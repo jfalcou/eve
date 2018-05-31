@@ -15,7 +15,6 @@
 #include <eve/arch/x86/ssse3/tags.hpp>
 #include <eve/arch/x86/sse4_1/tags.hpp>
 #include <eve/arch/x86/sse4_2/tags.hpp>
-#include <eve/arch/x86/sse4a/tags.hpp>
 
 // AVX ABI
 #include <eve/arch/x86/avx/tags.hpp>

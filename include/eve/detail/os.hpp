@@ -9,11 +9,6 @@
 #ifndef EVE_DETAIL_OS_HPP_INCLUDED
 #define EVE_DETAIL_OS_HPP_INCLUDED
 
-// #include <boost/predef/os/linux.h>
-// #include <boost/predef/os/macos.h>
-// #include <boost/predef/os/unix.h>
-// #include <boost/predef/os/windows.h>
-
 // Detect if we are using Linux
 #if !defined(EVE_OS_DETECTED) && (defined(linux) || defined(__linux))
 #define EVE_OS_IS_LINUX
