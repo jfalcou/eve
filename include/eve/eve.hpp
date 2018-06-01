@@ -9,7 +9,9 @@
 #ifndef EVE_EVE_HPP_INCLUDED
 #define EVE_EVE_HPP_INCLUDED
 
-#include <eve/as.hpp>
 #include <eve/arch.hpp>
+#include <eve/as.hpp>
+
+#include <eve/module/core.hpp>
 
 #endif
