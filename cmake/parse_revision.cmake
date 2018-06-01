@@ -18,7 +18,7 @@ function(parse_revision version_string prefix)
   elseif("${version_string}" MATCHES ${version_regex_prerelease})
     set(version_regex ${version_regex_prerelease})
   else()
-    message(STATUS "[spy] Unknown version format - Assume WIP")
+    message(STATUS "[eve] Unknown version format - Assume WIP")
     set(${prefix}_IS_PRERELEASE 0)
     set(${prefix}_IS_WIP 1)
     foreach(ARG "" _IS_WIP _IS_PRERELEASE)
@@ -56,40 +56,40 @@ find_package(Git QUIET)
 if(GIT_EXECUTABLE)
   execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                  OUTPUT_VARIABLE SPY_VERSION_STRING
+                  OUTPUT_VARIABLE EVE_VERSION_STRING
                   OUTPUT_STRIP_TRAILING_WHITESPACE
                   ERROR_QUIET
                  )
 endif()
 
-if(NOT DEFINED SPY_VERSION_STRING)
+if(NOT DEFINED EVE_VERSION_STRING)
   if((NOT GIT_EXECUTABLE OR NOT EXISTS GIT_EXECUTABLE) AND IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
 
-    message ( FATAL_ERROR "[spy] Git not found, verify your GIT_EXECUTABLE variable "
-                          "or specify SPY_VERSION_STRING manually"
+    message ( FATAL_ERROR "[eve] Git not found, verify your GIT_EXECUTABLE variable "
+                          "or specify EVE_VERSION_STRING manually"
             )
 
   elseif(NOT EXISTS ${PROJECT_SOURCE_DIR}/tagname)
 
-  message ( FATAL_ERROR "SPY_VERSION_STRING must be specified "
+  message ( FATAL_ERROR "EVE_VERSION_STRING must be specified "
                         "manually if no tagname file nor Git"
           )
 
   endif()
 
-  file(READ tagname SPY_VERSION_STRING)
-  string(REGEX REPLACE "[ \r\n\t]+$" "" SPY_VERSION_STRING "${SPY_VERSION_STRING}")
+  file(READ tagname EVE_VERSION_STRING)
+  string(REGEX REPLACE "[ \r\n\t]+$" "" EVE_VERSION_STRING "${EVE_VERSION_STRING}")
 
 endif()
 
-parse_revision("${SPY_VERSION_STRING}" SPY_VERSION)
+parse_revision("${EVE_VERSION_STRING}" eve_VERSION)
 
-if(SPY_VERSION_IS_WIP)
-  set(spy_release "(internal version)")
+if(eve_VERSION_IS_WIP)
+  set(eve_release "(internal version)")
 else()
-  if(SPY_VERSION_IS_PRERELEASE)
-    set(spy_release "(pre-release)")
+  if(eve_VERSION_IS_PRERELEASE)
+    set(eve_release "(pre-release)")
   endif()
 endif()
 
-message(STATUS "[spy] Configuring version ${SPY_VERSION_STRING} ${spy_release}")
+message(STATUS "[eve] Configuring version ${EVE_VERSION_STRING} ${eve_release}")
