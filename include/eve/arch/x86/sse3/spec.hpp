@@ -12,14 +12,16 @@
 #include <eve/arch/x86/sse3/tags.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_SIMD_X86 == EVE_SSE3_VERSION
+  #if EVE_HW_X86 == EVE_SSE3_VERSION
     #define EVE_CURRENT_ABI ::eve::sse_
     #define EVE_CURRENT_API ::eve::sse3_
   #endif
 #endif
 
-#if EVE_SIMD_X86 >= EVE_SSE3_VERSION
+#if EVE_HW_X86 >= EVE_SSE3_VERSION
   #include <pmmintrin.h>
+  #include <eve/arch/x86/sse2/abi_of.hpp>
+  #include <eve/arch/x86/sse2/as_register.hpp>
 #endif
 
 #endif

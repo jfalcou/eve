@@ -10,6 +10,9 @@
 #define EVE_ARCH_X86_SPEC_HPP_INCLUDED
 
 #include <eve/arch/x86/predef.hpp>
+#include <cstdint>
+
+int data[EVE_HW_X86];
 
 // Register count
 #if defined(EVE_HW_X86)

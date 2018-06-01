@@ -6,16 +6,18 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_SPEC_HPP_INCLUDED
-#define EVE_ARCH_CPU_SPEC_HPP_INCLUDED
+#ifndef EVE_ARCH_CPU_ABI_OF_HPP_INCLUDED
+#define EVE_ARCH_CPU_ABI_OF_HPP_INCLUDED
 
-#if !defined(EVE_CURRENT_ABI)
-  #define EVE_CURRENT_ABI ::eve::emulated_
-  #define EVE_CURRENT_API ::eve::cpu_
-  #define EVE_STRICT_EMULATION
-#endif
+#include <eve/arch/cpu/tags.hpp>
 
-#include <eve/arch/cpu/abi_of.hpp>
-#include <eve/arch/cpu/as_register.hpp>
+namespace eve { namespace ext
+{
+  template<typename Type, int Cardinal, typename EnableIf>
+  struct abi_of
+  {
+    using type = ::eve::emulated_;
+  };
+} }
 
 #endif

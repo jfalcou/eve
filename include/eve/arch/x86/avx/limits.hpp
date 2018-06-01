@@ -38,6 +38,9 @@ namespace eve
     static constexpr std::size_t bits   = 256;
     static constexpr std::size_t bytes  = 32;
 
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes/sizeof(Type);
+
     using supported_types = detail::types < float,double
                                           , std::int8_t , std::int16_t , std::int32_t , std::int64_t
                                           , std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t

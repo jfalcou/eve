@@ -16,6 +16,8 @@
     #include <x86intrin.h>
     #include <fma4intrin.h>
   #endif
+  #include <eve/arch/x86/avx/abi_of.hpp>
+  #include <eve/arch/x86/avx/as_register.hpp>
 #endif
 
 #endif
