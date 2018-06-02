@@ -6,69 +6,57 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_DETAIL_PACK_HPP_INCLUDED
-#define EVE_MODULE_CORE_DETAIL_PACK_HPP_INCLUDED
+#ifndef EVE_DETAIL_AGGREGATE_PACK_HPP_INCLUDED
+#define EVE_DETAIL_AGGREGATE_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
-#include <type_traits>
-#include <iterator>
 #include <iostream>
+#include <array>
 
 namespace eve { namespace detail
 {
-  // Wrapper for SIMD registers holding arithmetic types with compile-time size
-  template<typename Type, typename Size, typename ABI>
-  struct pack
+  // Wrapper for SIMD registers holding multiple native SIMD registers
+  template<typename Pack, std::size_t Size>
+  struct aggregate_pack
   {
-    using storage_type            = ::eve::ext::as_register_t<Type,Size::value,ABI>;
-    using value_type              = Type;
+    using storage_type            = std::array<Pack,2>;
+    using value_type              = typename Pack::value_type;
     using size_type               = std::size_t;
-    using reference               = Type&;
-    using const_reference         = Type const&;
-    using iterator                = Type*;
-    using const_iterator          = Type const*;
-    using reverse_iterator        = std::reverse_iterator<iterator>;
-    using const_reverse_iterator  = std::reverse_iterator<const_iterator>;
+    using reference               = typename Pack::reference;
+    using const_reference         = typename Pack::const_reference;
+    using iterator                = typename Pack::iterator;
+    using const_iterator          = typename Pack::const_iterator;
+    using reverse_iterator        = typename Pack::reverse_iterator;
+    using const_reverse_iterator  = typename Pack::const_reverse_iterator;
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
-    EVE_FORCEINLINE pack() noexcept {};
-
-    EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
-
-    // template<typename T0, typename T1, typename... Ts
-    //         , typename = std::enable_if_t<!Size::is_default && sizeof(T0)>
-    //         >
-    // EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vn) noexcept
-    // {
-    //   std::cout << "WOOT: " << 2+sizeof...(vn) << "\n";
-    // }
+    EVE_FORCEINLINE aggregate_pack() noexcept {};
 
     template< typename Generator
             , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
             >
-    EVE_FORCEINLINE pack(Generator&& g) noexcept
+    EVE_FORCEINLINE aggregate_pack(Generator&& g) noexcept
     {
       for(std::size_t i=0;i<size();++i)
-        this->operator[](i) = std::forward<Generator>(g)(i,size());
+        this->operator[](i) = std::forward<Generator>(g)(i,Size);
     }
 
     // ---------------------------------------------------------------------------------------------
     // Raw storage access
-    EVE_FORCEINLINE pack& operator=(storage_type const& o) noexcept { data_ = o; return *this; }
-
     EVE_FORCEINLINE storage_type   storage() const noexcept { return data_; }
     EVE_FORCEINLINE operator storage_type()  const noexcept { return data_; }
 
     // ---------------------------------------------------------------------------------------------
     // array-like interface
-    static EVE_FORCEINLINE constexpr std::size_t  size()     const noexcept { return Size::value; }
-    static EVE_FORCEINLINE constexpr size_type    max_size() const noexcept { return size();      }
+    static EVE_FORCEINLINE constexpr std::size_t  size()     const noexcept { return Size; }
+    static EVE_FORCEINLINE constexpr size_type    max_size() const noexcept { return Size;      }
     static EVE_FORCEINLINE constexpr bool         empty()    const noexcept { return false;
 
-    EVE_FORCEINLINE void swap(pack& rhs) noexcept
+    EVE_FORCEINLINE void swap(aggregate_pack& rhs) noexcept
     {
       using std::swap;
       swap(data_, rhs.data_);
@@ -78,17 +66,17 @@ namespace eve { namespace detail
     // begin() variants
     EVE_FORCEINLINE iterator begin() noexcept
     {
-      return reinterpret_cast<detail::alias_t<value_type>*>( &data_ );
+      return reinterpret_cast<detail::alias_t<value_type>*>( &data_[0] );
     }
 
     EVE_FORCEINLINE const_iterator begin() const noexcept
     {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_ );
+      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_[0] );
     }
 
     EVE_FORCEINLINE const_iterator cbegin() noexcept
     {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_ );
+      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_[0] );
     }
 
     EVE_FORCEINLINE reverse_iterator        rbegin()        noexcept { return reverse_iterator(end()); }
@@ -110,8 +98,8 @@ namespace eve { namespace detail
     EVE_FORCEINLINE reference       operator[](std::size_t i)       noexcept { return begin()[i]; }
     EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept { return begin()[i]; }
 
-    EVE_FORCEINLINE reference       back()        noexcept  { return this->operator[](size()-1); }
-    EVE_FORCEINLINE const_reference back() const  noexcept  { return this->operator[](size()-1); }
+    EVE_FORCEINLINE reference       back()        noexcept  { return this->operator[](Size-1); }
+    EVE_FORCEINLINE const_reference back() const  noexcept  { return this->operator[](Size-1); }
 
     EVE_FORCEINLINE reference       front()       noexcept  { return this->operator[](0); }
     EVE_FORCEINLINE const_reference front() const noexcept  { return this->operator[](0); }
@@ -120,14 +108,14 @@ namespace eve { namespace detail
     storage_type data_;
   };
 
-  template <typename T, typename N, typename ABI>
-  EVE_FORCEINLINE void swap(pack<T, N, ABI>& lhs, pack<T, N, ABI>& rhs) noexcept
+  template<typename P, std::size_t S>
+  void swap(aggregate_pack<P,S>& lhs, aggregate_pack<P,S>& rhs) noexcept
   {
     lhs.swap(rhs);
   }
 
-  template <typename T, typename N, typename ABI>
-  std::ostream& operator<<(std::ostream& os, pack<T, N, ABI> const& p)
+  template<typename P, std::size_t S>
+  std::ostream& operator<<(std::ostream& os, aggregate_pack<P,S> const& p)
   {
     os << '(' << +p[0];
 
