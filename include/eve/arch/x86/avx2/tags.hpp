@@ -30,7 +30,7 @@ namespace eve
   }
 
   // AVX2 extension tag object
-  constexpr inline avx2_ avx2 = {};
+  inline const avx2_ avx2 = {};
 }
 
 #endif

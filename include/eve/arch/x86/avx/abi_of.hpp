@@ -10,7 +10,7 @@
 #define EVE_ARCH_X86_AVX_ABI_OF_HPP_INCLUDED
 
 #include <eve/arch/x86/avx/tags.hpp>
-#include <eve/arch/abi_of.hpp>
+#include <eve/ext/abi_of.hpp>
 #include <type_traits>
 
 namespace eve { namespace ext

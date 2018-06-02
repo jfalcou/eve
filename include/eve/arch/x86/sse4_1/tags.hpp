@@ -28,7 +28,7 @@ namespace eve
   }
 
   // SSE4.1 extension tag object
-  constexpr inline sse4_1_ sse4_1 = {};
+  inline const sse4_1_ sse4_1 = {};
 }
 
 #endif

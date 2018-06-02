@@ -29,7 +29,7 @@ namespace eve
   }
 
   // XOP extension tag object
-  constexpr inline xop_ xop = {};
+  inline const xop_ xop = {};
 }
 
 #endif

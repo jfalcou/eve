@@ -6,8 +6,8 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_AS_REGISTER_HPP_INCLUDED
+#ifndef EVE_EXT_AS_REGISTER_HPP_INCLUDED
+#define EVE_EXT_AS_REGISTER_HPP_INCLUDED
 
 #include <array>
 

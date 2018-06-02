@@ -29,7 +29,7 @@ namespace eve
   }
 
   // FMA4 extension tag object
-  constexpr inline fma4_ fma4 = {};
+  inline const fma4_ fma4 = {};
 }
 
 #endif

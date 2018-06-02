@@ -6,8 +6,8 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ABI_OF_HPP_INCLUDED
-#define EVE_ARCH_ABI_OF_HPP_INCLUDED
+#ifndef EVE_EXT_ABI_OF_HPP_INCLUDED
+#define EVE_EXT_ABI_OF_HPP_INCLUDED
 
 namespace eve { namespace ext
 {

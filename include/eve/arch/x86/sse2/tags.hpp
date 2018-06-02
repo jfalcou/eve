@@ -32,7 +32,7 @@ namespace eve
   }
 
   // SSE2 extension tag object
-  constexpr inline sse2_ sse2 = {};
+  inline const sse2_ sse2 = {};
 }
 
 #endif

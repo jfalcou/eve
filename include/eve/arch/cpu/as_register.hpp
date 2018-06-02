@@ -10,7 +10,7 @@
 #define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 
 #include <array>
-#include <eve/arch/as_register.hpp>
+#include <eve/ext/as_register.hpp>
 
 namespace eve { namespace ext
 {

@@ -10,7 +10,7 @@
 #define EVE_ARCH_X86_SSE2_AS_REGISTER_HPP_INCLUDED
 
 #include <eve/arch/x86/sse2/tags.hpp>
-#include <eve/arch/as_register.hpp>
+#include <eve/ext/as_register.hpp>
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 

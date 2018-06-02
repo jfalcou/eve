@@ -28,7 +28,7 @@ namespace eve
   }
 
   // SSSE3 extension tag object
-  constexpr inline ssse3_ ssse3 = {};
+  inline const ssse3_ ssse3 = {};
 }
 
 #endif
