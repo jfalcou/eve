@@ -6,6 +6,8 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
-add_subdirectory(arch)
-add_subdirectory(api)
-add_subdirectory(module)
+set(  SOURCES
+      scalar/popcnt.cpp
+   )
+
+add_unit_test( "core" ${SOURCES} )

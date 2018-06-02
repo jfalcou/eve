@@ -6,6 +6,4 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
-add_subdirectory(arch)
-add_subdirectory(api)
-add_subdirectory(module)
+add_subdirectory(core)
