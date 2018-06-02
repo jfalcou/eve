@@ -64,9 +64,9 @@ namespace eve { namespace detail
 
     // ---------------------------------------------------------------------------------------------
     // array-like interface
-    static EVE_FORCEINLINE constexpr std::size_t  size()     const noexcept { return Size::value; }
-    static EVE_FORCEINLINE constexpr size_type    max_size() const noexcept { return size();      }
-    static EVE_FORCEINLINE constexpr bool         empty()    const noexcept { return false;
+    static EVE_FORCEINLINE constexpr std::size_t  size()     noexcept { return Size::value; }
+    static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return size();      }
+    static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
 
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {

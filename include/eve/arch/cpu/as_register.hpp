@@ -15,7 +15,7 @@
 namespace eve { namespace ext
 {
   template<typename Type, int Cardinal>
-  struct as_register<Type, Cardinal, eve::cpu_>
+  struct as_register<Type, Cardinal, eve::emulated_>
   {
     using type = std::array<Type,Cardinal>;
   };
