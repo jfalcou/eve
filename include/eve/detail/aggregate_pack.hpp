@@ -11,7 +11,6 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
 #include <iostream>
 #include <array>
@@ -64,45 +63,34 @@ namespace eve { namespace detail
 
     // ---------------------------------------------------------------------------------------------
     // begin() variants
-    EVE_FORCEINLINE iterator begin() noexcept
-    {
-      return reinterpret_cast<detail::alias_t<value_type>*>( &data_[0] );
-    }
+    EVE_FORCEINLINE iterator        begin()       noexcept  { return data_[0].begin(); }
+    EVE_FORCEINLINE const_iterator  begin() const noexcept  { return data_[0].begin(); }
+    EVE_FORCEINLINE const_iterator cbegin()       noexcept  { return data_[0].begin(); }
 
-    EVE_FORCEINLINE const_iterator begin() const noexcept
-    {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_[0] );
-    }
-
-    EVE_FORCEINLINE const_iterator cbegin() noexcept
-    {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_[0] );
-    }
-
-    EVE_FORCEINLINE reverse_iterator        rbegin()        noexcept { return reverse_iterator(end()); }
-    EVE_FORCEINLINE const_reverse_iterator  rbegin() const  noexcept { return reverse_iterator(end()); }
-    EVE_FORCEINLINE const_reverse_iterator crbegin() const  noexcept { return const_reverse_iterator(cend()); }
+    EVE_FORCEINLINE reverse_iterator        rbegin()        noexcept { return data_[1].rbegin();  }
+    EVE_FORCEINLINE const_reverse_iterator  rbegin() const  noexcept { return data_[1].rbegin();  }
+    EVE_FORCEINLINE const_reverse_iterator crbegin() const  noexcept { return data_[1].crbegin(); }
 
     // ---------------------------------------------------------------------------------------------
     // end() variants
-    EVE_FORCEINLINE iterator          end()         noexcept  { return begin() + size(); }
-    EVE_FORCEINLINE const_iterator    end()   const noexcept  { return begin() + size(); }
-    EVE_FORCEINLINE const_iterator    cend()        noexcept  { return begin() + size(); }
-    EVE_FORCEINLINE reverse_iterator  rend()        noexcept  { return reverse_iterator(begin()); }
+    EVE_FORCEINLINE iterator          end()         noexcept  { return data_[1].end();  }
+    EVE_FORCEINLINE const_iterator    end()   const noexcept  { return data_[1].end();  }
+    EVE_FORCEINLINE const_iterator    cend()        noexcept  { return data_[1].cend(); }
+    EVE_FORCEINLINE reverse_iterator  rend()        noexcept  { return data_[0].rend(); }
 
-    EVE_FORCEINLINE const_reverse_iterator  rend() const noexcept { return reverse_iterator(begin()); }
-    EVE_FORCEINLINE const_reverse_iterator crend() const noexcept { return const_reverse_iterator(cbegin()); }
+    EVE_FORCEINLINE const_reverse_iterator  rend() const noexcept { return data_[0].rend();   }
+    EVE_FORCEINLINE const_reverse_iterator crend() const noexcept { return data_[0].crend();  }
 
     // ---------------------------------------------------------------------------------------------
     // elementwise access
     EVE_FORCEINLINE reference       operator[](std::size_t i)       noexcept { return begin()[i]; }
     EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept { return begin()[i]; }
 
-    EVE_FORCEINLINE reference       back()        noexcept  { return this->operator[](Size-1); }
-    EVE_FORCEINLINE const_reference back() const  noexcept  { return this->operator[](Size-1); }
+    EVE_FORCEINLINE reference       back()        noexcept  { return data_[1].back(); }
+    EVE_FORCEINLINE const_reference back() const  noexcept  { return data_[1].back(); }
 
-    EVE_FORCEINLINE reference       front()       noexcept  { return this->operator[](0); }
-    EVE_FORCEINLINE const_reference front() const noexcept  { return this->operator[](0); }
+    EVE_FORCEINLINE reference       front()       noexcept  { return data_[0].front(); }
+    EVE_FORCEINLINE const_reference front() const noexcept  { return data_[0].front(); }
 
     private:
     storage_type data_;
