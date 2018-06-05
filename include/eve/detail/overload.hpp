@@ -19,8 +19,8 @@ namespace detail                                                                
   template<typename Mode> struct callable_object<tag::TAG,Mode>                                     \
   {                                                                                                 \
     using tag_type = tag::TAG;                                                                      \
-    template<typename... Args>                                                                      \
-    EVE_FORCEINLINE auto operator()(Args&&... args) const noexcept                                  \
+    template<typename... Args> EVE_FORCEINLINE                                                      \
+    constexpr auto operator()(Args&&... args) const noexcept                                        \
                     -> decltype(TAG( delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)... ))   \
     {                                                                                               \
       return TAG( delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)... );                      \

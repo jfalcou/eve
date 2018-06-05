@@ -21,7 +21,7 @@
 namespace eve { namespace detail
 {
   template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-  EVE_FORCEINLINE auto popcnt_( EVE_SUPPORTS(cpu_), T a0) noexcept
+  EVE_FORCEINLINE constexpr auto popcnt_( EVE_SUPPORTS(cpu_), T a0) noexcept
   {
     if constexpr( sizeof(T) == 1 )
     {
