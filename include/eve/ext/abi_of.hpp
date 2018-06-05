@@ -9,15 +9,21 @@
 #ifndef EVE_EXT_ABI_OF_HPP_INCLUDED
 #define EVE_EXT_ABI_OF_HPP_INCLUDED
 
-namespace eve { namespace ext
+namespace eve
 {
-  template< typename Type, int Cardinal
-          , typename EnableIf = void
-          >
-  struct abi_of;
+  template<typename T> struct logical;
 
-  template< typename Type, int Cardinal>
-  using abi_of_t = typename abi_of<Type,Cardinal>::type;
-} }
+  namespace ext
+  {
+    template< typename Type, int Cardinal, typename EnableIf = void>
+    struct abi_of;
+
+    template< typename Type, int Cardinal>
+    struct abi_of<logical<Type>,Cardinal> : abi_of<Type,Cardinal> {};
+
+    template< typename Type, int Cardinal>
+    using abi_of_t = typename abi_of<Type,Cardinal>::type;
+  }
+}
 
 #endif

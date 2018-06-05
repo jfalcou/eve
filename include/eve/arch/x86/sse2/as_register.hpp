@@ -14,28 +14,38 @@
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 
-namespace eve { namespace ext
+namespace eve
 {
-  // double maps to __m128d
-  template<int N> struct as_register<double, N, eve::sse_, std::enable_if_t<(N<=2)>>
-  {
-    using type = __m128d;
-  };
+  template<typename T> struct logical;
 
-  // float maps to __m128
-  template<int N> struct as_register<float, N, eve::sse_, std::enable_if_t<(N<=4)>>
+  namespace ext
   {
-    using type = __m128;
-  };
+    // double maps to __m128d
+    template<int N> struct as_register<double, N, eve::sse_, std::enable_if_t<(N<=2)>>
+    {
+      using type = __m128d;
+    };
 
-  // float maps to __m128
-  template<typename T, int N>
-  struct as_register< T, N, eve::sse_
-                    , std::enable_if_t<std::is_integral_v<T> && (N <= 16/sizeof(T))>
-                    >
-  {
-    using type = __m128i;
-  };
-} }
+    // float maps to __m128
+    template<int N> struct as_register<float, N, eve::sse_, std::enable_if_t<(N<=4)>>
+    {
+      using type = __m128;
+    };
+
+    // float maps to __m128
+    template<typename T, int N>
+    struct as_register< T, N, eve::sse_
+                      , std::enable_if_t<std::is_integral_v<T> && (N <= 16/sizeof(T))>
+                      >
+    {
+      using type = __m128i;
+    };
+
+    // logical uses same registers
+    template<typename T, int N>
+    struct as_register< logical<T>, N, eve::sse_> : as_register<T,N,eve::sse_>
+    {};
+  }
+}
 
 #endif

@@ -43,7 +43,7 @@ namespace eve { namespace detail
     using type = typename selection::type;
   };
 
-  // Generat integral types from sign + size
+  // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned> struct make_integer
   {
     template<std::size_t Sz, typename S, typename Dummy = void> struct fetch;
@@ -60,6 +60,30 @@ namespace eve { namespace detail
 
     using type = typename fetch<Size,Sign>::type;
   };
+
+  template<std::size_t Size, typename Sign = unsigned>
+  using make_integer_t = typename make_integer<Size,Sign>::type;
+
+  // Extract the sign of a type
+  template<typename T>
+  struct  sign_of
+        : std::conditional< std::is_signed_v<T> || std::is_floating_point_v<T>
+                          , signed
+                          , unsigned
+                          >
+  {};
+
+  template<typename T> using sign_of_t = typename sign_of<T>::type;
+
+  // Turn a type into an integer one
+  template<typename T, typename Sign = sign_of_t<T>>
+  struct as_integer
+  {
+    using type = make_integer_t<sizeof(T), Sign>;
+  };
+
+  template<typename T, typename Sign = sign_of_t<T>>
+  using as_integer_t = typename as_integer<T,Sign>::type;
 } }
 
 #endif
