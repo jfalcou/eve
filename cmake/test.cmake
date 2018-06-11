@@ -6,6 +6,9 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
+include(download)
+include(add_parent_target)
+
 ## Centralize all required setup for unit tests
 function(add_unit_test root)
   if( MSVC )
@@ -35,27 +38,28 @@ function(add_unit_test root)
 
     add_dependencies(unit ${test})
 
+    add_parent_target(${test})
+
     add_test( NAME ${test} COMMAND ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test"
             )
   endforeach()
 endfunction()
 
-include(download)
 
-## Disable testing LEST
-set(LEST_BUILD_TEST OFF CACHE INTERNAL    "OFF")
-set(LEST_BUILD_EXAMPLE OFF CACHE INTERNAL "OFF")
+## Disable testing/doc for tts
+set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
+set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
 
-download_project( PROJ                lest
-                  GIT_REPOSITORY      https://github.com/martinmoene/lest
+download_project( PROJ                tts
+                  GIT_REPOSITORY      git@lri-git:jfalcou/tts
                   GIT_TAG             master
                   "UPDATE_DISCONNECTED 1"
                   QUIET
                 )
 
-add_subdirectory(${lest_SOURCE_DIR} ${lest_BINARY_DIR})
-include_directories("${lest_SOURCE_DIR}/include")
+add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
+include_directories("${tts_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/test")
 
 ## Setup our tests
