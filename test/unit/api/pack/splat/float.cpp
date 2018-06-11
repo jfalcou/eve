@@ -1,15 +1,11 @@
 //==================================================================================================
-/**
+/*
   Copyright 2018 Joel FALCOU
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-**/
+ */
 //==================================================================================================
-#ifndef EVE_FUNCTION_MAKE_HPP_INCLUDED
-#define EVE_FUNCTION_MAKE_HPP_INCLUDED
 
-#include <eve/function/scalar/make.hpp>
-//#include <eve/function/simd/make.hpp>
-
-#endif
+using Type = float;
+#include "splat.hpp"

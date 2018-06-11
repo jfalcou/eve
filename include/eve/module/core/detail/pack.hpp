@@ -11,10 +11,17 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/detail/alias.hpp>
+#include <eve/detail/compiler.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/module/core/function/detail/make.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
+
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+#endif
 
 namespace eve { namespace detail
 {
@@ -38,13 +45,21 @@ namespace eve { namespace detail
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
 
-    // template<typename T0, typename T1, typename... Ts
-    //         , typename = std::enable_if_t<!Size::is_default && sizeof(T0)>
-    //         >
-    // EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vn) noexcept
-    // {
-    //   std::cout << "WOOT: " << 2+sizeof...(vn) << "\n";
-    // }
+    template<typename T>
+    EVE_FORCEINLINE explicit pack(T const& v) noexcept
+                  : data_( detail::make(as_<value_type>{},ABI{},v) )
+    {}
+
+    template<typename T0, typename T1, typename... Ts
+            , typename = std::enable_if_t<!Size::is_default && sizeof(T0)>
+            >
+    EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
+                  : data_( detail::make(as_<value_type>{},ABI{},v0,v1,vs...) )
+    {
+      static_assert ( 2+sizeof...(vs) == Size::value
+                    , "[eve] Incomplete initializer list for pack"
+                    );
+    }
 
     template< typename Generator
             , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
@@ -137,5 +152,9 @@ namespace eve { namespace detail
     return os << ')';
   }
 } }
+
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic pop
+#endif
 
 #endif

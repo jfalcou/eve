@@ -10,6 +10,7 @@
 #define EVE_DETAIL_META_HPP_INCLUDED
 
 #include <type_traits>
+#include <utility>
 #include <cstdint>
 
 namespace eve { namespace detail
@@ -84,6 +85,18 @@ namespace eve { namespace detail
 
   template<typename T, typename Sign = sign_of_t<T>>
   using as_integer_t = typename as_integer<T,Sign>::type;
+
+  // Tuple free apply
+  template<typename Func, std::size_t... I>
+  void apply_impl(Func&& f, std::index_sequence<I...> const&)
+  {
+    std::forward<Func>(f)(std::integral_constant<std::size_t,I>{}...);
+  }
+
+  template<std::size_t Count,typename Func> void apply(Func&& f)
+  {
+    apply_impl(std::forward<Func>(f), std::make_index_sequence<Count>{});
+  }
 } }
 
 #endif

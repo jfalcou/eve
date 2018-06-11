@@ -11,6 +11,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/module/core/function/detail/make.hpp>
 #include <eve/detail/abi.hpp>
 #include <iostream>
 #include <array>
@@ -34,6 +35,22 @@ namespace eve { namespace detail
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE aggregate_pack() noexcept {};
+
+    EVE_FORCEINLINE aggregate_pack(storage_type const& r) noexcept : data_(r) {}
+
+    template<typename T>
+    EVE_FORCEINLINE explicit aggregate_pack(T const& v) noexcept
+                  : data_( detail::make(as_<aggregate_pack>{},eve::emulated_{},v) )
+    {}
+
+    template<typename T, typename... Ts>
+    EVE_FORCEINLINE aggregate_pack(T const& v, Ts const&... vs) noexcept
+                  : aggregate_pack(detail::make(as_<aggregate_pack>{},eve::emulated_{},v,vs...))
+    {
+      static_assert ( 1+sizeof...(vs) == Size
+                    , "[eve] Incomplete initializer list for pack"
+                    );
+    }
 
     template< typename Generator
             , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
