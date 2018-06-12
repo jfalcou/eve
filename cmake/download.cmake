@@ -1,10 +1,10 @@
-## -------------------------------------------------------------------------------------------------
-##                     From https://github.com/Crascit/DownloadProject
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  From https://github.com/Crascit/DownloadProject
 ##
-##                   Distributed under the Boost Software License, Version 1.0.
-##                        See accompanying file LICENSE.txt or copy at
-##                            http://www.boost.org/LICENSE_1_0.txt
-## -------------------------------------------------------------------------------------------------
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 set(_DownloadProjectDir "${CMAKE_CURRENT_LIST_DIR}")
 
 include(CMakeParseArguments)

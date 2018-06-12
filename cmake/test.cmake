@@ -1,10 +1,10 @@
-## -------------------------------------------------------------------------------------------------
-##                              Copyright 2018 Joel FALCOU
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2018 Joel FALCOU
 ##
-##                   Distributed under the Boost Software License, Version 1.0.
-##                        See accompanying file LICENSE.txt or copy at
-##                            http://www.boost.org/LICENSE_1_0.txt
-## -------------------------------------------------------------------------------------------------
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 
 include(download)
 include(add_parent_target)
@@ -52,7 +52,7 @@ set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
 set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
 
 download_project( PROJ                tts
-                  GIT_REPOSITORY      git@lri-git:jfalcou/tts
+                  GIT_REPOSITORY      git@lri-git:esquisse/tts
                   GIT_TAG             master
                   "UPDATE_DISCONNECTED 1"
                   QUIET
