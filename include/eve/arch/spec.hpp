@@ -12,6 +12,7 @@
 
 #if !defined(EVE_NO_SIMD)
 #include <eve/arch/x86/spec.hpp>
+#include <eve/arch/ppc/spec.hpp>
 #endif
 
 #include <eve/arch/cpu/spec.hpp>

@@ -13,13 +13,12 @@
 #include <eve/arch/x86/predef.hpp>
 #include <cstdint>
 
-int data[EVE_HW_X86];
-
 // Register count
 #if defined(EVE_HW_X86)
 namespace eve
 {
   struct register_count
+
   {
     static constexpr std::size_t general = 2*sizeof(void*);
     static constexpr std::size_t simd    = 2*sizeof(void*);

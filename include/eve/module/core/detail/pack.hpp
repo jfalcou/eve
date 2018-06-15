@@ -48,7 +48,7 @@ namespace eve { namespace detail
 
     template<typename T>
     EVE_FORCEINLINE explicit pack(T const& v) noexcept
-                  : data_( detail::make(as_<value_type>{},ABI{},v) )
+                  : data_( detail::make(as_<storage_type>{},ABI{},v) )
     {}
 
     template<typename T0, typename T1, typename... Ts

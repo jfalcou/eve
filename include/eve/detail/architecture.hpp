@@ -30,4 +30,10 @@
 #define EVE_ARCH_IS_X86
 #endif
 
+#if     defined(__powerpc)    ||  defined(__powerpc__)    ||  defined(__POWERPC__)                  \
+    || defined(__ppc__)       ||  defined(_M_PPC)         ||  defined(_ARCH_PPC)                    \
+    || defined(__PPCGECKO__)  || defined(__PPCBROADWAY__) ||  defined(_XENON)
+#define EVE_ARCH_IS_PPC
+#endif
+
 #endif

@@ -30,6 +30,18 @@ function(add_unit_test root)
                   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
                 )
 
+    if (CMAKE_CROSSCOMPILING_CMD)
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}>
+              )
+    else()
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                COMMAND $<TARGET_FILE:${test}>
+              )
+    endif()
+
     set_target_properties ( ${test} PROPERTIES
                             EXCLUDE_FROM_DEFAULT_BUILD TRUE
                             EXCLUDE_FROM_ALL TRUE
@@ -40,9 +52,6 @@ function(add_unit_test root)
 
     add_parent_target(${test})
 
-    add_test( NAME ${test} COMMAND ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test"
-            )
   endforeach()
 endfunction()
 
