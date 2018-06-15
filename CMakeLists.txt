@@ -18,7 +18,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake )
 ## No in-source build
 ## =================================================================================================
 if (${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
-  message(FATAL_ERROR "[eve]: In-source build is not recommend")
+  message( FATAL_ERROR "[eve] Building in-source, not recommended! Build in a separate directory." )
 endif()
 
 ## =================================================================================================
