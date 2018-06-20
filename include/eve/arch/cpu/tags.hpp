@@ -18,6 +18,9 @@ namespace eve
   // dispatching tag for generic SIMD implementation
   struct simd_ : cpu_ { using parent = cpu_; };
 
+  // dispatching tag for emulated SIMD implementation of large register
+  struct aggregated_ : cpu_ { using parent = cpu_; };
+
   // dispatching tag for emulated SIMD implementation
   struct emulated_ : cpu_ { using parent = cpu_; };
 

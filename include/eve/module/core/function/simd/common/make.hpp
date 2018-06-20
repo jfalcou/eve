@@ -15,6 +15,8 @@
 
 namespace eve { namespace detail
 {
+  //------------------------------------------------------------------------------------------------
+  // Emulation
   template<typename Pack, typename V0, typename... Values>
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::emulated_ const&, V0 v0, Values... vs) noexcept
   {
@@ -31,8 +33,27 @@ namespace eve { namespace detail
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::emulated_ const&, Value vs) noexcept
   {
     Pack that;
-
     for(auto& e : that) e = vs;
+    return that;
+  }
+
+  //------------------------------------------------------------------------------------------------
+  // Aggregation
+  template<typename Pack, typename V0, typename... Values>
+  EVE_FORCEINLINE Pack make(as_<Pack> const& tgt, eve::aggregated_ const&, V0 v0, Values... vs) noexcept
+  {
+    return make(tgt,eve::emulated_{},v0,vs...);
+  }
+
+  template<typename Pack, typename Value>
+  EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::aggregated_ const&, Value vs) noexcept
+  {
+    using sub_t = typename Pack::storage_type::value_type;
+
+    Pack that;
+    sub_t sub_value(vs);
+
+    that.storage()[0] = that.storage()[1] = sub_value;
 
     return that;
   }

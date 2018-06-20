@@ -31,6 +31,7 @@ namespace eve { namespace detail
   struct pack
   {
     using storage_type            = ::eve::ext::as_register_t<Type,Size::value,ABI>;
+    using abi_type                = ABI;
     using value_type              = Type;
     using size_type               = std::size_t;
     using reference               = Type&;
@@ -46,9 +47,14 @@ namespace eve { namespace detail
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
 
-    template<typename T>
+    template< typename T
+            , typename MakeTarget = std::conditional_t< std::is_same_v<ABI,eve::emulated_>
+                                                      , storage_type
+                                                      , value_type
+                                                      >
+            >
     EVE_FORCEINLINE explicit pack(T const& v) noexcept
-                  : data_( detail::make(as_<storage_type>{},ABI{},v) )
+                  : data_( detail::make(as_<MakeTarget>{},ABI{},v) )
     {}
 
     template<typename T0, typename T1, typename... Ts
