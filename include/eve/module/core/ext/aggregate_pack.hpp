@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_DETAIL_pack_HPP_INCLUDED
-#define EVE_MODULE_CORE_DETAIL_pack_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_EXT_AGGREGATE_PACK_HPP_INCLUDED
+#define EVE_MODULE_CORE_EXT_AGGREGATE_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
@@ -18,7 +18,7 @@
 #include <iostream>
 #include <array>
 
-namespace eve { namespace detail
+namespace eve { namespace ext
 {
   // Wrapper for SIMD registers holding multiple native SIMD registers
   template<typename Type, typename Size>

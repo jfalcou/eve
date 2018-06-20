@@ -13,8 +13,8 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
 #include <eve/ext/as_pack.hpp>
-#include <eve/module/core/detail/pack.hpp>
-#include <eve/module/core/detail/aggregate_pack.hpp>
+#include <eve/module/core/ext/pack.hpp>
+#include <eve/module/core/ext/aggregate_pack.hpp>
 
 namespace eve
 {
@@ -38,7 +38,6 @@ namespace eve
 
   namespace ext
   {
-
     // Wrapper for SIMD registers holding arithmetic types
     template<typename Type, typename Size>
     struct as_pack< Type, Size
@@ -48,7 +47,7 @@ namespace eve
                   >
     {
       using abi_type  = ext::abi_of_t<Type,Size::value>;
-      using type      = eve::detail::pack<Type,Size,abi_type>;
+      using type      = eve::ext::pack<Type,Size,abi_type>;
     };
 
     // Wrapper for SIMD registers holding logical type
@@ -60,7 +59,7 @@ namespace eve
                   >
     {
       using abi_type  = ext::abi_of_t<logical<Type>,Size::value>;
-      using type      = eve::detail::pack<logical<Type>,Size,abi_type>;
+      using type      = eve::ext::pack<logical<Type>,Size,abi_type>;
     };
 
     // Large pack wrapper
@@ -71,9 +70,8 @@ namespace eve
                                     >
                   >
     {
-      using type = eve::detail::pack<Type,Size,eve::aggregated_>;
+      using type = eve::ext::pack<Type,Size,eve::aggregated_>;
     };
-
   }
 }
 
