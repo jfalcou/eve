@@ -10,7 +10,7 @@
 #ifndef EVE_ARCH_PPC_LIMITS_HPP_INCLUDED
 #define EVE_ARCH_PPC_LIMITS_HPP_INCLUDED
 
-#include <eve/arch/x86/vmx/limits.hpp>
-#include <eve/arch/x86/vsx/limits.hpp>
+#include <eve/arch/ppc/vmx/limits.hpp>
+#include <eve/arch/ppc/vsx/limits.hpp>
 
 #endif
