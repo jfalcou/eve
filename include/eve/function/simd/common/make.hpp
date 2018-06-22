@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
 #include <eve/as.hpp>

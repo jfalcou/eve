@@ -7,24 +7,23 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_EXT_AGGREGATE_PACK_HPP_INCLUDED
-#define EVE_MODULE_CORE_EXT_AGGREGATE_PACK_HPP_INCLUDED
+#ifndef EVE_EXT_AGGREGATE_HPP_INCLUDED
+#define EVE_EXT_AGGREGATE_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/module/core/function/detail/make.hpp>
-#include <eve/ext/as_pack.hpp>
+#include <eve/detail/function/make.hpp>
 #include <eve/detail/abi.hpp>
 #include <iostream>
 #include <array>
 
-namespace eve { namespace ext
+namespace eve
 {
   // Wrapper for SIMD registers holding multiple native SIMD registers
   template<typename Type, typename Size>
   struct pack<Type,Size,eve::aggregated_>
   {
-    using substorage_type         = typename eve::ext::as_pack<Type,typename Size::split_type>::type;
+    using substorage_type         = pack<Type,typename Size::split_type>;
     using storage_type            = std::array<substorage_type,2>;
     using abi_type                = eve::aggregated_;
     using value_type              = typename substorage_type::value_type;
@@ -118,6 +117,6 @@ namespace eve { namespace ext
     private:
     storage_type data_;
   };
-} }
+}
 
 #endif

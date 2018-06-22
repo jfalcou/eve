@@ -12,6 +12,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
+#include <type_traits>
 #include <array>
 
 namespace eve
@@ -28,6 +29,21 @@ namespace eve
 
   template<typename Type, typename API = EVE_CURRENT_API>
   constexpr inline auto expected_cardinal_v = expected_cardinal<Type,API>::value;
+
+  template<std::size_t Cardinal>
+  struct fixed : std::integral_constant< std::size_t, Cardinal>
+  {
+    static_assert( Cardinal == 1 || Cardinal % 2 == 0, "Cardinal must be a power of 2" );
+    static constexpr bool is_default = false;
+    using split_type = fixed<Cardinal/2>;
+  };
+
+  template<std::size_t Cardinal>
+  struct defaulted : std::integral_constant< std::size_t, Cardinal>
+  {
+    static constexpr bool is_default = true;
+    using split_type = defaulted<Cardinal/2>;
+  };
 }
 
 #endif

@@ -10,7 +10,4 @@
 #ifndef EVE_MODULE_CORE_HPP_INCLUDED
 #define EVE_MODULE_CORE_HPP_INCLUDED
 
-#include <eve/module/core/type/pack.hpp>
-#include <eve/module/core/type/logical.hpp>
-
 #endif

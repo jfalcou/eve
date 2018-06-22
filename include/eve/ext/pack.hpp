@@ -7,14 +7,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_EXT_PACK_HPP_INCLUDED
-#define EVE_MODULE_CORE_EXT_PACK_HPP_INCLUDED
+#ifndef EVE_EXT_PACK_HPP_INCLUDED
+#define EVE_EXT_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
-#include <eve/detail/alias.hpp>
+#include <eve/detail/function/make.hpp>
 #include <eve/detail/compiler.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/function/detail/make.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -24,7 +24,7 @@
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
 
-namespace eve { namespace ext
+namespace eve
 {
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   template<typename Type, typename Size, typename ABI>
@@ -158,7 +158,7 @@ namespace eve { namespace ext
 
     return os << ')';
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

@@ -11,14 +11,23 @@
 #define EVE_EXT_AS_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/forward.hpp>
 
-namespace eve { namespace ext
+namespace eve
 {
-  template< typename Type, typename Size, typename EnableIf = void>
-  struct as_pack;
+  template<typename T> struct logical;
 
-  template< typename Type, typename Size>
-  using as_pack_t = typename as_pack<Type,Size>::type;
-} }
+  namespace ext
+  {
+    template< typename Type, typename Size, typename EnableIf = void>
+    struct as_pack
+    {
+      using type = eve::pack<Type,Size>;
+    };
+
+    template< typename Type, typename Size>
+    using as_pack_t = typename as_pack<Type,Size>::type;
+  }
+}
 
 #endif
