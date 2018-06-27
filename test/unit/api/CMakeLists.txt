@@ -6,17 +6,12 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-set(  SOURCES
-      pack/splat/double.cpp
-      pack/splat/float.cpp
-      pack/splat/int64.cpp
-      pack/splat/int32.cpp
-      pack/splat/int16.cpp
-      pack/splat/int8.cpp
-      pack/splat/uint64.cpp
-      pack/splat/uint32.cpp
-      pack/splat/uint16.cpp
-      pack/splat/uint8.cpp
-   )
+##==================================================================================================
+## General API tests
+add_unit_test( "api" memory/aligned_ptr.cpp )
+add_unit_test( "api" memory/is_aligned.cpp )
 
-add_unit_test( "api" ${SOURCES} )
+##==================================================================================================
+## pack API tests
+list_tests("pack/splat" "api" ${all_types})
+#list_tests("pack/make" "api" ${all_types})

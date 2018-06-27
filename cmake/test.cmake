@@ -9,6 +9,13 @@
 include(download)
 include(add_parent_target)
 
+## Basic type roots
+set(real_types      double float                      )
+set(int_types       int64 int32 int16 int8            )
+set(uint_types      uint64 uint32 uint16 uint8        )
+set(integral_types  "${int_types};${uint_types}"      )
+set(all_types       "${real_types};${integral_types}" )
+
 ## Centralize all required setup for unit tests
 function(add_unit_test root)
   if( MSVC )
@@ -51,10 +58,19 @@ function(add_unit_test root)
     add_dependencies(unit ${test})
 
     add_parent_target(${test})
-
   endforeach()
 endfunction()
 
+##==================================================================================================
+function (list_tests root unit)
+  set(sources )
+
+  foreach(e ${ARGN})
+    list(APPEND sources "${root}/${e}.cpp")
+  endforeach(e)
+
+  add_unit_test( ${unit} "${sources}" )
+endfunction()
 
 ## Disable testing/doc for tts
 set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")

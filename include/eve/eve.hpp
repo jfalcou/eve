@@ -11,6 +11,9 @@
 #define EVE_EVE_HPP_INCLUDED
 
 #include <eve/as.hpp>
+#include <eve/pack.hpp>
+#include <eve/logical.hpp>
+#include <eve/version.hpp>
 #include <eve/module/core.hpp>
 
 #endif
