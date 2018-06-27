@@ -10,6 +10,14 @@
 #ifndef EVE_DETAIL_OS_HPP_INCLUDED
 #define EVE_DETAIL_OS_HPP_INCLUDED
 
+#if defined(__APPLE__) || defined(__APPLE_CC__) || defined(macintosh)
+#include <AvailabilityMacros.h>
+#endif
+
+#if (MAC_OS_X_VERSION_MIN_REQUIRED >= 1090) ||(_POSIX_C_SOURCE >= 200112L) || (_XOPEN_SOURCE >= 600)
+#define EVE_OS_USE_POSIX
+#endif
+
 // Detect if we are using Linux
 #if !defined(EVE_OS_DETECTED) && (defined(linux) || defined(__linux))
 #define EVE_OS_IS_LINUX
