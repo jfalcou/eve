@@ -36,14 +36,11 @@ include_directories(
 include(parse_revision)
 
 ## =================================================================================================
-## Setup Documentation
-## =================================================================================================
-add_subdirectory(doc)
-
-## =================================================================================================
 ## Options
 ## =================================================================================================
-option( EVE_BUILD_TEST  "Build tests for eve" ON )
+option( EVE_BUILD_TEST        "Build tests for eve"         ON  )
+option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    OFF )
+option( EVE_BUILD_DOC         "Build documentation for eve" ON  )
 
 ## =================================================================================================
 ## Install target
@@ -51,12 +48,21 @@ option( EVE_BUILD_TEST  "Build tests for eve" ON )
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include DESTINATION .)
 
 ## =================================================================================================
+## Setup Documentation
+## =================================================================================================
+if( EVE_BUILD_TEST )
+  add_subdirectory(doc)
+endif()
+
+## =================================================================================================
 ## Test and Benchmarks target
 ## =================================================================================================
 include(CTest)
 
-## include(benchmark)
-
 if( EVE_BUILD_TEST )
   include(test)
+endif()
+
+if( EVE_BUILD_BENCHMARKS )
+  include(benchmark)
 endif()
