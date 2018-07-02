@@ -15,4 +15,4 @@ add_unit_test( "api" memory/is_aligned.cpp )
 ##==================================================================================================
 ## pack API tests
 list_tests("pack/splat" "api" ${all_types})
-#list_tests("pack/make" "api" ${all_types})
+list_tests("pack/make"  "api" ${all_types})
