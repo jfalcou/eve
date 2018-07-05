@@ -12,6 +12,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/detail/function/make.hpp>
+#include <eve/detail/function/load.hpp>
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
@@ -41,33 +42,45 @@ namespace eve
     using reverse_iterator        = std::reverse_iterator<iterator>;
     using const_reverse_iterator  = std::reverse_iterator<const_iterator>;
 
+    using target_type = std::conditional_t< std::is_same_v<abi_type,eve::emulated_>
+                                          , storage_type
+                                          , value_type
+                                          >;
+
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE pack() noexcept {};
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
 
-    template< typename T
-            , typename MakeTarget = std::conditional_t< std::is_same_v<ABI,eve::emulated_>
-                                                      , storage_type
-                                                      , value_type
-                                                      >
-            >
-    EVE_FORCEINLINE explicit pack(T const& v) noexcept
-                  : data_( detail::make(as_<MakeTarget>{},ABI{},v) )
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a pointer
+    EVE_FORCEINLINE explicit pack(Type* ptr) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
     {}
 
-    template<typename T0, typename T1, typename... Ts
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a single value
+    EVE_FORCEINLINE explicit pack(Type v) noexcept
+                  : data_( detail::make(as_<target_type>{},abi_type{},v) )
+    {}
+
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a sequence of values
+    template<typename T0, typename... Ts
             , typename = std::enable_if_t<!Size::is_default && sizeof(T0)>
+            , typename = std::enable_if_t<!std::is_same_v<T0,storage_type>>
             >
-    EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
-                  : data_( detail::make(as_<value_type>{},ABI{},v0,v1,vs...) )
+    EVE_FORCEINLINE pack(T0 const& v0, Ts const&... vs) noexcept
+                  : data_( detail::make(as_<target_type>{},abi_type{},v0,vs...) )
     {
-      static_assert ( 2+sizeof...(vs) == Size::value
-                    , "[eve] Incomplete initializer list for pack"
+      static_assert ( 1+sizeof...(vs) == Size::value
+                    , "[eve] Size mismatch in initializer list for pack"
                     );
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack with a generator function
     template< typename Generator
             , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
             >
@@ -75,6 +88,14 @@ namespace eve
     {
       for(std::size_t i=0;i<size();++i)
         this->operator[](i) = std::forward<Generator>(g)(i,size());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Assign a single value to a pack
+    EVE_FORCEINLINE pack& operator=(Type v) noexcept
+    {
+      data_ = detail::make(as_<target_type>{},abi_type{},v);
+      return *this;
     }
 
     // ---------------------------------------------------------------------------------------------

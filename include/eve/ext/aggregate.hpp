@@ -41,20 +41,31 @@ namespace eve
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
 
-    template<typename T>
-    EVE_FORCEINLINE explicit pack(T const& v) noexcept
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from an iterator
+    EVE_FORCEINLINE explicit pack(Type* ptr) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
+    {}
+
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a single value
+    EVE_FORCEINLINE explicit pack(Type v) noexcept
                   : data_( detail::make(as_<pack>{},::eve::aggregated_{},v) )
     {}
 
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a sequence of values
     template<typename T, typename... Ts>
     EVE_FORCEINLINE pack(T const& v, Ts const&... vs) noexcept
                   : pack(detail::make(as_<pack>{},::eve::aggregated_{},v,vs...))
     {
       static_assert ( 1+sizeof...(vs) == Size::value
-                    , "[eve] Incomplete initializer list for pack"
+                    , "[eve] Size mismatch in initializer list for pack"
                     );
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack with a generator function
     template< typename Generator
             , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
             >
