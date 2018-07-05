@@ -89,14 +89,14 @@ namespace eve { namespace detail
 
   // Tuple free apply
   template<typename Func, std::size_t... I>
-  void apply_impl(Func&& f, std::index_sequence<I...> const&)
+  decltype(auto) apply_impl(Func&& f, std::index_sequence<I...> const&)
   {
-    std::forward<Func>(f)(std::integral_constant<std::size_t,I>{}...);
+    return std::forward<Func>(f)(std::integral_constant<std::size_t,I>{}...);
   }
 
-  template<std::size_t Count,typename Func> void apply(Func&& f)
+  template<std::size_t Count,typename Func> decltype(auto) apply(Func&& f)
   {
-    apply_impl(std::forward<Func>(f), std::make_index_sequence<Count>{});
+    return apply_impl(std::forward<Func>(f), std::make_index_sequence<Count>{});
   }
 } }
 
