@@ -54,11 +54,11 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
   TTS_SETUP("An aligned_ptr of default alignment")
   {
     type value{42}, other_value{1337};
-    alignas(64) type extra_aligned_value{787};
+    alignas(16) type extra_aligned_value{787};
 
     eve::aligned_ptr<type> ptr        = &value;
     eve::aligned_ptr<type> other_ptr  = &other_value;
-    eve::aligned_ptr<type,64> realigned_ptr  = &extra_aligned_value;
+    eve::aligned_ptr<type,16> realigned_ptr  = &extra_aligned_value;
 
     TTS_SECTION("has the proper default alignment")
     {
