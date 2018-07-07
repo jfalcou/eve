@@ -13,8 +13,15 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/function/make.hpp>
+#include <eve/detail/function/load.hpp>
+#include <eve/detail/is_iterator.hpp>
+#include <eve/detail/is_range.hpp>
+#include <eve/detail/compiler.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
-#include <iostream>
+#include <eve/ext/is_pack.hpp>
+#include <type_traits>
+#include <iterator>
 #include <array>
 
 namespace eve
@@ -39,9 +46,28 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
-    EVE_FORCEINLINE pack() noexcept {};
+    EVE_FORCEINLINE pack()            noexcept {}
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
+
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a Range
+    template< typename Iterator
+            , typename = std::enable_if_t< detail::is_iterator_v<Iterator>>
+            >
+    EVE_FORCEINLINE explicit pack(Iterator b, Iterator e) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},b,e))
+    {}
+
+    template<typename Range>
+    EVE_FORCEINLINE explicit pack (Range&& r
+                                  , std::enable_if_t<   detail::is_range_v<Range>
+                                                    && !ext::is_pack_v<Range>
+                                                    && !std::is_same_v<storage_type,Range>
+                                                    >* = 0
+                                  ) noexcept
+                  : pack( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a pointer
@@ -64,9 +90,14 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a sequence of values
-    template<typename T, typename... Ts>
-    EVE_FORCEINLINE pack(T const& v, Ts const&... vs) noexcept
-                  : pack(detail::make(as_<pack>{},::eve::aggregated_{},v,vs...))
+    template<typename T0, typename... Ts
+            , typename = std::enable_if_t <   std::is_convertible_v<T0,Type>
+                                          && (... &&  std::is_convertible_v<Ts,Type>)
+                                          && !Size::is_default
+                                          >
+            >
+    EVE_FORCEINLINE pack(T0 const& v0, Ts const&... vs) noexcept
+                  : pack(detail::make(as_<pack>{},::eve::aggregated_{},v0,vs...))
     {
       static_assert ( 1+sizeof...(vs) == Size::value
                     , "[eve] Size mismatch in initializer list for pack"
@@ -75,10 +106,13 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack with a generator function
-    template< typename Generator
-            , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
-            >
-    EVE_FORCEINLINE pack(Generator&& g) noexcept
+    template<typename Generator>
+    EVE_FORCEINLINE pack( Generator&& g
+                        , std::enable_if_t<std::is_invocable_v< Generator
+                                                              , std::size_t,std::size_t
+                                                              >
+                                          >* = 0
+                        ) noexcept
     {
       for(std::size_t i=0;i<size();++i)
         this->operator[](i) = std::forward<Generator>(g)(i,Size::value);

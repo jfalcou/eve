@@ -13,9 +13,12 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
+#include <eve/detail/is_iterator.hpp>
+#include <eve/detail/is_range.hpp>
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/ext/is_pack.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -51,9 +54,27 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
-    EVE_FORCEINLINE pack() noexcept {};
+    EVE_FORCEINLINE pack()            noexcept {}
 
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
+
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a Range
+    template<typename Iterator>
+    EVE_FORCEINLINE explicit pack ( Iterator b, Iterator e
+                                  , std::enable_if_t< detail::is_iterator_v<Iterator>>* = 0
+                                  ) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},b,e))
+    {}
+
+    template<typename Range>
+    EVE_FORCEINLINE explicit pack ( Range&& r
+                                  , std::enable_if_t<   detail::is_range_v<Range>
+                                                    && !ext::is_pack_v<Range>
+                                                    >* = 0
+                                  ) noexcept
+                  : pack( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a pointer
@@ -77,8 +98,10 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a sequence of values
     template<typename T0, typename... Ts
-            , typename = std::enable_if_t<!Size::is_default && sizeof(T0)>
-            , typename = std::enable_if_t<!std::is_same_v<T0,storage_type>>
+            , typename = std::enable_if_t <   std::is_convertible_v<T0,Type>
+                                          && (... &&  std::is_convertible_v<Ts,Type>)
+                                          && !Size::is_default
+                                          >
             >
     EVE_FORCEINLINE pack(T0 const& v0, Ts const&... vs) noexcept
                   : data_( detail::make(as_<target_type>{},abi_type{},v0,vs...) )
@@ -90,10 +113,13 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack with a generator function
-    template< typename Generator
-            , typename = std::enable_if_t<std::is_invocable_v<Generator,std::size_t,std::size_t>>
-            >
-    EVE_FORCEINLINE pack(Generator&& g) noexcept
+    template<typename Generator>
+    EVE_FORCEINLINE pack( Generator&& g
+                        , std::enable_if_t<std::is_invocable_v< Generator
+                                                              , std::size_t,std::size_t
+                                                              >
+                                          >* = 0
+                        ) noexcept
     {
       for(std::size_t i=0;i<size();++i)
         this->operator[](i) = std::forward<Generator>(g)(i,size());
@@ -111,7 +137,11 @@ namespace eve
     // Raw storage access
     EVE_FORCEINLINE pack& operator=(storage_type const& o) noexcept { data_ = o; return *this; }
 
-    EVE_FORCEINLINE storage_type   storage() const noexcept { return data_; }
+    // ---------------------------------------------------------------------------------------------
+    // Raw storage access
+    EVE_FORCEINLINE storage_type   storage() const  noexcept { return data_; }
+    EVE_FORCEINLINE storage_type&  storage()        noexcept { return data_; }
+
     EVE_FORCEINLINE operator storage_type()  const noexcept { return data_; }
 
     // ---------------------------------------------------------------------------------------------
