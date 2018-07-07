@@ -24,7 +24,7 @@ namespace eve { namespace detail
   {
     auto impl = [&](auto... I)
                 {
-                  auto deref = [](auto& p, auto const&) { return *(p++); };
+                  auto deref = [&](auto p, auto const& i) { std::advance(p,i); return *p; };
                   return Pack(deref(ptr,I)...);
                 };
 
@@ -37,6 +37,12 @@ namespace eve { namespace detail
                             ) noexcept
   {
     return load(tgt,mode,ptr.get());
+  }
+
+  template<typename Iterator, typename ABI, typename Pack>
+  EVE_FORCEINLINE Pack load(as_<Pack> const& tgt, ABI const&, Iterator b, Iterator) noexcept
+  {
+    return load(tgt,eve::emulated_{}, b);
   }
 
   //------------------------------------------------------------------------------------------------
