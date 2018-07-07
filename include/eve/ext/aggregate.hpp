@@ -42,7 +42,8 @@ namespace eve
     using reverse_iterator        = typename substorage_type::reverse_iterator;
     using const_reverse_iterator  = typename substorage_type::const_reverse_iterator;
 
-    static constexpr std::size_t alignment = substorage_type::alignment;
+    static constexpr std::size_t static_size  = Size::value;
+    static constexpr std::size_t alignment    = substorage_type::alignment;
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
@@ -99,7 +100,7 @@ namespace eve
     EVE_FORCEINLINE pack(T0 const& v0, Ts const&... vs) noexcept
                   : pack(detail::make(as_<pack>{},::eve::aggregated_{},v0,vs...))
     {
-      static_assert ( 1+sizeof...(vs) == Size::value
+      static_assert ( 1+sizeof...(vs) == static_size
                     , "[eve] Size mismatch in initializer list for pack"
                     );
     }
@@ -115,7 +116,7 @@ namespace eve
                         ) noexcept
     {
       for(std::size_t i=0;i<size();++i)
-        this->operator[](i) = std::forward<Generator>(g)(i,Size::value);
+        this->operator[](i) = std::forward<Generator>(g)(i,static_size);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -127,8 +128,8 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // array-like interface
-    static EVE_FORCEINLINE constexpr std::size_t  size()     noexcept { return Size::value; }
-    static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return Size::value; }
+    static EVE_FORCEINLINE constexpr std::size_t  size()     noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
 
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
