@@ -10,3 +10,4 @@
 
 using Type = double;
 #include "load.hpp"
+#include "aligned_load.hpp"

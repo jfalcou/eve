@@ -12,6 +12,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
 namespace eve { namespace detail
@@ -30,6 +31,14 @@ namespace eve { namespace detail
     return apply<Pack::size()>(impl);
   }
 
+  template<typename T, typename Pack, std::size_t N>
+  EVE_FORCEINLINE Pack load ( as_<Pack> const& tgt, eve::emulated_ const& mode
+                            , aligned_ptr<T,N> ptr
+                            ) noexcept
+  {
+    return load(tgt,mode,ptr.get());
+  }
+
   //------------------------------------------------------------------------------------------------
   // Aggregation
   template<typename Pack, typename Pointer>
@@ -38,11 +47,19 @@ namespace eve { namespace detail
     using storage_t = typename Pack::storage_type;
     using subpack_t = typename storage_t::value_type;
 
-    auto next = ptr;
-    std::advance(next,subpack_t::size());
+    return Pack(storage_t{ subpack_t(ptr), subpack_t(ptr + subpack_t::size())});
+  }
 
-    return Pack(storage_t{ subpack_t(ptr), subpack_t(next)});
+  template<typename T, typename Pack, std::size_t N>
+  EVE_FORCEINLINE Pack load ( as_<Pack> const& tgt, eve::aggregated_ const& mode
+                            , aligned_ptr<T,N> ptr
+                            ) noexcept
+  {
+    using storage_t = typename Pack::storage_type;
+    using subpack_t = typename storage_t::value_type;
+    return Pack(storage_t{ subpack_t(ptr), subpack_t(ptr + subpack_t::size())});
   }
 } }
 
 #endif
+

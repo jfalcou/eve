@@ -10,3 +10,4 @@
 
 using Type = float;
 #include "load.hpp"
+#include "aligned_load.hpp"

@@ -50,14 +50,14 @@ namespace eve
 
     aligned_ptr& operator+=(std::ptrdiff_t o) noexcept
     {
-      assert(is_aligned<Alignment>(o));
+      assert(is_aligned<Alignment>(pointer_ + o));
       pointer_ +=o;
       return *this;
     }
 
     aligned_ptr& operator-=(std::ptrdiff_t o) noexcept
     {
-      assert(is_aligned<Alignment>(o));
+      assert(is_aligned<Alignment>(pointer_ - o));
       pointer_ -=o;
       return *this;
     }
@@ -115,6 +115,30 @@ namespace eve
   void swap(aligned_ptr<Type,Alignment>& lhs,aligned_ptr<Type,Alignment>& rhs) noexcept
   {
     lhs.swap(rhs);
+  }
+
+  template<typename Type, std::size_t Alignment>
+  aligned_ptr<Type,Alignment>
+  operator-(aligned_ptr<Type,Alignment> const& p, std::ptrdiff_t o) noexcept
+  {
+    auto that    = p;
+    return that -= o;
+  }
+
+  template<typename Type, std::size_t Alignment>
+  aligned_ptr<Type,Alignment>
+  operator+(aligned_ptr<Type,Alignment> const& p, std::ptrdiff_t o) noexcept
+  {
+    auto that    = p;
+    return that += o;
+  }
+
+  template<typename Type, std::size_t Alignment>
+  aligned_ptr<Type,Alignment>
+  operator+(std::ptrdiff_t o, aligned_ptr<Type,Alignment> const& p) noexcept
+  {
+    auto that    = p;
+    return that += o;
   }
 
   template<std::size_t Alignment, typename Type>

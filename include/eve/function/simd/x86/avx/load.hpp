@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_SIMD_X86_AVX_LOAD_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
 #if defined(EVE_COMP_IS_GNUC)
@@ -28,12 +29,28 @@ namespace eve { namespace detail
     return _mm256_loadu_pd(ptr);
   }
 
+  template<typename N, std::size_t Align>
+  EVE_FORCEINLINE __m256d load( as_<pack<double,N>> const&, eve::avx_ const&
+                              , aligned_ptr<double,Align> ptr
+                              ) noexcept
+  {
+    return _mm256_load_pd(ptr.get());
+  }
+
   //------------------------------------------------------------------------------------------------
   // float case 1->4
   template<typename N>
   EVE_FORCEINLINE __m256 load(as_<pack<float,N>> const&, eve::avx_ const&, float* ptr) noexcept
   {
     return _mm256_loadu_ps(ptr);
+  }
+
+  template<typename N, std::size_t Align>
+  EVE_FORCEINLINE __m256 load ( as_<pack<float,N>> const&, eve::avx_ const&
+                              , aligned_ptr<float,Align> ptr
+                              ) noexcept
+  {
+    return _mm256_load_ps(ptr.get());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -43,6 +60,13 @@ namespace eve { namespace detail
   load(as_<pack<T,N>> const&, eve::avx_ const&, T* ptr) noexcept
   {
     return _mm256_loadu_si256((__m256i*)ptr);
+  }
+
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE std::enable_if_t<std::is_integral_v<T>,__m256i>
+  load ( as_<pack<T,N>> const&, eve::avx_ const&, aligned_ptr<T,Align> ptr) noexcept
+  {
+    return _mm256_load_si256((__m256i*)(ptr.get()));
   }
 } }
 

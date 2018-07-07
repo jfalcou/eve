@@ -11,3 +11,4 @@
 #include <cstdint>
 using Type = std::uint8_t;
 #include "load.hpp"
+#include "aligned_load.hpp"

@@ -47,6 +47,8 @@ namespace eve
                                           , value_type
                                           >;
 
+    static constexpr std::size_t alignment = alignof(storage_type);
+
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE pack() noexcept {};
@@ -56,6 +58,13 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a pointer
     EVE_FORCEINLINE explicit pack(Type* ptr) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
+    {}
+
+    template< std::size_t Alignment
+            , typename = std::enable_if_t<(Alignment>=alignment)>
+            >
+    EVE_FORCEINLINE explicit pack(aligned_ptr<Type,Alignment> ptr) noexcept
                   : data_(detail::load(as_<pack>{},abi_type{},ptr))
     {}
 

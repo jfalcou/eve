@@ -35,6 +35,8 @@ namespace eve
     using reverse_iterator        = typename substorage_type::reverse_iterator;
     using const_reverse_iterator  = typename substorage_type::const_reverse_iterator;
 
+    static constexpr std::size_t alignment = substorage_type::alignment;
+
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE pack() noexcept {};
@@ -42,8 +44,15 @@ namespace eve
     EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from an iterator
+    // Constructs a pack from a pointer
     EVE_FORCEINLINE explicit pack(Type* ptr) noexcept
+                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
+    {}
+
+    template< std::size_t Alignment
+            , typename = std::enable_if_t<(Alignment>=alignment)>
+            >
+    EVE_FORCEINLINE explicit pack(aligned_ptr<Type,Alignment> ptr) noexcept
                   : data_(detail::load(as_<pack>{},abi_type{},ptr))
     {}
 
