@@ -34,7 +34,7 @@ function(add_unit_test root)
     target_compile_options  ( ${test} PUBLIC ${options} )
 
     set_property( TARGET ${test}
-                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/test"
+                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                 )
 
     if (CMAKE_CROSSCOMPILING_CMD)
