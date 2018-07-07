@@ -11,21 +11,21 @@
 #define EVE_FUNCTION_DETAIL_LOAD_HPP_INCLUDED
 
 #include <eve/arch.hpp>
-#include <eve/function/simd/common/load.hpp>
+#include <eve/detail/function/simd/common/load.hpp>
 
 #if defined(EVE_HW_X86)
 #if EVE_HW_X86 >= EVE_SSE2_VERSION
-#include <eve/function/simd/x86/sse2/load.hpp>
+#include <eve/detail/function/simd/x86/sse2/load.hpp>
 #endif
 
 #if EVE_HW_X86 >= EVE_AVX_VERSION
-#include <eve/function/simd/x86/avx/load.hpp>
+#include <eve/detail/function/simd/x86/avx/load.hpp>
 #endif
 #endif
 
 #if defined(EVE_HW_POWERPC)
 #if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#include <eve/function/simd/ppc/vmx/load.hpp>
+#include <eve/detail/function/simd/ppc/vmx/load.hpp>
 #endif
 #endif
 
