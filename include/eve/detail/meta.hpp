@@ -16,6 +16,9 @@
 
 namespace eve { namespace detail
 {
+  // Silence unused warning
+  template<typename... T> void ignore(T&&...) {}
+
   // Types list helper
   template<typename... Types> struct types {};
 

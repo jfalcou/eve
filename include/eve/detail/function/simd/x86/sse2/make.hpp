@@ -11,8 +11,9 @@
 #define EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_MAKE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/alias.hpp>
 #include <eve/detail/compiler.hpp>
+#include <eve/detail/alias.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 
 #if defined(EVE_COMP_IS_GNUC)
@@ -60,6 +61,7 @@ namespace eve { namespace detail
     T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
     ptr[0] = v0;
     ptr[1] = v1;
+    detail::ignore(that);
 
     return that;
   }
@@ -72,6 +74,8 @@ namespace eve { namespace detail
     T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
     ptr[0] = v0;
     ptr[1] = v0;
+
+    detail::ignore(that);
 
     return that;
   }
