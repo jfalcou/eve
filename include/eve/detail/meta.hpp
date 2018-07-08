@@ -98,6 +98,15 @@ namespace eve { namespace detail
   {
     return apply_impl(std::forward<Func>(f), std::make_index_sequence<Count>{});
   }
+
+  // Recurrent pseudo-concept checkers
+  template<typename From, typename To, typename Ret = void>
+  using Convertible = std::enable_if_t<std::is_convertible_v<From,To>,Ret>;
 } }
+
+// Pseudo require macro
+#define requires_type(...)  __VA_ARGS__
+#define requires(...)       __VA_ARGS__* = 0
+
 
 #endif
