@@ -7,10 +7,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_PLUS_HPP_INCLUDED
-#define EVE_FUNCTION_PLUS_HPP_INCLUDED
+#ifndef PLUS_HPP
+#define PLUS_HPP
 
 #include <eve/function/scalar/plus.hpp>
-#include <eve/function/simd/plus.hpp>
+#include <tts/tts.hpp>
+#include <tts/tests/relation.hpp>
+
+TTS_CASE( "Check eve::plus behavior" )
+{
+  TTS_EQUAL( eve::plus(Type{0},Type{0}), Type{0});
+  TTS_EQUAL( eve::plus(Type{0},Type{1}), Type{1});
+  TTS_EQUAL( eve::plus(Type{1},Type{0}), Type{1});
+  TTS_EQUAL( eve::plus(Type{1},Type{1}), Type{2});
+}
 
 #endif

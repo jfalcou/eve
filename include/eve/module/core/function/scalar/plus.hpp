@@ -10,13 +10,13 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_PLUS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_PLUS_HPP_INCLUDED
 
-#include <eve/function/saturated.hpp>
+//#include <eve/function/saturated.hpp>
 // #include <eve/function/scalar/saturate.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <type_traits>
-#include <limits>
-#include <climits>
+// #include <type_traits>
+// #include <limits>
+// #include <climits>
 
 namespace eve { namespace detail
 {
@@ -28,6 +28,7 @@ namespace eve { namespace detail
     return a+b;
   }
 
+#if 0
   // -----------------------------------------------------------------------------------------------
   // Saturated case
   template<typename T> EVE_FORCEINLINE
@@ -81,6 +82,7 @@ namespace eve { namespace detail
       }
     }
   }
+#endif
 } }
 
 #endif

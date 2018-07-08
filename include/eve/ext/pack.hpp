@@ -18,6 +18,7 @@
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/plus.hpp>
 #include <eve/ext/is_pack.hpp>
 #include <type_traits>
 #include <iterator>
@@ -198,6 +199,16 @@ namespace eve
 
     EVE_FORCEINLINE reference       front()       noexcept  { return this->operator[](0); }
     EVE_FORCEINLINE const_reference front() const noexcept  { return this->operator[](0); }
+
+    // ---------------------------------------------------------------------------------------------
+    // Self-assignment operators
+    template<typename Other>
+    EVE_FORCEINLINE pack& operator+=(Other const& other) noexcept
+    {
+      *this = eve::plus(*this, other);
+      return *this;
+    }
+
 
     private:
     storage_type data_;
