@@ -7,11 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_INC_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_INC_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve { EVE_MAKE_CALLABLE(inc_,inc); }
-
-#endif
+#include <cstdint>
+using Type = std::uint8_t;
+#include "increment.hpp"

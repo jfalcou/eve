@@ -171,6 +171,21 @@ namespace eve
     EVE_FORCEINLINE const_reference front() const noexcept  { return data_[0].front(); }
 
     // ---------------------------------------------------------------------------------------------
+    // Self-increment/decrement operators
+    EVE_FORCEINLINE pack& operator++() noexcept
+    {
+      *this += Type{1};
+      return *this;
+    }
+
+    EVE_FORCEINLINE pack operator++(int) noexcept
+    {
+      auto that(*this);
+      operator++();
+      return that;
+    }
+
+    // ---------------------------------------------------------------------------------------------
     // Self-assignment operators
     template<typename Other>
     EVE_FORCEINLINE pack& operator+=(Other const& other) noexcept

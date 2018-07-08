@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_INC_HPP_INCLUDED
-#define EVE_FUNCTION_INC_HPP_INCLUDED
 
-#include <eve/function/scalar/inc.hpp>
-//#include <eve/function/simd/inc.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::uint32_t;
+#include "increment.hpp"
