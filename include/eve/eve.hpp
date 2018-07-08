@@ -14,6 +14,7 @@
 #include <eve/pack.hpp>
 #include <eve/logical.hpp>
 #include <eve/version.hpp>
+#include <eve/cardinal.hpp>
 #include <eve/module/core.hpp>
 
 #endif
