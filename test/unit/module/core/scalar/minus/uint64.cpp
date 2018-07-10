@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MINUS_HPP_INCLUDED
-#define EVE_FUNCTION_MINUS_HPP_INCLUDED
 
-#include <eve/function/scalar/minus.hpp>
-#include <eve/function/simd/minus.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::uint64_t;
+#include "minus.hpp"

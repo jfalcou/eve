@@ -7,10 +7,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MINUS_HPP_INCLUDED
-#define EVE_FUNCTION_MINUS_HPP_INCLUDED
+#ifndef MINUS_HPP
+#define MINUS_HPP
 
 #include <eve/function/scalar/minus.hpp>
-#include <eve/function/simd/minus.hpp>
+#include <tts/tts.hpp>
+#include <tts/tests/relation.hpp>
+
+TTS_CASE( "Check eve::minus behavior" )
+{
+  TTS_EQUAL( eve::minus(Type{0},Type{0}), Type{0});
+  TTS_EQUAL( eve::minus(Type{2},Type{1}), Type{1});
+  TTS_EQUAL( eve::minus(Type{1},Type{0}), Type{1});
+  TTS_EQUAL( eve::minus(Type{1},Type{1}), Type{0});
+}
 
 #endif
