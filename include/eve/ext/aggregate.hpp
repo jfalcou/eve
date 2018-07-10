@@ -86,7 +86,10 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a single value
-    EVE_FORCEINLINE explicit pack(Type v) noexcept
+    template< typename T
+            , typename = std::enable_if_t <std::is_convertible_v<T,Type>>
+            >
+    EVE_FORCEINLINE explicit pack(T v) noexcept
                   : data_( detail::make(as_<pack>{},::eve::aggregated_{},v) )
     {}
 
