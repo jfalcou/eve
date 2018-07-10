@@ -43,10 +43,9 @@ namespace eve { namespace detail
 
     auto impl = [&](auto... I)
                 {
-                  auto eval = [](auto&& fn, auto const& i, auto&&... vs)
+                  auto eval = [](Func&& fn, auto const& i, Ts&&... vs)
                   {
-                    using fn_t = decltype(fn);
-                    return std::forward<fn_t>(fn)(at(std::forward<decltype(vs)>(vs),i)...);
+                    return std::forward<Func>(fn)(at(std::forward<Ts>(vs),i)...);
                   };
 
                   return pack_t{ eval( std::forward<Func>(f), I, std::forward<Ts>(ts)...)... };
