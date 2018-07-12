@@ -7,21 +7,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_COMBINE_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_COMBINE_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_COMBINE_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_COMBINE_HPP_INCLUDED
 
-#include <eve/function/definition/combine.hpp>
+#include <eve/function/scalar/combine.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/pack.hpp>
 
 namespace eve { namespace detail
 {
-  template<typename T>
-  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto combine_ ( EVE_SUPPORTS(cpu_)
+                                , pack<T,N,ABI> const& a, pack<T,N,ABI> const& b
+                                ) noexcept
   {
-    return pack<T,fixed<2>>{a,b};
+    return pack<T,typename N::combined_type>{a,b};
   }
 } }
-
 #endif

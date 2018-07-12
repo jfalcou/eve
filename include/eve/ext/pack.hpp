@@ -11,6 +11,8 @@
 #define EVE_EXT_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/detail/function/combine.hpp>
+#include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/is_iterator.hpp>
@@ -131,6 +133,14 @@ namespace eve
     }
 
     // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a pair of sub-pack
+    EVE_FORCEINLINE pack( pack<Type,typename Size::split_type> const& l
+                        , pack<Type,typename Size::split_type> const& h
+                        )
+                    : data_( detail::combine(EVE_CURRENT_API{},l,h) )
+    {}
+
+    // ---------------------------------------------------------------------------------------------
     // Assign a single value to a pack
     EVE_FORCEINLINE pack& operator=(Type v) noexcept
     {
@@ -155,6 +165,12 @@ namespace eve
     static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
 
+    // ---------------------------------------------------------------------------------------------
+    // slice interface
+    auto slice() const { return detail::slice(*this); }
+
+     // ---------------------------------------------------------------------------------------------
+    // swap
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {
       using std::swap;

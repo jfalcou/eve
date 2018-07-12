@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COMBINE_HPP_INCLUDED
-#define EVE_FUNCTION_COMBINE_HPP_INCLUDED
 
-#include <eve/function/scalar/combine.hpp>
-#include <eve/function/simd/combine.hpp>
-
-#endif
+using Type = float;
+#include "slice.hpp"

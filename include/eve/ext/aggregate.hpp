@@ -12,6 +12,8 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/detail/function/combine.hpp>
+#include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/is_iterator.hpp>
@@ -124,6 +126,14 @@ namespace eve
     }
 
     // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a pair of sub-pack
+    EVE_FORCEINLINE pack( pack<Type,typename Size::split_type> const& l
+                        , pack<Type,typename Size::split_type> const& h
+                        )
+                    : data_( detail::combine(EVE_CURRENT_API{},l,h) )
+    {}
+
+    // ---------------------------------------------------------------------------------------------
     // Raw storage access
     EVE_FORCEINLINE storage_type   storage() const  noexcept { return data_; }
     EVE_FORCEINLINE storage_type&  storage()        noexcept { return data_; }
@@ -136,6 +146,12 @@ namespace eve
     static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
 
+    // ---------------------------------------------------------------------------------------------
+    // slice interface
+    auto slice() const { return detail::slice(*this); }
+
+    // ---------------------------------------------------------------------------------------------
+    // swap
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {
       using std::swap;
