@@ -12,6 +12,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/as.hpp>
+#include <cstddef>
 
 namespace eve { namespace detail
 {
@@ -20,10 +21,11 @@ namespace eve { namespace detail
   template<typename Pack, typename V0, typename... Values>
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::emulated_ const&, V0 v0, Values... vs) noexcept
   {
+    using type = typename Pack::value_type;
     Pack that;
     std::size_t i=0;
 
-    that[i++] = v0;
+    that[i++] = static_cast<type>(v0);
     ((that[i++] = vs),...);
 
     return that;
@@ -32,8 +34,9 @@ namespace eve { namespace detail
   template<typename Pack, typename Value>
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::emulated_ const&, Value vs) noexcept
   {
+    using type = typename Pack::value_type;
     Pack that;
-    for(auto& e : that) e = vs;
+    for(auto& e : that) e = static_cast<type>(vs);
     return that;
   }
 

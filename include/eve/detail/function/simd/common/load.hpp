@@ -25,7 +25,7 @@ namespace eve { namespace detail
     auto impl = [&](auto... I)
                 {
                   auto deref = [&](auto p, auto const& i) { std::advance(p,i); return *p; };
-                  return Pack(deref(ptr,I)...);
+                  return Pack(deref(ptr,static_cast<std::ptrdiff_t>(I))...);
                 };
 
     return apply<Pack::size()>(impl);

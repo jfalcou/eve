@@ -19,8 +19,8 @@ using eve::fixed;
 using eve::as_aligned;
 
 // Generator for the base values
-auto baseg = [](int i, int) { return i; };
-auto nextg = [](int i, int) { return i+1; };
+auto baseg = [](auto i, auto) { return i; };
+auto nextg = [](auto i, auto) { return i+1; };
 
 TTS_CASE_TPL( "Check self-increment on pack"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>

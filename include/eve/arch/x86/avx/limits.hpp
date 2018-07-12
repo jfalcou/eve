@@ -14,6 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 #include <cstdint>
+#include <cstddef>
 
 namespace eve
 {

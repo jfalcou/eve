@@ -25,8 +25,8 @@ TTS_CASE_TPL( "Check plus behavior on pack"
 
   TTS_SETUP( "A correctly initialized pack" )
   {
-    pack<Type,T>  lhs([](int i, int  ) { return i; })
-                , rhs([](int i, int c) { return c-i; })
+    pack<Type,T>  lhs([](auto i, auto  ) { return i; })
+                , rhs([](auto i, auto c) { return c-i; })
                 , ref(T::value);
 
     TTS_SECTION( "supports eve::plus" )

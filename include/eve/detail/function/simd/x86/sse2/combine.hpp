@@ -14,7 +14,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
-#include <iostream>
 
 namespace eve { namespace detail
 {
@@ -47,7 +46,7 @@ namespace eve { namespace detail
 
     if constexpr(N::value == 1)
     {
-      auto that = l.storage();
+      that_t that = l.storage();
       that[1] = h[0];
       return that;
     }
@@ -69,22 +68,29 @@ namespace eve { namespace detail
       return that_t( typename that_t::storage_type{l,h} );
 
     else if constexpr (sz*sizeof(T) ==  limits<sse2_>::bytes)
-      return that_t{(__m128i)_mm_shuffle_ps((__m128)l.storage(),(__m128)h.storage(),0x44)};
+      return that_t ( _mm_castps_si128 ( _mm_shuffle_ps ( _mm_castsi128_ps(l.storage())
+                                                        , _mm_castsi128_ps(h.storage())
+                                                        , 0x44
+                                                        )
+                                      )
+                    );
 
     else if constexpr (2*sz*sizeof(T) ==  limits<sse2_>::bytes)
-     return that_t{ _mm_shuffle_epi32 ( (__m128i)_mm_shuffle_ps ( (__m128)l.storage()
-                                                                , (__m128)h.storage()
-                                                                , 0x44
-                                                                )
+      return that_t( _mm_shuffle_epi32( _mm_castps_si128
+                                        ( _mm_shuffle_ps( _mm_castsi128_ps(l.storage())
+                                                        , _mm_castsi128_ps(h.storage())
+                                                        , 0x44
+                                                        )
+                                        )
                                       , 0x88
                                       )
-                  };
+                  );
 
     else if constexpr (sz == 4)
-      return that_t{l[0],l[1],h[0],h[1]};
+      return that_t(l[0],l[1],h[0],h[1]);
 
     else if constexpr (sz == 2)
-      return that_t{l[0],h[0]};
+      return that_t(l[0],h[0]);
   }
 } }
 

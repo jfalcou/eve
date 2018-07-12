@@ -8,7 +8,6 @@
 
 set(  SOURCES
       is_supported.cpp
-      registers.cpp
    )
 
 add_unit_test( "arch" ${SOURCES} )

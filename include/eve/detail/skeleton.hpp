@@ -32,7 +32,13 @@ namespace eve { namespace detail
   {
     using fn_t    = std::decay_t<F>;
     using value_t = decltype(std::declval<fn_t>()(at(std::declval<std::decay_t<Ts>>(),0)...));
-    using type    = pack<value_t,fixed<std::max({eve::cardinal_v<std::decay_t<Ts>>...})>>;
+
+    template<typename T>
+    using card_t = eve::cardinal<std::decay_t<T>>;
+
+    static constexpr std::size_t card_v = std::max( {card_t<Ts>::value...} );
+
+    using type    = pack<value_t,fixed<card_v>>;
   };
 
   // MAP skeleton used to emulate SIMD operations

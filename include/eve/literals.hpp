@@ -11,6 +11,7 @@
 #define EVE_LITERALS_HPP_INCLUDED
 
 #include <type_traits>
+#include <cstddef>
 
 namespace eve
 {

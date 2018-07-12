@@ -20,7 +20,7 @@ namespace eve { namespace detail
   template<typename T>
   EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
   {
-    return pack<T,fixed<2>>{a,b};
+    return pack<T,fixed<2>>(a,b);
   }
 } }
 
