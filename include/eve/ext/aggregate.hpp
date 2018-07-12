@@ -12,6 +12,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/is_iterator.hpp>
@@ -136,6 +137,12 @@ namespace eve
     static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
 
+    // ---------------------------------------------------------------------------------------------
+    // slice interface
+    auto slice() const { return detail::slice(*this); }
+
+    // ---------------------------------------------------------------------------------------------
+    // swap
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {
       using std::swap;

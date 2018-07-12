@@ -7,11 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_SLICE_LOW_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_SLICE_LOW_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <cstdint>
+using Type = std::uint16_t;
+#include "slice.hpp"
 
-namespace eve { EVE_MAKE_CALLABLE(slice_low_,slice_low); }
-
-#endif

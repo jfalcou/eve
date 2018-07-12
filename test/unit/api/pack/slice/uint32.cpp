@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_SLICE_LOW_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_SLICE_LOW_HPP_INCLUDED
 
-#include <eve/function/definition/slice_low.hpp>
-#include <eve/module/core/function/scalar/slice_low.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::uint32_t;
+#include "slice.hpp"
