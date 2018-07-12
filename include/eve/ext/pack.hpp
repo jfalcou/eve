@@ -11,6 +11,7 @@
 #define EVE_EXT_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
@@ -130,6 +131,14 @@ namespace eve
       for(std::size_t i=0;i<size();++i)
         this->operator[](i) = std::forward<Generator>(g)(i,size());
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // Constructs a pack from a pair of sub-pack
+    EVE_FORCEINLINE pack( pack<Type,typename Size::split_type> const& l
+                        , pack<Type,typename Size::split_type> const& h
+                        )
+                    : data_( detail::combine(EVE_CURRENT_API{},l,h) )
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Assign a single value to a pack

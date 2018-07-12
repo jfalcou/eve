@@ -36,6 +36,7 @@ namespace eve
     static_assert( Cardinal == 1 || Cardinal % 2 == 0, "Cardinal must be a power of 2" );
     static constexpr bool is_default = false;
     using split_type    = fixed<Cardinal/2>;
+    using combined_type = fixed<Cardinal*2>;
   };
 
   template<std::size_t Cardinal>
@@ -43,6 +44,7 @@ namespace eve
   {
     static constexpr bool is_default = true;
     using split_type    = defaulted<Cardinal/2>;
+    using combined_type = defaulted<Cardinal*2>;
   };
 }
 
