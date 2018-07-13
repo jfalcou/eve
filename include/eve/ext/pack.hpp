@@ -20,6 +20,7 @@
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/plus.hpp>
 #include <eve/ext/is_pack.hpp>
 #include <type_traits>
@@ -240,6 +241,19 @@ namespace eve
       return that;
     }
 
+    EVE_FORCEINLINE pack& operator--() noexcept
+    {
+      *this -= Type{1};
+      return *this;
+    }
+
+    EVE_FORCEINLINE pack operator--(int) noexcept
+    {
+      auto that(*this);
+      operator--();
+      return that;
+    }
+
     // ---------------------------------------------------------------------------------------------
     // Self-assignment operators
     template<typename Other>
@@ -249,6 +263,12 @@ namespace eve
       return *this;
     }
 
+    template<typename Other>
+    EVE_FORCEINLINE pack& operator-=(Other const& other) noexcept
+    {
+      *this = eve::minus(*this, other);
+      return *this;
+    }
 
     private:
     storage_type data_;

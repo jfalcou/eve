@@ -8,9 +8,11 @@
 
 ##==================================================================================================
 ## scalar tests
-list_tests("scalar/popcnt" "core" ${integral_types})
-list_tests("scalar/plus" "core" ${all_types})
+list_tests("scalar/minus"   "core" ${all_types})
+list_tests("scalar/plus"    "core" ${all_types})
+list_tests("scalar/popcnt"  "core" ${integral_types})
 
 ##==================================================================================================
 ## SIMD tests
+list_tests("simd/minus" "core" ${all_types})
 list_tests("simd/plus" "core" ${all_types})

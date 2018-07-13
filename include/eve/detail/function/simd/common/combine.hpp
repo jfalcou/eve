@@ -14,6 +14,11 @@
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
 
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
+
 namespace eve { namespace detail
 {
   //------------------------------------------------------------------------------------------------
@@ -40,5 +45,9 @@ namespace eve { namespace detail
     return that_t( typename that_t::storage_type{l,h} );
   }
 } }
+
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic pop
+#endif
 
 #endif

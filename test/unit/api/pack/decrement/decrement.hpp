@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef INCREMENT_HPP
-#define INCREMENT_HPP
+#ifndef DECREMENT_HPP
+#define DECREMENT_HPP
 
 #include <eve/pack.hpp>
 #include <tts/tts.hpp>
@@ -19,8 +19,8 @@ using eve::fixed;
 using eve::as_aligned;
 
 // Generator for the base values
-auto baseg = [](auto i, auto) { return i; };
-auto nextg = [](auto i, auto) { return i+1; };
+auto baseg = [](auto i, auto) { return i+1; };
+auto nextg = [](auto i, auto) { return i; };
 
 TTS_CASE_TPL( "Check self-increment on pack"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
@@ -33,16 +33,16 @@ TTS_CASE_TPL( "Check self-increment on pack"
     pack<Type,T> simd(baseg), next(nextg);
     pack<Type,T> prev(simd), res;
 
-    TTS_SECTION( "supports operator++()" )
+    TTS_SECTION( "supports operator--()" )
     {
-      res = simd++;
+      res = simd--;
       TTS_EXPECT( std::equal(simd.begin(),simd.end(),next.begin()));
       TTS_EXPECT( std::equal(res.begin() ,res.end() ,prev.begin()));
     }
 
-    TTS_SECTION( "supports operator++(int)" )
+    TTS_SECTION( "supports operator--(int)" )
     {
-      res = ++simd;
+      res = --simd;
       TTS_EXPECT( std::equal(simd.begin(),simd.end(),next.begin()));
       TTS_EXPECT( std::equal(res.begin() ,res.end() ,next.begin()));
     }
