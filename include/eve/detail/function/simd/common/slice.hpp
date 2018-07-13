@@ -13,6 +13,17 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
+#include <type_traits>
+#include <cstddef>
+
+namespace eve
+{
+  struct upper_slice : std::integral_constant<std::size_t,1> {};
+  struct lower_slice : std::integral_constant<std::size_t,0> {};
+
+  inline constexpr upper_slice upper_ = {};
+  inline constexpr lower_slice lower_ = {};
+}
 
 namespace eve { namespace detail
 {
@@ -26,6 +37,18 @@ namespace eve { namespace detail
       using pack_t = pack<T,typename N::split_type>;
       using that_t = std::array<pack_t,2>;
       return that_t{pack_t{a[I]...},pack_t{a[I+N::value/2]...}};
+    };
+
+    return apply<N::value/2>(eval);
+  }
+
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice( pack<T,N,emulated_> const& a, Slice const& ) noexcept
+  {
+    auto eval = [&](auto... I)
+    {
+      using pack_t = pack<T,typename N::split_type>;
+      return pack_t{a[I+(upper_slice::value*N::value/2)]...};
     };
 
     return apply<N::value/2>(eval);
@@ -56,6 +79,12 @@ namespace eve { namespace detail
     }
     else
       return a.storage();
+  }
+
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice( pack<T,N,aggregated_> const& a, Slice const& ) noexcept
+  {
+    return a.storage()[Slice::value];
   }
 } }
 

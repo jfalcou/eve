@@ -156,7 +156,10 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // slice interface
-    auto slice() const { return detail::slice(*this); }
+    EVE_FORCEINLINE auto slice()                const { return detail::slice(*this); }
+
+    template<typename Slice>
+    EVE_FORCEINLINE auto slice(Slice const& s)  const { return detail::slice(*this,s); }
 
     // ---------------------------------------------------------------------------------------------
     // swap
