@@ -13,6 +13,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
+#include <cstddef>
 #include <array>
 
 namespace eve

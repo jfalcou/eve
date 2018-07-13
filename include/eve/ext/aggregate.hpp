@@ -97,19 +97,22 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a sequence of values
-    template<typename T0, typename... Ts
-            , typename = std::enable_if_t <   std::is_convertible_v<T0,Type>
-                                          && (... &&  std::is_convertible_v<Ts,Type>)
+    template< typename T0, typename T1, typename... Ts
+            , bool ConvertProperly = (... && std::is_convertible_v<Ts,Type>)
+            , typename = std::enable_if_t <  std::is_convertible_v<T0,Type>
+                                          && std::is_convertible_v<T1,Type>
                                           && !Size::is_default
+                                          && ConvertProperly
                                           >
             >
-    EVE_FORCEINLINE pack(T0 const& v0, Ts const&... vs) noexcept
-                  : pack(detail::make(as_<pack>{},::eve::aggregated_{},v0,vs...))
+    EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
+                  : data_( detail::make(as_<pack>{},::eve::aggregated_{},v0,v1,vs...) )
     {
-      static_assert ( 1+sizeof...(vs) == static_size
+      static_assert ( 2+sizeof...(vs) == static_size
                     , "[eve] Size mismatch in initializer list for pack"
                     );
     }
+
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack with a generator function
@@ -122,7 +125,7 @@ namespace eve
                         ) noexcept
     {
       for(std::size_t i=0;i<size();++i)
-        this->operator[](i) = std::forward<Generator>(g)(i,static_size);
+        this->operator[](i) = static_cast<Type>(std::forward<Generator>(g)(i,static_size));
     }
 
     // ---------------------------------------------------------------------------------------------

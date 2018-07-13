@@ -12,6 +12,7 @@
 
 #include <eve/arch/x86/predef.hpp>
 #include <cstdint>
+#include <cstddef>
 
 // Register count
 #if defined(EVE_HW_X86)

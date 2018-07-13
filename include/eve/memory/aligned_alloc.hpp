@@ -32,7 +32,7 @@ namespace eve
     if( ::posix_memalign((void**)&result,std::max(Alignment,sizeof(void*)),size) )
       result = nullptr;
 #elif defined(EVE_COMP_IS_MSVC)
-    result =  ::_aligned_malloc(size, Alignment);
+    result =  static_cast<T*>(::_aligned_malloc(size, Alignment));
 #else
     constexpr auto alignment = std::max(Alignment,sizeof(void*));
     std::size_t n = size + alignment - sizeof(void*);

@@ -13,6 +13,7 @@
 #include <type_traits>
 #include <utility>
 #include <cstdint>
+#include <cstddef>
 
 namespace eve { namespace detail
 {

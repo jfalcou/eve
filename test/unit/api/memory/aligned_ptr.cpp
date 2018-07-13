@@ -11,6 +11,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
+#include <array>
 
 TTS_CASE( "aligned_ptr default constructors" )
 {

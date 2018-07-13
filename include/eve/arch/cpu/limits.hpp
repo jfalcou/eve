@@ -13,6 +13,7 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <type_traits>
 #include <cstdint>
+#include <cstddef>
 
 namespace eve
 {

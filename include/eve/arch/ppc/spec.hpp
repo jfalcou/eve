@@ -11,7 +11,7 @@
 #define EVE_ARCH_PPC_SPEC_HPP_INCLUDED
 
 #include <eve/arch/ppc/predef.hpp>
-#include <cstdint>
+#include <cstddef>
 
 // Register count
 #if defined(EVE_HW_POWERPC)
