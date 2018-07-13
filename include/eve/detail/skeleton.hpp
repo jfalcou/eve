@@ -11,6 +11,9 @@
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
 #include <eve/detail/is_range.hpp>
+#include <eve/detail/function/slice.hpp>
+#include <eve/ext/is_pack.hpp>
+#include <eve/ext/has_abi.hpp>
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>
@@ -62,15 +65,34 @@ namespace eve { namespace detail
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated pack
   template<typename Func, typename... Ts>
-  EVE_FORCEINLINE decltype(auto) aggregate(Func&& f, Ts&&... ts)
+  EVE_FORCEINLINE auto aggregate(Func&& f, Ts&&... ts)
   {
-    using pack_t  = typename pack_result<Func,Ts...>::type;
-    using stg_t   = typename pack_t::storage_type;
+    using pack_t = typename pack_result<Func,Ts...>::type;
 
-    return pack_t ( stg_t { std::forward<Func>(f)(std::forward<Ts>(ts).storage()[0]...)
-                          , std::forward<Func>(f)(std::forward<Ts>(ts).storage()[1]...)
-                          }
-                  );
+    if constexpr( (ext::has_abi_v<Ts,avx_> || ...) )
+    {
+      auto aggregate_pack = [](auto&& f, auto... ts)
+      {
+        return  pack_t{ std::forward<Func>(f)(std::forward<Ts>(ts).slice(lower_)...)
+                      , std::forward<Func>(f)(std::forward<Ts>(ts).slice(upper_)...)
+                      };
+      };
+
+      return aggregate_pack(std::forward<Func>(f),std::forward<Ts>(ts)...);
+    }
+    else
+    {
+      auto aggregate_other = [](auto&& f, auto... ts)
+      {
+        using stg_t = typename pack_t::storage_type;
+        return  pack_t{ stg_t { std::forward<Func>(f)(std::forward<Ts>(ts).storage()[0]...)
+                              , std::forward<Func>(f)(std::forward<Ts>(ts).storage()[1]...)
+                              }
+                      };
+      };
+
+      return aggregate_other(std::forward<Func>(f),std::forward<Ts>(ts)...);
+    }
   }
 } }
 
