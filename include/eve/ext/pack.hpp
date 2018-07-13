@@ -29,6 +29,7 @@
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
 namespace eve

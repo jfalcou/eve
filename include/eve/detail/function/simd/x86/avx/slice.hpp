@@ -35,7 +35,7 @@ namespace eve { namespace detail
           >
   EVE_FORCEINLINE auto slice( pack<float,N,avx_> const& a ) noexcept
   {
-    std::array<pack<float,typename N::split_type>,2> that{ _mm256_extractf128_ps(a,0)
+    std::array<pack<float,typename N::split_type>,2> that { _mm256_extractf128_ps(a,0)
                                                           , _mm256_extractf128_ps(a,1)
                                                           };
     return that;
@@ -50,8 +50,8 @@ namespace eve { namespace detail
           >
   EVE_FORCEINLINE auto slice( pack<T,N,avx_> const& a ) noexcept
   {
-    std::array<pack<T,typename N::split_type>,2> that { _mm256_extracti128_si256(a,0)
-                                                      , _mm256_extracti128_si256(a,1)
+    std::array<pack<T,typename N::split_type>,2> that { _mm256_extractf128_si256(a,0)
+                                                      , _mm256_extractf128_si256(a,1)
                                                       };
     return that;
   }

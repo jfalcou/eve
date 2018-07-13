@@ -27,6 +27,11 @@
 #include <iterator>
 #include <array>
 
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 namespace eve
 {
   // Wrapper for SIMD registers holding multiple native SIMD registers
@@ -220,5 +225,9 @@ namespace eve
     storage_type data_;
   };
 }
+
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic pop
+#endif
 
 #endif
