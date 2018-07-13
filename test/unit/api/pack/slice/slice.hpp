@@ -29,7 +29,9 @@ TTS_CASE_TPL( "Check slicing for arithmetic pack"
   auto[low,high] = simd.slice();
 
   TTS_EQUAL( low , ref_low  );
+  TTS_EQUAL( simd.slice(eve::lower_) , ref_low  );
   TTS_EQUAL( high, ref_high );
+  TTS_EQUAL( simd.slice(eve::upper_), ref_high );
 }
 
 #endif

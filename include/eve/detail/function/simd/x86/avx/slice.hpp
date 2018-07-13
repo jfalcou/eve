@@ -17,42 +17,44 @@ namespace eve { namespace detail
 {
   // -----------------------------------------------------------------------------------------------
   // double
-  template< typename N
+  template< typename N, typename Slice
           , typename = std::enable_if_t<(N::value>1)>
           >
-  EVE_FORCEINLINE auto slice( pack<double,N,avx_> const& a ) noexcept
+  EVE_FORCEINLINE auto slice( pack<double,N,avx_> const& a, Slice const& ) noexcept
   {
-    std::array<pack<double,typename N::split_type>,2> that{ _mm256_extractf128_pd(a,0)
-                                                          , _mm256_extractf128_pd(a,1)
-                                                          };
-    return that;
+    return pack<double,typename N::split_type>(_mm256_extractf128_pd(a,Slice::value));
   }
 
   // -----------------------------------------------------------------------------------------------
   // float
-  template< typename N
+  template< typename N, typename Slice
           , typename = std::enable_if_t<(N::value>1)>
           >
-  EVE_FORCEINLINE auto slice( pack<float,N,avx_> const& a ) noexcept
+  EVE_FORCEINLINE auto slice( pack<float,N,avx_> const& a, Slice const& ) noexcept
   {
-    std::array<pack<float,typename N::split_type>,2> that { _mm256_extractf128_ps(a,0)
-                                                          , _mm256_extractf128_ps(a,1)
-                                                          };
-    return that;
+    return pack<float,typename N::split_type>(_mm256_extractf128_ps(a,Slice::value));
   }
 
   // -----------------------------------------------------------------------------------------------
   // integers
-  template< typename T,typename N
+  template< typename T,typename N, typename Slice
           , typename = std::enable_if_t <   std::is_integral_v<T>
                                         &&  (N::value>1)
                                         >
           >
+  EVE_FORCEINLINE auto slice( pack<T,N,avx_> const& a, Slice const& ) noexcept
+  {
+    return pack<T,typename N::split_type>(_mm256_extractf128_si256(a,Slice::value));
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Both slice
+  template< typename T,typename N
+          , typename = std::enable_if_t <(N::value>1)>
+          >
   EVE_FORCEINLINE auto slice( pack<T,N,avx_> const& a ) noexcept
   {
-    std::array<pack<T,typename N::split_type>,2> that { _mm256_extractf128_si256(a,0)
-                                                      , _mm256_extractf128_si256(a,1)
-                                                      };
+    std::array<pack<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
     return that;
   }
 } }
