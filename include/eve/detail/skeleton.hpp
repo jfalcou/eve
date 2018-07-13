@@ -33,8 +33,7 @@ namespace eve { namespace detail
   template<typename F, typename... Ts>
   struct pack_result
   {
-    using fn_t    = std::decay_t<F>;
-    using value_t = decltype(std::declval<fn_t>()(at(std::declval<std::decay_t<Ts>>(),0)...));
+    using value_t = decltype(std::declval<F>()(at(std::declval<Ts>(),0)...));
 
     template<typename T>
     using card_t = eve::cardinal<std::decay_t<T>>;
@@ -71,7 +70,7 @@ namespace eve { namespace detail
 
     if constexpr( (ext::has_abi_v<Ts,avx_> || ...) )
     {
-      auto aggregate_pack = [](auto&& f, auto... ts)
+      auto aggregate_pack = [](auto&& f, auto&&... ts)
       {
         return  pack_t{ std::forward<Func>(f)(std::forward<Ts>(ts).slice(lower_)...)
                       , std::forward<Func>(f)(std::forward<Ts>(ts).slice(upper_)...)
@@ -82,7 +81,7 @@ namespace eve { namespace detail
     }
     else
     {
-      auto aggregate_other = [](auto&& f, auto... ts)
+      auto aggregate_other = [](auto&& f, auto&&... ts)
       {
         using stg_t = typename pack_t::storage_type;
         return  pack_t{ stg_t { std::forward<Func>(f)(std::forward<Ts>(ts).storage()[0]...)

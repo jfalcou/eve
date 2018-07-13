@@ -30,7 +30,8 @@ TTS_CASE_TPL( "Check self-increment on pack"
 
   TTS_SETUP( "A correctly initialized pack" )
   {
-    pack<Type,T> simd(baseg), next(nextg), prev(simd), res;
+    pack<Type,T> simd(baseg), next(nextg);
+    pack<Type,T> prev(simd), res;
 
     TTS_SECTION( "supports operator++()" )
     {
