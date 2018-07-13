@@ -19,6 +19,22 @@ namespace eve { namespace ext
   struct is_pack : std::false_type
   {};
 
+  template<typename Type>
+  struct is_pack<Type&> : is_pack<Type>
+  {};
+
+  template<typename Type>
+  struct is_pack<Type const> : is_pack<Type>
+  {};
+
+  template<typename Type>
+  struct is_pack<Type const&> : is_pack<Type>
+  {};
+
+  template<typename Type>
+  struct is_pack<Type &&> : is_pack<Type>
+  {};
+
   template<typename Type, typename Size, typename ABI>
   struct is_pack<pack<Type,Size,ABI>> : std::true_type
   {};
