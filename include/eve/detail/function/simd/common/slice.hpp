@@ -48,7 +48,7 @@ namespace eve { namespace detail
     auto eval = [&](auto... I)
     {
       using pack_t = pack<T,typename N::split_type>;
-      return pack_t{a[I+(upper_slice::value*N::value/2)]...};
+      return pack_t{a[I+(Slice::value*N::value/2)]...};
     };
 
     return apply<N::value/2>(eval);
