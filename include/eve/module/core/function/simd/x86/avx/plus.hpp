@@ -37,6 +37,24 @@ namespace eve { namespace detail
   {
     return _mm256_add_ps(v0,v1);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // integers
+  template< typename T, typename N
+          , typename = std::enable_if_t<std::is_integral_v<T>>
+          >
+  EVE_FORCEINLINE pack<T,N,avx_> plus_( EVE_SUPPORTS(avx_)
+                                      , pack<T,N,avx_> const& v0
+                                      , pack<T,N,avx_> const& v1
+                                      ) noexcept
+  {
+    using that_t = pack<T,N,avx_>;
+
+    auto[l0,h0] = v0.slice();
+    auto[l1,h1] = v1.slice();
+
+    return that_t( l0+l1, h0+h1 );
+  }
 } }
 
 #endif
