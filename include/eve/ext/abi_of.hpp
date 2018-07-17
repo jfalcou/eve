@@ -27,4 +27,6 @@ namespace eve
   }
 }
 
+#include <eve/arch/abi_of.hpp>
+
 #endif

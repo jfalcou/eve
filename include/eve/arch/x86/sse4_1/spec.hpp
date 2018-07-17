@@ -21,8 +21,6 @@
 
 #if EVE_HW_X86 >= EVE_SSE4_1_VERSION
   #include <smmintrin.h>
-  #include <eve/arch/x86/sse2/abi_of.hpp>
-  #include <eve/arch/x86/sse2/as_register.hpp>
 #endif
 
 #endif

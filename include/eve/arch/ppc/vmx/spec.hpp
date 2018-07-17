@@ -44,9 +44,6 @@
   #if defined(__IBMCPP__) || defined(__MWERKS__)
   #define __bool bool
   #endif
-
-  #include <eve/arch/ppc/vmx/abi_of.hpp>
-  #include <eve/arch/ppc/vmx/as_register.hpp>
 #endif
 
 #endif

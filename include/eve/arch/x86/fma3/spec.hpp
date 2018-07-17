@@ -12,8 +12,6 @@
 
 #if defined(EVE_SUPPORTS_FMA3)
   #include <immintrin.h>
-  #include <eve/arch/x86/avx/abi_of.hpp>
-  #include <eve/arch/x86/avx/as_register.hpp>
 #endif
 
 #endif

@@ -21,33 +21,45 @@ namespace eve
 
   namespace ext
   {
-    template<int N> struct as_register<double, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< double, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector double;
     };
 
-    template<int N> struct as_register<std::int64_t, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< std::int64_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector signed long;
     };
 
-    template<int N> struct as_register<std::uint64_t, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< std::uint64_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector unsigned long;
     };
 
     // logical cases
-    template<int N> struct as_register<logical<double>, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< logical<double>
+                                              , Size, eve::ppc_, std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector __bool long;
     };
 
-    template<int N> struct as_register<logical<std::int64_t>, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< logical<std::int64_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector __bool long;
     };
 
-    template<int N> struct as_register<logical<std::uint64_t>, N, eve::ppc_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< logical<std::uint64_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __vector __bool long;
     };

@@ -21,8 +21,6 @@
 
 #if EVE_HW_X86 >= EVE_SSE2_VERSION
   #include <xmmintrin.h>
-  #include <eve/arch/x86/sse2/abi_of.hpp>
-  #include <eve/arch/x86/sse2/as_register.hpp>
 #endif
 
 #endif

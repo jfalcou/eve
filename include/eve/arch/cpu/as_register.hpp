@@ -12,13 +12,21 @@
 
 #include <array>
 #include <eve/ext/as_register.hpp>
+#include <eve/forward.hpp>
 
 namespace eve { namespace ext
 {
-  template<typename Type, int Cardinal>
+  template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
-    using type = std::array<Type,Cardinal>;
+    using type = std::array<Type,Cardinal::value>;
+  };
+
+  template<typename Type, typename Cardinal>
+  struct as_register<Type, Cardinal, eve::aggregated_>
+  {
+    using substorage_type = eve::pack<Type,typename Cardinal::split_type>;
+    using type = std::array<substorage_type,2>;
   };
 } }
 

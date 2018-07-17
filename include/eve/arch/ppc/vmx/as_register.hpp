@@ -21,73 +21,101 @@ namespace eve
 
   namespace ext
   {
-    template<int N> struct as_register<float, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< float, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector float;
     };
 
-    template<int N> struct as_register<std::int32_t, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< std::int32_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector signed int;
     };
 
-    template<int N> struct as_register<std::int16_t, N, eve::ppc_, std::enable_if_t<(N<=8)>>
+    template<typename Size> struct as_register< std::int16_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=8)>
+                                              >
     {
       using type = __vector signed short;
     };
 
-    template<int N> struct as_register<std::int8_t, N, eve::ppc_, std::enable_if_t<(N<=16)>>
+    template<typename Size> struct as_register< std::int8_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=16)>
+                                              >
     {
       using type = __vector signed  char;
     };
 
-    template<int N> struct as_register<std::uint32_t, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< std::uint32_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector unsigned int;
     };
 
-    template<int N> struct as_register<std::uint16_t, N, eve::ppc_, std::enable_if_t<(N<=8)>>
+    template<typename Size> struct as_register< std::uint16_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=8)>
+                                              >
     {
       using type = __vector unsigned short;
     };
 
-    template<int N> struct as_register<std::uint8_t, N, eve::ppc_, std::enable_if_t<(N<=16)>>
+    template<typename Size> struct as_register< std::uint8_t, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=16)>
+                                              >
     {
       using type = __vector unsigned char;
     };
 
     // logical cases
-    template<int N> struct as_register<logical<float>, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< logical<float>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector __bool int;
     };
 
-    template<int N> struct as_register<logical<std::int32_t>, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< logical<std::int32_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector __bool int;
     };
 
-    template<int N> struct as_register<logical<std::int16_t>, N, eve::ppc_, std::enable_if_t<(N<=8)>>
+    template<typename Size> struct as_register< logical<std::int16_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=8)>
+                                              >
     {
       using type = __vector __bool short;
     };
 
-    template<int N> struct as_register<logical<std::int8_t>, N, eve::ppc_, std::enable_if_t<(N<=16)>>
+    template<typename Size> struct as_register< logical<std::int8_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=16)>
+                                              >
     {
       using type = __vector __bool  char;
     };
 
-    template<int N> struct as_register<logical<std::uint32_t>, N, eve::ppc_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< logical<std::uint32_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __vector __bool int;
     };
 
-    template<int N> struct as_register<logical<std::uint16_t>, N, eve::ppc_, std::enable_if_t<(N<=8)>>
+    template<typename Size> struct as_register< logical<std::uint16_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=8)>
+                                              >
     {
       using type = __vector __bool short;
     };
 
-    template<int N> struct as_register<logical<std::uint8_t>, N, eve::ppc_, std::enable_if_t<(N<=16)>>
+    template<typename Size> struct as_register< logical<std::uint8_t>, Size, eve::ppc_
+                                              , std::enable_if_t<(Size::value<=16)>
+                                              >
     {
       using type = __vector __bool char;
     };

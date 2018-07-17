@@ -16,7 +16,4 @@
   #define EVE_STRICT_EMULATION
 #endif
 
-#include <eve/arch/cpu/abi_of.hpp>
-#include <eve/arch/cpu/as_register.hpp>
-
 #endif
