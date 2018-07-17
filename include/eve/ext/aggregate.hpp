@@ -51,6 +51,8 @@ namespace eve
     using reverse_iterator        = typename substorage_type::reverse_iterator;
     using const_reverse_iterator  = typename substorage_type::const_reverse_iterator;
 
+    using target_type = pack<Type,Size,eve::aggregated_>;
+
     static constexpr std::size_t static_size  = Size::value;
     static constexpr std::size_t alignment    = substorage_type::alignment;
 
@@ -62,15 +64,15 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a Range
-    template< typename Iterator
-            , typename = std::enable_if_t< detail::is_iterator_v<Iterator>>
-            >
-    EVE_FORCEINLINE explicit pack(Iterator b, Iterator e) noexcept
+    template<typename Iterator>
+    EVE_FORCEINLINE explicit pack ( Iterator b, Iterator e
+                                  , std::enable_if_t< detail::is_iterator_v<Iterator>>* = 0
+                                  ) noexcept
                   : data_(detail::load(as_<pack>{},abi_type{},b,e))
     {}
 
     template<typename Range>
-    EVE_FORCEINLINE explicit pack (Range&& r
+    EVE_FORCEINLINE explicit pack ( Range&& r
                                   , std::enable_if_t<   detail::is_range_v<Range>
                                                     && !ext::is_pack_v<Range>
                                                     && !std::is_same_v<storage_type,Range>
@@ -97,8 +99,8 @@ namespace eve
     template< typename T
             , typename = std::enable_if_t <std::is_convertible_v<T,Type>>
             >
-    EVE_FORCEINLINE explicit pack(T v) noexcept
-                  : data_( detail::make(as_<pack>{},::eve::aggregated_{},v) )
+    EVE_FORCEINLINE explicit pack(T const& v) noexcept
+                  : data_( detail::make(as_<target_type>{},abi_type{},v) )
     {}
 
     // ---------------------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ namespace eve
                                           >
             >
     EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
-                  : data_( detail::make(as_<pack>{},::eve::aggregated_{},v0,v1,vs...) )
+                  : data_( detail::make(as_<target_type>{},abi_type{},v0,v1,vs...) )
     {
       static_assert ( 2+sizeof...(vs) == static_size
                     , "[eve] Size mismatch in initializer list for pack"
@@ -141,6 +143,18 @@ namespace eve
                         )
                     : data_( detail::combine(EVE_CURRENT_API{},l,h) )
     {}
+
+    // ---------------------------------------------------------------------------------------------
+    // Assign a single value to a pack
+    EVE_FORCEINLINE pack& operator=(Type v) noexcept
+    {
+      data_ = detail::make(as_<target_type>{},abi_type{},v);
+      return *this;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Raw storage access
+    EVE_FORCEINLINE pack& operator=(storage_type const& o) noexcept { data_ = o; return *this; }
 
     // ---------------------------------------------------------------------------------------------
     // Raw storage access

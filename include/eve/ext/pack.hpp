@@ -77,6 +77,7 @@ namespace eve
     EVE_FORCEINLINE explicit pack ( Range&& r
                                   , std::enable_if_t<   detail::is_range_v<Range>
                                                     && !ext::is_pack_v<Range>
+                                                    && !std::is_same_v<storage_type,Range>
                                                     >* = 0
                                   ) noexcept
                   : pack( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
@@ -176,7 +177,7 @@ namespace eve
     template<typename Slice>
     EVE_FORCEINLINE auto slice(Slice const& s)  const { return detail::slice(*this,s); }
 
-     // ---------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------
     // swap
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {
