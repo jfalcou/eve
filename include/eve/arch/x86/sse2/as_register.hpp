@@ -22,29 +22,33 @@ namespace eve
   namespace ext
   {
     // double maps to __m128d
-    template<int N> struct as_register<double, N, eve::sse_, std::enable_if_t<(N<=2)>>
+    template<typename Size> struct as_register< double, Size, eve::sse_
+                                              , std::enable_if_t<(Size::value<=2)>
+                                              >
     {
       using type = __m128d;
     };
 
     // float maps to __m128
-    template<int N> struct as_register<float, N, eve::sse_, std::enable_if_t<(N<=4)>>
+    template<typename Size> struct as_register< float, Size, eve::sse_
+                                              , std::enable_if_t<(Size::value<=4)>
+                                              >
     {
       using type = __m128;
     };
 
     // float maps to __m128
-    template<typename T, int N>
-    struct as_register< T, N, eve::sse_
-                      , std::enable_if_t<std::is_integral_v<T> && (N <= 16/sizeof(T))>
+    template<typename T, typename Size>
+    struct as_register< T, Size, eve::sse_
+                      , std::enable_if_t<std::is_integral_v<T> && (Size::value <= 16/sizeof(T))>
                       >
     {
       using type = __m128i;
     };
 
     // logical uses same registers
-    template<typename T, int N>
-    struct as_register< logical<T>, N, eve::sse_> : as_register<T,N,eve::sse_>
+    template<typename T, typename Size>
+    struct as_register< logical<T>, Size, eve::sse_> : as_register<T,Size,eve::sse_>
     {};
   }
 }

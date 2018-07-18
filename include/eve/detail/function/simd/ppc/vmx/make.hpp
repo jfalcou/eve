@@ -25,7 +25,7 @@ namespace eve { namespace detail
   template< typename T,typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const&, eve::ppc_ const&, Vs... vs) noexcept
   {
-    using type = ext::as_register_t<T,sizeof...(vs),eve::ppc_>;
+    using type = ext::as_register_t<T,fixed<sizeof...(vs)>,eve::ppc_>;
     type that = { static_cast<T>(vs)... };
     return that;
   }
@@ -35,7 +35,7 @@ namespace eve { namespace detail
   {
     auto impl = [&](auto... I)
                 {
-                  using type = ext::as_register_t<T,expected_cardinal_v<T>,eve::ppc_>;
+                  using type = ext::as_register_t<T,expected_cardinal_t<T>,eve::ppc_>;
 
                   auto u = static_cast<T>(v);
                   auto val = [](auto vv, auto const&) { return vv; };

@@ -10,7 +10,7 @@
 #ifndef EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
 #define EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
 
-#include <eve/arch/spec.hpp>
+#include <eve/arch/abi_of.hpp>
 
 namespace eve
 {

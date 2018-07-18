@@ -7,20 +7,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_SSE3_SPEC_HPP_INCLUDED
-#define EVE_ARCH_X86_SSE3_SPEC_HPP_INCLUDED
+#ifndef EVE_ARCH_ABI_OF_HPP_INCLUDED
+#define EVE_ARCH_ABI_OF_HPP_INCLUDED
 
-#include <eve/arch/x86/sse3/tags.hpp>
-
-#if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_X86 == EVE_SSE3_VERSION
-    #define EVE_CURRENT_ABI ::eve::sse_
-    #define EVE_CURRENT_API ::eve::sse3_
-  #endif
-#endif
-
-#if EVE_HW_X86 >= EVE_SSE3_VERSION
-  #include <pmmintrin.h>
-#endif
+#include <eve/arch/cpu/abi_of.hpp>
+#include <eve/arch/x86/abi_of.hpp>
+#include <eve/arch/ppc/abi_of.hpp>
 
 #endif

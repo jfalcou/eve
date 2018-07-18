@@ -19,9 +19,4 @@
   #endif
 #endif
 
-#if EVE_HW_POWERPC >= EVE_VSX_VERSION
-  #include <eve/arch/ppc/vsx/abi_of.hpp>
-  #include <eve/arch/ppc/vsx/as_register.hpp>
-#endif
-
 #endif

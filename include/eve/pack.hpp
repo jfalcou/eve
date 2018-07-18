@@ -14,6 +14,5 @@
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
 #include <eve/ext/pack.hpp>
-#include <eve/ext/aggregate.hpp>
 
 #endif

@@ -11,6 +11,9 @@
 #define EVE_EXT_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/arch/expected_cardinal.hpp>
+#include <eve/ext/base_pack.hpp>
+#include <eve/ext/as_register.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
@@ -18,7 +21,6 @@
 #include <eve/detail/is_iterator.hpp>
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/compiler.hpp>
-#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/function/plus.hpp>
@@ -39,7 +41,7 @@ namespace eve
   template<typename Type, typename Size, typename ABI>
   struct pack
   {
-    using storage_type            = ::eve::ext::as_register_t<Type,Size::value,ABI>;
+    using storage_type            = ::eve::ext::as_register_t<Type,Size,ABI>;
     using abi_type                = ABI;
     using value_type              = Type;
     using size_type               = std::size_t;
@@ -50,13 +52,12 @@ namespace eve
     using reverse_iterator        = std::reverse_iterator<iterator>;
     using const_reverse_iterator  = std::reverse_iterator<const_iterator>;
 
-    using target_type = std::conditional_t< std::is_same_v<abi_type,eve::emulated_>
-                                          , storage_type
-                                          , value_type
-                                          >;
+    using target_type = typename detail::target_type<pack,abi_type>::type;
 
     static constexpr std::size_t static_size  = Size::value;
-    static constexpr std::size_t alignment    = alignof(storage_type);
+    static constexpr std::size_t alignment    = detail::pack_align<storage_type,abi_type>::value;
+
+    using iterator_facade = detail::pack_iterator<Type,storage_type,abi_type>;
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
@@ -77,6 +78,7 @@ namespace eve
     EVE_FORCEINLINE explicit pack ( Range&& r
                                   , std::enable_if_t<   detail::is_range_v<Range>
                                                     && !ext::is_pack_v<Range>
+                                                    && !std::is_same_v<storage_type,Range>
                                                     >* = 0
                                   ) noexcept
                   : pack( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
@@ -154,10 +156,6 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Raw storage access
-    EVE_FORCEINLINE pack& operator=(storage_type const& o) noexcept { data_ = o; return *this; }
-
-    // ---------------------------------------------------------------------------------------------
-    // Raw storage access
     EVE_FORCEINLINE storage_type   storage() const  noexcept { return data_; }
     EVE_FORCEINLINE storage_type&  storage()        noexcept { return data_; }
 
@@ -176,7 +174,7 @@ namespace eve
     template<typename Slice>
     EVE_FORCEINLINE auto slice(Slice const& s)  const { return detail::slice(*this,s); }
 
-     // ---------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------
     // swap
     EVE_FORCEINLINE void swap(pack& rhs) noexcept
     {
@@ -186,19 +184,12 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // begin() variants
-    EVE_FORCEINLINE iterator begin() noexcept
-    {
-      return reinterpret_cast<detail::alias_t<value_type>*>( &data_ );
-    }
+    EVE_FORCEINLINE iterator        begin()       noexcept { return iterator_facade::begin(data_); }
+    EVE_FORCEINLINE const_iterator  begin() const noexcept { return iterator_facade::begin(data_); }
 
-    EVE_FORCEINLINE const_iterator begin() const noexcept
+    EVE_FORCEINLINE const_iterator cbegin() const noexcept
     {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_ );
-    }
-
-    EVE_FORCEINLINE const_iterator cbegin() noexcept
-    {
-      return reinterpret_cast<detail::alias_t<value_type> const*>( &data_ );
+      return iterator_facade::begin( static_cast<storage_type const&>(data_));
     }
 
     EVE_FORCEINLINE reverse_iterator        rbegin()        noexcept { return reverse_iterator(end()); }
@@ -209,9 +200,9 @@ namespace eve
     // end() variants
     EVE_FORCEINLINE iterator          end()         noexcept  { return begin() + size(); }
     EVE_FORCEINLINE const_iterator    end()   const noexcept  { return begin() + size(); }
-    EVE_FORCEINLINE const_iterator    cend()        noexcept  { return begin() + size(); }
-    EVE_FORCEINLINE reverse_iterator  rend()        noexcept  { return reverse_iterator(begin()); }
+    EVE_FORCEINLINE const_iterator    cend()  const noexcept  { return cbegin() + size(); }
 
+    EVE_FORCEINLINE reverse_iterator        rend()       noexcept { return reverse_iterator(begin()); }
     EVE_FORCEINLINE const_reverse_iterator  rend() const noexcept { return reverse_iterator(begin()); }
     EVE_FORCEINLINE const_reverse_iterator crend() const noexcept { return const_reverse_iterator(cbegin()); }
 
@@ -220,11 +211,11 @@ namespace eve
     EVE_FORCEINLINE reference       operator[](std::size_t i)       noexcept { return begin()[i]; }
     EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept { return begin()[i]; }
 
-    EVE_FORCEINLINE reference       back()        noexcept  { return this->operator[](size()-1); }
-    EVE_FORCEINLINE const_reference back() const  noexcept  { return this->operator[](size()-1); }
+    EVE_FORCEINLINE reference       back()        noexcept  { return *rbegin(); }
+    EVE_FORCEINLINE const_reference back() const  noexcept  { return *rbegin(); }
 
-    EVE_FORCEINLINE reference       front()       noexcept  { return this->operator[](0); }
-    EVE_FORCEINLINE const_reference front() const noexcept  { return this->operator[](0); }
+    EVE_FORCEINLINE reference       front()       noexcept  { return *begin(); }
+    EVE_FORCEINLINE const_reference front() const noexcept  { return *begin(); }
 
     // ---------------------------------------------------------------------------------------------
     // Self-increment/decrement operators
