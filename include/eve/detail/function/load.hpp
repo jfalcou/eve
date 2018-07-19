@@ -27,6 +27,9 @@
 #if EVE_HW_POWERPC >= EVE_VMX_VERSION
 #include <eve/detail/function/simd/ppc/vmx/load.hpp>
 #endif
+#if EVE_HW_POWERPC >= EVE_VSX_VERSION
+#include <eve/detail/function/simd/ppc/vsx/load.hpp>
+#endif
 #endif
 
 #endif
