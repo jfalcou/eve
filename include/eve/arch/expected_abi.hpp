@@ -10,7 +10,9 @@
 #ifndef EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
 #define EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
 
-#include <eve/arch/abi_of.hpp>
+#include <eve/ext/abi_of.hpp>
+#include <eve/arch/expected_cardinal.hpp>
+#include <eve/forward.hpp>
 
 namespace eve
 {
