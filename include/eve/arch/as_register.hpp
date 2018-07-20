@@ -13,5 +13,6 @@
 #include <eve/arch/cpu/as_register.hpp>
 #include <eve/arch/x86/as_register.hpp>
 #include <eve/arch/ppc/as_register.hpp>
+#include <eve/arch/arm/as_register.hpp>
 
 #endif
