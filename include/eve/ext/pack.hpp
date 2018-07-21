@@ -140,8 +140,10 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a pack from a pair of sub-pack
-    EVE_FORCEINLINE pack( pack<Type,typename Size::split_type> const& l
-                        , pack<Type,typename Size::split_type> const& h
+    template<typename HalfSize>
+    EVE_FORCEINLINE pack( pack<Type,HalfSize> const& l
+                        , pack<Type,HalfSize> const& h
+                        , std::enable_if_t<Size::value == 2*HalfSize::value>* = 0
                         )
                     : data_( detail::combine(EVE_CURRENT_API{},l,h) )
     {}

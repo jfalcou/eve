@@ -36,4 +36,9 @@
 #define EVE_ARCH_IS_PPC
 #endif
 
+#if     defined(__arm__)            || defined(__arm64)             || defined(__thumb__) \
+    ||  defined(__TARGET_ARCH_ARM)  || defined(__TARGET_ARCH_THUMB) || defined(_M_ARM)
+#define EVE_ARCH_IS_ARM
+#endif
+
 #endif

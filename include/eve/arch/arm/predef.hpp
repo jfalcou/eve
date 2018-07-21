@@ -7,12 +7,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ABI_OF_HPP_INCLUDED
-#define EVE_ARCH_ABI_OF_HPP_INCLUDED
+#ifndef EVE_ARCH_ARM_PREDEF_HPP_INCLUDED
+#define EVE_ARCH_ARM_PREDEF_HPP_INCLUDED
 
-#include <eve/arch/cpu/abi_of.hpp>
-#include <eve/arch/x86/abi_of.hpp>
-#include <eve/arch/ppc/abi_of.hpp>
-#include <eve/arch/arm/abi_of.hpp>
+// NEON version numbering
+#define EVE_NEON_VERSION  1000
+
+// Detect current highest NEON variant
+#undef EVE_HW_ARM
+#if !defined(EVE_HW_ARM) && (defined(__ARM_NEON__) || defined (_M_ARM) || defined(__aarch64__))
+#define EVE_HW_ARM EVE_NEON_VERSION
+#endif
 
 #endif

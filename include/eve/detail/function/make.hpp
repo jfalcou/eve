@@ -27,7 +27,12 @@
 #if EVE_HW_POWERPC >= EVE_VMX_VERSION
 #include <eve/detail/function/simd/ppc/vmx/make.hpp>
 #endif
+#endif
 
+#if defined(EVE_HW_ARM)
+#if EVE_HW_ARM >= EVE_NEON_VERSION
+#include <eve/detail/function/simd/arm/neon/make.hpp>
+#endif
 #endif
 
 #endif

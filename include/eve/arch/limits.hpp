@@ -13,5 +13,6 @@
 #include <eve/arch/cpu/limits.hpp>
 #include <eve/arch/x86/limits.hpp>
 #include <eve/arch/ppc/limits.hpp>
+#include <eve/arch/arm/limits.hpp>
 
 #endif

@@ -33,4 +33,10 @@
 #endif
 #endif
 
+#if defined(EVE_HW_ARM)
+#if EVE_HW_ARM >= EVE_NEON_VERSION
+#include <eve/module/core/function/simd/arm/neon/minus.hpp>
+#endif
+#endif
+
 #endif
