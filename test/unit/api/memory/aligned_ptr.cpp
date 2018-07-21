@@ -24,9 +24,9 @@ TTS_CASE( "aligned_ptr default constructors" )
 
 TTS_CASE( "aligned_ptr factory functions" )
 {
-  alignas(16) std::array<char,10> values;
+  alignas(8) std::array<char,10> values;
   TTS_EQUAL( eve::as_aligned(&values[0]).get()    , &values[0] );
-  TTS_EQUAL( eve::as_aligned<16>(&values[0]).get(), &values[0] );
+  TTS_EQUAL( eve::as_aligned<8>(&values[0]).get(), &values[0] );
 }
 
 TTS_CASE( "aligned_ptr pre/post increment & decrement" )
@@ -47,19 +47,19 @@ TTS_CASE( "aligned_ptr pre/post increment & decrement" )
 struct type
 {
   auto method() const { return this; }
-  int member;
+  std::uint8_t member;
 };
 
 TTS_CASE( "aligned_ptr provides pointer-like interface" )
 {
   TTS_SETUP("An aligned_ptr of default alignment")
   {
-    type value{42}, other_value{1337};
-    alignas(16) type extra_aligned_value{787};
+    type value{42}, other_value{17};
+    alignas(8) type extra_aligned_value{87};
 
     eve::aligned_ptr<type> ptr        = &value;
     eve::aligned_ptr<type> other_ptr  = &other_value;
-    eve::aligned_ptr<type,16> realigned_ptr  = &extra_aligned_value;
+    eve::aligned_ptr<type,8> realigned_ptr  = &extra_aligned_value;
 
     TTS_SECTION("has the proper default alignment")
     {
@@ -79,7 +79,7 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
     {
       ptr  = &other_value;
       TTS_EQUAL( ptr->method(), &other_value );
-      TTS_EQUAL( ptr->member, 1337 );
+      TTS_EQUAL( ptr->member, 17 );
       ptr->member = 101;
       TTS_EQUAL( other_value.member, 101 );
     }
@@ -88,7 +88,7 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
     {
       ptr = other_ptr;
       TTS_EQUAL( ptr->method(), &other_value );
-      TTS_EQUAL( ptr->member, 1337 );
+      TTS_EQUAL( ptr->member, 17 );
       ptr->member = 99;
       TTS_EQUAL( other_value.member, 99 );
     }
@@ -97,7 +97,7 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
     {
       ptr = realigned_ptr;
       TTS_EQUAL( ptr->method(), &extra_aligned_value );
-      TTS_EQUAL( ptr->member, 787 );
+      TTS_EQUAL( ptr->member, 87 );
       ptr->member = 99;
       TTS_EQUAL( extra_aligned_value.member, 99 );
     }
@@ -106,7 +106,7 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
     {
       ptr[0] = other_value;
       TTS_EQUAL( ptr->method(), &value );
-      TTS_EQUAL( ptr->member, 1337 );
+      TTS_EQUAL( ptr->member, 17 );
       ptr->member = 99;
       TTS_EQUAL( value.member, 99 );
     }
@@ -126,12 +126,12 @@ TTS_CASE( "aligned_ptr provides pointer-like interface" )
     TTS_SECTION("supports swap")
     {
       ptr.swap(other_ptr);
-      TTS_EQUAL( ptr->member, 1337 );
+      TTS_EQUAL( ptr->member, 17 );
       TTS_EQUAL( other_ptr->member, 42 );
 
       swap(ptr,other_ptr);
       TTS_EQUAL( ptr->member, 42 );
-      TTS_EQUAL( other_ptr->member, 1337 );
+      TTS_EQUAL( other_ptr->member, 17 );
     }
   }
 }

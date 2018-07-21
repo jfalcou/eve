@@ -43,11 +43,11 @@ TTS_CASE( "is_aligned for pointers" )
   std::uint16_t v16;
   std::uint32_t v32;
   std::uint64_t v64;
-  alignas(16) std::uint8_t v128;
+  alignas(8) std::uint8_t v128;
 
   TTS_EXPECT( eve::is_aligned<1>(&v8) );
   TTS_EXPECT( eve::is_aligned<2>(&v16) );
   TTS_EXPECT( eve::is_aligned<4>(&v32) );
   TTS_EXPECT( eve::is_aligned<8>(&v64) );
-  TTS_EXPECT( eve::is_aligned<16>(&v128) );
+  TTS_EXPECT( eve::is_aligned<8>(&v128) );
 }
