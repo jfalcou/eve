@@ -29,4 +29,10 @@
 #endif
 #endif
 
+#if defined(EVE_HW_ARM)
+#if EVE_HW_ARM >= EVE_NEON_VERSION
+#include <eve/detail/function/simd/arm/neon/slice.hpp>
+#endif
+#endif
+
 #endif

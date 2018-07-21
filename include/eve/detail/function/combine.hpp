@@ -29,4 +29,10 @@
 #endif
 #endif
 
+#if defined(EVE_HW_ARM)
+#if EVE_HW_ARM >= EVE_NEON_VERSION
+#include <eve/detail/function/simd/arm/neon/combine.hpp>
+#endif
+#endif
+
 #endif
