@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_EXT_PACK_HPP_INCLUDED
-#define EVE_EXT_PACK_HPP_INCLUDED
+#ifndef EVE_ARCH_CPU_PACK_HPP_INCLUDED
+#define EVE_ARCH_CPU_PACK_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
