@@ -26,7 +26,6 @@ TTS_CASE_TPL( "Check splatting constructor for pack"
   Type base = 42;
   pack<Type,T> simd( base );
 
-  runtime.stream() << tts::type_id<typename pack<Type,T>::abi_type>() << "\n";
   TTS_EXPECT( std::all_of(simd.begin(), simd.end(), [=](auto e) { return e == base; }) );
 }
 
