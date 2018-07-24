@@ -20,22 +20,20 @@
 
 namespace eve
 {
-  template<typename T, std::size_t Alignment>
-  aligned_ptr<T,Alignment> aligned_alloc( std::size_t nbelem)
+  template<std::size_t Alignment> aligned_ptr<void,Alignment> aligned_alloc( std::size_t nbelem)
   {
     static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
 
-    T* result = nullptr;
-    auto size = nbelem*sizeof(T);
+    void* result = nullptr;
 
 #if defined(EVE_OS_USE_POSIX) || defined(EVE_OS_IS_MACOS)
-    if( ::posix_memalign((void**)&result,std::max(Alignment,sizeof(void*)),size) )
+    if( ::posix_memalign((void**)&result,std::max(Alignment,sizeof(void*)),nbelem) )
       result = nullptr;
 #elif defined(EVE_COMP_IS_MSVC)
-    result =  static_cast<T*>(::_aligned_malloc(size, Alignment));
+    result =  ::_aligned_malloc(nbelem, Alignment);
 #else
     constexpr auto alignment = std::max(Alignment,sizeof(void*));
-    std::size_t n = size + alignment - sizeof(void*);
+    std::size_t n = nbelem + alignment - sizeof(void*);
 
     void* p = std::malloc(sizeof(void*) + n);
 
@@ -44,7 +42,7 @@ namespace eve
       void* r = static_cast<char*>(p) + sizeof(void*);
       r = align(r, over{alignment} );
       *(static_cast<void**>(r) - 1) = p;
-      result = static_cast<T*>(r);
+      result = r;
     }
 #endif
 

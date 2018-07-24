@@ -13,12 +13,10 @@
 #include <tts/tests/relation.hpp>
 #include <array>
 
-TTS_CASE( "aligned_ptr default constructors" )
+TTS_CASE( "aligned_ptr constructor from nullptr" )
 {
   eve::aligned_ptr<double> nullptr_constructed_ptr = nullptr;
-  eve::aligned_ptr<double> default_constructed_ptr;
 
-  TTS_EQUAL( default_constructed_ptr.get(), nullptr );
   TTS_EQUAL( nullptr_constructed_ptr.get(), nullptr );
 }
 

@@ -18,8 +18,8 @@
 
 namespace eve
 {
-  template<typename T, std::size_t Alignment>
-  void aligned_dealloc( aligned_ptr<T,Alignment>& ptr )
+  template<std::size_t Alignment>
+  void aligned_dealloc( aligned_ptr<void,Alignment> ptr )
   {
 #if defined(EVE_OS_USE_POSIX) || defined(EVE_OS_IS_MACOS)
     ::free( (void*)ptr.get() );
