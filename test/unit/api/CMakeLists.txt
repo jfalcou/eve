@@ -9,6 +9,7 @@
 ##==================================================================================================
 ## General API tests
 add_unit_test( "api" memory/aligned_alloc.cpp )
+add_unit_test( "api" memory/aligned_allocator.cpp )
 add_unit_test( "api" memory/aligned_ptr.cpp )
 add_unit_test( "api" memory/is_aligned.cpp )
 
