@@ -26,7 +26,7 @@ TTS_CASE_TPL( "load behavior for pack"
     using pack_t = eve::pack<Type,T>;
     auto filler = [](auto i, auto) { return Type(1)+i; };
 
-    alignas(pack_t::alignment) std::array<Type, T::value> data;
+    alignas(pack_t::static_alignment) std::array<Type, T::value> data;
     for(std::size_t i = 0; i < data.size(); ++i)
       data[i] = filler(i,0);
 
@@ -40,7 +40,7 @@ TTS_CASE_TPL( "load behavior for pack"
 
     TTS_SECTION("an aligned pointer to pack")
     {
-      simd = eve::load( eve::as_aligned<pack_t::alignment>(&ref) );
+      simd = eve::load( eve::as_aligned<pack_t::static_alignment>(&ref) );
       TTS_EQUAL( simd, ref );
     }
 
@@ -52,7 +52,7 @@ TTS_CASE_TPL( "load behavior for pack"
 
     TTS_SECTION("an aligned pointer to scalar values")
     {
-      simd = eve::load(eve::as_aligned<pack_t::alignment>(&data[0]), eve::as(simd));
+      simd = eve::load(eve::as_aligned<pack_t::static_alignment>(&data[0]), eve::as(simd));
       TTS_EQUAL( simd, ref );
     }
   }

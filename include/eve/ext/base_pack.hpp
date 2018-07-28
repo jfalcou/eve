@@ -40,7 +40,7 @@ namespace eve { namespace detail
 
   template<typename Storage> struct pack_align<Storage,::eve::aggregated_>
   {
-    static constexpr std::size_t value = Storage::value_type::alignment;
+    static constexpr std::size_t value = Storage::value_type::static_alignment;
   };
 
   template<typename Type, typename Storage, typename ABI> struct pack_iterator

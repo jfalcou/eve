@@ -24,22 +24,22 @@ namespace eve
     return *ptr;
   }
 
-  template<typename T,typename Size>
-  EVE_FORCEINLINE auto load(aligned_ptr<T,pack<T,Size>::alignment> ptr) noexcept
+  template<typename T,typename Size, typename ABI>
+  EVE_FORCEINLINE auto load(aligned_ptr<pack<T,Size,ABI>> ptr) noexcept
   {
     return *ptr;
   }
 
-  template<typename Size, typename T>
-  EVE_FORCEINLINE auto load(T* ptr, as_<pack<T,Size>> const&) noexcept
+  template<typename Size, typename T, typename ABI>
+  EVE_FORCEINLINE auto load(T* ptr, as_<pack<T,Size,ABI>> const&) noexcept
   {
     return pack<T,Size>(ptr);
   }
 
-  template< typename Size, typename T, std::size_t Align
-          , typename = std::enable_if_t<(Align >= pack<T,Size>::alignment)>
+  template< typename Size, typename ABI, typename T, std::size_t Align
+          , typename = std::enable_if_t<(Align >= pack<T,Size>::static_alignment)>
           >
-  EVE_FORCEINLINE auto load(aligned_ptr<T,Align> ptr, as_<pack<T,Size>> const&) noexcept
+  EVE_FORCEINLINE auto load(aligned_ptr<T,Align> ptr, as_<pack<T,Size,ABI>> const&) noexcept
   {
     return pack<T,Size>(ptr);
   }

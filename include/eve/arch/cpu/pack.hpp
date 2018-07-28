@@ -54,8 +54,8 @@ namespace eve
 
     using target_type = typename detail::target_type<pack,abi_type>::type;
 
-    static constexpr std::size_t static_size  = Size::value;
-    static constexpr std::size_t alignment    = detail::pack_align<storage_type,abi_type>::value;
+    static constexpr std::size_t static_size      = Size::value;
+    static constexpr std::size_t static_alignment = detail::pack_align<storage_type,abi_type>::value;
 
     using iterator_facade = detail::pack_iterator<Type,storage_type,abi_type>;
 
@@ -91,7 +91,7 @@ namespace eve
     {}
 
     template< std::size_t Alignment
-            , typename = std::enable_if_t<(Alignment>=alignment)>
+            , typename = std::enable_if_t<(Alignment>=static_alignment)>
             >
     EVE_FORCEINLINE explicit pack(aligned_ptr<Type,Alignment> ptr) noexcept
                   : data_(detail::load(as_<pack>{},abi_type{},ptr))
@@ -165,9 +165,13 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // array-like interface
-    static EVE_FORCEINLINE constexpr std::size_t  size()     noexcept { return static_size; }
-    static EVE_FORCEINLINE constexpr size_type    max_size() noexcept { return static_size; }
-    static EVE_FORCEINLINE constexpr bool         empty()    noexcept { return false;       }
+    static EVE_FORCEINLINE constexpr size_type  size()     noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr size_type  max_size() noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr bool       empty()    noexcept { return false;       }
+
+    // ---------------------------------------------------------------------------------------------
+    // alignment interface
+    static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return static_alignment; }
 
     // ---------------------------------------------------------------------------------------------
     // slice interface
