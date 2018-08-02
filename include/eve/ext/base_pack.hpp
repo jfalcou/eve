@@ -32,13 +32,17 @@ namespace eve { namespace detail
     using type = Pack;
   };
 
-  template<typename Storage, typename ABI>
+  template<typename Size, typename Type, typename Storage, typename ABI>
   struct pack_align
   {
-    static constexpr std::size_t value = alignof(Storage);
+    static constexpr std::size_t base   = alignof(Type);
+    static constexpr std::size_t native = alignof(Storage);
+    static constexpr std::size_t limit  = Size::value*sizeof(Type);
+    static constexpr std::size_t value  = limit < native ? base : native;
   };
 
-  template<typename Storage> struct pack_align<Storage,::eve::aggregated_>
+  template<typename Size, typename Type, typename Storage>
+  struct pack_align<Size,Type,Storage,::eve::aggregated_>
   {
     static constexpr std::size_t value = Storage::value_type::static_alignment;
   };

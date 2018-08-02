@@ -55,7 +55,9 @@ namespace eve
     using target_type = typename detail::target_type<pack,abi_type>::type;
 
     static constexpr std::size_t static_size      = Size::value;
-    static constexpr std::size_t static_alignment = detail::pack_align<storage_type,abi_type>::value;
+    static constexpr std::size_t static_alignment = detail::pack_align< Size        , value_type
+                                                                      , storage_type, abi_type
+                                                                      >::value;
 
     using iterator_facade = detail::pack_iterator<Type,storage_type,abi_type>;
 
