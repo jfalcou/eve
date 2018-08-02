@@ -31,12 +31,15 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::ppc_ const&
+  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::ppc_ const& mode
                             , aligned_ptr<T,Align> ptr
                             , std::enable_if_t<(sizeof(T)<8)>* = 0
                             ) noexcept
   {
-    return vec_ld(0, ptr.get());
+    if constexpr( Align >= 16)
+      return vec_ld(0, ptr.get());
+    else
+      return load(tgt,mode, ptr.get());
   }
 } }
 

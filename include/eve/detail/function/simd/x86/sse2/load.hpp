@@ -30,11 +30,14 @@ namespace eve { namespace detail
   }
 
   template<typename N, std::size_t Align>
-  EVE_FORCEINLINE __m128d load( as_<pack<double,N>> const&, eve::sse_ const&
+  EVE_FORCEINLINE __m128d load( as_<pack<double,N>> const& tgt, eve::sse_ const& mode
                               , aligned_ptr<double,Align> ptr
                               ) noexcept
   {
-    return _mm_load_pd(ptr.get());
+    if constexpr( Align >= 16)
+      return _mm_load_pd(ptr.get());
+    else
+      return load(tgt,mode,ptr.get());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -46,11 +49,14 @@ namespace eve { namespace detail
   }
 
   template<typename N, std::size_t Align>
-  EVE_FORCEINLINE __m128 load ( as_<pack<float,N>> const&, eve::sse_ const&
+  EVE_FORCEINLINE __m128 load ( as_<pack<float,N>> const& tgt, eve::sse_ const& mode
                               , aligned_ptr<float,Align> ptr
                               ) noexcept
   {
-    return _mm_load_ps(ptr.get());
+    if constexpr( Align >= 16)
+      return _mm_load_ps(ptr.get());
+    else
+      return load(tgt,mode,ptr.get());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -64,9 +70,12 @@ namespace eve { namespace detail
 
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE std::enable_if_t<std::is_integral_v<T>,__m128i>
-  load ( as_<pack<T,N>> const&, eve::sse_ const&, aligned_ptr<T,Align> ptr) noexcept
+  load ( as_<pack<T,N>> const& tgt, eve::sse_ const& mode, aligned_ptr<T,Align> ptr) noexcept
   {
-    return _mm_load_si128((__m128i*)(ptr.get()));
+    if constexpr( Align >= 16)
+      return _mm_load_si128((__m128i*)(ptr.get()));
+    else
+      return load(tgt,mode,ptr.get());
   }
 } }
 
