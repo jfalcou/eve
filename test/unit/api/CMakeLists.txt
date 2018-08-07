@@ -17,6 +17,7 @@ add_unit_test( "api" memory/is_aligned.cpp )
 ## Function tests
 list_tests("function/scalar/load"  "api" ${all_types})
 list_tests("function/simd/load"    "api" ${all_types})
+list_tests("function/simd/store"   "api" ${all_types})
 
 ##==================================================================================================
 ## pack API tests

@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_STORE_HPP_INCLUDED
-#define EVE_FUNCTION_STORE_HPP_INCLUDED
 
-#include <eve/function/scalar/store.hpp>
-#include <eve/function/simd/store.hpp>
-
-#endif
+using Type = double;
+#include "aligned_store.hpp"
+#include "store.hpp"
