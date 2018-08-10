@@ -8,11 +8,15 @@
 
 ##==================================================================================================
 ## scalar tests
-list_tests("scalar/minus"   "core" ${all_types})
-list_tests("scalar/plus"    "core" ${all_types})
-list_tests("scalar/popcnt"  "core" ${integral_types})
+add_unit_test( "core" scalar/bitwise_cast.cpp )
+
+list_tests("scalar/minus"         "core" ${all_types})
+list_tests("scalar/plus"          "core" ${all_types})
+list_tests("scalar/popcnt"        "core" ${integral_types})
 
 ##==================================================================================================
 ## SIMD tests
+add_unit_test( "core" simd/bitwise_cast.cpp )
+
 list_tests("simd/minus" "core" ${all_types})
 list_tests("simd/plus" "core" ${all_types})

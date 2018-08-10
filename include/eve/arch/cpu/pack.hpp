@@ -42,6 +42,7 @@ namespace eve
   struct pack
   {
     using storage_type            = ::eve::ext::as_register_t<Type,Size,ABI>;
+    using cardinal_type           = Size;
     using abi_type                = ABI;
     using value_type              = Type;
     using size_type               = std::size_t;
