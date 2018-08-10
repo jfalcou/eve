@@ -11,12 +11,29 @@
 #define MAKE_HPP
 
 #include <eve/pack.hpp>
+#include <eve/logical.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
 
 using eve::fixed;
 
+TTS_CASE_TPL( "Check enumerating constructor for pack of logical"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
+{
+  using eve::pack;
+  using eve::logical;
+
+  auto filler = [](auto i, auto) { return i%3 ? true : false; };
+
+  pack<logical<Type>,T> simd( filler );
+  std::array<logical<Type>,T::value> ref;
+  for(std::size_t i=0;i<T::value;++i) ref[i] = filler(i,T::value);
+
+  TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+}
+/*
 TTS_CASE( "Check enumerating constructor for pack of 1 element" )
 {
   using eve::pack;
@@ -98,5 +115,6 @@ TTS_CASE( "Check enumerating constructor for pack of 64 elements" )
 
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
+*/
 
 #endif

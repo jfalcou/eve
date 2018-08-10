@@ -16,52 +16,84 @@
 
 namespace eve { namespace detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // Arithmetic cases
+  template<typename T, typename ABI>
+  struct neon_maker
+  {
+    template<typename... Vs> auto operator()(Vs... vs) const
+    {
+      using type = ext::as_register_t<T,fixed<sizeof...(vs)>,ABI>;
+      type that{ static_cast<T>(vs)... };
+      return that;
+    }
+
+    template<typename V> auto operator()(V v) const
+    {
+      auto impl = [&](auto... I)
+      {
+        using type = ext::as_register_t<T,expected_cardinal_t<T,ABI>,ABI>;
+
+        auto u = static_cast<T>(v);
+        auto val = [](auto vv, auto const&) { return vv; };
+
+        return type{val(u,I)...};
+      };
+
+      return apply<expected_cardinal_v<T,ABI>>(impl);
+    }
+  };
+
   template< typename T,typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const&, eve::neon64_ const&, Vs... vs) noexcept
   {
-    using type = ext::as_register_t<T,fixed<sizeof...(vs)>,eve::neon64_>;
-    type that{ static_cast<T>(vs)... };
-    return that;
+    return neon_maker<T,eve::neon64_>{}(vs...);
   }
 
   template< typename T,typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const&, eve::neon128_ const&, Vs... vs) noexcept
   {
-    using type = ext::as_register_t<T,fixed<sizeof...(vs)>,eve::neon128_>;
-    type that{ static_cast<T>(vs)... };
-    return that;
+    return neon_maker<T,eve::neon128_>{}(vs...);
   }
 
-  template< typename T,typename V>
-  EVE_FORCEINLINE auto make(as_<T> const&, eve::neon64_ const&, V v) noexcept
+  // -----------------------------------------------------------------------------------------------
+  // Logical cases
+  template<typename T, typename ABI> struct neon_maker<logical<T>, ABI>
   {
-    auto impl = [&](auto... I)
+    template<typename... Vs> auto operator()(Vs... vs) const
     {
-      using type = ext::as_register_t<T,expected_cardinal_t<T,eve::neon64_>,neon64_>;
+      using type = ext::as_register_t<logical<T>,fixed<sizeof...(vs)>,ABI>;
+      type that{ ltype(vs).bits()... };
+      return that;
+    }
 
-      auto u = static_cast<T>(v);
-      auto val = [](auto vv, auto const&) { return vv; };
+    template<typename V> auto operator()(V v) const
+    {
+      using ltype = logical<T>;
+      auto impl = [&](auto... I)
+      {
+        using type = ext::as_register_t<ltype,expected_cardinal_t<ltype,ABI>,ABI>;
 
-      return type{val(u,I)...};
-    };
+        auto u = ltype(v).bits();
+        auto val = [](auto vv, auto const&) { return vv; };
 
-    return apply<expected_cardinal_v<T,eve::neon64_>>(impl);
+        return type{val(u,I)...};
+      };
+
+      return apply<expected_cardinal_v<ltype,ABI>>(impl);
+    }
+  };
+
+  template< typename T,typename... Vs>
+  EVE_FORCEINLINE auto make(as_<logical<T>> const&, eve::neon64_ const&, Vs... vs) noexcept
+  {
+    return neon_maker<logical<T>,eve::neon64_>{}(vs...);
   }
 
-  template< typename T,typename V>
-  EVE_FORCEINLINE auto make(as_<T> const&, eve::neon128_ const&, V v) noexcept
+  template< typename T,typename... Vs>
+  EVE_FORCEINLINE auto make(as_<logical<T>> const&, eve::neon128_ const&, Vs... vs) noexcept
   {
-    auto impl = [&](auto... I)
-    {
-      using type = ext::as_register_t<T,expected_cardinal_t<T,eve::neon128_>,neon128_>;
-
-      auto u = static_cast<T>(v);
-      auto val = [](auto vv, auto const&) { return vv; };
-
-      return type{val(u,I)...};
-    };
-
-    return apply<expected_cardinal_v<T,eve::neon128_>>(impl);
+    return neon_maker<logical<T>,eve::neon128_>{}(vs...);
   }
 } }
 

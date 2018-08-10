@@ -13,15 +13,16 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <iostream>
+#include <cstring>
 
 namespace eve
 {
   template<typename T> struct logical
   {
     using value_type  = T;
-    using bits        = detail::as_integer_t<T,unsigned>;
-    static constexpr bits true_mask  = ~bits{0};
-    static constexpr bits false_mask =  bits{0};
+    using bits_type   = detail::as_integer_t<T,unsigned>;
+    static constexpr bits_type true_mask  = ~bits_type{0};
+    static constexpr bits_type false_mask =  bits_type{0};
 
     /// Default constructor
     EVE_FORCEINLINE constexpr logical() noexcept {}
@@ -41,10 +42,10 @@ namespace eve
     }
 
     /// Bitwise complement operator
-    EVE_FORCEINLINE constexpr logical operator ~() const noexcept { return {~value_}; }
+    EVE_FORCEINLINE constexpr logical operator ~() const noexcept { return logical(~value_); }
 
     /// Logical not operator
-    EVE_FORCEINLINE constexpr logical operator !() const noexcept { return {~value_}; }
+    EVE_FORCEINLINE constexpr logical operator !() const noexcept { return logical(~value_); }
 
     /// Unary + operator
     EVE_FORCEINLINE constexpr logical operator +() const noexcept { return *this; }
@@ -55,8 +56,19 @@ namespace eve
     /// Explicitly convert a logical value to bool
     EVE_FORCEINLINE constexpr bool value() const noexcept {return !!value_; }
 
+    /// Explicitly convert a logical value to bool
+    EVE_FORCEINLINE constexpr auto bits() const noexcept {return value_; }
+
+    /// Explicitly convert a logical value to bool
+    EVE_FORCEINLINE constexpr T mask() const noexcept
+    {
+      value_type that;
+      std::memcpy(&that,&value_,sizeof(value_type));
+      return that;
+    }
+
     private:
-    bits  value_;
+    bits_type  value_;
   };
 
   /// Stream insertion operator
@@ -68,14 +80,14 @@ namespace eve
 
   /// Equality comparison operator
   template<typename T> EVE_FORCEINLINE
-  constexpr logical<T> operator ==(logical<T> const& a, logical<T> const& b) noexcept
+  constexpr bool operator ==(logical<T> const& a, logical<T> const& b) noexcept
   {
     return a.value() == b.value();
   }
 
   /// Inequality comparison operator
   template<typename T> EVE_FORCEINLINE
-  constexpr logical<T> operator !=(logical<T> const& a, logical<T> const& b) noexcept
+  constexpr bool operator !=(logical<T> const& a, logical<T> const& b) noexcept
   {
     return a.value() != b.value();
   }
