@@ -41,10 +41,10 @@ namespace eve
     }
 
     /// Bitwise complement operator
-    EVE_FORCEINLINE constexpr logical operator ~() const noexcept { return {~value_}; }
+    EVE_FORCEINLINE constexpr logical operator ~() const noexcept { return ~value_; }
 
     /// Logical not operator
-    EVE_FORCEINLINE constexpr logical operator !() const noexcept { return {~value_}; }
+    EVE_FORCEINLINE constexpr logical operator !() const noexcept { return ~value_; }
 
     /// Unary + operator
     EVE_FORCEINLINE constexpr logical operator +() const noexcept { return *this; }

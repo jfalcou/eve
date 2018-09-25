@@ -48,6 +48,38 @@ namespace eve { namespace detail
       if constexpr( std::is_integral_v<Target>     ) return v0.storage();
     }
   }
+
+  // AVX supports logical bitwise casting
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,avx_>
+  bitwise_cast_ ( EVE_SUPPORTS(avx_)
+                , pack<Source,N,avx_> const& v0, as_<pack<logical<Target>,M,avx_>> const&
+                ) noexcept
+  {
+    return bitwise_cast<pack<Target,M,avx_>>(v0).storage();
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<Target,M,avx_>
+  bitwise_cast_ ( EVE_SUPPORTS(avx_)
+                , pack<logical<Source>,N,avx_> const& v0, as_<pack<Target,M,avx_>> const&
+                ) noexcept
+  {
+    pack<Source,N> tmp{v0.storage()};
+    return bitwise_cast<pack<Target,M,avx_>>(tmp);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,avx_>
+  bitwise_cast_ ( EVE_SUPPORTS(avx_)
+                , pack<logical<Source>,N,avx_> const& v0, as_<pack<logical<Target>,M,avx_>> const&
+                ) noexcept
+  {
+    if constexpr( std::is_same_v<Source,Target> )
+      return v0;
+    else
+      return bitwise_cast<pack<Target,M,avx_>>(pack<Source,N>{v0.storage()}).storage();
+  }
 } }
 
 #endif

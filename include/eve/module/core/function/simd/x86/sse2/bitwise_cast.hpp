@@ -48,6 +48,38 @@ namespace eve { namespace detail
       if constexpr( std::is_integral_v<Target>     ) return v0.storage();
     }
   }
+
+  // SSE2 supports logical bitwise casting
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,sse_>
+  bitwise_cast_ ( EVE_SUPPORTS(sse2_)
+                , pack<Source,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const&
+                ) noexcept
+  {
+    return bitwise_cast<pack<Target,M,sse_>>(v0).storage();
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<Target,M,sse_>
+  bitwise_cast_ ( EVE_SUPPORTS(sse2_)
+                , pack<logical<Source>,N,sse_> const& v0, as_<pack<Target,M,sse_>> const&
+                ) noexcept
+  {
+    pack<Source,N> tmp{v0.storage()};
+    return bitwise_cast<pack<Target,M,sse_>>(tmp);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,sse_>
+  bitwise_cast_ ( EVE_SUPPORTS(sse2_)
+                , pack<logical<Source>,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const&
+                ) noexcept
+  {
+    if constexpr( std::is_same_v<Source,Target> )
+      return v0;
+    else
+      return bitwise_cast<pack<Target,M,sse_>>(pack<Source,N>{v0.storage()}).storage();
+  }
 } }
 
 #endif
