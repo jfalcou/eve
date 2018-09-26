@@ -52,7 +52,7 @@ namespace eve { namespace detail
   EVE_FORCEINLINE auto make(as_<logical<T>> const&, eve::ppc_ const&, Vs... vs) noexcept
   {
     using type = ext::as_register_t<logical<T>,fixed<sizeof...(vs)>,eve::ppc_>;
-    type that = { logical<T>(vs).value()... };
+    type that = { logical<T>(vs).bits()... };
     return that;
   }
 
@@ -64,7 +64,7 @@ namespace eve { namespace detail
                 {
                   using type = ext::as_register_t<ltype,expected_cardinal_t<ltype>,eve::ppc_>;
 
-                  auto u = ltype(v).value();
+                  auto u = ltype(v).bits();
                   auto val = [](auto vv, auto const&) { return vv; };
 
                   return type{val(u,I)...};

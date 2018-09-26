@@ -56,10 +56,10 @@ namespace eve
     /// Explicitly convert a logical value to bool
     EVE_FORCEINLINE constexpr bool value() const noexcept {return !!value_; }
 
-    /// Explicitly convert a logical value to bool
+    /// Convert a logical to its internal representation value
     EVE_FORCEINLINE constexpr auto bits() const noexcept {return value_; }
 
-    /// Explicitly convert a logical value to bool
+    /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr T mask() const noexcept
     {
       value_type that;
