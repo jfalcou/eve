@@ -39,7 +39,7 @@ TTS_CASE_TPL( "Check bitwise_cast between integer and real types"
 }
 
 TTS_CASE_TPL( "Check bitwise_cast between arithmetic and logical types"
-            , eve::fixed<1>, eve::fixed<2> //, eve::fixed<4>
+            , eve::fixed<1>, eve::fixed<2>, eve::fixed<4>
             //, eve::fixed<8>, eve::fixed<16>, eve::fixed<32>, eve::fixed<64>
             )
 {
@@ -47,12 +47,9 @@ TTS_CASE_TPL( "Check bitwise_cast between arithmetic and logical types"
   using pl_t = eve::pack<eve::logical<double>, T>;
   using pm_t = eve::pack<eve::logical<float>, typename T::combined_type>;
 
-  pl_t x( [](auto,auto) { return true; });
-  pm_t y( [](auto,auto) { return true; });
-
-  TTS_EQUAL ( eve::bitwise_cast<pi_t>(x), pi_t(0xFFFFFFFFFFFFFFFFULL)   );
-  TTS_EQUAL ( eve::bitwise_cast<pl_t>(pi_t(0xFFFFFFFFFFFFFFFFULL)),   x );
-  TTS_EQUAL ( eve::bitwise_cast<pm_t>(x), y);
-  TTS_EQUAL ( eve::bitwise_cast<pl_t>(y), x);
-  TTS_EQUAL ( eve::bitwise_cast<pl_t>(x), x);
+  TTS_EQUAL ( eve::bitwise_cast<pi_t>(pl_t( true )), pi_t(0xFFFFFFFFFFFFFFFFULL)   );
+  TTS_EQUAL ( eve::bitwise_cast<pl_t>(pi_t(0xFFFFFFFFFFFFFFFFULL)), pl_t( true ) );
+  TTS_EQUAL ( eve::bitwise_cast<pm_t>(pl_t( true )), pm_t( true ));
+  TTS_EQUAL ( eve::bitwise_cast<pl_t>(pm_t( true )), pl_t( true ));
+  TTS_EQUAL ( eve::bitwise_cast<pl_t>(pl_t( true )), pl_t( true ));
 }

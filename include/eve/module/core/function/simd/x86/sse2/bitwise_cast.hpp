@@ -12,6 +12,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/module/core/function/simd/detail/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -53,32 +54,29 @@ namespace eve { namespace detail
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE pack<logical<Target>,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<Source,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const&
+                , pack<Source,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const& tgt
                 ) noexcept
   {
-    return bitwise_cast<pack<Target,M,sse_>>(v0).storage();
+    return a2l_isocast_(v0,tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE pack<Target,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<logical<Source>,N,sse_> const& v0, as_<pack<Target,M,sse_>> const&
+                , pack<logical<Source>,N,sse_> const& v0, as_<pack<Target,M,sse_>> const& tgt
                 ) noexcept
   {
-    pack<Source,N> tmp{v0.storage()};
-    return bitwise_cast<pack<Target,M,sse_>>(tmp);
+    return l2a_isocast_(v0,tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE pack<logical<Target>,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<logical<Source>,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const&
+                , pack<logical<Source>,N,sse_> const& v0
+                , as_<pack<logical<Target>,M,sse_>> const& tgt
                 ) noexcept
   {
-    if constexpr( std::is_same_v<Source,Target> )
-      return v0;
-    else
-      return bitwise_cast<pack<Target,M,sse_>>(pack<Source,N>{v0.storage()}).storage();
+    return l2l_isocast_(v0,tgt);
   }
 } }
 

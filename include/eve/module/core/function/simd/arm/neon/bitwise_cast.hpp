@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/function/simd/detail/bitwise_cast.hpp>
 #include <type_traits>
 
 namespace eve { namespace detail
@@ -343,6 +344,68 @@ namespace eve { namespace detail
       if constexpr(std::is_same_v<in_t,uint32x4_t >) return vreinterpretq_u8_u32(v0);
       if constexpr(std::is_same_v<in_t,uint16x8_t >) return vreinterpretq_u8_u16(v0);
     }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // NEON supports logical bitwise casting
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,neon128_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<Source,N,neon128_> const& v0
+                , as_<pack<logical<Target>,M,neon128_>> const& tgt
+                ) noexcept
+  {
+    return a2l_cast_(v0,tgt);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,neon64_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<Source,N,neon64_> const& v0
+                , as_<pack<logical<Target>,M,neon64_>> const& tgt
+                ) noexcept
+  {
+    return a2l_cast_(v0,tgt);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<Target,M,neon128_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<logical<Source>,N,neon128_> const& v0
+                , as_<pack<Target,M,neon128_>> const& tgt
+                ) noexcept
+  {
+    return l2a_cast_(v0,tgt);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<Target,M,neon64_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<logical<Source>,N,neon64_> const& v0
+                , as_<pack<Target,M,neon64_>> const& tgt
+                ) noexcept
+  {
+    return l2a_cast_(v0,tgt);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,neon128_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<logical<Source>,N,neon128_> const& v0
+                , as_<pack<logical<Target>,M,neon128_>> const& tgt
+                ) noexcept
+  {
+    return l2l_cast_(v0,tgt);
+  }
+
+  template<typename Target, typename Source, typename N, typename M>
+  EVE_FORCEINLINE pack<logical<Target>,M,neon64_>
+  bitwise_cast_ ( EVE_SUPPORTS(neon128_)
+                , pack<logical<Source>,N,neon64_> const& v0
+                , as_<pack<logical<Target>,M,neon64_>> const& tgt
+                ) noexcept
+  {
+    return l2l_cast_(v0,tgt);
   }
 } }
 
