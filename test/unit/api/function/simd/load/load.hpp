@@ -58,4 +58,45 @@ TTS_CASE_TPL( "load behavior for pack"
   }
 }
 
+TTS_CASE_TPL( "load behavior for pack of logical"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
+{
+  TTS_SETUP("load a pack from")
+  {
+    using pack_t = eve::pack<eve::logical<Type>,T>;
+    auto filler = [](auto i, auto) { return i% 3 ? true : false; };
+
+    alignas(pack_t::static_alignment) std::array<eve::logical<Type>, T::value> data;
+    for(std::size_t i = 0; i < data.size(); ++i)
+      data[i] = filler(i,0);
+
+    pack_t simd, ref(filler);
+
+    TTS_SECTION("a pointer to logical pack")
+    {
+      simd = eve::load(&ref);
+      TTS_EQUAL( simd, ref );
+    }
+
+    TTS_SECTION("an aligned pointer to logical pack")
+    {
+      simd = eve::load( eve::as_aligned<pack_t::static_alignment>(&ref) );
+      TTS_EQUAL( simd, ref );
+    }
+
+    TTS_SECTION("a pointer to scalar logical values")
+    {
+      simd = eve::load(&data[0], eve::as(simd));
+      TTS_EQUAL( simd, ref );
+    }
+
+    TTS_SECTION("an aligned pointer to scalar logical values")
+    {
+      simd = eve::load(eve::as_aligned<pack_t::static_alignment>(&data[0]), eve::as(simd));
+      TTS_EQUAL( simd, ref );
+    }
+  }
+}
+
 #endif

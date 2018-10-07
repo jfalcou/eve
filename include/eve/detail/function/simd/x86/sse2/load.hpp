@@ -21,61 +21,31 @@
 
 namespace eve { namespace detail
 {
-  //------------------------------------------------------------------------------------------------
-  // double case 1->2
-  template<typename N>
-  EVE_FORCEINLINE __m128d load(as_<pack<double,N>> const&, eve::sse_ const&, double* ptr) noexcept
-  {
-    return _mm_loadu_pd(ptr);
-  }
-
-  template<typename N, std::size_t Align>
-  EVE_FORCEINLINE __m128d load( as_<pack<double,N>> const& tgt, eve::sse_ const& mode
-                              , aligned_ptr<double,Align> ptr
-                              ) noexcept
-  {
-    if constexpr( Align >= 16)
-      return _mm_load_pd(ptr.get());
-    else
-      return load(tgt,mode,ptr.get());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // float case 1->4
-  template<typename N>
-  EVE_FORCEINLINE __m128 load(as_<pack<float,N>> const&, eve::sse_ const&, float* ptr) noexcept
-  {
-    return _mm_loadu_ps(ptr);
-  }
-
-  template<typename N, std::size_t Align>
-  EVE_FORCEINLINE __m128 load ( as_<pack<float,N>> const& tgt, eve::sse_ const& mode
-                              , aligned_ptr<float,Align> ptr
-                              ) noexcept
-  {
-    if constexpr( Align >= 16)
-      return _mm_load_ps(ptr.get());
-    else
-      return load(tgt,mode,ptr.get());
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // *int* case 1->N
   template<typename T, typename N>
-  EVE_FORCEINLINE std::enable_if_t<std::is_integral_v<T>,__m128i>
-  load(as_<pack<T,N>> const&, eve::sse_ const&, T* ptr) noexcept
+  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::sse_ const&, T* p
+                            , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+                            ) noexcept
   {
-    return _mm_loadu_si128((__m128i*)ptr);
+    if constexpr( std::is_same_v<T, double> ) return _mm_loadu_pd(p);
+    if constexpr( std::is_same_v<T, float>  ) return _mm_loadu_ps(p);
+    if constexpr( std::is_integral_v<T>     ) return _mm_loadu_si128((__m128i*)p);
   }
 
-  template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE std::enable_if_t<std::is_integral_v<T>,__m128i>
-  load ( as_<pack<T,N>> const& tgt, eve::sse_ const& mode, aligned_ptr<T,Align> ptr) noexcept
+  template<typename T, typename N, std::size_t A>
+  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::sse_ const& mode, aligned_ptr<T,A> p
+                            , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+                            ) noexcept
   {
-    if constexpr( Align >= 16)
-      return _mm_load_si128((__m128i*)(ptr.get()));
+    if constexpr( A >= 16)
+    {
+      if constexpr( std::is_same_v<T, double> ) return _mm_load_pd(p.get());
+      if constexpr( std::is_same_v<T, float>  ) return _mm_load_ps(p.get());
+      if constexpr( std::is_integral_v<T>     ) return _mm_load_si128((__m128i*)p.get());
+    }
     else
-      return load(tgt,mode,ptr.get());
+    {
+      return load(tgt,mode,p.get());
+    }
   }
 } }
 

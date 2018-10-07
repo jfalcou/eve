@@ -23,7 +23,9 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load(as_<pack<T,N>> const&, eve::neon128_ const&, T* ptr) noexcept
+  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon128_ const&, T* ptr
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+                            ) noexcept
   {
     #if defined(__aarch64__)
     if constexpr( std::is_same_v<T,double> ) return vld1q_f64(ptr);
@@ -51,7 +53,9 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load(as_<pack<T,N>> const&, eve::neon64_ const&, T* ptr) noexcept
+  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon64_ const&, T* ptr
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+                            ) noexcept
   {
     #if defined(__aarch64__)
     if constexpr( std::is_same_v<T,double> ) return vld1_f64(ptr);
@@ -82,6 +86,7 @@ namespace eve { namespace detail
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon128_ const&
                             , aligned_ptr<T,Align> p
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
   {
     auto ptr = p.get();
@@ -121,6 +126,7 @@ namespace eve { namespace detail
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon64_ const&
                             , aligned_ptr<T,Align> p
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
   {
     auto ptr = p.get();
@@ -160,6 +166,7 @@ namespace eve { namespace detail
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon128_ const& mode
                             , aligned_ptr<T,Align> ptr
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
   {
     return load(tgt,mode,ptr.get());
@@ -168,6 +175,7 @@ namespace eve { namespace detail
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon64_ const& mode
                             , aligned_ptr<T,Align> ptr
+                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
   {
     return load(tgt,mode,ptr.get());

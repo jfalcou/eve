@@ -23,43 +23,41 @@
 
 namespace eve { namespace detail
 {
-  template<typename N>
-  EVE_FORCEINLINE auto load(as_<pack<double,N>> const&, eve::ppc_ const&, double* ptr) noexcept
-  {
-    return vec_vsx_ld(0,ptr);
-  }
-
   template<typename T, typename N>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr
-                            , std::enable_if_t<  sizeof(T)==8
-                                              && std::is_integral_v<T>
-                                              >* = 0
+                            , std::enable_if_t<sizeof(T)==8 && std::is_arithmetic_v<T>>* = 0
                             ) noexcept
   {
-    using type = typename pack<T,N>::storage_type*;
-    return vec_vsx_ld(0,type(ptr));
-  }
-
-  template<typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<double,N>> const&, eve::ppc_ const&
-                            , aligned_ptr<double,Align> ptr
-                            ) noexcept
-  {
-    return vec_vsx_ld(0, ptr.get());
+    if constexpr( std::is_integral_v<T> )
+    {
+      using type = typename pack<T,N>::storage_type*;
+      return vec_vsx_ld(0,type(ptr));
+    }
+    else
+    {
+      return vec_vsx_ld(0,ptr);
+    }
   }
 
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::ppc_ const&
                             , aligned_ptr<T,Align> ptr
-                            , std::enable_if_t<  sizeof(T)==8
-                                              && std::is_integral_v<T>
-                                              >* = 0
+                            , std::enable_if_t<sizeof(T)==8 && std::is_arithmetic_v<T>>* = 0
                            ) noexcept
   {
+    if constexpr( std::is_integral_v<T> )
+    {
+      using type = typename pack<T,N>::storage_type*;
+      return vec_vsx_ld(0,type(ptr.get()));
+    }
+    else
+    {
+      return vec_vsx_ld(0,ptr.get());
+    }
+
     using type = typename pack<T,N>::storage_type*;
     return vec_vsx_ld(0,type(ptr.get()));
   }
-
 } }
 
 #if defined(EVE_COMP_IS_GNUC)
