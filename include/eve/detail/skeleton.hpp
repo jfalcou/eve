@@ -30,7 +30,7 @@ namespace eve { namespace detail
   }
 
   // Upper values extraction
-  template<typename T> EVE_FORCEINLINE constexpr decltype(auto) upper( T&& t ) noexcept
+  template<typename T> EVE_FORCEINLINE constexpr auto upper( T&& t ) noexcept
   {
     if constexpr( ext::is_pack_v<T> )
     {
@@ -46,7 +46,7 @@ namespace eve { namespace detail
   }
 
   // Lower values extraction
-  template<typename T> EVE_FORCEINLINE constexpr decltype(auto) lower( T&& t ) noexcept
+  template<typename T> EVE_FORCEINLINE constexpr auto lower( T&& t ) noexcept
   {
     if constexpr( ext::is_pack_v<T> )
     {
@@ -100,7 +100,7 @@ namespace eve { namespace detail
   {
     using pack_t = typename pack_result<Func,Ts...>::type;
 
-    auto aggregate_pack = [](auto&& f, auto&&... ts)
+    auto aggregate_pack = [](auto&& f, auto&&... ts) -> decltype(auto)
     {
       return  pack_t{ std::forward<Func>(f)( lower(std::forward<Ts>(ts))...)
                     , std::forward<Func>(f)( upper(std::forward<Ts>(ts))...)

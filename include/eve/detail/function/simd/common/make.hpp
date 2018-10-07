@@ -53,9 +53,8 @@ namespace eve { namespace detail
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::aggregated_ const&, Value vs) noexcept
   {
     using sub_t = typename Pack::storage_type::value_type;
-
     sub_t sub_value(vs);
-    return Pack(sub_value,sub_value);
+    return Pack{sub_value,sub_value};
   }
 } }
 
