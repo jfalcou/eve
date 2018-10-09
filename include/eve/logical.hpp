@@ -15,6 +15,12 @@
 #include <iostream>
 #include <cstring>
 
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 namespace eve
 {
   template<typename T> struct logical
@@ -106,5 +112,9 @@ namespace eve
     return a.value() || b.value();
   }
 }
+
+#if defined(EVE_COMP_IS_GNUC)
+#pragma GCC diagnostic pop
+#endif
 
 #endif
