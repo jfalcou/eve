@@ -19,7 +19,10 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE void store_( EVE_SUPPORTS(vmx_), pack<T,N,ppc_> const& value, T* ptr) noexcept
+  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(vmx_)
+                              , pack<T,N,ppc_> const& value, T* ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+                              ) noexcept
   {
     if constexpr(N::value*sizeof(T) == limits<vmx_>::bytes)
       *((typename pack<T,N,ppc_>::storage_type*)(ptr)) = value;
@@ -30,6 +33,7 @@ namespace eve { namespace detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(vmx_)
                               , pack<T,S,ppc_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     if constexpr( N >= limits<vmx_>::bytes )

@@ -16,68 +16,43 @@
 
 namespace eve { namespace detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // double
-  template<typename N>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
-                              , pack<double,N,avx_> const& value, double* ptr
-                              ) noexcept
-  {
-    _mm256_storeu_pd(ptr,value);
-  }
-
-  template<typename N, std::size_t A>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
-                              , pack<double,N,avx_> const& value, aligned_ptr<double,A> ptr
-                              ) noexcept
-  {
-    static constexpr auto   alg = pack<double,N,avx_>::static_alignment;
-    if constexpr(A >= alg)  _mm256_store_pd(ptr,value);
-    else                    store(value,ptr.get());
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template<typename N>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
-                              , pack<float,N,avx_> const& value, float* ptr
-                              ) noexcept
-  {
-    _mm256_storeu_ps(ptr,value);
-  }
-
-  template<typename N, std::size_t A>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
-                              , pack<float,N,avx_> const& value, aligned_ptr<float,A> ptr
-                              ) noexcept
-  {
-    static constexpr auto   alg = pack<float,N,avx_>::static_alignment;
-    if constexpr(A >= alg)  _mm256_store_ps(ptr,value);
-    else                    store(value,ptr.get());
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // integers
-  template< typename T, typename N
-          , typename = std::enable_if_t<std::is_integral_v<T>>
-          >
+  template<typename T, typename N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
                               , pack<T,N,avx_> const& value, T* ptr
+                              , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
-    _mm256_storeu_si256((__m256i*)(ptr), value);
+    if constexpr(N::value*sizeof(T) == limits<avx_>::bytes)
+    {
+      if constexpr( std::is_same_v<T,double>  ) _mm256_storeu_pd(ptr,value);
+      if constexpr( std::is_same_v<T,float>   ) _mm256_storeu_ps(ptr,value);
+      if constexpr( std::is_integral_v<T>     ) _mm256_storeu_si256((__m256i*)(ptr), value);
+    }
+    else
+    {
+      apply<N::value>( [&](auto... I) { ((*ptr++ = value[I]), ...); } );
+    }
   }
 
-  template< typename T, typename N,std::size_t A
-          , typename = std::enable_if_t<std::is_integral_v<T>>
-          >
+  template<typename T, typename N, std::size_t A>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(avx_)
-                              , pack<T,N,avx_> const& value, aligned_ptr<T,A> ptr
+                              , pack<T,N,avx_> const& value
+                              , aligned_ptr<T,A> ptr
+                              , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
-    static constexpr auto   alg = pack<T,N,avx_>::static_alignment;
-    if constexpr(A >= alg)  _mm256_store_si256((__m256i*)(ptr.get()), value);
-    else                    store(value,ptr.get());
+    static constexpr auto  alg = pack<T,N,avx_>::static_alignment;
+
+    if constexpr(N::value*sizeof(T) == limits<avx_>::bytes && A >= alg)
+    {
+      if constexpr( std::is_same_v<T,double>  ) _mm256_store_pd(ptr.get(),value);
+      if constexpr( std::is_same_v<T,float>   ) _mm256_store_ps(ptr.get(),value);
+      if constexpr( std::is_integral_v<T>     ) _mm256_store_si256((__m256i*)(ptr.get()), value);
+    }
+    else
+    {
+      store(value,ptr.get());
+    }
   }
 } }
 
