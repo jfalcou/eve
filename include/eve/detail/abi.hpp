@@ -25,7 +25,7 @@
 #if defined(_MSC_VER)
 #define EVE_MAYBE_FORCEINLINE inline
 #else
-#define EVE_MAYBE_FORCEINLINEEVE_FORCEINLINE
+#define EVE_MAYBE_FORCEINLINE EVE_FORCEINLINE
 #endif
 
 // Captures math related options and translate to proper setup
