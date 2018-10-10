@@ -90,6 +90,14 @@ namespace eve { namespace detail
     if constexpr(sizeof...(vs)==1)
       return _mm256_set1_epi8(vs...);
   }
+
+  //------------------------------------------------------------------------------------------------
+  // logical cases
+  template<typename T, typename... Vs>
+  EVE_FORCEINLINE auto make( as_<logical<T>> const&, eve::avx_ const&, Vs... vs) noexcept
+  {
+    return make(as_<T>{},eve::avx_{},logical<T>(vs).mask()...);
+  }
 } }
 
 #if defined(EVE_COMP_IS_GNUC)

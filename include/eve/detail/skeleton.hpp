@@ -29,6 +29,38 @@ namespace eve { namespace detail
       return std::forward<T>(t);
   }
 
+  // Upper values extraction
+  template<typename T> EVE_FORCEINLINE constexpr auto upper( T&& t ) noexcept
+  {
+    if constexpr( ext::is_pack_v<T> )
+    {
+      if constexpr( ext::has_abi_v<T,avx_> )
+        return std::forward<T>(t).slice(upper_);
+      else
+        return std::forward<T>(t).storage()[1];
+    }
+    else
+    {
+      return std::forward<T>(t);
+    }
+  }
+
+  // Lower values extraction
+  template<typename T> EVE_FORCEINLINE constexpr auto lower( T&& t ) noexcept
+  {
+    if constexpr( ext::is_pack_v<T> )
+    {
+      if constexpr( ext::has_abi_v<T,avx_> )
+        return std::forward<T>(t).slice(lower_);
+      else
+        return std::forward<T>(t).storage()[0];
+    }
+    else
+    {
+      return std::forward<T>(t);
+    }
+  }
+
   // Compute a transformed pack type
   template<typename F, typename... Ts>
   struct pack_result
@@ -68,30 +100,14 @@ namespace eve { namespace detail
   {
     using pack_t = typename pack_result<Func,Ts...>::type;
 
-    if constexpr( (ext::has_abi_v<Ts,avx_> || ...) )
+    auto aggregate_pack = [](auto&& f, auto&&... ts) -> decltype(auto)
     {
-      auto aggregate_pack = [](auto&& f, auto&&... ts)
-      {
-        return  pack_t{ std::forward<Func>(f)(std::forward<Ts>(ts).slice(lower_)...)
-                      , std::forward<Func>(f)(std::forward<Ts>(ts).slice(upper_)...)
-                      };
-      };
+      return  pack_t{ std::forward<Func>(f)( lower(std::forward<Ts>(ts))...)
+                    , std::forward<Func>(f)( upper(std::forward<Ts>(ts))...)
+                    };
+    };
 
-      return aggregate_pack(std::forward<Func>(f),std::forward<Ts>(ts)...);
-    }
-    else
-    {
-      auto aggregate_other = [](auto&& f, auto&&... ts)
-      {
-        using stg_t = typename pack_t::storage_type;
-        return  pack_t{ stg_t { std::forward<Func>(f)(std::forward<Ts>(ts).storage()[0]...)
-                              , std::forward<Func>(f)(std::forward<Ts>(ts).storage()[1]...)
-                              }
-                      };
-      };
-
-      return aggregate_other(std::forward<Func>(f),std::forward<Ts>(ts)...);
-    }
+    return aggregate_pack(std::forward<Func>(f),std::forward<Ts>(ts)...);
   }
 } }
 

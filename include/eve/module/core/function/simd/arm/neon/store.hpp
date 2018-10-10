@@ -21,6 +21,7 @@ namespace eve { namespace detail
   template<typename T, typename N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,N,neon64_> const& value, T* ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     if constexpr(N::value*sizeof(T) == limits<neon64_>::bytes)
@@ -56,6 +57,7 @@ namespace eve { namespace detail
   template<typename T, typename N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,N,neon128_> const& value, T* ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     #if defined(__aarch64__)
@@ -87,6 +89,7 @@ namespace eve { namespace detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     if constexpr( N >= limits<neon64_>::bytes )
@@ -122,6 +125,7 @@ namespace eve { namespace detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     if constexpr( N >= limits<neon128_>::bytes )
@@ -157,6 +161,7 @@ namespace eve { namespace detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     store(value, ptr.get());
@@ -165,6 +170,7 @@ namespace eve { namespace detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(neon128_)
                               , pack<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
   {
     store(value, ptr.get());

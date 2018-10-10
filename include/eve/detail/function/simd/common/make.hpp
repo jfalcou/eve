@@ -11,6 +11,7 @@
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/logical.hpp>
 #include <eve/as.hpp>
 #include <cstddef>
 
@@ -52,13 +53,8 @@ namespace eve { namespace detail
   EVE_FORCEINLINE Pack make(as_<Pack> const&, eve::aggregated_ const&, Value vs) noexcept
   {
     using sub_t = typename Pack::storage_type::value_type;
-
-    Pack that;
     sub_t sub_value(vs);
-
-    that.storage()[0] = that.storage()[1] = sub_value;
-
-    return that;
+    return Pack{sub_value,sub_value};
   }
 } }
 

@@ -38,4 +38,6 @@
 #endif
 #endif
 
+#include <eve/detail/function/simd/common/load_logical.hpp>
+
 #endif

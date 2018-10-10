@@ -10,5 +10,4 @@
 
 #include <cstdint>
 using Type = std::uint64_t;
-#include "aligned_store.hpp"
 #include "store.hpp"

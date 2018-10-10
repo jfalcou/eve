@@ -92,6 +92,17 @@ namespace eve { namespace detail
     else if constexpr (sz == 2)
       return that_t(l[0],h[0]);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logicals
+  template<typename T, typename N>
+  EVE_FORCEINLINE
+  typename pack<logical<T>, typename N::combined_type>::storage_type
+  combine(sse2_ const&, pack<logical<T>,N,sse_> const& l, pack<logical<T>,N,sse_> const& h) noexcept
+  {
+    using that_t = pack<logical<T>,typename N::combined_type>;
+    return that_t( typename that_t::storage_type{l,h} );
+  }
 } }
 
 #endif

@@ -11,86 +11,126 @@
 #define LOAD_HPP
 
 #include <eve/pack.hpp>
+#include <eve/logical.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
+#include <list>
+
+using eve::fixed;
+using eve::as_aligned;
 
 using eve::fixed;
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 1 element" )
+TTS_CASE_TPL( "Check ctor from unaligned pointer for pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
+  std::array<Type,T::value> ref;
 
-  std::array<Type,1> ref{ 42 };
-  pack<Type,fixed<1>> simd( &ref[0] );
+  Type k = {};
+  for(auto& e : ref) e = k++;
+
+  pack<Type,T> simd( &ref[0] );
 
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 2 elements" )
+TTS_CASE_TPL( "Check ctor from unaligned pointer for logical pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
+  using eve::logical;
 
-  std::array<Type,2> ref{ 42, 69 };
-  pack<Type,eve::fixed<2>> simd( &ref[0] );
+  std::array<logical<Type>,T::value> ref;
+
+  logical<Type> k = true;
+  for(auto& e : ref) e = (k = !k);
+
+  pack<logical<Type>,T> simd( &ref[0] );
 
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 4 elements" )
+TTS_CASE_TPL( "Check ctor from aligned pointer for pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
+  constexpr auto algt = pack<Type,fixed<1>>::alignment();
 
-  std::array<Type,4> ref{ 42, 69, 13, 37 };
-  pack<Type,eve::fixed<4>> simd( &ref[0] );
+  alignas(algt) std::array<Type,T::value> ref;
 
+  Type k = {};
+  for(auto& e : ref) e = k++;
+
+  pack<Type,T> simd( as_aligned<algt>(&ref[0]) );
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 8 elements" )
+TTS_CASE_TPL( "Check ctor from aligned pointer for logical pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
+  using eve::logical;
+  constexpr auto algt = pack<logical<Type>,fixed<1>>::alignment();
 
-  std::array<Type,8> ref{ 4, 2, 6, 9, 1, 3, 3, 7 };
-  pack<Type,eve::fixed<8>> simd( &ref[0] );
+  alignas(algt) std::array<logical<Type>,T::value> ref;
 
+  logical<Type> k = true;
+  for(auto& e : ref) e = (k = !k);
+
+  pack<logical<Type>,T> simd( as_aligned<algt>(&ref[0]) );
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 16 elements" )
+TTS_CASE_TPL( "Check ctor from range for pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
 
-  std::array<Type,16> ref{ 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7 };
-  pack<Type,eve::fixed<16>> simd( &ref[0] );
+  std::list<Type> ref(T::value);
 
-  TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  Type k = {};
+  for(auto& e : ref) e = k++;
+
+  {
+    pack<Type,T> simd( ref );
+    TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  }
+
+  {
+    pack<Type,T> simd( ref.begin(), ref.end() );
+    TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  }
 }
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 32 elements" )
+TTS_CASE_TPL( "Check ctor from range for logical pack"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
 {
   using eve::pack;
+  using eve::logical;
 
-  std::array<Type,32> ref { 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          , 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          };
-  pack<Type,eve::fixed<32>> simd( &ref[0] );
+  std::list<logical<Type>> ref(T::value);
 
-  TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
-}
+  logical<Type> k = true;
+  for(auto& e : ref) e = (k = !k);
 
-TTS_CASE( "Check ctor from unaligned pointer for pack of 64 elements" )
-{
-  using eve::pack;
+  {
+    pack<logical<Type>,T> simd( ref );
+    TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  }
 
-  std::array<Type,64> ref { 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          , 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          , 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          , 4, 2, 6, 9, 1, 3, 3, 7, 4, 2, 6, 9, 1, 3, 3, 7
-                          };
-  pack<Type,eve::fixed<64>> simd( &ref[0] );
-
-  TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  {
+    pack<logical<Type>,T> simd( ref.begin(), ref.end() );
+    TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
+  }
 }
 
 #endif
