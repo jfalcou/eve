@@ -23,18 +23,21 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr
-                            , std::enable_if_t<(sizeof(T)<8) && std::is_arithmetic_v<T>>* = 0
-                            ) noexcept
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
+                        requires( typename pack<T,N>::storage_type
+                                , Arithmetic<T>, If<(sizeof(T)<8)>
+                                )
   {
     return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::ppc_ const& mode
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::ppc_ const& mode
                             , aligned_ptr<T,Align> ptr
-                            , std::enable_if_t<(sizeof(T)<8) && std::is_arithmetic_v<T>>* = 0
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type
+                                , Arithmetic<T>, If<(sizeof(T)<8)>
+                                )
   {
     if constexpr( Align >= 16)
       return vec_ld(0, ptr.get());

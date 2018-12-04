@@ -54,12 +54,12 @@ namespace eve { namespace detail
 
   // -----------------------------------------------------------------------------------------------
   // integers
-  template< typename T, typename N
-          , typename = std::enable_if_t<std::is_integral_v<T>>
-          >
-  EVE_FORCEINLINE auto combine( sse2_ const&
-                              , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
-                              ) noexcept
+  template< typename T, typename N>
+  EVE_FORCEINLINE auto  combine ( sse2_ const&
+                                , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
+                                ) noexcept
+                        requires( pack<T,typename N::combined_type>, Integral<T>)
+
   {
     using that_t = pack<T,typename N::combined_type>;
     constexpr auto sz = that_t::static_size;

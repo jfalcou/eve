@@ -117,6 +117,9 @@ namespace eve { namespace detail
   template<typename T>
   using Arithmetic = std::enable_if_t<std::is_arithmetic_v<T>>;
 
+  template<typename T>
+  using Integral = std::enable_if_t<std::is_integral_v<T>>;
+
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
 } }
