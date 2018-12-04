@@ -104,13 +104,24 @@ namespace eve { namespace detail
   }
 
   // Recurrent pseudo-concept checkers
-  template<typename From, typename To, typename Ret = void>
-  using Convertible = std::enable_if_t<std::is_convertible_v<From,To>,Ret>;
+  template<typename R, typename Enabler> struct require_impl;
+  template<typename R>                   struct require_impl<R, void> { using type = R; };
+
+  template<typename Return, typename... Ts>
+  struct require_check : require_impl<Return,std::void_t<Ts...>>
+  {};
+
+  template<typename From, typename To>
+  using Convertible = std::enable_if_t<std::is_convertible_v<From,To>>;
+
+  template<typename T>
+  using Arithmetic = std::enable_if_t<std::is_arithmetic_v<T>>;
+
+  template<bool Condition>
+  using If = std::enable_if_t<Condition>;
 } }
 
 // Pseudo require macro
-#define requires_type(...)  __VA_ARGS__
-#define requires(...)       __VA_ARGS__* = 0
-
+#define requires(...)  -> typename ::eve::detail::require_check<__VA_ARGS__>::type
 
 #endif

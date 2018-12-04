@@ -107,8 +107,8 @@ namespace eve
     pointer get() const  noexcept { return pointer_; }
     operator pointer() const  noexcept { return pointer_; }
 
-    decltype(auto) operator[](std::size_t i) const  noexcept  { return pointer_[i]; }
-    decltype(auto) operator[](std::size_t i)        noexcept  { return pointer_[i]; }
+    Type const& operator[](std::size_t i) const  noexcept  { return pointer_[i]; }
+    Type&       operator[](std::size_t i)        noexcept  { return pointer_[i]; }
 
     decltype(auto) operator*() const  noexcept  { return *pointer_; }
     decltype(auto) operator*()        noexcept  { return *pointer_; }

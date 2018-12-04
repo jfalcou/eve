@@ -27,6 +27,9 @@ namespace eve { namespace detail
 
   template<typename T>
   using is_native_t = typename is_native<T>::type;
+
+  // Assocaited Concept-like entity
+  template<typename T> using Native = std::enable_if_t<is_native_v<T>>;
 } }
 
 #endif

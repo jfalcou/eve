@@ -14,8 +14,8 @@
 ///     year: EVE_VERSION / 100000 % 100
 ///    month: EVE_VERSION / 1000 % 100
 ///    patch: EVE_VERSION % 1000
-#define EVE_VERSION 41701002
+#define EVE_VERSION 51812000
 
-#define EVE_LIB_VERSION "4.17.1.2"
+#define EVE_LIB_VERSION "5.18.12.0"
 
 #endif

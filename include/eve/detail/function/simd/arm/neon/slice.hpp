@@ -57,10 +57,9 @@ namespace eve { namespace detail
     }
   }
 
-  template< typename T, typename N, typename Slice
-          , typename = std::enable_if_t<(N::value>1)>
-          >
-  EVE_FORCEINLINE auto slice( pack<T,N,neon64_> const& a, Slice const& ) noexcept
+  template<typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto  slice( pack<T,N,neon64_> const& a, Slice const& ) noexcept
+                        requires( pack<T,typename N::split_type>, If<(N::value>1)>)
   {
     using type = pack<T,typename N::split_type>;
     if constexpr(Slice::value)
