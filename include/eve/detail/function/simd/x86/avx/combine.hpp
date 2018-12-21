@@ -27,45 +27,21 @@ namespace eve { namespace detail
   }
 
   // -----------------------------------------------------------------------------------------------
-  // double
-  template< typename N
-          , typename = std::enable_if_t<N::value==2>
-          >
-  EVE_FORCEINLINE auto combine( avx_ const&
-                              , pack<double,N,sse_> const& l, pack<double,N,sse_> const& h
-                              ) noexcept
+  // All SSE types
+  template<typename T,typename N>
+  EVE_FORCEINLINE auto  combine ( avx_ const&
+                                , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
+                                ) noexcept
+                        requires( pack<T,typename N::combined_type>, If<(N::value*sizeof(T)==16)>)
   {
-    using that_t = pack<double,typename N::combined_type>;
-    that_t that = _mm256_castpd128_pd256(l);
-    return _mm256_insertf128_pd(that, h, 1);
-  }
+    if constexpr( std::is_same_v<T,double> )
+      return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);
 
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template< typename N
-          , typename = std::enable_if_t<N::value==4>
-          >
-  EVE_FORCEINLINE auto combine( avx_ const&
-                              , pack<float,N,sse_> const& l, pack<float,N,sse_> const& h
-                              ) noexcept
-  {
-    using that_t = pack<float,typename N::combined_type>;
-    that_t that = _mm256_castps128_ps256(l);
-    return _mm256_insertf128_ps(that, h, 1);
-  }
+    if constexpr( std::is_same_v<T,float> )
+      return _mm256_insertf128_ps(_mm256_castps128_ps256(l), h, 1);
 
-  // -----------------------------------------------------------------------------------------------
-  // integers
-  template< typename T,typename N
-          , typename = std::enable_if_t<std::is_integral_v<T> && (N::value*sizeof(T)==16)>
-          >
-  EVE_FORCEINLINE auto combine( avx_ const&
-                              , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
-                              ) noexcept
-  {
-    using that_t = pack<T,typename N::combined_type>;
-    that_t that = _mm256_castsi128_si256(l);
-    return _mm256_insertf128_si256(that, h, 1);
+    if constexpr( std::is_integral_v<T> )
+      return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
   }
 } }
 

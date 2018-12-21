@@ -62,6 +62,7 @@ namespace eve { namespace detail
   {
     template<typename... Vs> auto operator()(Vs... vs) const
     {
+      using ltype = logical<T>;
       using type = ext::as_register_t<logical<T>,fixed<sizeof...(vs)>,ABI>;
       type that{ ltype(vs).bits()... };
       return that;

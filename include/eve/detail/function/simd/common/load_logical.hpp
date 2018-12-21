@@ -21,19 +21,20 @@ namespace eve { namespace detail
   //------------------------------------------------------------------------------------------------
   // Common logical case
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto load ( as_<pack<logical<T>,N>> const& tgt, ABI const& mode, logical<T>* ptr
-                            , typename std::enable_if_t< is_native_v<ABI> >* = 0
+  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
+                            , logical<T>* ptr
                             ) noexcept
+                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
   {
     using type    = typename pack<logical<T>,N>::storage_type;
     return type( load(as_<pack<T,N>>{}, mode, (T*)ptr) );
   }
 
   template<typename T, typename N, std::size_t Align, typename ABI>
-  EVE_FORCEINLINE auto load ( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
+  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
                             , aligned_ptr<logical<T>,Align> ptr
-                            , typename std::enable_if_t< is_native_v<ABI> >* = 0
                             ) noexcept
+                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
   {
     using type    = typename pack<logical<T>,N>::storage_type;
     return type ( load( as_<pack<T,N>>{},mode

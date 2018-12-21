@@ -22,19 +22,15 @@ namespace eve { namespace detail
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE pack<T,N,ABI> minus_( EVE_SUPPORTS(simd_)
-                                      , pack<T,N,ABI> const& v0, U const& v1
-                                      , requires(Convertible<U,T>)
-                                      ) noexcept
+  EVE_FORCEINLINE auto  minus_( EVE_SUPPORTS(simd_), pack<T,N,ABI> const& v0, U const& v1) noexcept
+                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::minus( v0, pack<T,N,ABI>(static_cast<T>(v1)) );
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE pack<T,N,ABI> minus_( EVE_SUPPORTS(simd_)
-                                      , U const& v0, pack<T,N,ABI> const& v1
-                                      , requires(Convertible<U,T>)
-                                      ) noexcept
+  EVE_FORCEINLINE auto  minus_( EVE_SUPPORTS(simd_), U const& v0, pack<T,N,ABI> const& v1) noexcept
+                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::minus( pack<T,N,ABI>(static_cast<T>(v0)), v1 );
   }
@@ -62,19 +58,19 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N, typename U>
-  EVE_FORCEINLINE pack<T,N,emulated_> minus_( EVE_SUPPORTS(simd_)
-                                            , pack<T,N,emulated_> const& v0, U const& v1
-                                            , requires(Convertible<U,T>)
-                                            ) noexcept
+  EVE_FORCEINLINE auto  minus_( EVE_SUPPORTS(simd_)
+                              , pack<T,N,emulated_> const& v0, U const& v1
+                              ) noexcept
+                        requires( pack<T,N,emulated_>, detail::Convertible<U,T> )
   {
     return map( eve::minus, v0, static_cast<T>(v1));
   }
 
   template<typename T, typename N, typename U>
-  EVE_FORCEINLINE pack<T,N,emulated_> minus_( EVE_SUPPORTS(simd_)
-                                            , U const& v0, pack<T,N,emulated_> const& v1
-                                            , requires(Convertible<U,T>)
-                                            ) noexcept
+  EVE_FORCEINLINE auto  minus_( EVE_SUPPORTS(simd_)
+                              , U const& v0, pack<T,N,emulated_> const& v1
+                              ) noexcept
+                        requires( pack<T,N,emulated_>, detail::Convertible<U,T> )
   {
     return map( eve::minus, static_cast<T>(v0), v1);
   }
@@ -91,15 +87,15 @@ namespace eve
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE requires_type(detail::Convertible<U,T,pack<T,N,ABI>>)
-  operator- ( pack<T,N,ABI> const& v0, U const& v1 ) noexcept
+  EVE_FORCEINLINE auto  operator- ( pack<T,N,ABI> const& v0, U const& v1 ) noexcept
+                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::minus(v0, v1);
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE requires_type(detail::Convertible<U,T,pack<T,N,ABI>>)
-  operator- ( U const& v0, pack<T,N,ABI> const& v1) noexcept
+  EVE_FORCEINLINE auto  operator- ( U const& v0, pack<T,N,ABI> const& v1) noexcept
+                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::minus(v0, v1);
   }

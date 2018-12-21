@@ -11,6 +11,7 @@
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOAD_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
@@ -23,9 +24,8 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon128_ const&, T* ptr
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
-                            ) noexcept
+  EVE_FORCEINLINE auto  load ( as_<pack<T,N>> const&, eve::neon128_ const&, T* ptr) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     #if defined(__aarch64__)
     if constexpr( std::is_same_v<T,double> ) return vld1q_f64(ptr);
@@ -53,9 +53,8 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon64_ const&, T* ptr
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
-                            ) noexcept
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::neon64_ const&, T* ptr) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     #if defined(__aarch64__)
     if constexpr( std::is_same_v<T,double> ) return vld1_f64(ptr);
@@ -84,10 +83,10 @@ namespace eve { namespace detail
 
 #if defined(EVE_COMP_IS_MSVC)
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon128_ const&
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::neon128_ const&
                             , aligned_ptr<T,Align> p
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     auto ptr = p.get();
 
@@ -124,10 +123,10 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::neon64_ const&
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::neon64_ const&
                             , aligned_ptr<T,Align> p
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     auto ptr = p.get();
 
@@ -164,19 +163,19 @@ namespace eve { namespace detail
   }
 #else
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon128_ const& mode
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::neon128_ const& mode
                             , aligned_ptr<T,Align> ptr
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     return load(tgt,mode,ptr.get());
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::neon64_ const& mode
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::neon64_ const& mode
                             , aligned_ptr<T,Align> ptr
-                            , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     return load(tgt,mode,ptr.get());
   }

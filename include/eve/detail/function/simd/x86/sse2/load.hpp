@@ -10,6 +10,7 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_LOAD_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_LOAD_HPP_INCLUDED
 
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
@@ -22,9 +23,8 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const&, eve::sse_ const&, T* p
-                            , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
-                            ) noexcept
+  EVE_FORCEINLINE auto  load(as_<pack<T,N>> const&, eve::sse_ const&, T* p) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     if constexpr( std::is_same_v<T, double> ) return _mm_loadu_pd(p);
     if constexpr( std::is_same_v<T, float>  ) return _mm_loadu_ps(p);
@@ -32,9 +32,10 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto load ( as_<pack<T,N>> const& tgt, eve::sse_ const& mode, aligned_ptr<T,A> p
-                            , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::sse_ const& mode
+                            , aligned_ptr<T,A> p
                             ) noexcept
+                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
   {
     if constexpr( A >= 16)
     {

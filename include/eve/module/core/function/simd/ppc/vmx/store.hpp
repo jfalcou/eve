@@ -11,6 +11,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_STORE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/arch/limits.hpp>
@@ -19,10 +20,8 @@
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(vmx_)
-                              , pack<T,N,ppc_> const& value, T* ptr
-                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
-                              ) noexcept
+  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(vmx_), pack<T,N,ppc_> const& value, T* ptr) noexcept
+                        requires( void, Arithmetic<T>)
   {
     if constexpr(N::value*sizeof(T) == limits<vmx_>::bytes)
       *((typename pack<T,N,ppc_>::storage_type*)(ptr)) = value;
@@ -31,10 +30,10 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename S, std::size_t N>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(vmx_)
+  EVE_FORCEINLINE auto  store_ ( EVE_SUPPORTS(vmx_)
                               , pack<T,S,ppc_> const& value, aligned_ptr<T,N> ptr
-                              , std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
+                        requires( void, Arithmetic<T>)
   {
     if constexpr( N >= limits<vmx_>::bytes )
       vec_st(value.storage(), 0, ptr.get());

@@ -11,16 +11,17 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_SSE2_STORE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
 namespace eve { namespace detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(sse2_)
+  EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
                               , pack<T,N,sse_> const& value, T* ptr
-                              , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
                               ) noexcept
+                  requires( void, detail::Arithmetic<T> )
   {
     if constexpr(N::value*sizeof(T) == limits<sse2_>::bytes)
     {
@@ -35,11 +36,10 @@ namespace eve { namespace detail
   }
 
   template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(sse2_)
-                              , pack<T,N,sse_> const& value
-                              , aligned_ptr<T,A> ptr
-                              , typename std::enable_if_t<std::is_arithmetic_v<T>>* = 0
+  EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
+                              , pack<T,N,sse_> const& value, aligned_ptr<T,A> ptr
                               ) noexcept
+                  requires( void, detail::Arithmetic<T> )
   {
     static constexpr auto  alg = pack<T,N,sse_>::static_alignment;
 

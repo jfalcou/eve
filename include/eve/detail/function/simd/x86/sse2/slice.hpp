@@ -20,81 +20,69 @@
 namespace eve { namespace detail
 {
   // -----------------------------------------------------------------------------------------------
-  // double
-  template< typename N, typename Slice
-          , typename = std::enable_if_t<(N::value>1)>
-          >
+  // Single slice
+  template<typename N, typename Slice>
   EVE_FORCEINLINE auto slice( pack<double,N,sse_> const& a, Slice const& ) noexcept
+                  requires(pack<double,typename N::split_type>,If<(N::value>1)>)
   {
+    using that_t = pack<double,typename N::split_type>;
+
     if constexpr(Slice::value)
-      return pack<double,typename N::split_type>(_mm_shuffle_pd(a,a,0x01));
+    {
+      return that_t(_mm_shuffle_pd(a,a,0x01));
+    }
     else
-      return pack<double,typename N::split_type>(a.storage());
+    {
+      return that_t(a.storage());
+    }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template< typename N, typename Slice
-          , typename = std::enable_if_t<(N::value>1)>
-          >
+  template<typename N, typename Slice>
   EVE_FORCEINLINE auto slice( pack<float,N,sse_> const& a, Slice const& ) noexcept
+                  requires(pack<float,typename N::split_type>,If<(N::value>1)>)
   {
+    using that_t = pack<float,typename N::split_type>;
+
     if constexpr(Slice::value)
     {
-      auto select = [](auto const& v, auto const& size)
-      {
-        using size_ = std::decay_t<decltype(size)>;
-        if constexpr(size_::value == 4) return _mm_shuffle_ps(v,v,0x0E);
-        if constexpr(size_::value == 2) return _mm_shuffle_ps(v,v,0x11);
-      };
-
-      return pack<float,typename N::split_type>(select(a,N{}));
+      if constexpr(N::value == 4) return that_t(_mm_shuffle_ps(a,a,0x0E));
+      if constexpr(N::value == 2) return that_t(_mm_shuffle_ps(a,a,0x11));
     }
     else
     {
-      return pack<float,typename N::split_type>(a.storage());
+      return that_t(a.storage());
     }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // integers
-  template< typename T,typename N, typename Slice
-          , typename = std::enable_if_t <   std::is_integral_v<T>
-                                        &&  (N::value>1)
-                                        >
-          >
+  template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice( pack<T,N,sse_> const& a, Slice const& ) noexcept
+                  requires( pack<T,typename N::split_type>
+                          , If<(N::value>1)>, Integral<T>
+                          )
   {
+    using that_t = pack<T,typename N::split_type>;
+
     if constexpr(Slice::value)
     {
-      auto select = [](auto const& v)
-      {
-        using that_t = pack<T,typename N::split_type>;
+      constexpr auto bytes_size = N::value*sizeof(T);
+      constexpr auto lims       = limits<eve::sse2_>::bytes;
 
-        if constexpr(N::value == 2)
-          return that_t(v[1]);
-        if constexpr(N::value*sizeof(T) == limits<eve::sse2_>::bytes)
-          return that_t(_mm_shuffle_epi32(v,0xEE));
-        if constexpr(N::value*sizeof(T)*2 == limits<eve::sse2_>::bytes)
-          return that_t(_mm_shuffle_epi32(v,0x01));
-        else
-          return that_t(_mm_shufflelo_epi16(v,0x01));
-      };
-
-      return pack<T,typename N::split_type>(select(a));
+      if constexpr(  N::value   == 2   )  return that_t(a[1]);
+      if constexpr(  bytes_size == lims)  return that_t(_mm_shuffle_epi32(a,0xEE));
+      if constexpr(2*bytes_size == lims)  return that_t(_mm_shuffle_epi32(a,0x01));
+      else                                return that_t(_mm_shufflelo_epi16(a,0x01));
     }
     else
     {
-      return pack<T,typename N::split_type>(a.storage());
+      return that_t(a.storage());
     }
   }
 
   // -----------------------------------------------------------------------------------------------
   // Both slice
-  template< typename N, typename T
-          , typename = std::enable_if_t<(N::value>1)>
-          >
-  EVE_FORCEINLINE auto slice( pack<T,N,sse_> const& a ) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto  slice( pack<T,N,sse_> const& a ) noexcept
+                        requires(std::array<pack<T,typename N::split_type>,2>,If<(N::value>1)>)
   {
     std::array<pack<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
     return that;
