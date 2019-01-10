@@ -77,7 +77,7 @@ set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
 set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
 
 download_project( PROJ                tts
-                  GIT_REPOSITORY      git@lri-git:esquisse/tts
+                  GIT_REPOSITORY      git@github.com:jfalcou/tts.git
                   GIT_TAG             master
                   "UPDATE_DISCONNECTED 1"
                   QUIET
