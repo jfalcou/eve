@@ -45,65 +45,58 @@ namespace eve { namespace detail
   }
 
   // -----------------------------------------------------------------------------------------------
-  // *int64 cases 2 & 1
-  template<typename T, typename V0, typename V1>
-  EVE_FORCEINLINE auto  make( as_<T> const&, eve::sse_ const&, V0 v0, V1 v1) noexcept
-                        requires( __m128i, Integral<T>, If<(sizeof(T)==8)> )
-  {
-    __m128i that;
-    T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
-    ptr[0] = v0;
-    ptr[1] = v1;
-    detail::ignore(that);
-
-    return that;
-  }
-
-  template<typename T, typename V0>
-  EVE_FORCEINLINE auto  make( as_<T> const&, eve::sse_ const&, V0 v0) noexcept
-                        requires( __m128i, Integral<T>, If<(sizeof(T)==8)> )
-  {
-    __m128i that;
-    T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
-    ptr[0] = v0;
-    ptr[1] = v0;
-
-    detail::ignore(that);
-
-    return that;
-  }
-
+  // integer cases
   template<typename T,typename... Vs>
   EVE_FORCEINLINE auto  make(as_<T> const&, eve::sse_ const&, Vs... vs) noexcept
-                        requires( __m128i, Integral<T>, If<sizeof(T)!=8>)
+                  requires( __m128i, Integral<T>)
   {
-    if constexpr(sizeof...(vs)==1)
+    if(sizeof(T)==8)
     {
-      if(sizeof(T)==4)  return _mm_set1_epi32(vs...);
-      if(sizeof(T)==2)  return _mm_set1_epi16(vs...);
-      if(sizeof(T)==1)  return _mm_set1_epi8(vs...);
+      __m128i that;
+      T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
+      T  d[] = { static_cast<T>(vs)...};
+      ptr[0] = d[0];
+      ptr[1] = d[1];
+      detail::ignore(that);
+      return that;
     }
 
     if constexpr(sizeof...(vs) == 4   && sizeof(T)==4)
-      return _mm_setr_epi32(vs...);
+      return _mm_setr_epi32( static_cast<int>(vs)... );
     if constexpr(sizeof...(vs) == 2   && sizeof(T)==4)
-      return _mm_setr_epi32(vs...,0,0);
+      return _mm_setr_epi32( static_cast<int>(vs)... ,0,0);
 
     if constexpr(sizeof...(vs) == 8   && sizeof(T)==2)
-      return _mm_setr_epi16(vs...);
+      return _mm_setr_epi16( static_cast<short>(vs)... );
     if constexpr(sizeof...(vs) == 4   && sizeof(T)==2)
-      return _mm_setr_epi16(vs...,0,0,0,0);
+      return _mm_setr_epi16( static_cast<short>(vs)... ,0,0,0,0);
     if constexpr(sizeof...(vs) == 2   && sizeof(T)==2)
-      return _mm_setr_epi16(vs...,0,0,0,0,0,0);
+      return _mm_setr_epi16( static_cast<short>(vs)... ,0,0,0,0,0,0);
 
     if constexpr(sizeof...(vs) == 16  && sizeof(T)==1)
-      return _mm_setr_epi8(vs...);
+      return _mm_setr_epi8( static_cast<char>(vs)... );
     if constexpr(sizeof...(vs) ==  8  && sizeof(T)==1)
-      return _mm_setr_epi8(vs...,0,0,0,0,0,0,0,0);
+      return _mm_setr_epi8( static_cast<char>(vs)... ,0,0,0,0,0,0,0,0);
     if constexpr(sizeof...(vs) ==  4  && sizeof(T)==1)
-      return _mm_setr_epi8(vs...,0,0,0,0,0,0,0,0,0,0,0,0);
+      return _mm_setr_epi8( static_cast<char>(vs)... ,0,0,0,0,0,0,0,0,0,0,0,0);
     if constexpr(sizeof...(vs) ==  2  && sizeof(T)==1)
-      return _mm_setr_epi8(vs...,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+      return _mm_setr_epi8( static_cast<char>(vs)... ,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+  }
+
+  template<typename T,typename Vs>
+  EVE_FORCEINLINE auto  make(as_<T> const&, eve::sse_ const&, Vs vs) noexcept requires( __m128i, Integral<T>)
+  {
+    if(sizeof(T)==8)
+    {
+      __m128i that;
+      T* ptr = reinterpret_cast<detail::alias_t<T>*>( &that );
+      ptr[0] =  ptr[1] = static_cast<T>(vs);
+      detail::ignore(that);
+      return that;
+    }
+    if(sizeof(T)==4)  return _mm_set1_epi32( static_cast<int>(vs)   );
+    if(sizeof(T)==2)  return _mm_set1_epi16( static_cast<short>(vs) );
+    if(sizeof(T)==1)  return _mm_set1_epi8 ( static_cast<char>(vs)  );
   }
 
   //------------------------------------------------------------------------------------------------
