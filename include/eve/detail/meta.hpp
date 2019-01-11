@@ -50,22 +50,16 @@ namespace eve { namespace detail
   };
 
   // Generate integral types from sign + size
-  template<std::size_t Size, typename Sign = unsigned> struct make_integer
-  {
-    template<std::size_t Sz, typename S, typename Dummy = void> struct fetch;
+  template<std::size_t Size, typename Sign = unsigned> struct make_integer;
 
-    template<typename Dummy> struct fetch<1,signed,Dummy> { using type = std::int8_t;  };
-    template<typename Dummy> struct fetch<2,signed,Dummy> { using type = std::int16_t; };
-    template<typename Dummy> struct fetch<4,signed,Dummy> { using type = std::int32_t; };
-    template<typename Dummy> struct fetch<8,signed,Dummy> { using type = std::int64_t; };
-
-    template<typename Dummy> struct fetch<1,unsigned,Dummy> { using type = std::uint8_t;  };
-    template<typename Dummy> struct fetch<2,unsigned,Dummy> { using type = std::uint16_t; };
-    template<typename Dummy> struct fetch<4,unsigned,Dummy> { using type = std::uint32_t; };
-    template<typename Dummy> struct fetch<8,unsigned,Dummy> { using type = std::uint64_t; };
-
-    using type = typename fetch<Size,Sign>::type;
-  };
+  template<> struct make_integer<1,signed>   { using type = std::int8_t;  };
+  template<> struct make_integer<2,signed>   { using type = std::int16_t; };
+  template<> struct make_integer<4,signed>   { using type = std::int32_t; };
+  template<> struct make_integer<8,signed>   { using type = std::int64_t; };
+  template<> struct make_integer<1,unsigned> { using type = std::uint8_t;  };
+  template<> struct make_integer<2,unsigned> { using type = std::uint16_t; };
+  template<> struct make_integer<4,unsigned> { using type = std::uint32_t; };
+  template<> struct make_integer<8,unsigned> { using type = std::uint64_t; };
 
   template<std::size_t Size, typename Sign = unsigned>
   using make_integer_t = typename make_integer<Size,Sign>::type;
