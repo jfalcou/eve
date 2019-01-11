@@ -39,12 +39,12 @@ TTS_CASE_TPL( "Check splatting constructor for pack<logical>"
 
   {
     pack<logical<Type>,T> simd( true );
-    TTS_EXPECT( std::all_of(simd.begin(), simd.end(), [](auto e) { return e; }) );
+    TTS_EXPECT( std::all_of(simd.begin(), simd.end(), [](auto e) { return e == true; }) );
   }
 
   {
     pack<logical<Type>,T> simd( false );
-    TTS_EXPECT( std::all_of(simd.begin(), simd.end(), [](auto e) { return !e; }) );
+    TTS_EXPECT( std::all_of(simd.begin(), simd.end(), [](auto e) { return e == false; }) );
   }
 }
 
