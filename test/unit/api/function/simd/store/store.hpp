@@ -33,10 +33,10 @@ TTS_CASE_TPL( "Check store behavior to unaligned pointer"
   std::array<Type,3*T::value> ref;
   std::array<Type,3*T::value> target;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(int i=0;i<T::value;++i)
   {
     auto v = filler(i,T::value);
-    ref[i] = ref[i+T::value] = ref[i+2*T::value] = v;
+    ref[i] = ref[i+T::value] = ref[i+2*T::value] = static_cast<Type>(v);
   }
 
   eve::store(simd, &target[0] );
@@ -62,7 +62,7 @@ TTS_CASE_TPL( "Check store behavior to unaligned logical pointer"
   for(std::size_t i=0;i<T::value;++i)
   {
     auto v = filler(i,T::value);
-    ref[i] = ref[i+T::value] = ref[i+2*T::value] = v;
+    ref[i] = ref[i+T::value] = ref[i+2*T::value] = static_cast<Type>(v);
   }
 
   eve::store(simd, &target[0] );
@@ -89,7 +89,7 @@ TTS_CASE_TPL( "Check store behavior to aligned pointer"
   for(std::size_t i=0;i<T::value;++i)
   {
     auto v = filler(i,T::value);
-    ref[i] = ref[i+T::value] = ref[i+2*T::value] = v;
+    ref[i] = ref[i+T::value] = ref[i+2*T::value] = static_cast<Type>(v);
   }
 
   eve::store(simd, as_aligned<algt>(&target[0]) );
@@ -117,7 +117,7 @@ TTS_CASE_TPL( "Check store behavior to aligned pointer of logical"
   for(std::size_t i=0;i<T::value;++i)
   {
     auto v = filler(i,T::value);
-    ref[i] = ref[i+T::value] = ref[i+2*T::value] = v;
+    ref[i] = ref[i+T::value] = ref[i+2*T::value] = static_cast<Type>(v);
   }
 
   eve::store(simd, as_aligned<algt>(&target[0]) );

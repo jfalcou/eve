@@ -60,7 +60,7 @@ TTS_CASE_TPL( "Check ctor from aligned pointer for pack"
             )
 {
   using eve::pack;
-  constexpr auto algt = pack<Type,fixed<1>>::alignment();
+  constexpr auto algt = pack<Type,T>::static_alignment;
 
   alignas(algt) std::array<Type,T::value> ref;
 
@@ -77,7 +77,7 @@ TTS_CASE_TPL( "Check ctor from aligned pointer for logical pack"
 {
   using eve::pack;
   using eve::logical;
-  constexpr auto algt = pack<logical<Type>,fixed<1>>::alignment();
+  constexpr auto algt = pack<Type,T>::static_alignment;
 
   alignas(algt) std::array<logical<Type>,T::value> ref;
 
