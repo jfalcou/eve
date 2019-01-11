@@ -84,7 +84,8 @@ namespace eve { namespace detail
   }
 
   template<typename T,typename Vs>
-  EVE_FORCEINLINE auto  make(as_<T> const&, eve::sse_ const&, Vs vs) noexcept requires( __m128i, Integral<T>)
+  EVE_FORCEINLINE auto  make(as_<T> const&, eve::sse_ const&, Vs vs) noexcept
+                  requires( __m128i, Integral<T>)
   {
     if(sizeof(T)==8)
     {
