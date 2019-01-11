@@ -103,9 +103,8 @@ namespace eve
     }
 
     explicit operator bool() const noexcept { return pointer_ != nullptr; }
-
-    pointer get() const  noexcept { return pointer_; }
-    operator pointer() const  noexcept { return pointer_; }
+                      pointer get() const  noexcept { return pointer_; }
+    explicit operator pointer() const  noexcept { return pointer_; }
 
     Type const& operator[](std::size_t i) const  noexcept  { return pointer_[i]; }
     Type&       operator[](std::size_t i)        noexcept  { return pointer_[i]; }
