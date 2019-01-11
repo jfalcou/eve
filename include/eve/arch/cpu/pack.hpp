@@ -46,7 +46,7 @@ namespace eve
     using cardinal_type           = Size;
     using abi_type                = ABI;
     using value_type              = Type;
-    using size_type               = std::size_t;
+    using size_type               = std::ptrdiff_t;
     using reference               = Type&;
     using const_reference         = Type const&;
     using iterator                = Type*;
@@ -138,7 +138,7 @@ namespace eve
                                           >* = 0
                         ) noexcept
     {
-      for(std::size_t i=0;i<size();++i)
+      for(int i=0;i<size();++i)
         this->operator[](i) = static_cast<Type>(std::forward<Generator>(g)(i,static_size));
     }
 
