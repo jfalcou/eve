@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <utility>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // Value extraction from RandomAccessRange
   template<typename T> EVE_FORCEINLINE constexpr decltype(auto) at( T&& t, std::size_t i ) noexcept
@@ -109,6 +109,6 @@ namespace eve { namespace detail
 
     return aggregate_pack(std::forward<Func>(f),std::forward<Ts>(ts)...);
   }
-} }
+}
 
 #endif
