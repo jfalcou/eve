@@ -16,7 +16,7 @@
 #include <eve/module/core/function/simd/detail/bitwise_cast.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE pack<Target,M,neon64_> bitwise_cast_( EVE_SUPPORTS(neon128_)
@@ -407,6 +407,6 @@ namespace eve { namespace detail
   {
     return l2l_cast_(v0,tgt);
   }
-} }
+}
 
 #endif

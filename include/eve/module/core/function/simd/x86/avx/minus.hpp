@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // double
@@ -50,6 +50,6 @@ namespace eve { namespace detail
   {
     return aggregate( eve::minus, v0, v1 );
   }
-} }
+}
 
 #endif

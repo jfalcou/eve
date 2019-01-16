@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE pack<T,N,ppc_> plus_( EVE_SUPPORTS(vmx_)
@@ -24,6 +24,6 @@ namespace eve { namespace detail
   {
     return vec_add(v0.storage(),v1.storage());
   }
-} }
+}
 
 #endif

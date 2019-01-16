@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template< typename T, typename N
           , typename = std::enable_if_t<std::is_integral_v<T>>
@@ -33,6 +33,6 @@ namespace eve { namespace detail
     else
       return _mm256_sub_epi64(v0,v1);
   }
-} }
+}
 
 #endif

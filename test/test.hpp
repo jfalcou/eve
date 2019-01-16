@@ -15,7 +15,7 @@
 #include <eve/pack.hpp>
 #include <algorithm>
 
-namespace tts { namespace ext
+namespace tts::ext
 {
   template<typename T, typename N, typename ABI, typename EnableIf>
   struct equal<eve::pack<T,N,ABI>,eve::pack<T,N,ABI>,EnableIf>
@@ -26,6 +26,6 @@ namespace tts { namespace ext
       return std::equal(l.begin(),l.end(),r.begin());
     }
   };
-} }
+}
 
 #endif

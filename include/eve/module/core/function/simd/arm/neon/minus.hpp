@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE pack<T,N,neon64_> minus_( EVE_SUPPORTS(neon128_)
@@ -61,6 +61,6 @@ namespace eve { namespace detail
     if constexpr( is_unsigned_int && sizeof(T) == 2 ) return vsubq_u16(v0,v1);
     if constexpr( is_unsigned_int && sizeof(T) == 1 ) return vsubq_u8 (v0,v1);
   }
-} }
+}
 
 #endif

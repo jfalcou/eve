@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -31,6 +31,6 @@ namespace eve { namespace detail
   {
     *ptr = value;
   }
-} }
+}
 
 #endif

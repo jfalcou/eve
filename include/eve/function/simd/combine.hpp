@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/pack.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto combine_ ( EVE_SUPPORTS(cpu_)
@@ -24,5 +24,6 @@ namespace eve { namespace detail
   {
     return pack<T,typename N::combined_type>{a,b};
   }
-} }
+}
+
 #endif

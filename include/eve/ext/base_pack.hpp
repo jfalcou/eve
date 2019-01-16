@@ -15,7 +15,7 @@
 #include <iterator>
 #include <cstddef>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename Pack, typename ABI> struct target_type
   {
@@ -66,6 +66,6 @@ namespace eve { namespace detail
     static EVE_FORCEINLINE auto begin(Storage& s)       noexcept { return s[0].begin(); }
     static EVE_FORCEINLINE auto begin(Storage const& s) noexcept { return s[0].begin(); }
   };
-} }
+}
 
 #endif
