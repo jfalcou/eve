@@ -15,7 +15,7 @@
 #include <eve/as.hpp>
 #include <cstddef>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Emulation
@@ -56,6 +56,6 @@ namespace eve { namespace detail
     sub_t sub_value(vs);
     return Pack{sub_value,sub_value};
   }
-} }
+}
 
 #endif

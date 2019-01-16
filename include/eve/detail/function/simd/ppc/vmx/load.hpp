@@ -20,7 +20,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
@@ -44,7 +44,7 @@ namespace eve { namespace detail
     else
       return load(tgt,mode, ptr.get());
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

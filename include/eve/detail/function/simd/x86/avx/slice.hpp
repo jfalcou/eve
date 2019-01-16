@@ -16,7 +16,7 @@
 #include <type_traits>
 #include <cstddef>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Single slice
@@ -56,6 +56,6 @@ namespace eve { namespace detail
     std::array<pack<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
     return that;
   }
-} }
+}
 
 #endif

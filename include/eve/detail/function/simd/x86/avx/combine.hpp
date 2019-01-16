@@ -13,7 +13,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // All AVX types
@@ -43,6 +43,6 @@ namespace eve { namespace detail
     if constexpr( std::is_integral_v<T> )
       return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
   }
-} }
+}
 
 #endif

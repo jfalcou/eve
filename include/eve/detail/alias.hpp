@@ -29,7 +29,10 @@
 namespace eve::detail
 {
   template<typename T, typename EnableIf = void>
-  struct alias { using type = T EVE_MAY_ALIAS; };
+  struct alias
+  {
+    typedef T EVE_MAY_ALIAS type;
+  };
 
   template<typename T> struct alias<T,std::enable_if_t<std::is_class_v<T>>>
   {

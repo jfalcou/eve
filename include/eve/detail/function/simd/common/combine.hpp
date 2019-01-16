@@ -20,7 +20,7 @@
 #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Emulation
@@ -45,7 +45,7 @@ namespace eve { namespace detail
     using that_t = pack<T,typename N::combined_type>;
     return that_t( typename that_t::storage_type{l,h} );
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

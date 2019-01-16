@@ -20,7 +20,7 @@
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto  load(as_<pack<T,N>> const&, eve::avx_ const&, T* p) noexcept
@@ -48,7 +48,7 @@ namespace eve { namespace detail
       return load(tgt,mode,p.get());
     }
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

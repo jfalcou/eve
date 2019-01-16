@@ -20,7 +20,7 @@
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template< typename T,typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const&, eve::ppc_ const&, Vs... vs) noexcept
@@ -72,7 +72,7 @@ namespace eve { namespace detail
 
     return apply<expected_cardinal_v<T>>(impl);
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

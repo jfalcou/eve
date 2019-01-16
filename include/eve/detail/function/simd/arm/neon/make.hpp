@@ -14,7 +14,7 @@
 #include <eve/as.hpp>
 #include <iostream>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Arithmetic cases
@@ -96,6 +96,6 @@ namespace eve { namespace detail
   {
     return neon_maker<logical<T>,eve::neon128_>{}(vs...);
   }
-} }
+}
 
 #endif
