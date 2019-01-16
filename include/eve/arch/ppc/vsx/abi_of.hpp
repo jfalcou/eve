@@ -14,7 +14,7 @@
 #include <eve/ext/abi_of.hpp>
 #include <type_traits>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<int N> struct abi_of<double , N, std::enable_if_t<(N<=2)>>  { using type = ::eve::ppc_; };
 
@@ -25,6 +25,6 @@ namespace eve { namespace ext
   {
     using type = ::eve::ppc_;
   };
-} }
+}
 
 #endif

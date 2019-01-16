@@ -10,7 +10,7 @@
 #ifndef EVE_EXT_AS_REGISTER_HPP_INCLUDED
 #define EVE_EXT_AS_REGISTER_HPP_INCLUDED
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template< typename Type, typename Cardinal, typename ABI
           , typename EnableIf = void
@@ -19,7 +19,7 @@ namespace eve { namespace ext
 
   template< typename Type, typename Cardinal, typename ABI>
   using as_register_t = typename as_register<Type,Cardinal,ABI>::type;
-} }
+}
 
 #include <eve/arch/as_register.hpp>
 

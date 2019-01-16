@@ -14,7 +14,7 @@
 #include <eve/ext/abi_of.hpp>
 #include <type_traits>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<> struct abi_of<double, 4>  { using type = ::eve::avx_; };
   template<> struct abi_of<float , 8>  { using type = ::eve::avx_; };
@@ -26,6 +26,6 @@ namespace eve { namespace ext
   {
     using type = ::eve::avx_;
   };
-} }
+}
 
 #endif

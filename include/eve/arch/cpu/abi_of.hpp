@@ -12,13 +12,13 @@
 
 #include <eve/arch/cpu/tags.hpp>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<typename Type, int Cardinal, typename EnableIf>
   struct abi_of
   {
     using type = ::eve::emulated_;
   };
-} }
+}
 
 #endif

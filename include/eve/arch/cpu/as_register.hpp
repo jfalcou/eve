@@ -14,7 +14,7 @@
 #include <eve/ext/as_register.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
@@ -28,6 +28,6 @@ namespace eve { namespace ext
     using substorage_type = eve::pack<Type,typename Cardinal::split_type>;
     using type = std::array<substorage_type,2>;
   };
-} }
+}
 
 #endif

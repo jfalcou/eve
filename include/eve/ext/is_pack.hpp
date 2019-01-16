@@ -13,7 +13,7 @@
 #include <type_traits>
 #include <eve/forward.hpp>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<typename Type>
   struct is_pack : std::false_type
@@ -42,6 +42,6 @@ namespace eve { namespace ext
   template<typename Type> using is_pack_t = typename is_pack<Type>::type;
 
   template<typename Type> inline constexpr bool is_pack_v = is_pack_t<Type>::value;
-} }
+}
 
 #endif
