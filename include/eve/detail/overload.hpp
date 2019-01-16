@@ -40,10 +40,10 @@ inline detail::callable_object<tag::TAG> const NAME = {}                        
 #define EVE_SUPPORTS(ARCH) delay_t const&, ARCH const&
 
 // basic type to support delayed calls
-namespace eve { namespace detail
+namespace eve::detail
 {
   struct delay_t {};
   template<typename Tag, typename Mode = void> struct callable_object;
-} }
+}
 
 #endif
