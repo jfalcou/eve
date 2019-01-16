@@ -55,18 +55,16 @@ namespace eve::detail
 #endif
   }
 
-  inline bool detect_feature(int bit, int function, int register_id) noexcept
-  {
-    register_t regs_x86[4] = {0x00000000, 0x00000000, 0x00000000, 0x00000000};
-    cpuidex(regs_x86, function, 0);
-    return (regs_x86[register_id] & (1 << bit)) != 0;
-  }
-
   inline bool detect_features(int bits, int function, int register_id) noexcept
   {
     register_t regs_x86[4] = {0x00000000, 0x00000000, 0x00000000, 0x00000000};
     cpuidex(regs_x86, function, 0);
     return (regs_x86[register_id] & bits) != 0;
+  }
+
+  inline bool detect_feature(int bit, int function, int register_id) noexcept
+  {
+    return detect_features((1 << bit),function,register_id);
   }
 }
 #endif
