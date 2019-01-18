@@ -25,7 +25,7 @@ namespace eve
   inline constexpr lower_slice lower_ = {};
 }
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Emulation
@@ -86,6 +86,6 @@ namespace eve { namespace detail
   {
     return a.storage()[Slice::value];
   }
-} }
+}
 
 #endif

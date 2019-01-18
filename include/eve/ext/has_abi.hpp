@@ -13,7 +13,7 @@
 #include <type_traits>
 #include <eve/forward.hpp>
 
-namespace eve { namespace ext
+namespace eve::ext
 {
   template<typename Type, typename ABI>
   struct has_abi : std::false_type
@@ -48,6 +48,6 @@ namespace eve { namespace ext
 
   template<typename Type, typename ABI>
   inline constexpr bool has_abi_v = has_abi_t<Type,ABI>::value;
-} }
+}
 
 #endif

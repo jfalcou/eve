@@ -19,7 +19,7 @@
 #include <intrin.h>
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
   EVE_FORCEINLINE constexpr auto popcnt_( EVE_SUPPORTS(cpu_), T a0) noexcept
@@ -80,6 +80,6 @@ namespace eve { namespace detail
   // Disallow popcnt on scalar floating-point types
   EVE_FORCEINLINE std::uint64_t popcnt_( EVE_SUPPORTS(cpu_), float      ) noexcept = delete;
   EVE_FORCEINLINE std::uint64_t popcnt_( EVE_SUPPORTS(cpu_), double     ) noexcept = delete;
-} }
+}
 
 #endif

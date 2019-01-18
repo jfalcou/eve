@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // double
@@ -55,6 +55,6 @@ namespace eve { namespace detail
     else
       return _mm_add_epi64(v0,v1);
   }
-} }
+}
 
 #endif

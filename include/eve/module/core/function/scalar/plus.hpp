@@ -18,7 +18,7 @@
 // #include <limits>
 // #include <climits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -83,6 +83,6 @@ namespace eve { namespace detail
     }
   }
 #endif
-} }
+}
 
 #endif

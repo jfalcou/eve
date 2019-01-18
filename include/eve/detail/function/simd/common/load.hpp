@@ -15,7 +15,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Emulation
@@ -65,7 +65,7 @@ namespace eve { namespace detail
     using subpack_t = typename storage_t::value_type;
     return Pack(storage_t{ subpack_t(ptr), subpack_t(ptr + subpack_t::size())});
   }
-} }
+}
 
 #endif
 

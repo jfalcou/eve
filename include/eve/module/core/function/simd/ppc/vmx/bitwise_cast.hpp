@@ -15,7 +15,7 @@
 #include <eve/module/core/function/simd/detail/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N, typename U, typename M>
   EVE_FORCEINLINE pack<U,M,ppc_> bitwise_cast_( EVE_SUPPORTS(vmx_)
@@ -54,6 +54,6 @@ namespace eve { namespace detail
   {
     return l2l_cast_(v0,tgt);
   }
-} }
+}
 
 #endif

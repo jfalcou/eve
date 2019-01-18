@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <utility>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // Value extraction from RandomAccessRange
   template<typename T> EVE_FORCEINLINE constexpr decltype(auto) at( T&& t, std::size_t i ) noexcept
@@ -33,45 +33,27 @@ namespace eve { namespace detail
   template<typename T> EVE_FORCEINLINE constexpr auto upper( T&& t ) noexcept
   {
     if constexpr( ext::is_pack_v<T> )
-    {
-      if constexpr( ext::has_abi_v<T,avx_> )
-        return std::forward<T>(t).slice(upper_);
-      else
-        return std::forward<T>(t).storage()[1];
-    }
+      return eve::detail::slice(std::forward<T>(t),upper_);
     else
-    {
       return std::forward<T>(t);
-    }
   }
 
   // Lower values extraction
   template<typename T> EVE_FORCEINLINE constexpr auto lower( T&& t ) noexcept
   {
     if constexpr( ext::is_pack_v<T> )
-    {
-      if constexpr( ext::has_abi_v<T,avx_> )
-        return std::forward<T>(t).slice(lower_);
-      else
-        return std::forward<T>(t).storage()[0];
-    }
+      return eve::detail::slice(std::forward<T>(t),lower_);
     else
-    {
       return std::forward<T>(t);
-    }
   }
 
   // Compute a transformed pack type
   template<typename F, typename... Ts>
   struct pack_result
   {
+    template<typename T>  using       card_t = eve::cardinal<std::decay_t<T>>;
+    static constexpr      std::size_t card_v = std::max( {card_t<Ts>::value...} );
     using value_t = decltype(std::declval<F>()(at(std::declval<Ts>(),0)...));
-
-    template<typename T>
-    using card_t = eve::cardinal<std::decay_t<T>>;
-
-    static constexpr std::size_t card_v = std::max( {card_t<Ts>::value...} );
-
     using type    = pack<value_t,fixed<card_v>>;
   };
 
@@ -109,6 +91,6 @@ namespace eve { namespace detail
 
     return aggregate_pack(std::forward<Func>(f),std::forward<Ts>(ts)...);
   }
-} }
+}
 
 #endif

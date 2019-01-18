@@ -16,7 +16,7 @@
 #include <type_traits>
 #include <cstddef>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE pack<T,typename N::split_type>
@@ -97,6 +97,6 @@ namespace eve { namespace detail
     std::array<pack<T,typename N::split_type>,2> that{ slice(a,lower_), slice(a,upper_)};
     return that;
   }
-} }
+}
 
 #endif

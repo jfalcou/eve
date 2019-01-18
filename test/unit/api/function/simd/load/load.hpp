@@ -27,7 +27,7 @@ TTS_CASE_TPL( "load behavior for pack"
     auto filler = [](auto i, auto) { return Type(1)+i; };
 
     alignas(pack_t::static_alignment) std::array<Type, T::value> data;
-    for(int i = 0; i < data.size(); ++i)
+    for(int i = 0; i < T::value; ++i)
       data[i] = filler(i,0);
 
     pack_t simd, ref(filler);
@@ -68,7 +68,7 @@ TTS_CASE_TPL( "load behavior for pack of logical"
     auto filler = [](auto i, auto) { return i% 3 ? true : false; };
 
     alignas(pack_t::static_alignment) std::array<eve::logical<Type>, T::value> data;
-    for(std::size_t i = 0; i < data.size(); ++i)
+    for(std::size_t i = 0; i < T::value; ++i)
       data[i] = filler(i,0);
 
     pack_t simd, ref(filler);

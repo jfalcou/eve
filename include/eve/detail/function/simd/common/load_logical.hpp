@@ -16,7 +16,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Common logical case
@@ -42,7 +42,7 @@ namespace eve { namespace detail
                       )
                 );
   }
-} }
+}
 
 #endif
 

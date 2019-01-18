@@ -17,7 +17,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
@@ -74,7 +74,7 @@ namespace eve { namespace detail
   {
     return map( eve::plus, static_cast<T>(v0), v1);
   }
-} }
+}
 
 // -------------------------------------------------------------------------------------------------
 // Infix operator support

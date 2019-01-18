@@ -26,7 +26,7 @@
 #define EVE_MAY_ALIAS
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename EnableIf = void>
   struct alias
@@ -36,10 +36,10 @@ namespace eve { namespace detail
 
   template<typename T> struct alias<T,std::enable_if_t<std::is_class_v<T>>>
   {
-    typedef T type;
+    using type = T;
   };
 
   template<typename T> using alias_t =  typename alias<T>::type;
-} }
+}
 
 #endif

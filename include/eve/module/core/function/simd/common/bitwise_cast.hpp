@@ -16,7 +16,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template< typename T, typename N, typename X1
           , typename U, typename M, typename X2
@@ -44,6 +44,6 @@ namespace eve { namespace detail
       return that;
     }
   }
-} }
+}
 
 #endif

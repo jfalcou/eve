@@ -14,7 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/arch/limits.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( vmx_ const&
@@ -40,6 +40,6 @@ namespace eve { namespace detail
       return vec_perm(l.storage(), h.storage(), apply<(sizeof(T) * N::value)>(mask));
     }
   }
-} }
+}
 
 #endif

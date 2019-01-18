@@ -13,54 +13,44 @@
 #include <iterator>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // Detect if a Type behaves a Range
-  template <typename T> struct is_range_impl
-  {
-    static std::false_type test(...);
-
-    template <  typename U
-              , typename=decltype(std::begin(std::declval<U>()))
-              , typename=decltype(std::end  (std::declval<U>()))
-              >
-    static std::true_type test(U&&);
-
-    static constexpr auto value = std::is_same_v<decltype(test(std::declval<T>())),std::true_type>;
-  };
+  template<typename T, typename Enable = void>
+  struct is_range : std::false_type
+  {};
 
   template<typename T>
-  inline constexpr bool is_range_v = detail::is_range_impl<T>::value;
+  struct  is_range < T
+                   , std::void_t < decltype( std::begin(std::declval<T>()) )
+                                 , decltype( std::end  (std::declval<T>()) )
+                                 >
+                   >
+        : std::true_type
+  {};
 
-  template<typename T>
-  struct is_range : std::bool_constant<is_range_v<T>> {};
-
-  template<typename T>
-  using is_range_t = typename is_range<T>::type;
+  template<typename T> inline constexpr bool is_range_v = is_range<T>::value;
+  template<typename T> using is_range_t = typename is_range<T>::type;
 
   // Detect if a Type behaves a Random Access Range
-  template <typename T> struct is_rarange_impl
-  {
-    static std::false_type test(...);
-
-    template <  typename U
-              , typename=decltype(std::begin(std::declval<U>()))
-              , typename=decltype(std::end  (std::declval<U>()))
-              , typename=decltype(std::declval<U>()[0])
-              >
-    static std::true_type test(U&&);
-
-    static constexpr auto value = std::is_same_v<decltype(test(std::declval<T>())),std::true_type>;
-  };
+  template<typename T, typename Enable = void>
+  struct is_random_access_range : std::false_type {};
 
   template<typename T>
-  inline constexpr bool is_random_access_range_v = detail::is_rarange_impl<T>::value;
+  struct  is_random_access_range< T
+                                , std::void_t < decltype( std::begin(std::declval<T>()) )
+                                              , decltype( std::end  (std::declval<T>()) )
+                                              , decltype( std::declval<T>()[0] )
+                                              >
+                                >
+        : std::true_type
+  {};
 
   template<typename T>
-  struct is_random_access_range : std::bool_constant<is_random_access_range_v<T>> {};
+  inline constexpr bool is_random_access_range_v = is_random_access_range<T>::value;
 
   template<typename T>
   using is_random_access_range_t = typename is_random_access_range<T>::type;
-} }
+}
 
 #endif

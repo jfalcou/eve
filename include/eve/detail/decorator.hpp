@@ -12,34 +12,31 @@
 
 #include <eve/detail/abi.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  namespace detail
+  template<typename Functor, typename Decorator>
+  struct decorated_functor : private Functor
   {
-    template<typename Functor, typename Decorator>
-    struct decorated_functor : private Functor
-    {
-      using parent = Functor;
+    using parent = Functor;
 
-      template<typename... Args> EVE_FORCEINLINE
-      constexpr   auto operator()(Args&&... args) const noexcept
-              ->  decltype(std::declval<parent const>() ( Decorator()
-                                                        , std::forward<Args>(args)...)
-                                                        )
-      {
-        return static_cast<parent const&>(*this)( Decorator(), std::forward<Args>(args)... );
-      }
-    };
-
-    template<typename Flag> struct decorator
+    template<typename... Args> EVE_FORCEINLINE
+    constexpr   auto operator()(Args&&... args) const noexcept
+            ->  decltype(std::declval<parent const>() ( Decorator()
+                                                      , std::forward<Args>(args)...)
+                                                      )
     {
-      template<typename Function>
-      constexpr detail::decorated_functor<Function,Flag> operator()(Function const&) const noexcept
-      {
-        return {};
-      }
-    };
-  }
+      return static_cast<parent const&>(*this)( Decorator(), std::forward<Args>(args)... );
+    }
+  };
+
+  template<typename Flag> struct decorator
+  {
+    template<typename Function>
+    constexpr detail::decorated_functor<Function,Flag> operator()(Function const&) const noexcept
+    {
+      return {};
+    }
+  };
 }
 
 #endif

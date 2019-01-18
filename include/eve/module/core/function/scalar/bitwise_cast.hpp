@@ -14,7 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <cstring>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE T bitwise_cast_( EVE_SUPPORTS(cpu_), T const& a, as_<T> const& ) noexcept
@@ -31,6 +31,6 @@ namespace eve { namespace detail
     std::memcpy(&that, &a, sizeof(a));
     return that;
   }
-} }
+}
 
 #endif

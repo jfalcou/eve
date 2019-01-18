@@ -21,7 +21,7 @@
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // double cases 2 & 1
@@ -107,7 +107,7 @@ namespace eve { namespace detail
   {
     return make(as_<T>{},eve::sse_{},logical<T>(vs).mask()...);
   }
-} }
+}
 
 #if defined(EVE_COMP_IS_GNUC)
 #pragma GCC diagnostic pop

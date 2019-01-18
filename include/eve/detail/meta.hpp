@@ -15,7 +15,7 @@
 #include <cstdint>
 #include <cstddef>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // Silence unused warning
   template<typename... T> void ignore(T&&...) {}
@@ -116,7 +116,7 @@ namespace eve { namespace detail
 
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
-} }
+}
 
 // Pseudo require macro
 #define requires(...)  -> typename ::eve::detail::require_check<__VA_ARGS__>::type

@@ -14,7 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/arch/limits.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( neon128_ const&
@@ -66,6 +66,6 @@ namespace eve { namespace detail
       return that_t( typename that_t::storage_type(that) );
     }
   }
-} }
+}
 
 #endif

@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
@@ -54,6 +54,6 @@ namespace eve { namespace detail
       store(value,ptr.get());
     }
   }
-} }
+}
 
 #endif

@@ -13,7 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -22,6 +22,6 @@ namespace eve { namespace detail
   {
     return a-b;
   }
-} }
+}
 
 #endif

@@ -15,7 +15,7 @@
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // double
@@ -103,6 +103,6 @@ namespace eve { namespace detail
     using that_t = pack<logical<T>,typename N::combined_type>;
     return that_t( typename that_t::storage_type{l,h} );
   }
-} }
+}
 
 #endif

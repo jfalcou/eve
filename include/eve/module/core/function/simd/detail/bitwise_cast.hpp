@@ -12,7 +12,7 @@
 
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Reusable helper for logical casting
@@ -89,6 +89,6 @@ namespace eve { namespace detail
     else
       return bitwise_cast<typename Out::type>(bitwise_cast<type>(v0));
   };
-} }
+}
 
 #endif

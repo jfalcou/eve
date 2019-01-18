@@ -17,7 +17,7 @@
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(vsx_), pack<T,N,ppc_> const& value, T* ptr) noexcept
@@ -43,6 +43,6 @@ namespace eve { namespace detail
   {
     store(value,ptr.get());
   }
-} }
+}
 
 #endif

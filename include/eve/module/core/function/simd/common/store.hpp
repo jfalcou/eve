@@ -15,7 +15,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -52,6 +52,6 @@ namespace eve { namespace detail
     store( value.storage()[0], ptr );
     store( value.storage()[1], ptr + value.storage()[1].size() );
   }
-} }
+}
 
 #endif
