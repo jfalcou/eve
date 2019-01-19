@@ -11,6 +11,7 @@
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_VSX_LOAD_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
@@ -21,7 +22,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #endif
 
-namespace eve::detaill
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto  load(as_<wide<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
