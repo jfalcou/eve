@@ -77,19 +77,23 @@ namespace eve::detail
   }
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
-  template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto aggregate(Func&& f, Ts&&... ts)
+  struct aggregate_wide
   {
-    using wide_t = typename wide_result<Func,Ts...>::type;
-
-    auto aggregate_wide = [](auto&& f, auto&&... ts) -> decltype(auto)
+    // Not a lambda as we need force-inlining
+    template<typename Func, typename... Ts>
+    EVE_FORCEINLINE auto operator()(Func&& f, Ts&&... ts) const -> decltype(auto)
     {
+      using wide_t = typename wide_result<Func,Ts...>::type;
       return  wide_t{ std::forward<Func>(f)( lower(std::forward<Ts>(ts))...)
                     , std::forward<Func>(f)( upper(std::forward<Ts>(ts))...)
                     };
-    };
+    }
+  };
 
-    return aggregate_wide(std::forward<Func>(f),std::forward<Ts>(ts)...);
+  template<typename Func, typename... Ts>
+  EVE_FORCEINLINE auto aggregate(Func&& f, Ts&&... ts)
+  {
+    return aggregate_wide{}(std::forward<Func>(f),std::forward<Ts>(ts)...);
   }
 }
 
