@@ -19,8 +19,8 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE pack<T,typename N::split_type>
-  slice( pack<T,N,neon128_> const& a, Slice const& ) noexcept
+  EVE_FORCEINLINE wide<T,typename N::split_type>
+  slice( wide<T,N,neon128_> const& a, Slice const& ) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -58,10 +58,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto  slice( pack<T,N,neon64_> const& a, Slice const& ) noexcept
-                        requires( pack<T,typename N::split_type>, If<(N::value>1)>)
+  EVE_FORCEINLINE auto  slice( wide<T,N,neon64_> const& a, Slice const& ) noexcept
+                        requires( wide<T,typename N::split_type>, If<(N::value>1)>)
   {
-    using type = pack<T,typename N::split_type>;
+    using type = wide<T,typename N::split_type>;
     if constexpr(Slice::value)
     {
       auto select = [](auto const& v, auto size)
@@ -85,16 +85,16 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice( pack<T,N,neon128_> const& a ) noexcept
+  EVE_FORCEINLINE auto slice( wide<T,N,neon128_> const& a ) noexcept
   {
-    std::array<pack<T,typename N::split_type>,2> that{ slice(a,lower_), slice(a,upper_)};
+    std::array<wide<T,typename N::split_type>,2> that{ slice(a,lower_), slice(a,upper_)};
     return that;
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice( pack<T,N,neon64_> const& a ) noexcept
+  EVE_FORCEINLINE auto slice( wide<T,N,neon64_> const& a ) noexcept
   {
-    std::array<pack<T,typename N::split_type>,2> that{ slice(a,lower_), slice(a,upper_)};
+    std::array<wide<T,typename N::split_type>,2> that{ slice(a,lower_), slice(a,upper_)};
     return that;
   }
 }

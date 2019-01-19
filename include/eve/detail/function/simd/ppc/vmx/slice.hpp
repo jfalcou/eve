@@ -19,8 +19,8 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto  slice( pack<T,N,ppc_> const& a, Slice const& ) noexcept
-                        requires(pack<T,typename N::split_type>,If<(N::value>1)>)
+  EVE_FORCEINLINE auto  slice( wide<T,N,ppc_> const& a, Slice const& ) noexcept
+                        requires(wide<T,typename N::split_type>,If<(N::value>1)>)
 
   {
     if constexpr(Slice::value)
@@ -37,19 +37,19 @@ namespace eve::detail
         return vec_perm(v.storage(), v.storage(), apply<16>(mask));
       };
 
-      return pack<T,typename N::split_type>(select(a,N{}));
+      return wide<T,typename N::split_type>(select(a,N{}));
     }
     else
     {
-      return pack<T,typename N::split_type>(a.storage());
+      return wide<T,typename N::split_type>(a.storage());
     }
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice( pack<T,N,ppc_> const& a ) noexcept
-                  requires(std::array<pack<T,typename N::split_type>,2>,If<(N::value>1)>)
+  EVE_FORCEINLINE auto slice( wide<T,N,ppc_> const& a ) noexcept
+                  requires(std::array<wide<T,typename N::split_type>,2>,If<(N::value>1)>)
   {
-    std::array<pack<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
+    std::array<wide<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
     return that;
   }
 }

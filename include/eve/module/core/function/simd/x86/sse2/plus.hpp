@@ -19,9 +19,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // double
   template<typename N>
-  EVE_FORCEINLINE pack<double,N,sse_> plus_ ( EVE_SUPPORTS(sse2_)
-                                            , pack<double,N,sse_> const& v0
-                                            , pack<double,N,sse_> const& v1
+  EVE_FORCEINLINE wide<double,N,sse_> plus_ ( EVE_SUPPORTS(sse2_)
+                                            , wide<double,N,sse_> const& v0
+                                            , wide<double,N,sse_> const& v1
                                             ) noexcept
   {
     return _mm_add_pd(v0,v1);
@@ -30,9 +30,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // float
   template<typename N>
-  EVE_FORCEINLINE pack<float,N,sse_> plus_( EVE_SUPPORTS(sse2_)
-                                          , pack<float,N,sse_> const& v0
-                                          , pack<float,N,sse_> const& v1
+  EVE_FORCEINLINE wide<float,N,sse_> plus_( EVE_SUPPORTS(sse2_)
+                                          , wide<float,N,sse_> const& v0
+                                          , wide<float,N,sse_> const& v1
                                           ) noexcept
   {
     return _mm_add_ps(v0,v1);
@@ -41,9 +41,9 @@ namespace eve::detail
   template< typename T, typename N
           , typename = std::enable_if_t<std::is_integral_v<T>>
           >
-  EVE_FORCEINLINE pack<T,N,sse_> plus_( EVE_SUPPORTS(sse2_)
-                                      , pack<T,N,sse_> const& v0
-                                      , pack<T,N,sse_> const& v1
+  EVE_FORCEINLINE wide<T,N,sse_> plus_( EVE_SUPPORTS(sse2_)
+                                      , wide<T,N,sse_> const& v0
+                                      , wide<T,N,sse_> const& v1
                                       ) noexcept
   {
     if constexpr(sizeof(T) == 1)

@@ -23,19 +23,19 @@ namespace eve::detail
           , typename = std::enable_if_t<!is_native<X1>::value || ! is_native<X2>::value>
           >
   EVE_FORCEINLINE auto bitwise_cast_( EVE_SUPPORTS(simd_)
-                                    , pack<T,N,X1> const& v0, as_<pack<U,M,X2>> const& tgt
+                                    , wide<T,N,X1> const& v0, as_<wide<U,M,X2>> const& tgt
                                     ) noexcept
   {
     if constexpr( std::is_same_v<X1, aggregated_> && std::is_same_v<X2, aggregated_> )
     {
-      using small_tgt = pack<U, typename M::split_type>;
-      return pack<U,M,X2> { bitwise_cast<small_tgt>( v0.slice(lower_) )
+      using small_tgt = wide<U, typename M::split_type>;
+      return wide<U,M,X2> { bitwise_cast<small_tgt>( v0.slice(lower_) )
                           , bitwise_cast<small_tgt>( v0.slice(upper_) )
                           };
     }
     else
     {
-      using type = pack<U,M,X2>;
+      using type = wide<U,M,X2>;
       constexpr auto sz = (sizeof(v0) < sizeof(type)) ? sizeof(v0) :sizeof(type);
 
       type that;

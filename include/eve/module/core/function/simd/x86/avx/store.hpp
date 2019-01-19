@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(avx_), pack<T,N,avx_> const& value, T* ptr) noexcept
+  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(avx_), wide<T,N,avx_> const& value, T* ptr) noexcept
                         requires( void, Arithmetic<T>)
   {
     if constexpr(N::value*sizeof(T) == limits<avx_>::bytes)
@@ -34,12 +34,12 @@ namespace eve::detail
   }
 
   template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(avx_), pack<T,N,avx_> const& value
+  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(avx_), wide<T,N,avx_> const& value
                               , aligned_ptr<T,A> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
-    static constexpr auto  alg = pack<T,N,avx_>::static_alignment;
+    static constexpr auto  alg = wide<T,N,avx_>::static_alignment;
 
     if constexpr(N::value*sizeof(T) == limits<avx_>::bytes && A >= alg)
     {

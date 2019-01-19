@@ -20,9 +20,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // double
   template<typename N>
-  EVE_FORCEINLINE pack<double,N,avx_> minus_( EVE_SUPPORTS(avx_)
-                                            , pack<double,N,avx_> const& v0
-                                            , pack<double,N,avx_> const& v1
+  EVE_FORCEINLINE wide<double,N,avx_> minus_( EVE_SUPPORTS(avx_)
+                                            , wide<double,N,avx_> const& v0
+                                            , wide<double,N,avx_> const& v1
                                             ) noexcept
   {
     return _mm256_sub_pd(v0,v1);
@@ -31,9 +31,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // float
   template<typename N>
-  EVE_FORCEINLINE pack<float,N,avx_> minus_ ( EVE_SUPPORTS(avx_)
-                                            , pack<float,N,avx_> const& v0
-                                            , pack<float,N,avx_> const& v1
+  EVE_FORCEINLINE wide<float,N,avx_> minus_ ( EVE_SUPPORTS(avx_)
+                                            , wide<float,N,avx_> const& v0
+                                            , wide<float,N,avx_> const& v1
                                             ) noexcept
   {
     return _mm256_sub_ps(v0,v1);
@@ -45,7 +45,7 @@ namespace eve::detail
           , typename = std::enable_if_t<std::is_integral_v<T>>
           >
   EVE_FORCEINLINE auto  minus_( EVE_SUPPORTS(avx_)
-                              , pack<T,N,avx_> const& v0, pack<T,N,avx_> const& v1
+                              , wide<T,N,avx_> const& v0, wide<T,N,avx_> const& v1
                               ) noexcept
   {
     return aggregate( eve::minus, v0, v1 );

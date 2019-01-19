@@ -23,8 +23,8 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  load(as_<pack<T,N>> const&, eve::avx_ const&, T* p) noexcept
-                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
+  EVE_FORCEINLINE auto  load(as_<wide<T,N>> const&, eve::avx_ const&, T* p) noexcept
+                        requires( typename wide<T,N>::storage_type, Arithmetic<T>)
   {
     if constexpr( std::is_same_v<T, double> ) return _mm256_loadu_pd(p);
     if constexpr( std::is_same_v<T, float>  ) return _mm256_loadu_ps(p);
@@ -32,10 +32,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::avx_ const& mode
+  EVE_FORCEINLINE auto  load( as_<wide<T,N>> const& tgt, eve::avx_ const& mode
                             , aligned_ptr<T,A> p
                             ) noexcept
-                        requires( typename pack<T,N>::storage_type, Arithmetic<T>)
+                        requires( typename wide<T,N>::storage_type, Arithmetic<T>)
   {
     if constexpr( A >= 16)
     {

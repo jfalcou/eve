@@ -10,7 +10,7 @@
 #ifndef INCREMENT_HPP
 #define INCREMENT_HPP
 
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
@@ -22,16 +22,16 @@ using eve::as_aligned;
 auto baseg = [](auto i, auto) { return i; };
 auto nextg = [](auto i, auto) { return i+1; };
 
-TTS_CASE_TPL( "Check self-increment on pack"
+TTS_CASE_TPL( "Check self-increment on wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
 
-  TTS_SETUP( "A correctly initialized pack" )
+  TTS_SETUP( "A correctly initialized wide" )
   {
-    pack<Type,T> simd(baseg), next(nextg);
-    pack<Type,T> prev(simd), res;
+    wide<Type,T> simd(baseg), next(nextg);
+    wide<Type,T> prev(simd), res;
 
     TTS_SECTION( "supports operator++()" )
     {

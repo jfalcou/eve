@@ -36,11 +36,11 @@ namespace eve::ext
   {};
 
   template<typename Type, typename Size, typename ABI>
-  struct has_abi<pack<Type,Size,ABI>, ABI> : std::true_type
+  struct has_abi<wide<Type,Size,ABI>, ABI> : std::true_type
   {};
 
   template<typename Type, typename Size, typename ABI, typename ABI2>
-  struct has_abi<pack<Type,Size,ABI>, ABI2> : std::false_type
+  struct has_abi<wide<Type,Size,ABI>, ABI2> : std::false_type
   {};
 
   template<typename Type, typename ABI>

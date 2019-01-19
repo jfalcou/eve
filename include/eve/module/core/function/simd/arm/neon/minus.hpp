@@ -17,9 +17,9 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE pack<T,N,neon64_> minus_( EVE_SUPPORTS(neon128_)
-                                          , pack<T,N,neon64_> const& v0
-                                          , pack<T,N,neon64_> const& v1
+  EVE_FORCEINLINE wide<T,N,neon64_> minus_( EVE_SUPPORTS(neon128_)
+                                          , wide<T,N,neon64_> const& v0
+                                          , wide<T,N,neon64_> const& v1
                                           ) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
@@ -40,9 +40,9 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE pack<T,N,neon128_>  minus_( EVE_SUPPORTS(neon128_)
-                                            , pack<T,N,neon128_> const& v0
-                                            , pack<T,N,neon128_> const& v1
+  EVE_FORCEINLINE wide<T,N,neon128_>  minus_( EVE_SUPPORTS(neon128_)
+                                            , wide<T,N,neon128_> const& v0
+                                            , wide<T,N,neon128_> const& v1
                                             ) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;

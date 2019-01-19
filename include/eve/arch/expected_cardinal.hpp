@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_EXPECTED_CARDINAL_PACK_HPP_INCLUDED
-#define EVE_ARCH_EXPECTED_CARDINAL_PACK_HPP_INCLUDED
+#ifndef EVE_ARCH_EXPECTED_CARDINAL_WIDE_HPP_INCLUDED
+#define EVE_ARCH_EXPECTED_CARDINAL_WIDE_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>

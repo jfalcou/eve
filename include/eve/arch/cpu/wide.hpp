@@ -7,12 +7,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_PACK_HPP_INCLUDED
-#define EVE_ARCH_CPU_PACK_HPP_INCLUDED
+#ifndef EVE_ARCH_CPU_WIDE_HPP_INCLUDED
+#define EVE_ARCH_CPU_WIDE_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/ext/base_pack.hpp>
+#include <eve/ext/base_wide.hpp>
 #include <eve/ext/as_register.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -24,7 +24,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/function/plus.hpp>
-#include <eve/ext/is_pack.hpp>
+#include <eve/ext/is_wide.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -40,7 +40,7 @@ namespace eve
 {
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   template<typename Type, typename Size, typename ABI>
-  struct pack
+  struct wide
   {
     using storage_type            = ::eve::ext::as_register_t<Type,Size,ABI>;
     using cardinal_type           = Size;
@@ -54,64 +54,64 @@ namespace eve
     using reverse_iterator        = std::reverse_iterator<iterator>;
     using const_reverse_iterator  = std::reverse_iterator<const_iterator>;
 
-    using target_type = typename detail::target_type<pack,abi_type>::type;
+    using target_type = typename detail::target_type<wide,abi_type>::type;
 
     static constexpr std::size_t static_size      = Size::value;
-    static constexpr std::size_t static_alignment = detail::pack_align< Size        , value_type
+    static constexpr std::size_t static_alignment = detail::wide_align< Size        , value_type
                                                                       , storage_type, abi_type
                                                                       >::value;
 
-    using iterator_facade = detail::pack_iterator<Type,storage_type,abi_type>;
+    using iterator_facade = detail::wide_iterator<Type,storage_type,abi_type>;
 
     // ---------------------------------------------------------------------------------------------
     // Ctor
-    EVE_FORCEINLINE pack()            noexcept {}
+    EVE_FORCEINLINE wide()            noexcept {}
 
-    EVE_FORCEINLINE pack(storage_type const& r) noexcept : data_(r) {}
+    EVE_FORCEINLINE wide(storage_type const& r) noexcept : data_(r) {}
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from a Range
+    // Constructs a wide from a Range
     template<typename Iterator>
-    EVE_FORCEINLINE explicit pack ( Iterator b, Iterator e
+    EVE_FORCEINLINE explicit wide ( Iterator b, Iterator e
                                   , std::enable_if_t< detail::is_iterator_v<Iterator>>* = 0
                                   ) noexcept
-                  : data_(detail::load(as_<pack>{},abi_type{},b,e))
+                  : data_(detail::load(as_<wide>{},abi_type{},b,e))
     {}
 
     template<typename Range>
-    EVE_FORCEINLINE explicit pack ( Range&& r
+    EVE_FORCEINLINE explicit wide ( Range&& r
                                   , std::enable_if_t<   detail::is_range_v<Range>
-                                                    && !ext::is_pack_v<Range>
+                                                    && !ext::is_wide_v<Range>
                                                     && !std::is_same_v<storage_type,Range>
                                                     >* = 0
                                   ) noexcept
-                  : pack( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
+                  : wide( std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
     {}
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from a pointer
-    EVE_FORCEINLINE explicit pack(Type* ptr) noexcept
-                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
+    // Constructs a wide from a pointer
+    EVE_FORCEINLINE explicit wide(Type* ptr) noexcept
+                  : data_(detail::load(as_<wide>{},abi_type{},ptr))
     {}
 
     template< std::size_t Alignment
             , typename = std::enable_if_t<(Alignment>=static_alignment)>
             >
-    EVE_FORCEINLINE explicit pack(aligned_ptr<Type,Alignment> ptr) noexcept
-                  : data_(detail::load(as_<pack>{},abi_type{},ptr))
+    EVE_FORCEINLINE explicit wide(aligned_ptr<Type,Alignment> ptr) noexcept
+                  : data_(detail::load(as_<wide>{},abi_type{},ptr))
     {}
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from a single value
+    // Constructs a wide from a single value
     template< typename T
             , typename = std::enable_if_t <std::is_convertible_v<T,Type>>
             >
-    EVE_FORCEINLINE explicit pack(T const& v) noexcept
+    EVE_FORCEINLINE explicit wide(T const& v) noexcept
                   : data_( detail::make(as_<target_type>{},abi_type{},v) )
     {}
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from a sequence of values
+    // Constructs a wide from a sequence of values
     template< typename T0, typename T1, typename... Ts
             , bool ConvertProperly = (... && std::is_convertible_v<Ts,Type>)
             , typename = std::enable_if_t <  std::is_convertible_v<T0,Type>
@@ -120,18 +120,18 @@ namespace eve
                                           && ConvertProperly
                                           >
             >
-    EVE_FORCEINLINE pack(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
+    EVE_FORCEINLINE wide(T0 const& v0, T1 const& v1, Ts const&... vs) noexcept
                   : data_( detail::make(as_<target_type>{},abi_type{},v0,v1,vs...) )
     {
       static_assert ( 2+sizeof...(vs) == static_size
-                    , "[eve] Size mismatch in initializer list for pack"
+                    , "[eve] Size mismatch in initializer list for wide"
                     );
     }
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack with a generator function
+    // Constructs a wide with a generator function
     template<typename Generator>
-    EVE_FORCEINLINE pack( Generator&& g
+    EVE_FORCEINLINE wide( Generator&& g
                         , std::enable_if_t<std::is_invocable_v< Generator
                                                               , std::size_t,std::size_t
                                                               >
@@ -143,18 +143,18 @@ namespace eve
     }
 
     // ---------------------------------------------------------------------------------------------
-    // Constructs a pack from a pair of sub-pack
+    // Constructs a wide from a pair of sub-wide
     template<typename HalfSize>
-    EVE_FORCEINLINE pack( pack<Type,HalfSize> const& l
-                        , pack<Type,HalfSize> const& h
+    EVE_FORCEINLINE wide( wide<Type,HalfSize> const& l
+                        , wide<Type,HalfSize> const& h
                         , std::enable_if_t<Size::value == 2*HalfSize::value>* = 0
                         )
                     : data_( detail::combine(EVE_CURRENT_API{},l,h) )
     {}
 
     // ---------------------------------------------------------------------------------------------
-    // Assign a single value to a pack
-    EVE_FORCEINLINE pack& operator=(Type v) noexcept
+    // Assign a single value to a wide
+    EVE_FORCEINLINE wide& operator=(Type v) noexcept
     {
       data_ = detail::make(as_<target_type>{},abi_type{},v);
       return *this;
@@ -186,7 +186,7 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // swap
-    EVE_FORCEINLINE void swap(pack& rhs) noexcept
+    EVE_FORCEINLINE void swap(wide& rhs) noexcept
     {
       using std::swap;
       swap(data_, rhs.data_);
@@ -229,26 +229,26 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Self-increment/decrement operators
-    EVE_FORCEINLINE pack& operator++() noexcept
+    EVE_FORCEINLINE wide& operator++() noexcept
     {
       *this += Type{1};
       return *this;
     }
 
-    EVE_FORCEINLINE pack operator++(int) noexcept
+    EVE_FORCEINLINE wide operator++(int) noexcept
     {
       auto that(*this);
       operator++();
       return that;
     }
 
-    EVE_FORCEINLINE pack& operator--() noexcept
+    EVE_FORCEINLINE wide& operator--() noexcept
     {
       *this -= Type{1};
       return *this;
     }
 
-    EVE_FORCEINLINE pack operator--(int) noexcept
+    EVE_FORCEINLINE wide operator--(int) noexcept
     {
       auto that(*this);
       operator--();
@@ -258,14 +258,14 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Self-assignment operators
     template<typename Other>
-    EVE_FORCEINLINE pack& operator+=(Other const& other) noexcept
+    EVE_FORCEINLINE wide& operator+=(Other const& other) noexcept
     {
       *this = eve::plus(*this, other);
       return *this;
     }
 
     template<typename Other>
-    EVE_FORCEINLINE pack& operator-=(Other const& other) noexcept
+    EVE_FORCEINLINE wide& operator-=(Other const& other) noexcept
     {
       *this = eve::minus(*this, other);
       return *this;
@@ -276,13 +276,13 @@ namespace eve
   };
 
   template <typename T, typename N, typename ABI>
-  EVE_FORCEINLINE void swap(pack<T, N, ABI>& lhs, pack<T, N, ABI>& rhs) noexcept
+  EVE_FORCEINLINE void swap(wide<T, N, ABI>& lhs, wide<T, N, ABI>& rhs) noexcept
   {
     lhs.swap(rhs);
   }
 
   template <typename T, typename N, typename ABI>
-  std::ostream& operator<<(std::ostream& os, pack<T, N, ABI> const& p)
+  std::ostream& operator<<(std::ostream& os, wide<T, N, ABI> const& p)
   {
     os << '(' << +p[0];
 

@@ -18,19 +18,19 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( neon128_ const&
-                              , pack<T,N,neon128_> const& l, pack<T,N,neon128_> const& h
+                              , wide<T,N,neon128_> const& l, wide<T,N,neon128_> const& h
                               ) noexcept
   {
-    using that_t = pack<T,typename N::combined_type>;
+    using that_t = wide<T,typename N::combined_type>;
     return that_t( typename that_t::storage_type{l,h} );
   }
 
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( neon128_ const&
-                              , pack<T,N,neon64_> const& l, pack<T,N,neon64_> const& h
+                              , wide<T,N,neon64_> const& l, wide<T,N,neon64_> const& h
                               ) noexcept
   {
-    using that_t = pack<T,typename N::combined_type>;
+    using that_t = wide<T,typename N::combined_type>;
 
     if constexpr(N::value*sizeof(T) == limits<eve::neon64_>::bytes)
     {

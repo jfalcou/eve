@@ -12,35 +12,35 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 #include <eve/function/load.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL( "load behavior for pack"
+TTS_CASE_TPL( "load behavior for wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  TTS_SETUP("load a pack from")
+  TTS_SETUP("load a wide from")
   {
-    using pack_t = eve::pack<Type,T>;
+    using wide_t = eve::wide<Type,T>;
     auto filler = [](auto i, auto) { return Type(1)+i; };
 
-    alignas(pack_t::static_alignment) std::array<Type, T::value> data;
+    alignas(wide_t::static_alignment) std::array<Type, T::value> data;
     for(int i = 0; i < T::value; ++i)
       data[i] = filler(i,0);
 
-    pack_t simd, ref(filler);
+    wide_t simd, ref(filler);
 
-    TTS_SECTION("a pointer to pack")
+    TTS_SECTION("a pointer to wide")
     {
       simd = eve::load(&ref);
       TTS_EQUAL( simd, ref );
     }
 
-    TTS_SECTION("an aligned pointer to pack")
+    TTS_SECTION("an aligned pointer to wide")
     {
-      simd = eve::load( eve::as_aligned<pack_t::static_alignment>(&ref) );
+      simd = eve::load( eve::as_aligned<wide_t::static_alignment>(&ref) );
       TTS_EQUAL( simd, ref );
     }
 
@@ -52,36 +52,36 @@ TTS_CASE_TPL( "load behavior for pack"
 
     TTS_SECTION("an aligned pointer to scalar values")
     {
-      simd = eve::load(eve::as_aligned<pack_t::static_alignment>(&data[0]), eve::as(simd));
+      simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&data[0]), eve::as(simd));
       TTS_EQUAL( simd, ref );
     }
   }
 }
 
-TTS_CASE_TPL( "load behavior for pack of logical"
+TTS_CASE_TPL( "load behavior for wide of logical"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  TTS_SETUP("load a pack from")
+  TTS_SETUP("load a wide from")
   {
-    using pack_t = eve::pack<eve::logical<Type>,T>;
+    using wide_t = eve::wide<eve::logical<Type>,T>;
     auto filler = [](auto i, auto) { return i% 3 ? true : false; };
 
-    alignas(pack_t::static_alignment) std::array<eve::logical<Type>, T::value> data;
+    alignas(wide_t::static_alignment) std::array<eve::logical<Type>, T::value> data;
     for(std::size_t i = 0; i < T::value; ++i)
       data[i] = filler(i,0);
 
-    pack_t simd, ref(filler);
+    wide_t simd, ref(filler);
 
-    TTS_SECTION("a pointer to logical pack")
+    TTS_SECTION("a pointer to logical wide")
     {
       simd = eve::load(&ref);
       TTS_EQUAL( simd, ref );
     }
 
-    TTS_SECTION("an aligned pointer to logical pack")
+    TTS_SECTION("an aligned pointer to logical wide")
     {
-      simd = eve::load( eve::as_aligned<pack_t::static_alignment>(&ref) );
+      simd = eve::load( eve::as_aligned<wide_t::static_alignment>(&ref) );
       TTS_EQUAL( simd, ref );
     }
 
@@ -93,7 +93,7 @@ TTS_CASE_TPL( "load behavior for pack of logical"
 
     TTS_SECTION("an aligned pointer to scalar logical values")
     {
-      simd = eve::load(eve::as_aligned<pack_t::static_alignment>(&data[0]), eve::as(simd));
+      simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&data[0]), eve::as(simd));
       TTS_EQUAL( simd, ref );
     }
   }

@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto a2l_isocast_(In const& v0, Out const&) noexcept
   {
     using tgt_t = typename Out::type;
-    using type  = pack< typename tgt_t::value_type::value_type
+    using type  = wide< typename tgt_t::value_type::value_type
                       , typename tgt_t::cardinal_type
                       , typename tgt_t::abi_type
                       >;
@@ -35,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto a2l_cast_(In const& v0, Out const&) noexcept
   {
     using type      = typename Out::type;
-    using local_tgt = pack< typename type::value_type::value_type
+    using local_tgt = wide< typename type::value_type::value_type
                           , typename type::cardinal_type
                           , typename type::abi_type
                           >;
@@ -48,7 +48,7 @@ namespace eve::detail
   template<typename In, typename Out>
   EVE_FORCEINLINE auto l2a_isocast_(In const& v0, Out const&) noexcept
   {
-    using type = pack < typename In::value_type::value_type
+    using type = wide < typename In::value_type::value_type
                       , typename In::cardinal_type
                       >;
     return bitwise_cast<typename Out::type>(type{v0.storage()});
@@ -58,7 +58,7 @@ namespace eve::detail
   template<typename In, typename Out>
   EVE_FORCEINLINE auto l2a_cast_(In const& v0, Out const&) noexcept
   {
-    using type  = pack< typename In::value_type::value_type
+    using type  = wide< typename In::value_type::value_type
                       , typename In::cardinal_type
                       >;
 
@@ -70,7 +70,7 @@ namespace eve::detail
   template<typename In, typename Out>
   EVE_FORCEINLINE auto l2l_isocast_(In const& v0, Out const&) noexcept
   {
-    using type = pack<typename In::value_type::value_type,typename In::cardinal_type>;
+    using type = wide<typename In::value_type::value_type,typename In::cardinal_type>;
 
     if constexpr( std::is_same_v<In,typename Out::type> )
       return v0;
@@ -82,7 +82,7 @@ namespace eve::detail
   template<typename In, typename Out>
   EVE_FORCEINLINE auto l2l_cast_(In const& v0, Out const&) noexcept
   {
-    using type = pack<typename In::value_type::value_type,typename In::cardinal_type>;
+    using type = wide<typename In::value_type::value_type,typename In::cardinal_type>;
 
     if constexpr( std::is_same_v<In,typename Out::type> )
       return v0;

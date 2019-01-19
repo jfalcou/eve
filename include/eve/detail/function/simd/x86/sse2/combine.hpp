@@ -21,10 +21,10 @@ namespace eve::detail
   // double
   template<typename N>
   EVE_FORCEINLINE auto combine( sse2_ const&
-                              , pack<double,N,sse_> const& l, pack<double,N,sse_> const& h
+                              , wide<double,N,sse_> const& l, wide<double,N,sse_> const& h
                               ) noexcept
   {
-    using that_t = pack<double,typename N::combined_type>;
+    using that_t = wide<double,typename N::combined_type>;
 
     if constexpr(N::value == 2)
       return that_t( typename that_t::storage_type{l,h} );
@@ -36,10 +36,10 @@ namespace eve::detail
   // float
   template<typename N>
   EVE_FORCEINLINE auto combine( sse2_ const&
-                              , pack<float,N,sse_> const& l, pack<float,N,sse_> const& h
+                              , wide<float,N,sse_> const& l, wide<float,N,sse_> const& h
                               ) noexcept
   {
-    using that_t = pack<float,typename N::combined_type>;
+    using that_t = wide<float,typename N::combined_type>;
 
     if constexpr(N::value == 4) return that_t( typename that_t::storage_type{l,h} );
     if constexpr(N::value == 2) return that_t{_mm_shuffle_ps(l,h,0x44)};
@@ -56,12 +56,12 @@ namespace eve::detail
   // integers
   template< typename T, typename N>
   EVE_FORCEINLINE auto  combine ( sse2_ const&
-                                , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
+                                , wide<T,N,sse_> const& l, wide<T,N,sse_> const& h
                                 ) noexcept
-                        requires( pack<T,typename N::combined_type>, Integral<T>)
+                        requires( wide<T,typename N::combined_type>, Integral<T>)
 
   {
-    using that_t = pack<T,typename N::combined_type>;
+    using that_t = wide<T,typename N::combined_type>;
     constexpr auto sz = that_t::static_size;
 
     if constexpr      (sz*sizeof(T) ==  2*limits<sse2_>::bytes)
@@ -97,10 +97,10 @@ namespace eve::detail
   // logicals
   template<typename T, typename N>
   EVE_FORCEINLINE
-  typename pack<logical<T>, typename N::combined_type>::storage_type
-  combine(sse2_ const&, pack<logical<T>,N,sse_> const& l, pack<logical<T>,N,sse_> const& h) noexcept
+  typename wide<logical<T>, typename N::combined_type>::storage_type
+  combine(sse2_ const&, wide<logical<T>,N,sse_> const& l, wide<logical<T>,N,sse_> const& h) noexcept
   {
-    using that_t = pack<logical<T>,typename N::combined_type>;
+    using that_t = wide<logical<T>,typename N::combined_type>;
     return that_t( typename that_t::storage_type{l,h} );
   }
 }

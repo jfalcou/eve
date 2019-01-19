@@ -10,7 +10,7 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 #include <eve/logical.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/store.hpp>
@@ -25,11 +25,11 @@ TTS_CASE_TPL( "Check store behavior to unaligned pointer"
             , fixed<1>, fixed<2>, fixed<4>, fixed<8>, fixed<16>, fixed<32>, fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
 
   auto filler = [](auto i, auto) { return 1 + i; };
 
-  pack<Type,T> simd( filler );
+  wide<Type,T> simd( filler );
   std::array<Type,3*T::value> ref;
   std::array<Type,3*T::value> target;
 
@@ -50,12 +50,12 @@ TTS_CASE_TPL( "Check store behavior to unaligned logical pointer"
             , fixed<1>, fixed<2>, fixed<4>, fixed<8>, fixed<16>, fixed<32>, fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   using eve::logical;
 
   auto filler = [](auto i, auto) { return i % 3 == 0; };
 
-  pack<logical<Type>,T> simd( filler );
+  wide<logical<Type>,T> simd( filler );
   std::array<logical<Type>,3*T::value> ref;
   std::array<logical<Type>,3*T::value> target;
 
@@ -76,13 +76,13 @@ TTS_CASE_TPL( "Check store behavior to aligned pointer"
             , fixed<1>, fixed<2>, fixed<4>, fixed<8>, fixed<16>, fixed<32>, fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
 
   auto filler = [](auto i, auto) { return 1 + i; };
 
-  constexpr auto algt = pack<Type,T>::alignment();
+  constexpr auto algt = wide<Type,T>::alignment();
 
-  pack<Type,T> simd( filler );
+  wide<Type,T> simd( filler );
   alignas(algt) std::array<Type,3*T::value> ref;
   alignas(algt) std::array<Type,3*T::value> target;
 
@@ -103,14 +103,14 @@ TTS_CASE_TPL( "Check store behavior to aligned pointer of logical"
             , fixed<1>, fixed<2>, fixed<4>, fixed<8>, fixed<16>, fixed<32>, fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   using eve::logical;
 
   auto filler = [](auto i, auto) { return i%3 == 0; };
 
-  constexpr auto algt = pack<logical<Type>,T>::alignment();
+  constexpr auto algt = wide<logical<Type>,T>::alignment();
 
-  pack<logical<Type>,T> simd( filler );
+  wide<logical<Type>,T> simd( filler );
   alignas(algt) std::array<logical<Type>,3*T::value> ref;
   alignas(algt) std::array<logical<Type>,3*T::value> target;
 

@@ -18,10 +18,10 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( vmx_ const&
-                              , pack<T,N,ppc_> const& l, pack<T,N,ppc_> const& h
+                              , wide<T,N,ppc_> const& l, wide<T,N,ppc_> const& h
                               ) noexcept
   {
-    using that_t = pack<T,typename N::combined_type>;
+    using that_t = wide<T,typename N::combined_type>;
 
     if constexpr(N::value*sizeof(T) == limits<eve::vmx_>::bytes)
     {

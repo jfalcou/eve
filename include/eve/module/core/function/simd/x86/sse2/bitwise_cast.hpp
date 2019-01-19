@@ -19,9 +19,9 @@
 namespace eve::detail
 {
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE pack<Target,M,sse_> bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                                                    , pack<Source,N,sse_> const& v0
-                                                    , as_<pack<Target,M,sse_>> const&
+  EVE_FORCEINLINE wide<Target,M,sse_> bitwise_cast_ ( EVE_SUPPORTS(sse2_)
+                                                    , wide<Source,N,sse_> const& v0
+                                                    , as_<wide<Target,M,sse_>> const&
                                                     ) noexcept
   {
     // Idempotent call
@@ -52,28 +52,28 @@ namespace eve::detail
 
   // SSE2 supports logical bitwise casting
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE pack<logical<Target>,M,sse_>
+  EVE_FORCEINLINE wide<logical<Target>,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<Source,N,sse_> const& v0, as_<pack<logical<Target>,M,sse_>> const& tgt
+                , wide<Source,N,sse_> const& v0, as_<wide<logical<Target>,M,sse_>> const& tgt
                 ) noexcept
   {
     return a2l_isocast_(v0,tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE pack<Target,M,sse_>
+  EVE_FORCEINLINE wide<Target,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<logical<Source>,N,sse_> const& v0, as_<pack<Target,M,sse_>> const& tgt
+                , wide<logical<Source>,N,sse_> const& v0, as_<wide<Target,M,sse_>> const& tgt
                 ) noexcept
   {
     return l2a_isocast_(v0,tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE pack<logical<Target>,M,sse_>
+  EVE_FORCEINLINE wide<logical<Target>,M,sse_>
   bitwise_cast_ ( EVE_SUPPORTS(sse2_)
-                , pack<logical<Source>,N,sse_> const& v0
-                , as_<pack<logical<Target>,M,sse_>> const& tgt
+                , wide<logical<Source>,N,sse_> const& v0
+                , as_<wide<logical<Target>,M,sse_>> const& tgt
                 ) noexcept
   {
     return l2l_isocast_(v0,tgt);

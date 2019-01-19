@@ -51,9 +51,9 @@ namespace eve::detail
   EVE_FORCEINLINE Pack load(as_<Pack> const& tgt, eve::aggregated_ const&, Pointer ptr) noexcept
   {
     using storage_t = typename Pack::storage_type;
-    using subpack_t = typename storage_t::value_type;
+    using subwide_t = typename storage_t::value_type;
 
-    return Pack(storage_t{ subpack_t(ptr), subpack_t(ptr + subpack_t::size())});
+    return Pack(storage_t{ subwide_t(ptr), subwide_t(ptr + subwide_t::size())});
   }
 
   template<typename T, typename Pack, std::size_t N>
@@ -62,8 +62,8 @@ namespace eve::detail
                             ) noexcept
   {
     using storage_t = typename Pack::storage_type;
-    using subpack_t = typename storage_t::value_type;
-    return Pack(storage_t{ subpack_t(ptr), subpack_t(ptr + subpack_t::size())});
+    using subwide_t = typename storage_t::value_type;
+    return Pack(storage_t{ subwide_t(ptr), subwide_t(ptr + subwide_t::size())});
   }
 }
 
