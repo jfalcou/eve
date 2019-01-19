@@ -13,19 +13,19 @@
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/plus.hpp>
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check plus behavior on pack"
+TTS_CASE_TPL( "Check plus behavior on wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
 
-  TTS_SETUP( "A correctly initialized pack" )
+  TTS_SETUP( "A correctly initialized wide" )
   {
-    pack<Type,T>  lhs([](auto i, auto  ) { return i; })
+    wide<Type,T>  lhs([](auto i, auto  ) { return i; })
                 , rhs([](auto i, auto c) { return c-i; })
                 , ref(T::value);
 

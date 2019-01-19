@@ -7,9 +7,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_PACK_HPP_INCLUDED
-#define EVE_ARCH_PACK_HPP_INCLUDED
+#ifndef EVE_ARCH_WIDE_HPP_INCLUDED
+#define EVE_ARCH_WIDE_HPP_INCLUDED
 
-#include <eve/arch/cpu/pack.hpp>
+#include <eve/arch/cpu/wide.hpp>
 
 #endif

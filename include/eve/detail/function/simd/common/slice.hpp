@@ -30,25 +30,25 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Emulation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice( pack<T,N,emulated_> const& a ) noexcept
+  EVE_FORCEINLINE auto slice( wide<T,N,emulated_> const& a ) noexcept
   {
     auto eval = [&](auto... I)
     {
-      using pack_t = pack<T,typename N::split_type>;
-      using that_t = std::array<pack_t,2>;
-      return that_t{pack_t{a[I]...},pack_t{a[I+N::value/2]...}};
+      using wide_t = wide<T,typename N::split_type>;
+      using that_t = std::array<wide_t,2>;
+      return that_t{wide_t{a[I]...},wide_t{a[I+N::value/2]...}};
     };
 
     return apply<N::value/2>(eval);
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<T,N,emulated_> const& a, Slice const& ) noexcept
+  EVE_FORCEINLINE auto slice( wide<T,N,emulated_> const& a, Slice const& ) noexcept
   {
     auto eval = [&](auto... I)
     {
-      using pack_t = pack<T,typename N::split_type>;
-      return pack_t{a[I+(Slice::value*N::value/2)]...};
+      using wide_t = wide<T,typename N::split_type>;
+      return wide_t{a[I+(Slice::value*N::value/2)]...};
     };
 
     return apply<N::value/2>(eval);
@@ -57,7 +57,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE decltype(auto) slice( pack<T,N,aggregated_> const& a ) noexcept
+  EVE_FORCEINLINE decltype(auto) slice( wide<T,N,aggregated_> const& a ) noexcept
   {
     #if defined(EVE_COMP_IS_GNUC)
     constexpr bool is_gnuc = true;
@@ -70,9 +70,9 @@ namespace eve::detail
     {
       auto eval = [&](auto... I)
       {
-        using pack_t = pack<T,typename N::split_type>;
-        using that_t = std::array<pack_t,2>;
-        return that_t{pack_t{a[I]...},pack_t{a[I+N::value/2]...}};
+        using wide_t = wide<T,typename N::split_type>;
+        using that_t = std::array<wide_t,2>;
+        return that_t{wide_t{a[I]...},wide_t{a[I+N::value/2]...}};
       };
 
       return apply<N::value/2>(eval);
@@ -82,7 +82,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<T,N,aggregated_> const& a, Slice const& ) noexcept
+  EVE_FORCEINLINE auto slice( wide<T,N,aggregated_> const& a, Slice const& ) noexcept
   {
     return a.storage()[Slice::value];
   }

@@ -32,7 +32,7 @@ namespace eve
     }
   }
 
-  // Find proper ABI for pack
+  // Find proper ABI for wide
   template<typename Type, typename Size, typename Enable= void>
   struct expected_abi;
 

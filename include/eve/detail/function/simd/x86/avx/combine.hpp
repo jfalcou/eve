@@ -19,10 +19,10 @@ namespace eve::detail
   // All AVX types
   template<typename T, typename N>
   EVE_FORCEINLINE auto combine( avx_ const&
-                              , pack<T,N,avx_> const& l, pack<T,N,avx_> const& h
+                              , wide<T,N,avx_> const& l, wide<T,N,avx_> const& h
                               ) noexcept
   {
-    using that_t = pack<T,typename N::combined_type>;
+    using that_t = wide<T,typename N::combined_type>;
     return that_t( typename that_t::storage_type{l,h} );
   }
 
@@ -30,9 +30,9 @@ namespace eve::detail
   // All SSE types
   template<typename T,typename N>
   EVE_FORCEINLINE auto  combine ( avx_ const&
-                                , pack<T,N,sse_> const& l, pack<T,N,sse_> const& h
+                                , wide<T,N,sse_> const& l, wide<T,N,sse_> const& h
                                 ) noexcept
-                        requires( pack<T,typename N::combined_type>, If<(N::value*sizeof(T)==16)>)
+                        requires( wide<T,typename N::combined_type>, If<(N::value*sizeof(T)==16)>)
   {
     if constexpr( std::is_same_v<T,double> )
       return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);

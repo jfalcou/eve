@@ -20,18 +20,18 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(vmx_), pack<T,N,ppc_> const& value, T* ptr) noexcept
+  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(vmx_), wide<T,N,ppc_> const& value, T* ptr) noexcept
                         requires( void, Arithmetic<T>)
   {
     if constexpr(N::value*sizeof(T) == limits<vmx_>::bytes)
-      *((typename pack<T,N,ppc_>::storage_type*)(ptr)) = value;
+      *((typename wide<T,N,ppc_>::storage_type*)(ptr)) = value;
     else
       apply<N::value>( [&](auto... I) { ((*ptr++ = value[I]), ...); } );
   }
 
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto  store_ ( EVE_SUPPORTS(vmx_)
-                              , pack<T,S,ppc_> const& value, aligned_ptr<T,N> ptr
+                              , wide<T,S,ppc_> const& value, aligned_ptr<T,N> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {

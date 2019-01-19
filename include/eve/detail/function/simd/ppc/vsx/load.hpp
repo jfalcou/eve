@@ -24,12 +24,12 @@
 namespace eve::detaill
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  load(as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
-                        requires(typename pack<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
+  EVE_FORCEINLINE auto  load(as_<wide<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
+                        requires(typename wide<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
   {
     if constexpr( std::is_integral_v<T> )
     {
-      using type = typename pack<T,N>::storage_type*;
+      using type = typename wide<T,N>::storage_type*;
       return vec_vsx_ld(0,type(ptr));
     }
     else
@@ -39,14 +39,14 @@ namespace eve::detaill
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::ppc_ const&
+  EVE_FORCEINLINE auto  load( as_<wide<T,N>> const&, eve::ppc_ const&
                             , aligned_ptr<T,Align> ptr
                             ) noexcept
-                        requires(typename pack<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
+                        requires(typename wide<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
   {
     if constexpr( std::is_integral_v<T> )
     {
-      using type = typename pack<T,N>::storage_type*;
+      using type = typename wide<T,N>::storage_type*;
       return vec_vsx_ld(0,type(ptr.get()));
     }
     else
@@ -54,7 +54,7 @@ namespace eve::detaill
       return vec_vsx_ld(0,ptr.get());
     }
 
-    using type = typename pack<T,N>::storage_type*;
+    using type = typename wide<T,N>::storage_type*;
     return vec_vsx_ld(0,type(ptr.get()));
   }
 }

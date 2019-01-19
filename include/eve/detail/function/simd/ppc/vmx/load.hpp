@@ -23,8 +23,8 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
-                        requires( typename pack<T,N>::storage_type
+  EVE_FORCEINLINE auto  load( as_<wide<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
+                        requires( typename wide<T,N>::storage_type
                                 , Arithmetic<T>, If<(sizeof(T)<8)>
                                 )
   {
@@ -32,10 +32,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto  load( as_<pack<T,N>> const& tgt, eve::ppc_ const& mode
+  EVE_FORCEINLINE auto  load( as_<wide<T,N>> const& tgt, eve::ppc_ const& mode
                             , aligned_ptr<T,Align> ptr
                             ) noexcept
-                        requires( typename pack<T,N>::storage_type
+                        requires( typename wide<T,N>::storage_type
                                 , Arithmetic<T>, If<(sizeof(T)<8)>
                                 )
   {

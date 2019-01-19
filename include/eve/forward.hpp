@@ -22,7 +22,7 @@ namespace eve
           , typename Size = defaulted<expected_cardinal_v<Type>>
           , typename ABI  = expected_abi_t<Type,Size>
           >
-  struct pack;
+  struct wide;
 }
 
 #endif

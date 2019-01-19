@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
-                              , pack<T,N,sse_> const& value, T* ptr
+                              , wide<T,N,sse_> const& value, T* ptr
                               ) noexcept
                   requires( void, detail::Arithmetic<T> )
   {
@@ -37,11 +37,11 @@ namespace eve::detail
 
   template<typename T, typename N, std::size_t A>
   EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
-                              , pack<T,N,sse_> const& value, aligned_ptr<T,A> ptr
+                              , wide<T,N,sse_> const& value, aligned_ptr<T,A> ptr
                               ) noexcept
                   requires( void, detail::Arithmetic<T> )
   {
-    static constexpr auto  alg = pack<T,N,sse_>::static_alignment;
+    static constexpr auto  alg = wide<T,N,sse_>::static_alignment;
 
     if constexpr(N::value*sizeof(T) == limits<sse2_>::bytes && A >= alg)
     {

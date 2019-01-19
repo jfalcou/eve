@@ -20,11 +20,11 @@ list_tests("function/simd/load"    "api" ${all_types})
 list_tests("function/simd/store"   "api" ${all_types})
 
 ##==================================================================================================
-## pack API tests
-list_tests("pack/combine"   "api" ${all_types})
-list_tests("pack/decrement" "api" ${all_types})
-list_tests("pack/increment" "api" ${all_types})
-list_tests("pack/load"      "api" ${all_types})
-list_tests("pack/make"      "api" ${all_types})
-list_tests("pack/slice"     "api" ${all_types})
-list_tests("pack/splat"     "api" ${all_types})
+## wide API tests
+list_tests("wide/combine"   "api" ${all_types})
+list_tests("wide/decrement" "api" ${all_types})
+list_tests("wide/increment" "api" ${all_types})
+list_tests("wide/load"      "api" ${all_types})
+list_tests("wide/make"      "api" ${all_types})
+list_tests("wide/slice"     "api" ${all_types})
+list_tests("wide/splat"     "api" ${all_types})

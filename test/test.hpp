@@ -12,15 +12,15 @@
 
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 #include <algorithm>
 
 namespace tts::ext
 {
   template<typename T, typename N, typename ABI, typename EnableIf>
-  struct equal<eve::pack<T,N,ABI>,eve::pack<T,N,ABI>,EnableIf>
+  struct equal<eve::wide<T,N,ABI>,eve::wide<T,N,ABI>,EnableIf>
   {
-    using arg_t = eve::pack<T,N,ABI>;
+    using arg_t = eve::wide<T,N,ABI>;
     inline bool operator()(arg_t const& l, arg_t const& r) const
     {
       return std::equal(l.begin(),l.end(),r.begin());

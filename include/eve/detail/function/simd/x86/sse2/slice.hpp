@@ -22,10 +22,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Single slice
   template<typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<double,N,sse_> const& a, Slice const& ) noexcept
-                  requires(pack<double,typename N::split_type>,If<(N::value>1)>)
+  EVE_FORCEINLINE auto slice( wide<double,N,sse_> const& a, Slice const& ) noexcept
+                  requires(wide<double,typename N::split_type>,If<(N::value>1)>)
   {
-    using that_t = pack<double,typename N::split_type>;
+    using that_t = wide<double,typename N::split_type>;
 
     if constexpr(Slice::value)
     {
@@ -38,10 +38,10 @@ namespace eve::detail
   }
 
   template<typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<float,N,sse_> const& a, Slice const& ) noexcept
-                  requires(pack<float,typename N::split_type>,If<(N::value>1)>)
+  EVE_FORCEINLINE auto slice( wide<float,N,sse_> const& a, Slice const& ) noexcept
+                  requires(wide<float,typename N::split_type>,If<(N::value>1)>)
   {
-    using that_t = pack<float,typename N::split_type>;
+    using that_t = wide<float,typename N::split_type>;
 
     if constexpr(Slice::value)
     {
@@ -55,12 +55,12 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<T,N,sse_> const& a, Slice const& ) noexcept
-                  requires( pack<T,typename N::split_type>
+  EVE_FORCEINLINE auto slice( wide<T,N,sse_> const& a, Slice const& ) noexcept
+                  requires( wide<T,typename N::split_type>
                           , If<(N::value>1)>, Integral<T>
                           )
   {
-    using that_t = pack<T,typename N::split_type>;
+    using that_t = wide<T,typename N::split_type>;
 
     if constexpr(Slice::value)
     {
@@ -81,10 +81,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Both slice
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  slice( pack<T,N,sse_> const& a ) noexcept
-                        requires(std::array<pack<T,typename N::split_type>,2>,If<(N::value>1)>)
+  EVE_FORCEINLINE auto  slice( wide<T,N,sse_> const& a ) noexcept
+                        requires(std::array<wide<T,typename N::split_type>,2>,If<(N::value>1)>)
   {
-    std::array<pack<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
+    std::array<wide<T,typename N::split_type>,2> that{slice(a,lower_), slice(a,upper_)};
     return that;
   }
 }

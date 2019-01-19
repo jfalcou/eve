@@ -10,7 +10,7 @@
 #ifndef LOAD_HPP
 #define LOAD_HPP
 
-#include <eve/pack.hpp>
+#include <eve/wide.hpp>
 #include <eve/logical.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <tts/tts.hpp>
@@ -23,26 +23,26 @@ using eve::as_aligned;
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check ctor from unaligned pointer for pack"
+TTS_CASE_TPL( "Check ctor from unaligned pointer for wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   std::array<Type,T::value> ref;
 
   Type k = {};
   for(auto& e : ref) e = k++;
 
-  pack<Type,T> simd( &ref[0] );
+  wide<Type,T> simd( &ref[0] );
 
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE_TPL( "Check ctor from unaligned pointer for logical pack"
+TTS_CASE_TPL( "Check ctor from unaligned pointer for logical wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   using eve::logical;
 
   std::array<logical<Type>,T::value> ref;
@@ -50,49 +50,49 @@ TTS_CASE_TPL( "Check ctor from unaligned pointer for logical pack"
   logical<Type> k = true;
   for(auto& e : ref) e = (k = !k);
 
-  pack<logical<Type>,T> simd( &ref[0] );
+  wide<logical<Type>,T> simd( &ref[0] );
 
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE_TPL( "Check ctor from aligned pointer for pack"
+TTS_CASE_TPL( "Check ctor from aligned pointer for wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
-  constexpr auto algt = pack<Type,T>::static_alignment;
+  using eve::wide;
+  constexpr auto algt = wide<Type,T>::static_alignment;
 
   alignas(algt) std::array<Type,T::value> ref;
 
   Type k = {};
   for(auto& e : ref) e = k++;
 
-  pack<Type,T> simd( as_aligned<algt>(&ref[0]) );
+  wide<Type,T> simd( as_aligned<algt>(&ref[0]) );
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE_TPL( "Check ctor from aligned pointer for logical pack"
+TTS_CASE_TPL( "Check ctor from aligned pointer for logical wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   using eve::logical;
-  constexpr auto algt = pack<Type,T>::static_alignment;
+  constexpr auto algt = wide<Type,T>::static_alignment;
 
   alignas(algt) std::array<logical<Type>,T::value> ref;
 
   logical<Type> k = true;
   for(auto& e : ref) e = (k = !k);
 
-  pack<logical<Type>,T> simd( as_aligned<algt>(&ref[0]) );
+  wide<logical<Type>,T> simd( as_aligned<algt>(&ref[0]) );
   TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
 }
 
-TTS_CASE_TPL( "Check ctor from range for pack"
+TTS_CASE_TPL( "Check ctor from range for wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
 
   std::list<Type> ref(T::value);
 
@@ -100,21 +100,21 @@ TTS_CASE_TPL( "Check ctor from range for pack"
   for(auto& e : ref) e = k++;
 
   {
-    pack<Type,T> simd( ref );
+    wide<Type,T> simd( ref );
     TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
   }
 
   {
-    pack<Type,T> simd( ref.begin(), ref.end() );
+    wide<Type,T> simd( ref.begin(), ref.end() );
     TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
   }
 }
 
-TTS_CASE_TPL( "Check ctor from range for logical pack"
+TTS_CASE_TPL( "Check ctor from range for logical wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
-  using eve::pack;
+  using eve::wide;
   using eve::logical;
 
   std::list<logical<Type>> ref(T::value);
@@ -123,12 +123,12 @@ TTS_CASE_TPL( "Check ctor from range for logical pack"
   for(auto& e : ref) e = (k = !k);
 
   {
-    pack<logical<Type>,T> simd( ref );
+    wide<logical<Type>,T> simd( ref );
     TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
   }
 
   {
-    pack<logical<Type>,T> simd( ref.begin(), ref.end() );
+    wide<logical<Type>,T> simd( ref.begin(), ref.end() );
     TTS_EXPECT( std::equal(simd.begin(),simd.end(),ref.begin()));
   }
 }

@@ -7,11 +7,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_PACK_CAST_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_PACK_CAST_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SCALAR_WIDE_CAST_HPP_INCLUDED
+#define EVE_FUNCTION_SCALAR_WIDE_CAST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve { EVE_MAKE_CALLABLE(pack_cast_,pack_cast); }
+#include <eve/function/definition/wide_cast.hpp>
+#include <eve/module/core/function/scalar/wide_cast.hpp>
 
 #endif

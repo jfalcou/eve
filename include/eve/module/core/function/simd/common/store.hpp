@@ -20,13 +20,13 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename N> EVE_FORCEINLINE
-  void store_(EVE_SUPPORTS(cpu_), pack<T,N,emulated_> const& value, T* ptr) noexcept
+  void store_(EVE_SUPPORTS(cpu_), wide<T,N,emulated_> const& value, T* ptr) noexcept
   {
     apply<N::value>( [&](auto... I) { ((*ptr++ = value[I]), ...); } );
   }
 
   template<typename T, typename N> EVE_FORCEINLINE
-  void store_(EVE_SUPPORTS(cpu_), pack<T,N,aggregated_> const& value, T* ptr) noexcept
+  void store_(EVE_SUPPORTS(cpu_), wide<T,N,aggregated_> const& value, T* ptr) noexcept
   {
     store( value.storage()[0], ptr );
     store( value.storage()[1], ptr + value.storage()[1].size() );
@@ -36,8 +36,8 @@ namespace eve::detail
   // Aligned case
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(cpu_)
-                              , pack<T,S,emulated_> const& value, aligned_ptr<T,N> ptr
-                              , std::enable_if_t<(pack<T,S,emulated_>::static_alignment <= N)>* = 0
+                              , wide<T,S,emulated_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<(wide<T,S,emulated_>::static_alignment <= N)>* = 0
                               ) noexcept
   {
     store(value, ptr.get());
@@ -45,8 +45,8 @@ namespace eve::detail
 
   template< typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void store_ ( EVE_SUPPORTS(cpu_)
-                              , pack<T,S,aggregated_> const& value, aligned_ptr<T,N> ptr
-                              , std::enable_if_t<(pack<T,S,aggregated_>::static_alignment <= N)>* = 0
+                              , wide<T,S,aggregated_> const& value, aligned_ptr<T,N> ptr
+                              , std::enable_if_t<(wide<T,S,aggregated_>::static_alignment <= N)>* = 0
                               ) noexcept
   {
     store( value.storage()[0], ptr );

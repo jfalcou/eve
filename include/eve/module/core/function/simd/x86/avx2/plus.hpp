@@ -19,9 +19,9 @@ namespace eve::detail
   template< typename T, typename N
           , typename = std::enable_if_t<std::is_integral_v<T>>
           >
-  EVE_FORCEINLINE pack<T,N,avx_> plus_( EVE_SUPPORTS(avx2_)
-                                      , pack<T,N,avx_> const& v0
-                                      , pack<T,N,avx_> const& v1
+  EVE_FORCEINLINE wide<T,N,avx_> plus_( EVE_SUPPORTS(avx2_)
+                                      , wide<T,N,avx_> const& v0
+                                      , wide<T,N,avx_> const& v1
                                       ) noexcept
   {
     if constexpr(sizeof(T) == 1)

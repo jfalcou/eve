@@ -7,12 +7,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_PACK_HPP_INCLUDED
-#define EVE_PACK_HPP_INCLUDED
+#ifndef EVE_EXT_AS_WIDE_HPP_INCLUDED
+#define EVE_EXT_AS_WIDE_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
-#include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
-#include <eve/arch/pack.hpp>
+
+namespace eve
+{
+  template<typename T> struct logical;
+
+  namespace ext
+  {
+    template< typename Type, typename Size, typename EnableIf = void>
+    struct as_wide
+    {
+      using type = eve::wide<Type,Size>;
+    };
+
+    template< typename Type, typename Size>
+    using as_wide_t = typename as_wide<Type,Size>::type;
+  }
+}
 
 #endif

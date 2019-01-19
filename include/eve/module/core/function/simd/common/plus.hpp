@@ -22,25 +22,25 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto  plus_( EVE_SUPPORTS(simd_), pack<T,N,ABI> const& v0, U const& v1) noexcept
-                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
+  EVE_FORCEINLINE auto  plus_( EVE_SUPPORTS(simd_), wide<T,N,ABI> const& v0, U const& v1) noexcept
+                        requires( wide<T,N,ABI>, detail::Convertible<U,T> )
   {
-    return eve::plus( v0, pack<T,N,ABI>(static_cast<T>(v1)) );
+    return eve::plus( v0, wide<T,N,ABI>(static_cast<T>(v1)) );
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto  plus_( EVE_SUPPORTS(simd_), U const& v0, pack<T,N,ABI> const& v1) noexcept
-                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
+  EVE_FORCEINLINE auto  plus_( EVE_SUPPORTS(simd_), U const& v0, wide<T,N,ABI> const& v1) noexcept
+                        requires( wide<T,N,ABI>, detail::Convertible<U,T> )
   {
-    return eve::plus( pack<T,N,ABI>(static_cast<T>(v0)), v1 );
+    return eve::plus( wide<T,N,ABI>(static_cast<T>(v0)), v1 );
   }
 
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE pack<T,N,aggregated_> plus_ ( EVE_SUPPORTS(simd_)
-                                              , pack<T,N,aggregated_> const& v0
-                                              , pack<T,N,aggregated_> const& v1
+  EVE_FORCEINLINE wide<T,N,aggregated_> plus_ ( EVE_SUPPORTS(simd_)
+                                              , wide<T,N,aggregated_> const& v0
+                                              , wide<T,N,aggregated_> const& v1
                                               ) noexcept
   {
     return aggregate( eve::plus, v0, v1);
@@ -49,9 +49,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE pack<T,N,emulated_> plus_ ( EVE_SUPPORTS(simd_)
-                                            , pack<T,N,emulated_> const& v0
-                                            , pack<T,N,emulated_> const& v1
+  EVE_FORCEINLINE wide<T,N,emulated_> plus_ ( EVE_SUPPORTS(simd_)
+                                            , wide<T,N,emulated_> const& v0
+                                            , wide<T,N,emulated_> const& v1
                                             ) noexcept
   {
     return map( eve::plus, v0, v1);
@@ -59,18 +59,18 @@ namespace eve::detail
 
   template<typename T, typename N, typename U>
   EVE_FORCEINLINE auto  plus_ ( EVE_SUPPORTS(simd_)
-                              , pack<T,N,emulated_> const& v0, U const& v1
+                              , wide<T,N,emulated_> const& v0, U const& v1
                               ) noexcept
-                        requires( pack<T,N,emulated_>, detail::Convertible<U,T> )
+                        requires( wide<T,N,emulated_>, detail::Convertible<U,T> )
   {
     return map( eve::plus, v0, static_cast<T>(v1));
   }
 
   template<typename T, typename N, typename U>
   EVE_FORCEINLINE auto  plus_ ( EVE_SUPPORTS(simd_)
-                              , U const& v0, pack<T,N,emulated_> const& v1
+                              , U const& v0, wide<T,N,emulated_> const& v1
                               ) noexcept
-                        requires( pack<T,N,emulated_>, detail::Convertible<U,T> )
+                        requires( wide<T,N,emulated_>, detail::Convertible<U,T> )
   {
     return map( eve::plus, static_cast<T>(v0), v1);
   }
@@ -81,21 +81,21 @@ namespace eve::detail
 namespace eve
 {
   template<typename T, typename N, typename ABI> EVE_FORCEINLINE
-  auto operator+( pack<T,N,ABI> const& v0, pack<T,N,ABI> const& v1) noexcept
+  auto operator+( wide<T,N,ABI> const& v0, wide<T,N,ABI> const& v1) noexcept
   {
     return eve::plus(v0, v1);
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto  operator+ ( pack<T,N,ABI> const& v0, U const& v1 ) noexcept
-                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
+  EVE_FORCEINLINE auto  operator+ ( wide<T,N,ABI> const& v0, U const& v1 ) noexcept
+                        requires( wide<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::plus(v0, v1);
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto  operator+ ( U const& v0, pack<T,N,ABI> const& v1) noexcept
-                        requires( pack<T,N,ABI>, detail::Convertible<U,T> )
+  EVE_FORCEINLINE auto  operator+ ( U const& v0, wide<T,N,ABI> const& v1) noexcept
+                        requires( wide<T,N,ABI>, detail::Convertible<U,T> )
   {
     return eve::plus(v0, v1);
   }

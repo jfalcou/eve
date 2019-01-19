@@ -20,7 +20,7 @@ namespace eve
   {};
 
   template<typename Type,typename Size, typename ABI>
-  struct cardinal<pack<Type,Size,ABI>> : std::integral_constant<std::size_t,Size::value>
+  struct cardinal<wide<Type,Size,ABI>> : std::integral_constant<std::size_t,Size::value>
   {};
 
   template<typename Type>

@@ -21,23 +21,23 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Common logical case
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
+  EVE_FORCEINLINE auto  load( as_<wide<logical<T>,N>> const& tgt, ABI const& mode
                             , logical<T>* ptr
                             ) noexcept
-                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
+                        requires( typename wide<logical<T>,N>::storage_type, Native<ABI>)
   {
-    using type    = typename pack<logical<T>,N>::storage_type;
-    return type( load(as_<pack<T,N>>{}, mode, (T*)ptr) );
+    using type    = typename wide<logical<T>,N>::storage_type;
+    return type( load(as_<wide<T,N>>{}, mode, (T*)ptr) );
   }
 
   template<typename T, typename N, std::size_t Align, typename ABI>
-  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
+  EVE_FORCEINLINE auto  load( as_<wide<logical<T>,N>> const& tgt, ABI const& mode
                             , aligned_ptr<logical<T>,Align> ptr
                             ) noexcept
-                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
+                        requires( typename wide<logical<T>,N>::storage_type, Native<ABI>)
   {
-    using type    = typename pack<logical<T>,N>::storage_type;
-    return type ( load( as_<pack<T,N>>{},mode
+    using type    = typename wide<logical<T>,N>::storage_type;
+    return type ( load( as_<wide<T,N>>{},mode
                       , aligned_ptr<T,Align>((T*)ptr.get())
                       )
                 );

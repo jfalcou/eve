@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,N,neon64_> const& value, T* ptr
+                              , wide<T,N,neon64_> const& value, T* ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
@@ -57,7 +57,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,N,neon128_> const& value, T* ptr
+                              , wide<T,N,neon128_> const& value, T* ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
@@ -89,7 +89,7 @@ namespace eve::detail
 #if defined(EVE_COMP_IS_MSVC)
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
+                              , wide<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
@@ -125,7 +125,7 @@ namespace eve::detail
 
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
+                              , wide<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
@@ -161,7 +161,7 @@ namespace eve::detail
 #else
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
+                              , wide<T,S,neon64_> const& value, aligned_ptr<T,N> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
@@ -170,7 +170,7 @@ namespace eve::detail
 
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(neon128_)
-                              , pack<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
+                              , wide<T,S,neon128_> const& value, aligned_ptr<T,N> ptr
                               ) noexcept
                         requires( void, Arithmetic<T>)
   {
