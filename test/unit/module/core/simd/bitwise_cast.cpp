@@ -40,7 +40,7 @@ TTS_CASE_TPL( "Check bitwise_cast between integer and real types"
 
 TTS_CASE_TPL( "Check bitwise_cast between arithmetic and logical types"
             , eve::fixed<1>, eve::fixed<2>, eve::fixed<4>
-            //, eve::fixed<8>, eve::fixed<16>, eve::fixed<32>, eve::fixed<64>
+            , eve::fixed<8>, eve::fixed<16>, eve::fixed<32>, eve::fixed<64>
             )
 {
   using pi_t = eve::wide<std::uint64_t, T>;
