@@ -49,10 +49,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,emulated_> plus_ ( EVE_SUPPORTS(simd_)
-                                            , wide<T,N,emulated_> const& v0
-                                            , wide<T,N,emulated_> const& v1
-                                            ) noexcept
+  EVE_FORCEINLINE auto plus_( EVE_SUPPORTS(simd_)
+                            , wide<T,N,emulated_> const& v0, wide<T,N,emulated_> const& v1
+                            ) noexcept
   {
     return map( eve::plus, v0, v1);
   }

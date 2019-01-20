@@ -34,10 +34,10 @@ namespace eve { namespace detail
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,emulated_> bitwise_or_( EVE_SUPPORTS(simd_)
-                                                  , wide<T,N,emulated_> const& v0
-                                                  , wide<T,N,emulated_> const& v1
-                                                  ) noexcept
+  EVE_FORCEINLINE auto bitwise_or_( EVE_SUPPORTS(simd_)
+                                  , wide<T,N,emulated_> const& v0
+                                  , wide<T,N,emulated_> const& v1
+                                  ) noexcept
   {
     return map( eve::bitwise_or, v0, v1);
   }
