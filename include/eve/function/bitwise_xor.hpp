@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_BITWISE_XOR_HPP_INCLUDED
 
 #include <eve/function/scalar/bitwise_xor.hpp>
-//#include <eve/function/simd/bitwise_xor.hpp>
+#include <eve/function/simd/bitwise_xor.hpp>
 
 #endif

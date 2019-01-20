@@ -13,7 +13,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/slice.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -26,23 +25,12 @@ namespace eve::detail
                                     , wide<T,N,X1> const& v0, as_<wide<U,M,X2>> const& tgt
                                     ) noexcept
   {
-    if constexpr( std::is_same_v<X1, aggregated_> && std::is_same_v<X2, aggregated_> )
-    {
-      using small_tgt = wide<U, typename M::split_type>;
-      return wide<U,M,X2> { bitwise_cast<small_tgt>( v0.slice(lower_) )
-                          , bitwise_cast<small_tgt>( v0.slice(upper_) )
-                          };
-    }
-    else
-    {
-      using type = wide<U,M,X2>;
-      constexpr auto sz = (sizeof(v0) < sizeof(type)) ? sizeof(v0) :sizeof(type);
+    wide<U,M,X2> that;
 
-      type that;
-      std::memcpy(&that, &v0, sz);
+    constexpr auto sz = std::min(sizeof(v0), sizeof(that));
+    std::memcpy(&that, &v0, sz);
 
-      return that;
-    }
+    return that;
   }
 }
 

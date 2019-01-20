@@ -58,38 +58,48 @@ namespace eve::detail
   };
 
   // MAP skeleton used to emulate SIMD operations
-  template<typename Func, typename... Ts>
-  EVE_FORCEINLINE decltype(auto) map(Func&& f, Ts&&... ts)
+  struct map_
   {
-    using wide_t  = typename wide_result<Func,Ts...>::type;
+    // Not a lambda as we need force-inlining
+    template<typename Func, typename Idx, typename... Ts>
+    EVE_FORCEINLINE auto operator()(Func&& fn, Idx const& i, Ts&&... vs) const noexcept
+    {
+      return std::forward<Func>(fn)(at(std::forward<Ts>(vs),i)...);
+    };
+  };
 
-    auto impl = [&](auto... I)
-                {
-                  auto eval = [](Func&& fn, auto const& i, Ts&&... vs)
-                  {
-                    return std::forward<Func>(fn)(at(std::forward<Ts>(vs),i)...);
-                  };
+  template<typename Fn, typename... Ts>
+  EVE_FORCEINLINE decltype(auto) map(Fn&& f, Ts&&... ts)
+  {
+    using w_t  = typename wide_result<Fn,Ts...>::type;
 
-                  return wide_t{ eval( std::forward<Func>(f), I, std::forward<Ts>(ts)...)... };
-                };
+    auto impl = [&](auto... I)  { return w_t{ map_{}( std::forward<Fn>(f), I
+                                                    , std::forward<Ts>(ts)...
+                                                    )...
+                                            };
+                                };
 
-    return apply<wide_t::static_size>(impl);
+    return apply<w_t::static_size>(impl);
   }
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
-  template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto aggregate(Func&& f, Ts&&... ts)
+  struct aggregate_wide
   {
-    using wide_t = typename wide_result<Func,Ts...>::type;
-
-    auto aggregate_wide = [](auto&& f, auto&&... ts) -> decltype(auto)
+    // Not a lambda as we need force-inlining
+    template<typename Func, typename... Ts>
+    EVE_FORCEINLINE auto operator()(Func&& f, Ts&&... ts) const -> decltype(auto)
     {
+      using wide_t = typename wide_result<Func,Ts...>::type;
       return  wide_t{ std::forward<Func>(f)( lower(std::forward<Ts>(ts))...)
                     , std::forward<Func>(f)( upper(std::forward<Ts>(ts))...)
                     };
-    };
+    }
+  };
 
-    return aggregate_wide(std::forward<Func>(f),std::forward<Ts>(ts)...);
+  template<typename Func, typename... Ts>
+  EVE_FORCEINLINE auto aggregate(Func&& f, Ts&&... ts)
+  {
+    return aggregate_wide{}(std::forward<Func>(f),std::forward<Ts>(ts)...);
   }
 }
 

@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_BITWISE_OR_HPP_INCLUDED
 
 #include <eve/function/scalar/bitwise_or.hpp>
-//#include <eve/function/simd/bitwise_or.hpp>
+#include <eve/function/simd/bitwise_or.hpp>
 
 #endif

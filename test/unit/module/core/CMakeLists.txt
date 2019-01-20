@@ -8,6 +8,9 @@
 
 ##==================================================================================================
 ## scalar tests
+add_unit_test( "core" scalar/bitwise_and.cpp )
+add_unit_test( "core" scalar/bitwise_or.cpp )
+add_unit_test( "core" scalar/bitwise_xor.cpp )
 add_unit_test( "core" scalar/bitwise_cast.cpp )
 
 list_tests("scalar/minus"         "core" ${all_types})
@@ -20,3 +23,6 @@ add_unit_test( "core" simd/bitwise_cast.cpp )
 
 list_tests("simd/minus" "core" ${all_types})
 list_tests("simd/plus" "core" ${all_types})
+list_tests("simd/bitwise_and" "core" ${all_types})
+list_tests("simd/bitwise_or" "core" ${all_types})
+list_tests("simd/bitwise_xor" "core" ${all_types})
