@@ -12,7 +12,6 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
-#include <eve/forward.hpp>
 #include <eve/arch/wide.hpp>
 
 #endif
