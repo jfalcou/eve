@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BITWISE_XOR_HPP_INCLUDED
-#define EVE_FUNCTION_BITWISE_XOR_HPP_INCLUDED
 
-#include <eve/function/scalar/bitwise_xor.hpp>
-#include <eve/function/simd/bitwise_xor.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::int16_t;
+#include "bitwise_xor.hpp"
