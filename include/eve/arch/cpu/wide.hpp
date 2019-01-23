@@ -22,7 +22,7 @@
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/minus.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_or.hpp>
@@ -268,7 +268,7 @@ namespace eve
 
     template<typename Other> EVE_FORCEINLINE wide& operator-=(Other const& other) noexcept
     {
-      *this = eve::minus(*this, other);
+      *this = eve::sub(*this, other);
       return *this;
     }
 
