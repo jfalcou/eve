@@ -24,6 +24,9 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/function/plus.hpp>
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bitwise_xor.hpp>
 #include <eve/ext/is_wide.hpp>
 #include <type_traits>
 #include <iterator>
@@ -257,17 +260,33 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Self-assignment operators
-    template<typename Other>
-    EVE_FORCEINLINE wide& operator+=(Other const& other) noexcept
+    template<typename Other> EVE_FORCEINLINE wide& operator+=(Other const& other) noexcept
     {
       *this = eve::plus(*this, other);
       return *this;
     }
 
-    template<typename Other>
-    EVE_FORCEINLINE wide& operator-=(Other const& other) noexcept
+    template<typename Other> EVE_FORCEINLINE wide& operator-=(Other const& other) noexcept
     {
       *this = eve::minus(*this, other);
+      return *this;
+    }
+
+    template<typename Other> EVE_FORCEINLINE wide& operator&=(Other const& other) noexcept
+    {
+      *this = eve::bitwise_and(*this, other);
+      return *this;
+    }
+
+    template<typename Other> EVE_FORCEINLINE wide& operator|=(Other const& other) noexcept
+    {
+      *this = eve::bitwise_or(*this, other);
+      return *this;
+    }
+
+    template<typename Other> EVE_FORCEINLINE wide& operator^=(Other const& other) noexcept
+    {
+      *this = eve::bitwise_xor(*this, other);
       return *this;
     }
 
