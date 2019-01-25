@@ -12,6 +12,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/is_native.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
@@ -28,7 +29,10 @@ namespace eve::detail
     wide<U,M,X2> that;
 
     constexpr auto sz = std::min(sizeof(v0), sizeof(that));
-    std::memcpy(&that, &v0, sz);
+
+    void const* src = reinterpret_cast<detail::alias_t<void const>*>( &v0 );
+    void* dst = reinterpret_cast<detail::alias_t<void>*>( &that );
+    std::memcpy(dst,src, sz);
 
     return that;
   }

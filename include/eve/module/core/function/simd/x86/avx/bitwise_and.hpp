@@ -25,7 +25,12 @@ namespace eve { namespace detail
   {
     if constexpr( std::is_same_v<T,float>   ) return _mm256_and_ps(v0,v1);
     if constexpr( std::is_same_v<T,double>  ) return _mm256_and_pd(v0,v1);
-    if constexpr( std::is_integral_v<T>     ) return _mm256_and_si256(v0,v1);
+
+    if constexpr( std::is_integral_v<T>     )
+      return _mm256_castps_si256( _mm256_and_ps ( _mm256_castsi256_ps(v0)
+                                                , _mm256_castsi256_ps(v1)
+                                                )
+                                );
   }
 } }
 
