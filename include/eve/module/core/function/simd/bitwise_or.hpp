@@ -22,6 +22,10 @@
   #include <eve/module/core/function/simd/x86/avx/bitwise_or.hpp>
 #endif
 
+#if EVE_HW_X86 >= EVE_AVX2_VERSION
+  #include <eve/module/core/function/simd/x86/avx2/bitwise_or.hpp>
+#endif
+
 #endif
 
 #if defined(EVE_HW_POWERPC)
