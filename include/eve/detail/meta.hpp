@@ -85,6 +85,19 @@ namespace eve::detail
   template<typename T, typename Sign = sign_of_t<T>>
   using as_integer_t = typename as_integer<T,Sign>::type;
 
+  // Extract value_type from type
+  template<typename T, typename Enable = void> struct value_type
+  {
+    using type = T;
+  };
+
+  template<typename T> struct value_type<T, std::void_t<typename T::value_type>>
+  {
+    using type = typename T::value_type;
+  };
+
+  template<typename T> using value_type_t = typename value_type<T>::type;
+
   // Tuple free apply
   template<typename Func, std::size_t... I>
   decltype(auto) apply_impl(Func&& f, std::index_sequence<I...> const&)
