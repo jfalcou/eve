@@ -29,7 +29,7 @@ namespace eve::detail
     if constexpr(N::value == 2)
       return that_t( typename that_t::storage_type{l,h} );
     else
-      return that_t{_mm_shuffle_pd(l,h,0x20)};
+      return that_t{_mm_shuffle_pd(l,h,0)};
   }
 
   // -----------------------------------------------------------------------------------------------
