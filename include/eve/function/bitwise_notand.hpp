@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_BITWISE_NOTAND_HPP_INCLUDED
 
 #include <eve/function/scalar/bitwise_notand.hpp>
-//#include <eve/function/simd/bitwise_notand.hpp>
+#include <eve/function/simd/bitwise_notand.hpp>
 
 #endif
