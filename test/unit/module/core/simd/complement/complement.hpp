@@ -1,14 +1,14 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapresté
+  Copyright 2019 Jean-Thierry Lapreste
   
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef BITWISE_AND_HPP
-#define BITWISE_AND_HPP
+#ifndef COMPLEMENT_HPP
+#define COMPLEMENT_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -17,7 +17,7 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check complement behavior on homogeneous wide"
+TTS_CASE_TPL( "Check complement behavior on wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {

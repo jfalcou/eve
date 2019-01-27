@@ -18,10 +18,6 @@ TTS_CASE( "Check complement return type" )
 {
   TTS_EXPR_IS(eve::complement(0.f       ) , float  );
   TTS_EXPR_IS(eve::complement(0.        ) , double );
-  TTS_EXPR_IS(eve::complement(0.f ) , float  );
-  TTS_EXPR_IS(eve::complement(0.  ) , double );
-  TTS_EXPR_IS(eve::complement(std::int32_t() ) , std::int32_t  );
-  TTS_EXPR_IS(eve::complement(std::int64_t() ) , std::int64_t );
 
   TTS_EXPR_IS(eve::complement(std::int8_t()  ) , std::int8_t  );
   TTS_EXPR_IS(eve::complement(std::int16_t() ) , std::int16_t );
