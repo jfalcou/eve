@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -23,7 +24,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,aggregated_> complement_( EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE wide<T,N,aggregated_> complement_ ( EVE_SUPPORTS(simd_)
                                                     , wide<T,N,aggregated_> const& v
                                                     ) noexcept
   {
@@ -33,9 +34,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE auto complement_ ( EVE_SUPPORTS(simd_)
-                                    , wide<T,N,emulated_> const& v0
-                                    ) noexcept
+  EVE_FORCEINLINE auto complement_( EVE_SUPPORTS(simd_)
+                                  , wide<T,N,emulated_> const& v0
+                                  ) noexcept
   {
     return map( eve::complement, v0);
   }

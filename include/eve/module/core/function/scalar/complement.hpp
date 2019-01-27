@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -23,7 +24,6 @@ namespace eve::detail
   template<typename T> EVE_FORCEINLINE
   constexpr T complement_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   {
-
     if constexpr( std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T,unsigned>;
@@ -31,9 +31,9 @@ namespace eve::detail
     }
     else
     {
-        return ~a;
+      return ~a;
     }
   }
-} 
+}
 
 #endif
