@@ -15,7 +15,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T,N,avx_> bitwise_xor_ ( EVE_SUPPORTS(avx2_)
@@ -27,6 +27,6 @@ namespace eve { namespace detail
     if constexpr( std::is_same_v<T,double>  ) return _mm256_xor_pd(v0,v1);
     if constexpr( std::is_integral_v<T>     ) return _mm256_xor_si256(v0,v1);
   }
-} }
+}
 
 #endif

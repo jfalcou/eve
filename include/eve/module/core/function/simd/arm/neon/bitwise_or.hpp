@@ -15,7 +15,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T,N,neon64_> bitwise_or_( EVE_SUPPORTS(neon128_)
@@ -70,6 +70,6 @@ namespace eve { namespace detail
     if constexpr(std::is_same_v<in_t,uint16x8_t >)  return vorrq_u16(v0,v1);
     if constexpr(std::is_same_v<in_t,uint8x16_t >)  return vorrq_u8 (v0,v1);
   }
-} }
+}
 
 #endif

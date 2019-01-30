@@ -15,7 +15,7 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T0, typename N0, typename T1, typename N1>
   EVE_FORCEINLINE wide<T0,N0,ppc_> bitwise_or_ ( EVE_SUPPORTS(vmx_)
@@ -25,6 +25,6 @@ namespace eve { namespace detail
   {
     return vec_or(v0.storage(), bitwise_cast<wide<T0,N0,ppc_>>(v1).storage());
   }
-} }
+}
 
 #endif

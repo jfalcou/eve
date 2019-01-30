@@ -15,7 +15,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T,N,avx_> bitwise_or_ ( EVE_SUPPORTS(avx_)
@@ -30,6 +30,6 @@ namespace eve { namespace detail
                                               , _mm256_castsi256_ps(v1)
                                               )
                                 );  }
-} }
+}
 
 #endif

@@ -16,7 +16,7 @@
 #include <eve/function/scalar/bitwise_cast.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -44,6 +44,6 @@ namespace eve { namespace detail
       }
     }
   }
-} }
+}
 
 #endif
