@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::int64_t;
-#include "complement.hpp"
+using Type = std::int32_t;
+#include "bitwise_not.hpp"

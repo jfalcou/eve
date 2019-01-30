@@ -47,7 +47,7 @@ namespace eve
       return *this;
     }
 
-    /// Bitwise complement operator
+    /// Bitwise NOT operator
     EVE_FORCEINLINE constexpr logical operator ~() const noexcept { return logical(~value_); }
 
     /// Logical not operator

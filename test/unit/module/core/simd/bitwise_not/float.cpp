@@ -8,6 +8,5 @@
 **/
 //==================================================================================================
 
-#include <cstdint>
-using Type = std::int32_t;
-#include "complement.hpp"
+using Type = float;
+#include "bitwise_not.hpp"

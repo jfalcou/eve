@@ -1,13 +1,16 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapresté
+  Copyright 2019 Jean-Thierry Laprest
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#ifndef EVE_FUNCTION_SIMD_BITWISE_NOT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_BITWISE_NOT_HPP_INCLUDED
 
-#include <cstdint>
-using Type = std::int8_t;
-#include "complement.hpp"
+#include <eve/function/scalar/bitwise_not.hpp>
+#include <eve/module/core/function/simd/bitwise_not.hpp>
+
+#endif

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_COMPLEMENT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_COMPLEMENT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_BITWISE_NOT_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_BITWISE_NOT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
@@ -22,7 +22,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T> EVE_FORCEINLINE
-  constexpr T complement_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+  constexpr T bitwise_not_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   {
     if constexpr( std::is_floating_point_v<T>)
     {
