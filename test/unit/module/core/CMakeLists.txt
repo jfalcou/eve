@@ -1,6 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
 ##  Copyright 2018 Joel FALCOU
+##  Copyright 2019 Jean-Thierry Lapreste
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -12,6 +13,7 @@ add_unit_test( "core" scalar/bitwise_and.cpp )
 add_unit_test( "core" scalar/bitwise_or.cpp )
 add_unit_test( "core" scalar/bitwise_xor.cpp )
 add_unit_test( "core" scalar/bitwise_cast.cpp )
+add_unit_test( "core" scalar/bitwise_not.cpp )
 
 list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -26,3 +28,4 @@ list_tests("simd/add"         "core" ${all_types})
 list_tests("simd/bitwise_and" "core" ${all_types})
 list_tests("simd/bitwise_or"  "core" ${all_types})
 list_tests("simd/bitwise_xor" "core" ${all_types})
+list_tests("simd/bitwise_not" "core" ${all_types})

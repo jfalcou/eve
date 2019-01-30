@@ -18,7 +18,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Aggregation
@@ -79,8 +79,7 @@ namespace eve { namespace detail
   {
     return eve::bitwise_and( wide<T,N,ABI>(v0), v1 );
   }
-} }
-
+} 
 // -------------------------------------------------------------------------------------------------
 // Infix operator support
 namespace eve
