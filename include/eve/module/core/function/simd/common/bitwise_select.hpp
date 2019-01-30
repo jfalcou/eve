@@ -18,7 +18,6 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_andnot.hpp>
 #include <eve/function/bitwise_or.hpp>   
-#include <eve/function/complement.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

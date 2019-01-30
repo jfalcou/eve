@@ -16,7 +16,6 @@
 #include <eve/function/scalar/bitwise_and.hpp>
 #include <eve/function/scalar/bitwise_andnot.hpp>   
 #include <eve/function/scalar/bitwise_or.hpp>
-#include <eve/function/scalar/complement.hpp>
 #include <type_traits>
 #include <iostream>
 
