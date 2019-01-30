@@ -13,4 +13,12 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/bitwise_select.hpp>
 
+#if defined(EVE_HW_X86)
+
+#if  defined(EVE_SUPPORTS_XOP)
+  #include <eve/module/core/function/simd/x86/xop/bitwise_select.hpp>
+#endif
+
+#endif
+
 #endif
