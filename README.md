@@ -1,4 +1,4 @@
-# EVE - the Expressixe Vector Engine
+# EVE - the Expressive Vector Engine
 
 ## Purpose
 
