@@ -30,7 +30,7 @@ TTS_CASE_TPL( "Check bitwise_select behavior on homogeneous wide"
     wide<Type,T>  lhs([](int i, int c) { return c-i; })
                 , rhs1([](int i, int  ) { return i+1; })
                 , rhs2([](int i, int  ) { return 2*i+1; })   
-                , ref([](int i, int c) { return eve::bitwise_select(Type(c-i),Type(i+1)),Type(2*i+1)); });
+                , ref([](int i, int c) { return eve::bitwise_select(Type(c-i),Type(i+1),Type(2*i+1)); });
 
     TTS_SECTION( "supports eve::bitwise_select" )  {
       if constexpr(std::is_integral_v<T>)
@@ -50,9 +50,9 @@ TTS_CASE_TPL( "Check bitwise_select behavior on wide + scalar"
   TTS_SETUP( "A correctly initialized wide" )
   {
     wide<Type,T>  lhs([](int i, int c) { return i%3; })
-      , ref([](int i, int c) { return eve::bitwise_select( Type(i%3), Type(7),  Type(8)); });
+      , ref([](int i, int c) { return eve::bitwise_select( Type(i%3), Type(7), Type(8)); });
 
-    TTS_SECTION( "supports eve::bitwise_select" )  { TTS_EQUAL(ref, eve::bitwise_select(lhs, 7, 8)); }
+    TTS_SECTION( "supports eve::bitwise_select" )  { TTS_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8))); }
   }
 }
 
