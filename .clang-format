@@ -28,7 +28,6 @@ ColumnLimit: 100
 Cpp11BracedListStyle: true
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: false
-IncludeBlocks: Regroup
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
 IndentWidth: 2
@@ -36,7 +35,7 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: All
 PointerAlignment: Right
-SortIncludes: true
+SortIncludes: false
 SortUsingDeclarations: true
 SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true
