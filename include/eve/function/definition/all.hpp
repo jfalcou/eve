@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(all_,all); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(all_, all);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(sinpi_,sinpi); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sinpi_, sinpi);
+}
 
 #endif

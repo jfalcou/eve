@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(ifnot_inc_,ifnot_inc); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ifnot_inc_, ifnot_inc);
+}
 
 #endif

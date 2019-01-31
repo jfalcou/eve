@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(inrad_,inrad); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(inrad_, inrad);
+}
 
 #endif

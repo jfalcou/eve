@@ -12,11 +12,11 @@
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 
-TTS_CASE( "Check popcnt correctness on 8 bits unsigned integrals" )
+TTS_CASE("Check popcnt correctness on 8 bits unsigned integrals")
 {
   using eve::popcnt;
 
-  TTS_EQUAL( popcnt(std::uint8_t{0})         , 0);
-  TTS_EQUAL( popcnt(std::uint8_t{255})       , 8);
-  TTS_EQUAL( popcnt(std::uint8_t{0b10101010}), 4);
+  TTS_EQUAL(popcnt(std::uint8_t{0}), 0);
+  TTS_EQUAL(popcnt(std::uint8_t{255}), 8);
+  TTS_EQUAL(popcnt(std::uint8_t{0b10101010}), 4);
 }

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(repeat_upper_half_,repeat_upper_half); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(repeat_upper_half_, repeat_upper_half);
+}
 
 #endif

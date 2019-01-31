@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(cot_,cot); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cot_, cot);
+}
 
 #endif

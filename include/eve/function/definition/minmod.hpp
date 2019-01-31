@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(minmod_,minmod); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(minmod_, minmod);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(genmaskc_,genmaskc); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(genmaskc_, genmaskc);
+}
 
 #endif

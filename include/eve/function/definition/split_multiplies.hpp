@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(split_multiplies_,split_multiplies); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(split_multiplies_, split_multiplies);
+}
 
 #endif

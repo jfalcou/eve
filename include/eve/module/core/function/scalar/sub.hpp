@@ -17,10 +17,10 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T> EVE_FORCEINLINE
-  constexpr T sub_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr T sub_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
-    return a-b;
+    return a - b;
   }
 }
 

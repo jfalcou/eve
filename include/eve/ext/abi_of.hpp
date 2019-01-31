@@ -12,18 +12,21 @@
 
 namespace eve
 {
-  template<typename T> struct logical;
+  template<typename T>
+  struct logical;
 
   namespace ext
   {
-    template< typename Type, int Cardinal, typename EnableIf = void>
+    template<typename Type, int Cardinal, typename EnableIf = void>
     struct abi_of;
 
-    template< typename Type, int Cardinal>
-    struct abi_of<logical<Type>,Cardinal> : abi_of<Type,Cardinal> {};
+    template<typename Type, int Cardinal>
+    struct abi_of<logical<Type>, Cardinal> : abi_of<Type, Cardinal>
+    {
+    };
 
-    template< typename Type, int Cardinal>
-    using abi_of_t = typename abi_of<Type,Cardinal>::type;
+    template<typename Type, int Cardinal>
+    using abi_of_t = typename abi_of<Type, Cardinal>::type;
   }
 }
 

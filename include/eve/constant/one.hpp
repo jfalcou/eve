@@ -15,7 +15,11 @@
 
 namespace eve
 {
-  template<typename T> EVE_FORCEINLINE auto One( as_<T> const& = {} )  { return T(1); }
+  template<typename T>
+  EVE_FORCEINLINE auto One(as_<T> const & = {})
+  {
+    return T(1);
+  }
 }
 
 #endif

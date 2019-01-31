@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(remquo_,remquo); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(remquo_, remquo);
+}
 
 #endif

@@ -27,18 +27,18 @@ namespace eve
 #endif
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_ARM == EVE_NEON_VERSION
-    #define EVE_CURRENT_ABI ::eve::arm_
-    #define EVE_CURRENT_API ::eve::neon128_
-    #include <arm_neon.h>
-  #endif
+#  if EVE_HW_ARM == EVE_NEON_VERSION
+#    define EVE_CURRENT_ABI ::eve::arm_
+#    define EVE_CURRENT_API ::eve::neon128_
+#    include <arm_neon.h>
+#  endif
 
-  #if !defined(__aarch64__)
-    #ifndef EVE_NO_DENORMALS
-    #define EVE_NO_DENORMALS
-  #endif
+#  if !defined(__aarch64__)
+#    ifndef EVE_NO_DENORMALS
+#      define EVE_NO_DENORMALS
+#    endif
 
-  #endif
+#  endif
 #endif
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(deinterleave_second_,deinterleave_second); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(deinterleave_second_, deinterleave_second);
+}
 
 #endif

@@ -18,11 +18,10 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto combine_ ( EVE_SUPPORTS(cpu_)
-                                , wide<T,N,ABI> const& a, wide<T,N,ABI> const& b
-                                ) noexcept
+  EVE_FORCEINLINE auto
+  combine_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a, wide<T, N, ABI> const &b) noexcept
   {
-    return wide<T,typename N::combined_type>{a,b};
+    return wide<T, typename N::combined_type>{a, b};
   }
 }
 

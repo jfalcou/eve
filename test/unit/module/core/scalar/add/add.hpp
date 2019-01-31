@@ -14,12 +14,12 @@
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 
-TTS_CASE( "Check eve::add behavior" )
+TTS_CASE("Check eve::add behavior")
 {
-  TTS_EQUAL( eve::add(Type{0},Type{0}), Type{0});
-  TTS_EQUAL( eve::add(Type{0},Type{1}), Type{1});
-  TTS_EQUAL( eve::add(Type{1},Type{0}), Type{1});
-  TTS_EQUAL( eve::add(Type{1},Type{1}), Type{2});
+  TTS_EQUAL(eve::add(Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::add(Type{0}, Type{1}), Type{1});
+  TTS_EQUAL(eve::add(Type{1}, Type{0}), Type{1});
+  TTS_EQUAL(eve::add(Type{1}, Type{1}), Type{2});
 }
 
 #endif

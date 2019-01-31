@@ -18,29 +18,29 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // All AVX types
   template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( avx_ const&
-                              , wide<T,N,avx_> const& l, wide<T,N,avx_> const& h
-                              ) noexcept
+  EVE_FORCEINLINE auto
+  combine(avx_ const &, wide<T, N, avx_> const &l, wide<T, N, avx_> const &h) noexcept
   {
-    using that_t = wide<T,typename N::combined_type>;
-    return that_t( typename that_t::storage_type{l,h} );
+    using that_t = wide<T, typename N::combined_type>;
+    return that_t(typename that_t::storage_type{l, h});
   }
 
   // -----------------------------------------------------------------------------------------------
   // All SSE types
-  template<typename T,typename N>
-  EVE_FORCEINLINE auto  combine ( avx_ const&
-                                , wide<T,N,sse_> const& l, wide<T,N,sse_> const& h
-                                ) noexcept
-                        requires( wide<T,typename N::combined_type>, If<(N::value*sizeof(T)==16)>)
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine(avx_ const &,
+          wide<T, N, sse_> const &l,
+          wide<T, N, sse_> const &h) noexcept requires(wide<T, typename N::combined_type>,
+                                                       If<(N::value * sizeof(T) == 16)>)
   {
-    if constexpr( std::is_same_v<T,double> )
+    if constexpr(std::is_same_v<T, double>)
       return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);
 
-    if constexpr( std::is_same_v<T,float> )
+    if constexpr(std::is_same_v<T, float>)
       return _mm256_insertf128_ps(_mm256_castps128_ps256(l), h, 1);
 
-    if constexpr( std::is_integral_v<T> )
+    if constexpr(std::is_integral_v<T>)
       return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
   }
 }

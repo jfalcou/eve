@@ -14,27 +14,32 @@
 
 namespace eve
 {
-  template<typename T> struct as_logical
+  template<typename T>
+  struct as_logical
   {
     using type = bool;
   };
 
-  template<typename T> struct as_logical<logical<T>>
+  template<typename T>
+  struct as_logical<logical<T>>
   {
     using type = logical<T>;
   };
 
-  template<typename T> struct as_logical<wide<T>>
+  template<typename T>
+  struct as_logical<wide<T>>
   {
     using type = wide<logical<T>>;
   };
 
-  template<typename T> struct as_logical<wide<logical<T>>>
+  template<typename T>
+  struct as_logical<wide<logical<T>>>
   {
     using type = wide<logical<T>>;
   };
 
-  template<typename T> using as_logical_t = typename as_logical<T>::type;
+  template<typename T>
+  using as_logical_t = typename as_logical<T>::type;
 }
 
 #endif

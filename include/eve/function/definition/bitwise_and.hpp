@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitwise_and_,bitwise_and); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitwise_and_, bitwise_and);
+}
 
 #endif

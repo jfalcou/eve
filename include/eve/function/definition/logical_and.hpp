@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(logical_and_,logical_and); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_and_, logical_and);
+}
 
 #endif

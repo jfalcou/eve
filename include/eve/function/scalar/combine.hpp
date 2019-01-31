@@ -18,9 +18,9 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
-    return wide<T,fixed<2>>(a,b);
+    return wide<T, fixed<2>>(a, b);
   }
 }
 

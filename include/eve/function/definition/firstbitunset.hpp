@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(firstbitunset_,firstbitunset); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(firstbitunset_, firstbitunset);
+}
 
 #endif

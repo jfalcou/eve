@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_invalid_,is_invalid); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_invalid_, is_invalid);
+}
 
 #endif

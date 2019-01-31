@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(splat_,splat); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(splat_, splat);
+}
 
 #endif

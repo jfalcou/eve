@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(broadcast_,broadcast); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(broadcast_, broadcast);
+}
 
 #endif

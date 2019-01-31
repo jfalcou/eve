@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(expm1_,expm1); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(expm1_, expm1);
+}
 
 #endif

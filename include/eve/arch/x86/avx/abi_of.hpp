@@ -16,13 +16,19 @@
 
 namespace eve::ext
 {
-  template<> struct abi_of<double, 4>  { using type = ::eve::avx_; };
-  template<> struct abi_of<float , 8>  { using type = ::eve::avx_; };
+  template<>
+  struct abi_of<double, 4>
+  {
+    using type = ::eve::avx_;
+  };
+  template<>
+  struct abi_of<float, 8>
+  {
+    using type = ::eve::avx_;
+  };
 
   template<typename T, int N>
-  struct abi_of < T, N
-                , std::enable_if_t<std::is_integral_v<T> && (N == 32/sizeof(T))>
-                >
+  struct abi_of<T, N, std::enable_if_t<std::is_integral_v<T> && (N == 32 / sizeof(T))>>
   {
     using type = ::eve::avx_;
   };

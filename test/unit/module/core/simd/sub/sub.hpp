@@ -17,27 +17,25 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check sub behavior on wide"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check sub behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
   using eve::wide;
 
-  TTS_SETUP( "A correctly initialized wide" )
+  TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type,T>  lhs([](int i, int c) { return c+i; })
-                , rhs([](int i, int  ) { return i;   })
-                , ref(T::value);
+    wide<Type, T> lhs([](int i, int c) { return c + i; }), rhs([](int i, int) { return i; }),
+        ref(T::value);
 
-    TTS_SECTION( "supports eve::sub" )
-    {
-      TTS_EQUAL(ref, eve::sub(lhs,rhs));
-    }
+    TTS_SECTION("supports eve::sub") { TTS_EQUAL(ref, eve::sub(lhs, rhs)); }
 
-    TTS_SECTION( "supports operator-()" )
-    {
-      TTS_EQUAL(ref, lhs - rhs);
-    }
+    TTS_SECTION("supports operator-()") { TTS_EQUAL(ref, lhs - rhs); }
   }
 }
 

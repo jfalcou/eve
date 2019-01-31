@@ -18,16 +18,16 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T> EVE_FORCEINLINE
-  void store_(EVE_SUPPORTS(cpu_), T value, T* ptr) noexcept
+  template<typename T>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_), T value, T *ptr) noexcept
   {
     *ptr = value;
   }
 
   // -----------------------------------------------------------------------------------------------
   // Aligned case
-  template<typename T, std::size_t N> EVE_FORCEINLINE
-  void store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T,N> ptr) noexcept
+  template<typename T, std::size_t N>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, N> ptr) noexcept
   {
     *ptr = value;
   }

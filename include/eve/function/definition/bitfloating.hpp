@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitfloating_,bitfloating); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitfloating_, bitfloating);
+}
 
 #endif

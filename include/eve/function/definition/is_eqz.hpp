@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_eqz_,is_eqz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
+}
 
 #endif

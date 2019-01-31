@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(sqrt1pm1_,sqrt1pm1); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sqrt1pm1_, sqrt1pm1);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(rem_pio2_,rem_pio2); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(rem_pio2_, rem_pio2);
+}
 
 #endif

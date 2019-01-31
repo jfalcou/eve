@@ -12,13 +12,11 @@
 
 namespace eve::ext
 {
-  template< typename Type, typename Cardinal, typename ABI
-          , typename EnableIf = void
-          >
+  template<typename Type, typename Cardinal, typename ABI, typename EnableIf = void>
   struct as_register;
 
-  template< typename Type, typename Cardinal, typename ABI>
-  using as_register_t = typename as_register<Type,Cardinal,ABI>::type;
+  template<typename Type, typename Cardinal, typename ABI>
+  using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
 }
 
 #include <eve/arch/as_register.hpp>

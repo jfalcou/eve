@@ -15,18 +15,20 @@
 namespace eve
 {
   // dispatching tag for FMA3 SIMD implementation
-  struct fma3_ {};
+  struct fma3_
+  {
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(fma3_ const& ) noexcept
+  inline bool is_supported(fma3_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
-    static const bool detected  =   detail::detect_feature(12, 0x00000001, detail::ecx)
-                                &&  detail::detect_feature(27, 0x00000001, detail::ecx);
+#if defined(EVE_ARCH_IS_X86)
+    static const bool detected = detail::detect_feature(12, 0x00000001, detail::ecx) &&
+                                 detail::detect_feature(27, 0x00000001, detail::ecx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // FMA4 extension tag object

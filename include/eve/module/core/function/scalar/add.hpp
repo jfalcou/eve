@@ -22,10 +22,10 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T> EVE_FORCEINLINE
-  constexpr T add_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
-    return a+b;
+    return a + b;
   }
 
 #if 0
@@ -57,11 +57,11 @@ namespace eve::detail
       }
       else
       {
-#if 0
+#  if 0
         // small signed integral case
         auto r = a+b;
         return static_cast<T>(saturate<T>(r));
-#endif
+#  endif
       }
     }
 

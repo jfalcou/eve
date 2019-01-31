@@ -18,16 +18,17 @@
 
 namespace eve
 {
-  template<typename T> EVE_FORCEINLINE auto Allbits( as_<T> const& = {} )
+  template<typename T>
+  EVE_FORCEINLINE auto Allbits(as_<T> const & = {})
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<t_t,unsigned>;
+    using t_t           = detail::value_type_t<T>;
+    using i_t           = detail::as_integer_t<t_t, unsigned>;
     constexpr auto mask = ~0ULL;
 
-    if constexpr( std::is_integral_v<t_t> )
-      return T( mask );
+    if constexpr(std::is_integral_v<t_t>)
+      return T(mask);
     else
-      return T(bitwise_cast<t_t>( i_t( mask ) ));
+      return T(bitwise_cast<t_t>(i_t(mask)));
   }
 }
 

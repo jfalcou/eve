@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(conj_,conj); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(conj_, conj);
+}
 
 #endif

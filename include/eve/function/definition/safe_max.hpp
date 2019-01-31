@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(safe_max_,safe_max); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(safe_max_, safe_max);
+}
 
 #endif

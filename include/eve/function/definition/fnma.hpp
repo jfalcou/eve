@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(fnma_,fnma); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(fnma_, fnma);
+}
 
 #endif

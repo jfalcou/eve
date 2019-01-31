@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_not_equal_with_equal_nans_,is_not_equal_with_equal_nans); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_equal_with_equal_nans_, is_not_equal_with_equal_nans);
+}
 
 #endif

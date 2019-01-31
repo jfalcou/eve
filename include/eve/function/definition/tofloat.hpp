@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(tofloat_,tofloat); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(tofloat_, tofloat);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(exponent_,exponent); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(exponent_, exponent);
+}
 
 #endif

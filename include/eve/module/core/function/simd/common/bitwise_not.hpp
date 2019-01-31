@@ -25,21 +25,18 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,aggregated_> bitwise_not_ ( EVE_SUPPORTS(simd_)
-                                                    , wide<T,N,aggregated_> const& v
-                                                    ) noexcept
+  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_not_(EVE_SUPPORTS(simd_),
+                                                       wide<T, N, aggregated_> const &v) noexcept
   {
-    return aggregate( eve::bitwise_not, v);
+    return aggregate(eve::bitwise_not, v);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_not_( EVE_SUPPORTS(simd_)
-                                  , wide<T,N,emulated_> const& v0
-                                  ) noexcept
+  EVE_FORCEINLINE auto bitwise_not_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v0) noexcept
   {
-    return map( eve::bitwise_not, v0);
+    return map(eve::bitwise_not, v0);
   }
 }
 
@@ -48,9 +45,9 @@ namespace eve::detail
 namespace eve
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator~(wide<T,N,ABI> const& v) noexcept
+  EVE_FORCEINLINE auto operator~(wide<T, N, ABI> const &v) noexcept
   {
-    return eve::bitwise_xor(v, Allbits(as(v)) );
+    return eve::bitwise_xor(v, Allbits(as(v)));
   }
 }
 

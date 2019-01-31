@@ -11,4 +11,3 @@
 #include <cstdint>
 using Type = std::int64_t;
 #include "slice.hpp"
-

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitwise_notor_,bitwise_notor); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitwise_notor_, bitwise_notor);
+}
 
 #endif

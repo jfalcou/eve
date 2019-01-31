@@ -21,8 +21,8 @@ namespace eve
   struct register_count
 
   {
-    static constexpr std::size_t general = 2*sizeof(void*);
-    static constexpr std::size_t simd    = 2*sizeof(void*);
+    static constexpr std::size_t general = 2 * sizeof(void *);
+    static constexpr std::size_t simd    = 2 * sizeof(void *);
   };
 }
 #endif

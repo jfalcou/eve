@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(compare_greater_,compare_greater); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(compare_greater_, compare_greater);
+}
 
 #endif

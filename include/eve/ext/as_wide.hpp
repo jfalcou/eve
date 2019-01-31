@@ -15,18 +15,19 @@
 
 namespace eve
 {
-  template<typename T> struct logical;
+  template<typename T>
+  struct logical;
 
   namespace ext
   {
-    template< typename Type, typename Size, typename EnableIf = void>
+    template<typename Type, typename Size, typename EnableIf = void>
     struct as_wide
     {
-      using type = eve::wide<Type,Size>;
+      using type = eve::wide<Type, Size>;
     };
 
-    template< typename Type, typename Size>
-    using as_wide_t = typename as_wide<Type,Size>::type;
+    template<typename Type, typename Size>
+    using as_wide_t = typename as_wide<Type, Size>::type;
   }
 }
 

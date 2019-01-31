@@ -13,37 +13,37 @@
 #include <eve/arch/ppc/vmx/tags.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_POWERPC == EVE_VMX_VERSION
-    #define EVE_CURRENT_ABI ::eve::ppc_
-    #define EVE_CURRENT_API ::eve::vmx_
-  #endif
+#  if EVE_HW_POWERPC == EVE_VMX_VERSION
+#    define EVE_CURRENT_ABI ::eve::ppc_
+#    define EVE_CURRENT_API ::eve::vmx_
+#  endif
 #endif
 
 #if EVE_HW_POWERPC >= EVE_VMX_VERSION
 
-  #ifndef EVE_NO_DENORMALS
-  #define EVE_NO_DENORMALS
-  #endif
+#  ifndef EVE_NO_DENORMALS
+#    define EVE_NO_DENORMALS
+#  endif
 
-  #if !defined(__APPLE_CC__) || __APPLE_CC__ <= 1 || __GNUC__ >= 4
-  #include <altivec.h>
-  #endif
+#  if !defined(__APPLE_CC__) || __APPLE_CC__ <= 1 || __GNUC__ >= 4
+#    include <altivec.h>
+#  endif
 
-  #ifdef bool
-  #undef bool
-  #endif
+#  ifdef bool
+#    undef bool
+#  endif
 
-  #ifdef pixel
-  #undef pixel
-  #endif
+#  ifdef pixel
+#    undef pixel
+#  endif
 
-  #ifdef vector
-  #undef vector
-  #endif
+#  ifdef vector
+#    undef vector
+#  endif
 
-  #if defined(__IBMCPP__) || defined(__MWERKS__)
-  #define __bool bool
-  #endif
+#  if defined(__IBMCPP__) || defined(__MWERKS__)
+#    define __bool bool
+#  endif
 #endif
 
 #endif

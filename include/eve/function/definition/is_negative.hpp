@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_negative_,is_negative); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_negative_, is_negative);
+}
 
 #endif

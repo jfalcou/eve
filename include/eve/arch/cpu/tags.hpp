@@ -13,19 +13,30 @@
 namespace eve
 {
   // dispatching tag for generic implementation
-  struct cpu_ {};
+  struct cpu_
+  {
+  };
 
   // dispatching tag for generic SIMD implementation
-  struct simd_ : cpu_ { using parent = cpu_; };
+  struct simd_ : cpu_
+  {
+    using parent = cpu_;
+  };
 
   // dispatching tag for emulated SIMD implementation of large register
-  struct aggregated_ : cpu_ { using parent = cpu_; };
+  struct aggregated_ : cpu_
+  {
+    using parent = cpu_;
+  };
 
   // dispatching tag for emulated SIMD implementation
-  struct emulated_ : cpu_ { using parent = cpu_; };
+  struct emulated_ : cpu_
+  {
+    using parent = cpu_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(cpu_ const& ) noexcept { return true; }
+  inline bool is_supported(cpu_ const &) noexcept { return true; }
 }
 
 #endif

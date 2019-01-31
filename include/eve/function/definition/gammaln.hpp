@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(gammaln_,gammaln); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(gammaln_, gammaln);
+}
 
 #endif

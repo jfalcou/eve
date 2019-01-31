@@ -21,12 +21,12 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T> EVE_FORCEINLINE
-  constexpr T bitwise_not_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr T bitwise_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    if constexpr( std::is_floating_point_v<T>)
+    if constexpr(std::is_floating_point_v<T>)
     {
-      using b_t = as_integer_t<T,unsigned>;
+      using b_t = as_integer_t<T, unsigned>;
       return bitwise_cast<T>(~bitwise_cast<b_t>(a));
     }
     else

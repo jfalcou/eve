@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(extract_,extract); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(extract_, extract);
+}
 
 #endif

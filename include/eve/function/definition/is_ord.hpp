@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_ord_,is_ord); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ord_, is_ord);
+}
 
 #endif

@@ -16,12 +16,14 @@
 namespace eve
 {
   template<typename Type>
-  struct cardinal : std::integral_constant<std::size_t,1>
-  {};
+  struct cardinal : std::integral_constant<std::size_t, 1>
+  {
+  };
 
-  template<typename Type,typename Size, typename ABI>
-  struct cardinal<wide<Type,Size,ABI>> : std::integral_constant<std::size_t,Size::value>
-  {};
+  template<typename Type, typename Size, typename ABI>
+  struct cardinal<wide<Type, Size, ABI>> : std::integral_constant<std::size_t, Size::value>
+  {
+  };
 
   template<typename Type>
   inline constexpr auto cardinal_v = cardinal<Type>::value;

@@ -17,49 +17,47 @@
 
 namespace eve
 {
-  template<typename T> struct logical;
+  template<typename T>
+  struct logical;
 
   namespace ext
   {
-    template<typename Size> struct as_register< double, Size, eve::ppc_
-                                              , std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<double, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector double;
     };
 
-    template<typename Size> struct as_register< std::int64_t, Size, eve::ppc_
-                                              , std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<std::int64_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector signed long;
     };
 
-    template<typename Size> struct as_register< std::uint64_t, Size, eve::ppc_
-                                              , std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<std::uint64_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector unsigned long;
     };
 
     // logical cases
-    template<typename Size> struct as_register< logical<double>
-                                              , Size, eve::ppc_, std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<logical<double>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector __bool long;
     };
 
-    template<typename Size> struct as_register< logical<std::int64_t>, Size, eve::ppc_
-                                              , std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<logical<std::int64_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector __bool long;
     };
 
-    template<typename Size> struct as_register< logical<std::uint64_t>, Size, eve::ppc_
-                                              , std::enable_if_t<(Size::value<=2)>
-                                              >
+    template<typename Size>
+    struct as_register<logical<std::uint64_t>,
+                       Size,
+                       eve::ppc_,
+                       std::enable_if_t<(Size::value <= 2)>>
     {
       using type = __vector __bool long;
     };

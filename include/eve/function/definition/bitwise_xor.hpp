@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitwise_xor_,bitwise_xor); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitwise_xor_, bitwise_xor);
+}
 
 #endif

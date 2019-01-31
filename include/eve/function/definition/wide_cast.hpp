@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(wide_cast_,wide_cast); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(wide_cast_, wide_cast);
+}
 
 #endif

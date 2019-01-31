@@ -14,20 +14,23 @@
 #include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 
-TTS_CASE_TPL( "aligned_alloc behavior"
-            , std::integral_constant<int,1>, std::integral_constant<int,2>
-            , std::integral_constant<int,4>, std::integral_constant<int,8>
-            , std::integral_constant<int,16>, std::integral_constant<int,32>
-            , std::integral_constant<int,64>, std::integral_constant<int,128>
-            )
+TTS_CASE_TPL("aligned_alloc behavior",
+             std::integral_constant<int, 1>,
+             std::integral_constant<int, 2>,
+             std::integral_constant<int, 4>,
+             std::integral_constant<int, 8>,
+             std::integral_constant<int, 16>,
+             std::integral_constant<int, 32>,
+             std::integral_constant<int, 64>,
+             std::integral_constant<int, 128>)
 {
-  auto ptr = eve::aligned_alloc<T::value>(7*sizeof(float));
+  auto ptr = eve::aligned_alloc<T::value>(7 * sizeof(float));
 
-  TTS_EXPECT( eve::is_aligned<T::value>(ptr) );
+  TTS_EXPECT(eve::is_aligned<T::value>(ptr));
 
-  eve::aligned_ptr<int,T::value> iptr = ptr;
+  eve::aligned_ptr<int, T::value> iptr = ptr;
 
-  TTS_EXPECT( eve::is_aligned<T::value>(iptr) );
+  TTS_EXPECT(eve::is_aligned<T::value>(iptr));
 
   eve::aligned_dealloc(ptr);
 }

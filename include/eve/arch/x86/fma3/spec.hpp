@@ -11,7 +11,7 @@
 #define EVE_ARCH_X86_FMA3_SPEC_HPP_INCLUDED
 
 #if defined(EVE_SUPPORTS_FMA3)
-  #include <immintrin.h>
+#  include <immintrin.h>
 #endif
 
 #endif

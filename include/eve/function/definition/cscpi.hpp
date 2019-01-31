@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(cscpi_,cscpi); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cscpi_, cscpi);
+}
 
 #endif

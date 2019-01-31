@@ -19,24 +19,26 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T, typename N, typename ABI> EVE_FORCEINLINE
-  auto  store_( EVE_SUPPORTS(cpu_), wide<logical<T>,N,ABI> const& value, logical<T>* ptr) noexcept
-        requires( void, Native<ABI>)
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_),
+                              wide<logical<T>, N, ABI> const &value,
+                              logical<T> *ptr) noexcept requires(void, Native<ABI>)
   {
-    using type    = typename wide<T,N>::storage_type;
-    store( wide<T,N>(type(value.storage())), (T*)ptr );
+    using type = typename wide<T, N>::storage_type;
+    store(wide<T, N>(type(value.storage())), (T *)ptr);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Aligned case
   template<typename T, typename S, std::size_t N, typename ABI>
-  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(cpu_)
-                              , wide<logical<T>,S,ABI> const& value, aligned_ptr<logical<T>,N> ptr
-                              ) noexcept
-                  requires( void, Native<ABI>, If<(wide<T,S,ABI>::static_alignment <= N)>)
+  EVE_FORCEINLINE auto
+  store_(EVE_SUPPORTS(cpu_),
+         wide<logical<T>, S, ABI> const &value,
+         aligned_ptr<logical<T>, N>
+             ptr) noexcept requires(void, Native<ABI>, If<(wide<T, S, ABI>::static_alignment <= N)>)
   {
-    using type    = typename wide<T,S>::storage_type;
-    store( wide<T,S>(type(value.storage())), aligned_ptr<T,N>((T*)ptr.get()) );
+    using type = typename wide<T, S>::storage_type;
+    store(wide<T, S>(type(value.storage())), aligned_ptr<T, N>((T *)ptr.get()));
   }
 }
 

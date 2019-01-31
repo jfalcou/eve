@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(refine_rec_,refine_rec); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(refine_rec_, refine_rec);
+}
 
 #endif

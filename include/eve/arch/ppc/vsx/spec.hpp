@@ -13,10 +13,10 @@
 #include <eve/arch/ppc/vsx/tags.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_POWERPC == EVE_VSX_VERSION
-    #define EVE_CURRENT_ABI ::eve::ppc_
-    #define EVE_CURRENT_API ::eve::vsx_
-  #endif
+#  if EVE_HW_POWERPC == EVE_VSX_VERSION
+#    define EVE_CURRENT_ABI ::eve::ppc_
+#    define EVE_CURRENT_API ::eve::vsx_
+#  endif
 #endif
 
 #endif

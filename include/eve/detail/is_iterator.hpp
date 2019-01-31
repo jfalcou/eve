@@ -14,20 +14,25 @@
 
 namespace eve::detail
 {
-  template<typename T, typename Enable = void> struct is_iterator : std::false_type {};
+  template<typename T, typename Enable = void>
+  struct is_iterator : std::false_type
+  {
+  };
 
   template<typename T>
-  struct  is_iterator < T
-                      , std::void_t < decltype(  *std::declval<T>()    ) // Dereferenceable
-                                    , decltype(   std::declval<T&>()++ ) // WeaklyIncrementable
-                                    , decltype( ++std::declval<T&>()   )
-                                    >
-                      >
-          : std::true_type
-  {};
+  struct is_iterator<T,
+                     std::void_t<decltype(*std::declval<T>()) // Dereferenceable
+                                 ,
+                                 decltype(std::declval<T &>()++) // WeaklyIncrementable
+                                 ,
+                                 decltype(++std::declval<T &>())>> : std::true_type
+  {
+  };
 
-  template<typename T> inline constexpr bool is_iterator_v = is_iterator<T>::value;
-  template<typename T> using                 is_iterator_t = typename is_iterator<T>::type;
+  template<typename T>
+  inline constexpr bool is_iterator_v = is_iterator<T>::value;
+  template<typename T>
+  using is_iterator_t = typename is_iterator<T>::type;
 }
 
 #endif

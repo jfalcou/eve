@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_less_equal_,is_less_equal); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_less_equal_, is_less_equal);
+}
 
 #endif

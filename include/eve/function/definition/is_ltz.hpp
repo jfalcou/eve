@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_ltz_,is_ltz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
+}
 
 #endif

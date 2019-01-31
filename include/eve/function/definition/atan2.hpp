@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(atan2_,atan2); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(atan2_, atan2);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(rshr_,rshr); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(rshr_, rshr);
+}
 
 #endif

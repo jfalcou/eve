@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(iround_,iround); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(iround_, iround);
+}
 
 #endif

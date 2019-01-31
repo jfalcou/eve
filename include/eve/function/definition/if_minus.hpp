@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(if_minus_,if_minus); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(if_minus_, if_minus);
+}
 
 #endif

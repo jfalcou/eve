@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(ifrexp_,ifrexp); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
+}
 
 #endif

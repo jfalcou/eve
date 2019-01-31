@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(safe_min_,safe_min); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(safe_min_, safe_min);
+}
 
 #endif
