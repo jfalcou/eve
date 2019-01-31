@@ -23,7 +23,7 @@ namespace eve::detail
                                               , wide<T,N,avx_> const& v1
                                               ) noexcept
   {
-    if constexpr( std::is_integral_v<T> ) return _mm256_andnot_si256_ps(v0,v1);
+    if constexpr(std::is_integral_v<T>) return _mm256_andnot_si256_ps(v0, v1);
   }
 } 
 #endif
