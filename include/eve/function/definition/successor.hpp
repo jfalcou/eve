@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(successor_,successor); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(successor_, successor);
+}
 
 #endif

@@ -16,24 +16,32 @@
 namespace eve
 {
   // Tag for all ARM NEON SIMD ABI
-  struct arm_ {};
+  struct arm_
+  {
+  };
 
   // dispatching tag for VMX SIMD implementation
-  struct neon64_  : simd_ { using parent = simd_; };
-  struct neon128_ : simd_ { using parent = simd_; };
+  struct neon64_ : simd_
+  {
+    using parent = simd_;
+  };
+  struct neon128_ : simd_
+  {
+    using parent = simd_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(arm_ const& ) noexcept
+  inline bool is_supported(arm_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_ARM)
-    return true;  // Fix later
-    #else
+#if defined(EVE_ARCH_IS_ARM)
+    return true; // Fix later
+#else
     return false;
-    #endif
+#endif
   }
 
   // NEON extension tag object
-  inline const arm_ neon  = {};
+  inline const arm_ neon = {};
 }
 
 #endif

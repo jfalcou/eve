@@ -15,17 +15,20 @@
 namespace eve
 {
   // dispatching tag for SSSE3 SIMD implementation
-  struct ssse3_ : sse3_ { using parent = sse3_; };
+  struct ssse3_ : sse3_
+  {
+    using parent = sse3_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(ssse3_ const& ) noexcept
+  inline bool is_supported(ssse3_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
+#if defined(EVE_ARCH_IS_X86)
     static const bool detected = detail::detect_feature(9, 0x00000001, detail::ecx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // SSSE3 extension tag object

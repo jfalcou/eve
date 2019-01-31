@@ -13,11 +13,11 @@
 #include <eve/arch/x86/predef.hpp>
 
 #if EVE_HW_X86 >= EVE_SSE2_VERSION
-  #include <eve/arch/x86/sse2/as_register.hpp>
+#  include <eve/arch/x86/sse2/as_register.hpp>
 #endif
 
 #if EVE_HW_X86 >= EVE_AVX_VERSION
-  #include <eve/arch/x86/avx/as_register.hpp>
+#  include <eve/arch/x86/avx/as_register.hpp>
 #endif
 
 #endif

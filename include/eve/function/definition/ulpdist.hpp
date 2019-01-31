@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(ulpdist_,ulpdist); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
+}
 
 #endif

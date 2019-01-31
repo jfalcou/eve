@@ -17,51 +17,56 @@
 #include <type_traits>
 
 #if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-#pragma GCC diagnostic ignored "-Wdeprecated"
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wignored-attributes"
+#  pragma GCC diagnostic ignored "-Wdeprecated"
 #endif
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  load(as_<wide<T,N>> const&, eve::ppc_ const&, T* ptr) noexcept
-                        requires(typename wide<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
+  EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
+                            eve::ppc_ const &,
+                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                      Arithmetic<T>,
+                                                      If<(sizeof(T) == 8)>)
   {
-    if constexpr( std::is_integral_v<T> )
+    if constexpr(std::is_integral_v<T>)
     {
-      using type = typename wide<T,N>::storage_type*;
-      return vec_vsx_ld(0,type(ptr));
+      using type = typename wide<T, N>::storage_type *;
+      return vec_vsx_ld(0, type(ptr));
     }
     else
     {
-      return vec_vsx_ld(0,ptr);
+      return vec_vsx_ld(0, ptr);
     }
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto  load( as_<wide<T,N>> const&, eve::ppc_ const&
-                            , aligned_ptr<T,Align> ptr
-                            ) noexcept
-                        requires(typename wide<T,N>::storage_type,Arithmetic<T>,If<(sizeof(T)==8)>)
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &,
+       eve::ppc_ const &,
+       aligned_ptr<T, Align> ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                    Arithmetic<T>,
+                                                    If<(sizeof(T) == 8)>)
   {
-    if constexpr( std::is_integral_v<T> )
+    if constexpr(std::is_integral_v<T>)
     {
-      using type = typename wide<T,N>::storage_type*;
-      return vec_vsx_ld(0,type(ptr.get()));
+      using type = typename wide<T, N>::storage_type *;
+      return vec_vsx_ld(0, type(ptr.get()));
     }
     else
     {
-      return vec_vsx_ld(0,ptr.get());
+      return vec_vsx_ld(0, ptr.get());
     }
 
-    using type = typename wide<T,N>::storage_type*;
-    return vec_vsx_ld(0,type(ptr.get()));
+    using type = typename wide<T, N>::storage_type *;
+    return vec_vsx_ld(0, type(ptr.get()));
   }
 }
 
 #if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic pop
+#  pragma GCC diagnostic pop
 #endif
 
 #endif

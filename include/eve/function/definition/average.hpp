@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(average_,average); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(average_, average);
+}
 
 #endif

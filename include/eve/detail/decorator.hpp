@@ -19,20 +19,19 @@ namespace eve::detail
   {
     using parent = Functor;
 
-    template<typename... Args> EVE_FORCEINLINE
-    constexpr   auto operator()(Args&&... args) const noexcept
-            ->  decltype(std::declval<parent const>() ( Decorator()
-                                                      , std::forward<Args>(args)...)
-                                                      )
+    template<typename... Args>
+    EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept
+        -> decltype(std::declval<parent const>()(Decorator(), std::forward<Args>(args)...))
     {
-      return static_cast<parent const&>(*this)( Decorator(), std::forward<Args>(args)... );
+      return static_cast<parent const &>(*this)(Decorator(), std::forward<Args>(args)...);
     }
   };
 
-  template<typename Flag> struct decorator
+  template<typename Flag>
+  struct decorator
   {
     template<typename Function>
-    constexpr detail::decorated_functor<Function,Flag> operator()(Function const&) const noexcept
+    constexpr detail::decorated_functor<Function, Flag> operator()(Function const &) const noexcept
     {
       return {};
     }

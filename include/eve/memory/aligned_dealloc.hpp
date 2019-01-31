@@ -19,14 +19,14 @@
 namespace eve
 {
   template<typename T, std::size_t Alignment>
-  void aligned_dealloc( aligned_ptr<T,Alignment> const& ptr )
+  void aligned_dealloc(aligned_ptr<T, Alignment> const &ptr)
   {
 #if defined(EVE_OS_USE_POSIX) || defined(EVE_OS_IS_MACOS)
-    ::free( (void*)ptr.get() );
+    ::free((void *)ptr.get());
 #elif defined(EVE_COMP_IS_MSVC)
     ::_aligned_free(ptr.get());
 #else
-    if (ptr) ::free( *((void**)(ptr.get()) - 1) );
+    if(ptr) ::free(*((void **)(ptr.get()) - 1));
 #endif
   }
 }

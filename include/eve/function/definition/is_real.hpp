@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_real_,is_real); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_real_, is_real);
+}
 
 #endif

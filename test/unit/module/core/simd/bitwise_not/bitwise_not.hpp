@@ -17,20 +17,24 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check bitwise_not behavior on wide"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check bitwise_not behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
   using eve::wide;
 
-  TTS_SETUP( "A correctly initialized wide" )
+  TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type,T>  lhs([](int i,  int) { return i+1; })
-                , ref([](int i,  int) { return eve::bitwise_not(Type(i+1)); });
+    wide<Type, T> lhs([](int i, int) { return i + 1; }),
+        ref([](int i, int) { return eve::bitwise_not(Type(i + 1)); });
 
-
-    TTS_SECTION( "supports eve::bitwise_not" )  { TTS_EQUAL(ref, eve::bitwise_not(lhs)); }
-    TTS_SECTION( "supports operator~" )         { TTS_EQUAL(ref, ~lhs); }
+    TTS_SECTION("supports eve::bitwise_not") { TTS_EQUAL(ref, eve::bitwise_not(lhs)); }
+    TTS_SECTION("supports operator~") { TTS_EQUAL(ref, ~lhs); }
   }
 }
 

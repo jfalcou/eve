@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(store_,store); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(store_, store);
+}
 
 #endif

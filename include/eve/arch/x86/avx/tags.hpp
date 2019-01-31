@@ -15,19 +15,21 @@
 namespace eve
 {
   // dispatching tag for AVX SIMD implementation
-  struct avx_ : sse4_2_ { using parent = sse4_2_; };
+  struct avx_ : sse4_2_
+  {
+    using parent = sse4_2_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(avx_ const& ) noexcept
+  inline bool is_supported(avx_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
-    static const bool detected = detail::detect_features( (1<<28)|(1<<27)|(1<<26)
-                                                        , 0x00000001, detail::ecx
-                                                        );
+#if defined(EVE_ARCH_IS_X86)
+    static const bool detected =
+        detail::detect_features((1 << 28) | (1 << 27) | (1 << 26), 0x00000001, detail::ecx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // AVX extension tag object

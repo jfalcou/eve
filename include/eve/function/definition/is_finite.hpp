@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_finite_,is_finite); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_finite_, is_finite);
+}
 
 #endif

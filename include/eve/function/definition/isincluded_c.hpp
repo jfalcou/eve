@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(isincluded_c_,isincluded_c); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(isincluded_c_, isincluded_c);
+}
 
 #endif

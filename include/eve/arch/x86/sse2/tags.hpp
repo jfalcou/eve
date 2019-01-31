@@ -16,20 +16,25 @@
 namespace eve
 {
   // ABI tag for all X86 128 bits SIMD registers
-  struct sse_ {};
+  struct sse_
+  {
+  };
 
   // dispatching tag for SSE2 SIMD implementation
-  struct sse2_ : simd_ { using parent = simd_; };
+  struct sse2_ : simd_
+  {
+    using parent = simd_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(sse2_ const& ) noexcept
+  inline bool is_supported(sse2_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
+#if defined(EVE_ARCH_IS_X86)
     static const bool detected = detail::detect_feature(25, 0x00000001, detail::edx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // SSE2 extension tag object

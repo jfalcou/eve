@@ -17,37 +17,44 @@ namespace eve::ext
 {
   template<typename Type, typename ABI>
   struct has_abi : std::false_type
-  {};
+  {
+  };
 
   template<typename Type, typename ABI>
-  struct has_abi<Type&, ABI> : has_abi<Type, ABI>
-  {};
+  struct has_abi<Type &, ABI> : has_abi<Type, ABI>
+  {
+  };
 
   template<typename Type, typename ABI>
   struct has_abi<Type const, ABI> : has_abi<Type, ABI>
-  {};
+  {
+  };
 
   template<typename Type, typename ABI>
-  struct has_abi<Type const&, ABI> : has_abi<Type, ABI>
-  {};
+  struct has_abi<Type const &, ABI> : has_abi<Type, ABI>
+  {
+  };
 
   template<typename Type, typename ABI>
   struct has_abi<Type &&, ABI> : has_abi<Type, ABI>
-  {};
+  {
+  };
 
   template<typename Type, typename Size, typename ABI>
-  struct has_abi<wide<Type,Size,ABI>, ABI> : std::true_type
-  {};
+  struct has_abi<wide<Type, Size, ABI>, ABI> : std::true_type
+  {
+  };
 
   template<typename Type, typename Size, typename ABI, typename ABI2>
-  struct has_abi<wide<Type,Size,ABI>, ABI2> : std::false_type
-  {};
+  struct has_abi<wide<Type, Size, ABI>, ABI2> : std::false_type
+  {
+  };
 
   template<typename Type, typename ABI>
-  using has_abi_t = typename has_abi<Type,ABI>::type;
+  using has_abi_t = typename has_abi<Type, ABI>::type;
 
   template<typename Type, typename ABI>
-  inline constexpr bool has_abi_v = has_abi_t<Type,ABI>::value;
+  inline constexpr bool has_abi_v = has_abi_t<Type, ABI>::value;
 }
 
 #endif

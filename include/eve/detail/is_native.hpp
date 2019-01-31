@@ -17,10 +17,10 @@ namespace eve::detail
 {
   template<typename X>
   struct is_native
-        : std::integral_constant< bool
-                                , !std::is_same_v<X,aggregated_> && !std::is_same_v<X,emulated_>
-                                >
-  {};
+      : std::integral_constant<bool,
+                               !std::is_same_v<X, aggregated_> && !std::is_same_v<X, emulated_>>
+  {
+  };
 
   template<typename T>
   inline constexpr bool is_native_v = is_native<T>::value;
@@ -29,7 +29,8 @@ namespace eve::detail
   using is_native_t = typename is_native<T>::type;
 
   // Associated Concept-like entity
-  template<typename T> using Native = std::enable_if_t<is_native_v<T>>;
+  template<typename T>
+  using Native = std::enable_if_t<is_native_v<T>>;
 }
 
 #endif

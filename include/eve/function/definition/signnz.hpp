@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(signnz_,signnz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(signnz_, signnz);
+}
 
 #endif

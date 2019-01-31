@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(refine_rsqrt_,refine_rsqrt); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(refine_rsqrt_, refine_rsqrt);
+}
 
 #endif

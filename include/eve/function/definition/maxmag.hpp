@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(maxmag_,maxmag); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(maxmag_, maxmag);
+}
 
 #endif

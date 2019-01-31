@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(exprecneg_,exprecneg); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(exprecneg_, exprecneg);
+}
 
 #endif

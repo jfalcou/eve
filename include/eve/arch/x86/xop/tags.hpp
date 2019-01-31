@@ -15,18 +15,20 @@
 namespace eve
 {
   // dispatching tag for XOP SIMD implementation
-  struct xop_ {};
+  struct xop_
+  {
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(xop_ const& ) noexcept
+  inline bool is_supported(xop_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
-    static const bool detected  =   detail::detect_feature(11, 0x80000001, detail::ebx)
-                                &&  detail::detect_feature(27, 0x80000001, detail::ecx);
+#if defined(EVE_ARCH_IS_X86)
+    static const bool detected = detail::detect_feature(11, 0x80000001, detail::ebx) &&
+                                 detail::detect_feature(27, 0x80000001, detail::ecx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // XOP extension tag object

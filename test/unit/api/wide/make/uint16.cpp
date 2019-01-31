@@ -11,4 +11,3 @@
 #include <cstdint>
 using Type = std::uint16_t;
 #include "make.hpp"
-

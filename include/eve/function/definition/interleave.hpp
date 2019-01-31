@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(interleave_,interleave); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(interleave_, interleave);
+}
 
 #endif

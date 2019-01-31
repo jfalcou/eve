@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(unary_minus_,unary_minus); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(unary_minus_, unary_minus);
+}
 
 #endif

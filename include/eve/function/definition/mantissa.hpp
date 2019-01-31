@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(mantissa_,mantissa); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(mantissa_, mantissa);
+}
 
 #endif

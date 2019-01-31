@@ -18,21 +18,24 @@
 
 namespace eve::detail
 {
-  template< typename T, typename N, typename X1
-          , typename U, typename M, typename X2
-          , typename = std::enable_if_t<!is_native<X1>::value || ! is_native<X2>::value>
-          >
-  EVE_FORCEINLINE auto bitwise_cast_( EVE_SUPPORTS(simd_)
-                                    , wide<T,N,X1> const& v0, as_<wide<U,M,X2>> const& tgt
-                                    ) noexcept
+  template<typename T,
+           typename N,
+           typename X1,
+           typename U,
+           typename M,
+           typename X2,
+           typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
+  EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(simd_),
+                                     wide<T, N, X1> const &     v0,
+                                     as_<wide<U, M, X2>> const &tgt) noexcept
   {
-    wide<U,M,X2> that;
+    wide<U, M, X2> that;
 
     constexpr auto sz = std::min(sizeof(v0), sizeof(that));
 
-    void const* src = reinterpret_cast<detail::alias_t<void const>*>( &v0 );
-    void* dst = reinterpret_cast<detail::alias_t<void>*>( &that );
-    std::memcpy(dst,src, sz);
+    void const *src = reinterpret_cast<detail::alias_t<void const> *>(&v0);
+    void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
+    std::memcpy(dst, src, sz);
 
     return that;
   }

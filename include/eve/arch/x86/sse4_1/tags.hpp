@@ -15,17 +15,20 @@
 namespace eve
 {
   // dispatching tag for SSE4.1 SIMD implementation
-  struct sse4_1_ : ssse3_ { using parent = ssse3_; };
+  struct sse4_1_ : ssse3_
+  {
+    using parent = ssse3_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(sse4_1_ const& ) noexcept
+  inline bool is_supported(sse4_1_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_X86)
+#if defined(EVE_ARCH_IS_X86)
     static const bool detected = detail::detect_feature(19, 0x00000001, detail::ecx);
     return detected;
-    #else
+#else
     return false;
-    #endif
+#endif
   }
 
   // SSE4.1 extension tag object

@@ -11,9 +11,9 @@
 #define EVE_ARCH_CPU_SPEC_HPP_INCLUDED
 
 #if !defined(EVE_CURRENT_ABI)
-  #define EVE_CURRENT_ABI ::eve::emulated_
-  #define EVE_CURRENT_API ::eve::cpu_
-  #define EVE_STRICT_EMULATION
+#  define EVE_CURRENT_ABI ::eve::emulated_
+#  define EVE_CURRENT_API ::eve::cpu_
+#  define EVE_STRICT_EMULATION
 #endif
 
 #endif

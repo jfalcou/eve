@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(sum_,sum); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sum_, sum);
+}
 
 #endif

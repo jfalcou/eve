@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(swapbytes_,swapbytes); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(swapbytes_, swapbytes);
+}
 
 #endif

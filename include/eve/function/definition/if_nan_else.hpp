@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(if_nan_else_,if_nan_else); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(if_nan_else_, if_nan_else);
+}
 
 #endif

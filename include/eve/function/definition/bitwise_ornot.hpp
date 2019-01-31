@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitwise_ornot_,bitwise_ornot); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitwise_ornot_, bitwise_ornot);
+}
 
 #endif

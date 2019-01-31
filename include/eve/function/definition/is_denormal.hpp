@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_denormal_,is_denormal); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
+}
 
 #endif

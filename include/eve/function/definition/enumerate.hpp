@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(enumerate_,enumerate); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(enumerate_, enumerate);
+}
 
 #endif

@@ -15,7 +15,10 @@
 
 namespace eve
 {
-  template<> struct limits<eve::sse4_2_> : limits<eve::sse2_> {};
+  template<>
+  struct limits<eve::sse4_2_> : limits<eve::sse2_>
+  {
+  };
 }
 
 #endif

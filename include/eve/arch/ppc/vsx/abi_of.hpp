@@ -16,12 +16,14 @@
 
 namespace eve::ext
 {
-  template<int N> struct abi_of<double , N, std::enable_if_t<(N<=2)>>  { using type = ::eve::ppc_; };
+  template<int N>
+  struct abi_of<double, N, std::enable_if_t<(N <= 2)>>
+  {
+    using type = ::eve::ppc_;
+  };
 
   template<typename T, int N>
-  struct abi_of < T, N
-                , std::enable_if_t<std::is_integral_v<T> && (sizeof(T)==8) && (N <= 2)>
-                >
+  struct abi_of<T, N, std::enable_if_t<std::is_integral_v<T> && (sizeof(T) == 8) && (N <= 2)>>
   {
     using type = ::eve::ppc_;
   };

@@ -13,11 +13,11 @@
 #include <eve/arch/ppc/predef.hpp>
 
 #if EVE_HW_POWERPC >= EVE_VMX_VERSION
-  #include <eve/arch/ppc/vmx/abi_of.hpp>
+#  include <eve/arch/ppc/vmx/abi_of.hpp>
 #endif
 
 #if EVE_HW_POWERPC >= EVE_VSX_VERSION
-  #include <eve/arch/ppc/vsx/abi_of.hpp>
+#  include <eve/arch/ppc/vsx/abi_of.hpp>
 #endif
 
 #endif

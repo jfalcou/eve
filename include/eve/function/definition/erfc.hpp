@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(erfc_,erfc); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(erfc_, erfc);
+}
 
 #endif

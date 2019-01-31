@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(logical_xor_,logical_xor); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
+}
 
 #endif

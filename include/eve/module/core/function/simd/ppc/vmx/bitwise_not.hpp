@@ -19,7 +19,8 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,ppc_> bitwise_not_(EVE_SUPPORTS(vmx_), wide<T,N,ppc_> const& v0) noexcept
+  EVE_FORCEINLINE wide<T, N, ppc_> bitwise_not_(EVE_SUPPORTS(vmx_),
+                                                wide<T, N, ppc_> const &v0) noexcept
   {
     return vec_nor(v0.storage(), v0.storage());
   }

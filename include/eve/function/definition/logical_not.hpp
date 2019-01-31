@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(logical_not_,logical_not); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_not_, logical_not);
+}
 
 #endif

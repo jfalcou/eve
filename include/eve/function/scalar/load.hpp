@@ -17,26 +17,26 @@
 
 namespace eve
 {
-  template<typename T> EVE_FORCEINLINE auto load(T* ptr) noexcept
+  template<typename T>
+  EVE_FORCEINLINE auto load(T *ptr) noexcept
   {
     return *ptr;
   }
 
-  template<typename T, std::size_t Align> EVE_FORCEINLINE auto load(aligned_ptr<T,Align> ptr) noexcept
+  template<typename T, std::size_t Align>
+  EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr) noexcept
   {
     return *ptr;
   }
 
   template<typename T>
-  EVE_FORCEINLINE auto load(T* ptr, as_<T> const&) noexcept
+  EVE_FORCEINLINE auto load(T *ptr, as_<T> const &) noexcept
   {
     return *ptr;
   }
 
-  template< typename T, std::size_t Align
-          , typename = std::enable_if_t<(Align >= alignof(T))>
-          >
-  EVE_FORCEINLINE auto load(aligned_ptr<T,Align> ptr, as_<T> const&) noexcept
+  template<typename T, std::size_t Align, typename = std::enable_if_t<(Align >= alignof(T))>>
+  EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<T> const &) noexcept
   {
     return *ptr;
   }

@@ -20,22 +20,22 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto  store_( EVE_SUPPORTS(vmx_), wide<T,N,ppc_> const& value, T* ptr) noexcept
-                        requires( void, Arithmetic<T>)
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
+                              wide<T, N, ppc_> const &value,
+                              T *                     ptr) noexcept requires(void, Arithmetic<T>)
   {
-    if constexpr(N::value*sizeof(T) == limits<vmx_>::bytes)
-      *((typename wide<T,N,ppc_>::storage_type*)(ptr)) = value;
+    if constexpr(N::value * sizeof(T) == limits<vmx_>::bytes)
+      *((typename wide<T, N, ppc_>::storage_type *)(ptr)) = value;
     else
-      apply<N::value>( [&](auto... I) { ((*ptr++ = value[I]), ...); } );
+      apply<N::value>([&](auto... I) { ((*ptr++ = value[ I ]), ...); });
   }
 
   template<typename T, typename S, std::size_t N>
-  EVE_FORCEINLINE auto  store_ ( EVE_SUPPORTS(vmx_)
-                              , wide<T,S,ppc_> const& value, aligned_ptr<T,N> ptr
-                              ) noexcept
-                        requires( void, Arithmetic<T>)
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
+                              wide<T, S, ppc_> const &value,
+                              aligned_ptr<T, N>       ptr) noexcept requires(void, Arithmetic<T>)
   {
-    if constexpr( N >= limits<vmx_>::bytes )
+    if constexpr(N >= limits<vmx_>::bytes)
       vec_st(value.storage(), 0, ptr.get());
     else
       store(value, ptr.get());

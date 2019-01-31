@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(reldist_,reldist); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(reldist_, reldist);
+}
 
 #endif

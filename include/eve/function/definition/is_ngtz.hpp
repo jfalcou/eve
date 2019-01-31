@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_ngtz_,is_ngtz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ngtz_, is_ngtz);
+}
 
 #endif

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(shift_left_,shift_left); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(shift_left_, shift_left);
+}
 
 #endif

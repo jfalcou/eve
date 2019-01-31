@@ -14,7 +14,9 @@
 
 namespace eve
 {
-  struct saturated_tag {};
+  struct saturated_tag
+  {
+  };
   constexpr inline detail::decorator<saturated_tag> saturated_ = {};
 }
 

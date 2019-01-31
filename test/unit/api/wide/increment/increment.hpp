@@ -15,36 +15,41 @@
 #include <tts/tests/basic.hpp>
 #include <algorithm>
 
-using eve::fixed;
 using eve::as_aligned;
+using eve::fixed;
 
 // Generator for the base values
 auto baseg = [](auto i, auto) { return i; };
-auto nextg = [](auto i, auto) { return i+1; };
+auto nextg = [](auto i, auto) { return i + 1; };
 
-TTS_CASE_TPL( "Check self-increment on wide"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check self-increment on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
   using eve::wide;
 
-  TTS_SETUP( "A correctly initialized wide" )
+  TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type,T> simd(baseg), next(nextg);
-    wide<Type,T> prev(simd), res;
+    wide<Type, T> simd(baseg), next(nextg);
+    wide<Type, T> prev(simd), res;
 
-    TTS_SECTION( "supports operator++()" )
+    TTS_SECTION("supports operator++()")
     {
       res = simd++;
-      TTS_EXPECT( std::equal(simd.begin(),simd.end(),next.begin()));
-      TTS_EXPECT( std::equal(res.begin() ,res.end() ,prev.begin()));
+      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+      TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
     }
 
-    TTS_SECTION( "supports operator++(int)" )
+    TTS_SECTION("supports operator++(int)")
     {
       res = ++simd;
-      TTS_EXPECT( std::equal(simd.begin(),simd.end(),next.begin()));
-      TTS_EXPECT( std::equal(res.begin() ,res.end() ,next.begin()));
+      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+      TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
     }
   }
 }

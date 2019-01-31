@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(acotd_,acotd); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acotd_, acotd);
+}
 
 #endif

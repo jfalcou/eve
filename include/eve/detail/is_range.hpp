@@ -18,33 +18,35 @@ namespace eve::detail
   // Detect if a Type behaves a Range
   template<typename T, typename Enable = void>
   struct is_range : std::false_type
-  {};
+  {
+  };
 
   template<typename T>
-  struct  is_range < T
-                   , std::void_t < decltype( std::begin(std::declval<T>()) )
-                                 , decltype( std::end  (std::declval<T>()) )
-                                 >
-                   >
-        : std::true_type
-  {};
+  struct is_range<
+      T,
+      std::void_t<decltype(std::begin(std::declval<T>())), decltype(std::end(std::declval<T>()))>>
+      : std::true_type
+  {
+  };
 
-  template<typename T> inline constexpr bool is_range_v = is_range<T>::value;
-  template<typename T> using is_range_t = typename is_range<T>::type;
+  template<typename T>
+  inline constexpr bool is_range_v = is_range<T>::value;
+  template<typename T>
+  using is_range_t = typename is_range<T>::type;
 
   // Detect if a Type behaves a Random Access Range
   template<typename T, typename Enable = void>
-  struct is_random_access_range : std::false_type {};
+  struct is_random_access_range : std::false_type
+  {
+  };
 
   template<typename T>
-  struct  is_random_access_range< T
-                                , std::void_t < decltype( std::begin(std::declval<T>()) )
-                                              , decltype( std::end  (std::declval<T>()) )
-                                              , decltype( std::declval<T>()[0] )
-                                              >
-                                >
-        : std::true_type
-  {};
+  struct is_random_access_range<T,
+                                std::void_t<decltype(std::begin(std::declval<T>())),
+                                            decltype(std::end(std::declval<T>())),
+                                            decltype(std::declval<T>()[ 0 ])>> : std::true_type
+  {
+  };
 
   template<typename T>
   inline constexpr bool is_random_access_range_v = is_random_access_range<T>::value;

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(compare_not_equal_,compare_not_equal); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(compare_not_equal_, compare_not_equal);
+}
 
 #endif

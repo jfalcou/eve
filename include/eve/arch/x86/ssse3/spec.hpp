@@ -13,14 +13,14 @@
 #include <eve/arch/x86/ssse3/tags.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_X86 == EVE_SSSE3_VERSION
-    #define EVE_CURRENT_ABI ::eve::sse_
-    #define EVE_CURRENT_API ::eve::ssse3_
-  #endif
+#  if EVE_HW_X86 == EVE_SSSE3_VERSION
+#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_API ::eve::ssse3_
+#  endif
 #endif
 
 #if EVE_HW_X86 >= EVE_SSSE3_VERSION
-  #include <tmmintrin.h>
+#  include <tmmintrin.h>
 #endif
 
 #endif

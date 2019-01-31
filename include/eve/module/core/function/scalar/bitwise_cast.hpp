@@ -17,15 +17,15 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE T bitwise_cast_( EVE_SUPPORTS(cpu_), T const& a, as_<T> const& ) noexcept
+  EVE_FORCEINLINE T bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<T> const &) noexcept
   {
     return a;
   }
 
   template<typename T, typename Target>
-  EVE_FORCEINLINE Target bitwise_cast_(EVE_SUPPORTS(cpu_), T const& a, as_<Target> const& ) noexcept
+  EVE_FORCEINLINE Target bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
   {
-    static_assert( sizeof(a) == sizeof(Target), "[eve] Size mismatch in bitwise_cast");
+    static_assert(sizeof(a) == sizeof(Target), "[eve] Size mismatch in bitwise_cast");
 
     Target that;
     std::memcpy(&that, &a, sizeof(a));

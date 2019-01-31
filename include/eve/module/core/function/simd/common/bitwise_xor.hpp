@@ -23,61 +23,60 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,aggregated_> bitwise_xor_( EVE_SUPPORTS(simd_)
-                                                    , wide<T,N,aggregated_> const& v0
-                                                    , wide<T,N,aggregated_> const& v1
-                                                    ) noexcept
+  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_xor_(EVE_SUPPORTS(simd_),
+                                                       wide<T, N, aggregated_> const &v0,
+                                                       wide<T, N, aggregated_> const &v1) noexcept
   {
-    return aggregate( eve::bitwise_xor, v0, v1);
+    return aggregate(eve::bitwise_xor, v0, v1);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_xor_ ( EVE_SUPPORTS(simd_)
-                                    , wide<T,N,emulated_> const& v0
-                                    , wide<T,N,emulated_> const& v1
-                                    ) noexcept
+  EVE_FORCEINLINE auto bitwise_xor_(EVE_SUPPORTS(simd_),
+                                    wide<T, N, emulated_> const &v0,
+                                    wide<T, N, emulated_> const &v1) noexcept
   {
-    return map( eve::bitwise_xor, v0, v1);
+    return map(eve::bitwise_xor, v0, v1);
   }
 
   template<typename T, typename N, typename U>
-  EVE_FORCEINLINE auto bitwise_xor_ ( EVE_SUPPORTS(simd_)
-                                    , wide<T,N,emulated_> const& v0, U const& v1
-                                    ) noexcept
-                  requires(wide<T,N,emulated_>, Convertible<U,T>)
+  EVE_FORCEINLINE auto bitwise_xor_(EVE_SUPPORTS(simd_),
+                                    wide<T, N, emulated_> const &v0,
+                                    U const &v1) noexcept requires(wide<T, N, emulated_>,
+                                                                   Convertible<U, T>)
   {
-    return map( eve::bitwise_xor, v0, T(v1) );
+    return map(eve::bitwise_xor, v0, T(v1));
   }
 
   template<typename T, typename N, typename U>
-  EVE_FORCEINLINE auto bitwise_xor_ ( EVE_SUPPORTS(simd_)
-                                    , U const& v0, wide<T,N,emulated_> const& v1
-                                    ) noexcept
-                  requires(wide<T,N,emulated_>, Convertible<U,T>)
+  EVE_FORCEINLINE auto
+  bitwise_xor_(EVE_SUPPORTS(simd_),
+               U const &                    v0,
+               wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
+                                                                  Convertible<U, T>)
   {
-    return map( eve::bitwise_xor, T(v0), v1);
+    return map(eve::bitwise_xor, T(v0), v1);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_xor_ ( EVE_SUPPORTS(simd_)
-                                    , wide<T,N,ABI> const& v0, U const& v1
-                                    ) noexcept
-                  requires(wide<T,N,ABI>, Convertible<U,T>)
+  EVE_FORCEINLINE auto bitwise_xor_(EVE_SUPPORTS(simd_),
+                                    wide<T, N, ABI> const &v0,
+                                    U const &              v1) noexcept requires(wide<T, N, ABI>,
+                                                                   Convertible<U, T>)
   {
-    return eve::bitwise_xor( v0, wide<T,N,ABI>(v1) );
+    return eve::bitwise_xor(v0, wide<T, N, ABI>(v1));
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_xor_ ( EVE_SUPPORTS(simd_)
-                                    , U const& v0, wide<T,N,ABI> const& v1
-                                    ) noexcept
-                  requires(wide<T,N,ABI>, Convertible<U,T>)
+  EVE_FORCEINLINE auto bitwise_xor_(EVE_SUPPORTS(simd_),
+                                    U const &              v0,
+                                    wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                                                 Convertible<U, T>)
   {
-    return eve::bitwise_xor( wide<T,N,ABI>(v0), v1 );
+    return eve::bitwise_xor(wide<T, N, ABI>(v0), v1);
   }
 }
 
@@ -86,21 +85,23 @@ namespace eve::detail
 namespace eve
 {
   template<typename T0, typename N0, typename T1, typename N1, typename ABI>
-  EVE_FORCEINLINE auto operator^(wide<T0,N0,ABI> const& v0, wide<T1,N1,ABI> const& v1) noexcept
+  EVE_FORCEINLINE auto operator^(wide<T0, N0, ABI> const &v0, wide<T1, N1, ABI> const &v1) noexcept
   {
-    return eve::bitwise_xor(v0, eve::bitwise_cast<wide<T0,N0,ABI>>(v1));
+    return eve::bitwise_xor(v0, eve::bitwise_cast<wide<T0, N0, ABI>>(v1));
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator^( wide<T,N,ABI> const& v0, U const& v1 ) noexcept
-                  requires(wide<T,N,ABI>, detail::Convertible<U,T>)
+  EVE_FORCEINLINE auto operator^(wide<T, N, ABI> const &v0,
+                                 U const &              v1) noexcept requires(wide<T, N, ABI>,
+                                                                detail::Convertible<U, T>)
   {
     return eve::bitwise_xor(v0, v1);
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator^( U const& v0, wide<T,N,ABI> const& v1) noexcept
-                  requires(wide<T,N,ABI>, detail::Convertible<U,T>)
+  EVE_FORCEINLINE auto
+  operator^(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                                      detail::Convertible<U, T>)
   {
     return eve::bitwise_xor(v0, v1);
   }

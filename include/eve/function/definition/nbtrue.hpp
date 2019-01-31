@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(nbtrue_,nbtrue); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(nbtrue_, nbtrue);
+}
 
 #endif

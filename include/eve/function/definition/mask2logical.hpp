@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(mask2logical_,mask2logical); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(mask2logical_, mask2logical);
+}
 
 #endif

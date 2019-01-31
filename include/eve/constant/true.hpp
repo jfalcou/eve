@@ -18,14 +18,15 @@
 
 namespace eve
 {
-  template<typename T> EVE_FORCEINLINE
-  std::enable_if_t<is_logical_v<T>,as_logical_t<T>>  True( as_<T> const& = {} )
+  template<typename T>
+  EVE_FORCEINLINE std::enable_if_t<is_logical_v<T>, as_logical_t<T>> True(as_<T> const & = {})
   {
     return as_logical_t<T>(true);
   }
 
-  template<typename T> EVE_FORCEINLINE
-  std::enable_if_t<!is_logical_v<T>,as_logical_t<T>> True( as_<T> const& = {} ) = delete;
+  template<typename T>
+  EVE_FORCEINLINE std::enable_if_t<!is_logical_v<T>, as_logical_t<T>>
+                  True(as_<T> const & = {}) = delete;
 }
 
 #endif

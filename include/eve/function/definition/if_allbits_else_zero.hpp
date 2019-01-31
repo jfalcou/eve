@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(if_allbits_else_zero_,if_allbits_else_zero); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(if_allbits_else_zero_, if_allbits_else_zero);
+}
 
 #endif

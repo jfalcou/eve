@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(negatenz_,negatenz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(negatenz_, negatenz);
+}
 
 #endif

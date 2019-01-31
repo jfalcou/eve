@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(max_,max); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(max_, max);
+}
 
 #endif

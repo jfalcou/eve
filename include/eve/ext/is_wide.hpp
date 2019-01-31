@@ -17,31 +17,39 @@ namespace eve::ext
 {
   template<typename Type>
   struct is_wide : std::false_type
-  {};
+  {
+  };
 
   template<typename Type>
-  struct is_wide<Type&> : is_wide<Type>
-  {};
+  struct is_wide<Type &> : is_wide<Type>
+  {
+  };
 
   template<typename Type>
   struct is_wide<Type const> : is_wide<Type>
-  {};
+  {
+  };
 
   template<typename Type>
-  struct is_wide<Type const&> : is_wide<Type>
-  {};
+  struct is_wide<Type const &> : is_wide<Type>
+  {
+  };
 
   template<typename Type>
   struct is_wide<Type &&> : is_wide<Type>
-  {};
+  {
+  };
 
   template<typename Type, typename Size, typename ABI>
-  struct is_wide<wide<Type,Size,ABI>> : std::true_type
-  {};
+  struct is_wide<wide<Type, Size, ABI>> : std::true_type
+  {
+  };
 
-  template<typename Type> using is_wide_t = typename is_wide<Type>::type;
+  template<typename Type>
+  using is_wide_t = typename is_wide<Type>::type;
 
-  template<typename Type> inline constexpr bool is_wide_v = is_wide_t<Type>::value;
+  template<typename Type>
+  inline constexpr bool is_wide_v = is_wide_t<Type>::value;
 }
 
 #endif

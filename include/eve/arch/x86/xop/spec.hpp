@@ -11,12 +11,12 @@
 #define EVE_ARCH_X86_XOP_SPEC_HPP_INCLUDED
 
 #if defined(EVE_SUPPORTS_XOP)
-  #if defined(_MSC_VER)
-    #include <intrin.h>
-  #else
-    #include <x86intrin.h>
-    #include <xopintrin.h>
-  #endif
+#  if defined(_MSC_VER)
+#    include <intrin.h>
+#  else
+#    include <x86intrin.h>
+#    include <xopintrin.h>
+#  endif
 #endif
 
 #endif

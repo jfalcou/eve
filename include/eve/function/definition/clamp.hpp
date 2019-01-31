@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(clamp_,clamp); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(clamp_, clamp);
+}
 
 #endif

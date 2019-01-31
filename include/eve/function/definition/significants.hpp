@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(significants_,significants); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(significants_, significants);
+}
 
 #endif

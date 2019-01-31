@@ -15,9 +15,9 @@
 #include <eve/forward.hpp>
 
 #if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#pragma GCC diagnostic ignored "-Wuninitialized"
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#  pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
 namespace eve::detail
@@ -25,30 +25,26 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Emulation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( cpu_ const&
-                              , wide<T,N,emulated_> const& l
-                              , wide<T,N,emulated_> const& h
-                              ) noexcept
+  EVE_FORCEINLINE auto
+  combine(cpu_ const &, wide<T, N, emulated_> const &l, wide<T, N, emulated_> const &h) noexcept
   {
-    auto impl = [&](auto... I) { return wide<T,typename N::combined_type>{l[I]...,h[I]...}; };
+    auto impl = [&](auto... I) { return wide<T, typename N::combined_type>{l[ I ]..., h[ I ]...}; };
     return apply<N::value>(impl);
   }
 
   //------------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( cpu_ const&
-                              , wide<T,N,aggregated_> const& l
-                              , wide<T,N,aggregated_> const& h
-                              ) noexcept
+  EVE_FORCEINLINE auto
+  combine(cpu_ const &, wide<T, N, aggregated_> const &l, wide<T, N, aggregated_> const &h) noexcept
   {
-    using that_t = wide<T,typename N::combined_type>;
-    return that_t( typename that_t::storage_type{l,h} );
+    using that_t = wide<T, typename N::combined_type>;
+    return that_t(typename that_t::storage_type{l, h});
   }
 }
 
 #if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic pop
+#  pragma GCC diagnostic pop
 #endif
 
 #endif

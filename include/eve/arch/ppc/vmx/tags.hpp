@@ -16,19 +16,24 @@
 namespace eve
 {
   // Tag for all PPC SIMD ABI
-  struct ppc_ {};
+  struct ppc_
+  {
+  };
 
   // dispatching tag for VMX SIMD implementation
-  struct vmx_ : simd_ { using parent = simd_; };
+  struct vmx_ : simd_
+  {
+    using parent = simd_;
+  };
 
   // Runtime detection of CPU support
-  inline bool is_supported(vmx_ const& ) noexcept
+  inline bool is_supported(vmx_ const &) noexcept
   {
-    #if defined(EVE_ARCH_IS_PPC)
-    return true;  // Fix later
-    #else
+#if defined(EVE_ARCH_IS_PPC)
+    return true; // Fix later
+#else
     return false;
-    #endif
+#endif
   }
 
   // VMX extension tag object

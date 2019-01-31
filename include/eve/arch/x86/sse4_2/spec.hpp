@@ -13,14 +13,14 @@
 #include <eve/arch/x86/sse4_2/tags.hpp>
 
 #if !defined(EVE_CURRENT_ABI)
-  #if EVE_HW_X86 == EVE_SSE4_2_VERSION
-    #define EVE_CURRENT_ABI ::eve::sse_
-    #define EVE_CURRENT_API ::eve::sse4_2_
-  #endif
+#  if EVE_HW_X86 == EVE_SSE4_2_VERSION
+#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_API ::eve::sse4_2_
+#  endif
 #endif
 
 #if EVE_HW_X86 >= EVE_SSE4_2_VERSION
-  #include <nmmintrin.h>
+#  include <nmmintrin.h>
 #endif
 
 #endif

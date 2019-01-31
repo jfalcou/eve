@@ -21,11 +21,11 @@ namespace eve
   {
     static constexpr std::size_t general = 32;
 
-    #if EVE_HW_POWERPC == EVE_VMX_VERSION
-    static constexpr std::size_t simd    = 32;
-    #else
-    static constexpr std::size_t simd    = 64;
-    #endif
+#  if EVE_HW_POWERPC == EVE_VMX_VERSION
+    static constexpr std::size_t simd = 32;
+#  else
+    static constexpr std::size_t simd = 64;
+#  endif
   };
 }
 #endif

@@ -17,23 +17,18 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( vmx_ const&
-                              , wide<T,N,ppc_> const& l, wide<T,N,ppc_> const& h
-                              ) noexcept
+  EVE_FORCEINLINE auto
+  combine(vmx_ const &, wide<T, N, ppc_> const &l, wide<T, N, ppc_> const &h) noexcept
   {
-    using that_t = wide<T,typename N::combined_type>;
+    using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr(N::value*sizeof(T) == limits<eve::vmx_>::bytes)
-    {
-      return that_t( typename that_t::storage_type{l,h} );
-    }
+    if constexpr(N::value * sizeof(T) == limits<eve::vmx_>::bytes)
+    { return that_t(typename that_t::storage_type{l, h}); }
     else
     {
-      auto mask = [&](auto... I)
-      {
-        __vector unsigned char m ={ static_cast<std::uint8_t>(I)...
-                                  , static_cast<std::uint8_t>(I+limits<eve::vmx_>::bytes)...
-                                  };
+      auto mask = [&](auto... I) {
+        __vector unsigned char m = {static_cast<std::uint8_t>(I)...,
+                                    static_cast<std::uint8_t>(I + limits<eve::vmx_>::bytes)...};
         return m;
       };
 

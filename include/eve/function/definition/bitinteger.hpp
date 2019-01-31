@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(bitinteger_,bitinteger); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bitinteger_, bitinteger);
+}
 
 #endif

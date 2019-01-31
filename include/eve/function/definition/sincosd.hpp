@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(sincosd_,sincosd); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sincosd_, sincosd);
+}
 
 #endif

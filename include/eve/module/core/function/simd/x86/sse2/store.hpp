@@ -18,40 +18,38 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
-                              , wide<T,N,sse_> const& value, T* ptr
-                              ) noexcept
-                  requires( void, detail::Arithmetic<T> )
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_),
+                              wide<T, N, sse_> const &value,
+                              T *ptr) noexcept requires(void, detail::Arithmetic<T>)
   {
-    if constexpr(N::value*sizeof(T) == limits<sse2_>::bytes)
+    if constexpr(N::value * sizeof(T) == limits<sse2_>::bytes)
     {
-      if constexpr( std::is_same_v<T,double>  ) _mm_storeu_pd(ptr,value);
-      if constexpr( std::is_same_v<T,float>   ) _mm_storeu_ps(ptr,value);
-      if constexpr( std::is_integral_v<T>     ) _mm_storeu_si128((__m128i*)(ptr), value);
+      if constexpr(std::is_same_v<T, double>) _mm_storeu_pd(ptr, value);
+      if constexpr(std::is_same_v<T, float>) _mm_storeu_ps(ptr, value);
+      if constexpr(std::is_integral_v<T>) _mm_storeu_si128((__m128i *)(ptr), value);
     }
     else
     {
-      apply<N::value>( [&](auto... I) { ((*ptr++ = value[I]), ...); } );
+      apply<N::value>([&](auto... I) { ((*ptr++ = value[ I ]), ...); });
     }
   }
 
   template<typename T, typename N, std::size_t A>
-  EVE_FORCEINLINE auto store_ ( EVE_SUPPORTS(sse2_)
-                              , wide<T,N,sse_> const& value, aligned_ptr<T,A> ptr
-                              ) noexcept
-                  requires( void, detail::Arithmetic<T> )
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_),
+                              wide<T, N, sse_> const &value,
+                              aligned_ptr<T, A> ptr) noexcept requires(void, detail::Arithmetic<T>)
   {
-    static constexpr auto  alg = wide<T,N,sse_>::static_alignment;
+    static constexpr auto alg = wide<T, N, sse_>::static_alignment;
 
-    if constexpr(N::value*sizeof(T) == limits<sse2_>::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == limits<sse2_>::bytes && A >= alg)
     {
-      if constexpr( std::is_same_v<T,double>  ) _mm_store_pd(ptr.get(),value);
-      if constexpr( std::is_same_v<T,float>   ) _mm_store_ps(ptr.get(),value);
-      if constexpr( std::is_integral_v<T>     ) _mm_store_si128((__m128i*)(ptr.get()), value);
+      if constexpr(std::is_same_v<T, double>) _mm_store_pd(ptr.get(), value);
+      if constexpr(std::is_same_v<T, float>) _mm_store_ps(ptr.get(), value);
+      if constexpr(std::is_integral_v<T>) _mm_store_si128((__m128i *)(ptr.get()), value);
     }
     else
     {
-      store(value,ptr.get());
+      store(value, ptr.get());
     }
   }
 }

@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_gtz_,is_gtz); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_gtz_, is_gtz);
+}
 
 #endif

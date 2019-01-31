@@ -19,14 +19,14 @@ namespace eve::ext
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
-    using type = std::array<Type,Cardinal::value>;
+    using type = std::array<Type, Cardinal::value>;
   };
 
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::aggregated_>
   {
-    using substorage_type = eve::wide<Type,typename Cardinal::split_type>;
-    using type = std::array<substorage_type,2>;
+    using substorage_type = eve::wide<Type, typename Cardinal::split_type>;
+    using type            = std::array<substorage_type, 2>;
   };
 }
 

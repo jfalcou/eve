@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(toint_,toint); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(toint_, toint);
+}
 
 #endif

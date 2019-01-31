@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(floor_,floor); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(floor_, floor);
+}
 
 #endif

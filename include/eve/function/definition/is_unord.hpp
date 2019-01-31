@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(is_unord_,is_unord); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_unord_, is_unord);
+}
 
 #endif

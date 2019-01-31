@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(trunc_,trunc); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(trunc_, trunc);
+}
 
 #endif

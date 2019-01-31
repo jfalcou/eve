@@ -19,23 +19,23 @@
 namespace tts::ext
 {
   template<typename T, typename N, typename ABI, typename EnableIf>
-  struct equal<eve::wide<T,N,ABI>,eve::wide<T,N,ABI>,EnableIf>
+  struct equal<eve::wide<T, N, ABI>, eve::wide<T, N, ABI>, EnableIf>
   {
-    using arg_t = eve::wide<T,N,ABI>;
-    inline bool operator()(arg_t const& l, arg_t const& r) const
+    using arg_t = eve::wide<T, N, ABI>;
+    inline bool operator()(arg_t const &l, arg_t const &r) const
     {
-      return std::equal(l.begin(),l.end(),r.begin());
+      return std::equal(l.begin(), l.end(), r.begin());
     }
   };
 
   template<typename T, typename N, typename ABI, typename EnableIf>
-  struct ulpdist<eve::wide<T,N,ABI>,eve::wide<T,N,ABI>,EnableIf>
+  struct ulpdist<eve::wide<T, N, ABI>, eve::wide<T, N, ABI>, EnableIf>
   {
-    inline double operator()(eve::wide<T,N,ABI> const& l, eve::wide<T,N,ABI> const& r) const
+    inline double operator()(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r) const
     {
       double max_ulp = 0;
       for(auto i = 0; i < l.size(); ++i)
-        max_ulp = std::max( max_ulp, tts::ulpdist(T(l[i]),T(r[i])) );
+        max_ulp = std::max(max_ulp, tts::ulpdist(T(l[ i ]), T(r[ i ])));
 
       return max_ulp;
     }

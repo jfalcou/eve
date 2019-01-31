@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(ifnot_neg_,ifnot_neg); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ifnot_neg_, ifnot_neg);
+}
 
 #endif

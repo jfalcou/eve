@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(hmsb_,hmsb); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(hmsb_, hmsb);
+}
 
 #endif

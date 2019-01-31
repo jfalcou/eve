@@ -12,6 +12,9 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve { EVE_MAKE_CALLABLE(inearbyint_,inearbyint); }
+namespace eve
+{
+  EVE_MAKE_CALLABLE(inearbyint_, inearbyint);
+}
 
 #endif
