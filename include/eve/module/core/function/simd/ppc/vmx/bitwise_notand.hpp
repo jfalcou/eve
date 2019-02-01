@@ -12,7 +12,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -22,7 +21,7 @@ namespace eve::detail
                                                    wide<T, N, ppc_> const &v0,
                                                    wide<T, N, ppc_> const &v1) noexcept
   {
-    return vec_andc(bitwise_cast<wide<T, N, ppc_>>(v1).storage(), v0.storage());
+    return vec_andc(v1.storage(), v0.storage());
   }
 }
 

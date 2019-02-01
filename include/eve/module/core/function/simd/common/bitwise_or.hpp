@@ -78,6 +78,13 @@ namespace eve::detail
   {
     return eve::bitwise_or(wide<T, N, ABI>(v0), v1);
   }
+
+  template<typename T, typename N, typename U, typename M>
+  EVE_FORCEINLINE auto
+  bitwise_or_(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
+  {
+    return eve::bitwise_or_(v0, bitwise_cast<wide<U, M>>(v1));
+  }
 }
 
 // -------------------------------------------------------------------------------------------------
