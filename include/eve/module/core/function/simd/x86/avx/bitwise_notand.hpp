@@ -18,19 +18,16 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,avx_> bitwise_notand_ ( EVE_SUPPORTS(avx_)
-                                              , wide<T,N,avx_> const& v0
-                                              , wide<T,N,avx_> const& v1
-                                              ) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_> bitwise_notand_(EVE_SUPPORTS(avx_),
+                                                   wide<T, N, avx_> const &v0,
+                                                   wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr( std::is_same_v<T,float>   ) return _mm256_andnot_ps(v0,v1);
-    if constexpr( std::is_same_v<T,double>  ) return _mm256_andnot_pd(v0,v1);
-    if constexpr( std::is_integral_v<T>     )
-      return _mm256_castps_si256( _mm256_andnot_ps ( _mm256_castsi256_ps(v0)
-                                                , _mm256_castsi256_ps(v1)
-                                                )
-                                );
+    if constexpr(std::is_same_v<T, float>) return _mm256_andnot_ps(v0, v1);
+    if constexpr(std::is_same_v<T, double>) return _mm256_andnot_pd(v0, v1);
+    if constexpr(std::is_integral_v<T>)
+      return _mm256_castps_si256(
+          _mm256_andnot_ps(_mm256_castsi256_ps(v0), _mm256_castsi256_ps(v1)));
   }
-} 
+}
 
 #endif

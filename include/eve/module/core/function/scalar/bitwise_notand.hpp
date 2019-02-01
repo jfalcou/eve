@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -14,22 +15,20 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_and.hpp>
-#include <eve/function/scalar/complement.hpp>
+#include <eve/function/scalar/bitwise_not.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T, typename U> EVE_FORCEINLINE
-  constexpr T bitwise_notand_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr T bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    static_assert ( sizeof(T) == sizeof(U)
-                  , "eve::bitwise_notand - Arguments have incompatible size"
-                  );
+    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_notand - Arguments have incompatible size");
 
-    return bitwise_and(complement(a), b); 
+    return bitwise_and(bitwise_not(a), b);
   }
-} 
+}
 
 #endif
