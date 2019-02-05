@@ -83,7 +83,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bitwise_and_(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
   {
-    return eve::bitwise_and_(v0, bitwise_cast<wide<U, M>>(v1));
+    return eve::bitwise_and(v0, bitwise_cast<wide<U, M>>(v1));
   }
 }
 // -------------------------------------------------------------------------------------------------
