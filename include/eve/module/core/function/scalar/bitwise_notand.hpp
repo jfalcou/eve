@@ -27,7 +27,7 @@ namespace eve::detail
   {
     static_assert(sizeof(T) == sizeof(U), "eve::bitwise_notand - Arguments have incompatible size");
 
-    return bitwise_and(bitwise_not(a), b); 
+    return bitwise_and(bitwise_not(a), b);
   }
 }
 
