@@ -7,10 +7,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BITWISE_ANDNOT_HPP_INCLUDED
-#define EVE_FUNCTION_BITWISE_ANDNOT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_BITWISE_ANDNOT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_BITWISE_ANDNOT_HPP_INCLUDED
 
 #include <eve/function/scalar/bitwise_andnot.hpp>
-#include <eve/function/simd/bitwise_andnot.hpp>
+#include <eve/module/core/function/simd/bitwise_andnot.hpp>
 
 #endif
