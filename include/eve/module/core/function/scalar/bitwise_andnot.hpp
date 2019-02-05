@@ -21,15 +21,13 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T, typename U> EVE_FORCEINLINE
-  constexpr T bitwise_andnot_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr T bitwise_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    static_assert ( sizeof(T) == sizeof(U)
-                  , "eve::bitwise_andnot - Arguments have incompatible size"
-                  );
+    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_andnot - Arguments have incompatible size");
 
-    return bitwise_and(a, bitwise_not(b)); 
+    return bitwise_and(a, bitwise_not(b));
   }
-} 
+}
 
 #endif
