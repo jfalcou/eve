@@ -55,6 +55,14 @@ function(add_unit_test root)
                             ${MAKE_UNIT_TARGET_PROPERTIES}
                           )
 
+    target_include_directories( ${test}
+                                PRIVATE
+                                  ${tts_SOURCE_DIR}/include
+                                  ${PROJECT_SOURCE_DIR}/test
+                                  ${PROJECT_SOURCE_DIR}/include
+                              )
+
+    target_link_libraries(${test} tts)
     add_dependencies(unit ${test})
 
     add_parent_target(${test})
@@ -84,12 +92,12 @@ download_project( PROJ                tts
                 )
 
 add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
-include_directories("${tts_SOURCE_DIR}/include")
-include_directories("${PROJECT_SOURCE_DIR}/test")
 
 ## Setup our tests
 add_custom_target(tests)
 add_custom_target(unit)
+add_dependencies(tests tts)
+add_dependencies(unit tts)
 add_dependencies(tests unit)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/test/)

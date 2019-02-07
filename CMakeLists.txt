@@ -22,15 +22,6 @@ if (${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
 endif()
 
 ## =================================================================================================
-## Add include directories
-## =================================================================================================
-include_directories(
-  ${PROJECT_SOURCE_DIR}/include
-  ${PROJECT_SOURCE_DIR}/test
-  ${PROJECT_SOURCE_DIR}/benchmark
-)
-
-## =================================================================================================
 ## Compute version string and mode
 ## =================================================================================================
 include(parse_revision)
