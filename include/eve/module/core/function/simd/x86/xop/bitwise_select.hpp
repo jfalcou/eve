@@ -30,7 +30,7 @@ namespace eve::detail
       using itype = as_integer_t<wide<T, N, sse_>, unsigned>;
       itype tmp =
           _mm_cmov_si128(bitwise_cast<itype>(v1), bitwise_cast<itype>(v2), bitwise_cast<itype>(v0));
-      return bitwise_cast<wide<T, N, avx_>>(tmp);
+      return bitwise_cast<wide<T, N, sse_>>(tmp);
     }
     else
     {
