@@ -19,15 +19,15 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE auto Nan(as_<T> const & = {}) noexcept
   {
-    if constexpr(std::is_same_v < float>) return  T{bitwise_cast<base>(0xFFFFFFFFU)};
-    if constexpr(std::is_same_v <double>) return  T{bitwise_cast<base>(0xFFFFFFFFFFFFFFFFULL)};
+    if constexpr(std::is_same_v<float>) return T{bitwise_cast<base>(0xFFFFFFFFU)};
+    if constexpr(std::is_same_v<double>) return T{bitwise_cast<base>(0xFFFFFFFFFFFFFFFFULL)};
     return T(0);
   }
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto Nan(as_<wide< T, N, ABI>> const & = {}) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto Nan(as_<wide<T, N, ABI>> const & = {}) noexcept
   {
-    return wide<T, N, ABI>(Nan<T>()); 
+    return wide<T, N, ABI>(Nan<T>());
   }
 }
 

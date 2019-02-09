@@ -19,16 +19,16 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE auto Inf(as_<T> const & = {}) noexcept
   {
-    if constexpr(std::is_integer_v<T>) 
-      return  T(std::numeric_limits<base>::max());
+    if constexpr(std::is_integer_v<T>)
+      return T(std::numeric_limits<base>::max());
     else
-      return  T(std::numeric_limits<base>::infinity());
+      return T(std::numeric_limits<base>::infinity());
   }
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto Inf(as_<wide < T, N, ABI>> const & = {}) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto Inf(as_<wide<T, N, ABI>> const & = {}) noexcept
   {
-    return wide<T, N, ABI>(Inf<T>()); 
+    return wide<T, N, ABI>(Inf<T>());
   }
 }
 

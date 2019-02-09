@@ -19,16 +19,16 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE auto Minf(as_<T> const & = {}) noexcept
   {
-    if constexpr(std::is_integer_v<T>) 
+    if constexpr(std::is_integer_v<T>)
       return T(std::numeric_limits<base>::min());
     else
       return T(-std::numeric_limits<base>::infinity());
   }
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto Minf(as_<wide < T, N, ABI>> const & = {}) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto Minf(as_<wide<T, N, ABI>> const & = {}) noexcept
   {
-    return wide<T, N, ABI>(Minf<T>()); 
+    return wide<T, N, ABI>(Minf<T>());
   }
 }
 
