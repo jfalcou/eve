@@ -96,8 +96,6 @@ add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
 ## Setup our tests
 add_custom_target(tests)
 add_custom_target(unit)
-add_dependencies(tests tts)
-add_dependencies(unit tts)
 add_dependencies(tests unit)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
