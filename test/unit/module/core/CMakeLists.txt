@@ -23,6 +23,11 @@ list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/popcnt"  "core" ${integral_types})
 
+add_unit_test( "core" scalar/inf.cpp )
+add_unit_test( "core" scalar/minf.cpp )
+add_unit_test( "core" scalar/nan.cpp )
+
+
 ##==================================================================================================
 ## SIMD tests
 add_unit_test( "core" simd/bitwise_cast.cpp )

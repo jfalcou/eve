@@ -11,25 +11,24 @@
 #define EVE_CONSTANT_INF_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
+#include <limits>
 
 namespace eve
 {
   template<typename T>
   EVE_FORCEINLINE auto Inf(as_<T> const & = {}) noexcept
   {
-    if constexpr(std::is_integer_v<T>)
-      return T(std::numeric_limits<base>::max());
+    using t_t = detail::value_type_t<T>;
+
+    if constexpr(std::is_integral_v<t_t>)
+      return T(std::numeric_limits<t_t>::max());
     else
-      return T(std::numeric_limits<base>::infinity());
+      return T(std::numeric_limits<t_t>::infinity());
   }
 
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto Inf(as_<wide<T, N, ABI>> const & = {}) noexcept
-  {
-    return wide<T, N, ABI>(Inf<T>());
-  }
 }
 
 #endif
