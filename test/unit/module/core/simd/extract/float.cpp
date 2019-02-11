@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXTRACT_HPP_INCLUDED
-#define EVE_FUNCTION_EXTRACT_HPP_INCLUDED
 
-#include <eve/function/scalar/extract.hpp>
-#include <eve/function/simd/extract.hpp>
-
-#endif
+using Type = float;
+#include "extract.hpp"
