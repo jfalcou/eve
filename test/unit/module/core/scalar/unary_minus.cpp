@@ -34,13 +34,13 @@ TTS_CASE("Check unary_minus behavior")
 {
   TTS_EQUAL(eve::unary_minus(std::uint8_t(1)), std::uint8_t(-1));
   TTS_EQUAL(eve::unary_minus(std::uint16_t(1)), std::uint16_t(-1));
+  TTS_EQUAL(eve::unary_minus(std::uint32_t(1)), std::uint32_t(-1));
+  TTS_EQUAL(eve::unary_minus(std::uint64_t(1)), std::uint64_t(-1));
   TTS_EQUAL(eve::unary_minus(std::int8_t(1)), std::int8_t(-1));
   TTS_EQUAL(eve::unary_minus(std::int16_t(1)), std::int16_t(-1));
+  TTS_EQUAL(eve::unary_minus(std::int32_t(1)), std::int32_t(-1));
+  TTS_EQUAL(eve::unary_minus(std::int64_t(1)), std::int64_t(-1));
 
-  TTS_EQUAL(eve::unary_minus(std::int8_t(1)), std::int8_t(-1));
-  TTS_EQUAL(eve::unary_minus(std::int16_t(1)), std::int16_t(-1));
-  TTS_EQUAL(eve::unary_minus(std::int8_t(1)), std::int8_t(-1));
-  TTS_EQUAL(eve::unary_minus(std::int16_t(1)), std::int16_t(-1));
 
   TTS_EQUAL(eve::unary_minus(-1.5f), 1.5f);
   TTS_EQUAL(eve::unary_minus(-4.753), 4.753);

@@ -29,9 +29,6 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(simd_),
                                                wide<T, N, ABI> const &v) noexcept
   {
-    //     if constexpr(std::is_floating_point_v<T>)
-    //       return eve::bitwise_xor(Mzero(as(v)), v); // TODO Is it actually better than 0 - v ?
-    //     else
     return Zero(as(v)) - v;
   }
   // -----------------------------------------------------------------------------------------------
