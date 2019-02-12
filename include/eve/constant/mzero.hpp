@@ -23,8 +23,8 @@ namespace eve
     using t_t = detail::value_type_t<T>;
 
     if constexpr(std::is_same_v<t_t, float>) return T(-0.0f);
-    if constexpr(std::is_same_v<t_t, double>) return T(-0.0);
-    return T(0);
+    else if constexpr(std::is_same_v<t_t, double>) return T(-0.0);
+    else return T(0);
   }
 }
 
