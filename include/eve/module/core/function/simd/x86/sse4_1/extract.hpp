@@ -23,7 +23,6 @@ namespace eve ::detail
                              wide<T, N, sse_> const &v0,
                              std::integral_constant<I, v> const &) noexcept
   {
-    std::cout << "latte" << std::endl; 
     using i_t =  std::integral_constant<I, v>;
     enum { value = i_t::value };
     
@@ -53,8 +52,9 @@ namespace eve ::detail
     {
       return _mm_extract_epi64(v0, value);
     }
-#endif      
-#ifdef  EVE_ARCH_IS_X86_64
+#else
+    
+  #ifdef  EVE_ARCH_IS_X86_64
     
     if constexpr(sizeof(T) == 4 && std::is_floating_point_v<T>)
     {
@@ -63,18 +63,21 @@ namespace eve ::detail
     
     if constexpr(sizeof(T) == 8)
     {
+    #if  !EVE_COMP_IS_MSVC
       if constexpr(std::is_integral_v<T>)
       {
         return _mm_cvtsi128_si64(_mm_srli_si128(v0, value * 8));
       }
-      else
+    #endif
+      if constexpr(std::is_floating_point_v<T>)
       {
         return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), value * 8)));
       }
     }
     
-#endif
+  #endif
     
+#endif      
   }
   
 }
