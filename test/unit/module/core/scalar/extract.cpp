@@ -36,11 +36,14 @@ TTS_CASE("Check extract return type")
 
 TTS_CASE("Check extract behavior")
 {
-  TTS_EQUAL(eve::extract(std::uint8_t(23), 1),
-            std::uint8_t(23));
-
-  TTS_EQUAL(eve::extract(std::uint16_t(1000), 0),
-            std::uint16_t(1000));
+  TTS_EQUAL(eve::extract(std::uint8_t(23), 1), std::uint8_t(23));
+  TTS_EQUAL(eve::extract(std::uint16_t(1000), 0), std::uint16_t(1000));
+  TTS_EQUAL(eve::extract(std::uint32_t(23), 1), std::uint32_t(23));
+  TTS_EQUAL(eve::extract(std::uint64_t(1000), 0), std::uint64_t(1000));
+  TTS_EQUAL(eve::extract(std::int8_t(23), 1), std::int8_t(23));
+  TTS_EQUAL(eve::extract(std::int16_t(1000), 0), std::int16_t(1000));
+  TTS_EQUAL(eve::extract(std::int32_t(23), 1), std::int32_t(23));
+  TTS_EQUAL(eve::extract(std::int64_t(1000), 0), std::int64_t(1000));
 
   TTS_EQUAL(eve::extract(-1.5f, 1), -1.5f);
   TTS_EQUAL(eve::extract(-4.753, 1), -4.753);
