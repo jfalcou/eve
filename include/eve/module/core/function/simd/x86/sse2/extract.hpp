@@ -36,12 +36,8 @@ namespace eve ::detail
     }
     
     if constexpr(sizeof(T) == 4 && std::is_integral_v<T>)
-    {
-      return _mm_cvtsi128_si32(_mm_srli_si128(v0, idx * 4));
-    }
-    
-#if defined(EVE_ARCH_IS_X86_64)
-    
+    { return _mm_cvtsi128_si32(_mm_srli_si128(v0, idx * 4)); } #if defined(EVE_ARCH_IS_X86_64)
+
     if constexpr(sizeof(T) == 4 && std::is_floating_point_v<T>)
     {
       return _mm_cvtss_f32(_mm_castsi128_ps(_mm_srli_si128(_mm_castps_si128(v0), i_t::value * 4)));
@@ -58,12 +54,10 @@ namespace eve ::detail
         return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), idx * 8)));
       }
     }
-#elif  defined(EVE_ARCH_IS_X86_32)
-    
-    if constexpr((sizeof(T) == 4 && std::is_floating_point_v<T>) || (sizeof(T) == 8) )
-    {
-      return v0[idx]; 
-    }
+#elif defined(EVE_ARCH_IS_X86_32)
+
+    if constexpr((sizeof(T) == 4 && std::is_floating_point_v<T>) || (sizeof(T) == 8))
+    { return v0[ idx ]; }
 #endif 
   }
   

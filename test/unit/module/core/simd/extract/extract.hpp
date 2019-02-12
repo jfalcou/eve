@@ -32,15 +32,31 @@ TTS_CASE_TPL("Check extract behavior on wide + scalar",
 
   TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type, T> lhs([](int i, int ) { return i+ 2; });
+    wide<Type, T> lhs([](int i, int) { return i + 2; });
 
-    TTS_SECTION("supports eve::extract") { TTS_EQUAL(Type(T::value+1), eve::extract(lhs, T::value-1)); }
-    TTS_SECTION("supports static eve::extract") { TTS_EQUAL(Type(T::value+1), eve::extract(lhs, std::integral_constant<int, T::value-1>())); }
+    TTS_SECTION("supports eve::extract")
+    {
+      TTS_EQUAL(Type(T::value + 1), eve::extract(lhs, T::value - 1));
+    }
+    TTS_SECTION("supports static eve::extract")
+    {
+      TTS_EQUAL(Type(T::value + 1), eve::extract(lhs, std::integral_constant<int, T::value - 1>()));
+    }
     TTS_SECTION("supports eve::extract") { TTS_EQUAL(Type(2), eve::extract(lhs, 0)); }
-    TTS_SECTION("supports static eve::extract") { TTS_EQUAL(Type(2), eve::extract(lhs, std::integral_constant<int, 0>())); }
-    TTS_SECTION("supports eve::extract") { TTS_EQUAL(Type(T::value/2+2), eve::extract(lhs,T::value/2 )); }
-    TTS_SECTION("supports static eve::extract") { TTS_EQUAL(Type(T::value/2+2), eve::extract(lhs, std::integral_constant<int, T::value/2>())); }
-    using namespace eve::literal; 
+    TTS_SECTION("supports static eve::extract")
+    {
+      TTS_EQUAL(Type(2), eve::extract(lhs, std::integral_constant<int, 0>()));
+    }
+    TTS_SECTION("supports eve::extract")
+    {
+      TTS_EQUAL(Type(T::value / 2 + 2), eve::extract(lhs, T::value / 2));
+    }
+    TTS_SECTION("supports static eve::extract")
+    {
+      TTS_EQUAL(Type(T::value / 2 + 2),
+                eve::extract(lhs, std::integral_constant<int, T::value / 2>()));
+    }
+    using namespace eve::literal;
     TTS_SECTION("supports eve::extract") { TTS_EQUAL(Type(2), eve::extract(lhs, 0_c)); }
   }
 }
