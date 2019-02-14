@@ -40,12 +40,12 @@ function(add_unit_test root)
     if (CMAKE_CROSSCOMPILING_CMD)
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}>
+                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}> --no-color --pass
               )
     else()
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND $<TARGET_FILE:${test}>
+                COMMAND $<TARGET_FILE:${test}> --no-color --pass
               )
     endif()
 
