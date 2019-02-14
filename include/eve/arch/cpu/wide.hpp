@@ -137,7 +137,7 @@ namespace eve
     wide(Generator &&g,
          std::enable_if_t<std::is_invocable_v<Generator, std::size_t, std::size_t>> * = 0) noexcept
     {
-      for(int i = 0; i < size(); ++i)
+      for(std::size_t i = 0; i < size(); ++i)
         this->operator[](i) = static_cast<Type>(std::forward<Generator>(g)(i, static_size));
     }
 
