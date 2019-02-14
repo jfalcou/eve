@@ -12,6 +12,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <type_traits>
 
