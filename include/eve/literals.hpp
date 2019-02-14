@@ -24,7 +24,7 @@ namespace eve::detail
   {
     std::uint64_t value = 0;
     char          arr[] = {c...};
-    for(int i = 0; i < sizeof...(c); ++i) value = value * 10 + (arr[ i ] - 48);
+    for(istd::size_t i = 0; i < sizeof...(c); ++i) value = value * 10 + (arr[ i ] - 48);
     return value;
   }
 }
