@@ -15,8 +15,6 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_xor.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -31,6 +29,7 @@ namespace eve::detail
   {
     return Zero(as(v)) - v;
   }
+
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
