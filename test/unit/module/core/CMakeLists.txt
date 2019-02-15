@@ -18,6 +18,8 @@ add_unit_test( "core" scalar/bitwise_notand.cpp )
 add_unit_test( "core" scalar/bitwise_andnot.cpp )
 add_unit_test( "core" scalar/bitwise_ornot.cpp )
 add_unit_test( "core" scalar/bitwise_notor.cpp )
+add_unit_test( "core" scalar/unary_plus.cpp )
+add_unit_test( "core" scalar/unary_minus.cpp )
 
 list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -26,7 +28,7 @@ list_tests("scalar/popcnt"  "core" ${integral_types})
 add_unit_test( "core" scalar/inf.cpp )
 add_unit_test( "core" scalar/minf.cpp )
 add_unit_test( "core" scalar/nan.cpp )
-
+add_unit_test( "core" scalar/mzero.cpp )
 
 ##==================================================================================================
 ## SIMD tests
@@ -42,3 +44,5 @@ list_tests("simd/bitwise_notand" "core" ${all_types})
 list_tests("simd/bitwise_andnot" "core" ${all_types})
 list_tests("simd/bitwise_ornot" "core" ${all_types})
 list_tests("simd/bitwise_notor" "core" ${all_types})
+list_tests("simd/unary_plus" "core" ${all_types})
+list_tests("simd/unary_minus" "core" ${all_types})
