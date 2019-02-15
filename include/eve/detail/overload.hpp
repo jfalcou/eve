@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -23,8 +23,8 @@
   }                                                                                                \
   namespace detail                                                                                 \
   {                                                                                                \
-    template<typename Mode>                                                                        \
-    struct callable_object<tag::TAG, Mode>                                                         \
+    template<typename Dummy>                                                                       \
+    struct callable_object<tag::TAG, void, Dummy>                                                  \
     {                                                                                              \
       using tag_type = tag::TAG;                                                                   \
       template<typename... Args>                                                                   \
@@ -32,6 +32,36 @@
           -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...))              \
       {                                                                                            \
         return TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...);                     \
+      };                                                                                           \
+                                                                                                   \
+      template<typename Option>                                                                    \
+      EVE_FORCEINLINE constexpr auto operator[](Option const &o) const noexcept                    \
+      {                                                                                            \
+        return callable_object<tag_type, Option>{o};                                               \
+      }                                                                                            \
+                                                                                                   \
+      struct negator                                                                               \
+      {                                                                                            \
+        template<typename Option>                                                                  \
+        EVE_FORCEINLINE constexpr auto operator[](Option const &o) const noexcept                  \
+        {                                                                                          \
+          return callable_object<tag_type, not_t<Option>>{o};                                      \
+        }                                                                                          \
+      };                                                                                           \
+                                                                                                   \
+      negator not_;                                                                                \
+    };                                                                                             \
+                                                                                                   \
+    template<typename Mode, typename Dummy>                                                        \
+    struct callable_object<tag::TAG, Mode, Dummy>                                                  \
+    {                                                                                              \
+      Mode state_;                                                                                 \
+      using tag_type = tag::TAG;                                                                   \
+      template<typename... Args>                                                                   \
+      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
+          -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, Mode{}, std::forward<Args>(args)...))      \
+      {                                                                                            \
+        return TAG(delay_t{}, EVE_CURRENT_API{}, state_, std::forward<Args>(args)...);             \
       };                                                                                           \
     };                                                                                             \
   }                                                                                                \
@@ -50,7 +80,14 @@ namespace eve::detail
   struct delay_t
   {
   };
-  template<typename Tag, typename Mode = void>
+
+  template<typename T>
+  struct not_t
+  {
+    T value;
+  };
+
+  template<typename Tag, typename Mode = void, typename Enabler = void>
   struct callable_object;
 }
 
