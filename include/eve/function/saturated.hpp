@@ -10,14 +10,11 @@
 #ifndef EVE_FUNCTION_SATURATED_HPP_INCLUDED
 #define EVE_FUNCTION_SATURATED_HPP_INCLUDED
 
-#include <eve/detail/decorator.hpp>
-
 namespace eve
 {
-  struct saturated_tag
-  {
-  };
-  constexpr inline detail::decorator<saturated_tag> saturated_ = {};
+  namespace decorator { struct saturated_ {}; }
+
+  constexpr inline decorator::saturated_ saturated_ = {};
 }
 
 #endif
