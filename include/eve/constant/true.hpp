@@ -10,6 +10,7 @@
 #ifndef EVE_CONSTANT_TRUE_HPP_INCLUDED
 #define EVE_CONSTANT_TRUE_HPP_INCLUDED
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
@@ -18,6 +19,8 @@
 
 namespace eve
 {
+  EVE_MAKE_CALLABLE(true_, true_);
+
   template<typename T>
   EVE_FORCEINLINE std::enable_if_t<is_logical_v<T>, as_logical_t<T>> True(as_<T> const & = {})
   {
@@ -27,6 +30,8 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE std::enable_if_t<!is_logical_v<T>, as_logical_t<T>>
                   True(as_<T> const & = {}) = delete;
+
+  EVE_MAKE_NAMED_CONSTANT(true_, True);
 }
 
 #endif

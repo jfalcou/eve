@@ -10,6 +10,7 @@
 #ifndef EVE_CONSTANT_ALLBITS_HPP_INCLUDED
 #define EVE_CONSTANT_ALLBITS_HPP_INCLUDED
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/bitwise_cast.hpp>
@@ -18,6 +19,8 @@
 
 namespace eve
 {
+  EVE_MAKE_CALLABLE(allbits_, allbits_);
+
   template<typename T>
   EVE_FORCEINLINE auto Allbits(as_<T> const & = {})
   {
@@ -30,6 +33,8 @@ namespace eve
     else
       return T(bitwise_cast<t_t>(i_t(mask)));
   }
+
+  EVE_MAKE_NAMED_CONSTANT(allbits_, Allbits);
 }
 
 #endif
