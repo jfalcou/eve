@@ -10,6 +10,7 @@
 #ifndef EVE_CONSTANT_INF_HPP_INCLUDED
 #define EVE_CONSTANT_INF_HPP_INCLUDED
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
@@ -18,6 +19,8 @@
 
 namespace eve
 {
+  EVE_MAKE_CALLABLE(inf_, inf_);
+
   template<typename T>
   EVE_FORCEINLINE auto Inf(as_<T> const & = {}) noexcept
   {
@@ -29,6 +32,7 @@ namespace eve
       return T(std::numeric_limits<t_t>::infinity());
   }
 
+  EVE_MAKE_NAMED_CONSTANT(inf_, Inf);
 }
 
 #endif

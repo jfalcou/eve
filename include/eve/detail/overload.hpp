@@ -74,6 +74,18 @@
 // Flag a function to support delayed calls on given architecture
 #define EVE_SUPPORTS(ARCH) delay_t const &, ARCH const &
 
+// Create named object for consatnt
+#define EVE_MAKE_NAMED_CONSTANT(TAG, FUNC)                                                         \
+namespace detail                                                                                   \
+{                                                                                                  \
+  template<typename T>                                                                             \
+  EVE_FORCEINLINE constexpr auto TAG(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept                  \
+  {                                                                                                \
+    return FUNC<T>();                                                                              \
+  }                                                                                                \
+}                                                                                                  \
+/**/
+
 // basic type to support delayed calls
 namespace eve::detail
 {
