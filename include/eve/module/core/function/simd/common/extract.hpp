@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -11,14 +11,8 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_EXTRACT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/alias.hpp>
-#include <eve/detail/compiler.hpp>
-#include <eve/function/store.hpp>
 #include <eve/forward.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
@@ -27,15 +21,8 @@ namespace eve::detail
                              wide<T, N, ABI> const &v0,
                              U const &i) noexcept
   {
-    using wide_t =  wide<T, N, ABI>; 
-    using result_t = T;
-    result_t data[wide_t::static_size];
-    eve::store(v0, &data[0]);
-    return data[i];
+    return v0[i];
   }
-
-
 }
-
 
 #endif
