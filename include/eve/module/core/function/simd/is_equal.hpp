@@ -22,13 +22,13 @@
 #    include <eve/module/core/function/simd/x86/sse4_1/is_equal.hpp>
 #  endif
 
-// #  if EVE_HW_X86 >= EVE_AVX_VERSION
-// #    include <eve/module/core/function/simd/x86/avx/is_equal.hpp>
-// #  endif
+#  if EVE_HW_X86 >= EVE_AVX_VERSION
+#    include <eve/module/core/function/simd/x86/avx/is_equal.hpp>
+#  endif
 
-// #  if EVE_HW_X86 >= EVE_AVX2_VERSION
-// #    include <eve/module/core/function/simd/x86/avx2/is_equal.hpp>
-// #  endif
+#  if EVE_HW_X86 >= EVE_AVX2_VERSION
+#    include <eve/module/core/function/simd/x86/avx2/is_equal.hpp>
+#  endif
 
  #endif
 
