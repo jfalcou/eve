@@ -16,32 +16,13 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // double
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, avx_> add_(EVE_SUPPORTS(avx_),
-                                             wide<double, N, avx_> const &v0,
-                                             wide<double, N, avx_> const &v1) noexcept
-  {
-    return _mm256_add_pd(v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template<typename N>
-  EVE_FORCEINLINE wide<float, N, avx_>
-                  add_(EVE_SUPPORTS(avx_), wide<float, N, avx_> const &v0, wide<float, N, avx_> const &v1) noexcept
-  {
-    return _mm256_add_ps(v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // integers
-  template<typename T, typename N, typename = std::enable_if_t<std::is_integral_v<T>>>
-  EVE_FORCEINLINE auto
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, avx_>
   add_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
   {
-    return aggregate(eve::add, v0, v1);
+    if constexpr(std::is_same_v<T, float>)  return _mm256_add_ps(v0, v1);
+    if constexpr(std::is_same_v<T, double>) return _mm256_add_pd(v0, v1);
+    if constexpr(std::is_integral_v<T>)     return aggregate(eve::add, v0, v1);
   }
 }
 

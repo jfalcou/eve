@@ -16,18 +16,16 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename = std::enable_if_t<std::is_integral_v<T>>>
+  template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_>
-                  sub_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
+  sub_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(sizeof(T) == 1)
-      return _mm256_sub_epi8(v0, v1);
-    else if constexpr(sizeof(T) == 2)
-      return _mm256_sub_epi16(v0, v1);
-    else if constexpr(sizeof(T) == 4)
-      return _mm256_sub_epi32(v0, v1);
-    else
-      return _mm256_sub_epi64(v0, v1);
+    if constexpr(std::is_same_v<T, float>)  return _mm256_sub_ps(v0, v1);
+    if constexpr(std::is_same_v<T, double>) return _mm256_sub_pd(v0, v1);
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 1) return _mm256_sub_epi8(v0, v1);
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 2) return _mm256_sub_epi16(v0, v1);
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 4) return _mm256_sub_epi32(v0, v1);
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 8) return _mm256_sub_epi64(v0, v1);
   }
 }
 
