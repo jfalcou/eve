@@ -12,75 +12,55 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/function/simd/x86/sse2/make.hpp>
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // double
-  template<typename N>
-  EVE_FORCEINLINE auto
-  combine(sse2_ const &, wide<double, N, sse_> const &l, wide<double, N, sse_> const &h) noexcept
-  {
-    using that_t = wide<double, typename N::combined_type>;
-
-    if constexpr(N::value == 2)
-      return that_t(typename that_t::storage_type{l, h});
-    else
-      return that_t{_mm_shuffle_pd(l, h, 0)};
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template<typename N>
-  EVE_FORCEINLINE auto
-  combine(sse2_ const &, wide<float, N, sse_> const &l, wide<float, N, sse_> const &h) noexcept
-  {
-    using that_t = wide<float, typename N::combined_type>;
-
-    if constexpr(N::value == 4) return that_t(typename that_t::storage_type{l, h});
-    if constexpr(N::value == 2) return that_t{_mm_shuffle_ps(l, h, 0x44)};
-
-    if constexpr(N::value == 1)
-    {
-      that_t that = l.storage();
-      that[ 1 ]   = h[ 0 ];
-      return that;
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // integers
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  combine(sse2_ const &,
-          wide<T, N, sse_> const &l,
-          wide<T, N, sse_> const &h) noexcept requires(wide<T, typename N::combined_type>,
-                                                       Integral<T>)
-
+  EVE_FORCEINLINE typename wide<T, typename N::combined_type>::storage_type
+  combine(sse2_ const &, wide<T, N, sse_> const &l, wide<T, N, sse_> const &h) noexcept
   {
-    using that_t      = wide<T, typename N::combined_type>;
-    constexpr auto sz = that_t::static_size;
+    using t_t = wide<T, typename N::combined_type>;
+    using s_t = typename t_t::storage_type;
 
-    if constexpr(sz * sizeof(T) == 2 * limits<sse2_>::bytes)
-      return that_t(typename that_t::storage_type{l, h});
+    // If we aggregate two fully sized wide, just coalesce inside new storage
+    if constexpr(N::value * sizeof(T) == limits<eve::sse2_>::bytes) return s_t{l, h};
 
-    else if constexpr(sz * sizeof(T) == limits<sse2_>::bytes)
-      return that_t(_mm_castps_si128(
-          _mm_shuffle_ps(_mm_castsi128_ps(l.storage()), _mm_castsi128_ps(h.storage()), 0x44)));
+    // Handle half-storage
+    if constexpr(2 * N::value * sizeof(T) == limits<eve::sse2_>::bytes)
+    {
+      if constexpr(std::is_same_v<T, double>) return _mm_shuffle_pd(l, h, 0);
+      if constexpr(std::is_same_v<T, float>) return _mm_shuffle_ps(l, h, 0x44);
+      if constexpr(std::is_integral_v<T>)
+        return _mm_castps_si128(
+            _mm_shuffle_ps(_mm_castsi128_ps(l.storage()), _mm_castsi128_ps(h.storage()), 0x44));
+    }
 
-    else if constexpr(2 * sz * sizeof(T) == limits<sse2_>::bytes)
-      return that_t(_mm_shuffle_epi32(
-          _mm_castps_si128(
-              _mm_shuffle_ps(_mm_castsi128_ps(l.storage()), _mm_castsi128_ps(h.storage()), 0x44)),
-          0x88));
+    // Handle quarter-storage
+    if constexpr(4 * N::value * sizeof(T) == limits<eve::sse2_>::bytes)
+    {
+      if constexpr(std::is_same_v<T, float>)
+      {
+        t_t that  = l.storage();
+        that[ 1 ] = h[ 0 ];
+        return that.storage();
+      }
 
-    else if constexpr(sz == 4)
-      return that_t(l[ 0 ], l[ 1 ], h[ 0 ], h[ 1 ]);
+      if constexpr(std::is_integral_v<T>)
+        return _mm_shuffle_epi32(
+            _mm_castps_si128(
+                _mm_shuffle_ps(_mm_castsi128_ps(l.storage()), _mm_castsi128_ps(h.storage()), 0x44)),
+            0x88);
+    }
 
-    else if constexpr(sz == 2)
-      return that_t(l[ 0 ], h[ 0 ]);
+    // Handle 1/8th and 1/16th -storage - Those cases are obviously integrals
+    if constexpr(std::is_integral_v<T> && ((sizeof(T) != 8) && (N::value == 2)))
+      return make(as_<T>{}, eve::sse_{}, l[ 0 ], l[ 1 ], h[ 0 ], h[ 1 ]);
+
+    if constexpr(std::is_integral_v<T> && (sizeof(T) != 8) && (N::value == 1))
+      return make(as_<T>{}, eve::sse_{}, l[ 0 ], h[ 0 ]);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -92,7 +72,11 @@ namespace eve::detail
           wide<logical<T>, N, sse_> const &h) noexcept
   {
     using that_t = wide<logical<T>, typename N::combined_type>;
-    return that_t(typename that_t::storage_type{l, h});
+
+    if constexpr(N::value * sizeof(T) == limits<eve::sse2_>::bytes)
+      return typename that_t::storage_type{l, h};
+    else
+      return combine(sse2_{}, wide<T, N, sse_>(l.storage()), wide<T, N, sse_>(h.storage()));
   }
 }
 

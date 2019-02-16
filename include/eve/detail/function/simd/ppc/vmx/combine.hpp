@@ -23,7 +23,7 @@ namespace eve::detail
     using that_t = wide<T, typename N::combined_type>;
 
     if constexpr(N::value * sizeof(T) == limits<eve::vmx_>::bytes)
-    { return that_t(typename that_t::storage_type{l, h}); }
+      return typename that_t::storage_type{l, h};
     else
     {
       auto mask = [&](auto... I) {

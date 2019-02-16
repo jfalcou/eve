@@ -62,6 +62,15 @@ namespace eve::detail
       return that_t(typename that_t::storage_type(that));
     }
   }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto combine(neon128_ const &,
+                               wide<logical<T>, N, neon64_> const &l,
+                               wide<logical<T>, N, neon64_> const &h) noexcept
+  {
+    using that_t = wide<as_integer_t<T, unsigned>, N>;
+    return combine(neon128_{}, that_t(l.storage()), that_t(h.storage()));
+  }
 }
 
 #endif

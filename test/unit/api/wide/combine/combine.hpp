@@ -13,6 +13,7 @@
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
+#include <eve/logical.hpp>
 #include <eve/function/combine.hpp>
 
 using eve::fixed;
@@ -42,6 +43,26 @@ TTS_CASE_TPL("Check combining for arithmetic wide",
   wide<Type, typename T::combined_type> ref([](auto i, auto) { return 1 + i; });
 
   TTS_EQUAL((wide<Type, typename T::combined_type>(low, high)), ref);
+  TTS_EQUAL((eve::combine(low, high)), ref);
+}
+
+TTS_CASE_TPL("Check combining for logical wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+  using eve::logical;
+
+  wide<logical<Type>, T>                         low ([](int i, int)    { return i%2 < 2; });
+  wide<logical<Type>, T>                         high([](int i, int)    { return i%2 > 3; });
+  wide<logical<Type>, typename T::combined_type> ref ([](int i, int c)  { return i < c/2; });
+
+  TTS_EQUAL((wide<logical<Type>, typename T::combined_type>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);
 }
 
