@@ -1,3 +1,5 @@
+.. _function-add:
+
 add
 ===
 

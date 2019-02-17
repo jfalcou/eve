@@ -1,3 +1,5 @@
+.. _function-add:
+
 add
 ===
 
@@ -37,4 +39,4 @@ Possible output
 .. code-block:: c++
 
    add(3.f, 5.5f) = 8.5
-   add(3_wf, {1,2,3,4.5}) = {4,5,6,7.5}
+   add(3_wf, {1,2,3,4}) = {4,5,6,7}
