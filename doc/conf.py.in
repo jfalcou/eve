@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'eve'
-copyright = u'2018, Joel Falcou'
-author = u'Joel Falcou'
+copyright = u'2019, Joel Falcou, Jean-Thierry Lapresté'
+author = u'Joel Falcou, Jean-Thierry Lapresté'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -89,7 +89,12 @@ html_theme = '@SPHINX_THEME@'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {@SPHINX_OPTIONS@}
+html_theme_options = {
+#@SPHINX_OPTIONS@
+                       'prev_next_buttons_location': 'bottom',
+                       'body_max_width': '5%'
+                     }
+
 html_logo = '@CMAKE_CURRENT_SOURCE_DIR@/_static/logo.png'
 
 # Add any paths that contain custom static files (such as style sheets) here,
