@@ -52,8 +52,8 @@ namespace eve::detail
   {
     using t_t = wide<logical<T>, N, ABI>;
     using c_t = wide<T, N>;
-    return bitwise_cast<t_t>(bitwise_not(bitwise_xor(bitwise_cast<c_t>(v0),bitwise_cast<c_t>(v1))));
-    
+    return bitwise_cast<t_t>(
+        bitwise_not(bitwise_xor(bitwise_cast<c_t>(v0), bitwise_cast<c_t>(v1))));
   }
 }
 
