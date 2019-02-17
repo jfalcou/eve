@@ -14,6 +14,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/is_bitwise_logical.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_not.hpp> 
 #include <eve/function/bitwise_xor.hpp>
@@ -50,9 +51,16 @@ namespace eve::detail
                                  wide<logical<T>, N, ABI> const &v0,
                                  wide<logical<T>, N, ABI> const &v1) noexcept
   {
-    using t_t = wide<logical<T>, N, ABI>;
-    using c_t = wide<T, N>;
-    return bitwise_cast<t_t>(bitwise_not(bitwise_xor(bitwise_cast<c_t>(v0),bitwise_cast<c_t>(v1))));
+    if constexpr(is_bitwise_logical_v<T>)
+    {
+      using t_t = wide<logical<T>, N, ABI>;
+      using c_t = wide<T, N>;
+      return bitwise_cast<t_t>(bitwise_not(bitwise_xor(bitwise_cast<c_t>(v0),bitwise_cast<c_t>(v1))));
+    }
+//     else
+//     {
+//       return logical_not(logical_xor(v0, v1));
+//     }    using t_t = wide<logical<T>, N, ABI>;
   }
 }
 
