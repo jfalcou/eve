@@ -48,54 +48,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmp_pd(v0, v1, _CMP_EQ_OQ));
     if constexpr( std::is_integral_v<T>   ) return map(eve::is_equal, v0, v1);  
   }
-  
-  // -----------------------------------------------------------------------------------------------
-  // float
-//   template < typename N > 
-//   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
-//                                  wide<float, N, avx_> const &v0,
-//                                  wide<float, N, avx_> const &v1) noexcept
-//   {
-//     using t_t = wide<float, N, avx_>; 
-//     return as_logical_t<t_t>(_mm256_cmp_ps(v0, v1, _CMP_EQ_OQ));
-//   }
- 
- //  template < typename N > 
-//   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
-//                                  wide<float, N, sse_> const &v0,
-//                                  wide<float, N, sse_> const &v1) noexcept
-//   {
-//     using t_t = wide<float, N, sse_>; 
-//     return as_logical_t<t_t>(_mm_cmp_ps(v0, v1, _CMP_EQ_OQ));
-//   }
 
-// -----------------------------------------------------------------------------------------------
-// double
-//   template < typename N > 
-//   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
-//                                  wide<double, N, avx_> const &v0,
-//                                  wide<double, N, avx_> const &v1) noexcept
-//   {
-//     using t_t = wide<double, N , avx_>; 
-//     return as_logical_t<t_t>(_mm256_cmp_pd(v0, v1, _CMP_EQ_OQ));
-//   }
-  
-//   template < typename N > 
-//   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
-//                                  wide<double, N, sse_> const &v0,
-//                                  wide<double, N, sse_> const &v1) noexcept
-//   {
-//     using t_t = wide<double, N , sse_>; 
-//     return as_logical_t<t_t>(_mm_cmp_pd(v0, v1, _CMP_EQ_OQ));
-//   }
-
-//   template < typename T,  typename N > 
-//   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
-//                                  wide<T, N, sse_> const &v0,
-//                                  wide<T, N, sse_> const &v1) noexcept requires(as_logical_t<wide<T, N, sse_> >, Integral < T > )
-//   {
-//      return aggregate(eve::is_equal, v0, v1);  
-//   }
 }
 
 #endif
