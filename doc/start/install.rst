@@ -1,0 +1,12 @@
+Installation
+============
+
+Dependencies
+------------
+
+Linux
+-----
+
+Windows
+-------
+

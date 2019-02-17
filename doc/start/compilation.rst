@@ -1,0 +1,11 @@
+Compilation
+===========
+
+Linux
+~~~~~
+
+Windows
+~~~~~~~
+
+CMake
+~~~~~
