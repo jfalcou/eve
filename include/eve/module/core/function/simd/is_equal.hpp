@@ -30,18 +30,18 @@
 #    include <eve/module/core/function/simd/x86/avx2/is_equal.hpp>
 #  endif
 
- #endif
+#endif
 
-// #if defined(EVE_HW_POWERPC)
-// #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-// #    include <eve/module/core/function/simd/ppc/vmx/is_equal.hpp>
-// #  endif
-// #endif
+#if defined(EVE_HW_POWERPC)
+#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
+#    include <eve/module/core/function/simd/ppc/vmx/is_equal.hpp>
+#  endif
+#endif
 
-// #if defined(EVE_HW_ARM)
-// #  if EVE_HW_ARM >= EVE_NEON_VERSION
-// #    include <eve/module/core/function/simd/arm/neon/is_equal.hpp>
-// #  endif
-// #endif
+#if defined(EVE_HW_ARM)
+#  if EVE_HW_ARM >= EVE_NEON_VERSION
+#    include <eve/module/core/function/simd/arm/neon/is_equal.hpp>
+#  endif
+#endif
 
 #endif

@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_not.hpp> 
+#include <eve/function/bitwise_not.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
@@ -32,9 +32,9 @@ namespace eve::detail
   {
     return aggregate(eve::is_equal, v0, v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
-  // Emulation 
+  // Emulation
   template<typename T, typename N>
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
                                  wide<T, N, emulated_> const &v0,
@@ -42,10 +42,10 @@ namespace eve::detail
   {
     return map(eve::is_equal, v0, v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
-  // logical 
-  template<typename T, typename N,  typename ABI>
+  // logical
+  template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
                                  wide<logical<T>, N, ABI> const &v0,
                                  wide<logical<T>, N, ABI> const &v1) noexcept
@@ -61,11 +61,10 @@ namespace eve
 {
   // -----------------------------------------------------------------------------------------------
   // operator ==
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto eve::operator==(  wide<T, N, ABI> const &v0,
-                                         wide<T, N, ABI> const &v1) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator==(wide<T, N, ABI> const &v0, wide<T, N, ABI> const &v1) noexcept
   {
-    return eve::is_equal(v0, v1); 
+    return eve::is_equal(v0, v1);
   }
 }
 
