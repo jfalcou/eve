@@ -7,10 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_EQUAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_EQUAL_HPP_INCLUDED
 
-#include <eve/function/scalar/is_equal.hpp>
-#include <eve/function/simd/is_equal.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::int8_t;
+#include "is_equal.hpp"
