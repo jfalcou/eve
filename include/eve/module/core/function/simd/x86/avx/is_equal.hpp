@@ -20,9 +20,8 @@
 
 namespace eve::detail
 {
-
-// -----------------------------------------------------------------------------------------------
-// avx_
+  // -----------------------------------------------------------------------------------------------
+  // avx_
   template < typename T, typename N > 
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
                                  wide<T, N, avx_> const &v0,
@@ -32,11 +31,11 @@ namespace eve::detail
     using l_t = as_logical_t<t_t>; 
     if constexpr(std::is_same_v<T, float> ) return l_t(_mm256_cmp_ps(v0, v1, _CMP_EQ_OQ));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_EQ_OQ));
-    if constexpr( std::is_integral_v<T>   ) return aggregate(eve::is_equal, v0, v1);  
+    if constexpr(std::is_integral_v<T>) return aggregate(eve::is_equal, v0, v1);
   }
- 
-// -----------------------------------------------------------------------------------------------
-// sse__
+
+  // -----------------------------------------------------------------------------------------------
+  // sse__
   template < typename T,  typename N > 
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(avx_),
                                  wide<T, N, sse_> const &v0,

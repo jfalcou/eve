@@ -58,15 +58,15 @@ namespace eve::detail
 }
 
 namespace eve
-{  // -----------------------------------------------------------------------------------------------
-  // operator ==  
+{
+  // -----------------------------------------------------------------------------------------------
+  // operator ==
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto eve::operator==(  wide<T, N, ABI> const &v0,
                                          wide<T, N, ABI> const &v1) noexcept
   {
     return eve::is_equal(v0, v1); 
   }
-    
 }
 
 #endif

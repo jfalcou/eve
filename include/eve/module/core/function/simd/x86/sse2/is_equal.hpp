@@ -21,44 +21,25 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // float
-  template < typename N > 
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(sse2_),
-                                 wide<float, N, sse_> const &v0,
-                                 wide<float, N, sse_> const &v1) noexcept
-  {
-    using t_t = wide<float, N, sse_>; 
-    return as_logical_t<t_t>(_mm_cmpeq_ps(v0,v1));
-  }
- 
-  // -----------------------------------------------------------------------------------------------
-  // double
-  template < typename N > 
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(sse2_),
-                                 wide<double, N, sse_> const &v0,
-                                 wide<double, N, sse_> const &v1) noexcept
-  {
-    using t_t = wide<double, N , sse_>; 
-    return as_logical_t<t_t>(_mm_cmpeq_pd(v0,v1));
-  }
-
-    
-  // -----------------------------------------------------------------------------------------------
-  // integers
+  // sse2
   template < typename T,  typename N> 
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(sse2_),
                                  wide<T, N, sse_> const &v0,
                                  wide<T, N, sse_> const &v1) noexcept
   {
-    using t_t = wide<T, N ,sse_>; 
-    if constexpr(sizeof(T) == 1)
-      return as_logical_t<t_t>(_mm_cmpeq_epi8(v0,v1));
-    else if  constexpr(sizeof(T) == 2)
-      return as_logical_t<t_t>(_mm_cmpeq_epi16(v0,v1));
-    else if  constexpr(sizeof(T) == 4)
-      return as_logical_t<t_t>(_mm_cmpeq_epi32(v0,v1));
-    else if  constexpr(sizeof(T) == 8)
-      return map(eve::is_equal, v0, v1); 
+    using t_t = wide<T, N, sse_>;
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      if constexpr(std::is_same_v<T, float>) return as_logical_t<t_t>(_mm_cmpeq_ps(v0, v1));
+      if constexpr(std::is_same_v<T, double>) return as_logical_t<t_t>(_mm_cmpeq_pd(v0, v1));
+    }
+    else
+    {
+      if constexpr(sizeof(T) == 1) return as_logical_t<t_t>(_mm_cmpeq_epi8(v0, v1));
+      if constexpr(sizeof(T) == 2) return as_logical_t<t_t>(_mm_cmpeq_epi16(v0, v1));
+      if constexpr(sizeof(T) == 4) return as_logical_t<t_t>(_mm_cmpeq_epi32(v0, v1));
+      if constexpr(sizeof(T) == 8) return map(eve::is_equal, v0, v1);
+    }
   }
  
 }
