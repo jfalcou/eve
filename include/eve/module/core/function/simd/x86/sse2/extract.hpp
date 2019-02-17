@@ -14,60 +14,68 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/architecture.hpp>
+#include <eve/function/bitwise_cast.hpp>
+#include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve ::detail
 {
-  template<typename T, typename N, typename I, auto val>
+  template<typename T, typename N,typename I, auto V>
+  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(sse2_),
+                                        wide<logical<T>, N, sse_> const &v0,
+                                        std::integral_constant<I, V> const& u) noexcept
+  {
+    return bitwise_cast<logical<T>>( extract( bitwise_cast<wide<T,N>>(v0), u) );
+  }
+
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse2_),
                              wide<T, N, sse_> const &v0,
-                             std::integral_constant<I, val> const &) noexcept
+                             std::integral_constant<I, V> const &) noexcept
   {
-    using i_t =  std::integral_constant<I, val>;
-    enum { idx = i_t::value };
+    constexpr auto qv = 4 * V;
+    constexpr auto ov = 8 * V;
+
+    static_assert((V < wide<T, N, sse_>::static_size),
+                  "[EVE} - extract : Index is out of bound for current architecture");
 
     if constexpr(sizeof(T) == 1)
     {
-      int v = _mm_extract_epi16(v0, idx / 2);
-      return (v >> (8*(idx % 2)))& 0xFF;
+      int v = _mm_extract_epi16(v0, V / 2);
+      return static_cast<T>((v >> (8 * (V % 2))) & 0xFF);
     }
 
-    if constexpr(sizeof(T) == 2)
+    if constexpr(sizeof(T) == 2) { return static_cast<T>(_mm_extract_epi16(v0, V)); }
+
+    if constexpr(sizeof(T) == 4)
     {
-      return static_cast<T>(_mm_extract_epi16(v0, idx));
-    }
+      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si32(_mm_srli_si128(v0, qv));
 
-    if constexpr(sizeof(T) == 4 && std::is_integral_v<T>)
-    {
-      return _mm_cvtsi128_si32(_mm_srli_si128(v0, idx * 4));
-    }
-
+      if constexpr(std::is_floating_point_v<T>)
+      {
 #if defined(EVE_ARCH_IS_X86_64)
-
-    if constexpr(sizeof(T) == 4 && std::is_floating_point_v<T>)
-    {
-      return _mm_cvtss_f32(_mm_castsi128_ps(_mm_srli_si128(_mm_castps_si128(v0), i_t::value * 4)));
+        return _mm_cvtss_f32(_mm_castsi128_ps(_mm_srli_si128(_mm_castps_si128(v0), qv)));
+#else
+        return v0[ V ];
+#endif
+      }
     }
 
     if constexpr(sizeof(T) == 8)
     {
-      if constexpr(std::is_integral_v<T>)
+      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si64(_mm_srli_si128(v0, ov));
+
+      if constexpr(std::is_floating_point_v<T>)
       {
-        return _mm_cvtsi128_si64(_mm_srli_si128(v0, idx * 8));
-      }
-      else
-      {
-        return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), idx * 8)));
+#if defined(EVE_ARCH_IS_X86_64)
+        return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), ov)));
+#else
+        return v0[ V ];
+#endif
       }
     }
-#elif defined(EVE_ARCH_IS_X86_32)
-
-    if constexpr((sizeof(T) == 4 && std::is_floating_point_v<T>) || (sizeof(T) == 8))
-    { return v0[ idx ]; }
-#endif
   }
-
 }
 
 #endif

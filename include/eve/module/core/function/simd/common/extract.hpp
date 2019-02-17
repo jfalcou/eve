@@ -1,6 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
+  Copyright 2019 Jean-Thierry LAPRESTE
   Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -16,12 +17,12 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI, typename U>
+  template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(simd_),
                              wide<T, N, ABI> const &v0,
-                             U const &i) noexcept
+                             std::ptrdiff_t         i) noexcept
   {
-    return v0[i];
+    return v0[ i ];
   }
 }
 

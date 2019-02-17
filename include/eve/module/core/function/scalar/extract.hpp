@@ -18,9 +18,9 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr T extract_(EVE_SUPPORTS(cpu_), T const &a, U const&) noexcept
+  EVE_FORCEINLINE constexpr T extract_(EVE_SUPPORTS(cpu_), T const &a, std::ptrdiff_t i) noexcept
   {
-     return a;
+    return a;
   }
 }
 

@@ -24,16 +24,10 @@
 
 #endif
 
-// #if defined(EVE_HW_POWERPC)
-// #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-// #    include <eve/module/core/function/simd/ppc/vmx/extract.hpp>
-// #  endif
-// #endif
-
-// #if defined(EVE_HW_ARM)
-// #  if EVE_HW_ARM >= EVE_NEON_VERSION
-// #    include <eve/module/core/function/simd/arm/neon/extract.hpp>
-// #  endif
-// #endif
+#if defined(EVE_HW_ARM)
+#  if EVE_HW_ARM >= EVE_NEON_VERSION
+#    include <eve/module/core/function/simd/arm/neon/extract.hpp>
+#  endif
+#endif
 
 #endif
