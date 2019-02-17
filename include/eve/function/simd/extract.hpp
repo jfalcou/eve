@@ -7,10 +7,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXTRACT_HPP_INCLUDED
-#define EVE_FUNCTION_EXTRACT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_EXTRACT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_EXTRACT_HPP_INCLUDED
 
 #include <eve/function/scalar/extract.hpp>
-#include <eve/function/simd/extract.hpp>
+#include <eve/module/core/function/simd/extract.hpp>
 
 #endif
