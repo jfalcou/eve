@@ -11,3 +11,4 @@
 ## scalar tests
 add_unit_test( "doc.function.operators" add.cpp )
 add_unit_test( "doc.function.operators" sub.cpp )
+add_unit_test( "doc.function.bitwise" bitwise_and.cpp )

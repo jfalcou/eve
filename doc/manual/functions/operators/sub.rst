@@ -22,7 +22,7 @@ Parameters
 Return value
 ------------
 
-The difference between  ``arg0`` and ``arg1`` for every element of each parameters.
+The difference between  ``lhs`` and ``rhs`` for every elements of each parameter.
 
 Options
 -------
