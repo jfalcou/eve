@@ -21,7 +21,7 @@ namespace eve
   template<>
   struct limits<eve::avx_>
   {
-    using parent = eve::sse2_;
+    using parent = eve::sse4_2_;
 
     template<typename Sign>
     using largest_integer =
@@ -36,6 +36,7 @@ namespace eve
 
     static constexpr std::size_t bits  = 256;
     static constexpr std::size_t bytes = 32;
+    static constexpr bool is_bitwise_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
