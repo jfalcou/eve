@@ -44,10 +44,7 @@ TTS_CASE("Check is_not_equal behavior")
   TTS_EQUAL(eve::is_not_equal(-1.5f, 2.0f),       true);
   TTS_EQUAL(eve::is_not_equal(-4.753,-4.753), false);
 }
- 
- 
- 
- 
+
  
  
  
