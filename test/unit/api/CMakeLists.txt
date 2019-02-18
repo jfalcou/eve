@@ -20,6 +20,10 @@ list_tests("function/simd/load"    "api" ${all_types})
 list_tests("function/simd/store"   "api" ${all_types})
 
 ##==================================================================================================
+## Constant tests
+add_unit_test( "api" constant/constant.cpp )
+
+##==================================================================================================
 ## wide API tests
 list_tests("wide/combine"   "api" ${all_types})
 list_tests("wide/decrement" "api" ${all_types})
