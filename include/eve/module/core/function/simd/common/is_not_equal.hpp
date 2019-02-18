@@ -17,6 +17,7 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_xor.hpp>
+#include <eve/function/logical_not.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
