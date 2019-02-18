@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Vectorized &mdash; eve  - (internal version) documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="IEEEValue" href="ieeevalue.html" />
+    <link rel="prev" title="Vectorizable" href="vectorizable.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> eve
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../start/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../start/compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../start/first.html">Your First SIMD code</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="general.html">Concepts</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="vectorizable.html">Vectorizable</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Vectorized</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ieeevalue.html">IEEEValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integervalue.html">IntegerValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="value.html">Value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logical.html">Logical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logicalvalue.html">LogicalValue</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../functions/general.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants/general.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">eve</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../main.html">Reference Documentation</a> &raquo;</li>
+        
+          <li><a href="general.html">Concepts</a> &raquo;</li>
+        
+      <li>Vectorized</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/manual/concepts/vectorized.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vectorized">
+<span id="concept-vectorized"></span><h1>Vectorized<a class="headerlink" href="#vectorized" title="Permalink to this headline">¶</a></h1>
+<p>A type is <a class="reference internal" href="#concept-vectorized"><span class="std std-ref">Vectorized</span></a> if it represents a type which operations are performed in accordance
+with the SIMD execution model.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#concept-vectorized"><span class="std std-ref">Vectorized</span></a> types satisfy <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/DefaultConstructible">DefaultConstructible</a>, <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/Destructible">Destructible</a>, <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/CopyConstructible">CopyConstructible</a>,
+<a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/CopyAssignable">CopyAssignable</a>, <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/MoveConstructible">MoveConstructible</a> and <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/MoveAssignable">MoveAssignable</a> while lvalues of <a class="reference internal" href="#concept-vectorized"><span class="std std-ref">Vectorized</span></a>
+types satisfy <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/Swappable">Swappable</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><a class="reference internal" href="#concept-vectorized"><span class="std std-ref">Vectorized</span></a> does not refine <a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/EqualityComparable">EqualityComparable</a> (and hence Regular)
+because <code class="docutils literal notranslate"><span class="pre">operator==</span></code> returns a <a class="reference internal" href="logicalvalue.html#concept-logicalvalue"><span class="std std-ref">LogicalValue</span></a> type instead of straight
+<code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+</div>
+<p>For any <a class="reference internal" href="#concept-vectorized"><span class="std std-ref">Vectorized</span></a> type <code class="docutils literal notranslate"><span class="pre">V</span></code>, the following expressions are valid:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="32%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Expression</th>
+<th class="head">Type</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">V::storage_type</span></code></td>
+<td>native storage type</td>
+<td>architecture dependent</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">V::value_type</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">T</span></code></td>
+<td>satisfies <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">V::reference</span></code></td>
+<td>reference to <code class="docutils literal notranslate"><span class="pre">T</span></code></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">V::const_reference</span></code></td>
+<td>reference to <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">const</span></code></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">V::iterator</span></code></td>
+<td>iterator pointing to <code class="docutils literal notranslate"><span class="pre">T</span></code></td>
+<td><a class="reference external" href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">RandomAccessIterator</a> convertible to <code class="docutils literal notranslate"><span class="pre">const_iterator</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">V::const_iterator</span></code></td>
+<td>const iterator pointing to <code class="docutils literal notranslate"><span class="pre">T</span></code></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">V::difference_type</span></code></td>
+<td>signed integer type</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">V::size_type</span></code></td>
+<td>signed integer type</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">V::static_alignment</span></code></td>
+<td>constant expression of unsigned integer type</td>
+<td>The value of the preferred alignment for <code class="docutils literal notranslate"><span class="pre">V</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">V::static_size</span></code></td>
+<td>constant expression of unsigned integer type</td>
+<td>The number of <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> stored in an instance of <code class="docutils literal notranslate"><span class="pre">V</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>For any given <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> of type <code class="docutils literal notranslate"><span class="pre">V</span></code>, the following expressions are valid:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="23%" />
+<col width="42%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Expression</th>
+<th class="head">Return type</th>
+<th class="head">Semantics</th>
+<th class="head">Complexity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">std::begin(a)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(const_)iterator</span></code></td>
+<td>Iterator to the first element of <code class="docutils literal notranslate"><span class="pre">a</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">std::end(a)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(const_)iterator</span></code></td>
+<td>Iterator to one past the last element of <code class="docutils literal notranslate"><span class="pre">a</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">std::cbegin(a)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">const_iterator</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">std::begin(const_cast&lt;const</span> <span class="pre">V&amp;&gt;(a))</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">std::cend(a)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">const_iterator</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">std::end(const_cast&lt;const</span> <span class="pre">V&amp;&gt;(a))</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">a.swap(b)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">void</span></code></td>
+<td>Exchanges the values of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">swap(a,</span> <span class="pre">b)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">void</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a.swap(b)</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">a.size()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">size_type</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">std::distance(a.begin(),</span> <span class="pre">a.end())</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">a.empty()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">bool</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a.size()</span> <span class="pre">==</span> <span class="pre">0</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">a.storage()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">storage_type</span></code></td>
+<td>Returns the internal native data stored in <code class="docutils literal notranslate"><span class="pre">a</span></code></td>
+<td>Constant</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">operator</span> <span class="pre">storage_type()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">storage_type</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">a.storage()</span></code></td>
+<td>Constant</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">eve::wide&lt;short&gt;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">eve::wide&lt;eve::logical&lt;float&gt;&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ieeevalue.html" class="btn btn-neutral float-right" title="IEEEValue" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="vectorizable.html" class="btn btn-neutral" title="Vectorizable" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joel Falcou, Jean-Thierry Lapresté.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:' - (internal version)',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
