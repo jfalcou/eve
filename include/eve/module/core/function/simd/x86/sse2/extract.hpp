@@ -34,9 +34,6 @@ namespace eve ::detail
                              wide<T, N, sse_> const &v0,
                              std::integral_constant<I, V> const &) noexcept
   {
-    constexpr auto qv = 4 * V;
-    constexpr auto ov = 8 * V;
-
     static_assert((V < wide<T, N, sse_>::static_size),
                   "[EVE} - extract : Index is out of bound for current architecture");
 
@@ -50,12 +47,12 @@ namespace eve ::detail
 
     if constexpr(sizeof(T) == 4)
     {
-      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si32(_mm_srli_si128(v0, qv));
+      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si32(_mm_srli_si128(v0, 4 * V));
 
       if constexpr(std::is_floating_point_v<T>)
       {
 #if defined(EVE_ARCH_IS_X86_64)
-        return _mm_cvtss_f32(_mm_castsi128_ps(_mm_srli_si128(_mm_castps_si128(v0), qv)));
+        return _mm_cvtss_f32(_mm_castsi128_ps(_mm_srli_si128(_mm_castps_si128(v0), 4 * V)));
 #else
         return v0[ V ];
 #endif
@@ -64,12 +61,12 @@ namespace eve ::detail
 
     if constexpr(sizeof(T) == 8)
     {
-      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si64(_mm_srli_si128(v0, ov));
+      if constexpr(std::is_integral_v<T>) return _mm_cvtsi128_si64(_mm_srli_si128(v0, 8 * V));
 
       if constexpr(std::is_floating_point_v<T>)
       {
 #if defined(EVE_ARCH_IS_X86_64)
-        return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), ov)));
+        return _mm_cvtsd_f64(_mm_castsi128_pd(_mm_srli_si128(_mm_castpd_si128(v0), 8 * V)));
 #else
         return v0[ V ];
 #endif
