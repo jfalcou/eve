@@ -36,7 +36,6 @@ Example
 
 Possible output
 
-.. code-block:: c++
+.. include:: ../../../../test/doc/add.txt
+  :literal:
 
-   add(3.f, 5.5f) = 8.5
-   add(3_wf, {1,2,3,4}) = {4,5,6,7}

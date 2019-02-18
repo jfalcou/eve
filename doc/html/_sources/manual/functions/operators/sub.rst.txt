@@ -12,7 +12,7 @@ sub
      constexpr Value sub( Value lhs, Value rhs ) noexcept
    }
 
-Function object for performing substarction over two :ref:`concept-value` of the same type.
+Function object for performing substraction over two :ref:`concept-value` of the same type.
 
 Parameters
 ----------
@@ -22,7 +22,7 @@ Parameters
 Return value
 ------------
 
-The sum of  ``arg0`` and ``arg1`` for every element of each parameters.
+The difference between  ``arg0`` and ``arg1`` for every element of each parameters.
 
 Options
 -------
@@ -36,8 +36,5 @@ Example
 
 Possible output
 
-.. code-block:: c++
-
-   sub(3.f, 5.5f) = -2.5
-   sub(3_wf, {1,2,3,4}) = {2,1,0,-1}
-
+.. include:: ../../../../test/doc/sub.txt
+  :literal:
