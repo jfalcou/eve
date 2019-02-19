@@ -35,7 +35,7 @@ namespace eve
         : pointer_(p)
     {
       EVE_ASSERT( is_aligned<Alignment>(p)
-                , (void*)(p) << " is not aligned on" << Alignment << "."
+                , (void*)(p) << " is not aligned on " << Alignment << "."
                 );
     }
 
@@ -70,7 +70,7 @@ namespace eve
     aligned_ptr &operator+=(std::ptrdiff_t o) noexcept
     {
       EVE_ASSERT( is_aligned<Alignment>(pointer_ + o)
-                , (void*)(pointer_) << " + " << o " is not aligned on" << Alignment << "."
+                , (void*)(pointer_) << " + " << o << " is not aligned on " << Alignment << "."
                 );
 
       pointer_ += o;
@@ -80,7 +80,7 @@ namespace eve
     aligned_ptr &operator-=(std::ptrdiff_t o) noexcept
     {
       EVE_ASSERT( is_aligned<Alignment>(pointer_ - o)
-                , (void*)(pointer_) << " - " << o " is not aligned on" << Alignment << "."
+                , (void*)(pointer_) << " - " << o << " is not aligned on " << Alignment << "."
                 );
 
       pointer_ -= o;
@@ -154,7 +154,7 @@ namespace eve
         : pointer_(p)
     {
       EVE_ASSERT( is_aligned<Alignment>(p)
-                , (void*)(p) << " is not aligned on" << Alignment << "."
+                , (void*)(p) << " is not aligned on " << Alignment << "."
                 );
     }
 

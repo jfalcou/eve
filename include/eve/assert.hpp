@@ -35,5 +35,3 @@ do {                                                                            
 #define EVE_VERIFY(cond, ... ) EVE_ASSERT(cond,__VA_ARGS__)
 
 #endif
-
-#endif
