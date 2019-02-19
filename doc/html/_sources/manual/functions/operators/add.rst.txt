@@ -22,7 +22,7 @@ Parameters
 Return value
 ------------
 
-The sum of  ``arg0`` and ``arg1`` for every element of each parameters.
+The sum of  ``lhs`` and ``rhs`` for every elements of each parameter.
 
 Options
 -------

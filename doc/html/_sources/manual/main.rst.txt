@@ -1,3 +1,5 @@
+.. _reference-manual:
+
 Reference Documentation
 =======================
 
@@ -7,5 +9,6 @@ Reference Documentation
    concepts/general
    types/general
    functions/general
+   functions/operators
    constants/general
 
