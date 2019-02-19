@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-The bitwise notand of  ``lhs`` and ``rhs`` for every elements of each parameter.
+The bitwise and of  the complement of ``lhs`` with ``rhs`` for every elements of each parameter.
 
 Options
 -------

@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-The bitwise ornot of  ``lhs`` and``rhs`` for every elements of each parameter.
+The bitwise or of  ``lhs`` and the complement of ``rhs`` for every elements of each parameter.
 
 Options
 -------
