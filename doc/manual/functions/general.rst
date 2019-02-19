@@ -5,4 +5,3 @@ Functions
    :maxdepth: 1
 
    operators.rst
-   bitwise.rst

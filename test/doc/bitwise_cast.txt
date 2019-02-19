@@ -1,0 +1,6 @@
+---- simd
+<- pf =                            (1, 2, -1, 0.5)
+-> eve::bitwise_cast<wide_it>(pf) = (1065353216, 1073741824, -1082130432, 1056964608)
+---- scalar
+<- xf =                            2
+-> eve::bitwise_cast<iT>(xf) =      1073741824
