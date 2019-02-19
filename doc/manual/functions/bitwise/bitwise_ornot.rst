@@ -1,7 +1,7 @@
 .. _function-bitwise_ornot:
 
 bitwise_ornot
-===========
+=============
 
 **Required header** ``#include <eve/function/bitwise_ornot.hpp>``
 

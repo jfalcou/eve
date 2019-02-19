@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-The bits of  ``lhs``  :ref:`Value1 <concept-value>` as a  :ref:`Value0 <concept-value>`.
+The bits of  ``lhs``  :ref:`Value1 <concept-value>` reinterpreted as a  :ref:`Value0 <concept-value>`.
 
 Options
 -------

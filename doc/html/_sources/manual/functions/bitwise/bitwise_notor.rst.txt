@@ -13,7 +13,7 @@ bitwise_notor
    }
 
 Function object for performing bitwise notor over two :ref:`Values <concept-value>` of possibly different types
-but of same bit size.
+but of same bit size, (``~lhs | rhs``).
 
 The result type is the one of the first operator.
 
@@ -26,8 +26,7 @@ Parameters
 Return value
 ------------
 
-The bitwise notor of  ``lhs`` and ``rhs`` for every elements of each parameter,
-(``~lhs | rhs``).
+The bitwise or of  complement of ``lhs`` with  ``rhs`` for every elements of each parameter.
 
 Options
 -------

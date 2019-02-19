@@ -28,7 +28,7 @@ Parameters
 Return value
 ------------
 
-The bitwise not of  ``lhs`` for every elements of each parameter.
+The bitwise complement of  ``lhs`` for every elements of each parameter.
 
 Options
 -------

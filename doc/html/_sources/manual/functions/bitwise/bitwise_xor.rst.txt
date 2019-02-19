@@ -15,7 +15,7 @@ bitwise_xor
 Function object for performing bitwise xor over two :ref:`Values <concept-value>` of possibly different types
 but of same bit size.
 
-The result type is the one of the first operxor.
+The result type is the one of the first operrator.
 
 Infix notation can be used with operator '^' execept in scalar mode if any
 operxor is floating point because of C++ limitations.
