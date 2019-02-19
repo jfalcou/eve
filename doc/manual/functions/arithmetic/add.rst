@@ -9,10 +9,12 @@ add
 
    namespace eve
    {
-     constexpr Value add( Value lhs, Value rhs ) noexcept
+     constexpr Value add( Value lhs, Value rhs ) noexcept                  // (1)
+     constexpr Value operator+( Value lhs, Value rhs ) noexcept            // (2)
    }
 
-Function object for performing addition over two :ref:`concept-value` of the same type.
+(1) Function object for performing addition over two :ref:`concept-value` of the same type.
+(2) Infix operator for performing addition over two :ref:`concept-value` of the same type.
 
 Parameters
 ----------

@@ -1,5 +1,7 @@
-Operators
-=========
+.. _function-infix:
+
+Infix Operators
+===============
 
 These functions provide scalar and SIMD version of the native C and C++ operators as functional
 interface.
@@ -12,17 +14,14 @@ performed within the input type's range.
 
 .. toctree::
    :maxdepth: 1
-   :glob:
 
-   operators/*
+   arithmetic/add
+   arithmetic/sub
 
 .. rubric:: Comparison Operators
 
 .. toctree::
    :maxdepth: 1
-   :glob:
-
-   comparison/*
 
 .. rubric:: Logical Operators
 
@@ -31,9 +30,6 @@ when called on :ref:`concept-vectorized` types.
 
 .. toctree::
    :maxdepth: 1
-   :glob:
-
-   logical/*
 
 .. rubric:: Bitwise Operators
 
@@ -45,6 +41,11 @@ required headers in one shot.
 
 .. toctree::
    :maxdepth: 1
-   :glob:
 
-   bitwise/*
+   bitwise/bitwise_and
+   bitwise/bitwise_not
+   bitwise/bitwise_or
+   bitwise/bitwise_xor
+
+
+
