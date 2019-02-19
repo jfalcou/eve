@@ -1,7 +1,10 @@
+.. _function:
+
 Functions
 =========
 
 .. toctree::
    :maxdepth: 1
 
-   operators.rst
+   arithmetic.rst
+   bitwise.rst

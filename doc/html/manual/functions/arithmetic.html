@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Vectorizable &mdash; eve  - (internal version) documentation</title>
+  <title>Arithmetic Functions &mdash; eve  - (internal version) documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Vectorized" href="vectorized.html" />
-    <link rel="prev" title="Concepts" href="general.html" /> 
+    <link rel="next" title="add" href="arithmetic/add.html" />
+    <link rel="prev" title="Functions" href="general.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -92,22 +92,18 @@
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="general.html">Concepts</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Vectorizable</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="vectorized.html">Vectorized</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ieeevalue.html">IEEEValue</a></li>
-<li class="toctree-l3"><a class="reference internal" href="integervalue.html">IntegerValue</a></li>
-<li class="toctree-l3"><a class="reference internal" href="value.html">Value</a></li>
-<li class="toctree-l3"><a class="reference internal" href="logical.html">Logical</a></li>
-<li class="toctree-l3"><a class="reference internal" href="logicalvalue.html">LogicalValue</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/general.html">Concepts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../functions/general.html">Functions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="general.html">Functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Arithmetic Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/add.html">add</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bitwise.html">Bitwise functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="operators.html">Infix Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/general.html">Constants</a></li>
 </ul>
 </li>
@@ -158,15 +154,15 @@
         
           <li><a href="../main.html">Reference Documentation</a> &raquo;</li>
         
-          <li><a href="general.html">Concepts</a> &raquo;</li>
+          <li><a href="general.html">Functions</a> &raquo;</li>
         
-      <li>Vectorizable</li>
+      <li>Arithmetic Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/manual/concepts/vectorizable.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/manual/functions/arithmetic.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,35 +175,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="vectorizable">
-<span id="concept-vectorizable"></span><h1>Vectorizable<a class="headerlink" href="#vectorizable" title="Permalink to this headline">¶</a></h1>
-<p>A <a class="reference internal" href="#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> type is usable as the template parameter of other components like
-<code class="docutils literal notranslate"><span class="pre">eve::wide</span></code> to produce a <a class="reference internal" href="vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> type.</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>A type <code class="docutils literal notranslate"><span class="pre">T</span></code> satisfies <a class="reference internal" href="#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> if it refines Logical or if:</p>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">&lt;=</span> <span class="pre">sizeof(double)</span></code> and</li>
-<li><code class="docutils literal notranslate"><span class="pre">std::is_arithmetic_v&lt;T&gt;</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">true</span></code> and</li>
-<li><code class="docutils literal notranslate"><span class="pre">std::is_same_v&lt;T,</span> <span class="pre">bool&gt;</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</li>
+  <div class="section" id="arithmetic-functions">
+<span id="function-arithmetic"></span><h1>Arithmetic Functions<a class="headerlink" href="#arithmetic-functions" title="Permalink to this headline">¶</a></h1>
+<p>These functions provide scalar and SIMD version of basic arithmetic functions
+For most of those functions, their semantic are the same than for regular language operator
+or functions with the one restriction that both parameters must share a type unless specified
+otherwise. Note also that  operations are performed within the input type’s range.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/add.html">add</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
 </ul>
-</div></blockquote>
-</div></blockquote>
-</div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">float</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">double</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">int</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">char</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">std::uint16_t</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">eve::logical&lt;short&gt;</span></code></li>
-</ul>
-</div></blockquote>
 </div>
 </div>
 
@@ -219,10 +197,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="vectorized.html" class="btn btn-neutral float-right" title="Vectorized" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="arithmetic/add.html" class="btn btn-neutral float-right" title="add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="general.html" class="btn btn-neutral" title="Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="general.html" class="btn btn-neutral" title="Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
