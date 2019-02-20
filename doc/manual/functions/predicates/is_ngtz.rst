@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-Equivalent to `is_not_greater(lhs, Zero(as(lhs)))`
+Semantically equivalent to `is_not_greater(lhs, Zero(as(lhs)))`
 
 Options
 -------

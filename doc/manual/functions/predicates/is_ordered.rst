@@ -27,7 +27,7 @@ Parameters
 Return value
 ------------
 
-Equivalent to ``(lhs == lhs) && (rhs == rhs)``  for each parameters element.
+Semantically equivalent to ``(lhs == lhs) && (rhs == rhs)``  for each parameters element.
 
 Options
 -------
