@@ -13,21 +13,23 @@ is_equal
    }
 
 
-This function object compares for equality two :ref:`Values <concept-value>`  of the same type.
+This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
+  according its parameters  :ref:`Values <concept-value>` are equal or not.
+
 
 Infix notation can be used with operator '=='.
 
-.. seealso:: modules :py:mod:`zipfile`, :py:mod:`tarfile`
+.. seealso::  :ref:`is_equal_with_equal_nans <function-is_equal_with_equal_nans>`
 
 Parameters
 ----------
 
-  - ``lhs``, ``rhs`` : values to compare
+  - ``lhs``, ``rhs`` : values to compare of the same type
 
 Return value
 ------------
 
-The logical  equal of ``arg0`` and ``arg1`` for every elements of each parameter.
+The logical  equal of ``lhs`` and ``rhs`` for every elements of each parameter.
 
 Options
 -------
