@@ -8,3 +8,4 @@ Functions
 
    arithmetic.rst
    bitwise.rst
+   predicates.rst
