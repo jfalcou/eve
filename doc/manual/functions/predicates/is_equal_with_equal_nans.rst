@@ -12,8 +12,8 @@ is_equal_with_equal_nans
      constexpr as_logical_t<Value> is_equal_with_equal_nans( Value lhs, Value rhs ) noexcept
    }
 
-This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
-  according its parameters  :ref:`Values <concept-value>` are equal or both nan, or are not equal.
+This function returns :ref:`True <constant-true_>` if and only if
+its parameters  :ref:`Values <concept-value>` are equal or both :ref:`Nans <constant-nan>`.
 
  
 Infix notation can be used with operator '=='.
@@ -28,7 +28,7 @@ Parameters
 Return value
 ------------
 
-The logical  equal of ``lhs`` and ``rhs`` for every elements of each parameter (considering Nans are equal).
+The logical  equal of ``lhs`` and ``rhs`` for every elements of each parameter (considering :ref:`Nans <constant-nan>` are equal).
 
 Options
 -------

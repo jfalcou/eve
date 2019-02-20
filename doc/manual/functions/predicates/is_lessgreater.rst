@@ -15,7 +15,7 @@ is_lessgreater
 
 This function returns :ref:`True <constant-true_>` if and only if
 its first parameter is :ref:`less <function-is_less>` or 
-:ref:` greater <function-is_greater>` than the second.
+:ref:`greater <function-is_greater>` than the second.
 Accordingly :ref:`False <constant-true_>`
 is returned if and only if the two values are  :ref:`equal <function-is_equal>`
 or :ref:`unordered <function-is_unordered>`.

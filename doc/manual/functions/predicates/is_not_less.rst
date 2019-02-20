@@ -14,7 +14,7 @@ is_not_less
 
 
 This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
-  according its first parameter is not less than the second.
+according its first parameter is not less than the second.
 
 .. seealso::  :ref:`is_greater_equal <function-is_greater_equal>`
 
@@ -27,8 +27,9 @@ Return value
 ------------
 
 The logical values ``lhs`` not less than ``rhs`` for every elements of each parameter.
-The return value can differ from those of :ref:`is_greater_equal <function-is_greater_equal>` only in case of Nans
- in floating point parameters.
+The return value can differ from those of :ref:`is_greater_equal <function-is_greater_equal>` only in case of :ref:`Nans <constant-nan>` 
+in floating point parameters.
+
 
 Options
 -------

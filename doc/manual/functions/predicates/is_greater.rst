@@ -14,7 +14,7 @@ is_greater
 
 
 This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
-  according its first parameter is greater than the second.
+according its first parameter is greater than the second.
 
 
 Infix notation can be used with operator '>'.

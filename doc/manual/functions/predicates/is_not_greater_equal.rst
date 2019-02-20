@@ -1,7 +1,7 @@
 .. _function-is_not_greater_equal:
 
 is_not_greater_equal
-============
+====================
 
 **Required header** ``#include <eve/function/is_not_greater_equal.hpp>``
 
@@ -14,7 +14,7 @@ is_not_greater_equal
 
 
 This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
-  according its first parameter is not greater or equal to the second.
+according its first parameter is not greater or equal to the second.
 
 
 .. seealso::  :ref:`is_not_greater <function-is_not_greater>`,  :ref:`is_less <function-is_less>`
@@ -28,8 +28,8 @@ Return value
 ------------
 
 The logical values ``lhs`` greater_equal than ``rhs`` for every elements of each parameter. 
-The return value can differ from those of :ref:`is_less <function-is_less>` only in case of Nans
- in floating point parameters.
+The return value can differ from those of :ref:`is_less <function-is_less>` only in case of  :ref:`Nans <constant-nan>` 
+in floating point parameters.
 
 Options
 -------

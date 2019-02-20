@@ -5,6 +5,8 @@ Constants
    :maxdepth: 1
 
    false
+   mzero
+   nan
    true
    zero
    

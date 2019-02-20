@@ -13,8 +13,9 @@ is_ordered
    }
 
 
-This function returns :ref:`True <constant-true_>` if and only if the two parameters are ordered (that is none is a Nan value).
-Acoordingly it returns :ref:`False <constant-false_>` if and only if at least one of the parameters is a Nan.
+This function returns :ref:`True <constant-true_>` if and only if the two parameters are ordered 
+(that is none is a  :ref:`Nan <constant-nan>` value).
+Acoordingly it returns :ref:`False <constant-false_>` if and only if at least one of the parameters is a :ref:`Nan <constant-nan>`.
 
 .. seealso::  :ref:`is_unordered <function-is_unordered>`
 
@@ -26,7 +27,7 @@ Parameters
 Return value
 ------------
 
-The logical  ordered of ``lhs`` and ``rhs`` for every elements of each parameter.
+Equivalent to ``(lhs == lhs) && (rhs == rhs)``  for each parameters element.
 
 Options
 -------

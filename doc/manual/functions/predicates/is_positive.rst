@@ -12,7 +12,7 @@ is_positive
      constexpr as_logical_t<Value> is_positive( Value lhs ) noexcept
    }
 
-For  :ref:`Integral Values <concept-integervalue>` this function is strictly equivalent
+For  :ref:`Integral Values <concept-integralvalue>` this function is strictly equivalent
 to :ref:`is_equal <function-is_gtz>`, but for floating point inputs it only tests the bit of sign.
 In particular input of :ref:`Mzero <constant-mzero>` returns :ref:`False <constant-true_>`
 and of  :ref:`Zero <constant-zero>` returns :ref:`True <constant-true_>`.
@@ -28,7 +28,7 @@ Parameters
 Return value
 ------------
 
- - for  :ref:`Integral Values <concept-integervalue>` as  :ref:`is_gtz <function-is_gtz>`
+ - for  :ref:`Integral Values <concept-integralvalue>` as  :ref:`is_gtz <function-is_gtz>`
  - for floating point inputs : is the bit of sign not set ?
 
 Options

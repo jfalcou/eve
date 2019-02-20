@@ -13,7 +13,7 @@ is_equal_with_equal_nans
    }
 
 This function returns :ref:`False <constant-true_>` or :ref:`True <constant-false_>`
-  according its parameters  :ref:`Values <concept-value>` are equal or both nan, or are not equal.
+according its parameters  :ref:`Values <concept-value>` are equal or both  :ref:`Nans <constant-nan>`, or are not equal.
 
  
 .. seealso::  :ref:`is_not_equal <function-is_not_equal>`
@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-The logical negation of the  equality between ``lhs`` and ``rhs`` for every elements of each parameter (considering Nans are equal).
+The logical negation of the  equality between ``lhs`` and ``rhs`` for every elements of each parameter (considering  :ref:`Nans <constant-nan>` are equal).
 
 Options
 -------

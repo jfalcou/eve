@@ -1,15 +1,15 @@
-.. _concept-integervalue:
+.. _concept-integralvalue:
 
-IntegerValue
+IntegralValue
 ============
 
-An :ref:`concept-integervalue` type is a type which satisfies either :ref:`concept-vectorizable` or
+An :ref:`concept-integralvalue` type is a type which satisfies either :ref:`concept-vectorizable` or
 ``Vectorized`` and which underlying scalar type behaves like an integral value.
 
 Requirements
 ------------
 
-A type ``T`` satisfies :ref:`concept-integervalue` if:
+A type ``T`` satisfies :ref:`concept-integralvalue` if:
 
   - ``T``  satisfies `:ref:`concept-vectorizable` or  ``Vectorized``
   - ``std::is_integral_v<eve::scalar_of_t<T>>`` evaluates to ``true``
