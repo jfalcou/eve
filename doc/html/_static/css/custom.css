@@ -16,7 +16,7 @@ div.sphinxsidebarwrapper
     max-width: none !important;
 }
 
-div .toctree-wrapper { column-count: 3; }
+div .toctree-wrapper { column-count: 2; }
 
 div .toctree-wrapper > ul { margin: 0; }
 
