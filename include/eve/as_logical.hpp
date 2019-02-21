@@ -11,6 +11,7 @@
 #define EVE_AS_LOGICAL_HPP_INCLUDED
 
 #include <eve/forward.hpp>
+#include <eve/logical.hpp>
 
 namespace eve
 {
