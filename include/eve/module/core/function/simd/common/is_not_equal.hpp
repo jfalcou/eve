@@ -44,7 +44,7 @@ namespace eve::detail
   {
     return eve::is_not_equal(v0, wide<T, N, ABI>(static_cast<T>(v1)));
   }
-  
+
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
                                       U const & v0,
@@ -53,7 +53,7 @@ namespace eve::detail
   {
     return eve::is_not_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
@@ -63,9 +63,9 @@ namespace eve::detail
   {
     return aggregate(eve::is_not_equal, v0, v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
-  // Emulation 
+  // Emulation
   template<typename T, typename N>
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
                                  wide<T, N, emulated_> const &v0,
@@ -73,9 +73,9 @@ namespace eve::detail
   {
     return map(eve::is_not_equal, v0, v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
-  // logical 
+  // logical
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
                                  wide<logical<T>, N, ABI> const &v0,
@@ -90,12 +90,12 @@ namespace eve::detail
 namespace eve
 {
   // -----------------------------------------------------------------------------------------------
-  // operator !=  
+  // operator !=
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto eve::operator!=(  wide<T, N, ABI> const &v0,
-                                         wide<T, N, ABI> const &v1) noexcept
+  EVE_FORCEINLINE auto operator!=(  wide<T, N, ABI> const &v0,
+                                    wide<T, N, ABI> const &v1) noexcept
   {
-    return eve::is_not_equal(v0, v1); 
+    return eve::is_not_equal(v0, v1);
   }
 
   template<typename T, typename N, typename ABI, typename U>
@@ -105,7 +105,7 @@ namespace eve
   {
     return eve::is_not_equal(v0, wide<T, N, ABI>(static_cast<T>(v1)));
   }
-  
+
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto  operator!=( U const & v0,
                                     wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
@@ -113,7 +113,7 @@ namespace eve
   {
     return eve::is_not_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
   }
-   
+
 }
 
 #endif
