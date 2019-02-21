@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_equal(abs(lhs), Inf(as(lhs)))`
+Semantically equivalent to ``is_equal(abs(lhs), Inf(as(lhs)))``
 
 Options
 -------

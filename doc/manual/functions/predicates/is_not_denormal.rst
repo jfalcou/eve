@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_greater_equal(abs(lhs), Smallestposval(as(lhs)))`
+Semantically equivalent to ``is_greater_equal(abs(lhs), Smallestposval(as(lhs)))``
 
 Options
 -------

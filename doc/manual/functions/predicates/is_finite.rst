@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `logical_not(is_inf(lhs)||is_nan(lhs)))`
+Semantically equivalent to ``logical_not(is_inf(lhs)||is_nan(lhs)))``
 
 Options
 -------

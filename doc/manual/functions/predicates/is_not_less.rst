@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-The logical values ``lhs`` not less than ``rhs`` for every elements of each parameter.
+The logical values ``lhs`` not less than ``rhs`` for each parameter elements.
 The return value can differ from those of :ref:`is_greater_equal <function-is_greater_equal>` only in case of :ref:`Nans <constant-nan>` 
 in floating point parameters.
 

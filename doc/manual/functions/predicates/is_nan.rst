@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_not_equal(lhs, lhs)`.
+Semantically equivalent to ``is_not_equal(lhs, lhs)``.
 
 Options
 -------

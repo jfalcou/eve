@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `logical_or(is_less(abs(lhs), Inf(as(lhs))), is_nan(lhs))`
+Semantically equivalent to ``logical_or(is_less(abs(lhs), Inf(as(lhs))), is_nan(lhs))``
 
 Options
 -------

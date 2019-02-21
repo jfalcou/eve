@@ -27,7 +27,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `False(as(lhs))`
+Semantically equivalent to ``False(as(lhs))`` for real inputs.
 
 Options
 -------

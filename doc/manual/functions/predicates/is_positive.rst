@@ -28,8 +28,8 @@ Parameters
 Return value
 ------------
 
- - for  :ref:`Integral Values <concept-integralvalue>` as  :ref:`is_gtz <function-is_gtz>`
- - for floating point inputs : is the bit of sign not set ?
+ - for  :ref:`Integral Values <concept-integralvalue>` as  :ref:`is_gtz <function-is_gtz>`;
+ - for  :ref:`floating point Values <concept-IEEEvalue>` returns  :ref:`True <constant-true_>` if and only if  the bit of sign is  not set.
 
 Options
 -------

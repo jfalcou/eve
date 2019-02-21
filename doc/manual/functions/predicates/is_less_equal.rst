@@ -29,7 +29,7 @@ Parameters
 Return value
 ------------
 
-The logical values ``lhs`` less or equal to ``rhs`` for every elements of each parameter.
+The logical values ``lhs`` less or equal to ``rhs`` for each parameter elements.
 
 Options
 -------

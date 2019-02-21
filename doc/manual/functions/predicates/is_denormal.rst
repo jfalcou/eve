@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_less(abs(lhs), Smallestposval(as(lhs))) && is_nez(lhs)`
+Semantically equivalent to ``is_less(abs(lhs), Smallestposval(as(lhs))) && is_nez(lhs)``
 
 Options
 -------

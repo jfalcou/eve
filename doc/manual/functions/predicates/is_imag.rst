@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_eqz(lhs)`
+Semantically equivalent to ``is_eqz(lhs)``
 
 Options
 -------

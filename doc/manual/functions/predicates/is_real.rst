@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `True(as(lhs)))`
+Semantically equivalent to ``True(as(lhs)))``
 
 Options
 -------

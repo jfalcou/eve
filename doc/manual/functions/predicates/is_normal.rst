@@ -14,8 +14,8 @@ is_normal
 
 
 This function returns :ref:`True <constant-true_>` if and only if the parameter is normal
-
-.. seealso::  :ref:`Smallestposval <constant-Smallestposval>`, :ref:`abs <constant-abs>`
+ 
+.. seealso::  :ref:`is_not_denormal <function-is_not_denormal>`,  :ref:`is_finite <function-is_finite>`,  :ref:`is_nez <function-is_nez>`
 
 Parameters
 ----------
@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_not_denormal(lhs) && is_finite(lhs) && is_nez(lhs)`
+Semantically equivalent to ``is_not_denormal(lhs) && is_finite(lhs) && is_nez(lhs)``
 
 Options
 -------

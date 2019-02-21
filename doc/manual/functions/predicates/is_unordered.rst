@@ -27,7 +27,7 @@ Parameters
 Return value
 ------------
 
-The logical  unordered of ``lhs`` and ``rhs`` for every elements of each parameter.
+Semantically equivalent to ``logical_or(is_nan(lhs), is_nan(rhs))`` for each parameters element.
 
 Options
 -------

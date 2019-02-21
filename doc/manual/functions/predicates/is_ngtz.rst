@@ -16,7 +16,7 @@ is_ngtz
 This function returns :ref:`True <constant-true_>` or :ref:`False <constant-false_>`
 according its parameter  :ref:`Value <concept-value>` is not greater than:ref:`Zero <constant-Zero>`.
 
-.. seealso::  :ref:`is_not_greater <function-is_not_greater>`
+.. seealso::  :ref:`is_not_greater <function-is_not_greater>`, :ref:`Zero <constant-zero>` 
 
 Parameters
 ----------
@@ -26,7 +26,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_not_greater(lhs, Zero(as(lhs)))`
+Semantically equivalent to ``is_not_greater(lhs, Zero(as(lhs)))``
 
 Options
 -------

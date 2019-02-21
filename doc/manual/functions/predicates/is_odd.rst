@@ -13,7 +13,7 @@ is_odd
    }
 
 
-This function returns :ref:`True <constant-true_>` if and only if the parameter is odd
+This function returns :ref:`True <constant-true_>` if and only if the parameter is odd.
 
 
 Parameters
@@ -24,7 +24,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_even(lhs+lhs)`
+Semantically equivalent to ``is_even(lhs+lhs)`` for each parameters element.
 
 Options
 -------

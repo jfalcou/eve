@@ -15,7 +15,7 @@ is_not_nan
 
 This function returns :ref:`True <constant-true_>` if and only if the parameter is not_nan
 
-.. seealso::  :ref:`Smallestposval <constant-Smallestposval>`, :ref:`abs <constant-abs>`
+.. seealso::  :ref:`Smallestposval <constant-Smallestposval>`, :ref:`abs <function-abs>`
 
 Parameters
 ----------
@@ -25,7 +25,7 @@ Parameters
 Return value
 ------------
 
-Semantically equivalent to `is_equal(lhs, lhs)`
+Semantically equivalent to ``is_equal(lhs, lhs)`` for each parameters element.
 
 Options
 -------
