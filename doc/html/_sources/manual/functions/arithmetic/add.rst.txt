@@ -24,7 +24,7 @@ Parameters
 Return value
 ------------
 
-The sum of  ``lhs`` and ``rhs`` for every elements of each parameter.
+The sum of  ``lhs`` and ``rhs`` for every elements of each parameter. 
 
 Options
 -------
