@@ -25,10 +25,10 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // sse4_2
-  template < typename T,  typename N> 
+  template<typename T, typename N>
   EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(sse4_2_),
-                                 wide<T, N, sse_> const &v0,
-                                 wide<T, N, sse_> const &v1) noexcept
+                                   wide<T, N, sse_> const &v0,
+                                   wide<T, N, sse_> const &v1) noexcept
   {
     using t_t = wide<T, N, sse_>;
     if constexpr(std::is_floating_point_v<T>)
@@ -47,15 +47,14 @@ namespace eve::detail
       }
       if constexpr(std::is_unsigned_v<T>)
       {
-        using s_t = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
-        using l_t = eve::wide<eve::as_logical_t<T>, N, sse_>;  
+        using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
+        using l_t    = eve::wide<eve::as_logical_t<T>, N, sse_>;
         s_t const sm = Signmask<s_t>();
-        return bitwise_cast<l_t>(eve::is_greater( bitwise_cast<s_t>(v0) - sm
-                                                , bitwise_cast<s_t>(v1) - sm)); 
+        return bitwise_cast<l_t>(
+            eve::is_greater(bitwise_cast<s_t>(v0) - sm, bitwise_cast<s_t>(v1) - sm));
       }
     }
   }
- 
 }
 
 #endif

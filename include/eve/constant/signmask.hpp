@@ -27,17 +27,16 @@ namespace eve
   {
     using t_t = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float >)  return Constant<T, 0x80000000U>();
-    if constexpr(std::is_same_v<t_t, double>)  return Constant<T, 0x8000000000000000ULL>();
+    if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x80000000U>();
+    if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x8000000000000000ULL>();
     if constexpr(std::is_same_v<t_t, uint8_t>) return Constant<T, 0x80U>();
-    if constexpr(std::is_same_v<t_t, uint16_t>)return Constant<T, 0x8000U>();
-    if constexpr(std::is_same_v<t_t, uint32_t>)return Constant<T, 0x80000000U>();
-    if constexpr(std::is_same_v<t_t, uint64_t>)return Constant<T, 0x8000000000000000ULL>();
-    if constexpr(std::is_same_v<t_t, int8_t>)  return Constant<T, -128>();
-    if constexpr(std::is_same_v<t_t, int16_t> )return Constant<T, -32768>();
+    if constexpr(std::is_same_v<t_t, uint16_t>) return Constant<T, 0x8000U>();
+    if constexpr(std::is_same_v<t_t, uint32_t>) return Constant<T, 0x80000000U>();
+    if constexpr(std::is_same_v<t_t, uint64_t>) return Constant<T, 0x8000000000000000ULL>();
+    if constexpr(std::is_same_v<t_t, int8_t>) return Constant<T, -128>();
+    if constexpr(std::is_same_v<t_t, int16_t>) return Constant<T, -32768>();
     if constexpr(std::is_same_v<t_t, int32_t>) return Constant<T, -2147483648LL>();
-    if constexpr(std::is_same_v<t_t, int64_t>) return Constant<T, -9223372036854775807LL-1>();
-
+    if constexpr(std::is_same_v<t_t, int64_t>) return Constant<T, -9223372036854775807LL - 1>();
   }
 
   EVE_MAKE_NAMED_CONSTANT(signmask_, Signmask);
