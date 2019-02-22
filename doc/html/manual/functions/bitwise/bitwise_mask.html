@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>bitwise_not &mdash; eve  - (internal version) documentation</title>
+  <title>bitwise_mask &mdash; eve  - (internal version) documentation</title>
   
 
   
@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="bitwise_notand" href="bitwise_notand.html" />
-    <link rel="prev" title="bitwise_mask" href="bitwise_mask.html" /> 
+    <link rel="next" title="bitwise_not" href="bitwise_not.html" />
+    <link rel="prev" title="bitwise_cast" href="bitwise_cast.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -93,22 +93,24 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../main.html">Reference Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/general.html">Concepts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../general.html">Functions</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../operators.html">Infix Operators</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../arithmetic/add.html">add</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../arithmetic/sub.html">sub</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">bitwise_not</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_andnot.html">bitwise_andnot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_cast.html">bitwise_cast</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">bitwise_mask</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_not.html">bitwise_not</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_notand.html">bitwise_notand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_notor.html">bitwise_notor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_or.html">bitwise_or</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_ornot.html">bitwise_ornot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise_or.html">bitwise_or</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../constants/general.html">Constants</a></li>
 </ul>
 </li>
@@ -163,13 +165,13 @@
         
           <li><a href="../bitwise.html">Bitwise functions</a> &raquo;</li>
         
-      <li>bitwise_not</li>
+      <li>bitwise_mask</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../../_sources/manual/functions/bitwise/bitwise_not.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/manual/functions/bitwise/bitwise_mask.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -182,19 +184,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="bitwise-not">
-<span id="function-bitwise-not"></span><h1>bitwise_not<a class="headerlink" href="#bitwise-not" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_not.hpp&gt;</span></code></p>
+  <div class="section" id="bitwise-mask">
+<span id="function-bitwise-mask"></span><h1>bitwise_mask<a class="headerlink" href="#bitwise-mask" title="Permalink to this headline">¶</a></h1>
+<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_mask.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="n">Value</span> <span class="n">bitwise_not</span><span class="p">(</span> <span class="n">Value</span> <span class="n">lhs</span> <span class="p">)</span> <span class="k">noexcept</span>
+  <span class="k">constexpr</span> <span class="n">Value</span> <span class="n">bitwise_mask</span><span class="p">(</span> <span class="n">Value</span> <span class="n">lhs</span> <span class="p">)</span> <span class="k">noexcept</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object for performing bitwise not over a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>, (~lhs)</p>
+<p>This function object returns a mask of bits. This mask is full of ones if the
+input element is not equal to zero else full of zeros.</p>
 <p>The result type is the one of the parameter.</p>
-<p>Operator notation can be used with operator ‘~’ except in scalar mode if
-operand is floating point because of C++ limitations.</p>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -205,7 +206,7 @@ operand is floating point because of C++ limitations.</p>
 </div>
 <div class="section" id="return-value">
 <h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>The bitwise complement of  <code class="docutils literal notranslate"><span class="pre">lhs</span></code> for every elements of each parameter.</p>
+<p>Semantically equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(a0),Allbits(as(a0)),Zero(as(a0))</span></code>.</p>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
@@ -217,30 +218,36 @@ operand is floating point because of C++ limitations.</p>
 <span class="c1">#include &lt;iostream&gt;</span>
 
 <span class="n">using</span> <span class="n">wide_it</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">uint32_t</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="n">using</span> <span class="n">wide_f</span>  <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span><span class="o">&lt;</span><span class="nb">float</span>        <span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>  
 
 <span class="nb">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">wide_it</span> <span class="n">pi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">~</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">};</span>
+  <span class="n">wide_it</span> <span class="n">pi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">~</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">};</span>
+  <span class="n">wide_f</span>  <span class="n">pf</span> <span class="o">=</span> <span class="p">{</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.0</span><span class="n">f</span><span class="p">};</span> 
 
   <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- pi =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-            <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::bitwise_not(pi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::bitwise_mask(pi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- pf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::bitwise_mask(pf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
 
   <span class="n">std</span><span class="p">::</span><span class="n">uint32_t</span> <span class="n">xi</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
   <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
             <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- xi =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-            <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::bitwise_not(xi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::bitwise_mask(xi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Possible output</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
-<span class="o">&lt;-</span> <span class="n">pi</span> <span class="o">=</span>                  <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">1023</span><span class="p">)</span>
-<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4294967294</span><span class="p">,</span> <span class="mi">4294967293</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4294966272</span><span class="p">)</span>
+<span class="o">&lt;-</span> <span class="n">pi</span> <span class="o">=</span>                  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">1023</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">)</span>
+<span class="o">&lt;-</span> <span class="n">pf</span> <span class="o">=</span>                  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">)</span>
 <span class="o">----</span> <span class="n">scalar</span>
 <span class="o">&lt;-</span> <span class="n">xi</span> <span class="o">=</span>                  <span class="mi">2</span>
-<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4294967293</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4294967295</span>
 </pre></div>
 </div>
 </div>
@@ -254,10 +261,10 @@ operand is floating point because of C++ limitations.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="bitwise_notand.html" class="btn btn-neutral float-right" title="bitwise_notand" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bitwise_not.html" class="btn btn-neutral float-right" title="bitwise_not" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="bitwise_mask.html" class="btn btn-neutral" title="bitwise_mask" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bitwise_cast.html" class="btn btn-neutral" title="bitwise_cast" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
