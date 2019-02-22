@@ -9,7 +9,8 @@
  *
  */
 
-if (!Scorer) {
+if(!Scorer)
+{
   /**
    * Simple result scoring code.
    */
@@ -24,27 +25,28 @@ if (!Scorer) {
     */
 
     // query matches the full name of an object
-    objNameMatch: 11,
+    objNameMatch : 11,
     // or matches in the last dotted part of the object name
-    objPartialMatch: 6,
+    objPartialMatch : 6,
     // Additive scores depending on the priority of the object
-    objPrio: {0:  15,   // used to be importantResults
-              1:  5,   // used to be objectResults
-              2: -5},  // used to be unimportantResults
+    objPrio : {
+      0 : 15, // used to be importantResults
+      1 : 5,  // used to be objectResults
+      2 : -5
+    }, // used to be unimportantResults
     //  Used when the priority is not in the mapping.
-    objPrioDefault: 0,
+    objPrioDefault : 0,
 
     // query found in title
-    title: 15,
+    title : 15,
     // query found in terms
-    term: 5
+    term : 5
   };
 }
 
-if (!splitQuery) {
-  function splitQuery(query) {
-    return query.split(/\s+/);
-  }
+if(!splitQuery)
+{
+  function splitQuery(query) { return query.split(/\s+/); }
 }
 
 /**
@@ -476,6 +478,4 @@ var Search = {
   }
 };
 
-$(document).ready(function() {
-  Search.init();
-});
+$(document).ready(function() { Search.init(); });
