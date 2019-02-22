@@ -28,7 +28,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(simd_),
                                    wide<T, N, ABI> const &v0,
-                                   U const &              v1) noexcept requires(wide<T, N, ABI>,
+                                   U const &              v1) noexcept requires(wide<logical<T>, N, ABI>,
                                                                   detail::Convertible<U, T>)
   {
     return eve::is_greater(v0, wide<T, N, ABI>(static_cast<T>(v1)));
@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   is_greater_(EVE_SUPPORTS(simd_),
               U const &              v0,
-              wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+              wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
                                                            detail::Convertible<U, T>)
   {
     return eve::is_greater(wide<T, N, ABI>(static_cast<T>(v0)), v1);
@@ -77,7 +77,7 @@ namespace eve
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto operator>(wide<T, N, ABI> const &v0,
-                                 U const &              v1) noexcept requires(wide<T, N, ABI>,
+                                 U const &              v1) noexcept requires(wide<logical<T>, N, ABI>,
                                                                 detail::Convertible<U, T>)
   {
     return eve::is_greater(v0, wide<T, N, ABI>(static_cast<T>(v1)));
@@ -85,7 +85,7 @@ namespace eve
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto
-  operator>(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+  operator>(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
                                                                       detail::Convertible<U, T>)
   {
     return eve::is_greater(wide<T, N, ABI>(static_cast<T>(v0)), v1);

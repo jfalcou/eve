@@ -40,4 +40,28 @@ TTS_CASE_TPL("Check is_less behavior on homogeneous wide",
   }
 }
 
+TTS_CASE_TPL("Check is_less behavior on wide and scalar",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+
+  TTS_SETUP("A correctly initialized wide")
+  {
+    wide<Type, T> lhs([](int i, int c) { return c - i; });
+    wide<eve::logical<Type>, T> ref1([](int i, int c) { return eve::is_less(Type(c - i), Type(1)); });
+    wide<eve::logical<Type>, T> ref2([](int i, int c) { return eve::is_less(Type(1), Type(c - i)); });
+    TTS_SECTION("supports eve::is_less1") { TTS_EQUAL(ref1, eve::is_less(lhs, Type(1))); }
+    TTS_SECTION("supports eve::is_less2") { TTS_EQUAL(ref2, eve::is_less(Type(1), lhs)); }
+    
+    TTS_SECTION("1 supports operator < ") { TTS_EQUAL(ref1, (lhs < Type(1))); }
+    TTS_SECTION("2 supports operator < ") { TTS_EQUAL(ref2, (Type(1) < lhs)); }
+  }
+}
+
 #endif
