@@ -19,7 +19,6 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/forward.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {

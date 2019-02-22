@@ -12,11 +12,8 @@ bitwise_mask
      constexpr Value bitwise_mask( Value lhs ) noexcept
    }
 
-This function object returns a mask of bits. This mask is full of ones if the
-input element is not equal to zero else full of zeros.
+This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
 
-
-The result type is the one of the parameter.
 
 
 Parameters
@@ -28,6 +25,8 @@ Return value
 ------------
 
 Semantically equivalent to ``if_else(is_nez(a0),Allbits(as(a0)),Zero(as(a0))``.
+
+The result type is  the parameter type.
 
 Options
 -------
