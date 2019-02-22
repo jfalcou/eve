@@ -41,24 +41,23 @@ TTS_CASE_TPL("Check is_equal behavior on homogeneous wide",
 
 TTS_CASE_TPL("Check plus behavior on wide and scalar",
              fixed<1>,
-             fixed<2> ,
+             fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
   using eve::wide;
 
   TTS_SETUP("A correctly initialized wide and a scalar")
   {
-    wide<Type, T> lhs([](auto i, auto) { return i; }); 
-    wide < eve::logical < Type>, T >  ref([](int i, int) { return eve::is_equal(Type(i), 2); });
+    wide<Type, T>               lhs([](auto i, auto) { return i; });
+    wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_equal(Type(i), 2); });
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_equal(lhs, Type(2))); }
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_equal(Type(2), lhs)); }
-    
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, lhs ==  2); }
+
+    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, lhs == 2); }
     TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, 2 == lhs); }
   }
 }

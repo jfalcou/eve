@@ -51,13 +51,13 @@ TTS_CASE_TPL("Check plus behavior on wide and scalar",
 
   TTS_SETUP("A correctly initialized wide and a scalar")
   {
-    wide<Type, T> lhs([](auto i, auto) { return i; }); 
-    wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::is_not_equal(Type(i), 2); });
-    
+    wide<Type, T>               lhs([](auto i, auto) { return i; });
+    wide<eve::logical<Type>, T> ref([](int i, int c) { return eve::is_not_equal(Type(i), 2); });
+
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_not_equal(lhs, Type(2))); }
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_not_equal(Type(2), lhs)); }
-    
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, lhs !=  2); }
+
+    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, lhs != 2); }
     TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref, 2 != lhs); }
   }
 }

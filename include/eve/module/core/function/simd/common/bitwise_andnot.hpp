@@ -55,7 +55,7 @@ namespace eve::detail
   bitwise_andnot_(EVE_SUPPORTS(simd_),
                   U const &                    v0,
                   wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                     Convertible<U, T>) =  delete; 
+                                                                     Convertible<U, T>) = delete;
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
@@ -72,8 +72,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bitwise_andnot_(EVE_SUPPORTS(simd_),
                   U const &              v0,
-                  wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>, Convertible<U, T>) =  delete; 
-
+                  wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                               Convertible<U, T>) = delete;
 
   template<typename T, typename N, typename U, typename M>
   EVE_FORCEINLINE auto

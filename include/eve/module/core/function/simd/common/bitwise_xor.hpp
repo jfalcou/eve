@@ -54,7 +54,7 @@ namespace eve::detail
   bitwise_xor_(EVE_SUPPORTS(simd_),
                U const &                    v0,
                wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                  Convertible<U, T>) =  delete; 
+                                                                  Convertible<U, T>) = delete;
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
@@ -68,10 +68,11 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_xor_(EVE_SUPPORTS(simd_),
-                                    U const &              v0,
-                                    wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                                                 Convertible<U, T>) =  delete; 
+  EVE_FORCEINLINE auto
+  bitwise_xor_(EVE_SUPPORTS(simd_),
+               U const &              v0,
+               wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                            Convertible<U, T>) = delete;
   template<typename T, typename N, typename U, typename M>
   EVE_FORCEINLINE auto
   bitwise_xor(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
@@ -100,9 +101,9 @@ namespace eve
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto
-  operator^(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                                      detail::Convertible<U, T>) =  delete; 
-
+  operator^(U const &              v0,
+            wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                         detail::Convertible<U, T>) = delete;
 }
 
 #endif

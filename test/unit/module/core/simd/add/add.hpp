@@ -52,13 +52,14 @@ TTS_CASE_TPL("Check plus behavior on wide",
 
   TTS_SETUP("A correctly initialized wide and a scalar")
   {
-    wide<Type, T> lhs([](auto i, auto) { return i; }), ref([](auto i, auto) { return i+Type(4); }); 
+    wide<Type, T> lhs([](auto i, auto) { return i; }),
+        ref([](auto i, auto) { return i + Type(4); });
 
     TTS_SECTION("supports eve::add") { TTS_EQUAL(ref, eve::add(lhs, 4)); }
     TTS_SECTION("supports eve::add") { TTS_EQUAL(ref, eve::add(4, lhs)); }
 
     TTS_SECTION("supports operator+()") { TTS_EQUAL(ref, lhs + 4); }
-    TTS_SECTION("supports operator+()") { TTS_EQUAL(ref, 4+lhs); }
+    TTS_SECTION("supports operator+()") { TTS_EQUAL(ref, 4 + lhs); }
   }
 }
 
