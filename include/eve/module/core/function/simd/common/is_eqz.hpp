@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel Falcou
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/function/logical_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
@@ -30,13 +32,14 @@ namespace eve::detail
   {
     return is_equal(v, Zero(as(v)));
   }
+
   // -----------------------------------------------------------------------------------------------
   // logical
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(simd_),
                               wide<logical<T>, N, ABI> const &v) noexcept
   {
-    return logical_not(v); 
+    return logical_not(v);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -57,6 +60,5 @@ namespace eve::detail
     return map(eve::is_eqz, v0);
   }
 }
-
 
 #endif
