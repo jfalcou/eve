@@ -1,0 +1,8 @@
+---- simd
+<- pi =                  (0, 2, 4294967295, 1023)
+-> eve::bitwise_mask(pi) = (0, 4294967295, 4294967295, 4294967295)
+<- pf =                  (0, -0, 1, -10)
+-> eve::bitwise_mask(pf) = (0, 0, -nan, -nan)
+---- scalar
+<- xi =                  2
+-> eve::bitwise_mask(xi) = 4294967295
