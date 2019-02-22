@@ -65,13 +65,18 @@ namespace eve::detail
   bitwise_notor_(EVE_SUPPORTS(simd_),
                  U const &                    v0,
                  wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                    Convertible<U, T>)
-  {
-    return map(eve::bitwise_notor, T(v0), v1);
-  }
+                                                                    Convertible<U, T>) =  delete; 
+
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
+  template<typename T0, typename N0, typename T1, typename N1, typename ABI>
+  EVE_FORCEINLINE auto bitwise_notor(wide<T0, N0, ABI> const &v0
+                                    , wide<T1, N1, ABI> const &v1) noexcept
+  {
+    return eve::bitwise_and(v0, eve::bitwise_cast<wide<T0, N0, ABI>>(v1));
+  }
+
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto bitwise_notor_(EVE_SUPPORTS(simd_),
                                       wide<T, N, ABI> const &v0,
@@ -85,10 +90,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bitwise_notor_(EVE_SUPPORTS(simd_),
                  U const &              v0,
-                 wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>, Convertible<U, T>)
-  {
-    return eve::bitwise_notor(wide<T, N, ABI>(v0), v1);
-  }
+                 wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>, Convertible<U, T>) =  delete; 
+
 }
 
 #endif
