@@ -28,6 +28,8 @@ add_unit_test( "core" scalar/is_eqz.cpp )
 add_unit_test( "core" scalar/is_nez.cpp )
 add_unit_test( "core" scalar/bitwise_select.cpp )
 add_unit_test( "core" scalar/bitwise_mask.cpp )
+add_unit_test( "core" scalar/is_less.cpp )
+add_unit_test( "core" scalar/is_greater.cpp )
 
 list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -37,6 +39,7 @@ add_unit_test( "core" scalar/inf.cpp )
 add_unit_test( "core" scalar/minf.cpp )
 add_unit_test( "core" scalar/nan.cpp )
 add_unit_test( "core" scalar/mzero.cpp )
+add_unit_test( "core" scalar/signmask.cpp )
 
 ##==================================================================================================
 ## SIMD tests
@@ -62,3 +65,5 @@ list_tests("simd/is_eqz" "core" ${all_types})
 list_tests("simd/is_nez" "core" ${all_types})
 list_tests("simd/bitwise_select"  "core" ${all_types})
 list_tests("simd/bitwise_mask" "core" ${all_types})
+list_tests("simd/is_less" "core" ${all_types})
+list_tests("simd/is_greater" "core" ${all_types})
