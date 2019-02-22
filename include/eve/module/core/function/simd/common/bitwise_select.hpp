@@ -1,6 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -23,58 +24,34 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Native
-  template<typename U, typename M, typename T, typename N, typename API>
-  EVE_FORCEINLINE wide<T, N, API> bitwise_select_(EVE_SUPPORTS(simd_),
-                                                  wide<U, M, API> const &v0,
-                                                  wide<T, N, API> const &v1,
-                                                  wide<T, N, API> const &v2) noexcept
+  //-----------------------------------------------------------------------------------------------
+  // Aggregation
+  template<typename U, typename M, typename T, typename N>
+  EVE_FORCEINLINE wide<T,N,aggregated_> bitwise_select_ ( EVE_SUPPORTS(simd_)
+                                                        , wide<U,M,aggregated_> const& v0
+                                                        , wide<T,N,aggregated_> const& v1
+                                                        , wide<T,N,aggregated_> const& v2
+                                                        ) noexcept
   {
-    static_assert(sizeof(wide<U, M, API>) == sizeof(wide<T, N, API>),
+    static_assert(sizeof(wide<U, M, aggregated_>) == sizeof(wide<T, N, aggregated_>),
                   "eve::bitwise_select - Arguments have incompatible size");
-    return eve::bitwise_or(eve::bitwise_and(v1, v0), eve::bitwise_andnot(v2, v0));
+    return aggregate( eve::bitwise_select, v0, v1, v2);
   }
-  // -----------------------------------------------------------------------------------------------
-  //   // Aggregation
-  //   template<typename U, typename T, typename N>
-  //   EVE_FORCEINLINE wide<T,N,aggregated_> bitwise_select_( EVE_SUPPORTS(simd_)
-  //                                                     , wide<U,N,aggregated_> const& v0
-  //                                                     , wide<T,N,aggregated_> const& v1
-  //                                                     , wide<T,N,aggregated_> const& v2
-  //                                                     ) noexcept
-  //   {
-  //     static_assert ( sizeof(U) == sizeof(T)
-  //                   , "eve::bitwise_select - Arguments have incompatible size"
-  //                   );
-  //     return aggregate( eve::bitwise_select, v0, v1, v2);
-  //   }
 
   // -----------------------------------------------------------------------------------------------
   //   // Emulation with auto-splat inside map for performance purpose
-  //   template<typename U, typename T, typename N>
-  //   EVE_FORCEINLINE  wide<T,N,emulated_> bitwise_select_ ( EVE_SUPPORTS(simd_)
-  //                                                        , wide<U,N,emulated_> const& v0
-  //                                                        , wide<T,N,emulated_> const& v1
-  //                                                        , wide<T,N,emulated_> const& v2
-  //                                                        ) noexcept
-  //   {
-  //     static_assert ( sizeof(U) == sizeof(T)
-  //                   , "eve::bitwise_select - Arguments have incompatible size"
-  //                   );
-  //     return map( eve::bitwise_select, v0, v1, v2);
-  //   }
-
-  //   template<typename T, typename N>
-  //   EVE_FORCEINLINE wide<T,N,emulated_> bitwise_select_ ( EVE_SUPPORTS(simd_)
-  //                                                       , wide<T,N,emulated_> const& v0
-  //                                                       , T const& v1
-  //                                                         T const& v2
-  //                                                       ) noexcept
-  //                             requires(wide<T,N,emulated_>, Convertible<U,T>)
-  //   {
-  //     return map( eve::bitwise_select, v0, T(v1), T(v2));
-  //   }
+  template<typename U, typename T, typename N>
+  EVE_FORCEINLINE  wide<T,N,emulated_> bitwise_select_ ( EVE_SUPPORTS(simd_)
+                                                       , wide<U,N,emulated_> const& v0
+                                                       , wide<T,N,emulated_> const& v1
+                                                       , wide<T,N,emulated_> const& v2
+                                                       ) noexcept
+  {
+    static_assert ( sizeof(U) == sizeof(T)
+                  , "eve::bitwise_select - Arguments have incompatible size"
+                  );
+    return map( eve::bitwise_select, v0, v1, v2);
+  }
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
@@ -85,6 +62,19 @@ namespace eve::detail
     return eve::bitwise_select(v0, wide<T, N, ABI>(v1), wide<T, N, ABI>(v2));
   }
 
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  bitwise_select_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, wide<T, N, ABI> const &v1, T const &v2) noexcept
+  {
+    return eve::bitwise_select(v0, v1, wide<T, N, ABI>(v2));
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  bitwise_select_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, T const &v1, wide<T, N, ABI> const &v2) noexcept
+  {
+    return eve::bitwise_select(v0, wide<T, N, ABI>(v1), v2);
+  }
 }
 
 #endif

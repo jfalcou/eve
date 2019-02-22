@@ -1,6 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -13,11 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/bitwise_and.hpp>
-#include <eve/function/scalar/bitwise_andnot.hpp>
-#include <eve/function/scalar/bitwise_or.hpp>
-#include <type_traits>
-#include <iostream>
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_andnot.hpp>
+#include <eve/function/bitwise_or.hpp>
 
 namespace eve::detail
 {
