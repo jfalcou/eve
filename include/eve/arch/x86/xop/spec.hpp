@@ -10,8 +10,11 @@
 #ifndef EVE_ARCH_X86_XOP_SPEC_HPP_INCLUDED
 #define EVE_ARCH_X86_XOP_SPEC_HPP_INCLUDED
 
+#include <eve/detail/compiler.hpp>
+#include <eve/arch/x86/avx/spec.hpp>
+
 #if defined(EVE_SUPPORTS_XOP)
-#  if defined(_MSC_VER)
+#  if defined(EVE_COMP_IS_MSVC)
 #    include <intrin.h>
 #  else
 #    include <x86intrin.h>

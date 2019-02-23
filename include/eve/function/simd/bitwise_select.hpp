@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_BITWISE_SELECT_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_BITWISE_SELECT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_BITWISE_SELECT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_BITWISE_SELECT_HPP_INCLUDED
 
-#include <eve/function/definition/bitwise_select.hpp>
-#include <eve/module/core/function/scalar/bitwise_select.hpp>
+#include <eve/function/scalar/bitwise_select.hpp>
+#include <eve/module/core/function/simd/bitwise_select.hpp>
 
 #endif

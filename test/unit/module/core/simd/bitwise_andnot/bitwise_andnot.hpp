@@ -17,7 +17,7 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check bitwise_and behavior on homogeneous wide"
+TTS_CASE_TPL( "Check bitwise_andnot behavior on homogeneous wide"
             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
             )
 {
@@ -29,7 +29,7 @@ TTS_CASE_TPL( "Check bitwise_and behavior on homogeneous wide"
                 , rhs([](int i, int  ) { return i+1; })
                 , ref([](int i, int c) { return eve::bitwise_andnot(Type(c-i),Type(i+1)); });
 
-    TTS_SECTION( "supports eve::bitwise_and" )  { TTS_EQUAL(ref, eve::bitwise_andnot(lhs,rhs)); }
+    TTS_SECTION( "supports eve::bitwise_andnot" )  { TTS_EQUAL(ref, eve::bitwise_andnot(lhs,rhs)); }
   }
 }
 
@@ -44,7 +44,7 @@ TTS_CASE_TPL( "Check bitwise_andnot behavior on wide + scalar"
     wide<Type,T>  lhs([](int i, int c) { return i%3; })
                 , ref([](int i, int c) { return eve::bitwise_andnot( Type(i%3), Type(7) ); });
 
-    TTS_SECTION( "supports eve::bitwise_and" )  { TTS_EQUAL(ref, eve::bitwise_andnot(lhs,7)); }
+    TTS_SECTION( "supports eve::bitwise_andnot" )  { TTS_EQUAL(ref, eve::bitwise_andnot(lhs,7)); }
   }
 }
 
