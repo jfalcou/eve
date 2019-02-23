@@ -20,13 +20,12 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T, typename U>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto
   is_not_equal_(EVE_SUPPORTS(cpu_),
                 T const &a,
-                U const &b) noexcept requires(as_logical_t<T>, detail::Convertible<U, T>)
-  {
-    return (a != T(b));
+                T const &b) noexcept
+    return (a != b);
   }
   
   EVE_FORCEINLINE constexpr bool is_not_equal_(EVE_SUPPORTS(cpu_)
