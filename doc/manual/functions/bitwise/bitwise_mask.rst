@@ -12,7 +12,7 @@ bitwise_mask
      constexpr Value bitwise_mask( Value lhs ) noexcept
    }
 
-This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
+This function object returns a mask of bits. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
 
 
 
