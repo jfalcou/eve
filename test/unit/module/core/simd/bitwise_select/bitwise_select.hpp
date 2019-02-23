@@ -7,7 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef BITWISE_SElECT_HPP
+#ifndef BITWISE_SELECT_HPP
 #define BITWISE_SELECT_HPP
 
 #include "test.hpp"
