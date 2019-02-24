@@ -26,8 +26,8 @@ Synopsis
    template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
    template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
 
-* [1] Performs a bitwise AND between every elements of both :ref:`type-wide`.
-* [2] Performs a bitwise AND between the scalar and every elements of the :ref:`type-wide` instance.
+* [1] Performs a bitwise AND between both :ref:`wides <type-wide`>.
+* [2] Performs a bitwise AND between the scalar and each elements of the :ref:`type-wide` instance.
 * [3] Performs a bitwise AND between both scalars.
 
 .. rubric:: Parameters

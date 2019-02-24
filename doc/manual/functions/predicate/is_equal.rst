@@ -13,7 +13,7 @@ is_equal
       constexpr /* implementation defined */ is_equal = {};
    }
 
-Function object performing equality comparison between two :ref:`Values <concept-value>` of same size.
+Function object performing equality comparison between two :ref:`Values <concept-value>` of same type.
 
 ********
 Synopsis
@@ -27,8 +27,8 @@ Synopsis
    template<typename T, typename N, typename U> as_logical_t<wide<T,N>> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   as_logical_t<T>         operator()( T s, U t ) noexcept;
 
-* [1] Performs equality comparison between every elements of both :ref:`type-wide`.
-* [2,3] Performs equality comparison between the scalar and every elements of the :ref:`type-wide` instance.
+* [1] Performs element-wise equality comparison between both :ref:`wides <type-wide>`.
+* [2,3] Performs equality comparison between the scalar and each element of the :ref:`type-wide` instance.
 * [4] Performs equality comparison between both scalars.
 
 .. rubric:: Parameters
@@ -40,6 +40,7 @@ Synopsis
 
 * [1,2] A value of type **as_logical_t<wide<T,N>>**.
 * [3] A value of type **as_logical_t<T>**.
+
 
 .. rubric:: Notes
 

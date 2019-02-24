@@ -26,8 +26,8 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
-* [1] Computes the addition of every elements of both :ref:`type-wide`.
-* [2,3] Computes the addition of the scalar and every elements of the :ref:`type-wide` instance.
+* [1] Computes the element-wise addition of both :ref:`wides <type-wide>`.
+* [2,3] Computes the addition of the scalar to each element of the :ref:`type-wide` instance.
 * [4] Computes the addition of both scalars.
 
 .. rubric:: Parameters
