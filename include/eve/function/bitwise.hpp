@@ -14,7 +14,7 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_andnot.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise.hpp>
+#include <eve/function/bitwise_mask.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/bitwise_not.hpp>
 #include <eve/function/bitwise_notor.hpp>

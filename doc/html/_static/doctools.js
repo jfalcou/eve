@@ -4,7 +4,7 @@
  *
  * Sphinx JavaScript utilities for all documentation.
  *
- * :copyright: Copyright 2007-2018 by the Sphinx team, see AUTHORS.
+ * :copyright: Copyright 2007-2019 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
  *
  */
@@ -150,7 +150,7 @@ var Documentation = {
     this.fixFirefoxAnchorBug();
     this.highlightSearchWords();
     this.initIndexTable();
-    
+    if(DOCUMENTATION_OPTIONS.NAVIGATION_WITH_KEYS) { this.initOnKeyListeners(); }
   },
 
   /**
@@ -218,7 +218,8 @@ var Documentation = {
   highlightSearchWords : function() {
     var params = $.getQueryParameters();
     var terms = (params.highlight) ? params.highlight[0].split(/\s+/) : [];
-    if (terms.length) {
+    if (terms.length)
+    {
       var body = $('div.body');
       if (!body.length) {
         body = $('body');
@@ -263,9 +264,7 @@ var Documentation = {
   /**
    * make the url absolute
    */
-  makeURL : function(relativeURL) {
-    return DOCUMENTATION_OPTIONS.URL_ROOT + '/' + relativeURL;
-  },
+  makeURL : function(relativeURL) { return DOCUMENTATION_OPTIONS.URL_ROOT + '/' + relativeURL; },
 
   /**
    * get the current relative url
@@ -281,7 +280,7 @@ var Documentation = {
     return path.substring(url.lastIndexOf('/') + 1, path.length - 1);
   },
 
-  initOnKeyListeners: function() {
+  initOnKeyListeners : function() {
     $(document).keyup(function(event) {
       var activeElementType = document.activeElement.tagName;
       // don't navigate when in search box or textarea
@@ -308,6 +307,4 @@ var Documentation = {
 // quick alias for translations
 _ = Documentation.gettext;
 
-$(document).ready(function() {
-  Documentation.init();
-});
+$(document).ready(function() { Documentation.init(); });
