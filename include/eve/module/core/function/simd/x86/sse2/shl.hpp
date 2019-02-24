@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
@@ -25,11 +25,10 @@
 namespace eve ::detail
 {
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE wide<T, N, sse_> shl_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, sse_> const &a0
-                                       , I a1) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_>
+                  shl_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, I a1) noexcept
   {
-    using t_t = wide<T, N, sse_>; 
+    using t_t = wide<T, N, sse_>;
     assert(assert_good_shift<t_t>(a1) && "shl sse2: a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -57,13 +56,11 @@ namespace eve ::detail
   }
 
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE wide<T, N, sse_> shl_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, sse_> const &a0
-                                       , wide<I, N, sse_> const &a1) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_>
+                  shl_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, wide<I, N, sse_> const &a1) noexcept
   {
     return map(eve::shl, a0, a1);
   }
-
 }
 
 #endif

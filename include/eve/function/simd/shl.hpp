@@ -14,4 +14,3 @@
 #include <eve/module/core/function/simd/shl.hpp>
 
 #endif
- 

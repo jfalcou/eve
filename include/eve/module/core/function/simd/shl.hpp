@@ -8,7 +8,7 @@
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED 
+#define EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED
 
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/shl.hpp>

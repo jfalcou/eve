@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
 
@@ -37,7 +37,6 @@ namespace eve::detail
   {
     return map(eve::shl, v0, v1);
   }
-
 }
 
 #endif

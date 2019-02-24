@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
@@ -27,7 +27,8 @@ namespace eve::detail
     {
       t_t1 v = eve::extract(t, i);
       if(v >= N) return false;
-      if constexpr(std::is_unsigned_v<t_t1>) if(v < t_t1(0)) return false;
+      if constexpr(std::is_unsigned_v<t_t1>)
+        if(v < t_t1(0)) return false;
     }
 
     return true;

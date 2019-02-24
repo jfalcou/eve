@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry Lapreste
@@ -24,8 +24,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
-  shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
   {
     assert(detail::assert_good_shift<T>(a1) && "shl: a shift is out of range");
     static_assert(std::is_integral_v<U>, "shift value must be integral");
@@ -34,12 +33,11 @@ namespace eve::detail
       using i_t = as_integer_t<T, signed>;
       return bitwise_cast<T>(shl(eve::bitwise_cast<i_t>(a0), a1));
     }
-    else 
+    else
     {
       return T(a0 << a1);
     }
   }
-
 }
 
 #endif
