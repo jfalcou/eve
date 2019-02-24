@@ -1,40 +1,58 @@
 .. _function-sub:
 
+###
 sub
-===
+###
 
-**Required header** ``#include <eve/function/sub.hpp>``
+**Required header:** ``#include <eve/function/sub.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr Value sub( Value lhs, Value rhs ) noexcept
+      constexpr /* implementation defined */ sub = {};
    }
 
-Function object for performing substraction over two :ref:`concept-value` of the same type.
+Function object computing the difference of two :ref:`Values <concept-value>`.
 
-Parameters
-----------
+********
+Synopsis
+********
 
-  - ``lhs``, ``rhs`` : values to substract
+.. code-block:: c++
+  :linenos:
 
-Return value
-------------
+   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
+   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
+   template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
+   template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
-The difference between  ``lhs`` and ``rhs`` for every elements of each parameter.
+* [1] Computes the difference of every elements of both :ref:`type-wide`.
+* [2,3] Computes the difference of the scalar and every elements of the :ref:`type-wide` instance.
+* [4] Computes the difference of both scalars.
 
+.. rubric:: Parameters
+
+* **v**, **w**: Instances of :ref:`type-wide`.
+* **s**, **t**: Scalar values of type **U** convertible to **T**.
+
+.. rubric:: Return value
+
+* [1-3] A value with the same type as the :ref:`type-wide` parameter.
+* [4] A value of type **T**.
+
+*******
 Options
--------
+*******
 
-
+*******
 Example
--------
+*******
 
 .. include:: ../../../../test/doc/sub.cpp
   :literal:
 
-Possible output
+Possible output:
 
 .. include:: ../../../../test/doc/sub.txt
   :literal:

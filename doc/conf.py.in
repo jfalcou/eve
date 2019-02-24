@@ -91,7 +91,7 @@ html_theme = '@SPHINX_THEME@'
 #
 html_theme_options = {
 #@SPHINX_OPTIONS@
-                       'prev_next_buttons_location': 'bottom',
+                       'prev_next_buttons_location': 'both',
                        'body_max_width': '5%'
                      }
 

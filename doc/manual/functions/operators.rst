@@ -1,7 +1,8 @@
 .. _function-infix:
 
+###############
 Infix Operators
-===============
+###############
 
 These functions provide scalar and SIMD version of the native C and C++ operators as functional
 interface.
@@ -22,6 +23,8 @@ performed within the input type's range.
 
 .. toctree::
    :maxdepth: 1
+
+   predicate/is_equal
 
 .. rubric:: Logical Operators
 
