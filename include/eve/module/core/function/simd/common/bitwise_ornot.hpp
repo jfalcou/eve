@@ -66,10 +66,7 @@ namespace eve::detail
   bitwise_ornot_(EVE_SUPPORTS(simd_),
                  U const &                    v0,
                  wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                    Convertible<U, T>)
-  {
-    return map(eve::bitwise_ornot, T(v0), v1);
-  }
+                                                                    Convertible<U, T>) = delete;
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
@@ -86,10 +83,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bitwise_ornot_(EVE_SUPPORTS(simd_),
                  U const &              v0,
-                 wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>, Convertible<U, T>)
-  {
-    return eve::bitwise_ornot(wide<T, N, ABI>(v0), v1);
-  }
+                 wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                              Convertible<U, T>) = delete;
 
   template<typename T, typename N, typename U, typename M>
   EVE_FORCEINLINE auto
