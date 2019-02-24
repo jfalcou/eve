@@ -116,19 +116,17 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a sequence of values
-    template<typename T0,
-             typename T1,
-             typename... Ts,
-             bool ConvertProperly = (... && std::is_convertible_v<Ts, Type>),
-             typename             = std::enable_if_t<std::is_convertible_v<T0, Type> &&
-                                         std::is_convertible_v<T1, Type> && !Size::is_default &&
-                                         ConvertProperly>>
+    template< typename T0,
+              typename T1,
+              typename... Ts,
+              bool Converts =   std::is_convertible_v<T0, Type>
+                            &&  std::is_convertible_v<T1, Type>
+                            && (... && std::is_convertible_v<Ts, Type>),
+              typename      = std::enable_if_t<(static_size == 2 + sizeof...(Ts)) && Converts>
+            >
     EVE_FORCEINLINE wide(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
-    {
-      static_assert(2 + sizeof...(vs) == static_size,
-                    "[eve] Size mismatch in initializer list for wide");
-    }
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide with a generator function

@@ -45,21 +45,6 @@ namespace eve
     static constexpr bool is_default = false;
     using combined_type              = fixed<2>;
   };
-
-  template<std::ptrdiff_t Cardinal>
-  struct defaulted : std::integral_constant<std::ptrdiff_t, Cardinal>
-  {
-    static constexpr bool is_default = true;
-    using split_type                 = defaulted<Cardinal / 2>;
-    using combined_type              = defaulted<Cardinal * 2>;
-  };
-
-  template<>
-  struct defaulted<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
-  {
-    static constexpr bool is_default = true;
-    using combined_type              = defaulted<2>;
-  };
 }
 
 #endif

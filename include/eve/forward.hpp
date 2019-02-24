@@ -20,7 +20,7 @@ namespace eve
 
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   template<typename Type,
-           typename Size = defaulted<expected_cardinal_v<Type>>,
+           typename Size = fixed<expected_cardinal_v<Type>>,
            typename ABI  = expected_abi_t<Type, Size>>
   struct wide;
 }
