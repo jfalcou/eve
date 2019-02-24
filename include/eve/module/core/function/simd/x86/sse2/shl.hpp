@@ -10,6 +10,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_SSE2_SHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_SSE2_SHL_HPP_INCLUDED
 
+#include <eve/assert.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/architecture.hpp>
@@ -29,7 +30,9 @@ namespace eve ::detail
                   shl_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, I a1) noexcept
   {
     using t_t = wide<T, N, sse_>;
-    assert(assert_good_shift<t_t>(a1) && "shl sse2: a shift is out of range");
+    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
+              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              );
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T>, N>;
@@ -59,6 +62,10 @@ namespace eve ::detail
   EVE_FORCEINLINE wide<T, N, sse_>
                   shl_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, wide<I, N, sse_> const &a1) noexcept
   {
+    using t_t = wide<T, N, sse_>;
+    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
+              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              );
     return map(eve::shl, a0, a1);
   }
 }

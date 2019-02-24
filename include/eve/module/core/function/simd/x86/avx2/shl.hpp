@@ -10,6 +10,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX2_SHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX2_SHL_HPP_INCLUDED
 
+#include <eve/assert.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/architecture.hpp>
@@ -27,7 +28,9 @@ namespace eve::detail
                   shl_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, I a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    assert(assert_good_shift<t_t>(a1) && "shl avx2: a shift is out of range");
+    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
+              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              );
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T>, N>;
@@ -59,7 +62,9 @@ namespace eve::detail
                   shl_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, wide<I, N, avx_> const &a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    assert(assert_good_shift<t_t>(a1) && "shl avx2: a shift is out of range");
+    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
+              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              );
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T>, N>;
