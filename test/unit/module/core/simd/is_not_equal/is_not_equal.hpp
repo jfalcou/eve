@@ -21,7 +21,7 @@ using eve::fixed;
 TTS_CASE_TPL("Check is_not_equal behavior on homogeneous wide",
              fixed<1>,
              fixed<2>,
-             fixed<4>, 
+             fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check plus behavior on wide and scalar",
   TTS_SETUP("A correctly initialized wide and a scalar")
   {
     wide<Type, T>               lhs([](auto i, auto) { return i; });
-    wide<eve::logical<Type>, T> ref([](int i, int c) { return eve::is_not_equal(Type(i), 2); });
+    wide<eve::logical<Type>, T> ref([](int i, int c) { return eve::is_not_equal(Type(i), Type(2)); });
 
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_not_equal(lhs, Type(2))); }
     TTS_SECTION("supports eve::is_equal") { TTS_EQUAL(ref, eve::is_not_equal(Type(2), lhs)); }
