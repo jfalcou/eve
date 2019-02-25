@@ -74,6 +74,9 @@
 // Flag a function to support delayed calls on given architecture
 #define EVE_SUPPORTS(ARCH) delay_t const &, ARCH const &
 
+// Flag a function to support delayed calls on given architecture
+#define EVE_RETARGET(ARCH) delay_t{}, ARCH{}
+
 // Create named object for consatnt
 #define EVE_MAKE_NAMED_CONSTANT(TAG, FUNC)                                                         \
 namespace detail                                                                                   \
