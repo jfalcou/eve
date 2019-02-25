@@ -1,7 +1,8 @@
 .. _function-arithmetic:
 
+####################
 Arithmetic Functions
-====================
+####################
 
 These functions provide scalar and SIMD version of basic arithmetic functions
 For most of those functions, their semantic are the same than for regular language operator

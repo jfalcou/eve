@@ -40,13 +40,6 @@ Synopsis
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
 
-.. rubric:: Notes
-
-* `bitwise_cast` does not allow to cast :ref:`type-wide` instances to scalar ones because for performance reasons,
-the `small`  :ref:`type-wide` types are stored as native vectorial registers and consequently does not share the
-scalar sizes in the supported rchitectures. In fact the bit size of supported wides is always greater of equal to 128 bits
-and the size of supported scalars is always less or equal to 64 bits.
-
 
 Options
 *******

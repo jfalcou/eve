@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise Functions</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_andnot.html">bitwise_andnot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_cast.html">bitwise_cast</a></li>
@@ -108,6 +108,7 @@
 <li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
@@ -163,7 +164,7 @@
         
           <li><a href="../general.html">Functions</a> &raquo;</li>
         
-          <li><a href="../bitwise.html">Bitwise functions</a> &raquo;</li>
+          <li><a href="../bitwise.html">Bitwise Functions</a> &raquo;</li>
         
       <li>bitwise_mask</li>
     
@@ -179,6 +180,15 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="bitwise_not.html" class="btn btn-neutral float-right" title="bitwise_not" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bitwise_cast.html" class="btn btn-neutral" title="bitwise_cast" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -186,27 +196,37 @@
             
   <div class="section" id="bitwise-mask">
 <span id="function-bitwise-mask"></span><h1>bitwise_mask<a class="headerlink" href="#bitwise-mask" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_mask.hpp&gt;</span></code></p>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_mask.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="n">Value</span> <span class="n">bitwise_mask</span><span class="p">(</span> <span class="n">Value</span> <span class="n">lhs</span> <span class="p">)</span> <span class="k">noexcept</span>
+   <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">bitwise_mask</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This function object returns a mask of bits. This mask is full of ones if the
-input element is not equal to zero else full of zeros.</p>
-<p>The result type is the one of the parameter.</p>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">lhs</span></code> : input value</li>
+<p>Function object computing a mask of bits for each input element. This mask is full of ones if the input element is not equal
+to zero and full of zeros otherwise.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">M</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">constexpr</span>   <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Computes a mask of bits for each element of <em>v</em>. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
+The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(v),Allbits(as(v)),Zero(as(v))</span></code>.</li>
+<li>[2] Computes a mask of bits for <em>s</em>. This mask is full of ones if <em>s</em> is not equal to zero and full of zeros otherwise.
+The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">?</span> <span class="pre">Allbits(as(s))</span> <span class="pre">:</span> <span class="pre">Zero(as(s))</span></code>.</li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="return-value">
-<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>Semantically equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(a0),Allbits(as(a0)),Zero(as(a0))</span></code>.</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong>, <strong>w</strong>: Instance of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> .</li>
+<li><strong>s</strong>, <strong>t</strong>: Scalar value.</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1,2,3] A value with the same type as the parameter.</li>
+</ul>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
@@ -239,7 +259,7 @@ input element is not equal to zero else full of zeros.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Possible output</p>
+<p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
 <span class="o">&lt;-</span> <span class="n">pi</span> <span class="o">=</span>                  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">1023</span><span class="p">)</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_mask</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">)</span>
@@ -299,6 +319,7 @@ input element is not equal to zero else full of zeros.</p>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   

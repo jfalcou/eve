@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IEEEValue &mdash; eve  - (internal version) documentation</title>
+  <title>Predicate Functions &mdash; eve  - (internal version) documentation</title>
   
 
   
@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="IntegerValue" href="integervalue.html" />
-    <link rel="prev" title="Vectorized" href="vectorized.html" /> 
+    <link rel="next" title="is_equal" href="predicate/is_equal.html" />
+    <link rel="prev" title="bitwise_xor" href="bitwise/bitwise_xor.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -91,23 +91,18 @@
 <p class="caption"><span class="caption-text">Reference Manual</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="general.html">Concepts</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="vectorizable.html">Vectorizable</a></li>
-<li class="toctree-l3"><a class="reference internal" href="vectorized.html">Vectorized</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">IEEEValue</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="integervalue.html">IntegerValue</a></li>
-<li class="toctree-l3"><a class="reference internal" href="value.html">Value</a></li>
-<li class="toctree-l3"><a class="reference internal" href="logical.html">Logical</a></li>
-<li class="toctree-l3"><a class="reference internal" href="logicalvalue.html">LogicalValue</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/general.html">Concepts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../functions/general.html">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../functions/operators.html">Infix Operators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="general.html">Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="arithmetic.html">Arithmetic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Predicate Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="predicate/is_equal.html">is_equal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="operators.html">Infix Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/general.html">Constants</a></li>
 </ul>
 </li>
@@ -158,15 +153,15 @@
         
           <li><a href="../main.html">Reference Documentation</a> &raquo;</li>
         
-          <li><a href="general.html">Concepts</a> &raquo;</li>
+          <li><a href="general.html">Functions</a> &raquo;</li>
         
-      <li>IEEEValue</li>
+      <li>Predicate Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/manual/concepts/ieeevalue.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/manual/functions/predicate.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,10 +171,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="integervalue.html" class="btn btn-neutral float-right" title="IntegerValue" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="predicate/is_equal.html" class="btn btn-neutral float-right" title="is_equal" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="vectorized.html" class="btn btn-neutral" title="Vectorized" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bitwise/bitwise_xor.html" class="btn btn-neutral" title="bitwise_xor" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -188,29 +183,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ieeevalue">
-<span id="concept-ieeevalue"></span><h1>IEEEValue<a class="headerlink" href="#ieeevalue" title="Permalink to this headline">¶</a></h1>
-<p>An <a class="reference internal" href="#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> type is a type which satisfies either <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> or
-<code class="docutils literal notranslate"><span class="pre">Vectorized</span></code> and which underlying scalar type behaves like a IEEE754 floating point value.</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>A type <code class="docutils literal notranslate"><span class="pre">T</span></code> satisfies <a class="reference internal" href="#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> if:</p>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span></code>  satisfies <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> or  <code class="docutils literal notranslate"><span class="pre">Vectorized</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">std::is_floating_point_v&lt;eve::scalar_of_t&lt;T&gt;&gt;</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">true</span></code></li>
+  <div class="section" id="predicate-functions">
+<span id="function-predicate"></span><h1>Predicate Functions<a class="headerlink" href="#predicate-functions" title="Permalink to this headline">¶</a></h1>
+<p>These functions provide scalar and SIMD version of bitwise operations.
+Bitwise operations are extended to work on any floating-point types by considering the masking
+operations to apply on the value bit patterns while retaining its original types.</p>
+<p>The header <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/predicate.hpp&gt;</span></code> allows the inclusion of all specific bitwise
+required headers in one shot.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_equal.html">is_equal</a></li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">float</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">double</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">eve::wide&lt;double&gt;</span></code></li>
-</ul>
-</div></blockquote>
 </div>
 </div>
 
@@ -222,10 +205,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="integervalue.html" class="btn btn-neutral float-right" title="IntegerValue" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="predicate/is_equal.html" class="btn btn-neutral float-right" title="is_equal" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="vectorized.html" class="btn btn-neutral" title="Vectorized" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bitwise/bitwise_xor.html" class="btn btn-neutral" title="bitwise_xor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -260,6 +243,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   

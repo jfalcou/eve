@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Bitwise functions" href="../bitwise.html" />
+    <link rel="next" title="Bitwise Functions" href="../bitwise.html" />
     <link rel="prev" title="add" href="add.html" /> 
 
   
@@ -97,12 +97,12 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../operators.html">Infix Operators</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="add.html">add</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">sub</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate/is_equal.html">is_equal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bitwise/bitwise_and.html">bitwise_and</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bitwise/bitwise_not.html">bitwise_not</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bitwise/bitwise_or.html">bitwise_or</a></li>
@@ -177,6 +177,15 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="../bitwise.html" class="btn btn-neutral float-right" title="Bitwise Functions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="add.html" class="btn btn-neutral" title="add" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -184,25 +193,40 @@
             
   <div class="section" id="sub">
 <span id="function-sub"></span><h1>sub<a class="headerlink" href="#sub" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/sub.hpp&gt;</span></code></p>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/sub.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="n">Value</span> <span class="n">sub</span><span class="p">(</span> <span class="n">Value</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">Value</span> <span class="n">rhs</span> <span class="p">)</span> <span class="k">noexcept</span>
+   <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">sub</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object for performing substraction over two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> of the same type.</p>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">lhs</span></code>, <code class="docutils literal notranslate"><span class="pre">rhs</span></code> : values to substract</li>
+<p>Function object computing the difference of two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">w</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">U</span> <span class="n">s</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">U</span> <span class="n">s</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">constexpr</span>               <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span><span class="p">,</span> <span class="n">T</span> <span class="n">t</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Computes the difference of every elements of both <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a>.</li>
+<li>[2,3] Computes the difference of the scalar and every elements of the <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> instance.</li>
+<li>[4] Computes the difference of both scalars.</li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="return-value">
-<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>The difference between  <code class="docutils literal notranslate"><span class="pre">lhs</span></code> and <code class="docutils literal notranslate"><span class="pre">rhs</span></code> for every elements of each parameter.</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong>, <strong>w</strong>: Instances of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a>.</li>
+<li><strong>s</strong>, <strong>t</strong>: Scalar values of type <strong>U</strong> convertible to <strong>T</strong>.</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1-3] A value with the same type as the <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> parameter.</li>
+<li>[4] A value of type <strong>T</strong>.</li>
+</ul>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
@@ -223,7 +247,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Possible output</p>
+<p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span><span class="p">(</span><span class="mf">3.</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.5</span><span class="n">f</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
 <span class="n">sub</span><span class="p">(</span><span class="mi">3</span><span class="n">_wf</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">})</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span>
 </pre></div>
@@ -239,7 +263,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../bitwise.html" class="btn btn-neutral float-right" title="Bitwise functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../bitwise.html" class="btn btn-neutral float-right" title="Bitwise Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="add.html" class="btn btn-neutral" title="add" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
