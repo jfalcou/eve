@@ -1,45 +1,60 @@
 .. _function-bitwise_mask:
 
+##############
 bitwise_mask
-============
+##############
 
-**Required header** ``#include <eve/function/bitwise_mask.hpp>``
+**Required header:** ``#include <eve/function/bitwise_mask.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr Value bitwise_mask( Value lhs ) noexcept
+      constexpr /* implementation defined */ bitwise_mask = {};
    }
 
-This function object returns a mask of bits. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
+Function object computing a mask of bits for each input element. This mask is full of ones if the input element is not equal
+to zero and full of zeros otherwise. 
 
 
+********
+Synopsis
+********
 
-Parameters
-----------
+.. code-block:: c++
+  :linenos:
 
-  - ``lhs`` : input value
+   template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v ) noexcept;
+   template<typename T, typename U> constexpr   T         operator()( T s ) noexcept;
 
-Return value
-------------
+* [1] Computes a mask of bits for each element of *v*. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
+  The computation is equivalent to ``if_else(is_nez(v),Allbits(as(v)),Zero(as(v))``.
+                                           
+* [2] Computes a mask of bits for *s*. This mask is full of ones if *s* is not equal to zero and full of zeros otherwise.
+  The computation is equivalent to ``s ? Allbits(as(s)) : Zero(as(s))``.
 
-Semantically equivalent to ``if_else(is_nez(a0),Allbits(as(a0)),Zero(as(a0))``.
 
-The result type is  the parameter type.
+.. rubric:: Parameters
 
+* **v**, **w**: Instance of :ref:`type-wide` .
+* **s**, **t**: Scalar value.
+
+.. rubric:: Return value
+
+* [1,2,3] A value with the same type as the parameter.
+
+*******
 Options
--------
+*******
 
-
+*******
 Example
--------
+*******
 
 .. include:: ../../../../test/doc/bitwise_mask.cpp
   :literal:
 
-Possible output
+Possible output:
 
 .. include:: ../../../../test/doc/bitwise_mask.txt
   :literal:
-

@@ -27,7 +27,7 @@ Synopsis
    template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
 * [1] Computes the element-wise addition of both :ref:`wides <type-wide>`.
-* [2,3] Computes the addition of the scalar to each element of the :ref:`type-wide` instance.
+* [2,3] Computes the addition of the scalar with each element of the :ref:`type-wide` instance.
 * [4] Computes the addition of both scalars.
 
 .. rubric:: Parameters

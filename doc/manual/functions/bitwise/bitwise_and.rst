@@ -37,7 +37,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the :ref:`type-wide` parameter.
+* [1,2] A value with the same type as the first parameter.
 * [3] A value of type **T**.
 
 .. rubric:: Notes
