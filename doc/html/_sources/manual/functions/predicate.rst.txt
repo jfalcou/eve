@@ -4,9 +4,9 @@
 Predicate Functions
 ###################
 
-These functions provide scalar and SIMD version of bitwise operations.
-Bitwise operations are extended to work on any floating-point types by considering the masking
-operations to apply on the value bit patterns while retaining its original types.
+These functions provide scalar and SIMD version of scalar predicate operations.
+
+The main difference is those operations do not return `bool` but a :ref:`concept-logicalValue`. 
 
 The header ``#include <eve/function/predicate.hpp>`` allows the inclusion of all specific bitwise
 required headers in one shot.

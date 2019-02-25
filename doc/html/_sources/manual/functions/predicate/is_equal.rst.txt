@@ -13,7 +13,7 @@ is_equal
       constexpr /* implementation defined */ is_equal = {};
    }
 
-Function object performing equality comparison between two :ref:`Values <concept-value>` of same type.
+Function object performing equality comparison between two :ref:`Values <concept-value>`.
 
 ********
 Synopsis

@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Infix Operators" href="../operators.html" />
-    <link rel="prev" title="Predicate Functions" href="../predicate.html" /> 
+    <link rel="next" title="is_equal_with_equal_nans" href="is_equal_with_equal_nans.html" />
+    <link rel="prev" title="is_denormal" href="is_denormal.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -179,10 +179,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="../operators.html" class="btn btn-neutral float-right" title="Infix Operators" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="is_equal_with_equal_nans.html" class="btn btn-neutral float-right" title="is_equal_with_equal_nans" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../predicate.html" class="btn btn-neutral" title="Predicate Functions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="is_denormal.html" class="btn btn-neutral" title="is_denormal" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -200,7 +200,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object performing equality comparison between two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a> of same type.</p>
+<p>Function object performing equality comparison between two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -238,6 +238,41 @@ multiple values.</li>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/predicates.hpp&gt;</span>
+<span class="c1">#include &lt;eve/wide.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/inf.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/minf.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/nan.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/mindenormal.hpp&gt;</span>
+<span class="c1">#include &lt;iostream&gt;</span>
+
+<span class="n">using</span> <span class="n">wide_ft</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span> <span class="o">&lt;</span><span class="nb">float</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">wide_ft</span> <span class="n">pf</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="n">f</span>
+                <span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">Mindenormal</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Inf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Minf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">};</span>
+  <span class="n">wide_ft</span> <span class="n">qf</span> <span class="o">=</span> <span class="p">{</span> <span class="n">eve</span><span class="p">::</span><span class="n">Mindenormal</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Inf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Minf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span>
+                 <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="n">f</span> <span class="p">};</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- pf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- qf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">qf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::is_equal(pf, qf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_equal</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">qf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+
+  <span class="nb">float</span> <span class="n">xf</span> <span class="o">=</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">;</span>
+  <span class="nb">float</span> <span class="n">yf</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span>  <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- xf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- yf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">yf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::is_equal(xf, yf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_equal</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>Possible output:</p>
 </div>
 </div>
@@ -250,10 +285,10 @@ multiple values.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../operators.html" class="btn btn-neutral float-right" title="Infix Operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="is_equal_with_equal_nans.html" class="btn btn-neutral float-right" title="is_equal_with_equal_nans" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../predicate.html" class="btn btn-neutral" title="Predicate Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="is_denormal.html" class="btn btn-neutral" title="is_denormal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
