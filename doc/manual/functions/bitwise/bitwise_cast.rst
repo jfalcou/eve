@@ -35,7 +35,7 @@ Synopsis
 
 * **T**: expected return type that satisfy:
 
-  * [1] ``sizeof(T) == sizeof(wide<U,N>)``; 
+  * [1] ``sizeof(T) == sizeof(wide<U,N>)`` and **T** must be a  :ref:`type-wide` type; 
   * [2] ``sizeof(T) == sizeof(U)``.
   
 .. rubric:: Parameters
@@ -46,6 +46,10 @@ Synopsis
 .. rubric:: Return value
 
 * [1-3] A value of type *T*.
+
+.. rubric:: Notes
+
+* `bitwise_cast` does not allow to cast :ref:`type-wide` instances to scalar ones because, for performance reasons, the `small`  :ref:`type-wide` types (i.e. smaller than the SIMD native registers of the architecture) are  stored as native SIMD registers and consequently does not share the  scalar sizes in the supported architectures. In fact the bit size of supported wides is always greater of equal to 128 bits and the size of supported scalars is always less or equal to 64 bits.
 
 
 *******

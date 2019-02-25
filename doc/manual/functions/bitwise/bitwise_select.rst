@@ -48,7 +48,7 @@ Options
 
 *******
 Example
-*******
+******* 
 
 .. include:: ../../../../test/doc/bitwise_select.cpp
   :literal:
