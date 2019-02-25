@@ -21,16 +21,11 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T>
+  template<typename T, typename U>
   EVE_FORCEINLINE constexpr as_logical_t<T>
-  is_less_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  is_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    return (a < b);
-  }
-
-  EVE_FORCEINLINE constexpr bool is_less_(EVE_SUPPORTS(cpu_), bool a, bool b) noexcept
-  {
-    return (a < b);
+    return a < b;
   }
 }
 
