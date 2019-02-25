@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_LESS_HPP_INCLUDED
 
 #include <eve/function/scalar/is_less.hpp>
-//#include <eve/function/simd/is_less.hpp>
+#include <eve/function/simd/is_less.hpp>
 
 #endif
