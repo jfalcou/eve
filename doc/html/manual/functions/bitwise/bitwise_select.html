@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bitwise_select &mdash; eve  - (internal version) documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="bitwise_xor" href="bitwise_xor.html" />
+    <link rel="prev" title="bitwise_ornot" href="bitwise_ornot.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> eve
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/first.html">Your First SIMD code</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../main.html">Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_andnot.html">bitwise_andnot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_cast.html">bitwise_cast</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_mask.html">bitwise_mask</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_not.html">bitwise_not</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_notand.html">bitwise_notand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_notor.html">bitwise_notor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_or.html">bitwise_or</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_ornot.html">bitwise_ornot</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">bitwise_select</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants/general.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">eve</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../main.html">Reference Documentation</a> &raquo;</li>
+        
+          <li><a href="../general.html">Functions</a> &raquo;</li>
+        
+          <li><a href="../bitwise.html">Bitwise Functions</a> &raquo;</li>
+        
+      <li>bitwise_select</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/manual/functions/bitwise/bitwise_select.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="bitwise_xor.html" class="btn btn-neutral float-right" title="bitwise_xor" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bitwise_ornot.html" class="btn btn-neutral" title="bitwise_ornot" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bitwise-select">
+<span id="function-bitwise-select"></span><h1>bitwise_select<a class="headerlink" href="#bitwise-select" title="Permalink to this headline">¶</a></h1>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_select.hpp&gt;</span></code></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
+<span class="p">{</span>
+   <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">bitwise_select</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Function object performing a bit selection between two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a> of same bit size according to a
+mask.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">M</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">U</span><span class="p">,</span><span class="n">M</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">w</span> <span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">U</span><span class="p">,</span><span class="n">M</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">U</span> <span class="n">s</span><span class="p">,</span> <span class="n">U</span> <span class="n">t</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">constexpr</span>               <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">r</span><span class="p">,</span> <span class="n">U</span> <span class="n">s</span><span class="p">,</span> <span class="n">U</span> <span class="n">t</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Performs a bit selection between <em>w</em> and <em>x</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(w,</span> <span class="pre">v),</span> <span class="pre">eve::bitwise_andnot(x,</span> <span class="pre">v))</span></code>.</li>
+<li>[2] Performs a bit selection between <em>s</em> and <em>t</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_select(v,</span> <span class="pre">wide&lt;T,N&gt;(s),</span> <span class="pre">wide&lt;T,N&gt;(t))</span></code>.</li>
+<li>[3] Performs a bit selection between <em>s</em> and <em>t</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(s,</span> <span class="pre">r),</span> <span class="pre">eve::bitwise_andnot(t,</span> <span class="pre">r))</span></code>.</li>
+</ul>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong>, <strong>w</strong>, <strong>x</strong>: Instances of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> satisfying <code class="docutils literal notranslate"><span class="pre">sizeof(v)</span> <span class="pre">==</span> <span class="pre">sizeof(w)</span></code>, <em>w</em> and <em>x</em> sharing the same type.</li>
+<li><strong>r</strong>: Scalar value  of type <strong>T</strong></li>
+<li><strong>s</strong>, <strong>t</strong>: Scalar values of type <strong>U</strong>. <strong>U</strong> must satisfy <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">==</span> <span class="pre">sizeof(U)</span></code>.</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1-3] A value of the type shared by the second and third parameter.</li>
+</ul>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/bitwise.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/allbits.hpp&gt;</span>
+<span class="c1">#include &lt;eve/wide.hpp&gt;</span>
+<span class="c1">#include &lt;iostream&gt;</span>
+
+<span class="n">using</span> <span class="n">iT</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">uint32_t</span><span class="p">;</span>
+<span class="n">using</span> <span class="n">wide_it</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span><span class="o">&lt;</span><span class="n">iT</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">wide_it</span> <span class="n">pi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+  <span class="n">wide_it</span> <span class="n">qi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+  <span class="n">wide_it</span> <span class="n">si</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">Allbits</span><span class="o">&lt;</span><span class="n">iT</span><span class="o">&gt;</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;- si =                              &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">si</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;- pi =                              &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;- qi =                              &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">qi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; -&gt; eve::bitwise_select(si, pi, qi) =  &quot;</span>
+            <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_select</span><span class="p">(</span><span class="n">si</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">qi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+
+  <span class="n">iT</span> <span class="n">ssi</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">xi</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">yi</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; ssi =                                &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ssi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; xi =                                 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; yi =                                 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">yi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; -&gt; eve::bitwise_select(ssi, xi, yi) = &quot;</span>
+            <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_select</span><span class="p">(</span><span class="n">ssi</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Possible output:</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bitwise_xor.html" class="btn btn-neutral float-right" title="bitwise_xor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bitwise_ornot.html" class="btn btn-neutral" title="bitwise_ornot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joel Falcou, Jean-Thierry Lapresté
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
