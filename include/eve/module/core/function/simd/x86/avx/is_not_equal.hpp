@@ -16,39 +16,45 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/as_arithmetic.hpp>
+#include <eve/is_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-
-// -----------------------------------------------------------------------------------------------
-// avx_
-  template < typename T, typename N > 
+  // -----------------------------------------------------------------------------------------------
+  // avx_
+  template < typename T, typename N >
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(avx_),
                                  wide<T, N, avx_> const &v0,
                                  wide<T, N, avx_> const &v1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    using l_t = as_logical_t<t_t>; 
+    using l_t = as_logical_t<t_t>;
+    using a_t = as_arithmetic_t< wide<as_integer_t<T>,N> >;
+
     if constexpr(std::is_same_v<T, float> ) return l_t(_mm256_cmp_ps(v0, v1, _CMP_NEQ_UQ));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_NEQ_UQ));
-    if constexpr( std::is_integral_v<T>   ) return aggregate(eve::is_not_equal, v0, v1);  
+    if constexpr( std::is_integral_v<T>   ) return aggregate(eve::is_not_equal, v0, v1);
+    if constexpr(is_logical_v<T>) return is_not_equal(bitwise_cast<a_t>(v0), bitwise_cast<a_t>(v1));
   }
- 
-// -----------------------------------------------------------------------------------------------
-// sse_
-  template < typename T,  typename N > 
+
+  // -----------------------------------------------------------------------------------------------
+  // sse_
+  template < typename T,  typename N >
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(avx_),
                                  wide<T, N, sse_> const &v0,
                                  wide<T, N, sse_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>; 
-    using l_t = as_logical_t<t_t>; 
+    using t_t = wide<T, N, avx_>;
+    using l_t = as_logical_t<t_t>;
+    using a_t = as_arithmetic_t< wide<as_integer_t<T>,N> >;
+
     if constexpr(std::is_same_v<T, float> ) return l_t(_mm_cmp_ps(v0, v1, _CMP_NEQ_UQ));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmp_pd(v0, v1, _CMP_NEQ_UQ));
-    if constexpr( std::is_integral_v<T>   ) return map(eve::is_not_equal, v0, v1);  
+    if constexpr( std::is_integral_v<T>   ) return is_not_equal_(EVE_RETARGET(sse4_2_),v0,v1);
+    if constexpr(is_logical_v<T>) return is_not_equal(bitwise_cast<a_t>(v0), bitwise_cast<a_t>(v1));
   }
-
 }
 
 #endif

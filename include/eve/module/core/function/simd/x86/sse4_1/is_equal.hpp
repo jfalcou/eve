@@ -16,6 +16,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/is_logical.hpp>
+#include <eve/as_arithmetic.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -27,18 +29,16 @@ namespace eve::detail
   is_equal_(EVE_SUPPORTS(sse4_1_), wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1) noexcept
   {
     using t_t = wide<T, N, sse_>;
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if constexpr(std::is_same_v<T, float>) return as_logical_t<t_t>(_mm_cmpeq_ps(v0, v1));
-      if constexpr(std::is_same_v<T, double>) return as_logical_t<t_t>(_mm_cmpeq_pd(v0, v1));
-    }
-    else
-    {
-      if constexpr(sizeof(T) == 1) return as_logical_t<t_t>(_mm_cmpeq_epi8(v0, v1));
-      if constexpr(sizeof(T) == 2) return as_logical_t<t_t>(_mm_cmpeq_epi16(v0, v1));
-      if constexpr(sizeof(T) == 4) return as_logical_t<t_t>(_mm_cmpeq_epi32(v0, v1));
-      if constexpr(sizeof(T) == 8) return as_logical_t<t_t>(_mm_cmpeq_epi64(v0, v1));
-    }
+    using l_t = as_logical_t<t_t>;
+    using a_t = as_arithmetic_t< wide<as_integer_t<T>,N> >;
+
+    if constexpr(std::is_same_v<T, float>) return l_t(_mm_cmpeq_ps(v0, v1));
+    if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpeq_pd(v0, v1));
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 1) return l_t(_mm_cmpeq_epi8(v0, v1));
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 2) return l_t(_mm_cmpeq_epi16(v0, v1));
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 4) return l_t(_mm_cmpeq_epi32(v0, v1));
+    if constexpr(std::is_integral_v<T> && sizeof(T) == 8) return l_t(_mm_cmpeq_epi64(v0, v1));
+    if constexpr(is_logical_v<T>) return is_equal(bitwise_cast<a_t>(v0), bitwise_cast<a_t>(v1));
   }
 }
 
