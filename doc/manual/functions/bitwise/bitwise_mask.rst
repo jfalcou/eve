@@ -13,9 +13,8 @@ bitwise_mask
       constexpr /* implementation defined */ bitwise_mask = {};
    }
 
-Function object computing a mask of bits for each input element. This mask is full of ones if the input element is not equal
-to zero and full of zeros otherwise. 
-
+Function object computing a mask of bits for each input element. This mask has all its bit set if the input element
+is not equal to zero and all its bits unset otherwise.
 
 ********
 Synopsis
@@ -27,11 +26,11 @@ Synopsis
    template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   T         operator()( T s ) noexcept;
 
-* [1] Computes a mask of bits for each element of *v*. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
-  The computation is equivalent to ``if_else(is_nez(v),Allbits(as(v)),Zero(as(v))``.
-                                           
-* [2] Computes a mask of bits for *s*. This mask is full of ones if *s* is not equal to zero and full of zeros otherwise.
-  The computation is equivalent to ``s ? Allbits(as(s)) : Zero(as(s))``.
+* [1] Computes a mask of bits for each element of **v**. This mask has all its bit set if the input element
+  is not equal to zero and all its bits unset otherwise. The computation is equivalent to ``if_else(is_nez(v),Allbits(as(v)),Zero(as(v))``.
+
+* [2] Computes a mask of bits for **s**. TThis mask has all its bit set if **s** is not equal to zero
+  and all its bits unset otherwise. The computation is equivalent to ``s ? Allbits(as(s)) : Zero(as(s))``.
 
 
 .. rubric:: Parameters

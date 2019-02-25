@@ -40,10 +40,8 @@ Synopsis
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
 
-
 Options
 *******
-
 
 Example
 *******

@@ -13,7 +13,7 @@ bitwise_andnot
       constexpr /* implementation defined */ bitwise_andnot = {};
    }
 
-Function object performing a bitwise AND between a :ref:`Value <concept-value>` and the COMPLEMENT of 
+Function object performing a bitwise AND between a :ref:`Value <concept-value>` and the COMPLEMENT of
 another :ref:`Value <concept-value>` of the same bit size.
 
 ********
@@ -27,9 +27,9 @@ Synopsis
    template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
    template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
 
-* [1] Performs a bitwise AND between *v* and the COMPLEMENT of *w*.
-* [2] Performs a bitwise AND between each elements of *v* and the COMPLEMENT of *s*.
-* [3] Performs a bitwise AND between *s* and the COMPLEMENT of *t*.
+* [1] Performs a bitwise AND between **v** and the COMPLEMENT of **w**.
+* [2] Performs a bitwise AND between each elements of *v* and the COMPLEMENT of **s**.
+* [3] Performs a bitwise AND between **s** and the COMPLEMENT of **t**.
 
 .. rubric:: Parameters
 

@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   T         operator()( T s ) noexcept;
 
-* [1] Performs the bitwise COMPLEMENT of *v*.
-* [2] Performs the bitwise COMPLEMENT of *s*.
+* [1] Performs the bitwise COMPLEMENT of **v**.
+* [2] Performs the bitwise COMPLEMENT of **s**.
 
 .. rubric:: Parameters
 
@@ -39,9 +39,8 @@ Synopsis
 
 .. rubric:: Notes
 
-* There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bitwise_not`. 
-  This implies that calls to:ref:`function-bitwise_not` on
-  :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
+* There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bitwise_not`.
+  This implies that calls to:ref:`function-bitwise_not` on :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
 
 *******
 Options
