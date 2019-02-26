@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check logical_and behavior on homogeneous wide",
     wide<eve::logical<Type>, T> ref(
         [](int i, int c) { return eve::logical_and(Type(c - i), Type(i % 2)); });
     TTS_SECTION("supports eve::logical_and") { TTS_EQUAL(ref, eve::logical_and(lhs, rhs)); }
-    TTS_SECTION("supports operator == ") { TTS_EQUAL(ref, (lhs && rhs)); }
+    TTS_SECTION("supports operator && ") { TTS_EQUAL(ref, (lhs && rhs)); }
   }
 }
 
@@ -61,10 +61,10 @@ TTS_CASE_TPL("Check plus behavior on wide and scalar",
     TTS_SECTION("supports eve::logical_and") { TTS_EQUAL(ref2, eve::logical_and(lhs, Type(0))); }
     TTS_SECTION("supports eve::logical_and") { TTS_EQUAL(ref2, eve::logical_and(Type(0), lhs)); }
 
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref1, lhs && 2); }
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref1, Type(2) && lhs); }
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref2, lhs && 0); }
-    TTS_SECTION("supports operator == ()") { TTS_EQUAL(ref2, Type(0) && lhs); }
+    TTS_SECTION("supports operator && ()") { TTS_EQUAL(ref1, lhs && 2); }
+    TTS_SECTION("supports operator && ()") { TTS_EQUAL(ref1, Type(2) && lhs); }
+    TTS_SECTION("supports operator && ()") { TTS_EQUAL(ref2, lhs && 0); }
+    TTS_SECTION("supports operator && ()") { TTS_EQUAL(ref2, Type(0) && lhs); }
   }
 }
 #endif
