@@ -8,10 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_LOGICAL_ANDNOT_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_LOGICAL_ANDNOT_HPP_INCLUDED
 
-#include <eve/function/definition/logical_andnot.hpp>
-#include <eve/module/core/function/scalar/logical_andnot.hpp>
-
-#endif
+using Type = float;
+#include "logical_andnot.hpp"
