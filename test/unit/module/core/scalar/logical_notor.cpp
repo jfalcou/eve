@@ -41,8 +41,8 @@ TTS_CASE("Check logical_notor behavior")
   TTS_EQUAL(eve::logical_notor(std::int16_t(1), std::int16_t(0)), false);
   TTS_EQUAL(eve::logical_notor(std::int32_t(1), std::int32_t(0)), false);
   TTS_EQUAL(eve::logical_notor(std::int64_t(1), std::int64_t(0)), false);
-  TTS_EQUAL(eve::logical_notor(1.5f, -1.5f), false);
-  TTS_EQUAL(eve::logical_notor(4.753, -4.753), false);
+  TTS_EQUAL(eve::logical_notor(1.5f, 0.0f), false);
+  TTS_EQUAL(eve::logical_notor(4.753, 0.0), false);
 
   TTS_EQUAL(eve::logical_notor(std::uint8_t(1), std::uint8_t(2)), true);
   TTS_EQUAL(eve::logical_notor(std::uint16_t(1), std::uint16_t(2)), true);
@@ -52,8 +52,8 @@ TTS_CASE("Check logical_notor behavior")
   TTS_EQUAL(eve::logical_notor(std::int16_t(1), std::int16_t(2)), true);
   TTS_EQUAL(eve::logical_notor(std::int32_t(1), std::int32_t(2)), true);
   TTS_EQUAL(eve::logical_notor(std::int64_t(1), std::int64_t(2)), true);
-  TTS_EQUAL(eve::logical_notor(-1.5f, -0.0f), true);
-  TTS_EQUAL(eve::logical_notor(-4.753, 0.0), true);
+  TTS_EQUAL(eve::logical_notor(-1.5f, 1.0f), true);
+  TTS_EQUAL(eve::logical_notor(-4.753, 89.4), true);
 }
 
 
