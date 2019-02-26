@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bitwise functions &mdash; eve  - (internal version) documentation</title>
+  <title>Bitwise Functions &mdash; eve  - (internal version) documentation</title>
   
 
   
@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="general.html">Functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="arithmetic.html">Arithmetic Functions</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Bitwise functions</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bitwise Functions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_and.html">bitwise_and</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_andnot.html">bitwise_andnot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_cast.html">bitwise_cast</a></li>
@@ -105,9 +105,11 @@
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_notor.html">bitwise_notor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_or.html">bitwise_or</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_ornot.html">bitwise_ornot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_select.html">bitwise_select</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise/bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="predicate.html">Predicate Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="operators.html">Infix Operators</a></li>
@@ -163,7 +165,7 @@
         
           <li><a href="general.html">Functions</a> &raquo;</li>
         
-      <li>Bitwise functions</li>
+      <li>Bitwise Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,13 +179,22 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="bitwise/bitwise_and.html" class="btn btn-neutral float-right" title="bitwise_and" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="arithmetic/sub.html" class="btn btn-neutral" title="sub" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="section" id="bitwise-functions">
-<span id="function-bitwise"></span><h1>Bitwise functions<a class="headerlink" href="#bitwise-functions" title="Permalink to this headline">¶</a></h1>
+<span id="function-bitwise"></span><h1>Bitwise Functions<a class="headerlink" href="#bitwise-functions" title="Permalink to this headline">¶</a></h1>
 <p>These functions provide scalar and SIMD version of bitwise operations.
 Bitwise operations are extended to work on any floating-point types by considering the masking
 operations to apply on the value bit patterns while retaining its original types.</p>
@@ -200,6 +211,7 @@ required headers in one shot.</p>
 <li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_notor.html">bitwise_notor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_or.html">bitwise_or</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_ornot.html">bitwise_ornot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_select.html">bitwise_select</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </div>
@@ -251,6 +263,7 @@ required headers in one shot.</p>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   

@@ -15,14 +15,3 @@ div.sphinxsidebarwrapper
 .wy-nav-content {
     max-width: none !important;
 }
-
-div .toctree-wrapper { column-count: 2; }
-
-div .toctree-wrapper > ul { margin: 0; }
-
-ul .toctree-l1 {
-    margin: 0;
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid-column;
-}

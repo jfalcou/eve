@@ -1,7 +1,8 @@
 .. _function-bitwise:
 
-Bitwise functions
-=================
+#################
+Bitwise Functions
+#################
 
 These functions provide scalar and SIMD version of bitwise operations.
 Bitwise operations are extended to work on any floating-point types by considering the masking

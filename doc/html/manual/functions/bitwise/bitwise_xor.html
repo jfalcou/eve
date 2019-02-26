@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Infix Operators" href="../operators.html" />
-    <link rel="prev" title="bitwise_ornot" href="bitwise_ornot.html" /> 
+    <link rel="next" title="Predicate Functions" href="../predicate.html" />
+    <link rel="prev" title="bitwise_select" href="bitwise_select.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -97,12 +97,12 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../operators.html">Infix Operators</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic/add.html">add</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic/sub.html">sub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate/is_equal.html">is_equal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bitwise_not.html">bitwise_not</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bitwise_or.html">bitwise_or</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">bitwise_xor</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 </ul>
@@ -161,7 +161,7 @@
         
           <li><a href="../general.html">Functions</a> &raquo;</li>
         
-          <li><a href="../bitwise.html">Bitwise functions</a> &raquo;</li>
+          <li><a href="../bitwise.html">Bitwise Functions</a> &raquo;</li>
         
       <li>bitwise_xor</li>
     
@@ -177,6 +177,15 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="../predicate.html" class="btn btn-neutral float-right" title="Predicate Functions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bitwise_select.html" class="btn btn-neutral" title="bitwise_select" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -184,29 +193,49 @@
             
   <div class="section" id="bitwise-xor">
 <span id="function-bitwise-xor"></span><h1>bitwise_xor<a class="headerlink" href="#bitwise-xor" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_xor.hpp&gt;</span></code></p>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_xor.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="n">Value0</span> <span class="n">bitwise_xor</span><span class="p">(</span> <span class="n">Value0</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">Value1</span> <span class="n">rhs</span> <span class="p">)</span> <span class="k">noexcept</span>
+   <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">bitwise_xor</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object for performing bitwise xor over two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a> of possibly different types
-but of same bit size.</p>
-<p>The result type is the one of the first operrator.</p>
-<p>Infix notation can be used with operator ‘^’ execept in scalar mode if any
-operxor is floating point because of C++ limitations.</p>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">lhs</span></code>, <code class="docutils literal notranslate"><span class="pre">rhs</span></code> : input values</li>
+<p>Function object performing a bitwise XOR between two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a> of same size.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">M</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">U</span><span class="p">,</span><span class="n">M</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">w</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">U</span> <span class="n">s</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">constexpr</span>               <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span><span class="p">,</span> <span class="n">U</span> <span class="n">t</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Performs a bitwise XOR between both <span class="xref std std-ref">wides &lt;type-wide</span>&gt;.</li>
+<li>[2] Performs a bitwise XOR between the scalar and each elements of the <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> instance.</li>
+<li>[3] Performs a bitwise XOR between both scalars.</li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="return-value">
-<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>The bitwise xor of  <code class="docutils literal notranslate"><span class="pre">lhs</span></code> and <code class="docutils literal notranslate"><span class="pre">rhs</span></code> for every elements of each parameter.</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong>, <strong>w</strong>: Instances of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> satisfying <code class="docutils literal notranslate"><span class="pre">sizeof(v)</span> <span class="pre">==</span> <span class="pre">sizeof(w)</span></code>.</li>
+<li><strong>s</strong>, <strong>t</strong>: Scalar values of type <strong>U</strong> satisfying <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">==</span> <span class="pre">sizeof(U)</span></code>.</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1,2] A value with the same type as the first parameter.</li>
+<li>[3] A value of type <strong>T</strong>.</li>
+</ul>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li>There is no type restriction between operands of <a class="reference internal" href="#function-bitwise-xor"><span class="std std-ref">bitwise_xor</span></a> as long as the number
+of bits between them are equals. This implies that calls to:ref:<cite>function-bitwise_xor</cite> on
+<a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">floating points values</span></a> are possible as long as they are performed with a
+second parameters of proper size.</li>
+<li>There is no cardinal restriction on the <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> operands of <a class="reference internal" href="#function-bitwise-xor"><span class="std std-ref">bitwise_xor</span></a>
+as long as the number of bits between them are equals.  This implies that calls to:ref:<cite>function-bitwise_xor</cite>
+on <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> values of different cardinals are allowed as long at their total size
+in bits are equal.</li>
+</ul>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
@@ -240,7 +269,7 @@ operxor is floating point because of C++ limitations.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Possible output</p>
+<p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
  <span class="o">&lt;-</span> <span class="n">pi</span> <span class="o">=</span>                      <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
  <span class="o">&lt;-</span> <span class="n">qi</span> <span class="o">=</span>                      <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -262,10 +291,10 @@ operxor is floating point because of C++ limitations.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../operators.html" class="btn btn-neutral float-right" title="Infix Operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../predicate.html" class="btn btn-neutral float-right" title="Predicate Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="bitwise_ornot.html" class="btn btn-neutral" title="bitwise_ornot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bitwise_select.html" class="btn btn-neutral" title="bitwise_select" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -300,6 +329,7 @@ operxor is floating point because of C++ limitations.</p>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   

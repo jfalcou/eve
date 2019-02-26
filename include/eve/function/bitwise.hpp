@@ -20,7 +20,7 @@
 #include <eve/function/bitwise_notor.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_ornot.hpp>
-//#include <eve/function/bitwise_select.hpp>
+#include <eve/function/bitwise_select.hpp>
 #include <eve/function/bitwise_xor.hpp>
 
 #endif

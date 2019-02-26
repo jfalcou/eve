@@ -1,2 +1,6 @@
+.. _type-wide:
+
 wide
 ====
+
+

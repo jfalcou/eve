@@ -1,47 +1,60 @@
 .. _function-bitwise_not:
 
+##############
 bitwise_not
-===========
+##############
 
-**Required header** ``#include <eve/function/bitwise_not.hpp>``
+**Required header:** ``#include <eve/function/bitwise_not.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr Value bitwise_not( Value lhs ) noexcept
+      constexpr /* implementation defined */ bitwise_not = {};
    }
 
-Function object for performing bitwise not over a :ref:`Value <concept-value>`, (~lhs)
+Function object performing a bitwise COMPLEMENT of a :ref:`Value <concept-value>`.
 
-The result type is the one of the parameter.
+********
+Synopsis
+********
 
-Operator notation can be used with operator '~' except in scalar mode if 
-operand is floating point because of C++ limitations.
+.. code-block:: c++
+  :linenos:
 
+   template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v ) noexcept;
+   template<typename T, typename U> constexpr   T         operator()( T s ) noexcept;
 
-Parameters
-----------
+* [1] Performs the bitwise COMPLEMENT of *v*.
+* [2] Performs the bitwise COMPLEMENT of *s*.
 
-  - ``lhs`` : input value
+.. rubric:: Parameters
 
-Return value
-------------
+* **v**, **w**: Instance of :ref:`type-wide` .
+* **s**, **t**: Scalar value.
 
-The bitwise complement of  ``lhs`` for every elements of each parameter.
+.. rubric:: Return value
 
+* [1,2,3] A value with the same type as the parameter.
+
+.. rubric:: Notes
+
+* There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bitwise_not`. 
+  This implies that calls to:ref:`function-bitwise_not` on
+  :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
+
+*******
 Options
--------
+*******
 
-
+*******
 Example
--------
+*******
 
 .. include:: ../../../../test/doc/bitwise_not.cpp
   :literal:
 
-Possible output
+Possible output:
 
 .. include:: ../../../../test/doc/bitwise_not.txt
   :literal:
-

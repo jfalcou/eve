@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../bitwise.html">Bitwise Functions</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="bitwise_and.html">bitwise_and</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_andnot.html">bitwise_andnot</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">bitwise_cast</a></li>
@@ -105,9 +105,11 @@
 <li class="toctree-l4"><a class="reference internal" href="bitwise_notor.html">bitwise_notor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_or.html">bitwise_or</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_ornot.html">bitwise_ornot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitwise_select.html">bitwise_select</a></li>
 <li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
@@ -163,7 +165,7 @@
         
           <li><a href="../general.html">Functions</a> &raquo;</li>
         
-          <li><a href="../bitwise.html">Bitwise functions</a> &raquo;</li>
+          <li><a href="../bitwise.html">Bitwise Functions</a> &raquo;</li>
         
       <li>bitwise_cast</li>
     
@@ -179,6 +181,15 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="bitwise_mask.html" class="btn btn-neutral float-right" title="bitwise_mask" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bitwise_andnot.html" class="btn btn-neutral" title="bitwise_andnot" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -186,31 +197,47 @@
             
   <div class="section" id="bitwise-cast">
 <span id="function-bitwise-cast"></span><h1>bitwise_cast<a class="headerlink" href="#bitwise-cast" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_cast.hpp&gt;</span></code></p>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise_cast.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="n">Value0</span> <span class="n">bitwise_cast</span><span class="o">&lt;</span><span class="n">Value0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Value1</span> <span class="n">lhs</span><span class="p">)</span> <span class="k">noexcept</span>
+   <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span>  <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span> <span class="n">bitwise_cast</span><span class="p">(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">U</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+   <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span>             <span class="o">&gt;</span> <span class="n">bitwise_cast</span><span class="p">(</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object for performing bitwise cast to a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> of a possibly different type
-than the input, but of same bit size.</p>
-<p>The result type is the template parameter.</p>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">Value0</span></code> : output Type</li>
-<li><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: input value</li>
+<p>Function performing reinterpretation of a pattern of bit to a possibly different type of same bit size.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span>  <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span> <span class="n">bitwise_cast</span><span class="p">(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">U</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+    <span class="k">template</span> <span class="o">&lt;</span> <span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span>             <span class="o">&gt;</span> <span class="n">bitwise_cast</span><span class="p">(</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Reinterpret a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> <em>v</em> of type <em>wide&lt;U,N&gt;</em> as a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> of type <em>T</em>.</li>
+<li>[2] Reinterpret a scalar value  <em>s</em> of type <em>U</em> as a scalar value of type <em>T</em></li>
 </ul>
-</div></blockquote>
-</div>
-<div class="section" id="return-value">
-<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
-<p>The bits of  <code class="docutils literal notranslate"><span class="pre">lhs</span></code>  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value1</span></a> reinterpreted as a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value0</span></a>.</p>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Template parameters</p>
+<ul class="simple">
+<li><strong>T</strong>: expected return type that satisfy:<ul>
+<li>[1] <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">==</span> <span class="pre">sizeof(wide&lt;U,N&gt;)</span></code> and <strong>T</strong> must be a  <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> type;</li>
+<li>[2] <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">==</span> <span class="pre">sizeof(U)</span></code>.</li>
+</ul>
+</li>
+</ul>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong>: Instance of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a>.</li>
+<li><strong>s</strong>: Scalar value.</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1-3] A value of type <em>T</em>.</li>
+</ul>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><cite>bitwise_cast</cite> does not allow to cast <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> instances to scalar ones because, for performance reasons, the <cite>small</cite>  <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> types (i.e. smaller than the SIMD native registers of the architecture) are  stored as native SIMD registers and consequently does not share the  scalar sizes in the supported architectures. In fact the bit size of supported wides is always greater of equal to 128 bits and the size of supported scalars is always less or equal to 64 bits.</li>
+</ul>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
@@ -240,7 +267,7 @@ than the input, but of same bit size.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Possible output</p>
+<p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
 <span class="o">&lt;-</span> <span class="n">pf</span> <span class="o">=</span>                            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bitwise_cast</span><span class="o">&lt;</span><span class="n">wide_it</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1065353216</span><span class="p">,</span> <span class="mi">1073741824</span><span class="p">,</span> <span class="o">-</span><span class="mi">1082130432</span><span class="p">,</span> <span class="mi">1056964608</span><span class="p">)</span>
@@ -298,6 +325,7 @@ than the input, but of same bit size.</p>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   

@@ -9,7 +9,7 @@ and what expressions and operations are valid for such a SIMD compatible type.
 
 From those two Concepts, we define the :ref:`concept-value` -related Concepts that describes the types
 usable as arguments of **EVE** 's functions. They are the :ref:`concept-ieeevalue` and the
-:ref:`concept-integervalue` Concepts which represent types which can be either :ref:`concept-vectorizable`
+:ref:`concept-integralvalue` Concepts which represent types which can be either :ref:`concept-vectorizable`
 or :ref:`concept-vectorized` and supports a subset of numerical properties.
 
 This ambivalence around the SIMD or scalar status of types modeling these Concepts is what
@@ -19,7 +19,7 @@ to support the polymorphic aspect of the SIMDCallable Concepts, thus allowing po
 objects to be used for both scalar and SIMD computation.
 
 Finally, the :ref:`concept-value`  Concept aggregates all types modeling either :ref:`concept-ieeevalue` or
-:ref:`concept-integervalue`. Similarly, the :ref:`concept-logicalvalue` Concept defines types that represent
+:ref:`concept-integralvalue`. Similarly, the :ref:`concept-logicalvalue` Concept defines types that represent
 SIMD-compatible logical values.
 
 .. toctree::
@@ -28,7 +28,7 @@ SIMD-compatible logical values.
    vectorizable
    vectorized
    ieeevalue
-   integervalue
+   integralvalue
    value
    logical
    logicalvalue

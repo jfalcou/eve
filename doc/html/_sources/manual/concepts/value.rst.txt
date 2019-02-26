@@ -4,7 +4,7 @@ Value
 =====
 
 A type satisfies :ref:`concept-value` if it satisfies either :ref:`concept-ieeevalue`
-or :ref:`concept-integervalue`.
+or :ref:`concept-integralvalue`.
 
 Example
 -------
