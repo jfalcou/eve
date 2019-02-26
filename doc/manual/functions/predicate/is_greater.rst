@@ -1,8 +1,8 @@
 .. _function-is_greater:
 
-########
+##########
 is_greater
-########
+##########
 
 **Required header:** ``#include <eve/function/is_greater.hpp>``
 

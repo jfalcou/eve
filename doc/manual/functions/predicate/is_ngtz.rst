@@ -1,8 +1,8 @@
 .. _function-is_ngtz:
 
-################
+#######
 is_ngtz
-################
+#######
 
 **Required header** ``#include <eve/function/is_ngtz.hpp>``
 

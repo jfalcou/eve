@@ -1,8 +1,8 @@
 .. _function-is_gtz:
 
-################
+######
 is_gtz
-################
+######
 
 **Required header** ``#include <eve/function/is_gtz.hpp>``
 
@@ -40,8 +40,7 @@ Synopsis
 
 .. rubric:: Notes
 
- * The computation ``is_gtz(x)`` is equivalent to ``is_greater_equal(x, Zero(as(x)))``
-
+* The computation ``is_gtz(x)`` is equivalent to ``is_greater_equal(x, Zero(as(x)))``
 
 Options
 *******

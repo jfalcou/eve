@@ -1,8 +1,8 @@
-.. _function-is_denormal:
+.. _function-is_eqz:
 
-################
+######
 is_eqz
-################
+######
 
 **Required header** ``#include <eve/function/is_eqz.hpp>``
 

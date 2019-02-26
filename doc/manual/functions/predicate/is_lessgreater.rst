@@ -1,8 +1,8 @@
 .. _function-is_lessgreater:
 
-########
+##############
 is_lessgreater
-########
+##############
 
 **Required header:** ``#include <eve/function/is_lessgreater.hpp>``
 
@@ -42,9 +42,9 @@ Synopsis
 * [1,2] A value of type **as_logical_t<wide<T,N>>**.
 * [3] A value of type **as_logical_t<T>**.
 
-
 .. rubric:: Notes
-* This is equivalent to compute ``is_not_equal(x,y) || is_nan(x) || is_nan(y)`` 
+
+* This is equivalent to compute ``is_not_equal(x,y) || is_nan(x) || is_nan(y)``
 * The return type is not ``bool`` as predicates applied on :ref:`concept-vectorized` types need to store
   multiple values.
 

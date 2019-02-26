@@ -1,8 +1,8 @@
 .. _function-is_positive:
 
-################
+###########
 is_positive
-################
+###########
 
 **Required header** ``#include <eve/function/is_positive.hpp>``
 
@@ -33,17 +33,17 @@ Synopsis
 * **v**: Instance of :ref:`type-wide`.
 * **s**: Scalar value.
 
-.. rubric:: Return value 
+.. rubric:: Return value
 
 * [1] A value of type **as_logical_t<wide<T,N>>**.
 * [2] A value of type **as_logical_t<T>**.
 
 .. rubric:: Notes
 
-* The computation ``is_positive(x)`` is equivalent to ``is_not_greater(x, Zero(as(x)))`` 
-  for :ref:`IntegralValues <concept-integralvalue>`, but for for :ref:`IEEEValues <concept-ieeevalue>` 
+* The computation ``is_positive(x)`` is equivalent to ``is_not_greater(x, Zero(as(x)))``
+  for :ref:`IntegralValues <concept-integralvalue>`, but for :ref:`IEEEValues <concept-ieeevalue>`
   the object returns :ref:`True <constant-true>` if the most significant bit of the element is not set.
-  Peculiarly -0.0 and -0.0f are not 'positive' but are 'not greater than zero'.
+  More precisely, this implies that -0.0 and -0.0f are not 'positive' but are 'not greater than zero'.
 
 Example
 *******

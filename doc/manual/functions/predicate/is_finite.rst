@@ -1,8 +1,8 @@
 .. _function-is_finite:
 
-################
+#########
 is_finite
-################
+#########
 
 **Required header** ``#include <eve/function/is_finite.hpp>``
 
@@ -13,7 +13,7 @@ is_finite
      constexpr /* implementation defined */ is_finite = {};
    }
 
-Function object determining if the given :ref:`Value <concept-value>` is finite
+Function object determining if the given :ref:`Value <concept-value>` is finite.
 
 ********
 Synopsis

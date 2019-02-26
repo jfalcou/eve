@@ -1,8 +1,8 @@
 .. _function-is_equal_with_equal_nans:
 
-########
+########################
 is_equal_with_equal_nans
-########
+########################
 
 **Required header:** ``#include <eve/function/is_equal_with_equal_nans.hpp>``
 

@@ -1,8 +1,8 @@
 .. _function-is_less:
 
-########
-is_less 
-########
+#######
+is_less
+#######
 
 **Required header:** ``#include <eve/function/is_less.hpp>``
 

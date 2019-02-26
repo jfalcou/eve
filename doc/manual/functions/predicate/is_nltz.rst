@@ -1,8 +1,8 @@
 .. _function-is_nltz:
 
-################
+#######
 is_nltz
-################
+#######
 
 **Required header** ``#include <eve/function/is_nltz.hpp>``
 

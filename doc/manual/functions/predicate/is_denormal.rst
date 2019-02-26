@@ -1,8 +1,8 @@
 .. _function-is_denormal:
 
-################
+###########
 is_denormal
-################
+###########
 
 **Required header** ``#include <eve/function/is_denormal.hpp>``
 
@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename N>             as_logical_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
    template<typename T            > constexpr   as_logical_t<T>         operator()( T s ) noexcept;
 
-* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is subnormal.
-* [2] returns :ref:`True <constant-true_>` if **s** is subnormal.
+* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is denormal.
+* [2] returns :ref:`True <constant-true_>` if **s** is denormal.
 
 .. rubric:: Parameters
 
@@ -40,8 +40,8 @@ Synopsis
 
 .. rubric:: Notes
 
-* For :ref:`IEEEValues <concept-ieeevalue>`, the computation is equivalent to for each input element **x** ``is_less(abs(x), Smallestposval(as(x))) && is_nez(x)``
-* For :ref:`IntegralValues <concept-integralvalue>` the object is still defined, but always returns :ref:`False <constant-false_>`
+* For :ref:`IEEEValues <concept-ieeevalue>`, the computation is equivalent to ``is_less(abs(x), Smallestposval(as(x))) && is_nez(x)``
+* For :ref:`IntegralValues <concept-integralvalue>` the result is always :ref:`False <constant-false_>`
 
 Options
 *******

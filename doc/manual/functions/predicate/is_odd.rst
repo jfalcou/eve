@@ -1,8 +1,8 @@
 .. _function-is_odd:
 
-################
+######
 is_odd
-################
+######
 
 **Required header** ``#include <eve/function/is_odd.hpp>``
 
