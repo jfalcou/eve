@@ -12,17 +12,21 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/is_logical.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_equal_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon64_> const &v0,
                                                 wide<T, N, neon64_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
+
+    using a_t = wide<as_integer_t<T,unsigned>,N>;
 
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) return vceq_f64(v0, v1);
@@ -40,15 +44,20 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 4) return vceq_u32(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 2) return vceq_u16(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vceq_u8(v0, v1);
+
+    if constexpr(is_logical_v<T>)
+      return (a_t(v0.storage()) == a_t(v1.storage())).storage();
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_equal_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon128_> const &v0,
                                                 wide<T, N, neon128_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
+
+    using a_t = wide<as_integer_t<T,unsigned>,N>;
 
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) return vceqq_f64(v0, v1);
@@ -65,6 +74,9 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 4) return vceqq_u32(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 2) return vceqq_u16(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vceqq_u8(v0, v1);
+
+    if constexpr(is_logical_v<T>)
+      return (a_t(v0.storage()) == a_t(v1.storage())).storage();
   }
 }
 

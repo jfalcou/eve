@@ -15,21 +15,18 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_not.hpp>
-#include <eve/function/bitwise_xor.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
                                  wide<T, N, ABI> const &v0,
-                                 U const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+                                 U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                                 detail::Convertible<U, T>)
   {
     return eve::is_equal(v0, wide<T, N, ABI>(static_cast<T>(v1)));
@@ -39,7 +36,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   is_equal_(EVE_SUPPORTS(simd_),
             U const &              v0,
-            wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+            wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                          detail::Convertible<U, T>)
   {
     return eve::is_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
@@ -78,7 +75,7 @@ namespace eve
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto operator==(wide<T, N, ABI> const &v0,
-                                  U const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+                                  U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                                  detail::Convertible<U, T>)
   {
     return eve::is_equal(v0, v1);
@@ -86,7 +83,7 @@ namespace eve
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto
-  operator==(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+  operator==(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                                        detail::Convertible<U, T>)
   {
     return eve::is_equal(v0, v1);

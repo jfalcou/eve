@@ -17,7 +17,6 @@
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/as_arithmetic.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -31,7 +30,7 @@ namespace eve::detail
   {
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
-    using a_t = as_arithmetic_t< wide<as_integer_t<T>,N> >;
+    using a_t = wide<as_integer_t<T>,N>;
 
     if constexpr(std::is_same_v<T, float>) return l_t(_mm_cmpeq_ps(v0, v1));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpeq_pd(v0, v1));
