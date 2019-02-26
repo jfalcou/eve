@@ -8,14 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_LOGICAL_AND_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_LOGICAL_AND_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_LOGICAL_AND_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_LOGICAL_AND_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/logical.hpp>
+#include <eve/as_logical.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(logical_and_, logical_and);
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr as_logical_t<T>
+  logical_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  {
+    return (a && b);
+  }
 }
 
 #endif
