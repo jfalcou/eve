@@ -92,6 +92,22 @@ namespace eve::detail
     using type = typename selection::type;
   };
 
+  // Extract value_type from type
+  template<typename T, typename Enable = void>
+  struct value_type
+  {
+    using type = T;
+  };
+
+  template<typename T>
+  struct value_type<T, std::void_t<typename T::value_type>>
+  {
+    using type = typename T::value_type;
+  };
+
+  template<typename T>
+  using value_type_t = typename value_type<T>::type;
+
   // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned>
   struct make_integer;
@@ -143,7 +159,7 @@ namespace eve::detail
   // Extract the sign of a type
   template<typename T>
   struct sign_of
-      : std::conditional<std::is_signed_v<T> || std::is_floating_point_v<T>, signed, unsigned>
+      : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
   {
   };
 
@@ -189,21 +205,6 @@ namespace eve::detail
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;
 
-  // Extract value_type from type
-  template<typename T, typename Enable = void>
-  struct value_type
-  {
-    using type = T;
-  };
-
-  template<typename T>
-  struct value_type<T, std::void_t<typename T::value_type>>
-  {
-    using type = typename T::value_type;
-  };
-
-  template<typename T>
-  using value_type_t = typename value_type<T>::type;
 
   // Tuple free apply
   template<typename Func, std::size_t... I>
