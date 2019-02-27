@@ -17,6 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/logical.hpp>
 #include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bitwise_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/constant/zero.hpp>
