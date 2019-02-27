@@ -42,7 +42,7 @@ Synopsis
 
 * The computation ``is_negative(x)`` is equivalent to ``is_less(x, Zero(as(x)))``
   for :ref:`IntegralValues <concept-integralvalue>`, but for for :ref:`IEEEValues <concept-ieeevalue>`
-  the object returns :ref:`True <constant-true>` if the most significant bit of the element is set.
+  the object returns :ref:`True <constant-true_>` if the most significant bit of the element is set.
   More specifically, -0.0 and -0.0f are 'negative' but are not 'less than zero'.
 
 Example

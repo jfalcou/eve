@@ -42,7 +42,7 @@ Synopsis
 
 * The computation ``is_positive(x)`` is equivalent to ``is_not_greater(x, Zero(as(x)))``
   for :ref:`IntegralValues <concept-integralvalue>`, but for :ref:`IEEEValues <concept-ieeevalue>`
-  the object returns :ref:`True <constant-true>` if the most significant bit of the element is not set.
+  the object returns :ref:`True <constant-true_>` if the most significant bit of the element is not set.
   More precisely, this implies that -0.0 and -0.0f are not 'positive' but are 'not greater than zero'.
 
 Example
