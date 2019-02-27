@@ -162,32 +162,32 @@ namespace eve::detail
 
   // Generate integral types from sign + size
   template<std::size_t Size>
-  struct make_floating;
+  struct make_floating_point;
 
   template<>
-  struct make_floating<4>
+  struct make_floating_point<4>
   {
     using type = float;
   };
 
   template<>
-  struct make_floating<8>
+  struct make_floating_point<8>
   {
     using type = double;
   };
 
   template<std::size_t Size>
-  using make_floating_t = typename make_floating<Size>::type;
+  using make_floating_point_t = typename make_floating_point<Size>::type;
 
-  // Turn a type into an floating point one
+  // Turn a type into an floating_point point one
   template<typename T>
-  struct as_floating
+  struct as_floating_point
   {
-    using type = make_floating_t<sizeof(T)>;
+    using type = make_floating_point_t<sizeof(T)>;
   };
 
   template<typename T>
-  using as_floating_t = typename as_floating<T>::type;
+  using as_floating_point_t = typename as_floating_point<T>::type;
 
   // Extract value_type from type
   template<typename T, typename Enable = void>
