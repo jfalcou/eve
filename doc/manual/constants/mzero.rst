@@ -13,13 +13,10 @@ Mzero
    }
 
 This 'constant' returns the  :ref:`Values <concept-value>` -0, that is 0 for Integral types, but responding true to 
-ref:`is_negative <function-is_negative>` for floating point types.
+:ref:`is_negative <function-is_negative>` for floating point types.
 
+Template parameter
+------------------
 
-.. seealso::  :ref:`is_negative <function-is_negative>`,   :ref:`is_positive <function-is_positive>`
-
-Parameters
-----------
-
- - Value template type : the returned 0 is of type Value
+ -  ``Value``: the returned value is of type ``Value``
 
