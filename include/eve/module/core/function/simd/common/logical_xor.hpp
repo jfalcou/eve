@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   logical_xor_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, wide<T, N, ABI> const &v1) noexcept
   {
-    return eve::bitwise_cast<wide<logical<T>, N, ABI>>(
+    return eve::bitwise_cast<as_logical_t<wide<T, N, ABI>>>(
         eve::bitwise_xor(eve::bitwise_mask(v0), eve::bitwise_mask(v1)));
   }
 
@@ -39,7 +39,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(simd_),
                                     wide<T, N, ABI> const &v0,
-                                    U const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+                                    U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                                    detail::Convertible<U, T>)
   {
     return eve::logical_xor(v0, wide<T, N, ABI>(static_cast<T>(v1)));
@@ -49,7 +49,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   logical_xor_(EVE_SUPPORTS(simd_),
                U const &              v0,
-               wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
+               wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
                                                             detail::Convertible<U, T>)
   {
     return eve::logical_xor(wide<T, N, ABI>(static_cast<T>(v0)), v1);

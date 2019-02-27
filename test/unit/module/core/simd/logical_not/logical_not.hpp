@@ -31,12 +31,16 @@ TTS_CASE_TPL("Check logical_not behavior on wide",
 
   TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type, T> lhs([](int i, int) { return i%2; });
+    using t_t = wide<Type, T>;
+    using l_t = eve::as_logical_t <t_t>; 
+    t_t lhs([](int i, int) { return i%2; });
     
-    wide < eve::logical < Type >, T> ref([](int i, int) { return eve::logical_not(Type(i%2)); });
+    l_t ref([](int i, int) { return eve::logical_not(Type(i%2)); });
 
     TTS_SECTION("supports eve::logical_not") { TTS_EQUAL(ref, eve::logical_not(lhs)); }
     TTS_SECTION("supports operator!") { TTS_EQUAL(ref, !lhs); }
+    TTS_SECTION("supports eve::logical_not on logical") { TTS_EQUAL(eve::logical_not(ref), eve::logical_not(eve::logical_not(lhs))); }
+//    TTS_SECTION("supports operator!") { TTS_EQUAL(!ref, !!lhs); }
   } 
 }
 

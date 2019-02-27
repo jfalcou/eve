@@ -13,8 +13,9 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/logical_and.hpp>
-#include <eve/logical.hpp>
+#include <eve/function/logical_and.hpp>
+#include <eve/function/is_nez.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
@@ -32,11 +33,15 @@ TTS_CASE_TPL("Check logical_and behavior on homogeneous wide",
 
   TTS_SETUP("A correctly initialized wide")
   {
-    wide<Type, T> lhs([](int i, int c) { return c - i; }), rhs([](int i, int) { return i % 2; });
-    wide<eve::logical<Type>, T> ref(
-        [](int i, int c) { return eve::logical_and(Type(c - i), Type(i % 2)); });
+    using t_t = wide<Type, T>;
+    using l_t = eve::as_logical_t <t_t>; 
+    t_t lhs([](int i, int c) { return c - i; }), rhs([](int i, int) { return i % 2; });
+    t_t ref([](int i, int c) { return eve::logical_and(Type(c - i), Type(i % 2)); });
     TTS_SECTION("supports eve::logical_and") { TTS_EQUAL(ref, eve::logical_and(lhs, rhs)); }
+    TTS_SECTION("supports eve::logical_and on logicals"){ TTS_EQUAL(is_nez(ref)ref, eve::logical_and(is_nez(lhs), is_nez(rhs))); }
     TTS_SECTION("supports operator && ") { TTS_EQUAL(ref, (lhs && rhs)); }
+    TTS_SECTION("supports operator &&  on logicals") { TTS_EQUAL(is_nez(ref)ref, eve(is_nez(lhs) && is_nez(rhs))); }
+
   }
 }
 
