@@ -1,8 +1,8 @@
 .. _function-is_nez:
 
-################
+######
 is_nez
-################
+######
 
 **Required header** ``#include <eve/function/is_nez.hpp>``
 

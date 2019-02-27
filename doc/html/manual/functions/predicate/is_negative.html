@@ -96,6 +96,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../predicate.html">Predicate Functions</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="is_denormal.html">is_denormal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_equal.html">is_equal</a></li>
@@ -103,7 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="is_eqz.html">is_eqz</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_even.html">is_even</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_finite.html">is_finite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="is_flint.html">is_finite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="is_flint.html">is_flint</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_gez.html">is_gez</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_greater.html">is_greater</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_greater_equal.html">is_greater_equal</a></li>
@@ -260,8 +261,8 @@
 <ul class="simple">
 <li>The computation <code class="docutils literal notranslate"><span class="pre">is_negative(x)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">is_less(x,</span> <span class="pre">Zero(as(x)))</span></code>
 for <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">IntegralValues</span></a>, but for for <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValues</span></a>
-the object returns <span class="xref std std-ref">True</span> if the most significant bit of the element is set.
-Peculiarly -0.0 and -0.0f are ‘negative’ but are not ‘less than zero’.</li>
+the object returns <a class="reference internal" href="../../constants/true.html#constant-true"><span class="std std-ref">True</span></a> if the most significant bit of the element is set.
+More specifically, -0.0 and -0.0f are ‘negative’ but are not ‘less than zero’.</li>
 </ul>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>

@@ -1,8 +1,8 @@
 .. _function-is_gez:
 
-################
+######
 is_gez
-################
+######
 
 **Required header** ``#include <eve/function/is_gez.hpp>``
 

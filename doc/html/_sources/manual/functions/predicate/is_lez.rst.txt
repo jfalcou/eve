@@ -1,8 +1,8 @@
 .. _function-is_lez:
 
-################
+######
 is_lez
-################
+######
 
 **Required header** ``#include <eve/function/is_lez.hpp>``
 

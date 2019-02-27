@@ -1,8 +1,8 @@
 .. _function-is_normal:
 
-################
+#########
 is_normal
-################
+#########
 
 **Required header** ``#include <eve/function/is_normal.hpp>``
 

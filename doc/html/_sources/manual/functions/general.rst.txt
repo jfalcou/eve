@@ -9,4 +9,5 @@ Functions
 
    arithmetic.rst
    bitwise.rst
+   logical.rst
    predicate.rst

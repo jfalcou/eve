@@ -1,8 +1,8 @@
 .. _function-is_inf:
 
-################
+######
 is_inf
-################
+######
 
 **Required header** ``#include <eve/function/is_inf.hpp>``
 

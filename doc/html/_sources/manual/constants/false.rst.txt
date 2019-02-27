@@ -17,8 +17,8 @@ This 'constant' returns the  :ref:`Values <concept-value>` corresponding to fals
 
 .. seealso::  :ref:`True <constant-true_>`,  :ref:`Zero <constant-zero>`
 
-Parameters
-----------
+Template parameter
+------------------
 
-  - Value template type : the returned false value is of type as_logical_t<Value>
+  - Value  : the returned false value is of type ``as_logical_t<Value>``
 

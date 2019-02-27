@@ -13,7 +13,7 @@ bitwise_notor
       constexpr /* implementation defined */ bitwise_notor = {};
    }
 
-Function object performing a bitwise OR between the COMPLEMENT of a :ref:`Value <concept-value>` and  
+Function object performing a bitwise OR between the COMPLEMENT of a :ref:`Value <concept-value>` and
 another :ref:`Value <concept-value>` of the same bit size.
 
 ********
@@ -27,9 +27,9 @@ Synopsis
    template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
    template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
 
-* [1] Performs a bitwise OR between the COMPLEMENT of *v* and *w*.
-* [2] Performs a bitwise OR between each elements of the COMPLEMENT of *v* and *s*.
-* [3] Performs a bitwise OR between the COMPLEMENT of *s* and *t*.
+* [1] Performs a bitwise OR between the COMPLEMENT of **v** and **w**.
+* [2] Performs a bitwise OR between each elements of the COMPLEMENT of **v** and **s**.
+* [3] Performs a bitwise OR between the COMPLEMENT of **s** and **t**.
 
 .. rubric:: Parameters
 

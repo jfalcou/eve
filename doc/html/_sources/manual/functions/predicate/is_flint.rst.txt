@@ -1,16 +1,16 @@
-.. _function-is_finite:
+.. _function-is_flint:
 
-################
-is_finite
-################
+#########
+is_flint
+#########
 
-**Required header** ``#include <eve/function/is_finite.hpp>``
+**Required header** ``#include <eve/function/is_flint.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr /* implementation defined */ is_finite = {};
+     constexpr /* implementation defined */ is_flint = {};
    }
 
 Function object determining if the given :ref:`Value <concept-value>` is the representation of an integer
@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_finite.cpp
+.. include:: ../../../../test/doc/is_flint.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_finite.txt
+.. include:: ../../../../test/doc/is_flint.txt
   :literal:
 

@@ -1,8 +1,8 @@
 .. _function-is_less_equal:
 
-############
+#############
 is_less_equal
-############
+#############
 
 **Required header:** ``#include <eve/function/is_less_equal.hpp>``
 
