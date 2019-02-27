@@ -69,6 +69,7 @@
 
 #define EVE_MAKE_CALLABLE(TAG, NAME)                                                               \
   EVE_DECLARE_CALLABLE(TAG)                                                                        \
+  using callable_ ## TAG = detail::callable_object<tag::TAG>;                                      \
   inline detail::callable_object<tag::TAG> const NAME = {} /**/
 
 // Flag a function to support delayed calls on given architecture
