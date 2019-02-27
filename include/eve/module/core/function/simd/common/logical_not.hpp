@@ -20,6 +20,7 @@
 #include <eve/function/bitwise_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/bitwise_xor.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

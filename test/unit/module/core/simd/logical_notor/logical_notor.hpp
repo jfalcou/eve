@@ -63,4 +63,49 @@ TTS_CASE_TPL("Check plus behavior on wide and scalar",
     TTS_SECTION("supports eve::logical_notor") { TTS_EQUAL(ref4, eve::logical_notor(Type(0), lhs)); }
   }
 }
+
+
+TTS_CASE_TPL("Check logical_notor behavior on homogeneous wide<logical>",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  TTS_SETUP("A correctly initialized wide")
+  {
+    wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; }), rhs([](int i, int c) { return i%3 ==  0; });
+    wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::logical_notor(i%2 ==  0, i%3 ==  0); });
+    TTS_SECTION("supports eve::logical_notor") { TTS_EQUAL(ref, eve::logical_notor(lhs, rhs)); }
+  }
+}
+
+TTS_CASE_TPL("Check logical_notor behavior on wide<logical> and logical",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  TTS_SETUP("A correctly initialized wide")
+  {
+    wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; });
+    logical<Type> rhs = true; 
+    wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::logical_notor(i%2 ==  0, true); });
+    TTS_SECTION("supports eve::logical_notor") { TTS_EQUAL(ref, eve::logical_notor(lhs, rhs)); }
+  }
+}
+
 #endif
