@@ -78,7 +78,7 @@ TTS_CASE_TPL("Check logical_notor behavior on homogeneous wide<logical>",
   using eve::wide;
   using eve::logical;
 
-  TTS_SETUP("A correctly initialized wide")
+  TTS_SETUP(" homogeneous wide<logical>")
   {
     wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; }), rhs([](int i, int c) { return i%3 ==  0; });
     wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::logical_notor(i%2 ==  0, i%3 ==  0); });
@@ -99,7 +99,7 @@ TTS_CASE_TPL("Check logical_notor behavior on wide<logical> and logical",
   using eve::wide;
   using eve::logical;
 
-  TTS_SETUP("A correctly initialized wide")
+  TTS_SETUP("wide<logical> and logical")
   {
     wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; });
     logical<Type> rhs = true; 

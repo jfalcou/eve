@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check logical_not behavior on wide",
 {
   using eve::wide;
 
-  TTS_SETUP("A correctly initialized wide")
+  TTS_SETUP(" wide")
   {
     using t_t = wide<Type, T>;
     using l_t = eve::as_logical_t <t_t>; 
@@ -39,9 +39,32 @@ TTS_CASE_TPL("Check logical_not behavior on wide",
 
     TTS_SECTION("supports eve::logical_not") { TTS_EQUAL(ref, eve::logical_not(lhs)); }
     TTS_SECTION("supports operator!") { TTS_EQUAL(ref, !lhs); }
-    TTS_SECTION("supports eve::logical_not on logical") { TTS_EQUAL(eve::logical_not(ref), eve::logical_not(eve::logical_not(lhs))); }
-//    TTS_SECTION("supports operator!") { TTS_EQUAL(!ref, !!lhs); }
   } 
 }
+
+TTS_CASE_TPL("Check logical_not behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+
+  TTS_SETUP(" wide logical")
+  {
+    using t_t = wide<Type, T>;
+    using l_t = eve::as_logical_t <t_t>; 
+    l_t lhs([](int i, int) { return i%2 == 0; });
+    
+    l_t ref([](int i, int) { return eve::logical_not(i%2 == 0); });
+
+    TTS_SECTION("supports eve::logical_not") { TTS_EQUAL(ref, eve::logical_not(lhs)); }
+    TTS_SECTION("supports operator!") { TTS_EQUAL(ref, !lhs); }
+  } 
+}
+ 
 
 #endif
