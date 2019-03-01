@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_SHL_HPP_INCLUDED
 
 #include <eve/function/scalar/shl.hpp>
-//#include <eve/function/simd/shl.hpp>
+#include <eve/function/simd/shl.hpp>
 
 #endif

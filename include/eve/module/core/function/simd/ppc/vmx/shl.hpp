@@ -21,7 +21,8 @@ namespace eve::detail
   shl_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<I, N, ppc_> const &v1) noexcept
   requires(wide<T, N, ppc_>, Integral<I>)
   {
-    EVE_ASSERT( detail::assert_good_shift<wide<T, N, ppc_>>(v1)
+    using t_t = wide<T, N, ppc_>;
+    EVE_ASSERT( detail::assert_good_shift<t_t>(v1)
               , "eve::shl - At least one of " << v1 << "elements is out of the range [0, "
                                                     << sizeof(T)*8 << "[."
               );

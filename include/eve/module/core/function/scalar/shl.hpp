@@ -32,14 +32,23 @@ namespace eve::detail
               , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
               );
 
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::is_arithmetic_v<T>)
     {
-      using i_t = as_integer_t<T, signed>;
-      return bitwise_cast<T>(shl(eve::bitwise_cast<i_t>(a0), a1));
+      if constexpr(std::is_floating_point_v<T>)
+      {
+        using i_t = as_integer_t<T, signed>;
+        return bitwise_cast<T>(shl(eve::bitwise_cast<i_t>(a0), a1));
+      }
+      else
+      {
+        return T(a0 << a1);
+      }
     }
     else
     {
-      return T(a0 << a1);
+      static_assert ( std::is_arithmetic_v<T>,
+                     "eve::shl - No support for logical values"
+                    );
     }
   }
 }

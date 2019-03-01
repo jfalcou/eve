@@ -19,6 +19,10 @@
 #    include <eve/module/core/function/simd/x86/sse2/shl.hpp>
 #  endif
 
+#  if EVE_HW_X86 >= EVE_AVX_VERSION
+#    include <eve/module/core/function/simd/x86/avx/shl.hpp>
+#  endif
+
 #  if EVE_HW_X86 >= EVE_AVX2_VERSION
 #    include <eve/module/core/function/simd/x86/avx2/shl.hpp>
 #  endif
