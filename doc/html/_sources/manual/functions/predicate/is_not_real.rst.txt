@@ -1,8 +1,8 @@
 .. _function-is_not_real:
 
-################
+###########
 is_not_real
-################
+###########
 
 **Required header** ``#include <eve/function/is_not_real.hpp>``
 
@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename N>             as_logical_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
    template<typename T            > constexpr   as_logical_t<T>         operator()( T s ) noexcept;
 
-* [1] For each element of **v** returns :ref:`False <constant-false_>` 
-* [2] returns :ref:`False <constant-false_>` if **s** .
+* [1] For each element of **v**, returns :ref:`False <constant-false_>`
+* [2] returns :ref:`False <constant-false_>`.
 
 .. rubric:: Parameters
 

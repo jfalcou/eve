@@ -1,8 +1,8 @@
 .. _function-is_nlez:
 
-################
+#######
 is_nlez
-################
+#######
 
 **Required header** ``#include <eve/function/is_nlez.hpp>``
 

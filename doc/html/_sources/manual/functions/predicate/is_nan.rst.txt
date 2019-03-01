@@ -1,19 +1,19 @@
-.. _function-is_nan:
+.. _function-is_NaN:
 
-################
+######
 is_nan
-################
+######
 
-**Required header** ``#include <eve/function/is_nan.hpp>``
+**Required header** ``#include <eve/function/is_NaN.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr /* implementation defined */ is_nan = {};
+     constexpr /* implementation defined */ is_NaN = {};
    }
 
-Function object determining if the given :ref:`Value <concept-value>` element is a :ref:`Nan <constant-nan>` value
+Function object determining if the given :ref:`Value <concept-value>` element is a :ref:`NaN <constant-NaN>` value
 
 ********
 Synopsis
@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename N>             as_logical_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
    template<typename T            > constexpr   as_logical_t<T>         operator()( T s ) noexcept;
 
-* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is nan.
-* [2] returns :ref:`True <constant-true_>` if **s** is nan.
+* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is NaN.
+* [2] returns :ref:`True <constant-true_>` if **s** is NaN.
 
 .. rubric:: Parameters
 
@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_nan.cpp
+.. include:: ../../../../test/doc/is_NaN.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_nan.txt
+.. include:: ../../../../test/doc/is_NaN.txt
   :literal:
 

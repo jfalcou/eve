@@ -109,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
 </ul>
 </li>
@@ -204,8 +205,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object computing a mask of bits for each input element. This mask is full of ones if the input element is not equal
-to zero and full of zeros otherwise.</p>
+<p>Function object computing a mask of bits for each input element. This mask has all its bit set if the input element
+is not equal to zero and all its bits unset otherwise.</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -214,10 +215,10 @@ to zero and full of zeros otherwise.</p>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>[1] Computes a mask of bits for each element of <em>v</em>. This mask is full of ones if the input element is not equal to zero and full of zeros otherwise.
-The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(v),Allbits(as(v)),Zero(as(v))</span></code>.</li>
-<li>[2] Computes a mask of bits for <em>s</em>. This mask is full of ones if <em>s</em> is not equal to zero and full of zeros otherwise.
-The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">?</span> <span class="pre">Allbits(as(s))</span> <span class="pre">:</span> <span class="pre">Zero(as(s))</span></code>.</li>
+<li>[1] Computes a mask of bits for each element of <strong>v</strong>. This mask has all its bit set if the input element
+is not equal to zero and all its bits unset otherwise. The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(v),Allbits(as(v)),Zero(as(v))</span></code>.</li>
+<li>[2] Computes a mask of bits for <strong>s</strong>. TThis mask has all its bit set if <strong>s</strong> is not equal to zero
+and all its bits unset otherwise. The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">?</span> <span class="pre">Allbits(as(s))</span> <span class="pre">:</span> <span class="pre">Zero(as(s))</span></code>.</li>
 </ul>
 <p class="rubric">Parameters</p>
 <ul class="simple">

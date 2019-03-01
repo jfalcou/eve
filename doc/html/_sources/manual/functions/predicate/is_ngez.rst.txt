@@ -1,8 +1,8 @@
 .. _function-is_ngez:
 
-################
+#######
 is_ngez
-################
+#######
 
 **Required header** ``#include <eve/function/is_ngez.hpp>``
 

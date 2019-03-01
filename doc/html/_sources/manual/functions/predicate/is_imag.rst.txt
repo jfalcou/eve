@@ -1,8 +1,8 @@
 .. _function-is_imag:
 
-################
+#######
 is_imag
-################
+#######
 
 **Required header** ``#include <eve/function/is_imag.hpp>``
 
@@ -13,7 +13,7 @@ is_imag
      constexpr /* implementation defined */ is_imag = {};
    }
 
-Function object returning True if and only if the parameter is zero.
+Function object returning True if and only if the parameter is imaginary.
 
 ********
 Synopsis
@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename N>             as_logical_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
    template<typename T            > constexpr   as_logical_t<T>         operator()( T s ) noexcept;
 
-* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is zero.
-* [2] returns :ref:`True <constant-true_>` if **s** is zero.
+* [1] For each element of **v** returns :ref:`True <constant-true_>` if the element is imaginary.
+* [2] returns :ref:`True <constant-true_>` if **s** is imaginary.
 
 .. rubric:: Parameters
 

@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_LOGICAL_XOR_HPP_INCLUDED
 
 #include <eve/function/scalar/logical_xor.hpp>
-//#include <eve/function/simd/logical_xor.hpp>
+#include <eve/function/simd/logical_xor.hpp>
 
 #endif

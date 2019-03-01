@@ -1,8 +1,8 @@
 .. _function-is_not_equal_with_equal_nans:
 
-################################
+############################
 is_not_equal_with_equal_nans
-################################
+############################
 
 **Required header:** ``#include <eve/function/is_not_equal_with_equal_nans.hpp>``
 
@@ -13,7 +13,7 @@ is_not_equal_with_equal_nans
       constexpr /* implementation defined */ is_not_equal_with_equal_nans = {};
    }
 
-Function object performing inequality comparison between two :ref:`Values <concept-value>` assuming scalar :ref:`Nans <constant-nan>` are equals.
+Function object performing inequality comparison between two :ref:`Values <concept-value>` assuming scalar :ref:`NaNs <constant-nan>` are equals.
 
 ********
 Synopsis
@@ -27,9 +27,9 @@ Synopsis
    template<typename T, typename N, typename U> as_logical_t<wide<T,N>> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   as_logical_t<T>         operator()( T s, U t ) noexcept;
 
-* [1] Performs element-wise inequality comparison between both :ref:`wides <type-wide>`, assuming scalar :ref:`Nans <constant-nan>` are equals.
-* [2,3] Performs inequality comparison between the scalar and each element of the :ref:`type-wide` instance, assuming scalar :ref:`Nans <constant-nan>` are equals.
-* [4] Performs inequality comparison between both scalarsassuming scalar :ref:`Nans <constant-nan>` are equals. This is equivalent to ``(s!=t) && !(is_nan(s) && is_nan(t))``
+* [1] Performs element-wise inequality comparison between both :ref:`wides <type-wide>`, assuming scalar :ref:`NaNs <constant-nan>` are equals.
+* [2,3] Performs inequality comparison between the scalar and each element of the :ref:`type-wide` instance, assuming scalar :ref:`NaNs <constant-nan>` are equals.
+* [4] Performs inequality comparison between both scalarsassuming scalar :ref:`NaNs <constant-nan>` are equals. This is equivalent to ``(s!=t) && !(is_nan(s) && is_nan(t))``
 
 .. rubric:: Parameters
 

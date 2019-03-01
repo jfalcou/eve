@@ -8,7 +8,7 @@
 ##==================================================================================================
 
 ##==================================================================================================
-## scalar tests
+## documentation tests
 add_unit_test( "doc.function.operators" add.cpp )
 add_unit_test( "doc.function.operators" sub.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_and.cpp )
@@ -22,3 +22,11 @@ add_unit_test( "doc.function.bitwise" bitwise_ornot.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_select.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_xor.cpp )   
 add_unit_test( "doc.function.bitwise" bitwise_mask.cpp )
+add_unit_test( "doc.function.logical" logical_and.cpp )
+add_unit_test( "doc.function.logical" logical_andnot.cpp )
+add_unit_test( "doc.function.logical" logical_notand.cpp )
+add_unit_test( "doc.function.logical" logical_not.cpp )
+add_unit_test( "doc.function.logical" logical_notor.cpp )
+add_unit_test( "doc.function.logical" logical_or.cpp )
+add_unit_test( "doc.function.logical" logical_ornot.cpp )
+add_unit_test( "doc.function.logical" logical_xor.cpp )   

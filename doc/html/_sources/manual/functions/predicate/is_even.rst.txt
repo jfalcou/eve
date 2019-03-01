@@ -1,8 +1,8 @@
 .. _function-is_even:
 
-################
+#######
 is_even
-################
+#######
 
 **Required header** ``#include <eve/function/is_even.hpp>``
 

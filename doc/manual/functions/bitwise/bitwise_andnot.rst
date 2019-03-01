@@ -28,7 +28,7 @@ Synopsis
    template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
 
 * [1] Performs a bitwise AND between **v** and the COMPLEMENT of **w**.
-* [2] Performs a bitwise AND between each elements of *v* and the COMPLEMENT of **s**.
+* [2] Performs a bitwise AND between each elements of **v** and the COMPLEMENT of **s**.
 * [3] Performs a bitwise AND between **s** and the COMPLEMENT of **t**.
 
 .. rubric:: Parameters

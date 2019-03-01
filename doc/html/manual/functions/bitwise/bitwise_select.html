@@ -109,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="bitwise_xor.html">bitwise_xor</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
 </ul>
 </li>
@@ -216,13 +217,13 @@ mask.</p>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>[1] Performs a bit selection between <em>w</em> and <em>x</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(w,</span> <span class="pre">v),</span> <span class="pre">eve::bitwise_andnot(x,</span> <span class="pre">v))</span></code>.</li>
-<li>[2] Performs a bit selection between <em>s</em> and <em>t</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_select(v,</span> <span class="pre">wide&lt;T,N&gt;(s),</span> <span class="pre">wide&lt;T,N&gt;(t))</span></code>.</li>
-<li>[3] Performs a bit selection between <em>s</em> and <em>t</em> equivalent to  <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(s,</span> <span class="pre">r),</span> <span class="pre">eve::bitwise_andnot(t,</span> <span class="pre">r))</span></code>.</li>
+<li>[1] Selects bits between <strong>w</strong> and <strong>x</strong> based on the value of <strong>v</strong>. This computation is equivalent to <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(w,</span> <span class="pre">v),</span> <span class="pre">eve::bitwise_andnot(x,</span> <span class="pre">v))</span></code>.</li>
+<li>[2] Selects bits between <strong>s</strong> and <strong>t</strong> based on the value of <strong>v</strong>. This computation is equivalent to <code class="docutils literal notranslate"><span class="pre">bitwise_select(v,</span> <span class="pre">wide&lt;T,N&gt;(s),</span> <span class="pre">wide&lt;T,N&gt;(t))</span></code>.</li>
+<li>[3] Selects bits between <strong>s</strong> and <strong>t</strong> based on the value of <strong>r</strong>. This computation is equivalent to <code class="docutils literal notranslate"><span class="pre">bitwise_or(bitwise_and(s,</span> <span class="pre">r),</span> <span class="pre">eve::bitwise_andnot(t,</span> <span class="pre">r))</span></code>.</li>
 </ul>
 <p class="rubric">Parameters</p>
 <ul class="simple">
-<li><strong>v</strong>, <strong>w</strong>, <strong>x</strong>: Instances of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> satisfying <code class="docutils literal notranslate"><span class="pre">sizeof(v)</span> <span class="pre">==</span> <span class="pre">sizeof(w)</span></code>, <em>w</em> and <em>x</em> sharing the same type.</li>
+<li><strong>v</strong>, <strong>w</strong>, <strong>x</strong>: Instances of <a class="reference internal" href="../../types/wide.html#type-wide"><span class="std std-ref">wide</span></a> satisfying <code class="docutils literal notranslate"><span class="pre">sizeof(v)</span> <span class="pre">==</span> <span class="pre">sizeof(w)</span></code>, <strong>w</strong> and <strong>x</strong> sharing the same type.</li>
 <li><strong>r</strong>: Scalar value  of type <strong>T</strong></li>
 <li><strong>s</strong>, <strong>t</strong>: Scalar values of type <strong>U</strong>. <strong>U</strong> must satisfy <code class="docutils literal notranslate"><span class="pre">sizeof(T)</span> <span class="pre">==</span> <span class="pre">sizeof(U)</span></code>.</li>
 </ul>

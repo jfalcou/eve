@@ -14,8 +14,8 @@ Zero
 
 This 'constant' returns the  :ref:`Values <concept-value>`  0 
 
-Parameters
-----------
+Template parameter
+------------------
 
- - Value template type : the returned 0 is of type Value
+ - ``Value``  : the returned 0 is of type ``as_arithmetic_t<Value>``
 

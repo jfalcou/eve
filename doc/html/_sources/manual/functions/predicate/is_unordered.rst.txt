@@ -13,7 +13,7 @@ is_unordered
       constexpr /* implementation defined */ is_unordered = {};
    }
 
-Function object performing 'at least one is nan' test with two :ref:`Values <concept-value>`.
+Function object performing 'at least one is NaN' test with two :ref:`Values <concept-value>`.
 
 
 ********
@@ -28,9 +28,9 @@ Synopsis
    template<typename T, typename N, typename U> as_logical_t<wide<T,N>> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   as_logical_t<T>         operator()( T s, U t ) noexcept;
 
-* [1] Performs element-wise 'at least one is nan' comparison between both :ref:`wides <type-wide>`.
-* [2,3] Performs 'at least one is nan' comparison between the scalar and each element of the :ref:`type-wide` instance.
-* [4] Performs 'at least one is nan' comparison between both scalars.
+* [1] Performs element-wise 'at least one is NaN' comparison between both :ref:`wides <type-wide>`.
+* [2,3] Performs 'at least one is NaN' comparison between the scalar and each element of the :ref:`type-wide` instance.
+* [4] Performs 'at least one is NaN' comparison between both scalars.
 
 .. rubric:: Parameters
 
@@ -45,7 +45,7 @@ Synopsis
 
 .. rubric:: Notes
 
-* ``is_unordered(x,y)`` is equivalent to compute ``is_nan(x) || is_nan(y)`` 
+* ``is_unordered(x,y)`` is equivalent to computing ``is_NaN(x) || is_NaN(y)``
 * The return type is not ``bool`` as predicates applied on :ref:`concept-vectorized` types need to store
   multiple values.
 

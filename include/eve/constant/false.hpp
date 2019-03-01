@@ -22,14 +22,10 @@ namespace eve
   EVE_MAKE_CALLABLE(false_, false_);
 
   template<typename T>
-  EVE_FORCEINLINE std::enable_if_t<is_logical_v<T>, as_logical_t<T>> False(as_<T> const & = {})
+  EVE_FORCEINLINE auto False(as_<T> const & = {})
   {
     return as_logical_t<T>(false);
   }
-
-  template<typename T>
-  EVE_FORCEINLINE std::enable_if_t<!is_logical_v<T>, as_logical_t<T>>
-                  False(as_<T> const & = {}) = delete;
 
   EVE_MAKE_NAMED_CONSTANT(false_, False);
 }

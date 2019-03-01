@@ -96,6 +96,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../predicate.html">Predicate Functions</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="is_denormal.html">is_denormal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_equal.html">is_equal</a></li>
@@ -103,7 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="is_eqz.html">is_eqz</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_even.html">is_even</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_finite.html">is_finite</a></li>
-<li class="toctree-l4"><a class="reference internal" href="is_flint.html">is_finite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="is_flint.html">is_flint</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_gez.html">is_gez</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_greater.html">is_greater</a></li>
 <li class="toctree-l4"><a class="reference internal" href="is_greater_equal.html">is_greater_equal</a></li>
@@ -227,14 +228,14 @@
             
   <div class="section" id="is-not-nan">
 <span id="function-is-not-nan"></span><h1>is_not_nan<a class="headerlink" href="#is-not-nan" title="Permalink to this headline">¶</a></h1>
-<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/is_not_nan.hpp&gt;</span></code></p>
+<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/is_not_NaN.hpp&gt;</span></code></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
 <span class="p">{</span>
-  <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">is_not_nan</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">is_not_NaN</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object determining if the given <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> is not a nan</p>
+<p>Function object determining if the given <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> is not a NaN</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -243,8 +244,8 @@
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>[1] For each element of <strong>v</strong> returns <a class="reference internal" href="../../constants/true.html#constant-true"><span class="std std-ref">True</span></a> if the element is not a nan.</li>
-<li>[2] returns <a class="reference internal" href="../../constants/true.html#constant-true"><span class="std std-ref">True</span></a> if <strong>s</strong> is not a nan.</li>
+<li>[1] For each element of <strong>v</strong> returns <a class="reference internal" href="../../constants/true.html#constant-true"><span class="std std-ref">True</span></a> if the element is not a NaN.</li>
+<li>[2] returns <a class="reference internal" href="../../constants/true.html#constant-true"><span class="std std-ref">True</span></a> if <strong>s</strong> is not a NaN.</li>
 </ul>
 <p class="rubric">Parameters</p>
 <ul class="simple">
@@ -261,39 +262,6 @@
 </div>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/predicates.hpp&gt;</span>
-<span class="c1">#include &lt;eve/wide.hpp&gt;</span>
-<span class="c1">#include &lt;eve/constant/inf.hpp&gt;</span>
-<span class="c1">#include &lt;eve/constant/minf.hpp&gt;</span>
-<span class="c1">#include &lt;eve/constant/nan.hpp&gt;</span>
-<span class="c1">#include &lt;eve/constant/mindenormal.hpp&gt;</span>
-<span class="c1">#include &lt;iostream&gt;</span>
-
-<span class="n">using</span> <span class="n">wide_ft</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span> <span class="o">&lt;</span><span class="nb">float</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;&gt;</span><span class="p">;</span>
-
-<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="n">wide_ft</span> <span class="n">pf</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="n">f</span>
-                <span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">Mindenormal</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Inf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Minf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">};</span>
-
-  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- pf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::is_not_nan(pf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_not_nan</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-
-  <span class="nb">float</span> <span class="n">xf</span> <span class="o">=</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">;</span>
-  <span class="nb">float</span> <span class="n">yf</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">Mindenormal</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">();</span>
-
-  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span>  <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- xf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::is_not_nan(xf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_not_nan</span><span class="p">(</span><span class="n">xf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- yf =                  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">yf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::is_not_nan(yf) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_not_nan</span><span class="p">(</span><span class="n">yf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <p>Possible output</p>
 </div>
 </div>

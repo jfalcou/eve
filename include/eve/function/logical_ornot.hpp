@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
 
 #include <eve/function/scalar/logical_ornot.hpp>
-//#include <eve/function/simd/logical_ornot.hpp>
+#include <eve/function/simd/logical_ornot.hpp>
 
 #endif

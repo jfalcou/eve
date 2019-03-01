@@ -33,11 +33,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  is_equal_(EVE_SUPPORTS(simd_),
-            U const &              v0,
-            wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                         detail::Convertible<U, T>)
+  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
+                                 U const &              v0,
+                                 wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
+                                                                              detail::Convertible<U, T>)
   {
     return eve::is_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
   }

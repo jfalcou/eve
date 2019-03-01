@@ -20,6 +20,7 @@
 #include <eve/function/bitwise_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/bitwise_xor.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -40,10 +41,10 @@ namespace eve::detail
   // logical
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(simd_),
-                                    wide<logical<T>, N, ABI> const &v) noexcept
+                                    as_logical_t<wide<T, N, ABI>> const &v) noexcept
   {
-    using l_t = wide<eve::logical<T>, N, ABI>; 
     using t_t = wide<T, N, ABI>; 
+    using l_t = as_logical_t<t_t>; 
     return eve::bitwise_cast<l_t>(eve::bitwise_not(eve::bitwise_cast<t_t>(v)));
   }
 

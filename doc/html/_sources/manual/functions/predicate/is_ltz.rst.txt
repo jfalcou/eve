@@ -1,8 +1,8 @@
 .. _function-is_ltz:
 
-################
+######
 is_ltz
-################
+######
 
 **Required header** ``#include <eve/function/is_ltz.hpp>``
 

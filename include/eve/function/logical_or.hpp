@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_LOGICAL_OR_HPP_INCLUDED
 
 #include <eve/function/scalar/logical_or.hpp>
-//#include <eve/function/simd/logical_or.hpp>
+#include <eve/function/simd/logical_or.hpp>
 
 #endif

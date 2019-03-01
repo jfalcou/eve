@@ -1,0 +1,8 @@
+---- simd
+ <- pf =                      (3, -0, -3, 28.12)
+ <- qf =                      (4, -1, -3, 0)
+ -> eve::logical_or(pf, qf) = (true, true, true, true)
+---- scalar
+ xf =                         3
+ yf =                         4
+ -> eve::logical_or(xf, yf) = true

@@ -16,8 +16,10 @@ This 'constant' returns the  :ref:`Values <concept-value>` Not a Number for  :re
 and zero for  :ref:`Integral typed Values <concept-integralvalue>`
 
 
-Parameters
-----------
+Template parameter
+------------------
 
- - Value template type : the returned false value is of type as_logical_t<Value>
+
+ -  ``Value`` : the returned value is of type ``Value``
+
 

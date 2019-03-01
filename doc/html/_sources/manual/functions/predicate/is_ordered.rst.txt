@@ -13,7 +13,7 @@ is_ordered
       constexpr /* implementation defined */ is_ordered = {};
    }
 
-Function object performing 'none is nan' test with two :ref:`Values <concept-value>`.
+Function object performing 'none is NaN' test with two :ref:`Values <concept-value>`.
 
 
 ********
@@ -28,9 +28,9 @@ Synopsis
    template<typename T, typename N, typename U> as_logical_t<wide<T,N>> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   as_logical_t<T>         operator()( T s, U t ) noexcept;
 
-* [1] Performs element-wise 'none is nan' test between both :ref:`wides <type-wide>`.
-* [2,3] Performs 'none is nan' test between the scalar and each element of the :ref:`type-wide` instance.
-* [4] Performs 'none is nan' test between both scalars.
+* [1] Performs element-wise 'none is NaN' test between both :ref:`wides <type-wide>`.
+* [2,3] Performs 'none is NaN' test between the scalar and each element of the :ref:`type-wide` instance.
+* [4] Performs 'none is NaN' test between both scalars.
 
 .. rubric:: Parameters
 
@@ -45,8 +45,8 @@ Synopsis
 
 .. rubric:: Notes
 
-* ``is_ordered(x,y)`` is equivalent to ``is_not_nan(x) && is_not_nan(y)`` 
-* The return type is not ``bool`` as predicates applied on :ref:`concept-vectorized`` types need to store
+* ``is_ordered(x,y)`` is equivalent to ``is_not_NaN(x) && is_not_NaN(y)``
+* The return type is not ``bool`` as predicates applied on :ref:`concept-vectorized` types need to store
   multiple values.
 
 *******
