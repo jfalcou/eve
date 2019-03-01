@@ -9,7 +9,11 @@
 //==================================================================================================
 #ifndef EVE_DETAIL_ASSERT_UTILS_HPP_INCLUDED
 #define EVE_DETAIL_ASSERT_UTILS_HPP_INCLUDED
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> assert_utils
 #include <eve/detail/meta.hpp>
 #include <eve/cardinal.hpp>
 #include <eve/function/extract.hpp>
