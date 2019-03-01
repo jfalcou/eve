@@ -26,11 +26,12 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  requires(T, Integral<U>)
   {
     EVE_ASSERT( detail::assert_good_shift<T>(a1)
               , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
               );
-    static_assert(std::is_integral_v<U>, "shift value must be integral");
+
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = as_integer_t<T, signed>;
