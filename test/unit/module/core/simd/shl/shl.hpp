@@ -38,6 +38,7 @@ TTS_CASE_TPL("Check shl behavior on wide",
     wide<i_t, T> rhs([n](int i, int) { return i % n; });
 
     TTS_SECTION("supports eve::shl") { TTS_EQUAL(ref, eve::shl(lhs, rhs)); }
+    TTS_SECTION("supports <<      ") { TTS_EQUAL(ref, lhs << rhs); }; 
   }
 }
 
@@ -59,6 +60,7 @@ TTS_CASE_TPL("Check shl behavior on wide + scalar",
         ref([rhs](int i, int c) { return eve::shl(Type(c - i), rhs); });
 
     TTS_SECTION("supports eve::shl") { TTS_EQUAL(ref, eve::shl(lhs, rhs)); }
+    TTS_SECTION("supports <<      ") { TTS_EQUAL(ref, lhs << rhs); }; 
   }
 }
 
