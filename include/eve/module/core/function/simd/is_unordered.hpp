@@ -13,14 +13,14 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_unordered.hpp>
 
-// #if defined(EVE_HW_X86)
-// #  if EVE_HW_X86 >= EVE_SSE2_VERSION
-// #    include <eve/module/core/function/simd/x86/sse2/is_unordered.hpp>
-// #  endif
-// #  if EVE_HW_X86 >= EVE_AVX_VERSION
-// #    include <eve/module/core/function/simd/x86/avx/is_unordered.hpp>
-// #  endif
-// #endif
+#if defined(EVE_HW_X86)
+#  if EVE_HW_X86 >= EVE_SSE2_VERSION
+#    include <eve/module/core/function/simd/x86/sse2/is_unordered.hpp>
+#  endif
+#  if EVE_HW_X86 >= EVE_AVX_VERSION
+#    include <eve/module/core/function/simd/x86/avx/is_unordered.hpp>
+#  endif
+#endif
 
 #if defined(EVE_HW_POWERPC)
 #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
