@@ -38,7 +38,8 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> && sizeof(T) == 2) return l_t(_mm_cmpeq_epi16(v0, v1));
     if constexpr(std::is_integral_v<T> && sizeof(T) == 4) return l_t(_mm_cmpeq_epi32(v0, v1));
     if constexpr(std::is_integral_v<T> && sizeof(T) == 8) return map(eve::is_equal, v0, v1);
-    if constexpr(is_logical_v<T>) return is_equal(bitwise_cast<a_t>(v0), bitwise_cast<a_t>(v1));
+    if constexpr(is_logical_v<T>)
+      return bitwise_cast<l_t>(is_equal(bitwise_cast<a_t>(v0), bitwise_cast<a_t>(v1)));
   }
 }
 
