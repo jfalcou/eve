@@ -29,7 +29,7 @@ namespace eve::detail
                   shr_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, std::ptrdiff_t a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    assert(assert_good_shift<t_t>(a1) && "shr avx2: a shift is out of range");
+    assert(assert_good_shift<t_t>(a1) && "[eve shr] (avx2) a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T, signed>, N, avx_>;

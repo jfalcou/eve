@@ -30,7 +30,7 @@ namespace eve ::detail
                                        , I const &a1) noexcept
   {
     using t_t = wide<T, N, sse_>; 
-    assert(assert_good_shift<t_t>(a1) && "shl xop: a shift is out of range");
+    assert(assert_good_shift<t_t>(a1) && "[eve::shr] (xop) a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T>, N, sse_>;
@@ -44,40 +44,17 @@ namespace eve ::detail
     {
       if constexpr(std::is_unsigned_v<T>)
       {
-        if constexpr(sizeof(T) == 1)
-        {
-          _mm_shl_epi8(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 2)
-        {
-          _mm_shl_epi16(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 4)
-        {
-          _mm_shl_epi32(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 8)
-        {
-          _mm_shl_epi64(a0,-a1);   
-        }
+        if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,-a1); 
+        if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,-a1);   
+        if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,-a1);   
+        if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,-a1);   
       }
       else
       {
-        if constexpr(sizeof(T) == 1)
-        {
-          _mm_sha_epi8(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 2)
-        {
-          _mm_sha_epi16(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 4)
-        {
-          _mm_sha_epi32(a0,-a1);   
-        }
-        else if constexpr(sizeof(T) == 8)
-        {
-          _mm_sha_epi64(a0,-a1);   
+        if constexpr(sizeof(T) == 1) return _mm_sha_epi8(a0,-a1);   
+        if constexpr(sizeof(T) == 2) return _mm_sha_epi16(a0,-a1);   
+        if constexpr(sizeof(T) == 4) return _mm_sha_epi32(a0,-a1);   
+        if constexpr(sizeof(T) == 8) return _mm_sha_epi64(a0,-a1);   
         }
       }
     }

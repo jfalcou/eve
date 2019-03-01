@@ -36,7 +36,7 @@ namespace eve ::detail
                   shr_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, ptrdiff_t a1) noexcept
   {
     using t_t = wide<T, N, sse_>; 
-    assert(assert_good_shift<t_t>(a1) && "shr sse2: a shift is out of range");
+    assert(assert_good_shift<t_t>(a1) && "[eve::shr] (sse2) a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = wide<detail::as_integer_t<T>, N, sse_>;

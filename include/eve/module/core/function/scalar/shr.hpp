@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto shr_(EVE_SUPPORTS(cpu_), T const &a0, std::ptrdiff_t a1) noexcept
   {
-    assert(detail::assert_good_shift<T>(a1) && "shr: a shift is out of range");
+    assert(detail::assert_good_shift<T>(a1) && "[eve::shr] a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
       using i_t = as_integer_t<T, signed>;
