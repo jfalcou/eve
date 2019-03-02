@@ -13,9 +13,11 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/architecture.hpp>
 #include <eve/forward.hpp>
 #include <eve/function/bitwise_cast.hpp>
+#include <eve/assert.hpp>
 #include <eve/detail/assert_utils.hpp>
 
 #include <type_traits>
@@ -26,37 +28,46 @@ namespace eve ::detail
 {
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE wide<T, N, sse_> shr_(EVE_SUPPORTS(xop_)
-                                       , wide<T, N, sse_> const &a0
-                                       , I const &a1) noexcept
+                                       , wide<T, N, avx_> const &a0
+                                       , wide<I, N, avx_> const &a1) noexcept
   {
-    using t_t = wide<T, N, sse_>; 
-    assert(assert_good_shift<t_t>(a1) && "[eve::shr] (xop) a shift is out of range");
-    if constexpr(std::is_floating_point_v<T>)
+    using t_t = wide<T, N, avx_>; 
+   EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+               "[eve::shr xop] -  At least one of " << a1 << "elements is out of the range [0, "
+                                                     << sizeof(T) * 8 << "[.");
+    if constexpr( std::is_arithmetic_v<T> )
     {
-      using i_t = wide<detail::as_integer_t<T>, N, sse_>;
-      return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
-    }
-    if constexpr(std::is_integral_v<I>)
-    {
-      return map(eve::shr, a0, a1);
-    }     
-    else
-    {
-      if constexpr(std::is_unsigned_v<T>)
+      using si_t = wide<eve::as_integer_t<I,signed>, N, avx_>; 
+      auto sa1 = -bitwise_cast<si_t>(a1); 
+      if constexpr(std::is_floating_point_v<T>)
       {
-        if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,-a1); 
-        if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,-a1);   
-        if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,-a1);   
-        if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,-a1);   
+        using i_t = wide<detail::as_integer_t<T>, N, sse_>;
+        return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
       }
-      else
+      if constexpr(std::is_integral_v<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm_sha_epi8(a0,-a1);   
-        if constexpr(sizeof(T) == 2) return _mm_sha_epi16(a0,-a1);   
-        if constexpr(sizeof(T) == 4) return _mm_sha_epi32(a0,-a1);   
-        if constexpr(sizeof(T) == 8) return _mm_sha_epi64(a0,-a1);   
+        
+        if constexpr(std::is_unsigned_v<T>)
+        {
+          if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,sa1); 
+          if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,sa1);   
+          if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,sa1);   
+          if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,sa1);   
+        }
+        else
+        {
+          if constexpr(sizeof(T) == 1) return _mm_sha_epi8(a0,sa1);   
+          if constexpr(sizeof(T) == 2) return _mm_sha_epi16(a0,sa1);   
+          if constexpr(sizeof(T) == 4) return _mm_sha_epi32(a0,sa1);   
+          if constexpr(sizeof(T) == 8) return _mm_sha_epi64(a0,sa1);   
         }
       }
+    }
+    else
+    {
+      static_assert ( std::is_arithmetic_v<T>,
+                      "eve::shr - No support for logical values"
+                    );
     }
   }
 

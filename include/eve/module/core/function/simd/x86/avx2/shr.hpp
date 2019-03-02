@@ -20,7 +20,9 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
+#include <cassert>
 
 namespace eve::detail
 {
@@ -29,48 +31,40 @@ namespace eve::detail
                   shr_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, std::ptrdiff_t a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    assert(assert_good_shift<t_t>(a1) && "[eve shr] (avx2) a shift is out of range");
-    if constexpr(std::is_floating_point_v<T>)
+    using t_t = wide<T, N, sse_>;
+    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+               "[eve::shr avx2] -  At least one of " << a1 << "elements is out of the range [0, "
+                                                     << sizeof(T) * 8 << "[.");
+
+    if constexpr( std::is_arithmetic_v<T> )
     {
-      using i_t = wide<detail::as_integer_t<T, signed>, N, avx_>;
-      return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
+      if constexpr(std::is_floating_point_v<T>)
+      {
+        using i_t = wide<detail::as_integer_t<T, signed>, N, avx_>;
+        return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
+      }
+      if constexpr(std::is_integral_v<T>)
+      {
+        if constexpr(std::is_unsigned_v<T>)
+        {
+          if constexpr(sizeof(T) == 1)   return map(eve::shr, a0, a1);
+          if constexpr(sizeof(T) == 2)  return _mm256_srli_epi16(a0, a1);
+          if constexpr(sizeof(T) == 4)  return _mm256_srli_epi32(a0, a1);        
+          if constexpr(sizeof(T) == 8)  return _mm256_srli_epi64(a0, a1);
+        }
+        if constexpr(std::is_signed_v<T>)
+        {
+          if constexpr(sizeof(T) == 1 || sizeof(T) == 8) return map(eve::shr, a0, a1); // ??
+          if constexpr(sizeof(T) == 2)                   return _mm256_srai_epi16(a0, a1);
+          if constexpr(sizeof(T) == 4)                   return _mm256_srai_epi32(a0, a1);        
+        }
+      }
     }
-    if constexpr(std::is_integral_v<T>)
+    else
     {
-      if constexpr(std::is_unsigned_v<T>)
-      {
-       if constexpr(sizeof(T) == 1)
-        {
-          return map(eve::shr, a0, a1);
-        }
-        if constexpr(sizeof(T) == 2)
-        {
-          return _mm256_srli_epi16(a0, a1);
-        }
-        if constexpr(sizeof(T) == 4)
-        {
-          return _mm256_srli_epi32(a0, a1);        
-        }
-        if constexpr(sizeof(T) == 8)
-        {
-         return _mm256_srli_epi64(a0, a1);
-        }
-      }
-      if constexpr(std::is_signed_v<T>)
-      {
-        if constexpr(sizeof(T) == 1 || sizeof(T) == 8)
-        {
-          return map(eve::shr, a0, a1);
-        }
-        if constexpr(sizeof(T) == 2)
-        {
-         return _mm256_srai_epi16(a0, a1);
-        }
-        if constexpr(sizeof(T) == 4)
-        {
-          return _mm256_srai_epi32(a0, a1);        
-        }
-      }
+      static_assert ( std::is_arithmetic_v<T>,
+                      "eve::shr - No support for logical values"
+                    );
     }
   }
 
@@ -79,42 +73,38 @@ namespace eve::detail
                   shr_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, wide<I, N, avx_> const &a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    assert(assert_good_shift<t_t>(a1) && "shr avx2: a shift is out of range");
-    if constexpr(std::is_floating_point_v<T>)
+    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+               "[eve::shr avx2] -  At least one of " << a1 << "elements is out of the range [0, "
+                                                     << sizeof(T) * 8 << "[.");
+
+    if constexpr( std::is_arithmetic_v<T> )
     {
-      using i_t = wide<detail::as_integer_t<T, signed>, N, avx_>;
-      return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
-    }
-    if constexpr(std::is_integral_v<T>)
-    {
-      if constexpr(std::is_unsigned_v<T>)
+      if constexpr(std::is_floating_point_v<T>)
       {
-        if constexpr(sizeof(T) <= 2)
-        {
-          return map(eve::shr, a0, a1);
-        }
-        if constexpr(sizeof(T) == 4)
-        {
-          return _mm256_srlv_epi32(a0, a1);        
-        }
-        if constexpr(sizeof(T) == 8)
-        {
-          return _mm256_srlv_epi64(a0, a1);
-        }
+        using i_t = wide<detail::as_integer_t<T, signed>, N, avx_>;
+        return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
       }
-      else
+      if constexpr(std::is_integral_v<T>)
       {
-        if constexpr(sizeof(T) <= 2 || sizeof(T) == 8)
+        if constexpr(std::is_unsigned_v<T>)
         {
-          return map(eve::shr, a0, a1);
+          if constexpr(sizeof(T) <= 2)  return map(eve::shr, a0, a1);
+          if constexpr(sizeof(T) == 4)  return _mm256_srlv_epi32(a0, a1);        
+          if constexpr(sizeof(T) == 8)  return _mm256_srlv_epi64(a0, a1);
         }
-        if constexpr(sizeof(T) == 4)
+        else
         {
-          return _mm256_srav_epi32(a0, a1);        
+          if constexpr(sizeof(T) <= 2 || sizeof(T) == 8) return map(eve::shr, a0, a1); // ??
+          if constexpr(sizeof(T) == 4)                   return _mm256_srav_epi32(a0, a1);        
         }
       }
     }
-    
+    else
+    {
+      static_assert ( std::is_arithmetic_v<T>,
+                      "eve::shr - No support for logical values"
+                    );
+    }     
   }
 
 }
