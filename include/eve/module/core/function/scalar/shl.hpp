@@ -27,23 +27,15 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
-  requires(T, Integral<U>)
+  requires(T, Integral<U>,  Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),
-               "[ eve::shl scalar] - At least one of " << a1 << "elements is out of the range [0, "
+               "[ eve::shl scalar] - AShift " << a1 << " is out of the range [0, "
                                                        << sizeof(T) * 8 << "[.");
 
     if constexpr(std::is_arithmetic_v<T>)
     {
-      if constexpr(std::is_floating_point_v<T>)
-      {
-        using i_t = as_integer_t<T, signed>;
-        return bitwise_cast<T>(shl(eve::bitwise_cast<i_t>(a0), a1));
-      }
-      else
-      {
-        return T(a0 << a1);
-      }
+      return T(a0 << a1);
     }
     else
     {
