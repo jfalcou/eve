@@ -29,8 +29,9 @@ namespace eve::detail
     assert(detail::assert_good_shift<T>(a1) && "[eve::shr] a shift is out of range");
     if constexpr(std::is_floating_point_v<T>)
     {
-      using i_t = as_integer_t<T, signed>;
-      return bitwise_cast<T>(shr(eve::bitwise_cast<i_t>(a0), a1));
+      static_assert ( !std::is_floating_point_v<T> &&
+                      "[eve::shr] - No support for floating values"
+                    );
     }
     else 
     {

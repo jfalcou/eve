@@ -43,8 +43,9 @@ namespace eve ::detail
     {
       if constexpr(std::is_floating_point_v<T>)
       {
-        using i_t = wide<detail::as_integer_t<T>, N, sse_>;
-        return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
+        static_assert ( !std::is_floating_point_v<T> &&
+                        "[eve::shr] - No support for floating values"
+                      );
       }
       if constexpr(std::is_integral_v<T>)
       {
@@ -107,8 +108,9 @@ namespace eve ::detail
     {
       if constexpr(std::is_floating_point_v<T>)
       {
-        using i_t = wide<detail::as_integer_t<T, signed>, N, sse_>;
-        return bitwise_cast<t_t>(shr(bitwise_cast<i_t>(a0), a1));
+        static_assert ( !std::is_floating_point_v<T> &&
+                        "[eve::shr] - No support for floating values"
+                      );
       }
       else
       {

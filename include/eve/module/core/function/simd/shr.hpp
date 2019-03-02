@@ -19,14 +19,9 @@
 #    include <eve/module/core/function/simd/x86/sse2/shr.hpp>
 #  endif
 
-#if defined(EVE_HW_X86)
 #  if EVE_HW_X86 >= EVE_AVX_VERSION
 #    include <eve/module/core/function/simd/x86/avx/shr.hpp>
-#    if defined(EVE_SUPPORTS_XOP)
-#      include <eve/module/core/function/simd/x86/xop/shr.hpp>
-#    endif
 #  endif
-#endif
 
 #  if EVE_HW_X86 >= EVE_AVX2_VERSION
 #    include <eve/module/core/function/simd/x86/avx2/shr.hpp>
