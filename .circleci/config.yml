@@ -191,6 +191,36 @@ jobs:
   gcc_latest_rel_sse2:
     <<: *config_gcc_latest_rel_sse2
     <<: *steps_test_gcc_latest
+  gcc_latest_dbg_sse4:
+    <<: *config_gcc_latest_dbg_sse4
+    <<: *steps_test_gcc_latest
+  gcc_latest_rel_sse4:
+    <<: *config_gcc_latest_rel_sse4
+    <<: *steps_test_gcc_latest
+  gcc_latest_dbg_avx:
+    <<: *config_gcc_latest_dbg_avx
+    <<: *steps_test_gcc_latest
+  gcc_latest_rel_avx2:
+    <<: *config_gcc_latest_rel_avx2
+    <<: *steps_test_gcc_latest
+  gcc_7_dbg_sse2:
+    <<: *config_gcc_7_dbg_sse2
+    <<: *steps_test_gcc_7
+  gcc_7_rel_sse2:
+    <<: *config_gcc_7_rel_sse2
+    <<: *steps_test_gcc_7
+  gcc_7_dbg_sse4:
+    <<: *config_gcc_7_dbg_sse4
+    <<: *steps_test_gcc_7
+  gcc_7_rel_sse4:
+    <<: *config_gcc_7_rel_sse4
+    <<: *steps_test_gcc_7
+  gcc_7_dbg_avx:
+    <<: *config_gcc_7_dbg_avx
+    <<: *steps_test_gcc_7
+  gcc_7_rel_avx2:
+    <<: *config_gcc_7_rel_avx2
+    <<: *steps_test_gcc_7
 
 workflows:
   version: 2
@@ -198,3 +228,17 @@ workflows:
     jobs:
       - gcc_latest_dbg_sse2
       - gcc_latest_rel_sse2
+      - gcc_latest_dbg_sse4
+      - gcc_latest_rel_sse4
+      - gcc_latest_dbg_avx
+      - gcc_latest_rel_avx
+      - gcc_latest_dbg_avx2
+      - gcc_latest_rel_avx2
+      - gcc_7_dbg_sse2
+      - gcc_7_rel_sse2
+      - gcc_7_dbg_sse4
+      - gcc_7_rel_sse4
+      - gcc_7_dbg_avx
+      - gcc_7_rel_avx
+      - gcc_7_dbg_avx2
+      - gcc_7_rel_avx2

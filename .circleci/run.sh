@@ -7,10 +7,12 @@
 ##==================================================================================================
 #!/usr/bin/env bash
 
-$1 --version
-
 mkdir -p build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=$VARIANT -G Ninja -DCMAKE_CXX_COMPILER=$1 -DCMAKE_CXX_FLAGS=$OPTIONS
+echo VARIANT=$VARIANT
+echo OPTIONS=$OPTIONS
+$1 --version
+
+echo cmake .. -DCMAKE_BUILD_TYPE=$VARIANT -G Ninja -DCMAKE_CXX_COMPILER=$1 -DCMAKE_CXX_FLAGS=$OPTIONS
 ninja unit -j 8
 ctest -D Experimental -j 8
