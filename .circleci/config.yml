@@ -194,7 +194,6 @@ steps_test_clang_8: &steps_test_clang_8
         command: . .circleci/run.sh clang++-8
 
 jobs:
-  parallelism: 16
   gcc_latest_dbg_sse2:
     <<: *config_gcc_latest_dbg_sse2
     <<: *steps_test_gcc
