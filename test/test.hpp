@@ -10,6 +10,7 @@
 #ifndef TEST_TEST_HPP
 #define TEST_TEST_HPP
 
+#define TTS_USE_CUSTOM_DRIVER
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -40,6 +41,19 @@ namespace tts::ext
       return max_ulp;
     }
   };
+}
+
+int main(int argc, const char** argv)
+{
+  std::cout << "[EVE] - Target: "<< ::tts::type_id<EVE_CURRENT_API>() << " - Build type: ";
+  #ifdef NDEBUG
+  std::cout << "Release\n";
+  #else
+  std::cout << "Debug\n";
+  #endif
+
+  ::tts::env runtime(argc,argv,std::cout);
+  return ::tts::run( runtime, ::tts::detail::suite, 0, 0 );
 }
 
 #endif

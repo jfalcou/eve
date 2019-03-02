@@ -40,12 +40,12 @@ function(add_unit_test root)
     if (CMAKE_CROSSCOMPILING_CMD)
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}>
+                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}> --no-color --pass
               )
     else()
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND $<TARGET_FILE:${test}>
+                COMMAND $<TARGET_FILE:${test}> --no-color --pass
               )
     endif()
 
@@ -85,7 +85,7 @@ set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
 set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
 
 download_project( PROJ                tts
-                  GIT_REPOSITORY      git@github.com:jfalcou/tts.git
+                  GIT_REPOSITORY      https://github.com/jfalcou/tts.git
                   GIT_TAG             master
                   "UPDATE_DISCONNECTED 1"
                   QUIET

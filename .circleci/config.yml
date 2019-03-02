@@ -1,0 +1,330 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+version: 2.0
+
+##==================================================================================================
+## Docker images
+##==================================================================================================
+docker_gcc_latest: &docker_gcc_latest
+  docker:
+    - image: gcc:latest
+docker_gcc_7: &docker_gcc_7
+  docker:
+    - image: gcc:7
+docker_clang_7: &docker_clang_7
+  docker:
+    - image: teeks99/clang-ubuntu:7
+docker_clang_8: &docker_clang_8
+  docker:
+    - image: teeks99/clang-ubuntu:8
+
+##==================================================================================================
+## Build variants
+##==================================================================================================
+env_debug_sse2: &env_debug_sse2
+  environment:
+    - VARIANT: "Debug"
+    - OPTIONS: "-msse2"
+env_debug_sse4: &env_debug_sse4
+  environment:
+    - VARIANT: "Debug"
+    - OPTIONS: "-msse4.2"
+env_debug_avx: &env_debug_avx
+  environment:
+    - VARIANT: "Debug"
+    - OPTIONS: "-mavx"
+env_debug_avx2: &env_debug_avx2
+  environment:
+    - VARIANT: "Debug"
+    - OPTIONS: "-mavx2"
+env_release_sse2: &env_release_sse2
+  environment:
+    - VARIANT: "Release"
+    - OPTIONS: "-msse2"
+env_release_sse4: &env_release_sse4
+  environment:
+    - VARIANT: "Release"
+    - OPTIONS: "-msse4.2"
+env_release_avx: &env_release_avx
+  environment:
+    - VARIANT: "Release"
+    - OPTIONS: "-mavx"
+env_release_avx2: &env_release_avx2
+  environment:
+    - VARIANT: "Release"
+    - OPTIONS: "-mavx2"
+
+##==================================================================================================
+## Build configurations
+##==================================================================================================
+config_gcc_latest_dbg_sse2: &config_gcc_latest_dbg_sse2
+  <<: *docker_gcc_latest
+  <<: *env_debug_sse2
+config_gcc_latest_rel_sse2: &config_gcc_latest_rel_sse2
+  <<: *docker_gcc_latest
+  <<: *env_release_sse2
+config_gcc_latest_dbg_sse4: &config_gcc_latest_dbg_sse4
+  <<: *docker_gcc_latest
+  <<: *env_debug_sse4
+config_gcc_latest_rel_sse4: &config_gcc_latest_rel_sse4
+  <<: *docker_gcc_latest
+  <<: *env_release_sse4
+config_gcc_latest_dbg_avx: &config_gcc_latest_dbg_avx
+  <<: *docker_gcc_latest
+  <<: *env_debug_avx
+config_gcc_latest_rel_avx: &config_gcc_latest_rel_avx
+  <<: *docker_gcc_latest
+  <<: *env_release_avx
+config_gcc_latest_dbg_avx2: &config_gcc_latest_dbg_avx2
+  <<: *docker_gcc_latest
+  <<: *env_debug_avx2
+config_gcc_latest_rel_avx2: &config_gcc_latest_rel_avx2
+  <<: *docker_gcc_latest
+  <<: *env_release_avx2
+config_gcc_7_dbg_sse2: &config_gcc_7_dbg_sse2
+  <<: *docker_gcc_7
+  <<: *env_debug_sse2
+config_gcc_7_rel_sse2: &config_gcc_7_rel_sse2
+  <<: *docker_gcc_7
+  <<: *env_release_sse2
+config_gcc_7_dbg_sse4: &config_gcc_7_dbg_sse4
+  <<: *docker_gcc_7
+  <<: *env_debug_sse4
+config_gcc_7_rel_sse4: &config_gcc_7_rel_sse4
+  <<: *docker_gcc_7
+  <<: *env_release_sse4
+config_gcc_7_dbg_avx: &config_gcc_7_dbg_avx
+  <<: *docker_gcc_7
+  <<: *env_debug_avx
+config_gcc_7_rel_avx: &config_gcc_7_rel_avx
+  <<: *docker_gcc_7
+  <<: *env_release_avx
+config_gcc_7_dbg_avx2: &config_gcc_7_dbg_avx2
+  <<: *docker_gcc_7
+  <<: *env_debug_avx2
+config_gcc_7_rel_avx2: &config_gcc_7_rel_avx2
+  <<: *docker_gcc_7
+  <<: *env_release_avx2
+config_clang_7_dbg_sse2: &config_clang_7_dbg_sse2
+  <<: *docker_clang_7
+  <<: *env_debug_sse2
+config_clang_7_rel_sse2: &config_clang_7_rel_sse2
+  <<: *docker_clang_7
+  <<: *env_release_sse2
+config_clang_7_dbg_sse4: &config_clang_7_dbg_sse4
+  <<: *docker_clang_7
+  <<: *env_debug_sse4
+config_clang_7_rel_sse4: &config_clang_7_rel_sse4
+  <<: *docker_clang_7
+  <<: *env_release_sse4
+config_clang_7_dbg_avx: &config_clang_7_dbg_avx
+  <<: *docker_clang_7
+  <<: *env_debug_avx
+config_clang_7_rel_avx: &config_clang_7_rel_avx
+  <<: *docker_clang_7
+  <<: *env_release_avx
+config_clang_7_dbg_avx2: &config_clang_7_dbg_avx2
+  <<: *docker_clang_7
+  <<: *env_debug_avx2
+config_clang_7_rel_avx2: &config_clang_7_rel_avx2
+  <<: *docker_clang_7
+  <<: *env_release_avx2
+config_clang_8_dbg_sse2: &config_clang_8_dbg_sse2
+  <<: *docker_clang_8
+  <<: *env_debug_sse2
+config_clang_8_rel_sse2: &config_clang_8_rel_sse2
+  <<: *docker_clang_8
+  <<: *env_release_sse2
+config_clang_8_dbg_sse4: &config_clang_8_dbg_sse4
+  <<: *docker_clang_8
+  <<: *env_debug_sse4
+config_clang_8_rel_sse4: &config_clang_8_rel_sse4
+  <<: *docker_clang_8
+  <<: *env_release_sse4
+config_clang_8_dbg_avx: &config_clang_8_dbg_avx
+  <<: *docker_clang_8
+  <<: *env_debug_avx
+config_clang_8_rel_avx: &config_clang_8_rel_avx
+  <<: *docker_clang_8
+  <<: *env_release_avx
+config_clang_8_dbg_avx2: &config_clang_8_dbg_avx2
+  <<: *docker_clang_8
+  <<: *env_debug_avx2
+config_clang_8_rel_avx2: &config_clang_8_rel_avx2
+  <<: *docker_clang_8
+  <<: *env_release_avx2
+
+##==================================================================================================
+## Build steps
+##==================================================================================================
+steps_test_gcc: &steps_test_gcc
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh g++
+
+steps_test_clang_7: &steps_test_clang_7
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh clang++-7
+
+steps_test_clang_8: &steps_test_clang_8
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh clang++-8
+
+jobs:
+  gcc_latest_dbg_sse2:
+    <<: *config_gcc_latest_dbg_sse2
+    <<: *steps_test_gcc
+  gcc_latest_rel_sse2:
+    <<: *config_gcc_latest_rel_sse2
+    <<: *steps_test_gcc
+  gcc_latest_dbg_sse4:
+    <<: *config_gcc_latest_dbg_sse4
+    <<: *steps_test_gcc
+  gcc_latest_rel_sse4:
+    <<: *config_gcc_latest_rel_sse4
+    <<: *steps_test_gcc
+  gcc_latest_dbg_avx:
+    <<: *config_gcc_latest_dbg_avx
+    <<: *steps_test_gcc
+  gcc_latest_rel_avx:
+    <<: *config_gcc_latest_rel_avx
+    <<: *steps_test_gcc
+    <<: *steps_test_gcc
+  gcc_latest_dbg_avx2:
+    <<: *config_gcc_latest_dbg_avx2
+    <<: *steps_test_gcc
+  gcc_latest_rel_avx2:
+    <<: *config_gcc_latest_rel_avx2
+    <<: *steps_test_gcc
+  gcc_7_dbg_sse2:
+    <<: *config_gcc_7_dbg_sse2
+    <<: *steps_test_gcc
+  gcc_7_rel_sse2:
+    <<: *config_gcc_7_rel_sse2
+    <<: *steps_test_gcc
+  gcc_7_dbg_sse4:
+    <<: *config_gcc_7_dbg_sse4
+    <<: *steps_test_gcc
+  gcc_7_rel_sse4:
+    <<: *config_gcc_7_rel_sse4
+    <<: *steps_test_gcc
+  gcc_7_dbg_avx:
+    <<: *config_gcc_7_dbg_avx
+    <<: *steps_test_gcc
+  gcc_7_rel_avx:
+    <<: *config_gcc_7_rel_avx
+    <<: *steps_test_gcc
+  gcc_7_dbg_avx2:
+    <<: *config_gcc_7_dbg_avx2
+    <<: *steps_test_gcc
+  gcc_7_rel_avx2:
+    <<: *config_gcc_7_rel_avx2
+    <<: *steps_test_gcc
+  clang_7_dbg_sse2:
+    <<: *config_clang_7_dbg_sse2
+    <<: *steps_test_clang_7
+  clang_7_rel_sse2:
+    <<: *config_clang_7_rel_sse2
+    <<: *steps_test_clang_7
+  clang_7_dbg_sse4:
+    <<: *config_clang_7_dbg_sse4
+    <<: *steps_test_clang_7
+  clang_7_rel_sse4:
+    <<: *config_clang_7_rel_sse4
+    <<: *steps_test_clang_7
+  clang_7_dbg_avx:
+    <<: *config_clang_7_dbg_avx
+    <<: *steps_test_clang_7
+  clang_7_rel_avx:
+    <<: *config_clang_7_rel_avx
+    <<: *steps_test_clang_7
+  clang_7_dbg_avx2:
+    <<: *config_clang_7_dbg_avx2
+    <<: *steps_test_clang_7
+  clang_7_rel_avx2:
+    <<: *config_clang_7_rel_avx2
+    <<: *steps_test_clang_7
+  clang_8_dbg_sse2:
+    <<: *config_clang_8_dbg_sse2
+    <<: *steps_test_clang_8
+  clang_8_rel_sse2:
+    <<: *config_clang_8_rel_sse2
+    <<: *steps_test_clang_8
+  clang_8_dbg_sse4:
+    <<: *config_clang_8_dbg_sse4
+    <<: *steps_test_clang_8
+  clang_8_rel_sse4:
+    <<: *config_clang_8_rel_sse4
+    <<: *steps_test_clang_8
+  clang_8_dbg_avx:
+    <<: *config_clang_8_dbg_avx
+    <<: *steps_test_clang_8
+  clang_8_rel_avx:
+    <<: *config_clang_8_rel_avx
+    <<: *steps_test_clang_8
+  clang_8_dbg_avx2:
+    <<: *config_clang_8_dbg_avx2
+    <<: *steps_test_clang_8
+  clang_8_rel_avx2:
+    <<: *config_clang_8_rel_avx2
+    <<: *steps_test_clang_8
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - gcc_latest_dbg_sse2
+      - gcc_latest_rel_sse2
+      - gcc_latest_dbg_sse4
+      - gcc_latest_rel_sse4
+      - gcc_latest_dbg_avx
+      - gcc_latest_rel_avx
+      - gcc_latest_dbg_avx2
+      - gcc_latest_rel_avx2
+      - gcc_7_dbg_sse2
+      - gcc_7_rel_sse2
+      - gcc_7_dbg_sse4
+      - gcc_7_rel_sse4
+      - gcc_7_dbg_avx
+      - gcc_7_rel_avx
+      - gcc_7_dbg_avx2
+      - gcc_7_rel_avx2
+      - clang_7_dbg_sse2
+      - clang_7_rel_sse2
+      - clang_7_dbg_sse4
+      - clang_7_rel_sse4
+      - clang_7_dbg_avx
+      - clang_7_rel_avx
+      - clang_7_dbg_avx2
+      - clang_7_rel_avx2
+#      - clang_8_dbg_sse2
+#      - clang_8_rel_sse2
+#      - clang_8_dbg_sse4
+#      - clang_8_rel_sse4
+#      - clang_8_dbg_avx
+#      - clang_8_rel_avx
+#      - clang_8_dbg_avx2
+#      - clang_8_rel_avx2
