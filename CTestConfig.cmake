@@ -41,7 +41,7 @@ if(GIT_EXECUTABLE)
       RESULT_VARIABLE BRANCH_RESULT ERROR_QUIET
       )
   if(NOT BRANCH_RESULT)
-    string(REGEX REPLACE "^.+/([^/]+)$" "\\1" BRANCH ${BRANCH})
+    string(REGEX REPLACE "refs/heads/([^ ]*)" "\\1" BRANCH ${BRANCH})
   else()
     set(BRANCH "dirty")
   endif()
