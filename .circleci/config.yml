@@ -163,7 +163,7 @@ config_clang_8_rel_avx2: &config_clang_8_rel_avx2
 ##==================================================================================================
 ## Build steps
 ##==================================================================================================
-steps_test_gcc_latest: &steps_test_gcc_latest
+steps_test_gcc: &steps_test_gcc
   steps:
     - checkout
     - run:
@@ -173,7 +173,7 @@ steps_test_gcc_latest: &steps_test_gcc_latest
         name: Running tests
         command: . .circleci/run.sh g++
 
-steps_test_gcc_7: &steps_test_gcc_7
+steps_test_clang_7: &steps_test_clang_7
   steps:
     - checkout
     - run:
@@ -181,45 +181,91 @@ steps_test_gcc_7: &steps_test_gcc_7
         command: . .circleci/prepare.sh
     - run:
         name: Running tests
-        command: . .circleci/run.sh g++
+        command: . .circleci/run.sh clang++-7
+
+steps_test_clang_8: &steps_test_clang_8
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh clang++-8
 
 jobs:
   gcc_latest_dbg_sse2:
     <<: *config_gcc_latest_dbg_sse2
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_latest_rel_sse2:
     <<: *config_gcc_latest_rel_sse2
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_latest_dbg_sse4:
     <<: *config_gcc_latest_dbg_sse4
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_latest_rel_sse4:
     <<: *config_gcc_latest_rel_sse4
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_latest_dbg_avx:
     <<: *config_gcc_latest_dbg_avx
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_latest_rel_avx2:
     <<: *config_gcc_latest_rel_avx2
-    <<: *steps_test_gcc_latest
+    <<: *steps_test_gcc
   gcc_7_dbg_sse2:
     <<: *config_gcc_7_dbg_sse2
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
   gcc_7_rel_sse2:
     <<: *config_gcc_7_rel_sse2
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
   gcc_7_dbg_sse4:
     <<: *config_gcc_7_dbg_sse4
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
   gcc_7_rel_sse4:
     <<: *config_gcc_7_rel_sse4
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
   gcc_7_dbg_avx:
     <<: *config_gcc_7_dbg_avx
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
   gcc_7_rel_avx2:
     <<: *config_gcc_7_rel_avx2
-    <<: *steps_test_gcc_7
+    <<: *steps_test_gcc
+  clang_7_dbg_sse2:
+    <<: *config_clang_7_dbg_sse2
+    <<: *steps_test_clang_7
+  clang_7_rel_sse2:
+    <<: *config_clang_7_rel_sse2
+    <<: *steps_test_clang_7
+  clang_7_dbg_sse4:
+    <<: *config_clang_7_dbg_sse4
+    <<: *steps_test_clang_7
+  clang_7_rel_sse4:
+    <<: *config_clang_7_rel_sse4
+    <<: *steps_test_clang_7
+  clang_7_dbg_avx:
+    <<: *config_clang_7_dbg_avx
+    <<: *steps_test_clang_7
+  clang_7_rel_avx2:
+    <<: *config_clang_7_rel_avx2
+    <<: *steps_test_clang_7
+  clang_8_dbg_sse2:
+    <<: *config_clang_8_dbg_sse2
+    <<: *steps_test_clang_8
+  clang_8_rel_sse2:
+    <<: *config_clang_8_rel_sse2
+    <<: *steps_test_clang_8
+  clang_8_dbg_sse4:
+    <<: *config_clang_8_dbg_sse4
+    <<: *steps_test_clang_8
+  clang_8_rel_sse4:
+    <<: *config_clang_8_rel_sse4
+    <<: *steps_test_clang_8
+  clang_8_dbg_avx:
+    <<: *config_clang_8_dbg_avx
+    <<: *steps_test_clang_8
+  clang_8_rel_avx2:
+    <<: *config_clang_8_rel_avx2
+    <<: *steps_test_clang_8
 
 workflows:
   version: 2
@@ -241,3 +287,15 @@ workflows:
       - gcc_7_rel_avx
       - gcc_7_dbg_avx2
       - gcc_7_rel_avx2
+      - clang_7_dbg_sse2
+      - clang_7_rel_sse2
+      - clang_7_dbg_sse4
+      - clang_7_rel_sse4
+      - clang_7_dbg_avx
+      - clang_7_rel_avx2
+      - clang_8_dbg_sse2
+      - clang_8_rel_sse2
+      - clang_8_dbg_sse4
+      - clang_8_rel_sse4
+      - clang_8_dbg_avx
+      - clang_8_rel_avx2
