@@ -25,54 +25,35 @@
 
 namespace eve::detail
 {
-
 #if defined(EVE_SUPPORTS_XOP)
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE wide<T, N, sse_> shr_(EVE_SUPPORTS(avx_)
-                                       , wide<T, N, sse_> const &a0
-                                       , wide<I, N, sse_> const &a1) noexcept
+  EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(avx_)
+                           , wide<T, N, sse_> const &a0
+                           , wide<I, N, sse_> const &a1) noexcept
+  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>; 
    EVE_ASSERT(assert_good_shift<t_t>(a1),
                "[eve::shr xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
-    if constexpr( std::is_arithmetic_v<T> )
-    {
-      if constexpr(std::is_floating_point_v<T>)
-      {
-        static_assert (  !std::is_floating_point_v<T> &&
-                        "[eve::shr] - No support for floating values"
-                      );
-      }
-      if constexpr(std::is_integral_v<T>)
-      {
-        
-        if constexpr(std::is_unsigned_v<T>)
-        {
-          using si_t = wide<as_integer_t<I,signed>, N, sse_>; 
-          auto sa1 = -bitwise_cast<si_t>(a1); 
-          if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,sa1); 
-          if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,sa1);   
-          if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,sa1);   
-          if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,sa1);   
-        }
-        else
-        {
-          using si_t = wide<as_integer_t<I,signed>, N, sse_>; 
-          auto sa1 = -bitwise_cast<si_t>(a1); 
-          if constexpr(sizeof(T) == 1) return _mm_sha_epi8(a0,sa1);   
-          if constexpr(sizeof(T) == 2) return _mm_sha_epi16(a0,sa1);   
-          if constexpr(sizeof(T) == 4) return _mm_sha_epi32(a0,sa1);   
-          if constexpr(sizeof(T) == 8) return _mm_sha_epi64(a0,sa1);   
-        }
-      }
-    }
-    else
-    {
-      static_assert ( std::is_arithmetic_v<T>,
-                      "eve::shr - No support for logical values"
-                    );
-    }
+   if constexpr(std::is_unsigned_v<T>)
+   {
+     using si_t = wide<as_integer_t<I,signed>, N, sse_>; 
+     auto sa1 = -bitwise_cast<si_t>(a1); 
+     if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,sa1); 
+     if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,sa1);   
+     if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,sa1);   
+     if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,sa1);   
+   }
+   else
+   {
+     using si_t = wide<as_integer_t<I,signed>, N, sse_>; 
+     auto sa1 = -bitwise_cast<si_t>(a1); 
+     if constexpr(sizeof(T) == 1) return _mm_sha_epi8(a0,sa1);   
+     if constexpr(sizeof(T) == 2) return _mm_sha_epi16(a0,sa1);   
+     if constexpr(sizeof(T) == 4) return _mm_sha_epi32(a0,sa1);   
+     if constexpr(sizeof(T) == 8) return _mm_sha_epi64(a0,sa1);   
+   }
   }
 #endif
   

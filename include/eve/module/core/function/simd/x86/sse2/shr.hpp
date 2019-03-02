@@ -31,98 +31,65 @@
 
 namespace eve ::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  shr_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, ptrdiff_t a1) noexcept
+  template<typename T, typename N, typename I>
+  EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(sse2_)
+                           , wide<T, N, sse_> const &a0, I a1) noexcept
+  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>; 
     EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
                "[eve::shr sse2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
-    if constexpr( std::is_arithmetic_v<T> )
+    if constexpr(std::is_unsigned_v<T>)
     {
-      if constexpr(std::is_floating_point_v<T>)
+      if constexpr(sizeof(T) == 1)
       {
-        static_assert ( !std::is_floating_point_v<T> &&
-                        "[eve::shr] - No support for floating values"
-                      );
+        using int_t     = std::uint16_t;
+        using gen_t     = wide<int_t, fixed<N::value / 2>>;
+        t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
+        t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
+        t_t tmp  = bitwise_and(a0, Mask1);
+        t_t tmp1 = _mm_srli_epi16(tmp, int(a1));
+        tmp1 = bitwise_and(tmp1, Mask1);
+        tmp = bitwise_and(a0, Mask2);
+        t_t tmp3 = _mm_srli_epi16(tmp, int(a1));
+        return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
       }
-      if constexpr(std::is_integral_v<T>)
-      {
-        if constexpr(std::is_unsigned_v<T>)
-        {
-          if constexpr(sizeof(T) == 1)
-          {
-            using int_t     = std::uint16_t;
-            using gen_t     = wide<int_t, fixed<N::value / 2>>;
-            t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
-            t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
-            t_t tmp  = bitwise_and(a0, Mask1);
-            t_t tmp1 = _mm_srli_epi16(tmp, int(a1));
-            tmp1 = bitwise_and(tmp1, Mask1);
-            tmp = bitwise_and(a0, Mask2);
-            t_t tmp3 = _mm_srli_epi16(tmp, int(a1));
-            return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
-          }
-          if constexpr(sizeof(T) == 2) { return _mm_srli_epi16(a0, a1); }
-          if constexpr(sizeof(T) == 4) { return _mm_srli_epi32(a0, a1); }
-          if constexpr(sizeof(T) == 8) { return _mm_srli_epi64(a0, a1); }
-        }
-        if constexpr(std::is_signed_v<T>)
-        {
-          if constexpr(sizeof(T) == 1)
-          {
-            return map(eve::shr, a0, a1); 
-//           auto s = split(a0);
-//           return bitwise_cast<A0>(group(shr(s[0], a1), shr(s[1], a1)));
-          }
-          if constexpr(sizeof(T) == 2) { return _mm_srai_epi16(a0, a1); }
-          if constexpr(sizeof(T) == 4) { return _mm_srai_epi32(a0, a1); }
-          if constexpr(sizeof(T) == 8)
-          {
-            return map(eve::shr, a0, a1); 
-//           t_t that = _mm_srli_epi64(a0, a1);
-//           t_t mask = _mm_srli_epi64(Allbits<t_t>(), a1);
-//           return bitwise_ornot(that, if_else_allbits(is_ltz(a0), mask));
-          }
-        }
-      }
+      if constexpr(sizeof(T) == 2) { return _mm_srli_epi16(a0, a1); }
+      if constexpr(sizeof(T) == 4) { return _mm_srli_epi32(a0, a1); }
+      if constexpr(sizeof(T) == 8) { return _mm_srli_epi64(a0, a1); }
     }
     else
     {
-      static_assert ( std::is_arithmetic_v<T>,
-                      "eve::shr - No support for logical values"
-                    );
+      if constexpr(sizeof(T) == 1)
+      {
+        return map(eve::shr, a0, a1); 
+//           auto s = split(a0);
+//           return bitwise_cast<A0>(group(shr(s[0], a1), shr(s[1], a1)));
+      }
+      if constexpr(sizeof(T) == 2) { return _mm_srai_epi16(a0, a1); }
+      if constexpr(sizeof(T) == 4) { return _mm_srai_epi32(a0, a1); }
+      if constexpr(sizeof(T) == 8)
+      {
+        return map(eve::shr, a0, a1); 
+//           t_t that = _mm_srli_epi64(a0, a1);
+//           t_t mask = _mm_srli_epi64(Allbits<t_t>(), a1);
+//           return bitwise_ornot(that, if_else_allbits(is_ltz(a0), mask));
+      }
     }
   }
-
+  
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  shr_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, wide<I, N, sse_> const &a1) noexcept
+  EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(sse2_)
+                           , wide<T, N, sse_> const &a0
+                           , wide<I, N, sse_> const &a1) noexcept
+  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>;
     EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
                "[eve::shr sse2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
-    if constexpr( std::is_arithmetic_v<T> )
-    {
-      if constexpr(std::is_floating_point_v<T>)
-      {
-        static_assert ( !std::is_floating_point_v<T> &&
-                        "[eve::shr] - No support for floating values"
-                      );
-      }
-      else
-      {
-        return map(eve::shr, a0, a1);
-      }
-    }
-    else
-    {
-      static_assert ( std::is_arithmetic_v<T>,
-                      "eve::shr - No support for logical values"
-                    );
-    }
+    return map(eve::shr, a0, a1);
   }
   
 }

@@ -23,10 +23,10 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE auto shl_(avx_(avx2_), wide<T, N, avx_> const &a0, I a1) noexcept
-  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, I a1) noexcept
+  requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, avx_>;
     EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
                " [eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
