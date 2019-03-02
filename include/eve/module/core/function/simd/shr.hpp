@@ -21,9 +21,10 @@
 
 #if defined(EVE_HW_X86)
 #  if EVE_HW_X86 >= EVE_AVX_VERSION
-#   if defined(EVE_SUPPORTS_XOP)
-#    include <eve/module/core/function/simd/x86/xop/shr.hpp>
-#   endif
+#    include <eve/module/core/function/simd/x86/avx/shr.hpp>
+#    if defined(EVE_SUPPORTS_XOP)
+#      include <eve/module/core/function/simd/x86/xop/shr.hpp>
+#    endif
 #  endif
 #endif
 

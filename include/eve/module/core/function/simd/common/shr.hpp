@@ -40,13 +40,28 @@ namespace eve::detail
   }
 }
 
+// -------------------------------------------------------------------------------------------------
+// Infix operator support
 namespace eve
 {
-  // -----------------------------------------------------------------------------------------------
-  // Infix support
   template<typename T, typename U, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator>>(wide<T, N, ABI> const &v0, wide<U, N, ABI> const &v1) noexcept
+  {
+    return eve::shr(v0, v1);
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto operator>>(wide<T, N, ABI> const &v0,
+                                 U const &              v1) noexcept requires(wide<T, N, ABI>,
+                                                                detail::Convertible<U, T>)
+  {
+    return eve::shr(v0, v1);
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto
-  operator >> (wide<T, N, ABI> const &v0, U const &v1) noexcept
+  operator>>(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
+                                                                      detail::Convertible<U, T>)
   {
     return eve::shr(v0, v1);
   }
