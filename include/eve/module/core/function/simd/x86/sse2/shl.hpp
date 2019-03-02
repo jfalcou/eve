@@ -28,7 +28,7 @@ namespace eve ::detail
   {
     using t_t = wide<T, N, sse_>;
     EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
-              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              , "[eve::shl sse2] -  At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
               );
 
     if constexpr( std::is_arithmetic_v<T> )
@@ -71,7 +71,7 @@ namespace eve ::detail
   {
     using t_t = wide<T, N, sse_>;
     EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
-              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              , "[eve::shl sse2] - At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
               );
 
     return map(eve::shl, a0, a1);

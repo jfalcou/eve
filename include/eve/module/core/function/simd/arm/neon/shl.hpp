@@ -14,6 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
+#include <type_traits>
+#include <eve/function/bitwise_cast.hpp>
 
 namespace eve::detail
 {
@@ -23,6 +28,10 @@ namespace eve::detail
                               wide<I, N, neon64_> const &v1) noexcept
   requires(wide<T, N, neon64_>, Integral<I>)
   {
+    EVE_ASSERT( detail::assert_good_shift<t_t>(v1)
+              , "[eve::shl neon64] - At least one of " << v1 << "elements is out of the range [0, "
+                                                    << sizeof(T)*8 << "[."
+              );
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
@@ -51,7 +60,7 @@ namespace eve::detail
     else
     {
       static_assert ( std::is_arithmetic_v<T>,
-                     "eve::shl - No support for logical values"
+                     "[eve::shl neon] - No support for logical values"
                     );
     }
   }
@@ -70,6 +79,10 @@ namespace eve::detail
                              wide<I, N, neon128_> const &v1) noexcept
   requires(wide<T, N, neon128_>, Integral<I>)
   {
+    EVE_ASSERT( detail::assert_good_shift<t_t>(v1)
+              , "[eve::shl neon128] - At least one of " << v1 << "elements is out of the range [0, "
+                                                    << sizeof(T)*8 << "[."
+              );
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 

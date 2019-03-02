@@ -17,6 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/function/scalar/bitwise_cast.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 #include <cassert>
 
@@ -29,7 +30,7 @@ namespace eve::detail
   requires(T, Integral<U>)
   {
     EVE_ASSERT( detail::assert_good_shift<T>(a1)
-              , " At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              , "[ eve::shl scalar] - At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
               );
 
     if constexpr(std::is_arithmetic_v<T>)
@@ -47,7 +48,7 @@ namespace eve::detail
     else
     {
       static_assert ( std::is_arithmetic_v<T>,
-                     "eve::shl - No support for logical values"
+                     "[ eve::shl scalar] - No support for logical values"
                     );
     }
   }

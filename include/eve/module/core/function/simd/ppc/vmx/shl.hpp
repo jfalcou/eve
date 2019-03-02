@@ -13,6 +13,12 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
+#include <type_traits>
+#include <eve/function/bitwise_cast.hpp>
+
 
 namespace eve::detail
 {

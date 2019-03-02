@@ -17,6 +17,7 @@
 #include <eve/forward.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
 
 #include <type_traits>
 #include <cassert>
@@ -29,31 +30,32 @@ namespace eve ::detail
                                        , wide<I, N, avx_> const &a1) noexcept
   {
     using t_t = wide<T, N, sse_>; 
-    assert(assert_good_shift<t_t>(a1) && "[eve::shl] (xop) a shift is out of range");
-    if constexpr(std::is_floating_point_v<T>)
+    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
+              , "[eve::shl xop] - At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
+              );
+    if constexpr( std::is_arithmetic_v<T> )
     {
-      using i_t = wide<detail::as_integer_t<T>, N, sse_>;
-      return bitwise_cast<t_t>(shl(bitwise_cast<i_t>(a0), a1));
+      if constexpr(std::is_floating_point_v<T>)
+      {
+        using i_t = wide<detail::as_integer_t<T>, N, sse_>;
+        return bitwise_cast<t_t>(shl(bitwise_cast<i_t>(a0), a1));
+      }
+      if constexpr(std::is_integral_v<T>)
+      {
+        if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,a1); 
+        if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);   
+        if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);   
+        if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);   
+      }
     }
-    if constexpr(std::is_integral_v<T>)
+    else
     {
-      if constexpr(sizeof(T) == 1)  return _mm_shl_epi8(a0,a1); 
-      if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);   
-      if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);   
-      if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);   
+      static_assert ( std::is_arithmetic_v<T>,
+                      "[eve::shl xop] - No support for logical values"
+                    );
     }
   }
-  
-  template<typename T, typename N, typename I>
-  EVE_FORCEINLINE wide<T, N, sse_> shl_(EVE_SUPPORTS(xop_)
-                                       , wide<T, N, avx_> const &a0
-                                       , I a1) noexcept
-  {
-    using t_t = wide<T, N, sse_>; 
-    assert(assert_good_shift<t_t>(a1) && "[eve::shl] (xop)  shift is out of range");
-    using i_t = wide<I, N, avx_>;
-    return shl(a0, i_t(a1)); 
-  }
+
 }
 
 #endif
