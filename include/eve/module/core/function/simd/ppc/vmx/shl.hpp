@@ -32,8 +32,7 @@ namespace eve::detail
               );
 
     using i_t = wide<as_integer_t<T,unsigned>,N>;
-
-    return vec_sl(v0.storage(), bitwise_cast<i_t>(v1).storage());
+    return t_t(vec_sl(v0.storage(), bitwise_cast<i_t>(v1).storage()));
   }
 
   template<typename T, typename N, typename I>
