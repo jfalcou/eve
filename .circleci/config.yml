@@ -320,11 +320,11 @@ workflows:
       - clang_7_rel_avx
       - clang_7_dbg_avx2
       - clang_7_rel_avx2
-      - clang_8_dbg_sse2
-      - clang_8_rel_sse2
-      - clang_8_dbg_sse4
-      - clang_8_rel_sse4
-      - clang_8_dbg_avx
-      - clang_8_rel_avx
-      - clang_8_dbg_avx2
-      - clang_8_rel_avx2
+#      - clang_8_dbg_sse2
+#      - clang_8_rel_sse2
+#      - clang_8_dbg_sse4
+#      - clang_8_rel_sse4
+#      - clang_8_dbg_avx
+#      - clang_8_rel_avx
+#      - clang_8_dbg_avx2
+#      - clang_8_rel_avx2
