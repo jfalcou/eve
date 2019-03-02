@@ -20,7 +20,6 @@ docker_gcc_7: &docker_gcc_7
 docker_clang_7: &docker_clang_7
   docker:
     - image: teeks99/clang-ubuntu:7
-
 docker_clang_8: &docker_clang_8
   docker:
     - image: teeks99/clang-ubuntu:8
