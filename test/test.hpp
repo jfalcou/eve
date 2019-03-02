@@ -53,7 +53,7 @@ int main(int argc, const char** argv)
   #endif
 
   ::tts::env runtime(argc,argv,std::cout);
-  return ::tts::run( runtime, ::tts::detail::suite, 19, 0 );
+  return ::tts::run( runtime, ::tts::detail::suite, 0, 0 );
 }
 
 #endif
