@@ -19,7 +19,6 @@
 #include <type_traits>
 #include <eve/function/bitwise_cast.hpp>
 
-
 namespace eve::detail
 {
   template<typename T, typename N, typename I>

@@ -27,9 +27,9 @@ namespace eve::detail
                   shl_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, I a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
-              , " [eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
-              );
+    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+               " [eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, "
+                                                     << sizeof(T) * 8 << "[.");
 
     if constexpr( std::is_arithmetic_v<T> )
     {
@@ -60,9 +60,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert ( std::is_arithmetic_v<T>,
-                     "[eve::shl avx2] - No support for logical values"
-                    );
+      static_assert(std::is_arithmetic_v<T>, "[eve::shl avx2] - No support for logical values");
     }
   }
 
@@ -71,9 +69,9 @@ namespace eve::detail
                   shl_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0, wide<I, N, avx_> const &a1) noexcept
   {
     using t_t = wide<T, N, avx_>;
-    EVE_ASSERT( detail::assert_good_shift<t_t>(a1)
-              , "[eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, " << sizeof(T)*8 << "[."
-              );
+    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+               "[eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, "
+                                                    << sizeof(T) * 8 << "[.");
 
     if constexpr( std::is_arithmetic_v<T> )
     {
@@ -92,9 +90,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert ( std::is_arithmetic_v<T>,
-                     "[eve::shl avx2] - No support for logical values"
-                    );
+      static_assert(std::is_arithmetic_v<T>, "[eve::shl avx2] - No support for logical values");
     }
   }
 }
