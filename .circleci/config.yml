@@ -209,6 +209,13 @@ jobs:
   gcc_latest_dbg_avx:
     <<: *config_gcc_latest_dbg_avx
     <<: *steps_test_gcc
+  gcc_latest_rel_avx:
+    <<: *config_gcc_latest_rel_avx
+    <<: *steps_test_gcc
+    <<: *steps_test_gcc
+  gcc_latest_dbg_avx2:
+    <<: *config_gcc_latest_dbg_avx2
+    <<: *steps_test_gcc
   gcc_latest_rel_avx2:
     <<: *config_gcc_latest_rel_avx2
     <<: *steps_test_gcc
@@ -226,6 +233,12 @@ jobs:
     <<: *steps_test_gcc
   gcc_7_dbg_avx:
     <<: *config_gcc_7_dbg_avx
+    <<: *steps_test_gcc
+  gcc_7_rel_avx:
+    <<: *config_gcc_7_rel_avx
+    <<: *steps_test_gcc
+  gcc_7_dbg_avx2:
+    <<: *config_gcc_7_dbg_avx2
     <<: *steps_test_gcc
   gcc_7_rel_avx2:
     <<: *config_gcc_7_rel_avx2
@@ -245,6 +258,12 @@ jobs:
   clang_7_dbg_avx:
     <<: *config_clang_7_dbg_avx
     <<: *steps_test_clang_7
+  clang_7_rel_avx:
+    <<: *config_clang_7_rel_avx
+    <<: *steps_test_clang_7
+  clang_7_dbg_avx2:
+    <<: *config_clang_7_dbg_avx2
+    <<: *steps_test_clang_7
   clang_7_rel_avx2:
     <<: *config_clang_7_rel_avx2
     <<: *steps_test_clang_7
@@ -262,6 +281,12 @@ jobs:
     <<: *steps_test_clang_8
   clang_8_dbg_avx:
     <<: *config_clang_8_dbg_avx
+    <<: *steps_test_clang_8
+  clang_8_rel_avx:
+    <<: *config_clang_8_rel_avx
+    <<: *steps_test_clang_8
+  clang_8_dbg_avx2:
+    <<: *config_clang_8_dbg_avx2
     <<: *steps_test_clang_8
   clang_8_rel_avx2:
     <<: *config_clang_8_rel_avx2
@@ -292,10 +317,14 @@ workflows:
       - clang_7_dbg_sse4
       - clang_7_rel_sse4
       - clang_7_dbg_avx
+      - clang_7_rel_avx
+      - clang_7_dbg_avx2
       - clang_7_rel_avx2
       - clang_8_dbg_sse2
       - clang_8_rel_sse2
       - clang_8_dbg_sse4
       - clang_8_rel_sse4
       - clang_8_dbg_avx
+      - clang_8_rel_avx
+      - clang_8_dbg_avx2
       - clang_8_rel_avx2
