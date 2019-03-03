@@ -14,6 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_cast.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -23,7 +24,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr T bitwise_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_and - Arguments have incompatible size");
+    EVE_ASSERT(sizeof(T) == sizeof(U),
+               "[ eve::bitwise_and scalar] - Arguments have incompatible siz e" << sizeof(T) << " != " << sizeof(U) << ".");
+//    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_and - Arguments have incompatible size");
 
     if constexpr(std::is_floating_point_v<T>)
     {

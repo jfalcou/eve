@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -12,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/assert.hpp>
 #include <cstring>
 
 namespace eve::detail
@@ -25,7 +27,9 @@ namespace eve::detail
   template<typename T, typename Target>
   EVE_FORCEINLINE Target bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
   {
-    static_assert(sizeof(a) == sizeof(Target), "[eve] Size mismatch in bitwise_cast");
+    EVE_ASSERT(sizeof(a) == sizeof(Target),
+               "[ eve::bitwise_cast scalar] - Size mismatch in bitwise_cast " << sizeof(a) << " != " << sizeof(Target) << ".");
+//    static_assert(sizeof(a) == sizeof(Target), "[eve] Size mismatch in bitwise_cast");
 
     Target that;
     std::memcpy(&that, &a, sizeof(a));
