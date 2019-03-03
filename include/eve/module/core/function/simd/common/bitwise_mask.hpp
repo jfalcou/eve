@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),
                                      wide<T, N, ABI> const &v) noexcept
   {
-    using t_t = wide<T, N, ABI>; 
+    using t_t = wide<T, N, ABI>;
     return bitwise_cast<t_t>(is_nez(v));
   }
   // -----------------------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),
                                      wide<logical<T>, N, ABI> const &v) noexcept
   {
-    using t_t = wide<T, N, ABI>; 
+    using t_t = wide<T, N, ABI>;
     return bitwise_cast<t_t>(v);
   }
 
