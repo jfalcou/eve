@@ -13,6 +13,7 @@
 #include <eve/function/scalar/combine.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 namespace eve::detail
@@ -22,6 +23,16 @@ namespace eve::detail
   combine_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a, wide<T, N, ABI> const &b) noexcept
   {
     return wide<T, typename N::combined_type>{a, b};
+  }
+
+  //------------------------------------------------------------------------------------------------
+  // Logical
+  template<typename T, typename N, typename ABI, typename Arch>
+  EVE_FORCEINLINE auto  combine_( EVE_SUPPORTS(Arch),
+                                  logical<wide<T, N, ABI>> const &l,
+                                  logical<wide<T, N, ABI>> const &h) noexcept
+  {
+    return logical<wide<T, typename N::combined_type>>(l,h);
   }
 }
 

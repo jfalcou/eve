@@ -67,6 +67,34 @@ namespace eve::detail
     using subwide_t = typename storage_t::value_type;
     return Pack(storage_t{subwide_t(ptr), subwide_t(ptr + subwide_t::size())});
   }
+
+  //------------------------------------------------------------------------------------------------
+  // Aggregation of logical<wide>
+  template<typename Pack, typename Pointer>
+  EVE_FORCEINLINE logical<Pack> load( as_<logical<Pack>> const &tgt,
+                                      eve::aggregated_ const &,
+                                      Pointer ptr) noexcept
+  {
+    using subwide_t = logical < wide< typename Pack::value_type,
+                                      typename Pack::cardinal_type::split_type
+                                    >
+                              >;
+
+    return logical<Pack>(subwide_t(ptr), subwide_t(ptr + subwide_t::size()));
+  }
+
+  template<typename T, typename Pack, std::size_t N>
+  EVE_FORCEINLINE logical<Pack> load( as_<logical<Pack>> const &       tgt,
+                                      eve::aggregated_ const &mode,
+                                      aligned_ptr<T, N>       ptr) noexcept
+  {
+    using subwide_t = logical < wide< typename Pack::value_type,
+                                      typename Pack::cardinal_type::split_type
+                                    >
+                              >;
+
+    return logical<Pack>(subwide_t(ptr), subwide_t(ptr + subwide_t::size()));
+  }
 }
 
 #endif

@@ -29,6 +29,17 @@ namespace tts::ext
     }
   };
 
+  template<typename T, typename EnableIf>
+  struct equal<eve::logical<T>, eve::logical<T>, EnableIf>
+  {
+    using arg_t = eve::logical<T>;
+    inline bool operator()(arg_t const &l, arg_t const &r) const
+    {
+      using b_t = typename arg_t::bits_type;
+      return equal<b_t,b_t>{}(l.bits(),r.bits());
+    }
+  };
+
   template<typename T, typename N, typename ABI, typename EnableIf>
   struct ulpdist<eve::wide<T, N, ABI>, eve::wide<T, N, ABI>, EnableIf>
   {

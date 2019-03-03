@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -17,50 +18,8 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/is_wide.hpp>
 #include <type_traits>
-
-namespace eve::detail
-{
-  // -----------------------------------------------------------------------------------------------
-  // Support for mixed type with auto-splat
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, ABI> const &v0,
-                                 U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                                detail::Convertible<U, T>)
-  {
-    return eve::is_equal(v0, wide<T, N, ABI>(static_cast<T>(v1)));
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
-                                 U const &              v0,
-                                 wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                                              detail::Convertible<U, T>)
-  {
-    return eve::is_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, aggregated_> const &v0,
-                                 wide<T, N, aggregated_> const &v1) noexcept
-  {
-    return aggregate(eve::is_equal, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, emulated_> const &v0,
-                                 wide<T, N, emulated_> const &v1) noexcept
-  {
-    return map(eve::is_equal, v0, v1);
-  }
-}
 
 namespace eve
 {
@@ -86,6 +45,43 @@ namespace eve
                                                                        detail::Convertible<U, T>)
   {
     return eve::is_equal(v0, v1);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // operator == for logical<wide>
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,
+                                  logical<wide<T,N,ABI>> const &v1) noexcept
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,
+                                  logical<U> const &v1) noexcept
+                  requires(as_logical_t<wide<T, N, ABI>>, Scalar<U>)
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto operator==( logical<U> const &v0,
+                                   logical<wide<T,N,ABI>> const &v1) noexcept
+                  requires(as_logical_t<wide<T, N, ABI>>,Scalar<U>)
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,bool v1) noexcept
+  {
+    return logical<wide<T,N,ABI>>(v1) == v0;
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator==( bool v0, logical<wide<T,N,ABI>> const &v1) noexcept
+  {
+    return logical<wide<T,N,ABI>>(v0) == v1;
   }
 }
 

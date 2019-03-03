@@ -1,5 +1,5 @@
 //==================================================================================================
-/**  
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
 
@@ -17,7 +17,8 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/logical_or.hpp>
-#include <eve/forward.hpp> 
+#include <eve/constant/false.hpp>
+#include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
@@ -30,13 +31,13 @@ namespace eve::detail
                                                               wide<T, N, ABI> const &v0,
                                                               wide<T, N, ABI> const &v1) noexcept
   {
-    using t_t =  wide<as_logical_t<T>, N, ABI>; 
+    using t_t =  wide<as_logical_t<T>, N, ABI>;
     if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>)
       return False<t_t>();
-    else 
+    else
       return logical_or(is_not_equal(v0, v0), is_not_equal(v1, v1));
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T, typename N, typename ABI, typename U>
@@ -47,7 +48,7 @@ namespace eve::detail
   {
     return eve::is_unordered(v0, wide<T, N, ABI>(static_cast<T>(v1)));
   }
-  
+
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE auto
   is_unordered_(EVE_SUPPORTS(simd_),
@@ -57,7 +58,7 @@ namespace eve::detail
   {
     return eve::is_unordered(wide<T, N, ABI>(static_cast<T>(v0)), v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
@@ -67,7 +68,7 @@ namespace eve::detail
   {
     return aggregate(eve::is_unordered, v0, v1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Emulation
   template<typename T, typename N>

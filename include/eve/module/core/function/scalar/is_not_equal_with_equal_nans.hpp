@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -14,19 +14,18 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/logical.hpp>
-#include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename U>
-  EVE_FORCEINLINE constexpr as_logical_t<T>
-  is_not_equal_with_equal_nans_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr logical<T>
+  is_not_equal_with_equal_nans_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
-    if constexpr(std::is_floating_point_v<T> && std::is_floating_point_v<U>)
+    if constexpr(std::is_floating_point_v<T>)
       return (a != b) && ((a == a) || (b == b));
     else
-      return (a != b); 
+      return (a != b);
   }
 }
 

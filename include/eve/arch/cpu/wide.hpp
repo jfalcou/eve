@@ -133,7 +133,7 @@ namespace eve
     template<typename Generator>
     EVE_FORCEINLINE
     wide(Generator &&g,
-         std::enable_if_t<std::is_invocable_v<Generator, std::size_t, std::size_t>> * = 0) noexcept
+         std::enable_if_t<std::is_invocable_v<Generator, size_type, size_type>> * = 0) noexcept
     {
       for(size_type i = 0; i < size(); ++i)
         this->operator[](i) = static_cast<Type>(std::forward<Generator>(g)(i, static_size));
@@ -191,6 +191,9 @@ namespace eve
       using std::swap;
       swap(data_, rhs.data_);
     }
+
+    wide& self() { return *this; }
+    wide const& self() const{ return *this; }
 
     // ---------------------------------------------------------------------------------------------
     // begin() variants

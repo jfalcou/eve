@@ -18,6 +18,8 @@
 
 namespace eve
 {
+  //================================================================================================
+  // Arithmetic
   template<typename T, typename Size, typename ABI>
   EVE_FORCEINLINE auto load(wide<T, Size, ABI> *ptr) noexcept
   {
@@ -44,6 +46,24 @@ namespace eve
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
   {
     return wide<T, Size>(ptr);
+  }
+
+  //================================================================================================
+  // Logical
+  template<typename Size, typename T, typename ABI>
+  EVE_FORCEINLINE auto load(logical<T> *ptr, as_<logical<wide<T, Size, ABI>>> const &) noexcept
+  {
+    return logical<wide<T, Size>>(ptr);
+  }
+
+  template<typename Size,
+           typename ABI,
+           typename T,
+           std::size_t Align,
+           typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
+  EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr, as_<logical<wide<T, Size, ABI>>> const &) noexcept
+  {
+    return logical<wide<T, Size,ABI>>(ptr);
   }
 }
 

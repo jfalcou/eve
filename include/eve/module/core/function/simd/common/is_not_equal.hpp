@@ -14,66 +14,10 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_equal.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/logical_not.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
-
-namespace eve::detail
-{
-  // -----------------------------------------------------------------------------------------------
-  // Basic
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, ABI> const &v0,
-                                 wide<T, N, ABI> const &v1) noexcept
-  {
-    return logical_not(is_equal(v0, v1));
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Support for mixed type with auto-splat
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
-                                     wide<T, N, ABI> const &v0,
-                                     U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                                    detail::Convertible<U, T>)
-  {
-    return eve::is_not_equal(v0, wide<T, N, ABI>(static_cast<T>(v1)));
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  is_not_equal_(EVE_SUPPORTS(simd_),
-                U const &              v0,
-                wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                             detail::Convertible<U, T>)
-  {
-    return eve::is_not_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, aggregated_> const &v0,
-                                 wide<T, N, aggregated_> const &v1) noexcept
-  {
-    return aggregate(eve::is_not_equal, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(simd_),
-                                 wide<T, N, emulated_> const &v0,
-                                 wide<T, N, emulated_> const &v1) noexcept
-  {
-    return map(eve::is_not_equal, v0, v1);
-  }
-}
 
 namespace eve
 {
@@ -100,6 +44,43 @@ namespace eve
                                                                        detail::Convertible<U, T>)
   {
     return eve::is_not_equal(wide<T, N, ABI>(static_cast<T>(v0)), v1);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // operator != for logical<wide>
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator!=(logical<wide<T,N,ABI>> const &v0,
+                                  logical<wide<T,N,ABI>> const &v1) noexcept
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_not_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto operator!=(logical<wide<T,N,ABI>> const &v0,
+                                  logical<U> const &v1) noexcept
+                  requires(as_logical_t<wide<T, N, ABI>>, Scalar<U>)
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_not_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto operator!=( logical<U> const &v0,
+                                   logical<wide<T,N,ABI>> const &v1) noexcept
+                  requires(as_logical_t<wide<T, N, ABI>>,Scalar<U>)
+  {
+    return bitwise_cast<logical<wide<T,N,ABI>>>( is_not_equal(v0.bits(),v1.bits()) );
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator!=(logical<wide<T,N,ABI>> const &v0,bool v1) noexcept
+  {
+    return logical<wide<T,N,ABI>>(v1) != v0;
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto operator!=( bool v0, logical<wide<T,N,ABI>> const &v1) noexcept
+  {
+    return logical<wide<T,N,ABI>>(v0) != v1;
   }
 }
 

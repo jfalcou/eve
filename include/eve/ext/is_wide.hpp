@@ -44,6 +44,11 @@ namespace eve::ext
   struct is_wide<wide<Type, Size, ABI>> : std::true_type
   {
   };
+
+  template<typename Type, typename Size, typename ABI>
+  struct is_wide<logical<wide<Type, Size, ABI>>> : std::true_type
+  {
+  };
 }
 
 #endif

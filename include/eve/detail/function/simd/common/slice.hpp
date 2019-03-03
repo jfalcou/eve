@@ -16,6 +16,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <cstddef>
+#include <iostream>
 
 namespace eve
 {
@@ -32,6 +33,27 @@ namespace eve
 
 namespace eve::detail
 {
+  //------------------------------------------------------------------------------------------------
+  // Logical
+  template<typename T, typename N, typename Arch>
+  EVE_FORCEINLINE std::array<logical<wide<T, typename N::split_type>>, 2>
+  slice(logical<wide<T, N, Arch>> const &a) noexcept
+  {
+    using l_t = logical<wide<T, typename N::split_type>>;
+    using t_t = std::array<l_t, 2>;
+    auto[l,h] = a.bits().slice();
+    return t_t{ l_t(l.storage(),eve::from_bits), l_t(h.storage(),eve::from_bits)};
+  }
+
+  template<typename T, typename N, typename Arch, typename Slice>
+  EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
+  slice(logical<wide<T, N, Arch>> const &a, Slice const& s) noexcept
+  {
+    using l_t = logical<wide<T, typename N::split_type>>;
+    auto sa = a.bits().slice(s);
+    return l_t(sa.storage(),eve::from_bits);
+  }
+
   //------------------------------------------------------------------------------------------------
   // Emulation
   template<typename T, typename N>
@@ -60,7 +82,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE decltype(auto) slice(wide<T, N, aggregated_> const &a) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, aggregated_> const &a) noexcept
   {
     // g++ has trouble returning the storage properly for large aggregate - we then copy it
     if constexpr(platform::compiler == compilers::gcc_ && sizeof(a) > 256)

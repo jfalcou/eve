@@ -21,13 +21,14 @@
 
 namespace eve ::detail
 {
-  template<typename T, typename N,typename I, auto V>
-  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(sse4_1_),
-                                        wide<logical<T>, N, sse_> const &v0,
+  template<typename T, typename N, typename I, auto V>
+  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(sse4_1_),
+                                        logical<wide<T, N, sse_>> const& v0,
                                         std::integral_constant<I, V> const& u) noexcept
   {
-    return bitwise_cast<logical<T>>( extract( bitwise_cast<wide<T,N>>(v0), u) );
+    return logical<T>( extract( v0.bits(), u) );
   }
+
 
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse4_1_),
@@ -35,7 +36,7 @@ namespace eve ::detail
                              std::integral_constant<I, V> const &) noexcept
   {
     static_assert((V < wide<T, N, sse_>::static_size),
-                  "[EVE} - extract : Index is out of bound for current architecture");
+                  "[eve - extract sse4.1] : Index is out of bound for current architecture");
 
     if constexpr(sizeof(T) == 1) return static_cast<T>(_mm_extract_epi8(v0, V));
     if constexpr(sizeof(T) == 2) return static_cast<T>(_mm_extract_epi16(v0, V));

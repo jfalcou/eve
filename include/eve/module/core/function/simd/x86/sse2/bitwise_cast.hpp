@@ -51,10 +51,10 @@ namespace eve::detail
 
   // SSE2 supports logical bitwise casting
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE wide<logical<Target>, M, sse_>
+  EVE_FORCEINLINE logical<wide<Target, M, sse_>>
                   bitwise_cast_(EVE_SUPPORTS(sse2_),
                                 wide<Source, N, sse_> const &              v0,
-                                as_<wide<logical<Target>, M, sse_>> const &tgt) noexcept
+                                as_<logical<wide<Target, M, sse_>>> const &tgt) noexcept
   {
     return a2l_isocast_(v0, tgt);
   }
@@ -62,17 +62,17 @@ namespace eve::detail
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE wide<Target, M, sse_>
                   bitwise_cast_(EVE_SUPPORTS(sse2_),
-                                wide<logical<Source>, N, sse_> const &v0,
+                                logical<wide<Source, N, sse_>> const &v0,
                                 as_<wide<Target, M, sse_>> const &    tgt) noexcept
   {
     return l2a_isocast_(v0, tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE wide<logical<Target>, M, sse_>
+  EVE_FORCEINLINE logical<wide<Target, M, sse_>>
                   bitwise_cast_(EVE_SUPPORTS(sse2_),
-                                wide<logical<Source>, N, sse_> const &     v0,
-                                as_<wide<logical<Target>, M, sse_>> const &tgt) noexcept
+                                logical<wide<Source, N, sse_>> const &     v0,
+                                as_<logical<wide<Target, M, sse_>>> const &tgt) noexcept
   {
     return l2l_isocast_(v0, tgt);
   }

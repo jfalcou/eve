@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -13,57 +13,38 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
-#include <eve/function/bitwise_cast.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Basic
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),
-                                     wide<T, N, ABI> const &v) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
   {
-    using t_t = wide<T, N, ABI>;
-    return bitwise_cast<t_t>(is_nez(v));
-  }
-  // -----------------------------------------------------------------------------------------------
-  // logical
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),
-                                     wide<logical<T>, N, ABI> const &v) noexcept
-  {
-    using t_t = wide<T, N, ABI>;
-    return bitwise_cast<t_t>(v);
+    if constexpr( is_native_v<ABI> )
+    {
+      return is_nez(v).mask();
+    }
+    else
+    {
+      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::bitwise_mask, v);
+      if constexpr( is_emulated_v<ABI>   ) return map(eve::bitwise_mask, v);
+    }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_mask_(EVE_SUPPORTS(simd_),
-                                                       wide<T, N, aggregated_> const &v) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    return aggregate(eve::bitwise_mask, v);
-  }
-
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_mask_(EVE_SUPPORTS(simd_),
-                                                       wide<logical<T>, N, aggregated_> const &v) noexcept
-  {
-    using t_t = wide<T, N, aggregated_>;
-    return bitwise_cast<t_t>(v);
-  }
-  
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v0) noexcept
-  {
-    return map(eve::bitwise_mask, v0);
+    if constexpr( is_native_v<ABI> )
+    {
+      return v.mask();
+    }
+    else
+    {
+      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::bitwise_mask, v);
+      if constexpr( is_emulated_v<ABI>   ) return map(eve::bitwise_mask, v);
+    }
   }
 }
 

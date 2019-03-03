@@ -14,11 +14,18 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr T extract_(EVE_SUPPORTS(cpu_), T const &a, std::ptrdiff_t i) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_), T const &a, U const& ) noexcept
+  {
+    return a;
+  }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_), logical<T> const &a, U const&) noexcept
   {
     return a;
   }

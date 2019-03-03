@@ -27,9 +27,7 @@ namespace eve::detail
   template<typename T, typename Target>
   EVE_FORCEINLINE Target bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
   {
-    EVE_ASSERT(sizeof(a) == sizeof(Target),
-               "[ eve::bitwise_cast scalar] - Size mismatch in bitwise_cast " << sizeof(a) << " != " << sizeof(Target) << ".");
-//    static_assert(sizeof(a) == sizeof(Target), "[eve] Size mismatch in bitwise_cast");
+    static_assert(sizeof(a) == sizeof(Target), "[eve::bitwise_cast scalar] - Size mismatch in bitwise_cast");
 
     Target that;
     std::memcpy(&that, &a, sizeof(a));

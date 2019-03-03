@@ -62,22 +62,6 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> && (sizeof(T) != 8) && (N::value == 1))
       return make(as_<T>{}, eve::sse_{}, l[ 0 ], h[ 0 ]);
   }
-
-  // -----------------------------------------------------------------------------------------------
-  // logicals
-  template<typename T, typename N>
-  EVE_FORCEINLINE typename wide<logical<T>, typename N::combined_type>::storage_type
-  combine(sse2_ const &,
-          wide<logical<T>, N, sse_> const &l,
-          wide<logical<T>, N, sse_> const &h) noexcept
-  {
-    using that_t = wide<logical<T>, typename N::combined_type>;
-
-    if constexpr(N::value * sizeof(T) == limits<eve::sse2_>::bytes)
-      return typename that_t::storage_type{l, h};
-    else
-      return combine(sse2_{}, wide<T, N, sse_>(l.storage()), wide<T, N, sse_>(h.storage()));
-  }
 }
 
 #endif

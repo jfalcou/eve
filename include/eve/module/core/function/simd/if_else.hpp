@@ -12,7 +12,6 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_IF_ELSE_HPP_INCLUDED
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/if_else.hpp>
 
 #if defined(EVE_HW_X86)
 #  if EVE_HW_X86 >= EVE_SSE2_VERSION

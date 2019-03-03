@@ -26,10 +26,9 @@ TTS_CASE( "Check is_greater return type" )
 
 TTS_CASE("Check eve::is_greater behavior")
 {
-  TTS_GREATER(eve::is_greater(Type(1),Type(1)), eve::False<Type>());
-  TTS_GREATER(eve::is_greater(Type(3),Type(1)), eve::True<Type>());
-  TTS_GREATER(eve::is_greater(Type(1),Type(3)), eve::False<Type>());
+  TTS_EQUAL(eve::is_greater(Type(1),Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_greater(Type(3),Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_greater(Type(1),Type(3)), eve::False<Type>());
 }
-
 
 #endif

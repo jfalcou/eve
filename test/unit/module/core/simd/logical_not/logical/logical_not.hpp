@@ -1,7 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -27,19 +28,14 @@ TTS_CASE_TPL("Check logical_not behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
+  using t_t = eve::wide<Type, T>;
+  using l_t = eve::as_logical_t <t_t>;
 
-  TTS_SETUP(" wide logical")
-  {
-    using t_t = wide<Type, T>;
-    using l_t = eve::as_logical_t <t_t>;
-    l_t lhs([](int i, int) { return i%2 == 0; });
+  l_t lhs([](auto i, auto) { return i%2 == 0; });
+  l_t ref([](auto i, auto) { return eve::logical_not(i%2 == 0); });
 
-    l_t ref([](int i, int) { return eve::logical_not(i%2 == 0); });
-
-    TTS_SECTION("supports eve::logical_not") { TTS_EQUAL(ref, eve::logical_not(lhs)); }
-    TTS_SECTION("supports operator!") { TTS_EQUAL(ref, !lhs); }
-  }
+  TTS_EQUAL(ref, eve::logical_not(lhs));
+  TTS_EQUAL(ref, !lhs);
 }
 
 

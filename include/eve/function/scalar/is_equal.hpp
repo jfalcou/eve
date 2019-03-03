@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_SCALAR_IS_EQUAL_HPP_INCLUDED
 
 #include <eve/function/definition/is_equal.hpp>
-#include <eve/module/core/function/scalar/is_equal.hpp>
+#include <eve/module/core/function/generic/is_equal.hpp>
 
 #endif

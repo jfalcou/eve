@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -32,6 +33,13 @@ namespace eve::detail
   {
     store(value.storage()[ 0 ], ptr);
     store(value.storage()[ 1 ], ptr + value.storage()[ 1 ].size());
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE void
+  store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
+  {
+    store( bitwise_cast<wide<T,N,ABI>>(value), (T*)(ptr));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -55,6 +63,16 @@ namespace eve::detail
   {
     store(value.storage()[ 0 ], ptr);
     store(value.storage()[ 1 ], ptr + value.storage()[ 1 ].size());
+  }
+
+  template<typename T, typename S, std::size_t N, typename ABI>
+  EVE_FORCEINLINE void
+  store_(EVE_SUPPORTS(cpu_),
+         logical<wide<T, S, ABI>> const &value,
+         aligned_ptr<logical<T>, N>              ptr,
+         std::enable_if_t<(logical<wide<T, S, ABI>>::static_alignment <= N)> * = 0) noexcept
+  {
+    store(value, ptr.get());
   }
 }
 

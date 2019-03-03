@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry Lapreste
@@ -35,7 +35,7 @@ namespace eve::detail
     using a_t = wide<as_integer_t<T>,N>;
     if constexpr(std::is_integral_v<U>)
       return _mm256_blendv_epi8(v2, v1, bitwise_cast<a_t>(bitwise_mask(v0)));
-    else                 
+    else
       return if_else_(EVE_RETARGET(avx_), v0, v1, v2);
   }
 

@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
 
 #include <eve/function/definition/if_else.hpp>
-#include <eve/module/core/function/scalar/if_else.hpp>
+#include <eve/module/core/function/generic/if_else.hpp>
 
 #endif

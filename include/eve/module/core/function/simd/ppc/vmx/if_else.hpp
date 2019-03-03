@@ -18,7 +18,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-  if_else_( EVE_SUPPORTS(vmx_), wide<logical<T>, N, ppc_> const& m,
+  if_else_( EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const& m,
             wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
           ) noexcept
   {

@@ -20,7 +20,7 @@ namespace eve
   {
     // Is this type ABI emulated_ ?
     template<typename Type>
-    constexpr bool is_emulated()
+    constexpr bool require_emulation()
     {
       using abi_t = ext::abi_of_t<Type, expected_cardinal_v<Type>>;
       return std::is_same_v<abi_t, eve::emulated_>;
@@ -30,7 +30,7 @@ namespace eve
     template<typename Type, typename Size>
     constexpr bool require_aggregation()
     {
-      return (Size::value > expected_cardinal_v<Type>)&&!is_emulated<Type>();
+      return (Size::value > expected_cardinal_v<Type>)&&!require_emulation<Type>();
     }
   }
 
