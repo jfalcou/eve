@@ -30,17 +30,9 @@ namespace eve::detail
   requires(T, Integral<U>,  Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),
-               "[ eve::shl scalar] - AShift " << a1 << " is out of the range [0, "
+               "[ eve::shl scalar] - Shift " << a1 << " is out of the range [0, "
                                                        << sizeof(T) * 8 << "[.");
-
-    if constexpr(std::is_arithmetic_v<T>)
-    {
       return T(a0 << a1);
-    }
-    else
-    {
-      static_assert(std::is_arithmetic_v<T>, "[ eve::shl scalar] - No support for logical values");
-    }
   }
 }
 

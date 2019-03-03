@@ -18,7 +18,6 @@
 #include <eve/function/scalar/bitwise_cast.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
-#include <cassert>
 
 namespace eve::detail
 {
@@ -26,19 +25,12 @@ namespace eve::detail
   // Regular case
   template<typename T,  typename U>
   EVE_FORCEINLINE constexpr auto shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept
-  requires(T, Integral<U>)
+  requires(T, Integral<U>,  Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),
                "[ eve::shl scalar] - Shift " << a1 << " is out of the range [0, "
                                                        << sizeof(T) * 8 << "[.");
-    if constexpr(std::is_arithmetic_v<T>)
-    {
-      return T(a0 >>  a1);
-    }
-    else
-    {
-      static_assert(std::is_arithmetic_v<T>, "[ eve::shl scalar] - No support for logical values");
-    }
+    return T(a0 >>  a1);
   }
 }
 
