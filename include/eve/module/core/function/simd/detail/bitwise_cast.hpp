@@ -52,12 +52,10 @@ namespace eve::detail
 
   // Logical -> Arithmetic with different storage case
   template<typename In, typename Out>
-  EVE_FORCEINLINE auto l2a_cast_(In const &v0, Out const &) noexcept
+  EVE_FORCEINLINE typename Out::type l2a_cast_(In const &v0, Out const &) noexcept
   {
-    using type = wide<typename In::value_type::value_type, typename In::cardinal_type>;
-
-    type tmp((typename type::storage_type)(v0.storage()));
-    return bitwise_cast<typename Out::type>(tmp);
+    using type = wide<typename Out::type::value_type, typename Out::type::cardinal_type>;
+    return (typename type::storage_type)(v0.storage());
   };
 
   // Logical -> Logical with isomorphic storage case
