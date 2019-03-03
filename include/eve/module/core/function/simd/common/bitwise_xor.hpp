@@ -73,9 +73,10 @@ namespace eve::detail
                U const &              v0,
                wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
                                                             Convertible<U, T>) = delete;
+
   template<typename T, typename N, typename U, typename M>
   EVE_FORCEINLINE auto
-  bitwise_xor(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
+  bitwise_xor_(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
   {
     return eve::bitwise_xor(v0, bitwise_cast<wide<U, M>>(v1));
   }
