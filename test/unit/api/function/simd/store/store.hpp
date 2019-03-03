@@ -10,11 +10,11 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
+#include "test.hpp"
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/store.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
 

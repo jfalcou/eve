@@ -10,10 +10,10 @@
 #ifndef LOAD_HPP
 #define LOAD_HPP
 
+#include "test.hpp"
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
 #include <list>

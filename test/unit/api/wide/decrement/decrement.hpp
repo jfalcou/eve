@@ -10,8 +10,8 @@
 #ifndef DECREMENT_HPP
 #define DECREMENT_HPP
 
+#include "test.hpp"
 #include <eve/wide.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/basic.hpp>
 #include <algorithm>
 

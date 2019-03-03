@@ -8,8 +8,8 @@
 **/
 //==================================================================================================
 
+#include "test.hpp"
 #include <eve/memory/is_aligned.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 
 TTS_CASE("is_aligned for integers")
