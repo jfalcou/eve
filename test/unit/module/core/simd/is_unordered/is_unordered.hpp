@@ -74,8 +74,8 @@ TTS_CASE_TPL("Check plus behavior on wide and scalar",
     else
     {
       wide<Type, T> lhs([](auto i, auto) { return i%2 ? i : Nan<Type>(); });
-      wide<eve::logical<Type>, T> ref1([](int i, int) { return eve::is_unordered(i%2 ? i : Nan<Type>(), Type(2)); });
-      wide<eve::logical<Type>, T> ref2([](int i, int) { return eve::is_unordered(Type(2), i%2 ? i : Nan<Type>()); });
+      wide<eve::logical<Type>, T> ref1([](int i, int) { return eve::is_unordered(i%2 ? Type(i) : Nan<Type>(), Type(2)); });
+      wide<eve::logical<Type>, T> ref2([](int i, int) { return eve::is_unordered(Type(2), i%2 ? Type(i) : Nan<Type>()); });
       TTS_SECTION("supports eve::is_unordered wide/scalar") { TTS_EQUAL(ref1, eve::is_unordered(lhs, Type(2))); }
       TTS_SECTION("supports eve::is_unordered scalar/wide") { TTS_EQUAL(ref2, eve::is_unordered(Type(2), lhs)); }
     }
