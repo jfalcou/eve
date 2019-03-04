@@ -22,5 +22,6 @@
 #include <eve/function/bitwise_ornot.hpp>
 #include <eve/function/bitwise_select.hpp>
 #include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bitwise_shr.hpp>
 
 #endif
