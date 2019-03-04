@@ -32,3 +32,5 @@ add_unit_test( "doc.function.logical" logical_ornot.cpp )
 add_unit_test( "doc.function.logical" logical_xor.cpp )  
 add_unit_test( "doc.function.predicate" is_unordered.cpp )
 add_unit_test( "doc.function.predicate" is_nan.cpp )
+add_unit_test( "doc.function.arithmetic" abs.cpp )
+
