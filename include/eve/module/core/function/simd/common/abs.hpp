@@ -28,24 +28,20 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> abs_(EVE_SUPPORTS(simd_),
-                                       wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_),
+                            wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>, Arithmetic<T>)
   {
-    if constexpr(std::is_arithmetic_v<T>)
+    if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_floating_point_v<T>)                    return bitwise_notand(Mzero<T>(),v);
-      if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) return v;
-      if constexpr(std::is_signed_v<T> && std::is_signed_v<T>)
-      {
-        constexpr int Maxshift = sizeof(T)*8-1; 
-        wide<T, N> s = eve::shr(v, Maxshift);
-        return (v+s)^s;
-      }
+      using t_t = wide<T, N, ABI>; 
+      return bitwise_notand(Mzero<t_t>(),v);
     }
-    else
+    if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) return v;
+    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
     {
-      static_assert(std::is_arithmetic_v<T>,
-                    "[ eve::abs] - No support for logical values");
+      constexpr int Maxshift = sizeof(T)*8-1; 
+      wide<T, N> s = eve::shr(v, Maxshift);
+      return (v+s)^s;
     }
   }
   

@@ -22,42 +22,33 @@
 #include <eve/function/add.hpp>
 #include <eve/function/shr.hpp>
 #include <type_traits>
-#include <cassert>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> abs_(EVE_SUPPORTS(ssse3_),
-                                       wide<T, N, sse_> const &v) noexcept
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(ssse3_),
+                            wide<T, N, sse_> const &v) noexcept requires(wide<T, N, sse_>, Arithmetic<T>)
   {
-    using t_t =  wide<T, N, avx_>; 
-    if constexpr(std::is_arithmetic_v<T>)
+    using t_t =  wide<T, N, sse_>; 
+    if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(std::is_integral_v<T>)
+      constexpr bool issigned = std::is_signed_v<T>; 
+      if constexpr(!issigned) return v;
+      if constexpr(issigned && sizeof(T) == 1) return _mm_abs_epi8(v);
+      if constexpr(issigned && sizeof(T) == 2) return _mm_abs_epi16(v);
+      if constexpr(issigned && sizeof(T) == 4) return _mm_abs_epi32(v);
+      if constexpr(issigned && sizeof(T) == 8)
       {
-        constexpr bool issigned = std::is_signed_v<T>; 
-        if constexpr(!issigned) return v;
-        if constexpr(issigned && sizeof(T) == 1) return _mm_abs_epi8(v);
-        if constexpr(issigned && sizeof(T) == 2) return _mm_abs_epi16(v);
-        if constexpr(issigned && sizeof(T) == 4) return _mm_abs_epi32(v);
-        if constexpr(issigned && sizeof(T) == 8)
-        {
-          t_t s = eve::shr(v, sizeof(T)*8-1);
-          return  bitwise_xor(add(v, s), s);
-          // is it better here than :  map(eve::abs, v);
-          // ie 2 scalar abs ?
-          //       return map(eve::abs, v);
-        }
+        t_t s = eve::shr(v, sizeof(T)*8-1);
+        return  bitwise_xor(add(v, s), s); 
+        // TODO TEST if it is better than :  map(eve::abs, v);
+        // ie 2 scalar abs ?
+        //       return map(eve::abs, v);
       }
-      if constexpr(std::is_floating_point_v<T>) return bitwise_notand(Mzero<t_t>(),v); 
     }
-    else
-    {
-      static_assert(std::is_arithmetic_v<T>,
-                    "[ eve::abs] - No support for logical values");
-    }
+    if constexpr(std::is_floating_point_v<T>) return bitwise_notand(Mzero<t_t>(),v); 
   }   
 }
 
