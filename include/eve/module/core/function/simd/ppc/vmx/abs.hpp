@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,15 +18,17 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N> EVE_FORCEINLINE wide<T, N, ppc_> abs_(EVE_SUPPORTS(vmx_)
-                                                                        , wide<T, N, ppc_> const &v0) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, ppc_> abs_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
-    if constexpr(std::is_floating_point<T>) return vec_abs( v0.storage() );
-    if constexpr(is_signed_int<T> && sizeof(T) <=  4) return vec_abs( v0.storage() );
-    if constexpr(is_signed_int<T> && sizeof(T) == 8) return map(eve::abs, v0); 
-    if constexpr(is_unsigned_int<T>) return v0;
+
+    if constexpr(is_unsigned_int) return v0;
+    if constexpr(std::is_floating_point_v<T>) return vec_abs( v0.storage() );
+
+    if constexpr(is_signed_int && sizeof(T) <= 4) return vec_abs( v0.storage() );
+    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::abs, v0);
   }
 }
 
