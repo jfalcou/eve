@@ -39,15 +39,15 @@
 // #include <eve/function/is_nltz.hpp>                                   
 // #include <eve/function/is_normal.hpp>                                 
 // #include <eve/function/is_not_denormal.hpp>                           
-// #include <eve/function/is_not_equal.hpp>                              
-// #include <eve/function/is_not_equal_with_equal_nans.hpp>              
+#include <eve/function/is_not_equal.hpp>                              
+#include <eve/function/is_not_equal_with_equal_nans.hpp>              
 // #include <eve/function/is_not_greater_equal.hpp>                      
 // #include <eve/function/is_not_greater.hpp>                            
 // #include <eve/function/is_not_imag.hpp>                               
 // #include <eve/function/is_not_infinite.hpp>                           
 // #include <eve/function/is_not_less_equal.hpp>                         
 // #include <eve/function/is_not_less.hpp>                               
-// #include <eve/function/is_not_nan.hpp>                                
+#include <eve/function/is_not_nan.hpp>                                
 // #include <eve/function/is_not_real.hpp>                               
 // #include <eve/function/is_odd.hpp>                                    
 // #include <eve/function/is_ord.hpp>                                    

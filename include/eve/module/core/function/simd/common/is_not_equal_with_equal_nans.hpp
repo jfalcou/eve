@@ -17,7 +17,7 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/is_not_nan.hpp>
-
+#include <eve/function/is_not_equal.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
@@ -32,7 +32,7 @@ namespace eve::detail
                                                                           wide<T, N, ABI> const &v1) noexcept 
   {
     if constexpr(std::is_floating_point_v<T>)
-      return logical_and(is_equal(v0, v1), logical_or(is_not_nan(v0),  is_not_nan(v1)));
+      return logical_and(is_not_equal(v0, v1), logical_or(is_not_nan(v0),  is_not_nan(v1)));
     else
       return is_not_equal(v0, v1); 
   }

@@ -8,7 +8,7 @@
 **/
 //==================================================================================================
 
-#include <eve/function/scalar/is_equal_with_equal_nans.hpp>
+#include <eve/function/scalar/is_not_equal_with_equal_nans.hpp>
 #include <eve/constant/nan.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
