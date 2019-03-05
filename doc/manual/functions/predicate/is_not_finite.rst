@@ -1,8 +1,8 @@
 .. _function-is_not_finite:
 
-#########
+#############
 is_not_finite
-#########
+#############
 
 **Required header** ``#include <eve/function/is_not_finite.hpp>``
 
