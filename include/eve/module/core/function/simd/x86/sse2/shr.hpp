@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
@@ -36,7 +36,7 @@ namespace eve ::detail
                            , wide<T, N, sse_> const &a0, I a1) noexcept
   requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
-    using t_t = wide<T, N, sse_>; 
+    using t_t = wide<T, N, sse_>;
     EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
                "[eve::shr sse2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
@@ -63,7 +63,7 @@ namespace eve ::detail
     {
       if constexpr(sizeof(T) == 1)
       {
-        return map(eve::shr, a0, a1); 
+        return map(eve::shr, a0, a1);
 //           auto s = split(a0);
 //           return bitwise_cast<A0>(group(shr(s[0], a1), shr(s[1], a1)));
       }
@@ -71,27 +71,26 @@ namespace eve ::detail
       if constexpr(sizeof(T) == 4) { return _mm_srai_epi32(a0, a1); }
       if constexpr(sizeof(T) == 8)
       {
-        return map(eve::shr, a0, a1); 
+        return map(eve::shr, a0, a1);
 //           t_t that = _mm_srli_epi64(a0, a1);
 //           t_t mask = _mm_srli_epi64(Allbits<t_t>(), a1);
 //           return bitwise_ornot(that, if_else_allbits(is_ltz(a0), mask));
       }
     }
   }
-  
+
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(sse2_)
                            , wide<T, N, sse_> const &a0
                            , wide<I, N, sse_> const &a1) noexcept
   requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
-    using t_t = wide<T, N, sse_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+    EVE_ASSERT((detail::assert_good_shift<wide<T, N, sse_>>(a1)),
                "[eve::shr sse2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
     return map(eve::shr, a0, a1);
   }
-  
+
 }
 
 #endif
