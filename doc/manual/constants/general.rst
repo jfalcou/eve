@@ -12,5 +12,6 @@ Constants
    one
    smallestposval
    true
+   valmin
    zero
    

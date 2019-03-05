@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ABS_HPP_INCLUDED
-#define EVE_FUNCTION_ABS_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ABS_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ABS_HPP_INCLUDED
 
 #include <eve/function/scalar/abs.hpp>
-#include <eve/function/simd/abs.hpp>
+#include <eve/module/core/function/simd/abs.hpp>
 
 #endif
+ 

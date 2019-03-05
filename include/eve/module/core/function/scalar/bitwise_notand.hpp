@@ -16,6 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_and.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,7 +26,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr T bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_notand - Arguments have incompatible size");
+   EVE_ASSERT(sizeof(T) == sizeof(U),
+               "[ eve::bitwise_notand scalar] - Arguments have incompatible sizes " << sizeof(T) << " != " << sizeof(U) << ".");
+//    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_notand - Arguments have incompatible size");
 
     return bitwise_and(bitwise_not(a), b);
   }

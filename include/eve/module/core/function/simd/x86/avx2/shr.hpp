@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine 
+  EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
   Copyright 2019 Joel FALCOU
 
@@ -32,8 +32,7 @@ namespace eve::detail
                            , I a1) noexcept
   requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    using t_t = wide<T, N, avx_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+    EVE_ASSERT( (detail::assert_good_shift<wide<T, N, avx_>>(a1)),
                "[eve::shr avx2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
 
@@ -41,14 +40,14 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) == 1)  return map(eve::shr, a0, a1); //shr_(EVE_RETARGET(sse2_),a0, a1);
       if constexpr(sizeof(T) == 2)  return _mm256_srli_epi16(a0, a1);
-      if constexpr(sizeof(T) == 4)  return _mm256_srli_epi32(a0, a1);        
+      if constexpr(sizeof(T) == 4)  return _mm256_srli_epi32(a0, a1);
       if constexpr(sizeof(T) == 8)  return _mm256_srli_epi64(a0, a1);
     }
     else
     {
       if constexpr(sizeof(T) == 1 || sizeof(T) == 8) return map(eve::shr, a0, a1); //shr_(EVE_RETARGET(sse2_),a0, a1);
       if constexpr(sizeof(T) == 2)                   return _mm256_srai_epi16(a0, a1);
-      if constexpr(sizeof(T) == 4)                   return _mm256_srai_epi32(a0, a1);        
+      if constexpr(sizeof(T) == 4)                   return _mm256_srai_epi32(a0, a1);
     }
   }
 
@@ -58,23 +57,22 @@ namespace eve::detail
                            , wide<I, N, avx_> const &a1) noexcept
   requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    using t_t = wide<T, N, avx_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
+    EVE_ASSERT((detail::assert_good_shift<wide<T, N, avx_>>(a1)),
                "[eve::shr avx2] -  At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
     if constexpr(std::is_unsigned_v<T>)
     {
       if constexpr(sizeof(T) <= 2)  return map(eve::shr, a0, a1); //shr_(EVE_RETARGET(sse2_),a0, a1);
-      if constexpr(sizeof(T) == 4)  return _mm256_srlv_epi32(a0, a1);        
+      if constexpr(sizeof(T) == 4)  return _mm256_srlv_epi32(a0, a1);
       if constexpr(sizeof(T) == 8)  return _mm256_srlv_epi64(a0, a1);
     }
     else
     {
       if constexpr(sizeof(T) <= 2 || sizeof(T) == 8) return map(eve::shr, a0, a1); //shr_(EVE_RETARGET(sse2_),a0, a1);
-      if constexpr(sizeof(T) == 4)                   return _mm256_srav_epi32(a0, a1);        
+      if constexpr(sizeof(T) == 4)                   return _mm256_srav_epi32(a0, a1);
     }
   }
-  
+
 }
 
 #endif
