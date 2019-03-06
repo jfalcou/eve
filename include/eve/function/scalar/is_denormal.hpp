@@ -9,7 +9,7 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_SCALAR_IS_DENORMAL_HPP_INCLUDED
 #define EVE_FUNCTION_SCALAR_IS_DENORMAL_HPP_INCLUDED
-
+ 
 #include <eve/function/definition/is_denormal.hpp>
 #include <eve/module/core/function/scalar/is_denormal.hpp>
 
