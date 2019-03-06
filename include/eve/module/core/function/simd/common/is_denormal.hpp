@@ -18,6 +18,7 @@
 #include <eve/function/abs.hpp> 
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/is_logical.hpp>
@@ -32,12 +33,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),
                                     wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_integral_v<T> || is_logical_v<T>())
-      return False<T>();
+    if constexpr(std::is_integral_v<T> || is_logical_v<T>)
+      return False(as(v));
     else
     {
       using t_t = wide<T, N, ABI>; 
-      return is_nez(a) && is_less(abs(v), Smallestposval<t_t>());
+      return is_nez(v) && is_less(abs(v), Smallestposval<t_t>());
     }
   }
 

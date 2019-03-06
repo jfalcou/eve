@@ -33,7 +33,7 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>)
       return false;
     else
-      return is_nez(a) && (abs(a0) < Smallestposval<A>());
+      return is_nez(a) && (abs(a) < Smallestposval<T>());
   }
   
 

@@ -13,6 +13,7 @@
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/is_denormal.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
@@ -38,9 +39,9 @@ TTS_CASE_TPL("Check is_denormal behavior on wide",
     }
     else
     {
-      Type s = Smallestposval<Type>(); 
-      wide<Type, T> lhs([](int i, int) { return i%2 ? s*i : s/i; }); 
-      wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_denormal( return i%2 ? s*i : s/i;); });
+      Type s = eve::Smallestposval<Type>(); 
+      wide<Type, T> lhs([s](int i, int) { return i%2 ? s*i : s/i; }); 
+      wide<eve::logical<Type>, T> ref([s](int i, int) { return eve::is_denormal(i%2 ? s*i : s/i); });
       TTS_SECTION("supports eve::is_denormal") { TTS_EQUAL(ref, eve::is_denormal(lhs)); }
     }
 
