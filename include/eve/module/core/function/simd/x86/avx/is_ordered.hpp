@@ -17,7 +17,7 @@
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -34,7 +34,7 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_ORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_ORD_Q));
-    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return False<l_t>(); 
+    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return True<l_t>(); 
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmp_ps(v0, v1, _CMP_ORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmp_pd(v0, v1, _CMP_ORD_Q));
-    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return False<l_t>(); 
+    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return True<l_t>(); 
   } 
 }
 
