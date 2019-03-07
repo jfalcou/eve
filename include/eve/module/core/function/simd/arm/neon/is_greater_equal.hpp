@@ -29,8 +29,8 @@ namespace eve::detail
     if constexpr(is_signed_int && sizeof(T) == 8) return vcge_s64(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 8) return vcge_u64(v0, v1);
 #else
-    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::is_greater, v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::is_greater, v0, v1);
+    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::is_greater_equal, v0, v1);
+    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::is_greater_equal, v0, v1);
 #endif
 
     if constexpr(std::is_same_v<T, float>) return vcge_f32(v0, v1);
@@ -55,8 +55,8 @@ namespace eve::detail
     if constexpr(is_signed_int && sizeof(T) == 8) return vcgeq_s64(v0, v1);
     if constexpr(is_unsigned_int && sizeof(T) == 8) return vcgeq_u64(v0, v1);
 #else
-    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::is_greater, v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::is_greater, v0, v1);
+    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::is_greater_equal, v0, v1);
+    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::is_greater_equal, v0, v1);
 #endif
     if constexpr(std::is_same_v<T, float>) return vcgeq_f32(v0, v1);
     if constexpr(is_signed_int && sizeof(T) == 4) return vcgeq_s32(v0, v1);

@@ -18,7 +18,7 @@
 // #include <eve/function/is_even.hpp>
 #include <eve/function/is_finite.hpp>
 // #include <eve/function/is_flint.hpp>
-// #include <eve/function/is_gez.hpp>
+#include <eve/function/is_gez.hpp>
 // #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
 // #include <eve/function/is_gtz.hpp>
