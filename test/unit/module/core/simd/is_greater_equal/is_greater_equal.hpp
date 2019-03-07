@@ -7,18 +7,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_NOT_LESS_HPP
-#define IS_NOT_LESS_HPP
+#ifndef IS_GREATER_EQUAL_HPP
+#define IS_GREATER_EQUAL_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/is_not_less.hpp>
+#include <eve/function/simd/is_greater_equal.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check is_not_less behavior on homogeneous wide",
+TTS_CASE_TPL("Check is_greater_equal behavior on homogeneous wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -34,12 +34,13 @@ TTS_CASE_TPL("Check is_not_less behavior on homogeneous wide",
     wide<Type, T> lhs([](int i, int c) { return c - i; }),
         rhs([](int i, int c) { return i % 2 ? i : c - i; });
     wide<eve::logical<Type>, T> ref(
-        [](int i, int c) { return eve::is_not_less(Type(c - i), Type(i % 2 ? i : c - i)); });
-    TTS_SECTION("supports eve::is_not_less") { TTS_EQUAL(ref, eve::is_not_less(lhs, rhs)); }
+        [](int i, int c) { return eve::is_greater_equal(Type(c - i), Type(i % 2 ? i : c - i)); });
+    TTS_SECTION("supports eve::is_greater_equal") { TTS_EQUAL(ref, eve::is_greater_equal(lhs, rhs)); }
+    TTS_SECTION("supports operator < ") { TTS_EQUAL(ref, (lhs >=  rhs)); }
   }
 }
 
-TTS_CASE_TPL("Check is_not_less behavior on wide and scalar",
+TTS_CASE_TPL("Check is_greater_equal behavior on wide and scalar",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -54,11 +55,14 @@ TTS_CASE_TPL("Check is_not_less behavior on wide and scalar",
   {
     wide<Type, T>               lhs([](int i, int c) { return c - i; });
     wide<eve::logical<Type>, T> ref1(
-        [](int i, int c) { return eve::is_not_less(Type(c - i), Type(1)); });
+        [](int i, int c) { return eve::is_greater_equal(Type(c - i), Type(1)); });
     wide<eve::logical<Type>, T> ref2(
-        [](int i, int c) { return eve::is_not_less(Type(1), Type(c - i)); });
-    TTS_SECTION("supports eve::is_not_less1") { TTS_EQUAL(ref1, eve::is_not_less(lhs, Type(1))); }
-    TTS_SECTION("supports eve::is_not_less2") { TTS_EQUAL(ref2, eve::is_not_less(Type(1), lhs)); }
+        [](int i, int c) { return eve::is_greater_equal(Type(1), Type(c - i)); });
+    TTS_SECTION("supports eve::is_greater_equal1") { TTS_EQUAL(ref1, eve::is_greater_equal(lhs, Type(1))); }
+    TTS_SECTION("supports eve::is_greater_equal2") { TTS_EQUAL(ref2, eve::is_greater_equal(Type(1), lhs)); }
+
+    TTS_SECTION("1 supports operator < ") { TTS_EQUAL(ref1, (lhs >=  Type(1))); }
+    TTS_SECTION("2 supports operator < ") { TTS_EQUAL(ref2, (Type(1) >=  lhs)); }
   }
 }
 

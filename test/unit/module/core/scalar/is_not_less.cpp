@@ -40,8 +40,8 @@ TTS_CASE("Check is_not_less behavior")
   TTS_EQUAL(eve::is_not_less(std::int16_t(1), std::int16_t(2)), false);
   TTS_EQUAL(eve::is_not_less(std::int32_t(1), std::int32_t(2)), false);
   TTS_EQUAL(eve::is_not_less(std::int64_t(1), std::int64_t(2)), false);
-  TTS_EQUAL(eve::is_not_less(1.5f, -1.5f), false);
-  TTS_EQUAL(eve::is_not_less(4.753, -4.753), false);
+  TTS_EQUAL(eve::is_not_less(1.5f, -1.5f), true);
+  TTS_EQUAL(eve::is_not_less(4.753, -4.753), true);
 
   TTS_EQUAL(eve::is_not_less(std::uint8_t(3), std::uint8_t(2)), true);
   TTS_EQUAL(eve::is_not_less(std::uint16_t(3), std::uint16_t(2)), true);
