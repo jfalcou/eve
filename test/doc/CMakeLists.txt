@@ -40,4 +40,4 @@ add_unit_test( "doc.function.predicate" is_equal_with_equal_nans.cpp )
 add_unit_test( "doc.function.predicate" is_not_nan.cpp )
 add_unit_test( "doc.function.predicate" is_not_equal_with_equal_nans.cpp )
 add_unit_test( "doc.function.predicate" is_equal.cpp )
-
+add_unit_test( "doc.function.arithmetic" bitwise_shl.cpp )
