@@ -42,7 +42,6 @@ add_unit_test( "core" scalar/shr.cpp )
 add_unit_test( "core" scalar/is_unordered.cpp )
 add_unit_test( "core" scalar/is_nan.cpp )
 add_unit_test( "core" scalar/abs.cpp )
-<<<<<<< HEAD
 add_unit_test( "core" scalar/bitwise_shr.cpp )
 add_unit_test( "core" scalar/bitwise_shl.cpp )
 add_unit_test( "core" scalar/is_equal_with_equal_nans.cpp )
