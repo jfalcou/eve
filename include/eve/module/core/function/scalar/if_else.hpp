@@ -14,8 +14,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_select.hpp>
 #include <eve/function/is_nez.hpp>
 #include <type_traits>
 
@@ -25,7 +23,9 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  if_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept //requires(U, detail::Arithmetic<U>)
+  if_else_(EVE_SUPPORTS(cpu_), T const &cond
+          , U const &t
+          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
   {
     return cond ? t : f;
   }
@@ -34,7 +34,9 @@ namespace eve::detail
   // logical case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  if_else_(EVE_SUPPORTS(cpu_), logical<T> const &cond, U const &t, U const &f) //noexcept requires(U, detail::Arithmetic<U>)
+  if_else_(EVE_SUPPORTS(cpu_), logical<T> const &cond
+          , U const &t
+          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
   {
     return is_nez(cond) ? t : f;
   }  

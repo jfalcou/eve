@@ -50,6 +50,14 @@ namespace eve::detail
     return aggregate(eve::bitwise_mask, v);
   }
 
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_mask_(EVE_SUPPORTS(simd_),
+                                                       wide<logical<T>, N, aggregated_> const &v) noexcept
+  {
+    using t_t = wide<T, N, aggregated_>;
+    return bitwise_cast<t_t>(v);
+  }
+  
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
