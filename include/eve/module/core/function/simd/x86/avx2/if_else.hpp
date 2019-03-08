@@ -34,11 +34,10 @@ namespace eve::detail
   {
     using u_t = wide<U, N, avx_>;
     using a_t = wide<as_integer_t<T>,N>;
-
-    if constexpr(std::is_same_v<U, float>)   return _mm256_blendv_ps(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
-    if constexpr(std::is_same_v<U, double>)  return _mm256_blendv_pd(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));   
-    if constexpr(std::is_integral_v<U>)      return _mm256_blendv_epi8(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
-    if constexpr(is_logical_v<U>) return bitwise_cast<u_t>(if_else(v0, bitwise_cast<a_t>(v1), bitwise_cast<a_t>(v2))); 
+    if constexpr(std::is_integral_v<U>)
+      return _mm256_blendv_epi8(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
+    else                 
+      return if_else_(EVE_RETARGET(avx_), v0, v1, v2);
   }
 
 }
