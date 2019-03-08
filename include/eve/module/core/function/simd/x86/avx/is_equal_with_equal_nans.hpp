@@ -31,7 +31,7 @@ namespace eve::detail
     using t_t = wide<T, N, avx_>;
     using l_t = as_logical_t<t_t>;
     using a_t = wide<as_integer_t<T>,N>;
-    std::cout << "avx avx" << std::endl; 
+
     if constexpr(std::is_same_v<T, float> ) return l_t(_mm256_cmp_ps(v0, v1, _CMP_EQ_UQ));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_EQ_UQ));
     if constexpr(std::is_integral_v<T>)     return aggregate(eve::is_equal_with_equal_nans, v0, v1);
@@ -49,7 +49,7 @@ namespace eve::detail
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
     using a_t = wide<as_integer_t<T>,N>;
-    std::cout << "avx sse" << std::endl; 
+
 
     if constexpr(std::is_same_v<T, float> ) return l_t(_mm_cmp_ps(v0, v1, _CMP_EQ_UQ));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmp_pd(v0, v1, _CMP_EQ_UQ));
