@@ -14,4 +14,7 @@
 #include <eve/function/scalar/if_else.hpp>
 #include <eve/module/core/function/simd/if_else.hpp>
 
+#include <eve/module/core/function/simd/common/if_allbits_else.hpp>
+#include <eve/module/core/function/simd/common/if_else_allbits.hpp> 
+
 #endif

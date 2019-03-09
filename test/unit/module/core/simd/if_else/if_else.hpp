@@ -113,4 +113,34 @@ TTS_CASE_TPL( "Check if_else behavior on homogeneous logical wide"
   } 
 }
 
+
+TTS_CASE_TPL( "Check if_else behavior on special case"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
+{
+  using eve::wide;
+
+  TTS_SETUP( "A correctly initialized wide" )
+  {
+    auto a =  eve::Allbits<Type>(); 
+    wide<Type,T>  lhs([](int i, int c) { return i%2 ? 0 : 1; }); 
+    wide<Type,T>  rhs1([](int i, int  ) { return (i%2)*i; })
+      , ref([a](int i, int c) { return eve::if_else(Type(i%2 ? 0 : 1),a, Type((i%2)*i)); })
+      , refs([a](int i, int c) { return eve::if_else(Type(i%2 ? 0 : 1),a, Type(2)); })      ; 
+
+    TTS_SECTION( "supports eve::if_else on callable+wide" )
+    {
+      if constexpr(std::is_integral_v<Type>)
+      {
+        
+        TTS_EQUAL(ref, eve::if_else(lhs, eve::allbits_, rhs1));
+        TTS_EQUAL(refs, eve::if_else(lhs, eve::allbits_, Type(2)));
+        TTS_EQUAL(refs, eve::if_else(Type(1), eve::allbits_, Type(2)));
+      }
+      else
+        TTS_IEEE_EQUAL(ref, eve::if_else(lhs, eve::allbits_, rhs1));
+        TTS_IEEE_EQUAL(refs, eve::if_else(lhs, eve::allbits_, Type(2)));
+    }
+  } 
+}
 #endif

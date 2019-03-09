@@ -8,13 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_ALLBITS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_ALLBITS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/constant/allbits.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,9 +26,10 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), T const &cond
           , U const &t
-          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
+          , eve::callable_allbits_ const &
+          ) noexcept requires(U, detail::Arithmetic<U>)
   {
-    return cond ? t : f;
+    return cond ? t : Allbits<U>();
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -36,10 +38,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), logical<T> const &cond
           , U const &t
-          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
+          , eve::callable_allbits_ const &
+          ) noexcept requires(U, detail::Arithmetic<U>)
   {
-    return is_nez(cond) ? t : f;
+    return is_nez(cond) ? t : Allbits<U>();
   }
+
   
 }
 

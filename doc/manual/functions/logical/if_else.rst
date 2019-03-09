@@ -25,8 +25,8 @@ Synopsis
   :linenos:
 
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, wide<U,N> const& w , wide<U,N> const& x ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, T s, T t ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<logical<T>,N> const& v, T s, T t ) noexcept;
+   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, T s, T t ) noexcept;
+   template<typename T, typename N>             wide<T,N> operator()( wide<logical<T>,N> const& v, T s, T t ) noexcept;
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, wide<U,N> const& w , U s ) noexcept;
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, U s , wide<U,N> const& w)
    template<typename T, typename U> constexpr   T         operator()( T r, U s, U t ) noexcept;

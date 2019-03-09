@@ -10,6 +10,7 @@
 //==================================================================================================
 
 #include <eve/function/scalar/abs.hpp>
+#include <eve/constant/zero.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp> 
 #include <tts/tests/types.hpp>
@@ -17,6 +18,8 @@
 
 TTS_CASE("Check abs return type") 
 {
+  auto z = eve::zero_; 
+  std::cout << tts::type_id(z) << std::endl; 
   TTS_EXPR_IS(eve::abs(0.f), float);
   TTS_EXPR_IS(eve::abs(0.), double);
 

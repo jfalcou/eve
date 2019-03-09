@@ -242,6 +242,9 @@ namespace eve::detail
   template<typename T>
   using Integral = std::enable_if_t<std::is_integral_v<T>>;
 
+  template<typename T>
+  using Floating = std::enable_if_t<std::is_floating_point_v<T>>;
+
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
 }

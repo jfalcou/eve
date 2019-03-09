@@ -23,6 +23,14 @@
 #include <eve/as_arithmetic.hpp>
 #include <type_traits>
 
+// #include <eve/function/bitwise_and.hpp>
+// #include <eve/function/bitwise_or.hpp>
+// #include <eve/function/bitwise_andnot.hpp>
+// #include <eve/function/bitwise_ornot.hpp>
+// #include <eve/constant/zero.hpp>
+// #include <eve/constant/allbits.hpp>
+// #include <eve/constant/nan.hpp>
+
 namespace eve::detail
 {
   
@@ -134,7 +142,76 @@ namespace eve::detail
   {
     return eve::if_else(v0, wide<U, N>(v1), v2);
   }
+  
+//   // -----------------------------------------------------------------------------------------------
+//   // Support for specialization with zero and allbits
 
+//   // if zero else
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , callable_object<eve::tag::zero_>
+//           , wide<U, N, ABI> const &v2) noexcept
+//   {
+//     return bitwise_andnot(v2, bitwise_mask(v0));
+//   }
+
+//   // if else zero 
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , wide<U, N, ABI> const &v1
+//           , callable_object<eve::tag::zero_>) noexcept
+//   {
+//     return bitwise_and(v1, bitwise_mask(v0));
+//   }
+
+//   // if allbits else
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , callable_object<eve::tag::allbits_>
+//           , wide<U, N, ABI> const &v2) noexcept
+//   {
+//     return bitwise_ornot(v2, bitwise_mask(v0));
+//   }
+
+//   // if else allbits 
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , wide<U, N, ABI> const &v1
+//           , callable_object<eve::tag::allbits_>) noexcept
+//   {
+//     return bitwise_or(v1, bitwise_mask(v0));
+//   }
+
+//    // if nan else
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , callable_object<eve::tag::nan_>
+//           , wide<U, N, ABI> const &v2) noexcept requires(wide<U, N, ABI>, Floating<U>)
+//   {
+//     return bitwise_ornot(v2, bitwise_mask(v0));
+//   }
+
+//   // if else nan 
+//   template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto
+//   if_else_(EVE_SUPPORTS(simd_)
+//           , wide<T, N, ABI> const &v0
+//           , wide<U, N, ABI> const &v1
+//           , callable_object<eve::tag::nan_>) noexcept requires(wide<U, N, ABI>, Floating<U>)
+//   {
+//     return bitwise_or(v1, bitwise_mask(v0));
+//   }
+ 
 }
 
 #endif
