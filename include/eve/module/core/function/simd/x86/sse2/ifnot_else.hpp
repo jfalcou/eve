@@ -34,7 +34,7 @@ namespace eve::detail
   {
     using u_t = wide<logical<U>, N>;
     using a_t = wide<eve::as_arithmetic_t<T>,N>;
-    return bitwise_cast<u_t>(ifnot_else(bitwise_cast<a_t>(bitwise_mask(v0)), bitwise_cast<a_t>(v2), bitwise_cast<a_t>(v1)));    
+    return bitwise_cast<u_t>(ifnot_else(bitwise_cast<a_t>(bitwise_mask(v0)), bitwise_cast<a_t>(v1), bitwise_cast<a_t>(v2)));    
   }
 }
 
