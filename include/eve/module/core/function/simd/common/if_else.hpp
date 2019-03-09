@@ -91,17 +91,6 @@ namespace eve::detail
     return aggregate( eve::if_else, v0, v1, v2);
   }
   
- //  template<typename U, typename T, typename N>
-//   EVE_FORCEINLINE auto if_else_ ( EVE_SUPPORTS(simd_)
-//                                                         , wide<U,N,aggregated_> const& v0
-//                                                         , wide<logical<T>,N,aggregated_> const& v1
-//                                                         , wide<logical<T>,N,aggregated_> const& v2
-//                                                         ) noexcept requires(wide<logical<T>,N>, Arithmetic<U>, Arithmetic<T>)
-//   {
-//     return aggregate( eve::if_else, v0, v1, v2);
-//     return if_else
-//   }
-
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename U, typename T, typename N>

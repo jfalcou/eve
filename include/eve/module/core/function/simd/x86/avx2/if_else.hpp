@@ -32,10 +32,9 @@ namespace eve::detail
                                            , wide<U, N, avx_> const &v1
                                            , wide<U, N, avx_> const &v2) noexcept
   {
-    using u_t = wide<U, N, avx_>;
     using a_t = wide<as_integer_t<T>,N>;
     if constexpr(std::is_integral_v<U>)
-      return _mm256_blendv_epi8(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
+      return _mm256_blendv_epi8(v2, v1, bitwise_cast<a_t>(bitwise_mask(v0)));
     else                 
       return if_else_(EVE_RETARGET(avx_), v0, v1, v2);
   }

@@ -15,6 +15,7 @@ if_else
 
 Function object performing a logical selection between two :ref:`Values <concept-value>` of same element type
 according to a :ref:`Value <concept-value>`or a :ref:`logical Value <concept-logicalvalue>`.
+The element-wise scheme is: if the first parameter is 'true' returns the second parameter else the third.
 
 ********
 Synopsis
