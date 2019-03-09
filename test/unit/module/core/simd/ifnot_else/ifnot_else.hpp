@@ -102,10 +102,12 @@ TTS_CASE_TPL( "Check ifnot_else behavior on homogeneous logical wide"
   {
     wide<Type,T>  lhs([](int i, int c) { return i%2 ? 0 : 1; }); 
     wide<eve::logical<Type>,T>  rhs1([](int i, int  ) { return i%2 == 0; })
-      , ref([](int i, int c) { return eve::ifnot_else(Type(i%2 ? 0 : 1),i%2 == 0,true); })
-      , lhs1([](int i, int c) { return !(i%2 == 0); }); 
+      , ref([](int i, int c) { return eve::ifnot_else(Type(i%2 ? 0 : 1),i%2 == 0,true); }); 
     eve::logical<Type>  rhs2(true); 
-
+    std::cout << "lhs  " << lhs << std::endl;
+    std::cout << "rhs1 " << rhs1<< std::endl;
+    std::cout << "rhs2 " << rhs2<< std::endl;
+    std::cout << "ref  " << ref << std::endl;  
     TTS_SECTION( "supports eve::ifnot_else on wide logical/logical" )
     {
         TTS_EQUAL(ref, eve::ifnot_else(lhs, rhs1, rhs2));
