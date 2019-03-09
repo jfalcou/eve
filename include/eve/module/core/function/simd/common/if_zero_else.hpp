@@ -18,7 +18,7 @@
 #include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_andnot.hpp>
 #include <eve/constant/zero.hpp>
 
 namespace eve::detail
@@ -34,7 +34,7 @@ namespace eve::detail
           , wide<U, N, ABI> const &v1
           ) noexcept
   {
-    return bitwise_and(v1, bitwise_mask(v0));
+    return bitwise_andnot(v1, bitwise_mask(v0));
   }
   
   
@@ -47,7 +47,7 @@ namespace eve::detail
           ) noexcept
   {
     using t_t = wide<T, N, ABI>; 
-    return bitwise_and(t_t(v1), bitwise_mask(v0));
+    return bitwise_andnot(t_t(v1), bitwise_mask(v0));
   }
   
   template<typename T, typename N, typename ABI>
@@ -59,7 +59,7 @@ namespace eve::detail
           ) noexcept
   {
     using t_t = wide<T, N, ABI>; 
-    return bitwise_and(t_t(v1), bitwise_mask(v0));
+    return bitwise_andnot(t_t(v1), bitwise_mask(v0));
   } 
   
 }
