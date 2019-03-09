@@ -15,5 +15,9 @@
 
 #include <eve/module/core/function/scalar/if_allbits_else.hpp>
 #include <eve/module/core/function/scalar/if_else_allbits.hpp>     
+#include <eve/module/core/function/scalar/if_zero_else.hpp>
+#include <eve/module/core/function/scalar/if_else_zero.hpp>     
+#include <eve/module/core/function/scalar/if_nan_else.hpp>
+#include <eve/module/core/function/scalar/if_else_nan.hpp>     
 
 #endif
