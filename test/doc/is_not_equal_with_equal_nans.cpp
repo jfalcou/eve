@@ -12,22 +12,25 @@ int main()
 {
   wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
                 , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
-  wide_ft qf = { eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>(),
+  wide_ft qf = { 0.0f, eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>(),
                  0.0f, 1.0f, -1.0f, eve::Nan<float>() };
 
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
-    << "<- qf =                  " << pf << '\n'
+    << "<- qf =                  " << qf << '\n'
     << "-> eve::is_not_equal_with_equal_nans(pf, qf) = " << eve::is_not_equal_with_equal_nans(pf, qf) << '\n';
 
-  float xf = 1.0f;
+  float xf1 = 1.0f;
+  float xf2 = eve::Nan<float>(); 
   float yf = eve::Nan<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =                  " << xf << '\n'
-    << "<- yf =                  " << yf << '\n'
-    << "-> eve::is_not_equal_with_equal_nans(xf, yf) = " << eve::is_not_equal_with_equal_nans(xf, yf) << '\n';
+    << "<- xf1 =                  " << xf1 << '\n'
+    << "<- xf2 =                  " << xf2 << '\n'     
+    << "<- yf =                   " << yf << '\n'
+    << "-> eve::is_not_equal_with_equal_nans(xf1, yf) = " << eve::is_not_equal_with_equal_nans(xf1, yf) << '\n'
+    << "-> eve::is_not_equal_with_equal_nans(xf2, yf) = " << eve::is_not_equal_with_equal_nans(xf2, yf) << '\n';
   return 0;
 }

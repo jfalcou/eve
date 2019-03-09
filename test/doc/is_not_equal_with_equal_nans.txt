@@ -1,0 +1,10 @@
+---- simd
+<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+<- qf =                  (0, inf, -inf, -nan, 0, 1, -1, -nan)
+-> eve::is_not_equal_with_equal_nans(pf, qf) = (false, true, true, true, true, true, true, false)
+---- scalar
+<- xf1 =                  1
+<- xf2 =                  -nan
+<- yf =                   -nan
+-> eve::is_not_equal_with_equal_nans(xf1, yf) = true
+-> eve::is_not_equal_with_equal_nans(xf2, yf) = false

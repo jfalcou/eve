@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_NOT_EQUAL_WITH_EQUAL_NANS_HPP_INCLUDED
 
 #include <eve/function/scalar/is_not_equal_with_equal_nans.hpp>
-//#include <eve/function/simd/is_not_equal_with_equal_nans.hpp>
+#include <eve/function/simd/is_not_equal_with_equal_nans.hpp>
 
 #endif

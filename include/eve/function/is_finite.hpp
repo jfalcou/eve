@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_FINITE_HPP_INCLUDED
 
 #include <eve/function/scalar/is_finite.hpp>
-//#include <eve/function/simd/is_finite.hpp>
+#include <eve/function/simd/is_finite.hpp>
 
 #endif

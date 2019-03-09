@@ -15,7 +15,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
 #include <eve/function/scalar/bitwise_or.hpp>
-#include <iostream>
 #include <type_traits>
 
 namespace eve::detail
