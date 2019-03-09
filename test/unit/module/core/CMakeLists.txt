@@ -43,6 +43,7 @@ add_unit_test( "core" scalar/is_unordered.cpp )
 add_unit_test( "core" scalar/is_nan.cpp )
 add_unit_test( "core" scalar/abs.cpp )
 add_unit_test( "core" scalar/if_else.cpp )
+add_unit_test( "core" scalar/ifnot_else.cpp )  
 
 list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -101,4 +102,5 @@ list_tests("simd/is_unordered" "core" ${all_types})
 list_tests("simd/is_nan" "core" ${all_types})
 list_tests("simd/abs" "core" ${all_types})
 list_tests("simd/if_else" "core" ${all_types})
+list_tests("simd/ifnot_else" "core" ${all_types})
 

@@ -34,4 +34,5 @@ add_unit_test( "doc.function.predicate" is_unordered.cpp )
 add_unit_test( "doc.function.predicate" is_nan.cpp )
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.logical" if_else.cpp )
+add_unit_test( "doc.function.logical" ifnot_else.cpp ) 
 
