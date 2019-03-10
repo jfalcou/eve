@@ -15,7 +15,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/abs.hpp> 
+#include <eve/function/abs.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/logical_and.hpp>
@@ -33,13 +33,17 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),
                                     wide<T, N, ABI> const &v) noexcept
   {
+    #if defined(EVE_NO_DENORMALS)
+      return False(as(v));
+    #else
     if constexpr(std::is_integral_v<T> || is_logical_v<T>)
       return False(as(v));
     else
     {
-      using t_t = wide<T, N, ABI>; 
+      using t_t = wide<T, N, ABI>;
       return is_nez(v) && is_less(abs(v), Smallestposval<t_t>());
     }
+    #endif
   }
 
   // -----------------------------------------------------------------------------------------------
