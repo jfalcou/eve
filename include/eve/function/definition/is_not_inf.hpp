@@ -7,10 +7,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_INF_HPP_INCLUDED
-#define EVE_FUNCTION_IS_INF_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_IS_NOT_INF_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_IS_NOT_INF_HPP_INCLUDED
 
-#include <eve/function/scalar/is_inf.hpp>
-#include <eve/function/simd/is_inf.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_inf_, is_not_inf);
+}
 
 #endif
