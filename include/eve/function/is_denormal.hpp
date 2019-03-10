@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_DENORMAL_HPP_INCLUDED
 
 #include <eve/function/scalar/is_denormal.hpp>
-//#include <eve/function/simd/is_denormal.hpp>
+#include <eve/function/simd/is_denormal.hpp>
 
 #endif

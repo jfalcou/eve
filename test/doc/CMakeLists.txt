@@ -11,6 +11,7 @@
 ## documentation tests
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" bitwise_shl.cpp )
+add_unit_test( "doc.function.arithmetic" is_denormal.cpp )
 add_unit_test( "doc.function.arithmetic" shl.cpp )
 add_unit_test( "doc.function.arithmetic" shr.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_and.cpp )

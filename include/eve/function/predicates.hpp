@@ -11,7 +11,7 @@
 #define EVE_FUNCTION_PREDICATES_HPP_INCLUDED
 
 // helper file to include all predicates functions and operators
-// #include <eve/function/is_denormal.hpp>
+#include <eve/function/is_denormal.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_equal_with_equal_nans.hpp>
 #include <eve/function/is_eqz.hpp>

@@ -1,7 +1,7 @@
 .. _constant-smallestposval:
 
-Smallestposval
-=====
+Smallestposval 
+==============
 
 **Required header** ``#include <eve/constant/smallestposval.hpp>``
 
