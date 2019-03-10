@@ -51,6 +51,14 @@ Synopsis
 * [6]
 
 *******
+Notes
+*******
+
+* if one (and one only) of the ouput branches is to be ``zero``, ``allbits`` or ``nan``
+  an optimized call can be made using respectively ``eve::zero_``,``eve::allbits_`` or ``eve::nan_`` in place of the 
+  needed value.
+
+*******
 Options
 *******
 

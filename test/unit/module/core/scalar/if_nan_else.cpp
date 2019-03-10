@@ -16,6 +16,7 @@
 #include <eve/constant/nan.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
+#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cstddef>
 
