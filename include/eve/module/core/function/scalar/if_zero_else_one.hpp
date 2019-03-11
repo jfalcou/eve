@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ONE_ELSE_ZERO_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ONE_ELSE_ZERO_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ZERO_ELSE_ONE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ZERO_ELSE_ONE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
