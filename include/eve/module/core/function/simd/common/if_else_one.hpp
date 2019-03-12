@@ -34,7 +34,7 @@ namespace eve::detail
           , callable_object<eve::tag::one_>) noexcept
   {
     if constexpr(std::is_integral_v<U>)
-      return -bitwise_ornot(-v1, bitwise_mask(v0));
+      return -bitwise_and(-v1, bitwise_mask(v0));
     else
       return if_else(v0, v1, One(as(v1))); 
   }
