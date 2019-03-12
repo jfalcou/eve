@@ -27,7 +27,7 @@ namespace eve::detail
 {
 
   // -----------------------------------------------------------------------------------------------
-  // if one else zero
+  // if  zero else one
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto
   if_else_(EVE_SUPPORTS(simd_)
@@ -36,10 +36,7 @@ namespace eve::detail
           , callable_object<eve::tag::one_>
           ) noexcept
   {
-    if constexpr(std::is_integral_v<T>)
-      return bitwise_notand((bitwise_mask(v0), One(as(v0))));
-    else
-      return if_else(v0, Zero(as(v0)), One(as(v0))); 
+    return bitwise_notand((bitwise_mask(v0), One(as(v0))));
   }
   
 }

@@ -36,10 +36,7 @@ namespace eve::detail
           , callable_object<eve::tag::zero_>
           ) noexcept
   {
-    if constexpr(std::is_integral_v<T>)
-      return bitwise_and(bitwise_mask(v0), One(as(v0)));
-    else
-      return if_else(v0, One(as(v0)), Zero(as(v0))); 
+    return bitwise_and(bitwise_mask(v0), One(as(v0)));
   }
   
 }
