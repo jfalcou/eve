@@ -18,14 +18,14 @@
 // #include <eve/function/is_even.hpp>
 #include <eve/function/is_finite.hpp>
 // #include <eve/function/is_flint.hpp>
-// #include <eve/function/is_gez.hpp>
+#include <eve/function/is_gez.hpp>
 // #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
 // #include <eve/function/is_gtz.hpp>
 // #include <eve/function/is_imag.hpp>
 #include <eve/function/is_inf.hpp>
 // #include <eve/function/is_invalid.hpp>
-// #include <eve/function/is_less_equal.hpp>
+#include <eve/function/is_less_equal.hpp>
 // #include <eve/function/is_lessgreater.hpp>
 #include <eve/function/is_less.hpp>
 // #include <eve/function/is_lez.hpp>
@@ -49,7 +49,7 @@
 // #include <eve/function/is_not_imag.hpp>
 #include <eve/function/is_not_inf.hpp>
 // #include <eve/function/is_not_less_equal.hpp>
-// #include <eve/function/is_not_less.hpp>
+#include <eve/function/is_not_less.hpp>
 #include <eve/function/is_not_nan.hpp>
 // #include <eve/function/is_not_real.hpp>
 // #include <eve/function/is_odd.hpp>

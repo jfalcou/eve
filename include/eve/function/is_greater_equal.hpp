@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_GREATER_EQUAL_HPP_INCLUDED
 
 #include <eve/function/scalar/is_greater_equal.hpp>
-//#include <eve/function/simd/is_greater_equal.hpp>
+#include <eve/function/simd/is_greater_equal.hpp>
 
 #endif
