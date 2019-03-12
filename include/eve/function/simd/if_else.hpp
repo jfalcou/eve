@@ -22,5 +22,7 @@
 #include <eve/module/core/function/simd/common/if_else_nan.hpp>
 #include <eve/module/core/function/simd/common/if_one_else.hpp>
 #include <eve/module/core/function/simd/common/if_else_one.hpp>
+#include <eve/module/core/function/simd/common/if_zero_else_one.hpp>
+#include <eve/module/core/function/simd/common/if_one_else_zero.hpp>
 
 #endif

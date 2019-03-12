@@ -21,6 +21,7 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
 
 namespace eve::detail
 {
@@ -35,7 +36,7 @@ namespace eve::detail
           , callable_object<eve::tag::zero_>
           ) noexcept
   {
-    if constexpr(std::is_integral_v<U>)
+    if constexpr(std::is_integral_v<T>)
       return bitwise_and(bitwise_mask(v0), One(as(v0)));
     else
       return if_else(v0, One(as(v0)), Zero(as(v0))); 

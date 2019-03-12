@@ -15,7 +15,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/logical.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/zero.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -26,17 +27,18 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), T const &cond
           , eve::callable_one_ const &
-          , eve::callable_zero_const &
-          ) 
+          , eve::callable_zero_ const &
+          ) requires(T, Arithmetic<T>)
   {
     return cond ? One<T>(): Zero<T>();
   }
   
+  template<typename T>
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), logical<T> const &cond
           , eve::callable_one_ const &
-          , eve::callable_zero_const &
-          ) 
+          , eve::callable_zero_ const &
+          ) requires(T, Arithmetic<T>)
   {
     return cond ? One<T>(): Zero<T>();
   }

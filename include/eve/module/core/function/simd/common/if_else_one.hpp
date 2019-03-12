@@ -19,6 +19,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/function/bitwise_ornot.hpp>
+#include <eve/function/bitwise_mask.hpp>
 #include <eve/constant/one.hpp>
 
 namespace eve::detail
@@ -34,7 +35,7 @@ namespace eve::detail
           , callable_object<eve::tag::one_>) noexcept
   {
     if constexpr(std::is_integral_v<U>)
-      return -bitwise_and(-v1, bitwise_mask(v0));
+      return -bitwise_ornot(-v1, bitwise_mask(v0));
     else
       return if_else(v0, v1, One(as(v1))); 
   }

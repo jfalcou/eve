@@ -32,7 +32,7 @@ TTS_CASE_TPL( "Check if_else_one"
   TTS_SETUP( "A correctly initialized wide" )
   {
     auto c =  eve::one_; 
-    wide<Type,T>  lhs([](int i, int c) { return i%2 ? 0 : 1; }); 
+    wide<Type,T>  lhs([](int i, int) { return i%2 ? 0 : 1; }); 
     wide<Type,T>  rhs1([](int i, int  ) { return (i%2)*i; })
       , ref([c](int i, int ) { return eve::if_else(Type(i%2 ? 0 : 1), Type((i%2)*i), c); })
       , refs([c](int i, int ) { return eve::if_else(Type(i%2 ? 0 : 1), Type(2), c); }); 

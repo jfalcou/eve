@@ -18,10 +18,9 @@
 #include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_not.hpp>
-#include <eve/function/one.hpp>
-#include <eve/function/zero.hpp>
+#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bitwise_mask.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 
 namespace eve::detail
@@ -37,8 +36,8 @@ namespace eve::detail
           , callable_object<eve::tag::one_>
           ) noexcept
   {
-    if constexpr(std::is_integral_v<U>)
-      return bitwise_and(bitwise_not((bitwise_mask(v0)), One(as(v0)));
+    if constexpr(std::is_integral_v<T>)
+      return bitwise_notand((bitwise_mask(v0), One(as(v0))));
     else
       return if_else(v0, Zero(as(v0)), One(as(v0))); 
   }
