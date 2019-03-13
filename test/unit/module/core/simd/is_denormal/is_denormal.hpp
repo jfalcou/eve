@@ -7,7 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_DENORMAL_HPP 
+#ifndef IS_DENORMAL_HPP
 #define IS_DENORMAL_HPP
 
 #include "test.hpp"
@@ -29,23 +29,18 @@ TTS_CASE_TPL("Check is_denormal behavior on wide",
 {
   using eve::wide;
 
-  TTS_SETUP("A correctly initialized wide")
+  if constexpr(std::is_integral_v<Type>)
   {
-    if constexpr(std::is_integral_v<Type>)
-    {
-      wide<Type, T> lhs([](int i, int) { return i/2; }); 
-      wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_denormal(Type(i/2)); });
-      TTS_SECTION("supports eve::is_denormal") { TTS_EQUAL(ref, eve::is_denormal(lhs)); }
-    }
-    else
-    {
-      Type s = eve::Smallestposval<Type>(); 
-      wide<Type, T> lhs([s](int i, int) { return i%2 ? s*i : s/i; }); 
-      wide<eve::logical<Type>, T> ref([s](int i, int) { return eve::is_denormal(i%2 ? s*i : s/i); });
-      TTS_SECTION("supports eve::is_denormal") { TTS_EQUAL(ref, eve::is_denormal(lhs)); }
-    }
-
-
+    wide<Type, T> lhs([](int i, int) { return i/2; });
+    wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_denormal(Type(i/2)); });
+    TTS_EQUAL(ref, eve::is_denormal(lhs));
+  }
+  else
+  {
+    Type s = eve::Smallestposval<Type>();
+    wide<Type, T> lhs([s](int i, int) { return i%2 ? s*i : s/i; });
+    wide<eve::logical<Type>, T> ref([s](int i, int) { return eve::is_denormal(i%2 ? s*i : s/i); });
+    TTS_EQUAL(ref, eve::is_denormal(lhs));
   }
 }
 

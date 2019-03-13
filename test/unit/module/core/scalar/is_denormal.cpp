@@ -7,7 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
- 
+
 #include <eve/function/scalar/is_denormal.hpp>
 #include <eve/logical.hpp>
 #include <eve/as_logical.hpp>
@@ -36,7 +36,6 @@ TTS_CASE("Check is_denormal return type")
 
 TTS_CASE("Check is_denormal behavior")
 {
-
   TTS_EQUAL(eve::is_denormal(std::uint8_t(1)), eve::False<eve::logical<std::uint8_t>>());
   TTS_EQUAL(eve::is_denormal(std::uint16_t(1)), eve::False<eve::logical<std::uint16_t>>());
   TTS_EQUAL(eve::is_denormal(std::uint32_t(1)), eve::False<eve::logical<std::uint32_t>>());
@@ -45,7 +44,7 @@ TTS_CASE("Check is_denormal behavior")
   TTS_EQUAL(eve::is_denormal(std::int16_t(1)), eve::False<eve::logical<std::int16_t>>());
   TTS_EQUAL(eve::is_denormal(std::int32_t(1)), eve::False<eve::logical<std::int32_t>>());
   TTS_EQUAL(eve::is_denormal(std::int64_t(1)), eve::False<eve::logical<std::int64_t>>());
-  
+
   TTS_EQUAL(eve::is_denormal(std::uint8_t(0)), eve::False<eve::logical<std::uint8_t>>());
   TTS_EQUAL(eve::is_denormal(std::uint16_t(0)), eve::False<eve::logical<std::uint16_t>>());
   TTS_EQUAL(eve::is_denormal(std::uint32_t(0)), eve::False<eve::logical<std::uint32_t>>());
@@ -59,6 +58,12 @@ TTS_CASE("Check is_denormal behavior")
   TTS_EQUAL(eve::is_denormal(-4.753),eve::False<eve::logical<double>>());
   TTS_EQUAL(eve::is_denormal(-0.0f), eve::False<eve::logical<float>>());
   TTS_EQUAL(eve::is_denormal(0.0),eve::False<eve::logical<double>>());
-  TTS_EQUAL(eve::is_denormal(eve::Smallestposval<float>()/2.0f), eve::True<eve::logical<float>>());
-  TTS_EQUAL(eve::is_denormal(eve::Smallestposval<float>()/2.0f), eve::True<eve::logical<double>>());
+
+  TTS_EQUAL ( eve::is_denormal(eve::Smallestposval<float>()/2.0f)
+            , eve::logical<float>(eve::platform::supports_denormals)
+            );
+
+  TTS_EQUAL ( eve::is_denormal(eve::Smallestposval<float>()/2.0f)
+            , eve::logical<double>(eve::platform::supports_denormals)
+            );
 }

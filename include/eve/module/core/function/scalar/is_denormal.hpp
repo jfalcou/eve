@@ -19,6 +19,7 @@
 #include <eve/function/scalar/is_nez.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/is_logical.hpp>
+#include <eve/platform.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -30,22 +31,17 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_denormal_(EVE_SUPPORTS(cpu_)
                                                         , T const &a) noexcept
   {
-    #if defined(EVE_NO_DENORMALS)
+    if constexpr(std::is_integral_v<T> || is_logical_v<T> || !platform::supports_denormals)
+    {
       return false;
-    #else
-    if constexpr(std::is_integral_v<T> || is_logical_v<T>)
-      return false;
+    }
     else
     {
       return is_nez(a) && (abs(a) < Smallestposval<T>());
     }
-    #endif
   }
 
-
-
-  EVE_FORCEINLINE constexpr bool is_denormal_(EVE_SUPPORTS(cpu_)
-                                             , bool const &a) noexcept
+  EVE_FORCEINLINE constexpr bool is_denormal_(EVE_SUPPORTS(cpu_), bool const &a) noexcept
   {
     return false;
   }

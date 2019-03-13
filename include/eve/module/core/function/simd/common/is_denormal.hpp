@@ -22,6 +22,7 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/is_logical.hpp>
+#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -33,17 +34,15 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),
                                     wide<T, N, ABI> const &v) noexcept
   {
-    #if defined(EVE_NO_DENORMALS)
+    if constexpr(std::is_integral_v<T> || is_logical_v<T> || !platform::supports_denormals)
+    {
       return False(as(v));
-    #else
-    if constexpr(std::is_integral_v<T> || is_logical_v<T>)
-      return False(as(v));
+    }
     else
     {
       using t_t = wide<T, N, ABI>;
       return is_nez(v) && is_less(abs(v), Smallestposval<t_t>());
     }
-    #endif
   }
 
   // -----------------------------------------------------------------------------------------------
