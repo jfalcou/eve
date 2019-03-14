@@ -12,6 +12,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <cstddef>
@@ -61,14 +62,8 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE decltype(auto) slice(wide<T, N, aggregated_> const &a) noexcept
   {
-#if defined(EVE_COMP_IS_GNUC)
-    constexpr bool is_gnuc = true;
-#else
-    constexpr bool is_gnuc = false;
-#endif
-
     // g++ has trouble returning the storage properly for large aggregate - we then copy it
-    if constexpr(is_gnuc && sizeof(a) > 256)
+    if constexpr(platform::compiler == compilers::gcc_ && sizeof(a) > 256)
     {
       auto eval = [&](auto... I) {
         using wide_t = wide<T, typename N::split_type>;
