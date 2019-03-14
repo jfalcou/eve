@@ -17,7 +17,7 @@
 #include <eve/function/is_nez.hpp>
 #include <type_traits>
 
-namespace eve::detail
+namespace eve::detail 
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
