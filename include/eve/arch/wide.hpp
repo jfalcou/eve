@@ -11,5 +11,6 @@
 #define EVE_ARCH_WIDE_HPP_INCLUDED
 
 #include <eve/arch/cpu/wide.hpp>
+#include <eve/detail/std_api.hpp>
 
 #endif
