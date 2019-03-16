@@ -29,7 +29,7 @@ Synopsis
 * [1] Computes a mask of bits for each element of **v**. This mask has all its bit set if the input element
   is not equal to zero and all its bits unset otherwise. The computation is equivalent to ``if_else(is_nez(v),Allbits(as(v)),Zero(as(v))``.
 
-* [2] Computes a mask of bits for **s**. TThis mask has all its bit set if **s** is not equal to zero
+* [2] Computes a mask of bits for **s**. This mask has all its bit set if **s** is not equal to zero
   and all its bits unset otherwise. The computation is equivalent to ``s ? Allbits(as(s)) : Zero(as(s))``.
 
 

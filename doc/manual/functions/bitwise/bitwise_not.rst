@@ -40,7 +40,7 @@ Synopsis
 .. rubric:: Notes
 
 * There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bitwise_not`.
-  This implies that calls to:ref:`function-bitwise_not` on :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
+  This implies that calls to :ref:`function-bitwise_not` on :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
 
 *******
 Options
