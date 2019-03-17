@@ -36,12 +36,30 @@ TTS_CASE( "Check if_else return type" )
 
 TTS_CASE( "Check if_else behavior" )
 {
+  auto t = eve::True<float>();
+  auto f = eve::False<float>();
+
   TTS_EQUAL ( eve::if_else( 1, 2, 3), 2); 
   TTS_EQUAL ( eve::if_else( 1.0, 2, 3), 2); 
   TTS_EQUAL ( eve::if_else( true, 2, 3), 2);
-  TTS_EQUAL ( eve::if_else( eve::True<eve::logical<float>>(), 2, 3), 2);
+  TTS_EQUAL ( eve::if_else( t, 2, 3), 2);
   TTS_EQUAL ( eve::if_else( 0, 2, 3), 3); 
   TTS_EQUAL ( eve::if_else( 0.0, 2, 3), 3); 
   TTS_EQUAL ( eve::if_else( false, 2, 3), 3); 
-  TTS_EQUAL ( eve::if_else( eve::False<eve::logical<float>>(), 2, 3), 3);
-}
+  TTS_EQUAL ( eve::if_else( f, 2, 3), 3);
+
+  auto t1 = eve::True<std::int16_t>();
+  auto f1 = eve::False<std::int16_t>();
+  
+  TTS_EQUAL ( eve::if_else( 1, t, f), t); 
+  TTS_EQUAL ( eve::if_else( 1.0, t, f), t); 
+  TTS_EQUAL ( eve::if_else( true, t, f), t);
+  TTS_EQUAL ( eve::if_else( t, t, f), t);
+  TTS_EQUAL ( eve::if_else( t1, t, f), t); 
+  TTS_EQUAL ( eve::if_else( 0, t, f), f); 
+  TTS_EQUAL ( eve::if_else( 0.0, t, f), f); 
+  TTS_EQUAL ( eve::if_else( false, t, f), f); 
+  TTS_EQUAL ( eve::if_else( f, t, f), f);
+  TTS_EQUAL ( eve::if_else( f1, t, f), f); 
+} 
+

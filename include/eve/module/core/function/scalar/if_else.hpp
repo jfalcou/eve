@@ -13,8 +13,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/logical.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_nez.hpp>
 #include <type_traits>
 
 namespace eve::detail 
@@ -38,8 +38,16 @@ namespace eve::detail
           , U const &t
           , U const &f) noexcept requires(U, detail::Arithmetic<U>)
   {
-    return is_nez(cond) ? t : f;
+    return cond.value() ? t : f;
+  }  
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto
+  if_else_(EVE_SUPPORTS(cpu_), T const &cond
+          , logical<U> const &t
+          , logical<U> const &f) noexcept requires(logical<U>, detail::Arithmetic<U>)
+  {
+    return cond ? t : f;
   }  
 }
-
 #endif

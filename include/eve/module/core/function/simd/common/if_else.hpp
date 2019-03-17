@@ -90,7 +90,7 @@ namespace eve::detail
   {
     return aggregate( eve::if_else, v0, v1, v2);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename U, typename T, typename N>
@@ -105,14 +105,24 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename U, typename N, typename ABI>
   EVE_FORCEINLINE auto
   if_else_(EVE_SUPPORTS(simd_)
-          , wide<T, N, ABI> const &v0
+          , wide<U, N, ABI> const &v0
           , T const &v1
-          , T const &v2) noexcept
+          , T const &v2) noexcept requires(wide<T, N>, detail::Arithmetic<T>)
   {
     return eve::if_else(v0, wide<T, N>(v1), wide<T, N>(v2));
+  }
+
+  template<typename T, typename U, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  if_else_(EVE_SUPPORTS(simd_)
+          , wide<U, N, ABI> const &v0
+          , logical<T> const &v1
+          , logical<T> const &v2) noexcept requires(wide<logical<T>, N>, detail::Arithmetic<T>)
+  {
+    return eve::if_else(v0, wide<logical<T>, N>(v1), wide<logical<T>, N>(v2));
   }
 
   template<typename T, typename U, typename N, typename ABI>
