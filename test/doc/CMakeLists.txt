@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
 ##  Copyright 2018 Joel FALCOU
-##  Copyright 2019 Jean-Thierry Lapreste
+##  Copyright 2019 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -11,7 +11,6 @@
 ## documentation tests
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" bitwise_shl.cpp )
-add_unit_test( "doc.function.arithmetic" is_denormal.cpp )
 add_unit_test( "doc.function.arithmetic" shl.cpp )
 add_unit_test( "doc.function.arithmetic" shr.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_and.cpp )
@@ -27,8 +26,6 @@ add_unit_test( "doc.function.bitwise" bitwise_select.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_shl.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_shr.cpp )
 add_unit_test( "doc.function.bitwise" bitwise_xor.cpp )
-add_unit_test( "doc.function.logical" if_else.cpp )
-add_unit_test( "doc.function.logical" ifnot_else.cpp )
 add_unit_test( "doc.function.logical" logical_and.cpp )
 add_unit_test( "doc.function.logical" logical_andnot.cpp )
 add_unit_test( "doc.function.logical" logical_not.cpp )
@@ -38,7 +35,10 @@ add_unit_test( "doc.function.logical" logical_or.cpp )
 add_unit_test( "doc.function.logical" logical_ornot.cpp )
 add_unit_test( "doc.function.logical" logical_xor.cpp )
 add_unit_test( "doc.function.operators" add.cpp )
+add_unit_test( "doc.function.operators" if_else.cpp )
+add_unit_test( "doc.function.operators" ifnot_else.cpp )
 add_unit_test( "doc.function.operators" sub.cpp )
+add_unit_test( "doc.function.predicate" is_denormal.cpp )
 add_unit_test( "doc.function.predicate" is_equal.cpp )
 add_unit_test( "doc.function.predicate" is_equal_with_equal_nans.cpp )
 add_unit_test( "doc.function.predicate" is_finite.cpp )
@@ -47,8 +47,6 @@ add_unit_test( "doc.function.predicate" is_greater_equal.cpp )
 add_unit_test( "doc.function.predicate" is_inf.cpp )
 add_unit_test( "doc.function.predicate" is_less_equal.cpp )
 add_unit_test( "doc.function.predicate" is_nan.cpp )
-add_unit_test( "doc.function.logical" if_else.cpp )
-add_unit_test( "doc.function.logical" ifnot_else.cpp ) 
 add_unit_test( "doc.function.predicate" is_not_equal_with_equal_nans.cpp )
 add_unit_test( "doc.function.predicate" is_not_finite.cpp )
 add_unit_test( "doc.function.predicate" is_not_inf.cpp )
@@ -56,5 +54,3 @@ add_unit_test( "doc.function.predicate" is_not_less.cpp )
 add_unit_test( "doc.function.predicate" is_not_nan.cpp )
 add_unit_test( "doc.function.predicate" is_ordered.cpp )
 add_unit_test( "doc.function.predicate" is_unordered.cpp )
-add_unit_test( "doc.function.predicate" is_finite.cpp )
-add_unit_test( "doc.function.predicate" is_not_finite.cpp )

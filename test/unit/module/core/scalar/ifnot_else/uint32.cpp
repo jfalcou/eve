@@ -8,11 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIMD_IFNOT_ELSE_HPP_INCLUDED
-#define EVE_FUNCTION_SIMD_IFNOT_ELSE_HPP_INCLUDED
 
-#include <eve/function/scalar/ifnot_else.hpp>
-#include <eve/module/core/function/generic/ifnot_else.hpp>
-
-
-#endif
+#include <cstdint>
+using Type = std::uint32_t;
+#include "ifnot_else.hpp"
