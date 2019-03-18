@@ -13,7 +13,7 @@ is_imag
      constexpr /* implementation defined */ is_imag = {};
    }
 
-Function object returning True if and only if the parameter is imaginary.
+Function object returning True if and only if the parameter has a zero real part.
 
 ********
 Synopsis

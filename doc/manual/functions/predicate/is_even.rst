@@ -38,7 +38,10 @@ Synopsis
 * [1] A value of type **as_logical_t<wide<T,N>>**.
 * [2] A value of type **as_logical_t<T>**.
 
+Note
+*******
 
+* for a floating point value ``x`` to be even means that both ``x`` and ``x/2`` are flint.
 Options
 *******
 

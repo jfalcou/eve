@@ -44,7 +44,7 @@ Synopsis
 .. rubric:: Notes
 
 * There is no type restriction between operands of :ref:`function-bitwise_andnot` as long as the number
-  of bits between them are equals. This implies that calls to:ref:`function-bitwise_andnot` on
+  of bits between them are equals. This implies that calls to :ref:`function-bitwise_andnot` on
   :ref:`floating points values <concept-IEEEvalue>` are possible as long as they are performed with a
   second parameters of proper size.
 

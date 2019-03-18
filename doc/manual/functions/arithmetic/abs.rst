@@ -13,7 +13,7 @@ abs
       constexpr /* implementation defined */ abs = {};
    }
 
-Function object computing the absolute value of an arithmetic :ref:`Value <concept-value>`.
+Function object computing the absolute value of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********

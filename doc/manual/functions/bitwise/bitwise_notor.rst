@@ -44,7 +44,7 @@ Synopsis
 .. rubric:: Notes
 
 * There is no type restriction between operands of :ref:`function-bitwise_notor` as long as the number
-  of bits between them are equals. This implies that calls to:ref:`function-bitwise_notor` on
+  of bits between them are equals. This implies that calls to :ref:`function-bitwise_notor` on
   :ref:`floating points values <concept-IEEEvalue>` are possible as long as they are performed with a
   second parameters of proper size.
 

@@ -12,7 +12,7 @@ Mzero
      constexpr as_arithmetic_t<Value> Mzero<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Values <concept-value>` -0, that is 0 for Integral types, but responding true to 
+This 'constant' returns the  :ref:`Value <concept-value>` -0, that is 0 for Integral types, but responding true to 
 :ref:`is_negative <function-is_negative>` for floating point types.
 
 Template parameter

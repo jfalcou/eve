@@ -13,7 +13,7 @@ log1p
      constexpr /* implementation defined */ log1p = {};
    }
 
-Function object performing :math:`\log(1+v)` over a :ref:`IEEEValue <concept-ieeevalue>` **v**
+Function object performing :math:`\log(1+v)` over an :ref:`IEEEValue <concept-ieeevalue>` **v**
 
 ********
 Synopsis

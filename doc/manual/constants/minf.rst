@@ -12,7 +12,7 @@ Minf
      constexpr as_arithmetic_t<Value> Minf<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Values <concept-value>` minus infinity for  :ref:`floating point Values <concept-IEEEvalue>` 
+This 'constant' returns the  :ref:`Value <concept-value>` minus infinity for  :ref:`floating point Values <concept-IEEEvalue>` 
 and the least type value for  :ref:`Integral typed Values <concept-integralvalue>` (peculiarly 0 for unsigned integral types)
 
 
