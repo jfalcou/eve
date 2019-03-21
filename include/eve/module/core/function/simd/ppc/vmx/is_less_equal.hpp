@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -25,10 +26,10 @@ namespace eve::detail
                    , wide<T, N, ppc_> const &v1) noexcept
   {
     using t_t = wide<T, N, ppc_>;
-    if constexpr(std::is_floating_point_v<T>())
+    if constexpr(std::is_floating_point_v<T>)
       return as_logical_t<t_t>(vec_cmple(v0.storage(), v1.storage()));
     else
-      return !(v1 > v0); 
+      return !eve::is_greater(v0, v1); 
   }
 }
 

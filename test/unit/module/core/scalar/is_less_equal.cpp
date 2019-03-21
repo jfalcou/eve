@@ -52,6 +52,17 @@ TTS_CASE("Check is_less_equal behavior")
   TTS_EQUAL(eve::is_less_equal(std::int32_t(3), std::int32_t(2)), false);
   TTS_EQUAL(eve::is_less_equal(std::int64_t(3), std::int64_t(2)), false);
 
+  TTS_EQUAL(eve::is_less_equal(std::uint8_t(3), std::uint8_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::uint16_t(3), std::uint16_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::uint32_t(3), std::uint32_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::uint64_t(3), std::uint64_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::int8_t(3), std::int8_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::int16_t(3), std::int16_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::int32_t(3), std::int32_t(3)), true);
+  TTS_EQUAL(eve::is_less_equal(std::int64_t(3), std::int64_t(3)), true);
+
   TTS_EQUAL(eve::is_less_equal(1.5f, 1.6f), true);
   TTS_EQUAL(eve::is_less_equal(-4.753, 4.753), true);
+  TTS_EQUAL(eve::is_less_equal(1.5f, 1.5f), true);
+  TTS_EQUAL(eve::is_less_equal(-4.753, -4.753), true);
 }
