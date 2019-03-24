@@ -58,6 +58,7 @@ add_unit_test( "core" scalar/shr.cpp )
 add_unit_test( "core" scalar/unary_minus.cpp )
 add_unit_test( "core" scalar/unary_plus.cpp )
 
+list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/sub"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/popcnt"  "core" ${integral_types})
