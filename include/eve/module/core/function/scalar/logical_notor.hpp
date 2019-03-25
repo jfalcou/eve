@@ -14,6 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/logical.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/function/logical_or.hpp>
 #include <eve/as_logical.hpp>
 
 namespace eve::detail
@@ -24,6 +26,13 @@ namespace eve::detail
   {
     return (!a || b);
   }
+  
+  template<typename T>
+  EVE_FORCEINLINE constexpr as_logical_t<T>
+  logical_notor_(EVE_SUPPORTS(cpu_), logical<T> const &a, logical<T> const &b) noexcept
+  {
+    return logical_or(logical_not(a), b);
+  }  
 }
 
 #endif

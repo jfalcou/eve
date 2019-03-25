@@ -34,4 +34,10 @@ TTS_CASE("Check eve::logical_not behavior")
   TTS_EQUAL(eve::logical_not(eve::Allbits<Type>()), eve::False<Type>()); 
 }
 
+TTS_CASE("Check eve::logical_not behavior on logicals")
+{
+  TTS_EQUAL(eve::logical_not(eve::True<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::logical_not(eve::False<Type>()), eve::True<Type>());
+}
+
 #endif
