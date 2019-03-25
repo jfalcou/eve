@@ -88,7 +88,7 @@ list_tests("scalar/logical_or" "core" ${all_types})
 list_tests("scalar/shl"  "core" ${integral_types})   
 list_tests("scalar/shr"  "core" ${integral_types})    
 list_tests("scalar/bitwise_select"  "core" ${integral_types})  
-
+list_tests("scalar/extract"  "core" ${integral_types})  
 
 add_unit_test( "core" scalar/inf.cpp )
 add_unit_test( "core" scalar/minf.cpp )
