@@ -14,11 +14,27 @@
 #include <eve/function/scalar/is_not_less.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/nan.hpp> 
+#include <type_traits>
+
+TTS_CASE( "Check is_not_less return type" )
+{
+  TTS_EXPR_IS(eve::is_not_less(Type(), Type()) ,  eve::as_logical_t<Type>);
+}
 
 TTS_CASE("Check eve::is_not_less behavior")
 {
-  TTS_EQUAL(eve::is_not_less(Type{0}), Type{1});
-  TTS_EQUAL(eve::is_not_less(Type{2}), Type{3});
+  TTS_EQUAL(eve::is_not_less(Type(1),Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_not_less(Type(3),Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_not_less(Type(1),Type(3)), eve::False<Type>());
+  if constexpr(std::is_floating_point_v<Type>)
+  {
+    TTS_EQUAL(eve::is_not_less(eve::Nan<Type>(),Type(3)), eve::True<Type>());
+  }
+  
 }
 
 #endif

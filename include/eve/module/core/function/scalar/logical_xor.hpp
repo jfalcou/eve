@@ -15,6 +15,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/logical.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/function/is_not_equal.hpp>
 
 namespace eve::detail
 {
