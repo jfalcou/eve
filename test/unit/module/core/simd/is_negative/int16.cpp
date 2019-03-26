@@ -1,16 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
 
-#include <eve/function/scalar/is_negative.hpp>
-#include <eve/function/simd/is_negative.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::int16_t;
+#include "is_negative.hpp"
