@@ -26,7 +26,7 @@
 #include <eve/function/is_inf.hpp>
 // #include <eve/function/is_invalid.hpp>
 #include <eve/function/is_less_equal.hpp>
-// #include <eve/function/is_lessgreater.hpp>
+#include <eve/function/is_lessgreater.hpp>
 #include <eve/function/is_less.hpp>
 // #include <eve/function/is_lez.hpp>
 // #include <eve/function/is_ltz.hpp>

@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
-#define EVE_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 
-#include <eve/function/scalar/is_lessgreater.hpp>
-#include <eve/function/simd/is_lessgreater.hpp>
-
-#endif
+using Type = float;
+#include "is_lessgreater.hpp"

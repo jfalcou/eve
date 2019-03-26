@@ -1,16 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
+  Copyright 2018 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
-#define EVE_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 
-#include <eve/function/scalar/is_lessgreater.hpp>
-#include <eve/function/simd/is_lessgreater.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::int32_t;
+#include "is_lessgreater.hpp"
