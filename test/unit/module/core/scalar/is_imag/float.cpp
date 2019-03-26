@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_IMAG_HPP_INCLUDED
-#define EVE_FUNCTION_IS_IMAG_HPP_INCLUDED
 
-#include <eve/function/scalar/is_imag.hpp>
-#include <eve/function/simd/is_imag.hpp>
-
-#endif
+using Type = float;
+#include "is_imag.hpp"

@@ -21,8 +21,8 @@
 #include <eve/function/is_gez.hpp>
 // #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
-// #include <eve/function/is_gtz.hpp>
-// #include <eve/function/is_imag.hpp>
+#include <eve/function/is_gtz.hpp>
+#include <eve/function/is_imag.hpp>
 #include <eve/function/is_inf.hpp>
 // #include <eve/function/is_invalid.hpp>
 #include <eve/function/is_less_equal.hpp>
