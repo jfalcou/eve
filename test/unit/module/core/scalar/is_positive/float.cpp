@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_POSITIVE_HPP_INCLUDED
-#define EVE_FUNCTION_IS_POSITIVE_HPP_INCLUDED
 
-#include <eve/function/scalar/is_positive.hpp>
-#include <eve/function/simd/is_positive.hpp>
-
-#endif
+using Type = float;
+#include "is_positive.hpp"
