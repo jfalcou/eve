@@ -19,7 +19,7 @@
 #include <eve/function/is_finite.hpp>
 // #include <eve/function/is_flint.hpp>
 #include <eve/function/is_gez.hpp>
-// #include <eve/function/is_greater_equal.hpp>
+#include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_imag.hpp>
@@ -28,11 +28,11 @@
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_lessgreater.hpp>
 #include <eve/function/is_less.hpp>
-// #include <eve/function/is_lez.hpp>
-// #include <eve/function/is_ltz.hpp>
+#include <eve/function/is_lez.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nan.hpp>
 // #include <eve/function/is_negative.hpp>
-// #include <eve/function/is_nez.hpp>
+#include <eve/function/is_nez.hpp>
 // #include <eve/function/is_ngez.hpp>
 // #include <eve/function/is_ngtz.hpp>
 // #include <eve/function/is_nlez.hpp>
