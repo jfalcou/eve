@@ -67,6 +67,7 @@ list_tests("scalar/is_negative" "core" ${all_types})
 list_tests("scalar/is_positive" "core" ${all_types})
 list_tests("scalar/is_ngez" "core" ${all_types})
 list_tests("scalar/is_not_greater_equal" "core" ${all_types})
+list_tests("scalar/is_not_less_equal" "core" ${all_types})
 
 add_unit_test( "core" scalar/inf.cpp )
 add_unit_test( "core" scalar/minf.cpp )
@@ -144,4 +145,5 @@ list_tests("simd/is_negative" "core" ${all_types})
 list_tests("simd/is_positive" "core" ${all_types})
 list_tests("simd/is_ngez" "core" ${all_types})
 list_tests("simd/is_not_greater_equal" "core" ${all_types})
+list_tests("simd/is_not_less_equal" "core" ${all_types})
 
