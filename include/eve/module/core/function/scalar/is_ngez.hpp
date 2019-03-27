@@ -8,14 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_LTZ_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_LTZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NGEZ_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NGEZ_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/function/scalar/logical_not.hpp>
+#include <eve/function/scalar/is_nan.hpp>
+#include <eve/function/scalar/is_ltz.hpp>
 #include <eve/constant/false.hpp>
 #include <type_traits>
 
@@ -24,23 +25,23 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_ltz_(EVE_SUPPORTS(cpu_)
-                                                   , T const &a) noexcept requires(as_logical_t<T>, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_ngez_(EVE_SUPPORTS(cpu_)
+                                                    , T const &a) noexcept
   {
-    return a < T(0);
+    if constexpr(std::is_unsigned_v<T>)
+      return False(as(a));
+    else
+    {
+      if constexpr(std::is_floating_point_v<T>) return is_ltz(a).value() || is_nan(a).value();
+      if constexpr(std::is_integral_v<T>) return is_ltz(a); 
+    }
   }
+  
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_ltz_(EVE_SUPPORTS(cpu_)
-                                              , logical<T> const &a) noexcept
-  {
-    return False<T>(); 
-  }
-
-  EVE_FORCEINLINE constexpr bool is_ltz_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr bool is_ngez_(EVE_SUPPORTS(cpu_)
                                         , bool const &a) noexcept
   {
-    return  false; 
+    return false;
   }
 
 }
