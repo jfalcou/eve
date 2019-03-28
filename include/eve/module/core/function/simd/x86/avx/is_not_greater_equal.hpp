@@ -32,8 +32,9 @@ namespace eve::detail
     using t_t = wide<T, N, avx_>;
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, float>) return as_logical_t<t_t>( _mm256_cmp_ps(a0,a1, _CMP_NGE_UQ);
-      if constexpr(std::is_same_v<T, double>) return as_logical_t<t_t>(_mm256_cmp_pd(a0,a1, _CMP_NGE_UQ);
+      if constexpr(std::is_same_v<T, float>) return as_logical_t<t_t>( _mm256_cmp_ps(v0, v1, _CMP_NGE_UQ));
+      if constexpr(std::is_same_v<T, double>) return as_logical_t<t_t>(_mm256_cmp_pd(v0, v1, _CMP_NGE_UQ));
+    }
     else
     {
       return is_less(v0, v1); 
