@@ -30,13 +30,13 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_ngtz_(EVE_SUPPORTS(simd_),
                                wide<T, N, ABI> const &v) noexcept
   {
- //    if constexpr(std::is_unsigned_v<T>)
-//       return is_eqz(as(v));
-//     else
-//     {
+     if constexpr(std::is_unsigned_v<T>)
+      return is_eqz(v);
+    else
+    {
       if constexpr(std::is_floating_point_v<T>) return is_not_greater(v, Zero(as(v)));
       if constexpr(std::is_integral_v<T>) return is_lez(v); 
-//     }
+    }
   }
   
   // -----------------------------------------------------------------------------------------------
