@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
 
-#include <eve/function/scalar/is_not_greater.hpp>
-#include <eve/function/simd/is_not_greater.hpp>
-
-#endif
+using Type = float;
+#include "is_ngtz.hpp"

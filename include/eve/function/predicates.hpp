@@ -34,7 +34,7 @@
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_ngez.hpp>
-// #include <eve/function/is_ngtz.hpp>
+#include <eve/function/is_ngtz.hpp>
 // #include <eve/function/is_nlez.hpp>
 // #include <eve/function/is_nltz.hpp>
 // #include <eve/function/is_normal.hpp>
@@ -45,7 +45,7 @@
 // #include <eve/function/is_not_equal_with_equal_nans.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-// #include <eve/function/is_not_greater.hpp>
+#include <eve/function/is_not_greater.hpp>
 // #include <eve/function/is_not_imag.hpp>
 #include <eve/function/is_not_inf.hpp>
 #include <eve/function/is_not_less_equal.hpp>
