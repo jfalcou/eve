@@ -75,6 +75,7 @@ list_tests("scalar/is_nltz" "core" ${all_types})
 list_tests("scalar/is_normal" "core" ${all_types})
 list_tests("scalar/is_not_denormal" "core" ${all_types})
 list_tests("scalar/is_not_imag" "core" ${real_types})
+list_tests("scalar/is_not_real" "core" ${real_types})
 
 
 add_unit_test( "core" scalar/inf.cpp )
@@ -161,4 +162,4 @@ list_tests("simd/is_nltz" "core" ${all_types})
 list_tests("simd/is_normal" "core" ${all_types})
 list_tests("simd/is_not_denormal" "core" ${all_types})
 list_tests("simd/is_not_imag" "core" ${real_types})
-
+list_tests("simd/is_not_real" "core" ${real_types})
