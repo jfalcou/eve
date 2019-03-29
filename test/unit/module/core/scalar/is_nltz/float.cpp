@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NLTZ_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NLTZ_HPP_INCLUDED
 
-#include <eve/function/scalar/is_nltz.hpp>
-#include <eve/function/simd/is_nltz.hpp>
-
-#endif
+using Type = float;
+#include "is_nltz.hpp"

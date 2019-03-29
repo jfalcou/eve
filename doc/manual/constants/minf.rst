@@ -1,4 +1,4 @@
-.. _constant-inf:
+.. _constant-minf:
 
 Minf
 ====
