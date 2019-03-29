@@ -44,12 +44,6 @@ namespace eve::ext
   struct is_wide<wide<Type, Size, ABI>> : std::true_type
   {
   };
-
-  template<typename Type>
-  using is_wide_t = typename is_wide<Type>::type;
-
-  template<typename Type>
-  inline constexpr bool is_wide_v = is_wide_t<Type>::value;
 }
 
 #endif
