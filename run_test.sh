@@ -19,7 +19,7 @@ echo "test : ${test} on ${target}"
 
 echo "*******************************************"
 cd ./build/$target
-ninja -j 4 $test.unit
-ctest -j 4 -R ^$test.*.unit
+ninja  $test.unit
+ctest -R ^$test.*.unit
 cd ../..
 

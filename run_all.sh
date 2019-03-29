@@ -16,8 +16,8 @@ do
   echo ${i}
   echo "*******************************************"
   cd ./build/$i
-  ninja -j 4 unit
-  ctest -j 4
+  ninja unit
+  ctest
   cd ../..
 done
 
