@@ -5,9 +5,75 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(download)
 
-## Disable testing GBench
+include(download)
+include(add_parent_target)
+
+##==================================================================================================
+## Centralize all required setup for unit benchs
+##==================================================================================================
+function(add_bench root)
+  if( MSVC )
+    set( options /std:c++latest -W3 -EHsc)
+  else()
+    set( options -std=c++17 -Wall -Wno-missing-braces )
+  endif()
+
+  foreach(file ${ARGN})
+    string(REPLACE ".cpp" ".bench" base ${file})
+    string(REPLACE "/"    "." base ${base})
+    string(REPLACE "\\"   "." base ${base})
+    set(bench "${root}.${base}")
+
+    add_executable( ${bench}  ${file})
+    target_compile_options  ( ${bench} PUBLIC ${options} )
+
+    set_property( TARGET ${bench}
+                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
+                )
+
+    add_test( NAME ${bench}
+              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
+              COMMAND $<TARGET_FILE:${bench}> --benchmark_counters_tabular=true --benchmark_repetitions=3  --benchmark_report_aggregates_only=true
+            )
+
+    set_target_properties ( ${bench} PROPERTIES
+                            EXCLUDE_FROM_DEFAULT_BUILD TRUE
+                            EXCLUDE_FROM_ALL TRUE
+                            ${MAKE_UNIT_TARGET_PROPERTIES}
+                          )
+
+    target_include_directories( ${bench}
+                                PRIVATE
+                                  ${tts_SOURCE_DIR}/include
+                                  ${googlebenchmark_SOURCE_DIR}/include
+                                  ${googlebenchmark_SOURCE_DIR}/src
+                                  ${PROJECT_SOURCE_DIR}/benchmark
+                                  ${PROJECT_SOURCE_DIR}/include
+                              )
+
+    target_link_libraries(${bench} benchmark)
+    add_dependencies(bench ${bench})
+
+    add_parent_target(${bench})
+  endforeach()
+endfunction()
+
+##==================================================================================================
+## Generate a list of benchs from a type list
+##==================================================================================================
+function (list_benchs root bench)
+  set(sources )
+
+  foreach(e ${ARGN})
+    list(APPEND sources "${root}/${e}.cpp")
+  endforeach(e)
+
+  add_bench( ${bench} "${sources}" )
+endfunction()
+
+##==================================================================================================
+## Disable benching/doc for Google Bench
 set(BENCHMARK_ENABLE_TESTING OFF CACHE INTERNAL "")
 
 download_project( PROJ                googlebenchmark
@@ -18,8 +84,8 @@ download_project( PROJ                googlebenchmark
                 )
 
 add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR})
-include_directories("${googlebenchmark_SOURCE_DIR}/include")
 
-## Setup our benchmarks
+## Setup our benchs
 add_custom_target(bench)
-#add_subdirectory(${PROJECT_SOURCE_DIR}/benchmark/)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/benchmark/)
