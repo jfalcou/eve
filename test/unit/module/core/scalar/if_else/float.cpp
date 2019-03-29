@@ -7,10 +7,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
-#define EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
 
-#include <eve/function/scalar/if_else.hpp>
-#include <eve/function/simd/if_else.hpp>
-
-#endif
+using Type = float;
+#include "if_else.hpp"

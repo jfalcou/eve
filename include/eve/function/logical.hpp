@@ -19,5 +19,6 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_ornot.hpp>
 #include <eve/function/logical_xor.hpp>
+#include <eve/function/if_else.hpp>
 
 #endif
