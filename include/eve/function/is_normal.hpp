@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_NORMAL_HPP_INCLUDED
 
 #include <eve/function/scalar/is_normal.hpp>
-//#include <eve/function/simd/is_normal.hpp>
+#include <eve/function/simd/is_normal.hpp>
 
 #endif
