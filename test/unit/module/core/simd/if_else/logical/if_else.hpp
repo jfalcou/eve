@@ -55,7 +55,7 @@ TTS_CASE_TPL( "Check if_else behavior on wide + scalar"
       , lrefsw([t](auto i, auto ) { return eve::if_else( Type(i%3), t,  is_nez(Type((i%2)*i))); })
       , lrefws([f](auto i, auto ) { return eve::if_else( Type(i%3), is_nez(Type((i%2)*i)), f); });
 
-  l_t lx([t, f](auto i, auto ) { return ((i%2)*i) != 0; });
+  l_t lx([](auto i, auto ) { return ((i%2)*i) != 0; });
 
    TTS_EQUAL(lrefss, eve::if_else(cond, t, f));               //w ls ls
    TTS_EQUAL(lrefsw, eve::if_else(cond, t, lx));              //w ls lw
@@ -64,6 +64,5 @@ TTS_CASE_TPL( "Check if_else behavior on wide + scalar"
    TTS_EQUAL(lrefsw, eve::if_else(is_nez(cond), t, lx));      //lw ls lw
    TTS_EQUAL(lrefws, eve::if_else(is_nez(cond), lx, f));      //lw lw ls
 }
-
 
 #endif
