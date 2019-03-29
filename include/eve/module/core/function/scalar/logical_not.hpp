@@ -28,6 +28,13 @@ namespace eve::detail
   {
     return !a;
   }
+
+  template<typename T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> logical_not_(EVE_SUPPORTS(cpu_)
+                                                        , eve::logical<T> const &a) noexcept
+  {
+    return a.not_value();
+  } 
 }
 
 #endif

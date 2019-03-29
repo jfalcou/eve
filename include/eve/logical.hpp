@@ -69,6 +69,9 @@ namespace eve
     /// Explicitly convert a logical value to bool
     EVE_FORCEINLINE constexpr bool value() const noexcept { return !!value_; }
 
+    /// Explicitly convert a logical value to bool negation
+    EVE_FORCEINLINE constexpr bool not_value() const noexcept { return !value_; }
+
     /// Convert a logical to its internal representation value
     EVE_FORCEINLINE constexpr auto bits() const noexcept { return value_; }
 
@@ -105,14 +108,14 @@ namespace eve
     return a.value() != b.value();
   }
 
-  /// Equality comparison operator
+  /// logical and operator
   template<typename T>
   EVE_FORCEINLINE constexpr logical<T> operator&&(logical<T> const &a, logical<T> const &b) noexcept
   {
     return a.value() && b.value();
   }
 
-  /// Inequality comparison operator
+  /// logical or operator
   template<typename T>
   EVE_FORCEINLINE constexpr logical<T> operator||(logical<T> const &a, logical<T> const &b) noexcept
   {
