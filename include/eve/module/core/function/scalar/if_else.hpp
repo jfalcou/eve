@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry Lapreste
@@ -15,9 +15,10 @@
 #include <eve/detail/meta.hpp>
 #include <eve/logical.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/is_wide.hpp>
 #include <type_traits>
 
-namespace eve::detail 
+namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
@@ -25,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), T const &cond
           , U const &t
-          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
+          , U const &f) noexcept requires(U, Arithmetic<T>)
   {
     return cond ? t : f;
   }
@@ -36,18 +37,10 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_(EVE_SUPPORTS(cpu_), logical<T> const &cond
           , U const &t
-          , U const &f) noexcept requires(U, detail::Arithmetic<U>)
+          , U const &f) noexcept requires(U, Scalar<U>)
   {
     return cond.value() ? t : f;
-  }  
-
-  template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
-  if_else_(EVE_SUPPORTS(cpu_), T const &cond
-          , logical<U> const &t
-          , logical<U> const &f) noexcept requires(logical<U>, detail::Arithmetic<U>)
-  {
-    return cond ? t : f;
-  }  
+  }
 }
+
 #endif
