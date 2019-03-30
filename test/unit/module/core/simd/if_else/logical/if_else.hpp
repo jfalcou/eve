@@ -31,7 +31,7 @@ TTS_CASE_TPL( "Check if_else behavior on homogeneous wide"
   wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; });
 
   wide<l_t, T>  lref([](auto i, auto ) { return eve::if_else(Type((i%2)*i),l_t(i%2+1),l_t(i%3)); })
-              , rhs1([](auto i, auto ) { return (i%2) != 0; })
+              , rhs1([](auto i, auto ) { return (i%2+1) != 0; })
               , rhs2([](auto i, auto ) { return (i%3) != 0; });
 
   TTS_EQUAL(lref, eve::if_else(cond        , rhs1, rhs2)); //w lw lw
