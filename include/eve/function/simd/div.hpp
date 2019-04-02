@@ -7,10 +7,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DIV_HPP_INCLUDED
-#define EVE_FUNCTION_DIV_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_DIV_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_DIV_HPP_INCLUDED
 
 #include <eve/function/scalar/div.hpp>
-#include <eve/function/simd/div.hpp>
+#include <eve/module/core/function/simd/div.hpp>
 
 #endif

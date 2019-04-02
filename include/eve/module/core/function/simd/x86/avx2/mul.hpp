@@ -18,12 +18,10 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // double
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<double, N, avx_> mul_(EVE_SUPPORTS(avx2_),
-                                             wide<double, N, avx_> const &v0,
-                                             wide<double, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_> mul_(EVE_SUPPORTS(avx2_),
+                                        wide<T, N, avx_> const &v0,
+                                        wide<T, N, avx_> const &v1) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -39,7 +37,7 @@ namespace eve::detail
         auto const hmul = _mm256_mullo_epi16( _mm256_srli_epi16(v0.storage(), 8)
                                             , _mm256_srli_epi16(v1.storage(), 8)
                                             );
-
+        
         return _mm256_or_si256( _mm256_and_si256(mask, _mm256_mullo_epi16(v0,v1))
                               , _mm256_slli_epi16( _mm256_and_si256(mask, hmul), 8)
                               );
@@ -53,7 +51,7 @@ namespace eve::detail
     }
     
   }
-
+  
 }
 
 #endif
