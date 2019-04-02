@@ -55,7 +55,7 @@ namespace eve
     }
 
     /// Convert a logical value to bool
-    EVE_FORCEINLINE explicit constexpr operator bool() const noexcept { return !!value_; }
+    EVE_FORCEINLINE constexpr operator bool() const noexcept { return !!value_; }
 
     /// Explicitly convert a logical value to bool
     EVE_FORCEINLINE constexpr bool value() const noexcept { return !!value_; }
@@ -77,24 +77,6 @@ namespace eve
   private:
     bits_type value_;
   };
-
-  template<typename T>
-  EVE_FORCEINLINE auto operator!=(logical<T> const &v, logical<T> const &w)
-  {
-    return v.value() != w.value();
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE auto operator!=(bool b, logical<T> const &v)
-  {
-    return v.value() != b;
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE auto operator!=(logical<T> const &v, bool b)
-  {
-    return v.value() != b;
-  }
 
   /// Stream insertion operator
   template<typename T>

@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_SCALAR_IS_NOT_EQUAL_HPP_INCLUDED
 
 #include <eve/function/definition/is_not_equal.hpp>
-#include <eve/module/core/function/generic/is_not_equal.hpp>
+#include <eve/module/core/function/scalar/is_not_equal.hpp>
 
 #endif
