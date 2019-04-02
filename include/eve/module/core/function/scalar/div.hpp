@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,9 +25,11 @@ namespace eve::detail
                                      , T const &a
                                      , T const &b) noexcept requires(T, Arithmetic<T>)
   {
+    if constexpr(!std::is_floating_point_v<T>)
+      EVE_ASSERT(b, "[eve::div ] - you cannot divide by 0 with integral types.");
     return a/b;
   }
-
+ 
 }
 
 #endif

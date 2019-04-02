@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check plus behavior on wide",
 
   TTS_SETUP("two correctly initialized wide")
   {
-    wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
-      ref([](auto i, auto c) { return i*(c - i); });
+    wide<Type, T> lhs([](auto i, auto) { return i+1; }), rhs([](auto i, auto c) { return c - i+1; }),
+      ref([](auto i, auto c) { return Type(i+1)/Type((c - i+1)); });
 
     std::cout << "lhs " << lhs << std::endl;
     std::cout << "rhs " << rhs << std::endl;
@@ -55,14 +55,15 @@ TTS_CASE_TPL("Check plus behavior on wide",
 
   TTS_SETUP("A correctly initialized wide and a scalar")
   {
-    wide<Type, T> lhs([](auto i, auto) { return i; }),
-        ref([](auto i, auto) { return i * Type(4); });
+    wide<Type, T> lhs([](auto i, auto) { return i+1; }),
+      ref1([](auto i, auto) { return (i+1) /Type(4); }),
+      ref2([](auto i, auto) { return Type(4)/(i+1); });
 
-    TTS_SECTION("supports eve::div") { TTS_EQUAL(ref, eve::div(lhs, 4)); }
-    TTS_SECTION("supports eve::div") { TTS_EQUAL(ref, eve::div(4, lhs)); }
+    TTS_SECTION("supports eve::div") { TTS_EQUAL(ref1, eve::div(lhs, 4)); }
+    TTS_SECTION("supports eve::div") { TTS_EQUAL(ref2, eve::div(4, lhs)); }
 
-    TTS_SECTION("supports operator/()") { TTS_EQUAL(ref, lhs / 4); }
-    TTS_SECTION("supports operator/()") { TTS_EQUAL(ref, 4 / lhs); }
+    TTS_SECTION("supports operator/()") { TTS_EQUAL(ref1, lhs / 4); }
+    TTS_SECTION("supports operator/()") { TTS_EQUAL(ref2, 4 / lhs); }
   }
 }
 
