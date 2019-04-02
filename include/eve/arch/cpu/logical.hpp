@@ -79,24 +79,6 @@ namespace eve
   };
 
   template<typename T>
-  EVE_FORCEINLINE auto operator==(logical<T> const &v, logical<T> const &w)
-  {
-    return v.value() == w.value();
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE auto operator==(bool b, logical<T> const &v)
-  {
-    return v.value() == b;
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE auto operator==(logical<T> const &v, bool b)
-  {
-    return v.value() == b;
-  }
-
-  template<typename T>
   EVE_FORCEINLINE auto operator!=(logical<T> const &v, logical<T> const &w)
   {
     return v.value() != w.value();

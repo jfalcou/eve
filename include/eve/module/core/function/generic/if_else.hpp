@@ -18,7 +18,7 @@
 #include <eve/function/bitwise_mask.hpp>
 #include <eve/function/bitwise_select.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/is_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
 
@@ -29,18 +29,18 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
   {
     // SIMD case
-    if constexpr( is_wide_v<T> )
+    if constexpr( is_vectorized_v<T> )
     {
       // Expels non-fully SIMD cases by recalling self with type-casted value
-      if constexpr(is_wide_v<U> && !is_wide_v<V>)
+      if constexpr(is_vectorized_v<U> && !is_vectorized_v<V>)
       {
         return eve::if_else(cond, t, U(f));
       }
-      else if constexpr(!is_wide_v<U> && is_wide_v<V>)
+      else if constexpr(!is_vectorized_v<U> && is_vectorized_v<V>)
       {
         return eve::if_else(cond, V(t), f);
       }
-      else if constexpr(!is_wide_v<U> && !is_wide_v<V>)
+      else if constexpr(!is_vectorized_v<U> && !is_vectorized_v<V>)
       {
         // Non-SIMD alternative must be of same type
         if constexpr( !std::is_same_v<U,V> )

@@ -14,8 +14,8 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/ext/has_abi.hpp>
 #include <eve/ext/as_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/cardinal.hpp>
-#include <eve/is_wide.hpp>
 #include <algorithm>
 #include <utility>
 
@@ -35,7 +35,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
-    if constexpr(is_wide_v<T>)
+    if constexpr(is_vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), upper_);
     else
       return std::forward<T>(t);
@@ -45,7 +45,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
-    if constexpr(is_wide_v<T>)
+    if constexpr(is_vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), lower_);
     else
       return std::forward<T>(t);

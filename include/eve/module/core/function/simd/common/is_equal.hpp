@@ -13,75 +13,67 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/is_wide.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
-namespace eve
+namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // operator ==
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator==(wide<T, N, ABI> const &v0, wide<T, N, ABI> const &v1) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+                                    )
   {
-    return eve::is_equal(v0, v1);
+    // If one of argument is not Vectorized, recall once vectorized
+    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    {
+      return is_equal(a, T{b});
+    }
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return is_equal(U{a},b);
+    }
+    // Both arguments are vectorized ...
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr( is_aggregated_v<typename T::abi_type> )
+      {
+        // ... and are aggregates
+        return aggregate( eve::is_equal, a, b);
+      }
+      else if constexpr( is_emulated_v<typename T::abi_type> )
+      {
+        // ... and are emulations
+        return map( eve::is_equal, a, b);
+      }
+      else
+      {
+        static_assert( wrong<T,U>, "[eve::is_equal] - Unsupported ABI.");
+        return {};
+      }
+    }
+    else
+    {
+      static_assert( std::is_same_v<T,U>, "[eve::is_equal] - Incompatible types.");
+      return {};
+    }
   }
 
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator==(wide<T, N, ABI> const &v0,
-                                  U const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                                 detail::Convertible<U, T>)
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_equal_( EVE_SUPPORTS(cpu_),
+                                            logical<T> const &a, logical<U> const &b
+                                          ) noexcept
+                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+                                      Vectorized<T>, Vectorized<U>
+                                    )
   {
-    return eve::is_equal(v0, v1);
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  operator==(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(as_logical_t<wide<T, N, ABI>>,
-                                                                       detail::Convertible<U, T>)
-  {
-    return eve::is_equal(v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // operator == for logical<wide>
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,
-                                  logical<wide<T,N,ABI>> const &v1) noexcept
-  {
-    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,
-                                  logical<U> const &v1) noexcept
-                  requires(as_logical_t<wide<T, N, ABI>>, Scalar<U>)
-  {
-    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator==( logical<U> const &v0,
-                                   logical<wide<T,N,ABI>> const &v1) noexcept
-                  requires(as_logical_t<wide<T, N, ABI>>,Scalar<U>)
-  {
-    return bitwise_cast<logical<wide<T,N,ABI>>>( is_equal(v0.bits(),v1.bits()) );
-  }
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator==(logical<wide<T,N,ABI>> const &v0,bool v1) noexcept
-  {
-    return logical<wide<T,N,ABI>>(v1) == v0;
-  }
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator==( bool v0, logical<wide<T,N,ABI>> const &v1) noexcept
-  {
-    return logical<wide<T,N,ABI>>(v0) == v1;
+    using r_t = as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>;
+    return bitwise_cast<r_t>( is_equal(a.bits(),b.bits()) );
   }
 }
 

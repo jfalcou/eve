@@ -13,9 +13,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail

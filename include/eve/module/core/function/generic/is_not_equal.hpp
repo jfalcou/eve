@@ -18,17 +18,17 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/is_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr as_logical_t<std::conditional_t<is_wide_v<T>,T,U>>
+  EVE_FORCEINLINE constexpr as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>
   is_not_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    if constexpr( is_wide_v<T> && is_wide_v<U> )
+    if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(!std::is_same_v<T,U>)
       {
@@ -62,11 +62,11 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr( is_wide_v<T> && !is_wide_v<U> )
+    else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
       return is_not_equal(a, T{b});
     }
-    else if constexpr( !is_wide_v<T> && is_wide_v<U> )
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
     {
       return is_not_equal(U{a},b);
     }

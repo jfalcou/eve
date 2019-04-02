@@ -30,6 +30,9 @@ namespace eve
 
   template<typename T>
   static inline constexpr bool is_logical_v = is_logical<T>::value;
+
+  template<typename T>
+  using Logical = std::enable_if_t<is_logical_v<T>>;
 }
 
 #endif

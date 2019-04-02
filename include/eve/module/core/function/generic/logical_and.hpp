@@ -19,17 +19,17 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/is_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr as_logical_t<std::conditional_t<is_wide_v<T>,T,U>>
+  EVE_FORCEINLINE constexpr as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>
   logical_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
-    if constexpr( is_wide_v<T> && is_wide_v<U> )
+    if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(!std::is_same_v<T,U>)
       {
@@ -52,11 +52,11 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr( is_wide_v<T> && !is_wide_v<U> )
+    else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
       return logical_and(a, T{b});
     }
-    else if constexpr( !is_wide_v<T> && is_wide_v<U> )
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
     {
       return logical_and(U{a},b);
     }

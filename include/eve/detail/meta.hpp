@@ -244,7 +244,18 @@ namespace eve::detail
 
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
+
+  template<bool... Conditions>
+  using Either = std::enable_if_t<(Conditions || ...)>;
+
+
+  // False value with dependent type
+  template<typename... T>
+  inline constexpr bool wrong = false;
 }
+
+// Pseudo satisfy macro
+#  define satisfy(...) typename = typename ::eve::detail::require_check <void, __VA_ARGS__> ::type
 
 // Pseudo require macro
 #  define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type
