@@ -25,8 +25,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, double>) return _mm_mul_pd(v0, v1);
-      if constexpr(std::is_same_v<T, float>)  return _mm_mul_ps(v0, v1);
+      if constexpr(std::is_same_v<T, double>) return _mm256_mul_pd(v0, v1);
+      if constexpr(std::is_same_v<T, float>)  return _mm256_mul_ps(v0, v1);
     }
     else
     {
