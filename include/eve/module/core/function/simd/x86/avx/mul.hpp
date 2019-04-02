@@ -25,7 +25,7 @@ namespace eve::detail
                                              wide<double, N, avx_> const &v0,
                                              wide<double, N, avx_> const &v1) noexcept
   {
-    return _mm_mul_pd(v0, v1);
+    return _mm256_mul_pd(v0, v1);
   }
   
   template<typename T, typename N>
@@ -33,7 +33,7 @@ namespace eve::detail
                                              wide<float, N, avx_> const &v0,
                                              wide<float, N, avx_> const &v1) noexcept
   {
-    return _mm_mul_ps(v0, v1);
+    return _mm256_mul_ps(v0, v1);
   }
 
 }
