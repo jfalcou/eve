@@ -29,7 +29,7 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, float>)  return _mm256_mul_ps(v0, v1);
     }
     else
-    {
+    { 
       if constexpr(sizeof(T) == 1)
       {
         using i2_t = wide < std::int16_t, fixed<16>, avx_>;

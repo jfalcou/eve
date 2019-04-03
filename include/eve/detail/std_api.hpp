@@ -14,20 +14,21 @@
 
 namespace std
 {
-  template<std::size_t I, typename T, typename N, typename ABI>
-  struct tuple_element<I, eve::wide<T,N,ABI>>
-  {
-    using type = T;
-  };
-
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmismatched-tags"
 #endif // __clang__
-  // clang-7 changed the tag of tuple_size from struct to class
+// clang-7 changed the tag of tuple_size from struct to class
+
+  template<std::size_t I, typename T, typename N, typename ABI>
+  class tuple_element<I, eve::wide<T,N,ABI>>
+  {
+    using type = T;
+  };
+
   
   template<typename T, typename N, typename ABI>
-  struct tuple_size<eve::wide<T,N,ABI>> : N
+  class tuple_size<eve::wide<T,N,ABI>> : N
   {};
   
 #ifdef __clang__
