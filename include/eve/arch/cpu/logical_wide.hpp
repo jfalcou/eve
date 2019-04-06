@@ -120,9 +120,9 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pair of sub-wide
-    template<typename HalfSize>
-    EVE_FORCEINLINE logical(logical<wide<Type, HalfSize>> const &l,
-                            logical<wide<Type, HalfSize>> const &h,
+    template<typename HalfSize, typename Other>
+    EVE_FORCEINLINE logical(logical<wide<Type, HalfSize, Other>> const &l,
+                            logical<wide<Type, HalfSize, Other>> const &h,
                             std::enable_if_t<static_size == 2 * HalfSize::value> * = 0)
         : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
     {

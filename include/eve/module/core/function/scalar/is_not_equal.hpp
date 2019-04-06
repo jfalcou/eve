@@ -38,7 +38,7 @@ namespace eve::detail
 namespace eve
 {
   // -----------------------------------------------------------------------------------------------
-  // operator ==
+  // operator !=
   template<typename T, typename U>
   EVE_FORCEINLINE auto operator!=(T const& a, U const &b) noexcept -> decltype(eve::is_not_equal(a, b))
   {

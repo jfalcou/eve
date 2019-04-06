@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -47,7 +47,7 @@ namespace eve::detail
       if constexpr(std::is_unsigned_v<T>)
       {
         using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
-        using l_t    = eve::wide<eve::as_logical_t<T>, N, sse_>;
+        using l_t    = eve::as_logical_t<t_t>;
         s_t const sm = Signmask<s_t>();
         return eve::bitwise_cast<l_t>(
             eve::is_greater(eve::bitwise_cast<s_t>(v0) - sm, eve::bitwise_cast<s_t>(v1) - sm));

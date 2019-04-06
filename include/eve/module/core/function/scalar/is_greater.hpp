@@ -13,15 +13,36 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/is_logical.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr logical<T>
-  is_greater_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_greater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
-    return a > b;
+    if constexpr( is_logical_v<T> || is_logical_v<U>)
+    {
+      return static_cast<bool>(a) > static_cast<bool>(b);
+    }
+    else
+    {
+      return a > b;
+    }
+  }
+}
+
+namespace eve
+{
+    // -----------------------------------------------------------------------------------------------
+  // operator >
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto operator>(T const& a, U const &b) noexcept -> decltype(eve::is_greater(a, b))
+  {
+    return eve::is_greater(a, b);
   }
 }
 

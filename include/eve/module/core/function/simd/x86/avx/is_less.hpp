@@ -48,7 +48,7 @@ namespace eve::detail
       else
       {
         using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
-        using l_t    = eve::wide<eve::as_logical_t<T>, N, sse_>;
+        using l_t    = eve::as_logical_t<eve::wide<T, N, sse_>>;
         s_t const sm = Signmask<s_t>();
         return bitwise_cast<l_t>(
             eve::is_less(bitwise_cast<s_t>(v0) - sm, bitwise_cast<s_t>(v1) - sm));
