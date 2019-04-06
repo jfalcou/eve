@@ -13,17 +13,19 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/function/scalar/abs.hpp>
 #include <eve/function/scalar/is_nez.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/platform.hpp>
-#include <eve/logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_denormal_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto is_denormal_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T> )
   {
     if constexpr(!std::is_floating_point_v<T> || !platform::supports_denormals)
     {
@@ -33,11 +35,6 @@ namespace eve::detail
     {
       return is_nez(a) && (abs(a) < Smallestposval<T>());
     }
-  }
-
-  EVE_FORCEINLINE constexpr bool is_denormal_(EVE_SUPPORTS(cpu_), bool a) noexcept
-  {
-    return false;
   }
 }
 
