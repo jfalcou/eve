@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_ANDNOT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_ANDNOT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_NOTAND_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_NOTAND_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -32,17 +32,6 @@ namespace eve::detail
     {
       return !a && b;
     }
-  }
-}
-
-namespace eve
-{
-    // -----------------------------------------------------------------------------------------------
-  // operator &&
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto operator&&(T const& a, U const &b) noexcept -> decltype(eve::logical_notand(a, b))
-  {
-    return eve::logical_notand(a, b);
   }
 }
 

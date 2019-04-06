@@ -35,15 +35,4 @@ namespace eve::detail
   }
 }
 
-namespace eve
-{
-    // -----------------------------------------------------------------------------------------------
-  // operator &&
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto operator&&(T const& a, U const &b) noexcept -> decltype(eve::logical_andnot(a, b))
-  {
-    return eve::logical_andnot(a, b);
-  }
-}
-
 #endif
