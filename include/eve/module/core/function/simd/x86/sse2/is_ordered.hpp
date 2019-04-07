@@ -1,7 +1,8 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -14,16 +15,13 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // sse2
   template < typename T,  typename N>
   EVE_FORCEINLINE auto is_ordered_(EVE_SUPPORTS(sse2_),
                                      wide<T, N, sse_> const &v0,
@@ -34,7 +32,7 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpord_ps(v0, v1));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpord_pd(v0, v1));
-    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return True<l_t>(); 
+    if constexpr(std::is_integral_v<T>) return True<l_t>();
   }
 }
 
