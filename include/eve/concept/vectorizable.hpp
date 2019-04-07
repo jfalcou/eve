@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPTS_VECTORIZABLE_HPP_INCLUDED
-#define EVE_CONCEPTS_VECTORIZABLE_HPP_INCLUDED
+#ifndef EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
+#define EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
 #include <type_traits>

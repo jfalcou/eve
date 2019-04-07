@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_AVX_IS_NOT_EQUAL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_AVX_IS_NOT_EQUAL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_IS_NOT_EQUAL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_IS_NOT_EQUAL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>

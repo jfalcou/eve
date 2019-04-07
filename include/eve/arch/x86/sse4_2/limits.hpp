@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_SSSE4_2_LIMITS_HPP_INCLUDED
-#define EVE_ARCH_X86_SSSE4_2_LIMITS_HPP_INCLUDED
+#ifndef EVE_ARCH_X86_SSE4_2_LIMITS_HPP_INCLUDED
+#define EVE_ARCH_X86_SSE4_2_LIMITS_HPP_INCLUDED
 
 #include <eve/arch/x86/sse4_2/tags.hpp>
 #include <eve/arch/x86/sse2/limits.hpp>

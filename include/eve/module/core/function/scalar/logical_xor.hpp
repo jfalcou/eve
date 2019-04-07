@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_XOR_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_XOR_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_LOGICAL_XOR_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_LOGICAL_XOR_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>

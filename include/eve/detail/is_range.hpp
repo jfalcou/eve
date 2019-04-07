@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_META_IS_RANGE_HPP_INCLUDED
-#define EVE_DETAIL_META_IS_RANGE_HPP_INCLUDED
+#ifndef EVE_DETAIL_IS_RANGE_HPP_INCLUDED
+#define EVE_DETAIL_IS_RANGE_HPP_INCLUDED
 
 #include <iterator>
 #include <type_traits>
