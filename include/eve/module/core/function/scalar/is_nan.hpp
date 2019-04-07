@@ -13,13 +13,16 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <cmath>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto is_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T> )
   {
     if constexpr(std::is_floating_point_v<T>)
       return std::isnan(a);
