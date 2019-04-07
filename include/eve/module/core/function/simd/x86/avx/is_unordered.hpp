@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
@@ -14,10 +14,9 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
 #include <eve/constant/false.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,12 +28,12 @@ namespace eve::detail
                                      wide<T, N, avx_> const &v0,
                                      wide<T, N, avx_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, avx_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_UNORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_UNORD_Q));
-    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return False<l_t>(); 
+    if constexpr(std::is_integral_v<T>) return False<l_t>();
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -49,8 +48,8 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmp_ps(v0, v1, _CMP_UNORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmp_pd(v0, v1, _CMP_UNORD_Q));
-    if constexpr(std::is_integral_v<T> || eve::is_logical_v<T>) return False<l_t>(); 
-  } 
+    if constexpr(std::is_integral_v<T>) return False<l_t>();
+  }
 }
 
 #endif

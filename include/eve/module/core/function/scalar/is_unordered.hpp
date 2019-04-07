@@ -13,18 +13,19 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
-#include <type_traits>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <cmath>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T>
-  is_unordered_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  EVE_FORCEINLINE constexpr auto is_unordered_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T> )
   {
     if constexpr(std::is_floating_point_v<T>)
-      return std::isunordered(a, b);
+      return std::isunordered(a,b);
     else
       return false;
   }
