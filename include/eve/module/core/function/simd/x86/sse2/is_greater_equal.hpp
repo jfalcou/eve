@@ -1,7 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -14,18 +15,18 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/as_logical.hpp>
 #include <eve/function/logical_not.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // sse2
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_greater_equal_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE auto is_greater_equal_( EVE_SUPPORTS(sse2_),
+                                          wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1
+                                        ) noexcept
   {
     using t_t = wide<T, N, sse_>;
     if constexpr(std::is_floating_point_v<T>)
@@ -35,8 +36,8 @@ namespace eve::detail
     }
     else
     {
-      return logical_not(is_less(v0, v1)); 
-    }     
+      return logical_not(is_less(v0, v1));
+    }
   }
 }
 
