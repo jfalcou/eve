@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -17,7 +18,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_less_equal_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_equal_(EVE_SUPPORTS(neon128_),
                                                   wide<T, N, neon64_> const &v0,
                                                   wide<T, N, neon64_> const &v1) noexcept
   {
@@ -43,7 +44,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_less_equal_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_equal_(EVE_SUPPORTS(neon128_),
                                                   wide<T, N, neon128_> const &v0,
                                                   wide<T, N, neon128_> const &v1) noexcept
   {

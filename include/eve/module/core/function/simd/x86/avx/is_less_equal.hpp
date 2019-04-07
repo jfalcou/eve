@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2018 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -38,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      return logical_not(is_greater(v0, v1)); 
+      return logical_not(is_greater(v0, v1));
     }
   }
 
@@ -56,7 +57,7 @@ namespace eve::detail
     }
     else
     {
-      return  logical_not(is_greater(v0, v1)); 
+      return  logical_not(is_greater(v0, v1));
     }
   }
 }
