@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, API>
                   bitwise_notor_(EVE_SUPPORTS(simd_), wide<T, N, API> const &v0, wide<T, N, API> const &v1) noexcept
   {
-    return eve::bitwise_or(bitwise_not(v0), v1);
+    return bitwise_or(bitwise_not(v0), v1);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitwise_notor(wide<T0, N0, ABI> const &v0,
                                      wide<T1, N1, ABI> const &v1) noexcept
   {
-    return eve::bitwise_and(v0, eve::bitwise_cast<wide<T0, N0, ABI>>(v1));
+    return bitwise_notor(v0, bitwise_cast<wide<T0, N0, ABI>>(v1));
   }
 
   template<typename T, typename N, typename ABI, typename U>
@@ -82,7 +82,7 @@ namespace eve::detail
                                       U const &              v1) noexcept requires(wide<T, N, ABI>,
                                                                      Convertible<U, T>)
   {
-    return eve::bitwise_notor(v0, wide<T, N, ABI>(v1));
+    return bitwise_notor(v0, wide<T, N, ABI>(v1));
   }
 
   template<typename T, typename N, typename ABI, typename U>
