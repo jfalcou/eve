@@ -102,7 +102,8 @@ namespace eve::detail
   template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N, aggregated_> const &a, Slice const &) noexcept
   {
-    return a.storage()[ Slice::value ];
+    if constexpr(Slice::value == 0) return a.storage().lo;
+    else                            return a.storage().hi;
   }
 }
 

@@ -67,8 +67,8 @@ namespace eve::detail
   template<typename Type, typename Storage>
   struct wide_iterator<Type, Storage, ::eve::aggregated_>
   {
-    static EVE_FORCEINLINE auto begin(Storage &s) noexcept { return s[ 0 ].begin(); }
-    static EVE_FORCEINLINE auto begin(Storage const &s) noexcept { return s[ 0 ].begin(); }
+    static EVE_FORCEINLINE auto begin(Storage &s) noexcept { return s.lo.begin(); }
+    static EVE_FORCEINLINE auto begin(Storage const &s) noexcept { return s.lo.begin(); }
   };
 }
 
