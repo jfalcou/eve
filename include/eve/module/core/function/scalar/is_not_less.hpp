@@ -12,21 +12,28 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_LESS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_greater_equal.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr logical<T>
-  is_not_less_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_not_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
     if constexpr(std::is_floating_point_v<T>)
+    {
       return !(a < b);
+    }
     else
+    {
       return a >=  b;
+    }
   }
 }
 
