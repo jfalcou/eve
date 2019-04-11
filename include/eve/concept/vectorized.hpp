@@ -66,6 +66,9 @@ namespace eve
 
   template<typename Type>
   using Vectorized = std::enable_if_t<is_vectorized_v<Type>>;
+
+  template<typename T, typename U>
+  using EqualCardinal = std::enable_if_t<T::static_size == U::static_size>;
 }
 
 #endif
