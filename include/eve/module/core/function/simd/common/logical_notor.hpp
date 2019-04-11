@@ -31,7 +31,6 @@ namespace eve::detail
                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
                                     )
   {
-    // If one of argument is not Vectorized, recall once vectorized
     if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
       return logical_notor(a, T{b});
@@ -40,28 +39,28 @@ namespace eve::detail
     {
       return logical_notor(U{a},b);
     }
-    // Both arguments are vectorized ...
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else
     {
-      if constexpr( is_aggregated_v<typename T::abi_type> )
+      if constexpr(std::is_same_v<T,U>)
       {
-        // ... and are aggregates
-        return aggregate( eve::logical_notor, a, b);
-      }
-      else if constexpr( is_emulated_v<typename T::abi_type> )
-      {
-        // ... and are emulations
-        return map( eve::logical_notor, a, b);
+        if constexpr( is_aggregated_v<typename T::abi_type> )
+        {
+          return aggregate( eve::logical_notor, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::logical_notor, a, b);
+        }
+        else
+        {
+          return bitwise_cast<as_logical_t<T>>(bitwise_notor(bitwise_mask(a),bitwise_mask(b)));
+        }
       }
       else
       {
-        return bitwise_cast<as_logical_t<T>>(bitwise_notor(bitwise_mask(a),bitwise_mask(b)));
+        static_assert( std::is_same_v<T,U>, "[eve::logical_notor] - Incompatible types.");
+        return {};
       }
-    }
-    else
-    {
-      static_assert( std::is_same_v<T,U>, "[eve::logical_notor] - Incompatible types.");
-      return {};
     }
   }
 
@@ -69,12 +68,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto logical_notor_( EVE_SUPPORTS(cpu_),
                                             logical<T> const &a, logical<U> const &b
                                           ) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      Vectorized<T>, Vectorized<U>
+                            requires( logical<T>,
+                                      Vectorized<T>, Vectorized<U>,
+                                      EqualCardinal<T,U>
                                     )
   {
-    using r_t = as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>;
-    return bitwise_cast<r_t>(bitwise_notor(a.bits(), b.bits()));
+    return bitwise_cast<logical<T>>(bitwise_notor(a.bits(), b.bits()));
   }
 }
 

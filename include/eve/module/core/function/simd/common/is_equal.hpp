@@ -29,7 +29,6 @@ namespace eve::detail
                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
                                     )
   {
-    // If one of argument is not Vectorized, recall once vectorized
     if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
       return is_equal(a, T{b});
@@ -38,29 +37,29 @@ namespace eve::detail
     {
       return is_equal(U{a},b);
     }
-    // Both arguments are vectorized ...
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else
     {
-      if constexpr( is_aggregated_v<typename T::abi_type> )
+      if constexpr(std::is_same_v<T,U>)
       {
-        // ... and are aggregates
-        return aggregate( eve::is_equal, a, b);
-      }
-      else if constexpr( is_emulated_v<typename T::abi_type> )
-      {
-        // ... and are emulations
-        return map( eve::is_equal, a, b);
+        if constexpr( is_aggregated_v<typename T::abi_type> )
+        {
+          return aggregate( eve::is_equal, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::is_equal, a, b);
+        }
+        else
+        {
+          static_assert( wrong<T,U>, "[eve::is_equal] - Unsupported ABI.");
+          return {};
+        }
       }
       else
       {
-        static_assert( wrong<T,U>, "[eve::is_equal] - Unsupported ABI.");
+        static_assert( std::is_same_v<T,U>, "[eve::is_equal] - Incompatible types.");
         return {};
       }
-    }
-    else
-    {
-      static_assert( std::is_same_v<T,U>, "[eve::is_equal] - Incompatible types.");
-      return {};
     }
   }
 
@@ -68,12 +67,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_equal_( EVE_SUPPORTS(cpu_),
                                             logical<T> const &a, logical<U> const &b
                                           ) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      Vectorized<T>, Vectorized<U>
+                            requires( logical<T>,
+                                      Vectorized<T>, Vectorized<U>,
+                                      EqualCardinal<T,U>
                                     )
   {
-    using r_t = as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>;
-    return bitwise_cast<r_t>( is_equal(a.bits(),b.bits()) );
+    return bitwise_cast<logical<T>>( is_equal(a.bits(),b.bits()) );
   }
 }
 

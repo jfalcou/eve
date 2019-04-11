@@ -15,27 +15,24 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/concept/vectorized.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
-#include <eve/logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-                            requires( as_logical_t<T>,Vectorized<T>)
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr( is_aggregated_v<typename T::abi_type> )
+    if constexpr( is_aggregated_v<ABI> )
     {
       return aggregate( eve::logical_not, a);
     }
-    else if constexpr( is_emulated_v<typename T::abi_type> )
+    else if constexpr( is_emulated_v<ABI> )
     {
       return map( eve::logical_not, a);
     }
@@ -45,11 +42,12 @@ namespace eve::detail
     }
   }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto logical_not_( EVE_SUPPORTS(cpu_),logical<T> const &a) noexcept
-                            requires( as_logical_t<T>, Vectorized<T> )
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr auto logical_not_ ( EVE_SUPPORTS(simd_),
+                                                logical<wide<T, N, ABI>> const& a
+                                              ) noexcept
   {
-    return eve::bitwise_cast<as_logical_t<T>>(eve::bitwise_not(a.bits()));
+    return eve::bitwise_cast<logical<wide<T, N, ABI>>>(eve::bitwise_not(a.bits()));
   }
 }
 

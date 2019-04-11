@@ -15,49 +15,35 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/concept/vectorized.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto is_denormal_(EVE_SUPPORTS(simd_), T const &a) noexcept
-                            requires( as_logical_t<T>,Vectorized<T> )
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr( is_aggregated_v<typename T::abi_type> )
+    if constexpr(std::is_integral_v<T> || !platform::supports_denormals)
     {
-      // ... and are aggregates
-      return aggregate( eve::is_denormal, a);
-    }
-    else if constexpr( is_emulated_v<typename T::abi_type> )
-    {
-      // ... and are emulations
-      return map( eve::is_denormal, a);
+      return False(as(a));
     }
     else
     {
-      if constexpr(std::is_integral_v<T> || !platform::supports_denormals)
-      {
-        return False(as(a));
-      }
-      else
-      {
-        return is_nez(a) && is_less(abs(a), Smallestposval<T>());
-      }
+      return is_nez(a) && is_less(abs(a), Smallestposval<T>());
     }
   }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto is_denormal_( EVE_SUPPORTS(simd_),logical<T> const & a) noexcept
-                            requires( as_logical_t<T>,Vectorized<T> )
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr auto is_denormal_ ( EVE_SUPPORTS(simd_),
+                                                logical<wide<T, N, ABI>> const& a
+                                              ) noexcept
   {
     return False(as(a));
   }

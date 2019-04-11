@@ -31,7 +31,6 @@ namespace eve::detail
                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
                                     )
   {
-    // If one of argument is not Vectorized, recall once vectorized
     if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
       return is_not_equal(a, T{b});
@@ -40,41 +39,41 @@ namespace eve::detail
     {
       return is_not_equal(U{a},b);
     }
-    // Both arguments are vectorized ...
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else
     {
-      if constexpr( is_aggregated_v<typename T::abi_type> )
+      if constexpr(std::is_same_v<T,U>)
       {
-        // ... and are aggregates
-        return aggregate( eve::is_not_equal, a, b);
-      }
-      else if constexpr( is_emulated_v<typename T::abi_type> )
-      {
-        // ... and are emulations
-        return map( eve::is_not_equal, a, b);
+        if constexpr( is_aggregated_v<typename T::abi_type> )
+        {
+          return aggregate( eve::is_not_equal, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::is_not_equal, a, b);
+        }
+        else
+        {
+          return logical_not( is_equal(a,b) );
+        }
       }
       else
       {
-        return logical_not(is_equal(a, b));
+        static_assert( std::is_same_v<T,U>, "[eve::is_not_equal] - Incompatible types.");
+        return {};
       }
-    }
-    else
-    {
-      static_assert( std::is_same_v<T,U>, "[eve::is_not_equal] - Incompatible types.");
-      return {};
     }
   }
 
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto is_not_equal_( EVE_SUPPORTS(cpu_),
-                                                logical<T> const &a, logical<U> const &b
-                                              ) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      Vectorized<T>, Vectorized<U>
+                                            logical<T> const &a, logical<U> const &b
+                                          ) noexcept
+                            requires( logical<T>,
+                                      Vectorized<T>, Vectorized<U>,
+                                      EqualCardinal<T,U>
                                     )
   {
-    using r_t = as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>;
-    return bitwise_cast<r_t>( is_not_equal(a.bits(),b.bits()) );
+    return bitwise_cast<logical<T>>( is_not_equal(a.bits(),b.bits()) );
   }
 }
 
