@@ -13,21 +13,22 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/logical.hpp>
+#include <eve/is_logical.hpp>
+#include <eve/forward.hpp>
+#include <cmath>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T> )
   {
-    return a != T(0);
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_nez_(EVE_SUPPORTS(cpu_), logical<T> const &a) noexcept
-  {
-    return a;
+    if constexpr(is_logical_v<T>)
+      return a;
+    else
+      return a != T{0};
   }
 }
 

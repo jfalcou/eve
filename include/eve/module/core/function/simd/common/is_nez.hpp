@@ -12,28 +12,22 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_NEZ_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
-#include <eve/as.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  template<typename T>
+  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(simd_), T const &a) noexcept
+                            requires( as_logical_t<T>, Vectorized<T> )
   {
-    if constexpr( is_native_v<ABI> )
-    {
-      return is_not_equal(v, Zero(as(v)));
-    }
-    else
-    {
-      if constexpr( is_aggregated_v<ABI>) return aggregate(eve::is_nez, v);
-      if constexpr( is_emulated_v<ABI>  ) return map(eve::is_nez, v);
-    }
+    return a != Zero(as(a));
   }
 }
 
