@@ -22,11 +22,6 @@ namespace eve::detail
   {
     return !a;
   }
-
-  EVE_FORCEINLINE constexpr bool is_eqz_(EVE_SUPPORTS(cpu_), bool a) noexcept
-  {
-    return !a;
-  }
 }
 
 #endif

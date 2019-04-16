@@ -18,7 +18,6 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
@@ -28,29 +27,13 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr( is_native_v<ABI> )
-    {
-      return is_equal(v, Zero(as(v)));
-    }
-    else
-    {
-      if( is_aggregated_v<ABI>) return aggregate(eve::is_eqz, v);
-      if( is_emulated_v<ABI>  ) return map(eve::is_eqz, v);
-    }
+    return is_equal(v, Zero(as(v)));
   }
 
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    if constexpr( is_native_v<ABI> )
-    {
-      return logical_not(v);
-    }
-    else
-    {
-      if( is_aggregated_v<ABI> ) return aggregate(eve::is_eqz, v);
-      if( is_emulated_v<ABI>   ) return map(eve::is_eqz, v);
-    }
+    return logical_not(v);
   }
 }
 
