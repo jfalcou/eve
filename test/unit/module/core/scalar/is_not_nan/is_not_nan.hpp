@@ -32,6 +32,7 @@ TTS_CASE("Check eve::is_not_nan behavior")
 {
   TTS_EQUAL(eve::is_not_nan(Type{0}), eve::True<Type>());
   TTS_EQUAL(eve::is_not_nan(Type{2}), eve::True<Type>());
+
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_not_nan(eve::Inf<Type>()), eve::True<Type>());
