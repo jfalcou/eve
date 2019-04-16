@@ -31,6 +31,7 @@ TTS_CASE("Check eve::is_gez behavior")
 {
   TTS_EQUAL(eve::is_gez(Type{0}), eve::True<Type>());
   TTS_EQUAL(eve::is_gez(Type{2}), eve::True<Type>());
+
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::is_gez(static_cast<Type>(-2)), eve::False<Type>());
@@ -40,7 +41,6 @@ TTS_CASE("Check eve::is_gez behavior")
     TTS_EQUAL(eve::is_gez(eve::Nan<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_gez(eve::Mzero<Type>()), eve::True<Type>());
   }
-  
 }
 
 #endif

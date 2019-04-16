@@ -13,27 +13,19 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
+#include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_gez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_gez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_unsigned_v<T>)
       return true;
     else
       return a >= T(0);
   }
-
-  EVE_FORCEINLINE constexpr bool is_gez_(EVE_SUPPORTS(cpu_), bool a) noexcept
-  {
-    return true;
-  }
-
 }
 
 #endif
