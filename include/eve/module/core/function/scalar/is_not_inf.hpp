@@ -13,14 +13,15 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/is_inf.hpp>
-#include <eve/logical.hpp>
+#include <eve/function/is_inf.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_not_inf_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_inf_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   {
     return !eve::is_inf(a);
   }

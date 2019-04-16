@@ -1,50 +1,49 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_NOT_INF_HPP
-#define IS_NOT_INF_HPP
+#ifndef IS_INF_HPP
+#define IS_INF_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/is_not_inf.hpp>
+#include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <type_traits>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check is_not_inf behavior on wide",
+TTS_CASE_TPL("Check is_not_inf behavior",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>
+            )
 {
   using eve::wide;
+  using eve::logical;
 
-  TTS_SETUP("A correctly initialized wide")
+  using l_t = logical<wide<Type,T>>;
+
+  if constexpr(std::is_integral_v<Type>)
   {
-    if constexpr(std::is_integral_v<Type>)
-    {
-      wide<Type, T> lhs([](int i, int) { return i%2; }); 
-      wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_not_inf(Type(i%2)); });
-      
-      TTS_SECTION("supports eve::is_not_inf") { TTS_EQUAL(ref, eve::is_not_inf(lhs)); }
-    }
-    else
-    {
-      wide<Type, T> lhs([](int i, int) { return i%3/Type(i%2); }); 
-      wide<eve::logical<Type>, T> ref([](int i, int) { return eve::is_not_inf(Type(i%3/Type(i%2))); });
-      
-      TTS_SECTION("supports eve::is_not_inf") { TTS_EQUAL(ref, eve::is_not_inf(lhs)); }
-    }
+    wide<Type, T>         arg([](auto i, auto c) { return c - i; });
+    TTS_EQUAL(eve::is_not_inf(arg), l_t(true));
+  }
+  else
+  {
+    wide<Type, T> arg([](auto i, auto  ) { return (1+i)/Type(i); });
+    l_t           ref([](auto i, auto c) { return eve::is_not_inf(Type((1+i)/Type(i))); });
+    TTS_EQUAL(ref, eve::is_not_inf(arg));
   }
 }
 
