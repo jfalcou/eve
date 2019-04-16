@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -11,15 +11,15 @@
 #ifndef IS_INF_HPP
 #define IS_INF_HPP
 
-#include <eve/function/scalar/is_inf.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include "test.hpp"
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/function/is_inf.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
@@ -32,6 +32,7 @@ TTS_CASE("Check eve::is_inf behavior")
 {
   TTS_EQUAL(eve::is_inf(Type{0}), eve::False<Type>());
   TTS_EQUAL(eve::is_inf(Type{2}), eve::False<Type>());
+
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_inf(eve::Inf<Type>()), eve::True<Type>());

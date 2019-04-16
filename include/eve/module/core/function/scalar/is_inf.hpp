@@ -13,29 +13,24 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/abs.hpp>
-#include <eve/function/scalar/bitwise_cast.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/logical.hpp>
+#include <eve/function/scalar/abs.hpp>
+#include <eve/as_logical.hpp>
 #include <type_traits>
-#include <cmath>
-#include <iostream>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr logical<T> is_inf_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_inf_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      puts("YO");
-      std::cout << eve::abs(a) << "\n";
-      std::cout << Inf<T>() << "\n";
-      std::cout << (eve::abs(a) == Inf<T>()) << "\n";
       return eve::abs(a) == Inf<T>();
     }
     else
+    {
       return false;
+    }
   }
 }
 
