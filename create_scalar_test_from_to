@@ -1,0 +1,51 @@
+#!/bin/bash
+# crée les fichiers de test scalaire de la fonction $2 à partir des fichiers de $1 
+
+if [ "$#" -eq 0 ]
+then
+  echo 'usage: create_scalar_test_from_to $1 $2:  create the scalar tests of a function $2 from the files of the function $1'
+  return
+elif [ "$#" -eq 1 ]
+then
+  echo "create_scalar_test_from_to: invalid number of arguments"
+  return
+else
+  echo "create the scalar tests of a function "$2" from the files of the function "$1
+fi
+from=$1
+to=$2
+FROM="${from^^}"
+TO="${to^^}"
+icitte=$(pwd)
+testscalar=test/unit/module/core/scalar
+
+#echo $from
+#echo $to
+echo $icitte
+echo $testscalar
+mkdir -p $icitte/$testscalar/$to 
+cp -pR $icitte/$testscalar/$from/* $icitte/$testscalar/$to  
+
+echo $icitte/$testscalar/$to
+
+cd  $icitte/$testscalar/$to
+dirs=$(ls -d */ 2>/dev/null || true)
+
+if [ -z ${dirs} ]
+then
+  mv $from.hpp $to.hpp
+  sed -i "s/$from/$to/g" *.?pp
+  sed -i "s/$FROM/$TO/g" $to.hpp  
+  sed -i "/list_tests..scalar\/$1/{h;s/$1/$2/;H;x}" ../../CMakeLists.txt
+else
+  for dir in $(ls -d */)
+  do
+    cd  $icitte/$testscalar/$2/$dir
+    mv $from.hpp $to.hpp
+    sed -i "s/$from/$to/g" *.?pp
+    sed -i "s/$FROM/$TO/g" $to.hpp  
+    sed -i "/list_tests..scalar\/$1/{h;s/$1/$2/;H;x}" ../../../CMakeLists.txt
+  done
+fi
+
+cd $icitte

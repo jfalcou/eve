@@ -1,0 +1,53 @@
+#!/bin/bash
+# crée les fichiers de test simd de la fonction $2 à partir des fichiers de $1 
+# ce fichier doit être dans le répertoire de base de eve
+
+if [ "$#" -eq 0 ]
+then
+  echo 'usage: create_simd_test_from_to $1 $2:  create the simd tests of a function $2 from the files of the function $1'
+  return
+elif [ "$#" -eq 1 ]
+then
+  echo "create_simd_test_from_to: invalid number of arguments"
+  return
+else
+  echo "create the simd tests of a function "$2" from the files of the function "$1
+fi
+from=$1
+to=$2
+FROM="${from^^}"
+TO="${to^^}"
+icitte=$(pwd)
+testsimd=test/unit/module/core/simd
+
+#echo $from
+#echo $to
+echo $icitte
+echo $testsimd
+mkdir -p $icitte/$testsimd/$to 
+cp -pR $icitte/$testsimd/$from/* $icitte/$testsimd/$to  
+
+echo $icitte/$testsimd/$to
+
+cd  $icitte/$testsimd/$to
+dirs=$(ls -d */ 2>/dev/null || true)
+
+if [ -z ${dirs} ]
+then
+  mv $from.hpp $to.hpp
+  sed -i "s/$from/$to/g" *.?pp
+  sed -i "s/$FROM/$TO/g" $to.hpp  
+  sed -i "/list_tests..simd\/$1/{h;s/$1/$2/;H;x}" ../../CMakeLists.txt
+
+else
+  for dir in $(ls -d */)
+  do
+    cd  $icitte/$testsimd/$2/$dir
+    mv $from.hpp $to.hpp
+    sed -i "s/$from/$to/g" *.?pp
+    sed -i "s/$FROM/$TO/g" $to.hpp  
+    sed -i "/list_tests..simd\/$1/{h;s/$1/$2/;H;x}" ../../../CMakeLists.txt
+  done
+fi
+
+cd $icitte

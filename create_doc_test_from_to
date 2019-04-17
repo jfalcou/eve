@@ -1,0 +1,33 @@
+#!/bin/bash
+# crée un benchmark pour $2 à partir de celui de $1 
+# ce fichier doit être dans le répertoire de base de eve
+echo "$#"
+echo $1 
+echo $2
+
+if [ "$#" -eq 0 ]
+then
+  echo 'usage: create_doc_test_from_to_ $1 $2:  create a doc _test for $2 from the one of $1'
+  return
+elif [ "$#" -eq 1 ]
+then
+  echo "create_doc_test_from_to_: invalid number of arguments"
+  return
+else
+  echo "create a doc test for "$2" from the one of "$1""
+fi
+from=$1
+to=$2
+FROM="${from^^}"
+TO="${to^^}"
+icitte=$(pwd)
+
+testdoc=test/doc
+
+cp -n $icitte/$testdoc/$from.cpp    $icitte/$testdoc/$to.cpp
+cd $icitte/$testdoc
+sed -i  "s/$from/$to/g"   $to.cpp  
+sed -i  "s/$FROM/$TO/g"   $to.cpp   
+sed -i "/add_unit_test. .doc\/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
+
+cd $icitte
