@@ -8,22 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_IF_ELSE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_IF_ELSE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-  if_else_( EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const& m,
-            wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
-          ) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr
+  auto  if_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept
+        requires( U, Vectorizable<T> )
   {
-    return vec_sel( v1.storage(), v0.storage(), m.storage() );
+    return static_cast<bool>(cond) ? t : f;
   }
 }
 

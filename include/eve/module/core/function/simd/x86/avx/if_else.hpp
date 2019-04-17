@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -12,21 +12,14 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_IF_ELSE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_mask.hpp>
-#include <eve/logical.hpp>
-#include <eve/as_arithmetic.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // avx
   template<typename T, typename U, typename N>
   EVE_FORCEINLINE wide<U, N, avx_> if_else_(EVE_SUPPORTS(avx_)
                                            , wide<T, N, avx_> const &v0

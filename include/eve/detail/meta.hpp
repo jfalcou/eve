@@ -256,7 +256,7 @@ namespace eve::detail
 }
 
 // Pseudo satisfy macro
-#  define satisfy(...) typename = typename ::eve::detail::require_check <void, __VA_ARGS__> ::type
+#  define satisfy(...) typename ::eve::detail::require_check <void, __VA_ARGS__> ::type* = nullptr
 
 // Pseudo require macro
 #  define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type

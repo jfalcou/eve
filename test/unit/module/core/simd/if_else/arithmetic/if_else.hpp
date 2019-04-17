@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -38,25 +38,25 @@ TTS_CASE_TPL( "Check if_else behavior on homogeneous wide"
   TTS_EQUAL(ref , eve::if_else(is_nez(cond), rhs1, rhs2));  //lw w w
 }
 
-// TTS_CASE_TPL( "Check if_else behavior on wide + scalar"
-//             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-//             )
-// {
-//   using eve::wide;
-//   using eve::is_nez;
+TTS_CASE_TPL( "Check if_else behavior on wide + scalar"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
+{
+  using eve::wide;
+  using eve::is_nez;
 
-//   wide<Type,T>    lhs([](int i, int ) { return i%3; })
-//               , refss([](int i, int ) { return eve::if_else( Type(i%3), Type(7), Type(8)); })
-//               , refsw([](int i, int ) { return eve::if_else( Type(i%3), Type(7), Type(i*(i%2))); })
-//               , refws([](int i, int ) { return eve::if_else( Type(i%3), Type(i*(i%2)), Type(8)); })
-//               ,     x([](int i, int ) { return i*(i%2); });
+  wide<Type,T>    lhs([](int i, int ) { return i%3; })
+              , refss([](int i, int ) { return eve::if_else( Type(i%3), Type(7), Type(8)); })
+              , refsw([](int i, int ) { return eve::if_else( Type(i%3), Type(7), Type(i*(i%2))); })
+              , refws([](int i, int ) { return eve::if_else( Type(i%3), Type(i*(i%2)), Type(8)); })
+              ,     x([](int i, int ) { return i*(i%2); });
 
-//   TTS_EQUAL(refss, eve::if_else(lhs         , Type(7) , Type(8) )); //w s s
-//   TTS_EQUAL(refsw, eve::if_else(lhs         , Type(7) , x       )); //w s w
-//   TTS_EQUAL(refws, eve::if_else(lhs         , x       , Type(8) )); //w w s
-//   TTS_EQUAL(refss, eve::if_else(is_nez(lhs) , Type(7) , Type(8) )); //lw s s
-//   TTS_EQUAL(refsw, eve::if_else(is_nez(lhs) , Type(7) , x       )); //lw s w
-//   TTS_EQUAL(refws, eve::if_else(is_nez(lhs) , x       , Type(8) )); //lw w s
-// }
+  TTS_EQUAL(refss, eve::if_else(lhs         , Type(7) , Type(8) )); //w s s
+  TTS_EQUAL(refsw, eve::if_else(lhs         , Type(7) , x       )); //w s w
+  TTS_EQUAL(refws, eve::if_else(lhs         , x       , Type(8) )); //w w s
+  TTS_EQUAL(refss, eve::if_else(is_nez(lhs) , Type(7) , Type(8) )); //lw s s
+  TTS_EQUAL(refsw, eve::if_else(is_nez(lhs) , Type(7) , x       )); //lw s w
+  TTS_EQUAL(refws, eve::if_else(is_nez(lhs) , x       , Type(8) )); //lw w s
+}
 
 #endif
