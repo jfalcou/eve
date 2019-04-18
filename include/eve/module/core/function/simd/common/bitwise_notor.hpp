@@ -70,8 +70,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Support for mixed type with auto-splat
   template<typename T0, typename N0, typename T1, typename N1, typename ABI>
-  EVE_FORCEINLINE auto bitwise_notor(wide<T0, N0, ABI> const &v0,
-                                     wide<T1, N1, ABI> const &v1) noexcept
+  EVE_FORCEINLINE auto bitwise_notor_(wide<T0, N0, ABI> const &v0,
+                                      wide<T1, N1, ABI> const &v1) noexcept
   {
     return bitwise_notor(v0, bitwise_cast<wide<T0, N0, ABI>>(v1));
   }
