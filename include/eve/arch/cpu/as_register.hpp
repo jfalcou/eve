@@ -10,7 +10,6 @@
 #ifndef EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 #define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 
-#include <array>
 #include <eve/ext/as_register.hpp>
 #include <eve/forward.hpp>
 
@@ -26,7 +25,11 @@ namespace eve::ext
   struct as_register<Type, Cardinal, eve::aggregated_>
   {
     using substorage_type = eve::wide<Type, typename Cardinal::split_type>;
-    using type            = std::array<substorage_type, 2>;
+    struct type
+    {
+      using value_type = substorage_type;
+      substorage_type lo, hi;
+    };
   };
 }
 
