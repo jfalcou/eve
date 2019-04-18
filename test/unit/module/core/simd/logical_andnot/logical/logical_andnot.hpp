@@ -2,14 +2,14 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOGICAL_ANDNOT_HPP
-#define LOGICAL_ANDNOT_HPP
+#ifndef LOGICAL_AND_HPP
+#define LOGICAL_AND_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -19,7 +19,7 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check logical_andnot behavior on homogeneous wide<logical>",
+TTS_CASE_TPL("Check logical_andnot behavior on homogeneous logical<wide>",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -32,16 +32,15 @@ TTS_CASE_TPL("Check logical_andnot behavior on homogeneous wide<logical>",
   using eve::wide;
   using eve::logical;
 
-  TTS_SETUP(" wide<logical> and logical")
-  {
-    wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; }), rhs([](int i, int c) { return i%3 ==  0; });
-    wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::logical_andnot(i%2 ==  0, i%3 ==  0); });
-    TTS_SECTION("supports eve::logical_andnot") { TTS_EQUAL(ref, eve::logical_andnot(lhs, rhs)); }
-  }
+  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; }),
+                          rhs([](auto i, auto c) { return i%3 ==  0; });
+  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::logical_andnot(i%2 == 0, i%3 == 0); });
+
+  TTS_EQUAL(ref, eve::logical_andnot(lhs, rhs));
 }
 
 
-TTS_CASE_TPL("Check logical_andnot behavior on wide<logical> and logical",
+TTS_CASE_TPL("Check logical_andnot behavior on logical<wide> and scalars",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -54,13 +53,20 @@ TTS_CASE_TPL("Check logical_andnot behavior on wide<logical> and logical",
   using eve::wide;
   using eve::logical;
 
-  TTS_SETUP(" wide<logical> and logical")
-  {
-    wide<logical<Type>, T> lhs([](int i, int c) { return i%2 ==  0; });
-    logical<Type> rhs = true; 
-    wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::logical_andnot(i%2 ==  0, true); });
-    TTS_SECTION("supports eve::logical_andnot") { TTS_EQUAL(ref, eve::logical_andnot(lhs, rhs)); }
-  }
+  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; });
+  logical<wide<Type, T>> ref1([](auto i, auto c) { return eve::logical_andnot(i%2 == 0, true); });
+  logical<wide<Type, T>> ref2([](auto i, auto c) { return eve::logical_andnot(true, i%2 == 0); });
+  logical<wide<Type, T>> ref3([](auto i, auto c) { return eve::logical_andnot(i%2 == 0, false); });
+  logical<wide<Type, T>> ref4([](auto i, auto c) { return eve::logical_andnot(false, i%2 == 0); });
+
+  TTS_EQUAL(ref1, eve::logical_andnot(lhs   , true  ) );
+  TTS_EQUAL(ref1, eve::logical_andnot(lhs   , 3     ) );
+  TTS_EQUAL(ref2, eve::logical_andnot(true  , lhs   ) );
+  TTS_EQUAL(ref2, eve::logical_andnot(3     , lhs   ) );
+  TTS_EQUAL(ref3, eve::logical_andnot(lhs   , false ) );
+  TTS_EQUAL(ref3, eve::logical_andnot(lhs   , 0     ) );
+  TTS_EQUAL(ref4, eve::logical_andnot(false , lhs   ) );
+  TTS_EQUAL(ref4, eve::logical_andnot(0     , lhs   ) );
 }
 
 #endif

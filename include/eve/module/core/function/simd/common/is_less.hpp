@@ -1,7 +1,9 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019  Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
@@ -11,84 +13,68 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_not.hpp>
 #include <eve/function/bitwise_xor.hpp>
-#include <eve/forward.hpp>
-#include <eve/constant/true.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Support for mixed type with auto-splat
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(simd_),
-                                wide<T, N, ABI> const &v0,
-                                U const &v1) noexcept requires(wide<logical<T>, N, ABI>,
-                                                               detail::Convertible<U, T>)
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+                                    )
   {
-    return eve::is_less(v0, wide<T, N, ABI>(static_cast<T>(v1)));
+    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    {
+      return is_less(a, T{b});
+    }
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return is_less(U{a},b);
+    }
+    else
+    {
+      if constexpr(std::is_same_v<T,U>)
+      {
+        if constexpr( is_aggregated_v<typename T::abi_type> )
+        {
+          return aggregate( eve::is_less, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::is_less, a, b);
+        }
+        else
+        {
+          static_assert( wrong<T,U>, "[eve::is_less] - Unsupported ABI.");
+          return {};
+        }
+      }
+      else
+      {
+        static_assert( std::is_same_v<T,U>, "[eve::is_less] - Incompatible types.");
+        return {};
+      }
+    }
   }
 
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  is_less_(EVE_SUPPORTS(simd_),
-           U const &              v0,
-           wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
-                                                        detail::Convertible<U, T>)
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto is_less_( EVE_SUPPORTS(cpu_),
+                                            logical<T> const &a, logical<U> const &b
+                                          ) noexcept
+                            requires( logical<T>,
+                                      Vectorized<T>, Vectorized<U>,
+                                      EqualCardinal<T,U>
+                                    )
   {
-    return eve::is_less(wide<T, N, ABI>(static_cast<T>(v0)), v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(simd_),
-                                wide<T, N, aggregated_> const &v0,
-                                wide<T, N, aggregated_> const &v1) noexcept
-  {
-    return aggregate(eve::is_less, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(simd_),
-                                wide<T, N, emulated_> const &v0,
-                                wide<T, N, emulated_> const &v1) noexcept
-  {
-    return map(eve::is_less, v0, v1);
-  }
-}
-
-namespace eve
-{
-  // -----------------------------------------------------------------------------------------------
-  // operator <
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator<(wide<T, N, ABI> const &v0, wide<T, N, ABI> const &v1) noexcept
-  {
-    return eve::is_less(v0, v1);
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator<(wide<T, N, ABI> const &v0,
-                                 U const &v1) noexcept requires(wide<logical<T>, N, ABI>,
-                                                                detail::Convertible<U, T>)
-  {
-    return eve::is_less(v0, wide<T, N, ABI>(static_cast<T>(v1)));
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  operator<(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<logical<T>, N, ABI>,
-                                                                      detail::Convertible<U, T>)
-  {
-    return eve::is_less(wide<T, N, ABI>(static_cast<T>(v0)), v1);
+    return bitwise_cast<logical<T>>( is_less(a.bits(),b.bits()) );
   }
 }
 

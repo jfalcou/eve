@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
@@ -14,11 +14,11 @@
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/is_not_finite.hpp>
 #include <eve/logical.hpp>
-#include <eve/wide.hpp> 
+#include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check is_not_finite behavior on homogeneous wide",
+TTS_CASE_TPL("Check is_not_finite behavior",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -29,22 +29,20 @@ TTS_CASE_TPL("Check is_not_finite behavior on homogeneous wide",
             )
 {
   using eve::wide;
+  using eve::logical;
 
-  TTS_SETUP("A correctly initialized wide")
+  using l_t = logical<wide<Type,T>>;
+
+  if constexpr(std::is_integral_v<Type>)
   {
-    if constexpr(std::is_integral_v<Type>)
-    {                   
-      wide<Type, T> lhs([](int i, int c) { return c - i; });
-      wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::is_not_finite(Type(c - i)); });
-      TTS_SECTION("supports eve::is_not_finite") { TTS_EQUAL(ref, eve::is_not_finite(lhs)); }
-    }
-    else
-    {
-      wide<Type, T> lhs([](int i, int ) { return i/Type(i); });
-      wide < eve::logical < Type>, T >  ref([](int i, int c) { return eve::is_not_finite(Type(i/Type(i))); });
-      TTS_SECTION("supports eve::is_not_finite") { TTS_EQUAL(ref, eve::is_not_finite(lhs)); }
-    }
-    
+    wide<Type, T>         arg([](auto i, auto c) { return c - i; });
+    TTS_EQUAL(eve::is_not_finite(arg), l_t(false));
+  }
+  else
+  {
+    wide<Type, T> arg([](auto i, auto  ) { return i/Type(i); });
+    l_t           ref([](auto i, auto c) { return eve::is_not_finite(Type(i/Type(i))); });
+    TTS_EQUAL(ref, eve::is_not_finite(arg));
   }
 }
 

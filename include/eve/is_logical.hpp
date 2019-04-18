@@ -25,16 +25,14 @@ namespace eve
   {
   };
 
-  template<typename T, typename N, typename ABI>
-  struct is_logical<wide<logical<T>,N,ABI>> : std::true_type
-  {
-  };
-
   template<typename T>
   using is_logical_t = typename is_logical<T>::type;
 
   template<typename T>
   static inline constexpr bool is_logical_v = is_logical<T>::value;
+
+  template<typename T>
+  using Logical = std::enable_if_t<is_logical_v<T>>;
 }
 
 #endif

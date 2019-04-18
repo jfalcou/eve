@@ -21,7 +21,10 @@
 
 TTS_CASE( "Check is_not_equal return type" )
 {
-  TTS_EXPR_IS(eve::is_not_equal(Type(), Type()) ,  eve::as_logical_t<Type>);
+  using eve::logical;
+
+  TTS_EXPR_IS(eve::is_not_equal(Type()          , Type())         , eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_equal(logical<Type>() , logical<Type>()), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_equal behavior")
@@ -29,6 +32,13 @@ TTS_CASE("Check eve::is_not_equal behavior")
   TTS_EQUAL(eve::is_not_equal(Type(1),Type(1)), eve::False<Type>());
   TTS_EQUAL(eve::is_not_equal(Type(3),Type(1)), eve::True<Type>());
   TTS_EQUAL(eve::is_not_equal(Type(1),Type(3)), eve::True<Type>());
+
+  TTS_EQUAL(eve::is_not_equal(Type(1)           , eve::True<Type>() ), eve::False<Type>() );
+  TTS_EQUAL(eve::is_not_equal(Type(3)           , eve::False<Type>()), eve::True<Type>()  );
+  TTS_EQUAL(eve::is_not_equal(eve::True<Type>() , Type(3)           ), eve::False<Type>() );
+  TTS_EQUAL(eve::is_not_equal(eve::False<Type>(), Type(3)           ), eve::True<Type>()  );
+  TTS_EQUAL(eve::is_not_equal(eve::True<Type>() , eve::True<Type>() ), eve::False<Type>() );
+  TTS_EQUAL(eve::is_not_equal(eve::False<Type>(), eve::True<Type>() ), eve::True<Type>()  );
 }
 
 #endif

@@ -56,8 +56,8 @@ TTS_CASE_TPL("Check bitwise_cast between arithmetic and logical types",
              eve::fixed<64>)
 {
   using pi_t = eve::wide<std::uint64_t, T>;
-  using pl_t = eve::wide<eve::logical<double>, T>;
-  using pm_t = eve::wide<eve::logical<float>, typename T::combined_type>;
+  using pl_t = eve::logical<eve::wide<double, T>>;
+  using pm_t = eve::logical<eve::wide<float, typename T::combined_type>>;
 
   TTS_EQUAL(eve::bitwise_cast<pi_t>(pl_t(true)), pi_t(0xFFFFFFFFFFFFFFFFULL));
   TTS_EQUAL(eve::bitwise_cast<pl_t>(pi_t(0xFFFFFFFFFFFFFFFFULL)), pl_t(true));

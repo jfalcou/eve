@@ -30,14 +30,14 @@ namespace eve::detail
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(vmx_),
                                      wide<Source, N, ppc_> const &              v0,
-                                     as_<wide<logical<Target>, M, ppc_>> const &tgt) noexcept
+                                     as_<logical<wide<Target, M, ppc_>>> const &tgt) noexcept
   {
     return a2l_cast_(v0, tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(vmx_),
-                                     wide<logical<Source>, N, ppc_> const &v0,
+                                     logical<wide<Source, N, ppc_>> const &v0,
                                      as_<wide<Target, M, ppc_>> const &    tgt) noexcept
   {
     return l2a_cast_(v0, tgt);
@@ -45,8 +45,8 @@ namespace eve::detail
 
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(vmx_),
-                                     wide<logical<Source>, N, ppc_> const &     v0,
-                                     as_<wide<logical<Target>, M, ppc_>> const &tgt) noexcept
+                                     logical<wide<Source, N, ppc_>> const &     v0,
+                                     as_<logical<wide<Target, M, ppc_>>> const &tgt) noexcept
   {
     return l2l_cast_(v0, tgt);
   }

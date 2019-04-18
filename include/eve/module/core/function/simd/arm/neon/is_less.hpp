@@ -12,12 +12,13 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_less_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T,N>> is_less_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon64_> const &v0,
                                                 wide<T, N, neon64_> const &v1) noexcept
   {
@@ -43,7 +44,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_less_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE as_logical_t<wide<T,N>> is_less_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon128_> const &v0,
                                                 wide<T, N, neon128_> const &v1) noexcept
   {

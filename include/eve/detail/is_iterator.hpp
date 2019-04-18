@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_META_IS_ITERATOR_HPP_INCLUDED
-#define EVE_DETAIL_META_IS_ITERATOR_HPP_INCLUDED
+#ifndef EVE_DETAIL_IS_ITERATOR_HPP_INCLUDED
+#define EVE_DETAIL_IS_ITERATOR_HPP_INCLUDED
 
 #include <type_traits>
 

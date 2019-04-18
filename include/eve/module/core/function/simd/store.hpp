@@ -39,6 +39,4 @@
 #  endif
 #endif
 
-#include <eve/module/core/function/simd/common/store_logical.hpp>
-
 #endif

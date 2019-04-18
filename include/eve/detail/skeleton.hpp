@@ -13,8 +13,9 @@
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/ext/has_abi.hpp>
+#include <eve/ext/as_wide.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/cardinal.hpp>
-#include <eve/is_wide.hpp>
 #include <algorithm>
 #include <utility>
 
@@ -34,7 +35,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
-    if constexpr(is_wide_v<T>)
+    if constexpr(is_vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), upper_);
     else
       return std::forward<T>(t);
@@ -44,7 +45,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
-    if constexpr(is_wide_v<T>)
+    if constexpr(is_vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), lower_);
     else
       return std::forward<T>(t);
@@ -58,7 +59,7 @@ namespace eve::detail
     using card_t                        = eve::cardinal<std::decay_t<T>>;
     static constexpr std::size_t card_v = std::max({card_t<Ts>::value...});
     using value_t                       = decltype(std::declval<F>()(at(std::declval<Ts>(), 0)...));
-    using type                          = wide<value_t, fixed<card_v>>;
+    using type                          = as_wide_t<value_t, fixed<card_v>>;
   };
 
   // MAP skeleton used to emulate SIMD operations

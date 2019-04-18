@@ -22,6 +22,13 @@ namespace eve::detail
   {
     return wide<T, fixed<2>>(a, b);
   }
+
+  template<typename T>
+  EVE_FORCEINLINE auto
+  combine_(EVE_SUPPORTS(cpu_), logical<T> const &a, logical<T> const &b) noexcept
+  {
+    return logical<wide<T, fixed<2>>>(a, b);
+  }
 }
 
 #endif

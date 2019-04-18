@@ -15,6 +15,7 @@
 
 namespace eve::detail
 {
+  // Check if a given ABI is native
   template<typename X>
   struct is_native
       : std::integral_constant<bool,
@@ -31,6 +32,29 @@ namespace eve::detail
   // Associated Concept-like entity
   template<typename T>
   using Native = std::enable_if_t<is_native_v<T>>;
+
+  // Check aggregated/emulated status of ABI
+  template<typename X>
+  struct is_aggregated : std::is_same<X,aggregated_>
+  {
+  };
+
+  template<typename T>
+  inline constexpr bool is_aggregated_v = is_aggregated<T>::value;
+
+  template<typename T>
+  using is_aggregated_t = typename is_aggregated<T>::type;
+
+  template<typename X>
+  struct is_emulated : std::is_same<X,emulated_>
+  {
+  };
+
+  template<typename T>
+  inline constexpr bool is_emulated_v = is_emulated<T>::value;
+
+  template<typename T>
+  using is_emulated_t = typename is_emulated<T>::type;
 }
 
 #endif

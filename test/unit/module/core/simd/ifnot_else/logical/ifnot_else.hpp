@@ -27,18 +27,14 @@ TTS_CASE_TPL( "Check ifnot_else behavior on homogeneous wide"
 {
   using eve::wide;
   using eve::is_nez;
-  using l_t =  eve::logical<Type>;
+  using l_t =  eve::logical<wide<Type,T>>;
+
   wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; });
 
-  wide<l_t, T>  lref([](auto i, auto ) { return eve::ifnot_else(Type((i%2)*i),l_t(i%2),l_t(i%3)); })
-              , rhs1([](auto i, auto ) { return (i%2) != 0; })
-              , rhs2([](auto i, auto ) { return (i%3) != 0; });
+  l_t   lref([](auto i, auto ) { return eve::ifnot_else(Type((i%2)*i),i%2,i%3); })
+      , rhs1([](auto i, auto ) { return (i%2) != 0; })
+      , rhs2([](auto i, auto ) { return (i%3) != 0; });
 
-  std::cout << cond << "\n";
-  std::cout << rhs1 << "\n";
-  std::cout << rhs2 << "\n";
-  std::cout << lref << "\n";
-  std::cout << eve::ifnot_else(cond, rhs1, rhs2) << "\n";
   TTS_EQUAL(lref, eve::ifnot_else(cond        , rhs1, rhs2)); //w lw lw
   TTS_EQUAL(lref, eve::ifnot_else(is_nez(cond), rhs1, rhs2)); //lw lw lw
 }
@@ -53,7 +49,8 @@ TTS_CASE_TPL( "Check ifnot_else behavior on wide + scalar"
   eve::logical<Type> t(true);
   eve::logical<Type> f(false);
 
-  using l_t = wide<eve::logical<Type>, T>;
+  using l_t =  eve::logical<wide<Type,T>>;
+
   wide<Type,T>  cond([](auto i, auto ) { return i%3; });
 
   l_t   lrefss([t, f](auto i, auto ) { return eve::ifnot_else( Type(i%3), t,  f); })

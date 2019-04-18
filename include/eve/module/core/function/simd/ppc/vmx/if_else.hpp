@@ -1,7 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,7 +19,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-  if_else_( EVE_SUPPORTS(vmx_), wide<logical<T>, N, ppc_> const& m,
+  if_else_( EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const& m,
             wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
           ) noexcept
   {

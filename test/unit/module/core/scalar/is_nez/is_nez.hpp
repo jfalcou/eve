@@ -11,15 +11,15 @@
 #ifndef IS_NEZ_HPP
 #define IS_NEZ_HPP
 
-#include <eve/function/scalar/is_nez.hpp>
-#include <tts/tts.hpp>
+#include "test.hpp"
+#include <eve/constant/false.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/function/is_nez.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/as_logical.hpp>
 #include <type_traits>
 
 TTS_CASE("Check is_nez return type")
@@ -31,6 +31,7 @@ TTS_CASE("Check eve::is_nez behavior")
 {
   TTS_EQUAL(eve::is_nez(Type{0}), eve::False<Type>());
   TTS_EQUAL(eve::is_nez(Type{2}), eve::True<Type>());
+
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::is_nez(static_cast<Type>(-2)), eve::True<Type>());
@@ -40,7 +41,9 @@ TTS_CASE("Check eve::is_nez behavior")
     TTS_EQUAL(eve::is_nez(eve::Nan<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_nez(eve::Mzero<Type>()), eve::False<Type>());
   }
-  
+
+  TTS_EQUAL(eve::is_nez(eve::True<Type>()) , eve::True<Type>());
+  TTS_EQUAL(eve::is_nez(eve::False<Type>()), eve::False<Type>());
 }
 
 #endif

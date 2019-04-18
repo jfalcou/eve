@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
-  Copyright 2019 Joel Falcou
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,52 +15,37 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Basic
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),
-                                    wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr(std::is_integral_v<T> || is_logical_v<T> || !platform::supports_denormals)
+    if constexpr(std::is_integral_v<T> || !platform::supports_denormals)
     {
-      return False(as(v));
+      return False(as(a));
     }
     else
     {
-      using t_t = wide<T, N, ABI>;
-      return is_nez(v) && is_less(abs(v), Smallestposval<t_t>());
+      return is_nez(a) && is_less(abs(a), Smallestposval<T>());
     }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),
-                               wide<T, N, aggregated_> const &v) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr auto is_denormal_ ( EVE_SUPPORTS(simd_),
+                                                logical<wide<T, N, ABI>> const& a
+                                              ) noexcept
   {
-    return aggregate(eve::is_denormal, v);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_)
-                              , wide<T, N, emulated_> const &v0) noexcept
-  {
-    return map(eve::is_denormal, v0);
+    return False(as(a));
   }
 }
 

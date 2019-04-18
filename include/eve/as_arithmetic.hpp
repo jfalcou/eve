@@ -33,18 +33,6 @@ namespace eve
     using type = T;
   };
 
-  template<typename T,  typename N,  typename ABI>
-  struct as_arithmetic<wide<T, N, ABI>>
-  {
-    using type = wide<T, N, ABI>;
-  };
-
-  template<typename T, typename N,  typename ABI>
-  struct as_arithmetic<wide<logical<T>, N, ABI>>
-  {
-    using type = wide<T, N>;
-  };
-
   template<typename T>
   using as_arithmetic_t = typename as_arithmetic<T>::type;
 }

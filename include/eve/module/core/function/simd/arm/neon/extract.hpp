@@ -18,20 +18,12 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N,typename I, auto V>
-  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(neon128_),
-                                        wide<logical<T>, N, neon64_> const &v0,
+  template<typename T, typename N, typename I, auto V>
+  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(neon128_),
+                                        logical<wide<T, N, neon64_>> const& v0,
                                         std::integral_constant<I, V> const& u) noexcept
   {
-    return bitwise_cast<logical<T>>( extract( bitwise_cast<wide<T,N>>(v0), u) );
-  }
-
-  template<typename T, typename N,typename I, auto V>
-  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(neon128_),
-                                        wide<logical<T>, N, neon128_> const &v0,
-                                        std::integral_constant<I, V> const& u) noexcept
-  {
-    return bitwise_cast<logical<T>>( extract( bitwise_cast<wide<T,N>>(v0), u) );
+    return logical<T>( extract( v0.bits(), u) );
   }
 
   template<typename T, typename N, typename I, auto V>
@@ -41,6 +33,9 @@ namespace eve::detail
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
+
+    static_assert((V < wide<T, N, neon64_>::static_size),
+                  "[eve - extract neon64] : Index is out of bound for current architecture");
 
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) return vget_lane_f64(v0, V);
@@ -57,12 +52,23 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename I, auto V>
+  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(neon128_),
+                                        logical<wide<T, N, neon128_>> const& v0,
+                                        std::integral_constant<I, V> const& u) noexcept
+  {
+    return logical<T>( extract( v0.bits(), u) );
+  }
+
+  template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_( EVE_SUPPORTS(neon128_),
                               wide<T, N, neon128_> const &v0,
                               std::integral_constant<I,V> const&) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
+
+    static_assert((V < wide<T, N, neon128_>::static_size),
+                  "[eve - extract neon128] : Index is out of bound for current architecture");
 
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) return vgetq_lane_f64(v0, V);

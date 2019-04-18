@@ -1,28 +1,27 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_AVX_IS_NOT_LESS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_AVX_IS_NOT_LESS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_IS_NOT_LESS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_IS_NOT_LESS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/as_logical.hpp>
 #include <eve/function/is_greater_equal.hpp>
+#include <eve/as_logical.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // avx avx
+  // avx
   template<typename T, typename N>
   EVE_FORCEINLINE auto
   is_not_less_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
@@ -35,12 +34,12 @@ namespace eve::detail
     }
     else
     {
-      return v0 >= v1; 
+      return v0 >= v1;
     }
   }
 
   // -----------------------------------------------------------------------------------------------
-  // avx sse
+  // sse
   template<typename T, typename N>
   EVE_FORCEINLINE auto
   is_not_less_(EVE_SUPPORTS(sse_), wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1) noexcept
@@ -53,9 +52,9 @@ namespace eve::detail
     }
     else
     {
-      return v0 >= v1; 
+      return v0 >= v1;
     }
-  }      
+  }
 }
 
 #endif

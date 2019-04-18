@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -13,18 +13,25 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/function/logical_not.hpp>
-#include <eve/function/is_not_equal.hpp>
+#include <eve/is_logical.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr as_logical_t<T>
-  logical_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE constexpr auto logical_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
-    return {(!a != !b)};;
+    if constexpr( is_logical_v<T> || is_logical_v<U>)
+    {
+      return !static_cast<bool>(a) != !static_cast<bool>(b);
+    }
+    else
+    {
+      return !a != !b;
+    }
   }
 }
 

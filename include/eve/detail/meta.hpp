@@ -10,6 +10,7 @@
 #ifndef EVE_DETAIL_META_HPP_INCLUDED
 #  define EVE_DETAIL_META_HPP_INCLUDED
 
+#  include <eve/detail/abi.hpp>
 #  include <type_traits>
 #  include <utility>
 #  include <cstdint>
@@ -208,13 +209,13 @@ namespace eve::detail
 
   // Tuple free apply
   template<typename Func, std::size_t... I>
-  decltype(auto) apply_impl(Func &&f, std::index_sequence<I...> const &)
+  EVE_FORCEINLINE decltype(auto) apply_impl(Func &&f, std::index_sequence<I...> const &)
   {
     return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
   }
 
   template<std::size_t Count, typename Func>
-  decltype(auto) apply(Func &&f)
+  EVE_FORCEINLINE decltype(auto) apply(Func &&f)
   {
     return apply_impl(std::forward<Func>(f), std::make_index_sequence<Count>{});
   }
@@ -244,7 +245,18 @@ namespace eve::detail
 
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
+
+  template<bool... Conditions>
+  using Either = std::enable_if_t<(Conditions || ...)>;
+
+
+  // False value with dependent type
+  template<typename... T>
+  inline constexpr bool wrong = false;
 }
+
+// Pseudo satisfy macro
+#  define satisfy(...) typename ::eve::detail::require_check <void, __VA_ARGS__> ::type* = nullptr
 
 // Pseudo require macro
 #  define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type

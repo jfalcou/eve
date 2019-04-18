@@ -1,14 +1,15 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SSE2_IS_NOT_LESS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_SSE2_IS_NOT_LESS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_SSE2_IS_NOT_LESS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_SSE2_IS_NOT_LESS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
@@ -35,7 +36,7 @@ namespace eve::detail
     }
     else
     {
-      return v0 >= v1; 
+      return v0 >= v1;
     }
   }
 }

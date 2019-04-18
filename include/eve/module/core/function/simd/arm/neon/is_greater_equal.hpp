@@ -2,24 +2,27 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_IS_GREATER_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_IS_GREATER_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_IS_GREATER_EQUAL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_IS_GREATER_EQUAL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_greater_(EVE_SUPPORTS(neon128_),
-                                                  wide<T, N, neon64_> const &v0,
-                                                  wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE as_logical_t<wide<T, N>>  is_greater_equal_ ( EVE_SUPPORTS(neon128_),
+                                                                wide<T, N, neon64_> const &v0,
+                                                                wide<T, N, neon64_> const &v1
+                                                              ) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -43,9 +46,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<logical<T>, N> is_greater_(EVE_SUPPORTS(neon128_),
-                                                  wide<T, N, neon128_> const &v0,
-                                                  wide<T, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_greater_equal_( EVE_SUPPORTS(neon128_),
+                                                              wide<T, N, neon128_> const &v0,
+                                                              wide<T, N, neon128_> const &v1
+                                                            ) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;

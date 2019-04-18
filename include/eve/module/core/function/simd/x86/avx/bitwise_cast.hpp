@@ -51,10 +51,10 @@ namespace eve::detail
 
   // AVX supports logical bitwise casting
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE wide<logical<Target>, M, avx_>
+  EVE_FORCEINLINE logical<wide<Target, M, avx_>>
                   bitwise_cast_(EVE_SUPPORTS(avx_),
                                 wide<Source, N, avx_> const &              v0,
-                                as_<wide<logical<Target>, M, avx_>> const &tgt) noexcept
+                                as_<logical<wide<Target, M, avx_>>> const &tgt) noexcept
   {
     return a2l_isocast_(v0, tgt);
   }
@@ -62,17 +62,17 @@ namespace eve::detail
   template<typename Target, typename Source, typename N, typename M>
   EVE_FORCEINLINE wide<Target, M, avx_>
                   bitwise_cast_(EVE_SUPPORTS(avx_),
-                                wide<logical<Source>, N, avx_> const &v0,
+                                logical<wide<Source, N, avx_>> const &v0,
                                 as_<wide<Target, M, avx_>> const &    tgt) noexcept
   {
     return l2a_isocast_(v0, tgt);
   }
 
   template<typename Target, typename Source, typename N, typename M>
-  EVE_FORCEINLINE wide<logical<Target>, M, avx_>
+  EVE_FORCEINLINE logical<wide<Target, M, avx_>>
                   bitwise_cast_(EVE_SUPPORTS(avx_),
-                                wide<logical<Source>, N, avx_> const &     v0,
-                                as_<wide<logical<Target>, M, avx_>> const &tgt) noexcept
+                                logical<wide<Source, N, avx_>> const &     v0,
+                                as_<logical<wide<Target, M, avx_>>> const &tgt) noexcept
   {
     return l2l_isocast_(v0, tgt);
   }

@@ -47,17 +47,6 @@ namespace eve::detail
       return combine(sse2_{}, l, h);
     }
   }
-
-  // -----------------------------------------------------------------------------------------------
-  // logicals
-  template<typename T, typename N>
-  EVE_FORCEINLINE typename wide<logical<T>, typename N::combined_type>::storage_type
-  combine(avx_ const &,
-          wide<logical<T>, N, sse_> const &l,
-          wide<logical<T>, N, sse_> const &h) noexcept
-  {
-    return combine(avx_{}, wide<T, N, sse_>(l.storage()), wide<T, N, sse_>(h.storage()));
-  }
 }
 
 #endif

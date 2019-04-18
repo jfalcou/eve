@@ -17,12 +17,20 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE T extract_(EVE_SUPPORTS(simd_),
-                             wide<T, N, ABI> const &v0,
-                             std::ptrdiff_t         i) noexcept
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(simd_),
+                                  wide<T, N, ABI> const &v0,
+                                  U const& u) noexcept
   {
-    return v0[ i ];
+    return v0[ u ];
+  }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(simd_),
+                                        logical<wide<T, N, ABI>> const &v0,
+                                        U const& u) noexcept
+  {
+    return logical<T>( extract( v0.bits(), u) );
   }
 }
 
