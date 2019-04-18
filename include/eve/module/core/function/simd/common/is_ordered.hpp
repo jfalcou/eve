@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_UNORDERED_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_UNORDERED_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_ORDERED_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_ORDERED_HPP_INCLUDED
 
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/overload.hpp>
