@@ -2,20 +2,18 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_GTZ_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_GTZ_HPP_INCLUDED
+#include <eve/function/is_gtz.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        eve::wide<std::int16_t>
+#define FUNCTION()    eve::is_gtz
+#define SAMPLES(N)    random<T>(N,-100,100)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_gtz_, is_gtz);
-}
-
-#endif
+#include "bench.hpp"
