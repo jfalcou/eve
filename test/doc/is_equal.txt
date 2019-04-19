@@ -5,3 +5,4 @@
 ---- scalar
 <- xf =                  1
 <- yf =                  -nan
+-> eve::is_equal(xf, yf) = false
