@@ -8,14 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_GTZ_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_GTZ_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_gtz_, is_gtz);
-}
-
-#endif
+using Type = double;
+#include "is_gtz.hpp"

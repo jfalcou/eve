@@ -11,7 +11,7 @@ then
   echo "create_bench_from_to: invalid number of arguments"
   return
 else
-  echo "create a benchmark for $2 from the one of $1"
+  echo "create a benchmark for "$2" from the one of "$1
 fi
 from=$1
 to=$2
