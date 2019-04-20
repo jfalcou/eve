@@ -15,8 +15,17 @@ else
   echo "create the files of a function "$2" from the files of the function "$1
 fi
 
+from=$1
+to=$2
+
 source ./create_func_from_to $from $to
 source ./create_simd_test_from_to $from $to
 source ./create_scalar_test_from_to $from $to
 source ./create_doc_test_from_to $from $to
-source ./create_bench_from_to $from $to
+#source ./create_bench_from_to $from $to
+
+#icitte=$(pwd)
+
+#nrstf=include/eve_copie/doc/manual/functions/predicate
+#rstf=include/eve/doc/manual/functions/predicate  
+#cp $icitte/$nrstf/to.rst $icitte/$rstf/to.rst
