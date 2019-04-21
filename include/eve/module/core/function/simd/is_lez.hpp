@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_LTZ_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_LTZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_IS_LEZ_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_IS_LEZ_HPP_INCLUDED
 
-#include <eve/function/definition/is_ltz.hpp>
-#include <eve/module/core/function/scalar/is_ltz.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/is_lez.hpp>
 
 #endif
