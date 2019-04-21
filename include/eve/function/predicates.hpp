@@ -27,8 +27,8 @@
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_lessgreater.hpp>
 #include <eve/function/is_less.hpp>
-//#include <eve/function/is_lez.hpp>
-//#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_lez.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nan.hpp>
 // #include <eve/function/is_negative.hpp>
 #include <eve/function/is_nez.hpp>
