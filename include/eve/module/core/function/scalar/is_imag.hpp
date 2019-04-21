@@ -23,6 +23,7 @@ namespace eve::detail
   {
     return eve::is_eqz(a);
   }
+  
 }
 
 #endif

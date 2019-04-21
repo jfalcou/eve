@@ -8,14 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_LESSGREATER_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_LESSGREATER_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
-}
-
-#endif
+#include <cstdint>
+using Type = std::uint8_t;
+#include "is_lessgreater.hpp"
