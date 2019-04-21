@@ -1,9 +1,9 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Jean-Thierry Lapreste
   Copyright 2019 Joel FALCOU
- 
+
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
@@ -27,24 +27,25 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Basic
-  template<typename T, typename N,  typename ABI>
+  template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>, Arithmetic<T>)
+                            wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>,
+                                                                        Arithmetic<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      using t_t = wide<T, N, ABI>; 
-      return bitwise_notand(Mzero<t_t>(),v);
+      using t_t = wide<T, N, ABI>;
+      return bitwise_notand(Mzero<t_t>(), v);
     }
     if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) return v;
     if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
     {
-      constexpr int Maxshift = sizeof(T)*8-1; 
-      wide<T, N> s = eve::shr(v, Maxshift);
-      return (v+s)^s;
+      constexpr int Maxshift = sizeof(T) * 8 - 1;
+      wide<T, N>    s        = eve::shr(v, Maxshift);
+      return (v + s) ^ s;
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
@@ -53,19 +54,15 @@ namespace eve::detail
   {
     return aggregate(eve::abs, v);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
-  // Emulation 
+  // Emulation
   template<typename T, typename N>
   EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v) noexcept
   {
-    return map(eve::abs, v);;
+    return map(eve::abs, v);
+    ;
   }
-
-
-  
 }
-
-
 
 #endif
