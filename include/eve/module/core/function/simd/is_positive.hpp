@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_POSITIVE_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_POSITIVE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_IS_POSITIVE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_IS_POSITIVE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_positive_, is_positive);
-}
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/is_positive.hpp>
 
 #endif
