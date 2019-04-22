@@ -16,6 +16,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
+#include <type_traits>
 #include <cmath>
 
 namespace eve::detail
