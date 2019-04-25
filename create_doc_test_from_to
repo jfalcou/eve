@@ -28,6 +28,6 @@ cp -n $icitte/$testdoc/$from.cpp    $icitte/$testdoc/$to.cpp
 cd $icitte/$testdoc
 sed -i  "s/$from/$to/g"   $to.cpp  
 sed -i  "s/$FROM/$TO/g"   $to.cpp   
-sed -i "/add_unit_test. .doc\/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
+sed -i "/add_unit_test. .doc.function.predicate. \/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
 
 cd $icitte

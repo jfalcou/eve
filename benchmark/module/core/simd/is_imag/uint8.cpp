@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_IMAG_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_IMAG_HPP_INCLUDED
+#include <eve/function/is_imag.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/definition/is_imag.hpp>
-#include <eve/module/core/function/scalar/is_imag.hpp>
+#define TYPE()        eve::wide<std::uint8_t>
+#define FUNCTION()    eve::is_imag
+#define SAMPLES(N)    random<T>(N,0,200)
 
-#endif
+#include "bench.hpp"
