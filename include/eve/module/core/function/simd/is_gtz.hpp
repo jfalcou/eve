@@ -14,14 +14,4 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_gtz.hpp>
 
-#if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/is_gtz.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_SEE4_2_VERSION
-#    include <eve/module/core/function/simd/x86/sse4_2/is_gtz.hpp>
-#  endif
-#endif
-
 #endif
