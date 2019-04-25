@@ -12,8 +12,6 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_LESSGREATER_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/logical_and.hpp>
@@ -33,10 +31,16 @@ namespace eve::detail
   {
     if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
+      static_assert( std::is_same_v<T,U>, "[eve::is_lessgreater] - Incompatible types.");
+
       if constexpr(std::is_integral_v<typename T::value_type>)
+      {
         return is_not_equal(a, b);
+      }
       else
+      {
         return logical_and(is_not_equal(a, b), is_ordered(a, b));
+      }
     }
     else  if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {

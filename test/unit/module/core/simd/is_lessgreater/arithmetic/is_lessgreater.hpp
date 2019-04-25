@@ -2,6 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -37,16 +38,15 @@ TTS_CASE_TPL("Check is_lessgreater behavior on homogeneous wide",
   logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::is_lessgreater(Type(c - i), Type(i%2 ? i : c-i)); });
 
   TTS_EQUAL(ref, eve::is_lessgreater(lhs, rhs));
+
   if constexpr(std::is_floating_point_v<Type>)
   {
     wide<Type, T> lhs([](auto i, auto c) { return Type(i%3)/Type(i%2); }),
-      rhs([](auto i, auto c) { return Type(i%2)/Type(i%3); });
+                  rhs([](auto i, auto c) { return Type(i%2)/Type(i%3); });
 
-    logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::is_lessgreater(Type(i%3)/Type(i%2), Type(i%2)/Type(i%3)); });    
+    logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::is_lessgreater(Type(i%3)/Type(i%2), Type(i%2)/Type(i%3)); });
     TTS_EQUAL(ref, eve::is_lessgreater(lhs, rhs));
   }
-  
-  
 }
 
 TTS_CASE_TPL("Check is_lessgreater behavior on wide and scalar",

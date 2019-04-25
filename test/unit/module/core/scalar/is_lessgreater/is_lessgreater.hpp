@@ -33,9 +33,10 @@ TTS_CASE("Check eve::is_lessgreater behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::is_lessgreater(Type(1),Type(1))                      , eve::False<Type>() );
-  TTS_EQUAL(eve::is_lessgreater(Type(3),Type(1))                      , eve::True<Type>());
-  TTS_EQUAL(eve::is_lessgreater(Type(3),Type(7))                      , eve::True<Type>());
+  TTS_EQUAL(eve::is_lessgreater(Type(1),Type(1))  , eve::False<Type>());
+  TTS_EQUAL(eve::is_lessgreater(Type(3),Type(1))  , eve::True<Type>() );
+  TTS_EQUAL(eve::is_lessgreater(Type(3),Type(7))  , eve::True<Type>() );
+
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_lessgreater(eve::Nan<Type>(),Type(7))         , eve::False<Type>());
