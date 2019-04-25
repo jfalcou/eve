@@ -13,6 +13,7 @@
 
 #include <benchmark/benchmark.h>
 #include <eve/cardinal.hpp>
+#include <eve/memory/aligned_allocator.hpp>
 #include "tts/detail/pp_helpers.hpp"
 #include "cycleclock.h"
 #include <algorithm>
@@ -21,6 +22,9 @@
 
 namespace eve::bench
 {
+  template<typename T>
+  using bench_alloc = eve::aligned_allocator<T, eve::limits<EVE_CURRENT_API>::bytes>;
+
   // -------------------------------------------------------------------------------------------------
   struct metrics
   {
@@ -38,20 +42,20 @@ namespace eve::bench
   // Generators
   template <typename T> auto value(std::size_t sz, T const& val)
   {
-    std::vector<T> data(sz, val);
+    std::vector<T,bench_alloc<T>> data(sz, val);
     return data;
   }
 
   template <typename T> auto iota(std::size_t sz, T first = {})
   {
-    std::vector<T> data(sz);
+    std::vector<T,bench_alloc<T>> data(sz);
     std::iota(data.begin(),data.end(),first);
     return data;
   }
 
   template <typename T> auto arithmetic(std::size_t sz, T first = {}, T step = 1)
   {
-    std::vector<T> data(sz);
+    std::vector<T,bench_alloc<T>> data(sz);
 
     data[0] = first;
     for(std::size_t i=1;i<sz;++i) data[i] = data[i-1] + step;
@@ -59,9 +63,9 @@ namespace eve::bench
     return data;
   }
 
-  template <typename T> auto geomtric(std::size_t sz, T first = 1, T step = 2)
+  template <typename T> auto geometric(std::size_t sz, T first = 1, T step = 2)
   {
-    std::vector<T> data(sz);
+    std::vector<T,bench_alloc<T>> data(sz);
 
     data[0] = first;
     for(std::size_t i=1;i<sz;++i) data[i] = data[i-1] * step;
@@ -71,7 +75,7 @@ namespace eve::bench
 
   template <typename T, typename U> auto random(std::size_t sz, U mn, U mx)
   {
-      std::vector<T> data(sz);
+      std::vector<T,bench_alloc<T>> data(sz);
       std::generate ( data.begin(), data.end()
                     , [=]()
                       {
