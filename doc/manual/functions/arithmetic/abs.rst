@@ -13,7 +13,7 @@ abs
       constexpr /* implementation defined */ abs = {};
    }
 
-Function object computing the absolute value of an arithmetic :ref:`Values <concept-value>`.
+Function object computing the absolute value of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********
@@ -25,7 +25,7 @@ Synopsis
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
 * [1] Computes the element-wise absolute value of the :ref:`wide <type-wide>`.
-* [2] Computes the solute value of the scalar.
+* [2] Computes the absolute value of the scalar.
 
 .. rubric:: Parameters
 

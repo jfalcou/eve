@@ -13,7 +13,7 @@ log1p
      constexpr /* implementation defined */ log1p = {};
    }
 
-Function object performing :math:`\log(1+v)` over a :ref:`IEEEValue <concept-ieeevalue>` **v**
+Function object performing :math:`\log(1+v)` over an :ref:`IEEEValue <concept-ieeevalue>` **v**
 
 ********
 Synopsis
@@ -25,7 +25,7 @@ Synopsis
    template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T            > constexpr   T         operator()( T s ) noexcept;
 
-* [1,2] Computes the mathematical value :math:`\log(1+v)` with good accuracy even for small values.
+* [1,2] Computes the mathematical value :math:`\log(1+v)` with good accuracy even for small values of **v**.
 
 .. rubric:: Parameters
 

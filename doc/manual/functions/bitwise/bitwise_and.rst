@@ -43,12 +43,12 @@ Synopsis
 .. rubric:: Notes
 
 * There is no type restriction between operands of :ref:`function-bitwise_and` as long as the number
-  of bits between them are equals. This implies that calls to:ref:`function-bitwise_and` on
+  of bits between them are equals. This implies that calls to :ref:`function-bitwise_and` on
   :ref:`floating points values <concept-IEEEvalue>` are possible as long as they are performed with a
   second parameters of proper size.
 
 * There is no cardinal restriction on the :ref:`concept-vectorized` operands of :ref:`function-bitwise_and`
-  as long as the number of bits between them are equals.  This implies that calls to:ref:`function-bitwise_and`
+  as long as the number of bits between them are equals.  This implies that calls to :ref:`function-bitwise_and`
   on :ref:`concept-vectorized` values of different cardinals are allowed as long at their total size
   in bits are equal.
 

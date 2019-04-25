@@ -11,6 +11,6 @@
 #define EVE_FUNCTION_IS_GTZ_HPP_INCLUDED
 
 #include <eve/function/scalar/is_gtz.hpp>
-//#include <eve/function/simd/is_gtz.hpp>
+#include <eve/function/simd/is_gtz.hpp>
 
 #endif

@@ -12,7 +12,7 @@ False
      constexpr as_logical_t<Value> False<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Values <concept-value>` corresponding to false
+This 'constant' returns the  :ref:`Value <concept-value>` corresponding to false
 
 
 .. seealso::  :ref:`True <constant-true_>`,  :ref:`Zero <constant-zero>`

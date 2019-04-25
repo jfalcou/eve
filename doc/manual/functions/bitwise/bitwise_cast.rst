@@ -31,7 +31,7 @@ Synopsis
 
 .. rubric:: Template parameters
 
-* **T**: expected return type that satisfy:
+* **T**: expected return type that satisfies:
 
   * [1] ``sizeof(T) == sizeof(wide<U,N>)`` and **T** must be a :ref:`type-wide` type;
   * [2] ``sizeof(T) == sizeof(U)``.
@@ -43,7 +43,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1-3] A value of type **T**.
+* [1-2] A value of type **T**.
 
 .. rubric:: Notes
 

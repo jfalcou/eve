@@ -54,3 +54,9 @@ add_unit_test( "doc.function.predicate" is_not_less.cpp )
 add_unit_test( "doc.function.predicate" is_not_nan.cpp )
 add_unit_test( "doc.function.predicate" is_ordered.cpp )
 add_unit_test( "doc.function.predicate" is_unordered.cpp )
+add_unit_test( "doc.function.predicate" is_eqz.cpp )
+add_unit_test( "doc.function.predicate" is_greater.cpp )
+add_unit_test( "doc.function.predicate" is_less.cpp )
+add_unit_test( "doc.function.predicate" is_nez.cpp )
+
+

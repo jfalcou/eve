@@ -21,18 +21,17 @@
 #include <eve/function/is_gez.hpp>
 // #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
-// #include <eve/function/is_gtz.hpp>
+//#include <eve/function/is_gtz.hpp>
 // #include <eve/function/is_imag.hpp>
 #include <eve/function/is_inf.hpp>
-// #include <eve/function/is_invalid.hpp>
 #include <eve/function/is_less_equal.hpp>
 // #include <eve/function/is_lessgreater.hpp>
 #include <eve/function/is_less.hpp>
-// #include <eve/function/is_lez.hpp>
-// #include <eve/function/is_ltz.hpp>
+//#include <eve/function/is_lez.hpp>
+//#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nan.hpp>
 // #include <eve/function/is_negative.hpp>
-// #include <eve/function/is_nez.hpp>
+#include <eve/function/is_nez.hpp>
 // #include <eve/function/is_ngez.hpp>
 // #include <eve/function/is_ngtz.hpp>
 // #include <eve/function/is_nlez.hpp>
@@ -41,8 +40,8 @@
 // #include <eve/function/is_not_denormal.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/is_not_equal_with_equal_nans.hpp>
-// #include <eve/function/is_not_equal.hpp>
-// #include <eve/function/is_not_equal_with_equal_nans.hpp>
+#include <eve/function/is_not_equal.hpp>
+//#include <eve/function/is_not_equal_with_equal_nans.hpp>
 #include <eve/function/is_not_finite.hpp>
 // #include <eve/function/is_not_greater_equal.hpp>
 // #include <eve/function/is_not_greater.hpp>

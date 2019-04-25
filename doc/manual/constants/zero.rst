@@ -12,7 +12,7 @@ Zero
      constexpr as_arithmetic_t<Value> Zero<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Values <concept-value>`  0 
+This 'constant' returns the  :ref:`Value <concept-value>`  0 
 
 Template parameter
 ------------------
