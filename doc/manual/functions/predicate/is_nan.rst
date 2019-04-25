@@ -1,16 +1,16 @@
-.. _function-is_NaN:
+.. _function-is_nan:
 
 ######
 is_nan
 ######
 
-**Required header** ``#include <eve/function/is_NaN.hpp>``
+**Required header** ``#include <eve/function/is_nan.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr /* implementation defined */ is_NaN = {};
+     constexpr /* implementation defined */ is_nan = {};
    }
 
 Function object determining if the given :ref:`Value <concept-value>` element is a :ref:`NaN <constant-NaN>` value
