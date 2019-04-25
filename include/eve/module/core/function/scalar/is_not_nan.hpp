@@ -21,14 +21,11 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_not_nan_(EVE_SUPPORTS(cpu_)
-                                                     , T const &a) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_nan_(EVE_SUPPORTS(cpu_)
+                                                       , T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-    {
       return a == a;
-    }
     else
       return true;
   }

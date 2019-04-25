@@ -27,6 +27,5 @@ int main()
     << "-> eve::is_not_nan(xf) = " << eve::is_not_nan(xf) << '\n'
     << "<- yf =                  " << yf << '\n'
     << "-> eve::is_not_nan(yf) = " << eve::is_not_nan(yf) << '\n';
-   ; 
   return 0;
 }

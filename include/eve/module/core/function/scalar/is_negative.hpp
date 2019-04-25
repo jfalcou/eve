@@ -15,7 +15,9 @@
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/constant/false.hpp>
+#include <eve/logical.hpp>
 #include <eve/function/bitwise_cast.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -27,10 +29,10 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       using si_t = eve::detail::as_integer_t<T, signed>; 
-      return as_logical_t<T>(bitwise_cast<si_t>(a) < si_t(0));
+      return bool(is_ltz(bitwise_cast<si_t>(a)));
     }
     else if constexpr(std::is_signed_v<T>)
-      return a < T(0);
+      return is_ltz(a);
     else
       return False(as(a)); 
   }
