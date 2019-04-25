@@ -46,30 +46,6 @@ namespace eve::detail
     {
       return is_lessgreater(U{a},b);
     }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::is_lessgreater, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::is_lessgreater, a, b);
-        }
-        else
-        {
-          static_assert( wrong<T,U>, "[eve::is_lessgreater] - Unsupported ABI.");
-          return {};
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::is_lessgreater] - Incompatible types.");
-        return {};
-      }
-    }
   }
 
   template<typename T, typename U>
