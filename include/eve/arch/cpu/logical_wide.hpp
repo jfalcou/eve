@@ -248,8 +248,11 @@ namespace eve
   template<typename Type, typename N, typename ABI>
   EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical<wide<Type,N,ABI>> const &p)
   {
-    os << '(' << p[0];
-    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << p[i];
+    logical<Type> that[N::value];
+    memcpy(&that[0],p.begin(),N::value*sizeof(Type));
+
+    os << '(' << that[0];
+    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << that[i];
     return os << ')';
   }
 }

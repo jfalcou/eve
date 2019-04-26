@@ -322,10 +322,11 @@ namespace eve
   template<typename T, typename N, typename ABI>
   std::ostream &operator<<(std::ostream &os, wide<T, N, ABI> const &p)
   {
-    os << '(' << +p[ 0 ];
+    T that[N::value];
+    memcpy(&that[0],p.begin(),N::value*sizeof(T));
 
-    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << +p[ i ];
-
+    os << '(' << +that[0];
+    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << +that[i];
     return os << ')';
   }
 }

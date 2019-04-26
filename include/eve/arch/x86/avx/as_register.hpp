@@ -12,7 +12,6 @@
 
 #include <eve/arch/x86/avx/tags.hpp>
 #include <eve/ext/as_register.hpp>
-#include <eve/detail/meta.hpp>
 #include <type_traits>
 
 namespace eve
