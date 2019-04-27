@@ -1,8 +1,8 @@
 ---- simd
 <- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
 <- qf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::is_greater_equal(pf, qf) = (false, false, true, false, true, true, false, false)
+-> eve::is_lessgreater(pf, qf) = (true, true, true, true, true, true, true, true)
 ---- scalar
 <- xf =                  1
 <- yf =                  -nan
--> eve::is_greater_equal(xf, yf) = false
+-> eve::is_lessgreater(xf, yf) = false

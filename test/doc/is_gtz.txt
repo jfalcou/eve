@@ -1,8 +1,8 @@
 ---- simd
 <- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::is_denormal(pf) = (false, false, false, false, true, false, false, false)
+-> eve::is_gtz(pf) = (false, true, true, true, true, true, true, true)
 ---- scalar
 <- xf =                  1
--> eve::is_denormal(xf) = false
+-> eve::is_gtz(xf) = true
 <- yf =                  1.4013e-45
--> eve::is_denormal(yf) = true
+-> eve::is_gtz(yf) = true

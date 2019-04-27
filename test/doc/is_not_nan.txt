@@ -1,7 +1,6 @@
 ---- simd
 <- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
 -> eve::is_not_nan(pf) = (true, true, true, true, true, true, true, false)
-minden
 ---- scalar
 <- xf =                  1
 -> eve::is_not_nan(xf) = true
