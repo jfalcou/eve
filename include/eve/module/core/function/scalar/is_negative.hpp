@@ -32,11 +32,14 @@ namespace eve::detail
       return bitwise_cast<as_logical_t<T>>(is_ltz(bitwise_cast<si_t>(a)));
     }
     else if constexpr(std::is_signed_v<T>)
+    {
       return is_ltz(a);
+    }
     else
+    {
       return False(as(a));
+    }
   }
-
 }
 
 #endif
