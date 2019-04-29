@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_BITWISE_CAST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/assert.hpp>
 #include <cstring>
@@ -30,7 +31,11 @@ namespace eve::detail
     static_assert(sizeof(a) == sizeof(Target), "[eve::bitwise_cast scalar] - Size mismatch in bitwise_cast");
 
     Target that;
-    std::memcpy(&that, &a, sizeof(a));
+
+    void const *src = reinterpret_cast<detail::alias_t<void const> *>(&a);
+    void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
+    std::memcpy(dst,src, sizeof(a));
+
     return that;
   }
 }
