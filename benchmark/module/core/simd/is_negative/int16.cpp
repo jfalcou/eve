@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
+#include <eve/function/is_negative.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/scalar/is_negative.hpp>
-#include <eve/function/simd/is_negative.hpp>
+#define TYPE()        eve::wide<std::int16_t>
+#define FUNCTION()    eve::is_negative
+#define SAMPLES(N)    random<T>(N,-100,100)
 
-#endif
+#include "bench.hpp"
