@@ -28,8 +28,8 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Logical
-  template<typename T, typename N, typename ABI, typename Arch>
-  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(Arch),
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_),
                                 logical<wide<T, N, ABI>> const &l,
                                 logical<wide<T, N, ABI>> const &h) noexcept
   {

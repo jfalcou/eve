@@ -17,11 +17,12 @@
 
 // Detect current highest SSEx variant
 #undef EVE_HW_POWERPC
-#if !defined(EVE_HW_POWERPC) && defined(__VSX__)
+
+#if !defined(EVE_HW_POWERPC) && defined(__VSX__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_POWERPC EVE_VSX_VERSION
 #endif
 
-#if !defined(EVE_HW_POWERPC) && (defined(__ALTIVEC__) || defined(__VEC__))
+#if !defined(EVE_HW_POWERPC) && !defined(EVE_NO_SIMD) && (defined(__ALTIVEC__) || defined(__VEC__))
 #  define EVE_HW_POWERPC EVE_VMX_VERSION
 #endif
 

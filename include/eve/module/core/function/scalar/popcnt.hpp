@@ -15,6 +15,7 @@
 #include <eve/detail/compiler.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
+#include <cstdint>
 
 #if defined(EVE_COMP_IS_MSVC)
 #  include <intrin.h>

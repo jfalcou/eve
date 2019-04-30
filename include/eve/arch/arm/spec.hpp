@@ -39,19 +39,4 @@ namespace eve
 #  define EVE_CURRENT_API ::eve::neon128_
 #endif
 
-#if !defined(__aarch64__)
-#  ifndef EVE_NO_DENORMALS
-#    define EVE_NO_DENORMALS
-#  endif
-namespace eve
-{
-  inline constexpr bool supports_aarch64 = false;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_aarch64 = true;
-}
-#endif
-
 #endif

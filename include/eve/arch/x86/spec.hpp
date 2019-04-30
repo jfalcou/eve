@@ -44,7 +44,7 @@ namespace eve
 
 //==================================================================================================
 // X86 SIMD API
-#if !defined(EVE_CURRENT_API)
+#if !defined(EVE_CURRENT_API) && EVE_HW_X86
 #  if EVE_HW_X86 == EVE_SSE2_VERSION
 #    define EVE_CURRENT_API ::eve::sse2_
 #  elif EVE_HW_X86 == EVE_SSE3_VERSION
@@ -63,56 +63,5 @@ namespace eve
 #endif
 
 // TODO: AVX512 API
-
-//==================================================================================================
-// Additionnal ISA support
-#if defined(EVE_SUPPORTS_FMA3)
-#  include <immintrin.h>
-namespace eve
-{
-  inline constexpr bool supports_fma3 = true;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_fma3 = false;
-}
-#endif
-
-#if defined(EVE_SUPPORTS_FMA4)
-#  if defined(EVE_COMP_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <fma4intrin.h>
-#  endif
-namespace eve
-{
-  inline constexpr bool supports_fma4 = true;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_fma4 = false;
-}
-#endif
-
-#if defined(EVE_SUPPORTS_XOP)
-#  if defined(EVE_COMP_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <xopintrin.h>
-#  endif
-namespace eve
-{
-  inline constexpr bool supports_xop = true;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_xop = false;
-}
-#endif
 
 #endif
