@@ -12,13 +12,12 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_NOT_GREATER_EQUAL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
+#include <eve/function/is_greater_equal.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_not.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/function/is_less.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -43,18 +42,13 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T,U>)
       {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
+        if constexpr( std::is_floating_point_v<typename T::value_type> )
         {
-          return aggregate( eve::is_not_greater_equal, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::is_not_greater_equal, a, b);
+          return logical_not(is_greater_equal(a,b));
         }
         else
         {
-          static_assert( wrong<T,U>, "[eve::is_not_greater_equal] - Unsupported ABI.");
-          return {};
+          return is_less(a,b);
         }
       }
       else
