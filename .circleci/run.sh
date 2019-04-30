@@ -12,5 +12,5 @@ cd build
 
 $1 --version
 cmake .. -DCMAKE_BUILD_TYPE=$VARIANT -G Ninja -DCMAKE_CXX_COMPILER=$1 -DCMAKE_CXX_FLAGS=$OPTIONS
-ninja unit -j 8
-ctest -j 8 -R ^*.unit
+ninja unit -j 2
+ctest -R ^*.unit -j 2
