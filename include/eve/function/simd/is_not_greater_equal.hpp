@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_POSITIVE_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_POSITIVE_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_IS_NOT_GREATER_EQUAL_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_IS_NOT_GREATER_EQUAL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_positive_, is_positive);
-}
+#include <eve/function/scalar/is_not_greater_equal.hpp>
+#include <eve/module/core/function/simd/is_not_greater_equal.hpp>
 
 #endif

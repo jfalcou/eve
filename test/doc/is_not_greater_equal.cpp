@@ -19,7 +19,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
     << "<- qf =                  " << qf << '\n'
-    << "-> eve::is_greater(pf, qf) = " << eve::is_greater(pf, qf) << '\n';
+    << "-> eve::is_not_greater_equal(pf, qf) = " << eve::is_not_greater_equal(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Mindenormal<float>();

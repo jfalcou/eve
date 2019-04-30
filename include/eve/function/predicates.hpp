@@ -53,7 +53,7 @@
 // #include <eve/function/is_not_real.hpp>
 // #include <eve/function/is_odd.hpp>
 #include <eve/function/is_ordered.hpp>
-// #include <eve/function/is_positive.hpp>
+#include <eve/function/is_positive.hpp>
 // #include <eve/function/is_real.hpp>
 #include <eve/function/is_unordered.hpp>
 
