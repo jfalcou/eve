@@ -29,8 +29,8 @@ namespace eve::detail
       return is_gez(v);
     else
     {
-      using swi_t = wide<eve::detail::as_integer_t<T, signed>, N, ABI>;
-      using lwi_t = logical<wide<T, N, ABI>>; 
+      using swi_t = wide<eve::detail::as_integer_t<T, signed>, N>;
+      using lwi_t = logical<wide<T, N>>;
       return bitwise_cast<lwi_t>(is_gez(bitwise_cast<swi_t>(v)));
     }
   }

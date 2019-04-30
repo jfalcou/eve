@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check is_positive behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>           lhs([](auto i, auto) { return i%2; });
-  logical<wide<Type, T>>  ref([](auto i, auto) { return eve::is_positive(Type(i%2)); });
+  wide<Type, T>           lhs([](auto i, auto c) { return c/2 - i; });
+  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::is_positive(Type(c/2 - i)); });
 
   TTS_EQUAL(ref, eve::is_positive(lhs));
 }
@@ -50,8 +50,8 @@ TTS_CASE_TPL("Check is_positive behavior on logical<wide>",
   using eve::wide;
   using eve::logical;
 
-  logical<wide<Type, T>> lhs([](auto i, auto) { return (i%2) >= 0; });
-  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_positive( i%2 >= 0 ); });
+  logical<wide<Type, T>> lhs([](auto i, auto c) { return (c/2 - i) >= 0; });
+  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::is_positive( (c/2 - i) >= 0 ); });
 
   TTS_EQUAL(ref, eve::is_positive(lhs));
 }
