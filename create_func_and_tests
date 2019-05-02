@@ -1,18 +1,25 @@
 #!/bin/bash
-# crée les fichiers de la fonction $2 à partir des fichiers de $1 
+# crée les fichiers de la fonction $2 à partir des fichiers de $1,  $3 est le chemin de eve
 # ce fichier doit être dans le répertoire de base de eve
 
 if [ "$#" -eq 0 ]
 then
   echo 'usage: create_func_and_tests $1 $2:  create the files of function $2 from the files of the function $1'
   echo 'of course if the names are properly changed the code has to be edited'
+  echo '$3 may contain the path to eve which by default is supposed pwd'
   return
 elif [ "$#" -eq 1 ]
 then
   echo "create_func_and_tests: invalid number of arguments"
   return
-else
+elif  [ "$#" -eq 2 ]
+  rootdir = pwd
   echo "create the files of a function "$2" from the files of the function "$1
+  root "is "$rootdir 
+else
+  rootdir = $3
+  echo "create the files of a function "$2" from the files of the function "$1
+  root "is "$rootdir 
 fi
 
 from=$1
@@ -22,10 +29,5 @@ source ./create_func_from_to $from $to
 source ./create_simd_test_from_to $from $to
 source ./create_scalar_test_from_to $from $to
 source ./create_doc_test_from_to $from $to
-#source ./create_bench_from_to $from $to
+source ./create_bench_from_to $from $to
 
-#icitte=$(pwd)
-
-#nrstf=include/eve_copie/doc/manual/functions/predicate
-#rstf=include/eve/doc/manual/functions/predicate  
-#cp $icitte/$nrstf/to.rst $icitte/$rstf/to.rst

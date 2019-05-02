@@ -1,45 +1,46 @@
 #!/bin/bash
-# crée un benchmark pour $2 à partir de celui de $1 
-# ce fichier doit être dans le répertoire de base de eve
+# crée un benchmark pour $2 à partir de celui de $1, $3 donnant le chemin de eve
+
 
 if [ "$#" -eq 0 ]
 then
-  echo 'usage: create_bench_from_to $1 $2:  create a benchmark for $2 from the one of $1'
+  echo 'usage: create_bench_from_to $1 $2 $3:  create a benchmark for $2 from the one of $1, root dir being $3'
   return
 elif [ "$#" -eq 1 ]
 then
   echo "create_bench_from_to: invalid number of arguments"
   return
-else
+elif  [ "$#" -eq 2 ]
+then
+  rootdir=$(pwd)
   echo "create a benchmark for "$2" from the one of "$1
+  echo "root dir is "$rootdir
+else
+  rootdir=$3
+  echo "create a benchmark for "$2" from the one of "$1
+  echo "root dir is "$rootdir
 fi
 from=$1
 to=$2
-#FROM="${from^^}"
-#TO="${to^^}"
 icitte=$(pwd)
 where=benchmark/module/core
 
-#echo $from
-#echo $to
-#echo $icitte
-#echo $where
-mkdir -p $icitte/$where/simd/$2 
-mkdir -p $icitte/$where/scalar/$2 
+mkdir -p $rootdir/$where/simd/$to
+mkdir -p $rootdir/$where/scalar/$to 
 
 for fil in double float int8 int16 int32 int64 uint8 uint16 uint32 uint64 
 do
-  cp -n $icitte/$where/scalar/$1/$fil.cpp    $where/scalar/$2/$fil.cpp   
-  cp -n $icitte/$where/simd/$1/$fil.cpp    $where/simd/$2/$fil.cpp   
-  cd $icitte/$where/scalar/$2
+  cp -n $rootdir/$where/scalar/$1/$fil.cpp    $where/scalar/$2/$fil.cpp   
+  cp -n $rootdir/$where/simd/$1/$fil.cpp    $where/simd/$2/$fil.cpp   
+  cd $rootdir/$where/scalar/$2
   sed -i "s/$from/$to/g"   $fil.cpp  
-  cd $icitte/$where/simd/$2
+  cd $rootdir/$where/simd/$2
   sed -i "s/$from/$to/g"   $fil.cpp  
-  cd $icitte       
+  cd $rootdir       
 done    
 
-cd $icitte/$where  
-sed -i "/list_benchs..simd\/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
-sed -i "/list_benchs..scalar\/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
+cd $rootdir/$where  
+sed -i "/list_benchs..simd\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
+sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
 
 cd $icitte

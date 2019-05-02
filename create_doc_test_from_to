@@ -1,33 +1,40 @@
 #!/bin/bash
-# crée un benchmark pour $2 à partir de celui de $1 
-# ce fichier doit être dans le répertoire de base de eve
-echo "$#"
-echo $1 
-echo $2
+# crée un test de doc pour $2 à partir de celui de $1, $3 donnant le chemin de eve
 
 if [ "$#" -eq 0 ]
 then
-  echo 'usage: create_doc_test_from_to_ $1 $2:  create a doc _test for $2 from the one of $1'
+  echo 'usage: create_doc_test_from_to $1 $2 $3:  create a doc test for $2 from the one of $1, root dir being $3'
+  echo '       by default  $3 is pwd'
   return
 elif [ "$#" -eq 1 ]
 then
   echo "create_doc_test_from_to_: invalid number of arguments"
+  echo 'usage: create_doc_test_from_to $1 $2 $3:  create a doc test for $2 from the one of $1 root dir being $3'
+  echo '       by default $3 is pwd'
   return
+elif [ "$#" -eq 2 ]
+then
+  echo "create a doc test for "$2" from the one of "$1" 
+  rootdir=$(pwd)
+  echo "root dir is "$rootdir
 else
-  echo "create a doc test for "$2" from the one of "$1""
+  echo "create a doc test for "$2" from the one of "$1"
+  rootdir=$3
+  echo "root dir is "$rootdir
 fi
 from=$1
 to=$2
+
 FROM="${from^^}"
 TO="${to^^}"
 icitte=$(pwd)
 
 testdoc=test/doc
 
-cp -n $icitte/$testdoc/$from.cpp    $icitte/$testdoc/$to.cpp
-cd $icitte/$testdoc
+cp -n $rootdir/$testdoc/$from.cpp    $rootdir/$testdoc/$to.cpp
+cd $rootdir/$testdoc
 sed -i  "s/$from/$to/g"   $to.cpp  
 sed -i  "s/$FROM/$TO/g"   $to.cpp   
-sed -i "/add_unit_test. .doc.function.predicate. \/$1/{h;s/$1/$2/;H;x}" CMakeLists.txt
+sed -i "/add_unit_test. .doc.function.[a-z]*. $1.cpp/{h;s/$1/$2/;H;x}" CMakeLists.txt
 
 cd $icitte
