@@ -3,7 +3,6 @@
 
 if [ "$#" -eq 0 ]
 then
-<<<<<<< HEAD
   echo 'usage: create_doc_test_from_to $1 $2 $3:  create a doc test for $2 from the one of $1, root dir being $3'
   echo '       by default  $3 is pwd'
   return
