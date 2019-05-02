@@ -19,12 +19,13 @@
 #include <eve/tags.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/signmask.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_or.hpp<
-#include <eve/function/bitofsign.hpp>
+#include <eve/function/bitwise_or.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_inf.hpp>
+#include <eve/function/is_less.hpp>
 #include <eve/function/refine_rec.hpp>
 #include <type_traits>
  
@@ -34,7 +35,7 @@ namespace eve::detail
   // double
   template<typename N>
   EVE_FORCEINLINE wide<double, N, avx_> rec_(EVE_SUPPORTS(avx_),
-                                             raw_type const &
+                                             raw_type const &, 
                                              wide<double, N, avx_> const &a0) noexcept
   {
     return _mm256_cvtps_pd(_mm_rcp_ps( _mm256_cvtpd_ps(a0) ));//The error for this approximation is no more than 1.5.e-12
@@ -53,8 +54,9 @@ namespace eve::detail
                 );
 #endif
 #ifndef BOOST_SIMD_NO_DENORMALS
-    auto is_den = is_less(bs::abs(a00), Smallestposval<t_t>());
-    return if_else(is_den,  bitwise_or(bitofsign(a00), Inf<t_t>()), a0);
+    auto bitofsign = bitwise_and(a00, Signmask<t_t>());
+    auto is_den = is_less(eve::abs(a00), Smallestposval<t_t>());
+    return if_else(is_den,  bitwise_or(bitofsign, Inf<t_t>()), a0);
 #else
     auto is_den = is_eqz(a00);
     return if_else(is_den,  bitwise_or(a00, Inf<t_t>()), a0);
@@ -65,7 +67,7 @@ namespace eve::detail
   // float
   template<typename N>
   EVE_FORCEINLINE wide<float, N, avx_> rec_(EVE_SUPPORTS(avx_),
-                                             raw_type const &
+                                             raw_type const &, 
                                              wide<float, N, avx_> const &a0) noexcept
   {
     return _mm256_rcp_ps( a0 );
@@ -73,7 +75,7 @@ namespace eve::detail
 
   template<typename N>
   EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(avx_),
-                            wide<double, N, avx_> const &a00) noexcept
+                            wide<float, N, avx_> const &a00) noexcept
   {
     using t_t = wide<double, N, avx_>; 
     t_t a0 =refine_rec(a00,refine_rec(a00, rec[raw_](a00)));
@@ -84,8 +86,9 @@ namespace eve::detail
                 );
 #endif
 #ifndef BOOST_SIMD_NO_DENORMALS
-    auto is_den = is_less(bs::abs(a00), Smallestposval<t_t>());
-    return if_else(is_den,  bitwise_or(bitofsign(a00), Inf<t_t>()), a0);
+    auto bitofsign = bitwise_and(a00, Signmask<t_t>());
+    auto is_den = is_less(eve::abs(a00), Smallestposval<t_t>());
+    return if_else(is_den,  bitwise_or(bitofsign, Inf<t_t>()), a0);
 #else
     auto is_den = is_eqz(a00);
     return if_else(is_den,  bitwise_or(a00, Inf<t_t>()), a0);

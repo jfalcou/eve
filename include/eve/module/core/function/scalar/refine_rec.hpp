@@ -8,40 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_REC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_REC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_REFINE_REC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_REFINE_REC_HPP_INCLUDED
 
+//TODO generic, I believe, not scalar
+//TODO change as soon as fma fnms are available
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/abs.hpp>
+//TODO#include <eve/function/fma.hpp>
+//TODO#include <eve/function/fnms.hpp>
+//#include <eve/function/mul.hpp>
+#include <eve/function/sub.hpp>
 #include <type_traits>
-
-#ifdef BOOST_MSVC
-  #pragma warning(push)
-  #pragma warning(disable: 4723) // potential divide by 0
-#endif
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto rec_(EVE_SUPPORTS(cpu_)
-                                     , T const &a) noexcept requires( T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto refine_rec_(EVE_SUPPORTS(cpu_)
+                                     , T const &a
+                                     , T const &x) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-      return One<T>()/a;
-    else
-      return a ? ((eve::abs(a) == One<T>()) ? a  : Zero<T>()) : Valmax<T>();
+    // Newton-Raphson: 1/X ~= x*(1-a0*x) + x
+    return (One<T>()-a*x)*x+x; 
+    //TODO return fma(fnms(x, a0, One<T>()), x, x);
   }
 }
-
-#ifdef BOOST_MSVC
-  #pragma warning(pop)
-#endif
 
 #endif
