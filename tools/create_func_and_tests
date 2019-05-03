@@ -22,21 +22,21 @@ then
   return
 elif  [ "$#" -eq 2 ]
 then
-  rootdir = pwd
+  rootdir=pwd
   echo "create the files of a function "$2" from the files of the function "$1
   root "is "$rootdir
 else
-  rootdir = $3
+  rootdir=$3
   echo "create the files of a function "$2" from the files of the function "$1
   root "is "$rootdir
 fi
 
 from=$1
 to=$2
+base_path=`dirname $0`
 
-source ./create_func_from_to $from $to
-source ./create_simd_test_from_to $from $to
-source ./create_scalar_test_from_to $from $to
-source ./create_doc_test_from_to $from $to
-source ./create_bench_from_to $from $to
-
+source $base_path/create_func_from_to $from $to
+source $base_path/create_simd_test_from_to $from $to
+source $base_path/create_scalar_test_from_to $from $to
+source $base_path/create_doc_test_from_to $from $to
+source $base_path/create_bench_from_to $from $to
