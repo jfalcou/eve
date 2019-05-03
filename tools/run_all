@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
 ##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry Lapreste
+##  Copyright 2019 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -9,12 +9,20 @@
 #!/bin/bash
 # Usage:
 #
-#  source run_tests.sh <test ID>
+#  source run_all.sh <root_path>
 #
-test=$1
+if [[ "$#" -lt 1 ]]; then
+  root_path=`pwd`
+else
+  root_path=$1
+fi
 
-for i in `ls build`
+for target in `ls ${root_path}/build`
 do
-  ./run_test.sh ${i} ${test}
+  echo ${target}
+  echo "*******************************************"
+  cd $root_path/build/$target
+  ninja unit
+  ctest
+  cd ${root_path}
 done
-

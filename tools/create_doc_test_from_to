@@ -1,3 +1,11 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 #!/bin/bash
 # crée un test de doc pour $2 à partir de celui de $1, $3 donnant le chemin de eve
 
@@ -14,7 +22,7 @@ then
   return
 elif [ "$#" -eq 2 ]
 then
-  echo "create a doc test for "$2" from the one of "$1" 
+  echo "create a doc test for "$2" from the one of "$1"
   rootdir=$(pwd)
   echo "root dir is "$rootdir
 else
@@ -33,8 +41,8 @@ testdoc=test/doc
 
 cp -n $rootdir/$testdoc/$from.cpp    $rootdir/$testdoc/$to.cpp
 cd $rootdir/$testdoc
-sed -i  "s/$from/$to/g"   $to.cpp  
-sed -i  "s/$FROM/$TO/g"   $to.cpp   
+sed -i  "s/$from/$to/g"   $to.cpp
+sed -i  "s/$FROM/$TO/g"   $to.cpp
 sed -i "/add_unit_test. .doc.function.[a-z]*. $1.cpp/{h;s/$1/$2/;H;x}" CMakeLists.txt
 
 cd $icitte

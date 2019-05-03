@@ -1,5 +1,13 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 #!/bin/bash
-# crée les fichiers de test scalar de la fonction $2 à partir des fichiers de $1, $3 donnant le chemin de eve 
+# crée les fichiers de test scalar de la fonction $2 à partir des fichiers de $1, $3 donnant le chemin de eve
 
 if [ "$#" -eq 0 ]
 then
@@ -27,8 +35,8 @@ TO="${to^^}"
 icitte=$(pwd)
 testscalar=test/unit/module/core/scalar
 
-mkdir -p $rootdir/$testscalar/$to 
-cp -pR $rootdir/$testscalar/$from/* $icitte/$testscalar/$to  
+mkdir -p $rootdir/$testscalar/$to
+cp -pR $rootdir/$testscalar/$from/* $icitte/$testscalar/$to
 
 cd  $rootdir/$testscalar/$to
 dirs=$(ls -d */ 2>/dev/null || true)
@@ -38,7 +46,7 @@ then
   cd  $rootdir/$testscalar/$to
   mv $from.hpp $to.hpp
   sed -i "s/$from/$to/g" *.?pp
-  sed -i "s/$FROM/$TO/g" $to.hpp  
+  sed -i "s/$FROM/$TO/g" $to.hpp
   sed -i "/list_tests..scalar\/$from. /{h;s/$from/$to/;H;x}" ../../CMakeLists.txt
 else
   for dir in $(ls -d */)
@@ -47,7 +55,7 @@ else
     cd  $rootdir/$testscalar/$to/$d
     mv $from.hpp $to.hpp
     sed -i "s/$from/$to/g" *.?pp
-    sed -i "s/$FROM/$TO/g" $to.hpp  
+    sed -i "s/$FROM/$TO/g" $to.hpp
     sed -i "/list_tests..scalar\/$from\/$d. /{h;s/$from/$to/;H;x}" ../../../CMakeLists.txt
   done
 fi

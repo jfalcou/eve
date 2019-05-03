@@ -1,3 +1,11 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 #!/bin/bash
 # crée les fichiers de la fonction $2 à partir des fichiers de $1,  $3 est le chemin de eve
 # ce fichier doit être dans le répertoire de base de eve
@@ -16,11 +24,11 @@ elif  [ "$#" -eq 2 ]
 then
   rootdir = pwd
   echo "create the files of a function "$2" from the files of the function "$1
-  root "is "$rootdir 
+  root "is "$rootdir
 else
   rootdir = $3
   echo "create the files of a function "$2" from the files of the function "$1
-  root "is "$rootdir 
+  root "is "$rootdir
 fi
 
 from=$1

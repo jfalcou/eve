@@ -1,5 +1,13 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 #!/bin/bash
-# crée les fichiers de la fonction $2 à partir des fichiers de $1 
+# crée les fichiers de la fonction $2 à partir des fichiers de $1
 # ce fichier doit être dans le répertoire de base de eve
 
 if [ "$#" -eq 0 ]
@@ -22,12 +30,12 @@ icitte=$(pwd)
 incl=include/eve/
 
 files=$(find $icitte/$incl -type f -name $from.hpp)
-for fil in $files 
+for fil in $files
 do
   newfil=${fil%/$from.hpp}/$to.hpp
   cp -n $fil $newfil
   sed -i "s/$from/$to/g" $newfil
-  sed -i "s/$FROM/$TO/g" $newfil    
+  sed -i "s/$FROM/$TO/g" $newfil
 done
 
 cd $icitte

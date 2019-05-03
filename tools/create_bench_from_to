@@ -1,3 +1,11 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
 #!/bin/bash
 # crée un benchmark pour $2 à partir de celui de $1, $3 donnant le chemin de eve
 
@@ -26,20 +34,20 @@ icitte=$(pwd)
 where=benchmark/module/core
 
 mkdir -p $rootdir/$where/simd/$to
-mkdir -p $rootdir/$where/scalar/$to 
+mkdir -p $rootdir/$where/scalar/$to
 
-for fil in double float int8 int16 int32 int64 uint8 uint16 uint32 uint64 
+for fil in double float int8 int16 int32 int64 uint8 uint16 uint32 uint64
 do
-  cp -n $rootdir/$where/scalar/$1/$fil.cpp    $where/scalar/$2/$fil.cpp   
-  cp -n $rootdir/$where/simd/$1/$fil.cpp    $where/simd/$2/$fil.cpp   
+  cp -n $rootdir/$where/scalar/$1/$fil.cpp    $where/scalar/$2/$fil.cpp
+  cp -n $rootdir/$where/simd/$1/$fil.cpp    $where/simd/$2/$fil.cpp
   cd $rootdir/$where/scalar/$2
-  sed -i "s/$from/$to/g"   $fil.cpp  
+  sed -i "s/$from/$to/g"   $fil.cpp
   cd $rootdir/$where/simd/$2
-  sed -i "s/$from/$to/g"   $fil.cpp  
-  cd $rootdir       
-done    
+  sed -i "s/$from/$to/g"   $fil.cpp
+  cd $rootdir
+done
 
-cd $rootdir/$where  
+cd $rootdir/$where
 sed -i "/list_benchs..simd\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
 sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
 
