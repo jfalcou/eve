@@ -37,7 +37,7 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) == 1)
       {
-        auto mask = Constant<wide<std::int16_t>,0x00FF>();
+        auto mask = Constant<wide<std::int16_t,fixed<N::value/2>>,0x00FF>();
         auto const hmul = _mm256_mullo_epi16( _mm256_srli_epi16(v0.storage(), 8)
                                             , _mm256_srli_epi16(v1.storage(), 8)
                                             );

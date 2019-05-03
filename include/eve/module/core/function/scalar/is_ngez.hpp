@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/function/scalar/is_ltz.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
@@ -25,7 +26,7 @@ namespace eve::detail
   {
     if constexpr(std::is_unsigned_v<T>)
     {
-      return False(as(a));
+      return False<T>();
     }
     else
     {

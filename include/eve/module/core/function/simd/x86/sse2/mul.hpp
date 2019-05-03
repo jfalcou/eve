@@ -33,7 +33,7 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) == 1)
       {
-        auto mask = Constant<wide<std::int16_t,fixed<8>>,0x00FF>();
+        auto mask = Constant<wide<std::int16_t,fixed<N::value/2>>,0x00FF>();
         return _mm_or_si128 ( _mm_and_si128(mask, _mm_mullo_epi16(v0, v1))
                             , _mm_slli_epi16( _mm_and_si128 ( mask
                                                             , _mm_mullo_epi16( _mm_srli_epi16(v0, 8)
