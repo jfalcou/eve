@@ -6,7 +6,7 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
+        
 ##==================================================================================================
 ## scalar tests
 list_tests("scalar/abs"     "core" ${all_types})
@@ -41,12 +41,14 @@ list_tests("scalar/is_ltz" "core" ${all_types})
 list_tests("scalar/is_greater" "core" ${all_types})
 list_tests("scalar/is_greater_equal" "core" ${all_types})
 list_tests("scalar/is_not_greater_equal" "core" ${all_types})
+list_tests("scalar/is_not_less_equal" "core" ${all_types})
 list_tests("scalar/is_inf" "core" ${all_types})
 list_tests("scalar/is_less" "core" ${all_types})
 list_tests("scalar/is_lessgreater" "core" ${all_types})
 list_tests("scalar/is_less_equal" "core" ${all_types})
 list_tests("scalar/is_nan" "core" ${all_types})
 list_tests("scalar/is_nez" "core" ${all_types})
+list_tests("scalar/is_ngez" "core" ${all_types})
 list_tests("scalar/is_not_equal" "core" ${all_types})
 list_tests("scalar/is_not_equal_with_equal_nans" "core" ${all_types})
 list_tests("scalar/is_not_finite" "core" ${all_types})
@@ -117,8 +119,10 @@ list_tests("simd/is_positive" "core" ${all_types})
 list_tests("simd/is_ltz" "core" ${all_types})
 list_tests("simd/is_greater/arithmetic" "core" ${all_types})
 list_tests("simd/is_not_greater_equal/arithmetic" "core" ${all_types})
+list_tests("simd/is_not_less_equal/arithmetic" "core" ${all_types})
 list_tests("simd/is_greater/logical" "core" ${all_types})
 list_tests("simd/is_not_greater_equal/logical" "core" ${all_types})
+list_tests("simd/is_not_less_equal/logical" "core" ${all_types})
 list_tests("simd/is_greater_equal/arithmetic" "core" ${all_types})
 list_tests("simd/is_greater_equal/logical" "core" ${all_types})
 list_tests("simd/is_inf" "core" ${all_types})
@@ -130,6 +134,7 @@ list_tests("simd/is_less_equal/arithmetic" "core" ${all_types})
 list_tests("simd/is_less_equal/logical" "core" ${all_types})
 list_tests("simd/is_nan" "core" ${all_types})
 list_tests("simd/is_nez" "core" ${all_types})
+list_tests("simd/is_ngez" "core" ${all_types})
 list_tests("simd/is_not_equal/arithmetic" "core" ${all_types})
 list_tests("simd/is_not_equal/logical" "core" ${all_types})
 list_tests("simd/is_not_equal_with_equal_nans/arithmetic" "core" ${all_types})

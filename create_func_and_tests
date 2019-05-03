@@ -13,6 +13,7 @@ then
   echo "create_func_and_tests: invalid number of arguments"
   return
 elif  [ "$#" -eq 2 ]
+then
   rootdir = pwd
   echo "create the files of a function "$2" from the files of the function "$1
   root "is "$rootdir 
