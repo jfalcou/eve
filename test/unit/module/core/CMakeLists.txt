@@ -6,7 +6,7 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-        
+
 ##==================================================================================================
 ## scalar tests
 list_tests("scalar/abs"     "core" ${all_types})
@@ -65,6 +65,7 @@ list_tests("scalar/logical_notor" "core" ${all_types})
 list_tests("scalar/logical_ornot" "core" ${all_types})
 list_tests("scalar/logical_or" "core" ${all_types})
 list_tests("scalar/logical_xor" "core" ${all_types})
+list_tests("scalar/mul"  "core" ${all_types})
 list_tests("scalar/popcnt"  "core" ${integral_types})
 list_tests("scalar/shl"  "core" ${integral_types})
 list_tests("scalar/shr"  "core" ${integral_types})
@@ -162,6 +163,7 @@ list_tests("simd/logical_ornot/arithmetic" "core" ${all_types})
 list_tests("simd/logical_ornot/logical" "core" ${all_types})
 list_tests("simd/logical_xor/arithmetic" "core" ${all_types})
 list_tests("simd/logical_xor/logical" "core" ${all_types})
+list_tests("simd/mul" "core" ${all_types})
 list_tests("simd/shl" "core" ${integral_types})
 list_tests("simd/shr" "core" ${integral_types})
 list_tests("simd/sub"         "core" ${all_types})
