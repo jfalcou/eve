@@ -14,9 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/function/is_unordered.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,14 +25,13 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_not_less_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
                             requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
-    if constexpr( is_logical_v<T> || is_logical_v<U>)
-      return static_cast<bool>(a) <  static_cast<bool>(b);
+    if constexpr(is_logical_v<T> || is_logical_v<U>)
+      return static_cast<bool>(a) < static_cast<bool>(b);
     else if constexpr(std::is_integral_v<T>)
-      return a >  b; 
+      return a >  b;
     else
-      return (a > b) || is_unordered(a, b); 
+      return (a > b) || is_unordered(a, b);
   }
 }
-
 
 #endif
