@@ -8,14 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_NOT_GREATER_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_NOT_GREATER_HPP_INCLUDED
+#include <eve/function/is_not_greater.hpp>
+#include <cstddef>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        std::int16_t
+#define FUNCTION()    eve::is_not_greater
+#define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,-100,100)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
-}
-
-#endif
+#include "bench.hpp"
