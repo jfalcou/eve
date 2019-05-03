@@ -27,11 +27,11 @@ namespace eve::detail
                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
                                     )
   {
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return mul(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return mul(U{a},b);
     }

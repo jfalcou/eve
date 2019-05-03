@@ -26,16 +26,16 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto logical_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto logical_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return logical_notand(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return logical_notand(U{a},b);
     }
@@ -63,15 +63,15 @@ namespace eve::detail
       }
     }
   }
-
+  
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto logical_notand_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &a, logical<U> const &b
-                                          ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+  EVE_FORCEINLINE  auto logical_notand_( EVE_SUPPORTS(cpu_),
+                                         logical<T> const &a, logical<U> const &b
+                                       ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
     return bitwise_cast<logical<T>>(bitwise_notand(bitwise_mask(a), bitwise_mask(b)) );
   }

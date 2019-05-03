@@ -25,22 +25,22 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_not_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto is_not_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
     // If one of argument is not Vectorized, recall once vectorized
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_not_less(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_not_less(U{a},b);
     }
     // Both arguments are vectorized ...
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( std::is_same_v<T, U> )
     {
       if constexpr( is_aggregated_v<typename T::abi_type> )
       {

@@ -34,16 +34,16 @@ namespace eve::detail
                           )
   {
     // If one of argument is not Vectorized, recall once vectorized
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_unordered(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_unordered(U{a},b);
     }
     // Both arguments are vectorized ...
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( std::is_same_v<T, U> )
     {
       if constexpr( is_aggregated_v<typename T::abi_type> )
       {
