@@ -22,11 +22,11 @@ then
   return
 elif [ "$#" -eq 2 ]
 then
-  echo "create a doc test for "$2" from the one of "$1"
+  echo "create a doc test for "$2" from the one of "$1 
   rootdir=$(pwd)
   echo "root dir is "$rootdir
 else
-  echo "create a doc test for "$2" from the one of "$1"
+  echo "create a doc test for "$2" from the one of "$1
   rootdir=$3
   echo "root dir is "$rootdir
 fi
