@@ -2,16 +2,18 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_DENORMAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_DENORMAL_HPP_INCLUDED
+#include <eve/function/is_not_denormal.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/scalar/is_not_denormal.hpp>
-#include <eve/function/simd/is_not_denormal.hpp>
+#define TYPE()        eve::wide<std::int32_t>
+#define FUNCTION()    eve::is_not_denormal
+#define SAMPLES(N)    random<T>(N,-100,100)
 
-#endif
+#include "bench.hpp"

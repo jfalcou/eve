@@ -8,10 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_DENORMAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_DENORMAL_HPP_INCLUDED
 
-#include <eve/function/scalar/is_not_denormal.hpp>
-#include <eve/function/simd/is_not_denormal.hpp>
-
-#endif
+using Type = double;
+#include "is_not_denormal.hpp"
