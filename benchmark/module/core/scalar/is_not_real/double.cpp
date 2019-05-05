@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_REAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_REAL_HPP_INCLUDED
+#include <eve/function/is_not_real.hpp>
 
-#include <eve/function/scalar/is_not_real.hpp>
-#include <eve/function/simd/is_not_real.hpp>
+#define TYPE()        double
+#define FUNCTION()    eve::is_not_real
+#define SAMPLES(N)    random<T>(N,-100.,100.)
 
-#endif
+#include "bench.hpp"
