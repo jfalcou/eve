@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
+#include <eve/function/is_not_imag.hpp>
 
-#include <eve/function/scalar/is_not_imag.hpp>
-#include <eve/function/simd/is_not_imag.hpp>
+#define TYPE()        float
+#define FUNCTION()    eve::is_not_imag
+#define SAMPLES(N)    random<T>(N,-100.f,100.f)
 
-#endif
+#include "bench.hpp"

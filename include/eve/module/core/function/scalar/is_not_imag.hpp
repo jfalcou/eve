@@ -8,14 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_NOT_IMAG_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_NOT_IMAG_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_IMAG_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_IMAG_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/function/scalar/is_nez.hpp>
+#include <eve/as_logical.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(is_not_imag_, is_not_imag);
+  template<typename T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_imag_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return eve::is_nez(a);
+  }  
 }
 
 #endif
