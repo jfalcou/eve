@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_IS_REAL_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_IS_REAL_HPP_INCLUDED
 
-#include <eve/function/definition/is_real.hpp>
-#include <eve/module/core/function/scalar/is_real.hpp>
+#include <eve/function/scalar/is_real.hpp>
+#include <eve/module/core/function/simd/is_real.hpp>
 
 #endif
+

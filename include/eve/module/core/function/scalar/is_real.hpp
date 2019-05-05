@@ -8,14 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_REAL_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_REAL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/as_logical.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(is_real_, is_real);
+  template<typename T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_real_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return True<T>();
+  }  
 }
 
 #endif

@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
+#include <eve/function/is_real.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/definition/is_real.hpp>
-#include <eve/module/core/function/scalar/is_real.hpp>
+#define TYPE()        eve::wide<std::uint32_t>
+#define FUNCTION()    eve::is_real
+#define SAMPLES(N)    random<T>(N,0,10000)
 
-#endif
+#include "bench.hpp"
