@@ -36,7 +36,7 @@
 #include <eve/function/is_ngtz.hpp>
 #include <eve/function/is_nlez.hpp>
 // #include <eve/function/is_nltz.hpp>
-// #include <eve/function/is_normal.hpp>
+#include <eve/function/is_normal.hpp>
 #include <eve/function/is_not_denormal.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/is_not_equal_with_equal_nans.hpp>
