@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_NLTZ_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_NLTZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_IS_NLTZ_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_IS_NLTZ_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_nltz_, is_nltz);
-}
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/is_nltz.hpp>
 
 #endif

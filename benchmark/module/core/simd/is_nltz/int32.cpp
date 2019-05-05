@@ -8,14 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_NLTZ_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_NLTZ_HPP_INCLUDED
+#include <eve/function/is_nltz.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        eve::wide<std::int32_t>
+#define FUNCTION()    eve::is_nltz
+#define SAMPLES(N)    random<T>(N,-100,100)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(is_nltz_, is_nltz);
-}
-
-#endif
+#include "bench.hpp"
