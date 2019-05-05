@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_NGTZ_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_NGTZ_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_IS_NGTZ_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_IS_NGTZ_HPP_INCLUDED
 
-#include <eve/function/definition/is_ngtz.hpp>
-#include <eve/module/core/function/scalar/is_ngtz.hpp>
+#include <eve/function/scalar/is_ngtz.hpp>
+#include <eve/module/core/function/simd/is_ngtz.hpp>
 
 #endif

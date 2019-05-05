@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IS_NGTZ_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IS_NGTZ_HPP_INCLUDED
+#include <eve/function/is_ngtz.hpp>
 
-#include <eve/function/definition/is_ngtz.hpp>
-#include <eve/module/core/function/scalar/is_ngtz.hpp>
+#define TYPE()        float
+#define FUNCTION()    eve::is_ngtz
+#define SAMPLES(N)    random<T>(N,-100.f,100.f)
 
-#endif
+#include "bench.hpp"

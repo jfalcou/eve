@@ -32,8 +32,8 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_nez.hpp>
-// #include <eve/function/is_ngez.hpp>
-// #include <eve/function/is_ngtz.hpp>
+#include <eve/function/is_ngez.hpp>
+#include <eve/function/is_ngtz.hpp>
 // #include <eve/function/is_nlez.hpp>
 // #include <eve/function/is_nltz.hpp>
 // #include <eve/function/is_normal.hpp>
