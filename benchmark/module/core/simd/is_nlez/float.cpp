@@ -4,15 +4,16 @@
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
-
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NLEZ_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NLEZ_HPP_INCLUDED
+#include <eve/function/is_nlez.hpp>
+#include <eve/wide.hpp>
 
-#include <eve/function/scalar/is_nlez.hpp>
-#include <eve/function/simd/is_nlez.hpp>
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::is_nlez
+#define SAMPLES(N)    random<T>(N,-100.f,100.f)
 
-#endif
+#include "bench.hpp"
+
