@@ -17,7 +17,7 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/is_equal.hpp>
-#include <eve/function/is_nan.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -27,16 +27,16 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr
   auto  is_equal_with_equal_nans_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-        requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                  detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                )
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
     // If one of argument is not Vectorized, recall once vectorized
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr(!is_vectorized_v<U> )
     {
       return is_equal_with_equal_nans(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T>)
     {
       return is_equal_with_equal_nans(U{a},b);
     }
@@ -47,7 +47,7 @@ namespace eve::detail
       {
         if constexpr(std::is_floating_point_v<typename T::value_type>)
         {
-          return logical_or(is_equal(a, b), logical_and(is_nan(a), is_nan(b)));
+          return logical_or(is_equal(a, b), is_unordered(a, b));
         }
         else
         {
@@ -61,15 +61,15 @@ namespace eve::detail
       }
     }
   }
-
+  
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto is_equal_with_equal_nans_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &a, logical<U> const &b
-                                          ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+                                                            logical<T> const &a, logical<U> const &b
+                                                          ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
     return is_equal(a, b);
   }

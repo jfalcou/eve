@@ -25,16 +25,16 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_not_less_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto is_not_less_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_not_less_equal(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_not_less_equal(U{a},b);
     }
@@ -42,31 +42,42 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T,U>)
       {
-        if constexpr( std::is_floating_point_v<typename T::value_type> )
+        if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          return logical_not(is_less_equal(a,b));
+          return aggregate( eve::is_not_less_equal, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::is_not_less_equal, a, b);
         }
         else
         {
-          return is_greater(a,b);
+          if constexpr( std::is_floating_point_v<typename T::value_type> )
+          {
+            return logical_not(is_less_equal(a,b));
+          }
+          else
+          {
+            return is_greater(a,b);
+          }
         }
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::is_not_less_equal] - Incompatible types.");
+        static_assert( wrong<T,U>, "[eve::is_not_less_equal] - Unsupported ABI.");
         return {};
       }
     }
   }
 
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_not_less_equal_( EVE_SUPPORTS(cpu_),
+  EVE_FORCEINLINE  auto is_not_less_equal_( EVE_SUPPORTS(cpu_),
                                             logical<T> const &a, logical<U> const &b
                                           ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
     return bitwise_cast<logical<T>>( is_not_less_equal(a.bits(),b.bits()) );
   }

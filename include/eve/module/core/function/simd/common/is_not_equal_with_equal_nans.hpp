@@ -25,18 +25,18 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr
+  EVE_FORCEINLINE
   auto  is_not_equal_with_equal_nans_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-        requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                  detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                )
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
     // If one of argument is not Vectorized, recall once vectorized
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_not_equal_with_equal_nans(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_not_equal_with_equal_nans(U{a},b);
     }
@@ -61,15 +61,15 @@ namespace eve::detail
       }
     }
   }
-
+  
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto is_not_equal_with_equal_nans_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &a, logical<U> const &b
-                                          ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+                                                                logical<T> const &a, logical<U> const &b
+                                                              ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
     return is_not_equal(a, b);
   }

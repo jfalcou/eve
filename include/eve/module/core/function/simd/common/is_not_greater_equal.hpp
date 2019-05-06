@@ -30,11 +30,11 @@ namespace eve::detail
             detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_not_greater_equal(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_not_greater_equal(U{a},b);
     }

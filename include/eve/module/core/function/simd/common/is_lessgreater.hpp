@@ -24,44 +24,50 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_lessgreater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto is_lessgreater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
-    {
-      static_assert( std::is_same_v<T,U>, "[eve::is_lessgreater] - Incompatible types.");
-
-      if constexpr(std::is_integral_v<typename T::value_type>)
-      {
-        return is_not_equal(a, b);
-      }
-      else
-      {
-        return logical_and(is_not_equal(a, b), is_ordered(a, b));
-      }
-    }
-    else  if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_lessgreater(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_lessgreater(U{a},b);
     }
+    else
+    {
+      if constexpr( std::is_same_v<T, U> )
+      {
+        if constexpr(std::is_integral_v<typename T::value_type>)
+        {
+          return is_not_equal(a, b);
+        }
+        else
+        {
+          return logical_and(is_not_equal(a, b), is_ordered(a, b));
+        }
+      }
+      else
+      {
+        
+        static_assert( std::is_same_v<T,U>, "[eve::is_lessgreater] - Incompatible types.");
+      }
+    }
   }
-
+  
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_lessgreater_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &v0, logical<U> const &v1
-                                          ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+  EVE_FORCEINLINE  auto is_lessgreater_( EVE_SUPPORTS(cpu_),
+                                         logical<T> const &v0, logical<U> const &v1
+                                       ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
-      return is_not_equal(v0, v1);
+    return is_not_equal(v0, v1);
   }
 }
 

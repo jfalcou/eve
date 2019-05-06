@@ -26,16 +26,16 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto is_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    if constexpr( !is_vectorized_v<U> )
     {
       return is_less(a, T{b});
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( !is_vectorized_v<T> )
     {
       return is_less(U{a},b);
     }
@@ -64,15 +64,15 @@ namespace eve::detail
       }
     }
   }
-
+  
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_less_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &a, logical<U> const &b
-                                          ) noexcept
-                            requires( logical<T>,
-                                      Vectorized<T>, Vectorized<U>,
-                                      EqualCardinal<T,U>
-                                    )
+  EVE_FORCEINLINE  auto is_less_( EVE_SUPPORTS(cpu_),
+                                  logical<T> const &a, logical<U> const &b
+                                ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
   {
     return bitwise_cast<logical<T>>( is_less(a.bits(),b.bits()) );
   }

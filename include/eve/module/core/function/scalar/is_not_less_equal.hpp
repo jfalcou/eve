@@ -26,7 +26,7 @@ namespace eve::detail
                             requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
-      return static_cast<bool>(a) < static_cast<bool>(b);
+      return static_cast<bool>(a) >  static_cast<bool>(b);
     else if constexpr(std::is_integral_v<T>)
       return a >  b;
     else
