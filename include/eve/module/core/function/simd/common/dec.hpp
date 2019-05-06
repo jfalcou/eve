@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_INC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_INC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_DEC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_DEC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
@@ -30,28 +30,28 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(simd_),
                             wide<T, N, ABI> const &v) noexcept
   {
-    return v+One(as(v)); 
+    return v-One(as(v)); 
   }
   
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE constexpr auto dec_(EVE_SUPPORTS(simd_)
                                      , U const & cond
                                      , wide<T, N, ABI> const &v) noexcept
   {
     using t_t =  wide<T, N, ABI>; 
     if constexpr(!is_vectorized_v<U>)
-      return cond ? inc(v) : v;
+      return cond ? dec(v) : v;
     else
       if constexpr(std::is_integral_v<T>)
-        return v-(bitwise_mask(bitwise_cast<t_t>(cond)));
+        return v+(bitwise_mask(bitwise_cast<t_t>(cond)));
       else
-        return if_else(cond, v+One(as(v)), v);
+        return if_else(cond, v-One(as(v)), v);
   }
 
 }

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_INC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_INC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_DEC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_DEC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -23,23 +23,23 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr T dec_(EVE_SUPPORTS(cpu_)
                                      , T const &a) noexcept
   {
-    return static_cast<T>(a+One<T>()); 
+    return static_cast<T>(a-One<T>()); 
   }
   
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE constexpr T dec_(EVE_SUPPORTS(simd_)
                                      , U const & cond
                                      , T const &a) noexcept
   {
     if (std::is_integral_v<T>)
-      return static_cast<T>(a-bitwise_mask(T(cond))); 
+      return static_cast<T>(a+bitwise_mask(T(cond))); 
     else
-      return cond ? inc(a) : a;
+      return cond ? dec(a) : a;
   } 
 }
 

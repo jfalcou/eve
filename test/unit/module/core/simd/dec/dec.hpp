@@ -13,13 +13,13 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/inc.hpp>
+#include <eve/function/simd/dec.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check inc behavior on wide",
+TTS_CASE_TPL("Check dec behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -33,12 +33,12 @@ TTS_CASE_TPL("Check inc behavior on wide",
 
   wide<Type, T>  lhs([](auto i, auto) { return i%2; }), 
     tst([](auto i, auto) { return i%3; }),                     
-    ref([](auto i, auto) { return eve::inc(Type(i%2)); }), 
-    refc([](auto i, auto) { return eve::inc[i%3](Type(i%2)); });  
-  TTS_EQUAL(ref, eve::inc(lhs));
-  TTS_EQUAL(refc, eve::inc[tst](lhs));
-  TTS_EQUAL(lhs , eve::inc[1 > 2](lhs));
-  TTS_EQUAL(eve::inc(lhs), eve::inc[3 > 2](lhs));
+    ref([](auto i, auto) { return eve::dec(Type(i%2)); }), 
+    refc([](auto i, auto) { return eve::dec[i%3](Type(i%2)); });  
+  TTS_EQUAL(ref, eve::dec(lhs));
+  TTS_EQUAL(refc, eve::dec[tst](lhs));
+  TTS_EQUAL(lhs , eve::dec[1 > 2](lhs));
+  TTS_EQUAL(eve::dec(lhs), eve::dec[3 > 2](lhs));
 }
 
 
