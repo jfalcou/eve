@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
+#include <eve/function/min.hpp>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        float
+#define FUNCTION()    eve::min
+#define SAMPLES(N)    random<T>(N,-100.f,100.f),random<T>(N,-100.f,100.f)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(min_, min);
-}
-
-#endif
+#include "bench.hpp"

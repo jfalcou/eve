@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_MIN_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_MIN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(min_, min);
-}
+#include <eve/function/scalar/min.hpp>
+#include <eve/module/core/function/simd/min.hpp>
 
 #endif

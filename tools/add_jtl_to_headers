@@ -7,25 +7,21 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 #!/bin/bash
-# crée un benchmark pour $2 à partir de celui de $1, $3 donnant le chemin de eve
+# ajoute $1 au header ne le possédant pas juste après la ligne FALCOU, $2 donnant le chemin de eve
 
 
 if [ "$#" -eq 0 ]
 then
-  echo 'usage: create_bench_from_to $1 $2 $3:  create a benchmark for $2 from the one of $1, root dir being $3'
+  echo 'usage: add_to_header $1 $2 : $1 new header line $2 path to eve'
   return
 elif [ "$#" -eq 1 ]
 then
-  echo "create_bench_from_to: invalid number of arguments"
-  return
-elif  [ "$#" -eq 2 ]
-then
   rootdir=$(pwd)
-  echo "create a benchmark for "$2" from the one of "$1
+  echo " add_to_header "$1
   echo "root dir is "$rootdir
 else
-  rootdir=$3
-  echo "create a benchmark for "$2" from the one of "$1
+  rootdir=$2
+  echo " add_to_header "$1
   echo "root dir is "$rootdir
 fi
 from=$1

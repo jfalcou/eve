@@ -8,14 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_MIN_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_MIN_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(min_, min);
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, ppc_>
+                  min_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
+  {
+    return vec_min(v0.storage(), v1.storage());
+  }
 }
 
 #endif
