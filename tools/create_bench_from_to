@@ -48,7 +48,26 @@ do
 done
 
 cd $rootdir/$where
-sed -i "/list_benchs..simd\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
-sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
+lookfor='list_benchs("scalar/'$2
+echo $lookfor
+grep 'list_benchs("scalar/'$2   CMakeLists.txt
+
+if [ ! -z "$(echo grep $lookfor  CMakeLists.txt )" ]
+then
+ echo 1
+else 
+ echo 0
+fi
+
+#echo  "$test_valide"
+cd $icitte
+return
+if echo  "CMakeLists.txt" | grep $lookfor >/dev/null 2>&1
+then
+  echo "CMakeLists aleady contains "$1" references"
+else
+  sed -i "/list_benchs..simd\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
+  sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
+fi
 
 cd $icitte
