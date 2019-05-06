@@ -27,25 +27,17 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(simd_),
                                                wide<T, N, ABI> const &v) noexcept
   {
-    return Zero(as(v)) - v;
+   if constexpr( is_native_v<ABI> )
+    {
+      return Zero(as(v)) - v;
+    }
+    else
+    {
+      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::unary_minus, v);
+      if constexpr( is_emulated_v<ABI>   ) return map(eve::unary_minus, v);
+    }   
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> unary_minus_(EVE_SUPPORTS(simd_),
-                                                       wide<T, N, aggregated_> const &v) noexcept
-  {
-    return aggregate(eve::unary_minus, v);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto unary_minus_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v0) noexcept
-  {
-    return map(eve::unary_minus, v0);
-  }
 }
 
 // -------------------------------------------------------------------------------------------------
