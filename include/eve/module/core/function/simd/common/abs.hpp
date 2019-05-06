@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,18 +15,16 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/function/bitwise_notand.hpp>
 #include <eve/constant/mzero.hpp>
+#include <eve/function/bitwise_notand.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/shr.hpp>
+#include <eve/forward.hpp>
 #include <type_traits>
 #include <cassert>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Basic
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_),
                             wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>,
@@ -36,8 +34,7 @@ namespace eve::detail
     {
       if constexpr(std::is_floating_point_v<T>)
       {
-        using t_t = wide<T, N, ABI>;
-        return bitwise_notand(Mzero<t_t>(), v);
+        return bitwise_notand(Mzero(as(v)), v);
       }
       else if constexpr(std::is_integral_v<T>)
       {
