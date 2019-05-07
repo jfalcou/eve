@@ -64,7 +64,7 @@ list_benchs("scalar/is_denormal" "core" ${all_types})
 list_benchs("scalar/bitwise_not" "core" ${all_types})
 list_benchs("scalar/bitwise_mask" "core" ${all_types})
 list_benchs("scalar/is_negative" "core" ${all_types})
-
+list_benchs("scalar/inc" "core" ${all_types})
 
 ##==================================================================================================
 ## SIMD< benchmarks
@@ -123,3 +123,5 @@ list_benchs("simd/is_denormal" "core" ${all_types})
 list_benchs("simd/bitwise_not" "core" ${all_types})
 list_benchs("simd/bitwise_mask" "core" ${all_types})
 list_benchs("simd/is_negative" "core" ${all_types})
+list_benchs("simd/inc" "core" ${all_types})
+

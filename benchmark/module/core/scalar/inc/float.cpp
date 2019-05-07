@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEC_HPP_INCLUDED
-#define EVE_FUNCTION_DEC_HPP_INCLUDED
+#include <eve/function/inc.hpp>
 
-#include <eve/function/scalar/dec.hpp>
-#include <eve/function/simd/dec.hpp>
+#define TYPE()        float
+#define FUNCTION()    eve::inc
+#define SAMPLES(N)    random<T>(N,-100.f,100.f)
 
-#endif
+#include "bench.hpp"

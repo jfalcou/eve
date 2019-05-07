@@ -8,10 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEC_HPP_INCLUDED
-#define EVE_FUNCTION_DEC_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_INC_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_INC_HPP_INCLUDED
 
-#include <eve/function/scalar/dec.hpp>
-#include <eve/function/simd/dec.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(inc_, inc);
+}
 
 #endif
