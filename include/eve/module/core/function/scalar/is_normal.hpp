@@ -14,9 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/function/scalar/is_greater_equal.hpp>
 #include <eve/function/scalar/is_finite.hpp>
-#include <eve/function/scalar/is_not_denormal.hpp>
 #include <eve/function/scalar/is_nez.hpp>
+#include <eve/function/scalar/abs.hpp>
 #include <eve/is_logical.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/platform.hpp>
@@ -28,14 +30,14 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_normal_(EVE_SUPPORTS(cpu_), T const &a) noexcept
                             requires( as_logical_t<T>, Vectorizable<T> )
   {
-    if constexpr(std::is_integral_v<T> || is_logical_v<T> || !platform::supports_denormals)
+    if constexpr(std::is_integral_v<T> || is_logical_v<T>)
     {
       return is_nez(a);
     }
     else
     {
-      return is_finite(a) && is_nez(a) && is_not_denormal(a);
-    }  
+      return is_finite(a) && is_greater_equal(eve::abs(a),Smallestposval(as(a)));
+    }
   }
 }
 

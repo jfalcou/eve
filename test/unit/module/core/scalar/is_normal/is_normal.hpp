@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -28,8 +28,10 @@ TTS_CASE("Check eve::is_normal behavior")
   TTS_EXPECT_NOT( eve::is_normal(Type{0})  );
   TTS_EXPECT( eve::is_normal(Type{2}) );
 
-  TTS_EXPECT_NOT( eve::is_normal(eve::Smallestposval<Type>()/2));
-
+  if constexpr(std::is_floating_point_v<Type> )
+  {
+    TTS_EXPECT_NOT( eve::is_normal(eve::Smallestposval<Type>()/2));
+  }
 }
 
 #endif

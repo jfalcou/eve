@@ -25,7 +25,7 @@ TTS_CASE("Check is_denormal return type")
 
 TTS_CASE("Check eve::is_denormal behavior")
 {
-  TTS_EXPECT_NOT( eve::is_denormal(Type{0})  );
+  TTS_EXPECT_NOT( eve::is_denormal(Type{0}) );
   TTS_EXPECT_NOT( eve::is_denormal(Type{2}) );
 
   if constexpr(eve::platform::supports_denormals && std::is_floating_point_v<Type> )
