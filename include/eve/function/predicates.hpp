@@ -41,20 +41,20 @@
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/is_not_equal_with_equal_nans.hpp>
 #include <eve/function/is_not_equal.hpp>
-//#include <eve/function/is_not_equal_with_equal_nans.hpp>
+#include <eve/function/is_not_equal_with_equal_nans.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/is_not_greater.hpp>
-// #include <eve/function/is_not_imag.hpp>
+#include <eve/function/is_not_imag.hpp>
 #include <eve/function/is_not_inf.hpp>
-// #include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_less.hpp>
 #include <eve/function/is_not_nan.hpp>
-// #include <eve/function/is_not_real.hpp>
+#include <eve/function/is_not_real.hpp>
 // #include <eve/function/is_odd.hpp>
 #include <eve/function/is_ordered.hpp>
 #include <eve/function/is_positive.hpp>
-// #include <eve/function/is_real.hpp>
+#include <eve/function/is_real.hpp>
 #include <eve/function/is_unordered.hpp>
 
 #endif
