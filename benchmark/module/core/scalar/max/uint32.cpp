@@ -8,14 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_MAX_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_MAX_HPP_INCLUDED
+#include <eve/function/max.hpp>
+#include <cstddef>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        std::uint32_t
+#define FUNCTION()    eve::max
+#define SAMPLES(N)    random<T>(N,0,10000),random<T>(N,0,10000)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(max_, max);
-}
-
-#endif
+#include "bench.hpp"

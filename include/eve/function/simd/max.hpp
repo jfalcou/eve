@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_MAX_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_MAX_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_MAX_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_MAX_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(max_, max);
-}
+#include <eve/function/scalar/max.hpp>
+#include <eve/module/core/function/simd/max.hpp>
 
 #endif
