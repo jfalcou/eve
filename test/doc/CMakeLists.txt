@@ -10,6 +10,8 @@
 ##==================================================================================================
 ## documentation tests
 add_unit_test( "doc.function.arithmetic" abs.cpp )
+add_unit_test( "doc.function.arithmetic" min.cpp )
+add_unit_test( "doc.function.arithmetic" max.cpp )
 add_unit_test( "doc.function.arithmetic" bitwise_shl.cpp )
 add_unit_test( "doc.function.arithmetic" shl.cpp )
 add_unit_test( "doc.function.arithmetic" shr.cpp )

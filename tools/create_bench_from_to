@@ -49,25 +49,19 @@ done
 
 cd $rootdir/$where
 lookfor='list_benchs("scalar/'$2
-echo $lookfor
-grep 'list_benchs("scalar/'$2   CMakeLists.txt
-
-if [ ! -z "$(echo grep $lookfor  CMakeLists.txt )" ]
+if [ -z "$(echo grep $lookfor  CMakeLists.txt )" ]
 then
- echo 1
+  sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
 else 
- echo 0
+  echo "CMakeLists aleady contains "$1" scalar reference"
 fi
 
-#echo  "$test_valide"
-cd $icitte
-return
-if echo  "CMakeLists.txt" | grep $lookfor >/dev/null 2>&1
+lookfor='list_benchs("simd/'$2
+if [ -z "$(echo grep $lookfor  CMakeLists.txt )" ]
 then
-  echo "CMakeLists aleady contains "$1" references"
-else
   sed -i "/list_benchs..simd\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
-  sed -i "/list_benchs..scalar\/$1. /{h;s/$1/$2/;H;x}" CMakeLists.txt
+else 
+  echo "CMakeLists aleady contains "$1" simd reference"
 fi
 
 cd $icitte
