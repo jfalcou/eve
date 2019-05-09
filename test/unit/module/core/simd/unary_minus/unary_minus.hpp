@@ -27,15 +27,12 @@ TTS_CASE_TPL("Check unary_minus behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-
-  TTS_SETUP("A correctly initialized wide")
-  {
-    wide<Type, T> lhs([](int i, int) { return i + 1; }),
-        ref([](int i, int) { return eve::unary_minus(Type(i + 1)); });
-
-    TTS_SECTION("supports eve::unary_minus") { TTS_EQUAL(ref, eve::unary_minus(lhs)); }
-    TTS_SECTION("supports operator-") { TTS_EQUAL(ref, -lhs); }
-  }
+  wide<Type, T> lhs([](int i, int) { return i + 1; }),
+    ref([](int i, int) { return eve::unary_minus(Type(i + 1)); });
+  
+  TTS_EQUAL(ref, eve::unary_minus(lhs)); 
+  TTS_EQUAL(ref, -lhs);
 }
+
 
 #endif

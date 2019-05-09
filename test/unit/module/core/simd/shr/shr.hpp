@@ -31,17 +31,14 @@ TTS_CASE_TPL("Check shr behavior on wide",
 {
   using eve::wide;
   using i_t = eve::detail::as_integer_t<Type>;
-
-  TTS_SETUP("A correctly initialized wide and shift")
-  {
-    int           n = sizeof(Type) * 8 - 1;
-    wide<Type, T> lhs([](int i, int c) { return c - i; }),
-        ref([n](int i, int c) { return eve::shr(Type(c - i), i % n); });
-    wide<i_t, T> rhs([n](int i, int) { return i % n; });
-
-    TTS_SECTION("supports eve::shr") { TTS_EQUAL(ref, eve::shr(lhs, rhs)); }
-    TTS_SECTION("supports >>"      ) { TTS_EQUAL(ref, (lhs >>  rhs)); }   
-  }
+  
+  int           n = sizeof(Type) * 8 - 1;
+  wide<Type, T> lhs([](int i, int c) { return c - i; }),
+    ref([n](int i, int c) { return eve::shr(Type(c - i), i % n); });
+  wide<i_t, T> rhs([n](int i, int) { return i % n; });
+  
+  TTS_EQUAL(ref, eve::shr(lhs, rhs)); 
+  TTS_EQUAL(ref, (lhs >>  rhs));
 }
 
 TTS_CASE_TPL("Check shr behavior on wide + scalar",
@@ -55,15 +52,12 @@ TTS_CASE_TPL("Check shr behavior on wide + scalar",
 {
   using eve::wide;
 
-  TTS_SETUP("A correctly initialized wide and a scalar shift")
-  {
-    auto          rhs = sizeof(Type) * 4;
-    wide<Type, T> lhs([](int i, int c) { return c - i; }),
-        ref([rhs](int i, int c) { return eve::shr(Type(c - i), rhs); });
-
-    TTS_SECTION("supports eve::shr") { TTS_EQUAL(ref, eve::shr(lhs, rhs)); }
-    TTS_SECTION("supports >>"      ) { TTS_EQUAL(ref, (lhs >>  rhs)); }   
-  }
+  auto          rhs = sizeof(Type) * 4;
+  wide<Type, T> lhs([](int i, int c) { return c - i; }),
+    ref([rhs](int i, int c) { return eve::shr(Type(c - i), rhs); });
+  
+  TTS_EQUAL(ref, eve::shr(lhs, rhs)); 
+  TTS_EQUAL(ref, (lhs >>  rhs)); 
 }
 
 #endif

@@ -25,20 +25,16 @@ TTS_CASE_TPL( "Check bitwise_notor behavior on homogeneous wide"
             )
 {
   using eve::wide;
-
-  TTS_SETUP( "A correctly initialized wide" )
-  {
-    wide<Type,T>  lhs([](int i, int c) { return c-i; })
-                , rhs([](int i, int  ) { return i+1; })
-                , ref([](int i, int c) { return eve::bitwise_notor(Type(c-i),Type(i+1)); });
-
-    TTS_SECTION( "supports eve::bitwise_notor" )  {
-      if constexpr(std::is_integral_v<Type>)
-        TTS_EQUAL(ref, eve::bitwise_notor(lhs,rhs));
-      else
-        TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs,rhs));
-    }
-  }
+  wide<Type,T>  lhs([](int i, int c) { return c-i; })
+    , rhs([](int i, int  ) { return i+1; })
+    , ref([](int i, int c) { return eve::bitwise_notor(Type(c-i),Type(i+1)); });
+  
+  
+  if constexpr(std::is_integral_v<Type>)
+    TTS_EQUAL(ref, eve::bitwise_notor(lhs,rhs));
+  else
+    TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs,rhs));
+  
 }
 
 TTS_CASE_TPL( "Check bitwise_notor behavior on wide + scalar"
@@ -46,20 +42,15 @@ TTS_CASE_TPL( "Check bitwise_notor behavior on wide + scalar"
             )
 {
   using eve::wide;
-
-  TTS_SETUP( "A correctly initialized wide" )
-  {
-    wide<Type,T>  lhs([](int i, int c) { return i%3; })
-                , ref([](int i, int c) { return eve::bitwise_notor( Type(i%3), Type(7) ); });
-
-    TTS_SECTION("supports eve::bitwise_notor")
-    {
-      if constexpr(std::is_integral_v<Type>)
-        TTS_EQUAL(ref, eve::bitwise_notor(lhs, Type(7)));
-      else
-        TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs, Type(7)));
-    }
-  }
+  
+  wide<Type,T>  lhs([](int i, int c) { return i%3; })
+    , ref([](int i, int c) { return eve::bitwise_notor( Type(i%3), Type(7) ); });
+  
+  if constexpr(std::is_integral_v<Type>)
+    TTS_EQUAL(ref, eve::bitwise_notor(lhs, Type(7)));
+  else
+    TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs, Type(7)));
+  
 }
 
 #endif

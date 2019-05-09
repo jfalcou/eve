@@ -28,15 +28,11 @@ TTS_CASE_TPL("Check bitwise_and behavior on homogeneous wide",
              fixed<64>)
 {
   using eve::wide;
-
-  TTS_SETUP("A correctly initialized wide")
-  {
-    wide<Type, T> lhs([](int i, int c) { return c - i; }), rhs([](int i, int) { return i; }),
-        ref([](int i, int c) { return eve::bitwise_and(Type(c - i), Type(i)); });
-
-    TTS_SECTION("supports eve::bitwise_and") { TTS_EQUAL(ref, eve::bitwise_and(lhs, rhs)); }
-    TTS_SECTION("supports operator&") { TTS_EQUAL(ref, lhs & rhs); }
-  }
+  wide<Type, T> lhs([](int i, int c) { return c - i; }), rhs([](int i, int) { return i; }),
+    ref([](int i, int c) { return eve::bitwise_and(Type(c - i), Type(i)); });
+  
+  TTS_EQUAL(ref, eve::bitwise_and(lhs, rhs)); 
+  TTS_EQUAL(ref, lhs & rhs); 
 }
 
 TTS_CASE_TPL("Check bitwise_and behavior on wide + scalar",
@@ -50,15 +46,12 @@ TTS_CASE_TPL("Check bitwise_and behavior on wide + scalar",
 {
   using eve::wide;
 
-  TTS_SETUP("A correctly initialized wide")
-  {
-    wide<Type, T> lhs([](int i, int c) { return i % 3; }),
-        ref([](int i, int c) { return eve::bitwise_and(Type(i % 3), Type(7)); });
-
-    TTS_SECTION("supports eve::bitwise_and") { TTS_EQUAL(ref, eve::bitwise_and(lhs, 7)); }
-
-    TTS_SECTION("supports operator&") { TTS_EQUAL(ref, lhs & 7); }
-  }
+  wide<Type, T> lhs([](int i, int c) { return i % 3; }),
+    ref([](int i, int c) { return eve::bitwise_and(Type(i % 3), Type(7)); });
+  
+  TTS_EQUAL(ref, eve::bitwise_and(lhs, 7));
+  
+  TTS_EQUAL(ref, lhs & 7);
 }
 
 #endif
