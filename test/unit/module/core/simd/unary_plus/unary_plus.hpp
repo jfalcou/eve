@@ -34,7 +34,6 @@ TTS_CASE_TPL("Check unary_plus behavior on wide",
   
   TTS_EQUAL(ref, eve::unary_plus(lhs));
   TTS_EQUAL(ref, +lhs); 
-  TTS_EQUAL(ref, eve::unary_plus(lhs));
 }
 
 #endif
