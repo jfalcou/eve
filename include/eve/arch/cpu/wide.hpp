@@ -21,6 +21,7 @@
 #include <eve/detail/is_iterator.hpp>
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/compiler.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/add.hpp>
@@ -42,7 +43,7 @@ namespace eve
 {
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
   template<typename Type, typename Size, typename ABI>
-  struct wide
+  struct EVE_MAY_ALIAS wide
   {
     using storage_type           = ::eve::ext::as_register_t<Type, Size, ABI>;
     using cardinal_type          = Size;
