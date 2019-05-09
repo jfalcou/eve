@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check sub behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-  wide<Type, T> lhs([](int i, int c) { return c + i; }), rhs([](int i, int) { return i; }),
+  wide<Type, T> lhs([](auto i, auto c) { return c + i; }), rhs([](auto i, auto) { return i; }),
     ref(T::value);
   
   TTS_EQUAL(ref, eve::sub(lhs, rhs)); 

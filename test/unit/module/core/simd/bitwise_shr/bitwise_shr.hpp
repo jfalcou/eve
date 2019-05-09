@@ -33,9 +33,9 @@ TTS_CASE_TPL("Check bitwise_shr behavior on wide",
   using i_t = eve::detail::as_integer_t<Type>;
   
   int           n = sizeof(Type) * 8 - 1;
-  wide<Type, T> lhs([](int i, int c) { return c - i; }),
-    ref([n](int i, int c) { return eve::bitwise_shr(Type(c - i), i % n); });
-  wide<i_t, T> rhs([n](int i, int) { return i % n; });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }),
+    ref([n](auto i, auto c) { return eve::bitwise_shr(Type(c - i), i % n); });
+  wide<i_t, T> rhs([n](auto i, auto) { return i % n; });
   
   TTS_EQUAL(ref, eve::bitwise_shr(lhs, rhs)); 
   TTS_EQUAL(ref, (lhs >>  rhs));    
@@ -54,8 +54,8 @@ TTS_CASE_TPL("Check bitwise_shr behavior on wide + scalar",
   using eve::wide;
   
   auto          rhs = sizeof(Type) * 4;
-  wide<Type, T> lhs([](int i, int c) { return c - i; }),
-    ref([rhs](int i, int c) { return eve::bitwise_shr(Type(c - i), rhs); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }),
+    ref([rhs](auto i, auto c) { return eve::bitwise_shr(Type(c - i), rhs); });
   
   TTS_EQUAL(ref, eve::bitwise_shr(lhs, rhs)); 
   TTS_EQUAL(ref, (lhs >>  rhs));   

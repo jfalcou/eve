@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check unary_plus behavior on wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>, 
+             fixed<64>
             )
 {
   using eve::wide;

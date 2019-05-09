@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check bitwise_and behavior on homogeneous wide",
              fixed<64>)
 {
   using eve::wide;
-  wide<Type, T> lhs([](int i, int c) { return c - i; }), rhs([](int i, int) { return i; }),
-    ref([](int i, int c) { return eve::bitwise_and(Type(c - i), Type(i)); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i; }),
+    ref([](auto i, auto c) { return eve::bitwise_and(Type(c - i), Type(i)); });
   
   TTS_EQUAL(ref, eve::bitwise_and(lhs, rhs)); 
   TTS_EQUAL(ref, lhs & rhs); 
@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check bitwise_and behavior on wide + scalar",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](int i, int c) { return i % 3; }),
-    ref([](int i, int c) { return eve::bitwise_and(Type(i % 3), Type(7)); });
+  wide<Type, T> lhs([](auto i, auto c) { return i % 3; }),
+    ref([](auto i, auto c) { return eve::bitwise_and(Type(i % 3), Type(7)); });
   
   TTS_EQUAL(ref, eve::bitwise_and(lhs, 7));
   
