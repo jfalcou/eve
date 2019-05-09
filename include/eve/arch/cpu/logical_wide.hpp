@@ -11,6 +11,7 @@
 #define EVE_ARCH_CPU_LOGICAL_WIDE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/arch/cpu/logical.hpp>
 #include <type_traits>
@@ -26,7 +27,7 @@
 namespace eve
 {
   template<typename Type, typename N, typename ABI>
-  struct logical<wide<Type,N,ABI>>
+  struct EVE_MAY_ALIAS logical<wide<Type,N,ABI>>
   {
     using parent    = wide<logical<Type>,N>;
     using bits_type = wide<detail::as_integer_t<Type, unsigned>,N>;
@@ -51,7 +52,21 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE logical() noexcept {}
-    EVE_FORCEINLINE logical(storage_type const &r) noexcept : data_(r) {}
+    EVE_FORCEINLINE logical(storage_type const &r) noexcept
+#if !defined(__aarch64__)
+        : data_ (
+                  [&r]()
+                  {
+                    if constexpr(N::value == 1 && sizeof(Type) == 8 && std::is_same_v<ABI,neon64_>)
+                      return logical<Type>(r);
+                    else
+                      return r;
+                  }()
+                )
+#else
+        : data_ (r)
+#endif
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a Range
@@ -60,8 +75,7 @@ namespace eve
                                       Iterator e,
                                       std::enable_if_t<detail::is_iterator_v<Iterator>> * = 0) noexcept
         : data_(detail::load(as_<logical>{}, abi_type{}, b, e))
-    {
-    }
+    {}
 
     template<typename Range>
     EVE_FORCEINLINE explicit logical( Range &&r,
@@ -69,29 +83,25 @@ namespace eve
                                       !is_vectorized_v<Range> &&
                                       !std::is_same_v<storage_type, Range>> * = 0) noexcept
         : logical(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
-    {
-    }
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pointer
     EVE_FORCEINLINE explicit logical(logical<Type> *ptr) noexcept
         : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
-    {
-    }
+    {}
 
     template<std::size_t Alignment, typename = std::enable_if_t<(Alignment >= static_alignment)>>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
         : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
-    {
-    }
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a single value
     template<typename T, typename = std::enable_if_t<std::is_convertible_v<T, logical<Type>>>>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
         : data_(detail::make(as_<target_type>{}, abi_type{}, v))
-    {
-    }
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a sequence of values
@@ -125,8 +135,7 @@ namespace eve
                             logical<wide<Type, HalfSize, Other>> const &h,
                             std::enable_if_t<static_size == 2 * HalfSize::value> * = 0)
         : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
-    {
-    }
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Internal constructors
