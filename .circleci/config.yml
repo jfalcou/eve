@@ -6,159 +6,62 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-version: 2.0
+version: 2.1
 
 ##==================================================================================================
 ## Docker images
 ##==================================================================================================
-docker_gcc_latest: &docker_gcc_latest
+docker_gcc: &docker_gcc
   docker:
     - image: gcc:latest
-docker_gcc_7: &docker_gcc_7
-  docker:
-    - image: gcc:7
-docker_clang_7: &docker_clang_7
-  docker:
-    - image: teeks99/clang-ubuntu:7
-docker_clang_8: &docker_clang_8
+      environment:
+        COMPILER: g++
+docker_clang: &docker_clang
   docker:
     - image: teeks99/clang-ubuntu:8
-
-##==================================================================================================
-## Build variants
-##==================================================================================================
-env_debug_sse2: &env_debug_sse2
-  environment:
-    - VARIANT: "Debug"
-    - OPTIONS: "-msse2"
-env_debug_sse4: &env_debug_sse4
-  environment:
-    - VARIANT: "Debug"
-    - OPTIONS: "-msse4.2"
-env_debug_avx: &env_debug_avx
-  environment:
-    - VARIANT: "Debug"
-    - OPTIONS: "-mavx"
-env_debug_avx2: &env_debug_avx2
-  environment:
-    - VARIANT: "Debug"
-    - OPTIONS: "-mavx2"
-env_release_sse2: &env_release_sse2
-  environment:
-    - VARIANT: "Release"
-    - OPTIONS: "-msse2"
-env_release_sse4: &env_release_sse4
-  environment:
-    - VARIANT: "Release"
-    - OPTIONS: "-msse4.2"
-env_release_avx: &env_release_avx
-  environment:
-    - VARIANT: "Release"
-    - OPTIONS: "-mavx"
-env_release_avx2: &env_release_avx2
-  environment:
-    - VARIANT: "Release"
-    - OPTIONS: "-mavx2"
+      environment:
+        COMPILER: g++
+docker_ppc64: &docker_ppc64
+  docker:
+    - image: ubuntu:latest
+      environment:
+        COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
+        COMPILER: powerpc64-linux-gnu-g++-8
+        RUN_COMMAND: qemu-ppc64
+docker_arm: &docker_arm
+  docker:
+    - image: ubuntu:latest
+      environment:
+        COMPILER_PACKAGE: g++-8-arm-linux-gnueabihf
+        COMPILER: arm-linux-gnueabihf-g++-8
+        RUN_COMMAND: qemu-arm
+docker_aarch64: &docker_aarch64
+  docker:
+    - image: ubuntu:latest
+      environment:
+        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
+        COMPILER: aarch64-linux-gnu-g++-8
+        RUN_COMMAND: qemu-aarch64
 
 ##==================================================================================================
 ## Build configurations
 ##==================================================================================================
-config_gcc_latest_dbg_sse2: &config_gcc_latest_dbg_sse2
-  <<: *docker_gcc_latest
-  <<: *env_debug_sse2
-config_gcc_latest_rel_sse2: &config_gcc_latest_rel_sse2
-  <<: *docker_gcc_latest
-  <<: *env_release_sse2
-config_gcc_latest_dbg_sse4: &config_gcc_latest_dbg_sse4
-  <<: *docker_gcc_latest
-  <<: *env_debug_sse4
-config_gcc_latest_rel_sse4: &config_gcc_latest_rel_sse4
-  <<: *docker_gcc_latest
-  <<: *env_release_sse4
-config_gcc_latest_dbg_avx: &config_gcc_latest_dbg_avx
-  <<: *docker_gcc_latest
-  <<: *env_debug_avx
-config_gcc_latest_rel_avx: &config_gcc_latest_rel_avx
-  <<: *docker_gcc_latest
-  <<: *env_release_avx
-config_gcc_latest_dbg_avx2: &config_gcc_latest_dbg_avx2
-  <<: *docker_gcc_latest
-  <<: *env_debug_avx2
-config_gcc_latest_rel_avx2: &config_gcc_latest_rel_avx2
-  <<: *docker_gcc_latest
-  <<: *env_release_avx2
-config_gcc_7_dbg_sse2: &config_gcc_7_dbg_sse2
-  <<: *docker_gcc_7
-  <<: *env_debug_sse2
-config_gcc_7_rel_sse2: &config_gcc_7_rel_sse2
-  <<: *docker_gcc_7
-  <<: *env_release_sse2
-config_gcc_7_dbg_sse4: &config_gcc_7_dbg_sse4
-  <<: *docker_gcc_7
-  <<: *env_debug_sse4
-config_gcc_7_rel_sse4: &config_gcc_7_rel_sse4
-  <<: *docker_gcc_7
-  <<: *env_release_sse4
-config_gcc_7_dbg_avx: &config_gcc_7_dbg_avx
-  <<: *docker_gcc_7
-  <<: *env_debug_avx
-config_gcc_7_rel_avx: &config_gcc_7_rel_avx
-  <<: *docker_gcc_7
-  <<: *env_release_avx
-config_gcc_7_dbg_avx2: &config_gcc_7_dbg_avx2
-  <<: *docker_gcc_7
-  <<: *env_debug_avx2
-config_gcc_7_rel_avx2: &config_gcc_7_rel_avx2
-  <<: *docker_gcc_7
-  <<: *env_release_avx2
-config_clang_7_dbg_sse2: &config_clang_7_dbg_sse2
-  <<: *docker_clang_7
-  <<: *env_debug_sse2
-config_clang_7_rel_sse2: &config_clang_7_rel_sse2
-  <<: *docker_clang_7
-  <<: *env_release_sse2
-config_clang_7_dbg_sse4: &config_clang_7_dbg_sse4
-  <<: *docker_clang_7
-  <<: *env_debug_sse4
-config_clang_7_rel_sse4: &config_clang_7_rel_sse4
-  <<: *docker_clang_7
-  <<: *env_release_sse4
-config_clang_7_dbg_avx: &config_clang_7_dbg_avx
-  <<: *docker_clang_7
-  <<: *env_debug_avx
-config_clang_7_rel_avx: &config_clang_7_rel_avx
-  <<: *docker_clang_7
-  <<: *env_release_avx
-config_clang_7_dbg_avx2: &config_clang_7_dbg_avx2
-  <<: *docker_clang_7
-  <<: *env_debug_avx2
-config_clang_7_rel_avx2: &config_clang_7_rel_avx2
-  <<: *docker_clang_7
-  <<: *env_release_avx2
-config_clang_8_dbg_sse2: &config_clang_8_dbg_sse2
-  <<: *docker_clang_8
-  <<: *env_debug_sse2
-config_clang_8_rel_sse2: &config_clang_8_rel_sse2
-  <<: *docker_clang_8
-  <<: *env_release_sse2
-config_clang_8_dbg_sse4: &config_clang_8_dbg_sse4
-  <<: *docker_clang_8
-  <<: *env_debug_sse4
-config_clang_8_rel_sse4: &config_clang_8_rel_sse4
-  <<: *docker_clang_8
-  <<: *env_release_sse4
-config_clang_8_dbg_avx: &config_clang_8_dbg_avx
-  <<: *docker_clang_8
-  <<: *env_debug_avx
-config_clang_8_rel_avx: &config_clang_8_rel_avx
-  <<: *docker_clang_8
-  <<: *env_release_avx
-config_clang_8_dbg_avx2: &config_clang_8_dbg_avx2
-  <<: *docker_clang_8
-  <<: *env_debug_avx2
-config_clang_8_rel_avx2: &config_clang_8_rel_avx2
-  <<: *docker_clang_8
-  <<: *env_release_avx2
+config_gcc_sse2: &config_gcc_sse2
+  <<: *docker_gcc
+config_gcc_sse4: &config_gcc_sse4
+  <<: *docker_gcc
+config_gcc_avx: &config_gcc_avx
+  <<: *docker_gcc
+config_gcc_avx2: &config_gcc_avx2
+  <<: *docker_gcc
+config_clang_avx2: &config_clang_avx2
+  <<: *docker_clang
+config_gcc_arm: &config_gcc_arm
+  <<: *docker_arm
+config_gcc_aarch64: &config_gcc_aarch64
+  <<: *docker_aarch64
+config_gcc_ppc64: &config_gcc_ppc64
+  <<: *docker_ppc64
 
 ##==================================================================================================
 ## Build steps
@@ -171,19 +74,48 @@ steps_test_gcc: &steps_test_gcc
         command: . .circleci/prepare.sh
     - run:
         name: Running tests
-        command: . .circleci/run.sh g++
+        command: . .circleci/run.sh
 
-steps_test_clang_7: &steps_test_clang_7
+steps_test_neon: &steps_test_neon
   steps:
     - checkout
     - run:
         name: Setup dependencies
         command: . .circleci/prepare.sh
     - run:
+        name: Setup ARM
+        command: . .circleci/prepare_cc.sh
+    - run:
         name: Running tests
-        command: . .circleci/run.sh clang++-7
+        command: . .circleci/run.sh
 
-steps_test_clang_8: &steps_test_clang_8
+steps_test_aarch64: &steps_test_aarch64
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Setup AARCH64
+        command: . .circleci/prepare_cc.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh
+
+steps_test_ppc64: &steps_test_ppc64
+  steps:
+    - checkout
+    - run:
+        name: Setup dependencies
+        command: . .circleci/prepare.sh
+    - run:
+        name: Setup PowerPC 64
+        command: . .circleci/prepare_cc.sh
+    - run:
+        name: Running tests
+        command: . .circleci/run.sh
+
+steps_test_clang_: &steps_test_clang_
   steps:
     - checkout
     - run:
@@ -193,114 +125,508 @@ steps_test_clang_8: &steps_test_clang_8
         name: Running tests
         command: . .circleci/run.sh clang++-8
 
+##==================================================================================================
+## Jobs list
+##==================================================================================================
 jobs:
-  gcc_latest_dbg_sse2:
-    <<: *config_gcc_latest_dbg_sse2
+  ##================================================================================================
+  ## Synchronization jobs
+  ##================================================================================================
+  sync_arch:
+    <<: *docker_gcc
+    steps:
+      - run: echo "Test arch.unit completed"
+  sync_api:
+    <<: *docker_gcc
+    steps:
+      - run: echo "Test api.unit completed"
+  sync_doc:
+    <<: *docker_gcc
+    steps:
+      - run: echo "Test doc.unit completed"
+  sync_scalar:
+    <<: *docker_gcc
+    steps:
+      - run: echo "Test core.scalar.unit completed"
+  sync_simd:
+    <<: *docker_gcc
+    steps:
+      - run: echo "Test core.simd.unit completed"
+
+  ##================================================================================================
+  ## Arch tests
+  ##================================================================================================
+  gcc_sse2_arch:
+    <<: *config_gcc_sse2
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_latest_rel_sse2:
-    <<: *config_gcc_latest_rel_sse2
+  gcc_sse4_arch:
+    <<: *config_gcc_sse4
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
-  gcc_latest_dbg_sse4:
-    <<: *config_gcc_latest_dbg_sse4
+  gcc_avx_arch:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_latest_rel_sse4:
-    <<: *config_gcc_latest_rel_sse4
+  gcc_avx2_arch:
+    <<: *config_gcc_avx2
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  gcc_latest_dbg_avx:
-    <<: *config_gcc_latest_dbg_avx
+  clang_avx2_arch:
+    <<: *config_clang_avx2
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
+    <<: *steps_test_clang_
+  arm_neon_arch:
+    <<: *config_gcc_arm
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+    <<: *steps_test_neon
+  arm_aarch64_arch:
+    <<: *config_gcc_aarch64
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-static -Wno-psabi"
+    <<: *steps_test_aarch64
+  ppc_vsx_arch:
+    <<: *config_gcc_ppc64
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mvsx -mpower8-vector -static"
+    <<: *steps_test_ppc64
+
+  ##================================================================================================
+  ## API tests
+  ##================================================================================================
+  gcc_sse2_api:
+    <<: *config_gcc_sse2
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_latest_rel_avx:
-    <<: *config_gcc_latest_rel_avx
+  gcc_sse4_api:
+    <<: *config_gcc_sse4
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
+  gcc_avx_api:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_latest_dbg_avx2:
-    <<: *config_gcc_latest_dbg_avx2
+  gcc_avx2_api:
+    <<: *config_gcc_avx2
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  gcc_latest_rel_avx2:
-    <<: *config_gcc_latest_rel_avx2
+  clang_avx2_api:
+    <<: *config_clang_avx2
+    environment:
+      TARGET: api
+      OPTIONS: "-mavx2"
+      REPLICATION: 8
+    <<: *steps_test_clang_
+  arm_neon_api:
+    <<: *config_gcc_arm
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+    <<: *steps_test_neon
+  arm_aarch64_api:
+    <<: *config_gcc_aarch64
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-static -Wno-psabi"
+    <<: *steps_test_aarch64
+  ppc_vsx_api:
+    <<: *config_gcc_ppc64
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-mvsx -mpower8-vector -static"
+    <<: *steps_test_ppc64
+
+  ##================================================================================================
+  ## Doc tests
+  ##================================================================================================
+  gcc_sse2_doc:
+    <<: *config_gcc_sse2
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_7_dbg_sse2:
-    <<: *config_gcc_7_dbg_sse2
+  gcc_sse4_doc:
+    <<: *config_gcc_sse4
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
-  gcc_7_rel_sse2:
-    <<: *config_gcc_7_rel_sse2
+  gcc_avx_doc:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_7_dbg_sse4:
-    <<: *config_gcc_7_dbg_sse4
+  gcc_avx2_doc:
+    <<: *config_gcc_avx2
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  gcc_7_rel_sse4:
-    <<: *config_gcc_7_rel_sse4
+  clang_avx2_doc:
+    <<: *config_clang_avx2
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
+    <<: *steps_test_clang_
+  arm_neon_doc:
+    <<: *config_gcc_arm
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+    <<: *steps_test_neon
+  arm_aarch64_doc:
+    <<: *config_gcc_aarch64
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-static -Wno-psabi"
+    <<: *steps_test_aarch64
+  ppc_vsx_doc:
+    <<: *config_gcc_ppc64
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mvsx -mpower8-vector -static"
+    <<: *steps_test_ppc64
+
+  ##================================================================================================
+  ## Scalar tests
+  ##================================================================================================
+  gcc_sse2_scalar:
+    <<: *config_gcc_sse2
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_7_dbg_avx:
-    <<: *config_gcc_7_dbg_avx
+  gcc_sse4_scalar:
+    <<: *config_gcc_sse4
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
-  gcc_7_rel_avx:
-    <<: *config_gcc_7_rel_avx
+  gcc_avx_scalar:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_7_dbg_avx2:
-    <<: *config_gcc_7_dbg_avx2
+  gcc_avx2_scalar:
+    <<: *config_gcc_avx2
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  gcc_7_rel_avx2:
-    <<: *config_gcc_7_rel_avx2
+  clang_avx2_scalar:
+    <<: *config_clang_avx2
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mavx2"
+    <<: *steps_test_clang_
+  arm_neon_scalar:
+    <<: *config_gcc_arm
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+    <<: *steps_test_neon
+  arm_aarch64_scalar:
+    <<: *config_gcc_aarch64
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-static -Wno-psabi"
+    <<: *steps_test_aarch64
+  ppc_vsx_scalar:
+    <<: *config_gcc_ppc64
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mvsx -mpower8-vector -static"
+    <<: *steps_test_ppc64
+
+  ##================================================================================================
+  ## SIMD tests
+  ##================================================================================================
+  gcc_sse2_simd:
+    <<: *config_gcc_sse2
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  clang_7_dbg_sse2:
-    <<: *config_clang_7_dbg_sse2
-    <<: *steps_test_clang_7
-  clang_7_rel_sse2:
-    <<: *config_clang_7_rel_sse2
-    <<: *steps_test_clang_7
-  clang_7_dbg_sse4:
-    <<: *config_clang_7_dbg_sse4
-    <<: *steps_test_clang_7
-  clang_7_rel_sse4:
-    <<: *config_clang_7_rel_sse4
-    <<: *steps_test_clang_7
-  clang_7_dbg_avx:
-    <<: *config_clang_7_dbg_avx
-    <<: *steps_test_clang_7
-  clang_7_rel_avx:
-    <<: *config_clang_7_rel_avx
-    <<: *steps_test_clang_7
-  clang_7_dbg_avx2:
-    <<: *config_clang_7_dbg_avx2
-    <<: *steps_test_clang_7
-  clang_7_rel_avx2:
-    <<: *config_clang_7_rel_avx2
-    <<: *steps_test_clang_7
-  clang_8_dbg_sse2:
-    <<: *config_clang_8_dbg_sse2
-    <<: *steps_test_clang_8
-  clang_8_rel_sse2:
-    <<: *config_clang_8_rel_sse2
-    <<: *steps_test_clang_8
-  clang_8_dbg_sse4:
-    <<: *config_clang_8_dbg_sse4
-    <<: *steps_test_clang_8
-  clang_8_rel_sse4:
-    <<: *config_clang_8_rel_sse4
-    <<: *steps_test_clang_8
-  clang_8_dbg_avx:
-    <<: *config_clang_8_dbg_avx
-    <<: *steps_test_clang_8
-  clang_8_rel_avx:
-    <<: *config_clang_8_rel_avx
-    <<: *steps_test_clang_8
-  clang_8_dbg_avx2:
-    <<: *config_clang_8_dbg_avx2
-    <<: *steps_test_clang_8
-  clang_8_rel_avx2:
-    <<: *config_clang_8_rel_avx2
-    <<: *steps_test_clang_8
+  gcc_sse4_simd:
+    <<: *config_gcc_sse4
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-msse4.2"
+    <<: *steps_test_gcc
+  gcc_avx_simd:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mavx"
+    <<: *steps_test_gcc
+  gcc_avx2_simd:
+    <<: *config_gcc_avx2
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mavx2"
+    <<: *steps_test_gcc
+  clang_avx2_simd:
+    <<: *config_clang_avx2
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mavx2"
+    <<: *steps_test_clang_
+  arm_neon_simd:
+    <<: *config_gcc_arm
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+    <<: *steps_test_neon
+  arm_aarch64_simd:
+    <<: *config_gcc_aarch64
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-static -Wno-psabi"
+    <<: *steps_test_aarch64
+  ppc_vsx_simd:
+    <<: *config_gcc_ppc64
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mvsx -mpower8-vector -static"
+    <<: *steps_test_ppc64
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - gcc_latest_dbg_sse2
-      - gcc_latest_dbg_sse4
-      - gcc_latest_dbg_avx
-      - gcc_latest_dbg_avx2
-      - clang_7_dbg_sse2
-      - clang_7_dbg_sse4
-      - clang_7_dbg_avx
-      - clang_7_dbg_avx2
+    ##==============================================================================================
+    ## All architecture tests in parallel
+    ##==============================================================================================
+      - arm_aarch64_arch
+      - arm_neon_arch
+      - ppc_vsx_arch
+      - gcc_sse2_arch
+      - gcc_sse4_arch
+      - gcc_avx_arch
+      - gcc_avx2_arch
+      - clang_avx2_arch
+      - sync_arch:
+          requires:
+            - arm_aarch64_arch
+            - arm_neon_arch
+            - ppc_vsx_arch
+            - gcc_sse2_arch
+            - gcc_sse4_arch
+            - gcc_avx_arch
+            - gcc_avx2_arch
+            - clang_avx2_arch
+
+    ##==============================================================================================
+    ## All API tests in parallel
+    ##==============================================================================================
+      - arm_aarch64_api:
+          requires:
+            - sync_arch
+      - arm_neon_api:
+          requires:
+            - sync_arch
+      - ppc_vsx_api:
+          requires:
+            - sync_arch
+      - gcc_sse2_api:
+          requires:
+            - sync_arch
+      - gcc_sse4_api:
+          requires:
+            - sync_arch
+      - gcc_avx_api:
+          requires:
+            - sync_arch
+      - gcc_avx2_api:
+          requires:
+            - sync_arch
+      - clang_avx2_api:
+          requires:
+            - sync_arch
+      - sync_api:
+          requires:
+            - arm_aarch64_api
+            - arm_neon_api
+            - ppc_vsx_api
+            - gcc_sse2_api
+            - gcc_sse4_api
+            - gcc_avx_api
+            - gcc_avx2_api
+            - clang_avx2_api
+
+    ##==============================================================================================
+    ## All Doc tests in parallel
+    ##==============================================================================================
+      - arm_aarch64_doc:
+          requires:
+            - sync_api
+      - arm_neon_doc:
+          requires:
+            - sync_api
+      - ppc_vsx_doc:
+          requires:
+            - sync_api
+      - gcc_sse2_doc:
+          requires:
+            - sync_api
+      - gcc_sse4_doc:
+          requires:
+            - sync_api
+      - gcc_avx_doc:
+          requires:
+            - sync_api
+      - gcc_avx2_doc:
+          requires:
+            - sync_api
+      - clang_avx2_doc:
+          requires:
+            - sync_api
+      - sync_doc:
+          requires:
+            - arm_aarch64_doc
+            - arm_neon_doc
+            - ppc_vsx_doc
+            - gcc_sse2_doc
+            - gcc_sse4_doc
+            - gcc_avx_doc
+            - gcc_avx2_doc
+            - clang_avx2_doc
+
+    ##==============================================================================================
+    ## All Scalar tests in parallel
+    ##==============================================================================================
+      - arm_aarch64_scalar:
+          requires:
+            - sync_doc
+      - arm_neon_scalar:
+          requires:
+            - sync_doc
+      - ppc_vsx_scalar:
+          requires:
+            - sync_doc
+      - gcc_sse2_scalar:
+          requires:
+            - sync_doc
+      - gcc_sse4_scalar:
+          requires:
+            - sync_doc
+      - gcc_avx_scalar:
+          requires:
+            - sync_doc
+      - gcc_avx2_scalar:
+          requires:
+            - sync_doc
+      - clang_avx2_scalar:
+          requires:
+            - sync_doc
+      - sync_scalar:
+          requires:
+            - arm_aarch64_scalar
+            - arm_neon_scalar
+            - ppc_vsx_scalar
+            - gcc_sse2_scalar
+            - gcc_sse4_scalar
+            - gcc_avx_scalar
+            - gcc_avx2_scalar
+            - clang_avx2_scalar
+
+    ##==============================================================================================
+    ## All Scalar tests in parallel
+    ##==============================================================================================
+      - arm_aarch64_simd:
+          requires:
+            - sync_scalar
+      - arm_neon_simd:
+          requires:
+            - sync_scalar
+      - ppc_vsx_simd:
+          requires:
+            - sync_scalar
+      - gcc_sse2_simd:
+          requires:
+            - sync_scalar
+      - gcc_sse4_simd:
+          requires:
+            - sync_scalar
+      - gcc_avx_simd:
+          requires:
+            - sync_scalar
+      - gcc_avx2_simd:
+          requires:
+            - sync_scalar
+      - clang_avx2_simd:
+          requires:
+            - sync_scalar
+      - sync_simd:
+          requires:
+            - arm_aarch64_simd
+            - arm_neon_simd
+            - ppc_vsx_simd
+            - gcc_sse2_simd
+            - gcc_sse4_simd
+            - gcc_avx_simd
+            - gcc_avx2_simd
+            - clang_avx2_simd
