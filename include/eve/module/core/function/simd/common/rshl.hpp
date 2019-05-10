@@ -43,7 +43,7 @@ namespace eve::detail
       else
         return is_gtz(v1) ?  shl(v0, max(Zero(as(v1)), v1)) : shr(v0, max(Zero(as(v1)), -v1));
 #else
-      if constexpr(is_wide_v<U>)
+      if constexpr(is_vectorized_v<U>)
         return if_else(is_gtz(v1), shl(v0, v1), shr(v0, -v1));
       else
         return is_gtz(v1) ?  shl(v0, v1) : shr(v0, -v1);
