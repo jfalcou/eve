@@ -16,8 +16,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
-#include <eve/function/unary_minus.hpp>
-#include <eve/function/shl.hpp>
 #include <eve/forward.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
@@ -30,11 +28,11 @@ namespace eve::detail
                               wide<I, N, neon64_> const &v1) noexcept
   requires(wide<T, N, neon64_>, Integral<I>, Integral<T>)
   {
-    EVE_ASSERT((detail::assert_good_shift<wide<T, N, neon64_>>(v1)),
-               "[eve::rshl neon64] - At least one of " << v1 << " elements is out of the range [0, "
-                                                       << sizeof(T) * 8 << "[.");
-
-    return neon_shifter(v0,-v1);
+    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
+               "[ eve::rshl ] (neon64) - A shift absolute value abs("
+               << v1 << ") is out of the range [0, "
+               << sizeof(T) * 8 << "[.");
+    return neon_shifter(v0,v1);
   }
 
   template<typename T, typename N, typename I>
@@ -51,10 +49,10 @@ namespace eve::detail
                              wide<I, N, neon128_> const &v1) noexcept
   requires(wide<T, N, neon128_>, Integral<I>, Integral<T>)
   {
-    EVE_ASSERT((detail::assert_good_shift<wide<T, N, neon128_>>(v1)),
-               "[eve::rshl neon128] - At least one of " << v1 << " elements is out of the range [0, "
-                                                       << sizeof(T) * 8 << "[.");
-
+    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
+               "[ eve::rshl ] (neon128) - A shift absolute value abs("
+               << v1 << ") is out of the range [0, "
+               << sizeof(T) * 8 << "[.");
     return neon_shifter(v0,-v1);
   }
 
