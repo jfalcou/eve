@@ -38,7 +38,7 @@ TTS_CASE("Check eve::rshr behavior")
   TTS_EQUAL(eve::rshr(Type(64),2), Type(16));
   TTS_EQUAL(eve::rshr(Type(127), 2), Type(31));
   TTS_EQUAL(eve::rshr(eve::Allbits<Type>(), 0), eve::Allbits<Type>());
-  TTS_EQUAL(eve::rshr(eve::One<Type>(), -3), Type>(8) );
+  TTS_EQUAL(eve::rshr(eve::One<Type>(), -3), Type(8) );
   TTS_EQUAL(eve::rshr(Type(8), -2), Type(32));
 }
 
