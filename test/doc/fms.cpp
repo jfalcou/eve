@@ -3,7 +3,6 @@
 #include <iostream>
 
 using wide_t = eve::wide<float, eve::fixed<4>>;
-using wide_lt = eve::as_logical_t<wide_t>;
 
 int main() {
   wide_t oi = {2, -3, 0, 4};

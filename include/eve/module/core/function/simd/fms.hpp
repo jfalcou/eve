@@ -15,10 +15,10 @@
 #include <eve/module/core/function/simd/common/fms.hpp>
 
 #  if EVE_HW_X86 >= EVE_AVX_VERSION
-#   if defined(EVE_SUPPORTS_FMS3)
+#   if defined(EVE_SUPPORTS_FMA3)
 #    include <eve/module/core/function/simd/x86/fms3/fms.hpp>
 #   endif
-#   if defined(EVE_SUPPORTS_FMS4) || defined(EVE_SUPPORTS_XOP)
+#   if defined(EVE_SUPPORTS_FMA4) || defined(EVE_SUPPORTS_XOP)
 #    include <eve/module/core/function/simd/x86/fms4/fms.hpp>
 #   endif
 #  endif

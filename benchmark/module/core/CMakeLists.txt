@@ -145,3 +145,4 @@ list_benchs("simd/bitwise_mask" "core" ${all_types})
 list_benchs("simd/is_negative" "core" ${all_types})
 list_benchs("simd/inc" "core" ${all_types})
 
+
