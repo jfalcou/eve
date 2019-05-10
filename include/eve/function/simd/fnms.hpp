@@ -8,12 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FNMS_HPP_INCLUDED
-#define EVE_FUNCTION_FNMS_HPP_INCLUDED
-
-
+#ifndef EVE_FUNCTION_SIMD_FNMS_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_FNMS_HPP_INCLUDED
 
 #include <eve/function/scalar/fnms.hpp>
-#include <eve/function/simd/fnms.hpp>
+#include <eve/module/core/function/simd/fnms.hpp>
 
 #endif

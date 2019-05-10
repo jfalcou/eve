@@ -8,12 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FNMS_HPP_INCLUDED
-#define EVE_FUNCTION_FNMS_HPP_INCLUDED
+#include <eve/function/fnms.hpp>
+#include <eve/wide.hpp>
 
+#define TYPE()        eve::wide<double>
+#define FUNCTION()    eve::fnms
+#define SAMPLES(N)    random<T>(N,-100.,100.),random<T>(N,-100.,100.),random<T>(N,-100.,100.)
 
+#include "bench.hpp"
 
-#include <eve/function/scalar/fnms.hpp>
-#include <eve/function/simd/fnms.hpp>
-
-#endif

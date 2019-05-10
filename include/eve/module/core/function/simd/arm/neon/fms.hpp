@@ -28,19 +28,19 @@ namespace eve::detail
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vmls_f64(v2, v1, v0);
+    if constexpr(std::is_same_v<T, double>) return -vmls_f64(v2, v1, v0);
 #endif
 
     if constexpr(std::is_same_v<T, float>) return vmls_f32(v2, v1, v0);
 
     if constexpr(is_signed_int && sizeof(T) == 8) return map(fms, v0, v1, v2);
-    if constexpr(is_signed_int && sizeof(T) == 4) return vmls_s32(v2, v1, v0);
-    if constexpr(is_signed_int && sizeof(T) == 2) return vmls_s16(v2, v1, v0);
-    if constexpr(is_signed_int && sizeof(T) == 1) return vmls_s8(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 4) return -vmls_s32(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 2) return -vmls_s16(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 1) return -vmls_s8(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 8) return map(fms, v0, v1, v2);
-    if constexpr(is_unsigned_int && sizeof(T) == 4) return vmls_u32(v2, v1, v0);
-    if constexpr(is_unsigned_int && sizeof(T) == 2) return vmls_u16(v2, v1, v0);
-    if constexpr(is_unsigned_int && sizeof(T) == 1) return vmls_u8(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 4) return -vmls_u32(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 2) return -vmls_u16(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 1) return -vmls_u8(v2, v1, v0);
   }
 
   template<typename T, typename N>
@@ -60,13 +60,13 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>) return vmlsq_f32(v2, v1, v0);
 
     if constexpr(is_signed_int && sizeof(T) == 8) return map(fms, v0, v1, v2);
-    if constexpr(is_signed_int && sizeof(T) == 4) return vmlsq_s32(v2, v1, v0);
-    if constexpr(is_signed_int && sizeof(T) == 2) return vmlsq_s16(v2, v1, v0);
-    if constexpr(is_signed_int && sizeof(T) == 1) return vmlsq_s8(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 4) return -vmlsq_s32(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 2) return -vmlsq_s16(v2, v1, v0);
+    if constexpr(is_signed_int && sizeof(T) == 1) return -vmlsq_s8(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 8) return map(fms, v0, v1, v2);
-    if constexpr(is_unsigned_int && sizeof(T) == 4) return vmlsq_u32(v2, v1, v0);
-    if constexpr(is_unsigned_int && sizeof(T) == 2) return vmlsq_u16(v2, v1, v0);
-    if constexpr(is_unsigned_int && sizeof(T) == 1) return vmlsq_u8(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 4) return -vmlsq_u32(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 2) return -vmlsq_u16(v2, v1, v0);
+    if constexpr(is_unsigned_int && sizeof(T) == 1) return -vmlsq_u8(v2, v1, v0);
   }
 }
 
