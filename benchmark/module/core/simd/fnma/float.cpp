@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FNMA_HPP_INCLUDED
-#define EVE_FUNCTION_FNMA_HPP_INCLUDED
+#include <eve/function/fnma.hpp>
+#include <eve/wide.hpp>
 
-#include <eve/function/scalar/fnma.hpp>
-#include <eve/function/simd/fnma.hpp>
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::fnma
+#define SAMPLES(N)    random<T>(N,-100.f,100.f),random<T>(N,-100.f,100.f),random<T>(N,-100.f,100.f)
 
-#endif
+#include "bench.hpp"
+

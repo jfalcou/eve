@@ -1,17 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2018 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FNMA_HPP_INCLUDED
-#define EVE_FUNCTION_FNMA_HPP_INCLUDED
 
-#include <eve/function/scalar/fnma.hpp>
-#include <eve/function/simd/fnma.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::int64_t;
+#include "fnma.hpp"
