@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FMS_HPP_INCLUDED
-#define EVE_FUNCTION_FMS_HPP_INCLUDED
+#include <eve/function/fms.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/scalar/fms.hpp>
-#include <eve/function/simd/fms.hpp>
+#define TYPE()        eve::wide<std::int64_t>
+#define FUNCTION()    eve::fms
+#define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,-100,100),random<T>(N,-100,100)
 
-#endif
+#include "bench.hpp"
