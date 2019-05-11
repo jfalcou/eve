@@ -29,9 +29,9 @@ include(parse_revision)
 ## =================================================================================================
 ## Options
 ## =================================================================================================
-option( EVE_BUILD_TEST        "Build tests for eve"         ON )
-option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    ON )
-option( EVE_BUILD_DOC         "Build documentation for eve" ON )
+option( EVE_BUILD_TEST        "Build tests for eve"         ON  )
+option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    OFF )
+option( EVE_BUILD_DOC         "Build documentation for eve" ON  )
 
 message( STATUS "[eve] Building ${CMAKE_BUILD_TYPE} mode with: ${CMAKE_CXX_FLAGS}")
 
