@@ -60,7 +60,7 @@ namespace eve
 
     using target_type = typename detail::target_type<wide, abi_type>::type;
 
-    static constexpr std::size_t static_size = Size::value;
+    static constexpr size_type static_size = Size::value;
     static constexpr std::size_t static_alignment =
         detail::wide_align<Size, value_type, storage_type, abi_type>::value;
 
@@ -324,11 +324,12 @@ namespace eve
   template<typename T, typename N, typename ABI>
   std::ostream &operator<<(std::ostream &os, wide<T, N, ABI> const &p)
   {
+    using size_type = typename wide<T, N, ABI>::size_type;
     T that[N::value];
     memcpy(&that[0],p.begin(),N::value*sizeof(T));
 
     os << '(' << +that[0];
-    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << +that[i];
+    for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[i];
     return os << ')';
   }
 }

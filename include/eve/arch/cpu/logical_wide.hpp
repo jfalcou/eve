@@ -47,7 +47,7 @@ namespace eve
     using const_reverse_iterator  = typename parent::const_reverse_iterator;
     using target_type             = typename parent::target_type;
 
-    static constexpr std::size_t static_size      = parent::static_size;
+    static constexpr size_type   static_size      = parent::static_size;
     static constexpr std::size_t static_alignment = parent::static_alignment;
 
     // ---------------------------------------------------------------------------------------------
@@ -258,11 +258,12 @@ namespace eve
   template<typename Type, typename N, typename ABI>
   EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical<wide<Type,N,ABI>> const &p)
   {
+    using size_type = typename wide<T, N, ABI>::size_type;
     logical<Type> that[N::value];
     memcpy(&that[0],p.begin(),N::value*sizeof(Type));
 
     os << '(' << that[0];
-    for(std::size_t i = 1; i != p.size(); ++i) os << ", " << that[i];
+    for(size_type i = 1; i != p.size(); ++i) os << ", " << that[i];
     return os << ')';
   }
 }
