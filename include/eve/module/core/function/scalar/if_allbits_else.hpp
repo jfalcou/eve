@@ -8,28 +8,28 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ELSE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ALLBITS_ELSE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_ALLBITS_ELSE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/constant/allbits.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr
-  auto  if_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept
-        requires( U, Vectorizable<T> )
+  auto  if_else_(EVE_SUPPORTS(cpu_)
+                , T const &cond
+                , eve::callable_allbits_ const &
+                , U const &t) noexcept
+  requires( U, Vectorizable<T> )
   {
-    return static_cast<bool>(cond) ? t : f;
+    return static_cast<bool>(cond) ?  Allbits<U>() : t;
   }
+
 }
 
 #endif
-
-#include "if_else_zero.hpp"
-#include "if_zero_else.hpp"
-#include "if_else_allbits.hpp"
-#include "if_allbits_else.hpp"
