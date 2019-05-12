@@ -75,3 +75,4 @@ namespace eve::detail
 
 #include "if_else_zero.hpp"
 #include "if_zero_else.hpp"
+#include "if_else_allbits.hpp"
