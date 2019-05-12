@@ -36,8 +36,6 @@ TTS_CASE_TPL( "Check if_else behavior on homogeneous logical  wide"
   auto z = eve::Zero<wide<Type,T>>();
   auto z_= eve::zero_; 
   TTS_EQUAL( eve::if_else(is_nez(cond), rhs1, z), eve::if_else(is_nez(cond), rhs1, z_)); 
-//  TTS_EQUAL( eve::if_else(is_nez(cond), z, rhs1), eve::if_else(is_nez(cond), z_, rhs1)); 
-
   
 }
 
