@@ -40,19 +40,19 @@ TTS_CASE_TPL( "Check if_zero_else behavior on homogeneous logical  wide"
   
 }
 
-// TTS_CASE_TPL( "Check if_zero_else behavior on logical wide + scalar"
-//             , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-//             )
-// {
-//   using eve::wide;
-//   using eve::is_nez;
+TTS_CASE_TPL( "Check if_zero_else behavior on logical wide + scalar"
+            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+            )
+{
+  using eve::wide;
+  using eve::is_nez;
 
-//   wide<Type,T>    lhs([](int i, int ) { return i%3; }); 
+  wide<Type,T>    lhs([](int i, int ) { return i%3; }); 
 
-//   auto z = eve::Zero<wide<Type,T>>();
-//   auto z_= eve::zero_; 
-//   TTS_EQUAL( eve::if_else(is_nez(lhs), z, Type(7)), eve::if_else(is_nez(lhs), z_, Type(7))); 
+  auto z = eve::Zero<wide<Type,T>>();
+  auto z_= eve::zero_; 
+  TTS_EQUAL( eve::if_else(is_nez(lhs), z, Type(7)), eve::if_else(is_nez(lhs), z_, Type(7))); 
 
-// }
+}
 
 #endif
