@@ -24,22 +24,16 @@ TTS_CASE_TPL( "Check bitwise_select behavior on homogeneous wide"
             )
 {
   using eve::wide;
-
-  TTS_SETUP( "A correctly initialized wide" )
-  {
-    wide<Type,T>  lhs([](int i, int c) { return c-i; })
-                , rhs1([](int i, int  ) { return i+1; })
-                , rhs2([](int i, int  ) { return 2*i+1; })
-                , ref([](int i, int c) { return eve::bitwise_select(Type(c-i),Type(i+1),Type(2*i+1)); });
-
-    TTS_SECTION( "supports eve::bitwise_select" )
-    {
-      if constexpr(std::is_integral_v<Type>)
-        TTS_EQUAL(ref, eve::bitwise_select(lhs, rhs1, rhs2));
-      else
-        TTS_IEEE_EQUAL(ref, eve::bitwise_select(lhs, rhs1, rhs2));
-    }
-  }
+  wide<Type,T>  lhs([](auto i, auto c) { return c-i; })
+    , rhs1([](auto i, auto  ) { return i+1; })
+    , rhs2([](auto i, auto  ) { return 2*i+1; })
+    , ref([](auto i, auto c) { return eve::bitwise_select(Type(c-i),Type(i+1),Type(2*i+1)); });
+  
+  if constexpr(std::is_integral_v<Type>)
+    TTS_EQUAL(ref, eve::bitwise_select(lhs, rhs1, rhs2));
+  else
+    TTS_IEEE_EQUAL(ref, eve::bitwise_select(lhs, rhs1, rhs2));
+  
 }
 
 TTS_CASE_TPL( "Check bitwise_select behavior on wide + scalar"
@@ -47,20 +41,15 @@ TTS_CASE_TPL( "Check bitwise_select behavior on wide + scalar"
             )
 {
   using eve::wide;
-
-  TTS_SETUP( "A correctly initialized wide" )
-  {
-    wide<Type,T>  lhs([](int i, int c) { return i%3; })
-      , ref([](int i, int c) { return eve::bitwise_select( Type(i%3), Type(7), Type(8)); });
-
-    TTS_SECTION( "supports eve::bitwise_select" )
-    {
-      if constexpr(std::is_integral_v<Type>)
-        TTS_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
-      else
-        TTS_IEEE_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
-    }
-  }
+  
+  wide<Type,T>  lhs([](auto i, auto c) { return i%3; })
+    , ref([](auto i, auto c) { return eve::bitwise_select( Type(i%3), Type(7), Type(8)); });
+  
+  if constexpr(std::is_integral_v<Type>)
+    TTS_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
+  else
+    TTS_IEEE_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
+  
 }
 
 #endif

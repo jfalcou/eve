@@ -60,7 +60,7 @@ namespace eve
 
     using target_type = typename detail::target_type<wide, abi_type>::type;
 
-    static constexpr size_type static_size = Size::value;
+    static constexpr size_type   static_size = Size::value;
     static constexpr std::size_t static_alignment =
         detail::wide_align<Size, value_type, storage_type, abi_type>::value;
 

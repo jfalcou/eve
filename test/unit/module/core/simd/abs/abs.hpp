@@ -29,14 +29,11 @@ TTS_CASE_TPL("Check abs behavior on wide",
             )
 {
   using eve::wide;
-
-  TTS_SETUP("A correctly initialized wide")
-  {
-    wide<Type, T> lhs([](int i, int) { return i%2 ? i+2 :-i-2; }),
-        ref([](int i, int) { return eve::abs(Type(i%2 ? i+2 :-i-2)); });
-
-    TTS_SECTION("supports eve::abs") { TTS_EQUAL(ref, eve::abs(lhs)); }
-  }
+  
+  wide<Type, T> lhs([](int i, int) { return i%2 ? i+2 :-i-2; }),
+    ref([](int i, int) { return eve::abs(Type(i%2 ? i+2 :-i-2)); });
+  
+  TTS_EQUAL(ref, eve::abs(lhs)); 
 }
 
 #endif

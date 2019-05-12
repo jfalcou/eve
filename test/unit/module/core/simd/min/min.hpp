@@ -28,14 +28,11 @@ TTS_CASE_TPL("Check plus behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-
-  TTS_SETUP("two correctly initialized wide")
-  {
-    wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
-      ref([](auto i, auto c) { return eve::min(Type(i), Type(c - i)); });
-
-    TTS_SECTION("supports eve::min") { TTS_EQUAL(ref, eve::min(lhs, rhs)); }
-  }
+  
+  wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
+    ref([](auto i, auto c) { return eve::min(Type(i), Type(c - i)); });
+  
+  TTS_EQUAL(ref, eve::min(lhs, rhs)); 
 }
 
 TTS_CASE_TPL("Check plus behavior on wide",
@@ -48,16 +45,12 @@ TTS_CASE_TPL("Check plus behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-
-  TTS_SETUP("A correctly initialized wide and a scalar")
-  {
-    wide<Type, T> lhs([](auto i, auto) { return i; }),
-      ref([](auto i, auto) { return eve::min(Type(i), Type(2)); });
-
-    TTS_SECTION("supports eve::min") { TTS_EQUAL(ref, eve::min(lhs, Type(2))); }
-    TTS_SECTION("supports eve::min") { TTS_EQUAL(ref, eve::min(Type(2), lhs)); }
-
-  }
+  
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+    ref([](auto i, auto) { return eve::min(Type(i), Type(2)); });
+  
+  TTS_EQUAL(ref, eve::min(lhs, Type(2))); 
+  TTS_EQUAL(ref, eve::min(Type(2), lhs)); 
 }
 
 #endif

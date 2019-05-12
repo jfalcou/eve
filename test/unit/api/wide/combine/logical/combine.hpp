@@ -41,9 +41,9 @@ TTS_CASE_TPL("Check combining for logical wide",
   using eve::wide;
   using eve::logical;
 
-  logical<wide<Type, T>>                         low ([](int i, int)    { return i%2 < 2; });
-  logical<wide<Type, T>>                         high([](int i, int)    { return i%2 > 3; });
-  logical<wide<Type, typename T::combined_type>> ref ([](int i, int c)  { return i < c/2; });
+  logical<wide<Type, T>>                         low ([](auto i, auto)    { return i%2 < 2; });
+  logical<wide<Type, T>>                         high([](auto i, auto)    { return i%2 > 3; });
+  logical<wide<Type, typename T::combined_type>> ref ([](auto i, auto c)  { return i < int(c)/2; });
 
   TTS_EQUAL((logical<wide<Type, typename T::combined_type>>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);

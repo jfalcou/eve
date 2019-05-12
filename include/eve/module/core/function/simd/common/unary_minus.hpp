@@ -16,6 +16,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
