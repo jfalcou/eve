@@ -43,8 +43,7 @@ namespace eve
 
     /// Constructor from non-boolean value
     template<typename U>
-    EVE_FORCEINLINE explicit constexpr logical(U &&v) noexcept
-        : value_(v ? true_mask : false_mask)
+    EVE_FORCEINLINE explicit constexpr logical(U const& v) noexcept : logical(v != 0)
     {
     }
 

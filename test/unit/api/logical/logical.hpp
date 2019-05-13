@@ -17,13 +17,14 @@
 #include <eve/logical.hpp>
 #include <eve/constant/allbits.hpp>
 
+
 TTS_CASE("logical constructors")
 {
   eve::logical<Type> empty;
   eve::logical<Type> from_bool_t = true;
   eve::logical<Type> from_bool_f = false;
-  eve::logical<Type> from_value_t = Type{123};
-  eve::logical<Type> from_value_f = Type{0};
+  eve::logical<Type> from_value_t(Type{123});
+  eve::logical<Type> from_value_f(Type{0});
 
   TTS_EXPECT( (bool(empty) == false || bool(empty) == true) );
 
