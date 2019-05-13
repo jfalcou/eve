@@ -240,15 +240,15 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Not supported operators
-    auto operator++()     const = delete;
-    auto operator++(int)  const = delete;
-    auto operator--()     const = delete;
-    auto operator--(int)  const = delete;
-    template<typename Other> auto operator+=(Other const &other) = delete;
-    template<typename Other> auto operator-=(Other const &other) = delete;
-    template<typename Other> auto operator&=(Other const &other)  = delete;
-    template<typename Other> auto operator|=(Other const &other) = delete;
-    template<typename Other> auto operator^=(Other const &other) = delete;
+    void operator++()     const = delete;
+    void operator++(int)  const = delete;
+    void operator--()     const = delete;
+    void operator--(int)  const = delete;
+    template<typename Other> void operator+=(Other const &other) = delete;
+    template<typename Other> void operator-=(Other const &other) = delete;
+    template<typename Other> void operator&=(Other const &other)  = delete;
+    template<typename Other> void operator|=(Other const &other) = delete;
+    template<typename Other> void operator^=(Other const &other) = delete;
 
     private:
     wide<logical<Type>,N> data_;
