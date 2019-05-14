@@ -15,6 +15,9 @@
 #include <cstddef>
 #include <limits>
 
+#pragma warning( push )
+#pragma warning( disable : 4723 ) // 1/0 is OK for this test
+
 TTS_CASE("Check mzero return type")
 {
   TTS_EXPR_IS(eve::Mzero<float>(), float);
@@ -41,3 +44,5 @@ TTS_CASE("Check mzero behavior")
   TTS_EQUAL(1.0 / eve::Mzero<double>(), -std::numeric_limits<double>::infinity());
   TTS_EQUAL(1.0 / eve::Mzero<float>(), -std::numeric_limits<float>::infinity());
 }
+
+#pragma warning( pop )
