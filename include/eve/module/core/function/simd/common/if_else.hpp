@@ -79,3 +79,5 @@ namespace eve::detail
 #include "if_allbits_else.hpp"
 #include "if_else_one.hpp"
 #include "if_one_else.hpp"
+#include "if_else_mone.hpp"
+#include "if_mone_else.hpp"
