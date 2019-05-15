@@ -78,3 +78,4 @@ namespace eve::detail
 #include "if_else_allbits.hpp"
 #include "if_allbits_else.hpp"
 #include "if_else_one.hpp"
+#include "if_one_else.hpp"
