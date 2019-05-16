@@ -63,3 +63,5 @@ namespace eve::detail
 }
 
 #endif
+
+#include "if_mul.hpp"
