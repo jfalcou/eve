@@ -87,3 +87,5 @@ namespace eve::detail
 }
 
 #endif
+
+#include "if_add.hpp"
