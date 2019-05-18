@@ -27,7 +27,10 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_), T const &cond, U const &t,  eve::callable_zero_ const &
+  if_else_( EVE_SUPPORTS(cpu_)
+          , T const &cond
+          , U const &t
+          ,  eve::callable_zero_ const &
            , satisfy(Vectorized<T>, Vectorized<U>, EqualCardinal<T,U> )
           ) noexcept
   {
@@ -36,7 +39,10 @@ namespace eve::detail
 
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_), T const &cond, U const &t,  eve::callable_zero_ const &
+  if_else_( EVE_SUPPORTS(cpu_)
+          , T const &cond
+          , U const &t
+          ,  eve::callable_zero_ const &
           , satisfy(Vectorized<T>, Vectorizable<U>)
           ) noexcept
   {

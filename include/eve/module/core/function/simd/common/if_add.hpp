@@ -8,23 +8,28 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_SUB_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_SUB_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IF_ADD_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IF_ADD_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/forward.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Regular case
-  template<typename T>
-  EVE_FORCEINLINE constexpr T sub_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  template<typename T, typename U, typename V>
+  EVE_FORCEINLINE constexpr auto
+  add_( EVE_SUPPORTS(cpu_)
+         , T const &cond
+         , U const &t
+         , V const &f
+         ) noexcept
   {
-    return a - b;
+    return t+if_else(cond, f, eve::zero_); 
   }
 }
 
 #endif
-
-#include "if_sub.hpp"

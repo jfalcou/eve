@@ -8,32 +8,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_MUL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_MUL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_SUB_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_SUB_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_nez.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b)
-                  noexcept requires(T, Arithmetic<T>)
-  {
-    return a*b;
-  }
-}
-
-namespace eve
-{
   template<typename T, typename U>
-  EVE_FORCEINLINE auto operator*(T const& a, U const &b) noexcept -> decltype(eve::mul(a, b))
+  EVE_FORCEINLINE constexpr
+  auto  sub_(EVE_SUPPORTS(cpu_)
+            , T const &cond
+            , U const &t
+            , U const &f) noexcept
+        requires( U, Vectorizable<T> )
   {
-    return eve::mul(a, b);
+    return is_nez(cond) ? t-f : t;
   }
 }
 
 #endif
-
-#include "if_mul.hpp"
