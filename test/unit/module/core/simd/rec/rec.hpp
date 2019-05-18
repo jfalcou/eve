@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check rec behavior on wide",
   using eve::logical;
 
   wide<Type, T>           lhs([](auto i, auto) { return i%2; });
-  logical<wide<Type, T>>  ref([](auto i, auto) { return eve::rec(Type(i%2)); });
+  wide<Type, T>           ref([](auto i, auto) { return eve::rec(Type(i%2)); });
 
   TTS_EQUAL(ref, eve::rec(lhs));
 }

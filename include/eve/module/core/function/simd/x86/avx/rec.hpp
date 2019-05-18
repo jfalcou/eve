@@ -77,7 +77,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(avx_),
                             wide<float, N, avx_> const &a00) noexcept
   {
-    using t_t = wide<double, N, avx_>; 
+    using t_t = wide<float, N, avx_>; 
     t_t a0 =refine_rec(a00,refine_rec(a00, rec[raw_](a00)));
 #ifndef BOOST_SIMD_NO_INFINITIES
     a0 = if_else(is_inf(a00),
