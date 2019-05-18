@@ -81,3 +81,5 @@ namespace eve::detail
 #include "if_one_else.hpp"
 #include "if_else_mone.hpp"
 #include "if_mone_else.hpp"
+#include "if_zero_else_one.hpp"
+#include "if_one_else_zero.hpp"
