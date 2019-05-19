@@ -31,7 +31,8 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto rec_(EVE_SUPPORTS(cpu_)
-                                     , T const &a) noexcept requires( T, Arithmetic<T>)
+                                     , T const &a) noexcept
+  requires( T, Arithmetic<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return One<T>()/a;

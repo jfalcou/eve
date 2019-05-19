@@ -20,7 +20,6 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/abs.hpp>
-//#include <eve/function/div.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_equal.hpp>
 #include <type_traits>
@@ -28,18 +27,15 @@
 
 namespace eve::detail
 {
+
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>,
-                                                                        Arithmetic<T>)
+                            wide<T, N, ABI> const &v) noexcept
+  requires(wide<T, N, ABI>, Integral<T>)
   {
     using t_t = wide<T, N, ABI>;
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return v; //TODO map(div, One<t_t>(), v); 
-    }
     if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>)
       return if_else(v, if_else(v == One<t_t>(), One<t_t>(), Zero<t_t>()), Allbits<t_t>());
     
@@ -47,6 +43,18 @@ namespace eve::detail
       return if_else(v, if_else(eve::abs(v) == One<t_t>(), v, Zero<t_t>()), Valmax<t_t>());
   }
 
+  
+  // -----------------------------------------------------------------------------------------------
+  // Why is this necessary ???
+  template<typename ABI>
+  EVE_FORCEINLINE wide<double, fixed<1>, ABI> rec_(EVE_SUPPORTS(simd_),
+                            wide<double, fixed<1>, ABI> const &v) noexcept
+  {
+    using t_t = wide<double, fixed<1>, ABI>;
+    return t_t(One<double>()/v[0]); 
+  }
+
+  
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>

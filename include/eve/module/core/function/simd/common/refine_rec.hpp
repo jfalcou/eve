@@ -29,7 +29,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE T refine_rec_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE wide<T, N, ABI> refine_rec_(EVE_SUPPORTS(cpu_)
                                   , wide<T, N, ABI> const &a
                                   , wide<T, N, ABI> const &x) noexcept
   {

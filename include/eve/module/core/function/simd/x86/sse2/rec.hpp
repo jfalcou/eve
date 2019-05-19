@@ -26,11 +26,14 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_inf.hpp>
 #include <eve/function/is_less.hpp>
-//#include <eve/function/refine_rec.hpp>
+#include <eve/function/refine_rec.hpp>
 #include <type_traits>
  
 namespace eve::detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // Why is this necessary ?? The call to refine_rec is not found despite the above include
+ 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE   wide<T, N, ABI> refine_rec( wide<T, N, ABI> const &a
                               , wide<T, N, ABI> const &x) noexcept
@@ -51,15 +54,11 @@ namespace eve::detail
     return _mm_cvtps_pd(_mm_rcp_ps( _mm_cvtpd_ps(a0) ));//The error for this approximation is no more than 1.5.e-12
   }                                             
   
-  // template<typename N>
+  template<typename N>
   EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(sse2_),
-                            wide<double, fixed<2>, sse_> const &a00) noexcept
+                            wide<double, N, sse_> const &a00) noexcept
   {
-    using t_t = wide<double, fixed<2>, sse_>; 
-//    wide<double, fixed<2>, sse_> r0 = rec[eve::raw_](a00);
-//      auto r1 = refine_rec(a00, r0);
-//      auto r2 = refine_rec(a00, r1);    
-//      auto a0 = refine_rec(a00, r2);
+    using t_t = wide<double, N>; 
     t_t a0 = refine_rec(a00, refine_rec(a00,refine_rec(a00, rec[raw_](a00))));
 #ifndef BOOST_SIMD_NO_INFINITIES
     a0 = if_else(is_inf(a00),
@@ -92,10 +91,6 @@ namespace eve::detail
                             wide<float, N, sse_> const &a00) noexcept
   {
     using t_t = wide<float, N>;
-//    t_t r0 = rec[eve::raw_](a00);
-//     auto r1 = refine_rec(a00, r0);
-//     auto r2 = refine_rec(a00, r1);
-//     auto a0 = refine_rec(a00, r2); 
     t_t a0 =refine_rec(a00,refine_rec(a00, rec[eve::raw_](a00)));
 #ifndef BOOST_SIMD_NO_INFINITIES
     a0 = if_else(is_inf(a00),
