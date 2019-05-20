@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
   Copyright 2019 Joel Falcou
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
