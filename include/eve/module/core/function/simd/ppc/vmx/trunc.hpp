@@ -8,21 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TAGS_HPP_INCLUDED
-#define EVE_TAGS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_TRUNC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_TRUNC_HPP_INCLUDED
 
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <type_traits>
+#include <eve/forward.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  struct pedantic_type{};
-
-  pedantic_type pedantic_{};
-
-  struct raw_type{};
-
-  raw_type raw_{};  
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, ppc_> trunc_(EVE_SUPPORTS(vmx_)
+                                         , wide<T, N, ppc_> const &v0) noexcept
+  {
+    return vec_trunc( a0.storage() );  
+  }
 }
 
 #endif
