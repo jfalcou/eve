@@ -22,7 +22,7 @@ namespace eve::detail
                                          , wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-      return vec_floor( a0.storage() );  
+      return vec_floor( v0.storage() );  
     else
       return v0; 
   }
