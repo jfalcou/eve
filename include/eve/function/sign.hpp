@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SIGN_HPP_INCLUDED
 
 #include <eve/function/scalar/sign.hpp>
-//#include <eve/function/simd/sign.hpp>
+#include <eve/function/simd/sign.hpp>
 
 #endif
