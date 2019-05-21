@@ -13,9 +13,11 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
+#include <tts/tests/precision.hpp>
 #include <eve/function/trunc.hpp>
 //#include <eve/function/wide_cast.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
@@ -38,13 +40,14 @@ TTS_CASE_TPL("Check trunc behavior on wide",
   
   TTS_EQUAL(ref, eve::trunc(lhs));
 // TODO uncomment when wide_cast available
-//   if constexpr(std::is_floating_point_v<Type>)
-//   {
-//     using t_t =  wide<Type, T>;
+   if constexpr(std::is_floating_point_v<Type>)
+   {
+     using t_t =  wide<Type, T>;
 //     using i_t =  as_integer_t<t_t, unsigned>; 
 //     TTS_EQUAL(Valmax<i_t>(), eve::trunc(eve::wide_cast<t_t>Valmax(<i_t>())+Type(1)/2);
-//   }
-  
+     TTS_IEEE_EQUAL(eve::trunc(eve::Nan<t_t>()), eve::Nan<t_t>()); 
+   }
+   
 }
 
 #endif

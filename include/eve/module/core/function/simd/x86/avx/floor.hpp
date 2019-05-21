@@ -28,7 +28,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       if constexpr(std::is_same_v<T, double>) return _mm256_round_pd(a0, _MM_FROUND_FLOOR); 
-        if constexpr(std::is_same_v<T, float>)  return _mm256_round_pd(a0, _MM_FROUND_FLOOR); 
+      if constexpr(std::is_same_v<T, float>)  return _mm256_round_ps(a0, _MM_FROUND_FLOOR); 
     }
     else return a0;
   }

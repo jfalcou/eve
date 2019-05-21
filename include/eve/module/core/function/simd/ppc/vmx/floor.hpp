@@ -21,7 +21,10 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ppc_> floor_(EVE_SUPPORTS(vmx_)
                                          , wide<T, N, ppc_> const &v0) noexcept
   {
-    return vec_floor( a0.storage() );  
+    if constexpr(std::is_floating_point_v<T>)
+      return vec_floor( a0.storage() );  
+    else
+      return v0; 
   }
 }
 

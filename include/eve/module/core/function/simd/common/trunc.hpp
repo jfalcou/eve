@@ -31,8 +31,8 @@ namespace eve::detail
     if constexpr( is_native_v<ABI> )
     {
       if constexpr(std::is_floating_point_v<T>)
-        // TODO replace the map as soon cast is available
-        //       return if_else(eve::abs(a0) < Maxflint<T>();,  trunc[raw_](a0),  a0);
+        // TODO replace the map as soon wide_cast is available
+        //       return if_else(eve::abs(a0) < Maxflint(as(v));,  trunc[raw_](v),  a0);
         return map(eve::trunc, v); 
       else  return v;
     }
@@ -53,9 +53,8 @@ namespace eve::detail
 //   {
 //     if constexpr( is_native_v<ABI> )
 //     {
-//       using t_t = wide<T, N, ABI>;
-//       using i_t = as_integer_t<t_t>; 
-//       if constexpr(std::is_floating_point_v<T>) return wide_cast<t_t>(wide_cast<i_t>(v)); 
+//       using i_t = as_integer_t<T>; 
+//       if constexpr(std::is_floating_point_v<T>) return wide_cast[as(T)](wide_cast[as(i_t)](v)); 
 //       else  return v;
 //     }
 //     else

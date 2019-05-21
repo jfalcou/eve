@@ -16,10 +16,6 @@
 
 #if defined(EVE_HW_X86)
 
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/trunc.hpp>
-#  endif
-
 #  if EVE_HW_X86 >= EVE_SSE4_1_VERSION
 #    include <eve/module/core/function/simd/x86/sse4_1/trunc.hpp>
 #  endif
