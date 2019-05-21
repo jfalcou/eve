@@ -20,7 +20,7 @@ docker_clang: &docker_clang
   docker:
     - image: teeks99/clang-ubuntu:8
       environment:
-        COMPILER: g++
+        COMPILER: clang++-8
 docker_ppc64: &docker_ppc64
   docker:
     - image: ubuntu:latest
