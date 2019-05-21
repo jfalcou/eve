@@ -11,6 +11,7 @@
 ## documentation tests
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" trunc.cpp )
+add_unit_test( "doc.function.arithmetic" ceil.cpp )
 add_unit_test( "doc.function.arithmetic" min.cpp )
 add_unit_test( "doc.function.arithmetic" max.cpp )
 add_unit_test( "doc.function.arithmetic" bitwise_shl.cpp )
