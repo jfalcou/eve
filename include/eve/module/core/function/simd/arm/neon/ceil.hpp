@@ -25,14 +25,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<float, N, neon64_> ceil_(EVE_SUPPORTS(neon128_),
                                                    wide<float, N, neon64_> const &v0) noexcept
   {
-    return vrndp_f32(a0);
+    return vrndp_f32(v0);
   }
 
   template< typename N>
   EVE_FORCEINLINE wide<float, N, neon128_> ceil_(EVE_SUPPORTS(neon128_),
                                                     wide<float, N, neon128_> const &v0) noexcept
   {
-    return vrndpq_f32(a0);
+    return vrndpq_f32(v0);
   }
 
 #if defined(__aarch64__)
@@ -40,14 +40,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<double, N, neon64_> ceil_(EVE_SUPPORTS(neon128_),
                                                    wide<double, N, neon64_> const &v0) noexcept
   {
-    return vrndp_f64(a0);
+    return vrndp_f64(v0);
   }
 
   template< typename N>
   EVE_FORCEINLINE wide<double, N, neon128_> ceil_(EVE_SUPPORTS(neon128_),
                                                     wide<double, N, neon128_> const &v0) noexcept
   {
-    return vrndpq_f64(a0);
+    return vrndpq_f64(v0);
   }
 #endif
   
