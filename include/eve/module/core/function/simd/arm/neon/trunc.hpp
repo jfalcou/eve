@@ -31,7 +31,6 @@ namespace eve::detail
       return map(trunc, v0);    
     #endif
     if constexpr(std::is_same_v<T, float>)  return vrnd_f32(v0);
-    #endif        
 #else
     if constexpr(std::is_floating_point_v<T>) return map(trunc, v0);    
 #endif    

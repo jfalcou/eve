@@ -32,7 +32,6 @@ namespace eve::detail
       return map(floor, v0);    
     #endif
     if constexpr(std::is_same_v<T, float>)  return vrndm_f32(v0);
-    #endif    
 #else
     if constexpr(std::is_floating_point_v<T>) return map(floor, v0);    
 #endif    
@@ -50,7 +49,7 @@ namespace eve::detail
       return vrndmq_f64(v0);
     #else
       return map(floor, v0);    
-     #endif
+    #endif
     if constexpr(std::is_same_v<T, float>)  return vrndmq_f32(v0);
 #else
     if constexpr(std::is_floating_point_v<T>) return map(floor, v0);    
