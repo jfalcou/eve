@@ -8,29 +8,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMA3_FNMA_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMA3_FNMA_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FMA3_FNMA_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FMA3_FNMA_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/unary_minus>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> fnma_(EVE_SUPPORTS(avx_), wide<T, N, sse_> const &a,
-                                                            wide<T, N, sse_> const &b,
-                                                            wide<T, N, sse_> const &c
-                                                            ) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_> fnma_( EVE_SUPPORTS(avx_), wide<T, N, sse_> const &a,
+                                                              wide<T, N, sse_> const &b,
+                                                              wide<T, N, sse_> const &c
+                                        ) noexcept
   {
-    using t_t =  wide<T, N, sse_>; 
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, double>) return -t_t(_mm_fnmsub_pd(a, b, c));
-      if constexpr(std::is_same_v<T, float>)  return -t_t(_mm_fnmsub_ps(a, b, c));
+      if constexpr(std::is_same_v<T, double>) return _mm_fnmadd_pd(a, b, c);
+      if constexpr(std::is_same_v<T, float>)  return _mm_fnmadd_ps(a, b, c);
     }
     else
     {
@@ -39,15 +37,15 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> fnma_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a,
-                                                            wide<T, N, avx_> const &b,
-                                                            wide<T, N, avx_> const &c
-                                                            ) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_>  fnma_ ( EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a,
+                                                                wide<T, N, avx_> const &b,
+                                                                wide<T, N, avx_> const &c
+                                          ) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, double>) return -t_t(_mm256_fnmsub_pd(a, b, c));
-      if constexpr(std::is_same_v<T, float>)  return -t_t(_mm256_fnmsub_ps(a, b, c));
+      if constexpr(std::is_same_v<T, double>) return _mm256_fnmadd_pd(a, b, c);
+      if constexpr(std::is_same_v<T, float>)  return _mm256_fnmadd_ps(a, b, c);
     }
     else
     {

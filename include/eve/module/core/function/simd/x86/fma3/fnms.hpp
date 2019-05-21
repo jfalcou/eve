@@ -14,6 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/unary_minus.hpp>
+#include <eve/function/fms.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -25,32 +27,16 @@ namespace eve::detail
                                          wide<T, N, sse_> const &c
                                         ) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if constexpr(std::is_same_v<T, double>) return _mm_fnmadd_pd(a, b, c);
-      if constexpr(std::is_same_v<T, float>)  return _mm_fnmadd_ps(a, b, c);
-    }
-    else
-    {
-      return fnms_(EVE_RETARGET(sse4_1_),a, b, c);
-    }
+    return fms(-a,b,c);
   }
-  
+
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fnms_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a,
                                          wide<T, N, avx_> const &b,
                                          wide<T, N, avx_> const &c
                                         ) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if constexpr(std::is_same_v<T, double>) return _mm256_fnmadd_pd(a, b, c);
-      if constexpr(std::is_same_v<T, float>)  return _mm256_fnmadd_ps(a, b, c);
-    }
-    else
-    {
-      return aggregate(eve::fnms,a, b, c);
-    }
+    return fms(-a,b,c);
   }
 }
 

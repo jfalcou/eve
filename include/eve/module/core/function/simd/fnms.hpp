@@ -16,10 +16,10 @@
 
 #  if EVE_HW_X86 >= EVE_AVX_VERSION
 #   if defined(EVE_SUPPORTS_FMA3)
-#    include <eve/module/core/function/simd/x86/fnms3/fnms.hpp>
+#    include <eve/module/core/function/simd/x86/fma3/fnms.hpp>
 #   endif
 #   if defined(EVE_SUPPORTS_FMA4) || defined(EVE_SUPPORTS_XOP)
-#    include <eve/module/core/function/simd/x86/fnms4/fnms.hpp>
+#    include <eve/module/core/function/simd/x86/fma4/fnms.hpp>
 #   endif
 #  endif
 
