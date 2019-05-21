@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(_refine_rec_, refine_rec);
+  EVE_MAKE_CALLABLE(refine_rec_, refine_rec);
 }
 
 #endif

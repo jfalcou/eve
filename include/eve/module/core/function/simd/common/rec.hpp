@@ -33,55 +33,24 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_),
                             wide<T, N, ABI> const &v) noexcept
-  requires(wide<T, N, ABI>, Integral<T>)
   {
-    using t_t = wide<T, N, ABI>;
-    if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>)
-      return if_else(v, if_else(v == One<t_t>(), One<t_t>(), Zero<t_t>()), Allbits<t_t>());
-    
-    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
-      return if_else(v, if_else(eve::abs(v) == One<t_t>(), v, Zero<t_t>()), Valmax<t_t>());
-  }
-
-  
-  // -----------------------------------------------------------------------------------------------
-  // Why is this necessary ???
-  template<typename ABI>
-  EVE_FORCEINLINE wide<double, fixed<1>, ABI> rec_(EVE_SUPPORTS(simd_),
-                            wide<double, fixed<1>, ABI> const &v) noexcept
-  {
-    using t_t = wide<double, fixed<1>, ABI>;
-    return t_t(One<double>()/v[0]); 
-  }
-
-  
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> rec_(EVE_SUPPORTS(simd_),
-                                               wide<T, N, aggregated_> const &v) noexcept
-  {
-    return aggregate(eve::rec, v);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
-                           , wide<T, N, emulated_> const &v) noexcept
-  {
-    return map(eve::rec, v);
-    ;
-  }
-
-    template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
-                           , raw_type const &
-                           , wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>,
-                                                                        Arithmetic<T>)
+    if constexpr(is_aggregated_v<ABI>)
+      return aggregate(eve::rec, v);
+    else if  constexpr(is_emulated_v<ABI>)
+      return map(eve::rec, v);
+    else
     {
-      return rec(v); 
+      if constexpr(std::is_floating_point_v<T>)
+        return map(rec, v);
+      else
+      {
+       if constexpr(std::is_unsigned_v<T>)
+        return if_else(v, if_else(v == One(as(v)), One(as(v)), Zero(as(v))), Allbits(as(v)));
+       else
+         return if_else(v, if_else(eve::abs(v) == One(as(v)), v, Zero(as(v))), Valmax(as(v)));
+      }
     }
+  }
   
 }
 

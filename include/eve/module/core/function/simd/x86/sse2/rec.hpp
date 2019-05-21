@@ -31,20 +31,7 @@
  
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Why is this necessary ?? The call to refine_rec is not found despite the above include
- 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE   wide<T, N, ABI> refine_rec( wide<T, N, ABI> const &a
-                              , wide<T, N, ABI> const &x) noexcept
-  {
-    using t_t = wide<T, N, ABI>; 
-    // Newton-Raphson: 1/X ~= x*(1-a0*x) + x
-    return (One<t_t>()-a*x)*x+x; 
-    //TODO return fma(fnms(x, a0, One<T>()), x, x);
-  }
-  
-  // -----------------------------------------------------------------------------------------------
+
   // double
   template<typename N>
   EVE_FORCEINLINE wide<double, N, sse_> rec_(EVE_SUPPORTS(sse2_),
