@@ -25,14 +25,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<float, N, neon64_> floor_(EVE_SUPPORTS(neon128_),
                                                    wide<float, N, neon64_> const &v0) noexcept
   {
-    return vrndm_f32(a0);
+    return vrndm_f32(v0);
   }
 
   template< typename N>
   EVE_FORCEINLINE wide<float, N, neon128_> floor_(EVE_SUPPORTS(neon128_),
                                                     wide<float, N, neon128_> const &v0) noexcept
   {
-    return vrndmq_f32(a0);
+    return vrndmq_f32(v0);
   }
 
 #if defined(__aarch64__)
@@ -40,14 +40,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<double, N, neon64_> floor_(EVE_SUPPORTS(neon128_),
                                                    wide<double, N, neon64_> const &v0) noexcept
   {
-    return vrndm_f64(a0);
+    return vrndm_f64(v0);
   }
 
   template< typename N>
   EVE_FORCEINLINE wide<double, N, neon128_> floor_(EVE_SUPPORTS(neon128_),
                                                     wide<double, N, neon128_> const &v0) noexcept
   {
-    return vrndmq_f64(a0);
+    return vrndmq_f64(v0);
   }
 #endif
   
