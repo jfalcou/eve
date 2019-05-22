@@ -21,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ppc_> trunc_(EVE_SUPPORTS(vmx_)
                                          , wide<T, N, ppc_> const &v0) noexcept
   {
-    return vec_trunc( a0.storage() );  
+    return vec_trunc( v0.storage() );  
   }
 }
 

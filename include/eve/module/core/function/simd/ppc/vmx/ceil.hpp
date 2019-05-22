@@ -21,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ppc_> ceil_(EVE_SUPPORTS(vmx_)
                                          , wide<T, N, ppc_> const &v0) noexcept
   {
-    return vec_ceil( a0.storage() );  
+    return vec_ceil( v0.storage() );  
   }
 }
 
