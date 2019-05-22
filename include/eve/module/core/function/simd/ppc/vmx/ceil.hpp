@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -21,7 +22,10 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ppc_> ceil_(EVE_SUPPORTS(vmx_)
                                          , wide<T, N, ppc_> const &v0) noexcept
   {
-    return vec_ceil( v0.storage() );  
+    if constexpr(std::is_floating_point_v<T>)
+      return vec_ceil( v0.storage() );
+    else
+      return map(eve::ceil, v0); 
   }
 }
 
