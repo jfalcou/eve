@@ -16,7 +16,10 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/mzero.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/function/bitwise_notand.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/forward.hpp>
@@ -26,9 +29,9 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &v) noexcept requires(wide<T, N, ABI>,
-                                                                        Arithmetic<T>)
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_)
+                           , wide<T, N, ABI> const &v) noexcept
+  requires(wide<T, N, ABI>, Arithmetic<T>)
   {
     if constexpr( is_native_v<ABI> )
     {
@@ -56,6 +59,19 @@ namespace eve::detail
       if constexpr( is_emulated_v<ABI>   ) return map(eve::abs, v);
     }
   }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_)
+                           , saturated_type const & 
+                           , wide<T, N, ABI> const &a) noexcept
+  requires(wide<T, N, ABI>, Arithmetic<T>)
+  {
+    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
+      return if_else((a == Valmin(as(a))), Valmax(as(a)), eve::abs(a));
+    else
+      return eve::abs(a); 
+  }
+  
 }
 
 

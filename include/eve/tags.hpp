@@ -22,7 +22,13 @@ namespace eve
 
   struct raw_type{};
 
-  raw_type raw_{};  
+  raw_type raw_{};
+
+  struct saturated_type{};
+
+  saturated_type saturated_{};
+
+  
 }
 
 #endif
