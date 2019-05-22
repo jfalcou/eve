@@ -15,6 +15,9 @@
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/tags.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
@@ -30,6 +33,7 @@ TTS_CASE("Check eve::abs behavior")
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::abs(static_cast<Type>(-2)), Type(2));
+    TTS_EQUAL(eve::abs[eve::saturated_](eve::Valmin<Type>()), eve::Valmax<Type>()); 
   }
 }
 
