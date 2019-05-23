@@ -12,6 +12,7 @@
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" trunc.cpp )
 add_unit_test( "doc.function.arithmetic" frac.cpp )
+add_unit_test( "doc.function.arithmetic" nearest.cpp )
 add_unit_test( "doc.function.arithmetic" ceil.cpp )
 add_unit_test( "doc.function.arithmetic" floor.cpp )
 add_unit_test( "doc.function.arithmetic" min.cpp )
