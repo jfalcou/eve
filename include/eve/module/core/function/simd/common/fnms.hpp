@@ -17,9 +17,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/function/unary_minus.hpp>
+#include <eve/function/fma.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -53,7 +52,7 @@ namespace eve::detail
         using abi_t = typename T::abi_type;
         if      constexpr( is_aggregated_v<abi_t> ) return aggregate( eve::fnms, a, b, c);
         else if constexpr( is_emulated_v<abi_t>   ) return map( eve::fnms, a, b, c);
-        else                                        return - a * b - c;
+        else                                        return -eve::fma(a,b,c);
       }
       else
       {
