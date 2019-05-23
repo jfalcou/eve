@@ -38,9 +38,6 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, float>)  return _mm256_round_ps(a0,  _MM_FROUND_TO_ZERO);
     }
   }
-   
 }
-
-
 
 #endif

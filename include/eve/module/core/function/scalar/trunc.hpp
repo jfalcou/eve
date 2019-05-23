@@ -45,9 +45,6 @@ namespace eve::detail
     else
       return a0; 
   }
-
-  
 }
-
 
 #endif
