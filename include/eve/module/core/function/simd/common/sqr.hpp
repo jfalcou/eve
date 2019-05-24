@@ -30,7 +30,7 @@ namespace eve::detail
   // Basic
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto sqr_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &v) noexcept
+                            wide<T, N, ABI> const &a0) noexcept
   {
     return a0*a0; 
   }
@@ -41,12 +41,12 @@ namespace eve::detail
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(simd_)
                                   ,saturated_type const & 
-                                  , wide<T, N, ABI> const &a) noexcept
+                                  , wide<T, N, ABI> const &a0) noexcept
   {
     if (std::is_integral_v<T>)
     {
       if constexpr(std::is_signed_v<T>)
-        return if_else(abs/*[eve::saturated_]*/(a0) > Sqrtvalmax(as(a0)), Valmax(as(a0)), sqr(a0));
+        return if_else(abs[eve::saturated_](a0) > Sqrtvalmax(as(a0)), Valmax(as(a0)), sqr(a0));
       else
         return if_else((a0 > Sqrtvalmax(as(a0))), Valmax(as(a0)), sqr(a0));
     }          

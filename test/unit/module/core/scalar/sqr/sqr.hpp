@@ -20,6 +20,8 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/sqrtvalmax.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
@@ -43,6 +45,7 @@ TTS_CASE("Check eve::sqr behavior")
     TTS_IEEE_EQUAL(eve::sqr(-eve::Nan<Type>()), eve::Nan<Type>());
     TTS_EQUAL(eve::sqr(eve::Mzero<Type>()), Type(0)); 
     TTS_EQUAL(eve::sqr(eve::Zero<Type>()),  Type(0)); 
+    TTS_EQUAL(eve::sqr[eve::saturated_](inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>()); 
   }
 }
   

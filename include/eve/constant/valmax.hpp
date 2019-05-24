@@ -1,12 +1,14 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
-//==================================================================================================
+//================================================================================================== 
+>>>>>>> sqr saturated +test
 #ifndef EVE_CONSTANT_VALMAX_HPP_INCLUDED
 #define EVE_CONSTANT_VALMAX_HPP_INCLUDED
 
