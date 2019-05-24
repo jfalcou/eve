@@ -8,9 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_WIDE_CAST_HPP_INCLUDED
-#define EVE_FUNCTION_WIDE_CAST_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_WIDE_CAST_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_WIDE_CAST_HPP_INCLUDED
 
-#include <eve/function/simd/wide_cast.hpp>
+#include <eve/function/definition/wide_cast.hpp>
+#include <eve/module/core/function/simd/wide_cast.hpp>
 
 #endif
