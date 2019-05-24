@@ -18,7 +18,11 @@ namespace eve
 {
   struct pedantic_type{};
 
-  pedantic_type pedantic_{}; 
+  pedantic_type pedantic_{};
+
+  struct raw_type{};
+
+  raw_type raw_{};  
 }
 
 #endif
