@@ -148,10 +148,6 @@ jobs:
     <<: *docker_gcc
     steps:
       - run: echo "Test core.scalar.unit completed"
-  sync_simd:
-    <<: *docker_gcc
-    steps:
-      - run: echo "Test core.simd.unit completed"
 
   ##================================================================================================
   ## Arch tests
@@ -176,6 +172,13 @@ jobs:
       TARGET: arch
       REPLICATION: 8
       OPTIONS: "-mavx"
+    <<: *steps_test_gcc
+  gcc_fma3_arch:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: arch
+      REPLICATION: 8
+      OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_arch:
     <<: *config_gcc_avx2
@@ -237,6 +240,13 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
+  gcc_fma3_api:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: api
+      REPLICATION: 8
+      OPTIONS: "-mavx -mfma"
+    <<: *steps_test_gcc
   gcc_avx2_api:
     <<: *config_gcc_avx2
     environment:
@@ -296,6 +306,13 @@ jobs:
       TARGET: doc
       REPLICATION: 8
       OPTIONS: "-mavx"
+    <<: *steps_test_gcc
+  gcc_fma3_doc:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: doc
+      REPLICATION: 8
+      OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_doc:
     <<: *config_gcc_avx2
@@ -357,6 +374,13 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
+  gcc_fma3_scalar:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-mavx -mfma"
+    <<: *steps_test_gcc
   gcc_avx2_scalar:
     <<: *config_gcc_avx2
     environment:
@@ -417,6 +441,13 @@ jobs:
       REPLICATION: 2
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
+  gcc_fma3_simd:
+    <<: *config_gcc_avx
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-mavx -mfma"
+    <<: *steps_test_gcc
   gcc_avx2_simd:
     <<: *config_gcc_avx2
     environment:
@@ -466,6 +497,7 @@ workflows:
       - gcc_sse2_arch
       - gcc_sse4_arch
       - gcc_avx_arch
+      - gcc_fma3_arch
       - gcc_avx2_arch
       - clang_avx2_arch
       - sync_arch:
@@ -476,6 +508,7 @@ workflows:
             - gcc_sse2_arch
             - gcc_sse4_arch
             - gcc_avx_arch
+            - gcc_fma3_arch
             - gcc_avx2_arch
             - clang_avx2_arch
 
@@ -500,6 +533,9 @@ workflows:
       - gcc_avx_api:
           requires:
             - sync_arch
+      - gcc_fma3_api:
+          requires:
+            - sync_arch
       - gcc_avx2_api:
           requires:
             - sync_arch
@@ -514,6 +550,7 @@ workflows:
             - gcc_sse2_api
             - gcc_sse4_api
             - gcc_avx_api
+            - gcc_fma3_api
             - gcc_avx2_api
             - clang_avx2_api
 
@@ -538,6 +575,9 @@ workflows:
       - gcc_avx_doc:
           requires:
             - sync_api
+      - gcc_fma3_doc:
+          requires:
+            - sync_api
       - gcc_avx2_doc:
           requires:
             - sync_api
@@ -552,6 +592,7 @@ workflows:
             - gcc_sse2_doc
             - gcc_sse4_doc
             - gcc_avx_doc
+            - gcc_fma3_doc
             - gcc_avx2_doc
             - clang_avx2_doc
 
@@ -576,6 +617,9 @@ workflows:
       - gcc_avx_scalar:
           requires:
             - sync_doc
+      - gcc_fma3_scalar:
+          requires:
+            - sync_doc
       - gcc_avx2_scalar:
           requires:
             - sync_doc
@@ -590,11 +634,12 @@ workflows:
             - gcc_sse2_scalar
             - gcc_sse4_scalar
             - gcc_avx_scalar
+            - gcc_fma3_scalar
             - gcc_avx2_scalar
             - clang_avx2_scalar
 
     ##==============================================================================================
-    ## All Scalar tests in parallel
+    ## All SIMD tests in parallel
     ##==============================================================================================
       - arm_aarch64_simd:
           requires:
@@ -614,19 +659,12 @@ workflows:
       - gcc_avx_simd:
           requires:
             - sync_scalar
+      - gcc_fma3_simd:
+          requires:
+            - sync_scalar
       - gcc_avx2_simd:
           requires:
             - sync_scalar
       - clang_avx2_simd:
           requires:
             - sync_scalar
-      - sync_simd:
-          requires:
-            - arm_aarch64_simd
-            - arm_neon_simd
-            - ppc_vsx_simd
-            - gcc_sse2_simd
-            - gcc_sse4_simd
-            - gcc_avx_simd
-            - gcc_avx2_simd
-            - clang_avx2_simd

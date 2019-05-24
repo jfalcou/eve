@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_FNMA_HPP_INCLUDED
 
 #include <eve/function/scalar/fnma.hpp>
-//#include <eve/function/simd/fnma.hpp>
+#include <eve/function/simd/fnma.hpp>
 
 #endif
