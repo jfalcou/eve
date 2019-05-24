@@ -1,8 +1,8 @@
 .. _function-trunc:
 
-###
+#####
 trunc
-###
+#####
 
 **Required header:** ``#include <eve/function/trunc.hpp>``
 

@@ -1,8 +1,8 @@
 .. _function-ceil:
 
-###
+####
 ceil
-###
+####
 
 **Required header:** ``#include <eve/function/ceil.hpp>``
 

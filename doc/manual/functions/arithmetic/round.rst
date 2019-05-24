@@ -1,8 +1,8 @@
 .. _function-round:
 
-###
+#####
 round
-###
+#####
 
 **Required header:** ``#include <eve/function/round.hpp>``
 

@@ -1,8 +1,8 @@
 .. _function-floor:
 
-###
+#####
 floor
-###
+#####
 
 **Required header:** ``#include <eve/function/floor.hpp>``
 

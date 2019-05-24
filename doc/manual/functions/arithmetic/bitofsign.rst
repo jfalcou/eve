@@ -1,8 +1,8 @@
 .. _function-bitofsign:
 
-###
+#########
 bitofsign
-###
+#########
 
 **Required header:** ``#include <eve/function/bitofsign.hpp>``
 
@@ -35,9 +35,6 @@ Synopsis
 .. rubric:: Return value
 
 * [1,2] A value with the same type as the parameter.
-
-Notes
-******
 
 Options
 *******

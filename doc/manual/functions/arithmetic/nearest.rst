@@ -1,8 +1,8 @@
 .. _function-nearest:
 
-###
+#######
 nearest
-###
+#######
 
 **Required header:** ``#include <eve/function/nearest.hpp>``
 
