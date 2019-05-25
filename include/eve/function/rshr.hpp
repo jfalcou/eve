@@ -8,8 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#ifndef EVE_FUNCTION_RSHR_HPP_INCLUDED
+#define EVE_FUNCTION_RSHR_HPP_INCLUDED
 
-using Type = double;
-#include "ceil.hpp"
+#include <eve/function/scalar/rshr.hpp>
+#include <eve/function/simd/rshr.hpp>
 
-
+#endif
