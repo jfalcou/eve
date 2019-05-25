@@ -13,7 +13,7 @@ sign
       constexpr /* implementation defined */ sign = {};
    }
 
-Function object computing the sign (-1,0 or 1) of the  value of a :ref:`Value <concept-value>`.
+Function object computing the sign (-1,0 or 1) of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********

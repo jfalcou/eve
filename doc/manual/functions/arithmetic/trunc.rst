@@ -24,7 +24,7 @@ Synopsis
    template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise the integral parts the values of the :ref:`wide <type-wide>`.
+* [1] Computes the element-wise integral part values of the :ref:`wide <type-wide>`.
 * [2] Computes the integral part of the value of the scalar.
 
 .. rubric:: Parameters
@@ -40,9 +40,9 @@ Notes
 ******
 
   - the standard proposes 4 rounding modes namely: ``up_``, ``down_``, ``to_zero_`` and ``to_nearest_int``. This function object
-    implements the `to_zero_`` version.
+    implements the ``to_zero_`` version.
 
-  - the ``trunc(a)`` is equivalent to the call ``round[to_zero_](a)``
+  - the  call to ``trunc(a)`` is equivalent to the call ``round[to_zero_](a)``
 
 Options
 *******

@@ -31,12 +31,12 @@ Synopsis
 
 * [1] performs element-wise fused negate-multiply/add of the three parameters
 * [2:4] convert the scalar type U to the wide type and perform element-wise fused negate-multiply/add of the three parameters
-* [5] computes r*s+t
+* [5] computes fused negate-multiply/add of the three parameters
 
 .. rubric:: Parameters
 
 * **v**, **w**, **x**: Instances of **wide<T,N>**
-* **r**,**s**,**t*: Scalar value  of type **U*
+* **r**, **s**, **t**: Scalar value  of type **U**
 
 
 .. rubric:: Return value
@@ -57,7 +57,7 @@ Notes
 
     - no "intermediate" overflow
 
-    ``fnma`` provides this for all integral types and also each time it is reasonable
+    Our ``fnma`` provides this for all integral types and also each time it is reasonable
     in terms of performance for floating ones (i.e. if the system has the hard
     wired capability).
 
@@ -69,7 +69,8 @@ Notes
 Options
 *******
 
-    - pedantic_: ``fnma[pedantic_](x,y,z)`` ensures the fnma conformant properties and allows SIMD acceleration if available.
+    - pedantic_: ``fnma[pedantic_](x,y,z)`` ensures the fnma conformant properties and allows SIMD 
+      acceleration if available.
 
 *******
 Example

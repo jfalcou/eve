@@ -13,7 +13,7 @@ signnz
       constexpr /* implementation defined */ signnz = {};
    }
 
-Function object computing the signnz (-1 or 1) of the  value of a :ref:`Value <concept-value>`, the signnz of zero being one.
+Function object computing the signnz (-1 or 1) of a :ref:`Value <concept-value>`, the signnz of zero being one.
 
 Synopsis
 ********

@@ -31,12 +31,12 @@ Synopsis
 
 * [1] performs element-wise fused negate-multiply/sub of the three parameters
 * [2:4] convert the scalar type U to the wide type and perform element-wise fused negate-multiply/sub of the three parameters
-* [5] computes r*s+t
+* [5]  computes  fused multiply/sub of the three parameters
 
 .. rubric:: Parameters
 
 * **v**, **w**, **x**: Instances of **wide<T,N>**
-* **r**,**s**,**t*: Scalar value  of type **U*
+* **r**, **s**, **t**: Scalar value  of type **U**
 
 
 .. rubric:: Return value
@@ -57,19 +57,20 @@ Notes
 
     - no "intermediate" overflow
 
-    ``fnms`` provides this for all integral types and also each time it is reasonable
+    Our ``fnms`` provides this for all integral types and also each time it is reasonable
     in terms of performance for floating ones (i.e. if the system has the hard
     wired capability).
 
     If you need pedantic fnms capabilities in all circumstances in your own
-    code you can use the pedantic_ option (although both can be very expensive).
+    code you can use the pedantic_ option (although it can be very expensive).
     pedantic_ option ensures the fnms properties and allows SIMD acceleration if available.
 
 *******
 Options
 *******
 
-    - pedantic_: ``fnms[pedantic_](x,y,z)`` ensures the fnms conformant properties and allows SIMD acceleration if available.
+    - pedantic_: ``fnms[pedantic_](x,y,z)`` ensures the fnms conformant properties and allows SIMD 
+      acceleration if available.
 
 *******
 Example

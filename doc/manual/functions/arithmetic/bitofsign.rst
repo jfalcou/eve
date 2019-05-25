@@ -13,7 +13,7 @@ bitofsign
       constexpr /* implementation defined */ bitofsign = {};
    }
 
-Function object computing bits of sign of a :ref:`Value <concept-value>`.
+Function object computing the bit of sign of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********

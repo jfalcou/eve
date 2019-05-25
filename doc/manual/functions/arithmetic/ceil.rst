@@ -24,7 +24,7 @@ Synopsis
    template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise the least integral values greater or equal to the value of the :ref:`wide <type-wide>`.
+* [1] Computes the element-wise least integral values greater or equal to the value of the :ref:`wide <type-wide>`.
 * [2] Computes the least integral value greater or equal to the value of the scalar.
 
 .. rubric:: Parameters
@@ -40,9 +40,9 @@ Notes
 ******
 
   - the standard proposes 4 rounding modes namely: ``up_``, ``down_``, ``to_zero_`` and ``to_nearest_int``. This function object
-    implements the `up_`` version.
+    implements the ``up_`` version.
 
-  - the ``ceil(a)`` is equivalent to the call ``round[up_](a)``
+  - the call to ``ceil(a)`` is equivalent to the call ``round[up_](a)``
 
 Options
 *******

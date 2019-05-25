@@ -31,18 +31,17 @@ Synopsis
 
 * [1] performs element-wise fused multiply/sub of the three parameters
 * [2:4] convert the scalar type U to the wide type and perform element-wise fused multiply/sub of the three parameters
-* [5] computes r*s+t
+* [5] computes  fused multiply/sub of the three parameters
 
 .. rubric:: Parameters
 
 * **v**, **w**, **x**: Instances of **wide<T,N>**
-* **r**,**s**,**t*: Scalar value  of type **U*
-
+* **r**, **s**, **t**: Scalar value  of type **U**
 
 .. rubric:: Return value
 
 * [1:4] A value of the type **wide<T,N>**                  
-* [6]     A value of type **U**
+* [5]     A value of type **U**
 
 
 *****
@@ -57,19 +56,20 @@ Notes
 
     - no "intermediate" overflow
 
-    ``fms`` provides this for all integral types and also each time it is reasonable
+    Our ``fms`` provides this for all integral types and also each time it is reasonable
     in terms of performance for floating ones (i.e. if the system has the hard
     wired capability).
 
     If you need pedantic fms capabilities in all circumstances in your own
-    code you can use the pedantic_ option (although both can be very expensive).
+    code you can use the pedantic_ option (although it can be very expensive).
     pedantic_ option ensures the fms properties and allows SIMD acceleration if available.
 
 *******
 Options
 *******
 
-    - pedantic_: ``fms[pedantic_](x,y,z)`` ensures the fms conformant properties and allows SIMD acceleration if available.
+    - pedantic_: ``fms[pedantic_](x,y,z)`` ensures the fms conformant properties and allows SIMD 
+      acceleration if available.
 
 *******
 Example
