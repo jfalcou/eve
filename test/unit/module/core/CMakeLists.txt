@@ -11,6 +11,7 @@
 ## scalar tests
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/trunc"     "core" ${all_types})
+list_tests("scalar/frac"     "core" ${all_types})
 list_tests("scalar/ceil"     "core" ${all_types})
 list_tests("scalar/floor"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -118,6 +119,7 @@ add_unit_test( "core" simd/bitwise_cast.cpp )
 
 list_tests("simd/abs" "core" ${all_types})
 list_tests("simd/trunc" "core" ${all_types})
+list_tests("simd/frac" "core" ${all_types})
 list_tests("simd/ceil" "core" ${all_types})
 list_tests("simd/floor" "core" ${all_types})
 list_tests("simd/add"         "core" ${all_types})
