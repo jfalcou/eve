@@ -1,7 +1,11 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
+<<<<<<< HEAD
   Copyright 2019 Joel FALCOU 
+=======
+  Copyright 2019 JeaJoel FALCOU 
+>>>>>>> frac
   Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.

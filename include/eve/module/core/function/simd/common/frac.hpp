@@ -12,6 +12,8 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_FRAC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/trunc.hpp>
