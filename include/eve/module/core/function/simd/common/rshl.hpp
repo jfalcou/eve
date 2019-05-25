@@ -33,9 +33,9 @@ namespace eve::detail
     EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
                "[ eve::rshl scalar] - at least shift absolute value abs(" << v1 << ") is out of the range [0, "
                                                                  << sizeof(T) * 8 << "[.");
-    if constexpr(std::is_aggregated_v<ABI>)
+    if constexpr(is_aggregated_v<ABI>)
       return aggregate(eve::rshl, v0, v1);
-    else if   constexpr(std::is_emulated_v<ABI>)
+    else if   constexpr(is_emulated_v<ABI>)
       return map(eve::rshl, v0, v1);
     else if constexpr(std::is_unsigned_v<U>)
       return shl(v0, v1);
