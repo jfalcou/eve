@@ -18,7 +18,6 @@
 #include <eve/function/scalar/is_gtz.hpp>
 #include <eve/function/scalar/shr.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/platform.hpp>
 #include <type_traits>
 
 namespace eve::detail

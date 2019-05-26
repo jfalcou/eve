@@ -17,7 +17,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/function/bitwise_and.hpp>
-#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

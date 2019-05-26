@@ -25,7 +25,6 @@
 #include <eve/constant/signmask.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

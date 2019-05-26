@@ -20,7 +20,6 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/platform.hpp>
 #include <type_traits>
 
 namespace eve::detail

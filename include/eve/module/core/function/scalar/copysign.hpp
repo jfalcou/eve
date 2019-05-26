@@ -22,7 +22,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/platform.hpp>
 #include <type_traits>
 
 namespace eve::detail

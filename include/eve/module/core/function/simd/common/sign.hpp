@@ -15,7 +15,6 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/allbits.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bitwise_cast.hpp>
@@ -23,14 +22,16 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/unary_minus.hpp>
-#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
+#ifndef EVE_NO_NANS
+#include <eve/function/is_nan.hpp>
+#include <eve/constant/allbits.hpp>
+#endif
 
 namespace eve::detail
 {
@@ -41,7 +42,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       auto r = if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
-#ifdef BOOST_SIMD_NO_NANS
+#ifdef EVE_NO_NANS
       return r;
 #else
       return if_else(is_nan(a), eve::allbits_, r);
@@ -55,7 +56,6 @@ namespace eve::detail
       {
         return if_else[as(a)](a, eve::one_, eve::zero_);
       }
-      
     }   
   }
 }

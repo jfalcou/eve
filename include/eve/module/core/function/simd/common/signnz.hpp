@@ -25,7 +25,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/signmask.hpp>
-#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
@@ -50,7 +49,6 @@ namespace eve::detail
         return bitwise_or(shr(a, (sizeof(T)*8-1)), One(as(a)));
       else
         return One(as(a)); 
-      
     }   
   }
 }
