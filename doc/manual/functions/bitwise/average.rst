@@ -40,14 +40,16 @@ Synopsis
 * [1,2] A value with the same type as the first parameter.
 * [3] A value of type **T**.
 
-.. rubric:: Notes
 
-   * Using `average(x, y)` for floating entries is similar to  `(x+y)/2`
+*******
+Notes
+*******
 
-   * For integer types, it returns a rounded value at a distance guaranteed
-    to be less than or equal to 0.5 of the average floating value, but may differ
-    by unity from the truncation given by `(x+y)/2`.
+* Using `average(x, y)` for floating entries is similar to  `(x+y)/2`
 
+* For integer types, it returns a rounded value at a distance guaranteed
+  to be less than or equal to 0.5 of the average floating value, but may differ
+  by unity from the truncation given by `(x+y)/2`.
 
 *******
 Options
