@@ -20,7 +20,6 @@
 #include <eve/constant/zero.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <cassert>
 
 namespace eve::detail
 {

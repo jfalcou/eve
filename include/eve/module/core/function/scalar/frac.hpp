@@ -27,7 +27,6 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto frac_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept requires( T, Arithmetic<T>)
   {
-
     if constexpr(std::is_floating_point_v<T>)
       return a0-trunc(a0); 
     else
