@@ -44,8 +44,9 @@ TTS_CASE("Check eve::sqr behavior")
     TTS_IEEE_EQUAL(eve::sqr(eve::Nan<Type>()), eve::Nan<Type>());
     TTS_IEEE_EQUAL(eve::sqr(-eve::Nan<Type>()), eve::Nan<Type>());
     TTS_EQUAL(eve::sqr(eve::Mzero<Type>()), Type(0)); 
-    TTS_EQUAL(eve::sqr(eve::Zero<Type>()),  Type(0)); 
-    TTS_EQUAL(eve::sqr[eve::saturated_](inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>()); 
+    TTS_EQUAL(eve::sqr(eve::Zero<Type>()),  Type(0));
+    if constexpr(std::is_integral_v<Type>)
+      TTS_EQUAL(eve::sqr[eve::saturated_](eve::inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>()); 
   }
 }
   

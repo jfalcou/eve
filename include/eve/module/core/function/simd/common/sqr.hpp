@@ -17,6 +17,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/sqrtvalmax.hpp>    
@@ -39,9 +40,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // saturated case
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(simd_)
-                                  ,saturated_type const & 
-                                  , wide<T, N, ABI> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N, ABI> sqr_(EVE_SUPPORTS(simd_)
+                                      ,saturated_type const & 
+                                      , wide<T, N, ABI> const &a0) noexcept
   {
     if (std::is_integral_v<T>)
     {

@@ -38,7 +38,7 @@ namespace eve::detail
                                   ,saturated_type const & 
                                   , wide<T, N, ABI> const &a0) noexcept
   {
-    return sqr[saturated_>(a0); 
+    return sqr[eve::saturated_](a0); 
   }  
 }
 

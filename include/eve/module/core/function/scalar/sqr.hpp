@@ -32,7 +32,7 @@ namespace eve::detail
   
   // -----------------------------------------------------------------------------------------------
   // saturated case
-  template<typename U, typename T>
+  template<typename T>
   EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(simd_)
                                   , saturated_type const & 
                                   , T const &a0) noexcept

@@ -12,8 +12,8 @@ using wide_it = eve::wide <int16_t, eve::fixed<8>>;
 int main()
 {
   wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
-                , eve::sqrtvalmax<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
-  wide_it svm =  eve::Sqrtvalmax<wide_it>(); 
+                , eve::Sqrtvalmax<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
+  int16_t svm =  eve::Sqrtvalmax<int16_t>(); 
   wide_it pi = { 0, 1, -1, -2, svm-1, svm, svm+1, svm+2 };
 
   std::cout
