@@ -1,37 +1,32 @@
 #include <eve/function/dist.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>   
 #include <eve/tags.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide <float, eve::fixed<8>>;
-using eve::pedantic_;
+using wide_it = eve::wide <int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
-                 , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
-  wide_ft qf = { eve::Mindenormal<float>(), 1.0f, -1.0f, eve::Inf<float>()
-                 , eve::Minf<float>(), eve::Nan<float>(), 0.0f, -2.0f };
+  wide_it pf = { 0, 1, -1, -eve::Valmax<int16_t>() }; 
+  wide_it qf = { 1, -1, 0, eve::Valmax<int16_t>() };
 
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                          " << pf << '\n' 
     << "<- qf =                          " << qf << '\n' 
     << "-> eve::dist(pf, qf) =            " << eve::dist(pf, qf) << '\n'
-    << "-> eve::dist[pedantic_](pf, qf) = " << eve::dist[pedantic_](pf, qf) << '\n';   
+    << "-> eve::dist[eve::saturated_](pf, qf) = " << eve::dist[eve::saturated_](pf, qf) << '\n';   
 
-  float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  int16_t xf = -eve::Valmax<int16_t>();
+  int16_t yf = eve::Valmax<int16_t>(); 
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                          " << xf << '\n'
     << "<- yf =                          " << yf << '\n'
     << "-> eve::dist(xf, yf) =            " << eve::dist(xf, yf) << '\n'
-    << "-> eve::dist[pedantic_](xf, yf) = " << eve::dist[pedantic_](xf, yf) << '\n';   
+    << "-> eve::dist[eve::saturated_](xf, yf) = " << eve::dist[eve::saturated_](xf, yf) << '\n';   
   return 0;
 }

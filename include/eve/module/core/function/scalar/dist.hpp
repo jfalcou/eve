@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <type_traits>
 #include <eve/function/scalar/abs.hpp>
+#include <eve/function/scalar/is_ltz.hpp>
 #include <eve/function/scalar/max.hpp>
 #include <eve/function/scalar/min.hpp>
 #include <eve/constant/valmax.hpp>

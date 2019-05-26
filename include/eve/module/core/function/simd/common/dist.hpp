@@ -57,10 +57,12 @@ namespace eve::detail
         }
         else
         {
-          if constexpr(std::is_integral_v<T>())
-            return max(a0, a1)-min(a0, a1);
+          if constexpr(std::is_integral_v<typename T::value_type>)
+          {
+            return eve::max(a, b)-eve::min(a, b);
+          }
           else
-            return eve::abs(a1-a0);           
+            return eve::abs(a-b);           
         }
       }
       else
@@ -72,7 +74,7 @@ namespace eve::detail
   }
    
   // -----------------------------------------------------------------------------------------------
-  // Pedantic
+  // saturated_type
   template<typename T, typename U>
   EVE_FORCEINLINE  auto dist_(EVE_SUPPORTS(cpu_)
                             , saturated_type const &
@@ -84,18 +86,18 @@ namespace eve::detail
   {
     if constexpr( !is_vectorized_v<U> )
     {
-      return dist(pedantic_, v0, T{v1});
+      return dist(saturated_, v0, T{v1});
     }
     else if constexpr( !is_vectorized_v<T> )
     {
-      return dist(pedantic_, U{v0},v1);
+      return dist(saturated_, U{v0},v1);
     }
     else
     {
-      if constexpr(std::is_integral_v<T> && std:is_signed_v<T>)
+      if constexpr(std::is_integral_v<typename T::value_type> && std::is_signed_v<typename T::value_type>)
       {
-        auto tmp = dist(a0, a1);
-        return if_else(is_ltz(tmp)), Valmax(as(a0)), tmp);
+        auto tmp = dist(v0, v1);
+        return if_else(is_ltz(tmp), Valmax(as(v0)), tmp);
       }
       else
         return eve::dist(v0, v1);
