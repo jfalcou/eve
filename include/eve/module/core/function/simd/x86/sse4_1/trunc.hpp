@@ -32,7 +32,6 @@ namespace eve::detail
                             wide<T, N, sse_> const &a0) noexcept
   requires(wide<T, N, sse_>, Arithmetic<T>)
   {
-    using t_t =  wide<T, N, sse_>; 
     if constexpr(std::is_integral_v<T>)
     {
        return a0; 
