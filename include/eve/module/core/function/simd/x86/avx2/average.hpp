@@ -18,21 +18,22 @@
 
 namespace eve::detail
 {
-  EVE_FORCEINLINE wide<T, N, avx_>
+  template<typename N>
+  EVE_FORCEINLINE wide<uint16_t, N, avx_>
                   average_(EVE_SUPPORTS(avx2_)
                           , wide<uint16_t, N, avx_> const &v0
                           , wide<uint16_t, N, avx_> const &v1) noexcept
   {
-    return _mm256_avg_epu16(a0, a1);
+    return _mm256_avg_epu16(v0, v1);
   }
   
   template<typename N>
-  EVE_FORCEINLINE wide<T, N, avx_>
+  EVE_FORCEINLINE wide<uint8_t, N, avx_>
                   average_(EVE_SUPPORTS(avx2_)
                           , wide<uint8_t, N, avx_> const &v0
                           , wide<uint8_t, N, avx_> const &v1) noexcept
   {
-   return _mm256_avg_epu8(a0, a1);
+   return _mm256_avg_epu8(v0, v1);
   }
 }
 
