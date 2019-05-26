@@ -13,9 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/sqr_abstvalmax.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 

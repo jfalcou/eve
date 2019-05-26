@@ -14,12 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/sqr_abstvalmax.hpp>    
+#include <eve/function/sqr.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
