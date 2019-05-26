@@ -1,8 +1,8 @@
 //==================================================================================================
 /** 
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry Lapreste
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -63,7 +63,6 @@ namespace eve::detail
     return if_else(is_gtz(v1), shl(v0, v1), shr(v0, -v1));
 #endif
   }
-
 }
 
 #endif
