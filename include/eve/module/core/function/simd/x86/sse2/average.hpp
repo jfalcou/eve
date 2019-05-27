@@ -18,8 +18,8 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
+  template<typename N>
+  EVE_FORCEINLINE wide<uint16_t, N, sse_>
                   average_(EVE_SUPPORTS(sse2_)
                           , wide<uint16_t, N, sse_> const &v0
                           , wide<uint16_t, N, sse_> const &v1) noexcept
@@ -27,8 +27,8 @@ namespace eve::detail
     return _mm_avg_epu16(v0, v1);
   }
   
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
+  template<typename N>
+  EVE_FORCEINLINE wide<uint8_t, N, sse_>
                   average_(EVE_SUPPORTS(sse2_)
                           , wide<uint8_t, N, sse_> const &v0
                           , wide<uint8_t, N, sse_> const &v1) noexcept
