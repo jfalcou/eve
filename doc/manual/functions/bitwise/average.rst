@@ -49,7 +49,11 @@ Notes
 
 * For integer types, it returns a rounded value at a distance guaranteed
   to be less than or equal to 0.5 of the average floating value, but may differ
-  by unity from the truncation given by `(x+y)/2`.
+  by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide 
+  simd intrinsics, it is possible that the scalar results may differ by one unit from
+  simd ones.
+
+
 
 *******
 Options

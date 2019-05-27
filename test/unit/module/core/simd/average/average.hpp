@@ -14,6 +14,12 @@
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/average.hpp>
+#include <eve/function/is_less_equal.hpp>
+#include <eve/function/max.hpp>
+#include <eve/function/min.hpp>    
+#include <eve/function/sub.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/true.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
@@ -29,9 +35,11 @@ TTS_CASE_TPL("Check average behavior on homogeneous wide",
 {
   using eve::wide;
   wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); });
+    ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); }), 
+    val(eve::average(lhs, rhs)) ;
+  auto z =  eve::max(ref, val) -eve::min(ref, val); 
   
-  TTS_EQUAL(ref, eve::average(lhs, rhs)); 
+  TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref))); 
 }
 
 TTS_CASE_TPL("Check average behavior on wide + scalar",
@@ -45,10 +53,12 @@ TTS_CASE_TPL("Check average behavior on wide + scalar",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto c) { return i % 3; }),
-    ref([](auto i, auto c) { return eve::average(Type(i % 3), Type(7)); });
-  
-  TTS_EQUAL(ref, eve::average(lhs, 7));
+  wide<Type, T> lhs([](auto i, auto c) { return Type(i % 3); }),
+    ref([](auto i, auto c) { return eve::average(Type(i % 3), Type(7)); }), 
+    val(eve::average(lhs, Type(7)));
+  auto z =  eve::max(ref, val) -eve::min(ref, val); 
+
+TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref)));
 }
 
 #endif

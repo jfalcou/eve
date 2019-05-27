@@ -57,7 +57,9 @@ namespace eve::detail
         else
         {
           if constexpr(std::is_integral_v<typename T::value_type>)
-             return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
+          {
+            return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
+          }
           else
             return fma(a,Half<T>(),b*Half<T>()); 
         }
@@ -69,7 +71,6 @@ namespace eve::detail
       }
     }
   }
-  
 }
 
 #endif
