@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //================================================================================================== 
->>>>>>> sqr saturated +test
 #ifndef EVE_CONSTANT_VALMAX_HPP_INCLUDED
 #define EVE_CONSTANT_VALMAX_HPP_INCLUDED
 
