@@ -15,6 +15,7 @@
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
+#include <eve/constant/valmax.hpp>
 #include <type_traits>
 
 
@@ -24,6 +25,7 @@ TTS_CASE("Check eve::average behavior")
   TTS_EQUAL(eve::average(Type{0}, Type{2}), Type{1});
   TTS_EQUAL(eve::average(Type{2}, Type{0}), Type{1});
   TTS_EQUAL(eve::average(Type{1}, Type{1}), Type{1});
+  TTS_EQUAL(eve::average(eve::Valmax<Type>(), eve::Valmax<Type>()), eve::Valmax<Type>());
 }
 
 #endif

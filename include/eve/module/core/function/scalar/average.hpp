@@ -14,8 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/bitwise_and.hpp>
-#include <eve/function/scalar/bitwise_xor.hpp>
+// #include <eve/function/scalar/bitwise_and.hpp>
+// #include <eve/function/scalar/bitwise_xor.hpp>
+#include <eve/function/scalar/inc.hpp>
 #include <eve/function/scalar/fma.hpp>
 #include <eve/function/scalar/shr.hpp>
 #include <eve/constant/half.hpp>
@@ -30,7 +31,8 @@ namespace eve::detail
   requires(T, Arithmetic<T>)
   {
     if constexpr(std::is_integral_v<T>)
-      return bitwise_and(a0, a1)+shr(bitwise_xor(a0, a1),1);
+//      return bitwise_and(a0, a1)+shr(bitwise_xor(a0, a1),1);
+      return shr(inc(a0+a1), 1); 
     else
       return fma(a0,Half(as(a0)),a1*Half(as(a0)));
   }
