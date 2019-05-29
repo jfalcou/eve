@@ -33,12 +33,12 @@ namespace eve::detail
 // Dispatch to sub-functions
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<in_t, float64x1_t>)
-      return fma(a,Half<T>(),b*Half<T>()); 
+      return fma(v0,Half<T>(),v1*Half<T>()); 
 #endif
     if constexpr(std::is_same_v<in_t, float32x2_t>)
       return vreinterpret_f32_u32(vhadd_u32(vreinterpret_u32_f32(v0), vreinterpret_u32_f32(v1)));
 
-    if constexpr(sizeof(in_t) == 8) return  return shr(inc(a+b), 1); 
+    if constexpr(sizeof(in_t) == 8) return  return shr(inc(v0+v1), 1); 
     if constexpr(std::is_same_v<in_t, int32x2_t>) return vhadd_s32(v0, v1);
     if constexpr(std::is_same_v<in_t, int16x4_t>) return vhadd_s16(v0, v1);
     if constexpr(std::is_same_v<in_t, int8x8_t>) return vhadd_s8(v0, v1);
@@ -57,12 +57,12 @@ namespace eve::detail
 // Dispatch to sub-functions
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<in_t, float64x2_t>)
-      return fma(a,Half<T>(),b*Half<T>()); 
+      return fma(v0,Half<T>(),v1*Half<T>()); 
 #endif
     if constexpr(std::is_same_v<in_t, float32x4_t>)
       return vreinterpretq_f32_u32(vhaddq_u32(vreinterpretq_u32_f32(v0), vreinterpretq_u32_f32(v1)));
 
-    if constexpr(sizeof(in_t) == 8) return  return shr(inc(a+b), 1); 
+    if constexpr(sizeof(in_t) == 8) return  return shr(inc(v0+v1), 1); 
     if constexpr(std::is_same_v<in_t, int32x4_t>) return vhaddq_s32(v0, v1);
     if constexpr(std::is_same_v<in_t, int16x8_t>) return vhaddq_s16(v0, v1);
     if constexpr(std::is_same_v<in_t, int8x16_t>) return vhaddq_s8(v0, v1);
