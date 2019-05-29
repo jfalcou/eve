@@ -55,7 +55,6 @@ namespace eve::detail
     else
       return dist(a0, a1); 
   }  
-    
 }
 
 #endif

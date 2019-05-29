@@ -33,7 +33,6 @@ TTS_CASE_TPL("Check plus behavior on wide",
     ref([](auto i, auto c) { return eve::dist(Type(i), Type(c - i)); });
   
   TTS_EQUAL(ref, eve::dist(lhs, rhs));
-  
 }
 
 TTS_CASE_TPL("Check plus behavior on wide",
@@ -52,7 +51,6 @@ TTS_CASE_TPL("Check plus behavior on wide",
 
     TTS_EQUAL(ref, eve::dist(lhs, Type(2))); 
     TTS_EQUAL(ref, eve::dist(Type(2), lhs));
-    
 }
 
 #endif
