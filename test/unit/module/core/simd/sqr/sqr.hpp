@@ -36,5 +36,4 @@ TTS_CASE_TPL("Check sqr behavior on wide",
   TTS_EQUAL(ref, eve::sqr(lhs));
 }
 
-
 #endif
