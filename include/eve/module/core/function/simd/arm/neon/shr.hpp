@@ -39,7 +39,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(neon128_),wide<T, N, neon64_> const &v0,I v1) noexcept
-  requires(wide<T, N, neon64_>, Integral<I>, Integral<T>)
+  requires(wide<T, N, neon128_>, Integral<I>, Integral<T>)
   {
     using i_t = wide<as_integer_t<T,signed>,N>;
     return eve::shr(v0,i_t(v1));
