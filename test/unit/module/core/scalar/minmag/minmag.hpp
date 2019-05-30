@@ -31,6 +31,7 @@ TTS_CASE("Check eve::minmag behavior")
   {
     TTS_EQUAL(eve::minmag(static_cast<Type>(-3), Type{2}), Type{2});
     TTS_EQUAL(eve::minmag(static_cast<Type>(-1), Type{2}), static_cast<Type>(-1));
+    TTS_EQUAL(eve::minmag(static_cast<Type>(-1), Type{1}), static_cast<Type>(-1));
   }
   if constexpr(std::is_floating_point_v<Type> )
   {

@@ -31,6 +31,7 @@ TTS_CASE("Check eve::maxmag behavior")
   {
     TTS_EQUAL(eve::maxmag(static_cast<Type>(-1), Type{2}), Type{2});
     TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{1}), static_cast<Type>(-2));
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{2}), Type{2});
   }
   if constexpr(std::is_floating_point_v<Type> )
   {
