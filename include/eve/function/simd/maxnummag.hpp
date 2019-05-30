@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MAXNUMMAG_HPP_INCLUDED
-#define EVE_FUNCTION_MAXNUMMAG_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_MAXNUMMAG_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_MAXNUMMAG_HPP_INCLUDED
 
 #include <eve/function/scalar/maxnummag.hpp>
-#include <eve/function/simd/maxnummag.hpp>
+#include <eve/module/core/function/simd/maxnummag.hpp>
 
 #endif
