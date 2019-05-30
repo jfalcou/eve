@@ -1,19 +1,19 @@
 .. _function-maxmag:
 
-###
-maxmag
-###
+######
+minmag
+######
 
-**Required header:** ``#include <eve/function/maxmag.hpp>``
+**Required header:** ``#include <eve/function/minmag.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-      constexpr /* implementation defined */ maxmag = {};
+      constexpr /* implementation defined */ minmag = {};
    }
 
-Function object computing the value of maximal magnitude between two :ref:`Values <concept-value>`.
+Function object computing the value of minimal magnitude between two :ref:`Values <concept-value>`.
 
 Synopsis
 ********
@@ -26,9 +26,9 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T> constexpr               T         operator()( T a, T b ) noexcept;
 
-* [1] Computes the element-wise value of maximal magnitude between both :ref:`wides <type-wide>`.
-* [2,3] Computes the value of maximal magnitude between the scalar and each element of the :ref:`type-wide` instance.
-* [4] Computes the value of maximal magnitude between both scalars.
+* [1] Computes the element-wise value of minimal magnitude between both :ref:`wides <type-wide>`.
+* [2,3] Computes the value of minimal magnitude between the scalar and each element of the :ref:`type-wide` instance.
+* [4] Computes the value of minimal magnitude between both scalars.
 
 .. rubric:: Parameters
 
@@ -46,12 +46,12 @@ Notes
 
     For any given value `x` and `y` of type  `T`:
 
-    Using `maxmag(x, y)` is similar to `(abs(x) < abs(y)) ? y : x` which is the standard behaviour.
+    Using `minmag(x, y)` is similar to `(abs(x) < abs(y)) ? x : y` which is the standard behaviour.
 
-    With this definition with floating point entries maxmag(`x`,`Nan(as(x))`) should return `x`...
+    With this definition with floating point entries minmag(`Nan(as(y))`,`y`) should return `y`...
 
     On some systems the intrinsic used returns a nan value as soon `x` or `y` is a nan value.
-    So the real definition of our `maxmag` function must add: but if `x` is a nan value the result is system dependent.
+    So the real definition of our `minmag` function must add: but if `x` is a nan value the result is system dependent.
 
     This can be corrected using the `pedantic_` option that ensures the standard behaviour at a cost.
 
@@ -61,10 +61,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/maxmag.cpp
+.. include:: ../../../../test/doc/minmag.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/maxmag.txt
+.. include:: ../../../../test/doc/minmag.txt
   :literal:

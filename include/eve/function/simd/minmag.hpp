@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MINMAG_HPP_INCLUDED
-#define EVE_FUNCTION_MINMAG_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_MINMAG_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_MINMAG_HPP_INCLUDED
 
 #include <eve/function/scalar/minmag.hpp>
-#include <eve/function/simd/minmag.hpp>
+#include <eve/module/core/function/simd/minmag.hpp>
 
 #endif
