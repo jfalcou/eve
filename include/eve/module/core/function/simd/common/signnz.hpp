@@ -37,7 +37,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      #ifndef BOOST_SIMD_NO_NANS
+      #ifndef EVE_SIMD_NO_NANS
       return if_else( is_nan(a), eve::allbits_, bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a)));
       #else
       return bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
