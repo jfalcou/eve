@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 JeaJoel FALCOU 
+  Copyright 2019 Joel FALCOU 
   Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -23,7 +23,7 @@
 using eve::fixed;
  
 TTS_CASE_TPL("Check frac behavior on wide",
-            fixed<1>,
+             fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check frac behavior on wide",
   using eve::wide;
   
   wide<Type, T> lhs([](int i, int) { return Type(i%2 ? (i+2) :-i-2)/3; }),
-    ref([](int i, int) { return eve::frac(Type(i%2 ? i+2 :-i-2)/3); });
+                ref([](int i, int) { return eve::frac(Type(i%2 ? i+2 :-i-2)/3); });
   
   TTS_EQUAL(ref, eve::frac(lhs));
    
