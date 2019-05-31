@@ -35,7 +35,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       auto r = if_else[as(a)](is_gtz(a), one_, zero_)-if_one_else_zero[as(a)](is_ltz(a), one_, zero_);
-#ifdef BOOST_SIMD_NO_NANS
+#ifdef EVE_SIMD_NO_NANS
       return r;
 #else
       return if_else(is_nan(aa), r, allbits_);

@@ -17,7 +17,7 @@
 #if defined(EVE_HW_X86)
 
 #  if EVE_HW_X86 >= EVE_SSSE3_VERSION
-#    include <eve/module/core/function/simd/x86/ssse3/abs.hpp>
+#    include <eve/module/core/function/simd/x86/ssse3/sign.hpp>
 #  endif
 
 #endif
