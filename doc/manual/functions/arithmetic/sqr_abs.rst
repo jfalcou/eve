@@ -13,9 +13,7 @@ sqr_abs
       constexpr /* implementation defined */ sqr_abs = {};
    }
 
-Function object computing the square of tha absolute value of a floating point :ref:`Value <concept-value>`.
-This function coincides with ``sqr`` on real entries, but is restricted to floating points and of course differs on
-on complex entries.
+Function object computing the square of the absolute value of a floating point :ref:`Value <concept-value>`.
 
 Synopsis
 ********
@@ -40,6 +38,12 @@ Synopsis
 
 Options
 *******
+
+Notes
+*****
+
+This function coincides with ``sqr`` on real entries and is not defined for integral type. 
+Its use will be extended in a future complex module. On complex entries `sqr` and `sqr_abs do not coincide`.
 
 Example
 *******

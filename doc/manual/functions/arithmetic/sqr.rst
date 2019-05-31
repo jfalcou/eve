@@ -24,8 +24,8 @@ Synopsis
    template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise sqrolute value of the :ref:`wide <type-wide>`.
-* [2] Computes the sqrolute value of the scalar.
+* [1] Computes the element-wise square value of the :ref:`wide <type-wide>`.
+* [2] Computes the square value of the scalar.
 
 .. rubric:: Parameters
 
