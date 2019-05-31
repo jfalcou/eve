@@ -13,56 +13,130 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/function/refine_rec.hpp>
 #include <eve/forward.hpp>
+#include <eve/tags.hpp>
 
 namespace eve::detail
 {
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, neon64_> rec_(EVE_SUPPORTS(neon128_),
-                                                   wide<double, N, neon64_> const &v0) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> rec_( EVE_SUPPORTS(neon128_),
+                                            raw_type const &,
+                                            wide<T, N, neon64_> const &v0
+                                          ) noexcept
   {
-    // estimate 1/x with an extra NR step for full precision
-    auto a = refine_rec(v0, rec[raw_](v0) );
-    return refine_rec(v0, a );
-  }
-
-
-  template<typename N>
-  EVE_FORCEINLINE wide<float, N, neon64_> rec_(EVE_SUPPORTS(neon128_),
-                                                   wide<float, N, neon64_> const &v0) noexcept
-  {
-    return vrecpeq_f32(v0);
-  }
-
 #if defined(__aarch64__)
-
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, neon64_> rec_(EVE_SUPPORTS(neon128_),
-                                                   wide<float, N, neon64_> const &v0) noexcept
-  {
-    return t_t(1.0/extract<0>(v0));
-  }
-
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, neon128_> rec_(EVE_SUPPORTS(neon128_),
-                                                    wide<double, N, neon128_> const &v0) noexcept
-  {
-      auto x = vmulq_f64(vrecpsq_f64(v0, a1), a1);
-      return vmulq_f64(vrecpsq_f64(v0, x), x);
-  }
-  
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, neon64_> rec_(EVE_SUPPORTS(neon128_),
-                                                   raw_type const &
-                                                   wide<float, N, neon64_> const &v0) noexcept
-  {
-    return rec(v0));
-  }
-
+    if constexpr( std::is_same_v<T,double>)
+    {
+      return vrecpe_f64(v0);
+    }
 #endif
-  
+
+    if constexpr( std::is_same_v<T,float>)
+    {
+      return vrecpe_f32(v0);
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), raw_, v0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> rec_ ( EVE_SUPPORTS(neon128_),
+                                              raw_type const &,
+                                              wide<T, N, neon128_> const &v0
+                                            ) noexcept
+  {
+#if defined(__aarch64__)
+    if constexpr( std::is_same_v<T,double>)
+    {
+      return vrecpeq_f64(v0);
+    }
+#endif
+
+    if constexpr( std::is_same_v<T,float>)
+    {
+      return vrecpeq_f32(v0);
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), raw_, v0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> rec_( EVE_SUPPORTS(neon128_),
+                                            wide<T, N, neon64_> const &v0
+                                          ) noexcept
+  {
+#if defined(__aarch64__)
+    if constexpr( std::is_same_v<T,double>)
+    {
+      return wide<T, N, neon64_>{T{1}/v0[0]};
+    }
+#endif
+
+    if constexpr( std::is_same_v<T,float>)
+    {
+      // estimate 1/x with an extra NR step for full precision
+      auto a = refine_rec(v0, rec[raw_](v0) );
+      return refine_rec(v0, a );
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), v0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> rec_( EVE_SUPPORTS(neon128_),
+                                            wide<T, N, neon128_> const &v0
+                                          ) noexcept
+  {
+    if constexpr( std::is_floating_point_v<T>)
+    {
+      // estimate 1/x with an extra NR step for full precision
+      auto a = refine_rec(v0, rec[raw_](v0) );
+      return refine_rec(v0, a );
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), v0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> rec_( EVE_SUPPORTS(neon128_),
+                                            pedantic_type const &,
+                                            wide<T, N, neon64_> const &v0
+                                          ) noexcept
+  {
+    if constexpr( std::is_floating_point_v<T> )
+    {
+      return rec(v0);
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), pedantic_, v0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> rec_ ( EVE_SUPPORTS(neon128_),
+                                              pedantic_type const &,
+                                              wide<T, N, neon128_> const &v0
+                                            ) noexcept
+  {
+    if constexpr( std::is_floating_point_v<T> )
+    {
+      return rec(v0);
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), pedantic_, v0);
+    }
+  }
 }
 
 #endif

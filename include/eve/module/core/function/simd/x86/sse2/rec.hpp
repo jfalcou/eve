@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine 
-  Copyright 2019 Jean-Thierry Lapreste
+  EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,87 +15,99 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/function/bitwise_or.hpp>
+#include <eve/function/refine_rec.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/forward.hpp>
 #include <eve/tags.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_inf.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/refine_rec.hpp>
 #include <type_traits>
- 
+
+#ifndef EVE_NO_INFINITIES
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/is_inf.hpp>
+#include <eve/constant/mzero.hpp>
+#endif
+
+#ifndef EVE_NO_DENORMALS
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/constant/signmask.hpp>
+#endif
+
 namespace eve::detail
 {
-
-  // double
-  template<typename N>
-  EVE_FORCEINLINE wide<double, N, sse_> rec_(EVE_SUPPORTS(sse2_),
-                                             raw_type const &, 
-                                             wide<double, N, sse_> const &a0) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, sse_> rec_ ( EVE_SUPPORTS(sse2_),
+                                          raw_type const&,
+                                          wide<T, N, sse_> const &a0
+                                        ) noexcept
   {
-    return _mm_cvtps_pd(_mm_rcp_ps( _mm_cvtpd_ps(a0) ));//The error for this approximation is no more than 1.5.e-12
-  }                                             
-  
-  template<typename N>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(sse2_),
-                            wide<double, N, sse_> const &a00) noexcept
-  {
-    using t_t = wide<double, N>; 
-    t_t a0 = refine_rec(a00, refine_rec(a00,refine_rec(a00, rec[raw_](a00))));
-#ifndef BOOST_SIMD_NO_INFINITIES
-    a0 = if_else(is_inf(a00),
-                 bitwise_and(a00, Mzero<t_t>()),
-                 a0
-                );
-#endif
-#ifndef BOOST_SIMD_NO_DENORMALS
-    auto bitofsign = bitwise_and(a00, Signmask<t_t>());
-    auto is_den = is_less(eve::abs(a00), Smallestposval<t_t>());
-    return if_else(is_den,  bitwise_or(bitofsign, Inf<t_t>()), a0);
-#else
-    auto is_den = is_eqz(a00);
-    return if_else(is_den,  bitwise_or(a00, Inf<t_t>()), a0);
-#endif
+    if constexpr( std::is_same_v<T,double>)
+    {
+      //The error for this approximation is no more than 1.5.e-12
+      return _mm_cvtps_pd(_mm_rcp_ps( _mm_cvtpd_ps(a0) ));
+    }
+    if constexpr( std::is_same_v<T,float>)
+    {
+      return _mm_rcp_ps( a0 );
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), raw_, a0);
+    }
   }
-  
-  // -----------------------------------------------------------------------------------------------
-  // float
-  template<typename N>
-  EVE_FORCEINLINE wide<float, N, sse_> rec_(EVE_SUPPORTS(sse2_),
-                                             raw_type const &, 
-                                             wide<float, N, sse_> const &a0) noexcept
-  {
-    return _mm_rcp_ps( a0 );
-  }                                             
 
-  template<typename N>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(sse2_),
-                            wide<float, N, sse_> const &a00) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, sse_> rec_( EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0 ) noexcept
   {
-    using t_t = wide<float, N>;
-    t_t a0 =refine_rec(a00,refine_rec(a00, rec[eve::raw_](a00)));
-#ifndef BOOST_SIMD_NO_INFINITIES
-    a0 = if_else(is_inf(a00),
-                 bitwise_and(a00, Mzero<t_t>()),
-                 a0
-                );
+    if constexpr( std::is_floating_point_v<T>)
+    {
+      auto r = refine_rec(a0,refine_rec(a0, rec[raw_](a0)));
+
+      if constexpr( std::is_same_v<T,double>)
+      {
+        r = refine_rec(a0, r);
+      }
+
+      return r;
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), a0);
+    }
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, sse_> rec_ ( EVE_SUPPORTS(sse2_),
+                                          pedantic_type const&,
+                                          wide<T, N, sse_> const &a0
+                                        ) noexcept
+  {
+    if constexpr( std::is_floating_point_v<T>)
+    {
+      auto r = rec(a0);
+
+#ifndef EVE_NO_INFINITIES
+      r = if_else(is_inf(a0),bitwise_and(a0, Mzero(as(a0))),r);
 #endif
-#ifndef BOOST_SIMD_NO_DENORMALS
-    auto bitofsign = bitwise_and(a00, eve::Signmask<t_t>());
-    auto is_den = is_less(eve::abs(a00), Smallestposval<t_t>());
-    return if_else(is_den,  bitwise_or(bitofsign, Inf<t_t>()), a0);
+
+#ifndef EVE_NO_DENORMALS
+    auto bitofsign = bitwise_and(a0, eve::Signmask(as(a0)));
+    auto is_den = is_less(eve::abs(a0), Smallestposval(as(a0)));
+    return if_else(is_den,  bitwise_or(bitofsign, Inf(as(a0))), r);
 #else
-    auto is_den = is_eqz(a00);
-    return if_else(is_den,  bitwise_or(a00, Inf<t_t>()), a0);
+      auto is_den = is_eqz(a0);
+      return if_else(is_den, bitwise_or(a0, Inf(as(a0))), r);
 #endif
-  }   
+    }
+    else
+    {
+      return rec_(EVE_RETARGET(simd_), pedantic_, a0);
+    }
+  }
 }
-
-
 
 #endif
