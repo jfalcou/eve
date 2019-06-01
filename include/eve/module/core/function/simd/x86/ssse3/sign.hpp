@@ -17,7 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/false.hpp>
-#include <eve/function/if_elseo.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/shr.hpp>
