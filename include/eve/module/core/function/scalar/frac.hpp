@@ -32,7 +32,6 @@ namespace eve::detail
     else
       return Zero(as(a0)); 
   }
-
 }
 
 #endif
