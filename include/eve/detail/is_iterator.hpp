@@ -22,11 +22,11 @@ namespace eve::detail
 
   template<typename T>
   struct is_iterator<T,
-                     std::void_t<decltype(*std::declval<T>()) // Dereferenceable
-                                 ,
-                                 decltype(std::declval<T &>()++) // WeaklyIncrementable
-                                 ,
-                                 decltype(++std::declval<T &>())>> : std::true_type
+                     std::void_t<decltype(*std::declval<T>()),
+                                 decltype(std::declval<T &>()++),
+                                 decltype(++std::declval<T &>())
+                                >
+                    > : std::true_type
   {
   };
 

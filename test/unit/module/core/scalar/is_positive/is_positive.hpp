@@ -23,6 +23,9 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
+#pragma warning( push )
+#pragma warning( disable : 4146 ) // unary - on unsigned (?)
+
 TTS_CASE("Check is_positive return type")
 {
   TTS_EXPR_IS(eve::is_positive(Type(0)),  eve::as_logical_t<Type>);
@@ -45,5 +48,7 @@ TTS_CASE("Check eve::is_positive behavior")
     TTS_EQUAL(eve::is_positive(eve::Zero<Type>()), eve::True<Type>());
   }
 }
+
+#pragma warning( pop )
 
 #endif
