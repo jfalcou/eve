@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/tags.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,18 +26,16 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T sqr_abs_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    return sqr(a); 
+    if constexpr(std::is_floating_point_v<T>)
+      return sqr(a);
+    else
+    {
+      static_assert ( std::is_floating_point_v<T>,
+                      "[eve::sqr_abs] - Insupported type: use eve::sqr."
+                    );
+      return {};
+    }
   }
-  
-  // -----------------------------------------------------------------------------------------------
-  // saturated case
-  template<typename U, typename T>
-  EVE_FORCEINLINE constexpr T sqr_abs_(EVE_SUPPORTS(simd_)
-                                  , saturated_type const & 
-                                  , T const &a0) noexcept
-  {
-    return sqr[saturated_](a0);
-  } 
 }
 
 #endif

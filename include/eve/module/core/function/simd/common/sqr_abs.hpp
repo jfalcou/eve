@@ -27,19 +27,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto sqr_abs_(EVE_SUPPORTS(simd_),
                             wide<T, N, ABI> const &a0) noexcept
   {
-    return sqr(a0); 
+    if constexpr(std::is_floating_point_v<T>)
+      return sqr(a0); 
+    else
+    {
+      static_assert ( std::is_floating_point_v<T>,
+                      "[eve::sqr_abs] - Insupported type: use eve::sqr."
+                    );
+      return {};
+    }
   }
-  
-
-  // -----------------------------------------------------------------------------------------------
-  // saturated case
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr T sqr_abs_(EVE_SUPPORTS(simd_)
-                                  ,saturated_type const & 
-                                  , wide<T, N, ABI> const &a0) noexcept
-  {
-    return sqr[eve::saturated_](a0); 
-  }  
 }
 
 #endif
