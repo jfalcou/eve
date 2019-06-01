@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check sign behavior on wide",
 {
   using eve::wide;
   using eve::logical;
-
+  
   if constexpr(std::is_signed_v<Type>)
   {
     wide<Type, T> lhs([](auto i, auto) { return i%2 ? Type(i) : -Type(i); })

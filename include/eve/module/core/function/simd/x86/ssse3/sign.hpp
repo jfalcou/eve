@@ -34,23 +34,25 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto r = if_else[as(a)](is_gtz(a), one_, zero_)-if_one_else_zero[as(a)](is_ltz(a), one_, zero_);
+      auto r = if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
 #ifdef EVE_SIMD_NO_NANS
       return r;
 #else
-      return if_else(is_nan(aa), r, allbits_);
+      return if_else(is_nan(a), eve::allbits_, r);
 #endif
     }
     else
     {
       if constexpr(std::is_signed_v<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm_sign_epi8(One(as(a)), a);
-        if constexpr(sizeof(T) == 2) return _mm_sign_epi16(One(as(a)), a);
-        if constexpr(sizeof(T) == 4) return _mm_sign_epi32(One(as(a)), a);  
-        if constexpr(sizeof(T) == 8) return map(sign, a); 
+        using t_t = wide<T, N, sse_>; 
+        if constexpr(sizeof(T) == 1) return t_t(_mm_sign_epi8(One(as(a)), a));
+        if constexpr(sizeof(T) == 2) return t_t(_mm_sign_epi16(One(as(a)), a));
+        if constexpr(sizeof(T) == 4) return t_t(_mm_sign_epi32(One(as(a)), a));
+        if constexpr(sizeof(T) == 8) return map(sign, a);
+      }
       else
-        return if_else[as(a)](a, one_, zero_); 
+        return if_else[as(a)](a, eve::one_, eve::zero_); 
     }   
   }
 }
