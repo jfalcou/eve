@@ -1,4 +1,4 @@
-.. _function-maxmag:
+.. _function-minmag:
 
 ######
 minmag
@@ -44,16 +44,15 @@ Synopsis
 Notes
 *****
 
-    For any given value `x` and `y` of type  `T`:
+    There is three ways to call `minmag`:
 
-    Using `minmag(x, y)` is similar to `(abs(x) < abs(y)) ? x : y` which is the standard behaviour.
+    * `minmag(x, y)` in which case if ``x`` or ``y`` has a nan the result is system dependent as on various systems the intrinsics act differently
 
-    With this definition with floating point entries minmag(`Nan(as(y))`,`y`) should return `y`...
+    * `minmag[pedantic_](x, y)` in which case the call is equivalent to `if_else(abs(x) < abs(y),x,y)`
 
-    On some systems the intrinsic used returns a nan value as soon `x` or `y` is a nan value.
-    So the real definition of our `minmag` function must add: but if `x` is a nan value the result is system dependent.
+    * `minmag[num_](x, y)` in which case if ``x`` or ``y`` has a nan the result the corresponding result is the other value
 
-    This can be corrected using the `pedantic_` option that ensures the standard behaviour at a cost.
+    The first way is the speediest.
 
 Options
 *******

@@ -41,22 +41,18 @@ Synopsis
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
 
-Notes
-*****
-
-    For any given value `x` and `y` of type  `T`:
-
-    Using `maxmag(x, y)` is similar to `(abs(x) < abs(y)) ? y : x` which is the standard behaviour.
-
-    With this definition with floating point entries maxmag(`x`,`Nan(as(x))`) should return `x`...
-
-    On some systems the intrinsic used returns a nan value as soon `x` or `y` is a nan value.
-    So the real definition of our `maxmag` function must add: but if `x` is a nan value the result is system dependent.
-
-    This can be corrected using the `pedantic_` option that ensures the standard behaviour at a cost.
-
 Options
 *******
+
+    With floating types, there is three ways to call `maxmag`:
+
+    * `maxmag(x, y)`: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
+
+    * `maxmag[pedantic_](x, y)`: in which case the call is equivalent to `if_else(abs(x) < abs(y), x, y)`;
+
+    * `maxmag[num_](x, y)`: in which case if an element of ``x`` or ``y`` is a nan the result the corresponding result is the other value.
+
+    The first way is the speediest.
 
 Example
 *******

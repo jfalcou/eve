@@ -17,8 +17,6 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/min.hpp>
 
-
-
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------

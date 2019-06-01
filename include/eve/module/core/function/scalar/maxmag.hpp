@@ -17,8 +17,6 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/max.hpp>
 
-
-
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
