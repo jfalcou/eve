@@ -41,22 +41,19 @@ Synopsis
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
 
-Notes
-*****
-
-    For any given value `x` and `y` of type  `T`:
-
-    Using `min(x, y)` is similar to `(x < y) ? x : y` which is the standard behaviour.
-
-    With this definition with floating point entries min(`Nan(as(y))`,`y`) should return `y`...
-
-    On some systems the intrinsic used returns a nan value as soon `x` or `y` is a nan value.
-    So the real definition of our `min` function must add: but if `x` is a nan value the result is system dependent.
-
-    This can be corrected using the pedantic_ options that ensures the standard behaviour at a cost.
-
 Options
 *******
+
+    With floating types, there is three ways to call ``min``:
+
+    * ``min(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
+
+    * ``min[pedantic_](x, y)``: in which case the call is equivalent to ``if_else(abs(x) < abs(y), x, y)``;
+
+    * ``min[num_](x, y)``: in which case if an element of ``x`` or ``y`` is a nan the result the corresponding result is the other value.
+
+    The first way is the speediest.
+
 
 Example
 *******
