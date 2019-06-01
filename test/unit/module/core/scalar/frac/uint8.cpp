@@ -8,10 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FRAC_HPP_INCLUDED
-#define EVE_FUNCTION_FRAC_HPP_INCLUDED
 
-#include <eve/function/scalar/frac.hpp>
-#include <eve/function/simd/frac.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::uint8_t;
+#include "frac.hpp"
