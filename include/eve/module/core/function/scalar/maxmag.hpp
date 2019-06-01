@@ -24,7 +24,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
+  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
+                                     , T const &a0
+                                     , T const &a1) noexcept
   {
       auto aa0 = eve::abs(a0);
       auto aa1 = eve::abs(a1);
@@ -34,11 +36,27 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
-  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a0, T const &a1) noexcept
+  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
+                                     , pedantic_type const &
+                                     , T const &a0
+                                     , T const &a1) noexcept
   {
       auto aa0 = eve::abs(a0);
       auto aa1 = eve::abs(a1);
       return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : eve::max[pedantic_](a0, a1);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // numeric case
+  template<typename T>
+  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
+                                     , num_type const & 
+                                     , T const &a0
+                                     , T const &a1) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>)
+      if (is_nan(a0)) return a1;
+    return maxmag(a0, a1);
   }
 }
 

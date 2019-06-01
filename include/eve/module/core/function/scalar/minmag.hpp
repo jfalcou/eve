@@ -40,6 +40,19 @@ namespace eve::detail
       auto aa1 = eve::abs(a1);
       return aa0 < aa1 ? a0 : aa1 < aa0 ? a1 : eve::min[pedantic_](a0, a1);
   }
+  
+  // -----------------------------------------------------------------------------------------------
+  // numeric case
+  template<typename T>
+  EVE_FORCEINLINE constexpr T minmag_(EVE_SUPPORTS(cpu_)
+                                     , num_type const & 
+                                     , T const &a0
+                                     , T const &a1) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>)
+      if (is_nan(a0)) return a1;
+    return minmag(a0, a1);
+  }
 }
 
 #endif

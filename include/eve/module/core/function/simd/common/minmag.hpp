@@ -20,6 +20,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
+#include <eve/function/is_nan.hpp>
 #include <eve/function/min.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <type_traits>
@@ -120,7 +121,20 @@ namespace eve::detail
       }
     }
   }
+  // -----------------------------------------------------------------------------------------------
+  // Numeric
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(simd_)
+                              , num_type const &   
+                              , T const &a
+                              , U const &b) noexcept
+  {
+    auto z = minmag(a, b);
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      return if_else (is_nan(a), b, z);
+    else
+      return z;   
+  }
 }
 
 #endif
-  

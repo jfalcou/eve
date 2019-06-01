@@ -19,6 +19,7 @@
 #include <eve/forward.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/max.hpp>
 #include <eve/concept/vectorized.hpp>
@@ -115,10 +116,26 @@ namespace eve::detail
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::maxmag[pedantic_]] - Incompatible types.");
+        static_assert( std::is_same_v<T,U>
+                     , "[eve::maxmag[pedantic_]] - Incompatible types.");
         return {};
       }
     }
+  }
+  
+  // -----------------------------------------------------------------------------------------------
+  // Numeric
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_)
+                              , num_type const &   
+                              , T const &a
+                              , U const &b) noexcept
+  {
+    auto z = maxmag(a, b);
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      return if_else (is_nan(a), b, z);
+    else
+      return z;   
   }
 }
 

@@ -110,6 +110,19 @@ namespace eve::detail
     return logical_and(a, b); 
   }
   
+  // -----------------------------------------------------------------------------------------------
+  // Numeric
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto min_(EVE_SUPPORTS(cpu_)
+                            , num_type const & 
+                            , T const &a0
+                            , U const &a1) noexcept
+  {
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      return if_else (is_nan(a0), a1, min(a0, a1));
+    else
+      return min(a0, a1);
+  }  
 }
 
 #endif

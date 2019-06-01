@@ -121,6 +121,19 @@ namespace eve::detail
     return logical_or(a, b); 
   }
   
+  // -----------------------------------------------------------------------------------------------
+  // Numeric
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto max_(EVE_SUPPORTS(cpu_)
+                            , num_type const & 
+                            , T const &a0
+                            , U const &a1) noexcept
+  {
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      return if_else (is_nan(a0), a1, max(a0, a1));
+    else
+      return max(a0, a1);
+  }
 }
 
 #endif
