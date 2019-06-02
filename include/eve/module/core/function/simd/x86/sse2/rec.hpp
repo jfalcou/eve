@@ -63,16 +63,13 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> rec_( EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0 ) noexcept
   {
-    if constexpr( std::is_floating_point_v<T>)
+    if constexpr( std::is_same_v<T,double> )
     {
-      auto r = refine_rec(a0,refine_rec(a0, rec[raw_](a0)));
-
-      if constexpr( std::is_same_v<T,double>)
-      {
-        r = refine_rec(a0, r);
-      }
-
-      return r;
+      return _mm_div_pd(One(as(a0)),a0);
+    }
+    else if constexpr( std::is_same_v<T,float> )
+    {
+      return _mm_div_ps(One(as(a0)),a0);
     }
     else
     {
@@ -88,20 +85,7 @@ namespace eve::detail
   {
     if constexpr( std::is_floating_point_v<T>)
     {
-      auto r = rec(a0);
-
-#ifndef EVE_NO_INFINITIES
-      r = if_else(is_inf(a0),bitwise_and(a0, Mzero(as(a0))),r);
-#endif
-
-#ifndef EVE_NO_DENORMALS
-    auto bitofsign = bitwise_and(a0, eve::Signmask(as(a0)));
-    auto is_den = is_less(eve::abs(a0), Smallestposval(as(a0)));
-    return if_else(is_den,  bitwise_or(bitofsign, Inf(as(a0))), r);
-#else
-      auto is_den = is_eqz(a0);
-      return if_else(is_den, bitwise_or(a0, Inf(as(a0))), r);
-#endif
+      return rec(a0);
     }
     else
     {
