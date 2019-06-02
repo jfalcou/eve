@@ -15,7 +15,7 @@ rshl
 
 Function object performing a relative shift to the left or the right of an :ref:`IntegralValue <concept-integralvalue>`  by 
 another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size. The shift direction is left 
-(resp. right) if the shift is possitive (resp. negative)
+(resp. right) if the shift is positive (resp. negative)
 
 ********
 Synopsis

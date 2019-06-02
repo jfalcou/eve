@@ -31,8 +31,8 @@ namespace eve::detail
   rshr_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, wide<U, N, ABI> const &v1) noexcept
   {
     EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr scalar] - at least shift absolute value abs(" << v1 << ") is out of the range [0, "
-                                                                 << sizeof(T) * 8 << "[.");
+               "[ eve::rshr scalar] - at least a shift absolute value abs(" << v1 << ") is out of the range [0, "
+               << sizeof(T) * 8 << "[.");
     if constexpr(is_aggregated_v<ABI>)
       return aggregate(eve::rshr, v0, v1);
     else if   constexpr(is_emulated_v<ABI>)
@@ -55,15 +55,14 @@ namespace eve::detail
   rshr_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, U const &v1) noexcept
   {
     EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr scalar] - Shift absolute value abs(" << v1 << ") is out of the range [0, "
-                                                                 << sizeof(T) * 8 << "[.");
+               "[ eve::rshr scalar] - The shift absolute value abs(" << v1 << ") is out of the range [0, "
+               << sizeof(T) * 8 << "[.");
 #ifndef NDEBUG
     return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1)), shl(v0, max(Zero(as(v1)), -v1)));
 #else
     return if_else(is_gtz(v1), shr(v0, v1), shl(v0, -v1));
 #endif
   }
-
 }
 
 #endif

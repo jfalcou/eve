@@ -31,7 +31,7 @@ namespace eve::detail
   rshl_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, wide<U, N, ABI> const &v1) noexcept
   {
     EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshl scalar] - at least shift absolute value abs(" << v1 << ") is out of the range [0, "
+               "[ eve::rshl scalar] - at least a shift absolute value abs(" << v1 << ") is out of the range [0, "
                                                                  << sizeof(T) * 8 << "[.");
     if constexpr(is_aggregated_v<ABI>)
       return aggregate(eve::rshl, v0, v1);
