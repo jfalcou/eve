@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_DEFINITION_SIGN_HPP_INCLUDED
 #define EVE_FUNCTION_DEFINITION_SIGN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp> 
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
