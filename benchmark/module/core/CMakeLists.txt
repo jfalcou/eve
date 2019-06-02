@@ -77,6 +77,9 @@ list_benchs("scalar/bitwise_not" "core" ${all_types})
 list_benchs("scalar/bitwise_mask" "core" ${all_types})
 list_benchs("scalar/is_negative" "core" ${all_types})
 list_benchs("scalar/inc" "core" ${all_types})
+list_benchs("scalar/rec/regular" "core" ${all_types})
+list_benchs("scalar/rec/raw" "core" ${all_types})
+list_benchs("scalar/rec/pedantic" "core" ${all_types})
 
 ##==================================================================================================
 ## SIMD< benchmarks
@@ -148,5 +151,8 @@ list_benchs("simd/bitwise_not" "core" ${all_types})
 list_benchs("simd/bitwise_mask" "core" ${all_types})
 list_benchs("simd/is_negative" "core" ${all_types})
 list_benchs("simd/inc" "core" ${all_types})
+list_benchs("simd/rec/regular" "core" ${all_types})
+list_benchs("simd/rec/raw" "core" ${all_types})
+list_benchs("simd/rec/pedantic" "core" ${all_types})
 
 
