@@ -1,4 +1,4 @@
-#include <eve/function/maxnummag.hpp>
+#include <eve/function/maxmag.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -19,7 +19,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
     << "<- qf =                  " << qf << '\n'
-    << "-> eve::maxnummag(pf, qf) = " << eve::maxnummag(pf, qf) << '\n';
+    << "-> eve::maxmag[eve::num_](pf, qf) = " << eve::maxmag[eve::num_](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -2.0f;
@@ -28,6 +28,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::maxnummag(xf, yf) = " << eve::maxnummag(xf, yf) << '\n';
+    << "-> eve::maxmag[eve::num_](xf, yf) = " << eve::maxmag[eve::num_](xf, yf) << '\n';
   return 0;
 }

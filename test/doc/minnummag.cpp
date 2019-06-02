@@ -1,4 +1,4 @@
-#include <eve/function/minnummag.hpp>
+#include <eve/function/minmag.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -19,7 +19,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
     << "<- qf =                  " << qf << '\n'
-    << "-> eve::minnummag(pf, qf) = " << eve::minnummag(pf, qf) << '\n';
+    << "-> eve::minmag[eve::num_](pf, qf) = " << eve::minmag[eve::num_](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -2.0f;
@@ -28,6 +28,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::minnummag(xf, yf) = " << eve::minnummag(xf, yf) << '\n';
+    << "-> eve::minmag[eve::num_](xf, yf) = " << eve::minmag[eve::num_](xf, yf) << '\n';
   return 0;
 }
