@@ -12,7 +12,6 @@
 #define REC_HPP
 
 #include "test.hpp"
-#include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/wide.hpp>
@@ -62,7 +61,7 @@ TTS_CASE_TPL("Check rec[raw_] behavior on wide",
 
   wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec[eve::raw_](lhs[i]); });
 
-  TTS_RELATIVE_EQUAL(ref, eve::rec[eve::raw_](lhs), 1);
+  TTS_RELATIVE_EQUAL(ref, eve::rec[eve::raw_](lhs), 0.3);
 }
 
 TTS_CASE_TPL("Check rec[pedantic_] behavior on wide",
@@ -78,14 +77,14 @@ TTS_CASE_TPL("Check rec[pedantic_] behavior on wide",
 
   wide<Type, T> lhs ( [](auto i, auto c)
                       {
-                        if constexpr( std::is_floating_point_v<Type>) return Type(i)/(c/2);
+                        if constexpr( std::is_floating_point_v<Type>) return Type(i)/17;
                         else                                          return i;
                       }
                     );
 
   wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec[eve::pedantic_](lhs[i]); });
 
-  TTS_RELATIVE_EQUAL(ref, eve::rec[eve::pedantic_](lhs), 1);
+  TTS_ULP_EQUAL(ref, eve::rec[eve::pedantic_](lhs), 0.5);
 }
 
 #endif

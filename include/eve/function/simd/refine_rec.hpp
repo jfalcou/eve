@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry Lapreste
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,4 +15,4 @@
 #include <eve/module/core/function/simd/refine_rec.hpp>
 
 #endif
- 
+
