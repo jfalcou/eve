@@ -47,8 +47,6 @@ TTS_CASE_TPL("Check copysign behavior on wide",
       b([N](auto i,  auto ){ return eve::copysign(Type(i), Type(i%2)); }); 
     TTS_EQUAL(eve::copysign(a1, a2), b);
   }
-  
 }
-
 
 #endif

@@ -44,8 +44,6 @@ TTS_CASE_TPL("Check bitofsign behavior on wide",
       ,  ref([](auto i, auto) { return eve::bitofsign(i%3); });
     TTS_EQUAL(eve::bitofsign(lhs),  ref );
   }
-  
 }
-
 
 #endif

@@ -43,8 +43,6 @@ TTS_CASE_TPL("Check signnz behavior on wide",
       ,  ref([](auto i, auto) { return eve::signnz(i%3); });
     TTS_EQUAL(eve::signnz(lhs),  ref );
   }
-  
 }
-
 
 #endif
