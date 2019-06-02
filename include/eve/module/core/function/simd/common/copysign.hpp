@@ -31,19 +31,47 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
+  template<typename T, typename U>
   EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(simd_)
-                                , wide<T, N, ABI> const &a0
-                                , wide<T, N, ABI> const &a1) noexcept
+                                , T const &a
+                                , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr(std::is_floating_point_v<T>)
-      return bitwise_or(bitofsign(a1), bitwise_notand(Signmask(as(a0)), a0));
+    if constexpr( !is_vectorized_v<U> )
+    {
+      return copysign(a, T{b});
+    }
+    else if constexpr( !is_vectorized_v<T> )
+    {
+      return copysign(U{a},b);
+    }
     else
     {
-      if constexpr(std::is_unsigned_v<T>)
-        return  a0; 
-      else
-        return if_else(a0 == Valmin(as(a0)) && is_ltz(a1), Valmax(as(a0)), eve::abs(a0)*signnz(a1)); 
+      if constexpr(std::is_same_v<T,U>)
+      {
+        if constexpr( is_aggregated_v<typename T::abi_type> )
+        {
+          return aggregate( eve::copysign, a, b);
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::copysign, a, b);
+        }
+        else
+        {
+          if constexpr(std::is_floating_point_v<T>)
+            return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+          else
+          {
+            if constexpr(std::is_unsigned_v<T>)
+              return  a; 
+            else
+              return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
+          }
+        }
+      }
     }
   }
 }

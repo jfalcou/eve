@@ -21,7 +21,6 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/shr.hpp>
-#include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
