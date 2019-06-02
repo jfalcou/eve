@@ -21,7 +21,7 @@ int main() {
             << " -> eve::if_else(lsi, eve::zero, pi_) =       "
             << eve::if_else(lsi, eve::zero_, pi) << '\n';
 
-  iT ssi = 3, xi = 3, yi = 4;
+  iT ssi = 3, xi = 3;
   eve::logical<iT>  lssi = false;
 
   std::cout << "---- scalar" << '\n'
