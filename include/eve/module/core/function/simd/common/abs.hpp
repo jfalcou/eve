@@ -15,22 +15,19 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/mzero.hpp>
 #include <eve/function/bitwise_notand.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/forward.hpp>
+#include <eve/function/unary_minus.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <type_traits>
-#include <cassert>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_)
-                           , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v) noexcept
   {
     if constexpr( is_native_v<ABI> )
     {
@@ -46,9 +43,7 @@ namespace eve::detail
         }
         else
         {
-          constexpr int Maxshift = sizeof(T) * 8 - 1;
-          wide<T, N>    s        = eve::shr(v, Maxshift);
-          return (v + s) ^ s;
+          return if_else( is_ltz(v), -v, v);
         }
       }
     }
@@ -60,17 +55,16 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_)
-                           , saturated_type const & 
-                           , wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto abs_ ( EVE_SUPPORTS(simd_),
+                              saturated_type const & ,
+                              wide<T, N, ABI> const &a
+                            ) noexcept
   {
     if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
       return if_else((a == Valmin(as(a))), Valmax(as(a)), eve::abs(a));
     else
-      return eve::abs(a); 
+      return eve::abs(a);
   }
-  
 }
-
 
 #endif
