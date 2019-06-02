@@ -15,8 +15,10 @@
 #include <cstddef>
 #include <limits>
 
+#if defined(EVE_COMP_IS_MSVC)
 #pragma warning( push )
 #pragma warning( disable : 4723 ) // 1/0 is OK for this test
+#endif
 
 TTS_CASE("Check mzero return type")
 {
@@ -45,4 +47,6 @@ TTS_CASE("Check mzero behavior")
   TTS_EQUAL(1.0 / eve::Mzero<float>(), -std::numeric_limits<float>::infinity());
 }
 
+#if defined(EVE_COMP_IS_MSVC)
 #pragma warning( pop )
+#endif

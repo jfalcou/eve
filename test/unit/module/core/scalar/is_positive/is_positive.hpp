@@ -23,8 +23,10 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
+#if defined(EVE_COMP_IS_MSVC)
 #pragma warning( push )
 #pragma warning( disable : 4146 ) // unary - on unsigned (?)
+#endif
 
 TTS_CASE("Check is_positive return type")
 {
@@ -49,6 +51,9 @@ TTS_CASE("Check eve::is_positive behavior")
   }
 }
 
+#if defined(EVE_COMP_IS_MSVC)
 #pragma warning( pop )
+#endif
 
 #endif
+
