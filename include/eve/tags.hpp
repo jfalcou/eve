@@ -11,24 +11,18 @@
 #ifndef EVE_TAGS_HPP_INCLUDED
 #define EVE_TAGS_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
 #include <type_traits>
 
 namespace eve
 {
   struct pedantic_type{};
-
-  pedantic_type pedantic_{};
+  inline constexpr pedantic_type pedantic_ = {};
 
   struct raw_type{};
-
-  raw_type raw_{};
+  inline constexpr raw_type raw_ = {};
 
   struct saturated_type{};
-
-  saturated_type saturated_{};
-
-  
+  inline constexpr saturated_type saturated_ = {};
 }
 
 #endif

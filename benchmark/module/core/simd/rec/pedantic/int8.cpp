@@ -8,10 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_REC_HPP_INCLUDED
-#define EVE_FUNCTION_REC_HPP_INCLUDED
+#include <eve/function/rec.hpp>
+#include <eve/wide.hpp>
+#include <cstddef>
 
-#include <eve/function/scalar/rec.hpp>
-#include <eve/function/simd/rec.hpp>
+#define TYPE()        eve::wide<std::int8_t>
+#define FUNCTION()    eve::rec[eve::pedantic_]
+#define SAMPLES(N)    random<T>(N,-100,100)
 
-#endif
+#include "bench.hpp"

@@ -53,6 +53,19 @@ namespace tts::ext
       return max_ulp;
     }
   };
+
+  template<typename T, typename N, typename ABI, typename EnableIf>
+  struct reldist<eve::wide<T, N, ABI>, eve::wide<T, N, ABI>, EnableIf>
+  {
+    inline double operator()(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r) const
+    {
+      double max_rel = 0;
+      for(auto i = 0; i < l.size(); ++i)
+        max_rel = std::max(max_rel, tts::reldist(T(l[ i ]), T(r[ i ])));
+
+      return max_rel;
+    }
+  };
 }
 
 int main(int argc, const char** argv)
