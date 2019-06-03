@@ -53,7 +53,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   if_else_( EVE_SUPPORTS(cpu_)
           , as_<TARGET> const &
-          , T const &cond
+          , logical<T> const &cond
           ,  eve::callable_one_ const &
           ,  eve::callable_zero_  const &
           ) noexcept
@@ -61,6 +61,20 @@ namespace eve::detail
   {
     return if_else(cond, One<TARGET>(), eve::zero_);
   }
+
+  template<typename TARGET,typename T>
+  EVE_FORCEINLINE constexpr auto
+  if_else_( EVE_SUPPORTS(cpu_)
+          , as_<TARGET> const &
+          , T const &cond
+          ,  eve::callable_one_ const &
+          ,  eve::callable_zero_  const &
+          ) noexcept
+  requires(TARGET, Vectorized<TARGET> )
+  {
+    return if_else(is_nez(cond), One<TARGET>(), eve::zero_);
+  }
+  
 }
 
 #endif

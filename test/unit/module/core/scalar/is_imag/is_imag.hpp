@@ -12,7 +12,6 @@
 #define IS_IMAG_HPP
 
 #include "test.hpp"
-#include <eve/constant/smallestposval.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/inf.hpp>

@@ -14,8 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/tags.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/constant/mzero.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,7 +27,8 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_)
-                                  , T const &a) noexcept requires( T, Arithmetic<T>)
+                                  , T const &a) noexcept
+  requires( T, Arithmetic<T>)
   {
 
     if constexpr(std::is_floating_point_v<T>) return a<T(0) ? -a : a;
@@ -37,6 +41,23 @@ namespace eve::detail
       return (a + mask) ^ mask;
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // saturated case
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_)
+                                  , saturated_type const &     
+                                  , T const &a) noexcept
+  requires( T, Arithmetic<T>)
+  {
+    if constexpr(std::is_floating_point_v<T>)
+      return a<T(0) ? -a : a;
+    if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>)
+      return a;
+    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
+      return (a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a); 
+  }
+  
 }
 
 

@@ -68,7 +68,7 @@ namespace eve::detail
                                            wide<T, N, neon64_> const &a0,
                                            wide<T, N, neon64_> const &a1) noexcept
   {
-#if !defined(BOOST_SIMD_NO_NANS)
+#if !defined(EVE_SIMD_NO_NANS)
     return if_else(is_nan(a1), a0, eve::min(a0, a1));
 #else
     return eve::min(a0, a1);
@@ -81,7 +81,7 @@ namespace eve::detail
                                            wide<T, N, neon128_> const &a0,
                                            wide<T, N, neon128_> const &a1) noexcept
   {
-#if !defined(BOOST_SIMD_NO_NANS)
+#if !defined(EVE_SIMD_NO_NANS)
     return if_else(is_nan(a1), a0, eve::min(a0, a1));
 #else
     return eve::min(a0, a1);
