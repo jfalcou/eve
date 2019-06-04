@@ -12,6 +12,7 @@
 #define EVE_FUNCTION_SCALAR_SQR_HPP_INCLUDED
 
 #include <eve/function/definition/sqr.hpp>
+#include <eve/module/core/function/generic/sqr.hpp>
 #include <eve/module/core/function/scalar/sqr.hpp>
 
 #endif

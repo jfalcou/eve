@@ -8,10 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SQR_HPP_INCLUDED
-#define EVE_FUNCTION_SQR_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SQR_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_SQR_HPP_INCLUDED
 
-#include <eve/function/scalar/sqr.hpp>
-#include <eve/function/simd/sqr.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/detail/abi.hpp>
+
+namespace eve::detail
+{
+  template<typename T> EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return a*a;
+  }
+}
 
 #endif

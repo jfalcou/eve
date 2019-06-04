@@ -61,9 +61,13 @@ namespace eve::detail
                             ) noexcept
   {
     if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
+    {
       return if_else((a == Valmin(as(a))), Valmax(as(a)), eve::abs(a));
+    }
     else
+    {
       return eve::abs(a);
+    }
   }
 }
 
