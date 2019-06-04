@@ -13,8 +13,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -33,9 +31,7 @@ namespace eve::detail
 #endif
     if constexpr(std::is_same_v<T, float>)  return vabs_f32(v0);
 
-    // Optimize with if_else later
     if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::abs,v0);
-
     if constexpr(is_signed_int && sizeof(T) == 4) return vabs_s32(v0);
     if constexpr(is_signed_int && sizeof(T) == 2) return vabs_s16(v0);
     if constexpr(is_signed_int && sizeof(T) == 1) return vabs_s8(v0);
@@ -55,9 +51,7 @@ namespace eve::detail
 #endif
     if constexpr(std::is_same_v<T, float>)  return vabsq_f32(v0);
 
-    // Optimize with if_else later
     if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::abs,v0);
-
     if constexpr(is_signed_int && sizeof(T) == 4) return vabsq_s32(v0);
     if constexpr(is_signed_int && sizeof(T) == 2) return vabsq_s16(v0);
     if constexpr(is_signed_int && sizeof(T) == 1) return vabsq_s8(v0);

@@ -1,9 +1,9 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine 
+  EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
- 
+
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
@@ -18,6 +18,10 @@
 
 #  if EVE_HW_X86 >= EVE_SSSE3_VERSION
 #    include <eve/module/core/function/simd/x86/ssse3/abs.hpp>
+#  endif
+
+#  if EVE_HW_X86 >= EVE_AVX_VERSION
+#    include <eve/module/core/function/simd/x86/avx/abs.hpp>
 #  endif
 
 #  if EVE_HW_X86 >= EVE_AVX2_VERSION

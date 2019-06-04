@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX2_ABS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX2_ABS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_ABS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_AVX_ABS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
@@ -22,15 +22,18 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N,avx_> abs_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &v) noexcept
+  EVE_FORCEINLINE wide<T,N,avx_> abs_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
   {
     if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(!std::is_signed_v<T>                   ) return v;
-      if constexpr( std::is_signed_v<T> && sizeof(T) == 1 ) return _mm256_abs_epi8(v);
-      if constexpr( std::is_signed_v<T> && sizeof(T) == 2 ) return _mm256_abs_epi16(v);
-      if constexpr( std::is_signed_v<T> && sizeof(T) == 4 ) return _mm256_abs_epi32(v);
-      if constexpr( std::is_signed_v<T> && sizeof(T) == 8 ) return aggregate(eve::abs,v);
+      if constexpr( std::is_signed_v<T> )
+      {
+        return aggregate(eve::abs, v);
+      }
+      else
+      {
+        return v;
+      }
     }
     else
     {
