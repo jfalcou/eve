@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_RSHR_HPP_INCLUDED
 
 #include <eve/function/scalar/rshr.hpp>
-//#include <eve/function/simd/rshr.hpp>
+#include <eve/function/simd/rshr.hpp>
 
 #endif

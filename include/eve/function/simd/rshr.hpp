@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine
+  EVE - Expressive Vector Engine 
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
@@ -8,7 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#ifndef EVE_FUNCTION_SIMD_RSHR_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_RSHR_HPP_INCLUDED
 
-#include <cstdint>
-using Type = std::int16_t;
-#include "ceil.hpp"
+#include <eve/function/scalar/rshr.hpp>
+#include <eve/module/core/function/simd/rshr.hpp>
+
+#endif
