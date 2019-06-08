@@ -57,12 +57,7 @@ namespace eve::detail
         }
         else
         {
-          if constexpr(std::is_integral_v<typename T::value_type>)
-          {
-            return eve::max(a, b)-eve::min(a, b);
-          }
-          else
-            return eve::abs(a-b);           
+          return eve::max(a, b)-eve::min(a, b);
         }
       }
       else

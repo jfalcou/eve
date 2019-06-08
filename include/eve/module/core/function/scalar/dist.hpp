@@ -32,10 +32,7 @@ namespace eve::detail
                                      , T const &a1) noexcept
   requires(T, Arithmetic<T>)
   {
-    if constexpr(std::is_integral_v<T>)
-      return max(a0, a1)-min(a0, a1);
-    else
-      return eve::abs(a1-a0); 
+    return max(a0, a1)-min(a0, a1);
   }
   
   // -----------------------------------------------------------------------------------------------
