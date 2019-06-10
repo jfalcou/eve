@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TAGS_HPP_INCLUDED 
+#ifndef EVE_TAGS_HPP_INCLUDED
 #define EVE_TAGS_HPP_INCLUDED
 
 #include <type_traits>
@@ -23,7 +23,6 @@ namespace eve
 
   struct saturated_type{};
   inline constexpr saturated_type saturated_ = {};
-
 }
 
 #endif
