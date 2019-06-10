@@ -8,10 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CONJ_HPP_INCLUDED
-#define EVE_FUNCTION_CONJ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CONJ_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_CONJ_HPP_INCLUDED
 
-#include <eve/function/scalar/conj.hpp>
-#include <eve/function/simd/conj.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/assert.hpp>
+#include <type_traits>
+
+namespace eve::detail
+{
+  template<typename T>
+  EVE_FORCEINLINE constexpr T conj_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return a; 
+  }
+}
 
 #endif

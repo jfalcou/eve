@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_CONJ_HPP_INCLUDED
 
 #include <eve/function/definition/conj.hpp>
-#include <eve/module/core/function/scalar/conj.hpp>
+#include <eve/module/core/function/generic/conj.hpp>
 
 #endif
