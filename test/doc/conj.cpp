@@ -16,7 +16,7 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
-    << "-> eve::conj(pf) = " << eve::conj(pf) << '\n';
+    << "-> eve::conj(pf) =       " << eve::conj(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Mindenormal<float>();
@@ -24,8 +24,8 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
-    << "-> eve::conj(xf) = " << eve::conj(xf) << '\n'
+    << "-> eve::conj(xf) =       " << eve::conj(xf) << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::conj(yf) = " << eve::conj(yf) << '\n';
+    << "-> eve::conj(yf) =       " << eve::conj(yf) << '\n';
   return 0;
 }
