@@ -46,8 +46,7 @@ Notes
 *****
 
 This function is not defined for integral types.
-For real floating point  entries it takes the value zero if the bit of sign is not set andthe value
-``pi`` if it set. 
+For real floating point  entries it returns the value zero if the bit of sign of the entry is not set and the value ``pi`` if it is set. 
 Its use will be extended in a future complex module.
 
 Example
