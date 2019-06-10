@@ -10,4 +10,4 @@
 
 #include <cstdint>
 using Type = std::int32_t;
-#include "max.hpp"
+#include "average.hpp"

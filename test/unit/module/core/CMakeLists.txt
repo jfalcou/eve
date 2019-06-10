@@ -11,6 +11,7 @@
 ## scalar tests
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
+list_tests("scalar/average"     "core" ${all_types})
 list_tests("scalar/bitofsign" "core" ${all_types})
 list_tests("scalar/bitwise_andnot" "core" ${all_types})
 list_tests("scalar/bitwise_cast" "core" ${all_types})
