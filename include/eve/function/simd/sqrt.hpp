@@ -8,11 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_SQRT_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_SQRT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_SQRT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_SQRT_HPP_INCLUDED
 
-#include <eve/function/definition/sqrt.hpp>
-#include <eve/module/core/function/generic/sqrt.hpp>
-#include <eve/module/core/function/scalar/sqrt.hpp>
+#include <eve/function/scalar/sqrt.hpp>
+#include <eve/module/core/function/simd/sqrt.hpp>
 
 #endif
