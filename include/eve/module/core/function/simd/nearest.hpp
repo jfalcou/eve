@@ -30,6 +30,11 @@
 #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
 #    include <eve/module/core/function/simd/ppc/vmx/nearest.hpp>
 #  endif
+
+#  if EVE_HW_POWERPC >= EVE_VSX_VERSION
+#    include <eve/module/core/function/simd/ppc/vsx/nearest.hpp>
+#  endif
+
 #endif
 
 #if defined(EVE_HW_ARM)
