@@ -18,23 +18,18 @@
 
 namespace eve::detail
 {
-  template<typename N>
-  EVE_FORCEINLINE wide<uint16_t, N, sse_>
-                  average_(EVE_SUPPORTS(sse2_)
-                          , wide<uint16_t, N, sse_> const &v0
-                          , wide<uint16_t, N, sse_> const &v1) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, sse_> average_(EVE_SUPPORTS(sse2_)
+                                           , wide<T, N, sse_> const &v0
+                                           , wide<T, N, sse_> const &v1) noexcept
   {
-    return _mm_avg_epu16(v0, v1);
+    if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))
+      return _mm_avg_epu8(v0, v1);
+    else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2))
+      return _mm_avg_epu16(v0, v1);
+    else
+      return map(average, v0, v1); 
   }
-  
-  template<typename N>
-  EVE_FORCEINLINE wide<uint8_t, N, sse_>
-                  average_(EVE_SUPPORTS(sse2_)
-                          , wide<uint8_t, N, sse_> const &v0
-                          , wide<uint8_t, N, sse_> const &v1) noexcept
-  {
-    return _mm_avg_epu8(v0, v1);
-  }  
 }
 
 #endif

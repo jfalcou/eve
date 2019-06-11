@@ -20,6 +20,7 @@
 #include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
@@ -35,8 +36,10 @@ TTS_CASE_TPL("Check average behavior on homogeneous wide",
 {
   using eve::wide;
   wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); }), 
-    val(eve::average(lhs, rhs)) ;
+    ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); });
+  lhs[0] = rhs[0] = ref[0] = eve::Valmax<Type>();
+  
+   wide<Type, T> val(eve::average(lhs, rhs)) ;
   auto z =  eve::max(ref, val) -eve::min(ref, val); 
   
   TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref))); 
