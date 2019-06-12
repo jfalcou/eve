@@ -41,7 +41,6 @@ TTS_CASE_TPL("Check average behavior on homogeneous wide",
   
    wide<Type, T> val(eve::average(lhs, rhs)) ;
   auto z =  eve::max(ref, val) -eve::min(ref, val); 
-  
   TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref))); 
 }
 

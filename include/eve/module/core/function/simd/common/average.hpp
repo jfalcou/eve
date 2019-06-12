@@ -60,8 +60,7 @@ namespace eve::detail
         {
           if constexpr(std::is_integral_v<typename T::value_type>)
           {
-            //           return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
-            return shr(inc(a+b), 1); 
+            return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
           }
           else
             return fma(a,Half<T>(),b*Half<T>()); 
