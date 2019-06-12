@@ -12,6 +12,7 @@
 #define EVE_FUNCTION_SCALAR_RSQRT_HPP_INCLUDED
 
 #include <eve/function/definition/rsqrt.hpp>
+#include <eve/module/core/function/generic/rsqrt.hpp>
 #include <eve/module/core/function/scalar/rsqrt.hpp>
 
 #endif
