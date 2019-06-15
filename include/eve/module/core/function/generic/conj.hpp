@@ -22,6 +22,8 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr T conj_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
+    if constexpr(!std::is_floating_point_v<value_type<T>>)
+      EVE_ASSERT(false, "[eve::conj] -this function is not to be used with integral types"); 
     return a; 
   }
 }

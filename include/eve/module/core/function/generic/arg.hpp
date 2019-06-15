@@ -22,6 +22,7 @@
 #include <eve/assert.hpp>
 #include <eve/tags.hpp>
 #include <eve/as.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -30,7 +31,10 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T arg_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
+    if constexpr(!std::is_floating_point_v<value_type<T>>)
+      EVE_ASSERT(false, "[eve::arg] -this function is not to be used with integral types"); 
     return if_else(is_negative(a),Pi(as(a)), eve::zero_);
+
   }
   
   template<typename T>
@@ -38,6 +42,8 @@ namespace eve::detail
                                   , pedantic_type const &  
                                   , T const &a) noexcept
   {
+    if constexpr(!std::is_floating_point_v<value_type<T>>)
+      EVE_ASSERT(false, "[eve::arg[pedantic_]] -this function is notto be used with integral types"); 
     auto r = arg(a); 
 #ifndef BOOST_SIMD_NO_NANS
     return if_else(is_nan(a),eve::allbits_, r);
