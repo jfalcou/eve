@@ -34,7 +34,7 @@ namespace eve::detail
   {
     if constexpr(!std::is_floating_point_v<value_type_t<T>>)
     {
-      EVE_ASSERT(false, "[eve::arg] -this function is not to be used with integral types");
+      EVE_ASSERT(std::is_floating_point_v<value_type_t<T>>, "[eve::arg] -this function is not to be used with integral types");
       return{};
     }
     else
@@ -48,7 +48,7 @@ namespace eve::detail
   {
     if constexpr(!std::is_floating_point_v<value_type_t<T>>)
      {
-     EVE_ASSERT(false, "[eve::arg[pedantic_]] -this function is notto be used with integral types"); 
+     EVE_ASSERT(std::is_floating_point_v<value_type_t<T>>, "[eve::arg[pedantic_]] -this function is notto be used with integral types"); 
       return{};
     }
     else
