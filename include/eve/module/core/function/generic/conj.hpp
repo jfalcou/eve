@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(!std::is_floating_point_v<value_type_t<T>>)
     {
-      EVE_ASSERT(std::is_floating_point_v<value_type_t<T>>), "[eve::conj] -this function is not to be used with integral types");
+      EVE_ASSERT(std::is_floating_point_v<value_type_t<T>>, "[eve::conj] -this function is not to be used with integral types");
       return {}; 
     }
     else
