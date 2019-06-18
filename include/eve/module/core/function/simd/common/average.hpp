@@ -15,10 +15,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-// #include <eve/function/bitwise_and.hpp>
-// #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/inc.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/shr.hpp>
@@ -63,7 +60,9 @@ namespace eve::detail
             return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
           }
           else
-            return fma(a,Half<T>(),b*Half<T>()); 
+          {
+            return fma(a,Half<T>(),b*Half<T>());
+          }
         }
       }
       else
