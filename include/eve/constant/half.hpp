@@ -1,5 +1,5 @@
 //==================================================================================================
-/**
+/** 
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
@@ -12,7 +12,8 @@
 #define EVE_CONSTANT_HALF_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/abi.hpp> 
+#include <eve/constant/constant.hpp>
 #include <eve/as.hpp>
 
 namespace eve

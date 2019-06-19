@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_AVERAGE_HPP_INCLUDED
-#define EVE_FUNCTION_AVERAGE_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_AVERAGE_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_AVERAGE_HPP_INCLUDED
 
 #include <eve/function/scalar/average.hpp>
-#include <eve/function/simd/average.hpp>
+#include <eve/module/core/function/simd/average.hpp>
 
 #endif
