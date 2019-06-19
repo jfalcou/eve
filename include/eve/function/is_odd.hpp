@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_IS_ODD_HPP_INCLUDED
 
 #include <eve/function/scalar/is_odd.hpp>
-//#include <eve/function/simd/is_odd.hpp>
+#include <eve/function/simd/is_odd.hpp>
 
 #endif

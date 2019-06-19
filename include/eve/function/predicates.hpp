@@ -15,9 +15,9 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_equal_with_equal_nans.hpp>
 #include <eve/function/is_eqz.hpp>
-// #include <eve/function/is_even.hpp>
+#include <eve/function/is_even.hpp>
 #include <eve/function/is_finite.hpp>
-// #include <eve/function/is_flint.hpp>
+#include <eve/function/is_flint.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_greater.hpp>
@@ -51,7 +51,7 @@
 #include <eve/function/is_not_less.hpp>
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_not_real.hpp>
-// #include <eve/function/is_odd.hpp>
+#include <eve/function/is_odd.hpp>
 #include <eve/function/is_ordered.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_real.hpp>

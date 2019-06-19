@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_EVEN_HPP_INCLUDED
-#define EVE_FUNCTION_IS_EVEN_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_IS_EVEN_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_IS_EVEN_HPP_INCLUDED
 
 #include <eve/function/scalar/is_even.hpp>
-#include <eve/function/simd/is_even.hpp>
+#include <eve/module/core/function/simd/is_even.hpp>
 
 #endif
+

@@ -1,32 +1,25 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-<<<<<<< HEAD
-  Copyright 2019 Joel FALCOU 
-=======
-  Copyright 2019 JeaJoel FALCOU 
->>>>>>> frac
+  Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef FRAC_HPP
-#define FRAC_HPP
+#ifndef IS_FLINT_HPP
+#define IS_FLINT_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <eve/function/frac.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/function/simd/is_flint.hpp>
+#include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <type_traits>
 
 using eve::fixed;
- 
-TTS_CASE_TPL("Check frac behavior on wide",
+
+TTS_CASE_TPL("Check is_flint behavior",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -37,12 +30,14 @@ TTS_CASE_TPL("Check frac behavior on wide",
             )
 {
   using eve::wide;
+  using eve::logical;
+
+  using l_t = logical<wide<Type,T>>;
   
-  wide<Type, T> lhs([](int i, int) { return Type(i%2 ? (i+2) :-i-2)/3; }),
-                ref([](int i, int) { return eve::frac(Type(i%2 ? i+2 :-i-2)/3); });
+  wide<Type, T> arg([](auto i, auto c) { return Type(c - i)/2; }); 
+  l_t  ref([](auto i, auto c) { return eve::is_flint( Type(c-i)/2); }); 
   
-  TTS_EQUAL(ref, eve::frac(lhs));
-   
+  TTS_EQUAL(eve::is_flint(arg), ref);
 }
 
 #endif
