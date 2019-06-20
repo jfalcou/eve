@@ -12,7 +12,6 @@ int main()
 {
   wide_ft pf = { 0.0f, 1.0f, 4.0f, -2.0f
                 , eve::Sqrtvalmax<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
-  int16_t svm =  eve::Sqrtvalmax<int16_t>(); 
 
   std::cout
     << "---- simd" << '\n'

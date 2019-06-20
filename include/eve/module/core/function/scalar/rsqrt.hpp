@@ -29,9 +29,8 @@ namespace eve::detail
                                    ) noexcept
   {
     return a0 ? rec(eve::sqrt(a0)) : Inf(as(a0));
-    //needed as bysqrt IEEE requirementssqrt(-0.0) is -0.0
+    //needed as by sqrt IEEE requirements : sqrt(-0.0) is -0.0
   }
 }
 
 #endif
-

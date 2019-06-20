@@ -61,7 +61,6 @@ namespace eve::detail
       return map(eve::rsqrt, a00); 
   }
 
-
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> rsqrt_( EVE_SUPPORTS(avx_)
                                          ,  raw_type const &   
@@ -78,7 +77,6 @@ namespace eve::detail
     else
       return map(eve::rsqrt, a0); 
   }
-  
 }
 
 #endif

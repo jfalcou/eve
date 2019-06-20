@@ -78,7 +78,6 @@ namespace eve::detail
     else
       return map(eve::rsqrt, a0); 
   }
-  
 }
 
 #endif
