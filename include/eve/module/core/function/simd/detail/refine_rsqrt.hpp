@@ -13,7 +13,7 @@
 
 #include <type_traits>
 #include <eve/function/fma.hpp>
-#include <eve/function/fnms.hpp>
+#include <eve/function/fnma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/constant/half.hpp>
@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto refine_rsqrt(T const &a0, T const & x) noexcept
   {
-    return fma( fnms(a0, sqr(x), One(as(x))), x*Half(as(x)), x);
+    return fma( fnma(a0, sqr(x), One(as(x))), x*Half(as(x)), x);
   };
 
 

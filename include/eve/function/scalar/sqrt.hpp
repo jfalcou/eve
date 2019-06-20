@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SCALAR_SQRT_HPP_INCLUDED
 
 #include <eve/function/definition/sqrt.hpp>
-#include <eve/module/core/function/generic/sqrt.hpp>
 #include <eve/module/core/function/scalar/sqrt.hpp>
 
 #endif

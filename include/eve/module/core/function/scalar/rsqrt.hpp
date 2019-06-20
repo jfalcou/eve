@@ -13,10 +13,12 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_gez.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sqrt.hpp>
 #include <eve/tags.hpp>
 #include <eve/assert.hpp>
-#include <type_traits>
+#include <type_traits> 
 #include <cmath>
 
 namespace eve::detail
@@ -26,7 +28,8 @@ namespace eve::detail
                                      T const &a0
                                    ) noexcept
   {
-    return rec(sqrt(a0)); 
+    return a0 ? rec(eve::sqrt(a0)) : Inf(as(a0));
+    //needed as bysqrt IEEE requirementssqrt(-0.0) is -0.0
   }
 }
 

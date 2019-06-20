@@ -15,10 +15,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/fnms.hpp>
-#include <eve/function/rec; hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/fnma.hpp>
 #include <eve/constant/inf.hpp>
 #include <type_traits>
 #include <eve/module/core/function/simd/detail/refine_rsqrt.hpp>
@@ -35,11 +36,12 @@ namespace eve::detail
     {
       t_t a0 =  rsqrt[raw_](a00);
       t_t y = sqr(a0)*a00;
-      a0 = a0*Ratio<t_t, 1, 8>()*fnms(y, fnms(t_t(3), y, t_t(10)), t_t(15)); //this is Halley cubically convergent iteration
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      a0 = if_else(a00 == Inf(as(a00)),eve::zero_, a0);
-      #endif
-      return if_else(is_eqz(a00), Inf(as(a00)), a0);
+      t_t uh = t_t(rec(8.0f));
+      a0 = uh*a0*fnma(y, fnma(t_t(3.0f), y, t_t(10.0f)), t_t(15.0f)); //this is Halley cubically convergent iteration      
+#ifndef BOOST_SIMD_NO_INFINITIES
+       a0 = if_else(a00 == Inf(as(a00)),eve::zero_, a0);
+#endif
+       return if_else(is_eqz(a00), Inf(as(a00)), a0);
     }
     else if constexpr( std::is_same_v<T, double>)
     {
@@ -47,28 +49,32 @@ namespace eve::detail
       // the second method is a bit faster by half a cycle
       t_t a0 =  rsqrt[eve::raw_](a00);
       t_t y = sqr(a0)*a00;
-      a0 = a0*rec(T(8))*fnms(y, fnms(t_t(3), y, t_t(10)), t_t(15)); //this is Halley cubically convergent iteration
-      a0 = refine_rsqrt(a00, a0);
+      a0 = a0*rec(T(8))*fnma(y, fnma(t_t(3), y, t_t(10)), t_t(15)); //this is Halley cubically convergent iteration
+      a0 =  refine_rsqrt(a00, a0);  
 #ifndef BOOST_SIMD_NO_INFINITIES
-      a0 = if_zero_else(a00 == Inf(as(a00)),a0);
+      a0 = if_else(a00 == Inf(as(a00)),eve::zero_, a0);
 #endif
       return if_else(is_eqz(a00), Inf(as(a00)), a0);
     }
     else
-      return map(eve::rsqrt, a0); 
+    {
+      return map(eve::rsqrt, a00);
+    }
   }
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> rsqrt_( EVE_SUPPORTS(sse2_),
                                         raw_type const &   
-                                        wide<T, N, sse_> const & a0
+                                      ,  wide<T, N, sse_> const & a0
                                       ) noexcept
   {
     if constexpr( std::is_same_v<T, double>)
       return _mm_cvtps_pd(_mm_rsqrt_ps(_mm_cvtpd_ps(a0)));
       //The maximum error for this approximation is 1.5e-12
     else if constexpr( std::is_same_v<T, float>)
-      return  _mm_rsqrt_pd(a0);
+    {
+      return _mm_rsqrt_ps(a0);
+    }
     else
       return map(eve::rsqrt, a0); 
   }
