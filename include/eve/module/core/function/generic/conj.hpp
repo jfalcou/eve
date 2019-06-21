@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_CONJ_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
 
