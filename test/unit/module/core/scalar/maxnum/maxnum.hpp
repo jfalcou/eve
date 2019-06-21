@@ -20,18 +20,18 @@
 #include <type_traits>
 
 
-TTS_CASE("Check eve::max[eve::num_] behavior")
+TTS_CASE("Check eve::max[eve::numeric_] behavior")
 {
-  TTS_EQUAL(eve::max[eve::num_](Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::max[eve::num_](Type{0}, Type{1}), Type{1});
-  TTS_EQUAL(eve::max[eve::num_](Type{1}, Type{0}), Type{1});
-  TTS_EQUAL(eve::max[eve::num_](Type{1}, Type{1}), Type{1});
+  TTS_EQUAL(eve::max[eve::numeric_](Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::max[eve::numeric_](Type{0}, Type{1}), Type{1});
+  TTS_EQUAL(eve::max[eve::numeric_](Type{1}, Type{0}), Type{1});
+  TTS_EQUAL(eve::max[eve::numeric_](Type{1}, Type{1}), Type{1});
   if constexpr(std::is_floating_point_v<Type> )
   {
     Type n =  eve::Nan<Type>();
     Type o =  eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::max[eve::num_](n, o), o);
-    TTS_IEEE_EQUAL(eve::max[eve::num_](o, n), o);
+    TTS_IEEE_EQUAL(eve::max[eve::numeric_](n, o), o);
+    TTS_IEEE_EQUAL(eve::max[eve::numeric_](o, n), o);
   }
 }
 

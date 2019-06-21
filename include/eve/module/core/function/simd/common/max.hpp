@@ -66,7 +66,7 @@ namespace eve::detail
       }
     }
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto max_( EVE_SUPPORTS(cpu_),
                               logical<T> const &a, logical<U> const &b
@@ -76,9 +76,9 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return logical_or(a, b); 
+    return logical_or(a, b);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic
   template<typename T, typename U>
@@ -106,7 +106,7 @@ namespace eve::detail
         return if_else(is_nan(v1), v0, eve::max(v0, v1));
     }
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto max_( EVE_SUPPORTS(cpu_)
                             , pedantic_type const &
@@ -118,14 +118,14 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return logical_or(a, b); 
+    return logical_or(a, b);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Numeric
   template<typename T, typename U>
   EVE_FORCEINLINE  auto max_(EVE_SUPPORTS(cpu_)
-                            , num_type const & 
+                            , numeric_type const &
                             , T const &a0
                             , U const &a1) noexcept
   {

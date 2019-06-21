@@ -66,7 +66,7 @@ namespace eve::detail
       }
     }
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto min_( EVE_SUPPORTS(cpu_),
                               logical<T> const &a, logical<U> const &b
@@ -76,9 +76,9 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return logical_and(a, b); 
+    return logical_and(a, b);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic
   template<typename T, typename U>
@@ -95,7 +95,7 @@ namespace eve::detail
     else
       return if_else(is_nan(v1), v0, eve::min(v0, v1));
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto min_( EVE_SUPPORTS(cpu_)
                             , pedantic_type const &
@@ -107,14 +107,14 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return logical_and(a, b); 
+    return logical_and(a, b);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Numeric
   template<typename T, typename U>
   EVE_FORCEINLINE  auto min_(EVE_SUPPORTS(cpu_)
-                            , num_type const & 
+                            , numeric_type const &
                             , T const &a0
                             , U const &a1) noexcept
   {
@@ -122,7 +122,7 @@ namespace eve::detail
       return if_else (is_nan(a0), a1, min(a0, a1));
     else
       return min(a0, a1);
-  }  
+  }
 }
 
 #endif

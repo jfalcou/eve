@@ -20,25 +20,25 @@
 #include <type_traits>
 
 
-TTS_CASE("Check eve::maxmag[eve::num_] behavior")
+TTS_CASE("Check eve::maxmag[eve::numeric_] behavior")
 {
-  TTS_EQUAL(eve::maxmag[eve::num_](Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::maxmag[eve::num_](Type{0}, Type{1}), Type{1});
-  TTS_EQUAL(eve::maxmag[eve::num_](Type{1}, Type{0}), Type{1});
-  TTS_EQUAL(eve::maxmag[eve::num_](Type{1}, Type{2}), Type{2});
-  TTS_EQUAL(eve::maxmag[eve::num_](Type{2}, Type{1}), Type{2});
+  TTS_EQUAL(eve::maxmag[eve::numeric_](Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::maxmag[eve::numeric_](Type{0}, Type{1}), Type{1});
+  TTS_EQUAL(eve::maxmag[eve::numeric_](Type{1}, Type{0}), Type{1});
+  TTS_EQUAL(eve::maxmag[eve::numeric_](Type{1}, Type{2}), Type{2});
+  TTS_EQUAL(eve::maxmag[eve::numeric_](Type{2}, Type{1}), Type{2});
   if constexpr(std::is_signed_v<Type> )
   {
-    TTS_EQUAL(eve::maxmag[eve::num_](static_cast<Type>(-3), Type{2}), static_cast<Type>(-3));
-    TTS_EQUAL(eve::maxmag[eve::num_](static_cast<Type>(-1), Type{2}), static_cast<Type>(2));
-    TTS_EQUAL(eve::maxmag[eve::num_](static_cast<Type>(-1), Type{1}), Type{1}); 
+    TTS_EQUAL(eve::maxmag[eve::numeric_](static_cast<Type>(-3), Type{2}), static_cast<Type>(-3));
+    TTS_EQUAL(eve::maxmag[eve::numeric_](static_cast<Type>(-1), Type{2}), static_cast<Type>(2));
+    TTS_EQUAL(eve::maxmag[eve::numeric_](static_cast<Type>(-1), Type{1}), Type{1});
   }
   if constexpr(std::is_floating_point_v<Type> )
   {
     Type n =  eve::Nan<Type>();
     Type o =  eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::maxmag[eve::num_](n, o), o);
-    TTS_IEEE_EQUAL(eve::maxmag[eve::num_](o, n), o);
+    TTS_IEEE_EQUAL(eve::maxmag[eve::numeric_](n, o), o);
+    TTS_IEEE_EQUAL(eve::maxmag[eve::numeric_](o, n), o);
   }
 }
 

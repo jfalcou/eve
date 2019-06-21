@@ -30,7 +30,7 @@ namespace eve::detail
   {
      return (a1 < a0) ? a1 : a0;
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
@@ -47,7 +47,7 @@ namespace eve::detail
   // Numeric case
   template<typename T>
   EVE_FORCEINLINE constexpr auto min_(EVE_SUPPORTS(cpu_)
-                                     , num_type const & 
+                                     , numeric_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
   requires(T, Arithmetic<T>)
@@ -55,7 +55,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
       if (is_nan(a0)) return a1;
     return eve::min(a0, a1);
-  }   
+  }
 }
 
 #endif

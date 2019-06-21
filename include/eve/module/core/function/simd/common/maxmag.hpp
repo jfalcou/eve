@@ -3,7 +3,7 @@
    EVE - Expressive Vector Engine
    Copyright 2019 Joel FALCOU
    Copyright 2019 Jean-Thierry LAPRESTE
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
@@ -73,12 +73,12 @@ namespace eve::detail
       }
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic
   template<typename T, typename U>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_),
-                               pedantic_type const &, 
+                               pedantic_type const &,
                                T const &a,
                                U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
@@ -122,12 +122,12 @@ namespace eve::detail
       }
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Numeric
   template<typename T, typename U>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_)
-                              , num_type const &   
+                              , numeric_type const &
                               , T const &a
                               , U const &b) noexcept
   {
@@ -135,9 +135,9 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
       return if_else (is_nan(a), b, z);
     else
-      return z;   
+      return z;
   }
 }
 
 #endif
-  
+

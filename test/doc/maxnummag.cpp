@@ -19,7 +19,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
     << "<- qf =                  " << qf << '\n'
-    << "-> eve::maxmag[eve::num_](pf, qf) = " << eve::maxmag[eve::num_](pf, qf) << '\n';
+    << "-> eve::maxmag[eve::numeric_](pf, qf) = " << eve::maxmag[eve::numeric_](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -2.0f;
@@ -28,6 +28,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::maxmag[eve::num_](xf, yf) = " << eve::maxmag[eve::num_](xf, yf) << '\n';
+    << "-> eve::maxmag[eve::numeric_](xf, yf) = " << eve::maxmag[eve::numeric_](xf, yf) << '\n';
   return 0;
 }

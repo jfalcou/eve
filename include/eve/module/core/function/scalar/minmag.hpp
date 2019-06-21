@@ -28,7 +28,7 @@ namespace eve::detail
       auto aa1 = eve::abs(a1);
       return aa0 < aa1 ? a0 : aa1 < aa0 ? a1 : eve::min(a0, a1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
@@ -38,12 +38,12 @@ namespace eve::detail
       auto aa1 = eve::abs(a1);
       return aa0 < aa1 ? a0 : aa1 < aa0 ? a1 : eve::min[pedantic_](a0, a1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // numeric case
   template<typename T>
   EVE_FORCEINLINE constexpr T minmag_(EVE_SUPPORTS(cpu_)
-                                     , num_type const & 
+                                     , numeric_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
   {

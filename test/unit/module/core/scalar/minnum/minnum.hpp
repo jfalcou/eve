@@ -22,16 +22,16 @@
 
 TTS_CASE("Check eve::min[eve::num] behavior")
 {
-  TTS_EQUAL(eve::min[eve::num_](Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::min[eve::num_](Type{0}, Type{1}), Type{0});
-  TTS_EQUAL(eve::min[eve::num_](Type{1}, Type{0}), Type{0});
-  TTS_EQUAL(eve::min[eve::num_](Type{1}, Type{1}), Type{1});
+  TTS_EQUAL(eve::min[eve::numeric_](Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::min[eve::numeric_](Type{0}, Type{1}), Type{0});
+  TTS_EQUAL(eve::min[eve::numeric_](Type{1}, Type{0}), Type{0});
+  TTS_EQUAL(eve::min[eve::numeric_](Type{1}, Type{1}), Type{1});
   if constexpr(std::is_floating_point_v<Type> )
   {
     Type n =  eve::Nan<Type>();
     Type o =  eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::min[eve::num_](n, o), o);
-    TTS_IEEE_EQUAL(eve::min[eve::num_](o, n), o);
+    TTS_IEEE_EQUAL(eve::min[eve::numeric_](n, o), o);
+    TTS_IEEE_EQUAL(eve::min[eve::numeric_](o, n), o);
   }
 }
 
