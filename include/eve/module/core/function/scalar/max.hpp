@@ -16,6 +16,7 @@
 #include <type_traits>
 #include <eve/tags.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_nan.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +30,7 @@ namespace eve::detail
   {
      return (a0 < a1) ? a1 : a0;
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
@@ -40,8 +41,21 @@ namespace eve::detail
   requires(T, Arithmetic<T>)
   {
     return (a0 < a1) ? a1 : a0;
-  }  
-    
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // numeric case
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_)
+                                     , numeric_type const &
+                                     , T const &a0
+                                     , T const &a1) noexcept
+  requires(T, Arithmetic<T>)
+  {
+    if constexpr(std::is_floating_point_v<T>)
+      if (is_nan(a0)) return a1;
+    return max(a0, a1);
+  }
 }
 
 #endif

@@ -23,6 +23,9 @@ namespace eve
 
   struct saturated_type{};
   inline constexpr saturated_type saturated_ = {};
+
+  struct numeric_type{};
+  inline constexpr numeric_type numeric_ = {};
 }
 
 #endif
