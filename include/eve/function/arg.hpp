@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ARG_HPP_INCLUDED
 
 #include <eve/function/scalar/arg.hpp>
-//#include <eve/function/simd/arg.hpp>
+#include <eve/function/simd/arg.hpp>
 
 #endif

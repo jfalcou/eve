@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ARG_HPP_INCLUDED
 
 #include <eve/function/definition/arg.hpp>
-#include <eve/module/core/function/scalar/arg.hpp>
+#include <eve/module/core/function/generic/arg.hpp>
 
 #endif

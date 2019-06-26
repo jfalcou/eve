@@ -8,10 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CONJ_HPP_INCLUDED
-#define EVE_FUNCTION_CONJ_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ARG_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ARG_HPP_INCLUDED
 
-#include <eve/function/scalar/conj.hpp>
-#include <eve/function/simd/conj.hpp>
+#include <eve/function/scalar/arg.hpp>
 
 #endif
