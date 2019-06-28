@@ -8,32 +8,24 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IF_DIV_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IF_DIV_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_nez.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_), T const &a, T const &b)
-                  noexcept requires(T, Arithmetic<T>)
-  {
-    return a/b;
-  }
-}
-
-namespace eve
-{
   template<typename T, typename U>
-  EVE_FORCEINLINE auto operator/(T const& a, U const &b) noexcept -> decltype(eve::div(a, b))
+  EVE_FORCEINLINE constexpr
+  auto  div_(EVE_SUPPORTS(cpu_), T const &cond, U const &a, U const &b) noexcept
+        requires( U, Vectorizable<T> )
   {
-    return eve::div(a, b);
+    return is_nez(cond) ? a/b : a;
   }
 }
 
 #endif
-
-#include <eve/module/core/function/scalar/if_div.hpp>

@@ -72,4 +72,4 @@ namespace eve::detail
 
 #endif
 
-//#include "if_div.hpp"
+#include <eve/module/core/function/simd/common/if_div.hpp>
