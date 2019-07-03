@@ -10,7 +10,7 @@
 
 #include "test.hpp"
 #include <eve/memory/is_aligned.hpp>
-#include <tts/tests/relation.hpp>
+#include <tts/tests/basic.hpp>
 
 TTS_CASE("is_aligned for integers")
 {

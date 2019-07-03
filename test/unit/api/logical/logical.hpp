@@ -12,7 +12,7 @@
 #define LOGICAL_HPP
 
 #include "test.hpp"
-#include <tts/tests/relation.hpp>
+#include <tts/tests/basic.hpp>
 #include <tts/tests/precision.hpp>
 #include <eve/logical.hpp>
 #include <eve/constant/allbits.hpp>
