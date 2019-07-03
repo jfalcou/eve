@@ -68,7 +68,7 @@ namespace tts::ext
   };
 }
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
   std::cout << "[EVE] - Target: "<< ::tts::type_id<EVE_CURRENT_API>() << " - Build type: ";
   #ifdef NDEBUG
