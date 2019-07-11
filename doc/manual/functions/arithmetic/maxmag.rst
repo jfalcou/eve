@@ -1,8 +1,8 @@
 .. _function-maxmag:
 
-###
+######
 maxmag
-###
+######
 
 **Required header:** ``#include <eve/function/maxmag.hpp>``
 

@@ -1,4 +1,4 @@
-.. _function-maxmag:
+.. _function-minnummag:
 
 #########
 minnummag
