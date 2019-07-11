@@ -41,7 +41,7 @@ Synopsis
 Note
 *******
 
-* for a floating point value ``x`` to be even means that both ``x`` and ``x/2`` are flint.
+* for a :ref:`concept-ieeevalue` value ``x`` to be even means that both ``x`` and ``x/2`` are flint.
 Options
 *******
 

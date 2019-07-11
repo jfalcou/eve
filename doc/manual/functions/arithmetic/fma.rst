@@ -57,8 +57,8 @@ Notes
 
     - no "intermediate" overflow
 
-    Our ``fma`` provides this for all integral types and also each time it is reasonable
-    in terms of performance for floating ones (i.e. if the system has the hard
+    Our ``fma`` provides this for all :ref:`concept-integralvalue` types and also each time it is reasonable
+    in terms of performance for :ref:`concept-ieeevalue` ones (i.e. if the system has the hard
     wired capability).
 
     If you need pedantic fma capabilities in all circumstances in your own

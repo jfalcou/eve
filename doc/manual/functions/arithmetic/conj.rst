@@ -13,7 +13,7 @@ conj
       constexpr /* implementation defined */ conj = {};
    }
 
-Function object computing conjugate of a floating point :ref:`Value <concept-value>`.
+Function object computing conjugate of an  :ref:`IEEEValue <concept-ieeevalue>`.
 
 
 Synopsis
@@ -43,8 +43,9 @@ Options
 Notes
 *****
 
-This function coincides with identity on real entries and is not defined for integral type. 
-Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide`.
+This function coincides with identity on ref:`concept-ieeevalue` and is not defined for 
+:ref:`concept-integralvalue`  types. 
+Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide.
 
 Example
 *******

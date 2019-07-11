@@ -13,7 +13,7 @@ sqr_abs
       constexpr /* implementation defined */ sqr_abs = {};
    }
 
-Function object computing the square of the absolute value of a floating point :ref:`Value <concept-value>`.
+Function object computing the square of the absolute value of a  :ref:`concept-ieeevalue`.
 
 Synopsis
 ********
@@ -42,7 +42,7 @@ Options
 Notes
 *****
 
-This function coincides with ``sqr`` on real entries and is not defined for integral type. 
+This function coincides with ``sqr`` on real entries and is not defined for :ref:`concept-integralvalue` types. 
 Its use will be extended in a future complex module. On complex entries `sqr` and `sqr_abs do not coincide`.
 
 Example

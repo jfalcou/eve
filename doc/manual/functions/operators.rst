@@ -36,7 +36,7 @@ when called on :ref:`concept-vectorized` types.
 
 .. rubric:: Bitwise Operators
 
-Bitwise operations are extended to work on any floating-point types by considering the masking
+Bitwise operations are extended to work on any :ref:`concept-ieeevalue` types by considering the masking
 operations to apply on the value bit patterns while retaining its original types.
 
 The header ``#include <eve/function/bitwise.hpp>`` allows the inclusion of all specific bitwise

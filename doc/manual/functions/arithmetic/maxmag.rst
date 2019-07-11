@@ -44,7 +44,7 @@ Synopsis
 Options
 *******
 
-    With floating types, there is three ways to call `maxmag`:
+    With :ref:`concept-ieeevalue` types, there is three ways to call `maxmag`:
 
     * `maxmag(x, y)`: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
 
