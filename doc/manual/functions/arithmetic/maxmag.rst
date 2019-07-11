@@ -46,11 +46,11 @@ Options
 
     With :ref:`concept-ieeevalue` types, there is three ways to call `maxmag`:
 
-    * `maxmag(x, y)`: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
+    * ``maxmag(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
 
-    * `maxmag[pedantic_](x, y)`: in which case the call is equivalent to `if_else(abs(x) < abs(y), x, y)`;
+    * ``maxmag[pedantic_](x, y)``: in which case the call is equivalent to ``if_else(abs(x) < abs(y), x, y)``;
 
-    * `maxmag[num_](x, y)`: in which case if an element of ``x`` or ``y`` is a nan the result the corresponding result is the other value.
+    * ``maxmag[num_](x, y)``: in which case if an element of ``x`` or ``y`` is a nan the corresponding result is the other value.
 
     The first way is the speediest.
 

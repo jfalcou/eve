@@ -44,8 +44,6 @@ Notes
 
   - the  call to ``round(a)`` is equivalent to the call ``nearest(a)``
 
-  - half-integral values are rounded to the round even integral
-
 Options
 *******
 

@@ -39,7 +39,7 @@ Synopsis
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_int``. This function object
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``downward_`` version.
 
   - the  call to ``floor(a)`` is equivalent to the call ``round[downward_](a)``

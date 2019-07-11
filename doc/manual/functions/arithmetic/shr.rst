@@ -52,7 +52,7 @@ Synopsis
 Options
 *******
 
-.. seealso::  :ref:`shl <function-shl>`,  :ref:`shr <function-shr>`
+.. seealso::  :ref:`shl <function-shl>`
 
 *******
 Example

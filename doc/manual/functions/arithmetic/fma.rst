@@ -31,7 +31,7 @@ Synopsis
 
 * [1] performs element-wise fused multiply/add of the three parameters
 * [2:4] convert the scalar type U to the wide type and perform element-wise fused multiply/add of the three parameters
-* [5] computesfused multiply/add of the three parameters
+* [5] computes fused multiply/add of the three parameters
 
 .. rubric:: Parameters
 

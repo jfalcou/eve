@@ -42,7 +42,7 @@ Options
 Notes
 *****
 
-This function coincides with ``sqr`` on real entries and is not defined for :ref:`concept-integralvalue` types. 
+This function coincides with ``sqr`` on :ref:`concept-ieeevalue` entries but is not defined for :ref:`concept-integralvalue` types. 
 Its use will be extended in a future complex module. On complex entries `sqr` and `sqr_abs do not coincide`.
 
 Example

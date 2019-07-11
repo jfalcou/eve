@@ -27,8 +27,8 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
-* [1] Computes the difference of every elements of both :ref:`type-wide`.
-* [2,3] Computes the difference of the scalar and every elements of the :ref:`type-wide` instance.
+* [1] Computes the element-wise difference of every elements of both :ref:`type-wide`.
+* [2,3] Computes the difference of the scalar with each element of the wide instance.
 * [4] Computes the difference of both scalars.
 
 .. rubric:: Parameters
