@@ -10,6 +10,7 @@ Constants
    mzero
    nan
    one
+   pi
    smallestposval
    true
    valmin

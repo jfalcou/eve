@@ -39,10 +39,10 @@ Synopsis
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``up_``, ``down_``, ``to_zero_`` and ``to_nearest_int``. This function object
-    implements the ``to_nearest_int_`` version.
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_int``. This function object
+    implements the ``to_nearest_`` version.
 
-  - the  call to ``nearest(a)`` is equivalent to the call ``round[to_nearest_int_](a)``
+  - the  call to ``nearest(a)`` is equivalent to the call ``round[to_nearest_](a)``
 
   - half-integral values are rounded to the nearest even integral
 
