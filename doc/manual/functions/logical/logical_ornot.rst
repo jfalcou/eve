@@ -23,9 +23,9 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename U, typename N> wide<T,N>          operator()( wide<T,N> const& v, wide<U,M> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N>          operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<logical<T>,N> operator()( U s, wide<T,N> const& v ) noexcept;
+   template<typename T, typename U, typename N> logical<wide<T,N>> operator()( wide<T,N> const& v, wide<U,M> const& w ) noexcept;
+   template<typename T, typename N, typename U> logical<wide<T,N>> operator()( wide<T,N> const& v, U s ) noexcept;
+   template<typename T, typename N, typename U> logical<wide<T,N>> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T, typename U> constexpr   as_logical_t<T>    operator()( T s, U t ) noexcept;
 
 * [1] Performs a logical OR between **v** and the NEGATION of **w**.

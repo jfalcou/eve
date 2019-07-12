@@ -3,7 +3,7 @@
 Minf
 ====
 
-**Required header** ``#include <eve/constant/inf.hpp>``
+**Required header** ``#include <eve/constant/minf.hpp>``
 
 .. code-block:: c++
 

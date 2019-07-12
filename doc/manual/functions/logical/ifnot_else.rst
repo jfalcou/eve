@@ -13,8 +13,8 @@ ifnot_else
       constexpr /* implementation defined */ ifnot_else = {};
    }
 
-Function object performing a logical selection between two :ref:`Values <concept-value>` of same element type
-according to a :ref:`Value <concept-value>`or a :ref:`logical Value <concept-logicalvalue>`. 
+Function object performing a logical selection between two :ref:`concept-value` of same element type
+according to a :ref:`concept-value` or a :ref:`concept-logicalvalue`.
 The element-wise scheme is: if the first parameter is 'not true' returns the second parameter else the third.
 
 ********
@@ -26,7 +26,7 @@ Synopsis
 
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, wide<U,N> const& w , wide<U,N> const& x ) noexcept;
    template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, T s, T t ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<logical<T>,N> const& v, T s, T t ) noexcept;
+   template<typename T, typename N, typename U> wide<T,N> operator()( logical<wide<T,N>> const& v, T s, T t ) noexcept;
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, wide<U,N> const& w , U s ) noexcept;
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, U s , wide<U,N> const& w)
    template<typename T, typename U> constexpr   T         operator()( T r, U s, U t ) noexcept;

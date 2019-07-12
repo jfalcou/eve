@@ -42,6 +42,7 @@ Note
 *******
 
 * for a :ref:`concept-ieeevalue` value ``x`` to be even means that both ``x`` and ``x/2`` are flint.
+
 Options
 *******
 

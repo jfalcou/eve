@@ -22,7 +22,7 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>              wide<logical<T>,N> operator()( wide<T,N> const& v) noexcept;
+   template<typename T, typename N>              logical<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
    template<typename T            > constexpr    as_logical_t<T>    operator()( T s) noexcept;
 
 * [1] Performs a logical NOT on each element ofthe :ref:`wide <type-wide>` instance.
