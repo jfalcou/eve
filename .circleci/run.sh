@@ -19,6 +19,14 @@ else
   cmake .. -G Ninja -DCMAKE_CXX_COMPILER="$COMPILER" -DCMAKE_CXX_FLAGS="$OPTIONS"
 fi
 
+if [[ -v EXTRA_PATH ]]
+then
+  echo "Updating path for $EXTRA_PATH/$EXTRA_NAME ..."
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EXTRA_PATH
+  export LD_LIBRARY_PATH
+  ln -s $EXTRA_PATH/$EXTRA_NAME /$EXTRA_LIB/$EXTRA_NAME
+fi
+
 echo "ninja $TARGET.unit -j $REPLICATION"
 ninja $TARGET.unit -j $REPLICATION
 
