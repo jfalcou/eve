@@ -28,20 +28,20 @@ docker_ppc64: &docker_ppc64
         COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
         COMPILER: powerpc64-linux-gnu-g++-8
         RUN_COMMAND: qemu-ppc64
-docker_arm: &docker_arm
-  docker:
-    - image: ubuntu:latest
-      environment:
-        COMPILER_PACKAGE: g++-8-arm-linux-gnueabihf
-        COMPILER: arm-linux-gnueabihf-g++-8
-        RUN_COMMAND: qemu-arm
-docker_aarch64: &docker_aarch64
-  docker:
-    - image: ubuntu:latest
-      environment:
-        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
-        COMPILER: aarch64-linux-gnu-g++-8
-        RUN_COMMAND: qemu-aarch64
+##docker_arm: &docker_arm
+##  docker:
+##    - image: ubuntu:latest
+##      environment:
+##        COMPILER_PACKAGE: g++-8-arm-linux-gnueabihf
+##        COMPILER: arm-linux-gnueabihf-g++-8
+##        RUN_COMMAND: qemu-arm
+##docker_aarch64: &docker_aarch64
+##  docker:
+##    - image: ubuntu:latest
+##      environment:
+##        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
+##        COMPILER: aarch64-linux-gnu-g++-8
+##        RUN_COMMAND: qemu-aarch64
 
 ##==================================================================================================
 ## Build configurations
@@ -56,12 +56,12 @@ config_gcc_avx2: &config_gcc_avx2
   <<: *docker_gcc
 config_clang_avx2: &config_clang_avx2
   <<: *docker_clang
-config_gcc_arm: &config_gcc_arm
-  <<: *docker_arm
-config_gcc_aarch64: &config_gcc_aarch64
-  <<: *docker_aarch64
 config_gcc_ppc64: &config_gcc_ppc64
   <<: *docker_ppc64
+##config_gcc_arm: &config_gcc_arm
+##  <<: *docker_arm
+##config_gcc_aarch64: &config_gcc_aarch64
+##  <<: *docker_aarch64
 
 ##==================================================================================================
 ## Build steps
@@ -76,31 +76,15 @@ steps_test_gcc: &steps_test_gcc
         name: Running tests
         command: . .circleci/run.sh
 
-steps_test_neon: &steps_test_neon
+steps_test_clang_: &steps_test_clang_
   steps:
     - checkout
     - run:
         name: Setup dependencies
         command: . .circleci/prepare.sh
     - run:
-        name: Setup ARM
-        command: . .circleci/prepare_cc.sh
-    - run:
         name: Running tests
-        command: . .circleci/run.sh
-
-steps_test_aarch64: &steps_test_aarch64
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Setup AARCH64
-        command: . .circleci/prepare_cc.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh
+        command: . .circleci/run.sh clang++-8
 
 steps_test_ppc64: &steps_test_ppc64
   steps:
@@ -115,15 +99,31 @@ steps_test_ppc64: &steps_test_ppc64
         name: Running tests
         command: . .circleci/run.sh
 
-steps_test_clang_: &steps_test_clang_
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh clang++-8
+##steps_test_neon: &steps_test_neon
+##  steps:
+##    - checkout
+##    - run:
+##        name: Setup dependencies
+##        command: . .circleci/prepare.sh
+##    - run:
+##        name: Setup ARM
+##        command: . .circleci/prepare_cc.sh
+##    - run:
+##        name: Running tests
+##        command: . .circleci/run.sh
+##
+##steps_test_aarch64: &steps_test_aarch64
+##  steps:
+##    - checkout
+##    - run:
+##        name: Setup dependencies
+##        command: . .circleci/prepare.sh
+##    - run:
+##        name: Setup AARCH64
+##        command: . .circleci/prepare_cc.sh
+##    - run:
+##        name: Running tests
+##        command: . .circleci/run.sh
 
 ##==================================================================================================
 ## Jobs list
@@ -194,20 +194,20 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_arch:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: arch
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -static -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_arch:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: arch
-      REPLICATION: 8
-      OPTIONS: "-static -Wno-psabi"
-    <<: *steps_test_aarch64
+##  arm_neon_arch:
+##    <<: *config_gcc_arm
+##    environment:
+##      TARGET: arch
+##      REPLICATION: 8
+##      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+##    <<: *steps_test_neon
+##  arm_aarch64_arch:
+##    <<: *config_gcc_aarch64
+##    environment:
+##      TARGET: arch
+##      REPLICATION: 8
+##      OPTIONS: "-static -Wno-psabi"
+##    <<: *steps_test_aarch64
   ppc_vsx_arch:
     <<: *config_gcc_ppc64
     environment:
@@ -261,20 +261,20 @@ jobs:
       OPTIONS: "-mavx2"
       REPLICATION: 8
     <<: *steps_test_clang_
-  arm_neon_api:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -static -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_api:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-static -Wno-psabi"
-    <<: *steps_test_aarch64
+##  arm_neon_api:
+##    <<: *config_gcc_arm
+##    environment:
+##      TARGET: api
+##      REPLICATION: 8
+##      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+##    <<: *steps_test_neon
+##  arm_aarch64_api:
+##    <<: *config_gcc_aarch64
+##    environment:
+##      TARGET: api
+##      REPLICATION: 8
+##      OPTIONS: "-static -Wno-psabi"
+##    <<: *steps_test_aarch64
   ppc_vsx_api:
     <<: *config_gcc_ppc64
     environment:
@@ -328,20 +328,20 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_doc:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -static -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_doc:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-static -Wno-psabi"
-    <<: *steps_test_aarch64
+##  arm_neon_doc:
+##    <<: *config_gcc_arm
+##    environment:
+##      TARGET: doc
+##      REPLICATION: 8
+##      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+##    <<: *steps_test_neon
+##  arm_aarch64_doc:
+##    <<: *config_gcc_aarch64
+##    environment:
+##      TARGET: doc
+##      REPLICATION: 8
+##      OPTIONS: "-static -Wno-psabi"
+##    <<: *steps_test_aarch64
   ppc_vsx_doc:
     <<: *config_gcc_ppc64
     environment:
@@ -395,20 +395,20 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_scalar:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -static -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_scalar:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-static -Wno-psabi"
-    <<: *steps_test_aarch64
+##  arm_neon_scalar:
+##    <<: *config_gcc_arm
+##    environment:
+##      TARGET: core.scalar
+##      REPLICATION: 8
+##      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+##    <<: *steps_test_neon
+##  arm_aarch64_scalar:
+##    <<: *config_gcc_aarch64
+##    environment:
+##      TARGET: core.scalar
+##      REPLICATION: 8
+##      OPTIONS: "-static -Wno-psabi"
+##    <<: *steps_test_aarch64
   ppc_vsx_scalar:
     <<: *config_gcc_ppc64
     environment:
@@ -462,20 +462,20 @@ jobs:
       REPLICATION: 2
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_simd:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-mfpu=neon -static -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_simd:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-static -Wno-psabi"
-    <<: *steps_test_aarch64
+##  arm_neon_simd:
+##    <<: *config_gcc_arm
+##    environment:
+##      TARGET: core.simd
+##      REPLICATION: 2
+##      OPTIONS: "-mfpu=neon -static -Wno-psabi"
+##    <<: *steps_test_neon
+##  arm_aarch64_simd:
+##    <<: *config_gcc_aarch64
+##    environment:
+##      TARGET: core.simd
+##      REPLICATION: 2
+##      OPTIONS: "-static -Wno-psabi"
+##    <<: *steps_test_aarch64
   ppc_vsx_simd:
     <<: *config_gcc_ppc64
     environment:
@@ -491,8 +491,8 @@ workflows:
     ##==============================================================================================
     ## All architecture tests in parallel
     ##==============================================================================================
-      - arm_aarch64_arch
-      - arm_neon_arch
+##      - arm_aarch64_arch
+##      - arm_neon_arch
       - ppc_vsx_arch
       - gcc_sse2_arch
       - gcc_sse4_arch
@@ -502,8 +502,8 @@ workflows:
       - clang_avx2_arch
       - sync_arch:
           requires:
-            - arm_aarch64_arch
-            - arm_neon_arch
+##            - arm_aarch64_arch
+##            - arm_neon_arch
             - ppc_vsx_arch
             - gcc_sse2_arch
             - gcc_sse4_arch
@@ -515,12 +515,12 @@ workflows:
     ##==============================================================================================
     ## All API tests in parallel
     ##==============================================================================================
-      - arm_aarch64_api:
-          requires:
-            - sync_arch
-      - arm_neon_api:
-          requires:
-            - sync_arch
+##      - arm_aarch64_api:
+##          requires:
+##            - sync_arch
+##      - arm_neon_api:
+##          requires:
+##            - sync_arch
       - ppc_vsx_api:
           requires:
             - sync_arch
@@ -544,8 +544,8 @@ workflows:
             - sync_arch
       - sync_api:
           requires:
-            - arm_aarch64_api
-            - arm_neon_api
+##            - arm_aarch64_api
+##            - arm_neon_api
             - ppc_vsx_api
             - gcc_sse2_api
             - gcc_sse4_api
@@ -557,12 +557,12 @@ workflows:
     ##==============================================================================================
     ## All Doc tests in parallel
     ##==============================================================================================
-      - arm_aarch64_doc:
-          requires:
-            - sync_api
-      - arm_neon_doc:
-          requires:
-            - sync_api
+##      - arm_aarch64_doc:
+##          requires:
+##            - sync_api
+##      - arm_neon_doc:
+##          requires:
+##            - sync_api
       - ppc_vsx_doc:
           requires:
             - sync_api
@@ -586,8 +586,8 @@ workflows:
             - sync_api
       - sync_doc:
           requires:
-            - arm_aarch64_doc
-            - arm_neon_doc
+##           - arm_aarch64_doc
+##           - arm_neon_doc
             - ppc_vsx_doc
             - gcc_sse2_doc
             - gcc_sse4_doc
@@ -599,12 +599,12 @@ workflows:
     ##==============================================================================================
     ## All Scalar tests in parallel
     ##==============================================================================================
-      - arm_aarch64_scalar:
-          requires:
-            - sync_doc
-      - arm_neon_scalar:
-          requires:
-            - sync_doc
+##      - arm_aarch64_scalar:
+##          requires:
+##            - sync_doc
+##      - arm_neon_scalar:
+##          requires:
+##            - sync_doc
       - ppc_vsx_scalar:
           requires:
             - sync_doc
@@ -628,8 +628,8 @@ workflows:
             - sync_doc
       - sync_scalar:
           requires:
-            - arm_aarch64_scalar
-            - arm_neon_scalar
+##            - arm_aarch64_scalar
+##            - arm_neon_scalar
             - ppc_vsx_scalar
             - gcc_sse2_scalar
             - gcc_sse4_scalar
@@ -641,12 +641,12 @@ workflows:
     ##==============================================================================================
     ## All SIMD tests in parallel
     ##==============================================================================================
-      - arm_aarch64_simd:
-          requires:
-            - sync_scalar
-      - arm_neon_simd:
-          requires:
-            - sync_scalar
+##      - arm_aarch64_simd:
+##          requires:
+##            - sync_scalar
+##      - arm_neon_simd:
+##          requires:
+##            - sync_scalar
       - ppc_vsx_simd:
           requires:
             - sync_scalar
