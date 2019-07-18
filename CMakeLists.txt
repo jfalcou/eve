@@ -30,7 +30,7 @@ include(parse_revision)
 ## Options
 ## =================================================================================================
 option( EVE_BUILD_TEST        "Build tests for eve"         ON  )
-option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    OFF )
+option( EVE_BUILD_BENCHMARKS  "Build benchmarks for eve"    ON )
 option( EVE_BUILD_DOC         "Build documentation for eve" ON  )
 
 message( STATUS "[eve] Building ${CMAKE_BUILD_TYPE} mode with: ${CMAKE_CXX_FLAGS}")
@@ -59,3 +59,11 @@ endif()
 if( EVE_BUILD_BENCHMARKS )
   include(benchmark)
 endif()
+
+## =================================================================================================
+## Check float128 availability
+## =================================================================================================
+CHECK_CXX_SOURCE_COMPILES("
+        int main(void){
+            __float128 foo = 1.0;
+        }" EVE_CAN_USE_FLOAT128)

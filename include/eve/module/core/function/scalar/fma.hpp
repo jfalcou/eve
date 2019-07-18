@@ -21,7 +21,14 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c)
                   noexcept requires(T, Arithmetic<T>)
   {
-    return a * b + c;
+    if constexpr(std::is_same_v<T, float>)
+      return float(double(a)*double(b)+double(c));
+#ifdef  EVE_CAN_USE_FLOAT128
+     else if constexpr(std::is_same_v<T, double>)
+       return double(__float128(a)*__float128(b)+__float128(c));
+#endif
+    else
+      return a * b + c;
   }
 }
 
