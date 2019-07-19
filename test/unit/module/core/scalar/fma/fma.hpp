@@ -30,4 +30,12 @@ TTS_CASE("Check eve::fma behavior")
   TTS_EQUAL(eve::fma(Type{2}, Type{5} , Type{7}), Type{17});
 }
 
+TTS_CASE("Check eve::fma[pedantic_] behavior")
+{
+  TTS_EQUAL(eve::fma[eve::pedantic_](Type{0}, Type{0} , Type{0}), Type{0});
+  TTS_EQUAL(eve::fma[eve::pedantic_](Type{0}, Type{0} , Type{7}), Type{7});
+  TTS_EQUAL(eve::fma[eve::pedantic_](Type{2}, Type{0} , Type{7}), Type{7});
+  TTS_EQUAL(eve::fma[eve::pedantic_](Type{0}, Type{5} , Type{7}), Type{7});
+  TTS_EQUAL(eve::fma[eve::pedantic_](Type{2}, Type{5} , Type{7}), Type{17});
+}
 #endif

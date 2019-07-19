@@ -66,4 +66,4 @@ endif()
 CHECK_CXX_SOURCE_COMPILES("
         int main(void){
             __float128 foo = 1.0;
-        }" EVE_CAN_USE_FLOAT128)
+        }" EVE_HAS_SUPPORT_FOR_FLOAT128)
