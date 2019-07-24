@@ -73,7 +73,7 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return bitwise_cast<logical<T>>( bitwise_or(bitwise_mask(a), bitwise_mask(b)) );
+    return bitwise_cast<logical<T>>(bitwise_or(a.bits(),b.bits()));
   }
 }
 

@@ -63,7 +63,7 @@ namespace eve::detail
       }
     }
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto logical_notand_( EVE_SUPPORTS(cpu_),
                                          logical<T> const &a, logical<U> const &b
@@ -73,7 +73,7 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return bitwise_cast<logical<T>>(bitwise_notand(bitwise_mask(a), bitwise_mask(b)) );
+    return bitwise_cast<logical<T>>(bitwise_notand(a.bits(),b.bits()));
   }
 }
 

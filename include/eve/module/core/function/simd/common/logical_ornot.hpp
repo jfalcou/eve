@@ -63,7 +63,7 @@ namespace eve::detail
       }
     }
   }
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE  auto logical_ornot_( EVE_SUPPORTS(cpu_),
                                         logical<T> const &a, logical<U> const &b
