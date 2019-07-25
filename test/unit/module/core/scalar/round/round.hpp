@@ -35,20 +35,20 @@ TTS_CASE("Check round return type")
 
 TTS_CASE("Check eve::round behavior")
 {
-   TTS_EQUAL(eve::round[eve::up_](eve::One<Type>()), eve::ceil(eve::One<Type>()));
-   TTS_EQUAL(eve::round[eve::down_](eve::One<Type>()), eve::floor(eve::One<Type>()));
-   TTS_EQUAL(eve::round[eve::to_zero_](eve::One<Type>()), eve::trunc(eve::One<Type>()));
-   TTS_EQUAL(eve::round[eve::nearest_int_](eve::One<Type>()), eve::nearest(eve::One<Type>()));
+   TTS_EQUAL(eve::round[eve::upward_](eve::One<Type>()), eve::ceil(eve::One<Type>()));
+   TTS_EQUAL(eve::round[eve::downward_](eve::One<Type>()), eve::floor(eve::One<Type>()));
+   TTS_EQUAL(eve::round[eve::toward_zero_](eve::One<Type>()), eve::trunc(eve::One<Type>()));
+   TTS_EQUAL(eve::round[eve::to_nearest_](eve::One<Type>()), eve::nearest(eve::One<Type>()));
    TTS_EQUAL(eve::round(eve::One<Type>()), eve::nearest(eve::One<Type>()));
-   
+
    if constexpr(std::is_floating_point_v<Type>)
    {
-     TTS_EQUAL(eve::round[eve::up_](eve::Half<Type>()), eve::ceil(eve::Half<Type>()));
-     TTS_EQUAL(eve::round[eve::down_](eve::Half<Type>()), eve::floor(eve::Half<Type>()));
-     TTS_EQUAL(eve::round[eve::to_zero_](eve::Half<Type>()), eve::trunc(eve::Half<Type>()));
-     TTS_EQUAL(eve::round[eve::nearest_int_](eve::Half<Type>()), eve::nearest(eve::Half<Type>()));
+     TTS_EQUAL(eve::round[eve::upward_](eve::Half<Type>()), eve::ceil(eve::Half<Type>()));
+     TTS_EQUAL(eve::round[eve::downward_](eve::Half<Type>()), eve::floor(eve::Half<Type>()));
+     TTS_EQUAL(eve::round[eve::toward_zero_](eve::Half<Type>()), eve::trunc(eve::Half<Type>()));
+     TTS_EQUAL(eve::round[eve::to_nearest_](eve::Half<Type>()), eve::nearest(eve::Half<Type>()));
      TTS_EQUAL(eve::round(eve::Half<Type>()), eve::nearest(eve::Half<Type>()));
    }
 }
-  
+
 #endif

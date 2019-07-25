@@ -22,24 +22,19 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_)
-                                    , T const &a) noexcept
+  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return eve::nearest(a); 
+    return eve::nearest(a);
   }
-  
+
   template<typename TAG, typename T>
-  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_)
-                                    , TAG   const &
-                                    , T const &a) noexcept
+  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), TAG   const &, T const &a) noexcept
   {
-    if constexpr(std::is_same_v<TAG, eve::up_type>) return eve::ceil(a);
-    if constexpr(std::is_same_v<TAG, eve::down_type>) return eve::floor(a);
-    if constexpr(std::is_same_v<TAG, eve::to_zero_type>) return eve::trunc(a);
-    if constexpr(std::is_same_v<TAG, eve::nearest_int_type>) return eve::nearest(a);
+    if constexpr(std::is_same_v<TAG, eve::upward_type>)       return eve::ceil(a);
+    if constexpr(std::is_same_v<TAG, eve::downward_type>)     return eve::floor(a);
+    if constexpr(std::is_same_v<TAG, eve::toward_zero_type>)  return eve::trunc(a);
+    if constexpr(std::is_same_v<TAG, eve::to_nearest_type>)   return eve::nearest(a);
   }
 }
 
