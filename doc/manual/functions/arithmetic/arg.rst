@@ -13,7 +13,7 @@ arg
       constexpr /* implementation defined */ arg = {};
    }
 
-Function object computing argument of a floating point :ref:`Value <concept-value>`.
+Function object computing argument of a :ref:`IEEEValue <concept-ieeevalue>`.
 
 
 Synopsis
@@ -45,8 +45,8 @@ Options
 Notes
 *****
 
-This function is not defined for integral types.
-For real floating point  entries it returns the value zero if the bit of sign of the entry is not set and the value ``pi`` if it is set. 
+This function is not defined for :ref:`concept-integralvalue` types.
+For :ref:`IEEEValue <concept-ieeevalue>`  entries it returns the value zero if the bit of sign of the entry is not set and the value ``pi`` if it is set. 
 Its use will be extended in a future complex module.
 
 Example

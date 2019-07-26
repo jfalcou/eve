@@ -44,13 +44,13 @@ Synopsis
 Options
 *******
 
-    With floating types, there is three ways to call ``max``:
+    With :ref:`concept-ieeevalue` types, there is three ways to call ``max``:
 
     * ``max(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
 
     * ``max[pedantic_](x, y)``: in which case the call is equivalent to ``if_else(x < y, x, y)``;
 
-    * ``max[num_](x, y)``: in which case if an element of ``x`` or ``y`` is a nan the result the corresponding result is the other value.
+    * ``max[num_](x, y)``: in which case if an element of ``x`` or ``y`` is a nan the corresponding result is the other value.
 
     The first way is the speediest.
 

@@ -1,4 +1,4 @@
-.. _function-maxmag:
+.. _function-minnummag:
 
 #########
 minnummag
@@ -44,7 +44,7 @@ Synopsis
 Notes
 *****
 
- - For floating point entries, this object function returns a nan value if and only if both entries are a nan value.
+ - For :ref:`concept-ieeevalue` entries, this object function returns a nan value if and only if both entries are a nan value.
  
 Example
 *******

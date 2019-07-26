@@ -39,10 +39,10 @@ Synopsis
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``up_``, ``down_``, ``to_zero_`` and ``to_nearest_int``. This function object
-    implements the ``to_zero_`` version.
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
+    implements the ``toward_zero_`` version.
 
-  - the  call to ``trunc(a)`` is equivalent to the call ``round[to_zero_](a)``
+  - the  call to ``trunc(a)`` is equivalent to the call ``round[toward_zero_](a)``
 
 Options
 *******

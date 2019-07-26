@@ -12,8 +12,8 @@ Inf
      constexpr as_arithmetic_t<Value> Inf<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Values <concept-value>` infinity for  :ref:`floating point Values <concept-IEEEvalue>` 
-and the largest type value for  :ref:`Integral typed Values <concept-integralvalue>`
+This 'constant' returns the infinity value for  :ref:`concept-ieeevalue` 
+and the largest type value for  :ref:`concept-integralvalue`
 
 
 Template parameter

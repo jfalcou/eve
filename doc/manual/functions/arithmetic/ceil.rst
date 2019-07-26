@@ -39,10 +39,10 @@ Synopsis
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``up_``, ``down_``, ``to_zero_`` and ``to_nearest_int``. This function object
-    implements the ``up_`` version.
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
+    implements the ``upward_`` version.
 
-  - the call to ``ceil(a)`` is equivalent to the call ``round[up_](a)``
+  - the call to ``ceil(a)`` is equivalent to the call ``round[upward_](a)``
 
 Options
 *******

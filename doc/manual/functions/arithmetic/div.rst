@@ -1,21 +1,20 @@
-.. _function-sub:
+.. _function-div:
 
 ###
-sub
+div
 ###
 
-**Required header:** ``#include <eve/function/sub.hpp>``
+**Required header:** ``#include <eve/function/div.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-      constexpr /* implementation defined */ sub = {};
+      constexpr /* implementation defined */ div = {};
    }
 
-Function object computing the difference of two :ref:`Values <concept-value>`.
+Function object computing the division of two :ref:`Values <concept-value>`.
 
-********
 Synopsis
 ********
 
@@ -27,32 +26,30 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
-* [1] Computes the element-wise difference of every elements of both :ref:`type-wide`.
-* [2,3] Computes the difference of the scalar with each element of the wide instance.
-* [4] Computes the difference of both scalars.
+* [1] Computes the element-wise division of both :ref:`wides <type-wide>`.
+* [2,3] Computes the division of the scalar with each element of the :ref:`type-wide` instance.
+* [4] Computes the division of both scalars.
 
 .. rubric:: Parameters
 
 * **v**, **w**: Instances of :ref:`type-wide`.
-* **s**, **t**: Scalar values of type **U** convertible to **T**.
+* **s**, **t**: Scalar values of type **U** which must be convertible to **T**.
 
 .. rubric:: Return value
 
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
 
-*******
 Options
 *******
 
-*******
 Example
 *******
 
-.. include:: ../../../../test/doc/sub.cpp
+.. include:: ../../../../test/doc/div.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/sub.txt
+.. include:: ../../../../test/doc/div.txt
   :literal:

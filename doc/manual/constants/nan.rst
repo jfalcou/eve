@@ -12,8 +12,8 @@ Nan
      constexpr as_arithmetic_t<Value> Nan<Value>() noexcept
    }
 
-This 'constant' returns the  :ref:`Value <concept-value>` Not a Number for  :ref:`floating point Values <concept-IEEEvalue>` 
-and zero for  :ref:`Integral typed Values <concept-integralvalue>`
+This 'constant' returns the  :ref:`Value <concept-value>` Not a Number for  :ref:`concept-ieeevalue` entries
+and zero for :ref:`concept-integralvalue` entries.
 
 
 Template parameter

@@ -46,11 +46,11 @@ Notes
 
     There is three ways to call `minmag`:
 
-    * `minmag(x, y)` in which case if ``x`` or ``y`` has a nan the result is system dependent as on various systems the intrinsics act differently
+    * ``minmag(x, y)`` in which case if ``x`` or ``y`` has a nan the result is system dependent as on various systems the intrinsics act differently
 
-    * `minmag[pedantic_](x, y)` in which case the call is equivalent to `if_else(abs(x) < abs(y),x,y)`
+    * ``minmag[pedantic_](x, y)`` in which case the call is equivalent to ``if_else(abs(x) < abs(y),x,y)``
 
-    * `minmag[num_](x, y)` in which case if ``x`` or ``y`` has a nan the result the corresponding result is the other value
+    * ``minmag[num_](x, y)`` in which case if ``x`` or ``y`` has a nan the corresponding result is the other value
 
     The first way is the speediest.
 
