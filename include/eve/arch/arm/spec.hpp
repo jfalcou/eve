@@ -12,7 +12,6 @@
 #define EVE_ARCH_ARM_SPEC_HPP_INCLUDED
 
 #include <eve/arch/arm/predef.hpp>
-#include <eve/arch/arm/tags.hpp>
 #include <cstddef>
 
 // Register count
@@ -25,20 +24,24 @@ namespace eve
     static constexpr std::size_t simd    = 32;
   };
 }
+
+// NEON SIMD ABI
+#  if !defined(EVE_CURRENT_ABI)
+#    if EVE_HW_ARM == EVE_NEON_VERSION
+#      define EVE_CURRENT_ABI ::eve::arm_
+#      include <arm_neon.h>
+#    endif
+#  endif
 #endif
 
-#if !defined(EVE_CURRENT_ABI)
-#  if EVE_HW_ARM == EVE_NEON_VERSION
-#    define EVE_CURRENT_ABI ::eve::arm_
+// NEON SIMD API
+#if !defined(EVE_CURRENT_API)
 #    define EVE_CURRENT_API ::eve::neon128_
-#    include <arm_neon.h>
-#  endif
+#endif
 
-#  if !defined(__aarch64__)
-#    ifndef EVE_NO_DENORMALS
-#      define EVE_NO_DENORMALS
-#    endif
-
+#if !defined(__aarch64__)
+#  ifndef EVE_NO_DENORMALS
+#    define EVE_NO_DENORMALS
 #  endif
 #endif
 

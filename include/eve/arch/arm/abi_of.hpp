@@ -15,9 +15,15 @@
 #include <eve/ext/abi_of.hpp>
 #include <type_traits>
 
-#if EVE_HW_ARM >= EVE_NEON_VERSION
+namespace eve
+{
+  struct neon64_;
+  struct neon128_;
+}
+
 namespace eve::ext
 {
+#if EVE_HW_ARM >= EVE_NEON_VERSION
 #  if defined(__aarch64__)
   template<int N>
   struct abi_of<double, N, std::enable_if_t<(N == 2)>>
@@ -54,7 +60,7 @@ namespace eve::ext
   {
     using type = neon64_;
   };
+#endif
 }
 
-#endif
 #endif
