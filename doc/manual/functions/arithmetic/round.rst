@@ -48,10 +48,17 @@ Options
 *******
 
   this object function can be called with an optional tag parameter that change its meaning:
+<<<<<<< HEAD
  
   - ``round[to_nearest_](a)`` is equivalent to the call ``nearest(a)``
   - ``round[toward_zero_](a)`` is equivalent to the call ``trunc(a)``
   - ``round[upward_](a)`` is equivalent to the call ``ceil(a)``     
+=======
+
+  - ``round[to_nearest_](a)`` is equivalent to the call ``nearest(a)``
+  - ``round[toward_zero_](a)`` is equivalent to the call ``trunc(a)``
+  - ``round[upward_](a)`` is equivalent to the call ``ceil(a)``
+>>>>>>> Renaming round options to use IEEE754 parlance
   - ``round[downward_](a)`` is equivalent to the call ``floor(a)``
 
 Example

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ROUND_HPP_INCLUDED
-#define EVE_FUNCTION_ROUND_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ROUND_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ROUND_HPP_INCLUDED
 
 #include <eve/function/scalar/round.hpp>
 

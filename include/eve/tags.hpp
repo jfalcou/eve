@@ -26,6 +26,18 @@ namespace eve
 
   struct numeric_type{};
   inline constexpr numeric_type numeric_ = {};
+
+  struct upward_type{};
+  inline constexpr upward_type upward_ = {};
+
+  struct downward_type{};
+  inline constexpr downward_type downward_ = {};
+
+  struct toward_zero_type{};
+  inline constexpr toward_zero_type toward_zero_ = {};
+
+  struct to_nearest_type{};
+  inline constexpr  to_nearest_type to_nearest_ = {};
 }
 
 #endif
