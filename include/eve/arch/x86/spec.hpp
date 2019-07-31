@@ -16,6 +16,8 @@
 #include <cstdint>
 #include <cstddef>
 
+//==================================================================================================
+// X86 hardware info
 #if defined(EVE_HW_X86)
 namespace eve
 {
@@ -26,6 +28,7 @@ namespace eve
   };
 }
 
+//==================================================================================================
 // X86 SIMD ABI
 #  if !defined(EVE_CURRENT_ABI)
 #    if EVE_HW_X86 >= EVE_AVX_VERSION
@@ -40,6 +43,7 @@ namespace eve
 
 // TODO: AVX512 ABI
 
+//==================================================================================================
 // X86 SIMD API
 #if !defined(EVE_CURRENT_API)
 #  if EVE_HW_X86 == EVE_SSE2_VERSION
@@ -61,6 +65,7 @@ namespace eve
 
 // TODO: AVX512 API
 
+//==================================================================================================
 // Additionnal ISA support
 #if defined(EVE_SUPPORTS_FMA3)
 #  include <immintrin.h>

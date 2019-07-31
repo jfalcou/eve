@@ -16,10 +16,12 @@
 
 namespace eve
 {
+  //================================================================================================
   // ABI tag for all X86 128 bits SIMD registers
   struct sse_ {};
 
-  // dispatching tag for SSE* SIMD implementation
+  //================================================================================================
+  // Dispatching tag for SSE* SIMD implementation
   struct sse2_    : simd_   { using parent = simd_;   };
   struct sse3_    : sse2_   { using parent = sse2_;   };
   struct ssse3_   : sse3_   { using parent = sse3_;   };
@@ -28,11 +30,13 @@ namespace eve
   struct avx_     : sse4_2_ { using parent = sse4_2_; };
   struct avx2_    : avx_    { using parent = avx_;    };
 
+  //================================================================================================
   // Specific ISA tags
   struct xop_   {};
   struct fma3_  {};
   struct fma4_  {};
 
+  //================================================================================================
   // SSE* extension tag objects
   inline const sse2_    sse2    = {};
   inline const sse3_    sse3    = {};
@@ -45,8 +49,8 @@ namespace eve
   inline const fma3_    fma3    = {};
   inline const fma4_    fma4    = {};
 
+  //================================================================================================
   // Runtime detection of CPU support
-
 #if defined(EVE_ARCH_IS_X86)
   inline bool is_supported(sse2_ const &) noexcept
   {
