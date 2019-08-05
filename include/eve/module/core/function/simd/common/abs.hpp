@@ -13,15 +13,13 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/unary_minus.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
+#include <eve/function/max.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,38 +27,29 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr( is_native_v<ABI> )
+    if constexpr( is_aggregated_v<ABI> )
     {
-      if constexpr(std::is_floating_point_v<T>)
-      {
-        return bitwise_notand(Mzero(as(v)), v);
-      }
-      else if constexpr(std::is_integral_v<T>)
-      {
-        if constexpr(std::is_unsigned_v<T>)
-        {
-          return v;
-        }
-        else
-        {
-          return if_else( is_ltz(v), -v, v);
-        }
-      }
+      return aggregate(eve::abs, v);
     }
-    else
+    else if constexpr( is_emulated_v<ABI> )
     {
-      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::abs, v);
-      if constexpr( is_emulated_v<ABI>   ) return map(eve::abs, v);
+      return map(eve::abs, v);
+    }
+    else if constexpr( is_native_v<ABI> )
+    {
+      if constexpr(std::is_unsigned_v<T>)       return v;
+      if constexpr(std::is_floating_point_v<T>) return bitwise_notand(Mzero(as(v)), v);
+      else if constexpr(std::is_integral_v<T> && std::is_signed_v<T>) return eve::max( v, -v);
     }
   }
 
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto abs_ ( EVE_SUPPORTS(simd_),
                               saturated_type const & ,
-                              wide<T, N, ABI> const &a
+                              wide<T, N, ABI> const &v
                             ) noexcept
   {
-    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
+    if constexpr(std::is_integral_v<T> && std::is_signed_v<T> )
     {
       if constexpr( is_aggregated_v<ABI>  )
         return aggregate(saturated_(eve::abs), a);
@@ -71,7 +60,7 @@ namespace eve::detail
     }
     else
     {
-      return eve::abs(a);
+      return eve::abs(v);
     }
   }
 }

@@ -55,7 +55,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> bitwise_select_(EVE_SUPPORTS(neon128_),
-                                                    wide<T, N, neon64_> const &m,
+                                                    wide<T, N, neon128_> const &m,
                                                     wide<T, N, neon128_> const &v0,
                                                     wide<T, N, neon128_> const &v1) noexcept
   {

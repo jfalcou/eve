@@ -13,6 +13,7 @@
 
 //#include <eve/function/saturated.hpp>
 // #include <eve/function/scalar/saturate.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 // #include <type_traits>
@@ -24,7 +25,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+                  requires(T, Vectorizable<T>)
   {
     return a + b;
   }

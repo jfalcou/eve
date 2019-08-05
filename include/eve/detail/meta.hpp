@@ -110,6 +110,22 @@ namespace eve::detail
   template<typename T>
   using value_type_t = typename value_type<T>::type;
 
+  // Extract abi_type from type
+  template<typename T, typename Enable = void>
+  struct abi_type
+  {
+    using type = void;
+  };
+
+  template<typename T>
+  struct abi_type<T, std::void_t<typename T::abi_type>>
+  {
+    using type = typename T::abi_type;
+  };
+
+  template<typename T>
+  using abi_type_t = typename abi_type<T>::type;
+
   // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned>
   struct make_integer;
@@ -206,7 +222,6 @@ namespace eve::detail
 
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;
-
 
   // Tuple free apply
   template<typename Func, std::size_t... I>

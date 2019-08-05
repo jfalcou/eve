@@ -17,10 +17,10 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<typename T, typename U, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
   bitwise_select_ ( EVE_SUPPORTS(vmx_),
-                    wide<T, N, ppc_> const& m,
+                    wide<U, N, ppc_> const& m,
                     wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
                   ) noexcept
   {

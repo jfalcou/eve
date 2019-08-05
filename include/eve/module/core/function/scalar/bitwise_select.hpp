@@ -12,18 +12,15 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_BITWISE_SELECT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_andnot.hpp>
+#include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_or.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr U
+  EVE_FORCEINLINE constexpr auto
   bitwise_select_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1, U const &a2) noexcept
   {
     static_assert(sizeof(T) == sizeof(U), "eve::bitwise_select - Arguments have incompatible size");
