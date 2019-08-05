@@ -11,14 +11,14 @@
 #ifndef EVE_ARCH_PPC_SPEC_HPP_INCLUDED
 #define EVE_ARCH_PPC_SPEC_HPP_INCLUDED
 
+#include <eve/detail/compiler.hpp>
 #include <eve/arch/ppc/predef.hpp>
 #include <cstddef>
 
-// Register count
 #if defined(EVE_HW_POWERPC)
 namespace eve
 {
-  struct register_count
+struct register_count
   {
     static constexpr std::size_t general = 32;
 
@@ -29,9 +29,46 @@ namespace eve
 #  endif
   };
 }
+
+// PPC SIMD ABI
+#  if !defined(EVE_CURRENT_ABI)
+#    if EVE_HW_POWERPC >= EVE_VMX_VERSION
+#      define EVE_CURRENT_ABI ::eve::ppc_
+
+#      ifndef EVE_NO_DENORMALS
+#        define EVE_NO_DENORMALS
+#      endif
+
+#      if !defined(__APPLE_CC__) || __APPLE_CC__ <= 1 || __GNUC__ >= 4
+#        include <altivec.h>
+#      endif
+
+#      ifdef bool
+#        undef bool
+#      endif
+
+#      ifdef pixel
+#        undef pixel
+#      endif
+
+#      ifdef vector
+#       undef vector
+#      endif
+
+#      if defined(__IBMCPP__) || defined(__MWERKS__)
+#        define __bool bool
+#      endif
+#    endif
+#  endif
 #endif
 
-#include <eve/arch/ppc/vmx/spec.hpp>
-#include <eve/arch/ppc/vsx/spec.hpp>
+// PPC SIMD API
+#if !defined(EVE_CURRENT_API)
+#  if EVE_HW_POWERPC == EVE_VMX_VERSION
+#    define EVE_CURRENT_API ::eve::vmx_
+#  elif EVE_HW_POWERPC == EVE_VSX_VERSION
+#    define EVE_CURRENT_API ::eve::vsx_
+#  endif
+#endif
 
 #endif

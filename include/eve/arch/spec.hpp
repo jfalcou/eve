@@ -18,5 +18,27 @@
 #endif
 
 #include <eve/arch/cpu/spec.hpp>
+#include <eve/arch/tags.hpp>
+#include <type_traits>
+
+//==================================================================================================
+// constexpr object wrapper around EVE_CURRENT_API for if constexpr usage
+namespace eve
+{
+  template<typename API> struct current_api_{};
+
+  template<typename API, typename Tag>
+  inline constexpr bool operator==(current_api_<API> const&, Tag const&)
+  {
+    return std::is_same_v<API,Tag>;
+  }
+  template<typename API, typename Tag>
+  inline constexpr bool operator==(Tag const&, current_api_<API> const&)
+  {
+    return std::is_same_v<API,Tag>;
+  }
+
+  inline constexpr current_api_<EVE_CURRENT_API> current_api = {};
+}
 
 #endif
