@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/function/scalar/fma.hpp>
 #include <type_traits>
 
@@ -22,7 +23,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto average_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_integral_v<T>)
     {

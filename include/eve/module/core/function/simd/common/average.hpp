@@ -15,11 +15,6 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/constant/half.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -33,43 +28,25 @@ namespace eve::detail
             detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return average(a, T{b});
+      return map( eve::average, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return average(U{a},b);
+      return aggregate( eve::average, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::average(abi_cast<U>(a), abi_cast<T>(b) );
     }
     else
     {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::average, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::average, a, b);
-        }
-        else
-        {
-          if constexpr(std::is_integral_v<typename T::value_type>)
-          {
-            return bitwise_and(a, b)+shr(bitwise_xor(a, b),1);
-          }
-          else
-          {
-            return fma(a,Half<T>(),b*Half<T>());
-          }
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::average] - Incompatible types.");
-        return {};
-      }
+      static_assert( std::is_same_v<T,U>, "[eve::average] - Incompatible types.");
+      return {};
     }
   }
 }
