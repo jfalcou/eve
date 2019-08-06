@@ -8,12 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MINUS_HPP
-#define MINUS_HPP
+#ifndef SUB_HPP
+#define SUB_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/sub.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;

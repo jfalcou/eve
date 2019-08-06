@@ -26,7 +26,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-                  requires(T, Vectorizable<T>)
+  requires(T, Vectorizable<T>)
   {
     return a + b;
   }
