@@ -14,9 +14,6 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/bitwise_and.hpp>
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/bitwise_and.hpp>
-
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/bitwise_and.hpp>
 #endif
