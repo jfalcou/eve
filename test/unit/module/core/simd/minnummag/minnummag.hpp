@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check plus behavior on wide",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return Type(i-c); }),
-    ref([](auto i, auto c) { return eve::minmag[eve::numeric_](Type(i), Type(i-c)); });
+    ref([](auto i, auto c) { return eve::numeric_(eve::minmag)(Type(i), Type(i-c)); });
 
-  TTS_EQUAL(ref, eve::minmag[eve::numeric_](lhs, rhs));
+  TTS_EQUAL(ref, eve::numeric_(eve::minmag)(lhs, rhs));
 }
 
 TTS_CASE_TPL("Check plus behavior on wide",
@@ -47,12 +47,12 @@ TTS_CASE_TPL("Check plus behavior on wide",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto) { return eve::minmag[eve::numeric_](Type(i), static_cast<Type>(2)); }),
-    refm([](auto i, auto) { return eve::minmag[eve::numeric_](Type(i), static_cast<Type>(-2)); });
-  TTS_EQUAL(ref, eve::minmag[eve::numeric_](lhs, static_cast<Type>(2)));
-  TTS_EQUAL(ref, eve::minmag[eve::numeric_](static_cast<Type>(2), lhs));
-  TTS_EQUAL(refm, eve::minmag[eve::numeric_](lhs, static_cast<Type>(-2)));
-  TTS_EQUAL(refm, eve::minmag[eve::numeric_](static_cast<Type>(-2), lhs));
+    ref([](auto i, auto) { return eve::numeric_(eve::minmag)(Type(i), static_cast<Type>(2)); }),
+    refm([](auto i, auto) { return eve::numeric_(eve::minmag)(Type(i), static_cast<Type>(-2)); });
+  TTS_EQUAL(ref, eve::numeric_(eve::minmag)(lhs, static_cast<Type>(2)));
+  TTS_EQUAL(ref, eve::numeric_(eve::minmag)(static_cast<Type>(2), lhs));
+  TTS_EQUAL(refm, eve::numeric_(eve::minmag)(lhs, static_cast<Type>(-2)));
+  TTS_EQUAL(refm, eve::numeric_(eve::minmag)(static_cast<Type>(-2), lhs));
 }
 
 #endif

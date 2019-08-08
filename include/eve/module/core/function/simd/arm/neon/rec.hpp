@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> rec_( EVE_SUPPORTS(neon128_),
-                                            raw_type const &,
+                                            raw_type const & mode,
                                             wide<T, N, neon64_> const &v0
                                           ) noexcept
   {
@@ -38,13 +38,13 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), raw_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rec_ ( EVE_SUPPORTS(neon128_),
-                                              raw_type const &,
+                                              raw_type const& mode,
                                               wide<T, N, neon128_> const &v0
                                             ) noexcept
   {
@@ -61,7 +61,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), raw_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 
@@ -80,7 +80,7 @@ namespace eve::detail
     if constexpr( std::is_same_v<T,float>)
     {
       // estimate 1/x with an extra NR step for full precision
-      auto a = refine_rec(v0, rec[raw_](v0) );
+      auto a = refine_rec(v0, raw_(rec)(v0) );
       return refine_rec(v0, a );
     }
     else
@@ -97,7 +97,7 @@ namespace eve::detail
     if constexpr( std::is_floating_point_v<T>)
     {
       // estimate 1/x with an extra NR step for full precision
-      auto a = refine_rec(v0, rec[raw_](v0) );
+      auto a = refine_rec(v0, raw_(rec)(v0) );
       return refine_rec(v0, a );
     }
     else
@@ -108,7 +108,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> rec_( EVE_SUPPORTS(neon128_),
-                                            pedantic_type const &,
+                                            pedantic_type const & mode,
                                             wide<T, N, neon64_> const &v0
                                           ) noexcept
   {
@@ -118,13 +118,13 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), pedantic_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rec_ ( EVE_SUPPORTS(neon128_),
-                                              pedantic_type const &,
+                                              pedantic_type const & mode,
                                               wide<T, N, neon128_> const &v0
                                             ) noexcept
   {
@@ -134,7 +134,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), pedantic_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 }

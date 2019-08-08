@@ -87,11 +87,11 @@ namespace eve::detail
   {
     if constexpr( !is_vectorized_v<U> )
     {
-      return minmag[eve::pedantic_](a, T{b});
+      return eve::pedantic_(eve::minmag)(a, T{b});
     }
     else if constexpr( !is_vectorized_v<T> )
     {
-      return minmag[eve::pedantic_](U{a},b);
+      return eve::pedantic_(eve::minmag)(U{a},b);
     }
     else
     {
@@ -99,11 +99,11 @@ namespace eve::detail
       {
         if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          return aggregate( eve::minmag, eve::pedantic_, a, b);
+          return aggregate( eve::pedantic_(eve::minmag), a, b);
         }
         else if constexpr( is_emulated_v<typename T::abi_type> )
         {
-          return map( eve::minmag, eve::pedantic_, a, b);
+          return map( eve::pedantic_(eve::minmag), a, b);
         }
         else
         {
@@ -111,12 +111,12 @@ namespace eve::detail
           auto ab = eve::abs(b);
           return if_else( is_not_greater_equal(aa, ab), a
                         , if_else( is_not_greater_equal(ab, aa), b
-                                 , eve::min[eve::pedantic_](a, b) ) );
+                                 , eve::pedantic_(eve::min)(a, b) ) );
         }
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::minmag[pedantic_]] - Incompatible types.");
+        static_assert( std::is_same_v<T,U>, "[eve::pedantic_(minmag)] - Incompatible types.");
         return {};
       }
     }

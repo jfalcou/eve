@@ -19,7 +19,7 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/max.hpp>
-#include <eve/function/min.hpp>  
+#include <eve/function/min.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -67,7 +67,7 @@ namespace eve::detail
       }
     }
   }
-   
+
   // -----------------------------------------------------------------------------------------------
   // saturated_type
   template<typename T, typename U>
@@ -81,11 +81,11 @@ namespace eve::detail
   {
     if constexpr( !is_vectorized_v<U> )
     {
-      return dist(saturated_, v0, T{v1});
+      return saturated_(dist)(v0, T{v1});
     }
     else if constexpr( !is_vectorized_v<T> )
     {
-      return dist(saturated_, U{v0},v1);
+      return saturated_(dist)(U{v0},v1);
     }
     else
     {

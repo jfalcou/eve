@@ -29,7 +29,7 @@ namespace eve::detail
                                   , T const &a) noexcept
   {
     static_assert ( std::is_floating_point_v<value_type_t<T>>
-                  , "[eve::arg] -this function is not to be used with integral types"
+                  , "[eve::arg] - Function undefined for integral types"
                   );
 
     return if_else(is_negative(a),Pi(as(a)), eve::zero_);
@@ -41,11 +41,11 @@ namespace eve::detail
                                   , T const &a) noexcept
   {
     static_assert ( std::is_floating_point_v<value_type_t<T>>
-                  , "[eve::arg[pedantic_]] -this function is notto be used with integral types"
+                  , "[eve::pedantic_(eve::arg)] - Function undefined for integral types"
                   );
 
     auto r = arg(a);
-#ifndef BOOST_SIMD_NO_NANS
+#ifndef EVE_NO_NANS
     return if_else(is_nan(a),eve::allbits_, r);
 #else
     return r;

@@ -30,9 +30,9 @@ TTS_CASE("Check eve::dist and eve::dist[saturated_]  behavior")
 
   if constexpr(std::is_integral_v<Type> && std::is_signed_v<Type>)
   {
-    TTS_IEEE_EQUAL(eve::dist[eve::saturated_](eve::Valmax<Type>(), eve::Valmin<Type>()), eve::Valmax<Type>());
-    TTS_IEEE_EQUAL(eve::dist[eve::saturated_](eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-    TTS_IEEE_EQUAL(eve::dist[eve::saturated_](eve::Valmin<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Valmin<Type>()), eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
   }
 }
 

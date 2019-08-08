@@ -19,7 +19,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
     << "<- qf =                  " << qf << '\n'
-    << "-> eve::minmag[eve::numeric_](pf, qf) = " << eve::minmag[eve::numeric_](pf, qf) << '\n';
+    << "-> eve::numeric_(eve::minmag)(pf, qf) = " << eve::numeric_(eve::minmag)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = -2.0f;
@@ -28,6 +28,6 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::minmag[eve::numeric_](xf, yf) = " << eve::minmag[eve::numeric_](xf, yf) << '\n';
+    << "-> eve::numeric_(eve::minmag)(xf, yf) = " << eve::numeric_(eve::minmag)(xf, yf) << '\n';
   return 0;
 }

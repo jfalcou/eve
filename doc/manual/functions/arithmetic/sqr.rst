@@ -39,7 +39,7 @@ Synopsis
 Options
 *******
 
-  - ``saturated_``: for an integral entry ``a`` the call to ``sqr[saturated_](a)`` return ``Valmax(as(a))`` as soon as the
+  - ``saturated_``: for an integral entry ``a`` the call to ``saturated_(sqr)(a)`` return ``Valmax(as(a))`` as soon as the
     absolute value of ``a`` is greater than ``SqrtValmax(as(a))``
 
 Example

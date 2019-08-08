@@ -66,18 +66,18 @@ namespace eve::detail
   {
     if constexpr(is_aggregated_v<ABI>)
     {
-      return aggregate(eve::rec[raw_], v);
+      return aggregate(raw_(eve::rec), v);
     }
     else if  constexpr(is_emulated_v<ABI>)
     {
-      return map(eve::rec[raw_], v);
+      return map(raw_(eve::rec), v);
     }
     else
     {
       if constexpr(std::is_floating_point_v<T>)
       {
         // Change to 1/v;
-        return map(eve::rec[raw_], v);
+        return map(raw_(eve::rec), v);
       }
       else
       {
@@ -94,18 +94,18 @@ namespace eve::detail
   {
     if constexpr(is_aggregated_v<ABI>)
     {
-      return aggregate(eve::rec[eve::pedantic_], v);
+      return aggregate(eve::pedantic_(eve::rec), v);
     }
     else if  constexpr(is_emulated_v<ABI>)
     {
-      return map(eve::rec[eve::pedantic_], v);
+      return map(eve::pedantic_(eve::rec), v);
     }
     else
     {
       if constexpr(std::is_floating_point_v<T>)
       {
         // Change to 1/v;
-        return map(eve::rec[eve::pedantic_], v);
+        return map(eve::pedantic_(eve::rec), v);
       }
       else
       {

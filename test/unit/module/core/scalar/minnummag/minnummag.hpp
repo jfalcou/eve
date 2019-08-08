@@ -20,25 +20,25 @@
 #include <type_traits>
 
 
-TTS_CASE("Check eve::minmag[eve::numeric_] behavior")
+TTS_CASE("Check eve::numeric_(eve::minmag) behavior")
 {
-  TTS_EQUAL(eve::minmag[eve::numeric_](Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::minmag[eve::numeric_](Type{0}, Type{1}), Type{0});
-  TTS_EQUAL(eve::minmag[eve::numeric_](Type{1}, Type{0}), Type{0});
-  TTS_EQUAL(eve::minmag[eve::numeric_](Type{1}, Type{2}), Type{1});
-  TTS_EQUAL(eve::minmag[eve::numeric_](Type{2}, Type{1}), Type{1});
+  TTS_EQUAL(eve::numeric_(eve::minmag)(Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::numeric_(eve::minmag)(Type{0}, Type{1}), Type{0});
+  TTS_EQUAL(eve::numeric_(eve::minmag)(Type{1}, Type{0}), Type{0});
+  TTS_EQUAL(eve::numeric_(eve::minmag)(Type{1}, Type{2}), Type{1});
+  TTS_EQUAL(eve::numeric_(eve::minmag)(Type{2}, Type{1}), Type{1});
   if constexpr(std::is_signed_v<Type> )
   {
-    TTS_EQUAL(eve::minmag[eve::numeric_](static_cast<Type>(-3), Type{2}), Type{2});
-    TTS_EQUAL(eve::minmag[eve::numeric_](static_cast<Type>(-1), Type{2}), static_cast<Type>(-1));
-    TTS_EQUAL(eve::minmag[eve::numeric_](static_cast<Type>(-1), Type{1}), static_cast<Type>(-1));
+    TTS_EQUAL(eve::numeric_(eve::minmag)(static_cast<Type>(-3), Type{2}), Type{2});
+    TTS_EQUAL(eve::numeric_(eve::minmag)(static_cast<Type>(-1), Type{2}), static_cast<Type>(-1));
+    TTS_EQUAL(eve::numeric_(eve::minmag)(static_cast<Type>(-1), Type{1}), static_cast<Type>(-1));
   }
   if constexpr(std::is_floating_point_v<Type> )
   {
     Type n =  eve::Nan<Type>();
     Type o =  eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::minmag[eve::numeric_](n, o), o);
-    TTS_IEEE_EQUAL(eve::minmag[eve::numeric_](o, n), o);
+    TTS_IEEE_EQUAL(eve::numeric_(eve::minmag)(n, o), o);
+    TTS_IEEE_EQUAL(eve::numeric_(eve::minmag)(o, n), o);
   }
 }
 

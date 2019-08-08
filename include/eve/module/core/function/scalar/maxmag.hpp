@@ -41,7 +41,7 @@ namespace eve::detail
   {
       auto aa0 = eve::abs(a0);
       auto aa1 = eve::abs(a1);
-      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : eve::max[pedantic_](a0, a1);
+      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : eve::pedantic_(eve::max)(a0, a1);
   }
 
   // -----------------------------------------------------------------------------------------------
