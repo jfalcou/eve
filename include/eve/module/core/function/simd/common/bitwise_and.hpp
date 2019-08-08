@@ -45,13 +45,14 @@ namespace eve::detail
     {
       return eve::bitwise_and(a, T{b} );
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
-    {
-      return eve::bitwise_and(U{a}, b );
-    }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       return eve::bitwise_and(a, bitwise_cast<T>(b) );
+    }
+    else
+    {
+      static_assert( wrong<T,U>, "[eve::bitwise_and] - Unsupported types");
+      return {}
     }
   }
 }
