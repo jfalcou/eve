@@ -16,6 +16,7 @@
 #include <eve/detail/abi_cast.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -40,9 +41,17 @@ namespace eve::detail
     {
       return aggregate( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
-      return eve::bitwise_and(abi_cast<U>(a), abi_cast<T>(b) );
+      return eve::bitwise_and(a, T{b} );
+    }
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return eve::bitwise_and(U{a}, b );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return eve::bitwise_and(a, bitwise_cast<T>(b) );
     }
   }
 }
