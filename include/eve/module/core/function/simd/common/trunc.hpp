@@ -32,7 +32,7 @@ namespace eve::detail
     {
       if constexpr(std::is_floating_point_v<T>)
         // TODO replace the map as soon wide_cast is available
-        //       return if_else(eve::abs(a0) < Maxflint(as(v));,  trunc[raw_](v),  a0);
+        //       return if_else(eve::abs(a0) < Maxflint(as(v));,  eve::raw_(trunc)(v),  a0);
         return map(eve::trunc, v); 
       else  return v;
     }

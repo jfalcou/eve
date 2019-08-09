@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check rec behavior on wide",
   TTS_ULP_EQUAL(ref, eve::rec(lhs),0.5);
 }
 
-TTS_CASE_TPL("Check rec[raw_] behavior on wide",
+TTS_CASE_TPL("Check raw_(rec[raw_) behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,

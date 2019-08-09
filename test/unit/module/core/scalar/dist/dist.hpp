@@ -21,7 +21,7 @@
 #include <type_traits>
 
 
-TTS_CASE("Check eve::dist and eve::dist[saturated_]  behavior")
+TTS_CASE("Check eve::dist and saturated_(eve::dist)  behavior")
 {
   TTS_EQUAL(eve::dist(Type{0}, Type{0}), Type{0});
   TTS_EQUAL(eve::dist(Type{0}, Type{1}), Type{1});
