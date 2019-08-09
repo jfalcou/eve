@@ -30,7 +30,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> rec_ ( EVE_SUPPORTS(vmx_),
-                                          raw_type const &,
+                                          raw_type const & mode,
                                           wide<T, N, ppc_> const &v0
                                         ) noexcept
   {
@@ -40,7 +40,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), raw_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 
@@ -51,12 +51,12 @@ namespace eve::detail
   {
     if constexpr( std::is_same_v<double, T>)
     {
-      auto estimate = refine_rec(v0, rec[raw_](v0));
+      auto estimate = refine_rec(v0, raw_(rec)(v0));
       return refine_rec(v0, estimate);
     }
     else if constexpr( std::is_same_v<float, T>)
     {
-      return refine_rec(v0, rec[raw_](v0));
+      return refine_rec(v0, raw_(rec)(v0));
     }
     else
     {
@@ -66,7 +66,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> rec_ ( EVE_SUPPORTS(vmx_),
-                                          pedantic_type const &,
+                                          pedantic_type const& mode,
                                           wide<T, N, ppc_> const &v0
                                         ) noexcept
   {
@@ -90,7 +90,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), pedantic_, v0);
+      return rec_(EVE_RETARGET(simd_), mode, v0);
     }
   }
 }

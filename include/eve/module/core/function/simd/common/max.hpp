@@ -83,7 +83,7 @@ namespace eve::detail
   // Pedantic
   template<typename T, typename U>
   EVE_FORCEINLINE  auto max_(EVE_SUPPORTS(cpu_)
-                            , pedantic_type const &
+                            , pedantic_type const&
                             , T const &v0
                             , U const &v1) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
@@ -92,11 +92,11 @@ namespace eve::detail
   {
     if constexpr( !is_vectorized_v<U> )
     {
-      return max(pedantic_, v0, T{v1});
+      return pedantic_(max)(v0, T{v1});
     }
     else if constexpr( !is_vectorized_v<T> )
     {
-      return max(pedantic_, U{v0},v1);
+      return pedantic_(max)(U{v0},v1);
     }
     else
     {

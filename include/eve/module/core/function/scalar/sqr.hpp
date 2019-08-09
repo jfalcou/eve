@@ -31,7 +31,7 @@ namespace eve::detail
     {
       if constexpr(std::is_signed_v<T>)
       {
-        return (abs[eve::saturated_](a0) > Sqrtvalmax(as(a0))) ? Valmax(as(a0)) : sqr(a0);
+        return (eve::saturated_(eve::abs)(a0) > Sqrtvalmax(as(a0))) ? Valmax(as(a0)) : sqr(a0);
       }
       else
       {

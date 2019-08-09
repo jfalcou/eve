@@ -30,20 +30,20 @@ namespace eve::detail
   {
 
     if constexpr(std::is_floating_point_v<T>)
-      return eve::abs(a0) < Maxflint<T>() ? trunc[raw_](a0) : a0;
+      return eve::abs(a0) < Maxflint<T>() ? raw_(trunc)(a0) : a0;
     else
-      return a0; 
+      return a0;
   }
   template<typename T>
   EVE_FORCEINLINE constexpr auto trunc_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &       
+                                  , raw_type const &
                                   , T const &a0) noexcept requires( T, Arithmetic<T>)
   {
 
     if constexpr(std::is_floating_point_v<T>)
       return static_cast<T>(static_cast<as_integer_t<T>>(a0));
     else
-      return a0; 
+      return a0;
   }
 }
 

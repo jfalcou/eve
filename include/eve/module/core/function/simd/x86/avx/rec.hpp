@@ -41,7 +41,7 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> rec_ ( EVE_SUPPORTS(avx_),
-                                          raw_type const&,
+                                          raw_type const& mode,
                                           wide<T, N, avx_> const &a0
                                         ) noexcept
   {
@@ -56,7 +56,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), raw_, a0);
+      return rec_(EVE_RETARGET(simd_), mode, a0);
     }
   }
 
@@ -79,7 +79,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> rec_ ( EVE_SUPPORTS(avx_),
-                                          pedantic_type const&,
+                                          pedantic_type const& mode,
                                           wide<T, N, avx_> const &a0
                                         ) noexcept
   {
@@ -89,7 +89,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), pedantic_, a0);
+      return rec_(EVE_RETARGET(simd_), mode, a0);
     }
   }
 }

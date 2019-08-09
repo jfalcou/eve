@@ -36,7 +36,7 @@ namespace eve::detail
   {
       auto aa0 = eve::abs(a0);
       auto aa1 = eve::abs(a1);
-      return aa0 < aa1 ? a0 : aa1 < aa0 ? a1 : eve::min[pedantic_](a0, a1);
+      return aa0 < aa1 ? a0 : aa1 < aa0 ? a1 : eve::pedantic_(eve::min)(a0, a1);
   }
 
   // -----------------------------------------------------------------------------------------------

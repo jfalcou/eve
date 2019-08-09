@@ -30,8 +30,8 @@ TTS_CASE("Check eve::max behavior")
   {
     Type n =  eve::Nan<Type>();
     Type o =  eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::max[eve::pedantic_](n, o), n);
-    TTS_IEEE_EQUAL(eve::max[eve::pedantic_](o, n), o);
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::max)(n, o), n);
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::max)(o, n), o);
   }
 }
 

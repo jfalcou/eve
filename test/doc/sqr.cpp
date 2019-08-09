@@ -13,7 +13,7 @@ int main()
 {
   wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
                 , eve::Sqrtvalmax<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
-  int16_t svm =  eve::Sqrtvalmax<int16_t>(); 
+  int16_t svm =  eve::Sqrtvalmax<int16_t>();
   wide_it pi = { 0, 1, -1, -2, svm-1, svm, svm+1, svm+2 };
 
   std::cout
@@ -22,7 +22,7 @@ int main()
     << "-> eve::sqr(pf) = " << eve::sqr(pf) << '\n'
     << "<- pi =                  " << pi << '\n'
     << "-> eve::sqr(pi) = " << eve::sqr(pi) << '\n'
-    << "-> eve::sqr[eve::saturated_](pi) = " << eve::sqr[eve::saturated_](pi) << '\n';
+    << "-> eve::saturated_(eve::sqr)(pi) = " << eve::saturated_(eve::sqr)(pi) << '\n';
 
   float xf = 1.0f;
   int32_t yf = eve::Sqrtvalmax<int32_t>()+10;

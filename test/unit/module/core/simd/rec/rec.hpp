@@ -59,12 +59,12 @@ TTS_CASE_TPL("Check rec[raw_] behavior on wide",
                       }
                     );
 
-  wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec[eve::raw_](lhs[i]); });
+  wide<Type, T> ref([&lhs](auto i, auto) { return eve::raw_(eve::rec)(lhs[i]); });
 
-  TTS_RELATIVE_EQUAL(ref, eve::rec[eve::raw_](lhs), 0.3);
+  TTS_RELATIVE_EQUAL(ref, eve::raw_(eve::rec)(lhs), 0.3);
 }
 
-TTS_CASE_TPL("Check rec[pedantic_] behavior on wide",
+TTS_CASE_TPL("Check pedantic(rec) behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -82,9 +82,9 @@ TTS_CASE_TPL("Check rec[pedantic_] behavior on wide",
                       }
                     );
 
-  wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec[eve::pedantic_](lhs[i]); });
+  wide<Type, T> ref([&lhs](auto i, auto) { return eve::pedantic_(eve::rec)(lhs[i]); });
 
-  TTS_ULP_EQUAL(ref, eve::rec[eve::pedantic_](lhs), 0.5);
+  TTS_ULP_EQUAL(ref, eve::pedantic_(eve::rec)(lhs), 0.5);
 }
 
 #endif

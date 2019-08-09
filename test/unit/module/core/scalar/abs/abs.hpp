@@ -33,7 +33,7 @@ TTS_CASE("Check eve::abs behavior")
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::abs(static_cast<Type>(-2)), Type(2));
-    TTS_EQUAL(eve::abs[eve::saturated_](eve::Valmin<Type>()), eve::Valmax<Type>()); 
+    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<Type>()), eve::Valmax<Type>());
   }
 }
 

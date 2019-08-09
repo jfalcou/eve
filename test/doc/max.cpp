@@ -19,10 +19,10 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =                          " << pf << '\n' 
-    << "<- qf =                          " << qf << '\n' 
+    << "<- pf =                          " << pf << '\n'
+    << "<- qf =                          " << qf << '\n'
     << "-> eve::max(pf, qf) =            " << eve::max(pf, qf) << '\n'
-    << "-> eve::max[pedantic_](pf, qf) = " << eve::max[pedantic_](pf, qf) << '\n';   
+    << "-> eve::pedantic_(eve::max)(pf, qf) = " << eve::pedantic_(eve::max)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
@@ -32,6 +32,6 @@ int main()
     << "<- xf =                          " << xf << '\n'
     << "<- yf =                          " << yf << '\n'
     << "-> eve::max(xf, yf) =            " << eve::max(xf, yf) << '\n'
-    << "-> eve::max[pedantic_](xf, yf) = " << eve::max[pedantic_](xf, yf) << '\n';   
+    << "-> eve::pedantic_(eve::max)(xf, yf) = " << eve::pedantic_(eve::max)(xf, yf) << '\n';
   return 0;
 }
