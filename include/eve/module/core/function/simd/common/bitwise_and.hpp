@@ -32,18 +32,24 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
-
-    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    using vt_t = value_type_t<T>; 
+    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U> && (sizeof(U) == sizeof(vt_t)))
+      // this will ensure that no scalar conversion will take place in aggregated
+      // in the case vector and scalar not of the value type
     {
-      return map( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return eve::bitwise_and(a, T(bitwise_cast<vt_t>(b)));
+    }
+    else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b) );
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return aggregate( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b) );
     }
     else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
-      return eve::bitwise_and(a, T{b} );
+       return eve::bitwise_and(a, T{b} );
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
@@ -51,8 +57,8 @@ namespace eve::detail
     }
     else
     {
-      static_assert( wrong<T,U>, "[eve::bitwise_and] - Unsupported types");
-      return {}
+      static_assert( wrong<T,U>, "[eve::bitwise_and] - Unsupported types pairing");
+      return {}; 
     }
   }
 }
