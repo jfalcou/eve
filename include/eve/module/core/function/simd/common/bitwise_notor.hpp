@@ -33,11 +33,19 @@ namespace eve::detail
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;    
     using vt_t = value_type_t<T>; 
-    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U> && (sizeof(U) == sizeof(vt_t)))
-      // this will ensure that no scalar conversion will take place in aggregated
-      // in the case vector and scalar not of the value type
+    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U>)
     {
-      return eve::bitwise_notor(a, T(bitwise_cast<vt_t>(b)));
+      if constexpr (sizeof(U) == sizeof(vt_t))
+        // this will ensure that no scalar conversion will take place in aggregated
+        // in the case vector and scalar not of the value type
+      {
+        return eve::bitwise_notor(a, T(bitwise_cast<vt_t>(b)));
+      }
+      else
+      {
+        static_assert( wrong<T,U>, "[eve::bitwise_notor] - Unsupported types pairing");
+        return {}; 
+      }
     }
     else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
