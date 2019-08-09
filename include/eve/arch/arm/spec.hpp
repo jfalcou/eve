@@ -43,6 +43,9 @@ namespace eve
 #  ifndef EVE_NO_DENORMALS
 #    define EVE_NO_DENORMALS
 #  endif
+namespace eve { inline constexpr bool supports_aarch64 = false; }
+#else
+namespace eve { inline constexpr bool supports_aarch64 = true;  }
 #endif
 
 #endif
