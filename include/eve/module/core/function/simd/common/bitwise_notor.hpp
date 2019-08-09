@@ -22,75 +22,45 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Native
-  template<typename T, typename N, typename API>
-  EVE_FORCEINLINE wide<T, N, API>
-                  bitwise_notor_(EVE_SUPPORTS(simd_), wide<T, N, API> const &v0, wide<T, N, API> const &v1) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto bitwise_notor_(EVE_SUPPORTS(cpu_)
+                                       , T const &a
+                                       , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    return bitwise_or(bitwise_not(v0), v1);
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;    
+    using vt_t = value_type_t<T>; 
+    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U> && (sizeof(U) == sizeof(vt_t)))
+      // this will ensure that no scalar conversion will take place in aggregated
+      // in the case vector and scalar not of the value type
+    {
+      return eve::bitwise_notor(a, T(bitwise_cast<vt_t>(b)));
+    }
+    else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::bitwise_notor, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::bitwise_notor, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    {
+      return eve::bitwise_notor(a, T{b} );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return eve::bitwise_or(bitwise_not(a), bitwise_cast<T>(b) );
+    }
+    else
+    {
+      static_assert( wrong<T,U>, "[eve::bitwise_notor] - Unsupported types pairing");
+      return {}; 
+    }
   }
-
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_notor_(EVE_SUPPORTS(simd_),
-                                                         wide<T, N, aggregated_> const &v0,
-                                                         wide<T, N, aggregated_> const &v1) noexcept
-  {
-    return aggregate(eve::bitwise_notor, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_notor_(EVE_SUPPORTS(simd_),
-                                      wide<T, N, emulated_> const &v0,
-                                      wide<T, N, emulated_> const &v1) noexcept
-  {
-    return map(eve::bitwise_notor, v0, v1);
-  }
-
-  template<typename T, typename N, typename U>
-  EVE_FORCEINLINE auto bitwise_notor_(EVE_SUPPORTS(simd_),
-                                      wide<T, N, emulated_> const &v0,
-                                      U const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                     Convertible<U, T>)
-  {
-    return map(eve::bitwise_notor, v0, T(v1));
-  }
-
-  template<typename T, typename N, typename U>
-  EVE_FORCEINLINE auto
-  bitwise_notor_(EVE_SUPPORTS(simd_),
-                 U const &                    v0,
-                 wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                    Convertible<U, T>) = delete;
-
-  // -----------------------------------------------------------------------------------------------
-  // Support for mixed type with auto-splat
-  template<typename T0, typename N0, typename T1, typename N1, typename ABI>
-  EVE_FORCEINLINE auto bitwise_notor_(wide<T0, N0, ABI> const &v0,
-                                      wide<T1, N1, ABI> const &v1) noexcept
-  {
-    return bitwise_notor(v0, bitwise_cast<wide<T0, N0, ABI>>(v1));
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_notor_(EVE_SUPPORTS(simd_),
-                                      wide<T, N, ABI> const &v0,
-                                      U const &              v1) noexcept requires(wide<T, N, ABI>,
-                                                                     Convertible<U, T>)
-  {
-    return bitwise_notor(v0, wide<T, N, ABI>(v1));
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  bitwise_notor_(EVE_SUPPORTS(simd_),
-                 U const &              v0,
-                 wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                              Convertible<U, T>) = delete;
 }
 
 #endif

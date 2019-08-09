@@ -53,4 +53,23 @@ TTS_CASE_TPL( "Check bitwise_notor behavior on wide + scalar"
   
 }
 
+TTS_CASE("Check bitwise_notor with mixed types")
+{
+  using eve::wide; 
+  
+  {
+    wide<float, fixed<16>> lhs([](auto i, auto c) { return c - i; });
+    wide<int32_t, fixed<16>> rhs([](auto i, auto) { return i; }); 
+    wide<float, fixed<16>>  ref([](auto i, auto c) { return eve::bitwise_notor(float(c - i), int32_t(i)); });
+    
+    TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs, rhs)); 
+  }
+  {    
+    wide<int32_t, fixed<16>> lhs([](auto i, auto c) { return int32_t(i % 3); }),
+      ref([](auto i, auto c) { return eve::bitwise_notor(int32_t(i % 3), -3.322f); });
+    
+    TTS_IEEE_EQUAL(ref, eve::bitwise_notor(lhs, -3.322f));
+  }
+}
+
 #endif
