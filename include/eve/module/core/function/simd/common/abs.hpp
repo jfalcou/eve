@@ -46,7 +46,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto abs_ ( EVE_SUPPORTS(simd_),
                               saturated_type const & ,
-                              wide<T, N, ABI> const &v
+                              wide<T, N, ABI> const &a
                             ) noexcept
   {
     if constexpr(std::is_integral_v<T> && std::is_signed_v<T> )
@@ -60,7 +60,7 @@ namespace eve::detail
     }
     else
     {
-      return eve::abs(v);
+      return eve::abs(a);
     }
   }
 }
