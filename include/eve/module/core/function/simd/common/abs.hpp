@@ -63,11 +63,11 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
     {
       if constexpr( is_aggregated_v<ABI>  )
-        return aggregate(saturated_(eve::abs), v);
+        return aggregate(saturated_(eve::abs), a);
       else if constexpr( is_emulated_v<ABI>    )
-        return map(saturated_(eve::abs), v);
+        return map(saturated_(eve::abs), a);
       else if constexpr( is_native_v<ABI>      )
-        return if_else(v == Valmin(as(v)), Valmax(as(v)), eve::abs(v));
+        return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
     }
     else
     {
