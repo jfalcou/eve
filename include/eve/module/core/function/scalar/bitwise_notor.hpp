@@ -13,6 +13,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
 #include <eve/function/scalar/bitwise_or.hpp>
 #include <type_traits>

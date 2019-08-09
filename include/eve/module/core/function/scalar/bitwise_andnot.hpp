@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_and.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail

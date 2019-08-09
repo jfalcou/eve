@@ -33,7 +33,8 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;    
-    using vt_t = value_type_t<T>; 
+    using vt_t = value_type_t<T>;
+    
     if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U>)
     {
       if constexpr (sizeof(U) == sizeof(vt_t))
@@ -44,7 +45,7 @@ namespace eve::detail
       }
       else
       {
-        static_assert( wrong<T,U>, "[eve::bitwise_ornot] - Unsupported types pairing");
+        static_assert( sizeof(U) == sizeof(vt_t), "[eve::bitwise_ornot] - Types size mismatch");
         return {}; 
       }
     }
