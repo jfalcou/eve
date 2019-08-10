@@ -39,38 +39,40 @@ namespace eve::detail
             detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(!std::is_same_v<value_type_t<T>, value_type_t<U>>)
+      static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>, "elements are not of the same type"); 
+    else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return copysign(a, T{b});
+      return map( eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return copysign(U{a},b);
+      return aggregate( eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else
+    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
-      if constexpr(std::is_same_v<T,U>)
+      if constexpr( !is_vectorized_v<U> )
       {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::copysign, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::copysign, a, b);
-        }
+        return copysign(a, T{b});
+      }
+      else if constexpr( !is_vectorized_v<T> )
+      {
+        return copysign(U{a},b);
+      }
+    }
+    else // parameters are vectorized and of the same type
+    {
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+        return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+      else
+      {
+        if constexpr(std::is_unsigned_v<value_type_t<T>>)
+          return  a; 
         else
-        {
-          if constexpr(std::is_floating_point_v<T>)
-            return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
-          else
-          {
-            if constexpr(std::is_unsigned_v<T>)
-              return  a; 
-            else
-              return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
-          }
-        }
+          return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
       }
     }
   }
