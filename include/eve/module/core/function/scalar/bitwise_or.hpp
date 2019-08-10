@@ -23,7 +23,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto bitwise_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE constexpr auto bitwise_or_(EVE_SUPPORTS(cpu_)
+                                            , T const &a
+                                            , U const &b) noexcept
   requires(T,  Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
