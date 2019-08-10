@@ -18,6 +18,7 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_not.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
