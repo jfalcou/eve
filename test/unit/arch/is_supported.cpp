@@ -16,8 +16,17 @@
 
 int main()
 {
-  std::cout << "X86-like SIMD extensions\n";
+  std::cout << "Static detections:\n";
   std::cout << "========================\n";
+  std::cout << "FMA3   : " << std::boolalpha << eve::supports_fma3 << "\n";
+  std::cout << "FMA4   : " << std::boolalpha << eve::supports_fma4 << "\n";
+  std::cout << "XOP    : " << std::boolalpha << eve::supports_xop << "\n";
+  std::cout << "AARCH64: " << std::boolalpha << eve::supports_aarch64 << "\n";
+  std::cout << "\n";
+
+  std::cout << "Dynamic detections:\n";
+  std::cout << "========================\n";
+  std::cout << "X86-like SIMD extensions\n";
   std::cout << "SSE2   : " << std::boolalpha << eve::is_supported(eve::sse2) << "\n";
   std::cout << "SSE3   : " << std::boolalpha << eve::is_supported(eve::sse3) << "\n";
   std::cout << "SSSE3  : " << std::boolalpha << eve::is_supported(eve::ssse3) << "\n";
@@ -31,11 +40,9 @@ int main()
 
   std::cout << "\n";
   std::cout << "PPC SIMD extensions\n";
-  std::cout << "========================\n";
 
   std::cout << "\n";
   std::cout << "ARM SIMD extensions\n";
-  std::cout << "========================\n";
 
   return 0;
 }
