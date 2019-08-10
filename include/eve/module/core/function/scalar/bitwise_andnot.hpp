@@ -28,9 +28,14 @@ namespace eve::detail
                                              , U const &b) noexcept
   requires(T,  Vectorizable<T>, Vectorizable<U>)
   {
-    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_andnot - Arguments have incompatible size");
-    
-    return bitwise_and(a, bitwise_not(b));
+    if constexpr((sizeof(T) != sizeof(U)))
+    {
+      static_assert(sizeof(T) == sizeof(U)
+                   , "[eve::bitwise_andnot] scalar - Arguments have incompatible size");
+      return {}; 
+    }
+    else    
+      return bitwise_and(a, bitwise_not(b));
   }
 }
 

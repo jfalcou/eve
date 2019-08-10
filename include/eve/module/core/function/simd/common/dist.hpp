@@ -62,14 +62,14 @@ namespace eve::detail
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::dist] - Incompatible types.");
+        static_assert( std::is_same_v<T,U>, "[eve::dist] common - Incompatible types.");
         return {};
       }
     }
   }
 
   // -----------------------------------------------------------------------------------------------
-  // saturated_type
+  // saturated
   template<typename T, typename U>
   EVE_FORCEINLINE  auto dist_(EVE_SUPPORTS(cpu_)
                             , saturated_type const &
@@ -89,7 +89,8 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(std::is_integral_v<typename T::value_type> && std::is_signed_v<typename T::value_type>)
+      if constexpr(std::is_integral_v<typename T::value_type>
+                   && std::is_signed_v<typename T::value_type>)
       {
         auto tmp = dist(v0, v1);
         return if_else(is_ltz(tmp), Valmax(as(v0)), tmp);

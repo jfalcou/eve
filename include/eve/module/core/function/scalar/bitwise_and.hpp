@@ -28,7 +28,11 @@ namespace eve::detail
   requires(T,  Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
-      static_assert(sizeof(T) == sizeof(U), "eve::bitwise_and - Arguments have incompatible size");
+    {
+      static_assert(sizeof(T) == sizeof(U)
+                   , "[eve::bitwise_and] scalar - Arguments have incompatible size");
+      return {}; 
+    }
     else if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;

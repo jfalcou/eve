@@ -43,14 +43,20 @@ namespace eve::detail
     using u_abi = abi_type_t<U>;
 
     if constexpr(!std::is_same_v<value_type_t<T>, value_type_t<U>>)
-      static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>, "elements are not of the same type"); 
+    {
+      static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>
+                   , "[eve::copysign] common - Elements are not of the same type");
+      return {}; 
+    }
     else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return map( eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return map( eve::copysign, abi_cast<value_type_t<U>>(a)
+                , abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return aggregate( eve::copysign, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
@@ -72,7 +78,8 @@ namespace eve::detail
         if constexpr(std::is_unsigned_v<value_type_t<T>>)
           return  a; 
         else
-          return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
+          return if_else(a == Valmin(as(a)) && is_ltz(b)
+                        , Valmax(as(a)), eve::abs(a)*signnz(b));
       }
     }
   }

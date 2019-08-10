@@ -45,7 +45,8 @@ namespace eve::detail
       }
       else
       {
-        static_assert( (sizeof(U) == sizeof(vt_t)), "[eve::bitwise_or] - Types size mismatch");
+        static_assert( (sizeof(U) == sizeof(vt_t))
+                     , "[eve::bitwise_or] common - Types size mismatch");
         return {};
       }
     }
@@ -67,7 +68,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert( wrong<T,U>, "[eve::bitwise_or] - Unsupported types pairing");
+      static_assert( wrong<T,U>, "[eve::bitwise_or] common - Unsupported types pairing");
       return {};
     }
   }

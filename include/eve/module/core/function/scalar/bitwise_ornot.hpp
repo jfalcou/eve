@@ -29,7 +29,8 @@ namespace eve::detail
   requires(T,  Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
-      static_assert(sizeof(T) == sizeof(U), "eve::bitwise_ornot scalar - Arguments have incompatible size");
+      static_assert(sizeof(T) == sizeof(U)
+                   , "[eve::bitwise_ornot] scalar - Arguments have incompatible size");
     else
       return eve::bitwise_or(a, eve::bitwise_not(b));
   } 

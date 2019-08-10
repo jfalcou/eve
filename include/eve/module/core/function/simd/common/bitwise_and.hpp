@@ -45,7 +45,8 @@ namespace eve::detail
       }
       else
       {
-        static_assert( (sizeof(U) == sizeof(vt_t)), "[eve::bitwise_and] - Types size mismatch");
+        static_assert( (sizeof(U) == sizeof(vt_t))
+                     , "[eve::bitwise_and] simd - Types size mismatch");
         return {};
       }
     }
@@ -55,7 +56,8 @@ namespace eve::detail
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b) );
+      return aggregate( eve::bitwise_and, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<vt_t>(b) );
     }
     else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
     {
@@ -67,7 +69,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert( wrong<T,U>, "[eve::bitwise_and] - Unsupported types pairing");
+      static_assert( wrong<T,U>, "[eve::bitwise_and] simd - Unsupported types pairing");
       return {};
     }
   }

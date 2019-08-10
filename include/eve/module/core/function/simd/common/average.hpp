@@ -34,11 +34,13 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return map( eve::average, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return map( eve::average, abi_cast<value_type_t<U>>(a)
+                , abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::average, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return aggregate( eve::average, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
@@ -46,7 +48,8 @@ namespace eve::detail
     }
     else
     {
-      static_assert( std::is_same_v<T,U>, "[eve::average] - Incompatible types.");
+      static_assert( std::is_same_v<T,U>
+                   , "[eve::average] simd - Incompatible types.");
       return {};
     }
   }
