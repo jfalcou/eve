@@ -22,43 +22,48 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-                                      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-                                    )
+  EVE_FORCEINLINE  auto mul_(EVE_SUPPORTS(cpu_)
+                            , T const &a
+                            , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return mul(a, T{b});
+      return map( eve::mul, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return mul(U{a},b);
+      return aggregate( eve::mul, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else
+    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
     {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::mul, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::mul, a, b);
-        }
-        else
-        {
-          static_assert( wrong<T,U>, "[eve::mul] - Unsupported ABI.");
-          return {};
-        }
-      }
+      if constexpr(std::is_same_v<T, U>)
+        return eve::mul(a, b);
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::mul] - Incompatible types.");
+        static_assert(std::is_same_v<T, U> 
+                     , "[eve::mul] common - cannot multiply wide of different types");
         return {};
       }
     }
+    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::mul(abi_cast<U>(a), abi_cast<T>(b) );
+    }
+  }
+}
+
+namespace eve
+{
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto operator*(T const &v0, U const &v1) noexcept -> decltype( eve::mul(v0,v1) )
+  {
+    return eve::mul(v0, v1);
   }
 }
 
