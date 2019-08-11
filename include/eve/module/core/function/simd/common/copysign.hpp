@@ -45,7 +45,7 @@ namespace eve::detail
     if constexpr(!std::is_same_v<value_type_t<T>, value_type_t<U>>)
     {
       static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>
-                   , "[eve::copysign] common - Elements are not of the same type");
+                   , "[eve::copysign] common - cannot copysign: value_types are not of the same");
       return {}; 
     }
     else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
@@ -58,29 +58,31 @@ namespace eve::detail
       return aggregate( eve::copysign, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
     {
-      if constexpr( !is_vectorized_v<U> )
+      if constexpr(std::is_same_v<T, U>)
       {
-        return copysign(a, T{b});
+        if constexpr(std::is_floating_point_v<value_type_t<T>>)
+          return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+        else
+        {
+          if constexpr(std::is_unsigned_v<value_type_t<T>>)
+            return  a; 
+          else
+            return if_else(a == Valmin(as(a)) && is_ltz(b)
+                          , Valmax(as(a)), eve::abs(a)*signnz(b));
+        }
       }
-      else if constexpr( !is_vectorized_v<T> )
-      {
-        return copysign(U{a},b);
-      }
-    }
-    else // parameters are vectorized and of the same type
-    {
-      if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
       else
       {
-        if constexpr(std::is_unsigned_v<value_type_t<T>>)
-          return  a; 
-        else
-          return if_else(a == Valmin(as(a)) && is_ltz(b)
-                        , Valmax(as(a)), eve::abs(a)*signnz(b));
+        static_assert(std::is_same_v<T, U> 
+                     , "[eve::copy] common - cannot copysign on wide of different cardinal");
+        return {};
       }
+    }
+    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::copysign(abi_cast<U>(a), abi_cast<T>(b) );
     }
   }
 }

@@ -38,10 +38,21 @@ namespace eve::detail
     {
       return aggregate( eve::sub, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T, U>)
+        return eve::sub(a, b);
+      else
+      {
+        static_assert(std::is_same_v<T, U> 
+                     , "[eve::sub] common - cannot subtract wide of different types");
+        return {};
+      }
+    }
+    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
       return eve::sub(abi_cast<U>(a), abi_cast<T>(b) );
-    }
+    } 
   }
 }
 

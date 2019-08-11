@@ -38,7 +38,18 @@ namespace eve::detail
     {
       return aggregate( eve::add, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T, U>)
+        return eve::add(a, b);
+      else
+      {
+        static_assert(std::is_same_v<T, U> 
+                     , "[eve::add] common - cannot add wide of different types");
+        return {};
+      }
+    }
+    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
       return eve::add(abi_cast<U>(a), abi_cast<T>(b) );
     }
