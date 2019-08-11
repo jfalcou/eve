@@ -20,12 +20,13 @@ using eve::fixed;
 
 TTS_CASE_TPL("Check plus behavior on wide",
              fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+             fixed<2>// ,
+//              fixed<4>,
+//              fixed<8>,
+//              fixed<16>,
+//              fixed<32>,
+//              fixed<64>
+            )
 {
   using eve::wide;
 
