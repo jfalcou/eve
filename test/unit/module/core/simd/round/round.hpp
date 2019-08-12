@@ -38,16 +38,16 @@ TTS_CASE_TPL("Check round behavior on wide",
 
   wide<Type, T>  lhs([](auto i, auto) { return Type(i)/3; }),
   ref([](auto i, auto) { return eve::round(Type(i)/3); }),
-  ref1([](auto i, auto) { return eve::round[eve::upward_](Type(i)/3); }),
-  ref2([](auto i, auto) { return eve::round[eve::toward_zero_](Type(i)/3); }),
-  ref3([](auto i, auto) { return eve::round[eve::downward_](Type(i)/3); }),
-  ref4([](auto i, auto) { return eve::round[eve::to_nearest_](Type(i)/3); });
+  ref1([](auto i, auto) { return eve::round(Type(i)/3, eve::upward_     ); }),
+  ref2([](auto i, auto) { return eve::round(Type(i)/3, eve::toward_zero_); }),
+  ref3([](auto i, auto) { return eve::round(Type(i)/3, eve::downward_   ); }),
+  ref4([](auto i, auto) { return eve::round(Type(i)/3, eve::to_nearest_ ); });
 
   TTS_EQUAL(ref, eve::round(lhs));
-  TTS_EQUAL(ref1, eve::round[eve::upward_](lhs));
-  TTS_EQUAL(ref2, eve::round[eve::toward_zero_](lhs));
-  TTS_EQUAL(ref3, eve::round[eve::downward_](lhs));
-  TTS_EQUAL(ref4, eve::round[eve::to_nearest_](lhs));
+  TTS_EQUAL(ref1, eve::round(lhs, eve::upward_     ));
+  TTS_EQUAL(ref2, eve::round(lhs, eve::toward_zero_));
+  TTS_EQUAL(ref3, eve::round(lhs, eve::downward_   ));
+  TTS_EQUAL(ref4, eve::round(lhs, eve::to_nearest_ ));
 }
 
 

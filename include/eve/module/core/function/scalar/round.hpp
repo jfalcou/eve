@@ -29,7 +29,7 @@ namespace eve::detail
   }
 
   template<typename TAG, typename T>
-  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), TAG   const &, T const &a) noexcept
+  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), T const &a, TAG   const &) noexcept
   {
     if constexpr(std::is_same_v<TAG, eve::upward_type>)       return eve::ceil(a);
     if constexpr(std::is_same_v<TAG, eve::downward_type>)     return eve::floor(a);
