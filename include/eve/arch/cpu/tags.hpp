@@ -16,12 +16,14 @@ namespace eve
   // dispatching tag for generic implementation
   struct cpu_
   {
+    static constexpr int order = 0;
   };
 
   // dispatching tag for generic SIMD implementation
   struct simd_ : cpu_
   {
     using parent = cpu_;
+    static constexpr int order = 10;
   };
 
   // dispatching tag for emulated SIMD implementation of large register

@@ -12,6 +12,7 @@
 #define EVE_ARCH_PPC_TAGS_HPP_INCLUDED
 
 #include <eve/arch/cpu/tags.hpp>
+#include <eve/arch/ppc/predef.hpp>
 #include <eve/detail/architecture.hpp>
 
 namespace eve
@@ -20,8 +21,8 @@ namespace eve
   struct ppc_ {};
 
   // dispatching tag for V*X SIMD implementation
-  struct vmx_ : simd_ { using parent = simd_; };
-  struct vsx_ : vmx_  { using parent = vmx_;  };
+  struct vmx_ : simd_ { using parent = simd_; static constexpr int order = EVE_VMX_VERSION; };
+  struct vsx_ : vmx_  { using parent = vmx_;  static constexpr int order = EVE_VSX_VERSION; };
 
   // V*X extension tag objects
   inline const vmx_ vmx = {};

@@ -12,6 +12,7 @@
 #define EVE_ARCH_ARM_TAGS_HPP_INCLUDED
 
 #include <eve/arch/cpu/tags.hpp>
+#include <eve/arch/arm/predef.hpp>
 #include <eve/detail/architecture.hpp>
 
 namespace eve
@@ -20,8 +21,8 @@ namespace eve
   struct arm_ {};
 
   // dispatching tag for VMX SIMD implementation
-  struct neon64_  : simd_ { using parent = simd_; };
-  struct neon128_ : simd_ { using parent = simd_; };
+  struct neon64_  : simd_ { using parent = simd_; static constexpr int order = EVE_NEON_VERSION; };
+  struct neon128_ : simd_ { using parent = simd_; static constexpr int order = EVE_NEON_VERSION; };
 
   // Runtime detection of CPU support
   inline bool is_supported(arm_ const &) noexcept

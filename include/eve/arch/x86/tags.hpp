@@ -12,6 +12,7 @@
 #define EVE_ARCH_X86_TAGS_HPP_INCLUDED
 
 #include <eve/arch/cpu/tags.hpp>
+#include <eve/arch/x86/predef.hpp>
 #include <eve/detail/cpuid.hpp>
 
 namespace eve
@@ -22,13 +23,13 @@ namespace eve
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
-  struct sse2_    : simd_   { using parent = simd_;   };
-  struct sse3_    : sse2_   { using parent = sse2_;   };
-  struct ssse3_   : sse3_   { using parent = sse3_;   };
-  struct sse4_1_  : ssse3_  { using parent = ssse3_;  };
-  struct sse4_2_  : sse4_1_ { using parent = sse4_1_; };
-  struct avx_     : sse4_2_ { using parent = sse4_2_; };
-  struct avx2_    : avx_    { using parent = avx_;    };
+  struct sse2_   : simd_   { using parent = simd_;   static constexpr int order = EVE_SSE2_VERSION;   };
+  struct sse3_   : sse2_   { using parent = sse2_;   static constexpr int order = EVE_SSE3_VERSION;   };
+  struct ssse3_  : sse3_   { using parent = sse3_;   static constexpr int order = EVE_SSSE3_VERSION;  };
+  struct sse4_1_ : ssse3_  { using parent = ssse3_;  static constexpr int order = EVE_SSE4_1_VERSION; };
+  struct sse4_2_ : sse4_1_ { using parent = sse4_1_; static constexpr int order = EVE_SSE4_2_VERSION; };
+  struct avx_    : sse4_2_ { using parent = sse4_2_; static constexpr int order = EVE_AVX_VERSION;    };
+  struct avx2_   : avx_    { using parent = avx_;    static constexpr int order = EVE_AVX2_VERSION;   };
 
   //================================================================================================
   // Specific ISA tags
