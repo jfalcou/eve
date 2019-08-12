@@ -44,7 +44,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>)  return _mm256_sub_ps(v0, v1);
     if constexpr(std::is_same_v<T, double>) return _mm256_sub_pd(v0, v1);
 
-    if constexpr(current_api == avx2)
+    if constexpr(current_api >= avx2)
     {
       if constexpr(std::is_integral_v<T> && sizeof(T) == 1) return _mm256_sub_epi8(v0, v1);
       if constexpr(std::is_integral_v<T> && sizeof(T) == 2) return _mm256_sub_epi16(v0, v1);

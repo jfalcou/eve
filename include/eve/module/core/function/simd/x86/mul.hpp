@@ -47,7 +47,7 @@ namespace eve::detail
       else if constexpr(sizeof(T) == 2) return _mm_mullo_epi16(v0, v1);
       else if constexpr(sizeof(T) == 4)
       {
-        if constexpr((current_api == sse4_1) ||(current_api == sse4_2) )
+        if constexpr(current_api >= sse4_1 )
           return _mm_mullo_epi32(v0, v1);
         else
         {
@@ -89,7 +89,7 @@ namespace eve::detail
       return _mm256_mul_pd(v0, v1);
     else if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(current_api == avx2)
+      if constexpr(current_api >= avx2)
       {
         if constexpr(sizeof(T) == 1)
         {

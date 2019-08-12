@@ -46,14 +46,8 @@ namespace eve::detail
     }
     else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
     {
-      if constexpr(std::is_same_v<T, U>)
-        return eve::is_greater(a, b);
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::is_greater] common - cannot test is_greater for wide of different types");
-        return {};
-      }
+      static_assert(wrong<T, U>, "[eve::is_greater] - no support for current simd api ");
+      return {};
     }
     else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {

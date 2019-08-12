@@ -40,18 +40,12 @@ namespace eve::detail
     {
       return aggregate( eve::mul, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
-      if constexpr(std::is_same_v<T, U>)
-        return eve::mul(a, b);
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::mul] common - cannot multiply wide of different types");
-        return {};
-      }
+      static_assert(std::is_same_v<T, U>, "[eve::mul] - no support for current simd api");
+      return {};
     }
-    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::mul(abi_cast<U>(a), abi_cast<T>(b) );
     }

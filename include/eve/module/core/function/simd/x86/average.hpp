@@ -26,12 +26,9 @@ namespace eve::detail
           , wide<T, N, sse_> const &v0
           , wide<T, N, sse_> const &v1) noexcept
   {
-    if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))
-      return _mm_avg_epu8(v0, v1);
-    else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2))
-      return _mm_avg_epu16(v0, v1);
-    else
-      return map(average, v0, v1);
+    if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))      return _mm_avg_epu8(v0, v1);
+    else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2)) return _mm_avg_epu16(v0, v1);
+    else                                                        return map(average, v0, v1);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -42,12 +39,10 @@ namespace eve::detail
           , wide<T, N, avx_> const &v0
           , wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(current_api == avx2)
+    if constexpr(current_api >= avx2)
     {
-      if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))
-        return _mm256_avg_epu8(v0, v1);
-      else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2))
-        return _mm256_avg_epu16(v0, v1);
+      if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))      return _mm256_avg_epu8(v0, v1);
+      else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2)) return _mm256_avg_epu16(v0, v1);
     }
     else
     {

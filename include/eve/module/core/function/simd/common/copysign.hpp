@@ -63,14 +63,16 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr(std::is_floating_point_v<value_type_t<T>>)
+        {
           return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+        }
         else
         {
-          if constexpr(std::is_unsigned_v<value_type_t<T>>)
-            return  a; 
+          if constexpr(std::is_unsigned_v<value_type_t<T>>)        return  a; 
           else
-            return if_else(a == Valmin(as(a)) && is_ltz(b)
-                          , Valmax(as(a)), eve::abs(a)*signnz(b));
+          {
+            return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
+          }
         }
       }
       else

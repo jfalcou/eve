@@ -42,15 +42,14 @@ namespace eve::detail
       return aggregate( eve::average, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      static_assert(wrong<T, U>, "[eve::average] - no support for current simd api");
+      return {};
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::average(abi_cast<U>(a), abi_cast<T>(b) );
-    }
-    else
-    {
-      static_assert( std::is_same_v<T,U>
-                   , "[eve::average] simd - Incompatible types.");
-      return {};
     }
   }
 }

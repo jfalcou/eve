@@ -43,13 +43,13 @@ namespace eve::detail
       return aggregate( eve::div, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr( std::is_floating_point_v<value_type_t<T>> )
         {
-          return mul(abi_cast<value_type_t<U>>(a),rec( abi_cast<value_type_t<T>>(b)));
+          return mul(abi_cast<U>(a),rec( abi_cast<T>(b)));
         }
         else
         {
@@ -64,7 +64,7 @@ namespace eve::detail
         return {};
       }
     }
-    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::div(abi_cast<U>(a), abi_cast<T>(b) );
     }

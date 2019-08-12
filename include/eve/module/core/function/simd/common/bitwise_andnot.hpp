@@ -69,7 +69,7 @@ namespace eve::detail
     else
     {
       static_assert( wrong<T,U>
-                   , "[eve::bitwise_andnot] common - Unsupported types pairing");
+                   , "[eve::bitwise_andnot] common  - no support for current simd api");
       return {}; 
     }
   }
