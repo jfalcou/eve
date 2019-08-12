@@ -35,10 +35,10 @@ TTS_CASE("Check round return type")
 
 TTS_CASE("Check eve::round behavior")
 {
-   TTS_EQUAL(eve::round[](eve::One<Type>()), eve::ceil   (eve::One<Type>(), eve::upward_     ));
-   TTS_EQUAL(eve::round[](eve::One<Type>()), eve::floor  (eve::One<Type>(), eve::downward_   ));
-   TTS_EQUAL(eve::round[](eve::One<Type>()), eve::trunc  (eve::One<Type>(), eve::toward_zero_));
-   TTS_EQUAL(eve::round[](eve::One<Type>()), eve::nearest(eve::One<Type>(), eve::to_nearest_ ));
+   TTS_EQUAL(eve::round(eve::One<Type>(), eve::upward_     ), eve::ceil   (eve::One<Type>()));
+   TTS_EQUAL(eve::round(eve::One<Type>(), eve::downward_   ), eve::floor  (eve::One<Type>()));
+   TTS_EQUAL(eve::round(eve::One<Type>(), eve::toward_zero_), eve::trunc  (eve::One<Type>()));
+   TTS_EQUAL(eve::round(eve::One<Type>(), eve::to_nearest_ ), eve::nearest(eve::One<Type>()));
    TTS_EQUAL(eve::round(eve::One<Type>()), eve::nearest(eve::One<Type>()));
 
    if constexpr(std::is_floating_point_v<Type>)
