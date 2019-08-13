@@ -55,8 +55,8 @@ namespace eve::detail
     using t_t = wide<T, N ,avx_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float> )      return l_t(_mm256_cmp_ps(v0, v1, _CMP_EQ_OQ));
-    else if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_EQ_OQ));
+    if constexpr(std::is_same_v<T, float> )      return l_t(_mm256_cmp_ps(v0, v1, /*_CMP_EQ_OQ*/0x00));
+    else if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, /*_CMP_EQ_OQ*/0x00));
     else if constexpr(std::is_integral_v<T>)     return aggregate(eve::is_equal, v0, v1);
   }
 }
