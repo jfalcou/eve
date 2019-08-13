@@ -31,12 +31,11 @@ namespace eve
 //==================================================================================================
 // X86 SIMD ABI
 #  if !defined(EVE_CURRENT_ABI)
+#    include <immintrin.h>
 #    if EVE_HW_X86 >= EVE_AVX_VERSION
 #      define EVE_CURRENT_ABI ::eve::avx_
-#      include <immintrin.h>
 #    elif EVE_HW_X86 >= EVE_SSE2_VERSION
 #      define EVE_CURRENT_ABI ::eve::sse_
-#      include <nmmintrin.h>
 #    endif
 #  endif
 #endif

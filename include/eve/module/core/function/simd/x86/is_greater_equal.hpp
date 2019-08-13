@@ -44,37 +44,20 @@ namespace eve::detail
         #define _MM_PCOMCTRL_GE 3
         #define _MM_PCOMCTRL_GE_MISSING
         #endif
-        #if defined(__clang__)
         if (std::is_signed_v<T>)
         {
-          if constexpr(isizeof(T) == 1)  return l_t(_mm_com_epi8 (v0, v1, _MM_PCOMCTRL_GE)));
-          else if constexpr(isizeof(T) == 2)  return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_GE));
-          else if constexpr(isizeof(T) == 4)  return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_GE));
-          else if constexpr(isizeof(T) == 8)  return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_GE));
+          if constexpr(sizeof(T) == 1)        return l_t(_mm_com_epi8 (v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 2)   return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 4)   return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 8)   return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_GE));
         }
         else
         {
-          if constexpr(sizeof(T) == 1)  return l_t(_mm_com_epu8 (v0, v1, _MM_PCOMCTRL_GE));
-          else if constexpr((sizeof(T) == 2)  return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_GE));
-          else if constexpr(sizeof(T) == 4)  return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_GE));
-          else if constexpr(sizeof(T) == 8)  return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_GE));
+          if constexpr(sizeof(T) == 1)        return l_t(_mm_com_epu8 (v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 2)  return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 4)   return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_GE));
+          else if constexpr(sizeof(T) == 8)   return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_GE));
         }
-        #else
-        if (std::is_signed_v<T>)
-        {
-          if constexpr(sizeof(T) == 1)   return l_t(_mm_comge_epi8( v0, v1));
-          else if constexpr(sizeof(T) == 2)   return l_t(_mm_comge_epi16(v0, v1));
-          else if constexpr(sizeof(T) == 4)   return l_t(_mm_comge_epi32(v0, v1));
-          else if constexpr(sizeof(T) == 8)   return l_t(_mm_comge_epi64(v0, v1));
-        }
-        else
-        {
-          if constexpr(sizeof(T) == 1)  return l_t(_mm_comge_epu8( v0, v1));
-          else if constexpr(sizeof(T) == 2)  return l_t(_mm_comge_epu16(v0, v1));
-          else if constexpr(sizeof(T) == 4)  return l_t(_mm_comge_epu32(v0, v1));
-          else if constexpr(sizeof(T) == 8)  return l_t(_mm_comge_epu64(v0, v1));
-        }
-        #endif      
         #ifdef _MM_PCOMCTRL_GE_MISSING
         #undef _MM_PCOMCTRL_GE
         #undef _MM_PCOMCTRL_GE_MISSING
@@ -94,8 +77,8 @@ namespace eve::detail
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)        return l_t(_mm_cmp_ps(v0, v1, /*_CMP_GE_OQ*/0x1d));
-    else if constexpr(std::is_same_v<T, double>)  return l_t(_mm_cmp_pd(v0, v1, /*_CMP_GE_OQ*/0x1d));
+    if constexpr(std::is_same_v<T, float>)        return l_t(_mm_cmp_ps(v0, v1, _CMP_GE_OQ));
+    else if constexpr(std::is_same_v<T, double>)  return l_t(_mm_cmp_pd(v0, v1, _CMP_GE_OQ));
     else /* if constexpr(std::is_integral_v<T>)*/ return logical_not(is_less(v0, v1));
   }
   
@@ -110,8 +93,8 @@ namespace eve::detail
     using t_t = wide<T, N ,avx_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)          return l_t(_mm256_cmp_ps(v0, v1, /*_CMP_GE_OQ*/0x1d));
-    else if constexpr(std::is_same_v<T, double>)    return l_t(_mm256_cmp_pd(v0, v1, /*_CMP_GE_OQ*/0x1d));
+    if constexpr(std::is_same_v<T, float>)          return l_t(_mm256_cmp_ps(v0, v1, _CMP_GE_OQ));
+    else if constexpr(std::is_same_v<T, double>)    return l_t(_mm256_cmp_pd(v0, v1, _CMP_GE_OQ));
     else /* if  constexpr(std::is_integral_v<T>)*/  return  logical_not(is_less(v0, v1));
   }
 }
