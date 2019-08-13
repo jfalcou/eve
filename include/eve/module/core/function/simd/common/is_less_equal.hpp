@@ -32,42 +32,33 @@ namespace eve::detail
             detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return is_less_equal(a, T{b});
+      return map( eve::is_less_equal, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return is_less_equal(U{a},b);
+      return aggregate( eve::is_less_equal, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else
+    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
     {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::is_less_equal, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::is_less_equal, a, b);
-        }
-        else
-        {
-          return is_less(a, b) || is_equal(a, b);
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::is_less_equal] - Incompatible types.");
+        static_assert(wrong<T, U> 
+                     , "[eve::is_less_equal] - no support for current simd api ");
         return {};
-      }
+    }
+    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::is_less_equal(abi_cast<U>(a), abi_cast<T>(b) );
     }
   }
   
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto is_less_equal_ ( EVE_SUPPORTS(cpu_),
-                                                  logical<T> const &a, logical<U> const &b
+                                                  logical<T> const &a
+                                                , logical<U> const &b
                                                 ) noexcept
   requires( logical<T>,
             Vectorized<T>, Vectorized<U>,
@@ -75,6 +66,16 @@ namespace eve::detail
           )
   {
     return bitwise_cast<logical<T>>( is_less_equal(a.bits(),b.bits()) );
+  }
+}
+
+namespace eve
+{
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto operator <= (T const &v0, U const &v1) noexcept
+  -> decltype( eve::is_less_equal(v0,v1) )
+  {
+    return eve::is_less_equal(v0, v1);
   }
 }
 
