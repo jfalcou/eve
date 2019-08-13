@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_lessgreater_(EVE_SUPPORTS(cpu_)
                                                 , T const &a
                                                 , U const &b) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
+  requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
     if constexpr(std::is_integral_v<T>)
       return is_not_equal(a, b);
