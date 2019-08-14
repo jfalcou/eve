@@ -62,7 +62,7 @@ namespace eve::detail
       else
       {
         static_assert(std::is_same_v<T, U> 
-                     , "[eve::is_equal_with_equal_nans] common - cannot test equality wide of different types");
+                     , "[eve::is_equal_with_equal_nans] - no support for current simd api");
         return {};
       }
     }
