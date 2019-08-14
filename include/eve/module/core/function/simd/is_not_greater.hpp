@@ -14,7 +14,6 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_not_greater.hpp>
 
-
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/is_not_greater.hpp>
 #endif
