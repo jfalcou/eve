@@ -14,15 +14,9 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_not_greater.hpp>
 
+
 #if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/is_not_greater.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/is_not_greater.hpp>
-#  endif
-
+#  include <eve/module/core/function/simd/x86/is_not_greater.hpp>
 #endif
 
 #endif
