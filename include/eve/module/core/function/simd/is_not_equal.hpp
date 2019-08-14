@@ -14,21 +14,13 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_not_equal.hpp>
 
+
 #if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/is_not_equal.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/is_not_equal.hpp>
-#  endif
-
+#  include <eve/module/core/function/simd/x86/is_not_equal.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/is_not_equal.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/vmx/is_not_equal.hpp>
 #endif
 
 #endif

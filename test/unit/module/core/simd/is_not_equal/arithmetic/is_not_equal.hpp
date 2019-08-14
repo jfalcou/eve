@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check is_not_equal behavior on homogeneous wide",
   TTS_EQUAL(ref, (lhs !=  rhs));
 }
 
-TTS_CASE_TPL("Check plus behavior on wide and scalar",
+TTS_CASE_TPL("Check is_not_equal behavior on wide and scalar",
              fixed<1>,
              fixed<2>,
              fixed<4>,
