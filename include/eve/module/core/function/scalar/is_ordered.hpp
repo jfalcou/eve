@@ -20,8 +20,10 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_ordered_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto is_ordered_(EVE_SUPPORTS(cpu_)
+                                            , T const &a
+                                            , T const &b) noexcept
+  requires( as_logical_t<T>, Vectorizable<T> )
   {
     if constexpr(std::is_floating_point_v<T>)
       return (a == a) && (b == b);
