@@ -18,37 +18,71 @@ namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct raw_type       {};
-  struct pedantic_type  {};
-  struct saturated_type {};
-  struct numeric_type   {};
+  struct regular_type   {
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const&... args) { return f(args...); };
+    }
+  };
+  struct raw_type       {
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const&... args) { return f(raw_type{}, args...); };
+    }
+
+  };
+  struct pedantic_type  {
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const&... args) { return f(pedantic_type{}, args...); };
+    }
+  };
+  struct saturated_type {
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const&... args) { return f(saturated_type{}, args...); };
+    }
+  };
+  struct numeric_type   {
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const&... args) { return f(numeric_type{}, args...); };
+    }
+  };
+
+  //================================================================================================
+  // Function decorator - regular mode
+  template<typename Function> constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
+  {
+    return regular_type()(f); 
+  }
 
   //================================================================================================
   // Function decorator - raw mode
   template<typename Function> constexpr EVE_FORCEINLINE auto raw_(Function f) noexcept
   {
-    return [f](auto const&... args) { return f(raw_type{}, args...); };
+    return raw_type()(f); 
   }
 
   //================================================================================================
   // Function decorator - pedantic mode
   template<typename Function> constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
   {
-    return [f](auto const&... args) { return f(pedantic_type{}, args...); };
+    return pedantic_type()(f); 
   }
 
   //================================================================================================
   // Function decorator - saturated mode
   template<typename Function> constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
   {
-    return [f](auto const&... args) { return f(saturated_type{}, args...); };
+    return saturated_type()(f); 
   }
 
   //================================================================================================
   // Function decorator - numeric mode
   template<typename Function> constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
   {
-    return [f](auto const&... args) { return f(numeric_type{}, args...); };
+    return numeric_type()(f); 
   }
 
   //================================================================================================
