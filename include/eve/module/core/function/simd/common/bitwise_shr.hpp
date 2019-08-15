@@ -25,36 +25,35 @@
 // Basic
 namespace eve::detail
 {
-  template<typename T, typename U, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitwise_shr_(EVE_SUPPORTS(simd_)
-                                   , wide<T, N, ABI> const &v0
-                                   , wide<U, N, ABI> const &v1) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto bitwise_shr_(EVE_SUPPORTS(cpu_)
+                            , T const &a
+                            , U const &b) noexcept
+  requires( T, Vectorized<T>, Integral<value_type_t<U>>, Integral<value_type_t<T>>)
   {
-    using t_t =  wide<T, N, ABI>; 
-    using u_t =  wide<eve::detail::as_integer_t<T, unsigned>, N, ABI>; 
-    return bitwise_cast<t_t>(eve::shr(bitwise_cast<u_t>(v0), v1));
-  }
-  
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_shr_(EVE_SUPPORTS(simd_),
-                                    wide<T, N, ABI> const &v0,
-                                    U const &              v1) noexcept requires(wide<T, N, ABI>,
-                                                                                 detail::Convertible<U, T>)
-  {
-    using t_t =  wide<T, N, ABI>; 
-    using u_t =  wide<eve::detail::as_integer_t<T, unsigned>, N, ABI>; 
-    return bitwise_cast<t_t>(eve::shr(bitwise_cast<u_t>(v0), v1));
-  }
-  
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_shr_(EVE_SUPPORTS(simd_)
-                                   , U const &v0
-                                   , wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                                                  detail::Convertible<U, T>)
-  {
-    using t_t =  wide<T, N, ABI>; 
-    using u_t =  wide<eve::detail::as_integer_t<T, unsigned>, N, ABI>; 
-    return bitwise_cast<t_t>(eve::shr(u_t(v0), v1));
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return  map( eve::bitwise_shr, a, b );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::bitwise_shr, a, b );
+    }
+    else
+    {
+      if constexpr( is_vectorizable_v<U>)
+      {
+        using su_t = as_integer_t<value_type_t<T>, unsigned>;
+        using u_t = wide < su_t, typename T::cardinal_type, t_abi>; 
+        return bitwise_cast<T>(map( eve::bitwise_shr, bitwise_cast<u_t>(a), b)); 
+      }
+      else
+      {
+       return bitwise_cast<T>(map( eve::bitwise_shr, a, b)); 
+      }
+    }   
   }
 }
 

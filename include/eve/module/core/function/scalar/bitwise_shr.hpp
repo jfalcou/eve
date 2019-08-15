@@ -28,7 +28,7 @@ namespace eve::detail
   requires(T, Integral<U>,  Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),
-               "[ eve::bitwise_shr scalar] - Shift " << a1 << " is out of the range [0, "
+               "[ eve::bitwise_shr] scalar - Shift " << a1 << " is out of the range [0, "
                                                        << sizeof(T) * 8 << "[.");
     using u_t = eve::detail::as_integer_t<T, unsigned>; 
     return T(u_t(a0) >>  a1);
