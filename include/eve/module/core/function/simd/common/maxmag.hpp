@@ -28,114 +28,60 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // Basic
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_),
-                               T const &a,
-                               U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
-  {
-    if constexpr( !is_vectorized_v<U> )
-    {
-      return maxmag(a, T{b});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return maxmag(U{a},b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::maxmag, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::maxmag, a, b);
-        }
-        else
-        {
-          auto aa = eve::abs(a);
-          auto ab = eve::abs(b);
-          return if_else( is_not_greater_equal(ab, aa), a
-                        , if_else( is_not_greater_equal(aa, ab), b
-                                 , eve::max(a, b) ) );
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::maxmag] - Incompatible types.");
-        return {};
-      }
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Pedantic
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_),
-                               pedantic_type const &,
-                               T const &a,
-                               U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
-  {
-    if constexpr( !is_vectorized_v<U> )
-    {
-      return eve::pedantic_(eve::maxmag)(a, T{b});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return eve::pedantic_(eve::maxmag)(U{a},b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::pedantic_(eve::maxmag), a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::pedantic_(eve::maxmag), a, b);
-        }
-        else
-        {
-          auto aa = eve::abs(a);
-          auto ab = eve::abs(b);
-          return if_else( is_not_greater_equal(ab, aa), a
-                        , if_else( is_not_greater_equal(aa, ab), b
-                                 , eve::pedantic_(eve::max)(a, b) ) );
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>
-                     , "[eve::pedantic_(maxmag)] - Incompatible types.");
-        return {};
-      }
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Numeric
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(simd_)
-                              , numeric_type const &
+  // pedantic or numeric
+  template<typename Tag, typename T, typename U>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_)
+                              , Tag tag
                               , T const &a
                               , U const &b) noexcept
   {
-    auto z = maxmag(a, b);
-    if constexpr(std::is_floating_point_v<value_type_t<T>>)
-      return if_else (is_nan(a), b, z);
-    else
-      return z;
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::maxmag, abi_cast<value_type_t<U>>(a)
+                , abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::maxmag, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T,U>)
+      {
+        auto aa = eve::abs(a);
+        auto ab = eve::abs(b);
+        return if_else( is_not_greater_equal(ab, aa), a
+                      , if_else( is_not_greater_equal(aa, ab), b
+                               , tag(max)(a, b) ) );
+      }
+      else
+      {
+        static_assert(wrong<T, U>, "[eve::maxmag] - no support for current simd api");
+        return {};
+      }     
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::maxmag(abi_cast<U>(a), abi_cast<T>(b) );
+    }
+  }
+  
+  
+  // -----------------------------------------------------------------------------------------------
+  // regular
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_),
+                               T const &a,
+                               U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
+  {
+    return maxmag(eve::regular_type(), a, b); 
   }
 }
 
