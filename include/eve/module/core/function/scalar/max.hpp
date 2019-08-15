@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_)
                                      , T const &a0
                                      , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  requires(T, Vectorizable<T>)
   {
      return (a0 < a1) ? a1 : a0;
   }
@@ -38,7 +38,7 @@ namespace eve::detail
                                      , pedantic_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  requires(T, Vectorizable<T>)
   {
     return (a0 < a1) ? a1 : a0;
   }
@@ -50,11 +50,10 @@ namespace eve::detail
                                      , numeric_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  requires(T, Vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-      if (is_nan(a0)) return a1;
-    return max(a0, a1);
+    if constexpr(std::is_floating_point_v<T>) return  (is_nan(a0)) ? a1 : max(a0, a1);
+    else return max(a0, a1);
   }
 }
 
