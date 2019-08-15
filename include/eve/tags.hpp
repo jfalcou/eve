@@ -54,35 +54,35 @@ namespace eve
   // Function decorator - regular mode
   template<typename Function> constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
   {
-    return regular_type()(f); 
+    return regular_type{}(f); 
   }
 
   //================================================================================================
   // Function decorator - raw mode
   template<typename Function> constexpr EVE_FORCEINLINE auto raw_(Function f) noexcept
   {
-    return raw_type()(f); 
+    return raw_type{}(f); 
   }
 
   //================================================================================================
   // Function decorator - pedantic mode
   template<typename Function> constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
   {
-    return pedantic_type()(f); 
+    return pedantic_type{}(f); 
   }
 
   //================================================================================================
   // Function decorator - saturated mode
   template<typename Function> constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
   {
-    return saturated_type()(f); 
+    return saturated_type{}(f); 
   }
 
   //================================================================================================
   // Function decorator - numeric mode
   template<typename Function> constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
   {
-    return numeric_type()(f); 
+    return numeric_type{}(f); 
   }
 
   //================================================================================================

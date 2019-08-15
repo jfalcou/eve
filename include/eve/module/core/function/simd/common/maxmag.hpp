@@ -28,7 +28,7 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // pedantic or numeric
+  // regular, pedantic or numeric
   template<typename Tag, typename T, typename U>
   EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_)
                               , Tag tag
@@ -56,7 +56,7 @@ namespace eve::detail
         auto ab = eve::abs(b);
         return if_else( is_not_greater_equal(ab, aa), a
                       , if_else( is_not_greater_equal(aa, ab), b
-                               , tag(max)(a, b) ) );
+                               , tag(eve::max)(a, b) ) );
       }
       else
       {
@@ -68,20 +68,6 @@ namespace eve::detail
     {
       return eve::maxmag(abi_cast<U>(a), abi_cast<T>(b) );
     }
-  }
-  
-  
-  // -----------------------------------------------------------------------------------------------
-  // regular
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto maxmag_(EVE_SUPPORTS(cpu_),
-                               T const &a,
-                               U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
-  {
-    return maxmag(eve::regular_type(), a, b); 
   }
 }
 

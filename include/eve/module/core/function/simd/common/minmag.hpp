@@ -28,112 +28,46 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // Basic
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(simd_),
-                               T const &a,
-                               U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
-  {
-    if constexpr( !is_vectorized_v<U> )
-    {
-      return minmag(a, T{b});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return minmag(U{a},b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::minmag, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::minmag, a, b);
-        }
-        else
-        {
-          auto aa = eve::abs(a);
-          auto ab = eve::abs(b);
-          return if_else( is_not_greater_equal(aa, ab), a
-                        , if_else( is_not_greater_equal(ab, aa), b
-                                 , eve::min(a, b) ) );
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::minmag] - Incompatible types.");
-        return {};
-      }
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Pedantic
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(simd_),
-                               pedantic_type const &,
-                               T const &a,
-                               U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
-  {
-    if constexpr( !is_vectorized_v<U> )
-    {
-      return eve::pedantic_(eve::minmag)(a, T{b});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return eve::pedantic_(eve::minmag)(U{a},b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::pedantic_(eve::minmag), a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::pedantic_(eve::minmag), a, b);
-        }
-        else
-        {
-          auto aa = eve::abs(a);
-          auto ab = eve::abs(b);
-          return if_else( is_not_greater_equal(aa, ab), a
-                        , if_else( is_not_greater_equal(ab, aa), b
-                                 , eve::pedantic_(eve::min)(a, b) ) );
-        }
-      }
-      else
-      {
-        static_assert( std::is_same_v<T,U>, "[eve::pedantic_(minmag)] - Incompatible types.");
-        return {};
-      }
-    }
-  }
-  // -----------------------------------------------------------------------------------------------
-  // Numeric
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(simd_)
-                              , numeric_type const &
+  // regular, pedantic or numeric
+  template<typename Tag, typename T, typename U>
+  EVE_FORCEINLINE auto minmag_(EVE_SUPPORTS(cpu_)
+                              , Tag tag
                               , T const &a
                               , U const &b) noexcept
   {
-    auto z = minmag(a, b);
-    if constexpr(std::is_floating_point_v<value_type_t<T>>)
-      return if_else (is_nan(a), b, z);
-    else
-      return z;
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::minmag, abi_cast<value_type_t<U>>(a)
+                , abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::minmag, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T,U>)
+      {
+        auto aa = eve::abs(a);
+        auto ab = eve::abs(b);
+        return if_else( is_not_greater_equal(aa, ab), a
+                      , if_else( is_not_greater_equal(ab, aa), b
+                               , tag(eve::min)(a, b) ) );
+      }
+      else
+      {
+        static_assert(wrong<T, U>, "[eve::minmag] - no support for current simd api");
+        return {};
+      }     
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::minmag(abi_cast<U>(a), abi_cast<T>(b) );
+    }
   }
 }
 
