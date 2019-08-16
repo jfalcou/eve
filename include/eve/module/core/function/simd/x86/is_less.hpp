@@ -77,10 +77,10 @@ namespace eve::detail
       {
         if constexpr(std::is_signed_v<T>)
         {
-          if constexpr(sizeof(T) == 1)      return l_t(_mm256_cmpgt_epi8(v0, v1));
-          else if constexpr(sizeof(T) == 2) return l_t(_mm256_cmpgt_epi16(v0, v1));
-          else if constexpr(sizeof(T) == 4) return l_t(_mm256_cmpgt_epi32(v0, v1));
-          else if constexpr(sizeof(T) == 8) return l_t(_mm256_cmpgt_epi64(v0, v1));
+          if constexpr(sizeof(T) == 1)      return l_t(_mm256_cmpgt_epi8(v1,v0));
+          else if constexpr(sizeof(T) == 2) return l_t(_mm256_cmpgt_epi16(v1,v0));
+          else if constexpr(sizeof(T) == 4) return l_t(_mm256_cmpgt_epi32(v1,v0));
+          else if constexpr(sizeof(T) == 8) return l_t(_mm256_cmpgt_epi64(v1,v0));
         }
         else
         {
