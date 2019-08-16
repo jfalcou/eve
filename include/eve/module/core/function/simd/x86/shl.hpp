@@ -78,7 +78,6 @@ namespace eve::detail
                            , I const &a1) noexcept
   requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    std::cout << "latte " << sizeof(T)  << " " <<  (current_api >= avx2) << std::endl;
     if constexpr(current_api >= avx2)
     {
       EVE_ASSERT(assert_good_shift<wide<T, N, sse_>>(a1),
@@ -120,17 +119,9 @@ namespace eve::detail
       EVE_ASSERT(assert_good_shift<wide<T, N, sse_>>(a1),
                  "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
-      if constexpr(std::is_unsigned_v<T>)
-      {
-        if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1); 
-        if constexpr(sizeof(T) == 4)  return _mm256_srlv_epi32(a0, a1);
-        if constexpr(sizeof(T) == 8)  return _mm256_srlv_epi64(a0, a1);
-      }
-      else
-      {
-        if constexpr(sizeof(T) <= 2 || sizeof(T) == 8) return ifxop_choice(a0, a1);
-        if constexpr(sizeof(T) == 4)                   return _mm256_srav_epi32(a0, a1);
-      }
+      if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1); 
+      else if constexpr(sizeof(T) == 4)  return _mm256_sllv_epi32(a0, a1);
+      else if constexpr(sizeof(T) == 8)  return _mm256_sllv_epi64(a0, a1);
     }  
     else return ifxop_choice(a0, a1); 
   }
