@@ -16,7 +16,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/assert_utils.hpp>
-#include <eve/function/scalar/bitwise_cast.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
 #include <cassert>
@@ -26,7 +25,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_)
+                                     , T const &a0
+                                     , U const &a1) noexcept
   requires(T, Integral<U>,  Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),

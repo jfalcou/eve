@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check shl behavior on wide + scalar",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
+  using eve::wide;  
   
   auto          rhs = sizeof(Type) * 4;
   wide<Type, T> lhs([](auto i, auto c) { return c - i; }),
@@ -56,7 +56,7 @@ TTS_CASE_TPL("Check shl behavior on wide + scalar",
   
   TTS_EQUAL(ref, eve::shl(lhs, rhs)); 
   TTS_EQUAL(ref, lhs << rhs);
-  
+    
 }
 
 #endif

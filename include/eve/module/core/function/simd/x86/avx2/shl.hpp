@@ -31,8 +31,8 @@ namespace eve::detail
                " [eve::shl avx2] - At least one of " << a1 << "elements is out of the range [0, "
                                                      << sizeof(T) * 8 << "[.");
 
-      if constexpr(sizeof(T) == 1)
-      {
+    if constexpr(sizeof(T) == 1)
+    {
         using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
         t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
         t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));

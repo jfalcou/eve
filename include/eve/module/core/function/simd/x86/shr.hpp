@@ -111,7 +111,7 @@ namespace eve::detail
                            , I const &a1) noexcept
   requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    if (current_api >= avx2)
+    if constexpr(current_api >= avx2)
     {
       EVE_ASSERT(assert_good_shift<wide<T, N, sse_>>(a1),
                  "[eve::shr avx2] - Shift " << a1 << " is out of the range [0, "
