@@ -43,6 +43,7 @@ namespace eve::detail
     {
       if constexpr(!std::is_signed_v<T> && (sizeof(T) == 1))      return _mm256_avg_epu8(v0, v1);
       else if constexpr(!std::is_signed_v<T> && (sizeof(T) == 2)) return _mm256_avg_epu16(v0, v1);
+      else                                                        return map(average, v0, v1); 
     }
     else
     {
