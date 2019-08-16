@@ -47,7 +47,7 @@ namespace eve::detail
       {
         using su_t = as_integer_t<value_type_t<T>, unsigned>;
         using u_t = wide < su_t, typename T::cardinal_type, t_abi>; 
-        return bitwise_cast<T>(map( eve::bitwise_shr, bitwise_cast<u_t>(a), b)); 
+        return bitwise_cast<T>(eve::shr(bitwise_cast<u_t>(a), int(b))); 
       }
       else
       {
