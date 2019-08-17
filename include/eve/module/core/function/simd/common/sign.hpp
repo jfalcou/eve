@@ -41,7 +41,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto r = if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
+      auto r = if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)
+               -if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
 #ifdef EVE_NO_NANS
       return r;
 #else
@@ -51,7 +52,8 @@ namespace eve::detail
     else
     {
       if constexpr(std::is_signed_v<T>)
-        return if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
+        return if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)
+               -if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
       else
       {
         return if_else[as(a)](a, eve::one_, eve::zero_);
