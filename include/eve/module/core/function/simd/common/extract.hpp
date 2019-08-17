@@ -24,14 +24,17 @@ namespace eve::detail
   {
     return v0[ u ];
   }
-
+  
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(simd_),
-                                        logical<wide<T, N, ABI>> const &v0,
-                                        U const& u) noexcept
+  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(simd_),
+                                  logical<wide<T, N, ABI>> const &v0,
+                                  U const& u) noexcept
   {
-    return logical<T>( extract( v0.bits(), u) );
+    {
+      return logical<T>( extract( v0.bits(), u) );
+    }
   }
 }
 
 #endif
+  

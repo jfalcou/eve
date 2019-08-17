@@ -30,7 +30,8 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
+                           , wide<T, N, ABI> const &v) noexcept
   {
     if constexpr(is_aggregated_v<ABI>)
     {
@@ -62,7 +63,9 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_), raw_type const&, wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
+                           , raw_type const&
+                           , wide<T, N, ABI> const &v) noexcept
   {
     if constexpr(is_aggregated_v<ABI>)
     {
@@ -111,7 +114,6 @@ namespace eve::detail
       {
         if constexpr(std::is_unsigned_v<T>)
         {
-
           return if_else( is_eqz(v), eve::allbits_, eve::rec(v) );
         }
         else

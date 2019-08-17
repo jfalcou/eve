@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check extract behavior on logical wide",
   TTS_EQUAL( (T::value-1) % 2 == 0, eve::extract(lhs, T::value - 1));
   TTS_EQUAL( (T::value/2) % 2 == 0, eve::extract(lhs, T::value / 2));
 
-  TTS_EQUAL( true, eve::extract(lhs, 0_c));
+//   TTS_EQUAL( true, eve::extract(lhs, 0_c));
   TTS_EQUAL( true, eve::extract(lhs, std::integral_constant<int, 0>()));
   TTS_EQUAL( (T::value-1) % 2 == 0, eve::extract(lhs, std::integral_constant<int, T::value - 1>()));
   TTS_EQUAL( (T::value/2) % 2 == 0, eve::extract(lhs, std::integral_constant<int, T::value / 2>()));
