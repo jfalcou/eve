@@ -11,6 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_RSHR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_RSHR_HPP_INCLUDED
 
+#include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/skeleton.hpp>
@@ -29,49 +30,69 @@
 
 namespace eve::detail
 {
-  template<typename T, typename U, typename N, typename ABI>
-  EVE_FORCEINLINE auto
-  rshr_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, wide<U, N, ABI> const &v1) noexcept
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto  rshr_(EVE_SUPPORTS(simd_)
+                             , T const &v0
+                             , U const &v1) noexcept
+  requires( T, Vectorized<T>, Integral<value_type_t<U>>, Integral<value_type_t<T>>)
   {
-    EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
-                "[ eve::rshr ] (SIMD) - At least a shift absolute value (" << v1
-                << ") is out of range [0, " << sizeof(T) * 8 << "[."
-              );
-
-    if      constexpr(is_aggregated_v<ABI>)   return aggregate(eve::rshr, v0, v1);
-    else if constexpr(is_emulated_v<ABI>)     return map(eve::rshr, v0, v1);
-    else if constexpr(std::is_unsigned_v<U>)  return shl(v0, v1);
+    if constexpr(is_vectorized_v<U>)
+    {
+      EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
+                  "[ eve::rshr ] (SIMD) - At least a shift absolute value (" << eve::abs(v1)
+                  << ") is out of range [0, " << sizeof(T) * 8 << "[."
+                );
+    }
     else
     {
-#ifndef NDEBUG
-      return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1)), shl(v0, max(Zero(as(v1)), -v1)));
-#else
-      return if_else(is_gtz(v1), shr(v0, v1), shl(v0, -v1));
-#endif
+      EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
+                "[ eve::rshr ] (SIMD) - Shift absolute value (" << eve::abs(v1)
+                << ") is out of range [0, " << sizeof(T) * 8 << "[."
+                );
+    }
+    if constexpr(std::is_unsigned_v<value_type_t<U>>)  return shl(v0, v1);
+    else
+    {
+      #ifndef NDEBUG
+      return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1))
+                    , shl(v0, max(Zero(as(v1)), -v1)));
+      #else
+      return if_else(is_gtz(v1), shr(v0, v1)
+                    , shl(v0, -v1));
+      #endif
     }
   }
 
-  template<typename T, typename U, typename N, typename ABI>
-  EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v0, U const &v1) noexcept
-  requires( wide<T, N, ABI>, Vectorizable<U> )
-  {
-    EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
-                "[ eve::rshr ] (SIMD) - At least a shift absolute value (" << v1
-                << ") is out of range [0, " << sizeof(T) * 8 << "[."
-              );
-
-    if      constexpr(is_aggregated_v<ABI>)   return aggregate(eve::rshr, v0, v1);
-    else if constexpr(is_emulated_v<ABI>)     return map(eve::rshr, v0, v1);
-    else if constexpr(std::is_unsigned_v<U>)  return shl(v0, v1);
-    else
-    {
-#ifndef NDEBUG
-      return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1)), shl(v0, max(Zero(as(v1)), -v1)));
-#else
-      return if_else(is_gtz(v1), shr(v0, v1), shl(v0, -v1));
-#endif
-    }
-  }
+//  template<typename T, typename U, typename N, typename ABI>
+//   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(simd_)
+//                             , wide<T, N, ABI> const &v0
+//                             , wide<U, N, ABI> const &v1) noexcept
+//   {
+//     if constexpr(is_vectorized<U>)
+//     {
+//       EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
+//                   "[ eve::rshr ] (SIMD) - At least a shift absolute value (" << eve::abs(v1)
+//                   << ") is out of range [0, " << sizeof(T) * 8 << "[."
+//                 );
+//     }
+//     else
+//     {
+//       EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
+//                 "[ eve::rshr ] (SIMD) - Shift absolute value (" << eve::abs(v1)
+//                 << ") is out of range [0, " << sizeof(T) * 8 << "[."
+//                 );
+//     }
+//     if constexpr(std::is_unsigned_v<U>)  return shl(v0, v1);
+//     else
+//     {
+//       #ifndef NDEBUG
+//       return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1))
+//                     , shl(v0, max(Zero(as(v1)), -v1)));
+//       #else
+//       return if_else(is_gtz(v1), shr(v0, v1), shl(v0, -v1));
+//       #endif
+//     }
+//   }
 }
 
 #endif

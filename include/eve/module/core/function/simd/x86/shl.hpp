@@ -100,7 +100,7 @@ namespace eve::detail
       else if constexpr(sizeof(T) == 4)  return _mm256_slli_epi32(a0, a1);
       else if constexpr(sizeof(T) == 8)  return _mm256_slli_epi64(a0, a1);
     }
-    else return map(shl, a0, a1);
+    else return  shl_(EVE_RETARGET(sse2_),a0, a1);//map(shl, a0, a1);
   } 
   
   template<typename T, typename I, typename N>

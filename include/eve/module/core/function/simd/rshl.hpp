@@ -15,17 +15,11 @@
 #include <eve/module/core/function/simd/common/rshl.hpp>
 
 #if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#   if defined(EVE_SUPPORTS_XOP)
-#    include <eve/module/core/function/simd/x86/avx/rshl.hpp>
-#   endif
-#  endif
+#  include <eve/module/core/function/simd/x86/rshl.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/rshl.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/rshl.hpp>
 #endif
 
 #endif
