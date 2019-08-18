@@ -16,12 +16,17 @@
 #include <eve/function/bitwise_andnot.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_or.hpp>
+#include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_select_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1, U const &a2) noexcept
+  bitwise_select_(EVE_SUPPORTS(cpu_)
+                 , T const &a0
+                 , U const &a1
+                 , U const &a2) noexcept
+  requires(U, Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr((sizeof(T) != sizeof(U)))
     {

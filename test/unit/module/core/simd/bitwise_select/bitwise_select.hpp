@@ -43,13 +43,20 @@ TTS_CASE_TPL( "Check bitwise_select behavior on wide + scalar"
   using eve::wide;
   
   wide<Type,T>  lhs([](auto i, auto c) { return i%3; })
-    , ref([](auto i, auto c) { return eve::bitwise_select( Type(i%3), Type(7), Type(8)); });
+    ,  rhs([](auto i, auto c) { return 2*i+1; })
+    , ref1([](auto i, auto c) { return eve::bitwise_select( Type(i%3), Type(2*i+1), Type(8)); })
+    , ref2([](auto i, auto c) { return eve::bitwise_select( Type(i%3), Type(8),  Type(2*i+1)); }); 
   
   if constexpr(std::is_integral_v<Type>)
-    TTS_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
+  {
+    TTS_EQUAL(ref1, eve::bitwise_select(lhs, rhs, Type(8)));
+    TTS_EQUAL(ref2, eve::bitwise_select(lhs, Type(8), rhs));
+  }
   else
-    TTS_IEEE_EQUAL(ref, eve::bitwise_select(lhs, Type(7), Type(8)));
-  
+  {
+    TTS_IEEE_EQUAL(ref1, eve::bitwise_select(lhs, rhs, Type(8)));
+    TTS_IEEE_EQUAL(ref2, eve::bitwise_select(lhs, Type(8), rhs));
+  }
 }
 
 #endif
