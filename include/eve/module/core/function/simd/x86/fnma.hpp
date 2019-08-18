@@ -15,13 +15,13 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/function/fms.hpp>
+#include <eve/function/fma.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(avx2_)
+  EVE_FORCEINLINE auto fnma_(EVE_SUPPORTS(avx2_)
                            , wide<T, N, sse_> const &a
                            , wide<T, N, sse_> const &b
                            , wide<T, N, sse_> const &c
@@ -37,7 +37,7 @@ namespace eve::detail
   }
   
   template<typename T, typename N>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(avx2_)
+  EVE_FORCEINLINE auto fnma_(EVE_SUPPORTS(avx2_)
                            , wide<T, N, avx_> const &a
                            , wide<T, N, avx_> const &b
                            , wide<T, N, avx_> const &c

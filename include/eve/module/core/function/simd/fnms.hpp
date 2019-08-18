@@ -14,4 +14,8 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/fnms.hpp>
 
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/fnms.hpp>
+#endif
+
 #endif
