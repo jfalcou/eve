@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/tags.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/constant/twotonmb.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/is_negative.hpp>
@@ -28,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
                                          , T const &a0) noexcept
-  requires( T, Arithmetic<T>)
+  requires( T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -43,21 +44,16 @@ namespace eve::detail
     else
       return a0; 
   }
-  
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &       
-                                  , T const &a0) noexcept requires( T, Arithmetic<T>)
-  {
+//   template<typename T>
+//   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
+//                                   , raw_type const &       
+//                                   , T const &a0) noexcept
+//   requires( T, Vectorizable<T>)
+//   {
 
-    if constexpr(std::is_floating_point_v<T>)
-      return nearest(a0);
-    else
-      return a0; 
-  }
-
-  
+//     if constexpr(std::is_floating_point_v<T>) return nearest(a0);
+//     else                                             return a0; 
+//   }
 }
-
 
 #endif
