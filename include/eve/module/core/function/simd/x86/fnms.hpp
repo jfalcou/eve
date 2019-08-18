@@ -8,13 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FMA_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FMA_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/function/fms.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -28,26 +29,22 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(supports_fma3)
+      if  constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)      return _mm_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)  return _mm_fmadd_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)      return _mm_nmacc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>)  return _mm_nmacc_ps(a, b, c);
       }
-      else if  constexpr(supports_fma4)
-      {
-        if constexpr(std::is_same_v<T, double>)      return _mm_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)  return _mm_macc_ps(a, b, c);
-      }
+      else return fms(-a, b, c); 
     }
-    else //if constexpr(std::is_integralt_v<T>)
+    else
     {
       if  constexpr(supports_xop)
       {
-        if      constexpr( sizeof(T) == 2)  return _mm_macc_epi16(a, b, c);
-        else if constexpr( sizeof(T) == 4)  return _mm_macc_epi32(a, b, c);
-        else return a*b+c; 
+        if      constexpr(std::is_integral_v<T> && sizeof(T) == 2)  return _mm_macc_epi16(a, b, c);
+        else if constexpr(std::is_integral_v<T> && sizeof(T) == 4)  return _mm_macc_epi32(a, b, c);
+        else return  fms(-a, b, c); 
       }
-      else return a*b+c; 
+      else return fms(-a, b, c); 
     }
   }
   
@@ -60,19 +57,14 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(supports_fma3)
-      {
-        if constexpr(std::is_same_v<T, double>)      return _mm256_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)  return _mm256_fmadd_ps(a, b, c);
-      }
-      else if  constexpr(supports_fma4)
+      if  constexpr(supports_fma4)
       {
         if constexpr(std::is_same_v<T, double>)      return _mm256_macc_pd(a, b, c);
         else if constexpr(std::is_same_v<T, float>)  return _mm256_macc_ps(a, b, c);
       }
-      else return a*b+c; 
+      else return fms(-a, b, c); 
     } 
-    else return a*b+c; 
+    else return fms(-a, b, c); 
   }     
 }
 

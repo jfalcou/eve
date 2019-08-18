@@ -14,12 +14,16 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto fms_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c)
-                  noexcept requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto fms_(EVE_SUPPORTS(cpu_)
+                                     , T const &a
+                                     , T const &b
+                                     , T const &c) noexcept
+  requires(T, Vectorizable<T>)
   {
     return a * b - c;
   }

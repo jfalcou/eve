@@ -14,13 +14,4 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/fnms.hpp>
 
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#   if defined(EVE_SUPPORTS_FMA3)
-#    include <eve/module/core/function/simd/x86/fma3/fnms.hpp>
-#   endif
-#   if defined(EVE_SUPPORTS_FMA4) || defined(EVE_SUPPORTS_XOP)
-#    include <eve/module/core/function/simd/x86/fma4/fnms.hpp>
-#   endif
-#  endif
-
 #endif
