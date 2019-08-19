@@ -25,10 +25,10 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto ceil_(EVE_SUPPORTS(sse4_1_),
                             wide<T, N, sse_> const &a0) noexcept
-  requires(wide<T, N, ABI>, Floating<T>)
   {
     if constexpr(std::is_same_v<T, double>)      return _mm_ceil_pd(a0);
-    else if constexpr(std::is_same_v<T, float>)  return _mm_ceil_ps(a0);     
+    else if constexpr(std::is_same_v<T, float>)  return _mm_ceil_ps(a0);
+    else return a0; 
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -36,10 +36,10 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto ceil_(EVE_SUPPORTS(avx_),
                              wide<T, N, avx_> const &a0) noexcept
-  requires(wide<T, N, ABI>, Floating<T>)
   {
     if constexpr(std::is_same_v<T, double>)      return _mm256_round_pd(a0, _MM_FROUND_CEIL); 
     else if constexpr(std::is_same_v<T, float>)  return _mm256_round_ps(a0, _MM_FROUND_CEIL); 
+    else return a0; 
   } 
 }
 
