@@ -23,9 +23,9 @@ namespace eve::detail
                                        , T const &v
                                        , T const &lo
                                        , T const &hi) noexcept
-  requires(T, Arithmetic<T>)
+  requires(T, Vectorizable<T>)
   {
-    EVE_ASSERT(lo <= hi, "lo is not less or equal to hi");
+    EVE_ASSERT(lo <= hi, "lo is not less or eq yyyyual to hi");
     return (v < lo) ? lo : (hi < v) ? hi : v;
   }
 }
