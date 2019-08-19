@@ -40,8 +40,8 @@ namespace eve::detail
     {
       if  constexpr(supports_xop)
       {
-        if      constexpr(std::is_integral_v<T> && sizeof(T) == 2)  return _mm_macc_epi16(a, b, c);
-        else if constexpr(std::is_integral_v<T> && sizeof(T) == 4)  return _mm_macc_epi32(a, b, c);
+        if      constexpr(std::is_integral_v<T> && sizeof(T) == 2)  return _mm_nmacc_epi16(a, b, c);
+        else if constexpr(std::is_integral_v<T> && sizeof(T) == 4)  return _mm_nmacc_epi32(a, b, c);
         else return  fms(-a, b, c); 
       }
       else return fms(-a, b, c); 
@@ -59,8 +59,8 @@ namespace eve::detail
     {
       if  constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)      return _mm256_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)  return _mm256_macc_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)      return _mm256_nmacc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>)  return _mm256_nmacc_ps(a, b, c);
       }
       else return fms(-a, b, c); 
     } 

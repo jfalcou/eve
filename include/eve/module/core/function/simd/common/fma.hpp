@@ -24,7 +24,7 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename V>
-  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_)
                            , T const &a
                            , U const &b
                            , V const & c) noexcept

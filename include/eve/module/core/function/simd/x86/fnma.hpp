@@ -26,12 +26,15 @@ namespace eve::detail
                            , wide<T, N, sse_> const &b
                            , wide<T, N, sse_> const &c
                            ) noexcept
-  requires( wide<T, N, sse_>, Floating<T>)
   {
-    if  constexpr(supports_fma3)
+    if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, double>)      return _mm_fnmadd_pd(a, b, c);
-      else if constexpr(std::is_same_v<T, float>)  return _mm_fnmadd_ps(a, b, c);
+      if  constexpr(supports_fma3)
+      {
+        if constexpr(std::is_same_v<T, double>)      return _mm_fnmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>)  return _mm_fnmadd_ps(a, b, c);
+      }
+      else return fma(-a, b, c); 
     }
     else return fma(-a, b, c); 
   }
@@ -42,12 +45,15 @@ namespace eve::detail
                            , wide<T, N, avx_> const &b
                            , wide<T, N, avx_> const &c
                            ) noexcept
-  requires( wide<T, N, avx_>, Floating<T>)
   {
-    if  constexpr(supports_fma4)
+    if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(std::is_same_v<T, double>)      return _mm256_fnmadd_pd(a, b, c);
-      else if constexpr(std::is_same_v<T, float>)  return _mm256_fnmadd_ps(a, b, c);
+      if  constexpr(supports_fma4)
+      {
+        if constexpr(std::is_same_v<T, double>)      return _mm256_fnmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>)  return _mm256_fnmadd_ps(a, b, c);
+      }
+      else return fma(-a, b, c); 
     }
     else return fma(-a, b, c); 
   }     
