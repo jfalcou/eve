@@ -44,15 +44,14 @@ namespace eve::detail
     else return a0; 
   }
   
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &       
-                                  , T const &a0) noexcept
-  requires( T, Vectorizable<T>)
-  {
-    if constexpr(std::is_floating_point_v<T>) return nearest(a0);
-    else return a0; 
-  }
+//   template<typename T>
+//   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
+//                                   , raw_type const &       
+//                                   , T const &a0) noexcept
+//   {
+//     if constexpr(std::is_floating_point_v<T>) return nearest(a0);
+//     else return a0; 
+//   }
 }
 
 #endif

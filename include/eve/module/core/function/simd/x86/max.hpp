@@ -27,12 +27,12 @@ namespace eve::detail
   {
     if constexpr( std::is_same_v<T,double>)       return _mm_max_pd(v0, v1);
     else if constexpr( std::is_same_v<T,float>)   return _mm_max_ps(v0, v1);
-    else /*if constexpr( std::is_integral_v<T>)*/
+    else //if constexpr( std::is_integral_v<T>)
     {
       constexpr bool issigned = std::is_signed_v<T>; 
       if      constexpr(issigned && sizeof(T) == 2)  return _mm_max_epi16(v0, v1);
       else if constexpr(!issigned && sizeof(T) == 1) return _mm_max_epu8(v0, v1);
-      else if (current_api >= sse4_1 && (sizeof(T) != 8))
+      else if constexpr(current_api >= sse4_1 && (sizeof(T) != 8))
       {
         if constexpr(issigned)
         {
@@ -45,7 +45,7 @@ namespace eve::detail
           else if constexpr(sizeof(T) == 4) return _mm_max_epu32(v0, v1);   
         }
       }
-      else return  if_else(is_less(v0, v1), v1, v0);
+      else return max_(EVE_RETARGET(cpu_), v0, v1);
     }
   }
 
@@ -77,7 +77,7 @@ namespace eve::detail
       }
       else
       {
-        return if_else(is_less(v0, v1), v1, v0);;
+        return max_(EVE_RETARGET(cpu_), v0, v1);
       }
     }
   }

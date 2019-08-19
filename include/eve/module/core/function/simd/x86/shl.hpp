@@ -57,7 +57,8 @@ namespace eve::detail
                            , wide<I, N, sse_> const &a1) noexcept
   requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
-    EVE_ASSERT(assert_good_shift< wide<T, N, sse_>>(a1),
+    using t_t = wide<T, N, sse_>; 
+    EVE_ASSERT(assert_good_shift<t_t>(a1),
                "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
                << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
@@ -80,7 +81,8 @@ namespace eve::detail
   {
     if constexpr(current_api >= avx2)
     {
-      EVE_ASSERT(assert_good_shift<wide<T, N, sse_>>(a1),
+      using t_t = wide<T, N, avx_>; 
+      EVE_ASSERT(assert_good_shift<t_t>(a1),
                  "[eve::shl avx2] - Shift " << a1 << " is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
       if constexpr(sizeof(T) == 1)
@@ -116,7 +118,8 @@ namespace eve::detail
     
     if (current_api >= avx2)
     {
-      EVE_ASSERT(assert_good_shift<wide<T, N, sse_>>(a1),
+      using t_t = wide<T, N, avx_>; 
+      EVE_ASSERT(assert_good_shift<t_t>(a1),
                  "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
       if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1); 

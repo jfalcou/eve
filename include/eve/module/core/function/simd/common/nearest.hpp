@@ -29,7 +29,7 @@ namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &a0) noexcept
+                                wide<T, N, ABI> const &a0) noexcept
   {
     if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::nearest, a0);
     else if constexpr( is_emulated_v<ABI>   ) return map(eve::nearest, a0);
