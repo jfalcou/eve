@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CLAMP_HPP_INCLUDED
-#define EVE_FUNCTION_CLAMP_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_CLAMP_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_CLAMP_HPP_INCLUDED
 
 #include <eve/function/scalar/clamp.hpp>
-#include <eve/function/simd/clamp.hpp>
+#include <eve/module/core/function/simd/clamp.hpp>
 
 #endif
