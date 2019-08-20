@@ -25,7 +25,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_),
                               wide<T, N, sse_> const &value,
                               T                      *ptr) noexcept
-  requires(void, Vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<sse2_>::bytes)
     {
@@ -43,7 +42,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_),
                               wide<T, N, sse_> const &value,
                               aligned_ptr<T, A>       ptr) noexcept
-  requires(void, Vectorizable<T>)
   {
     static constexpr auto alg = wide<T, N, sse_>::static_alignment;
 
@@ -65,7 +63,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_),
                               wide<T, N, avx_> const &value,
                               T *                     ptr) noexcept
-  requires(void, Vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<avx_>::bytes)
     {
@@ -83,7 +80,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_),
                               wide<T, N, avx_> const &value,
                               aligned_ptr<T, A>        ptr) noexcept
-  requires(void, Vectorizable<T>)
   {
     static constexpr auto alg = wide<T, N, avx_>::static_alignment;
 

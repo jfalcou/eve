@@ -30,9 +30,12 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(ssse3_)
                             ,wide<T, N, sse_> const &a) noexcept
-  requires(wide<T, N, sse_>, Integral<T>())
   {
-    if constexpr(std::is_signed_v<T>)
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      return sign_(EVE_RETARGET(cpu_), a); 
+    }
+    else if constexpr(std::is_signed_v<T>)
     {
       using t_t = wide<T, N, sse_>; 
       if constexpr(sizeof(T) == 1)      return t_t(_mm_sign_epi8(One(as(a)), a));

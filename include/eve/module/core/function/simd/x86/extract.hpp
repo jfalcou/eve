@@ -24,10 +24,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename I, typename N, auto V>
-  EVE_FORCEINLINE auto extract_(EVE_SUPPORTS(sse2_)
+  EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse2_)
                                , wide<T, N, sse_> const &v0
                                , std::integral_constant<I, V> const &) noexcept
-  requires(T, Integral<I>)
   {
     static_assert((V < wide<T, N, sse_>::static_size),
                   "[eve - extract sse2] : Index is out of bound for current architecture");
