@@ -17,6 +17,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/alias.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/combine.hpp>

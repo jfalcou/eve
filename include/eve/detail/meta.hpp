@@ -19,6 +19,13 @@
 
 namespace eve::detail
 {
+  // Value list helper
+  template<auto... Values>
+  struct values
+  {
+    static constexpr auto size = sizeof...(Values);
+  };
+
   // Types list helper
   template<typename... Types>
   struct types
@@ -72,6 +79,25 @@ namespace eve::detail
   struct always
   {
     using type = T;
+  };
+
+  // Return the Nth type from a list of types
+  template<std::size_t> struct any { any(...) {} };
+
+  template<std::size_t... Is> struct nth
+  {
+    template<typename T> static auto fit(any<Is>..., T, ...) -> T;
+  };
+
+  template<std::size_t... Is, typename... Ts>
+  auto deduce(std::index_sequence<Is...>, Ts... pp) -> decltype( nth<Is...>::fit(pp...) );
+
+  template<std::size_t N, typename Ts> struct type_at;
+
+  template<std::size_t N, typename... Ts>
+  struct type_at<N,types<Ts...>>
+  {
+    using type = decltype( deduce(std::make_index_sequence<N>{},Ts()...) );
   };
 
   // Extract value_type from type
@@ -274,19 +300,6 @@ namespace eve::detail
   template<typename... T>
   inline constexpr bool wrong = false;
 
-  // Turns a pseudo-concept into a traits
-  template<template<class...> class Concept, typename List, typename Enable = void>
-  struct as_trait_impl : std::false_type
-  {};
-
-  template<template<class...> class Concept,typename... T>
-  struct as_trait_impl<Concept, types<T...>, std::void_t<Concept<T...>> > : std::true_type
-  {};
-
-  template<template<class...> class Concept,typename... T>
-  struct as_trait : as_trait_impl<Concept, types<T...>>
-  {};
-
   // How many items in tuple-like things ? 0 means non-tuple
   template<typename T>
   struct count : std::integral_constant<std::size_t,0>
@@ -308,5 +321,16 @@ namespace eve::detail
     };
 
     return impl(std::make_index_sequence<Count>{});
+  }
+
+  template<template<auto...> class Generator, auto... I, typename Func>
+  EVE_FORCEINLINE decltype(auto) apply(Func &&f, Generator<I...> const& g)
+  {
+    const auto impl = [&](Generator<I...> const &)
+    {
+      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+    };
+
+    return impl(g);
   }
 }

@@ -15,6 +15,7 @@
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
+#include <eve/detail/function/swizzle.hpp>
 
 namespace eve::detail
 {
@@ -83,6 +84,12 @@ namespace eve::detail
     EVE_FORCEINLINE auto operator[](std::size_t i) const noexcept
     {
       return detail::extract(self(), i);
+    }
+
+    template<typename Pattern, int PSize>
+    EVE_FORCEINLINE auto operator[](swizzler_t<Pattern,PSize> p) const noexcept
+    {
+      return detail::swizzle(EVE_CURRENT_API{}, *this, p);
     }
 
     EVE_FORCEINLINE void swap(Derived& other) noexcept
