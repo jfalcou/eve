@@ -52,7 +52,7 @@ namespace eve::detail
                 , T const &cond
                 , eve::callable_one_ const &
                 , eve::callable_zero_ const &) noexcept
-  requires( TARGET, Arithmetic<TARGET>, Vectorizable<T> )
+  requires( TARGET, Vectorizable<TARGET>, Vectorizable<T> )
   {
     return is_nez(cond) ?  One<TARGET>() : Zero<TARGET>();
   }

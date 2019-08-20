@@ -13,6 +13,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
 
@@ -26,8 +27,8 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
                             eve::sse_ const &,
-                            T *p) noexcept requires(typename wide<T, N>::storage_type,
-                                                    Arithmetic<T>)
+                            T *p) noexcept
+  requires(typename wide<T, N>::storage_type, Vectorizable<T>)
   {
     if constexpr(std::is_same_v<T, double>) return _mm_loadu_pd(p);
     if constexpr(std::is_same_v<T, float>) return _mm_loadu_ps(p);
@@ -38,7 +39,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
        eve::sse_ const &      mode,
-       aligned_ptr<T, A>      p) noexcept requires(typename wide<T, N>::storage_type, Arithmetic<T>)
+       aligned_ptr<T, A>      p) noexcept
+  requires(typename wide<T, N>::storage_type, Vectorizable<T>)
   {
     if constexpr(A >= 16)
     {

@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 #if defined(EVE_COMP_IS_GNUC)
@@ -28,9 +29,10 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
                             eve::ppc_ const &,
-                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                      Arithmetic<T>,
-                                                      If<(sizeof(T) == 8)>)
+                            T *ptr) noexcept
+  requires(typename wide<T, N>::storage_type,
+           Vectorizable<T>,
+           If<(sizeof(T) == 8)>)
   {
     if constexpr(std::is_integral_v<T>)
     {
@@ -47,9 +49,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &,
        eve::ppc_ const &,
-       aligned_ptr<T, Align> ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                    Arithmetic<T>,
-                                                    If<(sizeof(T) == 8)>)
+       aligned_ptr<T, Align> ptr) noexcept
+  requires(typename wide<T, N>::storage_type,
+           Vectorizable<T>,
+           If<(sizeof(T) == 8)>)
   {
     if constexpr(std::is_integral_v<T>)
     {

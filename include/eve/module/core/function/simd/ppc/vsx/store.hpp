@@ -16,6 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/arch/limits.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -23,7 +24,8 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vsx_),
                               wide<T, N, ppc_> const &value,
-                              T *                     ptr) noexcept requires(void, Arithmetic<T>)
+                              T *                     ptr) noexcept
+  requires(void, Vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<vmx_>::bytes)
     {
@@ -40,7 +42,8 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vsx_),
                               wide<T, S, ppc_> const &value,
-                              aligned_ptr<T, N>       ptr) noexcept requires(void, Arithmetic<T>)
+                              aligned_ptr<T, N>       ptr) noexcept
+  requires(void, Vectorizable<T>)
   {
     store(value, ptr.get());
   }

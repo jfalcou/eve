@@ -14,6 +14,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
+#include <eve/concept/vectorizable.hpp>
 
 #if defined(EVE_COMP_IS_GNUC)
 #  pragma GCC diagnostic push
@@ -26,9 +27,10 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
                             eve::ppc_ const &,
-                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                      Arithmetic<T>,
-                                                      If<(sizeof(T) < 8)>)
+                            T *ptr) noexcept
+  requires(typename wide<T, N>::storage_type,
+           Vectorizable<T>,
+           If<(sizeof(T) < 8)>)
   {
     return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
   }
@@ -37,9 +39,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
        eve::ppc_ const &      mode,
-       aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                    Arithmetic<T>,
-                                                    If<(sizeof(T) < 8)>)
+       aligned_ptr<T, Align>  ptr) noexcept
+  requires(typename wide<T, N>::storage_type,
+           Vectorizable<T>,
+           If<(sizeof(T) < 8)>)
   {
     if constexpr(Align >= 16)
       return vec_ld(0, ptr.get());
