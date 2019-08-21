@@ -25,7 +25,7 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename V>
-  EVE_FORCEINLINE  auto bitwise_select_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE  auto bitwise_select_(EVE_SUPPORTS(cpu_)
                                        , T const &a
                                        , U const &b
                                        , V const &c) noexcept

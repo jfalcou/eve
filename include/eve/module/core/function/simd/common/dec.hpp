@@ -30,7 +30,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(cpu_),
                             wide<T, N, ABI> const &v) noexcept
   {
     return v-One(as(v)); 
@@ -40,7 +40,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr auto dec_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE constexpr auto dec_(EVE_SUPPORTS(cpu_)
                                      , U const & cond
                                      , wide<T, N, ABI> const &v) noexcept
   {

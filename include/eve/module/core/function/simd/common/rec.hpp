@@ -30,7 +30,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_)
                            , wide<T, N, ABI> const &v) noexcept
   {
     if constexpr(is_aggregated_v<ABI>)
@@ -63,7 +63,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_)
                            , raw_type const&
                            , wide<T, N, ABI> const &v) noexcept
   {
@@ -90,7 +90,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto rec_ ( EVE_SUPPORTS(cpu_),
                               pedantic_type const&,
                               wide<T, N, ABI> const &v
                             ) noexcept

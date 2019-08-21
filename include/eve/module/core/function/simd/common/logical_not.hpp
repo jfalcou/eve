@@ -26,7 +26,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &a) noexcept
   {
     if constexpr( is_aggregated_v<ABI> )
     {
@@ -43,7 +43,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto logical_not_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE constexpr auto logical_not_ ( EVE_SUPPORTS(cpu_),
                                                 logical<wide<T, N, ABI>> const& a
                                               ) noexcept
   {

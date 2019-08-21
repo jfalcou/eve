@@ -22,14 +22,14 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_imag_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto is_imag_(EVE_SUPPORTS(cpu_)
                                , wide<T, N, ABI> const &v) noexcept
   {
       return is_eqz(v);
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_imag_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto is_imag_(EVE_SUPPORTS(cpu_)
                                , logical<wide<T, N, ABI>> const &v) noexcept
   {
     return logical_not(v);

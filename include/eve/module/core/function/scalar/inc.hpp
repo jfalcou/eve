@@ -16,6 +16,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/function/bitwise_mask.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -23,8 +24,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_)
                                      , T const &a) noexcept
+  requires(T, Vectorizable<T>)
   {
     return static_cast<T>(a+One<T>()); 
   }
@@ -32,9 +34,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_)
                                      , U const & cond
                                      , T const &a) noexcept
+  requires(T, Vectorizable<U>, Vectorizable<T>)
   {
     if (std::is_integral_v<T>)
       return static_cast<T>(a-bitwise_mask(T(cond))); 

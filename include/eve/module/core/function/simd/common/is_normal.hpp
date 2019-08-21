@@ -26,7 +26,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_normal_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_normal_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &v) noexcept
   {
     if constexpr(std::is_integral_v<T> )
     {
@@ -39,7 +39,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto is_normal_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE constexpr auto is_normal_ ( EVE_SUPPORTS(cpu_),
                                               logical<wide<T, N, ABI>> const& v
                                             ) noexcept
   {

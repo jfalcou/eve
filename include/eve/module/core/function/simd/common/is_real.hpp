@@ -20,14 +20,14 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_real_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto is_real_(EVE_SUPPORTS(cpu_)
                                , wide<T, N, ABI> const &v) noexcept
   {
     return True(as(v));
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_real_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto is_real_(EVE_SUPPORTS(cpu_)
                                , logical<wide<T, N, ABI>> const &v) noexcept
   {
     return  True(as(v));

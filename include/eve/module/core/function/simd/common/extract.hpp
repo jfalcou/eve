@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(cpu_),
                                   wide<T, N, ABI> const &v0,
                                   U const& u) noexcept
   {
@@ -26,7 +26,7 @@ namespace eve::detail
   }
   
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto extract_ ( EVE_SUPPORTS(cpu_),
                                   logical<wide<T, N, ABI>> const &v0,
                                   U const& u) noexcept
   {

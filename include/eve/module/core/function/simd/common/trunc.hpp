@@ -23,7 +23,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_),
                             wide<T, N, ABI> const &v) noexcept
   {
     if constexpr( is_aggregated_v<ABI> )              return aggregate(eve::trunc, v);
@@ -37,7 +37,7 @@ namespace eve::detail
 
 // TODO uncomment when wide_cast available
 //   template<typename T, typename N, typename ABI>
-//   EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(simd_)
+//   EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_)
 //                              , raw_type const & raw
 //                              , wide<T, N, ABI> const &v) noexcept
 //   {

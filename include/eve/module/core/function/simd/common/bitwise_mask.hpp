@@ -20,7 +20,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &v) noexcept
   {
     if constexpr( is_native_v<ABI> )
     {
@@ -34,7 +34,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     if constexpr( is_native_v<ABI> )
     {

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_REC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_VMX_REC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_CPU_PPC_VMX_REC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_CPU_PPC_VMX_REC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -40,7 +40,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 
@@ -60,7 +60,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), v0);
+      return rec_(EVE_RETARGET(cpu_), v0);
     }
   }
 
@@ -90,7 +90,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 }

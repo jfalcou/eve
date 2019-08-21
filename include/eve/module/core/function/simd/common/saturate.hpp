@@ -29,7 +29,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename Target, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_)
                                 , as_<Target> const & at
                                 , wide<U, N, ABI> const & v) noexcept
   requires(wide<U, N, ABI>, Vectorizable<Target>)

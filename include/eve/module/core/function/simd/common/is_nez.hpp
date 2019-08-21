@@ -24,7 +24,7 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(simd_), T const &a) noexcept
+  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
                             requires( as_logical_t<T>, Vectorized<T> )
   {
     return a != Zero(as(a));

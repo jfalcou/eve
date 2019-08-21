@@ -27,7 +27,7 @@ namespace eve::detail
     else  if  constexpr(std::is_same_v<T, float>)   return vdiv_f32(v0, v1);
     else                                            return map(div, v0, v1);
 #else
-    return div_(EVE_RETARGET(simd_), v0, v1);
+    return div_(EVE_RETARGET(cpu_), v0, v1);
 #endif
   }
 
@@ -41,7 +41,7 @@ namespace eve::detail
     else  if  constexpr(std::is_same_v<T, float>)   return vdivq_f32(v0, v1);
     else                                            return map(div, v0, v1);
 #else
-    return div_(EVE_RETARGET(simd_), v0, v1);
+    return div_(EVE_RETARGET(cpu_), v0, v1);
 #endif
   }
 }

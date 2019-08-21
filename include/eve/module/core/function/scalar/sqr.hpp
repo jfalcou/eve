@@ -16,16 +16,18 @@
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr T sqr_( EVE_SUPPORTS(simd_),
-                                    saturated_type const & ,
-                                    T const &a0
-                                  ) noexcept
+  EVE_FORCEINLINE constexpr auto sqr_( EVE_SUPPORTS(cpu_),
+                                       saturated_type const & ,
+                                       T const &a0
+                                     ) noexcept
+  requires(T, Vectorizable<T>)
   {
     if (std::is_integral_v<T>)
     {

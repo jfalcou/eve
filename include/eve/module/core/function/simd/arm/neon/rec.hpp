@@ -38,7 +38,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 
@@ -61,7 +61,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 
@@ -85,7 +85,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), v0);
+      return rec_(EVE_RETARGET(cpu_), v0);
     }
   }
 
@@ -102,7 +102,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), v0);
+      return rec_(EVE_RETARGET(cpu_), v0);
     }
   }
 
@@ -118,7 +118,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 
@@ -134,7 +134,7 @@ namespace eve::detail
     }
     else
     {
-      return rec_(EVE_RETARGET(simd_), mode, v0);
+      return rec_(EVE_RETARGET(cpu_), mode, v0);
     }
   }
 }

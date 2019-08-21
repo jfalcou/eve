@@ -25,7 +25,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Aggregation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_not_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE wide<T, N, aggregated_> bitwise_not_(EVE_SUPPORTS(cpu_),
                                                        wide<T, N, aggregated_> const &v) noexcept
   {
     return aggregate(eve::bitwise_not, v);
@@ -34,7 +34,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Emulation with auto-splat inside map for performance purpose
   template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_not_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v0) noexcept
+  EVE_FORCEINLINE auto bitwise_not_(EVE_SUPPORTS(cpu_), wide<T, N, emulated_> const &v0) noexcept
   {
     return map(eve::bitwise_not, v0);
   }

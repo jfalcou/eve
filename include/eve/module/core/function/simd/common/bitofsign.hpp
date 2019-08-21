@@ -24,7 +24,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_)
                             ,wide<T, N, ABI> const &a) noexcept
   {
     return bitwise_and(a, Signmask(as(a))); 

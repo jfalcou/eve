@@ -30,7 +30,7 @@ namespace eve::detail
       if constexpr( sizeof(T) == 1 ) return _mm_abs_epi8(v);
       else if constexpr( sizeof(T) == 2 ) return _mm_abs_epi16(v);
       else if constexpr( sizeof(T) == 4 ) return _mm_abs_epi32(v);
-      else if constexpr( std::is_signed_v<T> && sizeof(T) == 8)  return abs_(EVE_RETARGET(simd_),v);
+      else if constexpr( std::is_signed_v<T> && sizeof(T) == 8)  return abs_(EVE_RETARGET(cpu_),v);
     }
   }
 

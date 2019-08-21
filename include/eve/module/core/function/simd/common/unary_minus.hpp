@@ -25,7 +25,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(cpu_),
                                                wide<T, N, ABI> const &v) noexcept
   {
    if constexpr( is_native_v<ABI> )

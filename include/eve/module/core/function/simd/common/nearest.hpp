@@ -28,7 +28,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(cpu_),
                                 wide<T, N, ABI> const &a0) noexcept
   {
     if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::nearest, a0);

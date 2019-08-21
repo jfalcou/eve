@@ -41,7 +41,7 @@ namespace eve::detail
         return _mm_cmov_si128(v1, v2, v0);
       }
     }
-    else return bitwise_select_(EVE_RETARGET(simd_), v0, v1, v2);
+    else return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
   }
 
 #if defined(EVE_COMP_IS_MSVC)
@@ -66,7 +66,7 @@ namespace eve::detail
         return _mm256_cmov_si256(v1, v2, v0);
       }
     }
-    else return bitwise_select_(EVE_RETARGET(simd_), v0, v1, v2);
+    else return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
   }
 #endif
 }

@@ -22,7 +22,9 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-                  average_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
+                  average_(EVE_SUPPORTS(vmx_)
+                          , wide<T, N, ppc_> const &v0
+                          , wide<T, N, ppc_> const &v1) noexcept
   {
     if constexpr( std::is_integral_v<T> && sizeof(T) < 8)
     {
@@ -30,7 +32,7 @@ namespace eve::detail
     }
     else
     {
-      return average_(EVE_RETARGET(simd_), v0, v1);
+      return average_(EVE_RETARGET(cpu_), v0, v1);
     }
   }
 }

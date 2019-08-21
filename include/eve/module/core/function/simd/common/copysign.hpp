@@ -32,7 +32,7 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(cpu_)
                                 , T const &a
                                 , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
