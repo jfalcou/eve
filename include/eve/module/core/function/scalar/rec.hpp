@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
