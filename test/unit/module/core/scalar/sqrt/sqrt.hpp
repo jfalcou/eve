@@ -16,10 +16,11 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/constant/false.hpp> 
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/sqrt_2.hpp>
 #include <type_traits>
 
 TTS_CASE("Check sqrt return type")
@@ -38,6 +39,7 @@ TTS_CASE("Check eve::sqrt behavior")
     TTS_IEEE_EQUAL(eve::sqrt(-eve::Nan<Type>()), eve::Nan<Type>());
     TTS_EQUAL(eve::sqrt(eve::Mzero<Type>()), Type(0)); 
     TTS_EQUAL(eve::sqrt(eve::Zero<Type>()),  Type(0));
+    TTS_ULP_EQUAL(eve::sqrt(Type(2)),  eve::Sqrt_2<Type>(), 0.5); 
   }
 }
   
