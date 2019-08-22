@@ -14,9 +14,12 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_mask.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
+#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -43,7 +46,33 @@ namespace eve::detail
       return static_cast<T>(a+bitwise_mask(T(cond))); 
     else
       return cond ? dec(a) : a;
-  } 
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Saturated case
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto dec_(EVE_SUPPORTS(cpu_)
+                                     , saturated_type const &  
+                                     , T const &a) noexcept
+  requires(T, Vectorizable<T>)
+  {
+    if constexpr(std::is_floating_point_v<T>) return dec(a);
+    else return (a!= Valmin(as(a))) ? dec(a) : a; 
+  }
+ 
+  // -----------------------------------------------------------------------------------------------
+  // Saturated Masked case
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto dec_(EVE_SUPPORTS(cpu_) 
+                                     , U const & cond   
+                                     , saturated_type const & 
+                                     , T const &a) noexcept
+  requires(T, Vectorizable<T>, Vectorizable<U>)
+  {
+    bool tst = (Valmin(as(a)) != a); 
+    if constexpr(std::is_floating_point_v<value_type_t<T>>) return tst ? dec(a) : a;
+    else return (tst && cond) ? dec(a) : a; 
+  }
 }
 
 #endif
