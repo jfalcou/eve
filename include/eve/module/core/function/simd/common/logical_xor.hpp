@@ -66,7 +66,8 @@ namespace eve::detail
 
   template<typename T, typename U>
   EVE_FORCEINLINE  auto logical_xor_( EVE_SUPPORTS(cpu_),
-                                      logical<T> const &a, logical<U> const &b
+                                      logical<T> const &a
+                                    , logical<U> const &b
                                     ) noexcept
   requires( logical<T>,
             Vectorized<T>, Vectorized<U>,
@@ -75,6 +76,32 @@ namespace eve::detail
   {
     return bitwise_cast<logical<T>>(bitwise_xor(a.bits(),b.bits()));
   }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto logical_xor_( EVE_SUPPORTS(cpu_),
+                                      logical<T> const &a
+                                    , U const &b
+                                    ) noexcept
+  requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
+  {
+    return bitwise_cast<logical<T>>(bitwise_xor(a.bits(),bitwise_mask(b)));
+  }
+  
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto logical_xor_( EVE_SUPPORTS(cpu_),
+                                      T const &a
+                                    , logical<U> const &b
+                                    ) noexcept
+  requires( logical<U>,
+            Vectorized<T>, Vectorized<U>,
+            EqualCardinal<T,U>
+          )
+  {
+    return bitwise_cast<logical<U>>(bitwise_xor(bitwise_mask(a),b.bits()));
+  }  
 }
 
 #endif

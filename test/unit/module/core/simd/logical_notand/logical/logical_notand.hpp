@@ -69,4 +69,26 @@ TTS_CASE_TPL("Check logical_notand behavior on logical<wide> and scalars",
   TTS_EQUAL(ref4, eve::logical_notand(0     , lhs   ) );
 }
 
+TTS_CASE_TPL("Check logical_notand behavior on logical<wide> and wides",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>
+            )
+{
+  using eve::wide;
+  using eve::logical;
+
+  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; });
+  wide<Type, T>  rhs([](auto i, auto c) { return i%3; });
+  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_notand(i%2 == 0, i%3 ); }); 
+  logical<wide<Type, T>> ref1([](auto i, auto c) { return eve::logical_notand( i%3, i%2 == 0); });
+
+  TTS_EQUAL(ref, eve::logical_notand(lhs, rhs));
+  TTS_EQUAL(ref1, eve::logical_notand(rhs, lhs));
+}
+
 #endif
