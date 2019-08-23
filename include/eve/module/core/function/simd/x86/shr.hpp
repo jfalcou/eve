@@ -78,8 +78,7 @@ namespace eve::detail
   {
     if constexpr(supports_xop)
     {
-      using t_t = wide<T, N, sse_>;
-      EVE_ASSERT(assert_good_shift<t_t>(a1),
+      EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
                  "[eve::shr xop sse] -  At least one of " << a1 << " elements is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
       using si_t = wide<as_integer_t<I,signed>, N, sse_>; 
@@ -112,8 +111,7 @@ namespace eve::detail
   {
     if constexpr(current_api >= avx2)
     {
-      using t_t = wide<T, N, avx_>;
-      EVE_ASSERT(assert_good_shift<t_t>(a1),
+      EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
                  "[eve::shr avx2] - Shift " << a1 << " is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
       if constexpr(std::is_unsigned_v<T>)
@@ -146,8 +144,7 @@ namespace eve::detail
     
     if (current_api >= avx2)
     {
-      using t_t = wide<T, N, avx_>;
-     EVE_ASSERT(assert_good_shift<t_t>(a1),
+       EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
                  "[eve::shr avx] -  At least one of " << a1 << "elements is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
       if constexpr(std::is_unsigned_v<T>)
