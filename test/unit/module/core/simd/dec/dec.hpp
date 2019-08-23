@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQZ_HPP
-#define IS_EQZ_HPP
+#ifndef DEC_HPP
+#define DEC_HPP
 
 #include "test.hpp"
+#include <tts/detail/type_id.hpp>
 #include <tts/tests/relation.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/logical.hpp>
@@ -58,10 +59,12 @@ TTS_CASE_TPL("Check saturated_(dec) behavior on wide",
     ref([](auto i, auto) { return eve::saturated_(eve::dec)(Type(i%2)); }), 
     refc([](auto i, auto) {return eve::saturated_(eve::dec[i%3])(Type(i%2)); });
   TTS_EQUAL(ref, eve::saturated_(eve::dec)(lhs));
-  TTS_EQUAL(ref, eve::saturated_(eve::dec[tst])(lhs));
-  //TTS_EQUAL(lhs , eve::saturated_(eve::dec[1 > 2])(lhs));
-  //TTS_EQUAL(eve::saturated_(eve::dec)(lhs), eve::saturated_(eve::dec[3 > 2])(lhs));
+  TTS_EQUAL(refc, eve::saturated_(eve::dec[tst])(lhs));
+   eve::logical<wide<Type, T>> tstl([](auto i, auto) { return i%3; });
+   TTS_EQUAL(refc, eve::saturated_(eve::dec[tstl])(lhs));
   
+  TTS_EQUAL(lhs , eve::saturated_(eve::dec[1 > 2])(lhs));
+  TTS_EQUAL(eve::saturated_(eve::dec)(lhs), eve::saturated_(eve::dec[3 > 2])(lhs));
 }
 
 

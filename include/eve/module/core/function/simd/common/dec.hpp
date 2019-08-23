@@ -77,15 +77,21 @@ namespace eve::detail
   {
     if constexpr(!is_vectorized_v<U>)
     {
-      bool tst = (Valmin(as(a)) != a); 
-      if constexpr(std::is_floating_point_v<T>) return tst ? dec(a) : a;
-      else return (tst && cond) ? dec(a) : a; 
+      if constexpr(std::is_floating_point_v<T>) return cond ? dec(a) : a;
+      else
+      {
+        auto tst = is_not_equal(Valmin(as(a)), a); 
+        return cond ?  dec[tst](a) : a;
+      }
     }
     else
     {
-      auto tst = is_not_equal(Valmin(as(a)), a); 
-      if constexpr(std::is_floating_point_v<T>) return dec[tst](a);
-      else return dec[bitwise_and(tst, cond)](a);
+      if constexpr(std::is_floating_point_v<T>) return dec[cond](a);
+      else
+      {
+        auto tst = is_not_equal(Valmin(as(a)), a); 
+        return dec[logical_and(tst, cond)](a);
+      }
     }
   }
   

@@ -69,9 +69,8 @@ namespace eve::detail
                                      , T const &a) noexcept
   requires(T, Vectorizable<T>, Vectorizable<U>)
   {
-    bool tst = (Valmin(as(a)) != a); 
-    if constexpr(std::is_floating_point_v<value_type_t<T>>) return tst ? dec(a) : a;
-    else return (tst && cond) ? dec(a) : a; 
+    if constexpr(std::is_floating_point_v<T>) return cond ? dec(a) : a;
+    else return ((Valmin(as(a)) != a) && cond) ? dec(a) : a; 
   }
 }
 
