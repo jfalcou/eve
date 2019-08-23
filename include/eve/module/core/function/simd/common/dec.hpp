@@ -93,8 +93,7 @@ namespace eve::detail
         return dec[logical_and(tst, cond)](a);
       }
     }
-  }
-  
+  } 
 }
 
 #endif

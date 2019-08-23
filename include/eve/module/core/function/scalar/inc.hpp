@@ -15,8 +15,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/bitwise_mask.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -43,6 +46,32 @@ namespace eve::detail
       return static_cast<T>(a-bitwise_mask(T(cond))); 
     else
       return cond ? inc(a) : a;
+  }
+
+ 
+  // -----------------------------------------------------------------------------------------------
+  // Saturated case
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_)
+                                     , saturated_type const &  
+                                     , T const &a) noexcept
+  requires(T, Vectorizable<T>)
+  {
+    if constexpr(std::is_floating_point_v<T>) return inc(a);
+    else return (a!= Valmax(as(a))) ? inc(a) : a; 
+  }
+ 
+  // -----------------------------------------------------------------------------------------------
+  // Saturated Masked case
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_) 
+                                     , U const & cond   
+                                     , saturated_type const & 
+                                     , T const &a) noexcept
+  requires(T, Vectorizable<T>, Vectorizable<U>)
+  {
+    if constexpr(std::is_floating_point_v<T>) return cond ? inc(a) : a;
+    else return ((Valmax(as(a)) != a) && cond) ? inc(a) : a; 
   } 
 }
 
