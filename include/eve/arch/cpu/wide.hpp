@@ -26,6 +26,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/add.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/function/div.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_xor.hpp>
@@ -287,6 +289,20 @@ namespace eve
     EVE_FORCEINLINE wide &operator-=(Other const &other) noexcept
     {
       *this = eve::sub(*this, other);
+      return *this;
+    }
+    
+    template<typename Other>
+    EVE_FORCEINLINE wide &operator*=(Other const &other) noexcept
+    {
+      *this = eve::mul(*this, other);
+      return *this;
+    }
+
+    template<typename Other>
+    EVE_FORCEINLINE wide &operator/=(Other const &other) noexcept
+    {
+      *this = eve::div(*this, other);
       return *this;
     }
 
