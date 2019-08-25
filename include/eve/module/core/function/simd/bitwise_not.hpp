@@ -15,7 +15,7 @@
 
 #if defined(EVE_HW_POWERPC)
 #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/bitwise_not.hpp>
+#    include <eve/module/core/function/simd/ppc/bitwise_not.hpp>
 #  endif
 #endif
 

@@ -28,7 +28,7 @@
 
 #if defined(EVE_HW_POWERPC)
 #  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/if_else.hpp>
+#    include <eve/module/core/function/simd/ppc/if_else.hpp>
 #  endif
 #endif
 

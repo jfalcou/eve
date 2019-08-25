@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
@@ -19,7 +19,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/shr.hpp>
+#  include <eve/module/core/function/simd/ppc/shr.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)

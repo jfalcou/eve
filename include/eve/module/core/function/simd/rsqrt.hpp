@@ -19,7 +19,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/rsqrt.hpp>
+//#  include <eve/module/core/function/simd/ppc/rsqrt.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)

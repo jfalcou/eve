@@ -19,7 +19,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/bitwise_andnot.hpp>
+#  include <eve/module/core/function/simd/ppc/bitwise_andnot.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)

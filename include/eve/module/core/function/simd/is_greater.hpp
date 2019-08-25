@@ -18,7 +18,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/is_greater.hpp>
+#  include <eve/module/core/function/simd/ppc/is_greater.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)

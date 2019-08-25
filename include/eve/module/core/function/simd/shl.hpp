@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED 
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_SHL_HPP_INCLUDED
 
 #include <eve/arch.hpp>
@@ -19,7 +19,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/shl.hpp>
+#  include <eve/module/core/function/simd/ppc/shl.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)

@@ -19,7 +19,7 @@
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  include <eve/module/core/function/simd/ppc/vmx/rec.hpp>
+#  include <eve/module/core/function/simd/ppc/rec.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
