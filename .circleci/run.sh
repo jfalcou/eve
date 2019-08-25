@@ -31,4 +31,12 @@ echo "ninja $TARGET.unit -j $REPLICATION"
 ninja $TARGET.unit -j $REPLICATION
 
 echo "ctest -R $TARGET.*.unit -j 8"
-ctest -R $TARGET.*.unit -j 8
+
+if [ "$TARGET" == "basic" ]
+then
+  ctest -R ^arch.*.unit -j 8
+  ctest -R ^doc.*.unit  -j 8
+  ctest -R ^api.*.unit  -j 8
+elif
+  ctest -R $TARGET.*.unit -j 8
+fi
