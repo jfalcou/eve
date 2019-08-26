@@ -56,39 +56,14 @@ namespace eve::detail
   }
 
   //------------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, emulated_> const &a) noexcept
+  // Arithmetic full slice
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
   {
-    auto eval = [&](auto... I) {
-      using wide_t = wide<T, typename N::split_type>;
-      using that_t = std::array<wide_t, 2>;
-      return that_t{wide_t{a[ I ]...}, wide_t{a[ I + N::value / 2 ]...}};
-    };
-
-    return apply<N::value / 2>(eval);
-  }
-
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, emulated_> const &a, Slice const &) noexcept
-  {
-    auto eval = [&](auto... I) {
-      using wide_t = wide<T, typename N::split_type>;
-      return wide_t{a[ I + (Slice::value * N::value / 2) ]...};
-    };
-
-    return apply<N::value / 2>(eval);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, aggregated_> const &a) noexcept
-  {
-    // g++ has trouble returning the storage properly for large aggregate - we then copy it
-    if constexpr(platform::compiler == compilers::gcc_ && sizeof(a) > 256)
+    if constexpr( is_emulated_v<ABI> )
     {
-      auto eval = [&](auto... I) {
+      auto eval = [&](auto... I)
+      {
         using wide_t = wide<T, typename N::split_type>;
         using that_t = std::array<wide_t, 2>;
         return that_t{wide_t{a[ I ]...}, wide_t{a[ I + N::value / 2 ]...}};
@@ -96,15 +71,53 @@ namespace eve::detail
 
       return apply<N::value / 2>(eval);
     }
+    else if constexpr( is_aggregated_v<ABI> )
+    {
+      if constexpr(platform::compiler == compilers::gcc_ && sizeof(a) > 256)
+      {
+        auto eval = [&](auto... I)
+        {
+          using wide_t = wide<T, typename N::split_type>;
+          using that_t = std::array<wide_t, 2>;
+          return that_t{wide_t{a[ I ]...}, wide_t{a[ I + N::value / 2 ]...}};
+        };
+
+        return apply<N::value / 2>(eval);
+      }
+      else
+      {
+        return a.storage();
+      }
+    }
     else
-      return a.storage();
+    {
+      static_assert ( wrong<ABI>, "[eve::slice(a) - Unsupported SIMD ABI" );
+    }
   }
 
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, aggregated_> const &a, Slice const &) noexcept
+  //------------------------------------------------------------------------------------------------
+  // Arithmetic partial slice
+  template<typename T, typename N, typename ABI, typename Slice>
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &) noexcept
   {
-    if constexpr(Slice::value == 0) return a.storage().lo;
-    else                            return a.storage().hi;
+    if constexpr( is_emulated_v<ABI> )
+    {
+      auto eval = [&](auto... I)
+      {
+        return wide<T, typename N::split_type>{a[ I + (Slice::value * N::value / 2) ]...};
+      };
+
+      return apply<N::value / 2>(eval);
+    }
+    else if constexpr( is_aggregated_v<ABI> )
+    {
+      if constexpr(Slice::value == 0) return a.storage().lo;
+      else                            return a.storage().hi;
+    }
+    else
+    {
+      static_assert ( wrong<ABI>, "[eve::slice(a,s) - Unsupported SIMD ABI" );
+    }
   }
 }
 

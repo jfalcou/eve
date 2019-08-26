@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_VMX_COMBINE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_VMX_COMBINE_HPP_INCLUDED
+#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_COMBINE_HPP_INCLUDED
+#define EVE_DETAIL_FUNCTION_SIMD_PPC_COMBINE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
@@ -24,12 +24,16 @@ namespace eve::detail
     using that_t = wide<T, typename N::combined_type>;
 
     if constexpr(N::value * sizeof(T) == limits<eve::vmx_>::bytes)
+    {
       return typename that_t::storage_type{l, h};
+    }
     else
     {
-      auto mask = [&](auto... I) {
-        __vector unsigned char m = {static_cast<std::uint8_t>(I)...,
-                                    static_cast<std::uint8_t>(I + limits<eve::vmx_>::bytes)...};
+      auto mask = [&](auto... I)
+      {
+        __vector unsigned char m =  { static_cast<std::uint8_t>(I)...,
+                                      static_cast<std::uint8_t>(I + limits<eve::vmx_>::bytes)...
+                                    };
         return m;
       };
 

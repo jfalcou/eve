@@ -8,17 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_COMBINE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_COMBINE_HPP_INCLUDED
+#ifndef EVE_DETAIL_FUNCTION_SIMD_X86_COMBINE_HPP_INCLUDED
+#define EVE_DETAIL_FUNCTION_SIMD_X86_COMBINE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/function/simd/x86/sse2/make.hpp>
+#include <eve/detail/function/simd/x86/make.hpp>
 #include <eve/arch/limits.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // 2*128-bits regular combine
   template<typename T, typename N>
   EVE_FORCEINLINE typename wide<T, typename N::combined_type>::storage_type
   combine(sse2_ const &, wide<T, N, sse_> const &l, wide<T, N, sse_> const &h) noexcept
@@ -62,6 +64,39 @@ namespace eve::detail
 
     if constexpr(std::is_integral_v<T> && (sizeof(T) != 8) && (N::value == 1))
       return make(as_<T>{}, eve::sse_{}, l[ 0 ], h[ 0 ]);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // 256-bits combine
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine(avx_ const &, wide<T, N, avx_> const &l, wide<T, N, avx_> const &h) noexcept
+  {
+    using that_t = typename wide<T, typename N::combined_type>::storage_type;
+    return that_t{l, h};
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // 2*128-bits to 256-bits combine
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  combine(avx_ const &, wide<T, N, sse_> const &l, wide<T, N, sse_> const &h) noexcept
+  {
+    if constexpr(N::value * sizeof(T) == limits<eve::sse2_>::bytes)
+    {
+      if constexpr(std::is_same_v<T, double>)
+        return _mm256_insertf128_pd(_mm256_castpd128_pd256(l), h, 1);
+
+      if constexpr(std::is_same_v<T, float>)
+        return _mm256_insertf128_ps(_mm256_castps128_ps256(l), h, 1);
+
+      if constexpr(std::is_integral_v<T>)
+        return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
+    }
+    else
+    {
+      return combine(sse2_{}, l, h);
+    }
   }
 }
 
