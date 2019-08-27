@@ -52,10 +52,8 @@ TTS_CASE_TPL( "Check conditional div behavior on wide + scalar"
     , refws([](int i, int ) { return eve::div[ Type(i%3)]( Type(i*(i%2)+1), Type(8)); })
     ,     x([](int i, int ) { return i*(i%2)+1; });
 
-  TTS_EQUAL(refss, eve::div[lhs        ](Type(7) , Type(8) )); //w s s
   TTS_EQUAL(refsw, eve::div[lhs        ](Type(7) , x       )); //w s w
   TTS_EQUAL(refws, eve::div[lhs        ]( x       , Type(8) )); //w w s
-  TTS_EQUAL(refss, eve::div[is_nez(lhs)]( Type(7) , Type(8) )); //lw s s
   TTS_EQUAL(refsw, eve::div[is_nez(lhs)]( Type(7) , x       )); //lw s w
   TTS_EQUAL(refws, eve::div[is_nez(lhs)]( x       , Type(8) )); //lw w s
 }

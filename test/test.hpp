@@ -18,7 +18,10 @@
 #include <eve/wide.hpp>
 #include <algorithm>
 
-#define EVE_WIDE_SIZE_RANGE() fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
+#define EVE_WIDE_SIZE_RANGE() eve::fixed<1>,eve::fixed< 2>,eve::fixed<4>,                           \
+                              eve::fixed<8>,eve::fixed<16>,eve::fixed<32>,                          \
+                              eve::fixed<64>                                                        \
+/**/
 
 namespace tts::ext
 {

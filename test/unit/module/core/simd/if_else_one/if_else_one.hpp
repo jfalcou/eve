@@ -16,15 +16,9 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <type_traits>
 
-using eve::fixed;
-
-TTS_CASE_TPL( "Check if_else behavior on homogeneous wide"
-            , fixed<1>,fixed<2>, fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL( "Check if_else_one behavior on wide", EVE_WIDE_SIZE_RANGE())
 {
   using eve::wide;
   using eve::is_nez;
@@ -33,24 +27,11 @@ TTS_CASE_TPL( "Check if_else behavior on homogeneous wide"
               , rhs1([](auto i, auto ) { return i%2+1; })
               , rhs2([](auto i, auto ) { return i%3; });
 
-  auto z = eve::One<wide<Type,T>>();
-  auto z_= eve::one_; 
-  TTS_IEEE_EQUAL(eve::if_else(cond, rhs1, z) , eve::if_else(cond, rhs1, z_));  
-  
-}
+  auto z = eve::One(as(cond));
+  auto z_= eve::one_;
 
-TTS_CASE_TPL( "Check if_else behavior on wide + scalar"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
-{
-  using eve::wide;
-  using eve::is_nez;
-
-  wide<Type,T>    lhs([](int i, int ) { return i%3; }); 
-
-  auto z = eve::One<wide<Type,T>>();
-  auto z_= eve::one_; 
-  TTS_IEEE_EQUAL(eve::if_else(lhs, Type(7), z) , eve::if_else(lhs, Type(7), z_));  
+  TTS_IEEE_EQUAL(eve::if_else(cond, rhs1, z) , eve::if_else(cond, rhs1, z_));
+  TTS_IEEE_EQUAL(eve::if_else(is_nez(cond), rhs1, z), eve::if_else(is_nez(cond), rhs1, z_));
 }
 
 #endif

@@ -18,12 +18,14 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename V>
-  EVE_FORCEINLINE constexpr auto
-  ifnot_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
+  EVE_FORCEINLINE constexpr auto  ifnot_else_ ( EVE_SUPPORTS(cpu_),
+                                                T const &cond,
+                                                U const &t, V const &f
+                                              ) noexcept
+                  -> decltype(if_else(cond, f, t))
   {
     return if_else(cond, f, t);
   }
-
 }
 
 #endif

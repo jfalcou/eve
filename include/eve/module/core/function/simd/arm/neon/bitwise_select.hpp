@@ -70,16 +70,16 @@ namespace eve::detail
     if constexpr(std::is_same_v<in_t, float32x4_t>)
       return vbslq_f32(vreinterpretq_u32_f32(m), v0,v1);
 
-    if constexpr(std::is_same_v<in_t, int64x1_t>)
+    if constexpr(std::is_same_v<in_t, int64x2_t>)
       return vbslq_s64(vreinterpretq_u64_s64(m),v0, v1);
 
-    if constexpr(std::is_same_v<in_t, int32x2_t>)
+    if constexpr(std::is_same_v<in_t, int32x4_t>)
       return vbslq_s32(vreinterpretq_u32_s32(m),v0, v1);
 
-    if constexpr(std::is_same_v<in_t, int16x4_t>)
+    if constexpr(std::is_same_v<in_t, int16x8_t>)
       return vbslq_s16(vreinterpretq_u16_s16(m),v0, v1);
 
-    if constexpr(std::is_same_v<in_t, int8x8_t>)
+    if constexpr(std::is_same_v<in_t, int8x16_t>)
       return vbslq_s8(vreinterpretq_u8_s8(m),v0, v1);
 
     if constexpr(std::is_same_v<in_t, uint64x2_t>) return vbslq_u64(m,v0, v1);

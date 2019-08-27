@@ -18,10 +18,11 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-  if_else_( EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const& m,
-            wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
-          ) noexcept
+  EVE_FORCEINLINE wide<T, N, ppc_> if_else_ ( EVE_SUPPORTS(vmx_),
+                                              logical<wide<T, N, ppc_>> const& m,
+                                              wide<T, N, ppc_> const& v0,
+                                              wide<T, N, ppc_> const& v1
+                                            ) noexcept
   {
     return vec_sel( v1.storage(), v0.storage(), m.storage() );
   }

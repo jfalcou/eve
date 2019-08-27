@@ -28,13 +28,11 @@ TTS_CASE( "Check if_else return type" )
   TTS_EXPR_IS(eve::if_else(true  , Type(), eve::zero_ ) , Type );
 }
 
-
 TTS_CASE("Check if_else(., ., zero_) behavior ")
 {
   auto f = eve::Zero<Type>();
   auto t = eve::One<Type>();
 
-  
   TTS_EQUAL ( eve::if_else( 1   , t  , eve::zero_), t);
   TTS_EQUAL ( eve::if_else( 1.0 , t  , eve::zero_), t);
   TTS_EQUAL ( eve::if_else( true, t  , eve::zero_), t);

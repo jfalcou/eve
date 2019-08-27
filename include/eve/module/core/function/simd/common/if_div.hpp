@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IF_DIV_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi_cast.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/one.hpp>
@@ -24,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   div_( EVE_SUPPORTS(cpu_), T const &cond, U const &a, V const &b) noexcept
   {
-    return a/if_else(cond, b, eve::one_);
+    return a/if_else(cond, abi_cast<U>(b), eve::one_);
   }
 }
 

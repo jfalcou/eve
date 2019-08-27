@@ -51,10 +51,8 @@ TTS_CASE_TPL( "Check ifnot_else behavior on wide + scalar"
               , refws([](auto i, auto ) { return eve::ifnot_else( Type(i%3), Type(i*(i%2)), Type(8)); })
               ,     x([](auto i, auto ) { return i*(i%2); });
 
-  TTS_EQUAL(refss, eve::ifnot_else(lhs         , Type(7) , Type(8) )); //w s s
   TTS_EQUAL(refsw, eve::ifnot_else(lhs         , Type(7) , x       )); //w s w
   TTS_EQUAL(refws, eve::ifnot_else(lhs         , x       , Type(8) )); //w w s
-  TTS_EQUAL(refss, eve::ifnot_else(is_nez(lhs) , Type(7) , Type(8) )); //lw s s
   TTS_EQUAL(refsw, eve::ifnot_else(is_nez(lhs) , Type(7) , x       )); //lw s w
   TTS_EQUAL(refws, eve::ifnot_else(is_nez(lhs) , x       , Type(8) )); //lw w s
 }
