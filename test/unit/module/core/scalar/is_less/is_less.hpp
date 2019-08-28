@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQUAL_HPP
-#define IS_EQUAL_HPP
+#ifndef IS_LESS_HPP
+#define IS_LESS_HPP
 
 #include "test.hpp"
 #include <eve/constant/false.hpp>

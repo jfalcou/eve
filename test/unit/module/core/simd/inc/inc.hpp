@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQZ_HPP
-#define IS_EQZ_HPP
+#ifndef INC_HPP
+#define INC_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>

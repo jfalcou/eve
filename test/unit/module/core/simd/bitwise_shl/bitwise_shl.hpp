@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef BITWISE_bitwise_shl_HPP
-#define BITWISE_bitwise_shl_HPP
+#ifndef BITWISE_SHL_HPP
+#define BITWISE_SHL_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>

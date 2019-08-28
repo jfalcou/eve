@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ADD_HPP
-#define ADD_HPP
+#ifndef IF_MUL_HPP
+#define IF_MUL_HPP
 
 #include <eve/function/scalar/add.hpp>
 #include <eve/constant/true.hpp>

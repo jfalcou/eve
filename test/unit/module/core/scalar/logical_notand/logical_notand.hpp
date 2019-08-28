@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOGICAL_AND_HPP
-#define LOGICAL_AND_HPP
+#ifndef LOGICAL_NOTAND_HPP
+#define LOGICAL_NOTAND_HPP
 
 #include "test.hpp"
 #include <eve/constant/false.hpp>

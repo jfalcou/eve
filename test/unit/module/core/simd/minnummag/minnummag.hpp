@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef PLUS_HPP
-#define PLUS_HPP
+#ifndef MINNUMMAG_HPP
+#define MINNUMMAG_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>

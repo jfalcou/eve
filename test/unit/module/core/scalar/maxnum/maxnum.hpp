@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MAX_HPP
-#define MAX_HPP
+#ifndef MAXNUM_HPP
+#define MAXNUM_HPP
 
 #include <eve/function/scalar/max.hpp>
 #include <eve/constant/nan.hpp>

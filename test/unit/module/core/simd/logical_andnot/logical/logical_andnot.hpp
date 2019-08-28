@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOGICAL_AND_HPP
-#define LOGICAL_AND_HPP
+#ifndef LOGICAL_ANDNOT_HPP
+#define LOGICAL_ANDNOT_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_NAN_HPP
-#define IS_NAN_HPP
+#ifndef IS_NOT_NAN_HPP
+#define IS_NOT_NAN_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
