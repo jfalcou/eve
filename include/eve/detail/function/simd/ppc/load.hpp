@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_VMX_LOAD_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_VMX_LOAD_HPP_INCLUDED
+#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_LOAD_HPP_INCLUDED
+#define EVE_DETAIL_FUNCTION_SIMD_PPC_LOAD_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>

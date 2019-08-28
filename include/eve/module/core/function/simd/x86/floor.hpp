@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_CEIL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_CEIL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FLOOR_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FLOOR_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
@@ -33,7 +33,7 @@ namespace eve::detail
   //-----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, avx_> ceil_(EVE_SUPPORTS(avx_),
+  EVE_FORCEINLINE wide<T, N, avx_> floor_(EVE_SUPPORTS(avx_),
                                          wide<T, N, avx_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, double>)      return _mm256_round_pd(a0, _MM_FROUND_FLOOR); 

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_LOAD_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_X86_SSE2_LOAD_HPP_INCLUDED
+#ifndef EVE_DETAIL_FUNCTION_SIMD_X86_LOAD_HPP_INCLUDED
+#define EVE_DETAIL_FUNCTION_SIMD_X86_LOAD_HPP_INCLUDED
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>

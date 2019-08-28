@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_CPU_PPC_REC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_CPU_PPC_REC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -79,7 +79,7 @@ namespace eve::detail
                         , estimate
                         );
 
-      #ifndef EVE_NO_INFINITIES
+      #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
       estimate = if_else( is_inf(v0)
                         , bitwise_and(v0, Mzero( as(v0) ))
                         , estimate

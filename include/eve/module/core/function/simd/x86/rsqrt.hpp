@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SIMD_X86_SSE2_RSQRT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_SIMD_X86_SSE2_RSQRT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSQRT_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSQRT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
