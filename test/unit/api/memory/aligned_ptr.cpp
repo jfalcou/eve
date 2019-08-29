@@ -50,83 +50,80 @@ struct type
 
 TTS_CASE("aligned_ptr provides pointer-like interface")
 {
-  TTS_SETUP("An aligned_ptr of default alignment")
+  type            value{42}, other_value{17};
+  alignas(8) type extra_aligned_value{87};
+
+  eve::aligned_ptr<type>    ptr           = &value;
+  eve::aligned_ptr<type>    other_ptr     = &other_value;
+  eve::aligned_ptr<type, 8> realigned_ptr = &extra_aligned_value;
+
+  TTS_SUBCASE("has the proper default alignment") { TTS_EQUAL(ptr.alignment(), alignof(type)); }
+
+  TTS_SUBCASE("has access to its pointee members")
   {
-    type            value{42}, other_value{17};
-    alignas(8) type extra_aligned_value{87};
+    TTS_EQUAL(ptr.get(), &value);
+    TTS_EQUAL(ptr->method(), &value);
+    TTS_EQUAL(ptr->member, 42);
+    ptr->member = 69;
+    TTS_EQUAL(value.member, 69);
+  }
 
-    eve::aligned_ptr<type>    ptr           = &value;
-    eve::aligned_ptr<type>    other_ptr     = &other_value;
-    eve::aligned_ptr<type, 8> realigned_ptr = &extra_aligned_value;
+  TTS_SUBCASE("supports re-assignment from raw pointer")
+  {
+    ptr = &other_value;
+    TTS_EQUAL(ptr->method(), &other_value);
+    TTS_EQUAL(ptr->member, 17);
+    ptr->member = 101;
+    TTS_EQUAL(other_value.member, 101);
+  }
 
-    TTS_SECTION("has the proper default alignment") { TTS_EQUAL(ptr.alignment(), alignof(type)); }
+  TTS_SUBCASE("supports re-assignment from other aligned_ptr")
+  {
+    ptr = other_ptr;
+    TTS_EQUAL(ptr->method(), &other_value);
+    TTS_EQUAL(ptr->member, 17);
+    ptr->member = 99;
+    TTS_EQUAL(other_value.member, 99);
+  }
 
-    TTS_SECTION("has access to its pointee members")
-    {
-      TTS_EQUAL(ptr.get(), &value);
-      TTS_EQUAL(ptr->method(), &value);
-      TTS_EQUAL(ptr->member, 42);
-      ptr->member = 69;
-      TTS_EQUAL(value.member, 69);
-    }
+  TTS_SUBCASE("supports re-assignment from other aligned_ptr of different alignment")
+  {
+    ptr = realigned_ptr;
+    TTS_EQUAL(ptr->method(), &extra_aligned_value);
+    TTS_EQUAL(ptr->member, 87);
+    ptr->member = 99;
+    TTS_EQUAL(extra_aligned_value.member, 99);
+  }
 
-    TTS_SECTION("supports re-assignment from raw pointer")
-    {
-      ptr = &other_value;
-      TTS_EQUAL(ptr->method(), &other_value);
-      TTS_EQUAL(ptr->member, 17);
-      ptr->member = 101;
-      TTS_EQUAL(other_value.member, 101);
-    }
+  TTS_SUBCASE("supports subscripting operator")
+  {
+    ptr[ 0 ] = other_value;
+    TTS_EQUAL(ptr->method(), &value);
+    TTS_EQUAL(ptr->member, 17);
+    ptr->member = 99;
+    TTS_EQUAL(value.member, 99);
+  }
 
-    TTS_SECTION("supports re-assignment from other aligned_ptr")
-    {
-      ptr = other_ptr;
-      TTS_EQUAL(ptr->method(), &other_value);
-      TTS_EQUAL(ptr->member, 17);
-      ptr->member = 99;
-      TTS_EQUAL(other_value.member, 99);
-    }
+  TTS_SUBCASE("supports incrementing by valid value")
+  {
+    ptr += ptr.alignment();
+    TTS_EQUAL(ptr.get(), &value + ptr.alignment());
+  }
 
-    TTS_SECTION("supports re-assignment from other aligned_ptr of different alignment")
-    {
-      ptr = realigned_ptr;
-      TTS_EQUAL(ptr->method(), &extra_aligned_value);
-      TTS_EQUAL(ptr->member, 87);
-      ptr->member = 99;
-      TTS_EQUAL(extra_aligned_value.member, 99);
-    }
+  TTS_SUBCASE("supports decrementing by valid value")
+  {
+    ptr -= ptr.alignment();
+    TTS_EQUAL(ptr.get(), &value - ptr.alignment());
+  }
 
-    TTS_SECTION("supports subscripting operator")
-    {
-      ptr[ 0 ] = other_value;
-      TTS_EQUAL(ptr->method(), &value);
-      TTS_EQUAL(ptr->member, 17);
-      ptr->member = 99;
-      TTS_EQUAL(value.member, 99);
-    }
+  TTS_SUBCASE("supports swap")
+  {
+    ptr.swap(other_ptr);
+    TTS_EQUAL(ptr->member, 17);
+    TTS_EQUAL(other_ptr->member, 42);
 
-    TTS_SECTION("supports incrementing by valid value")
-    {
-      ptr += ptr.alignment();
-      TTS_EQUAL(ptr.get(), &value + ptr.alignment());
-    }
-
-    TTS_SECTION("supports decrementing by valid value")
-    {
-      ptr -= ptr.alignment();
-      TTS_EQUAL(ptr.get(), &value - ptr.alignment());
-    }
-
-    TTS_SECTION("supports swap")
-    {
-      ptr.swap(other_ptr);
-      TTS_EQUAL(ptr->member, 17);
-      TTS_EQUAL(other_ptr->member, 42);
-
-      swap(ptr, other_ptr);
-      TTS_EQUAL(ptr->member, 42);
-      TTS_EQUAL(other_ptr->member, 17);
-    }
+    swap(ptr, other_ptr);
+    TTS_EQUAL(ptr->member, 42);
+    TTS_EQUAL(other_ptr->member, 17);
   }
 }

@@ -23,7 +23,7 @@ using eve::fixed;
 auto baseg = [](auto i, auto) { return i + 1; };
 auto nextg = [](auto i, auto) { return i; };
 
-TTS_CASE_TPL("Check self-increment on wide",
+TTS_CASE_TPL("Check self-decrement on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -34,24 +34,21 @@ TTS_CASE_TPL("Check self-increment on wide",
 {
   using eve::wide;
 
-  TTS_SETUP("A correctly initialized wide")
+  wide<Type, T> simd(baseg), next(nextg);
+  wide<Type, T> prev(simd), res;
+
+  TTS_SUBCASE("support for operator--()")
   {
-    wide<Type, T> simd(baseg), next(nextg);
-    wide<Type, T> prev(simd), res;
+    res = simd--;
+    TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+    TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
+  }
 
-    TTS_SECTION("supports operator--()")
-    {
-      res = simd--;
-      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-      TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
-    }
-
-    TTS_SECTION("supports operator--(int)")
-    {
-      res = --simd;
-      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-      TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
-    }
+  TTS_SUBCASE("support for operator--(int)")
+  {
+    res = --simd;
+    TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+    TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
   }
 }
 

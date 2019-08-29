@@ -28,15 +28,12 @@ TTS_CASE_TPL("Check bitwise_xor behavior on homogeneous wide",
              fixed<64>)
 {
   using eve::wide;
-  
-  TTS_SETUP("A correctly initialized wide")
-  {
-    wide<Type, T> lhs([](auto i, auto c) { return i; }), rhs([](auto i, auto) { return 2 * i; }),
-      ref([](auto i, auto c) { return eve::bitwise_xor(Type(i), Type(2 * i)); });
-    
-    TTS_EQUAL(ref, eve::bitwise_xor(lhs, rhs)); 
-    TTS_EQUAL(ref, lhs ^ rhs); 
-  }
+
+  wide<Type, T> lhs([](auto i, auto c) { return i; }), rhs([](auto i, auto) { return 2 * i; }),
+    ref([](auto i, auto c) { return eve::bitwise_xor(Type(i), Type(2 * i)); });
+
+  TTS_EQUAL(ref, eve::bitwise_xor(lhs, rhs));
+  TTS_EQUAL(ref, lhs ^ rhs);
 }
 
 TTS_CASE_TPL("Check bitwise_xor behavior on wide + scalar",
@@ -49,14 +46,14 @@ TTS_CASE_TPL("Check bitwise_xor behavior on wide + scalar",
              fixed<64>)
 {
   using eve::wide;
-  
+
   wide<Type, T> lhs([](auto i, auto c) { return i % 3; }),
     ref([](auto i, auto c) { return eve::bitwise_xor(Type(i % 3), Type(-1)); });
-  
+
   TTS_EQUAL(ref, eve::bitwise_xor(lhs, -1));
-  TTS_EQUAL(ref, lhs ^ -1); 
-  
+  TTS_EQUAL(ref, lhs ^ -1);
+
 }
 
 #endif
-  
+

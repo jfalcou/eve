@@ -19,33 +19,30 @@ using eve::fixed;
 
 TTS_CASE("load behavior for scalar")
 {
-  TTS_SETUP("load a scalar from")
+  Type value, ref = 42, data[ 1 ] = {42};
+
+  TTS_SUBCASE("a pointer to scalar")
   {
-    Type value, ref = 42, data[ 1 ] = {42};
+    value = eve::load(&ref);
+    TTS_EQUAL(value, ref);
+  }
 
-    TTS_SECTION("a pointer to scalar")
-    {
-      value = eve::load(&ref);
-      TTS_EQUAL(value, ref);
-    }
+  TTS_SUBCASE("an aligned pointer to scalar")
+  {
+    value = eve::load(eve::as_aligned(&ref));
+    TTS_EQUAL(value, ref);
+  }
 
-    TTS_SECTION("an aligned pointer to scalar")
-    {
-      value = eve::load(eve::as_aligned(&ref));
-      TTS_EQUAL(value, ref);
-    }
+  TTS_SUBCASE("a pointer to scalar values")
+  {
+    value = eve::load(&data[ 0 ], eve::as(value));
+    TTS_EQUAL(value, ref);
+  }
 
-    TTS_SECTION("a pointer to scalar values")
-    {
-      value = eve::load(&data[ 0 ], eve::as(value));
-      TTS_EQUAL(value, ref);
-    }
-
-    TTS_SECTION("an aligned pointer to scalar values")
-    {
-      value = eve::load(eve::as_aligned(&data[ 0 ]), eve::as(value));
-      TTS_EQUAL(value, ref);
-    }
+  TTS_SUBCASE("an aligned pointer to scalar values")
+  {
+    value = eve::load(eve::as_aligned(&data[ 0 ]), eve::as(value));
+    TTS_EQUAL(value, ref);
   }
 }
 
