@@ -37,7 +37,7 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
-    
+
     if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
       return map( eve::minmag, abi_cast<value_type_t<U>>(a)
@@ -61,8 +61,8 @@ namespace eve::detail
       else
       {
         static_assert(wrong<T, U>, "[eve::minmag] - no support for current simd api");
-        return {};
-      }     
+        return a;
+      }
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
