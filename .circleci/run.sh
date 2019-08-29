@@ -37,6 +37,6 @@ then
   ctest -R ^arch.*.unit -j 8
   ctest -R ^doc.*.unit  -j 8
   ctest -R ^api.*.unit  -j 8
-elif
+else
   ctest -R $TARGET.*.unit -j 8
 fi

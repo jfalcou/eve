@@ -161,63 +161,63 @@ jobs:
   ##================================================================================================
   ## Basic tests
   ##================================================================================================
-  gcc_sse2_arch:
+  gcc_sse2_basic:
     <<: *config_gcc_sse2
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_sse4_arch:
+  gcc_sse4_basic:
     <<: *config_gcc_sse4
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
-  gcc_avx_arch:
+  gcc_avx_basic:
     <<: *config_gcc_avx
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_fma3_arch:
+  gcc_fma3_basic:
     <<: *config_gcc_avx
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
-  gcc_avx2_arch:
+  gcc_avx2_basic:
     <<: *config_gcc_avx2
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  clang_avx2_arch:
+  clang_avx2_basic:
     <<: *config_clang_avx2
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_arch:
+  arm_neon_basic:
     <<: *config_gcc_arm
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mfpu=neon -Wno-psabi"
     <<: *steps_test_neon
-  arm_aarch64_arch:
+  arm_aarch64_basic:
     <<: *config_gcc_aarch64
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
-  ppc_vsx_arch:
+  ppc_vsx_basic:
     <<: *config_gcc_ppc64
     environment:
       TARGET: basic
