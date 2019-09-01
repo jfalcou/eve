@@ -30,9 +30,14 @@ namespace eve::detail
     {
       return vec_avg(v0.storage(), v1.storage());
     }
+    else if constexpr( std::is_floating_point_v<T>)
+    {
+      auto h = Half(as(v0));
+      return fma(v0,h,v1*h);
+    }
     else
     {
-      return average_(EVE_RETARGET(cpu_), v0, v1);
+      return map(average,v0,v1);
     }
   }
 }

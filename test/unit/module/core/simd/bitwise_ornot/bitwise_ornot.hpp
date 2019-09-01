@@ -45,7 +45,7 @@ TTS_CASE_TPL( "Check bitwise_ornot behavior on wide + scalar"
   wide<Type,T>  lhs([](auto i, auto c) { return i%3; })
     , ref([](auto i, auto c) { return eve::bitwise_ornot( Type(i%3), Type(7) ); });
 
-  TTS_EQUAL(ref, eve::bitwise_ornot(lhs,7));
+  TTS_EQUAL(ref, eve::bitwise_ornot(lhs,Type(7)));
 }
 
 TTS_CASE("Check bitwise_ornot with mixed types")

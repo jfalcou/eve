@@ -33,18 +33,18 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      return sign_(EVE_RETARGET(cpu_), a); 
+      return sign_(EVE_RETARGET(cpu_), a);
     }
     else if constexpr(std::is_signed_v<T>)
     {
-      using t_t = wide<T, N, sse_>; 
+      using t_t = wide<T, N, sse_>;
       if constexpr(sizeof(T) == 1)      return t_t(_mm_sign_epi8(One(as(a)), a));
       else if constexpr(sizeof(T) == 2) return t_t(_mm_sign_epi16(One(as(a)), a));
       else if constexpr(sizeof(T) == 4) return t_t(_mm_sign_epi32(One(as(a)), a));
       else if constexpr(sizeof(T) == 8) return map(sign, a);
     }
     else
-      return if_else[as(a)](a, eve::one_, eve::zero_); 
+      return if_else(a, One(as(a)), eve::zero_);
   }
 }
 

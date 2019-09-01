@@ -15,7 +15,7 @@
 #include <tts/tests/relation.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/logical.hpp> 
+#include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
@@ -50,11 +50,9 @@ TTS_CASE_TPL( "Check conditional add behavior on wide + scalar"
     , refsw([](int i, int ) { return eve::add[ Type(i%3)]( Type(7), Type(i*(i%2))); })
     , refws([](int i, int ) { return eve::add[ Type(i%3)]( Type(i*(i%2)), Type(8)); })
     ,     x([](int i, int ) { return i*(i%2); });
-  
-  TTS_EQUAL(refss, eve::add[lhs        ](Type(7) , Type(8) )); //w s s
+
   TTS_EQUAL(refsw, eve::add[lhs        ](Type(7) , x       )); //w s w
   TTS_EQUAL(refws, eve::add[lhs        ]( x       , Type(8) )); //w w s
-  TTS_EQUAL(refss, eve::add[is_nez(lhs)]( Type(7) , Type(8) )); //lw s s
   TTS_EQUAL(refsw, eve::add[is_nez(lhs)]( Type(7) , x       )); //lw s w
   TTS_EQUAL(refws, eve::add[is_nez(lhs)]( x       , Type(8) )); //lw w s
 }

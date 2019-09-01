@@ -16,7 +16,7 @@
 #include <eve/function/add.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/logical.hpp> 
+#include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 
@@ -51,11 +51,9 @@ TTS_CASE_TPL( "Check conditional mul behavior on wide + scalar"
     , refsw([](int i, int ) { return eve::mul[ Type(i%3)]( Type(7), Type(i*(i%2))); })
     , refws([](int i, int ) { return eve::mul[ Type(i%3)]( Type(i*(i%2)), Type(8)); })
     ,     x([](int i, int ) { return i*(i%2); });
-  
-  TTS_EQUAL(refss, eve::mul[lhs        ](Type(7) , Type(8) )); //w s s
+
   TTS_EQUAL(refsw, eve::mul[lhs        ](Type(7) , x       )); //w s w
   TTS_EQUAL(refws, eve::mul[lhs        ]( x       , Type(8) )); //w w s
-  TTS_EQUAL(refss, eve::mul[is_nez(lhs)]( Type(7) , Type(8) )); //lw s s
   TTS_EQUAL(refsw, eve::mul[is_nez(lhs)]( Type(7) , x       )); //lw s w
   TTS_EQUAL(refws, eve::mul[is_nez(lhs)]( x       , Type(8) )); //lw w s
 }

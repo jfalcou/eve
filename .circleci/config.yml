@@ -306,56 +306,56 @@ jobs:
     <<: *config_gcc_sse4
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_simd:
     <<: *config_gcc_avx
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
   gcc_fma3_simd:
     <<: *config_gcc_avx
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_simd:
     <<: *config_gcc_avx2
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx2"
     <<: *steps_test_gcc
   clang_avx2_simd:
     <<: *config_clang_avx2
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
   arm_neon_simd:
     <<: *config_gcc_arm
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mfpu=neon -Wno-psabi"
     <<: *steps_test_neon
   arm_aarch64_simd:
     <<: *config_gcc_aarch64
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
   ppc_vsx_simd:
     <<: *config_gcc_ppc64
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mvsx -mpower8-vector"
     <<: *steps_test_ppc64
 

@@ -50,7 +50,7 @@ namespace eve::detail
     else if constexpr(sizeof(T) == 8) { return _mm_slli_epi64(a0, a1); }
   }
 
-  
+
   template<typename T, typename I, typename N>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(avx_)
                            , wide<T, N, sse_> const &a0
@@ -62,14 +62,14 @@ namespace eve::detail
                << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
     {
-      if constexpr(sizeof(T) == 1)       return _mm_shl_epi8(a0,a1); 
-      else if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);   
-      else if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);   
-      else if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);   
+      if constexpr(sizeof(T) == 1)       return _mm_shl_epi8(a0,a1);
+      else if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);
+      else if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);
+      else if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);
     }
-    else return map(eve::shl, a0, a1); 
+    else return map(eve::shl, a0, a1);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename I, typename N>
@@ -85,7 +85,7 @@ namespace eve::detail
                  << sizeof(T) * 8 << "[.");
       if constexpr(sizeof(T) == 1)
       {
-        using t_t       = wide<T, N, avx_>; 
+        using t_t       = wide<T, N, avx_>;
         using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
         t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
         t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
@@ -101,8 +101,8 @@ namespace eve::detail
       else if constexpr(sizeof(T) == 8)  return _mm256_slli_epi64(a0, a1);
     }
     else return  shl_(EVE_RETARGET(sse2_),a0, a1);//map(shl, a0, a1);
-  } 
-  
+  }
+
   template<typename T, typename I, typename N>
   EVE_FORCEINLINE auto  shl_(EVE_SUPPORTS(avx_)
                             , wide<T, N, avx_> const &a0
@@ -111,21 +111,21 @@ namespace eve::detail
   {
     auto ifxop_choice = [](const auto& a0, const auto & a1){
       if constexpr(supports_xop) return shl_(EVE_RETARGET(sse2_),a0, a1);
-      else return map(shl, a0, a1); 
-    }; 
-    
-    if (current_api >= avx2)
+      else return map(shl, a0, a1);
+    };
+
+    if constexpr (current_api >= avx2)
     {
       EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
                  "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
                  << sizeof(T) * 8 << "[.");
-      if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1); 
+      if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1);
       else if constexpr(sizeof(T) == 4)  return _mm256_sllv_epi32(a0, a1);
       else if constexpr(sizeof(T) == 8)  return _mm256_sllv_epi64(a0, a1);
-    }  
-    else return ifxop_choice(a0, a1); 
+    }
+    else return ifxop_choice(a0, a1);
   }
 }
 
 #endif
-  
+
