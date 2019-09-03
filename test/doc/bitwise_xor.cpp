@@ -5,21 +5,20 @@
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
-int main() {
+int main()
+{
   wide_it pi = {3, 2, 10, 1};
   wide_it qi = {4, 1, 2, 5};
   std::cout << "---- simd" << '\n'
             << " <- pi =                      " << pi << '\n'
             << " <- qi =                      " << qi << '\n'
-            << " -> eve::bitwise_xor(pi, qi) = " << eve::bitwise_xor(pi, qi)
-            << '\n';
+            << " -> eve::bitwise_xor(pi, qi) = " << eve::bitwise_xor(pi, qi) << '\n';
 
   std::uint32_t xi = 3, yi = 7;
 
   std::cout << "---- scalar" << '\n'
             << " xi =                         " << xi << '\n'
             << " yi =                         " << yi << '\n'
-            << " -> eve::bitwise_xor(xi, yi) = " << eve::bitwise_xor(xi, yi)
-            << '\n';
+            << " -> eve::bitwise_xor(xi, yi) = " << eve::bitwise_xor(xi, yi) << '\n';
   return 0;
 }

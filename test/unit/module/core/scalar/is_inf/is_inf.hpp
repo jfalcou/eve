@@ -23,10 +23,7 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check is_inf return type")
-{
-  TTS_EXPR_IS(eve::is_inf(Type(0)),  eve::as_logical_t<Type>);
-}
+TTS_CASE("Check is_inf return type") { TTS_EXPR_IS(eve::is_inf(Type(0)), eve::as_logical_t<Type>); }
 
 TTS_CASE("Check eve::is_inf behavior")
 {

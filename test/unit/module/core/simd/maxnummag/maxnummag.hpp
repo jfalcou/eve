@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef PLUS_HPP
-#define PLUS_HPP
+#ifndef MAXNUMMAG_HPP
+#define MAXNUMMAG_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -29,8 +29,9 @@ TTS_CASE_TPL("Check plus behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return Type(i-c); }),
-    ref([](auto i, auto c) { return eve::numeric_(eve::maxmag)(Type(i), Type(i-c)); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      rhs([](auto i, auto c) { return Type(i - c); }),
+      ref([](auto i, auto c) { return eve::numeric_(eve::maxmag)(Type(i), Type(i - c)); });
 
   TTS_EQUAL(ref, eve::numeric_(eve::maxmag)(lhs, rhs));
 }
@@ -47,8 +48,8 @@ TTS_CASE_TPL("Check plus behavior on wide",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto) { return eve::numeric_(eve::maxmag)(Type(i), static_cast<Type>(2)); }),
-    refm([](auto i, auto) { return eve::numeric_(eve::maxmag)(Type(i), static_cast<Type>(-2)); });
+      ref([](auto i, auto) { return eve::numeric_(eve::maxmag)(Type(i), static_cast<Type>(2)); }),
+      refm([](auto i, auto) { return eve::numeric_(eve::maxmag)(Type(i), static_cast<Type>(-2)); });
   TTS_EQUAL(ref, eve::numeric_(eve::maxmag)(lhs, static_cast<Type>(2)));
   TTS_EQUAL(ref, eve::numeric_(eve::maxmag)(static_cast<Type>(2), lhs));
   TTS_EQUAL(refm, eve::numeric_(eve::maxmag)(lhs, static_cast<Type>(-2)));

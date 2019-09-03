@@ -17,9 +17,10 @@
 
 namespace eve::detail
 {
-  template<typename T> EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return a*a;
+    return a * a;
   }
 }
 

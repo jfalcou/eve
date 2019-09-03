@@ -32,19 +32,20 @@ TTS_CASE_TPL("Check copysign behavior on wide",
 
   if constexpr(std::is_signed_v<Type>)
   {
-      auto N = T::value; 
-      wide<Type, T> a1([](auto i,  auto ){ return (i%2) ? Type(i) : Type(-i); }), 
-        a2([N](auto i,  auto ){ return (i%2) ? Type(i+N) : Type(-(i+N)); }), 
-        b([N](auto i,  auto ){ return eve::copysign((i%2) ? Type(i) : Type(-(i)),
-                                                    (i%2) ? Type(i+N) : Type(-(i+N))); }); 
-      TTS_IEEE_EQUAL(eve::copysign(a1, a2), b);
+    auto          N = T::value;
+    wide<Type, T> a1([](auto i, auto) { return (i % 2) ? Type(i) : Type(-i); }),
+        a2([N](auto i, auto) { return (i % 2) ? Type(i + N) : Type(-(i + N)); }),
+        b([N](auto i, auto) {
+          return eve::copysign((i % 2) ? Type(i) : Type(-(i)),
+                               (i % 2) ? Type(i + N) : Type(-(i + N)));
+        });
+    TTS_IEEE_EQUAL(eve::copysign(a1, a2), b);
   }
   else
   {
-    auto N = T::value; 
-    wide<Type, T> a1([](auto i,  auto ){ return i; }), 
-      a2([N](auto i,  auto ){ return i%2; }), 
-      b([N](auto i,  auto ){ return eve::copysign(Type(i), Type(i%2)); }); 
+    auto          N = T::value;
+    wide<Type, T> a1([](auto i, auto) { return i; }), a2([N](auto i, auto) { return i % 2; }),
+        b([N](auto i, auto) { return eve::copysign(Type(i), Type(i % 2)); });
     TTS_EQUAL(eve::copysign(a1, a2), b);
   }
 }
@@ -62,20 +63,19 @@ TTS_CASE_TPL("Check copysign behavior on wide+scalar",
 
   if constexpr(std::is_signed_v<Type>)
   {
-      auto N = T::value; 
-      wide<Type, T> a1([](auto i,  auto ){ return (i%2) ? Type(i) : Type(-i); }), 
-        b([N](auto i,  auto ){ return eve::copysign((i%2) ? Type(i) : Type(-(i)),Type(7)); }), 
-        c([N](auto i,  auto ){ return eve::copysign(Type(7), (i%2) ? Type(i) : Type(-(i)));  }); 
-      TTS_IEEE_EQUAL(eve::copysign(a1, Type(7)), b);
-      TTS_IEEE_EQUAL(eve::copysign(Type(7), a1), c); 
+    auto          N = T::value;
+    wide<Type, T> a1([](auto i, auto) { return (i % 2) ? Type(i) : Type(-i); }),
+        b([N](auto i, auto) { return eve::copysign((i % 2) ? Type(i) : Type(-(i)), Type(7)); }),
+        c([N](auto i, auto) { return eve::copysign(Type(7), (i % 2) ? Type(i) : Type(-(i))); });
+    TTS_IEEE_EQUAL(eve::copysign(a1, Type(7)), b);
+    TTS_IEEE_EQUAL(eve::copysign(Type(7), a1), c);
   }
   else
   {
-    using t_t = wide<Type, T>; 
-   t_t a1([](auto i,  auto ){ return i; }), 
-      a2([](auto i,  auto ){ return i%2; }); 
+    using t_t = wide<Type, T>;
+    t_t a1([](auto i, auto) { return i; }), a2([](auto i, auto) { return i % 2; });
     TTS_EQUAL(eve::copysign(a1, Type(7)), a1);
-    TTS_EQUAL(eve::copysign(Type(7), a1), t_t(7)); 
+    TTS_EQUAL(eve::copysign(Type(7), a1), t_t(7));
   }
 }
 

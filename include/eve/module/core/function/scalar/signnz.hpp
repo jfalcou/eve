@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_and.hpp>
-#include <eve/function/scalar/bitwise_or.hpp>   
+#include <eve/function/scalar/bitwise_or.hpp>
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
@@ -25,24 +25,23 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto signnz_(EVE_SUPPORTS(cpu_)
-                                        , T const &a) noexcept
-  requires(T, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto signnz_(EVE_SUPPORTS(cpu_),
+                                         T const &a) noexcept requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      #ifndef EVE_NO_NANS
+#ifndef EVE_NO_NANS
       return is_nan(a) ? Nan(as(a)) : bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
-      #else
+#else
       return bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
-      #endif
+#endif
     }
     else
     {
       if constexpr(std::is_signed_v<T>)
-        return (a>>(sizeof(T)*8-2)) | 1;
+        return (a >> (sizeof(T) * 8 - 2)) | 1;
       else
-        return One(as(a)); 
+        return One(as(a));
     }
   }
 }

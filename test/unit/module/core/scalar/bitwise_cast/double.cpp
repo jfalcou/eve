@@ -19,4 +19,3 @@ TTS_CASE("Check bitwise_cast return type")
   TTS_EXPR_IS(eve::bitwise_cast<ut_t>(double()), ut_t);
   TTS_EXPR_IS(eve::bitwise_cast<double>(double()), double);
 }
-

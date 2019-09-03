@@ -14,29 +14,37 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/assert.hpp>
 #include <cstring>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE T bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<T> const &) noexcept
-  {
-    return a;
-  }
-
   template<typename T, typename Target>
-  EVE_FORCEINLINE Target bitwise_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
+  EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
+                                     T const &a,
+                                     as_<Target> const &) noexcept requires(Target, Vectorizable<T>)
   {
-    static_assert(sizeof(a) == sizeof(Target), "[eve::bitwise_cast scalar] - Size mismatch in bitwise_cast");
+    if constexpr((sizeof(T) != sizeof(Target)))
+    {
+      static_assert(sizeof(T) == sizeof(Target),
+                    "[eve::bitwise_cast] scalar - Parameters size mismatch");
+      return {};
+    }
+    else if constexpr(std::is_same_v<T, Target>)
+    {
+      return a;
+    }
+    else
+    {
+      Target that;
 
-    Target that;
+      void const *src = reinterpret_cast<detail::alias_t<void const> *>(&a);
+      void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
+      std::memcpy(dst, src, sizeof(a));
 
-    void const *src = reinterpret_cast<detail::alias_t<void const> *>(&a);
-    void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
-    std::memcpy(dst,src, sizeof(a));
-
-    return that;
+      return that;
+    }
   }
 }
 

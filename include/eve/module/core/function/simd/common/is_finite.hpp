@@ -22,12 +22,9 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_finite_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_finite_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return is_eqz(v-v);
-    }
+    if constexpr(std::is_floating_point_v<T>) { return is_eqz(v - v); }
     else
     {
       return True(as(v));
@@ -35,7 +32,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_finite_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto is_finite_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     return True(as(v));
   }

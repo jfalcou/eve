@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOGICAL_AND_HPP
-#define LOGICAL_AND_HPP
+#ifndef LOGICAL_XOR_HPP
+#define LOGICAL_XOR_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -28,12 +28,12 @@ TTS_CASE_TPL("Check logical_xor behavior on homogeneous wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto c) { return c - i; }),
-                          rhs([](auto i, auto) { return i % 2; });
-  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::logical_xor(Type(c - i), Type(i % 2)); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i % 2; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto c) { return eve::logical_xor(Type(c - i), Type(i % 2)); });
 
   TTS_EQUAL(ref, eve::logical_xor(lhs, rhs));
 }
@@ -47,10 +47,10 @@ TTS_CASE_TPL("Check plus behavior on wide xor scalar",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto) { return i; });
+  wide<Type, T>          lhs([](auto i, auto) { return i; });
   logical<wide<Type, T>> ref1([](auto i, auto) { return eve::logical_xor(Type(i), Type(2)); });
   logical<wide<Type, T>> ref2([](auto i, auto) { return eve::logical_xor(Type(i), Type(0)); });
 

@@ -7,7 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIMD_IS_NORMAL_HPP_INCLUDED 
+#ifndef EVE_FUNCTION_SIMD_IS_NORMAL_HPP_INCLUDED
 #define EVE_FUNCTION_SIMD_IS_NORMAL_HPP_INCLUDED
 
 #include <eve/function/scalar/is_normal.hpp>

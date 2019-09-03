@@ -24,11 +24,10 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-      return a0-trunc(a0); 
+      return a0 - trunc(a0);
     else
       return Zero(as(a0));
   }

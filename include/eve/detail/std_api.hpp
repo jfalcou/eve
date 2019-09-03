@@ -14,42 +14,40 @@
 #include <tuple>
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmismatched-tags"
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wmismatched-tags"
 #endif
 
 namespace std
 {
   template<std::size_t I, typename T, typename N, typename ABI>
-  struct tuple_element<I, eve::wide<T,N,ABI>>
+  struct tuple_element<I, eve::wide<T, N, ABI>>
   {
     using type = T;
   };
 
-
   template<typename T, typename N, typename ABI>
-  struct tuple_size<eve::wide<T,N,ABI>> : N
-  {};
+  struct tuple_size<eve::wide<T, N, ABI>> : N
+  {
+  };
 }
 #ifdef __clang__
-#pragma clang diagnostic pop
+#  pragma clang diagnostic pop
 #endif
 
 namespace eve
 {
   template<std::size_t I, typename T, typename N, typename ABI>
-  auto get( wide<T,N,ABI> const& w)
+  auto get(wide<T, N, ABI> const &w)
   {
-    return w[I];
+    return w[ I ];
   }
 
   template<std::size_t I, typename T, typename N, typename ABI>
-  auto& get( wide<T,N,ABI>& w)
+  auto &get(wide<T, N, ABI> &w)
   {
-    return w[I];
+    return w[ I ];
   }
 }
 
 #endif
-
-

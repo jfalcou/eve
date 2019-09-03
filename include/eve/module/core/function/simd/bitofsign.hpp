@@ -15,4 +15,3 @@
 #include <eve/module/core/function/simd/common/bitofsign.hpp>
 
 #endif
- 

@@ -28,7 +28,6 @@ namespace eve
     return as_logical_t<T>(true);
   }
 
-
   EVE_MAKE_NAMED_CONSTANT(true_, True);
 }
 

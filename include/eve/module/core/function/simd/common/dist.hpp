@@ -28,74 +28,50 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename U>
-  EVE_FORCEINLINE  auto dist_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      std::conditional_t<is_vectorized_v<T>, T, U>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    { return map(eve::dist, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return dist(a, T{b});
+      return aggregate(eve::dist, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      return dist(U{a},b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T,U>)
-      {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
-        {
-          return aggregate( eve::dist, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::dist, a, b);
-        }
-        else
-        {
-          return eve::max(a, b)-eve::min(a, b);
-        }
-      }
+      if constexpr(std::is_same_v<T, U>) { return eve::max(a, b) - eve::min(a, b); }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::dist] - Incompatible types.");
+        static_assert(wrong<T, U>, "[eve::dist] - no support for current simd api");
         return {};
       }
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::dist(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
 
   // -----------------------------------------------------------------------------------------------
-  // saturated_type
+  // saturated
   template<typename T, typename U>
-  EVE_FORCEINLINE  auto dist_(EVE_SUPPORTS(cpu_)
-                            , saturated_type const &
-                            , T const &v0
-                            , U const &v1) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto
+  dist_(EVE_SUPPORTS(cpu_),
+        saturated_type const &,
+        T const &v0,
+        U const &v1) noexcept requires(std::conditional_t<is_vectorized_v<T>, T, U>,
+                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    if constexpr( !is_vectorized_v<U> )
-    {
-      return saturated_(dist)(v0, T{v1});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return saturated_(dist)(U{v0},v1);
-    }
+    auto d = dist(v0, v1);
+    if constexpr(std::is_integral_v<value_type_t<T>> && std::is_signed_v<value_type_t<T>>)
+    { return if_else(is_ltz(d), Valmax(as(v0)), d); }
     else
     {
-      if constexpr(std::is_integral_v<typename T::value_type> && std::is_signed_v<typename T::value_type>)
-      {
-        auto tmp = dist(v0, v1);
-        return if_else(is_ltz(tmp), Valmax(as(v0)), tmp);
-      }
-      else
-        return eve::dist(v0, v1);
+      return d;
     }
   }
 }

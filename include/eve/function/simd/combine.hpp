@@ -29,11 +29,11 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Logical
   template<typename T, typename N, typename ABI, typename Arch>
-  EVE_FORCEINLINE auto  combine_( EVE_SUPPORTS(Arch),
-                                  logical<wide<T, N, ABI>> const &l,
-                                  logical<wide<T, N, ABI>> const &h) noexcept
+  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(Arch),
+                                logical<wide<T, N, ABI>> const &l,
+                                logical<wide<T, N, ABI>> const &h) noexcept
   {
-    return logical<wide<T, typename N::combined_type>>(l,h);
+    return logical<wide<T, typename N::combined_type>>(l, h);
   }
 }
 

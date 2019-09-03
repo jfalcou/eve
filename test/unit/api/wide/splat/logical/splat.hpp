@@ -31,21 +31,21 @@ TTS_CASE_TPL("Check splatting constructor for logical wide",
              fixed<32>,
              fixed<64>)
 {
-  eve::logical<eve::wide<Type,T>> from_bool_t{true};
-  eve::logical<eve::wide<Type,T>> from_logical_t{eve::logical<Type>(true)};
-  eve::logical<eve::wide<Type,T>> from_value_t{Type{123}};
+  eve::logical<eve::wide<Type, T>> from_bool_t{true};
+  eve::logical<eve::wide<Type, T>> from_logical_t{eve::logical<Type>(true)};
+  eve::logical<eve::wide<Type, T>> from_value_t{Type{123}};
 
-  eve::logical<eve::wide<Type,T>> from_bool_f{false};
-  eve::logical<eve::wide<Type,T>> from_logical_f{eve::logical<Type>(false)};
-  eve::logical<eve::wide<Type,T>> from_value_f{Type{0}};
+  eve::logical<eve::wide<Type, T>> from_bool_f{false};
+  eve::logical<eve::wide<Type, T>> from_logical_f{eve::logical<Type>(false)};
+  eve::logical<eve::wide<Type, T>> from_value_f{Type{0}};
 
-  TTS_EXPECT( std::all_of(from_bool_t.begin()   , from_bool_t.end()   , all_true) );
-  TTS_EXPECT( std::all_of(from_logical_t.begin(), from_logical_t.end(), all_true) );
-  TTS_EXPECT( std::all_of(from_value_t.begin()  , from_value_t.end()  , all_true) );
+  TTS_EXPECT(std::all_of(from_bool_t.begin(), from_bool_t.end(), all_true));
+  TTS_EXPECT(std::all_of(from_logical_t.begin(), from_logical_t.end(), all_true));
+  TTS_EXPECT(std::all_of(from_value_t.begin(), from_value_t.end(), all_true));
 
-  TTS_EXPECT( std::all_of(from_bool_f.begin()   , from_bool_f.end()   , all_false) );
-  TTS_EXPECT( std::all_of(from_logical_f.begin(), from_logical_f.end(), all_false) );
-  TTS_EXPECT( std::all_of(from_value_f.begin()  , from_value_f.end()  , all_false) );
+  TTS_EXPECT(std::all_of(from_bool_f.begin(), from_bool_f.end(), all_false));
+  TTS_EXPECT(std::all_of(from_logical_f.begin(), from_logical_f.end(), all_false));
+  TTS_EXPECT(std::all_of(from_value_f.begin(), from_value_f.end(), all_false));
 }
 
 #endif

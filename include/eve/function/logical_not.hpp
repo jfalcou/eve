@@ -13,5 +13,5 @@
 
 #include <eve/function/scalar/logical_not.hpp>
 #include <eve/function/simd/logical_not.hpp>
- 
+
 #endif

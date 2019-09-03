@@ -29,12 +29,20 @@ namespace eve::detail
   }
 
   template<typename TAG, typename T>
-  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), T const &a, TAG   const &) noexcept
+  EVE_FORCEINLINE constexpr T round_(EVE_SUPPORTS(cpu_), T const &a, TAG const &) noexcept
   {
-    if constexpr(std::is_same_v<TAG, eve::upward_type>)       return eve::ceil(a);
-    if constexpr(std::is_same_v<TAG, eve::downward_type>)     return eve::floor(a);
-    if constexpr(std::is_same_v<TAG, eve::toward_zero_type>)  return eve::trunc(a);
-    if constexpr(std::is_same_v<TAG, eve::to_nearest_type>)   return eve::nearest(a);
+    if constexpr(std::is_same_v<TAG, eve::upward_type>)
+      return eve::ceil(a);
+    else if constexpr(std::is_same_v<TAG, eve::downward_type>)
+      return eve::floor(a);
+    else if constexpr(std::is_same_v<TAG, eve::toward_zero_type>)
+      return eve::trunc(a);
+    else if constexpr(std::is_same_v<TAG, eve::to_nearest_type>)
+      return eve::nearest(a);
+    else
+    {
+      static_assert(wrong<TAG>, "bad option for round call");
+    }
   }
 }
 

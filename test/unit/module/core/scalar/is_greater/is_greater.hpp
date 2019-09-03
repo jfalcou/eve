@@ -19,16 +19,16 @@
 #include <eve/constant/false.hpp>
 #include <type_traits>
 
-TTS_CASE( "Check is_greater return type" )
+TTS_CASE("Check is_greater return type")
 {
-  TTS_EXPR_IS(eve::is_greater(Type(), Type()) ,  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_greater(Type(), Type()), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_greater behavior")
 {
-  TTS_EQUAL(eve::is_greater(Type(1),Type(1)), eve::False<Type>());
-  TTS_EQUAL(eve::is_greater(Type(3),Type(1)), eve::True<Type>());
-  TTS_EQUAL(eve::is_greater(Type(1),Type(3)), eve::False<Type>());
+  TTS_EQUAL(eve::is_greater(Type(1), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_greater(Type(3), Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_greater(Type(1), Type(3)), eve::False<Type>());
 }
 
 #endif

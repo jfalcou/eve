@@ -18,6 +18,10 @@
 #include <eve/wide.hpp>
 #include <algorithm>
 
+#define EVE_WIDE_SIZE_RANGE()                                                                      \
+  eve::fixed<1>, eve::fixed<2>, eve::fixed<4>, eve::fixed<8>, eve::fixed<16>, eve::fixed<32>,      \
+      eve::fixed<64> /**/
+
 namespace tts::ext
 {
   template<typename T, typename N, typename ABI, typename EnableIf>
@@ -37,7 +41,7 @@ namespace tts::ext
     inline bool operator()(arg_t const &l, arg_t const &r) const
     {
       using b_t = typename arg_t::bits_type;
-      return equal<b_t,b_t>{}(l.bits(),r.bits());
+      return equal<b_t, b_t>{}(l.bits(), r.bits());
     }
   };
 
@@ -68,17 +72,17 @@ namespace tts::ext
   };
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-  std::cout << "[EVE] - Target: "<< ::tts::type_id<EVE_CURRENT_API>() << " - Build type: ";
-  #ifdef NDEBUG
+  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Build type: ";
+#ifdef NDEBUG
   std::cout << "Release\n";
-  #else
+#else
   std::cout << "Debug\n";
-  #endif
+#endif
 
-  ::tts::env runtime(argc,argv,std::cout);
-  return ::tts::run( runtime, ::tts::detail::suite, 0, 0 );
+  ::tts::env runtime(argc, argv, std::cout);
+  return ::tts::run(runtime, ::tts::detail::suite, 0, 0);
 }
 
 #endif

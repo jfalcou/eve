@@ -28,21 +28,21 @@ TTS_CASE_TPL("Check bitofsign behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
   if constexpr(std::is_signed_v<Type>)
   {
-    wide<Type, T> lhs([](auto i, auto) { return i%2 ? Type(i) : Type(-i); })
-      ,  ref([](auto i, auto) { return eve::bitofsign(i%2 ? Type(i) : Type(-i)); });
-    
-    TTS_EQUAL(eve::bitofsign(lhs),  ref );
+    wide<Type, T> lhs([](auto i, auto) { return i % 2 ? Type(i) : Type(-i); }),
+        ref([](auto i, auto) { return eve::bitofsign(i % 2 ? Type(i) : Type(-i)); });
+
+    TTS_EQUAL(eve::bitofsign(lhs), ref);
   }
   else
   {
-    wide<Type, T> lhs([](auto i, auto) { return i%3; })
-      ,  ref([](auto i, auto) { return eve::bitofsign(i%3); });
-    TTS_EQUAL(eve::bitofsign(lhs),  ref );
+    wide<Type, T> lhs([](auto i, auto) { return i % 3; }),
+        ref([](auto i, auto) { return eve::bitofsign(i % 3); });
+    TTS_EQUAL(eve::bitofsign(lhs), ref);
   }
 }
 

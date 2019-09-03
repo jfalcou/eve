@@ -26,7 +26,7 @@
 
 TTS_CASE("Check is_flint return type")
 {
-  TTS_EXPR_IS(eve::is_flint(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_flint(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_flint behavior")
@@ -35,11 +35,11 @@ TTS_CASE("Check eve::is_flint behavior")
   TTS_EQUAL(eve::is_flint(Type{2}), eve::True<Type>());
   if constexpr(std::is_floating_point_v<Type>)
   {
-    TTS_EQUAL(eve::is_flint(Type(1)/Type(2)), eve::False<Type>());
-    TTS_EQUAL(eve::is_flint(eve::One <Type>()), eve::True <Type>());  
+    TTS_EQUAL(eve::is_flint(Type(1) / Type(2)), eve::False<Type>());
+    TTS_EQUAL(eve::is_flint(eve::One<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_flint(eve::Inf<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_flint(eve::Minf<Type>()), eve::False<Type>());
-    TTS_EQUAL(eve::is_flint(eve::Nan <Type>()), eve::False<Type>()); 
+    TTS_EQUAL(eve::is_flint(eve::Nan<Type>()), eve::False<Type>());
   }
 }
 

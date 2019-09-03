@@ -16,7 +16,7 @@
 #include <eve/as_logical.hpp>
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/function/scalar/is_eqz.hpp>
-#include <eve/function/scalar/is_lez.hpp>     
+#include <eve/function/scalar/is_lez.hpp>
 #include <eve/constant/false.hpp>
 #include <type_traits>
 
@@ -25,18 +25,17 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_ngtz_(EVE_SUPPORTS(cpu_)
-                                                    , T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_ngtz_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_unsigned_v<T>)
       return is_eqz(a);
     else
     {
       if constexpr(std::is_floating_point_v<T>) return is_lez(a).value() || is_nan(a).value();
-      if constexpr(std::is_integral_v<T>) return is_lez(a); 
+      if constexpr(std::is_integral_v<T>) return is_lez(a);
     }
   }
-  
+
 }
 
 #endif

@@ -26,16 +26,16 @@ TTS_CASE_TPL("Check is_not_equal_with_equal_nans behavior on homogeneous logical
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; }),
-                          rhs([](auto i, auto)  { return i%3 == 0; });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; }),
+      rhs([](auto i, auto) { return i % 3 == 0; });
 
-  logical<wide<Type, T>>  ref([](auto i, auto)  { return eve::is_not_equal_with_equal_nans((i%2 == 0),(i%3 == 0)); });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto) { return eve::is_not_equal_with_equal_nans((i % 2 == 0), (i % 3 == 0)); });
 
   TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(lhs, rhs));
 }
@@ -47,14 +47,14 @@ TTS_CASE_TPL("Check is_not_equal_with_equal_nans behavior on logical<wide> and s
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-             )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; });
-  logical<wide<Type, T>>  ref([](auto i, auto)  { return eve::is_not_equal_with_equal_nans(i%2 == 0,true); });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto) { return eve::is_not_equal_with_equal_nans(i % 2 == 0, true); });
 
   TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(lhs, logical<Type>(true)));
   TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(logical<Type>(true), lhs));

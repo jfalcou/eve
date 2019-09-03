@@ -28,29 +28,29 @@ TTS_CASE_TPL("Check logical_ornot behavior on homogeneous wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto c)  { return c - i; }),
-                          rhs([](auto i, auto)    { return i % 2; });
-  logical<wide<Type, T>>  ref([](auto i, auto c)  { return eve::logical_ornot(Type(c - i), Type(i % 2)); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i % 2; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto c) { return eve::logical_ornot(Type(c - i), Type(i % 2)); });
 
   TTS_EQUAL(ref, eve::logical_ornot(lhs, rhs));
 }
 
-TTS_CASE_TPL( "Check logical_ornot behavior on wide and scalar",
-              fixed<1>,
-              fixed<2>,
-              fixed<4>,
-              fixed<8>,
-              fixed<16>,
-              fixed<32>,
-              fixed<64>)
+TTS_CASE_TPL("Check logical_ornot behavior on wide and scalar",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto) { return i; });
+  wide<Type, T>          lhs([](auto i, auto) { return i; });
   logical<wide<Type, T>> ref1([](auto i, auto) { return eve::logical_ornot(Type(i), Type(2)); });
   logical<wide<Type, T>> ref2([](auto i, auto) { return eve::logical_ornot(Type(2), Type(i)); });
   logical<wide<Type, T>> ref3([](auto i, auto) { return eve::logical_ornot(Type(i), Type(0)); });

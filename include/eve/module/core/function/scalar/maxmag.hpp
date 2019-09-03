@@ -14,47 +14,30 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/tags.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/max.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // Regular case
-  template<typename T>
-  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
-                                     , T const &a0
-                                     , T const &a1) noexcept
+  // Default case
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto maxmag_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
   {
-      auto aa0 = eve::abs(a0);
-      auto aa1 = eve::abs(a1);
-      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : eve::max(a0, a1);
+    return maxmag(regular_type(), a0, a1);
   }
 
   // -----------------------------------------------------------------------------------------------
-  // Pedantic case
-  template<typename T>
-  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
-                                     , pedantic_type const &
-                                     , T const &a0
-                                     , T const &a1) noexcept
+  // Regular, Pedantic or numeric case
+  template<typename Tag, typename T>
+  EVE_FORCEINLINE constexpr auto
+  maxmag_(EVE_SUPPORTS(cpu_), Tag tag, T const &a0, T const &a1) noexcept requires(T,
+                                                                                   Vectorizable<T>)
   {
-      auto aa0 = eve::abs(a0);
-      auto aa1 = eve::abs(a1);
-      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : eve::pedantic_(eve::max)(a0, a1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // numeric case
-  template<typename T>
-  EVE_FORCEINLINE constexpr T maxmag_(EVE_SUPPORTS(cpu_)
-                                     , numeric_type const &
-                                     , T const &a0
-                                     , T const &a1) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-      if (is_nan(a0)) return a1;
-    return maxmag(a0, a1);
+    auto aa0 = eve::abs(a0);
+    auto aa1 = eve::abs(a1);
+    return aa0 < aa1 ? a1 : aa1 < aa0 ? a0 : tag(eve::max)(a0, a1);
   }
 }
 

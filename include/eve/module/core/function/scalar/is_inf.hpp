@@ -21,12 +21,9 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_inf_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_inf_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return eve::abs(a) == Inf<T>();
-    }
+    if constexpr(std::is_floating_point_v<T>) { return eve::abs(a) == Inf<T>(); }
     else
     {
       return false;

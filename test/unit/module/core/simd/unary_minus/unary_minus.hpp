@@ -28,11 +28,10 @@ TTS_CASE_TPL("Check unary_minus behavior on wide",
 {
   using eve::wide;
   wide<Type, T> lhs([](int i, int) { return i + 1; }),
-    ref([](int i, int) { return eve::unary_minus(Type(i + 1)); });
-  
-  TTS_EQUAL(ref, eve::unary_minus(lhs)); 
+      ref([](int i, int) { return eve::unary_minus(Type(i + 1)); });
+
+  TTS_EQUAL(ref, eve::unary_minus(lhs));
   TTS_EQUAL(ref, -lhs);
 }
-
 
 #endif

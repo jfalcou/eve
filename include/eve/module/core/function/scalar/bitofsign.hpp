@@ -21,11 +21,10 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto bitofsign_(EVE_SUPPORTS(cpu_)
-                                           , T const &a) noexcept
-  requires(T, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto bitofsign_(EVE_SUPPORTS(cpu_),
+                                            T const &a) noexcept requires(T, Vectorizable<T>)
   {
-    return bitwise_and(a, Signmask(as(a))); 
+    return bitwise_and(a, Signmask(as(a)));
   }
 }
 

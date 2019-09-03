@@ -31,12 +31,11 @@ namespace eve
 //==================================================================================================
 // X86 SIMD ABI
 #  if !defined(EVE_CURRENT_ABI)
+#    include <immintrin.h>
 #    if EVE_HW_X86 >= EVE_AVX_VERSION
 #      define EVE_CURRENT_ABI ::eve::avx_
-#      include <immintrin.h>
 #    elif EVE_HW_X86 >= EVE_SSE2_VERSION
 #      define EVE_CURRENT_ABI ::eve::sse_
-#      include <nmmintrin.h>
 #    endif
 #  endif
 #endif
@@ -69,9 +68,15 @@ namespace eve
 // Additionnal ISA support
 #if defined(EVE_SUPPORTS_FMA3)
 #  include <immintrin.h>
-namespace eve { inline constexpr bool supports_fma3 = true;   }
+namespace eve
+{
+  inline constexpr bool supports_fma3 = true;
+}
 #else
-namespace eve { inline constexpr bool supports_fma3 = false;  }
+namespace eve
+{
+  inline constexpr bool supports_fma3 = false;
+}
 #endif
 
 #if defined(EVE_SUPPORTS_FMA4)
@@ -81,9 +86,15 @@ namespace eve { inline constexpr bool supports_fma3 = false;  }
 #    include <x86intrin.h>
 #    include <fma4intrin.h>
 #  endif
-namespace eve { inline constexpr bool supports_fma4 = true;   }
+namespace eve
+{
+  inline constexpr bool supports_fma4 = true;
+}
 #else
-namespace eve { inline constexpr bool supports_fma4 = false;  }
+namespace eve
+{
+  inline constexpr bool supports_fma4 = false;
+}
 #endif
 
 #if defined(EVE_SUPPORTS_XOP)
@@ -93,9 +104,15 @@ namespace eve { inline constexpr bool supports_fma4 = false;  }
 #    include <x86intrin.h>
 #    include <xopintrin.h>
 #  endif
-namespace eve { inline constexpr bool supports_xop = true;  }
+namespace eve
+{
+  inline constexpr bool supports_xop = true;
+}
 #else
-namespace eve { inline constexpr bool supports_xop = false; }
+namespace eve
+{
+  inline constexpr bool supports_xop = false;
+}
 #endif
 
 #endif

@@ -15,11 +15,7 @@
 #include <eve/module/core/function/simd/common/sign.hpp>
 
 #if defined(EVE_HW_X86)
-
-#  if EVE_HW_X86 >= EVE_SSSE3_VERSION
-#    include <eve/module/core/function/simd/x86/ssse3/sign.hpp>
-#  endif
+#  include <eve/module/core/function/simd/x86/sign.hpp>
+#endif
 
 #endif
-#endif
- 

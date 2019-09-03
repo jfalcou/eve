@@ -29,12 +29,11 @@ TTS_CASE_TPL("Check div behavior on wide",
 {
   using eve::wide;
 
-    wide<Type, T> lhs([](auto i, auto c) { return c; }),
-                  rhs([](auto i, auto ) { return 1 + i; }),
-                  ref([](auto i, auto c) { return Type(c)/(1 + i); });
+  wide<Type, T> lhs([](auto i, auto c) { return c; }), rhs([](auto i, auto) { return 1 + i; }),
+      ref([](auto i, auto c) { return Type(c) / (1 + i); });
 
-    TTS_ULP_EQUAL(ref, eve::div(lhs, rhs),0.5);
-    TTS_ULP_EQUAL(ref, lhs / rhs,0.5);
+  TTS_ULP_EQUAL(ref, eve::div(lhs, rhs), 0.5);
+  TTS_ULP_EQUAL(ref, lhs / rhs, 0.5);
 }
 
 TTS_CASE_TPL("Check div behavior on wide + scalar",
@@ -48,15 +47,15 @@ TTS_CASE_TPL("Check div behavior on wide + scalar",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i+1; }),
-                rref([](auto i, auto) { return (1+i) / Type(4); }),
-                lref([](auto i, auto) { return Type(4) / (i+1); });
+  wide<Type, T> lhs([](auto i, auto) { return i + 1; }),
+      rref([](auto i, auto) { return (1 + i) / Type(4); }),
+      lref([](auto i, auto) { return Type(4) / (i + 1); });
 
-  TTS_ULP_EQUAL(lref, eve::div(4, lhs),0.5);
-  TTS_ULP_EQUAL(rref, eve::div(lhs, 4),0.5);
+  TTS_ULP_EQUAL(lref, eve::div(4, lhs), 0.5);
+  TTS_ULP_EQUAL(rref, eve::div(lhs, 4), 0.5);
 
-  TTS_ULP_EQUAL(lref, 4 / lhs,0.5);
-  TTS_ULP_EQUAL(rref, lhs / 4,0.5);
+  TTS_ULP_EQUAL(lref, 4 / lhs, 0.5);
+  TTS_ULP_EQUAL(rref, lhs / 4, 0.5);
 }
 
 #endif

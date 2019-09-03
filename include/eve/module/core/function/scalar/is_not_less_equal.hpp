@@ -22,13 +22,15 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_not_less_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
+  EVE_FORCEINLINE constexpr auto
+  is_not_less_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(as_logical_t<T>,
+                                                                                   Vectorizable<T>,
+                                                                                   Vectorizable<U>)
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
-      return static_cast<bool>(a) >  static_cast<bool>(b);
+      return static_cast<bool>(a) > static_cast<bool>(b);
     else if constexpr(std::is_integral_v<T>)
-      return a >  b;
+      return a > b;
     else
       return (a > b) || is_unordered(a, b);
   }

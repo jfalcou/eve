@@ -23,11 +23,14 @@ namespace eve::detail
                                            wide<T, N, neon64_> const &v1) noexcept
   {
 #if defined(__aarch64__)
-          if  constexpr(std::is_same_v<T, double>)  return vdiv_f64(v0, v1);
-    else  if  constexpr(std::is_same_v<T, float>)   return vdiv_f32(v0, v1);
-    else                                            return map(div, v0, v1);
+    if constexpr(std::is_same_v<T, double>)
+      return vdiv_f64(v0, v1);
+    else if constexpr(std::is_same_v<T, float>)
+      return vdiv_f32(v0, v1);
+    else
+      return map(div, v0, v1);
 #else
-    return div_(EVE_RETARGET(simd_), v0, v1);
+    return div_(EVE_RETARGET(cpu_), v0, v1);
 #endif
   }
 
@@ -37,11 +40,14 @@ namespace eve::detail
                                             wide<T, N, neon128_> const &v1) noexcept
   {
 #if defined(__aarch64__)
-          if  constexpr(std::is_same_v<T, double>)  return vdivq_f64(v0, v1);
-    else  if  constexpr(std::is_same_v<T, float>)   return vdivq_f32(v0, v1);
-    else                                            return map(div, v0, v1);
+    if constexpr(std::is_same_v<T, double>)
+      return vdivq_f64(v0, v1);
+    else if constexpr(std::is_same_v<T, float>)
+      return vdivq_f32(v0, v1);
+    else
+      return map(div, v0, v1);
 #else
-    return div_(EVE_RETARGET(simd_), v0, v1);
+    return div_(EVE_RETARGET(cpu_), v0, v1);
 #endif
   }
 }

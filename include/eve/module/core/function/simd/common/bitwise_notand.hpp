@@ -15,71 +15,59 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_cast.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_>
-                  bitwise_notand_(EVE_SUPPORTS(simd_),
-                                  wide<T, N, aggregated_> const &v0,
-                                  wide<T, N, aggregated_> const &v1) noexcept
-  {
-    return aggregate(eve::bitwise_notand, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto bitwise_notand_(EVE_SUPPORTS(simd_),
-                                       wide<T, N, emulated_> const &v0,
-                                       wide<T, N, emulated_> const &v1) noexcept
-  {
-    return map(eve::bitwise_notand, v0, v1);
-  }
-
-  template<typename T, typename N, typename U>
-  EVE_FORCEINLINE auto bitwise_notand_(EVE_SUPPORTS(simd_),
-                                       wide<T, N, emulated_> const &v0,
-                                       U const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                      Convertible<U, T>)
-  {
-    return map(eve::bitwise_notand, v0, T(v1));
-  }
-
-  template<typename T, typename N, typename U>
+  template<typename T, typename U>
   EVE_FORCEINLINE auto
-  bitwise_notand_(EVE_SUPPORTS(simd_),
-                  U const &                    v0,
-                  wide<T, N, emulated_> const &v1) noexcept requires(wide<T, N, emulated_>,
-                                                                     Convertible<U, T>) = delete;
-
-  // -----------------------------------------------------------------------------------------------
-  // Support for mixed type with auto-splat
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto bitwise_notand_(EVE_SUPPORTS(simd_),
-                                       wide<T, N, ABI> const &v0,
-                                       U const &              v1) noexcept requires(wide<T, N, ABI>,
-                                                                      Convertible<U, T>)
+  bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      std::conditional_t<is_vectorized_v<T>, T, U>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    return eve::bitwise_notand(v0, wide<T, N, ABI>(v1));
-  }
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    using vt_t  = value_type_t<T>;
 
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  bitwise_notand_(EVE_SUPPORTS(simd_),
-                  U const &              v0,
-                  wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                               Convertible<U, T>) = delete;
-
-  template<typename T, typename N, typename U, typename M>
-  EVE_FORCEINLINE auto
-  bitwise_notand_(EVE_SUPPORTS(simd_), wide<U, M> const &v0, wide<T, N> const &v1) noexcept
-  {
-    return eve::bitwise_notand(v0, bitwise_cast<wide<U, M>>(v1));
+    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U>)
+    {
+      if constexpr(sizeof(U) == sizeof(vt_t))
+      // this will ensure that no scalar conversion will take place in aggregated
+      // in the case vector and scalar not of the value type
+      {
+        return eve::bitwise_notand(a, T(bitwise_cast<vt_t>(b)));
+      }
+      else
+      {
+        static_assert(sizeof(U) == sizeof(vt_t),
+                      "[eve::bitwise_notand] common - Types size mismatch");
+        return {};
+      }
+    }
+    else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    {
+      return map(eve::bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+    }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    {
+      return aggregate(
+          eve::bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+    }
+    else if constexpr(is_vectorized_v<T> && !is_vectorized_v<U>)
+    {
+      return eve::bitwise_notand(a, T{b});
+    }
+    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    {
+      return eve::bitwise_notand(a, bitwise_cast<T>(b));
+    }
+    else
+    {
+      static_assert(wrong<T, U>, "[eve::bitwise_notand] - no support for current simd api");
+      return {};
+    }
   }
 }
 

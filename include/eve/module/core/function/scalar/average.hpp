@@ -15,22 +15,20 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/function/scalar/fma.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto average_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto
+  average_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
   {
-    if constexpr(std::is_integral_v<T>)
-    {
-      return (a0 & a1) + ((a0 ^ a1)>>1);
-    }
+    if constexpr(std::is_integral_v<T>) { return (a0 & a1) + ((a0 ^ a1) >> 1); }
     else
     {
-      return fma(a0,Half(as(a0)),a1*Half(as(a0)));
+      return fma(a0, Half(as(a0)), a1 * Half(as(a0)));
     }
   }
 }

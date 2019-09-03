@@ -21,32 +21,30 @@
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE( "Check if_else(.,  zero_, one_) return type" )
+TTS_CASE("Check if_else(.,  zero_, one_) return type")
 {
-  TTS_EXPR_IS(eve::if_else[eve::as(Type())](Type(), eve::zero_, eve::one_ ) , Type );
-  TTS_EXPR_IS(eve::if_else[eve::as(Type())](eve::logical<Type>(), eve::zero_, eve::one_ ) , Type );
-  TTS_EXPR_IS(eve::if_else[eve::as(Type())](true , eve::zero_ , eve::one_ ) , Type );
-  TTS_EXPR_IS(eve::if_else(Type(), eve::zero_, eve::one_ ) , Type );
-  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), eve::zero_, eve::one_ ) , Type );
+  TTS_EXPR_IS(eve::if_else[ eve::as(Type()) ](Type(), eve::zero_, eve::one_), Type);
+  TTS_EXPR_IS(eve::if_else[ eve::as(Type()) ](eve::logical<Type>(), eve::zero_, eve::one_), Type);
+  TTS_EXPR_IS(eve::if_else[ eve::as(Type()) ](true, eve::zero_, eve::one_), Type);
+  TTS_EXPR_IS(eve::if_else(Type(), eve::zero_, eve::one_), Type);
+  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), eve::zero_, eve::one_), Type);
 }
- 
 
 TTS_CASE("Check if_else(., zero_, one_) behavior ")
 {
   auto f = eve::Zero<Type>();
   auto t = eve::One<Type>();
 
-  
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( 1   , eve::zero_, eve::one_  ), f);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( 1.0 , eve::zero_, eve::one_  ), f);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( true, eve::zero_, eve::one_  ), f);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( eve::True<Type>()  , eve::zero_, eve::one_), f);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( t   , eve::zero_, eve::one_  ), f);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( 0   , eve::zero_, eve::one_  ), t);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( 0.0 , eve::zero_, eve::one_  ), t);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( false , eve::zero_, eve::one_), t);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( eve::False<Type>(), eve::zero_, eve::one_), t);
-  TTS_EQUAL ( eve::if_else[eve::as(Type())]( f   , eve::zero_, eve::one_), t);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](1, eve::zero_, eve::one_), f);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](1.0, eve::zero_, eve::one_), f);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](true, eve::zero_, eve::one_), f);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](eve::True<Type>(), eve::zero_, eve::one_), f);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](t, eve::zero_, eve::one_), f);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](0, eve::zero_, eve::one_), t);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](0.0, eve::zero_, eve::one_), t);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](false, eve::zero_, eve::one_), t);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](eve::False<Type>(), eve::zero_, eve::one_), t);
+  TTS_EQUAL(eve::if_else[ eve::as(Type()) ](f, eve::zero_, eve::one_), t);
 }
 
 #endif

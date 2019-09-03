@@ -1,11 +1,11 @@
 #include <eve/function/shr.hpp>
 #include <eve/wide.hpp>
 
-
-using iT = std::int32_t;
+using iT      = std::int32_t;
 using wide_it = eve::wide<iT, eve::fixed<4>>;
 
-int main() {
+int main()
+{
   wide_it pi = {100, 200, -2, 3};
   wide_it qi = {1, 2, 3, 2};
 
@@ -18,7 +18,7 @@ int main() {
 
   std::cout << "---- scalar" << '\n'
             << "<- xi  =                      " << xi << '\n'
-            << "<- mxi =                      " << mxi << '\n' 
+            << "<- mxi =                      " << mxi << '\n'
             << "<- yi  =                      " << yi << '\n'
             << "-> eve::shr(xi, yi) = " << eve::shr(xi, yi) << '\n'
             << "-> eve::shr(mxi, yi)= " << eve::shr(mxi, yi) << '\n';

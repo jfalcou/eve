@@ -14,25 +14,16 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/fma.hpp>
 
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#   if defined(EVE_SUPPORTS_FMA3)
-#    include <eve/module/core/function/simd/x86/fma3/fma.hpp>
-#   endif
-#   if defined(EVE_SUPPORTS_FMA4) || defined(EVE_SUPPORTS_XOP)
-#    include <eve/module/core/function/simd/x86/fma4/fma.hpp>
-#   endif
-#  endif
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/fma.hpp>
+#endif
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/fma.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/fma.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/fma.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/fma.hpp>
 #endif
 
 #endif

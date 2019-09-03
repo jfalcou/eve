@@ -19,33 +19,37 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check eve::is_not_equal_with_equal_nans return type" )
+TTS_CASE("Check eve::is_not_equal_with_equal_nans return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(Type()          , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(logical<Type>() , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(logical<Type>() , logical<Type>()),  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(Type()          , logical<Type>()),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(Type(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(logical<Type>(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(logical<Type>(), logical<Type>()),
+              eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_equal_with_equal_nans(Type(), logical<Type>()), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_equal_with_equal_nans_with_equal_nans behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(1),Type(1))  , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3),Type(1))  , eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(1), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3), Type(1)), eve::True<Type>());
 
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::Nan<Type>(), eve::Nan<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::Nan<Type>(), eve::Nan<Type>()),
+            eve::False<Type>());
   TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::Nan<Type>(), Type(4)), eve::True<Type>());
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(7), eve::Nan<Type>() ), eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(7), eve::Nan<Type>()), eve::True<Type>());
 
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(),Type(1))            , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::False<Type>(),Type(1))           , eve::True<Type>());
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(),eve::True<Type>())  , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(),eve::False<Type>()) , eve::True<Type>());
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3),eve::True<Type>())            , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3),eve::False<Type>())           , eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::False<Type>(), Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(), eve::True<Type>()),
+            eve::False<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(eve::True<Type>(), eve::False<Type>()),
+            eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3), eve::True<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::is_not_equal_with_equal_nans(Type(3), eve::False<Type>()), eve::True<Type>());
 }
 
 #endif

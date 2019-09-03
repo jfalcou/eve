@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
   {
-    store( bitwise_cast<wide<T,N,ABI>>(value), (T*)(ptr));
+    store(bitwise_cast<wide<T, N, ABI>>(value), (T *)(ptr));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_),
          logical<wide<T, S, ABI>> const &value,
-         aligned_ptr<logical<T>, N>              ptr,
+         aligned_ptr<logical<T>, N>      ptr,
          std::enable_if_t<(logical<wide<T, S, ABI>>::static_alignment <= N)> * = 0) noexcept
   {
     store(value, ptr.get());

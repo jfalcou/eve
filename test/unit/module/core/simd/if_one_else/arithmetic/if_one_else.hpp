@@ -22,35 +22,43 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check if_one_else behavior on homogeneous wide"
-            , fixed<1>,fixed<2>, fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check if_one_else behavior on homogeneous wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; })
-              , rhs1([](auto i, auto ) { return i%2+1; })
-              , rhs2([](auto i, auto ) { return i%3; });
+  wide<Type, T> cond([](auto i, auto) { return (i % 2) * i; }),
+      rhs1([](auto i, auto) { return i % 2 + 1; }), rhs2([](auto i, auto) { return i % 3; });
 
-  auto z = eve::One<wide<Type,T>>();
-  auto z_= eve::one_; 
-  TTS_IEEE_EQUAL(eve::if_else(cond, z, rhs1) , eve::if_else(cond, z_, rhs1));  
-  
+  auto z  = eve::One<wide<Type, T>>();
+  auto z_ = eve::one_;
+  TTS_IEEE_EQUAL(eve::if_else(cond, z, rhs1), eve::if_else(cond, z_, rhs1));
 }
 
-TTS_CASE_TPL( "Check if_one_else behavior on wide + scalar"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check if_one_else behavior on wide + scalar",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>    lhs([](int i, int ) { return i%3; }); 
+  wide<Type, T> lhs([](int i, int) { return i % 3; });
 
-  auto z = eve::One<wide<Type,T>>();
-  auto z_= eve::one_; 
-  TTS_IEEE_EQUAL(eve::if_else(lhs, z, Type(7)) , eve::if_else(lhs, z_, Type(7)));  
+  auto z  = eve::One<wide<Type, T>>();
+  auto z_ = eve::one_;
+  TTS_IEEE_EQUAL(eve::if_else(lhs, z, Type(7)), eve::if_else(lhs, z_, Type(7)));
 }
 
 #endif

@@ -18,12 +18,6 @@
 namespace eve
 {
   EVE_MAKE_CALLABLE(saturate_, saturate);
-
-  template<typename Target, typename Arg>
-  EVE_FORCEINLINE constexpr Arg saturate(Arg const &a0) noexcept
-  {
-    return saturate_(a0, as_<Target>{});
-  }
 }
 
 #endif

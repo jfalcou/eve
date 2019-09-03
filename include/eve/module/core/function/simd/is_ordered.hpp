@@ -15,13 +15,7 @@
 #include <eve/module/core/function/simd/common/is_ordered.hpp>
 
 #if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/is_ordered.hpp>
-#  endif
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/is_ordered.hpp>
-#  endif
+#  include <eve/module/core/function/simd/x86/is_ordered.hpp>
 #endif
 
 #endif
-

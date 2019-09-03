@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/scalar/bitwise_and.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -22,11 +23,19 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr T bitwise_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE constexpr auto
+  bitwise_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
+                                                                                Vectorizable<T>,
+                                                                                Vectorizable<U>)
   {
-    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_andnot - Arguments have incompatible size");
-
-    return bitwise_and(a, bitwise_not(b));
+    if constexpr((sizeof(T) != sizeof(U)))
+    {
+      static_assert(sizeof(T) == sizeof(U),
+                    "[eve::bitwise_andnot] scalar - Arguments have incompatible size");
+      return {};
+    }
+    else
+      return bitwise_and(a, bitwise_not(b));
   }
 }
 

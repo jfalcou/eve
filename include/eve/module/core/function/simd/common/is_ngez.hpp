@@ -23,21 +23,20 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_ngez_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_ngez_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_unsigned_v<T>)
-    {
-      return False(as(v));
-    }
+    if constexpr(std::is_unsigned_v<T>) { return False(as(v)); }
     else
     {
-      if constexpr(std::is_floating_point_v<T>) return is_not_greater_equal(v, Zero(as(v)));
-      else                                      return is_ltz(v);
+      if constexpr(std::is_floating_point_v<T>)
+        return is_not_greater_equal(v, Zero(as(v)));
+      else
+        return is_ltz(v);
     }
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_ngez_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto is_ngez_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     return False(as(v));
   }

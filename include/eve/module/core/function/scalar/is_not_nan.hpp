@@ -17,12 +17,13 @@
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_nan_(EVE_SUPPORTS(cpu_)
-                                                       , T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto
+  is_not_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return a == a;
@@ -32,4 +33,3 @@ namespace eve::detail
 }
 
 #endif
-

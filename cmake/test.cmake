@@ -166,4 +166,10 @@ add_custom_target(tests)
 add_custom_target(unit)
 add_dependencies(tests unit)
 
+## Setup aggregation of tests
+add_custom_target(basic.unit)
+add_dependencies(basic.unit arch.unit)
+add_dependencies(basic.unit doc.unit)
+add_dependencies(basic.unit api.unit)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/test/)

@@ -19,13 +19,13 @@ namespace eve
   template<typename T>
   struct as_arithmetic
   {
-    using type = T ;
+    using type = T;
   };
 
   template<>
-  struct as_arithmetic < bool >
+  struct as_arithmetic<bool>
   {
-    using type = bool ;
+    using type = bool;
   };
 
   template<typename T>

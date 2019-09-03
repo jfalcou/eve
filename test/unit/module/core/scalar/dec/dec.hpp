@@ -24,38 +24,57 @@
 #include <type_traits>
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4146 ) // unary - on unsigned (?)
+#  pragma warning(push)
+#  pragma warning(disable : 4146) // unary - on unsigned (?)
 #endif
 
-TTS_CASE("Check dec return type")
-{
-  TTS_EXPR_IS(eve::dec(Type(0)),  Type);
-}
+TTS_CASE("Check dec return type") { TTS_EXPR_IS(eve::dec(Type(0)), Type); }
 
 TTS_CASE("Check eve::dec behavior")
 {
   TTS_EQUAL(eve::dec(Type{1}), Type(0));
   TTS_EQUAL(eve::dec(Type{2}), Type(1));
-  TTS_EQUAL(eve::dec[Type(1) > Type(0)](Type(1)),  Type(0));
-  TTS_EQUAL(eve::dec[Type(1) > Type(2)](eve::Zero<Type>()),  Type(0));
+  TTS_EQUAL(eve::dec[ Type(1) > Type(0) ](Type(1)), Type(0));
+  TTS_EQUAL(eve::dec[ Type(1) > Type(2) ](eve::Zero<Type>()), Type(0));
 
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::dec(static_cast<Type>(-2)), Type(-3));
-    TTS_EQUAL(eve::dec[Type(-1) > Type(0)](eve::Zero<Type>()),  Type(0));
+    TTS_EQUAL(eve::dec[ Type(-1) > Type(0) ](eve::Zero<Type>()), Type(0));
   }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_IEEE_EQUAL(eve::dec(eve::Nan<Type>()), eve::Nan<Type>());
     TTS_IEEE_EQUAL(eve::dec(-eve::Nan<Type>()), eve::Nan<Type>());
     TTS_EQUAL(eve::dec(eve::Mzero<Type>()), Type(-1));
-    TTS_EQUAL(eve::dec(eve::Zero<Type>()),  Type(-1));
+    TTS_EQUAL(eve::dec(eve::Zero<Type>()), Type(-1));
+  }
+}
+
+TTS_CASE("Check saturated_(dec) behavior")
+{
+  TTS_EQUAL(eve::saturated_(eve::dec)(eve::Valmin<Type>()), eve::Valmin<Type>());
+  TTS_EQUAL(eve::saturated_(eve::dec)(Type{1}), Type(0));
+  TTS_EQUAL(eve::saturated_(eve::dec)(Type{2}), Type(1));
+  TTS_EQUAL(eve::saturated_(eve::dec[ Type(1) > Type(0) ])(Type(1)), Type(0));
+  TTS_EQUAL(eve::saturated_(eve::dec[ Type(1) > Type(2) ])(eve::Zero<Type>()), Type(0));
+
+  if constexpr(std::is_signed_v<Type>)
+  {
+    TTS_EQUAL(eve::saturated_(eve::dec)(static_cast<Type>(-2)), Type(-3));
+    TTS_EQUAL(eve::saturated_(eve::dec[ Type(-1) > Type(0) ])(eve::Zero<Type>()), Type(0));
+  }
+  if constexpr(std::is_floating_point_v<Type>)
+  {
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dec)(eve::Nan<Type>()), eve::Nan<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dec)(-eve::Nan<Type>()), eve::Nan<Type>());
+    TTS_EQUAL(eve::saturated_(eve::dec)(eve::Mzero<Type>()), Type(-1));
+    TTS_EQUAL(eve::saturated_(eve::dec)(eve::Zero<Type>()), Type(-1));
   }
 }
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( pop )
+#  pragma warning(pop)
 #endif
 
 #endif

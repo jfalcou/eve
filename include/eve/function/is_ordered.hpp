@@ -15,4 +15,3 @@
 #include <eve/function/simd/is_ordered.hpp>
 
 #endif
-

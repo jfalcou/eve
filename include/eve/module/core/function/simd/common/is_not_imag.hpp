@@ -21,15 +21,13 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_not_imag_(EVE_SUPPORTS(simd_)
-                               , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_not_imag_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-      return is_nez(v);
+    return is_nez(v);
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_not_imag_(EVE_SUPPORTS(simd_)
-                               , logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto is_not_imag_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     return v;
   }

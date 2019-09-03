@@ -14,6 +14,4 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/function/simd/common/is_not_denormal.hpp>
 
-
 #endif
- 

@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check store behavior to unaligned logical pointer",
 
   auto filler = [](auto i, auto) { return i % 3 == 0; };
 
-  logical<wide<Type,T>>                  simd(filler);
+  logical<wide<Type, T>>                  simd(filler);
   std::array<logical<Type>, 3 * T::value> ref;
   std::array<logical<Type>, 3 * T::value> target;
 
@@ -67,9 +67,9 @@ TTS_CASE_TPL("Check store behavior to aligned pointer of logical",
 
   auto filler = [](auto i, auto) { return i % 3 == 0; };
 
-  constexpr auto algt = logical<wide<Type,T>>::alignment();
+  constexpr auto algt = logical<wide<Type, T>>::alignment();
 
-  logical<wide<Type,T>>                                simd(filler);
+  logical<wide<Type, T>>                                simd(filler);
   alignas(algt) std::array<logical<Type>, 3 * T::value> ref;
   alignas(algt) std::array<logical<Type>, 3 * T::value> target;
 

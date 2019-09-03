@@ -29,11 +29,11 @@ TTS_CASE_TPL("Check is_ngez behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>          lhs([](auto i, auto) { return i%2; });
-  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_ngez(Type(i%2)); });
+  wide<Type, T>          lhs([](auto i, auto) { return i % 2; });
+  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_ngez(Type(i % 2)); });
 
   TTS_EQUAL(ref, eve::is_ngez(lhs));
 }
@@ -47,10 +47,10 @@ TTS_CASE_TPL("Check is_ngez behavior on logical<wide>",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
-  using t_t = wide<Type, T>; 
-  eve::logical<t_t> lhs([](auto i, auto) { return (i%2 == 0); });
+  using eve::wide;
+  using t_t = wide<Type, T>;
+  eve::logical<t_t> lhs([](auto i, auto) { return (i % 2 == 0); });
 
   TTS_EQUAL(eve::False<t_t>(), eve::is_ngez(lhs));
 }

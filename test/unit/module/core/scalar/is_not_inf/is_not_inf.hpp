@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_INF_HPP
-#define IS_INF_HPP
+#ifndef IS_NOT_INF_HPP
+#define IS_NOT_INF_HPP
 
 #include "test.hpp"
 #include <eve/constant/false.hpp>
@@ -25,7 +25,7 @@
 
 TTS_CASE("Check is_not_inf return type")
 {
-  TTS_EXPR_IS(eve::is_not_inf(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_inf(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_inf behavior")

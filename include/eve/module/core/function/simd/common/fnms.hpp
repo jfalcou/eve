@@ -18,50 +18,18 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/unary_minus.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/function/fms.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U, typename V>
-  EVE_FORCEINLINE auto fnms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const & c) noexcept
-                  requires( std::conditional_t< !is_vectorized_v<T>
-                                              , std::conditional_t<is_vectorized_v<U>,U,V>
-                                              , T
-                                              >,
-                            detail::Either< is_vectorized_v<T>,
-                                            is_vectorized_v<U>,
-                                            is_vectorized_v<V>
-                                          >
-                          )
+  EVE_FORCEINLINE auto
+  fnms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
+      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
   {
-    static constexpr auto vT = is_vectorized_v<T>;
-    static constexpr auto vU = is_vectorized_v<U>;
-    static constexpr auto vV = is_vectorized_v<V>;
-
-    if      constexpr(  vT && !vU && !vV ) return fnms(  a , T{b}, T{c});
-    else if constexpr(  vT &&  vU && !vV ) return fnms(  a ,   b , T{c});
-    else if constexpr(  vT && !vU &&  vV ) return fnms(  a , T{b},   c );
-    else if constexpr( !vT &&  vU && !vV ) return fnms(U{a},   b , U{c});
-    else if constexpr( !vT &&  vU &&  vV ) return fnms(U{a},   b ,   c );
-    else if constexpr( !vT && !vU &&  vV ) return fnms(V{a}, V{b},   c );
-    else
-    {
-      if constexpr(std::is_same_v<T,U> && std::is_same_v<T,V>)
-      {
-        using abi_t = typename T::abi_type;
-        if      constexpr( is_aggregated_v<abi_t> ) return aggregate( eve::fnms, a, b, c);
-        else if constexpr( is_emulated_v<abi_t>   ) return map( eve::fnms, a, b, c);
-        else                                        return -eve::fma(a,b,c);
-      }
-      else
-      {
-        static_assert ( std::is_same_v<T,U> && std::is_same_v<T,V>,
-                        "[eve::fnms] - Incompatible types."
-                      );
-        return {};
-      }
-    }
+    return fms(-a, b, c);
   }
 }
 

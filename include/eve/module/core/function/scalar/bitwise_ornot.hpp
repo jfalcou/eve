@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/function/scalar/bitwise_or.hpp>
 #include <eve/function/scalar/bitwise_not.hpp>
 #include <type_traits>
@@ -22,10 +23,16 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr T bitwise_ornot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE constexpr auto
+  bitwise_ornot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
+                                                                               Vectorizable<T>,
+                                                                               Vectorizable<U>)
   {
-    static_assert(sizeof(T) == sizeof(U), "eve::bitwise_ornot - Arguments have incompatible size");
-    return eve::bitwise_or(a, eve::bitwise_not(b));
+    if constexpr(sizeof(T) != sizeof(U))
+      static_assert(sizeof(T) == sizeof(U),
+                    "[eve::bitwise_ornot] scalar - Arguments have incompatible size");
+    else
+      return eve::bitwise_or(a, eve::bitwise_not(b));
   }
 }
 

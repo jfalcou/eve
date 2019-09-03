@@ -149,7 +149,7 @@ jobs:
     <<: *docker_gcc
     steps:
       - run: echo "Test api.unit completed"
-  sync_doc:
+  sync_basic:
     <<: *docker_gcc
     steps:
       - run: echo "Test doc.unit completed"
@@ -159,202 +159,68 @@ jobs:
       - run: echo "Test core.scalar.unit completed"
 
   ##================================================================================================
-  ## Arch tests
+  ## Basic tests
   ##================================================================================================
-  gcc_sse2_arch:
+  gcc_sse2_basic:
     <<: *config_gcc_sse2
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse2"
     <<: *steps_test_gcc
-  gcc_sse4_arch:
+  gcc_sse4_basic:
     <<: *config_gcc_sse4
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
-  gcc_avx_arch:
+  gcc_avx_basic:
     <<: *config_gcc_avx
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
-  gcc_fma3_arch:
+  gcc_fma3_basic:
     <<: *config_gcc_avx
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
-  gcc_avx2_arch:
+  gcc_avx2_basic:
     <<: *config_gcc_avx2
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_gcc
-  clang_avx2_arch:
+  clang_avx2_basic:
     <<: *config_clang_avx2
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_arch:
+  arm_neon_basic:
     <<: *config_gcc_arm
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mfpu=neon -Wno-psabi"
     <<: *steps_test_neon
-  arm_aarch64_arch:
+  arm_aarch64_basic:
     <<: *config_gcc_aarch64
     environment:
-      TARGET: arch
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
-  ppc_vsx_arch:
+  ppc_vsx_basic:
     <<: *config_gcc_ppc64
     environment:
-      TARGET: arch
-      REPLICATION: 8
-      OPTIONS: "-mvsx -mpower8-vector"
-    <<: *steps_test_ppc64
-
-  ##================================================================================================
-  ## API tests
-  ##================================================================================================
-  gcc_sse2_api:
-    <<: *config_gcc_sse2
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-msse2"
-    <<: *steps_test_gcc
-  gcc_sse4_api:
-    <<: *config_gcc_sse4
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-msse4.2"
-    <<: *steps_test_gcc
-  gcc_avx_api:
-    <<: *config_gcc_avx
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mavx"
-    <<: *steps_test_gcc
-  gcc_fma3_api:
-    <<: *config_gcc_avx
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mavx -mfma"
-    <<: *steps_test_gcc
-  gcc_avx2_api:
-    <<: *config_gcc_avx2
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_gcc
-  clang_avx2_api:
-    <<: *config_clang_avx2
-    environment:
-      TARGET: api
-      OPTIONS: "-mavx2"
-      REPLICATION: 8
-    <<: *steps_test_clang_
-  arm_neon_api:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_api:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-Wno-psabi"
-    <<: *steps_test_aarch64
-  ppc_vsx_api:
-    <<: *config_gcc_ppc64
-    environment:
-      TARGET: api
-      REPLICATION: 8
-      OPTIONS: "-mvsx -mpower8-vector"
-    <<: *steps_test_ppc64
-
-  ##================================================================================================
-  ## Doc tests
-  ##================================================================================================
-  gcc_sse2_doc:
-    <<: *config_gcc_sse2
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-msse2"
-    <<: *steps_test_gcc
-  gcc_sse4_doc:
-    <<: *config_gcc_sse4
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-msse4.2"
-    <<: *steps_test_gcc
-  gcc_avx_doc:
-    <<: *config_gcc_avx
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mavx"
-    <<: *steps_test_gcc
-  gcc_fma3_doc:
-    <<: *config_gcc_avx
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mavx -mfma"
-    <<: *steps_test_gcc
-  gcc_avx2_doc:
-    <<: *config_gcc_avx2
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_gcc
-  clang_avx2_doc:
-    <<: *config_clang_avx2
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_clang_
-  arm_neon_doc:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -Wno-psabi"
-    <<: *steps_test_neon
-  arm_aarch64_doc:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: doc
-      REPLICATION: 8
-      OPTIONS: "-Wno-psabi"
-    <<: *steps_test_aarch64
-  ppc_vsx_doc:
-    <<: *config_gcc_ppc64
-    environment:
-      TARGET: doc
+      TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mvsx -mpower8-vector"
     <<: *steps_test_ppc64
@@ -440,56 +306,56 @@ jobs:
     <<: *config_gcc_sse4
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_simd:
     <<: *config_gcc_avx
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
   gcc_fma3_simd:
     <<: *config_gcc_avx
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_simd:
     <<: *config_gcc_avx2
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx2"
     <<: *steps_test_gcc
   clang_avx2_simd:
     <<: *config_clang_avx2
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
   arm_neon_simd:
     <<: *config_gcc_arm
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mfpu=neon -Wno-psabi"
     <<: *steps_test_neon
   arm_aarch64_simd:
     <<: *config_gcc_aarch64
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
   ppc_vsx_simd:
     <<: *config_gcc_ppc64
     environment:
       TARGET: core.simd
-      REPLICATION: 2
+      REPLICATION: 4
       OPTIONS: "-mvsx -mpower8-vector"
     <<: *steps_test_ppc64
 
@@ -500,141 +366,57 @@ workflows:
     ##==============================================================================================
     ## All architecture tests in parallel
     ##==============================================================================================
-      - arm_aarch64_arch
-      - arm_neon_arch
-      - ppc_vsx_arch
-      - gcc_sse2_arch
-      - gcc_sse4_arch
-      - gcc_avx_arch
-      - gcc_fma3_arch
-      - gcc_avx2_arch
-      - clang_avx2_arch
-      - sync_arch:
+      - arm_aarch64_basic
+      - arm_neon_basic
+      - ppc_vsx_basic
+      - gcc_sse2_basic
+      - gcc_sse4_basic
+      - gcc_avx_basic
+      - gcc_fma3_basic
+      - gcc_avx2_basic
+      - clang_avx2_basic
+      - sync_basic:
           requires:
-            - arm_aarch64_arch
-            - arm_neon_arch
-            - ppc_vsx_arch
-            - gcc_sse2_arch
-            - gcc_sse4_arch
-            - gcc_avx_arch
-            - gcc_fma3_arch
-            - gcc_avx2_arch
-            - clang_avx2_arch
-
-    ##==============================================================================================
-    ## All API tests in parallel
-    ##==============================================================================================
-      - arm_aarch64_api:
-          requires:
-            - sync_arch
-      - arm_neon_api:
-          requires:
-            - sync_arch
-      - ppc_vsx_api:
-          requires:
-            - sync_arch
-      - gcc_sse2_api:
-          requires:
-            - sync_arch
-      - gcc_sse4_api:
-          requires:
-            - sync_arch
-      - gcc_avx_api:
-          requires:
-            - sync_arch
-      - gcc_fma3_api:
-          requires:
-            - sync_arch
-      - gcc_avx2_api:
-          requires:
-            - sync_arch
-      - clang_avx2_api:
-          requires:
-            - sync_arch
-      - sync_api:
-          requires:
-            - arm_aarch64_api
-            - arm_neon_api
-            - ppc_vsx_api
-            - gcc_sse2_api
-            - gcc_sse4_api
-            - gcc_avx_api
-            - gcc_fma3_api
-            - gcc_avx2_api
-            - clang_avx2_api
-
-    ##==============================================================================================
-    ## All Doc tests in parallel
-    ##==============================================================================================
-      - arm_aarch64_doc:
-          requires:
-            - sync_api
-      - arm_neon_doc:
-          requires:
-            - sync_api
-      - ppc_vsx_doc:
-          requires:
-            - sync_api
-      - gcc_sse2_doc:
-          requires:
-            - sync_api
-      - gcc_sse4_doc:
-          requires:
-            - sync_api
-      - gcc_avx_doc:
-          requires:
-            - sync_api
-      - gcc_fma3_doc:
-          requires:
-            - sync_api
-      - gcc_avx2_doc:
-          requires:
-            - sync_api
-      - clang_avx2_doc:
-          requires:
-            - sync_api
-      - sync_doc:
-          requires:
-            - arm_aarch64_doc
-            - arm_neon_doc
-            - ppc_vsx_doc
-            - gcc_sse2_doc
-            - gcc_sse4_doc
-            - gcc_avx_doc
-            - gcc_fma3_doc
-            - gcc_avx2_doc
-            - clang_avx2_doc
+            - arm_aarch64_basic
+            - arm_neon_basic
+            - ppc_vsx_basic
+            - gcc_sse2_basic
+            - gcc_sse4_basic
+            - gcc_avx_basic
+            - gcc_fma3_basic
+            - gcc_avx2_basic
+            - clang_avx2_basic
 
     ##==============================================================================================
     ## All Scalar tests in parallel
     ##==============================================================================================
       - arm_aarch64_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - arm_neon_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - ppc_vsx_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - gcc_sse2_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - gcc_sse4_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - gcc_avx_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - gcc_fma3_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - gcc_avx2_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - clang_avx2_scalar:
           requires:
-            - sync_doc
+            - sync_basic
       - sync_scalar:
           requires:
             - arm_aarch64_scalar

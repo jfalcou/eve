@@ -26,21 +26,18 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check conj return type")
-{
-  TTS_EXPR_IS(eve::conj(Type(0)),  Type);
-}
+TTS_CASE("Check conj return type") { TTS_EXPR_IS(eve::conj(Type(0)), Type); }
 
 TTS_CASE("Check eve::conj behavior")
 {
   TTS_EQUAL(eve::conj(Type{1}), Type(1));
   TTS_EQUAL(eve::conj(Type{2}), Type(2));
-  
+
   TTS_EQUAL(eve::conj(static_cast<Type>(-2)), Type(-2));
   TTS_IEEE_EQUAL(eve::conj(eve::Nan<Type>()), eve::Nan<Type>());
   TTS_IEEE_EQUAL(eve::conj(-eve::Nan<Type>()), -eve::Nan<Type>());
-  TTS_EQUAL(eve::conj(eve::Mzero<Type>()), Type(0)); 
-  TTS_EQUAL(eve::conj(eve::Zero<Type>()),  Type(0)); 
+  TTS_EQUAL(eve::conj(eve::Mzero<Type>()), Type(0));
+  TTS_EQUAL(eve::conj(eve::Zero<Type>()), Type(0));
 }
-  
+
 #endif

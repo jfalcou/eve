@@ -29,16 +29,16 @@ TTS_CASE_TPL("Check rec behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs ( [](auto i, auto c)
-                      {
-                        if constexpr( std::is_floating_point_v<Type>) return Type(i+1)/(1+(c/2));
-                        else                                          return i+1;
-                      }
-                    );
+  wide<Type, T> lhs([](auto i, auto c) {
+    if constexpr(std::is_floating_point_v<Type>)
+      return Type(i + 1) / (1 + (c / 2));
+    else
+      return i + 1;
+  });
 
-  wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec(lhs[i]); });
+  wide<Type, T> ref([&lhs](auto i, auto) { return eve::rec(lhs[ i ]); });
 
-  TTS_ULP_EQUAL(ref, eve::rec(lhs),0.5);
+  TTS_ULP_EQUAL(ref, eve::rec(lhs), 0.5);
 }
 
 TTS_CASE_TPL("Check raw_(rec[raw_) behavior on wide",
@@ -52,14 +52,14 @@ TTS_CASE_TPL("Check raw_(rec[raw_) behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs ( [](auto i, auto c)
-                      {
-                        if constexpr( std::is_floating_point_v<Type>) return Type(i+1)/(c/2);
-                        else                                          return i+1;
-                      }
-                    );
+  wide<Type, T> lhs([](auto i, auto c) {
+    if constexpr(std::is_floating_point_v<Type>)
+      return Type(i + 1) / (c / 2);
+    else
+      return i + 1;
+  });
 
-  wide<Type, T> ref([&lhs](auto i, auto) { return eve::raw_(eve::rec)(lhs[i]); });
+  wide<Type, T> ref([&lhs](auto i, auto) { return eve::raw_(eve::rec)(lhs[ i ]); });
 
   TTS_RELATIVE_EQUAL(ref, eve::raw_(eve::rec)(lhs), 0.3);
 }
@@ -75,14 +75,14 @@ TTS_CASE_TPL("Check pedantic(rec) behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs ( [](auto i, auto c)
-                      {
-                        if constexpr( std::is_floating_point_v<Type>) return Type(i)/17;
-                        else                                          return i;
-                      }
-                    );
+  wide<Type, T> lhs([](auto i, auto c) {
+    if constexpr(std::is_floating_point_v<Type>)
+      return Type(i) / 17;
+    else
+      return i;
+  });
 
-  wide<Type, T> ref([&lhs](auto i, auto) { return eve::pedantic_(eve::rec)(lhs[i]); });
+  wide<Type, T> ref([&lhs](auto i, auto) { return eve::pedantic_(eve::rec)(lhs[ i ]); });
 
   TTS_ULP_EQUAL(ref, eve::pedantic_(eve::rec)(lhs), 0.5);
 }

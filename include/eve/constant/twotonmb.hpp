@@ -25,13 +25,13 @@ namespace eve
   EVE_FORCEINLINE auto Twotonmb(as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
-    if  constexpr(std::is_floating_point_v<t_t>)
+    if constexpr(std::is_floating_point_v<t_t>)
     {
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,0X4B000000U>();
-      if constexpr(std::is_same_v<t_t, double >) return Constant<T,0X4330000000000000ULL>();
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X4B000000U>();
+      if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4330000000000000ULL>();
     }
     else
-      return T(1); 
+      return T(1);
   }
 
   EVE_MAKE_NAMED_CONSTANT(twotonmb_, Twotonmb);

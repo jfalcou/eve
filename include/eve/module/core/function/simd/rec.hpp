@@ -15,27 +15,15 @@
 #include <eve/module/core/function/simd/common/rec.hpp>
 
 #if defined(EVE_HW_X86)
-
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/rec.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/rec.hpp>
-#  endif
-
+#  include <eve/module/core/function/simd/x86/rec.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/rec.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/rec.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/rec.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/rec.hpp>
 #endif
 
 #endif

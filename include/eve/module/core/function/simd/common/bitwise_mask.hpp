@@ -20,30 +20,24 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr( is_native_v<ABI> )
-    {
-      return is_nez(v).mask();
-    }
+    if constexpr(is_native_v<ABI>) { return is_nez(v).mask(); }
     else
     {
-      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::bitwise_mask, v);
-      if constexpr( is_emulated_v<ABI>   ) return map(eve::bitwise_mask, v);
+      if constexpr(is_aggregated_v<ABI>) return aggregate(eve::bitwise_mask, v);
+      if constexpr(is_emulated_v<ABI>) return map(eve::bitwise_mask, v);
     }
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto bitwise_mask_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    if constexpr( is_native_v<ABI> )
-    {
-      return v.mask();
-    }
+    if constexpr(is_native_v<ABI>) { return v.mask(); }
     else
     {
-      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::bitwise_mask, v);
-      if constexpr( is_emulated_v<ABI>   ) return map(eve::bitwise_mask, v);
+      if constexpr(is_aggregated_v<ABI>) return aggregate(eve::bitwise_mask, v);
+      if constexpr(is_emulated_v<ABI>) return map(eve::bitwise_mask, v);
     }
   }
 }

@@ -25,7 +25,7 @@
 
 TTS_CASE("Check is_real return type")
 {
-  TTS_EXPR_IS(eve::is_real(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_real(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_real behavior")
@@ -35,9 +35,9 @@ TTS_CASE("Check eve::is_real behavior")
 
   if constexpr(std::is_floating_point_v<Type>)
   {
-    TTS_EQUAL(eve::is_real(eve::Inf<Type>())  , eve::True<Type>());
-    TTS_EQUAL(eve::is_real(eve::Minf<Type>()) , eve::True<Type>());
-    TTS_EQUAL(eve::is_real(eve::Nan<Type>())  , eve::True<Type>());
+    TTS_EQUAL(eve::is_real(eve::Inf<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_real(eve::Minf<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_real(eve::Nan<Type>()), eve::True<Type>());
   }
 }
 

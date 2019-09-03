@@ -7,7 +7,7 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
-//================================================================================================== 
+//==================================================================================================
 #ifndef EVE_CONSTANT_VALMAX_HPP_INCLUDED
 #define EVE_CONSTANT_VALMAX_HPP_INCLUDED
 

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_NAN_HPP
-#define IS_NAN_HPP
+#ifndef IS_NOT_NAN_HPP
+#define IS_NOT_NAN_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -26,23 +26,22 @@ TTS_CASE_TPL("Check is_not_nan behavior",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  using l_t = logical<wide<Type,T>>;
+  using l_t = logical<wide<Type, T>>;
 
   if constexpr(std::is_integral_v<Type>)
   {
-    wide<Type, T>         arg([](auto i, auto c) { return c - i; });
+    wide<Type, T> arg([](auto i, auto c) { return c - i; });
     TTS_EQUAL(eve::is_not_nan(arg), l_t(true));
   }
   else
   {
-    wide<Type, T> arg([](auto i, auto) { return i/Type(i); });
-    l_t           ref([](auto i, auto) { return eve::is_not_nan(i/Type(i)); });
+    wide<Type, T> arg([](auto i, auto) { return i / Type(i); });
+    l_t           ref([](auto i, auto) { return eve::is_not_nan(i / Type(i)); });
 
     TTS_EQUAL(ref, eve::is_not_nan(arg));
   }

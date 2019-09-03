@@ -26,25 +26,24 @@ TTS_CASE_TPL("Check is_normal behavior on wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-             )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
   if constexpr(std::is_integral_v<Type>)
   {
-    wide<Type, T> lhs([](auto i, auto) { return i/2; });
-    logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_normal(i/2); });
-    TTS_EQUAL(eve::is_normal(lhs),  ref );
+    wide<Type, T>          lhs([](auto i, auto) { return i / 2; });
+    logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_normal(i / 2); });
+    TTS_EQUAL(eve::is_normal(lhs), ref);
   }
   else
   {
-    Type s = eve::Smallestposval<Type>();
-    wide<Type, T> lhs([&](auto i, auto c) { return i%2 ? s*i : s/i; });
+    Type          s = eve::Smallestposval<Type>();
+    wide<Type, T> lhs([&](auto i, auto c) { return i % 2 ? s * i : s / i; });
     lhs.back() = 0;
 
-    logical<wide<Type, T>> ref([&](auto i, auto c) { return eve::is_normal(lhs[i]); });
+    logical<wide<Type, T>> ref([&](auto i, auto c) { return eve::is_normal(lhs[ i ]); });
     TTS_EQUAL(eve::is_normal(lhs), ref);
   }
 }
@@ -58,11 +57,11 @@ TTS_CASE_TPL("Check is_normal behavior on logical<wide>",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>> lhs([](auto i, auto) { return i%2 == 1; });
-  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_normal( i%2 == 1); });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 1; });
+  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_normal(i % 2 == 1); });
   TTS_EQUAL(eve::is_normal(lhs), ref);
 }
 

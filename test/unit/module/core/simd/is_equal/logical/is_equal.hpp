@@ -26,19 +26,19 @@ TTS_CASE_TPL("Check is_equal behavior on homogeneous logical<wide>",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; }),
-                          rhs([](auto i, auto)  { return i%3 == 0; });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; }),
+      rhs([](auto i, auto) { return i % 3 == 0; });
 
-  logical<wide<Type, T>>  ref([](auto i, auto)  { return logical<Type>( (i%2 == 0) == (i%3 == 0) ); });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto) { return logical<Type>((i % 2 == 0) == (i % 3 == 0)); });
 
   TTS_EQUAL(ref, eve::is_equal(lhs, rhs));
-  TTS_EQUAL(ref, (lhs ==  rhs));
+  TTS_EQUAL(ref, (lhs == rhs));
 }
 
 TTS_CASE_TPL("Check is_equal behavior on logical<wide> and scalar",
@@ -48,20 +48,19 @@ TTS_CASE_TPL("Check is_equal behavior on logical<wide> and scalar",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-             )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; });
-  logical<wide<Type, T>>  ref([](auto i, auto)  { return logical<Type>( (i%2 == 0) == true ); });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; });
+  logical<wide<Type, T>> ref([](auto i, auto) { return logical<Type>((i % 2 == 0) == true); });
 
   TTS_EQUAL(ref, eve::is_equal(lhs, logical<Type>(true)));
   TTS_EQUAL(ref, eve::is_equal(logical<Type>(true), lhs));
   TTS_EQUAL(ref, eve::is_equal(lhs, true));
   TTS_EQUAL(ref, eve::is_equal(true, lhs));
-  TTS_EQUAL(ref, (lhs  ==  true));
+  TTS_EQUAL(ref, (lhs == true));
   TTS_EQUAL(ref, (true == lhs));
 }
 

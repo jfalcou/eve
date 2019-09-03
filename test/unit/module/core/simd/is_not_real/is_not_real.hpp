@@ -26,24 +26,23 @@ TTS_CASE_TPL("Check is_not_real behavior",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  using l_t = logical<wide<Type,T>>;
+  using l_t = logical<wide<Type, T>>;
 
   if constexpr(std::is_integral_v<Type>)
   {
-    wide<Type, T>         arg([](auto i, auto c) { return c - i; });
-    l_t           ref([](auto i, auto c) { return eve::is_not_real(c-i); });
+    wide<Type, T> arg([](auto i, auto c) { return c - i; });
+    l_t           ref([](auto i, auto c) { return eve::is_not_real(c - i); });
     TTS_EQUAL(ref, eve::is_not_real(arg));
   }
   else
   {
-    wide<Type, T> arg([](auto i, auto  ) { return i/Type(i); });
-    l_t           ref([](auto i, auto c) { return eve::is_not_real(Type(i/Type(i))); });
+    wide<Type, T> arg([](auto i, auto) { return i / Type(i); });
+    l_t           ref([](auto i, auto c) { return eve::is_not_real(Type(i / Type(i))); });
     TTS_EQUAL(ref, eve::is_not_real(arg));
   }
 }

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQZ_HPP
-#define IS_EQZ_HPP
+#ifndef SQR_ABS_HPP
+#define SQR_ABS_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -28,13 +28,12 @@ TTS_CASE_TPL("Check sqr_abs behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::sqr_abs(Type(i)); });  
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      ref([](auto i, auto) { return eve::sqr_abs(Type(i)); });
   TTS_EQUAL(ref, eve::sqr_abs(lhs));
 }
-
 
 #endif

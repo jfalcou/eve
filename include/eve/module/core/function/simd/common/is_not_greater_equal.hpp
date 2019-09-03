@@ -16,8 +16,8 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/bitwise_cast.hpp>
-#include <eve/function/logical_not.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -25,50 +25,58 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE  auto is_not_greater_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto
+  is_not_greater_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
-      return is_not_greater_equal(a, T{b});
+      return map(
+          eve::is_not_greater_equal, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return is_not_greater_equal(U{a},b);
+      return aggregate(
+          eve::is_not_greater_equal, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else
+    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T,U>)
+      if constexpr(std::is_same_v<T, U>)
       {
-        if constexpr( std::is_floating_point_v<typename T::value_type> )
-        {
-          return logical_not(is_greater_equal(a,b));
-        }
+        if constexpr(std::is_floating_point_v<value_type_t<T>>)
+        { return is_less(a, b) || is_unordered(a, b); }
         else
         {
-          return is_less(a,b);
+          return is_less(a, b);
         }
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::is_not_greater_equal] - Incompatible types.");
+        static_assert(wrong<T, U>,
+                      "[eve::is_not_greater_equal] - no support for current simd api ");
         return {};
       }
     }
+    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::is_not_greater_equal(abi_cast<U>(a), abi_cast<T>(b));
+    }
   }
-  
+
   template<typename T, typename U>
-  EVE_FORCEINLINE auto is_not_greater_equal_( EVE_SUPPORTS(cpu_),
-                                              logical<T> const &a, logical<U> const &b
-                                            ) noexcept
-  requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
-          )
+  EVE_FORCEINLINE auto
+  is_not_greater_equal_(EVE_SUPPORTS(cpu_),
+                        logical<T> const &a,
+                        logical<U> const &b) noexcept requires(logical<T>,
+                                                               Vectorized<T>,
+                                                               Vectorized<U>,
+                                                               EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>( is_not_greater_equal(a.bits(),b.bits()) );
+    return is_less(a, b);
   }
 }
 

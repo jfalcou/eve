@@ -24,16 +24,15 @@ TTS_CASE_TPL("Check unary_plus behavior on wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
   using eve::wide;
-  
+
   wide<Type, T> lhs([](int i, int) { return i + 1; }),
-    ref([](int i, int) { return eve::unary_plus(Type(i + 1)); });
-  
+      ref([](int i, int) { return eve::unary_plus(Type(i + 1)); });
+
   TTS_EQUAL(ref, eve::unary_plus(lhs));
-  TTS_EQUAL(ref, +lhs); 
+  TTS_EQUAL(ref, +lhs);
 }
 
 #endif

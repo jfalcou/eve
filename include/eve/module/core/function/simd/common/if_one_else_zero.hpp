@@ -27,54 +27,46 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_)
-          , logical<T> const &cond
-          ,  eve::callable_one_ const &
-          ,  eve::callable_zero_  const &
-          ) noexcept
-  requires(T, Vectorized<T>)
+  if_else_(EVE_SUPPORTS(cpu_),
+           logical<T> const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(T, Vectorized<T>)
   {
-    return  if_else(cond, One<T>(), zero_);
+    return if_else(cond, One<T>(), zero_);
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_)
-          , T const &cond
-          ,  eve::callable_one_ const &
-          ,  eve::callable_zero_  const &
-          ) noexcept
-  requires(T, Vectorized<T>)
+  if_else_(EVE_SUPPORTS(cpu_),
+           T const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(T, Vectorized<T>)
   {
-    return  if_else(is_nez(cond), One<T>(), eve::zero_);
+    return if_else(is_nez(cond), One<T>(), eve::zero_);
   }
 
-  template<typename TARGET,typename T>
+  template<typename TARGET, typename T>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_)
-          , as_<TARGET> const &
-          , logical<T> const &cond
-          ,  eve::callable_one_ const &
-          ,  eve::callable_zero_  const &
-          ) noexcept
-  requires(TARGET, Vectorized<TARGET> )
+  if_else_(EVE_SUPPORTS(cpu_),
+           as_<TARGET> const &,
+           logical<T> const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(TARGET, Vectorized<TARGET>)
   {
     return if_else(cond, One<TARGET>(), eve::zero_);
   }
 
-  template<typename TARGET,typename T>
+  template<typename TARGET, typename T>
   EVE_FORCEINLINE constexpr auto
-  if_else_( EVE_SUPPORTS(cpu_)
-          , as_<TARGET> const &
-          , T const &cond
-          ,  eve::callable_one_ const &
-          ,  eve::callable_zero_  const &
-          ) noexcept
-  requires(TARGET, Vectorized<TARGET> )
+  if_else_(EVE_SUPPORTS(cpu_),
+           as_<TARGET> const &,
+           T const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(TARGET, Vectorized<TARGET>)
   {
     return if_else(is_nez(cond), One<TARGET>(), eve::zero_);
   }
-  
+
 }
 
 #endif

@@ -20,7 +20,6 @@
 #include <tts/tests/precision.hpp>
 #include <type_traits>
 
-
 TTS_CASE("Check eve::dist and saturated_(eve::dist)  behavior")
 {
   TTS_EQUAL(eve::dist(Type{0}, Type{0}), Type{0});
@@ -30,9 +29,12 @@ TTS_CASE("Check eve::dist and saturated_(eve::dist)  behavior")
 
   if constexpr(std::is_integral_v<Type> && std::is_signed_v<Type>)
   {
-    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Valmin<Type>()), eve::Valmax<Type>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Valmin<Type>()),
+                   eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmax<Type>(), eve::Zero<Type>()),
+                   eve::Valmax<Type>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<Type>(), eve::Zero<Type>()),
+                   eve::Valmax<Type>());
   }
 }
 

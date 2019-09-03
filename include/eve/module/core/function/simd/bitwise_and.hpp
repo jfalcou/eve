@@ -15,30 +15,15 @@
 #include <eve/module/core/function/simd/common/bitwise_and.hpp>
 
 #if defined(EVE_HW_X86)
-#  if EVE_HW_X86 >= EVE_SSE2_VERSION
-#    include <eve/module/core/function/simd/x86/sse2/bitwise_and.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/bitwise_and.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX2_VERSION
-#    include <eve/module/core/function/simd/x86/avx2/bitwise_and.hpp>
-#  endif
-
+#  include <eve/module/core/function/simd/x86/bitwise_and.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/bitwise_and.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/bitwise_and.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/bitwise_and.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/bitwise_and.hpp>
 #endif
 
 #endif

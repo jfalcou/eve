@@ -27,11 +27,11 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_odd_(EVE_SUPPORTS(simd_), T const &a) noexcept
-  requires( as_logical_t<T>, Vectorized<T> )
+  EVE_FORCEINLINE constexpr auto
+  is_odd_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorized<T>)
   {
     if constexpr(std::is_floating_point_v<typename T::value_type>)
-      return  is_even(dec(a));
+      return is_even(dec(a));
     else
       return is_nez(bitwise_and(a, One(as(a))));
   }

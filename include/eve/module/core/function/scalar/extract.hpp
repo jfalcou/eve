@@ -13,19 +13,23 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_), T const &a, U const& ) noexcept
+  EVE_FORCEINLINE constexpr auto
+  extract_(EVE_SUPPORTS(cpu_), T const &a, U const &) noexcept requires(T, Vectorizable<T>)
   {
     return a;
   }
 
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_), logical<T> const &a, U const&) noexcept
+  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_),
+                                          logical<T> const &a,
+                                          U const &) noexcept requires(logical<T>, Vectorizable<T>)
   {
     return a;
   }

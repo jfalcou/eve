@@ -30,7 +30,6 @@ TTS_CASE_TPL("Check shuffle behavior",
   using i_t = eve::detail::as_integer_t<Type>;
 
   wide<Type, T> arg([](auto i, auto) { return i; }),
-
 }
 
 #endif

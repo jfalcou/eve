@@ -30,11 +30,13 @@ TTS_CASE_TPL("Check bitwise_mask behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](int i, int) { return i%2; }),
-                ref([](int i, int) { return eve::bitwise_mask(Type(i%2)); });
+  wide<Type, T> lhs([](int i, int) { return i % 2; }),
+      ref([](int i, int) { return eve::bitwise_mask(Type(i % 2)); });
 
-  if constexpr(std::is_integral_v<Type>)  TTS_EQUAL(ref, eve::bitwise_mask(lhs));
-  else                                    TTS_IEEE_EQUAL(ref, eve::bitwise_mask(lhs));
+  if constexpr(std::is_integral_v<Type>)
+    TTS_EQUAL(ref, eve::bitwise_mask(lhs));
+  else
+    TTS_IEEE_EQUAL(ref, eve::bitwise_mask(lhs));
 }
 
 #endif

@@ -18,7 +18,6 @@
 #include <eve/constant/valmax.hpp>
 #include <type_traits>
 
-
 TTS_CASE("Check eve::average behavior")
 {
   TTS_EQUAL(eve::average(Type{0}, Type{0}), Type{0});

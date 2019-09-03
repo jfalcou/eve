@@ -30,10 +30,9 @@ TTS_CASE_TPL("Check minnum behavior on wide",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
-    ref([](auto i, auto c) { return eve::min[eve::num](Type(i), Type(c - i)); });
-  
-  TTS_EQUAL(ref, eve::min[eve::num](lhs, rhs));
-  
+      ref([](auto i, auto c) { return eve::min[ eve::num ](Type(i), Type(c - i)); });
+
+  TTS_EQUAL(ref, eve::min[ eve::num ](lhs, rhs));
 }
 
 TTS_CASE_TPL("Check minnum behavior on wide",
@@ -47,12 +46,11 @@ TTS_CASE_TPL("Check minnum behavior on wide",
 {
   using eve::wide;
 
-    wide<Type, T> lhs([](auto i, auto) { return i; }),
-      ref([](auto i, auto) { return eve::min[eve::num](Type(i), Type(2)); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      ref([](auto i, auto) { return eve::min[ eve::num ](Type(i), Type(2)); });
 
-    TTS_EQUAL(ref, eve::min[eve::num](lhs, Type(2))); 
-    TTS_EQUAL(ref, eve::min[eve::num](Type(2), lhs));
-    
+  TTS_EQUAL(ref, eve::min[ eve::num ](lhs, Type(2)));
+  TTS_EQUAL(ref, eve::min[ eve::num ](Type(2), lhs));
 }
 
 #endif

@@ -21,12 +21,12 @@ using eve::fixed;
 
 TTS_CASE("Check combining for logical values")
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
   logical<wide<Type, fixed<2>>> ref(true, false);
 
-  TTS_EQUAL((eve::combine( logical<Type>(true), logical<Type>(false))), ref);
+  TTS_EQUAL((eve::combine(logical<Type>(true), logical<Type>(false))), ref);
 }
 
 TTS_CASE_TPL("Check combining for logical wide",
@@ -38,12 +38,12 @@ TTS_CASE_TPL("Check combining for logical wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>                         low ([](auto i, auto)    { return i%2 < 2; });
-  logical<wide<Type, T>>                         high([](auto i, auto)    { return i%2 > 3; });
-  logical<wide<Type, typename T::combined_type>> ref ([](auto i, auto c)  { return i < int(c)/2; });
+  logical<wide<Type, T>>                         low([](auto i, auto) { return i % 2 < 2; });
+  logical<wide<Type, T>>                         high([](auto i, auto) { return i % 2 > 3; });
+  logical<wide<Type, typename T::combined_type>> ref([](auto i, auto c) { return i < int(c) / 2; });
 
   TTS_EQUAL((logical<wide<Type, typename T::combined_type>>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);

@@ -18,11 +18,21 @@
 namespace eve
 {
   // Tag for all PPC SIMD ABI
-  struct ppc_ {};
+  struct ppc_
+  {
+  };
 
   // dispatching tag for V*X SIMD implementation
-  struct vmx_ : simd_ { using parent = simd_; static constexpr int order = EVE_VMX_VERSION; };
-  struct vsx_ : vmx_  { using parent = vmx_;  static constexpr int order = EVE_VSX_VERSION; };
+  struct vmx_ : simd_
+  {
+    using parent               = simd_;
+    static constexpr int order = EVE_VMX_VERSION;
+  };
+  struct vsx_ : vmx_
+  {
+    using parent               = vmx_;
+    static constexpr int order = EVE_VSX_VERSION;
+  };
 
   // V*X extension tag objects
   inline const vmx_ vmx = {};

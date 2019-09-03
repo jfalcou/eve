@@ -26,6 +26,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/add.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/function/div.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_xor.hpp>
@@ -117,17 +119,16 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a sequence of values
-    template< typename T0,
-              typename T1,
-              typename... Ts,
-              bool Converts =   std::is_convertible_v<T0, Type>
-                            &&  std::is_convertible_v<T1, Type>
-                            && (... && std::is_convertible_v<Ts, Type>),
-              typename      = std::enable_if_t<(static_size == 2 + sizeof...(Ts)) && Converts>
-            >
+    template<typename T0,
+             typename T1,
+             typename... Ts,
+             bool Converts = std::is_convertible_v<T0, Type> &&std::is_convertible_v<T1, Type> &&
+                             (... && std::is_convertible_v<Ts, Type>),
+             typename = std::enable_if_t<(static_size == 2 + sizeof...(Ts)) && Converts>>
     EVE_FORCEINLINE wide(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
-    {}
+    {
+    }
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide with a generator function
@@ -193,8 +194,8 @@ namespace eve
       swap(data_, rhs.data_);
     }
 
-    wide& self() { return *this; }
-    wide const& self() const{ return *this; }
+    wide &      self() { return *this; }
+    wide const &self() const { return *this; }
 
     // ---------------------------------------------------------------------------------------------
     // begin() variants
@@ -291,6 +292,20 @@ namespace eve
     }
 
     template<typename Other>
+    EVE_FORCEINLINE wide &operator*=(Other const &other) noexcept
+    {
+      *this = eve::mul(*this, other);
+      return *this;
+    }
+
+    template<typename Other>
+    EVE_FORCEINLINE wide &operator/=(Other const &other) noexcept
+    {
+      *this = eve::div(*this, other);
+      return *this;
+    }
+
+    template<typename Other>
     EVE_FORCEINLINE wide &operator&=(Other const &other) noexcept
     {
       *this = eve::bitwise_and(*this, other);
@@ -325,11 +340,11 @@ namespace eve
   std::ostream &operator<<(std::ostream &os, wide<T, N, ABI> const &p)
   {
     using size_type = typename wide<T, N, ABI>::size_type;
-    T that[N::value];
-    memcpy(&that[0],p.begin(),N::value*sizeof(T));
+    T that[ N::value ];
+    memcpy(&that[ 0 ], p.begin(), N::value * sizeof(T));
 
-    os << '(' << +that[0];
-    for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[i];
+    os << '(' << +that[ 0 ];
+    for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
     return os << ')';
   }
 }

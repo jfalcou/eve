@@ -19,17 +19,16 @@
 #include <tts/tests/precision.hpp>
 #include <type_traits>
 
-
 TTS_CASE("Check eve::max behavior")
 {
   TTS_EQUAL(eve::max(Type{0}, Type{0}), Type{0});
   TTS_EQUAL(eve::max(Type{0}, Type{1}), Type{1});
   TTS_EQUAL(eve::max(Type{1}, Type{0}), Type{1});
   TTS_EQUAL(eve::max(Type{1}, Type{1}), Type{1});
-  if constexpr(std::is_floating_point_v<Type> )
+  if constexpr(std::is_floating_point_v<Type>)
   {
-    Type n =  eve::Nan<Type>();
-    Type o =  eve::One<Type>();
+    Type n = eve::Nan<Type>();
+    Type o = eve::One<Type>();
     TTS_IEEE_EQUAL(eve::pedantic_(eve::max)(n, o), n);
     TTS_IEEE_EQUAL(eve::pedantic_(eve::max)(o, n), o);
   }

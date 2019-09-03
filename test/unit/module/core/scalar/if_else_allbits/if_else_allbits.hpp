@@ -22,29 +22,26 @@
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE( "Check if_else return type" )
+TTS_CASE("Check if_else return type")
 {
-  TTS_EXPR_IS(eve::if_else(Type(), Type(), eve::allbits_ ) , Type );
-  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), Type(), eve::allbits_ ) , Type );
-  TTS_EXPR_IS(eve::if_else(true  , Type(), eve::allbits_ ) , Type );
+  TTS_EXPR_IS(eve::if_else(Type(), Type(), eve::allbits_), Type);
+  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), Type(), eve::allbits_), Type);
+  TTS_EXPR_IS(eve::if_else(true, Type(), eve::allbits_), Type);
 }
-
 
 TTS_CASE("Check if_else(., ., allbits_) behavior ")
 {
   auto f = eve::Allbits<Type>();
   auto t = eve::One<Type>();
 
-  
-  TTS_IEEE_EQUAL ( eve::if_else( 1   , t  , eve::allbits_), t);
-  TTS_IEEE_EQUAL ( eve::if_else( 1.0 , t  , eve::allbits_), t);
-  TTS_IEEE_EQUAL ( eve::if_else( true, t  , eve::allbits_), t);
-  TTS_IEEE_EQUAL ( eve::if_else( eve::True<Type>(), t  , eve::allbits_), t);
-  TTS_IEEE_EQUAL ( eve::if_else( 0   , t  , eve::allbits_), f);
-  TTS_IEEE_EQUAL ( eve::if_else( 0.0 , t  , eve::allbits_), f);
-  TTS_IEEE_EQUAL ( eve::if_else( false, t , eve::allbits_), f);
-  TTS_IEEE_EQUAL ( eve::if_else( eve::False<Type>(), t  , eve::allbits_), f);
-
+  TTS_IEEE_EQUAL(eve::if_else(1, t, eve::allbits_), t);
+  TTS_IEEE_EQUAL(eve::if_else(1.0, t, eve::allbits_), t);
+  TTS_IEEE_EQUAL(eve::if_else(true, t, eve::allbits_), t);
+  TTS_IEEE_EQUAL(eve::if_else(eve::True<Type>(), t, eve::allbits_), t);
+  TTS_IEEE_EQUAL(eve::if_else(0, t, eve::allbits_), f);
+  TTS_IEEE_EQUAL(eve::if_else(0.0, t, eve::allbits_), f);
+  TTS_IEEE_EQUAL(eve::if_else(false, t, eve::allbits_), f);
+  TTS_IEEE_EQUAL(eve::if_else(eve::False<Type>(), t, eve::allbits_), f);
 }
 
 #endif

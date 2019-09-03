@@ -15,31 +15,15 @@
 #include <eve/module/core/function/simd/common/abs.hpp>
 
 #if defined(EVE_HW_X86)
-
-#  if EVE_HW_X86 >= EVE_SSSE3_VERSION
-#    include <eve/module/core/function/simd/x86/ssse3/abs.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX_VERSION
-#    include <eve/module/core/function/simd/x86/avx/abs.hpp>
-#  endif
-
-#  if EVE_HW_X86 >= EVE_AVX2_VERSION
-#    include <eve/module/core/function/simd/x86/avx2/abs.hpp>
-#  endif
-
+#  include <eve/module/core/function/simd/x86/abs.hpp>
 #endif
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/vmx/abs.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/abs.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/abs.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/abs.hpp>
 #endif
 
 #endif

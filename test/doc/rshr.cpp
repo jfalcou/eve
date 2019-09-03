@@ -1,11 +1,11 @@
 #include <eve/function/rshr.hpp>
 #include <eve/wide.hpp>
 
-
-using iT = std::int32_t;
+using iT      = std::int32_t;
 using wide_it = eve::wide<iT, eve::fixed<4>>;
 
-int main() {
+int main()
+{
   wide_it pi = {100, 200, -2, 3};
   wide_it qi = {1, -2, 3, -1};
 
@@ -18,7 +18,7 @@ int main() {
 
   std::cout << "---- scalar" << '\n'
             << "<- xi  =                      " << xi << '\n'
-            << "<- mxi =                      " << mxi << '\n' 
+            << "<- mxi =                      " << mxi << '\n'
             << "<- yi  =                      " << yi << '\n'
             << "-> eve::rshr(xi, yi) = " << eve::rshr(xi, yi) << '\n'
             << "-> eve::rshr(mxi, yi)= " << eve::rshr(mxi, yi) << '\n';

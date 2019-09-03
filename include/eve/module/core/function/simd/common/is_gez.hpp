@@ -23,12 +23,9 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_gez_(EVE_SUPPORTS(simd_), wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_gez_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_unsigned_v<T>)
-    {
-      return True(as(v));
-    }
+    if constexpr(std::is_unsigned_v<T>) { return True(as(v)); }
     else
     {
       return is_greater_equal(v, Zero(as(v)));
@@ -36,7 +33,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_gez_(EVE_SUPPORTS(simd_), logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE auto is_gez_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     return True(as(v));
   }

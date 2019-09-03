@@ -9,28 +9,19 @@
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_MUL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_MUL_HPP_INCLUDED
+#  define EVE_MODULE_CORE_FUNCTION_SCALAR_MUL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#  include <eve/detail/overload.hpp>
+#  include <eve/detail/abi.hpp>
+#  include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b)
-                  noexcept requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto
+  mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, Vectorizable<T>)
   {
-    return a*b;
-  }
-}
-
-namespace eve
-{
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto operator*(T const& a, U const &b) noexcept -> decltype(eve::mul(a, b))
-  {
-    return eve::mul(a, b);
+    return a * b;
   }
 }
 

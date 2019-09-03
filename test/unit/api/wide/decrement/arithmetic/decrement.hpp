@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check self-decrement on wide",
   using eve::wide;
 
   wide<Type, T> simd(baseg), next(nextg);
-  wide<Type, T> prev(simd), res;
+  wide<Type, T> prev(baseg), res;
 
   TTS_SUBCASE("support for operator--()")
   {

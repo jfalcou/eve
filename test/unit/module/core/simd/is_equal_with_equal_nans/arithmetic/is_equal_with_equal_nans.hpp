@@ -27,25 +27,25 @@ TTS_CASE_TPL("Check is_equal_with_equal_nans behavior on homogeneous wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto c) { return c - i; }),
-                rhs([](auto i, auto c) { return i%2 ? i : c-i; });
+      rhs([](auto i, auto c) { return i % 2 ? i : c - i; });
 
-  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::is_equal_with_equal_nans(Type(c - i), Type(i%2 ? i : c-i)); });
+  logical<wide<Type, T>> ref([](auto i, auto c) {
+    return eve::is_equal_with_equal_nans(Type(c - i), Type(i % 2 ? i : c - i));
+  });
 
   if constexpr(std::is_integral_v<Type>)
-  {
-    TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, rhs));
-  }
+  { TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, rhs)); }
   else
   {
-    lhs[lhs.size()/2] = rhs[rhs.size()/2] = eve::Nan<Type>();
-    logical<wide<Type, T>>  nref([&](auto i, auto) { return eve::is_equal_with_equal_nans(lhs[i],rhs[i]); });
+    lhs[ lhs.size() / 2 ] = rhs[ rhs.size() / 2 ] = eve::Nan<Type>();
+    logical<wide<Type, T>> nref(
+        [&](auto i, auto) { return eve::is_equal_with_equal_nans(lhs[ i ], rhs[ i ]); });
 
     TTS_EQUAL(nref, eve::is_equal_with_equal_nans(lhs, rhs));
   }
@@ -58,14 +58,14 @@ TTS_CASE_TPL("Check is_equal_with_equal_nans behavior on wide and scalar",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-             )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>             lhs([](auto i, auto) { return i; });
-  logical< wide<Type, T> >  ref([](auto i, auto) { return eve::is_equal_with_equal_nans(Type(i), Type(2)); });
+  wide<Type, T>          lhs([](auto i, auto) { return i; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto) { return eve::is_equal_with_equal_nans(Type(i), Type(2)); });
 
   TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, Type(2)));
   TTS_EQUAL(ref, eve::is_equal_with_equal_nans(Type(2), lhs));

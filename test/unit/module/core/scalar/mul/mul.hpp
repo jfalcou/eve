@@ -16,10 +16,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check mul return type" )
-{
-  TTS_EXPR_IS(eve::mul(Type(), Type()) , Type);
-}
+TTS_CASE("Check mul return type") { TTS_EXPR_IS(eve::mul(Type(), Type()), Type); }
 
 TTS_CASE("Check eve::mul behavior")
 {

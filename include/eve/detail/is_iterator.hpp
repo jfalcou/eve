@@ -24,9 +24,7 @@ namespace eve::detail
   struct is_iterator<T,
                      std::void_t<decltype(*std::declval<T>()),
                                  decltype(std::declval<T &>()++),
-                                 decltype(++std::declval<T &>())
-                                >
-                    > : std::true_type
+                                 decltype(++std::declval<T &>())>> : std::true_type
   {
   };
 

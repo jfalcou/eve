@@ -17,49 +17,34 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename U, typename N>
+  template<typename T, typename U>
   EVE_FORCEINLINE auto
-  shl_(EVE_SUPPORTS(simd_), wide<T, N, aggregated_> const &v0, U const &v1) noexcept
+  shl_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
+                                                                     Vectorized<T>,
+                                                                     Integral<value_type_t<U>>,
+                                                                     Integral<value_type_t<T>>)
   {
-    return aggregate(eve::shl, v0, v1);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename U, typename N>
-  EVE_FORCEINLINE auto
-  shl_(EVE_SUPPORTS(simd_), wide<T, N, emulated_> const &v0, U const &v1) noexcept
-  {
-    return map(eve::shl, v0, v1);
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>) { return map(eve::shl, a, b); }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    {
+      return aggregate(eve::shl, a, b);
+    }
+    else
+    {
+      return map(eve::shl, a, b);
+    }
   }
 }
 
-// -------------------------------------------------------------------------------------------------
-// Infix operator support
 namespace eve
 {
-  template<typename T, typename U, typename N, typename ABI>
-  EVE_FORCEINLINE auto operator<<(wide<T, N, ABI> const &v0, wide<U, N, ABI> const &v1) noexcept
-  {
-    return eve::shl(v0, v1);
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto operator<<(wide<T, N, ABI> const &v0,
-                                 U const &              v1) noexcept requires(wide<T, N, ABI>,
-                                                                detail::Convertible<U, T>)
-  {
-    return eve::shl(v0, v1);
-  }
-
-  template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto
-  operator<<(U const &v0, wide<T, N, ABI> const &v1) noexcept requires(wide<T, N, ABI>,
-                                                                      detail::Convertible<U, T>)
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto operator<<(T const &v0, U const &v1) noexcept -> decltype(eve::shl(v0, v1))
   {
     return eve::shl(v0, v1);
   }
 }
+
 #endif

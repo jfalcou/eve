@@ -21,28 +21,17 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
+  EVE_FORCEINLINE constexpr auto
+  is_equal_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(as_logical_t<T>,
+                                                                          Vectorizable<T>,
+                                                                          Vectorizable<U>)
   {
-    if constexpr( is_logical_v<T> || is_logical_v<U>)
-    {
-      return static_cast<bool>(a) == static_cast<bool>(b);
-    }
+    if constexpr(is_logical_v<T> || is_logical_v<U>)
+    { return static_cast<bool>(a) == static_cast<bool>(b); }
     else
     {
       return a == b;
     }
-  }
-}
-
-namespace eve
-{
-    // -----------------------------------------------------------------------------------------------
-  // operator ==
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto operator==(T const& a, U const &b) noexcept -> decltype(eve::is_equal(a, b))
-  {
-    return eve::is_equal(a, b);
   }
 }
 

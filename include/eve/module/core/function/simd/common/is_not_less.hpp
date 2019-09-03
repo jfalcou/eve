@@ -25,56 +25,52 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE  auto is_not_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto is_not_less_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    // If one of argument is not Vectorized, recall once vectorized
-    if constexpr( !is_vectorized_v<U> )
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    { return map(eve::is_not_less, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return is_not_less(a, T{b});
+      return aggregate(
+          eve::is_not_less, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      return is_not_less(U{a},b);
-    }
-    // Both arguments are vectorized ...
-    else if constexpr( std::is_same_v<T, U> )
-    {
-      if constexpr( is_aggregated_v<typename T::abi_type> )
+      if constexpr(std::is_same_v<T, U>)
       {
-        // ... and are aggregates
-        return aggregate( eve::is_not_less, a, b);
-      }
-      else if constexpr( is_emulated_v<typename T::abi_type> )
-      {
-        // ... and are emulations
-        return map( eve::is_not_less, a, b);
+        if constexpr(std::is_floating_point_v<value_type_t<T>>)
+        { return is_greater_equal(a, b) || is_unordered(a, b); }
+        else
+        {
+          return is_greater_equal(a, b);
+        }
       }
       else
       {
-        if constexpr(std::is_floating_point_v<T>)
-          return (a >= b) || is_unordered(a, b);
-        else
-          return a >= b;
+        static_assert(wrong<T, U>, "[eve::is_not_less] - no support for current simd api ");
+        return {};
       }
     }
-    else
+    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
-      static_assert( std::is_same_v<T,U>, "[eve::is_not_less] - Incompatible types.");
-      return {};
+      return eve::is_not_less(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
 
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_not_less_( EVE_SUPPORTS(cpu_),
-                                            logical<T> const &a, logical<U> const &b
-                                          ) noexcept
-                            requires( as_logical_t<T>,Vectorized<T>, Vectorized<U> )
+  EVE_FORCEINLINE auto is_not_less_(EVE_SUPPORTS(cpu_),
+                                    logical<T> const &a,
+                                    logical<U> const &b) noexcept requires(logical<T>,
+                                                                           Vectorized<T>,
+                                                                           Vectorized<U>,
+                                                                           EqualCardinal<T, U>)
   {
-    using r_t = as_logical_t<T>;
-    return bitwise_cast<r_t>( is_not_less(a.bits(),b.bits()) );
+    return bitwise_cast<logical<T>>(is_not_less(a.bits(), b.bits()));
   }
 }
 

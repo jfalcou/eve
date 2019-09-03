@@ -15,4 +15,3 @@
 #include <eve/module/core/function/simd/is_not_finite.hpp>
 
 #endif
-

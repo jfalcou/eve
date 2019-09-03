@@ -26,22 +26,18 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_normal_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_normal_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_integral_v<T> )
-    {
-      return is_nez(v);
-    }
+    if constexpr(std::is_integral_v<T>) { return is_nez(v); }
     else
     {
-      return logical_and(is_finite(v),is_greater_equal(eve::abs(v),Smallestposval(as(v))));
+      return logical_and(is_finite(v), is_greater_equal(eve::abs(v), Smallestposval(as(v))));
     }
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto is_normal_ ( EVE_SUPPORTS(simd_),
-                                              logical<wide<T, N, ABI>> const& v
-                                            ) noexcept
+  EVE_FORCEINLINE constexpr auto is_normal_(EVE_SUPPORTS(cpu_),
+                                            logical<wide<T, N, ABI>> const &v) noexcept
   {
     return is_nez(v);
   }

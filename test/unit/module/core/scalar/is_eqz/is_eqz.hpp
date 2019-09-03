@@ -19,16 +19,12 @@
 #include <eve/constant/true.hpp>
 #include <eve/as_logical.hpp>
 
-TTS_CASE("Check is_eqz return type")
-{
-  TTS_EXPR_IS(eve::is_eqz(Type(0)),  eve::as_logical_t<Type>);
-}
+TTS_CASE("Check is_eqz return type") { TTS_EXPR_IS(eve::is_eqz(Type(0)), eve::as_logical_t<Type>); }
 
 TTS_CASE("Check eve::is_eqz behavior")
 {
   TTS_EQUAL(eve::is_eqz(Type{0}), eve::True<Type>());
   TTS_EQUAL(eve::is_eqz(Type{2}), eve::False<Type>());
-
 }
 
 #endif

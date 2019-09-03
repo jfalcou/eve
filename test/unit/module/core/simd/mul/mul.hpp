@@ -29,12 +29,11 @@ TTS_CASE_TPL("Check mul behavior on wide",
 {
   using eve::wide;
 
-    wide<Type, T> lhs([](auto i, auto) { return i; }),
-                  rhs([](auto i, auto c) { return c - i; }),
-                  ref([](auto i, auto c) { return i*(c - i); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
+      ref([](auto i, auto c) { return i * (c - i); });
 
-    TTS_EQUAL(ref, eve::mul(lhs, rhs));
-    TTS_EQUAL(ref, lhs * rhs);
+  TTS_EQUAL(ref, eve::mul(lhs, rhs));
+  TTS_EQUAL(ref, lhs * rhs);
 }
 
 TTS_CASE_TPL("Check mul behavior on wide + scalar",
@@ -48,8 +47,7 @@ TTS_CASE_TPL("Check mul behavior on wide + scalar",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }),
-                ref([](auto i, auto) { return i * Type(4); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }), ref([](auto i, auto) { return i * Type(4); });
 
   TTS_EQUAL(ref, eve::mul(lhs, 4));
   TTS_EQUAL(ref, eve::mul(4, lhs));

@@ -62,9 +62,10 @@ namespace eve
            typename T,
            std::size_t Align,
            typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
-  EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr, as_<logical<wide<T, Size, ABI>>> const &) noexcept
+  EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr,
+                            as_<logical<wide<T, Size, ABI>>> const &) noexcept
   {
-    return logical<wide<T, Size,ABI>>(ptr);
+    return logical<wide<T, Size, ABI>>(ptr);
   }
 }
 

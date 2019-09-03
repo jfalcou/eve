@@ -25,80 +25,83 @@
 // constexpr object wrapper around EVE_CURRENT_API for if constexpr usage
 namespace eve
 {
-  template<typename API> struct current_api_{};
+  template<typename API>
+  struct current_api_
+  {
+  };
 
   // Is same API ?
   template<typename API, typename Tag>
-  inline constexpr bool operator==(current_api_<API> const&, Tag const&)
+  inline constexpr bool operator==(current_api_<API> const &, Tag const &)
   {
-    return std::is_same_v<API,Tag>;
+    return std::is_same_v<API, Tag>;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator==(Tag const&, current_api_<API> const&)
+  inline constexpr bool operator==(Tag const &, current_api_<API> const &)
   {
-    return std::is_same_v<API,Tag>;
+    return std::is_same_v<API, Tag>;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator!=(current_api_<API> const&, Tag const&)
+  inline constexpr bool operator!=(current_api_<API> const &, Tag const &)
   {
-    return !std::is_same_v<API,Tag>;
+    return !std::is_same_v<API, Tag>;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator!=(Tag const&, current_api_<API> const&)
+  inline constexpr bool operator!=(Tag const &, current_api_<API> const &)
   {
-    return !std::is_same_v<API,Tag>;
+    return !std::is_same_v<API, Tag>;
   }
 
   // API version ordering ?
   template<typename API, typename Tag>
-  inline constexpr bool operator<(current_api_<API> const&, Tag const&)
+  inline constexpr bool operator<(current_api_<API> const &, Tag const &)
   {
     return API::order < Tag::order;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator<(Tag const&, current_api_<API> const&)
+  inline constexpr bool operator<(Tag const &, current_api_<API> const &)
   {
     return Tag::order < API::order;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator>(current_api_<API> const&, Tag const&)
+  inline constexpr bool operator>(current_api_<API> const &, Tag const &)
   {
     return API::order > Tag::order;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator>(Tag const&, current_api_<API> const&)
+  inline constexpr bool operator>(Tag const &, current_api_<API> const &)
   {
     return Tag::order > API::order;
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator<=(current_api_<API> const& a, Tag const& t)
+  inline constexpr bool operator<=(current_api_<API> const &a, Tag const &t)
   {
-    return !(a>t);
+    return !(a > t);
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator<=(Tag const& t, current_api_<API> const& a)
+  inline constexpr bool operator<=(Tag const &t, current_api_<API> const &a)
   {
-    return !(t>a);
+    return !(t > a);
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator>=(current_api_<API> const& a, Tag const& t)
+  inline constexpr bool operator>=(current_api_<API> const &a, Tag const &t)
   {
-    return !(a<t);
+    return !(a < t);
   }
 
   template<typename API, typename Tag>
-  inline constexpr bool operator>=(Tag const& t, current_api_<API> const& a)
+  inline constexpr bool operator>=(Tag const &t, current_api_<API> const &a)
   {
-    return !(t<a);
+    return !(t < a);
   }
 
   inline constexpr current_api_<EVE_CURRENT_API> current_api = {};

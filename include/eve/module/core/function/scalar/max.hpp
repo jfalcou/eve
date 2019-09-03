@@ -23,22 +23,19 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_)
-                                     , T const &a0
-                                     , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto
+  max_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
   {
-     return (a0 < a1) ? a1 : a0;
+    return (a0 < a1) ? a1 : a0;
   }
 
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_)
-                                     , pedantic_type const &
-                                     , T const &a0
-                                     , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_),
+                                      pedantic_type const &,
+                                      T const &a0,
+                                      T const &a1) noexcept requires(T, Vectorizable<T>)
   {
     return (a0 < a1) ? a1 : a0;
   }
@@ -46,15 +43,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // numeric case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_)
-                                     , numeric_type const &
-                                     , T const &a0
-                                     , T const &a1) noexcept
-  requires(T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto max_(EVE_SUPPORTS(cpu_),
+                                      numeric_type const &,
+                                      T const &a0,
+                                      T const &a1) noexcept requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
-      if (is_nan(a0)) return a1;
-    return max(a0, a1);
+      return (is_nan(a0)) ? a1 : max(a0, a1);
+    else
+      return max(a0, a1);
   }
 }
 

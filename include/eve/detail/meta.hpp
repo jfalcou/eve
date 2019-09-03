@@ -12,6 +12,7 @@
 #  define EVE_DETAIL_META_HPP_INCLUDED
 
 #  include <eve/detail/abi.hpp>
+#  include <eve/detail/is_native.hpp>
 #  include <type_traits>
 #  include <utility>
 #  include <cstdint>
@@ -110,6 +111,22 @@ namespace eve::detail
   template<typename T>
   using value_type_t = typename value_type<T>::type;
 
+  // Extract abi_type from type
+  template<typename T, typename Enable = void>
+  struct abi_type
+  {
+    using type = void;
+  };
+
+  template<typename T>
+  struct abi_type<T, std::void_t<typename T::abi_type>>
+  {
+    using type = typename T::abi_type;
+  };
+
+  template<typename T>
+  using abi_type_t = typename abi_type<T>::type;
+
   // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned>
   struct make_integer;
@@ -160,8 +177,7 @@ namespace eve::detail
 
   // Extract the sign of a type
   template<typename T>
-  struct sign_of
-      : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
+  struct sign_of : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
   {
   };
 
@@ -207,7 +223,6 @@ namespace eve::detail
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;
 
-
   // Tuple free apply
   template<typename Func, std::size_t... I>
   EVE_FORCEINLINE decltype(auto) apply_impl(Func &&f, std::index_sequence<I...> const &)
@@ -244,12 +259,14 @@ namespace eve::detail
   template<typename T>
   using Integral = std::enable_if_t<std::is_integral_v<T>>;
 
+  template<typename T>
+  using Floating = std::enable_if_t<std::is_floating_point_v<T>>;
+
   template<bool Condition>
   using If = std::enable_if_t<Condition>;
 
   template<bool... Conditions>
   using Either = std::enable_if_t<(Conditions || ...)>;
-
 
   // False value with dependent type
   template<typename... T>
@@ -257,7 +274,7 @@ namespace eve::detail
 }
 
 // Pseudo satisfy macro
-#  define satisfy(...) typename ::eve::detail::require_check <void, __VA_ARGS__> ::type* = nullptr
+#  define satisfy(...) typename ::eve::detail::require_check<void, __VA_ARGS__>::type * = nullptr
 
 // Pseudo require macro
 #  define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type

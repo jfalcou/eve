@@ -28,12 +28,9 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr(std::is_integral_v<T> || !platform::supports_denormals)
-    {
-      return False(as(a));
-    }
+    if constexpr(std::is_integral_v<T> || !platform::supports_denormals) { return False(as(a)); }
     else
     {
       return is_nez(a) && is_less(abs(a), Smallestposval<T>());
@@ -41,9 +38,8 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto is_denormal_ ( EVE_SUPPORTS(simd_),
-                                                logical<wide<T, N, ABI>> const& a
-                                              ) noexcept
+  EVE_FORCEINLINE constexpr auto is_denormal_(EVE_SUPPORTS(cpu_),
+                                              logical<wide<T, N, ABI>> const &a) noexcept
   {
     return False(as(a));
   }

@@ -32,24 +32,24 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto signnz_(EVE_SUPPORTS(simd_)
-                            ,wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto signnz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      #ifndef EVE_SIMD_NO_NANS
-      return if_else( is_nan(a), eve::allbits_, bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a)));
-      #else
+#ifndef EVE_SIMD_NO_NANS
+      return if_else(
+          is_nan(a), eve::allbits_, bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a)));
+#else
       return bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
-      #endif
+#endif
     }
     else
     {
       if constexpr(std::is_signed_v<T>)
-        return bitwise_or(shr(a, (sizeof(T)*8-1)), One(as(a)));
+        return bitwise_or(shr(a, (sizeof(T) * 8 - 1)), One(as(a)));
       else
-        return One(as(a)); 
-    }   
+        return One(as(a));
+    }
   }
 }
 

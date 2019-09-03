@@ -26,15 +26,12 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(simd_),wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> )
+    if constexpr(is_aggregated_v<ABI>) { return aggregate(eve::logical_not, a); }
+    else if constexpr(is_emulated_v<ABI>)
     {
-      return aggregate( eve::logical_not, a);
-    }
-    else if constexpr( is_emulated_v<ABI> )
-    {
-      return map( eve::logical_not, a);
+      return map(eve::logical_not, a);
     }
     else
     {
@@ -43,9 +40,8 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto logical_not_ ( EVE_SUPPORTS(simd_),
-                                                logical<wide<T, N, ABI>> const& a
-                                              ) noexcept
+  EVE_FORCEINLINE constexpr auto logical_not_(EVE_SUPPORTS(cpu_),
+                                              logical<wide<T, N, ABI>> const &a) noexcept
   {
     return eve::bitwise_cast<logical<wide<T, N, ABI>>>(eve::bitwise_not(a.bits()));
   }

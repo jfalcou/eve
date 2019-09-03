@@ -24,18 +24,20 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
-       ABI const &                     mode,
-       logical<T> *ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, Native<ABI>)
+       ABI const &                          mode,
+       logical<T> *ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type,
+                                          Native<ABI>)
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, (T *)ptr));
   }
 
   template<typename T, typename N, std::size_t Align, typename ABI>
-  EVE_FORCEINLINE auto load(as_<logical<wide<T, N, ABI>>> const &tgt,
-                            ABI const &                     mode,
-                            aligned_ptr<logical<T>, Align> ptr) noexcept
-  requires(typename logical<wide<T, N, ABI>>::storage_type,Native<ABI>)
+  EVE_FORCEINLINE auto
+  load(as_<logical<wide<T, N, ABI>>> const &tgt,
+       ABI const &                          mode,
+       aligned_ptr<logical<T>, Align>
+           ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, Native<ABI>)
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));

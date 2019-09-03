@@ -16,12 +16,12 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check extract return type" )
+TTS_CASE("Check extract return type")
 {
-  using i_t =  eve::detail::as_integer_t<Type, signed>;
-  using u_t =  eve::detail::as_integer_t<Type, unsigned>;   
-  TTS_EXPR_IS(eve::extract(Type(), i_t ()) , Type);
-  TTS_EXPR_IS(eve::extract(Type(), u_t ()) , Type);
+  using i_t = eve::detail::as_integer_t<Type, signed>;
+  using u_t = eve::detail::as_integer_t<Type, unsigned>;
+  TTS_EXPR_IS(eve::extract(Type(), i_t()), Type);
+  TTS_EXPR_IS(eve::extract(Type(), u_t()), Type);
 }
 
 TTS_CASE("Check eve::extract behavior")

@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/trunc.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -23,15 +24,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto floor_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept requires( T, Arithmetic<T>)
+  EVE_FORCEINLINE constexpr auto floor_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      auto z =  trunc(a0);
-      return dec[z > a0](z);
+      auto z = trunc(a0);
+      return dec[ z > a0 ](z);
     }
-    else return a0; 
+    else
+      return a0;
   }
 }
 

@@ -29,19 +29,20 @@
 #include <eve/as.hpp>
 #include <type_traits>
 #ifndef EVE_NO_NANS
-#include <eve/function/is_nan.hpp>
-#include <eve/constant/allbits.hpp>
+#  include <eve/function/is_nan.hpp>
+#  include <eve/constant/allbits.hpp>
 #endif
 
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(simd_)
-                            ,wide<T, N, ABI> const &a) noexcept
+  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto r = if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
+      auto r =
+          if_else(is_gtz(a), One(as(a)), eve::zero_) - if_else(is_ltz(a), One(as(a)), eve::zero_);
+
 #ifdef EVE_NO_NANS
       return r;
 #else
@@ -51,12 +52,13 @@ namespace eve::detail
     else
     {
       if constexpr(std::is_signed_v<T>)
-        return if_else[as(a)](is_gtz(a), eve::one_, eve::zero_)-if_else[as(a)](is_ltz(a), eve::one_, eve::zero_);
+        return if_else(is_gtz(a), One(as(a)), eve::zero_) -
+               if_else(is_ltz(a), One(as(a)), eve::zero_);
       else
       {
-        return if_else[as(a)](a, eve::one_, eve::zero_);
+        return if_else(a, One(as(a)), eve::zero_);
       }
-    }   
+    }
   }
 }
 

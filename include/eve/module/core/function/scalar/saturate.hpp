@@ -12,11 +12,13 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_SATURATE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-// #include <boost/simd/function/scalar/clamp.hpp>
-// #include <boost/simd/function/scalar/is_inf.hpp>
-#include <eve/function/saturated.hpp>
-// #include <boost/simd/constant/valmin.hpp>
-// #include <boost/simd/constant/valmax.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/function/min.hpp>
+#include <eve/function/clamp.hpp>
+#include <eve/function/is_inf.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -24,139 +26,63 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Identity case
-  template<typename T>
-  EVE_FORCEINLINE constexpr T saturate_(EVE_SUPPORTS(cpu_), T const &a0, as_<T> const &) noexcept
+  template<typename Target, typename U>
+  EVE_FORCEINLINE constexpr auto
+  saturate_(EVE_SUPPORTS(cpu_),
+            as_<Target> const &,
+            U const &a0) noexcept requires(U, Vectorizable<Target>, Vectorizable<U>)
   {
-    return a0;
+    if constexpr(std::is_floating_point_v<Target>) // saturating to floating point
+    {
+      if constexpr(std::is_floating_point_v<U>) // from a floating point
+      {
+        if constexpr(sizeof(Target) >= sizeof(U))
+          return a0;
+        else
+        {
+          auto mn = static_cast<double>(Valmin<float>());
+          auto mx = static_cast<double>(Valmax<float>());
+          return is_inf(a0) ? a0 : clamp(a0, mn, mx);
+        }
+      }
+      else // from an integer
+        return a0;
+    }
+    else // saturating to integer
+    {
+      if constexpr(std::is_signed_v<Target>) // saturating to signed integer
+      {
+        if constexpr(std::is_signed_v<U>) // from a signed
+        {
+          if constexpr(sizeof(Target) >= sizeof(U))
+            return a0;
+          else
+            return clamp(a0, static_cast<U>(Valmin<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+        else // from an unsigned
+        {
+          return min(a0, static_cast<U>(Valmax<Target>()));
+        }
+      }
+      else // saturating to unsigned integer
+      {
+        if constexpr(!std::is_signed_v<U>) // from a unsigned
+        {
+          if constexpr(sizeof(Target) >= sizeof(U))
+            return a0;
+          else
+            return min(a0, static_cast<U>(Valmax<Target>()));
+        }
+        else // from a signed
+        {
+          if constexpr(sizeof(Target) >= sizeof(U))
+            return clamp(a0, static_cast<U>(Zero<Target>()), Valmax<U>());
+          else
+            return clamp(a0, static_cast<U>(Zero<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+      }
+    }
   }
-
-#if 0
-  // -----------------------------------------------------------------------------------------------
-  // double saturated as float -> clamp unless inf
-  EVE_FORCEINLINE
-  double saturate_(EVE_SUPPORTS(cpu_), double a0, as_<float> const&) noexcept
-  {
-    auto mn = static_cast<double>(Valmin<float>());
-    auto mx = static_cast<double>(Valmax<float>());
-    return is_inf(a0) ? a0 : clamp(a0,mn,mx);
-  }
-
-
-
-  // -----------------------------------------------------------------------------------------------
-  // float saturated as double -> identity
-  EVE_FORCEINLINE
-  float saturate_(EVE_SUPPORTS(cpu_), float a0, as_<double> const&) noexcept
-  {
-    return a0;
-  }
-
-
-
-  // -----------------------------------------------------------------------------------------------
-  // integer saturated as floating -> identity
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<std::is_floating_point<U>::value>::type* = 0
-                                ) noexcept
-  {
-    return a0;
-  }
-
-
-  // -----------------------------------------------------------------------------------------------
-  // floating saturated as integer
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<U>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<std::is_floating_point<T>::value>::type* = 0
-                                ) noexcept
-  {
-    return select_c<(sizeof(T)<=sizeof(U))>
-                                    ( [&]() { return a0; }
-                                    , [&]() { return clamp(a0 , static_cast<T>(Valmin<U>())
-                                                              , static_cast<T>(Valmax<U>())
-                                                          );
-                                            }
-                                    )();
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // unsigned integer saturated as unsigned integer
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          , typename = typename std::enable_if<std::is_integral<U>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<!std::is_signed<T>::value>::type* = 0
-                                , typename std::enable_if<!std::is_signed<U>::value>::type* = 0
-                                ) noexcept
-  {
-    return select_c<(sizeof(T)<sizeof(U))>( [&]() { return a0; }
-                                          , [&]() { return std::min(a0,static_cast<T>(Valmax<U>())); }
-                                          )();
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // unsigned integer saturated as signed integer
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          , typename = typename std::enable_if<std::is_integral<U>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<!std::is_signed<T>::value>::type* = 0
-                                , typename std::enable_if<std::is_signed<U>::value>::type* = 0
-                                ) noexcept
-  {
-    return std::min(static_cast<T>(Valmax<U>()), a0);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // signed integer saturated as unsigned integer
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          , typename = typename std::enable_if<std::is_integral<U>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<std::is_signed<T>::value>::type* = 0
-                                , typename std::enable_if<!std::is_signed<U>::value>::type* = 0
-                                ) noexcept
-  {
-    return select_c<(sizeof(T)<=sizeof(U))>
-                                    ( [&]() { return std::max(T(0), a0); }
-                                    , [&]() { return clamp(a0,T(0),static_cast<T>(Valmax<U>())); }
-                                    )();
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // signed integer saturated as signed integer
-  template< typename T, typename U
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          , typename = typename std::enable_if<std::is_integral<U>::value>::type
-          >
-  EVE_FORCEINLINE T saturate_ ( EVE_SUPPORTS(cpu_)
-                                , T a0, as_<U> const&
-                                , typename std::enable_if<std::is_signed<T>::value>::type* = 0
-                                , typename std::enable_if<std::is_signed<U>::value>::type* = 0
-                                ) noexcept
-  {
-    return select_c<(sizeof(T)<=sizeof(U))>
-                                    ( [&]() { return a0; }
-                                    , [&]() { return clamp(a0 , static_cast<T>(Valmin<U>())
-                                                              , static_cast<T>(Valmax<U>())
-                                                          );
-                                            }
-                                    )();
-  }
-#endif
 }
 
 #endif

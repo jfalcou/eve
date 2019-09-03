@@ -11,5 +11,3 @@
 
 using Type = double;
 #include "ceil.hpp"
-
-

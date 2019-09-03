@@ -25,26 +25,20 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check sqr return type")
-{
-  TTS_EXPR_IS(eve::sqr(Type(0)),  Type);
-}
+TTS_CASE("Check sqr return type") { TTS_EXPR_IS(eve::sqr(Type(0)), Type); }
 
 TTS_CASE("Check eve::sqr behavior")
 {
   TTS_EQUAL(eve::sqr(Type{1}), Type(1));
   TTS_EQUAL(eve::sqr(Type{2}), Type(4));
 
-  if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::sqr(static_cast<Type>(-2)), Type(4));
-  }
+  if constexpr(std::is_signed_v<Type>) { TTS_EQUAL(eve::sqr(static_cast<Type>(-2)), Type(4)); }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_IEEE_EQUAL(eve::sqr(eve::Nan<Type>()), eve::Nan<Type>());
     TTS_IEEE_EQUAL(eve::sqr(-eve::Nan<Type>()), eve::Nan<Type>());
     TTS_EQUAL(eve::sqr(eve::Mzero<Type>()), Type(0));
-    TTS_EQUAL(eve::sqr(eve::Zero<Type>()),  Type(0));
+    TTS_EQUAL(eve::sqr(eve::Zero<Type>()), Type(0));
     if constexpr(std::is_integral_v<Type>)
       TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>());
   }

@@ -18,7 +18,7 @@
 #if defined(EVE_HW_POWERPC)
 namespace eve
 {
-struct register_count
+  struct register_count
   {
     static constexpr std::size_t general = 32;
 
@@ -52,7 +52,7 @@ struct register_count
 #      endif
 
 #      ifdef vector
-#       undef vector
+#        undef vector
 #      endif
 
 #      if defined(__IBMCPP__) || defined(__MWERKS__)

@@ -21,15 +21,15 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE( "Check bitwise_shr return type" )
+TTS_CASE("Check bitwise_shr return type")
 {
-  using i_t =  eve::detail::as_integer_t<Type, signed>;
-  using u_t =  eve::detail::as_integer_t<Type, unsigned>;   
-  TTS_EXPR_IS(eve::bitwise_shr(Type(), Type()) , Type);
-  TTS_EXPR_IS(eve::bitwise_shr(Type(), i_t ()) , Type);
-  TTS_EXPR_IS(eve::bitwise_shr(Type(), u_t ()) , Type);
-  TTS_EXPR_IS(eve::bitwise_shr(i_t(), Type()) , i_t );
-  TTS_EXPR_IS(eve::bitwise_shr(u_t(), Type()) , u_t );
+  using i_t = eve::detail::as_integer_t<Type, signed>;
+  using u_t = eve::detail::as_integer_t<Type, unsigned>;
+  TTS_EXPR_IS(eve::bitwise_shr(Type(), Type()), Type);
+  TTS_EXPR_IS(eve::bitwise_shr(Type(), i_t()), Type);
+  TTS_EXPR_IS(eve::bitwise_shr(Type(), u_t()), Type);
+  TTS_EXPR_IS(eve::bitwise_shr(i_t(), Type()), i_t);
+  TTS_EXPR_IS(eve::bitwise_shr(u_t(), Type()), u_t);
 }
 
 TTS_CASE("Check eve::bitwise_shr behavior")
@@ -37,7 +37,7 @@ TTS_CASE("Check eve::bitwise_shr behavior")
   TTS_EQUAL(eve::bitwise_shr(Type(16), 4), Type(1));
   TTS_EQUAL(eve::bitwise_shr(Type(12), 2), Type(3));
   TTS_EQUAL(eve::bitwise_shr(eve::Allbits<Type>(), 0), eve::Allbits<Type>());
-  TTS_EQUAL(eve::bitwise_shr(eve::Zero<Type>(), 3), eve::Zero<Type>() );
+  TTS_EQUAL(eve::bitwise_shr(eve::Zero<Type>(), 3), eve::Zero<Type>());
 }
 
 #endif

@@ -17,7 +17,7 @@
 #define EVE_SSSE3_VERSION 3100
 #define EVE_SSE4_1_VERSION 4100
 #define EVE_SSE4_2_VERSION 4200
-#define EVE_AVX_VERSION   5000
+#define EVE_AVX_VERSION 5000
 #define EVE_AVX2_VERSION 5300
 
 // Make MSVC compliant with macro we look for

@@ -26,55 +26,71 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE  auto logical_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    if constexpr( !is_vectorized_v<U> )
+    if constexpr(!is_vectorized_v<U>) { return logical_or(a, T{b}); }
+    else if constexpr(!is_vectorized_v<T>)
     {
-      return logical_or(a, T{b});
-    }
-    else if constexpr( !is_vectorized_v<T> )
-    {
-      return logical_or(U{a},b);
+      return logical_or(U{a}, b);
     }
     else
     {
-      if constexpr(std::is_same_v<T,U>)
+      if constexpr(std::is_same_v<T, U>)
       {
-        if constexpr( is_aggregated_v<typename T::abi_type> )
+        if constexpr(is_aggregated_v<typename T::abi_type>)
+        { return aggregate(eve::logical_or, a, b); }
+        else if constexpr(is_emulated_v<typename T::abi_type>)
         {
-          return aggregate( eve::logical_or, a, b);
-        }
-        else if constexpr( is_emulated_v<typename T::abi_type> )
-        {
-          return map( eve::logical_or, a, b);
+          return map(eve::logical_or, a, b);
         }
         else
         {
-          return bitwise_cast<as_logical_t<T>>(bitwise_or(bitwise_mask(a),bitwise_mask(b)));
+          return bitwise_cast<as_logical_t<T>>(bitwise_or(bitwise_mask(a), bitwise_mask(b)));
         }
       }
       else
       {
-        static_assert( std::is_same_v<T,U>, "[eve::logical_or] - Incompatible types.");
+        static_assert(std::is_same_v<T, U>, "[eve::logical_or] - Incompatible types.");
         return {};
       }
     }
   }
 
   template<typename T, typename U>
-  EVE_FORCEINLINE auto logical_or_( EVE_SUPPORTS(cpu_),
-                                    logical<T> const &a, logical<U> const &b
-                                  ) noexcept
-  requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
-          )
+  EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_),
+                                   logical<T> const &a,
+                                   logical<U> const &b) noexcept requires(logical<T>,
+                                                                          Vectorized<T>,
+                                                                          Vectorized<U>,
+                                                                          EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(bitwise_or(a.bits(),b.bits()));
+    return bitwise_cast<logical<T>>(bitwise_or(a.bits(), b.bits()));
   }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_),
+                                   logical<T> const &a,
+                                   U const &         b) noexcept requires(logical<T>,
+                                                                 Vectorized<T>,
+                                                                 Vectorized<U>,
+                                                                 EqualCardinal<T, U>)
+  {
+    return bitwise_cast<logical<T>>(bitwise_or(a.bits(), bitwise_mask(b)));
+  }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto logical_or_(EVE_SUPPORTS(cpu_),
+                                   T const &         a,
+                                   logical<U> const &b) noexcept requires(logical<U>,
+                                                                          Vectorized<T>,
+                                                                          Vectorized<U>,
+                                                                          EqualCardinal<T, U>)
+  {
+    return bitwise_cast<logical<U>>(bitwise_or(bitwise_mask(a), b.bits()));
+  }
+
 }
 
 #endif
