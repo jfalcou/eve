@@ -18,25 +18,18 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check floor return type")
-{
-  TTS_EXPR_IS(eve::floor(Type()),  Type);
-}
+TTS_CASE("Check floor return type") { TTS_EXPR_IS(eve::floor(Type()), Type); }
 
 TTS_CASE("Check eve::floor behavior")
 {
   TTS_EQUAL(eve::floor(Type{0}), Type(0));
   TTS_EQUAL(eve::floor(Type{2}), Type(2));
-  if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::floor(static_cast<Type>(-2)), Type(-2));
-  }
+  if constexpr(std::is_signed_v<Type>) { TTS_EQUAL(eve::floor(static_cast<Type>(-2)), Type(-2)); }
   if constexpr(std::is_floating_point_v<Type>)
   {
-    TTS_EQUAL(eve::floor(Type(3)/Type(-2)), Type(-2));
-    TTS_EQUAL(eve::floor(Type(3)/Type(2)) , Type(1)); 
+    TTS_EQUAL(eve::floor(Type(3) / Type(-2)), Type(-2));
+    TTS_EQUAL(eve::floor(Type(3) / Type(2)), Type(1));
   }
 }
-
 
 #endif

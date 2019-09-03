@@ -18,11 +18,7 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check bitwise_not return type")
-{
-  TTS_EXPR_IS(eve::bitwise_not(Type()), Type);
-}
-
+TTS_CASE("Check bitwise_not return type") { TTS_EXPR_IS(eve::bitwise_not(Type()), Type); }
 
 TTS_CASE("Check eve::bitwise_not behavior")
 {

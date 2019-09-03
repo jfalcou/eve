@@ -16,10 +16,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check unary_plus return type")
-{
-  TTS_EXPR_IS(eve::unary_plus(Type(0)), Type);
-}
+TTS_CASE("Check unary_plus return type") { TTS_EXPR_IS(eve::unary_plus(Type(0)), Type); }
 
 TTS_CASE("Check eve::unary_plus behavior")
 {

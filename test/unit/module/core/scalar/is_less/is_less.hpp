@@ -18,47 +18,47 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check eve::is_less return type" )
+TTS_CASE("Check eve::is_less return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_less(Type()          , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_less(logical<Type>() , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_less(logical<Type>() , logical<Type>()),  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_less(Type()          , logical<Type>()),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_less(Type(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_less(logical<Type>(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_less(logical<Type>(), logical<Type>()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_less(Type(), logical<Type>()), eve::as_logical_t<Type>);
 }
 
-TTS_CASE( "Check eve::operator< return type" )
+TTS_CASE("Check eve::operator< return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(logical<Type>() < Type()         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(logical<Type>() < logical<Type>(),  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(Type()          < logical<Type>(),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(logical<Type>() < Type(), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(logical<Type>() < logical<Type>(), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(Type() < logical<Type>(), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_less behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::is_less(Type(1),Type(1))                      , eve::False<Type>() );
-  TTS_EQUAL(eve::is_less(Type(3),Type(1))                      , eve::False<Type>());
-  TTS_EQUAL(eve::is_less(Type(3),Type(7))                      , eve::True<Type>());
+  TTS_EQUAL(eve::is_less(Type(1), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_less(Type(3), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_less(Type(3), Type(7)), eve::True<Type>());
 
-  TTS_EQUAL(eve::is_less(eve::True<Type>()  , eve::True<Type>() ) , eve::False<Type>());
-  TTS_EQUAL(eve::is_less(eve::True<Type>()  , eve::False<Type>()) , eve::False<Type>());
-  TTS_EQUAL(eve::is_less(eve::False<Type>() , eve::True<Type>() ) , eve::True<Type>() );
-  TTS_EQUAL(eve::is_less(eve::False<Type>() , eve::False<Type>()) , eve::False<Type>());
+  TTS_EQUAL(eve::is_less(eve::True<Type>(), eve::True<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::is_less(eve::True<Type>(), eve::False<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::is_less(eve::False<Type>(), eve::True<Type>()), eve::True<Type>());
+  TTS_EQUAL(eve::is_less(eve::False<Type>(), eve::False<Type>()), eve::False<Type>());
 }
 
 TTS_CASE("Check eve::operator< behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::True<Type>()  < eve::True<Type>()  , eve::False<Type>());
-  TTS_EQUAL(eve::True<Type>()  < eve::False<Type>() , eve::False<Type>());
-  TTS_EQUAL(eve::False<Type>() < eve::True<Type>()  , eve::True<Type>() );
-  TTS_EQUAL(eve::False<Type>() < eve::False<Type>() , eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() < eve::True<Type>(), eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() < eve::False<Type>(), eve::False<Type>());
+  TTS_EQUAL(eve::False<Type>() < eve::True<Type>(), eve::True<Type>());
+  TTS_EQUAL(eve::False<Type>() < eve::False<Type>(), eve::False<Type>());
 }
 
 #endif

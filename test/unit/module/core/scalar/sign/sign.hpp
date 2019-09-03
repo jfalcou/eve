@@ -17,19 +17,13 @@
 #include <tts/tests/basic.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check sign return type")
-{
-  TTS_EXPR_IS(eve::sign(Type()),  Type);
-}
+TTS_CASE("Check sign return type") { TTS_EXPR_IS(eve::sign(Type()), Type); }
 
 TTS_CASE("Check eve::sign behavior")
 {
   TTS_EQUAL(eve::sign(Type{0}), Type(0));
   TTS_EQUAL(eve::sign(Type{2}), Type(1));
-  if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::sign(static_cast<Type>(-2)), Type(-1));
-  }
+  if constexpr(std::is_signed_v<Type>) { TTS_EQUAL(eve::sign(static_cast<Type>(-2)), Type(-1)); }
 }
 
 #endif

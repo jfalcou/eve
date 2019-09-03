@@ -28,10 +28,10 @@ TTS_CASE_TPL("Check bitwise_not behavior on wide",
 {
   using eve::wide;
   wide<Type, T> lhs([](int i, int) { return i + 1; }),
-    ref([](int i, int) { return eve::bitwise_not(Type(i + 1)); });
-  
+      ref([](int i, int) { return eve::bitwise_not(Type(i + 1)); });
+
   TTS_EQUAL(ref, eve::bitwise_not(lhs));
-  TTS_EQUAL(ref, ~lhs); 
+  TTS_EQUAL(ref, ~lhs);
 }
 
 #endif

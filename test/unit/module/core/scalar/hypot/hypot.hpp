@@ -17,17 +17,16 @@
 #include <tts/tests/precision.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
+#include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/sqrt_2.hpp>
 #include <type_traits>
 
-
 TTS_CASE("Check eve::hypot behavior")
 {
-  using eve::hypot; 
+  using eve::hypot;
   // specific values tests
 #ifndef BOOST_SIMD_NO_INVALIDS
   TTS_ULP_EQUAL(hypot(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>(), 0);
@@ -41,7 +40,7 @@ TTS_CASE("Check eve::hypot behavior")
   TTS_ULP_EQUAL(hypot(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>(), 0);
   TTS_ULP_EQUAL(hypot(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Inf<Type>(), 0);
   TTS_ULP_EQUAL(hypot(eve::Zero<Type>(), eve::Valmax<Type>()), eve::Inf<Type>(), 0);
-  TTS_ULP_EQUAL(hypot(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2), 0.5); 
+  TTS_ULP_EQUAL(hypot(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2), 0.5);
 } // end of test for floating_
 
 #endif

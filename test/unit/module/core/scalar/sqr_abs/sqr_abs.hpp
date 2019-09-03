@@ -26,21 +26,18 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check sqr_abs return type")
-{
-  TTS_EXPR_IS(eve::sqr_abs(Type(0)),  Type);
-}
+TTS_CASE("Check sqr_abs return type") { TTS_EXPR_IS(eve::sqr_abs(Type(0)), Type); }
 
 TTS_CASE("Check eve::sqr_abs behavior")
 {
   TTS_EQUAL(eve::sqr_abs(Type{1}), Type(1));
   TTS_EQUAL(eve::sqr_abs(Type{2}), Type(4));
-  
+
   TTS_EQUAL(eve::sqr_abs(static_cast<Type>(-2)), Type(4));
   TTS_IEEE_EQUAL(eve::sqr_abs(eve::Nan<Type>()), eve::Nan<Type>());
   TTS_IEEE_EQUAL(eve::sqr_abs(-eve::Nan<Type>()), eve::Nan<Type>());
-  TTS_EQUAL(eve::sqr_abs(eve::Mzero<Type>()), Type(0)); 
-  TTS_EQUAL(eve::sqr_abs(eve::Zero<Type>()),  Type(0)); 
+  TTS_EQUAL(eve::sqr_abs(eve::Mzero<Type>()), Type(0));
+  TTS_EQUAL(eve::sqr_abs(eve::Zero<Type>()), Type(0));
 }
-  
+
 #endif

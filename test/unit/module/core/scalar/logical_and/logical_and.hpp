@@ -18,18 +18,18 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check logical_and return type" )
+TTS_CASE("Check logical_and return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::logical_and(Type()         , Type()          ), logical<Type>);
-  TTS_EXPR_IS(eve::logical_and(logical<Type>(), Type()          ), logical<Type>);
-  TTS_EXPR_IS(eve::logical_and(logical<Type>(), logical<Type>() ), logical<Type>);
-  TTS_EXPR_IS(eve::logical_and(Type()         , logical<Type>() ), logical<Type>);
+  TTS_EXPR_IS(eve::logical_and(Type(), Type()), logical<Type>);
+  TTS_EXPR_IS(eve::logical_and(logical<Type>(), Type()), logical<Type>);
+  TTS_EXPR_IS(eve::logical_and(logical<Type>(), logical<Type>()), logical<Type>);
+  TTS_EXPR_IS(eve::logical_and(Type(), logical<Type>()), logical<Type>);
 
-  TTS_EXPR_IS(logical<Type>() && Type()         , logical<Type>);
+  TTS_EXPR_IS(logical<Type>() && Type(), logical<Type>);
   TTS_EXPR_IS(logical<Type>() && logical<Type>(), logical<Type>);
-  TTS_EXPR_IS(Type()          && logical<Type>(), logical<Type>);
+  TTS_EXPR_IS(Type() && logical<Type>(), logical<Type>);
 }
 
 TTS_CASE("Check eve::logical_and behavior on scalars")
@@ -41,28 +41,28 @@ TTS_CASE("Check eve::logical_and behavior on scalars")
 
 TTS_CASE("Check eve::logical_and behavior on logicals")
 {
-  TTS_EQUAL(eve::logical_and(eve::False<Type>(), eve::True<Type>()  ) , eve::False<Type>());
-  TTS_EQUAL(eve::logical_and(eve::True<Type>() , eve::False<Type>() ) , eve::False<Type>());
-  TTS_EQUAL(eve::logical_and(eve::True<Type>() , eve::True<Type>()  ) , eve::True<Type>() );
-  TTS_EQUAL(eve::logical_and(eve::False<Type>(), eve::False<Type>() ) , eve::False<Type>());
+  TTS_EQUAL(eve::logical_and(eve::False<Type>(), eve::True<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::logical_and(eve::True<Type>(), eve::False<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::logical_and(eve::True<Type>(), eve::True<Type>()), eve::True<Type>());
+  TTS_EQUAL(eve::logical_and(eve::False<Type>(), eve::False<Type>()), eve::False<Type>());
 
-  TTS_EQUAL(eve::logical_and(Type{0}          , eve::True<Type>() ) , eve::False<Type>());
-  TTS_EQUAL(eve::logical_and(eve::True<Type>(), Type{0}           ) , eve::False<Type>());
-  TTS_EQUAL(eve::logical_and(Type{7}          , eve::True<Type>() ) , eve::True<Type>() );
-  TTS_EQUAL(eve::logical_and(eve::True<Type>(), Type{99}          ) , eve::True<Type>() );
+  TTS_EQUAL(eve::logical_and(Type{0}, eve::True<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::logical_and(eve::True<Type>(), Type{0}), eve::False<Type>());
+  TTS_EQUAL(eve::logical_and(Type{7}, eve::True<Type>()), eve::True<Type>());
+  TTS_EQUAL(eve::logical_and(eve::True<Type>(), Type{99}), eve::True<Type>());
 }
 
 TTS_CASE("Check eve::operator&& behavior on logicals")
 {
-  TTS_EQUAL(eve::False<Type>() && eve::True<Type>() , eve::False<Type>());
-  TTS_EQUAL(eve::True<Type>()  && eve::False<Type>(), eve::False<Type>());
-  TTS_EQUAL(eve::True<Type>()  && eve::True<Type>() , eve::True<Type>() );
+  TTS_EQUAL(eve::False<Type>() && eve::True<Type>(), eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() && eve::False<Type>(), eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() && eve::True<Type>(), eve::True<Type>());
   TTS_EQUAL(eve::False<Type>() && eve::False<Type>(), eve::False<Type>());
 
-  TTS_EQUAL(Type{0}           && eve::True<Type>(), eve::False<Type>());
-  TTS_EQUAL(eve::True<Type>() && Type{0}          , eve::False<Type>());
-  TTS_EQUAL(Type{7}           && eve::True<Type>(), eve::True<Type>() );
-  TTS_EQUAL(eve::True<Type>() && Type{99}         , eve::True<Type>() );
+  TTS_EQUAL(Type{0} && eve::True<Type>(), eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() && Type{0}, eve::False<Type>());
+  TTS_EQUAL(Type{7} && eve::True<Type>(), eve::True<Type>());
+  TTS_EQUAL(eve::True<Type>() && Type{99}, eve::True<Type>());
 }
 
 #endif

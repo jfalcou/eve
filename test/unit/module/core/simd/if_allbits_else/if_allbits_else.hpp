@@ -20,17 +20,16 @@
 
 TTS_CASE_TPL("Check if_allbits_else behavior on  wide", EVE_WIDE_SIZE_RANGE())
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; })
-              , rhs1([](auto i, auto ) { return i%2+1; })
-              , rhs2([](auto i, auto ) { return i%3; });
+  wide<Type, T> cond([](auto i, auto) { return (i % 2) * i; }),
+      rhs1([](auto i, auto) { return i % 2 + 1; }), rhs2([](auto i, auto) { return i % 3; });
 
-  auto z = eve::Allbits(as(cond));
-  auto z_= eve::allbits_;
+  auto z  = eve::Allbits(as(cond));
+  auto z_ = eve::allbits_;
 
-  TTS_IEEE_EQUAL(eve::if_else(cond, z, rhs1) , eve::if_else(cond, z_, rhs1));
+  TTS_IEEE_EQUAL(eve::if_else(cond, z, rhs1), eve::if_else(cond, z_, rhs1));
   TTS_IEEE_EQUAL(eve::if_else(is_nez(cond), z, rhs1), eve::if_else(is_nez(cond), z_, rhs1));
 }
 

@@ -21,7 +21,6 @@
 using eve::as_aligned;
 using eve::fixed;
 
-
 TTS_CASE_TPL("Check ctor from unaligned pointer for wide",
              fixed<1>,
              fixed<2>,

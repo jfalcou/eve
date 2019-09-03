@@ -21,10 +21,7 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check abs return type")
-{
-  TTS_EXPR_IS(eve::abs(Type()),  Type);
-}
+TTS_CASE("Check abs return type") { TTS_EXPR_IS(eve::abs(Type()), Type); }
 
 TTS_CASE("Check eve::abs behavior")
 {
@@ -36,6 +33,5 @@ TTS_CASE("Check eve::abs behavior")
     TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<Type>()), eve::Valmax<Type>());
   }
 }
-
 
 #endif

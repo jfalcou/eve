@@ -24,7 +24,7 @@
 
 TTS_CASE("Check is_ngez return type")
 {
-  TTS_EXPR_IS(eve::is_ngez(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_ngez(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_ngez behavior")
@@ -33,16 +33,14 @@ TTS_CASE("Check eve::is_ngez behavior")
   TTS_EQUAL(eve::is_ngez(Type{2}), eve::False<Type>());
 
   if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::is_ngez(static_cast<Type>(-2)), eve::True<Type>());
-  }
+  { TTS_EQUAL(eve::is_ngez(static_cast<Type>(-2)), eve::True<Type>()); }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_ngez(eve::Nan<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_ngez(eve::Mzero<Type>()), eve::False<Type>());
   }
 
-  TTS_EQUAL(eve::is_ngez(eve::True<Type>()) , eve::False<Type>());
+  TTS_EQUAL(eve::is_ngez(eve::True<Type>()), eve::False<Type>());
   TTS_EQUAL(eve::is_ngez(eve::False<Type>()), eve::False<Type>());
 }
 

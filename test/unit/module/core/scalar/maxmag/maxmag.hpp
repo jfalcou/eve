@@ -19,7 +19,6 @@
 #include <tts/tests/precision.hpp>
 #include <type_traits>
 
-
 TTS_CASE("Check eve::maxmag behavior")
 {
   TTS_EQUAL(eve::maxmag(Type{0}, Type{0}), Type{0});
@@ -27,16 +26,16 @@ TTS_CASE("Check eve::maxmag behavior")
   TTS_EQUAL(eve::maxmag(Type{1}, Type{0}), Type{1});
   TTS_EQUAL(eve::maxmag(Type{1}, Type{2}), Type{2});
   TTS_EQUAL(eve::maxmag(Type{2}, Type{1}), Type{2});
-  if constexpr(std::is_signed_v<Type> )
+  if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::maxmag(static_cast<Type>(-1), Type{2}), Type{2});
     TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{1}), static_cast<Type>(-2));
     TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{2}), Type{2});
   }
-  if constexpr(std::is_floating_point_v<Type> )
+  if constexpr(std::is_floating_point_v<Type>)
   {
-    Type n =  eve::Nan<Type>();
-    Type o =  eve::One<Type>();
+    Type n = eve::Nan<Type>();
+    Type o = eve::One<Type>();
     TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(n, o), n);
     TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(o, n), o);
   }

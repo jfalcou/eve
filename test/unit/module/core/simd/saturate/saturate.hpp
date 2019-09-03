@@ -27,11 +27,10 @@ TTS_CASE_TPL("Check saturate behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-   wide<Type, T> lhs([](int i, int) { return i + 1; }),
-     ref([](int i, int) { return eve::saturate[eve::as(std::uint16_t())](Type(i + 1)); });
-  
-   TTS_EQUAL(ref, eve::saturate[eve::as(std::uint16_t())](lhs)); 
-}
+  wide<Type, T> lhs([](int i, int) { return i + 1; }),
+      ref([](int i, int) { return eve::saturate[ eve::as(std::uint16_t()) ](Type(i + 1)); });
 
+  TTS_EQUAL(ref, eve::saturate[ eve::as(std::uint16_t()) ](lhs));
+}
 
 #endif

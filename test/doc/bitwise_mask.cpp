@@ -3,11 +3,12 @@
 #include <iostream>
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
-using wide_f  = eve::wide<float        , eve::fixed<4>>;  
+using wide_f  = eve::wide<float, eve::fixed<4>>;
 
-int main() {
+int main()
+{
   wide_it pi = {0, 2, ~0, 1023};
-  wide_f  pf = {0.0f, -0.0f, 1.0f, -10.0f}; 
+  wide_f  pf = {0.0f, -0.0f, 1.0f, -10.0f};
 
   std::cout << "---- simd" << '\n'
             << "<- pi =                  " << pi << '\n'

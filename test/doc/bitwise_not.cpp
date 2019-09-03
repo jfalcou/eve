@@ -4,7 +4,8 @@
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
-int main() {
+int main()
+{
   wide_it pi = {1, 2, ~0, 1023};
 
   std::cout << "---- simd" << '\n'

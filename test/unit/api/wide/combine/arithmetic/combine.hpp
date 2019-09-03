@@ -38,9 +38,9 @@ TTS_CASE_TPL("Check combining for arithmetic wide",
 {
   using eve::wide;
 
-  wide<Type, T>                         low([](auto i, auto)  { return 1 + i; });
+  wide<Type, T>                         low([](auto i, auto) { return 1 + i; });
   wide<Type, T>                         high([](auto i, auto) { return T::value + 1 + i; });
-  wide<Type, typename T::combined_type> ref([](auto i, auto)  { return 1 + i; });
+  wide<Type, typename T::combined_type> ref([](auto i, auto) { return 1 + i; });
 
   TTS_EQUAL((wide<Type, typename T::combined_type>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);

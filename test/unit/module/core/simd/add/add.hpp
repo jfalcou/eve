@@ -25,13 +25,12 @@ TTS_CASE_TPL("Check plus behavior on wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
-    ref(T::value);
+      ref(T::value);
 
   TTS_EQUAL(ref, eve::add(lhs, rhs));
   TTS_EQUAL(ref, lhs + rhs);
@@ -48,8 +47,7 @@ TTS_CASE_TPL("Check plus behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto) { return i + Type(4); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }), ref([](auto i, auto) { return i + Type(4); });
 
   TTS_EQUAL(ref, eve::add(lhs, 4));
   TTS_EQUAL(ref, eve::add(4, lhs));

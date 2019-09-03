@@ -16,8 +16,8 @@
 #include <limits>
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4723 ) // 1/0 is OK for this test
+#  pragma warning(push)
+#  pragma warning(disable : 4723) // 1/0 is OK for this test
 #endif
 
 TTS_CASE("Check mzero return type")
@@ -48,5 +48,5 @@ TTS_CASE("Check mzero behavior")
 }
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( pop )
+#  pragma warning(pop)
 #endif

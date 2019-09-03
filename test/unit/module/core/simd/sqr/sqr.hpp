@@ -28,11 +28,11 @@ TTS_CASE_TPL("Check sqr behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::sqr(Type(i)); });  
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      ref([](auto i, auto) { return eve::sqr(Type(i)); });
   TTS_EQUAL(ref, eve::sqr(lhs));
 }
 

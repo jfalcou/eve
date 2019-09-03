@@ -28,13 +28,12 @@ TTS_CASE_TPL("Check conj behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::conj(Type(i)); });  
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      ref([](auto i, auto) { return eve::conj(Type(i)); });
   TTS_EQUAL(ref, eve::conj(lhs));
 }
-
 
 #endif

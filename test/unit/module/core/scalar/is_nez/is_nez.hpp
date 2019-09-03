@@ -22,10 +22,7 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check is_nez return type")
-{
-  TTS_EXPR_IS(eve::is_nez(Type(0)),  eve::as_logical_t<Type>);
-}
+TTS_CASE("Check is_nez return type") { TTS_EXPR_IS(eve::is_nez(Type(0)), eve::as_logical_t<Type>); }
 
 TTS_CASE("Check eve::is_nez behavior")
 {
@@ -33,16 +30,14 @@ TTS_CASE("Check eve::is_nez behavior")
   TTS_EQUAL(eve::is_nez(Type{2}), eve::True<Type>());
 
   if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::is_nez(static_cast<Type>(-2)), eve::True<Type>());
-  }
+  { TTS_EQUAL(eve::is_nez(static_cast<Type>(-2)), eve::True<Type>()); }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_nez(eve::Nan<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_nez(eve::Mzero<Type>()), eve::False<Type>());
   }
 
-  TTS_EQUAL(eve::is_nez(eve::True<Type>()) , eve::True<Type>());
+  TTS_EQUAL(eve::is_nez(eve::True<Type>()), eve::True<Type>());
   TTS_EQUAL(eve::is_nez(eve::False<Type>()), eve::False<Type>());
 }
 

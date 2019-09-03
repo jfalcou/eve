@@ -35,14 +35,14 @@ TTS_CASE_TPL("Check average behavior on homogeneous wide",
              fixed<64>)
 {
   using eve::wide;
-  wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return Type(i); }),
-    ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }),
+      rhs([](auto i, auto) { return Type(i); }),
+      ref([](auto i, auto c) { return eve::average(Type(c - i), Type(i)); });
 
-  if constexpr(std::is_integral_v<Type>)
-    lhs[0] = rhs[0] = ref[0] = eve::Valmax<Type>();
+  if constexpr(std::is_integral_v<Type>) lhs[ 0 ] = rhs[ 0 ] = ref[ 0 ] = eve::Valmax<Type>();
 
-  wide<Type, T> val(eve::average(lhs, rhs)) ;
-  auto z =  eve::max(ref, val) -eve::min(ref, val);
+  wide<Type, T> val(eve::average(lhs, rhs));
+  auto          z = eve::max(ref, val) - eve::min(ref, val);
 
   TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref)));
 }
@@ -59,9 +59,9 @@ TTS_CASE_TPL("Check average behavior on wide + scalar",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto c) { return Type(i % 3); }),
-    ref([](auto i, auto c) { return eve::average(Type(i % 3), Type(7)); }),
-    val(eve::average(lhs, Type(7)));
-  auto z =  eve::max(ref, val) -eve::min(ref, val);
+      ref([](auto i, auto c) { return eve::average(Type(i % 3), Type(7)); }),
+      val(eve::average(lhs, Type(7)));
+  auto z = eve::max(ref, val) - eve::min(ref, val);
 
   TTS_EQUAL(eve::is_less_equal(z, eve::One(as(ref))), eve::True(as(ref)));
 }

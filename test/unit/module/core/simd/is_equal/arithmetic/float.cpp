@@ -24,14 +24,15 @@ TTS_CASE_TPL("Check is_not_equal behavior on nans",
   using eve::wide;
 
   using t_t = wide<Type, T>;
-  using l_t = eve::as_logical_t <t_t>;
-  using eve::Nan; 
-  t_t  v0([](auto i, auto) { return Type(i); }), v1([](auto i, auto) { return i%2 ? Type(i) : Nan<Type>(); }); 
-  l_t ref([](auto i, auto c) { return eve::is_equal(Type(i), i%2 ? Type(i) : Nan<Type>()); });
-  
+  using l_t = eve::as_logical_t<t_t>;
+  using eve::Nan;
+  t_t v0([](auto i, auto) { return Type(i); }),
+      v1([](auto i, auto) { return i % 2 ? Type(i) : Nan<Type>(); });
+  l_t ref([](auto i, auto c) { return eve::is_equal(Type(i), i % 2 ? Type(i) : Nan<Type>()); });
+
   TTS_EQUAL(ref, eve::is_equal(v0, v1));
   TTS_EQUAL(ref, eve::is_equal(v1, v0));
-                      
-  TTS_EQUAL(ref, v0 ==  v1);
-  TTS_EQUAL(ref, v1 ==  v0);
+
+  TTS_EQUAL(ref, v0 == v1);
+  TTS_EQUAL(ref, v1 == v0);
 }

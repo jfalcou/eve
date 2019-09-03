@@ -25,7 +25,7 @@
 
 TTS_CASE("Check is_not_finite return type")
 {
-  TTS_EXPR_IS(eve::is_not_finite(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_finite(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_finite behavior")

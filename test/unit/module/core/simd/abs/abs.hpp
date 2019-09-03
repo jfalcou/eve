@@ -18,20 +18,19 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check abs behavior on wide",
-              fixed<1>,
-              fixed<2>,
-              fixed<4>,
-              fixed<8>,
-              fixed<16>,
-              fixed<32>,
-              fixed<64>
-            )
+TTS_CASE_TPL("Check abs behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](int i, int) { return i%2 ? i+2 :-i-2; }),
-                ref([](int i, int) { return eve::abs(Type(i%2 ? i+2 :-i-2)); });
+  wide<Type, T> lhs([](int i, int) { return i % 2 ? i + 2 : -i - 2; }),
+      ref([](int i, int) { return eve::abs(Type(i % 2 ? i + 2 : -i - 2)); });
 
   TTS_EQUAL(ref, eve::abs(lhs));
 }

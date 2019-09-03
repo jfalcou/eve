@@ -18,19 +18,18 @@
 #include <eve/constant/one.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL( "Check if_else_one behavior on wide", EVE_WIDE_SIZE_RANGE())
+TTS_CASE_TPL("Check if_else_one behavior on wide", EVE_WIDE_SIZE_RANGE())
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; })
-              , rhs1([](auto i, auto ) { return i%2+1; })
-              , rhs2([](auto i, auto ) { return i%3; });
+  wide<Type, T> cond([](auto i, auto) { return (i % 2) * i; }),
+      rhs1([](auto i, auto) { return i % 2 + 1; }), rhs2([](auto i, auto) { return i % 3; });
 
-  auto z = eve::One(as(cond));
-  auto z_= eve::one_;
+  auto z  = eve::One(as(cond));
+  auto z_ = eve::one_;
 
-  TTS_IEEE_EQUAL(eve::if_else(cond, rhs1, z) , eve::if_else(cond, rhs1, z_));
+  TTS_IEEE_EQUAL(eve::if_else(cond, rhs1, z), eve::if_else(cond, rhs1, z_));
   TTS_IEEE_EQUAL(eve::if_else(is_nez(cond), rhs1, z), eve::if_else(is_nez(cond), rhs1, z_));
 }
 

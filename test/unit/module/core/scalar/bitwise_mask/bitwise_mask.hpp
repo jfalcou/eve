@@ -19,19 +19,14 @@
 #include <eve/constant/allbits.hpp>
 #include <type_traits>
 
-TTS_CASE("Check bitwise_mask return type")
-{
-  TTS_EXPR_IS(eve::bitwise_mask(Type()), Type);
-}
+TTS_CASE("Check bitwise_mask return type") { TTS_EXPR_IS(eve::bitwise_mask(Type()), Type); }
 
 TTS_CASE("Check eve::bitwise_mask behavior")
 {
   TTS_EQUAL(eve::bitwise_mask(Type(0)), Type(0));
 
   if constexpr(std::is_floating_point_v<Type>)
-  {
-    TTS_IEEE_EQUAL(eve::bitwise_mask(Type(1)), eve::Allbits<Type>());
-  }
+  { TTS_IEEE_EQUAL(eve::bitwise_mask(Type(1)), eve::Allbits<Type>()); }
   else
   {
     TTS_EQUAL(eve::bitwise_mask(Type(1)), eve::Allbits<Type>());

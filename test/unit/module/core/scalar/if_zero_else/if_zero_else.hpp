@@ -21,30 +21,28 @@
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE( "Check if_else return type" )
+TTS_CASE("Check if_else return type")
 {
-  TTS_EXPR_IS(eve::if_else(Type(), eve::zero_, Type() ) , Type );
-  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), eve::zero_, Type() ) , Type );
-  TTS_EXPR_IS(eve::if_else(true , eve::zero_ , Type() ) , Type );
+  TTS_EXPR_IS(eve::if_else(Type(), eve::zero_, Type()), Type);
+  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), eve::zero_, Type()), Type);
+  TTS_EXPR_IS(eve::if_else(true, eve::zero_, Type()), Type);
 }
-
 
 TTS_CASE("Check if_else(., zero_, .) behavior ")
 {
   auto f = eve::Zero<Type>();
   auto t = eve::One<Type>();
 
-  
-  TTS_EQUAL ( eve::if_else( 1   , eve::zero_, t  ), f);
-  TTS_EQUAL ( eve::if_else( 1.0 , eve::zero_, t  ), f);
-  TTS_EQUAL ( eve::if_else( true, eve::zero_, t  ), f);
-  TTS_EQUAL ( eve::if_else( eve::True<Type>()  , eve::zero_, t), f);
-  TTS_EQUAL ( eve::if_else( t   , eve::zero_, t  ), f);
-  TTS_EQUAL ( eve::if_else( 0   , eve::zero_, t  ), t);
-  TTS_EQUAL ( eve::if_else( 0.0 , eve::zero_, t  ), t);
-  TTS_EQUAL ( eve::if_else( false , eve::zero_, t), t);
-  TTS_EQUAL ( eve::if_else( eve::False<Type>(), eve::zero_, t), t);
-  TTS_EQUAL ( eve::if_else( f   , eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(1, eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(1.0, eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(true, eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(eve::True<Type>(), eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(t, eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(0, eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(0.0, eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(false, eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(eve::False<Type>(), eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(f, eve::zero_, t), t);
 }
 
 #endif

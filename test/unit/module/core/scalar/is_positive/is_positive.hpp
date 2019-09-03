@@ -24,13 +24,13 @@
 #include <type_traits>
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4146 ) // unary - on unsigned (?)
+#  pragma warning(push)
+#  pragma warning(disable : 4146) // unary - on unsigned (?)
 #endif
 
 TTS_CASE("Check is_positive return type")
 {
-  TTS_EXPR_IS(eve::is_positive(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_positive(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_positive behavior")
@@ -39,9 +39,7 @@ TTS_CASE("Check eve::is_positive behavior")
   TTS_EQUAL(eve::is_positive(Type{2}), eve::True<Type>());
 
   if constexpr(std::is_signed_v<Type>)
-  {
-    TTS_EQUAL(eve::is_positive(static_cast<Type>(-2)), eve::False<Type>());
-  }
+  { TTS_EQUAL(eve::is_positive(static_cast<Type>(-2)), eve::False<Type>()); }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_positive(-eve::Nan<Type>()), eve::True<Type>());
@@ -52,8 +50,7 @@ TTS_CASE("Check eve::is_positive behavior")
 }
 
 #if defined(EVE_COMP_IS_MSVC)
-#pragma warning( pop )
+#  pragma warning(pop)
 #endif
 
 #endif
-

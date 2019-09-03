@@ -19,11 +19,11 @@
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE( "Check if_else return type" )
+TTS_CASE("Check if_else return type")
 {
-  TTS_EXPR_IS(eve::if_else(Type(), Type(), Type() ) , Type );
-  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), Type(), Type() ) , Type );
-  TTS_EXPR_IS(eve::if_else(true  , Type(), Type() ) , Type );
+  TTS_EXPR_IS(eve::if_else(Type(), Type(), Type()), Type);
+  TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), Type(), Type()), Type);
+  TTS_EXPR_IS(eve::if_else(true, Type(), Type()), Type);
 }
 
 TTS_CASE("Check if_else behavior with arithmetic alternatives")
@@ -33,14 +33,14 @@ TTS_CASE("Check if_else behavior with arithmetic alternatives")
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_EQUAL ( eve::if_else( 1     , tv, fv), tv);
-  TTS_EQUAL ( eve::if_else( 1.0   , tv, fv), tv);
-  TTS_EQUAL ( eve::if_else( true  , tv, fv), tv);
-  TTS_EQUAL ( eve::if_else( t     , tv, fv), tv);
-  TTS_EQUAL ( eve::if_else( 0     , tv, fv), fv);
-  TTS_EQUAL ( eve::if_else( 0.0   , tv, fv), fv);
-  TTS_EQUAL ( eve::if_else( false , tv, fv), fv);
-  TTS_EQUAL ( eve::if_else( f     , tv, fv), fv);
+  TTS_EQUAL(eve::if_else(1, tv, fv), tv);
+  TTS_EQUAL(eve::if_else(1.0, tv, fv), tv);
+  TTS_EQUAL(eve::if_else(true, tv, fv), tv);
+  TTS_EQUAL(eve::if_else(t, tv, fv), tv);
+  TTS_EQUAL(eve::if_else(0, tv, fv), fv);
+  TTS_EQUAL(eve::if_else(0.0, tv, fv), fv);
+  TTS_EQUAL(eve::if_else(false, tv, fv), fv);
+  TTS_EQUAL(eve::if_else(f, tv, fv), fv);
 }
 
 TTS_CASE("Check if_else behavior with logical alternatives")
@@ -48,14 +48,14 @@ TTS_CASE("Check if_else behavior with logical alternatives")
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_EQUAL ( eve::if_else( 1     , t, f), t);
-  TTS_EQUAL ( eve::if_else( 1.0   , t, f), t);
-  TTS_EQUAL ( eve::if_else( true  , t, f), t);
-  TTS_EQUAL ( eve::if_else( t     , t, f), t);
-  TTS_EQUAL ( eve::if_else( 0     , t, f), f);
-  TTS_EQUAL ( eve::if_else( 0.0   , t, f), f);
-  TTS_EQUAL ( eve::if_else( false , t, f), f);
-  TTS_EQUAL ( eve::if_else( f     , t, f), f);
+  TTS_EQUAL(eve::if_else(1, t, f), t);
+  TTS_EQUAL(eve::if_else(1.0, t, f), t);
+  TTS_EQUAL(eve::if_else(true, t, f), t);
+  TTS_EQUAL(eve::if_else(t, t, f), t);
+  TTS_EQUAL(eve::if_else(0, t, f), f);
+  TTS_EQUAL(eve::if_else(0.0, t, f), f);
+  TTS_EQUAL(eve::if_else(false, t, f), f);
+  TTS_EQUAL(eve::if_else(f, t, f), f);
 }
 
 #endif

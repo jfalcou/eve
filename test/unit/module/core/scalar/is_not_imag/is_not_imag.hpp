@@ -26,7 +26,7 @@
 
 TTS_CASE("Check is_not_imag return type")
 {
-  TTS_EXPR_IS(eve::is_not_imag(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_imag(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_imag behavior")
@@ -36,9 +36,9 @@ TTS_CASE("Check eve::is_not_imag behavior")
 
   if constexpr(std::is_floating_point_v<Type>)
   {
-    TTS_EQUAL(eve::is_not_imag(eve::Inf<Type>())  , eve::True<Type>());
-    TTS_EQUAL(eve::is_not_imag(eve::Minf<Type>()) , eve::True<Type>());
-    TTS_EQUAL(eve::is_not_imag(eve::Nan<Type>())  , eve::True<Type>());
+    TTS_EQUAL(eve::is_not_imag(eve::Inf<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_not_imag(eve::Minf<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_not_imag(eve::Nan<Type>()), eve::True<Type>());
   }
 }
 

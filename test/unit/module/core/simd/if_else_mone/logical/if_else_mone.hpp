@@ -22,36 +22,43 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL( "Check if_else behavior on homogeneous logical  wide"
-            , fixed<1>,fixed<2>, fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check if_else behavior on homogeneous logical  wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>  cond([](auto i, auto ) { return (i%2)*i; })
-              , rhs1([](auto i, auto ) { return i%2+1; })
-              , rhs2([](auto i, auto ) { return i%3; });
+  wide<Type, T> cond([](auto i, auto) { return (i % 2) * i; }),
+      rhs1([](auto i, auto) { return i % 2 + 1; }), rhs2([](auto i, auto) { return i % 3; });
 
-  auto z = eve::Mone<wide<Type,T>>();
-  auto z_= eve::mone_; 
-  TTS_IEEE_EQUAL( eve::if_else(is_nez(cond), rhs1, z), eve::if_else(is_nez(cond), rhs1, z_)); 
-  
+  auto z  = eve::Mone<wide<Type, T>>();
+  auto z_ = eve::mone_;
+  TTS_IEEE_EQUAL(eve::if_else(is_nez(cond), rhs1, z), eve::if_else(is_nez(cond), rhs1, z_));
 }
 
-TTS_CASE_TPL( "Check if_else behavior on logical wide + scalar"
-            , fixed<1>,fixed<2>,fixed<4>,fixed<8>,fixed<16>,fixed<32>,fixed<64>
-            )
+TTS_CASE_TPL("Check if_else behavior on logical wide + scalar",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
 {
-  using eve::wide;
   using eve::is_nez;
+  using eve::wide;
 
-  wide<Type,T>    lhs([](int i, int ) { return i%3; }); 
+  wide<Type, T> lhs([](int i, int) { return i % 3; });
 
-  auto z = eve::Mone<wide<Type,T>>();
-  auto z_= eve::mone_; 
-  TTS_IEEE_EQUAL( eve::if_else(is_nez(lhs), Type(7), z), eve::if_else(is_nez(lhs), Type(7), z_)); 
-
+  auto z  = eve::Mone<wide<Type, T>>();
+  auto z_ = eve::mone_;
+  TTS_IEEE_EQUAL(eve::if_else(is_nez(lhs), Type(7), z), eve::if_else(is_nez(lhs), Type(7), z_));
 }
 
 #endif

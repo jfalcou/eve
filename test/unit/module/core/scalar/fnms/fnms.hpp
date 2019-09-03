@@ -16,18 +16,15 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check fnms return type" )
-{
-  TTS_EXPR_IS(eve::fnms(Type(), Type(), Type()) , Type);
-}
+TTS_CASE("Check fnms return type") { TTS_EXPR_IS(eve::fnms(Type(), Type(), Type()), Type); }
 
 TTS_CASE("Check eve::fnms behavior")
 {
-  TTS_EQUAL(eve::fnms(Type{0}, Type{0} , Type{0}), Type{0});
-  TTS_EQUAL(eve::fnms(Type{0}, Type{0} , Type{7}), static_cast<Type>(-7));
-  TTS_EQUAL(eve::fnms(Type{2}, Type{0} , Type{7}), static_cast<Type>(-7));
-  TTS_EQUAL(eve::fnms(Type{0}, Type{5} , Type{7}), static_cast<Type>(-7));     
-  TTS_EQUAL(eve::fnms(Type{2}, Type{5} , Type{7}), static_cast<Type>(-17));
+  TTS_EQUAL(eve::fnms(Type{0}, Type{0}, Type{0}), Type{0});
+  TTS_EQUAL(eve::fnms(Type{0}, Type{0}, Type{7}), static_cast<Type>(-7));
+  TTS_EQUAL(eve::fnms(Type{2}, Type{0}, Type{7}), static_cast<Type>(-7));
+  TTS_EQUAL(eve::fnms(Type{0}, Type{5}, Type{7}), static_cast<Type>(-7));
+  TTS_EQUAL(eve::fnms(Type{2}, Type{5}, Type{7}), static_cast<Type>(-17));
 }
 
 #endif

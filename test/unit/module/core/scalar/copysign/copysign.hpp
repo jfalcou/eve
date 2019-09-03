@@ -24,10 +24,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/mzero.hpp>
 
-TTS_CASE("Check copysign return type")
-{
-  TTS_EXPR_IS(eve::copysign(Type(), Type()),  Type);
-}
+TTS_CASE("Check copysign return type") { TTS_EXPR_IS(eve::copysign(Type(), Type()), Type); }
 
 TTS_CASE("Check eve::copysign behavior")
 {

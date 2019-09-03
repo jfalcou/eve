@@ -35,9 +35,10 @@ TTS_CASE_TPL("Check hypot behavior on homogeneous wide",
              fixed<64>)
 {
   using eve::wide;
-  wide<Type, T> lhs([](auto i, auto c) { return Type(c - i); }), rhs([](auto i, auto) { return Type(i); }),
-    ref([](auto i, auto c) { return eve::hypot(Type(c - i), Type(i)); });
-  wide<Type, T> val(eve::hypot(lhs, rhs)) ;
+  wide<Type, T> lhs([](auto i, auto c) { return Type(c - i); }),
+      rhs([](auto i, auto) { return Type(i); }),
+      ref([](auto i, auto c) { return eve::hypot(Type(c - i), Type(i)); });
+  wide<Type, T> val(eve::hypot(lhs, rhs));
   TTS_ULP_EQUAL(ref, val, 1);
 }
 
@@ -53,8 +54,8 @@ TTS_CASE_TPL("Check hypot behavior on wide + scalar",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto c) { return Type(i % 3); }),
-    ref([](auto i, auto c) { return eve::hypot(Type(i % 3), Type(7)); }),
-    val(eve::hypot(lhs, Type(7)));
+      ref([](auto i, auto c) { return eve::hypot(Type(i % 3), Type(7)); }),
+      val(eve::hypot(lhs, Type(7)));
   TTS_ULP_EQUAL(ref, val, 1);
 }
 

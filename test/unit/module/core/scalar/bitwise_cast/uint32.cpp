@@ -20,5 +20,5 @@ TTS_CASE("Check bitwise_cast return type")
   TTS_EXPR_IS(eve::bitwise_cast<it_t>(Type()), it_t);
   TTS_EXPR_IS(eve::bitwise_cast<ut_t>(Type()), ut_t);
   TTS_EXPR_IS(eve::bitwise_cast<Type>(Type()), Type);
-  TTS_EXPR_IS(eve::bitwise_cast<ft_t>(Type()), ft_t);    
+  TTS_EXPR_IS(eve::bitwise_cast<ft_t>(Type()), ft_t);
 }

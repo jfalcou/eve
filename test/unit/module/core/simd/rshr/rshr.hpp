@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
@@ -30,16 +30,16 @@ TTS_CASE_TPL("Check rshr behavior on wide",
 {
   using eve::wide;
   using i_t = eve::detail::as_integer_t<Type, signed>;
-  
+
   std::ptrdiff_t n = sizeof(Type) * 8 - 1;
   wide<Type, T>  lhs([](int i, int c) { return c - i; }),
-    ref([n](int i, int c) { return eve::rshr(Type(c - i), (i-c/2) % n); });
-  wide<i_t, T> rhs([n](int i, int c) { return (i-c/2) % n; });
-  TTS_EQUAL(ref, eve::rshr(lhs, rhs)); 
+      ref([n](int i, int c) { return eve::rshr(Type(c - i), (i - c / 2) % n); });
+  wide<i_t, T> rhs([n](int i, int c) { return (i - c / 2) % n; });
+  TTS_EQUAL(ref, eve::rshr(lhs, rhs));
 }
 
 TTS_CASE_TPL("Check rshr behavior on wide + scalar",
-            fixed<1>,
+             fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
@@ -49,12 +49,12 @@ TTS_CASE_TPL("Check rshr behavior on wide + scalar",
 {
   using eve::wide;
   int           rhs = sizeof(Type) * 4;
-  wide<Type, T> lhs([](int i, int c) { return c - i; }); 
-  wide<Type, T>  ref1([rhs](int i, int c) { return eve::rshr(Type(c - i), rhs); }),
-    ref2([rhs](int i, int c) { return eve::rshr(Type(c - i), -rhs); });
-  
-  TTS_EQUAL(ref1, eve::rshr(lhs, rhs)); 
-  TTS_EQUAL(ref2, eve::rshr(lhs, -rhs)); 
+  wide<Type, T> lhs([](int i, int c) { return c - i; });
+  wide<Type, T> ref1([rhs](int i, int c) { return eve::rshr(Type(c - i), rhs); }),
+      ref2([rhs](int i, int c) { return eve::rshr(Type(c - i), -rhs); });
+
+  TTS_EQUAL(ref1, eve::rshr(lhs, rhs));
+  TTS_EQUAL(ref2, eve::rshr(lhs, -rhs));
 }
 
 #endif

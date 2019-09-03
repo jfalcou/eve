@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check enumerating constructor for arithmetic wide",
   using eve::logical;
   using eve::wide;
 
-  auto filler = [](auto i, auto) { return Type(i+1); };
+  auto filler = [](auto i, auto) { return Type(i + 1); };
 
   wide<Type, T>              simd(filler);
   std::array<Type, T::value> ref;

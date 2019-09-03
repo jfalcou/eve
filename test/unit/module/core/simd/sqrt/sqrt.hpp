@@ -29,8 +29,9 @@ TTS_CASE_TPL("Check sqrt behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), ref([](auto i, auto) { return eve::sqrt(Type(i)); });
-  TTS_ULP_EQUAL(ref, eve::sqrt(lhs),1);
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+      ref([](auto i, auto) { return eve::sqrt(Type(i)); });
+  TTS_ULP_EQUAL(ref, eve::sqrt(lhs), 1);
 }
 
 TTS_CASE_TPL("Check raw_(sqrt) behavior on wide",
@@ -44,8 +45,9 @@ TTS_CASE_TPL("Check raw_(sqrt) behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return 1+i; }), ref([](auto i, auto) { return eve::sqrt(Type(1+i)); });
-  TTS_RELATIVE_EQUAL(ref, eve::raw_(eve::sqrt)(lhs),1);
+  wide<Type, T> lhs([](auto i, auto) { return 1 + i; }),
+      ref([](auto i, auto) { return eve::sqrt(Type(1 + i)); });
+  TTS_RELATIVE_EQUAL(ref, eve::raw_(eve::sqrt)(lhs), 1);
 }
 
 #endif

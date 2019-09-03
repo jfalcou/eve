@@ -39,7 +39,7 @@ TTS_CASE("Check signmask behavior")
   TTS_EQUAL(eve::Signmask<std::uint64_t>(), std::uint64_t(0x8000000000000000ULL));
   TTS_EQUAL(eve::Signmask<std::int8_t>(), std::int8_t(-128));
   TTS_EQUAL(eve::Signmask<std::int16_t>(), std::int16_t(-32768));
-  TTS_EQUAL(eve::Signmask<std::int32_t>(), std::int32_t(-2147483647-1));
+  TTS_EQUAL(eve::Signmask<std::int32_t>(), std::int32_t(-2147483647 - 1));
   TTS_EQUAL(eve::Signmask<std::int64_t>(), std::int64_t(-9223372036854775807LL - 1));
 
   TTS_EQUAL(eve::Signmask<double>(), eve::Mzero<double>());

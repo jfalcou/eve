@@ -24,23 +24,20 @@
 #include <eve/constant/inf.hpp>
 #include <type_traits>
 
-TTS_CASE("Check rsqrt return type")
-{
-  TTS_EXPR_IS(eve::rsqrt(Type(0)),  Type);
-}
+TTS_CASE("Check rsqrt return type") { TTS_EXPR_IS(eve::rsqrt(Type(0)), Type); }
 
 TTS_CASE("Check eve::rsqrt behavior")
 {
   TTS_EQUAL(eve::rsqrt(Type{1}), Type(1));
   TTS_EQUAL(eve::rsqrt(Type{4}), eve::Half<Type>());
-  
+
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_IEEE_EQUAL(eve::rsqrt(eve::Nan<Type>()), eve::Nan<Type>());
     TTS_IEEE_EQUAL(eve::rsqrt(-eve::Nan<Type>()), eve::Nan<Type>());
-    TTS_EQUAL(eve::rsqrt(eve::Mzero<Type>()), eve::Inf<Type>()); 
-    TTS_EQUAL(eve::rsqrt(eve::Zero<Type>()),  eve::Inf<Type>());
+    TTS_EQUAL(eve::rsqrt(eve::Mzero<Type>()), eve::Inf<Type>());
+    TTS_EQUAL(eve::rsqrt(eve::Zero<Type>()), eve::Inf<Type>());
   }
 }
-  
+
 #endif

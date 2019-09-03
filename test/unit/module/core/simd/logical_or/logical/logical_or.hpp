@@ -26,20 +26,19 @@ TTS_CASE_TPL("Check logical_or behavior on homogeneous logical<wide>",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; }),
-                          rhs([](auto i, auto c) { return i%3 ==  0; });
-  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::logical_or(i%2 == 0, i%3 == 0); });
+  logical<wide<Type, T>> lhs([](auto i, auto c) { return i % 2 == 0; }),
+      rhs([](auto i, auto c) { return i % 3 == 0; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto c) { return eve::logical_or(i % 2 == 0, i % 3 == 0); });
 
   TTS_EQUAL(ref, eve::logical_or(lhs, rhs));
-  TTS_EQUAL(ref, (lhs ||  rhs));
+  TTS_EQUAL(ref, (lhs || rhs));
 }
-
 
 TTS_CASE_TPL("Check logical_or behavior on logical<wide> or scalars",
              fixed<1>,
@@ -48,16 +47,15 @@ TTS_CASE_TPL("Check logical_or behavior on logical<wide> or scalars",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; });
-  logical<Type>           rhs = true;
-  Type                    srhs = 3;
-  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_or(i%2 == 0, true); });
+  logical<wide<Type, T>> lhs([](auto i, auto c) { return i % 2 == 0; });
+  logical<Type>          rhs  = true;
+  Type                   srhs = 3;
+  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_or(i % 2 == 0, true); });
 
   TTS_EQUAL(ref, eve::logical_or(lhs, rhs));
   TTS_EQUAL(ref, eve::logical_or(lhs, srhs));
@@ -76,15 +74,14 @@ TTS_CASE_TPL("Check logical_or behavior on logical<wide> and wides",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; });
-  wide<Type, T>  rhs([](auto i, auto c) { return i%3; });
-  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_or(i%2 == 0, i%3 ); });
+  logical<wide<Type, T>> lhs([](auto i, auto c) { return i % 2 == 0; });
+  wide<Type, T>          rhs([](auto i, auto c) { return i % 3; });
+  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_or(i % 2 == 0, i % 3); });
 
   TTS_EQUAL(ref, eve::logical_or(lhs, rhs));
   TTS_EQUAL(ref, eve::logical_or(rhs, lhs));

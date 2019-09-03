@@ -26,23 +26,20 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check arg return type")
-{
-  TTS_EXPR_IS(eve::arg(Type(0)),  Type);
-}
+TTS_CASE("Check arg return type") { TTS_EXPR_IS(eve::arg(Type(0)), Type); }
 
 TTS_CASE("Check eve::arg behavior")
 {
-  TTS_EQUAL(eve::arg(Type{1}),  eve::Zero<Type>());
-  TTS_EQUAL(eve::arg(Type{2}),  eve::Zero<Type>());
+  TTS_EQUAL(eve::arg(Type{1}), eve::Zero<Type>());
+  TTS_EQUAL(eve::arg(Type{2}), eve::Zero<Type>());
 
   TTS_EQUAL(eve::arg(static_cast<Type>(-2)), eve::Pi<Type>());
   TTS_IEEE_EQUAL(eve::arg(eve::Nan<Type>()), eve::Pi<Type>());
-  TTS_IEEE_EQUAL(eve::arg(-eve::Nan<Type>()),  eve::Zero<Type>());
+  TTS_IEEE_EQUAL(eve::arg(-eve::Nan<Type>()), eve::Zero<Type>());
   TTS_IEEE_EQUAL(eve::pedantic_(eve::arg)(eve::Nan<Type>()), eve::Nan<Type>());
   TTS_IEEE_EQUAL(eve::pedantic_(eve::arg)(-eve::Nan<Type>()), -eve::Nan<Type>());
   TTS_EQUAL(eve::arg(eve::Mzero<Type>()), eve::Pi<Type>());
-  TTS_EQUAL(eve::arg(eve::Zero<Type>()),   eve::Zero<Type>());
+  TTS_EQUAL(eve::arg(eve::Zero<Type>()), eve::Zero<Type>());
 }
 
 #endif

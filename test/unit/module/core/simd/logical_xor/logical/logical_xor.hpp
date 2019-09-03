@@ -28,12 +28,12 @@ TTS_CASE_TPL("Check logical_xor behavior on homogeneous wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto c) { return c - i; }),
-                          rhs([](auto i, auto) { return i % 2; });
-  logical<wide<Type, T>>  ref([](auto i, auto c) { return eve::logical_xor(Type(c - i), Type(i % 2)); });
+  wide<Type, T> lhs([](auto i, auto c) { return c - i; }), rhs([](auto i, auto) { return i % 2; });
+  logical<wide<Type, T>> ref(
+      [](auto i, auto c) { return eve::logical_xor(Type(c - i), Type(i % 2)); });
 
   TTS_EQUAL(ref, eve::logical_xor(lhs, rhs));
 }
@@ -47,10 +47,10 @@ TTS_CASE_TPL("Check plus behavior on wide xor scalar",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto) { return i; });
+  wide<Type, T>          lhs([](auto i, auto) { return i; });
   logical<wide<Type, T>> ref1([](auto i, auto) { return eve::logical_xor(Type(i), Type(2)); });
   logical<wide<Type, T>> ref2([](auto i, auto) { return eve::logical_xor(Type(i), Type(0)); });
 
@@ -67,16 +67,15 @@ TTS_CASE_TPL("Check logical_xor behavior on logical<wide> and wides",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>>  lhs([](auto i, auto c) { return i%2 ==  0; });
-  wide<Type, T>  rhs([](auto i, auto c) { return i%3; });
-  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_xor(i%2 == 0, i%3 ); }); 
-  logical<wide<Type, T>> ref1([](auto i, auto c) { return eve::logical_xor( i%3, i%2 == 0); });
+  logical<wide<Type, T>> lhs([](auto i, auto c) { return i % 2 == 0; });
+  wide<Type, T>          rhs([](auto i, auto c) { return i % 3; });
+  logical<wide<Type, T>> ref([](auto i, auto c) { return eve::logical_xor(i % 2 == 0, i % 3); });
+  logical<wide<Type, T>> ref1([](auto i, auto c) { return eve::logical_xor(i % 3, i % 2 == 0); });
 
   TTS_EQUAL(ref, eve::logical_xor(lhs, rhs));
   TTS_EQUAL(ref1, eve::logical_xor(rhs, lhs));

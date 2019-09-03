@@ -25,7 +25,7 @@
 
 TTS_CASE("Check is_not_nan return type")
 {
-  TTS_EXPR_IS(eve::is_not_nan(Type(0)),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_not_nan(Type(0)), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_not_nan behavior")
@@ -40,6 +40,5 @@ TTS_CASE("Check eve::is_not_nan behavior")
     TTS_EQUAL(eve::is_not_nan(eve::Nan<Type>()), eve::False<Type>());
   }
 }
-
 
 #endif

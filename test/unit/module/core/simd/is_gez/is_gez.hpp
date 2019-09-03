@@ -28,11 +28,11 @@ TTS_CASE_TPL("Check is_gez behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>           lhs([](auto i, auto) { return i%2 ? Type(-1) : Type(+1); });
-  logical<wide<Type, T>>  ref([](auto i, auto) { return eve::is_gez(i%2 ? Type(-1) : Type(+1)); });
+  wide<Type, T>          lhs([](auto i, auto) { return i % 2 ? Type(-1) : Type(+1); });
+  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_gez(i % 2 ? Type(-1) : Type(+1)); });
 
   TTS_EQUAL(ref, eve::is_gez(lhs));
 }
@@ -44,14 +44,13 @@ TTS_CASE_TPL("Check is_gez behavior on logical<wide>",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-             )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  logical<wide<Type, T>> lhs([](auto i, auto) { return (i%2) >= 0; });
-  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_gez( i%2 >= 0 ); });
+  logical<wide<Type, T>> lhs([](auto i, auto) { return (i % 2) >= 0; });
+  logical<wide<Type, T>> ref([](auto i, auto) { return eve::is_gez(i % 2 >= 0); });
 
   TTS_EQUAL(ref, eve::is_gez(lhs));
 }

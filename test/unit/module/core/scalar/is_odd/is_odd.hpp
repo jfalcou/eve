@@ -25,10 +25,7 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check is_odd return type")
-{
-  TTS_EXPR_IS(eve::is_odd(Type(0)),  eve::as_logical_t<Type>);
-}
+TTS_CASE("Check is_odd return type") { TTS_EXPR_IS(eve::is_odd(Type(0)), eve::as_logical_t<Type>); }
 
 TTS_CASE("Check eve::is_odd behavior")
 {
@@ -39,7 +36,7 @@ TTS_CASE("Check eve::is_odd behavior")
     TTS_EQUAL(eve::is_odd(eve::Half<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_odd(eve::Inf<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_odd(eve::Minf<Type>()), eve::False<Type>());
-    TTS_EQUAL(eve::is_odd(eve::Nan <Type>()), eve::False<Type>()); 
+    TTS_EQUAL(eve::is_odd(eve::Nan<Type>()), eve::False<Type>());
   }
 }
 

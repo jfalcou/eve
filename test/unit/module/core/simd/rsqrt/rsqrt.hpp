@@ -30,11 +30,11 @@ TTS_CASE_TPL("Check rsqrt behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>   lhs([](auto i, auto) { return Type(i); }),
-                  ref([](auto i, auto) { return eve::rsqrt(Type(i)); });
+  wide<Type, T> lhs([](auto i, auto) { return Type(i); }),
+      ref([](auto i, auto) { return eve::rsqrt(Type(i)); });
 
   TTS_ULP_EQUAL(ref, eve::rsqrt(lhs), 1);
 }
@@ -48,11 +48,11 @@ TTS_CASE_TPL("Check raw(rsqrt) behavior on wide",
              fixed<32>,
              fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>   lhs([](auto i, auto) { return Type(i); }),
-                  ref([](auto i, auto) { return eve::rsqrt(Type(i)); });
+  wide<Type, T> lhs([](auto i, auto) { return Type(i); }),
+      ref([](auto i, auto) { return eve::rsqrt(Type(i)); });
 
   TTS_RELATIVE_EQUAL(ref, eve::raw_(eve::rsqrt)(lhs), 1);
 }

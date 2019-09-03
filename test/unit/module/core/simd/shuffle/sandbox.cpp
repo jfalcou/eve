@@ -14,7 +14,8 @@
 
 namespace eve
 {
-//  inline constexpr auto zip_        = shuffler([](int i, int c ) { auto s = c/2; return i/s + (i%s)*c; });
+  //  inline constexpr auto zip_        = shuffler([](int i, int c ) { auto s = c/2; return i/s +
+  //  (i%s)*c; });
 
   // template<int N, typename P>
   // inline auto extent_pattern(shuffler_t<P> const& p)
@@ -60,44 +61,42 @@ TTS_CASE("shuffle sandbox")
   using eve::logical;
   using eve::wide;
   using Type = float;
-  using T = eve::fixed<4>;
+  using T    = eve::fixed<4>;
 
-  wide<Type, T> arg([](auto i, auto) { return 10*(1+i); });
+  wide<Type, T> arg([](auto i, auto) { return 10 * (1 + i); });
   std::cout << "arg: " << arg << "\n";
 
-  std::cout << arg[eve::identity] << "\n";
-  std::cout << arg[eve::pattern<-1,-1, 0, 1>] << "\n";
-  std::cout << arg[eve::pattern< 0, 1,-1,-1>] << "\n";
-  std::cout << arg[eve::pattern<-1,-1, 2, 3>] << "\n";
-  std::cout << arg[eve::pattern< 2, 3,-1,-1>] << "\n";
-  std::cout << arg[eve::pattern<-1,-1,-1,-1>] << "\n";
-  std::cout << arg[eve::pattern<3,0,1,2>] << "\n";
-  std::cout << arg[eve::pattern<0,1>] << "\n";
-  std::cout << arg[eve::pattern<2,3>] << "\n";
-  std::cout << arg[eve::pattern<-1,-1>] << "\n";
-  std::cout << arg[eve::pattern<3,0>] << "\n";
-  std::cout << arg[eve::broadcast<1>] << "\n";
-  std::cout << arg[eve::reverse] << "\n";
-  std::cout << arg[eve::pattern<0,0>] << "\n";
-  std::cout << arg[eve::pattern<0,1,2,3,0,1,2,3>] << "\n\n";
+  std::cout << arg[ eve::identity ] << "\n";
+  std::cout << arg[ eve::pattern<-1, -1, 0, 1> ] << "\n";
+  std::cout << arg[ eve::pattern<0, 1, -1, -1> ] << "\n";
+  std::cout << arg[ eve::pattern<-1, -1, 2, 3> ] << "\n";
+  std::cout << arg[ eve::pattern<2, 3, -1, -1> ] << "\n";
+  std::cout << arg[ eve::pattern<-1, -1, -1, -1> ] << "\n";
+  std::cout << arg[ eve::pattern<3, 0, 1, 2> ] << "\n";
+  std::cout << arg[ eve::pattern<0, 1> ] << "\n";
+  std::cout << arg[ eve::pattern<2, 3> ] << "\n";
+  std::cout << arg[ eve::pattern<-1, -1> ] << "\n";
+  std::cout << arg[ eve::pattern<3, 0> ] << "\n";
+  std::cout << arg[ eve::broadcast<1> ] << "\n";
+  std::cout << arg[ eve::reverse ] << "\n";
+  std::cout << arg[ eve::pattern<0, 0> ] << "\n";
+  std::cout << arg[ eve::pattern<0, 1, 2, 3, 0, 1, 2, 3> ] << "\n\n";
 
-
-  logical<wide<Type, T>> larg([](auto i, auto) { return 10*(1+i) % 3; });
+  logical<wide<Type, T>> larg([](auto i, auto) { return 10 * (1 + i) % 3; });
   std::cout << "\nlarg: " << larg << "\n";
-  std::cout << larg[eve::identity] << "\n";
-  std::cout << larg[eve::pattern<-1,-1, 0, 1>] << "\n";
-  std::cout << larg[eve::pattern< 0, 1,-1,-1>] << "\n";
-  std::cout << larg[eve::pattern<-1,-1, 2, 3>] << "\n";
-  std::cout << larg[eve::pattern< 2, 3,-1,-1>] << "\n";
-  std::cout << larg[eve::pattern<-1,-1,-1,-1>] << "\n";
-  std::cout << larg[eve::pattern<3,0,1,2>] << "\n";
-  std::cout << larg[eve::pattern<0,1>] << "\n";
-  std::cout << larg[eve::pattern<2,3>] << "\n";
-  std::cout << larg[eve::pattern<-1,-1>] << "\n";
-  std::cout << larg[eve::pattern<3,0>] << "\n";
-  std::cout << larg[eve::broadcast<2>] << "\n";
-  std::cout << larg[eve::reverse] << "\n";
-  std::cout << larg[eve::pattern<0,0>] << "\n";
-  std::cout << larg[eve::pattern<0,0,1,1,2,2,3,3>] << "\n\n";
-
+  std::cout << larg[ eve::identity ] << "\n";
+  std::cout << larg[ eve::pattern<-1, -1, 0, 1> ] << "\n";
+  std::cout << larg[ eve::pattern<0, 1, -1, -1> ] << "\n";
+  std::cout << larg[ eve::pattern<-1, -1, 2, 3> ] << "\n";
+  std::cout << larg[ eve::pattern<2, 3, -1, -1> ] << "\n";
+  std::cout << larg[ eve::pattern<-1, -1, -1, -1> ] << "\n";
+  std::cout << larg[ eve::pattern<3, 0, 1, 2> ] << "\n";
+  std::cout << larg[ eve::pattern<0, 1> ] << "\n";
+  std::cout << larg[ eve::pattern<2, 3> ] << "\n";
+  std::cout << larg[ eve::pattern<-1, -1> ] << "\n";
+  std::cout << larg[ eve::pattern<3, 0> ] << "\n";
+  std::cout << larg[ eve::broadcast<2> ] << "\n";
+  std::cout << larg[ eve::reverse ] << "\n";
+  std::cout << larg[ eve::pattern<0, 0> ] << "\n";
+  std::cout << larg[ eve::pattern<0, 0, 1, 1, 2, 2, 3, 3> ] << "\n\n";
 }

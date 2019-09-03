@@ -18,49 +18,49 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE( "Check eve::is_equal return type" )
+TTS_CASE("Check eve::is_equal return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_equal(Type()          , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_equal(logical<Type>() , Type())         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_equal(logical<Type>() , logical<Type>()),  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(eve::is_equal(Type()          , logical<Type>()),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_equal(Type(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_equal(logical<Type>(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_equal(logical<Type>(), logical<Type>()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_equal(Type(), logical<Type>()), eve::as_logical_t<Type>);
 }
 
-TTS_CASE( "Check eve::operator== return type" )
+TTS_CASE("Check eve::operator== return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(logical<Type>() == Type()         ,  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(logical<Type>() == logical<Type>(),  eve::as_logical_t<Type>);
-  TTS_EXPR_IS(Type()          == logical<Type>(),  eve::as_logical_t<Type>);
+  TTS_EXPR_IS(logical<Type>() == Type(), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(logical<Type>() == logical<Type>(), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(Type() == logical<Type>(), eve::as_logical_t<Type>);
 }
 
 TTS_CASE("Check eve::is_equal behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::is_equal(Type(1),Type(1))                      , eve::True<Type>() );
-  TTS_EQUAL(eve::is_equal(Type(3),Type(1))                      , eve::False<Type>());
-  TTS_EQUAL(eve::is_equal(eve::True<Type>(),Type(1))            , eve::True<Type>() );
-  TTS_EQUAL(eve::is_equal(eve::False<Type>(),Type(1))           , eve::False<Type>());
-  TTS_EQUAL(eve::is_equal(eve::True<Type>(),eve::True<Type>())  , eve::True<Type>() );
-  TTS_EQUAL(eve::is_equal(eve::True<Type>(),eve::False<Type>()) , eve::False<Type>());
-  TTS_EQUAL(eve::is_equal(Type(3),eve::True<Type>())            , eve::True<Type>() );
-  TTS_EQUAL(eve::is_equal(Type(3),eve::False<Type>())           , eve::False<Type>());
+  TTS_EQUAL(eve::is_equal(Type(1), Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_equal(Type(3), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_equal(eve::True<Type>(), Type(1)), eve::True<Type>());
+  TTS_EQUAL(eve::is_equal(eve::False<Type>(), Type(1)), eve::False<Type>());
+  TTS_EQUAL(eve::is_equal(eve::True<Type>(), eve::True<Type>()), eve::True<Type>());
+  TTS_EQUAL(eve::is_equal(eve::True<Type>(), eve::False<Type>()), eve::False<Type>());
+  TTS_EQUAL(eve::is_equal(Type(3), eve::True<Type>()), eve::True<Type>());
+  TTS_EQUAL(eve::is_equal(Type(3), eve::False<Type>()), eve::False<Type>());
 }
 
 TTS_CASE("Check eve::operator== behavior")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::True<Type>() == Type(1)            , eve::True<Type>() );
-  TTS_EQUAL(eve::False<Type>() == Type(1)           , eve::False<Type>());
-  TTS_EQUAL(eve::True<Type>() == eve::True<Type>()  , eve::True<Type>() );
-  TTS_EQUAL(eve::True<Type>() == eve::False<Type>() , eve::False<Type>());
-  TTS_EQUAL(Type(3) == eve::True<Type>()            , eve::True<Type>() );
-  TTS_EQUAL(Type(3) == eve::False<Type>()           , eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() == Type(1), eve::True<Type>());
+  TTS_EQUAL(eve::False<Type>() == Type(1), eve::False<Type>());
+  TTS_EQUAL(eve::True<Type>() == eve::True<Type>(), eve::True<Type>());
+  TTS_EQUAL(eve::True<Type>() == eve::False<Type>(), eve::False<Type>());
+  TTS_EQUAL(Type(3) == eve::True<Type>(), eve::True<Type>());
+  TTS_EQUAL(Type(3) == eve::False<Type>(), eve::False<Type>());
 }
 
 #endif
