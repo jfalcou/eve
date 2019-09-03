@@ -15,4 +15,3 @@
 #include <eve/module/core/function/simd/common/is_not_nan.hpp>
 
 #endif
-

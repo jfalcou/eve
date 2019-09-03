@@ -72,12 +72,8 @@ namespace eve
   using EqualCardinal = std::enable_if_t<T::static_size == U::static_size>;
 
   template<typename N, typename... Us>
-  using HasCompatibleCardinal = std::enable_if_t< ( (      (cardinal_v<Us> == N::value)
-                                                      ||   (cardinal_v<Us> == 1)
-                                                    )
-                                                    && ...
-                                                  )
-                                                >;
+  using HasCompatibleCardinal =
+      std::enable_if_t<(((cardinal_v<Us> == N::value) || (cardinal_v<Us> == 1)) && ...)>;
 }
 
 #endif

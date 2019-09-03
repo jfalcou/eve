@@ -15,4 +15,3 @@
 #include <eve/module/core/function/scalar/is_ordered.hpp>
 
 #endif
-

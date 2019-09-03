@@ -20,14 +20,11 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr
-  auto  add_(EVE_SUPPORTS(cpu_)
-            , T const &cond
-            , U const &t
-            , U const &f) noexcept
-        requires( U, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto
+  add_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept requires(U,
+                                                                                    Vectorizable<T>)
   {
-    return is_nez(cond) ? t+f : t;
+    return is_nez(cond) ? t + f : t;
   }
 }
 

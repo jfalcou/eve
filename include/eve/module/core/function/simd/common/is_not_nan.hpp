@@ -24,10 +24,10 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_not_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-                            requires( as_logical_t<T>, Vectorized<T> )
+  EVE_FORCEINLINE constexpr auto
+  is_not_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorized<T>)
   {
-    return is_ordered(a,a);
+    return is_ordered(a, a);
   }
 }
 

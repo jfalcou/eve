@@ -20,9 +20,9 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto is_greater_equal_( EVE_SUPPORTS(vmx_),
-                                          wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1
-                                        ) noexcept
+  EVE_FORCEINLINE auto is_greater_equal_(EVE_SUPPORTS(vmx_),
+                                         wide<T, N, ppc_> const &v0,
+                                         wide<T, N, ppc_> const &v1) noexcept
   {
     using t_t = wide<T, N, ppc_>;
     if constexpr(std::is_floating_point_v<T>)

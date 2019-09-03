@@ -23,14 +23,14 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto bitwise_xor_(EVE_SUPPORTS(cpu_)
-                                             , T const &a
-                                             , U const &b) noexcept
-  requires(T,  Vectorizable<T>, Vectorizable<U>)
+  EVE_FORCEINLINE constexpr auto
+  bitwise_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
+                                                                             Vectorizable<T>,
+                                                                             Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
-      static_assert(sizeof(T) == sizeof(U)
-                   , "[eve::bitwise_xor] scalar - Arguments have incompatible size");
+      static_assert(sizeof(T) == sizeof(U),
+                    "[eve::bitwise_xor] scalar - Arguments have incompatible size");
     else if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;

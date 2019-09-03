@@ -29,15 +29,11 @@ namespace eve::detail
   template<typename T, typename... Vs, typename = Arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::sse_ const &, Vs... vs) noexcept
   {
-    static_assert ( sizeof...(Vs) <= limits<eve::sse2_>::bytes/sizeof(T)
-                  , "[eve::make sse] - Invalid number of arguments"
-                  );
+    static_assert(sizeof...(Vs) <= limits<eve::sse2_>::bytes / sizeof(T),
+                  "[eve::make sse] - Invalid number of arguments");
 
-    if constexpr( std::is_same_v<T,double> )
-    {
-      return _mm_setr_pd(static_cast<double>(vs)...);
-    }
-    else if constexpr( std::is_same_v<T,float> )
+    if constexpr(std::is_same_v<T, double>) { return _mm_setr_pd(static_cast<double>(vs)...); }
+    else if constexpr(std::is_same_v<T, float>)
     {
       if constexpr(sizeof...(vs) == 4) return _mm_setr_ps(static_cast<float>(vs)...);
       if constexpr(sizeof...(vs) == 2) return _mm_setr_ps(static_cast<float>(vs)..., 0.f, 0.f);
@@ -81,11 +77,8 @@ namespace eve::detail
   template<typename T, typename V, typename = Arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::sse_ const &, V v) noexcept
   {
-    if constexpr( std::is_same_v<T,double> )
-    {
-      return _mm_set1_pd(static_cast<double>(v));
-    }
-    else if constexpr( std::is_same_v<T,float> )
+    if constexpr(std::is_same_v<T, double>) { return _mm_set1_pd(static_cast<double>(v)); }
+    else if constexpr(std::is_same_v<T, float>)
     {
       return _mm_set1_ps(static_cast<float>(v));
     }
@@ -110,44 +103,37 @@ namespace eve::detail
   template<typename T, typename... Vs, typename = Arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::avx_ const &, Vs... vs) noexcept
   {
-    static_assert ( sizeof...(Vs) <= limits<eve::avx_>::bytes/sizeof(T)
-                  , "[eve::make sse] - Invalid number of arguments"
-                  );
+    static_assert(sizeof...(Vs) <= limits<eve::avx_>::bytes / sizeof(T),
+                  "[eve::make sse] - Invalid number of arguments");
 
-    if constexpr( std::is_same_v<T,double> )
-    {
-      return _mm256_setr_pd(vs...);
-    }
-    else if constexpr( std::is_same_v<T,float> )
+    if constexpr(std::is_same_v<T, double>) { return _mm256_setr_pd(vs...); }
+    else if constexpr(std::is_same_v<T, float>)
     {
       return _mm256_setr_ps(vs...);
     }
     else
     {
-      if constexpr(sizeof...(vs) == 4  && sizeof(T) == 8) return _mm256_setr_epi64x(vs...);
-      if constexpr(sizeof...(vs) == 8  && sizeof(T) == 4) return _mm256_setr_epi32 (vs...);
-      if constexpr(sizeof...(vs) == 16 && sizeof(T) == 2) return _mm256_setr_epi16 (vs...);
-      if constexpr(sizeof...(vs) == 32 && sizeof(T) == 1) return _mm256_setr_epi8  (vs...);
+      if constexpr(sizeof...(vs) == 4 && sizeof(T) == 8) return _mm256_setr_epi64x(vs...);
+      if constexpr(sizeof...(vs) == 8 && sizeof(T) == 4) return _mm256_setr_epi32(vs...);
+      if constexpr(sizeof...(vs) == 16 && sizeof(T) == 2) return _mm256_setr_epi16(vs...);
+      if constexpr(sizeof...(vs) == 32 && sizeof(T) == 1) return _mm256_setr_epi8(vs...);
     }
   }
 
   template<typename T, typename V, typename = Arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::avx_ const &, V v) noexcept
   {
-    if constexpr( std::is_same_v<T,double> )
-    {
-      return _mm256_set1_pd(v);
-    }
-    else if constexpr( std::is_same_v<T,float> )
+    if constexpr(std::is_same_v<T, double>) { return _mm256_set1_pd(v); }
+    else if constexpr(std::is_same_v<T, float>)
     {
       return _mm256_set1_ps(v);
     }
     else
     {
       if(sizeof(T) == 8) return _mm256_set1_epi64x(v);
-      if(sizeof(T) == 4) return _mm256_set1_epi32 (v);
-      if(sizeof(T) == 2) return _mm256_set1_epi16 (v);
-      if(sizeof(T) == 1) return _mm256_set1_epi8  (v);
+      if(sizeof(T) == 4) return _mm256_set1_epi32(v);
+      if(sizeof(T) == 2) return _mm256_set1_epi16(v);
+      if(sizeof(T) == 1) return _mm256_set1_epi8(v);
     }
   }
 

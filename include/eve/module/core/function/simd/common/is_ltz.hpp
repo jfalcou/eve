@@ -25,10 +25,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_ltz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_unsigned_v<T>)
-    {
-      return False(as(v));
-    }
+    if constexpr(std::is_unsigned_v<T>) { return False(as(v)); }
     else
     {
       return is_less(v, Zero(as(v)));

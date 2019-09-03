@@ -25,10 +25,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_gtz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_unsigned_v<T>)
-    {
-      return is_nez(v);
-    }
+    if constexpr(std::is_unsigned_v<T>) { return is_nez(v); }
     else
     {
       return is_greater(v, Zero(as(v)));

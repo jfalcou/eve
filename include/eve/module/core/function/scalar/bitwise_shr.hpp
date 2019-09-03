@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
@@ -23,17 +23,15 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T,  typename U>
-  EVE_FORCEINLINE constexpr auto bitwise_shr_(EVE_SUPPORTS(cpu_)
-                                             , T const &a0
-                                             , U a1) noexcept
-  requires(T, Integral<U>,  Integral<T>)
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto
+  bitwise_shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept requires(T, Integral<U>, Integral<T>)
   {
     EVE_ASSERT(detail::assert_good_shift<T>(a1),
                "[ eve::bitwise_shr] scalar - Shift " << a1 << " is out of the range [0, "
-                                                       << sizeof(T) * 8 << "[.");
-    using u_t = eve::detail::as_integer_t<T, unsigned>; 
-    return T(u_t(a0) >>  a1);
+                                                     << sizeof(T) * 8 << "[.");
+    using u_t = eve::detail::as_integer_t<T, unsigned>;
+    return T(u_t(a0) >> a1);
   }
 }
 

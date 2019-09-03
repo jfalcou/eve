@@ -32,59 +32,53 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(cpu_)
-                                , T const &a
-                                , U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      std::conditional_t<is_vectorized_v<T>, T, U>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
 
     if constexpr(!std::is_same_v<value_type_t<T>, value_type_t<U>>)
     {
-      static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>
-                   , "[eve::copysign] common - cannot copysign: value_types are not of the same");
-      return {}; 
+      static_assert(std::is_same_v<value_type_t<T>, value_type_t<U>>,
+                    "[eve::copysign] common - cannot copysign: value_types are not of the same");
+      return {};
     }
-    else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
-      return map( eve::copysign, abi_cast<value_type_t<U>>(a)
-                , abi_cast<value_type_t<T>>(b) );
+      return map(eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return aggregate( eve::copysign, abi_cast<value_type_t<U>>(a)
-                      , abi_cast<value_type_t<T>>(b) );
+      return aggregate(eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        {
-          return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
-        }
+        { return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a)); }
         else
         {
-          if constexpr(std::is_unsigned_v<value_type_t<T>>)        return  a; 
+          if constexpr(std::is_unsigned_v<value_type_t<T>>)
+            return a;
           else
           {
-            return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a)*signnz(b));
+            return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a) * signnz(b));
           }
         }
       }
       else
       {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::copy] common - cannot copysign on wide of different cardinal");
+        static_assert(std::is_same_v<T, U>,
+                      "[eve::copy] common - cannot copysign on wide of different cardinal");
         return {};
       }
     }
-    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
-      return eve::copysign(abi_cast<U>(a), abi_cast<T>(b) );
+      return eve::copysign(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
 }

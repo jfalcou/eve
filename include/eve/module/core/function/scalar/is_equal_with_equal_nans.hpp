@@ -21,16 +21,12 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr
-  auto  is_equal_with_equal_nans_(EVE_SUPPORTS(cpu_)
-                                 , T const &a
-                                 , U const &b) noexcept
-  requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
+  EVE_FORCEINLINE constexpr auto is_equal_with_equal_nans_(
+      EVE_SUPPORTS(cpu_),
+      T const &a,
+      U const &b) noexcept requires(as_logical_t<T>, Vectorizable<T>, Vectorizable<U>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return (a == b) || ((a!= a) && (b!= b));
-    }
+    if constexpr(std::is_floating_point_v<T>) { return (a == b) || ((a != a) && (b != b)); }
     else
     {
       return a == b;

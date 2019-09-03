@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_finite_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-      return eve::is_eqz(a-a);
+      return eve::is_eqz(a - a);
     else
       return true;
   }

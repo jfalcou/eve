@@ -10,7 +10,7 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_SCALAR_BITOFSIGN_HPP_INCLUDED
 #define EVE_FUNCTION_SCALAR_BITOFSIGN_HPP_INCLUDED
- 
+
 #include <eve/function/definition/bitofsign.hpp>
 #include <eve/module/core/function/scalar/bitofsign.hpp>
 

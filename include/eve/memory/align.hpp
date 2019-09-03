@@ -30,9 +30,7 @@ namespace eve
   template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
   constexpr auto align(T value, over alignment) noexcept
   {
-    EVE_ASSERT( is_power_of_2(alignment.value)
-              , alignment.value << " is not a power of 2."
-              );
+    EVE_ASSERT(is_power_of_2(alignment.value), alignment.value << " is not a power of 2.");
 
     return (value + alignment.value - 1) & ~(alignment.value - 1);
   }
@@ -40,9 +38,7 @@ namespace eve
   template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
   constexpr auto align(T value, under alignment) noexcept
   {
-    EVE_ASSERT( is_power_of_2(alignment.value)
-              , alignment.value << " is not a power of 2."
-              );
+    EVE_ASSERT(is_power_of_2(alignment.value), alignment.value << " is not a power of 2.");
 
     return value & ~(alignment.value - 1);
   }

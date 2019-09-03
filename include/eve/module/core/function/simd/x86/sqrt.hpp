@@ -19,25 +19,27 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> sqrt_( EVE_SUPPORTS(sse2_),
-                                          wide<T, N, sse_> const & a0
-                                        ) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_> sqrt_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0) noexcept
   {
-    if constexpr( std::is_same_v<T, float>)        return _mm_sqrt_ps(a0);
-    else if constexpr( std::is_same_v<T, double>)  return _mm_sqrt_pd(a0);
-    else return sqrt_(EVE_RETARGET(cpu_), a0); 
+    if constexpr(std::is_same_v<T, float>)
+      return _mm_sqrt_ps(a0);
+    else if constexpr(std::is_same_v<T, double>)
+      return _mm_sqrt_pd(a0);
+    else
+      return sqrt_(EVE_RETARGET(cpu_), a0);
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> sqrt_( EVE_SUPPORTS(avx2_),
-                                          wide<T, N, avx_> const & a0
-                                        ) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_> sqrt_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0) noexcept
   {
-    if constexpr( std::is_same_v<T, float>)       return _mm256_sqrt_ps(a0);
-    else if constexpr( std::is_same_v<T, double>) return _mm256_sqrt_pd(a0);
-    else  return sqrt_(EVE_RETARGET(cpu_), a0); 
+    if constexpr(std::is_same_v<T, float>)
+      return _mm256_sqrt_ps(a0);
+    else if constexpr(std::is_same_v<T, double>)
+      return _mm256_sqrt_pd(a0);
+    else
+      return sqrt_(EVE_RETARGET(cpu_), a0);
   }
-  
+
 }
 
 #endif

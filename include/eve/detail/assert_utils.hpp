@@ -18,10 +18,10 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE bool assert_all( T const& t ) noexcept
+  EVE_FORCEINLINE bool assert_all(T const &t) noexcept
   {
     for(std::size_t i = 0; i != eve::cardinal_v<T>; ++i)
-      if(!extract(t, i)) return false; 
+      if(!extract(t, i)) return false;
     return true;
   }
 

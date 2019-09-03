@@ -20,19 +20,16 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_)
-                                         , T const &a
-                                         , U const& ) noexcept
-  requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto
+  extract_(EVE_SUPPORTS(cpu_), T const &a, U const &) noexcept requires(T, Vectorizable<T>)
   {
     return a;
   }
-  
+
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_)
-                                         , logical<T> const &a
-                                         , U const&) noexcept
-  requires(logical<T>, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto extract_(EVE_SUPPORTS(cpu_),
+                                          logical<T> const &a,
+                                          U const &) noexcept requires(logical<T>, Vectorizable<T>)
   {
     return a;
   }

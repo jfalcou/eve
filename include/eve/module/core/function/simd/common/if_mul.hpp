@@ -23,13 +23,9 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto
-  mul_( EVE_SUPPORTS(cpu_)
-         , T const &cond
-         , U const &t
-         , V const &f
-         ) noexcept
+  mul_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
   {
-    return t*if_else(cond, abi_cast<U>(f), eve::one_);
+    return t * if_else(cond, abi_cast<U>(f), eve::one_);
   }
 }
 

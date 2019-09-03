@@ -30,14 +30,10 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_)
-                           , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(is_aggregated_v<ABI>)
-    {
-      return aggregate(eve::rec, v);
-    }
-    else if  constexpr(is_emulated_v<ABI>)
+    if constexpr(is_aggregated_v<ABI>) { return aggregate(eve::rec, v); }
+    else if constexpr(is_emulated_v<ABI>)
     {
       return map(eve::rec, v);
     }
@@ -50,10 +46,7 @@ namespace eve::detail
       }
       else
       {
-        if constexpr(std::is_unsigned_v<T>)
-        {
-          return if_else(v == One(as(v)), v, eve::zero_);
-        }
+        if constexpr(std::is_unsigned_v<T>) { return if_else(v == One(as(v)), v, eve::zero_); }
         else
         {
           return if_else(eve::abs(v) == One(as(v)), v, eve::zero_);
@@ -63,15 +56,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_)
-                           , raw_type const&
-                           , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto rec_(EVE_SUPPORTS(cpu_), raw_type const &, wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(is_aggregated_v<ABI>)
-    {
-      return aggregate(raw_(eve::rec), v);
-    }
-    else if  constexpr(is_emulated_v<ABI>)
+    if constexpr(is_aggregated_v<ABI>) { return aggregate(raw_(eve::rec), v); }
+    else if constexpr(is_emulated_v<ABI>)
     {
       return map(raw_(eve::rec), v);
     }
@@ -90,16 +78,11 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto rec_ ( EVE_SUPPORTS(cpu_),
-                              pedantic_type const&,
-                              wide<T, N, ABI> const &v
-                            ) noexcept
+  EVE_FORCEINLINE auto
+  rec_(EVE_SUPPORTS(cpu_), pedantic_type const &, wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(is_aggregated_v<ABI>)
-    {
-      return aggregate(eve::pedantic_(eve::rec), v);
-    }
-    else if  constexpr(is_emulated_v<ABI>)
+    if constexpr(is_aggregated_v<ABI>) { return aggregate(eve::pedantic_(eve::rec), v); }
+    else if constexpr(is_emulated_v<ABI>)
     {
       return map(eve::pedantic_(eve::rec), v);
     }
@@ -113,12 +96,10 @@ namespace eve::detail
       else
       {
         if constexpr(std::is_unsigned_v<T>)
-        {
-          return if_else( is_eqz(v), eve::allbits_, eve::rec(v) );
-        }
+        { return if_else(is_eqz(v), eve::allbits_, eve::rec(v)); }
         else
         {
-          return if_else( is_eqz(v), eve::Valmax(as(v)), eve::rec(v) );
+          return if_else(is_eqz(v), eve::Valmax(as(v)), eve::rec(v));
         }
       }
     }

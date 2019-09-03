@@ -24,15 +24,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto floor_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+  EVE_FORCEINLINE constexpr auto floor_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      auto z =  trunc(a0);
-      return dec[z > a0](z);
+      auto z = trunc(a0);
+      return dec[ z > a0 ](z);
     }
-    else return a0; 
+    else
+      return a0;
   }
 }
 

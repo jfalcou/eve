@@ -25,24 +25,21 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto load(as_<wide<T, N>> const& tgt,
-                            eve::ppc_ const&,
-                            T *ptr) noexcept
-  requires(typename wide<T, N>::storage_type, Vectorizable<T>)
+  EVE_FORCEINLINE auto load(as_<wide<T, N>> const &tgt,
+                            eve::ppc_ const &,
+                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                      Vectorizable<T>)
   {
-    if constexpr( current_api == eve::vmx )
+    if constexpr(current_api == eve::vmx)
     {
-      if constexpr( sizeof(T) <= 8 )
-      {
-        return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
-      }
+      if constexpr(sizeof(T) <= 8)
+      { return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr)); }
       else
       {
         return load(tgt, cpu_{}, ptr);
       }
-
     }
-    else if  constexpr( current_api == eve::vsx )
+    else if constexpr(current_api == eve::vsx)
     {
       if constexpr(std::is_integral_v<T>)
       {
@@ -57,21 +54,23 @@ namespace eve::detail
   }
 
   template<typename T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto load(  as_<wide<T, N>> const &tgt,
-                              eve::ppc_ const &      mode,
-                              aligned_ptr<T, Align>  ptr
-                            ) noexcept
-  requires(typename wide<T, N>::storage_type, Vectorizable<T>)
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &tgt,
+       eve::ppc_ const &      mode,
+       aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                    Vectorizable<T>)
   {
-    if constexpr( current_api == eve::vmx )
+    if constexpr(current_api == eve::vmx)
     {
-      if constexpr( sizeof(T) <= 8)
+      if constexpr(sizeof(T) <= 8)
       {
-        if constexpr(Align >= 16) return vec_ld(0, ptr.get());
-        else                      return load(tgt, mode, ptr.get());
+        if constexpr(Align >= 16)
+          return vec_ld(0, ptr.get());
+        else
+          return load(tgt, mode, ptr.get());
       }
     }
-    else if  constexpr( current_api == eve::vsx )
+    else if constexpr(current_api == eve::vsx)
     {
       if constexpr(std::is_integral_v<T>)
       {

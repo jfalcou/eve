@@ -32,66 +32,63 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Basic
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_),
-                            wide<T, N, ABI> const &v) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    return v+One(as(v)); 
+    return v + One(as(v));
   }
-  
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<typename U, typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_)
-                                     , U const & cond
-                                     , wide<T, N, ABI> const &v) noexcept
+  template<typename U, typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr auto
+  inc_(EVE_SUPPORTS(cpu_), U const &cond, wide<T, N, ABI> const &v) noexcept
   {
-    using t_t =  wide<T, N, ABI>; 
+    using t_t = wide<T, N, ABI>;
     if constexpr(!is_vectorized_v<U>)
       return cond ? inc(v) : v;
+    else if constexpr(std::is_integral_v<T>)
+      return v - (bitwise_mask(bitwise_cast<t_t>(cond)));
     else
-      if constexpr(std::is_integral_v<T>)
-        return v-(bitwise_mask(bitwise_cast<t_t>(cond)));
-      else
-        return if_else(cond, v+One(as(v)), v);
+      return if_else(cond, v + One(as(v)), v);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Saturated case
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_)
-                           , saturated_type const &  
-                           , wide<T, N, ABI> const &a) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  inc_(EVE_SUPPORTS(cpu_), saturated_type const &, wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) return inc(a);
-    else return inc[a!= Valmax(as(a))](a); 
+    if constexpr(std::is_floating_point_v<T>)
+      return inc(a);
+    else
+      return inc[ a != Valmax(as(a)) ](a);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Saturated Masked case
-  template<typename T, typename N,  typename ABI, typename U>
-  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_) 
-                           , U const & cond   
-                           , saturated_type const & 
-                           , wide<T, N, ABI> const &a) noexcept
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE auto
+  inc_(EVE_SUPPORTS(cpu_), U const &cond, saturated_type const &, wide<T, N, ABI> const &a) noexcept
   {
     if constexpr(!is_vectorized_v<U>)
     {
-      if constexpr(std::is_floating_point_v<T>) return cond ? inc(a) : a;
+      if constexpr(std::is_floating_point_v<T>)
+        return cond ? inc(a) : a;
       else
       {
-        auto tst = is_not_equal(Valmax(as(a)), a); 
-        return cond ?  inc[tst](a) : a;
+        auto tst = is_not_equal(Valmax(as(a)), a);
+        return cond ? inc[ tst ](a) : a;
       }
     }
     else
     {
-      if constexpr(std::is_floating_point_v<T>) return inc[cond](a);
+      if constexpr(std::is_floating_point_v<T>)
+        return inc[ cond ](a);
       else
       {
-        auto tst = is_not_equal(Valmax(as(a)), a); 
-        return inc[logical_and(tst, cond)](a);
+        auto tst = is_not_equal(Valmax(as(a)), a);
+        return inc[ logical_and(tst, cond) ](a);
       }
     }
   }

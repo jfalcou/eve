@@ -24,15 +24,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(sse2_)
-                           , wide<T, N, sse_> const &a0
-                           , I const & a1) noexcept
-  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto
+  shl_(EVE_SUPPORTS(sse2_),
+       wide<T, N, sse_> const &a0,
+       I const &               a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>;
     EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
                "[eve::shl sse2] -  shift " << a1 << "element is out of the range [0, "
-               << sizeof(T) * 8 << "[.");
+                                           << sizeof(T) * 8 << "[.");
     if constexpr(sizeof(T) == 1)
     {
       using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
@@ -45,44 +45,57 @@ namespace eve::detail
       t_t tmp3        = _mm_slli_epi16(tmp, a1);
       return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
     }
-    else if constexpr(sizeof(T) == 2) { return _mm_slli_epi16(a0, a1); }
-    else if constexpr(sizeof(T) == 4) { return _mm_slli_epi32(a0, a1); }
-    else if constexpr(sizeof(T) == 8) { return _mm_slli_epi64(a0, a1); }
+    else if constexpr(sizeof(T) == 2)
+    {
+      return _mm_slli_epi16(a0, a1);
+    }
+    else if constexpr(sizeof(T) == 4)
+    {
+      return _mm_slli_epi32(a0, a1);
+    }
+    else if constexpr(sizeof(T) == 8)
+    {
+      return _mm_slli_epi64(a0, a1);
+    }
   }
 
-
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(avx_)
-                           , wide<T, N, sse_> const &a0
-                           , wide<I, N, sse_> const &a1) noexcept
-  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto
+  shl_(EVE_SUPPORTS(avx_),
+       wide<T, N, sse_> const &a0,
+       wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
                "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
-               << sizeof(T) * 8 << "[.");
+                                                        << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
     {
-      if constexpr(sizeof(T) == 1)       return _mm_shl_epi8(a0,a1);
-      else if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);
-      else if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);
-      else if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);
+      if constexpr(sizeof(T) == 1)
+        return _mm_shl_epi8(a0, a1);
+      else if constexpr(sizeof(T) == 2)
+        return _mm_shl_epi16(a0, a1);
+      else if constexpr(sizeof(T) == 4)
+        return _mm_shl_epi32(a0, a1);
+      else if constexpr(sizeof(T) == 8)
+        return _mm_shl_epi64(a0, a1);
     }
-    else return map(eve::shl, a0, a1);
+    else
+      return map(eve::shl, a0, a1);
   }
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(avx_)
-                           , wide<T, N, avx_> const & a0
-                           , I const &a1) noexcept
-  requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto
+  shl_(EVE_SUPPORTS(avx_),
+       wide<T, N, avx_> const &a0,
+       I const &               a1) noexcept requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
     if constexpr(current_api >= avx2)
     {
       EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shl avx2] - Shift " << a1 << " is out of the range [0, "
-                 << sizeof(T) * 8 << "[.");
+                 "[eve::shl avx2] - Shift " << a1 << " is out of the range [0, " << sizeof(T) * 8
+                                            << "[.");
       if constexpr(sizeof(T) == 1)
       {
         using t_t       = wide<T, N, avx_>;
@@ -96,36 +109,45 @@ namespace eve::detail
         t_t tmp3        = _mm256_slli_epi16(tmp, int(a1));
         return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
       }
-      else if constexpr(sizeof(T) == 2)  return _mm256_slli_epi16(a0, a1);
-      else if constexpr(sizeof(T) == 4)  return _mm256_slli_epi32(a0, a1);
-      else if constexpr(sizeof(T) == 8)  return _mm256_slli_epi64(a0, a1);
+      else if constexpr(sizeof(T) == 2)
+        return _mm256_slli_epi16(a0, a1);
+      else if constexpr(sizeof(T) == 4)
+        return _mm256_slli_epi32(a0, a1);
+      else if constexpr(sizeof(T) == 8)
+        return _mm256_slli_epi64(a0, a1);
     }
-    else return  shl_(EVE_RETARGET(sse2_),a0, a1);//map(shl, a0, a1);
+    else
+      return shl_(EVE_RETARGET(sse2_), a0, a1); // map(shl, a0, a1);
   }
 
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto  shl_(EVE_SUPPORTS(avx_)
-                            , wide<T, N, avx_> const &a0
-                            , wide<I, N, avx_> const &a1) noexcept
-  requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto
+  shl_(EVE_SUPPORTS(avx_),
+       wide<T, N, avx_> const &a0,
+       wide<I, N, avx_> const &a1) noexcept requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
-    auto ifxop_choice = [](const auto& a0, const auto & a1){
-      if constexpr(supports_xop) return shl_(EVE_RETARGET(sse2_),a0, a1);
-      else return map(shl, a0, a1);
+    auto ifxop_choice = [](const auto &a0, const auto &a1) {
+      if constexpr(supports_xop)
+        return shl_(EVE_RETARGET(sse2_), a0, a1);
+      else
+        return map(shl, a0, a1);
     };
 
-    if constexpr (current_api >= avx2)
+    if constexpr(current_api >= avx2)
     {
       EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
-                 << sizeof(T) * 8 << "[.");
-      if constexpr(sizeof(T) <= 2)  return ifxop_choice(a0, a1);
-      else if constexpr(sizeof(T) == 4)  return _mm256_sllv_epi32(a0, a1);
-      else if constexpr(sizeof(T) == 8)  return _mm256_sllv_epi64(a0, a1);
+                 "[eve::shl xop sse] -  At least one of "
+                     << a1 << "elements is out of the range [0, " << sizeof(T) * 8 << "[.");
+      if constexpr(sizeof(T) <= 2)
+        return ifxop_choice(a0, a1);
+      else if constexpr(sizeof(T) == 4)
+        return _mm256_sllv_epi32(a0, a1);
+      else if constexpr(sizeof(T) == 8)
+        return _mm256_sllv_epi64(a0, a1);
     }
-    else return ifxop_choice(a0, a1);
+    else
+      return ifxop_choice(a0, a1);
   }
 }
 
 #endif
-

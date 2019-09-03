@@ -18,7 +18,8 @@
 
 namespace eve
 {
-  template<typename T> struct logical;
+  template<typename T>
+  struct logical;
   struct neon64_;
   struct neon128_;
 }

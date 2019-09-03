@@ -23,25 +23,21 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Default case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto maxmag_(EVE_SUPPORTS(cpu_)
-                                        , T const &a0
-                                        , U const &a1) noexcept
+  EVE_FORCEINLINE constexpr auto maxmag_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
   {
-    return maxmag(regular_type(), a0, a1); 
+    return maxmag(regular_type(), a0, a1);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Regular, Pedantic or numeric case
   template<typename Tag, typename T>
-  EVE_FORCEINLINE constexpr auto maxmag_(EVE_SUPPORTS(cpu_)
-                                        , Tag tag
-                                        , T const &a0
-                                        , T const &a1) noexcept
-  requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto
+  maxmag_(EVE_SUPPORTS(cpu_), Tag tag, T const &a0, T const &a1) noexcept requires(T,
+                                                                                   Vectorizable<T>)
   {
-      auto aa0 = eve::abs(a0);
-      auto aa1 = eve::abs(a1);
-      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : tag(eve::max)(a0, a1);
+    auto aa0 = eve::abs(a0);
+    auto aa1 = eve::abs(a1);
+    return aa0 < aa1 ? a1 : aa1 < aa0 ? a0 : tag(eve::max)(a0, a1);
   }
 }
 

@@ -36,7 +36,7 @@ namespace eve::detail
 
   // Check aggregated/emulated status of ABI
   template<typename X>
-  struct is_aggregated : std::is_same<X,aggregated_>
+  struct is_aggregated : std::is_same<X, aggregated_>
   {
   };
 
@@ -47,7 +47,7 @@ namespace eve::detail
   using is_aggregated_t = typename is_aggregated<T>::type;
 
   template<typename X>
-  struct is_emulated : std::is_same<X,emulated_>
+  struct is_emulated : std::is_same<X, emulated_>
   {
   };
 

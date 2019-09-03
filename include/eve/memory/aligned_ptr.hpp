@@ -35,9 +35,8 @@ namespace eve
     aligned_ptr(pointer p) noexcept
         : pointer_(p)
     {
-      EVE_ASSERT( is_aligned<Alignment>(p)
-                , (void*)(p) << " is not aligned on " << Alignment << "."
-                );
+      EVE_ASSERT(is_aligned<Alignment>(p),
+                 (void *)(p) << " is not aligned on " << Alignment << ".");
     }
 
     template<typename U, std::size_t A, typename = std::enable_if_t<(A >= Alignment)>>
@@ -70,9 +69,8 @@ namespace eve
 
     aligned_ptr &operator+=(std::ptrdiff_t o) noexcept
     {
-      EVE_ASSERT( is_aligned<Alignment>(pointer_ + o)
-                , (void*)(pointer_) << " + " << o << " is not aligned on " << Alignment << "."
-                );
+      EVE_ASSERT(is_aligned<Alignment>(pointer_ + o),
+                 (void *)(pointer_) << " + " << o << " is not aligned on " << Alignment << ".");
 
       pointer_ += o;
       return *this;
@@ -80,9 +78,8 @@ namespace eve
 
     aligned_ptr &operator-=(std::ptrdiff_t o) noexcept
     {
-      EVE_ASSERT( is_aligned<Alignment>(pointer_ - o)
-                , (void*)(pointer_) << " - " << o << " is not aligned on " << Alignment << "."
-                );
+      EVE_ASSERT(is_aligned<Alignment>(pointer_ - o),
+                 (void *)(pointer_) << " - " << o << " is not aligned on " << Alignment << ".");
 
       pointer_ -= o;
       return *this;
@@ -154,9 +151,8 @@ namespace eve
     aligned_ptr(pointer p) noexcept
         : pointer_(p)
     {
-      EVE_ASSERT( is_aligned<Alignment>(p)
-                , (void*)(p) << " is not aligned on " << Alignment << "."
-                );
+      EVE_ASSERT(is_aligned<Alignment>(p),
+                 (void *)(p) << " is not aligned on " << Alignment << ".");
     }
 
     template<typename U,

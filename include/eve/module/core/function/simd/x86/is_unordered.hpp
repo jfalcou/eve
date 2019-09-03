@@ -24,7 +24,7 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
-  template < typename T,  typename N>
+  template<typename T, typename N>
   EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(sse2_),
                                      wide<T, N, sse_> const &v0,
                                      wide<T, N, sse_> const &v1) noexcept
@@ -32,22 +32,21 @@ namespace eve::detail
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpunord_ps(v0, v1));
+    if constexpr(std::is_same_v<T, float>) return l_t(_mm_cmpunord_ps(v0, v1));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpunord_pd(v0, v1));
     if constexpr(std::is_integral_v<T>) return False<l_t>();
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
-  template < typename T,  typename N>
-  EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(avx_),
-                                     wide<T, N, avx_> const &v0,
-                                     wide<T, N, avx_> const &v1) noexcept
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto
+  is_unordered_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
   {
     using t_t = wide<T, N, avx_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_UNORD_Q));
+    if constexpr(std::is_same_v<T, float>) return l_t(_mm256_cmp_ps(v0, v1, _CMP_UNORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_UNORD_Q));
     if constexpr(std::is_integral_v<T>) return False<l_t>();
   }

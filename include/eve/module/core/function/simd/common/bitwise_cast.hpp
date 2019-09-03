@@ -49,8 +49,8 @@ namespace eve::detail
            typename X2,
            typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
-                                     logical<wide<T, N, X1>> const &     v0,
-                                     as_<wide<U, M, X2>> const &tgt) noexcept
+                                     logical<wide<T, N, X1>> const &v0,
+                                     as_<wide<U, M, X2>> const &    tgt) noexcept
   {
     wide<U, M, X2> that;
 
@@ -71,7 +71,7 @@ namespace eve::detail
            typename X2,
            typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
-                                     wide<T, N, X1> const &     v0,
+                                     wide<T, N, X1> const &              v0,
                                      as_<logical<wide<U, M, X2>>> const &tgt) noexcept
   {
     logical<wide<U, M, X2>> that;

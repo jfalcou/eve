@@ -29,65 +29,65 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename Target, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_)
-                                , as_<Target> const & at
-                                , wide<U, N, ABI> const & v) noexcept
-  requires(wide<U, N, ABI>, Vectorizable<Target>)
+  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_),
+                                 as_<Target> const &    at,
+                                 wide<U, N, ABI> const &v) noexcept requires(wide<U, N, ABI>,
+                                                                             Vectorizable<Target>)
   {
-    using u_t =  wide<U, N, ABI>; 
-    if constexpr( is_aggregated_v<ABI> )
+    using u_t = wide<U, N, ABI>;
+    if constexpr(is_aggregated_v<ABI>)
       return aggregate(eve::saturate, at, v);
-    else if constexpr( is_emulated_v<ABI>   )
+    else if constexpr(is_emulated_v<ABI>)
       return map(eve::saturate, at, v);
     else
     {
-      if constexpr(std::is_floating_point_v<Target>)    // saturating to floating point
+      if constexpr(std::is_floating_point_v<Target>) // saturating to floating point
       {
-        if constexpr(std::is_floating_point_v<U>)  // from a floating point
+        if constexpr(std::is_floating_point_v<U>) // from a floating point
         {
           if constexpr(sizeof(Target) >= sizeof(U))
             return v;
-          else                                         
+          else
           {
             auto mn = u_t(Valmin<float>());
             auto mx = u_t(Valmax<float>());
             return if_else(is_inf(v), v, clamp(v, mn, mx));
           }
         }
-        else                                       // from an integer   
+        else // from an integer
           return v;
       }
-      else                                        // saturating to integer
+      else // saturating to integer
       {
-        if constexpr(std::is_signed_v<Target>)         // saturating to signed integer
+        if constexpr(std::is_signed_v<Target>) // saturating to signed integer
         {
-          if constexpr(std::is_signed_v<U>)       // from a signed   
+          if constexpr(std::is_signed_v<U>) // from a signed
           {
             if constexpr(sizeof(Target) >= sizeof(U))
               return v;
             else
-              return  clamp(v , u_t(Valmin<Target>()), u_t(Valmax<Target>())); 
+              return clamp(v, u_t(Valmin<Target>()), u_t(Valmax<Target>()));
           }
-          else                                     // from an unsigned   
+          else // from an unsigned
           {
-            return  min(v, u_t(Valmax<Target>())); 
+            return min(v, u_t(Valmax<Target>()));
           }
         }
-        else                                        // saturating to unsigned integer
+        else // saturating to unsigned integer
         {
-          if constexpr(!std::is_signed_v<U>)       // from a unsigned   
+          if constexpr(!std::is_signed_v<U>) // from a unsigned
           {
             if constexpr(sizeof(Target) >= sizeof(U))
               return v;
             else
-              return  min(v, u_t(Valmax<Target>())); 
+              return min(v, u_t(Valmax<Target>()));
           }
-          else                                     // from an signed   
+          else // from an signed
           {
-         if constexpr(sizeof(Target) >= sizeof(U))
-            return  clamp(v , u_t(Zero<Target>()), Valmax<u_t>());
-          else
-            return  clamp(v , u_t(Zero<Target>()), u_t(Valmax<Target>())); 
+            if constexpr(sizeof(Target) >= sizeof(U))
+              return clamp(v, u_t(Zero<Target>()), Valmax<u_t>());
+            else
+              return clamp(v, u_t(Zero<Target>()), u_t(Valmax<Target>()));
           }
         }
       }

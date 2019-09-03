@@ -18,11 +18,21 @@
 namespace eve
 {
   // Tag for all ARM NEON SIMD ABI
-  struct arm_ {};
+  struct arm_
+  {
+  };
 
   // dispatching tag for VMX SIMD implementation
-  struct neon64_  : simd_ { using parent = simd_; static constexpr int order = EVE_NEON_VERSION; };
-  struct neon128_ : simd_ { using parent = simd_; static constexpr int order = EVE_NEON_VERSION; };
+  struct neon64_ : simd_
+  {
+    using parent               = simd_;
+    static constexpr int order = EVE_NEON_VERSION;
+  };
+  struct neon128_ : simd_
+  {
+    using parent               = simd_;
+    static constexpr int order = EVE_NEON_VERSION;
+  };
 
   // Runtime detection of CPU support
   inline bool is_supported(arm_ const &) noexcept

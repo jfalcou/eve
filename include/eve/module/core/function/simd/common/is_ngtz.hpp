@@ -35,8 +35,8 @@ namespace eve::detail
     else
     {
       if constexpr(std::is_floating_point_v<T>) return is_not_greater(v, Zero(as(v)));
-      if constexpr(std::is_integral_v<T>) return is_lez(v); 
-    } 
+      if constexpr(std::is_integral_v<T>) return is_lez(v);
+    }
   }
 
   template<typename T, typename N, typename ABI>

@@ -27,31 +27,31 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
-                                         , T const &a0) noexcept
-  requires( T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_),
+                                          T const &a0) noexcept requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      const T v = eve::abs(a0);
+      const T v   = eve::abs(a0);
       const T t2n = Twotonmb<T>();
-      T d0 = (v+t2n);
-      
-      T d = (d0-t2n);
-      d = (v < t2n)?d:v;
+      T       d0  = (v + t2n);
+
+      T d = (d0 - t2n);
+      d   = (v < t2n) ? d : v;
       return is_negative(a0) ? -d : d;
     }
-    else return a0; 
+    else
+      return a0;
   }
-  
-//   template<typename T>
-//   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
-//                                   , raw_type const &       
-//                                   , T const &a0) noexcept
-//   {
-//     if constexpr(std::is_floating_point_v<T>) return nearest(a0);
-//     else return a0; 
-//   }
+
+  //   template<typename T>
+  //   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
+  //                                   , raw_type const &
+  //                                   , T const &a0) noexcept
+  //   {
+  //     if constexpr(std::is_floating_point_v<T>) return nearest(a0);
+  //     else return a0;
+  //   }
 }
 
 #endif

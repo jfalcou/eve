@@ -10,7 +10,7 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_SCALAR_SIGNNZ_HPP_INCLUDED
 #define EVE_FUNCTION_SCALAR_SIGNNZ_HPP_INCLUDED
- 
+
 #include <eve/function/definition/signnz.hpp>
 #include <eve/module/core/function/scalar/signnz.hpp>
 

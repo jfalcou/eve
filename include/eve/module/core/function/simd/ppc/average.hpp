@@ -22,22 +22,18 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-                  average_(EVE_SUPPORTS(vmx_)
-                          , wide<T, N, ppc_> const &v0
-                          , wide<T, N, ppc_> const &v1) noexcept
+                  average_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
   {
-    if constexpr( std::is_integral_v<T> && sizeof(T) < 8)
-    {
-      return vec_avg(v0.storage(), v1.storage());
-    }
-    else if constexpr( std::is_floating_point_v<T>)
+    if constexpr(std::is_integral_v<T> && sizeof(T) < 8)
+    { return vec_avg(v0.storage(), v1.storage()); }
+    else if constexpr(std::is_floating_point_v<T>)
     {
       auto h = Half(as(v0));
-      return fma(v0,h,v1*h);
+      return fma(v0, h, v1 * h);
     }
     else
     {
-      return map(average,v0,v1);
+      return map(average, v0, v1);
     }
   }
 }

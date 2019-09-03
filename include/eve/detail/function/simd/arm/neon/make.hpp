@@ -30,16 +30,19 @@ namespace eve::detail
       return that;
     }
 
-    template<typename U> static auto val(U u, int) { return u; }
+    template<typename U>
+    static auto val(U u, int)
+    {
+      return u;
+    }
 
     template<typename V>
     auto operator()(V v) const
     {
-      auto impl = [&](auto... I)
-      {
+      auto impl = [&](auto... I) {
         using type = ext::as_register_t<T, expected_cardinal_t<T, ABI>, ABI>;
-        auto u   = static_cast<T>(v);
-        return type{val(u,I)...};
+        auto u     = static_cast<T>(v);
+        return type{val(u, I)...};
       };
 
       return apply<expected_cardinal_v<T, ABI>>(impl);

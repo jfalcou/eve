@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIMD_SIGN_HPP_INCLUDED 
+#ifndef EVE_FUNCTION_SIMD_SIGN_HPP_INCLUDED
 #define EVE_FUNCTION_SIMD_SIGN_HPP_INCLUDED
 
 #include <eve/function/scalar/sign.hpp>

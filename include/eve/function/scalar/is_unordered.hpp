@@ -1,5 +1,5 @@
 //==================================================================================================
-/** 
+/**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
@@ -15,4 +15,3 @@
 #include <eve/module/core/function/scalar/is_unordered.hpp>
 
 #endif
- 

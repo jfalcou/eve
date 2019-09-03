@@ -22,9 +22,7 @@ namespace eve::detail
   // 128 bits implementation
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_>
-  bitwise_and_(EVE_SUPPORTS(sse2_)
-              , wide<T, N, sse_> const &v0
-              , wide<T, N, sse_> const &v1) noexcept
+                  bitwise_and_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1) noexcept
   {
     if constexpr(std::is_same_v<T, float>) return _mm_and_ps(v0, v1);
     if constexpr(std::is_same_v<T, double>) return _mm_and_pd(v0, v1);
@@ -35,18 +33,15 @@ namespace eve::detail
   // 256 bits implementation
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_>
-  bitwise_and_(EVE_SUPPORTS(avx_)
-              , wide<T, N, avx_> const &v0
-              , wide<T, N, avx_> const &v1) noexcept
+                  bitwise_and_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(std::is_same_v<T, float>)  return _mm256_and_ps(v0, v1);
-    else if constexpr(std::is_same_v<T, double>) return _mm256_and_pd(v0, v1);
+    if constexpr(std::is_same_v<T, float>)
+      return _mm256_and_ps(v0, v1);
+    else if constexpr(std::is_same_v<T, double>)
+      return _mm256_and_pd(v0, v1);
     else if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(current_api >= avx2)
-      {
-        return _mm256_and_si256(v0, v1);
-      }
+      if constexpr(current_api >= avx2) { return _mm256_and_si256(v0, v1); }
       else
       {
         return _mm256_castps_si256(_mm256_and_ps(_mm256_castsi256_ps(v0), _mm256_castsi256_ps(v1)));

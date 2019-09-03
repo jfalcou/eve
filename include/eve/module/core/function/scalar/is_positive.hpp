@@ -21,20 +21,19 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_positive_(EVE_SUPPORTS(cpu_)
-                                                        , T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_positive_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      using si_t = eve::detail::as_integer_t<T, signed>; 
+      using si_t = eve::detail::as_integer_t<T, signed>;
       return as_logical_t<T>(bitwise_cast<si_t>(a) >= si_t(0));
     }
     else if constexpr(std::is_signed_v<T>)
       return a >= T(0);
     else
-      return True(as(a)); 
+      return True(as(a));
   }
- 
+
 }
 
 #endif

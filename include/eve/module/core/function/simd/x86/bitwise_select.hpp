@@ -32,8 +32,8 @@ namespace eve::detail
       {
         using itype = wide<as_integer_t<T, unsigned>, N, sse_>;
         using utype = wide<as_integer_t<U, unsigned>, N, sse_>;
-        itype tmp =
-          _mm_cmov_si128(bitwise_cast<itype>(v1), bitwise_cast<itype>(v2), bitwise_cast<utype>(v0));
+        itype tmp   = _mm_cmov_si128(
+            bitwise_cast<itype>(v1), bitwise_cast<itype>(v2), bitwise_cast<utype>(v0));
         return bitwise_cast<wide<T, N, sse_>>(tmp);
       }
       else
@@ -41,7 +41,8 @@ namespace eve::detail
         return _mm_cmov_si128(v1, v2, v0);
       }
     }
-    else return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
+    else
+      return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
   }
 
 #if defined(EVE_COMP_IS_MSVC)
@@ -58,7 +59,7 @@ namespace eve::detail
         using itype = wide<as_integer_t<T, unsigned>, N, avx_>;
         using utype = wide<as_integer_t<U, unsigned>, N, avx_>;
         itype tmp   = _mm256_cmov_si256(
-          bitwise_cast<itype>(v1), bitwise_cast<itype>(v2), bitwise_cast<utype>(v0));
+            bitwise_cast<itype>(v1), bitwise_cast<itype>(v2), bitwise_cast<utype>(v0));
         return bitwise_cast<wide<T, N, avx_>>(tmp);
       }
       else
@@ -66,7 +67,8 @@ namespace eve::detail
         return _mm256_cmov_si256(v1, v2, v0);
       }
     }
-    else return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
+    else
+      return bitwise_select_(EVE_RETARGET(cpu_), v0, v1, v2);
   }
 #endif
 }

@@ -22,11 +22,10 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_not_finite_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-      return eve::is_nan(a-a);
+      return eve::is_nan(a - a);
     else
       return false;
   }
 }
 
 #endif
-

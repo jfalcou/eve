@@ -15,4 +15,3 @@
 #include <eve/module/core/function/simd/refine_rec.hpp>
 
 #endif
-

@@ -20,15 +20,13 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto is_less_equal_ ( EVE_SUPPORTS(vmx_),
-                                        wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1
-                                      ) noexcept
+  EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(vmx_),
+                                      wide<T, N, ppc_> const &v0,
+                                      wide<T, N, ppc_> const &v1) noexcept
   {
     using t_t = wide<T, N, ppc_>;
     if constexpr(std::is_floating_point_v<T>)
-    {
-      return as_logical_t<t_t>(vec_cmple(v0.storage(), v1.storage()));
-    }
+    { return as_logical_t<t_t>(vec_cmple(v0.storage(), v1.storage())); }
     else
     {
       return !eve::is_greater(v0, v1);

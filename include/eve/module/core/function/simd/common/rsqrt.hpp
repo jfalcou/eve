@@ -18,20 +18,18 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> rsqrt_( EVE_SUPPORTS(cpu_),
-                                          wide<T, N, ABI> const & a0
-                                        ) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> rsqrt_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a0) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::rsqrt, a0);
-    else return map(rsqrt, a0);
+    if constexpr(is_aggregated_v<ABI>)
+      return aggregate(eve::rsqrt, a0);
+    else
+      return map(rsqrt, a0);
   }
 
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> rsqrt_( EVE_SUPPORTS(cpu_),
-                                          raw_type const &,
-                                          wide<T, N, ABI> const & a0
-                                        ) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE wide<T, N, ABI>
+                  rsqrt_(EVE_SUPPORTS(cpu_), raw_type const &, wide<T, N, ABI> const &a0) noexcept
   {
     return eve::rsqrt(a0);
   }

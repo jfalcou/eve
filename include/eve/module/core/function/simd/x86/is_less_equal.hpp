@@ -26,74 +26,92 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_less_equal_(EVE_SUPPORTS(sse2_)
-           , wide<T, N, sse_> const &v0
-           , wide<T, N, sse_> const &v1) noexcept
-  {
-    using t_t = wide<T, N, sse_>;
-    using l_t = as_logical_t<t_t>;
-    
-    if constexpr(std::is_same_v<T, float>)       return l_t(_mm_cmple_ps(v0, v1));
-    else if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmple_pd(v0, v1));
-    else // if constexpr(std::is_integral_v<T>)
-        return logical_not(is_greater(v0, v1));
-  }
-  
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_less_equal_(EVE_SUPPORTS(avx_)
-           , wide<T, N, sse_> const &v0
-           , wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(sse2_),
+                                      wide<T, N, sse_> const &v0,
+                                      wide<T, N, sse_> const &v1) noexcept
   {
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)        return l_t(_mm_cmp_ps(v0, v1, _CMP_LE_OQ));
-    else if constexpr(std::is_same_v<T, double>)  return l_t(_mm_cmp_pd(v0, v1, _CMP_LE_OQ));
-    else /* if constexpr(std::is_integral_v<T>)*/ 
+    if constexpr(std::is_same_v<T, float>)
+      return l_t(_mm_cmple_ps(v0, v1));
+    else if constexpr(std::is_same_v<T, double>)
+      return l_t(_mm_cmple_pd(v0, v1));
+    else // if constexpr(std::is_integral_v<T>)
+      return logical_not(is_greater(v0, v1));
+  }
+
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(avx_),
+                                      wide<T, N, sse_> const &v0,
+                                      wide<T, N, sse_> const &v1) noexcept
+  {
+    using t_t = wide<T, N, sse_>;
+    using l_t = as_logical_t<t_t>;
+
+    if constexpr(std::is_same_v<T, float>)
+      return l_t(_mm_cmp_ps(v0, v1, _CMP_LE_OQ));
+    else if constexpr(std::is_same_v<T, double>)
+      return l_t(_mm_cmp_pd(v0, v1, _CMP_LE_OQ));
+    else /* if constexpr(std::is_integral_v<T>)*/
     {
       if constexpr(supports_xop)
       {
-        #if defined(__clang__)
-        #if !defined(_MM_PCOMCTRL_LE)
-        #define _MM_PCOMCTRL_LE 1
-        #define _MM_PCOMCTRL_LE_MISSING
-        #endif
-        if (std::is_signed_v<T>)
+#if defined(__clang__)
+#  if !defined(_MM_PCOMCTRL_LE)
+#    define _MM_PCOMCTRL_LE 1
+#    define _MM_PCOMCTRL_LE_MISSING
+#  endif
+        if(std::is_signed_v<T>)
         {
-          if constexpr(sizeof(T) == 1)       return l_t(_mm_com_epi8 (v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 2)  return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 4)  return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 8)  return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_LE));
+          if constexpr(sizeof(T) == 1)
+            return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 2)
+            return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 4)
+            return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 8)
+            return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_LE));
         }
         else
         {
-          if constexpr(sizeof(T) == 1)       return l_t(_mm_com_epu8 (v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 2)  return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 4)  return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_LE));
-          else if constexpr(sizeof(T) == 8)  return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_LE));
+          if constexpr(sizeof(T) == 1)
+            return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 2)
+            return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 4)
+            return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_LE));
+          else if constexpr(sizeof(T) == 8)
+            return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_LE));
         }
-        #ifdef _MM_PCOMCTRL_LE_MISSING
-        #undef _MM_PCOMCTRL_LE
-        #undef _MM_PCOMCTRL_LE_MISSING
-        #endif
-       #else
-        if (std::is_signed_v<T>)
+#  ifdef _MM_PCOMCTRL_LE_MISSING
+#    undef _MM_PCOMCTRL_LE
+#    undef _MM_PCOMCTRL_LE_MISSING
+#  endif
+#else
+        if(std::is_signed_v<T>)
         {
-          if constexpr(sizeof(T) == 1)        return l_t(_mm_comle_epi8 (v0, v1));
-          else if constexpr(sizeof(T) == 2)   return l_t(_mm_comle_epi16(v0, v1));
-          else if constexpr(sizeof(T) == 4)   return l_t(_mm_comle_epi32(v0, v1));
-          else if constexpr(sizeof(T) == 8)   return l_t(_mm_comle_epi64(v0, v1));
+          if constexpr(sizeof(T) == 1)
+            return l_t(_mm_comle_epi8(v0, v1));
+          else if constexpr(sizeof(T) == 2)
+            return l_t(_mm_comle_epi16(v0, v1));
+          else if constexpr(sizeof(T) == 4)
+            return l_t(_mm_comle_epi32(v0, v1));
+          else if constexpr(sizeof(T) == 8)
+            return l_t(_mm_comle_epi64(v0, v1));
         }
         else
         {
-          if constexpr(sizeof(T) == 1)        return l_t(_mm_comle_epu8 (v0, v1));
-          else if constexpr(sizeof(T) == 2)   return l_t(_mm_comle_epu16(v0, v1));
-          else if constexpr(sizeof(T) == 4)   return l_t(_mm_comle_epu32(v0, v1));
-          else if constexpr(sizeof(T) == 8)   return l_t(_mm_comle_epu64(v0, v1));
+          if constexpr(sizeof(T) == 1)
+            return l_t(_mm_comle_epu8(v0, v1));
+          else if constexpr(sizeof(T) == 2)
+            return l_t(_mm_comle_epu16(v0, v1));
+          else if constexpr(sizeof(T) == 4)
+            return l_t(_mm_comle_epu32(v0, v1));
+          else if constexpr(sizeof(T) == 8)
+            return l_t(_mm_comle_epu64(v0, v1));
         }
-        #endif
+#endif
       }
       else
         return logical_not(is_greater(v0, v1));
@@ -103,17 +121,19 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_less_equal_(EVE_SUPPORTS(avx_)
-           , wide<T, N, avx_> const &v0
-           , wide<T, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(avx_),
+                                      wide<T, N, avx_> const &v0,
+                                      wide<T, N, avx_> const &v1) noexcept
   {
-    using t_t = wide<T, N ,avx_>;
+    using t_t = wide<T, N, avx_>;
     using l_t = as_logical_t<t_t>;
 
-    if constexpr(std::is_same_v<T, float>)          return l_t(_mm256_cmp_ps(v0, v1, _CMP_LE_OQ));
-    else if constexpr(std::is_same_v<T, double>)    return l_t(_mm256_cmp_pd(v0, v1, _CMP_LE_OQ));
-    else /* if  constexpr(std::is_integral_v<T>)*/  return  logical_not(is_greater(v0, v1));
+    if constexpr(std::is_same_v<T, float>)
+      return l_t(_mm256_cmp_ps(v0, v1, _CMP_LE_OQ));
+    else if constexpr(std::is_same_v<T, double>)
+      return l_t(_mm256_cmp_pd(v0, v1, _CMP_LE_OQ));
+    else /* if  constexpr(std::is_integral_v<T>)*/
+      return logical_not(is_greater(v0, v1));
   }
 }
 

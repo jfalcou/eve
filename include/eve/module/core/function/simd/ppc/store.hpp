@@ -24,22 +24,17 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
                               wide<T, N, ppc_> const &value,
-                              T *                     ptr) noexcept
-  requires(void, Vectorizable<T>)
+                              T *                     ptr) noexcept requires(void, Vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<vmx_>::bytes)
     {
-      if constexpr(current_api ==eve::vmx )
-      {
-        *((typename wide<T, N, ppc_>::storage_type *)(ptr)) = value;
-      }
+      if constexpr(current_api == eve::vmx)
+      { *((typename wide<T, N, ppc_>::storage_type *)(ptr)) = value; }
       else if constexpr(current_api == eve::vsx)
       {
         // 64bits integrals are not supported by vec_vsx_st on some compilers
         if constexpr(sizeof(T) == 8 && std::is_integral_v<T>)
-        {
-          vec_vsx_st((__vector double)(value.storage()), 0, (double *)(ptr));
-        }
+        { vec_vsx_st((__vector double)(value.storage()), 0, (double *)(ptr)); }
         else
         {
           vec_vsx_st(value.storage(), 0, ptr);
@@ -53,13 +48,10 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
                               wide<T, S, ppc_> const &value,
-                              aligned_ptr<T, N>       ptr) noexcept
-  requires(void, Vectorizable<T>)
+                              aligned_ptr<T, N>       ptr) noexcept requires(void, Vectorizable<T>)
   {
-    if constexpr( (N >= limits<vmx_>::bytes) && current_api == eve::vmx)
-    {
-      vec_st(value.storage(), 0, ptr.get());
-    }
+    if constexpr((N >= limits<vmx_>::bytes) && current_api == eve::vmx)
+    { vec_st(value.storage(), 0, ptr.get()); }
     else
     {
       store(value, ptr.get());

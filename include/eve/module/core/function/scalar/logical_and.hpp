@@ -21,13 +21,13 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto logical_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
+  EVE_FORCEINLINE constexpr auto
+  logical_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(as_logical_t<T>,
+                                                                             Vectorizable<T>,
+                                                                             Vectorizable<U>)
   {
-    if constexpr( is_logical_v<T> || is_logical_v<U>)
-    {
-      return static_cast<bool>(a) && static_cast<bool>(b);
-    }
+    if constexpr(is_logical_v<T> || is_logical_v<U>)
+    { return static_cast<bool>(a) && static_cast<bool>(b); }
     else
     {
       return a && b;
@@ -37,10 +37,11 @@ namespace eve::detail
 
 namespace eve
 {
-    // -----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // operator &&
   template<typename T, typename U>
-  EVE_FORCEINLINE auto operator&&(T const& a, U const &b) noexcept -> decltype(eve::logical_and(a, b))
+  EVE_FORCEINLINE auto operator&&(T const &a, U const &b) noexcept
+      -> decltype(eve::logical_and(a, b))
   {
     return eve::logical_and(a, b);
   }

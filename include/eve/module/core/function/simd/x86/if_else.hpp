@@ -23,18 +23,15 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // 128 bits if_else
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE wide<U, N, sse_> if_else_ ( EVE_SUPPORTS(sse4_1_),
-                                              wide<T, N, sse_> const &v0,
-                                              wide<U, N, sse_> const &v1,
-                                              wide<U, N, sse_> const &v2
-                                            ) noexcept
+  EVE_FORCEINLINE wide<U, N, sse_> if_else_(EVE_SUPPORTS(sse4_1_),
+                                            wide<T, N, sse_> const &v0,
+                                            wide<U, N, sse_> const &v1,
+                                            wide<U, N, sse_> const &v2) noexcept
   {
     using u_t = wide<U, N, sse_>;
 
     if constexpr(std::is_same_v<U, float>)
-    {
-        return _mm_blendv_ps(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
-    }
+    { return _mm_blendv_ps(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0))); }
     else if constexpr(std::is_same_v<U, double>)
     {
       return _mm_blendv_pd(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
@@ -48,18 +45,15 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // 256 bits if_else
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE wide<U, N, avx_> if_else_ ( EVE_SUPPORTS(avx_),
-                                              wide<T, N, avx_> const &v0,
-                                              wide<U, N, avx_> const &v1,
-                                              wide<U, N, avx_> const &v2
-                                            ) noexcept
+  EVE_FORCEINLINE wide<U, N, avx_> if_else_(EVE_SUPPORTS(avx_),
+                                            wide<T, N, avx_> const &v0,
+                                            wide<U, N, avx_> const &v1,
+                                            wide<U, N, avx_> const &v2) noexcept
   {
     using u_t = wide<U, N, avx_>;
 
     if constexpr(std::is_same_v<U, float>)
-    {
-      return _mm256_blendv_ps(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
-    }
+    { return _mm256_blendv_ps(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0))); }
     else if constexpr(std::is_same_v<U, double>)
     {
       return _mm256_blendv_pd(v2, v1, bitwise_cast<u_t>(bitwise_mask(v0)));
@@ -68,19 +62,17 @@ namespace eve::detail
     {
       if constexpr(current_api >= avx2)
       {
-        using a_t = wide<as_integer_t<T>,N>;
+        using a_t = wide<as_integer_t<T>, N>;
         return _mm256_blendv_epi8(v2, v1, bitwise_cast<a_t>(bitwise_mask(v0)));
       }
       else
       {
-        if constexpr(std::is_integral_v<U> && sizeof(U) <=  2)
-        {
-          return aggregate(if_else, v0, v1, v2);
-        }
-        else if constexpr(std::is_integral_v<U> && sizeof(U) >=  4)
+        if constexpr(std::is_integral_v<U> && sizeof(U) <= 2)
+        { return aggregate(if_else, v0, v1, v2); }
+        else if constexpr(std::is_integral_v<U> && sizeof(U) >= 4)
         {
           using f_t = wide<as_floating_point_t<U>, N, avx_>;
-          return bitwise_cast<u_t>(if_else(v0, bitwise_cast<f_t>(v1), bitwise_cast<f_t>(v2))) ;
+          return bitwise_cast<u_t>(if_else(v0, bitwise_cast<f_t>(v1), bitwise_cast<f_t>(v2)));
         }
       }
     }

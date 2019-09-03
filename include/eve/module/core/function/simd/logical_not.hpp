@@ -14,4 +14,3 @@
 #include <eve/module/core/function/simd/common/logical_not.hpp>
 
 #endif
-

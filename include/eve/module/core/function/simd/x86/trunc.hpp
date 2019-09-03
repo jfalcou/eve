@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine 
+  EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
@@ -17,7 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
- 
+
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
@@ -26,21 +26,26 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, sse_> trunc_(EVE_SUPPORTS(sse4_1_),
                                           wide<T, N, sse_> const &a0) noexcept
   {
-    if constexpr(std::is_same_v<T, double>)     return _mm_round_pd(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr(std::is_same_v<T, float>) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
-    else return a0; 
+    if constexpr(std::is_same_v<T, double>)
+      return _mm_round_pd(a0, _MM_FROUND_TO_ZERO);
+    else if constexpr(std::is_same_v<T, float>)
+      return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
+    else
+      return a0;
   }
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> trunc_(EVE_SUPPORTS(avx_),
-                                          wide<T, N, avx_> const &a0) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_> trunc_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0) noexcept
   {
-    if constexpr(std::is_same_v<T, double>)     return _mm256_round_pd(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr(std::is_same_v<T, float>) return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
-    else return a0; 
-  } 
+    if constexpr(std::is_same_v<T, double>)
+      return _mm256_round_pd(a0, _MM_FROUND_TO_ZERO);
+    else if constexpr(std::is_same_v<T, float>)
+      return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
+    else
+      return a0;
+  }
 }
 
 #endif

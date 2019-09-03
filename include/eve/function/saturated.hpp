@@ -13,7 +13,12 @@
 
 namespace eve
 {
-  namespace decorator { struct saturated_ {}; }
+  namespace decorator
+  {
+    struct saturated_
+    {
+    };
+  }
 
   constexpr inline decorator::saturated_ saturated_ = {};
 }

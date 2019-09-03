@@ -21,17 +21,14 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> abs_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
-    if      constexpr( std::is_integral_v<T> && std::is_unsigned_v<T> )
-    {
-      return v0;
-    }
-    else if constexpr( std::is_integral_v<T> && (sizeof(T)>4) )
+    if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) { return v0; }
+    else if constexpr(std::is_integral_v<T> && (sizeof(T) > 4))
     {
       return map(eve::abs, v0);
     }
     else
     {
-      return vec_abs( v0.storage() );
+      return vec_abs(v0.storage());
     }
   }
 }

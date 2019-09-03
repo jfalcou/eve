@@ -22,16 +22,15 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_select_(EVE_SUPPORTS(cpu_)
-                 , T const &a0
-                 , U const &a1
-                 , U const &a2) noexcept
-  requires(U, Vectorizable<T>, Vectorizable<U>)
+  bitwise_select_(EVE_SUPPORTS(cpu_),
+                  T const &a0,
+                  U const &a1,
+                  U const &a2) noexcept requires(U, Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr((sizeof(T) != sizeof(U)))
     {
-      static_assert(sizeof(T) == sizeof(U)
-                   , "[eve::bitwise_select] - Arguments have incompatible size");
+      static_assert(sizeof(T) == sizeof(U),
+                    "[eve::bitwise_select] - Arguments have incompatible size");
     }
     else
       return eve::bitwise_or(eve::bitwise_and(a1, a0), eve::bitwise_andnot(a2, a0));

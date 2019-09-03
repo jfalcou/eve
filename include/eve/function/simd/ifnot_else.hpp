@@ -14,5 +14,4 @@
 #include <eve/function/scalar/ifnot_else.hpp>
 #include <eve/module/core/function/generic/ifnot_else.hpp>
 
-
 #endif

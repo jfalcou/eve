@@ -28,15 +28,12 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(cpu_),
                                                wide<T, N, ABI> const &v) noexcept
   {
-   if constexpr( is_native_v<ABI> )
-    {
-      return Zero(as(v)) - v;
-    }
+    if constexpr(is_native_v<ABI>) { return Zero(as(v)) - v; }
     else
     {
-      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::unary_minus, v);
-      if constexpr( is_emulated_v<ABI>   ) return map(eve::unary_minus, v);
-    }   
+      if constexpr(is_aggregated_v<ABI>) return aggregate(eve::unary_minus, v);
+      if constexpr(is_emulated_v<ABI>) return map(eve::unary_minus, v);
+    }
   }
 
 }

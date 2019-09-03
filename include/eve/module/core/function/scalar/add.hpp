@@ -9,13 +9,13 @@
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_ADD_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_ADD_HPP_INCLUDED
+#  define EVE_MODULE_CORE_FUNCTION_SCALAR_ADD_HPP_INCLUDED
 
 //#include <eve/function/saturated.hpp>
 // #include <eve/function/scalar/saturate.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#  include <eve/concept/vectorizable.hpp>
+#  include <eve/detail/overload.hpp>
+#  include <eve/detail/abi.hpp>
 // #include <type_traits>
 // #include <limits>
 // #include <climits>
@@ -25,13 +25,13 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-  requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto
+  add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, Vectorizable<T>)
   {
     return a + b;
   }
 
-#if 0
+#  if 0
   // -----------------------------------------------------------------------------------------------
   // Saturated case
   template<typename T> EVE_FORCEINLINE
@@ -60,11 +60,11 @@ namespace eve::detail
       }
       else
       {
-#  if 0
+#    if 0
         // small signed integral case
         auto r = a+b;
         return static_cast<T>(saturate<T>(r));
-#  endif
+#    endif
       }
     }
 
@@ -85,7 +85,7 @@ namespace eve::detail
       }
     }
   }
-#endif
+#  endif
 }
 
 #endif

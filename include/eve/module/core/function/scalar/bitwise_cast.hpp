@@ -21,29 +21,28 @@
 namespace eve::detail
 {
   template<typename T, typename Target>
-  EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_)
-                                      , T const &a
-                                      , as_<Target> const &) noexcept
-  requires(Target, Vectorizable<T>)
+  EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
+                                     T const &a,
+                                     as_<Target> const &) noexcept requires(Target, Vectorizable<T>)
   {
     if constexpr((sizeof(T) != sizeof(Target)))
     {
-      static_assert(sizeof(T) == sizeof(Target)
-                   , "[eve::bitwise_cast] scalar - Parameters size mismatch");
-      return {}; 
+      static_assert(sizeof(T) == sizeof(Target),
+                    "[eve::bitwise_cast] scalar - Parameters size mismatch");
+      return {};
     }
     else if constexpr(std::is_same_v<T, Target>)
     {
-      return a; 
+      return a;
     }
-    else    
+    else
     {
       Target that;
-      
+
       void const *src = reinterpret_cast<detail::alias_t<void const> *>(&a);
       void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
-      std::memcpy(dst,src, sizeof(a));
-      
+      std::memcpy(dst, src, sizeof(a));
+
       return that;
     }
   }

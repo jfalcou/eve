@@ -28,20 +28,20 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(ssse3_)
-                            ,wide<T, N, sse_> const &a) noexcept
+  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(ssse3_), wide<T, N, sse_> const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return sign_(EVE_RETARGET(cpu_), a);
-    }
+    if constexpr(std::is_floating_point_v<T>) { return sign_(EVE_RETARGET(cpu_), a); }
     else if constexpr(std::is_signed_v<T>)
     {
       using t_t = wide<T, N, sse_>;
-      if constexpr(sizeof(T) == 1)      return t_t(_mm_sign_epi8(One(as(a)), a));
-      else if constexpr(sizeof(T) == 2) return t_t(_mm_sign_epi16(One(as(a)), a));
-      else if constexpr(sizeof(T) == 4) return t_t(_mm_sign_epi32(One(as(a)), a));
-      else if constexpr(sizeof(T) == 8) return map(sign, a);
+      if constexpr(sizeof(T) == 1)
+        return t_t(_mm_sign_epi8(One(as(a)), a));
+      else if constexpr(sizeof(T) == 2)
+        return t_t(_mm_sign_epi16(One(as(a)), a));
+      else if constexpr(sizeof(T) == 4)
+        return t_t(_mm_sign_epi32(One(as(a)), a));
+      else if constexpr(sizeof(T) == 8)
+        return map(sign, a);
     }
     else
       return if_else(a, One(as(a)), eve::zero_);

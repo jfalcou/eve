@@ -28,22 +28,18 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_not_denormal_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_not_denormal_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_integral_v<T> || !platform::supports_denormals)
-    {
-      return True(as(v));
-    }
+    if constexpr(std::is_integral_v<T> || !platform::supports_denormals) { return True(as(v)); }
     else
     {
-      return is_eqz(v) ||  is_not_less(eve::abs(v), Smallestposval(as(v))); 
-    }  
+      return is_eqz(v) || is_not_less(eve::abs(v), Smallestposval(as(v)));
+    }
   }
-  
+
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr auto is_not_denormal_ ( EVE_SUPPORTS(cpu_),
-                                                logical<wide<T, N, ABI>> const& a
-                                              ) noexcept
+  EVE_FORCEINLINE constexpr auto is_not_denormal_(EVE_SUPPORTS(cpu_),
+                                                  logical<wide<T, N, ABI>> const &a) noexcept
   {
     return True(as(a));
   }

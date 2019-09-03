@@ -18,10 +18,12 @@ namespace eve::detail
 {
   // Cast to Target unless Origin is Vectorized
   template<typename Target, typename Origin>
-  decltype(auto) abi_cast(Origin&& o)
+  decltype(auto) abi_cast(Origin &&o)
   {
-    if constexpr( is_vectorized_v<Origin> )   return std::forward<Origin>(o);
-    else                                      return static_cast<Target>(o);
+    if constexpr(is_vectorized_v<Origin>)
+      return std::forward<Origin>(o);
+    else
+      return static_cast<Target>(o);
   }
 }
 

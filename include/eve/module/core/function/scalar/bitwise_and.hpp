@@ -22,16 +22,16 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto bitwise_and_(EVE_SUPPORTS(cpu_)
-                                          , T const &a
-                                          , U const &b) noexcept
-  requires(T,  Vectorizable<T>, Vectorizable<U>)
+  EVE_FORCEINLINE constexpr auto
+  bitwise_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
+                                                                             Vectorizable<T>,
+                                                                             Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
     {
-      static_assert(sizeof(T) == sizeof(U)
-                   , "[eve::bitwise_and] scalar - Arguments have incompatible size");
-      return {}; 
+      static_assert(sizeof(T) == sizeof(U),
+                    "[eve::bitwise_and] scalar - Arguments have incompatible size");
+      return {};
     }
     else if constexpr(std::is_floating_point_v<T>)
     {
@@ -41,7 +41,7 @@ namespace eve::detail
     else
     {
       if constexpr(std::is_same_v<T, U>)
-        return a & b; 
+        return a & b;
       else
         return a & bitwise_cast<T>(b);
     }

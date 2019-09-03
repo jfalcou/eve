@@ -22,35 +22,43 @@
 namespace eve::detail
 {
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto rshl_(EVE_SUPPORTS(avx_)
-                           , wide<T, N, sse_> const &a0
-                           , wide<I, N, sse_> const &a1) noexcept
-  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto
+  rshl_(EVE_SUPPORTS(avx_),
+        wide<T, N, sse_> const &a0,
+        wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
-               "[eve::rshl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
-               << sizeof(T) * 8 << "[.");
+               "[eve::rshl xop sse] -  At least one of "
+                   << a1 << "elements is out of the range [0, " << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
     {
-      if (std::is_signed_v<I>)
+      if(std::is_signed_v<I>)
       {
-        if constexpr(sizeof(T) == 1)       return _mm_sha_epi8(a0,a1); 
-        else if constexpr(sizeof(T) == 2)  return _mm_sha_epi16(a0,a1);   
-        else if constexpr(sizeof(T) == 4)  return _mm_sha_epi32(a0,a1);   
-        else if constexpr(sizeof(T) == 8)  return _mm_sha_epi64(a0,a1);
+        if constexpr(sizeof(T) == 1)
+          return _mm_sha_epi8(a0, a1);
+        else if constexpr(sizeof(T) == 2)
+          return _mm_sha_epi16(a0, a1);
+        else if constexpr(sizeof(T) == 4)
+          return _mm_sha_epi32(a0, a1);
+        else if constexpr(sizeof(T) == 8)
+          return _mm_sha_epi64(a0, a1);
       }
       else
       {
-        if constexpr(sizeof(T) == 1)       return _mm_shl_epi8(a0,a1); 
-        else if constexpr(sizeof(T) == 2)  return _mm_shl_epi16(a0,a1);   
-        else if constexpr(sizeof(T) == 4)  return _mm_shl_epi32(a0,a1);   
-        else if constexpr(sizeof(T) == 8)  return _mm_shl_epi64(a0,a1);
+        if constexpr(sizeof(T) == 1)
+          return _mm_shl_epi8(a0, a1);
+        else if constexpr(sizeof(T) == 2)
+          return _mm_shl_epi16(a0, a1);
+        else if constexpr(sizeof(T) == 4)
+          return _mm_shl_epi32(a0, a1);
+        else if constexpr(sizeof(T) == 8)
+          return _mm_shl_epi64(a0, a1);
       }
     }
-    else return map(eve::rshl, a0, a1); 
+    else
+      return map(eve::rshl, a0, a1);
   }
 
 }
 
 #endif
-  

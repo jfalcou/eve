@@ -24,13 +24,11 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI> sqr_( EVE_SUPPORTS(cpu_),
-                                        saturated_type const&,
-                                        wide<T, N, ABI> const & a0
-                                      ) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE wide<T, N, ABI>
+                  sqr_(EVE_SUPPORTS(cpu_), saturated_type const &, wide<T, N, ABI> const &a0) noexcept
   {
-    if (std::is_integral_v<T>)
+    if(std::is_integral_v<T>)
     {
       if constexpr(std::is_signed_v<T>)
       {

@@ -28,22 +28,24 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(cpu_),
-                                wide<T, N, ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto nearest_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a0) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::nearest, a0);
-    else if constexpr( is_emulated_v<ABI>   ) return map(eve::nearest, a0);
+    if constexpr(is_aggregated_v<ABI>)
+      return aggregate(eve::nearest, a0);
+    else if constexpr(is_emulated_v<ABI>)
+      return map(eve::nearest, a0);
     else
     {
-      if constexpr( std::is_floating_point_v<T>)
+      if constexpr(std::is_floating_point_v<T>)
       {
         auto s   = bitofsign(a0);
         auto v   = bitwise_xor(a0, s);
         auto t2n = Twotonmb(as(a0));
-        auto d0  = v+t2n;
-        return bitwise_xor(if_else(is_less(v,t2n),d0-t2n,v), s);  
+        auto d0  = v + t2n;
+        return bitwise_xor(if_else(is_less(v, t2n), d0 - t2n, v), s);
       }
-      else if constexpr(std::is_integral_v<T>) return a0; 
+      else if constexpr(std::is_integral_v<T>)
+        return a0;
     }
   }
 }

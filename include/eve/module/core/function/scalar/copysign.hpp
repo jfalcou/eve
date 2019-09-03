@@ -27,19 +27,17 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto copysign_(EVE_SUPPORTS(cpu_)
-                                        , T const &a0
-                                        , T const &a1  ) noexcept
-  requires(T, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto
+  copysign_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return bitwise_or(bitofsign(a1), bitwise_notand(Signmask(as(a0)), a0));
     else
     {
       if constexpr(std::is_unsigned_v<T>)
-        return  a0; 
+        return a0;
       else
-        return ((a0 == Valmin(as(a0)) && (a1 < 0))) ? Valmax(as(a0)) : eve::abs(a0)*signnz(a1); 
+        return ((a0 == Valmin(as(a0)) && (a1 < 0))) ? Valmax(as(a0)) : eve::abs(a0) * signnz(a1);
     }
   }
 }

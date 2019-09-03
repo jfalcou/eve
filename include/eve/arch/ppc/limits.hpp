@@ -19,7 +19,8 @@
 
 namespace eve
 {
-  template<> struct limits<eve::vmx_>
+  template<>
+  struct limits<eve::vmx_>
   {
     using parent = eve::simd_;
 
@@ -34,9 +35,9 @@ namespace eve
     using largest_real  = float;
     using smallest_real = float;
 
-    static constexpr std::size_t bits  = 128;
-    static constexpr std::size_t bytes = 16;
-    static constexpr bool is_bitwise_logical = true;
+    static constexpr std::size_t bits               = 128;
+    static constexpr std::size_t bytes              = 16;
+    static constexpr bool        is_bitwise_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
@@ -50,7 +51,8 @@ namespace eve
                                           std::uint32_t>;
   };
 
-  template<> struct limits<eve::vsx_>
+  template<>
+  struct limits<eve::vsx_>
   {
     using parent = eve::vmx_;
 
@@ -65,9 +67,9 @@ namespace eve
     using largest_real  = double;
     using smallest_real = float;
 
-    static constexpr std::size_t bits  = 128;
-    static constexpr std::size_t bytes = 16;
-    static constexpr bool is_bitwise_logical = true;
+    static constexpr std::size_t bits               = 128;
+    static constexpr std::size_t bytes              = 16;
+    static constexpr bool        is_bitwise_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);

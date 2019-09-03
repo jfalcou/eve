@@ -38,21 +38,21 @@ namespace eve::detail
   // Logical
   template<typename T, typename N, typename Arch>
   EVE_FORCEINLINE std::array<logical<wide<T, typename N::split_type>>, 2>
-  slice(logical<wide<T, N, Arch>> const &a) noexcept
+                  slice(logical<wide<T, N, Arch>> const &a) noexcept
   {
-    using l_t = logical<wide<T, typename N::split_type>>;
-    using t_t = std::array<l_t, 2>;
-    auto[l,h] = a.bits().slice();
-    return t_t{ l_t(l.storage(),eve::from_bits), l_t(h.storage(),eve::from_bits)};
+    using l_t     = logical<wide<T, typename N::split_type>>;
+    using t_t     = std::array<l_t, 2>;
+    auto [ l, h ] = a.bits().slice();
+    return t_t{l_t(l.storage(), eve::from_bits), l_t(h.storage(), eve::from_bits)};
   }
 
   template<typename T, typename N, typename Arch, typename Slice>
-  EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
-  slice(logical<wide<T, N, Arch>> const &a, Slice const& s) noexcept
+  EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice(logical<wide<T, N, Arch>> const &a,
+                                                                 Slice const &s) noexcept
   {
     using l_t = logical<wide<T, typename N::split_type>>;
-    auto sa = a.bits().slice(s);
-    return l_t(sa.storage(),eve::from_bits);
+    auto sa   = a.bits().slice(s);
+    return l_t(sa.storage(), eve::from_bits);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -60,10 +60,9 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr(is_emulated_v<ABI>)
     {
-      auto eval = [&](auto... I)
-      {
+      auto eval = [&](auto... I) {
         using wide_t = wide<T, typename N::split_type>;
         using that_t = std::array<wide_t, 2>;
         return that_t{wide_t{a[ I ]...}, wide_t{a[ I + N::value / 2 ]...}};
@@ -71,12 +70,11 @@ namespace eve::detail
 
       return apply<N::value / 2>(eval);
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr(is_aggregated_v<ABI>)
     {
       if constexpr(platform::compiler == compilers::gcc_ && sizeof(a) > 256)
       {
-        auto eval = [&](auto... I)
-        {
+        auto eval = [&](auto... I) {
           using wide_t = wide<T, typename N::split_type>;
           using that_t = std::array<wide_t, 2>;
           return that_t{wide_t{a[ I ]...}, wide_t{a[ I + N::value / 2 ]...}};
@@ -91,7 +89,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert ( wrong<ABI>, "[eve::slice(a) - Unsupported SIMD ABI" );
+      static_assert(wrong<ABI>, "[eve::slice(a) - Unsupported SIMD ABI");
     }
   }
 
@@ -100,23 +98,24 @@ namespace eve::detail
   template<typename T, typename N, typename ABI, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &) noexcept
   {
-    if constexpr( is_emulated_v<ABI> )
+    if constexpr(is_emulated_v<ABI>)
     {
-      auto eval = [&](auto... I)
-      {
+      auto eval = [&](auto... I) {
         return wide<T, typename N::split_type>{a[ I + (Slice::value * N::value / 2) ]...};
       };
 
       return apply<N::value / 2>(eval);
     }
-    else if constexpr( is_aggregated_v<ABI> )
+    else if constexpr(is_aggregated_v<ABI>)
     {
-      if constexpr(Slice::value == 0) return a.storage().lo;
-      else                            return a.storage().hi;
+      if constexpr(Slice::value == 0)
+        return a.storage().lo;
+      else
+        return a.storage().hi;
     }
     else
     {
-      static_assert ( wrong<ABI>, "[eve::slice(a,s) - Unsupported SIMD ABI" );
+      static_assert(wrong<ABI>, "[eve::slice(a,s) - Unsupported SIMD ABI");
     }
   }
 }

@@ -20,7 +20,8 @@
 namespace eve
 {
   // SSE ABI
-  template<> struct limits<eve::sse2_>
+  template<>
+  struct limits<eve::sse2_>
   {
     using parent = eve::simd_;
 
@@ -35,9 +36,9 @@ namespace eve
     using largest_real  = double;
     using smallest_real = float;
 
-    static constexpr std::size_t bits  = 128;
-    static constexpr std::size_t bytes = 16;
-    static constexpr bool is_bitwise_logical = true;
+    static constexpr std::size_t bits               = 128;
+    static constexpr std::size_t bytes              = 16;
+    static constexpr bool        is_bitwise_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
@@ -54,13 +55,26 @@ namespace eve
                                           std::uint64_t>;
   };
 
-  template<>  struct limits<eve::sse3_  > : limits<eve::sse2_>    {};
-  template<>  struct limits<eve::ssse3_ > : limits<eve::sse3_>    {};
-  template<>  struct limits<eve::sse4_1_> : limits<eve::ssse3_>   {};
-  template<>  struct limits<eve::sse4_2_> : limits<eve::sse4_1_>  {};
+  template<>
+  struct limits<eve::sse3_> : limits<eve::sse2_>
+  {
+  };
+  template<>
+  struct limits<eve::ssse3_> : limits<eve::sse3_>
+  {
+  };
+  template<>
+  struct limits<eve::sse4_1_> : limits<eve::ssse3_>
+  {
+  };
+  template<>
+  struct limits<eve::sse4_2_> : limits<eve::sse4_1_>
+  {
+  };
 
   // AVX ABI
-  template<> struct limits<eve::avx_>
+  template<>
+  struct limits<eve::avx_>
   {
     using parent = eve::sse4_2_;
 
@@ -75,9 +89,9 @@ namespace eve
     using largest_real  = double;
     using smallest_real = float;
 
-    static constexpr std::size_t bits  = 256;
-    static constexpr std::size_t bytes = 32;
-    static constexpr bool is_bitwise_logical = true;
+    static constexpr std::size_t bits               = 256;
+    static constexpr std::size_t bytes              = 32;
+    static constexpr bool        is_bitwise_logical = true;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
@@ -94,7 +108,10 @@ namespace eve
                                           std::uint64_t>;
   };
 
-  template<>  struct limits<eve::avx2_> : limits<eve::avx_> {};
+  template<>
+  struct limits<eve::avx2_> : limits<eve::avx_>
+  {
+  };
 
   // TODO: AVX512 ABI
 }

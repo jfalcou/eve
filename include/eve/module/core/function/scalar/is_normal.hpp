@@ -27,16 +27,13 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto is_normal_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-                            requires( as_logical_t<T>, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto
+  is_normal_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorizable<T>)
   {
-    if constexpr(std::is_integral_v<T> || is_logical_v<T>)
-    {
-      return is_nez(a);
-    }
+    if constexpr(std::is_integral_v<T> || is_logical_v<T>) { return is_nez(a); }
     else
     {
-      return is_finite(a) && is_greater_equal(eve::abs(a),Smallestposval(as(a)));
+      return is_finite(a) && is_greater_equal(eve::abs(a), Smallestposval(as(a)));
     }
   }
 }

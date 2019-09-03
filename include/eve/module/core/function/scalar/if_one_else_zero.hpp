@@ -23,38 +23,34 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr
-  auto  if_else_(EVE_SUPPORTS(cpu_)
-                , T const &cond
-                , eve::callable_one_ const &
-                , eve::callable_zero_ const &
-                ) noexcept
-  requires( T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto
+  if_else_(EVE_SUPPORTS(cpu_),
+           T const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(T, Vectorizable<T>)
   {
-    return static_cast<bool>(cond) ?  One<T>() : Zero<T>();
+    return static_cast<bool>(cond) ? One<T>() : Zero<T>();
   }
-  
+
   template<typename T>
-  EVE_FORCEINLINE constexpr
-  auto  if_else_(EVE_SUPPORTS(cpu_)
-                , logical<T> const &cond
-                , eve::callable_one_ const &
-                , eve::callable_zero_ const &) noexcept
-  requires( T, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto
+  if_else_(EVE_SUPPORTS(cpu_),
+           logical<T> const &cond,
+           eve::callable_one_ const &,
+           eve::callable_zero_ const &) noexcept requires(T, Vectorizable<T>)
   {
-    return static_cast<bool>(cond) ?   One<T>() : Zero<T>();
+    return static_cast<bool>(cond) ? One<T>() : Zero<T>();
   }
 
   template<typename TARGET, typename T>
-  EVE_FORCEINLINE constexpr
-  auto  if_else_(EVE_SUPPORTS(cpu_)
-                , as_<TARGET> const &
-                , T const &cond
-                , eve::callable_one_ const &
-                , eve::callable_zero_ const &) noexcept
-  requires( TARGET, Vectorizable<TARGET>, Vectorizable<T> )
+  EVE_FORCEINLINE constexpr auto if_else_(
+      EVE_SUPPORTS(cpu_),
+      as_<TARGET> const &,
+      T const &cond,
+      eve::callable_one_ const &,
+      eve::callable_zero_ const &) noexcept requires(TARGET, Vectorizable<TARGET>, Vectorizable<T>)
   {
-    return is_nez(cond) ?  One<TARGET>() : Zero<TARGET>();
+    return is_nez(cond) ? One<TARGET>() : Zero<TARGET>();
   }
 }
 

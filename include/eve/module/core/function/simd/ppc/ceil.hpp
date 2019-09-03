@@ -18,12 +18,12 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_> ceil_(EVE_SUPPORTS(vmx_)
-                                         , wide<T, N, ppc_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, ppc_> ceil_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
-      return vec_ceil( v0.storage() );
-    else return v0;
+      return vec_ceil(v0.storage());
+    else
+      return v0;
   }
 }
 

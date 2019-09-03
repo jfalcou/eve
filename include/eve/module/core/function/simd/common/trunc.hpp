@@ -23,15 +23,18 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_),
-                            wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> )              return aggregate(eve::trunc, v);
-    else  if constexpr( is_emulated_v<ABI>)           return map(eve::trunc, v);
-    else  if constexpr(std::is_floating_point_v<T>)  return map(eve::trunc, v);
+    if constexpr(is_aggregated_v<ABI>)
+      return aggregate(eve::trunc, v);
+    else if constexpr(is_emulated_v<ABI>)
+      return map(eve::trunc, v);
+    else if constexpr(std::is_floating_point_v<T>)
+      return map(eve::trunc, v);
     // TODO replace the map as soon wide_cast is available
     //       return if_else(eve::abs(a0) < Maxflint(as(v));,  eve::raw_(trunc)(v),  a0);
-    else  return v;
+    else
+      return v;
   }
 }
 
@@ -45,7 +48,7 @@ namespace eve::detail
 //     else if constexpr( is_emulated_v<ABI>)           return map(eve::trunc, raw_, v);
 //     else if constexpr( is_floating_point_v<T> )
 //     {
-//       using i_t = as_integer_t<T>; 
+//       using i_t = as_integer_t<T>;
 //       return wide_cast[as(T)](wide_cast[as(i_t)](v));
 //     }
 //     else return v;

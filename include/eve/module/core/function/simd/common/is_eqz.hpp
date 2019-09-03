@@ -25,7 +25,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
     return is_equal(v, Zero(as(v)));
   }

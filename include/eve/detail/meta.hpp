@@ -177,8 +177,7 @@ namespace eve::detail
 
   // Extract the sign of a type
   template<typename T>
-  struct sign_of
-      : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
+  struct sign_of : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
   {
   };
 
@@ -269,14 +268,13 @@ namespace eve::detail
   template<bool... Conditions>
   using Either = std::enable_if_t<(Conditions || ...)>;
 
-
   // False value with dependent type
   template<typename... T>
   inline constexpr bool wrong = false;
 }
 
 // Pseudo satisfy macro
-#  define satisfy(...) typename ::eve::detail::require_check <void, __VA_ARGS__> ::type* = nullptr
+#  define satisfy(...) typename ::eve::detail::require_check<void, __VA_ARGS__>::type * = nullptr
 
 // Pseudo require macro
 #  define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type

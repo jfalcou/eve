@@ -10,7 +10,7 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_SCALAR_SIGN_HPP_INCLUDED
 #define EVE_FUNCTION_SCALAR_SIGN_HPP_INCLUDED
- 
+
 #include <eve/function/definition/sign.hpp>
 #include <eve/module/core/function/scalar/sign.hpp>
 

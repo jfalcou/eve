@@ -18,15 +18,14 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-  bitwise_select_ ( EVE_SUPPORTS(vmx_),
-                    wide<U, N, ppc_> const& m,
-                    wide<T, N, ppc_> const& v0, wide<T, N, ppc_> const& v1
-                  ) noexcept
+  EVE_FORCEINLINE wide<T, N, ppc_> bitwise_select_(EVE_SUPPORTS(vmx_),
+                                                   wide<U, N, ppc_> const &m,
+                                                   wide<T, N, ppc_> const &v0,
+                                                   wide<T, N, ppc_> const &v1) noexcept
   {
-    using i_t = wide<as_integer_t<T, unsigned>,N>;
+    using i_t = wide<as_integer_t<T, unsigned>, N>;
 
-    return vec_sel( v1.storage(), v0.storage(), bitwise_cast<i_t>(m).storage() );
+    return vec_sel(v1.storage(), v0.storage(), bitwise_cast<i_t>(m).storage());
   }
 }
 

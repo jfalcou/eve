@@ -24,12 +24,9 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_inf_(EVE_SUPPORTS(cpu_),wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto is_inf_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return is_equal(eve::abs(v), Inf(as(v)));
-    }
+    if constexpr(std::is_floating_point_v<T>) { return is_equal(eve::abs(v), Inf(as(v))); }
     else
     {
       return False(as(v));

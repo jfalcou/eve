@@ -28,13 +28,13 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_nltz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-     if constexpr(std::is_unsigned_v<T>)
-       return True(as(v));
+    if constexpr(std::is_unsigned_v<T>)
+      return True(as(v));
     else
     {
       if constexpr(std::is_floating_point_v<T>) return is_not_less(v, Zero(as(v)));
-      if constexpr(std::is_integral_v<T>) return is_gez(v); 
-    }  
+      if constexpr(std::is_integral_v<T>) return is_gez(v);
+    }
   }
 
   template<typename T, typename N, typename ABI>

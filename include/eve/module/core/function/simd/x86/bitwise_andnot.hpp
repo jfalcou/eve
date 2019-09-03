@@ -20,14 +20,16 @@ namespace eve ::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-  bitwise_andnot_(EVE_SUPPORTS(sse2_),
-                  wide<T, N, sse_> const &v0,
-                  wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_> bitwise_andnot_(EVE_SUPPORTS(sse2_),
+                                                   wide<T, N, sse_> const &v0,
+                                                   wide<T, N, sse_> const &v1) noexcept
   {
-    if constexpr(std::is_same_v<T, float>)  return _mm_andnot_ps(v1, v0);
-    else if constexpr(std::is_same_v<T, double>) return _mm_andnot_pd(v1, v0);
-    else if constexpr(std::is_integral_v<T>)     return _mm_andnot_si128(v1, v0);
+    if constexpr(std::is_same_v<T, float>)
+      return _mm_andnot_ps(v1, v0);
+    else if constexpr(std::is_same_v<T, double>)
+      return _mm_andnot_pd(v1, v0);
+    else if constexpr(std::is_integral_v<T>)
+      return _mm_andnot_si128(v1, v0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -37,22 +39,20 @@ namespace eve ::detail
                                                    wide<T, N, avx_> const &v0,
                                                    wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(std::is_same_v<T, float>) return _mm256_andnot_ps(v1, v0);
-    else if constexpr(std::is_same_v<T, double>) return _mm256_andnot_pd(v1, v0);
+    if constexpr(std::is_same_v<T, float>)
+      return _mm256_andnot_ps(v1, v0);
+    else if constexpr(std::is_same_v<T, double>)
+      return _mm256_andnot_pd(v1, v0);
     else if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(current_api >= avx2)
-      {
-        return _mm256_andnot_si256(v1, v0);
-      }
+      if constexpr(current_api >= avx2) { return _mm256_andnot_si256(v1, v0); }
       else
       {
-        return _mm256_castps_si256(_mm256_andnot_ps(_mm256_castsi256_ps(v1)
-                                                   , _mm256_castsi256_ps(v0)));
+        return _mm256_castps_si256(
+            _mm256_andnot_ps(_mm256_castsi256_ps(v1), _mm256_castsi256_ps(v0)));
       }
-    }    
+    }
   }
 }
 
 #endif
-  

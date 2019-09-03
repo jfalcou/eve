@@ -15,4 +15,3 @@
 #include <eve/module/core/function/simd/frac.hpp>
 
 #endif
- 

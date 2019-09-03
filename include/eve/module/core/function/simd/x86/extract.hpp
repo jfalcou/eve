@@ -24,13 +24,13 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename I, typename N, auto V>
-  EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse2_)
-                               , wide<T, N, sse_> const &v0
-                               , std::integral_constant<I, V> const &) noexcept
+  EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse2_),
+                             wide<T, N, sse_> const &v0,
+                             std::integral_constant<I, V> const &) noexcept
   {
     static_assert((V < wide<T, N, sse_>::static_size),
                   "[eve - extract sse2] : Index is out of bound for current architecture");
-    
+
     if constexpr(std::is_floating_point_v<T>)
     {
       if constexpr(std::is_same_v<T, float>)
@@ -52,31 +52,36 @@ namespace eve::detail
     }
     else // if constexpr(std::is_integral_v<T>)
     {
-      if constexpr(sizeof(T) == 2) return static_cast<T>(_mm_extract_epi16(v0, V));
+      if constexpr(sizeof(T) == 2)
+        return static_cast<T>(_mm_extract_epi16(v0, V));
       else if constexpr(current_api > sse4_1)
       {
-        if constexpr(sizeof(T) == 1)      return static_cast<T>(_mm_extract_epi8(v0, V));
-        else if constexpr(sizeof(T) == 4) return static_cast<T>(_mm_extract_epi32(v0, V));
-        else if constexpr(sizeof(T) == 8) return static_cast<T>(_mm_extract_epi64(v0, V)); 
+        if constexpr(sizeof(T) == 1)
+          return static_cast<T>(_mm_extract_epi8(v0, V));
+        else if constexpr(sizeof(T) == 4)
+          return static_cast<T>(_mm_extract_epi32(v0, V));
+        else if constexpr(sizeof(T) == 8)
+          return static_cast<T>(_mm_extract_epi64(v0, V));
       }
       else
       {
-        if constexpr(sizeof(T) == 1)       return static_cast<T>((_mm_extract_epi16(v0, V / 2)
-                                                                  >> (8 * (V % 2))) & 0xFF);
-        else if constexpr(sizeof(T) == 4)  return _mm_cvtsi128_si32(_mm_srli_si128(v0, 4 * V));
-        else if constexpr(sizeof(T) == 8)  return _mm_cvtsi128_si64(_mm_srli_si128(v0, 8 * V));
+        if constexpr(sizeof(T) == 1)
+          return static_cast<T>((_mm_extract_epi16(v0, V / 2) >> (8 * (V % 2))) & 0xFF);
+        else if constexpr(sizeof(T) == 4)
+          return _mm_cvtsi128_si32(_mm_srli_si128(v0, 4 * V));
+        else if constexpr(sizeof(T) == 8)
+          return _mm_cvtsi128_si64(_mm_srli_si128(v0, 8 * V));
       }
     }
   }
-  
+
   template<typename T, typename N, typename I, auto V>
-  EVE_FORCEINLINE logical<T> extract_ ( EVE_SUPPORTS(sse2_),
-                                        logical<wide<T, N, sse_>> const& v0,
-                                        std::integral_constant<I, V> const& u) noexcept
+  EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(sse2_),
+                                      logical<wide<T, N, sse_>> const &   v0,
+                                      std::integral_constant<I, V> const &u) noexcept
   {
-    return logical<T>( extract( v0.bits(), u) );
+    return logical<T>(extract(v0.bits(), u));
   }
 }
 
 #endif
-

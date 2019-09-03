@@ -23,9 +23,9 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto
-  div_( EVE_SUPPORTS(cpu_), T const &cond, U const &a, V const &b) noexcept
+  div_(EVE_SUPPORTS(cpu_), T const &cond, U const &a, V const &b) noexcept
   {
-    return a/if_else(cond, abi_cast<U>(b), eve::one_);
+    return a / if_else(cond, abi_cast<U>(b), eve::one_);
   }
 }
 

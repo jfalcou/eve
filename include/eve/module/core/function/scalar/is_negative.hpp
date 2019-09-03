@@ -23,8 +23,7 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_negative_(EVE_SUPPORTS(cpu_)
-                                                        , T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_negative_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {

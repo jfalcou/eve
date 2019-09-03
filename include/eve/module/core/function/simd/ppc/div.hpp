@@ -20,18 +20,14 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_> div_ ( EVE_SUPPORTS(vsx_),
-                                          wide<T, N, ppc_> const &v0,
-                                          wide<T, N, ppc_> const &v1
-                                        ) noexcept
+  EVE_FORCEINLINE wide<T, N, ppc_>
+                  div_(EVE_SUPPORTS(vsx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
   {
     if constexpr(std::is_floating_point_v<T> && current_api == eve::vsx)
-    {
-      return vec_div(v0.storage(), v1.storage());
-    }
+    { return vec_div(v0.storage(), v1.storage()); }
     else
     {
-      return map(eve::div,v0,v1);
+      return map(eve::div, v0, v1);
     }
   }
 }

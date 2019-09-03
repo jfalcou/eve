@@ -25,14 +25,13 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto frac_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
-  requires( T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto frac_(EVE_SUPPORTS(cpu_),
+                                       T const &a0) noexcept requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
-      return a0-trunc(a0); 
+      return a0 - trunc(a0);
     else
-      return Zero(as(a0)); 
+      return Zero(as(a0));
   }
 }
 

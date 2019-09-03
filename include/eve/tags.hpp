@@ -18,84 +18,106 @@ namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct regular_type   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+  struct regular_type
+  {
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
     {
-      return [f](auto const&... args) { return f(args...); };
+      return [f](auto const &... args) { return f(args...); };
     }
   };
-  struct raw_type       {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+  struct raw_type
+  {
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
     {
-      return [f](auto const&... args) { return f(raw_type{}, args...); };
-    }
-
-  };
-  struct pedantic_type  {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
-    {
-      return [f](auto const&... args) { return f(pedantic_type{}, args...); };
+      return [f](auto const &... args) { return f(raw_type{}, args...); };
     }
   };
-  struct saturated_type {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+  struct pedantic_type
+  {
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
     {
-      return [f](auto const&... args) { return f(saturated_type{}, args...); };
+      return [f](auto const &... args) { return f(pedantic_type{}, args...); };
     }
   };
-  struct numeric_type   {
-    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+  struct saturated_type
+  {
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
     {
-      return [f](auto const&... args) { return f(numeric_type{}, args...); };
+      return [f](auto const &... args) { return f(saturated_type{}, args...); };
+    }
+  };
+  struct numeric_type
+  {
+    template<typename Function>
+    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    {
+      return [f](auto const &... args) { return f(numeric_type{}, args...); };
     }
   };
 
   //================================================================================================
   // Function decorator - regular mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
+  template<typename Function>
+  constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
   {
-    return regular_type{}(f); 
+    return regular_type{}(f);
   }
 
   //================================================================================================
   // Function decorator - raw mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto raw_(Function f) noexcept
+  template<typename Function>
+  constexpr EVE_FORCEINLINE auto raw_(Function f) noexcept
   {
-    return raw_type{}(f); 
+    return raw_type{}(f);
   }
 
   //================================================================================================
   // Function decorator - pedantic mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
+  template<typename Function>
+  constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
   {
-    return pedantic_type{}(f); 
+    return pedantic_type{}(f);
   }
 
   //================================================================================================
   // Function decorator - saturated mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
+  template<typename Function>
+  constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
   {
-    return saturated_type{}(f); 
+    return saturated_type{}(f);
   }
 
   //================================================================================================
   // Function decorator - numeric mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
+  template<typename Function>
+  constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
   {
-    return numeric_type{}(f); 
+    return numeric_type{}(f);
   }
 
   //================================================================================================
   // Option types and objects
-  struct upward_type      {};
-  struct downward_type    {};
-  struct toward_zero_type {};
-  struct to_nearest_type  {};
+  struct upward_type
+  {
+  };
+  struct downward_type
+  {
+  };
+  struct toward_zero_type
+  {
+  };
+  struct to_nearest_type
+  {
+  };
 
-  inline constexpr upward_type      upward_       = {};
-  inline constexpr downward_type    downward_     = {};
-  inline constexpr toward_zero_type toward_zero_  = {};
-  inline constexpr to_nearest_type  to_nearest_   = {};
+  inline constexpr upward_type      upward_      = {};
+  inline constexpr downward_type    downward_    = {};
+  inline constexpr toward_zero_type toward_zero_ = {};
+  inline constexpr to_nearest_type  to_nearest_  = {};
 }
 
 #endif

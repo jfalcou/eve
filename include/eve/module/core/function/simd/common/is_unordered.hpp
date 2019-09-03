@@ -26,33 +26,27 @@
 
 namespace eve::detail
 {
- template<typename T, typename U>
-  EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(cpu_)
-                                      , T const &a
-                                      , U const &b) noexcept
-  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
+      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
+      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
 
-    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    { return map(eve::is_unordered, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return map( eve::is_unordered, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return aggregate(
+          eve::is_unordered, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
-    {
-      return aggregate( eve::is_unordered, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-    }
-    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        {
-          return logical_or(is_not_equal(a, a), is_not_equal(b, b));
-        }
+        { return logical_or(is_not_equal(a, a), is_not_equal(b, b)); }
         else
         {
           return False(as(a));
@@ -64,21 +58,19 @@ namespace eve::detail
         return {};
       }
     }
-    else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
-      return eve::is_unordered(abi_cast<U>(a), abi_cast<T>(b) );
+      return eve::is_unordered(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
-  
+
   template<typename T, typename U>
-  EVE_FORCEINLINE auto is_unordered_( EVE_SUPPORTS(cpu_),
-                                    logical<T> const &
-                                  , logical<U> const &
-                                  ) noexcept
-  requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
-          )
+  EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(cpu_),
+                                     logical<T> const &,
+                                     logical<U> const &) noexcept requires(logical<T>,
+                                                                           Vectorized<T>,
+                                                                           Vectorized<U>,
+                                                                           EqualCardinal<T, U>)
   {
     return False<T>();
   }

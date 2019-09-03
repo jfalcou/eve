@@ -19,36 +19,72 @@ namespace eve
 {
   //================================================================================================
   // ABI tag for all X86 128 bits SIMD registers
-  struct sse_ {};
+  struct sse_
+  {
+  };
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
-  struct sse2_   : simd_   { using parent = simd_;   static constexpr int order = EVE_SSE2_VERSION;   };
-  struct sse3_   : sse2_   { using parent = sse2_;   static constexpr int order = EVE_SSE3_VERSION;   };
-  struct ssse3_  : sse3_   { using parent = sse3_;   static constexpr int order = EVE_SSSE3_VERSION;  };
-  struct sse4_1_ : ssse3_  { using parent = ssse3_;  static constexpr int order = EVE_SSE4_1_VERSION; };
-  struct sse4_2_ : sse4_1_ { using parent = sse4_1_; static constexpr int order = EVE_SSE4_2_VERSION; };
-  struct avx_    : sse4_2_ { using parent = sse4_2_; static constexpr int order = EVE_AVX_VERSION;    };
-  struct avx2_   : avx_    { using parent = avx_;    static constexpr int order = EVE_AVX2_VERSION;   };
+  struct sse2_ : simd_
+  {
+    using parent               = simd_;
+    static constexpr int order = EVE_SSE2_VERSION;
+  };
+  struct sse3_ : sse2_
+  {
+    using parent               = sse2_;
+    static constexpr int order = EVE_SSE3_VERSION;
+  };
+  struct ssse3_ : sse3_
+  {
+    using parent               = sse3_;
+    static constexpr int order = EVE_SSSE3_VERSION;
+  };
+  struct sse4_1_ : ssse3_
+  {
+    using parent               = ssse3_;
+    static constexpr int order = EVE_SSE4_1_VERSION;
+  };
+  struct sse4_2_ : sse4_1_
+  {
+    using parent               = sse4_1_;
+    static constexpr int order = EVE_SSE4_2_VERSION;
+  };
+  struct avx_ : sse4_2_
+  {
+    using parent               = sse4_2_;
+    static constexpr int order = EVE_AVX_VERSION;
+  };
+  struct avx2_ : avx_
+  {
+    using parent               = avx_;
+    static constexpr int order = EVE_AVX2_VERSION;
+  };
 
   //================================================================================================
   // Specific ISA tags
-  struct xop_   {};
-  struct fma3_  {};
-  struct fma4_  {};
+  struct xop_
+  {
+  };
+  struct fma3_
+  {
+  };
+  struct fma4_
+  {
+  };
 
   //================================================================================================
   // SSE* extension tag objects
-  inline const sse2_    sse2    = {};
-  inline const sse3_    sse3    = {};
-  inline const ssse3_   ssse3   = {};
-  inline const sse4_1_  sse4_1  = {};
-  inline const sse4_2_  sse4_2  = {};
-  inline const avx_     avx     = {};
-  inline const avx2_    avx2    = {};
-  inline const xop_     xop     = {};
-  inline const fma3_    fma3    = {};
-  inline const fma4_    fma4    = {};
+  inline const sse2_   sse2   = {};
+  inline const sse3_   sse3   = {};
+  inline const ssse3_  ssse3  = {};
+  inline const sse4_1_ sse4_1 = {};
+  inline const sse4_2_ sse4_2 = {};
+  inline const avx_    avx    = {};
+  inline const avx2_   avx2   = {};
+  inline const xop_    xop    = {};
+  inline const fma3_   fma3   = {};
+  inline const fma4_   fma4   = {};
 
   //================================================================================================
   // Runtime detection of CPU support
@@ -120,16 +156,16 @@ namespace eve
 
 #else
 
-  inline bool is_supported(sse2_    const &) noexcept { return false; }
-  inline bool is_supported(sse3_    const &) noexcept { return false; }
-  inline bool is_supported(ssse3_   const &) noexcept { return false; }
-  inline bool is_supported(sse4_1_  const &) noexcept { return false; }
-  inline bool is_supported(sse4_2_  const &) noexcept { return false; }
-  inline bool is_supported(avx_     const &) noexcept { return false; }
-  inline bool is_supported(avx2_    const &) noexcept { return false; }
-  inline bool is_supported(xop_     const &) noexcept { return false; }
-  inline bool is_supported(fma3_    const &) noexcept { return false; }
-  inline bool is_supported(fma4_    const &) noexcept { return false; }
+  inline bool is_supported(sse2_ const &) noexcept { return false; }
+  inline bool is_supported(sse3_ const &) noexcept { return false; }
+  inline bool is_supported(ssse3_ const &) noexcept { return false; }
+  inline bool is_supported(sse4_1_ const &) noexcept { return false; }
+  inline bool is_supported(sse4_2_ const &) noexcept { return false; }
+  inline bool is_supported(avx_ const &) noexcept { return false; }
+  inline bool is_supported(avx2_ const &) noexcept { return false; }
+  inline bool is_supported(xop_ const &) noexcept { return false; }
+  inline bool is_supported(fma3_ const &) noexcept { return false; }
+  inline bool is_supported(fma4_ const &) noexcept { return false; }
 
 #endif
 }

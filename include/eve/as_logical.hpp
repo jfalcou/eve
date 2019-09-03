@@ -19,13 +19,13 @@ namespace eve
   template<typename T>
   struct as_logical
   {
-    using type = logical<T> ;
+    using type = logical<T>;
   };
 
   template<>
-  struct as_logical < bool >
+  struct as_logical<bool>
   {
-    using type = bool ;
+    using type = bool;
   };
 
   template<typename T>

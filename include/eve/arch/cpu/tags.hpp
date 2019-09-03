@@ -22,7 +22,7 @@ namespace eve
   // dispatching tag for generic SIMD implementation
   struct simd_ : cpu_
   {
-    using parent = cpu_;
+    using parent               = cpu_;
     static constexpr int order = 10;
   };
 
@@ -39,7 +39,9 @@ namespace eve
   };
 
   // Indicator for construction from arbitrary storage
-  struct from_bits_ {};
+  struct from_bits_
+  {
+  };
   static constexpr inline from_bits_ from_bits = {};
 
   // Runtime detection of CPU support

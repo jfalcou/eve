@@ -15,7 +15,7 @@
 #include <eve/module/core/function/simd/common/bitwise_shr.hpp>
 
 #if defined(EVE_HW_POWERPC)
-#    include <eve/module/core/function/simd/ppc/bitwise_shr.hpp>
+#  include <eve/module/core/function/simd/ppc/bitwise_shr.hpp>
 #endif
 
 #endif
