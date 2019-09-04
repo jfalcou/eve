@@ -9,14 +9,14 @@
 **/
 //==================================================================================================
 #ifndef EVE_DETAIL_META_HPP_INCLUDED
-#  define EVE_DETAIL_META_HPP_INCLUDED
+#define EVE_DETAIL_META_HPP_INCLUDED
 
-#  include <eve/detail/abi.hpp>
-#  include <eve/detail/is_native.hpp>
-#  include <type_traits>
-#  include <utility>
-#  include <cstdint>
-#  include <cstddef>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
+#include <type_traits>
+#include <utility>
+#include <cstdint>
+#include <cstddef>
 
 namespace eve::detail
 {

@@ -55,13 +55,7 @@ docker_aarch64: &docker_aarch64
 ##==================================================================================================
 ## Build configurations
 ##==================================================================================================
-config_gcc_sse2: &config_gcc_sse2
-  <<: *docker_gcc
-config_gcc_sse4: &config_gcc_sse4
-  <<: *docker_gcc
-config_gcc_avx: &config_gcc_avx
-  <<: *docker_gcc
-config_gcc_avx2: &config_gcc_avx2
+config_gcc_x86: &config_gcc_x86
   <<: *docker_gcc
 config_clang_avx2: &config_clang_avx2
   <<: *docker_clang
@@ -141,14 +135,6 @@ jobs:
   ##================================================================================================
   ## Synchronization jobs
   ##================================================================================================
-  sync_arch:
-    <<: *docker_gcc
-    steps:
-      - run: echo "Test arch.unit completed"
-  sync_api:
-    <<: *docker_gcc
-    steps:
-      - run: echo "Test api.unit completed"
   sync_basic:
     <<: *docker_gcc
     steps:
@@ -161,36 +147,43 @@ jobs:
   ##================================================================================================
   ## Basic tests
   ##================================================================================================
+  gcc_emu_basic:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: basic
+      REPLICATION: 8
+      OPTIONS: "-DEVE_NO_SIMD"
+    <<: *steps_test_gcc
   gcc_sse2_basic:
-    <<: *config_gcc_sse2
+    <<: *config_gcc_x86
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse2"
     <<: *steps_test_gcc
   gcc_sse4_basic:
-    <<: *config_gcc_sse4
+    <<: *config_gcc_x86
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_basic:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
   gcc_fma3_basic:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: basic
       REPLICATION: 8
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_basic:
-    <<: *config_gcc_avx2
+    <<: *config_gcc_x86
     environment:
       TARGET: basic
       REPLICATION: 8
@@ -228,36 +221,43 @@ jobs:
   ##================================================================================================
   ## Scalar tests
   ##================================================================================================
+  gcc_emu_scalar:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "-DEVE_NO_SIMD"
+    <<: *steps_test_gcc
   gcc_sse2_scalar:
-    <<: *config_gcc_sse2
+    <<: *config_gcc_x86
     environment:
       TARGET: core.scalar
       REPLICATION: 8
       OPTIONS: "-msse2"
     <<: *steps_test_gcc
   gcc_sse4_scalar:
-    <<: *config_gcc_sse4
+    <<: *config_gcc_x86
     environment:
       TARGET: core.scalar
       REPLICATION: 8
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_scalar:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: core.scalar
       REPLICATION: 8
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
   gcc_fma3_scalar:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: core.scalar
       REPLICATION: 8
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_scalar:
-    <<: *config_gcc_avx2
+    <<: *config_gcc_x86
     environment:
       TARGET: core.scalar
       REPLICATION: 8
@@ -295,36 +295,43 @@ jobs:
   ##================================================================================================
   ## SIMD tests
   ##================================================================================================
+  gcc_emu_simd:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-DEVE_NO_SIMD"
+    <<: *steps_test_gcc
   gcc_sse2_simd:
-    <<: *config_gcc_sse2
+    <<: *config_gcc_x86
     environment:
       TARGET: core.simd
       REPLICATION: 2
       OPTIONS: "-msse2"
     <<: *steps_test_gcc
   gcc_sse4_simd:
-    <<: *config_gcc_sse4
+    <<: *config_gcc_x86
     environment:
       TARGET: core.simd
       REPLICATION: 4
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_simd:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: core.simd
       REPLICATION: 4
       OPTIONS: "-mavx"
     <<: *steps_test_gcc
   gcc_fma3_simd:
-    <<: *config_gcc_avx
+    <<: *config_gcc_x86
     environment:
       TARGET: core.simd
       REPLICATION: 4
       OPTIONS: "-mavx -mfma"
     <<: *steps_test_gcc
   gcc_avx2_simd:
-    <<: *config_gcc_avx2
+    <<: *config_gcc_x86
     environment:
       TARGET: core.simd
       REPLICATION: 4
@@ -369,6 +376,7 @@ workflows:
       - arm_aarch64_basic
       - arm_neon_basic
       - ppc_vsx_basic
+      - gcc_emu_basic
       - gcc_sse2_basic
       - gcc_sse4_basic
       - gcc_avx_basic
@@ -380,6 +388,7 @@ workflows:
             - arm_aarch64_basic
             - arm_neon_basic
             - ppc_vsx_basic
+            - gcc_emu_basic
             - gcc_sse2_basic
             - gcc_sse4_basic
             - gcc_avx_basic
@@ -397,6 +406,9 @@ workflows:
           requires:
             - sync_basic
       - ppc_vsx_scalar:
+          requires:
+            - sync_basic
+      - gcc_emu_scalar:
           requires:
             - sync_basic
       - gcc_sse2_scalar:
@@ -439,6 +451,9 @@ workflows:
           requires:
             - sync_scalar
       - ppc_vsx_simd:
+          requires:
+            - sync_scalar
+      - gcc_emu_simd:
           requires:
             - sync_scalar
       - gcc_sse2_simd:

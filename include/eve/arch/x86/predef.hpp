@@ -53,32 +53,34 @@
 
 // Detect current highest SSEx variant
 #undef EVE_HW_X86
-#if !defined(EVE_HW_X86) && defined(__AVX2__)
+
+#if !defined(EVE_HW_X86) && defined(__AVX2__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_AVX2_VERSION
 #endif
 
-#if !defined(EVE_HW_X86) && defined(__AVX__)
+#if !defined(EVE_HW_X86) && defined(__AVX__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_AVX_VERSION
 #endif
 
-#if !defined(EVE_HW_X86) && defined(__SSE4_2__)
+#if !defined(EVE_HW_X86) && defined(__SSE4_2__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_SSE4_2_VERSION
 #endif
 
-#if !defined(EVE_HW_X86) && defined(__SSE4_1__)
+#if !defined(EVE_HW_X86) && defined(__SSE4_1__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_SSE4_1_VERSION
 #endif
 
-#if !defined(EVE_HW_X86) && defined(__SSSE3__)
+#if !defined(EVE_HW_X86) && defined(__SSSE3__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_SSSE3_VERSION
 #endif
 
-#if !defined(EVE_HW_X86) && defined(__SSE3__)
+#if !defined(EVE_HW_X86) && defined(__SSE3__) && !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_SSE3_VERSION
 #endif
 
 #if !defined(EVE_HW_X86) &&                                                                        \
-    (defined(__SSE2__) || defined(_M_X64) || (defined(_M_IX86_FP) && _M_IX86_FP >= 2))
+    (defined(__SSE2__) || defined(_M_X64) || (defined(_M_IX86_FP) && _M_IX86_FP >= 2)) &&          \
+    !defined(EVE_NO_SIMD)
 #  define EVE_HW_X86 EVE_SSE2_VERSION
 #endif
 

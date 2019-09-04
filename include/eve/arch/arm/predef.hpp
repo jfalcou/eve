@@ -16,7 +16,9 @@
 
 // Detect current highest NEON variant
 #undef EVE_HW_ARM
-#if !defined(EVE_HW_ARM) && (defined(__ARM_NEON__) || defined(_M_ARM) || defined(__aarch64__))
+
+#if !defined(EVE_HW_ARM)  && !defined(EVE_NO_SIMD) && (defined(__ARM_NEON__) ||                     \
+    defined(_M_ARM) || defined(__aarch64__))
 #  define EVE_HW_ARM EVE_NEON_VERSION
 #endif
 

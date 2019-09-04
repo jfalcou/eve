@@ -12,8 +12,11 @@
 #define EVE_ARCH_LIMITS_HPP_INCLUDED
 
 #include <eve/arch/cpu/limits.hpp>
+
+#if !defined(EVE_NO_SIMD)
 #include <eve/arch/x86/limits.hpp>
 #include <eve/arch/ppc/limits.hpp>
 #include <eve/arch/arm/limits.hpp>
+#endif
 
 #endif

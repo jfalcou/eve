@@ -9,15 +9,15 @@
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_MUL_HPP_INCLUDED
-#  define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_MUL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_MUL_HPP_INCLUDED
 
-#  include <eve/detail/overload.hpp>
-#  include <eve/detail/skeleton.hpp>
-#  include <eve/detail/is_native.hpp>
-#  include <eve/detail/meta.hpp>
-#  include <eve/detail/abi.hpp>
-#  include <eve/concept/vectorized.hpp>
-#  include <type_traits>
+#include <eve/detail/overload.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/detail/is_native.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/concept/vectorized.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {

@@ -13,7 +13,9 @@
 
 #include <eve/function/definition/combine.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/wide.hpp>
 
 namespace eve::detail
@@ -27,6 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto
   combine_(EVE_SUPPORTS(cpu_), logical<T> const &a, logical<T> const &b) noexcept
+  requires( logical<wide<T, fixed<2>>>, Vectorizable<T> )
   {
     return logical<wide<T, fixed<2>>>(a, b);
   }
