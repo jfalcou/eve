@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_equal_)
+
+  template<>
+  struct supports_conditionnal<tag::is_equal_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_equal_, is_equal);
 }
 

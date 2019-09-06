@@ -295,3 +295,10 @@ list_tests("simd/sqrt"    "core" ${all_types})
 list_tests("simd/sub"         "core" ${all_types})
 list_tests("simd/unary_minus" "core" ${all_types})
 list_tests("simd/unary_plus" "core" ${all_types})
+
+
+##==================================================================================================
+## Expected failures tests
+
+add_build_test( "core" failure/conditionnal/is_equal.cpp )
+add_build_test( "core" failure/conditionnal/is_not_equal.cpp )
