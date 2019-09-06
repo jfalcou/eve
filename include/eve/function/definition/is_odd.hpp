@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_odd_)
+
+  template<>
+  struct supports_conditionnal<tag::is_odd_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_odd_, is_odd);
 }
 

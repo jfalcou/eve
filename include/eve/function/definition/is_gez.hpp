@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_gez_)
+
+  template<>
+  struct supports_conditionnal<tag::is_gez_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_gez_, is_gez);
 }
 

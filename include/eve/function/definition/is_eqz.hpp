@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_eqz_)
+
+  template<>
+  struct supports_conditionnal<tag::is_eqz_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
 }
 

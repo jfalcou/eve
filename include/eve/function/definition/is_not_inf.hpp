@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_not_inf_)
+
+  template<>
+  struct supports_conditionnal<tag::is_not_inf_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_not_inf_, is_not_inf);
 }
 

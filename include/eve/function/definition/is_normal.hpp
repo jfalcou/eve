@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_normal_)
+
+  template<>
+  struct supports_conditionnal<tag::is_normal_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_normal_, is_normal);
 }
 

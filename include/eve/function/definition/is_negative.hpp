@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  EVE_DECLARE_TAG(is_negative_)
+
+  template<>
+  struct supports_conditionnal<tag::is_negative_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_negative_, is_negative);
 }
 
