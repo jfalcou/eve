@@ -16,3 +16,14 @@ Syntax
   where ``T`` is ``decltype(func_(x, ...))``. (In particular this feature is not available if ``x``
   is not convertible to ``T``).
 
+Example
+-------
+
+.. include:: ../../../../test/doc/mask.cpp
+  :literal:
+
+Possible output:
+
+.. include:: ../../../../test/doc/mask.txt
+  :literal:
+
