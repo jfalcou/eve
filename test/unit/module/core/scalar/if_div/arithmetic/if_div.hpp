@@ -19,11 +19,11 @@
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE("Check div return type")
+TTS_CASE( "Check div return type" )
 {
-  TTS_EXPR_IS(eve::div[ Type() ](Type(), Type()), Type);
-  TTS_EXPR_IS(eve::div[ eve::logical<Type>() ](Type(), Type()), Type);
-  TTS_EXPR_IS(eve::div[ true ](Type(), Type()), Type);
+  TTS_EXPR_IS(eve::div[Type()]( Type(), Type() ) , Type );
+  TTS_EXPR_IS(eve::div[eve::logical<Type>()]( Type(), Type() ) , Type );
+  TTS_EXPR_IS(eve::div[true]( Type(), Type() ) , Type );
 }
 
 TTS_CASE("Check conditional div behavior")
@@ -33,14 +33,14 @@ TTS_CASE("Check conditional div behavior")
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_EQUAL(eve::div[ 1 ](tv, fv), tv / fv);
-  TTS_EQUAL(eve::div[ 1.0 ](tv, fv), tv / fv);
-  TTS_EQUAL(eve::div[ true ](tv, fv), tv / fv);
-  TTS_EQUAL(eve::div[ t ](tv, fv), tv / fv);
-  TTS_EQUAL(eve::div[ 0 ](tv, fv), tv);
-  TTS_EQUAL(eve::div[ 0.0 ](tv, fv), tv);
-  TTS_EQUAL(eve::div[ false ](tv, fv), tv);
-  TTS_EQUAL(eve::div[ f ](tv, fv), tv);
+  TTS_EQUAL ( eve::div[ 1    ](tv, fv), tv/fv);
+  TTS_EQUAL ( eve::div[ 1.0  ](tv, fv), tv/fv);
+  TTS_EQUAL ( eve::div[ true ](tv, fv), tv/fv);
+  TTS_EQUAL ( eve::div[ t    ](tv, fv), tv/fv);
+  TTS_EQUAL ( eve::div[ 0    ](tv, fv), tv);
+  TTS_EQUAL ( eve::div[ 0.0  ](tv, fv), tv);
+  TTS_EQUAL ( eve::div[ false](tv, fv), tv);
+  TTS_EQUAL ( eve::div[ f    ](tv, fv), tv);
 }
 
 #endif

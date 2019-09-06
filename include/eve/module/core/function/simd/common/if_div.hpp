@@ -12,20 +12,47 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IF_DIV_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi_cast.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/forward.hpp>
+#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
+  //-----------------------------------------------------------------------------------------------
+  // masked
   template<typename T, typename U, typename V>
-  EVE_FORCEINLINE constexpr auto
-  div_(EVE_SUPPORTS(cpu_), T const &cond, U const &a, V const &b) noexcept
+  EVE_FORCEINLINE  auto
+  div_( EVE_SUPPORTS(cpu_)
+      , T const &cond
+      , U const &a
+      , V const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
+            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+          )
   {
-    return a / if_else(cond, abi_cast<U>(b), eve::one_);
+    if constexpr(is_vectorized_v<T>)  return div(a, if_else(cond, b, eve::one_));
+    else  return cond ? div(a, b) : a;
+  }
+  
+  //-----------------------------------------------------------------------------------------------
+  //  Saturated Masked case
+  template<typename T, typename U, typename V>
+  EVE_FORCEINLINE  auto div_( EVE_SUPPORTS(cpu_)
+                            , T const &cond
+                            , saturated_type const & 
+                            , U const &a
+                            , V const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
+            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+          )
+  {
+    if constexpr(is_vectorized_v<T>) return if_else(cond, saturated_(div)(a, b), a);
+    else return cond ? saturated_(div)(a, b) : a; 
   }
 }
 
