@@ -11,65 +11,63 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_ADD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_ADD_HPP_INCLUDED
 
-//#include <eve/function/saturated.hpp>
-// #include <eve/function/scalar/saturate.hpp>
+#include <eve/function/saturate.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-// #include <type_traits>
-// #include <limits>
-// #include <climits>
+#include <eve/tags.hpp>
+#include <eve/as.hpp>
+#include <type_traits>
+#include <limits>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr auto
-  add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  requires(T, Vectorizable<T>)
   {
     return a + b;
   }
 
-#  if 0
   // -----------------------------------------------------------------------------------------------
   // Saturated case
   template<typename T> EVE_FORCEINLINE
-  constexpr T add_(EVE_SUPPORTS(cpu_), saturated_tag const&, T const& a, T const& b) noexcept
+  constexpr auto add_(EVE_SUPPORTS(cpu_)
+                     , saturated_type const&
+                     , T const& a
+                     , T const& b) noexcept
+  requires(T, Vectorizable<T>)
   {
     if constexpr( std::is_floating_point_v<T> )
     {
       return a + b;
     }
-
-    if constexpr( std::is_signed_v<T> )
+    else if constexpr( std::is_signed_v<T> )
     {
       if constexpr( sizeof(T) >= 4 )
       {
         // large signed integral case
-        using utype = typename std::make_unsigned<T>::type;
-        enum sizee { value = sizeof(T)*CHAR_BIT-1 };
-
-        utype ux = a, uy = b;
-        utype res = ux + uy;
-
+        using u_t = std::make_unsigned_t<T>;
+        enum sizee { value = sizeof(T)*8-1 };
+        
+        u_t ux = a, uy = b;
+        u_t res = ux + uy;
+        
         ux = (ux >> sizee::value) + std::numeric_limits<T>::max();
-
+        
         if( T((ux ^ uy) | ~(uy ^ res)) >= T(0)) return ux;
         return static_cast<T>(res);
       }
       else
       {
-#    if 0
         // small signed integral case
         auto r = a+b;
-        return static_cast<T>(saturate<T>(r));
-#    endif
+        return static_cast<T>(saturate[as_<T>()](r));
       }
     }
-
-    if constexpr( std::is_unsigned_v<T> )
+    else // if constexpr( std::is_unsigned_v<T> )
     {
       if constexpr( sizeof(T) >= 4 )
       {
@@ -86,7 +84,6 @@ namespace eve::detail
       }
     }
   }
-#  endif
 }
 
 #endif

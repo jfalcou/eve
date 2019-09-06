@@ -18,25 +18,26 @@
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check plus behavior on wide",
+TTS_CASE_TPL("Check add behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>
+            )
 {
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
-      ref(T::value);
+    ref(T::value);
 
   TTS_EQUAL(ref, eve::add(lhs, rhs));
   TTS_EQUAL(ref, lhs + rhs);
 }
 
-TTS_CASE_TPL("Check plus behavior on wide",
+TTS_CASE_TPL("Check add behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -47,12 +48,50 @@ TTS_CASE_TPL("Check plus behavior on wide",
 {
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }), ref([](auto i, auto) { return i + Type(4); });
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+    ref([](auto i, auto) { return i + Type(4); });
 
   TTS_EQUAL(ref, eve::add(lhs, 4));
   TTS_EQUAL(ref, eve::add(4, lhs));
   TTS_EQUAL(ref, lhs + 4);
   TTS_EQUAL(ref, 4 + lhs);
 }
+
+TTS_CASE_TPL("Check saturated_(add) behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>
+            )
+{
+  using eve::wide;
+
+  wide<Type, T> lhs([](auto i, auto) { return i; }), rhs([](auto i, auto c) { return c - i; }),
+    ref(T::value);
+
+  TTS_EQUAL(ref, eve::saturated_(eve::add)(lhs, rhs));
+}
+
+TTS_CASE_TPL("Check saturated_(add) behavior on wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+    ref([](auto i, auto) { return i + Type(4); });
+
+  TTS_EQUAL(ref, eve::saturated_(eve::add)(lhs, 4));
+  TTS_EQUAL(ref, eve::saturated_(eve::add)(4, lhs));
+}
+
 
 #endif
