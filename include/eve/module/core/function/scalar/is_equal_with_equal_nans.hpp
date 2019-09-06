@@ -16,17 +16,23 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
+#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto is_equal_with_equal_nans_(
-      EVE_SUPPORTS(cpu_),
-      T const &a,
-      U const &b) noexcept requires(as_logical_t<T>, Vectorizable<T>, Vectorizable<U>)
+  EVE_FORCEINLINE constexpr
+  auto  is_equal_(EVE_SUPPORTS(cpu_)
+                 , numeric_type const &
+                 , T const &a
+                 , U const &b) noexcept
+  requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
-    if constexpr(std::is_floating_point_v<T>) { return (a == b) || ((a != a) && (b != b)); }
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      return (a == b) || ((a!= a) && (b!= b));
+    }
     else
     {
       return a == b;

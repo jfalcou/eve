@@ -13,53 +13,53 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/is_equal_with_equal_nans.hpp>
+#include <eve/function/simd/is_equal.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check is_equal_with_equal_nans behavior on homogeneous logical<wide>",
+TTS_CASE_TPL("Check eve::numeric_(eve::is_equal) behavior on homogeneous logical<wide>",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>
+            )
 {
-  using eve::logical;
   using eve::wide;
+  using eve::logical;
 
-  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; }),
-      rhs([](auto i, auto) { return i % 3 == 0; });
+  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; }),
+                          rhs([](auto i, auto)  { return i%3 == 0; });
 
-  logical<wide<Type, T>> ref(
-      [](auto i, auto) { return eve::is_equal_with_equal_nans((i % 2 == 0), (i % 3 == 0)); });
+  logical<wide<Type, T>>  ref([](auto i, auto)  { return eve::numeric_(eve::is_equal)((i%2 == 0),(i%3 == 0)); });
 
-  TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, rhs));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_equal)(lhs, rhs));
 }
 
-TTS_CASE_TPL("Check is_equal_with_equal_nans behavior on logical<wide> and scalar",
+TTS_CASE_TPL("Check eve::numeric_(eve::is_equal) behavior on logical<wide> and scalar",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>
+             )
 {
-  using eve::logical;
   using eve::wide;
+  using eve::logical;
 
-  logical<wide<Type, T>> lhs([](auto i, auto) { return i % 2 == 0; });
-  logical<wide<Type, T>> ref(
-      [](auto i, auto) { return eve::is_equal_with_equal_nans(i % 2 == 0, true); });
+  logical<wide<Type, T>>  lhs([](auto i, auto)  { return i%2 == 0; });
+  logical<wide<Type, T>>  ref([](auto i, auto)  { return eve::numeric_(eve::is_equal)(i%2 == 0,true); });
 
-  TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, logical<Type>(true)));
-  TTS_EQUAL(ref, eve::is_equal_with_equal_nans(logical<Type>(true), lhs));
-  TTS_EQUAL(ref, eve::is_equal_with_equal_nans(lhs, true));
-  TTS_EQUAL(ref, eve::is_equal_with_equal_nans(true, lhs));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_equal)(lhs, logical<Type>(true)));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_equal)(logical<Type>(true), lhs));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_equal)(lhs, true));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_equal)(true, lhs));
 }
 
 #endif
