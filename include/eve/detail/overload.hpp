@@ -15,6 +15,9 @@
 #include <eve/detail/abi.hpp>
 #include <utility>
 
+#define EVE_DECLARE_TAG(TAG) namespace tag { struct TAG; }                                         \
+/**/
+
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
   namespace tag                                                                                    \
   {                                                                                                \
@@ -25,7 +28,8 @@
   namespace detail                                                                                 \
   {                                                                                                \
     template<typename Dummy>                                                                       \
-    struct callable_object<tag::TAG, void, Dummy>                                                  \
+    struct  callable_object<tag::TAG, void, Dummy>                                                 \
+          : conditionnal_support<tag::TAG, eve::supports_conditionnal<tag::TAG>::value>            \
     {                                                                                              \
       using tag_type = tag::TAG;                                                                   \
       template<typename... Args>                                                                   \
@@ -34,23 +38,6 @@
       {                                                                                            \
         return TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...);                     \
       };                                                                                           \
-                                                                                                   \
-      template<typename Option>                                                                    \
-      EVE_FORCEINLINE constexpr auto operator[](Option const &o) const noexcept                    \
-      {                                                                                            \
-        return callable_object<tag_type, Option>{o};                                               \
-      }                                                                                            \
-                                                                                                   \
-      struct negator                                                                               \
-      {                                                                                            \
-        template<typename Option>                                                                  \
-        EVE_FORCEINLINE constexpr auto operator[](Option const &o) const noexcept                  \
-        {                                                                                          \
-          return callable_object<tag_type, not_t<Option>>{o};                                      \
-        }                                                                                          \
-      };                                                                                           \
-                                                                                                   \
-      negator not_;                                                                                \
     };                                                                                             \
                                                                                                    \
     template<typename Mode, typename Dummy>                                                        \
@@ -93,20 +80,50 @@
 /**/
 
 // basic type to support delayed calls
-namespace eve::detail
+namespace eve
 {
-  struct delay_t
-  {
-  };
+  template<typename Tag>
+  struct supports_conditionnal : std::true_type
+  {};
 
-  template<typename T>
-  struct not_t
+  namespace detail
   {
-    T value;
-  };
+    struct delay_t
+    {
+    };
 
-  template<typename Tag, typename Mode = void, typename Enabler = void>
-  struct callable_object;
+    template<typename T>
+    struct not_t
+    {
+      T value;
+    };
+
+    template<typename Tag, typename Mode = void, typename Enabler = void>
+    struct callable_object;
+
+    template<typename Tag, bool isSUpported>
+    struct conditionnal_support
+    {
+      template<typename Condition>
+      EVE_FORCEINLINE constexpr auto operator[](Condition const &o) const noexcept
+      {
+        return callable_object<Tag, Condition>{o};
+      }
+
+      struct negator
+      {
+        template<typename Condition>
+        EVE_FORCEINLINE constexpr auto operator[](Condition const &o) const noexcept
+        {
+          return callable_object<Tag, not_t<Condition>>{o};
+        }
+      };
+
+      negator not_;
+    };
+
+    template<typename Tag> struct conditionnal_support<Tag,false> {};
+  }
 }
 
 #endif
