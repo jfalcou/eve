@@ -20,3 +20,16 @@ Existing decorators
   - ``regular`` `      : as no decorator
   - ``saturated``      : saturated oeration
   - ``numeric_```      : prefer non Nan numbers to Nans when possible
+
+
+Example
+-------
+
+.. include:: ../../../../test/doc/deco.cpp
+  :literal:
+
+Possible output:
+
+.. include:: ../../../../test/doc/deco.txt
+  :literal:
+
