@@ -158,7 +158,7 @@ namespace eve::detail
       else
         return map(shr, a0, a1);
     };
-
+    ignore(ifxop_choice);
     if constexpr(current_api >= avx2)
     {
       EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),

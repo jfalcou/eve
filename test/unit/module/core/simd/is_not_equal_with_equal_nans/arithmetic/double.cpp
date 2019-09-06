@@ -29,10 +29,10 @@ TTS_CASE_TPL("Check is_not_equal behavior on nans",
   t_t v0([](auto i, auto) { return i % 3 ? Type(i) : Nan<Type>(); }),
       v1([](auto i, auto) { return i % 2 ? Type(i) : Nan<Type>(); });
   l_t ref([](auto i, auto c) {
-    return eve::is_not_equal_with_equal_nans(i % 3 ? Type(i) : Nan<Type>(),
+    return eve::numeric_(eve::is_not_equal)(i % 3 ? Type(i) : Nan<Type>(),
                                              i % 2 ? Type(i) : Nan<Type>());
   });
 
-  TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(v0, v1));
-  TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(v1, v0));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(v0, v1));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(v1, v0));
 }
