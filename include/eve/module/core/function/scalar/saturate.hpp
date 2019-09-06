@@ -16,7 +16,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/clamp.hpp>
-#include <eve/function/is_inf.hpp>
+#include <eve/function/is_infinite.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/as.hpp>
@@ -42,7 +42,7 @@ namespace eve::detail
         {
           auto mn = static_cast<double>(Valmin<float>());
           auto mx = static_cast<double>(Valmax<float>());
-          return is_inf(a0) ? a0 : clamp(a0, mn, mx);
+          return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
         }
       }
       else // from an integer

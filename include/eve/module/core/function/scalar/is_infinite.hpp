@@ -8,22 +8,26 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_INF_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_INF_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_INFINITE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_INFINITE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/logical_not.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/function/scalar/abs.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_inf_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_infinite_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return !eve::is_infinite(a);
+    if constexpr(std::is_floating_point_v<T>) { return eve::abs(a) == Inf<T>(); }
+    else
+    {
+      return false;
+    }
   }
 }
 
