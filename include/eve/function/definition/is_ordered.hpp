@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_ordered_)
+  namespace tag { struct is_ordered_; }
 
   template<>
   struct supports_conditionnal<tag::is_ordered_> : std::false_type

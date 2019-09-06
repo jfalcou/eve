@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_not_imag_)
+  namespace tag { struct is_not_imag_; }
 
   template<>
   struct supports_conditionnal<tag::is_not_imag_> : std::false_type

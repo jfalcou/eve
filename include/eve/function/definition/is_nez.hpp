@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_nez_)
+  namespace tag { struct is_nez_; }
 
   template<>
   struct supports_conditionnal<tag::is_nez_> : std::false_type

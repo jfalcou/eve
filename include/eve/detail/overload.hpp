@@ -15,9 +15,6 @@
 #include <eve/detail/abi.hpp>
 #include <utility>
 
-#define EVE_DECLARE_TAG(TAG) namespace tag { struct TAG; }                                         \
-/**/
-
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
   namespace tag                                                                                    \
   {                                                                                                \

@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_ltz_)
+  namespace tag { struct is_ltz_; }
 
   template<>
   struct supports_conditionnal<tag::is_ltz_> : std::false_type

@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_nan_)
+  namespace tag { struct is_nan_; }
 
   template<>
   struct supports_conditionnal<tag::is_nan_> : std::false_type

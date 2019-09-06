@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_unordered_)
+  namespace tag { struct is_unordered_; }
 
   template<>
   struct supports_conditionnal<tag::is_unordered_> : std::false_type

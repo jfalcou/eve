@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_infinite_)
+  namespace tag { struct is_infinite_; }
 
   template<>
   struct supports_conditionnal<tag::is_infinite_> : std::false_type

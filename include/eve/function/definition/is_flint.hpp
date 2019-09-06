@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_flint_)
+  namespace tag { struct is_flint_; }
 
   template<>
   struct supports_conditionnal<tag::is_flint_> : std::false_type

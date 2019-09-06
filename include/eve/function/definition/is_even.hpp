@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_even_)
+  namespace tag { struct is_even_; }
 
   template<>
   struct supports_conditionnal<tag::is_even_> : std::false_type

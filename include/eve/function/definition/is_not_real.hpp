@@ -15,7 +15,7 @@
 
 namespace eve
 {
-  EVE_DECLARE_TAG(is_not_real_)
+  namespace tag { struct is_not_real_; }
 
   template<>
   struct supports_conditionnal<tag::is_not_real_> : std::false_type
