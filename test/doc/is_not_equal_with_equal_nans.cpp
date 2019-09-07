@@ -30,8 +30,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf =                  " << pf << '\n'
             << "<- qf =                  " << qf << '\n'
-            << "-> eve::is_not_equal_with_equal_nans(pf, qf) = "
-            << eve::is_not_equal_with_equal_nans(pf, qf) << '\n';
+            << "-> eve::numeric_(eve::is_not_equal)(pf, qf) = "
+            << eve::numeric_(eve::is_not_equal)(pf, qf) << '\n';
 
   float xf1 = 1.0f;
   float xf2 = eve::Nan<float>();
@@ -41,9 +41,9 @@ int main()
             << "<- xf1 =                  " << xf1 << '\n'
             << "<- xf2 =                  " << xf2 << '\n'
             << "<- yf =                   " << yf << '\n'
-            << "-> eve::is_not_equal_with_equal_nans(xf1, yf) = "
-            << eve::is_not_equal_with_equal_nans(xf1, yf) << '\n'
-            << "-> eve::is_not_equal_with_equal_nans(xf2, yf) = "
-            << eve::is_not_equal_with_equal_nans(xf2, yf) << '\n';
+            << "-> eve::numeric_(eve::is_not_equal)(xf1, yf) = "
+            << eve::numeric_(eve::is_not_equal)(xf1, yf) << '\n'
+            << "-> eve::numeric_(eve::is_not_equal)(xf2, yf) = "
+            << eve::numeric_(eve::is_not_equal)(xf2, yf) << '\n';
   return 0;
 }

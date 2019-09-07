@@ -13,7 +13,7 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/is_not_equal_with_equal_nans.hpp>
+#include <eve/function/simd/is_not_equal.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check is_not_equal_with_equal_nans behavior on homogeneous wide",
         rhs([](auto i, auto c) { return i % 2 ? Type(i % 2) / Type(i % 3) : Type(c - i); });
 
     logical<wide<Type, T>> ref(
-        [&](auto i, auto) { return eve::is_not_equal_with_equal_nans(lhs[ i ], rhs[ i ]); });
-    TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(lhs, rhs));
+        [&](auto i, auto) { return eve::numeric_(eve::is_not_equal)(lhs[ i ], rhs[ i ]); });
+    TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(lhs, rhs));
   }
   else
   {
@@ -47,8 +47,8 @@ TTS_CASE_TPL("Check is_not_equal_with_equal_nans behavior on homogeneous wide",
         rhs([](auto i, auto c) { return i % 2 ? Type(i % 2) : Type(c - i); });
 
     logical<wide<Type, T>> ref(
-        [&](auto i, auto) { return eve::is_not_equal_with_equal_nans(lhs[ i ], rhs[ i ]); });
-    TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(lhs, rhs));
+        [&](auto i, auto) { return eve::numeric_(eve::is_not_equal)(lhs[ i ], rhs[ i ]); });
+    TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(lhs, rhs));
   }
 }
 
@@ -66,10 +66,10 @@ TTS_CASE_TPL("Check is_not_equal_with_equal_nans behavior on wide and scalar",
 
   wide<Type, T>          lhs([](auto i, auto) { return i; });
   logical<wide<Type, T>> ref(
-      [](auto i, auto) { return eve::is_not_equal_with_equal_nans(Type(i), Type(2)); });
+      [](auto i, auto) { return eve::numeric_(eve::is_not_equal)(Type(i), Type(2)); });
 
-  TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(lhs, Type(2)));
-  TTS_EQUAL(ref, eve::is_not_equal_with_equal_nans(Type(2), lhs));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(lhs, Type(2)));
+  TTS_EQUAL(ref, eve::numeric_(eve::is_not_equal)(Type(2), lhs));
 }
 
 #endif
