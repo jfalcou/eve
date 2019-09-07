@@ -51,7 +51,7 @@ namespace eve::detail
           {
             auto mn = u_t(Valmin<float>());
             auto mx = u_t(Valmax<float>());
-            return if_else(is_inf(v), v, clamp(v, mn, mx));
+            return if_else(is_infinite(v), v, clamp(v, mn, mx));
           }
         }
         else // from an integer

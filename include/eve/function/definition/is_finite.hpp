@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  namespace tag { struct is_finite_; }
+
+  template<>
+  struct supports_conditionnal<tag::is_finite_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_finite_, is_finite);
 }
 

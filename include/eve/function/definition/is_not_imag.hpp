@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  namespace tag { struct is_not_imag_; }
+
+  template<>
+  struct supports_conditionnal<tag::is_not_imag_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_not_imag_, is_not_imag);
 }
 

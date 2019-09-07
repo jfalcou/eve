@@ -15,6 +15,12 @@
 
 namespace eve
 {
+  namespace tag { struct is_greater_equal_; }
+
+  template<>
+  struct supports_conditionnal<tag::is_greater_equal_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(is_greater_equal_, is_greater_equal);
 }
 
