@@ -96,7 +96,7 @@ namespace eve::detail
               u_t uy = bitwise_cast<u_t>(b);
               u_t res = ux + uy;
               
-              ux = shr(ux, sizeof(T)*8-1) +  u_t(Valmax<vt_t>());
+              ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
               return  bitwise_cast<T>(if_else(is_gez(bitwise_cast<T>(bitwise_ornot(bitwise_xor(ux,uy)
                                                                                   , bitwise_xor(uy,res))))
                                              , ux, res));
