@@ -8,7 +8,7 @@
 **/
 //==================================================================================================
 
-using Type = float;
+using Type = float; 
 #include "horn.hpp"
 TTS_CASE("Check eve::horn behavior")
 {

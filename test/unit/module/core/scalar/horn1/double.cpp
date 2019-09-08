@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 
-using Type = double;
+using Type = double;  
 #include "horn1.hpp"
 TTS_CASE("Check eve::horn1 behavior")
 {

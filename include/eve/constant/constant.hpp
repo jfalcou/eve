@@ -12,7 +12,7 @@
 #define EVE_CONSTANT_CONSTANT_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/meta.hpp> 
 #include <eve/function/bitwise_cast.hpp> 
 #include <eve/as.hpp>
 #include <type_traits>
