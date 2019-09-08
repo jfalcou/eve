@@ -25,9 +25,12 @@ namespace eve
     using t_t = detail::value_type_t<T>;
 
     if constexpr(std::is_integral_v<t_t>)
-      return static_cast<T>(BitsPattern);
+      return T(BitsPattern);
     else
-      return static_cast<T>(bitwise_cast<t_t>(BitsPattern));
+    {
+      using i_t = detail::as_integer_t<detail::value_type_t<T>, unsigned>; 
+      return T(bitwise_cast<t_t>(i_t(BitsPattern)));
+    }
   }
 }
 
