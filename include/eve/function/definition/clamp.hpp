@@ -12,9 +12,22 @@
 #define EVE_FUNCTION_DEFINITION_CLAMP_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
 
 namespace eve
 {
+  namespace tag { struct clamp_; }
+
+  namespace detail
+  {
+    template<typename X, typename L, typename H>
+    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::clamp_), X const&, L const& lo, H const& hi)
+    {
+      EVE_ASSERT(assert_all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
+    }
+  }
+
   EVE_MAKE_CALLABLE(clamp_, clamp);
 }
 
