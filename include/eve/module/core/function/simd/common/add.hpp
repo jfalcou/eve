@@ -30,6 +30,8 @@
 
 namespace eve::detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // regular case
   template<typename T, typename U>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
                             , T const &a
@@ -60,6 +62,8 @@ namespace eve::detail
     }
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // saturated case
   template<typename T, typename U>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
                             , saturated_type const & st

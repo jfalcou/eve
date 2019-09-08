@@ -18,6 +18,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
+#include <eve/constant/valmax.hpp>
 
 TTS_CASE("Check add return type")
 {
@@ -43,4 +44,20 @@ TTS_CASE("Check conditional add behavior")
   TTS_EQUAL(eve::add[ f ](tv, fv), tv);
 }
 
+TTS_CASE("Check saturated conditional add behavior")
+{
+  Type tv{eve::Valmax<Type>()};
+  Type fv{3};
+  auto t = eve::True<Type>();
+  auto f = eve::False<Type>();
+
+  TTS_EQUAL(eve::saturated_(eve::add[ 1 ])(tv, fv), eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ 1.0 ])(tv, fv), eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ true ])(tv, fv), eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ t ])(tv, fv), eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ 0 ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ 0.0 ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ false ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ f ])(tv, fv), tv);
+}
 #endif
