@@ -17,6 +17,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
+//#include <eve/wide_cast.hpp>
+#include <eve/detail/upgrade.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -45,6 +47,55 @@ namespace eve::detail
       return eve::mul(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE  auto mul_(EVE_SUPPORTS(cpu_)
+                            ,  saturated_type const & st
+                            , T const &a
+                            , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+          )
+  {
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::mul, st, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::mul, st, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T, U>)
+      {
+        using vt_t = value_type_t<T>; 
+        if constexpr(std::is_floating_point_v<vt_t>) return mul(a, b);
+// TODO  UNCOMMENT WHEN wide_cast AVAILABLE        
+//         else if constexpr(sizeof(vt_t) <= 4)
+//         {
+//           using sup_t =  upgrade_t<vt_t>; 
+//           return wide_cast<T>(saturate<T>(mul(wide_cast<sup_t>(a), wide_cast<sup_t>(b)))); 
+//         }      
+        else
+        {
+          return map(mul, st, a, b);
+        }
+      }
+      else
+      {
+        static_assert(std::is_same_v<T, U>, "[eve::mul] - no support for current simd api");
+        return {};
+      }
+    }
+    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::mul(st, abi_cast<U>(a), abi_cast<T>(b) );
+    }
+  }  
 }
 
 namespace eve
