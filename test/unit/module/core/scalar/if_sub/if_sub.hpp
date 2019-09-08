@@ -42,5 +42,21 @@ TTS_CASE("Check conditional add behavior")
   TTS_EQUAL(eve::add[ false ](tv, fv), tv);
   TTS_EQUAL(eve::add[ f ](tv, fv), tv);
 }
+TTS_CASE("Check saturated conditional add behavior")
+{
+  Type tv{eve::Valmax<Type>()};
+  Type fv{3};
+  auto t = eve::True<Type>();
+  auto f = eve::False<Type>();
+
+  TTS_EQUAL(eve::saturated_(eve::sub[ 1 ])(tv, fv), eve::saturated_(eve::sub)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::sub[ 1.0 ])(tv, fv), eve::saturated_(eve::sub)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::sub[ true ])(tv, fv), eve::saturated_(eve::sub)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::sub[ t ])(tv, fv), eve::saturated_(eve::sub)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::sub[ 0 ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::sub[ 0.0 ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::sub[ false ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::sub[ f ])(tv, fv), tv);
+}
 
 #endif

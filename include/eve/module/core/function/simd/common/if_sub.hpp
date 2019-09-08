@@ -21,12 +21,44 @@
 
 namespace eve::detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto
-  sub_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
+  sub_(EVE_SUPPORTS(cpu_), T const &cond
+      , U const &t
+      , V const &f) noexcept
+  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
+            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+          )
   {
-    return t - if_else(cond, abi_cast<U>(f), eve::zero_);
+    if constexpr(is_vectorized_v<T>)
+    {
+      return t - if_else(cond, abi_cast<U>(f), eve::zero_);
+    }
+    else return  cond ? t - f : t; 
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // Saturated Masked case
+  template<typename T, typename U, typename V>
+  EVE_FORCEINLINE auto sub_(EVE_SUPPORTS(cpu_) 
+                           , T const & cond   
+                           , saturated_type const & 
+                           , U const &t
+                           , V const & f) noexcept
+  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
+            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+          )
+  {
+    if constexpr(is_vectorized_v<T>)
+    {
+      return saturated_(sub)(t, if_else(cond, abi_cast<U>(f), eve::zero_));
+    }
+    else return  cond ? saturated_(sub)(t, f) : t; 
+  } 
+
 }
 
 #endif
