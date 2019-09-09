@@ -19,7 +19,7 @@
 #include <eve/tags.hpp>
 #include <type_traits>
 
-#ifdef BOOST_MSVC
+#if defined(EVE_COMP_IS_MSVC)
 #  pragma warning(push)
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
@@ -65,7 +65,7 @@ namespace eve::detail
   }
 }
 
-#ifdef BOOST_MSVC
+#if defined(EVE_COMP_IS_MSVC)
 #  pragma warning(pop)
 #endif
 
