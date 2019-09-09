@@ -12,7 +12,7 @@
 #define EVE_CONSTANT_CONSTANT_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp> 
+#include <eve/detail/meta.hpp>
 #include <eve/function/bitwise_cast.hpp> 
 #include <eve/as.hpp>
 #include <type_traits>
@@ -32,7 +32,7 @@ namespace eve
       {
         static_assert(sizeof(t_t) == sizeof(BitsPattern),
                       "[eve::constant] floating_point case - BitsPattern has not the correct size");
-        return T();
+        return T{};
       }
       else return static_cast<T>(bitwise_cast<t_t>(BitsPattern));
     }    
