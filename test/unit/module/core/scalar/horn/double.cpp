@@ -11,3 +11,10 @@
 
 using Type = double;
 #include "horn.hpp"
+TTS_CASE("Check eve::horn behavior")
+{
+  using eve::detail::horn;
+  TTS_EQUAL((horn<Type,0x0ULL>(Type(0))), Type(0));
+  TTS_EQUAL((horn<Type, 0x3FF0000000000000ULL, 0x00000000ULL, 0x3FF0000000000000ULL>(Type(1))), Type(2));
+  TTS_EQUAL((horn<Type, 0x4000000000000000ULL, 0x00000000ULL, 0x3FF0000000000000ULL>(Type(2))), Type(6));  
+}

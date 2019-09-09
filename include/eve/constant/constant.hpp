@@ -28,11 +28,14 @@ namespace eve
       return static_cast<T>(BitsPattern);
     else
     {
-      static_assert(sizeof(t_t) == sizeof(BitsPattern),
-                    "[eve::constant] floating_point case - BitsPattern has not the correct size");
+      if constexpr((sizeof(t_t) != sizeof(BitsPattern)))
+      {
+        static_assert(sizeof(t_t) == sizeof(BitsPattern),
+                      "[eve::constant] floating_point case - BitsPattern has not the correct size");
+        return {};
+      }
       return static_cast<T>(bitwise_cast<t_t>(BitsPattern));
-    }
-    
+    }    
   }
 }
 
