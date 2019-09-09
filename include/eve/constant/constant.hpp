@@ -13,7 +13,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bitwise_cast.hpp> 
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -25,12 +25,14 @@ namespace eve
     using t_t = detail::value_type_t<T>;
 
     if constexpr(std::is_integral_v<t_t>)
-      return T(BitsPattern);
+      return static_cast<T>(BitsPattern);
     else
     {
-      using i_t = detail::as_integer_t<detail::value_type_t<T>, unsigned>; 
-      return T(bitwise_cast<t_t>(i_t(BitsPattern)));
+      static_assert(sizeof(t_t) == sizeof(BitsPattern),
+                    "[eve::constant] floating_point case - BitsPattern has not the correct size");
+      return static_cast<T>(bitwise_cast<t_t>(BitsPattern));
     }
+    
   }
 }
 

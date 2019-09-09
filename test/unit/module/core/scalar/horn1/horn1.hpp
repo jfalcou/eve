@@ -24,13 +24,13 @@ TTS_CASE("Check eve::horn1 behavior")
   TTS_EQUAL((horn1<Type,0x0>(Type(0))), Type(0));
   if constexpr(std::is_same_v<Type, float>)
   {
-    TTS_EQUAL((horn1<Type, 0x3f800000, 0x00000000, 0x3f800000>(Type(1))), Type(3));
-    TTS_EQUAL((horn1<Type, 0x40000000, 0x3f800000, 0x3f800000>(Type(2))), Type(16));  
+    TTS_EQUAL((horn1<Type, 0x3f800000UL, 0x00000000UL, 0x3f800000UL>(Type(1))), Type(3));
+    TTS_EQUAL((horn1<Type, 0x40000000UL, 0x3f800000UL, 0x3f800000UL>(Type(2))), Type(16));  
   }
   else                        
   {
-    TTS_EQUAL((horn1<Type, 0x3FF0000000000000, 0x00000000, 0x3FF0000000000000>(Type(1))), Type(3));
-    TTS_EQUAL((horn1<Type, 0x4000000000000000, 0x00000000, 0x3FF0000000000000>(Type(2))), Type(14));  
+    TTS_EQUAL((horn1<Type, 0x3FF0000000000000ULL, 0x00000000ULL, 0x3FF0000000000000ULL>(Type(1))), Type(3));
+    TTS_EQUAL((horn1<Type, 0x4000000000000000ULL, 0x00000000ULL, 0x3FF0000000000000ULL>(Type(2))), Type(14));  
   }
   
 }
