@@ -12,6 +12,7 @@
 add_unit_test( "doc.function.arithmetic" deco.cpp )
 add_unit_test( "doc.function.arithmetic" mask.cpp )  
 add_unit_test( "doc.function.arithmetic" abs.cpp )
+add_unit_test( "doc.function.invtrig" atan2.cpp )
 add_unit_test( "doc.function.arithmetic" trunc.cpp )
 add_unit_test( "doc.function.arithmetic" frac.cpp )
 add_unit_test( "doc.function.arithmetic" nearest.cpp )

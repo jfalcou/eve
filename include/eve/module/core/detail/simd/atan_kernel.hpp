@@ -1,0 +1,94 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#ifndef EVE_MODULE_CORE_DETAIL_SIMD_ATAN_KERNEL_HPP_INCLUDED
+#define EVE_MODULE_CORE_DETAIL_SIMD_ATAN_KERNEL_HPP_INCLUDED
+
+#include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/tags.hpp>
+#include <eve/function/bitofsign.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/div.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/is_equal.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/is_greater_equal.hpp>   
+#include <eve/function/logical_and.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/unary_minus.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/pio_4.hpp>
+#include <eve/constant/ieee_constant.hpp>
+#include <type_traits>
+#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
+
+namespace eve::detail
+{
+  template<typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE 
+  auto atan_kernelw( wide<T, N, ABI> x,  wide<T, N, ABI> recx ) noexcept
+  requires(wide<T, N, ABI>, Floating<T>)
+  {
+    // here T is float or double and x positive
+    static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>
+                 , "[detail;:atan_kernelw] - entry type is not IEEEValue"); 
+    using t_t =  wide<T, N, ABI>; 
+    const auto flag1 = x <  Ieee_constant<t_t,  0X401A827AUL, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
+    const auto flag2 = eve::logical_and(x >= Ieee_constant<t_t, 0x3ed413cdUL, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
+    t_t yy =  eve::if_else(flag1, eve::zero_, Pio_2(as(x)));
+    yy =  eve::if_else(flag2, Pio_4(as(x)), yy);
+    t_t xx =   eve::if_else(flag1, x, -recx);
+    xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx); 
+    t_t z = eve::sqr(xx);
+    if constexpr(std::is_same_v<T, float>)
+    {
+       z = z*horn<t_t
+        , 0xbeaaaa2aul  // -3.3333293e-01
+        , 0x3e4c925ful  //  1.9991724e-01
+        , 0xbe0e1b85ul  // -1.4031009e-01
+        , 0x3da4f0d1ul  //  8.5460119e-02
+        > (z);
+    }
+    else
+    {
+      z = z* horn<t_t,
+        0xc0503669fd28ec8ell,
+        0xc05eb8bf2d05ba25ll,
+        0xc052c08c36880273ll,
+        0xc03028545b6b807all,
+        0xbfec007fa1f72594ll
+        >(z)/
+        horn1<t_t,
+        0x4068519efbbd62ecll,
+        0x407e563f13b049eall,
+        0x407b0e18d2e2be3bll,
+        0x4064a0dd43b8fa25ll,
+        0x4038dbc45b14603cll
+        >(z);
+    }
+    z = eve::fma(xx, z, xx);
+    z = add[flag2](z,  Ieee_constant<T, 0XB2BBBD2EUL, 0X3C81A62633145C07ULL>());  //pio_4lo
+    z = z+eve::if_else(flag1, eve::zero_, Ieee_constant<t_t,  0XB33BBD2EUL, 0X3C91A62633145C07ULL>());//pio_2lo
+    return yy + z;
+  }
+}
+
+#endif
