@@ -44,8 +44,8 @@ namespace eve::detail
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>
                  , "[detail;:atan_kernel] - entry type is not IEEEValue"); 
-    auto flag1 = x <  Ieee_constant<T,  0X401A827AUL, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
-    auto flag2 = (x >= Ieee_constant<T, 0x3ed413cdUL, 0X3FDA827999FCEF31ULL>()) && flag1; // tan(pi/8)
+    auto flag1 = x <  Ieee_constant<T,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
+    auto flag2 = (x >= Ieee_constant<T, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>()) && flag1; // tan(pi/8)
     T yy = flag1 ? T(0) : Pio_2(as(x));
     if (flag2) yy =  Pio_4(as(x));
     T xx =  flag1 ? x : -recx;
@@ -54,10 +54,10 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>)
     {
        z = z*horn<T
-        , 0xbeaaaa2aul  // -3.3333293e-01
-        , 0x3e4c925ful  //  1.9991724e-01
-        , 0xbe0e1b85ul  // -1.4031009e-01
-        , 0x3da4f0d1ul  //  8.5460119e-02
+        , 0xbeaaaa2au  // -3.3333293e-01
+        , 0x3e4c925fu  //  1.9991724e-01
+        , 0xbe0e1b85u  // -1.4031009e-01
+        , 0x3da4f0d1u  //  8.5460119e-02
         > (z);
     }
     else
@@ -78,8 +78,8 @@ namespace eve::detail
         >(z);
     }
     z = eve::fma(xx, z, xx);
-    if (flag2) z += Ieee_constant<T, 0XB2BBBD2EUL, 0X3C81A62633145C07ULL>();  //pio_4lo
-    if (!flag1) z += Ieee_constant<T,  0XB33BBD2EUL, 0X3C91A62633145C07ULL>();//pio_2lo
+    if (flag2) z += Ieee_constant<T, 0XB2BBBD2EU, 0X3C81A62633145C07ULL>();  //pio_4lo
+    if (!flag1) z += Ieee_constant<T,  0XB33BBD2EU, 0X3C91A62633145C07ULL>();//pio_2lo
     return yy + z;
   }
 }

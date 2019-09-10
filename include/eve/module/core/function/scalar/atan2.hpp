@@ -16,17 +16,18 @@
 #include <eve/constant/pi.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_negative.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/tags.hpp>
 #include <eve/assert.hpp>
+#include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/module/core/detail/scalar/atan_kernel.hpp>
 
@@ -62,27 +63,28 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-#ifndef EVE_NO_NANS
-      if (is_nan(a0) || is_nan(a1)) return Nan<T>();
-#endif
+      if constexpr(platform::supports_nans)
+        if (is_unordered(a0, a1)) return Nan(as(a0));
       
-#ifndef EVE_NO_INFINITIES
-      if (is_infinite(a0) && is_infinite(a1))
+      if constexpr(platform::supports_infinites)
       {
-        a0 = copysign(One<T>(), a0);
-        a1 = copysign(One<T>(), a1);
+        if (is_infinite(a0) && is_infinite(a1))
+        {
+          a0 = copysign(One(as(a0)), a0);
+          a1 = copysign(One(as(a0)), a1);
+        }
       }
-#endif
+      
       T q = eve::abs(a0/a1);
       T z = detail::atan_kernel(q, rec(q));
       T sgn = signnz(a0);
       z = (is_positive(a1)? z: Pi<T>()-z)*sgn;
-      return is_eqz(a0) ? if_else(is_negative(a1), Pi<T>()*sgn, eve::zero_) : z;
+      return is_eqz(a0) ? if_else(is_negative(a1), Pi(as(a0))*sgn, eve::zero_) : z;
     }
     else 
     {
       static_assert(std::is_floating_point_v<T>
-                   , "[atan2[pedantic_] scalar] - type is not an IEEEValue"); 
+                   , "[atan2 pedantic_ scalar] - type is not an IEEEValue"); 
     }    
   }
 }

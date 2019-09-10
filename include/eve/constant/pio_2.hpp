@@ -24,7 +24,7 @@ namespace eve
   EVE_FORCEINLINE auto Pio_2(as_<T> const & = {})
   {
     using t_t =  detail::value_type_t<T>;
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x3fc90fdbUL>();
+    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x3fc90fdbU>();
     if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x3ff921fb54442d18ULL>();
     if constexpr(std::is_integral_v<t_t>) return T(2);
   }

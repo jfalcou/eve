@@ -51,8 +51,8 @@ namespace eve::detail
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>
                  , "[detail;:atan_kernelw] - entry type is not IEEEValue"); 
     using t_t =  wide<T, N, ABI>; 
-    const auto flag1 = x <  Ieee_constant<t_t,  0X401A827AUL, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
-    const auto flag2 = eve::logical_and(x >= Ieee_constant<t_t, 0x3ed413cdUL, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
+    const auto flag1 = x <  Ieee_constant<t_t,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
+    const auto flag2 = eve::logical_and(x >= Ieee_constant<t_t, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
     t_t yy =  eve::if_else(flag1, eve::zero_, Pio_2(as(x)));
     yy =  eve::if_else(flag2, Pio_4(as(x)), yy);
     t_t xx =   eve::if_else(flag1, x, -recx);
@@ -61,10 +61,10 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>)
     {
        z = z*horn<t_t
-        , 0xbeaaaa2aul  // -3.3333293e-01
-        , 0x3e4c925ful  //  1.9991724e-01
-        , 0xbe0e1b85ul  // -1.4031009e-01
-        , 0x3da4f0d1ul  //  8.5460119e-02
+        , 0xbeaaaa2au  // -3.3333293e-01
+        , 0x3e4c925fu  //  1.9991724e-01
+        , 0xbe0e1b85u  // -1.4031009e-01
+        , 0x3da4f0d1u  //  8.5460119e-02
         > (z);
     }
     else
@@ -85,8 +85,8 @@ namespace eve::detail
         >(z);
     }
     z = eve::fma(xx, z, xx);
-    z = add[flag2](z,  Ieee_constant<T, 0XB2BBBD2EUL, 0X3C81A62633145C07ULL>());  //pio_4lo
-    z = z+eve::if_else(flag1, eve::zero_, Ieee_constant<t_t,  0XB33BBD2EUL, 0X3C91A62633145C07ULL>());//pio_2lo
+    z = add[flag2](z,  Ieee_constant<T, 0XB2BBBD2EU, 0X3C81A62633145C07ULL>());  //pio_4lo
+    z = z+eve::if_else(flag1, eve::zero_, Ieee_constant<t_t,  0XB33BBD2EU, 0X3C91A62633145C07ULL>());//pio_2lo
     return yy + z;
   }
 }
