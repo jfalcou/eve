@@ -8,11 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_equal_with_equal_nans.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/wide.hpp>
 
 #define TYPE()        eve::wide<float>
-#define FUNCTION()    eve::is_equal_with_equal_nans
+#define FUNCTION()    eve::numeric_(eve::is_equal)
 #define SAMPLES(N)    random<T>(N,-100.f,100.f),random<T>(N,-100.f,100.f)
 
 #include "bench.hpp"

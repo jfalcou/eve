@@ -8,12 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_equal_with_equal_nans.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/wide.hpp>
 #include <cstddef>
 
 #define TYPE()        eve::wide<std::uint32_t>
-#define FUNCTION()    eve::is_equal_with_equal_nans
+#define FUNCTION()    eve::numeric_(eve::is_equal)
 #define SAMPLES(N)    random<T>(N,0,10000),random<T>(N,0,10000)
 
 #include "bench.hpp"

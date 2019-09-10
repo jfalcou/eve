@@ -11,7 +11,7 @@
 #include <eve/function/rec.hpp>
 
 #define TYPE()        double
-#define FUNCTION()    eve::rec[eve::pedantic_]
+#define FUNCTION()    eve::pedantic_(eve::rec)
 #define SAMPLES(N)    random<T>(N,-100.,100.)
 
 #include "bench.hpp"

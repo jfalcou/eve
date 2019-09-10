@@ -12,7 +12,7 @@
 #include <eve/wide.hpp>
 
 #define TYPE()        eve::wide<float>
-#define FUNCTION()    eve::rec[eve::raw_]
+#define FUNCTION()    eve::raw_(eve::rec)
 #define SAMPLES(N)    random<T>(N,1.f,1000.f)
 
 #include "bench.hpp"
