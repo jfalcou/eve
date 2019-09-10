@@ -14,25 +14,20 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/assert_utils.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/function/bitwise_cast.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto
-  shr_(EVE_SUPPORTS(sse2_),
-       wide<T, N, sse_> const &a0,
-       I const &               a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, I const & a1) noexcept
+  requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
-               "[eve::shr sse2] -  shift " << a1 << "element is out of the range [0, "
-                                           << sizeof(T) * 8 << "[.");
+
     if constexpr(std::is_unsigned_v<T>)
     {
       if constexpr(sizeof(T) == 1)
@@ -60,9 +55,6 @@ namespace eve::detail
       if constexpr(sizeof(T) == 8)
       {
         return map(eve::shr, a0, a1);
-        //           t_t that = _mm_srli_epi64(a0, a1);
-        //           t_t mask = _mm_srli_epi64(Allbits<t_t>(), a1);
-        //           return bitwise_ornot(that, if_else_allbits(is_ltz(a0), mask));
       }
     }
   }
@@ -75,9 +67,6 @@ namespace eve::detail
   {
     if constexpr(supports_xop)
     {
-      EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
-                 "[eve::shr xop sse] -  At least one of "
-                     << a1 << " elements is out of the range [0, " << sizeof(T) * 8 << "[.");
       using si_t = wide<as_integer_t<I, signed>, N, sse_>;
       auto sa1   = -bitwise_cast<si_t>(a1);
       if constexpr(std::is_unsigned_v<T>)
@@ -110,17 +99,11 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto
-  shr_(EVE_SUPPORTS(avx_),
-       wide<T, N, avx_> const &a0,
-       I const &               a1) noexcept requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
+  EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0,I const & a1) noexcept
+  requires(wide<T, N, avx_>, Integral<T>, Integral<I>)
   {
     if constexpr(current_api >= avx2)
     {
-      EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shr avx2] - Shift " << a1 << " is out of the range [0, " << sizeof(T) * 8
-                                            << "[.");
-
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) == 1)
@@ -158,13 +141,11 @@ namespace eve::detail
       else
         return map(shr, a0, a1);
     };
+
     ignore(ifxop_choice);
+
     if constexpr(current_api >= avx2)
     {
-      EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shr avx] -  At least one of " << a1 << " elements is out of the range [0, "
-                                                      << sizeof(T) * 8 << "[.");
-
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) <= 2) return ifxop_choice(a0, a1);
@@ -178,7 +159,9 @@ namespace eve::detail
       }
     }
     else
+    {
       return ifxop_choice(a0, a1);
+    }
   }
 }
 
