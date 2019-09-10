@@ -18,7 +18,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 //#include <eve/wide_cast.hpp>
-#include <eve/detail/upgrade.hpp>
 #include <type_traits>
 
 namespace eve::detail
