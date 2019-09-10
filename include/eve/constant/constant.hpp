@@ -32,7 +32,7 @@ namespace eve
       {
         static_assert(sizeof(t_t) == sizeof(BitsPattern),
                       "[eve::constant] floating_point case - BitsPattern has not the correct size");
-        return {};
+        return T();
       }
       else return static_cast<T>(bitwise_cast<t_t>(BitsPattern));
     }    
