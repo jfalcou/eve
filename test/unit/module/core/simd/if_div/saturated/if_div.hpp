@@ -13,6 +13,7 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
+#include <tts/tests/precision.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/div.hpp>
@@ -35,8 +36,8 @@ TTS_CASE_TPL( "Check saturated conditional div behavior on homogeneous wide"
 
   wide<Type,T>  ref([](int i, int ) { return eve::saturated_(eve::div[Type((i%2)*i)])(Type(i%2+1),Type(i%3+1)); });
 
-  TTS_EQUAL(ref ,  eve::saturated_(eve::div[cond])( rhs1, rhs2));          //w w w
-  TTS_EQUAL(ref ,  eve::saturated_(eve::div[is_nez(cond)])( rhs1, rhs2));  //lw w w
+  TTS_ULP_EQUAL(ref ,  eve::saturated_(eve::div[cond])( rhs1, rhs2), 0.5);          //w w w
+  TTS_ULP_EQUAL(ref ,  eve::saturated_(eve::div[is_nez(cond)])( rhs1, rhs2), 0.5);  //lw w w
 }
 
 TTS_CASE_TPL( "Check conditional div behavior on wide + scalar"
@@ -54,9 +55,9 @@ TTS_CASE_TPL( "Check conditional div behavior on wide + scalar"
     ref2([](int i, int ) { return  eve::saturated_(eve::div[false])(Type(i%2+1),Type(i%3+1)); }),
     ref3([](int i, int ) { return  eve::saturated_(eve::div[i%2  ])(Type(7),Type(i%3+1)); });
 
-  TTS_EQUAL(ref1 ,  eve::saturated_(eve::div[true])( rhs1, rhs2));      
-  TTS_EQUAL(ref2 ,  eve::saturated_(eve::div[false])( rhs1, rhs2));  
-  TTS_EQUAL(ref3 ,  eve::saturated_(eve::div[cond])(Type(7), rhs2)); 
+  TTS_ULP_EQUAL(ref1 ,  eve::saturated_(eve::div[true])( rhs1, rhs2), 0.5);      
+  TTS_ULP_EQUAL(ref2 ,  eve::saturated_(eve::div[false])( rhs1, rhs2), 0.5);  
+  TTS_ULP_EQUAL(ref3 ,  eve::saturated_(eve::div[cond])(Type(7), rhs2), 0.5); 
 }
 
 #endif
