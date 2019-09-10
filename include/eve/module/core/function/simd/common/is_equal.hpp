@@ -15,6 +15,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/abi_cast.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/as_logical.hpp>

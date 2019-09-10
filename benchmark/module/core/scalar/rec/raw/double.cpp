@@ -11,7 +11,7 @@
 #include <eve/function/rec.hpp>
 
 #define TYPE()        double
-#define FUNCTION()    eve::rec[eve::raw_]
+#define FUNCTION()    eve::raw_(eve::rec)
 #define SAMPLES(N)    random<T>(N,1.,1000.)
 
 #include "bench.hpp"

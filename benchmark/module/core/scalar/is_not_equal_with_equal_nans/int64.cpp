@@ -8,11 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_not_equal_with_equal_nans.hpp>
+#include <eve/function/is_not_equal.hpp>
 #include <cstddef>
 
 #define TYPE()        std::int64_t
-#define FUNCTION()    eve::is_not_equal_with_equal_nans
+#define FUNCTION()    eve::numeric_(eve::is_equal)
 #define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,-100,100)
 
 #include "bench.hpp"
