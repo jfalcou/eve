@@ -13,7 +13,7 @@
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>

@@ -1,5 +1,5 @@
 #include <eve/function/logical.hpp>
-#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -19,8 +19,8 @@ int main()
             << " <- lsi =                             " << lsi << '\n'
             << " <- pi =                              " << pi << '\n'
             << " <- qi =                              " << qi << '\n'
-            << " -> eve::add[si](pi, qi) =        " << eve::add[ si ](pi, qi) << '\n'
-            << " -> eve::add[lsi](pi, qi) =       " << eve::add[ lsi ](pi, qi) << '\n';
+            << " -> eve::sub[si](pi, qi) =        " << eve::sub[ si ](pi, qi) << '\n'
+            << " -> eve::sub[lsi](pi, qi) =       " << eve::sub[ lsi ](pi, qi) << '\n';
 
   iT               ssi = 3, xi = 3, yi = 4;
   eve::logical<iT> lssi = false;
@@ -30,7 +30,7 @@ int main()
             << " lssi =                               " << lssi << '\n'
             << " xi =                                 " << xi << '\n'
             << " yi =                                 " << yi << '\n'
-            << " -> eve::add[ssi](xi, yi) =       " << eve::add[ ssi ](xi, yi) << '\n'
-            << " -> eve::add[(lssi](xi, yi) =      " << eve::add[ lssi ](xi, yi) << '\n';
+            << " -> eve::sub[ssi](xi, yi) =       " << eve::sub[ ssi ](xi, yi) << '\n'
+            << " -> eve::sub[(lssi](xi, yi) =      " << eve::sub[ lssi ](xi, yi) << '\n';
   return 0;
 }
