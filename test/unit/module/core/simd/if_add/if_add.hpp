@@ -67,4 +67,50 @@ TTS_CASE_TPL("Check conditional add behavior on wide + scalar",
   TTS_EQUAL(refws, eve::add[ is_nez(lhs) ](x, Type(8))); // lw w s
 }
 
+TTS_CASE_TPL("Check conditional saturated add behavior on homogeneous wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::is_nez;
+  using eve::wide;
+
+  wide<Type, T> cond([](auto i, auto) { return (i % 2) * i; }),
+      rhs1([](auto i, auto) { return i % 2 + 1; }), rhs2([](auto i, auto) { return i % 3; });
+
+  wide<Type, T> ref(
+    [](int i, int) { return eve::saturated_(eve::add[ Type((i % 2) * i) ])(Type(i % 2 + 1), Type(i % 3)); });
+
+  TTS_EQUAL(ref, eve::saturated_(eve::add[ cond ])(rhs1, rhs2));         // w w w
+  TTS_EQUAL(ref, eve::saturated_(eve::add[ is_nez(cond) ])(rhs1, rhs2)); // lw w w
+}
+
+TTS_CASE_TPL("Check conditional add behavior on wide + scalar",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::is_nez;
+  using eve::wide;
+
+  wide<Type, T> lhs([](int i, int) { return i % 3; }),
+    refss([](int i, int) { return eve::saturated_(eve::add[ Type(i % 3) ])(Type(7), Type(8)); }),
+    refsw([](int i, int) { return eve::saturated_(eve::add[ Type(i % 3) ])(Type(7), Type(i * (i % 2))); }),
+    refws([](int i, int) { return eve::saturated_(eve::add[ Type(i % 3) ])(Type(i * (i % 2)), Type(8)); }),
+      x([](int i, int) { return i * (i % 2); });
+
+  TTS_EQUAL(refsw, eve::saturated_(eve::add[ lhs ])(Type(7), x));         // w s w
+  TTS_EQUAL(refws, eve::saturated_(eve::add[ lhs ])(x, Type(8)));         // w w s
+  TTS_EQUAL(refsw, eve::saturated_(eve::add[ is_nez(lhs) ])(Type(7), x)); // lw s w
+  TTS_EQUAL(refws, eve::saturated_(eve::add[ is_nez(lhs) ])(x, Type(8))); // lw w s
+}
+
 #endif
