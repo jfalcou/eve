@@ -19,12 +19,33 @@
 
 namespace eve::detail
 {
+  
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
-  div_(EVE_SUPPORTS(cpu_), T const &cond, U const &a, U const &b) noexcept requires(U,
-                                                                                    Vectorizable<T>)
+  EVE_FORCEINLINE constexpr
+  auto  div_(EVE_SUPPORTS(cpu_)
+            , U const &cond
+            , T const &a
+            , T const &b) noexcept
+  requires( T, Vectorizable<T>, Vectorizable<U> )
   {
-    return is_nez(cond) ? a / b : a;
+    return is_nez(cond) ? a/b : a;
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Saturated Masked case
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_) 
+                                     , U const & cond   
+                                     , saturated_type const & 
+                                     , T const &a
+                                     , T const &b) noexcept
+  requires(T, Vectorizable<T>, Vectorizable<U>)
+  {
+    auto tst = is_nez(cond);
+    if constexpr(std::is_floating_point_v<T>) return  tst ? a/b : a;
+    else return tst ? saturated_(div)(a, b) : a; 
   }
 }
 
