@@ -93,12 +93,9 @@ namespace eve::detail
           return _mm256_or_si256(_mm256_and_si256(mask, _mm256_mullo_epi16(v0, v1)),
                                  _mm256_slli_epi16(_mm256_and_si256(mask, hmul), 8));
         }
-        else if constexpr(sizeof(T) == 2)
-          return _mm256_mullo_epi16(v0, v1);
-        else if constexpr(sizeof(T) == 4)
-          return _mm256_mullo_epi32(v0, v1);
-        else
-          return map(mul, v0, v1);
+        else if constexpr(sizeof(T) == 2)   return _mm256_mullo_epi16(v0, v1);
+        else if constexpr(sizeof(T) == 4)   return _mm256_mullo_epi32(v0, v1);
+        else return map(mul, v0, v1);
       }
       else
       {
