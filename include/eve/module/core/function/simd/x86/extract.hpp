@@ -29,7 +29,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr( platform::x86_flavor = x86::x86_64 )
+      if constexpr( platform::x86_flavor == x86::x86_64 )
       {
         if constexpr(std::is_same_v<T, float>)
         {
