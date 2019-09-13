@@ -19,6 +19,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
+#include <eve/detail/function/fill.hpp>
 #include <eve/detail/is_iterator.hpp>
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/compiler.hpp>
@@ -136,10 +137,8 @@ namespace eve
     EVE_FORCEINLINE
     wide(Generator &&g,
          std::enable_if_t<std::is_invocable_v<Generator, size_type, size_type>> * = 0) noexcept
-    {
-      for(size_type i = 0; i < size(); ++i)
-        this->operator[](i) = static_cast<Type>(std::forward<Generator>(g)(i, static_size));
-    }
+      : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pair of sub-wide

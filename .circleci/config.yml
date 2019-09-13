@@ -154,6 +154,13 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-DEVE_NO_SIMD"
     <<: *steps_test_gcc
+  gcc_release_basic:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: basic
+      REPLICATION: 8
+      OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+    <<: *steps_test_gcc
   gcc_sse2_basic:
     <<: *config_gcc_x86
     environment:
@@ -228,6 +235,13 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-DEVE_NO_SIMD"
     <<: *steps_test_gcc
+  gcc_release_scalar:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      OPTIONS: "--DCMAKE_BUILD_TYPE=Release"
+    <<: *steps_test_gcc
   gcc_sse2_scalar:
     <<: *config_gcc_x86
     environment:
@@ -301,6 +315,13 @@ jobs:
       TARGET: core.simd
       REPLICATION: 2
       OPTIONS: "-DEVE_NO_SIMD"
+    <<: *steps_test_gcc
+  gcc_release_simd:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
     <<: *steps_test_gcc
   gcc_sse2_simd:
     <<: *config_gcc_x86
@@ -377,6 +398,7 @@ workflows:
       - arm_neon_basic
       - ppc_vsx_basic
       - gcc_emu_basic
+      - gcc_release_basic
       - gcc_sse2_basic
       - gcc_sse4_basic
       - gcc_avx_basic
@@ -389,6 +411,7 @@ workflows:
             - arm_neon_basic
             - ppc_vsx_basic
             - gcc_emu_basic
+            - gcc_release_basic
             - gcc_sse2_basic
             - gcc_sse4_basic
             - gcc_avx_basic
@@ -409,6 +432,9 @@ workflows:
           requires:
             - sync_basic
       - gcc_emu_scalar:
+          requires:
+            - sync_basic
+      - gcc_release_scalar:
           requires:
             - sync_basic
       - gcc_sse2_scalar:
@@ -434,6 +460,8 @@ workflows:
             - arm_aarch64_scalar
             - arm_neon_scalar
             - ppc_vsx_scalar
+            - gcc_emu_scalar
+            - gcc_release_scalar
             - gcc_sse2_scalar
             - gcc_sse4_scalar
             - gcc_avx_scalar
@@ -454,6 +482,9 @@ workflows:
           requires:
             - sync_scalar
       - gcc_emu_simd:
+          requires:
+            - sync_scalar
+      - gcc_release_simd:
           requires:
             - sync_scalar
       - gcc_sse2_simd:
