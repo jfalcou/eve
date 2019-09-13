@@ -13,10 +13,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/tags.hpp>
-#include <eve/assert.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/tags.hpp>
 #include <type_traits>
 #include <cmath>
 
@@ -35,9 +33,6 @@ namespace eve::detail
   {
     if(std::is_integral_v<T>)
     {
-      if constexpr(std::is_signed_v<T>)
-      { EVE_ASSERT(is_gez(a0), "sqrt integral domain is restricted to positive integer"); }
-
       return T(::sqrt(double(a0)));
     }
     else

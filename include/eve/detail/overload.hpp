@@ -33,6 +33,7 @@
       EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
           -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...))              \
       {                                                                                            \
+        check(delay_t{}, tag::TAG{}, std::forward<Args>(args)...);                                 \
         return TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...);                     \
       };                                                                                           \
     };                                                                                             \
@@ -46,6 +47,7 @@
       EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
           -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, Mode{}, std::forward<Args>(args)...))      \
       {                                                                                            \
+        check(delay_t{}, tag::TAG{}, state_, std::forward<Args>(args)...);                         \
         return TAG(delay_t{}, EVE_CURRENT_API{}, state_, std::forward<Args>(args)...);             \
       };                                                                                           \
     };                                                                                             \
@@ -64,7 +66,7 @@
 #define EVE_RETARGET(ARCH)                                                                         \
   delay_t{}, ARCH {}
 
-// Create named object for consatnt
+// Create named object for constant
 #define EVE_MAKE_NAMED_CONSTANT(TAG, FUNC)                                                         \
   namespace detail                                                                                 \
   {                                                                                                \
@@ -79,10 +81,6 @@
 // basic type to support delayed calls
 namespace eve
 {
-  template<typename Tag>
-  struct supports_conditionnal : std::true_type
-  {};
-
   namespace detail
   {
     struct delay_t
@@ -95,9 +93,14 @@ namespace eve
       T value;
     };
 
+    // Extension point for centralizing asserts & static_asserts
+    template<typename Tag, typename... Args>
+    void check(delay_t const&, Tag const&, Args const&... ) {}
+
     template<typename Tag, typename Mode = void, typename Enabler = void>
     struct callable_object;
 
+    // Extension point for controlling supports for foo[cond](...) calls
     template<typename Tag, bool isSUpported>
     struct conditionnal_support
     {
@@ -121,6 +124,11 @@ namespace eve
 
     template<typename Tag> struct conditionnal_support<Tag,false> {};
   }
+
+  // Traits for foo[cond](...) supports
+  template<typename Tag>
+  struct supports_conditionnal : std::true_type
+  {};
 }
 
 #endif

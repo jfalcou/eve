@@ -11,13 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SHL_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,10 +27,6 @@ namespace eve::detail
                                                                              Integral<I>,
                                                                              Integral<T>)
   {
-    EVE_ASSERT((detail::assert_good_shift<wide<T, N, neon64_>>(v1)),
-               "[eve::shl neon64] - At least one of " << v1 << " elements is out of the range [0, "
-                                                      << sizeof(T) * 8 << "[.");
-
     return neon_shifter(v0, v1);
   }
 
@@ -52,10 +46,6 @@ namespace eve::detail
                                                                               Integral<I>,
                                                                               Integral<T>)
   {
-    EVE_ASSERT((detail::assert_good_shift<wide<T, N, neon128_>>(v1)),
-               "[eve::shl neon128] - At least one of " << v1 << " elements is out of the range [0, "
-                                                       << sizeof(T) * 8 << "[.");
-
     return neon_shifter(v0, v1);
   }
 

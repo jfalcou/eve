@@ -14,10 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/assert_utils.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,10 +27,6 @@ namespace eve::detail
        wide<I, N, ppc_> const &v1) noexcept requires(wide<T, N, ppc_>, Integral<I>, Integral<T>)
   {
     using t_t = wide<T, N, ppc_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(v1),
-               "[eve::shl ppc] - At least one of " << v1 << "elements is out of the range [0, "
-                                                   << sizeof(T) * 8 << "[.");
-
     using i_t = wide<as_integer_t<T, unsigned>, N>;
     return t_t(vec_sl(v0.storage(), bitwise_cast<i_t>(v1).storage()));
   }

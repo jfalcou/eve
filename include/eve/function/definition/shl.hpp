@@ -12,9 +12,28 @@
 #define EVE_FUNCTION_DEFINITION_SHL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/assert.hpp>
+#include <type_traits>
 
 namespace eve
 {
+  namespace tag { struct shl_; }
+
+  namespace detail
+  {
+    template<typename T, typename S>
+    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::shl_), T const& v, S const& s)
+    {
+      EVE_ASSERT( assert_good_shift<T>(s),
+                  "[eve::shl] Shifting by " << s
+                                            << " is out of the range [0, "
+                                            << sizeof(value_type_t<T>) * 8
+                                            << "[."
+                );
+    }
+  }
+
   EVE_MAKE_CALLABLE(shl_, shl);
 }
 

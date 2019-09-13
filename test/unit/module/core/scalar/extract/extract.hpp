@@ -27,7 +27,6 @@ TTS_CASE("Check extract return type")
 TTS_CASE("Check eve::extract behavior")
 {
   TTS_EQUAL(eve::extract(Type{0}, 0), Type{0});
-  TTS_EQUAL(eve::extract(Type{2}, 1), Type{2});
 }
 
 #endif

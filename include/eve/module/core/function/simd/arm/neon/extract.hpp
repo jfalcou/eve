@@ -13,7 +13,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_cast.hpp>
 #include <eve/logical.hpp>
 #include <eve/forward.hpp>
 
@@ -35,12 +34,7 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
-    static_assert((V < wide<T, N, neon64_>::static_size),
-                  "[eve - extract neon64] : Index is out of bound for current architecture");
-
-#if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vget_lane_f64(v0, V);
-#endif
+    if constexpr(supports_aarch64 && std::is_same_v<T, double>) return vget_lane_f64(v0, V);
     if constexpr(std::is_same_v<T, float>) return vget_lane_f32(v0, V);
     if constexpr(is_signed_int && sizeof(T) == 8) return vget_lane_s64(v0, V);
     if constexpr(is_signed_int && sizeof(T) == 4) return vget_lane_s32(v0, V);
@@ -68,12 +62,7 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
-    static_assert((V < wide<T, N, neon128_>::static_size),
-                  "[eve - extract neon128] : Index is out of bound for current architecture");
-
-#if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vgetq_lane_f64(v0, V);
-#endif
+    if constexpr(supports_aarch64 && std::is_same_v<T, double>) return vgetq_lane_f64(v0, V);
     if constexpr(std::is_same_v<T, float>) return vgetq_lane_f32(v0, V);
     if constexpr(is_signed_int && sizeof(T) == 8) return vgetq_lane_s64(v0, V);
     if constexpr(is_signed_int && sizeof(T) == 4) return vgetq_lane_s32(v0, V);

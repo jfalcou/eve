@@ -14,10 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/assert_utils.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/function/bitwise_cast.hpp>
 
 namespace eve::detail
 {
@@ -30,9 +29,7 @@ namespace eve::detail
        I const &               a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
     using t_t = wide<T, N, sse_>;
-    EVE_ASSERT(detail::assert_good_shift<t_t>(a1),
-               "[eve::shl sse2] -  shift " << a1 << "element is out of the range [0, "
-                                           << sizeof(T) * 8 << "[.");
+
     if constexpr(sizeof(T) == 1)
     {
       using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
@@ -65,9 +62,6 @@ namespace eve::detail
        wide<T, N, sse_> const &a0,
        wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
-    EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
-               "[eve::shl xop sse] -  At least one of " << a1 << "elements is out of the range [0, "
-                                                        << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
     {
       if constexpr(sizeof(T) == 1)
@@ -93,9 +87,6 @@ namespace eve::detail
   {
     if constexpr(current_api >= avx2)
     {
-      EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shl avx2] - Shift " << a1 << " is out of the range [0, " << sizeof(T) * 8
-                                            << "[.");
       if constexpr(sizeof(T) == 1)
       {
         using t_t       = wide<T, N, avx_>;
@@ -135,9 +126,6 @@ namespace eve::detail
     ignore(ifxop_choice); 
     if constexpr(current_api >= avx2)
     {
-      EVE_ASSERT((assert_good_shift<wide<T, N, avx_>>(a1)),
-                 "[eve::shl xop sse] -  At least one of "
-                     << a1 << "elements is out of the range [0, " << sizeof(T) * 8 << "[.");
       if constexpr(sizeof(T) <= 2)
         return ifxop_choice(a0, a1);
       else if constexpr(sizeof(T) == 4)
