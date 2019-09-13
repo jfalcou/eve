@@ -1,5 +1,5 @@
 #include <eve/function/logical.hpp>
-#include <eve/function/add.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -19,8 +19,8 @@ int main()
             << " <- lsi =                             " << lsi << '\n'
             << " <- pi =                              " << pi << '\n'
             << " <- qi =                              " << qi << '\n'
-            << " -> eve::add[si](pi, qi) =        " << eve::add[ si ](pi, qi) << '\n'
-            << " -> eve::add[lsi](pi, qi) =       " << eve::add[ lsi ](pi, qi) << '\n';
+            << " -> eve::mul[si](pi, qi) =        " << eve::mul[ si ](pi, qi) << '\n'
+            << " -> eve::mul[lsi](pi, qi) =       " << eve::mul[ lsi ](pi, qi) << '\n';
 
   iT               ssi = 3, xi = 3, yi = 4;
   eve::logical<iT> lssi = false;
@@ -30,7 +30,7 @@ int main()
             << " lssi =                               " << lssi << '\n'
             << " xi =                                 " << xi << '\n'
             << " yi =                                 " << yi << '\n'
-            << " -> eve::add[ssi](xi, yi) =       " << eve::add[ ssi ](xi, yi) << '\n'
-            << " -> eve::add[(lssi](xi, yi) =      " << eve::add[ lssi ](xi, yi) << '\n';
+            << " -> eve::mul[ssi](xi, yi) =       " << eve::mul[ ssi ](xi, yi) << '\n'
+            << " -> eve::mul[(lssi](xi, yi) =      " << eve::mul[ lssi ](xi, yi) << '\n';
   return 0;
 }

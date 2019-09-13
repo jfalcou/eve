@@ -17,7 +17,7 @@
 #include <eve/as.hpp>
 #include <type_traits>
 
-namespace eve
+namespace eve 
 {
   template<typename T, auto BitsPattern>
   EVE_FORCEINLINE auto Constant(as_<T> const & = {})
