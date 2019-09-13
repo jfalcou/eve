@@ -24,9 +24,9 @@ namespace eve
   {
     template<typename T> EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::sqrt_), T const& v)
     {
-      if constexpr(std::is_signed_v<T>)
+      if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
       {
-        EVE_ASSERT(v >= 0, "[eve::sqrt] Invalid negative parameter");
+        EVE_ASSERT(v >= 0, "[eve::sqrt] Invalid parameter: " << v );
       }
     }
   }
