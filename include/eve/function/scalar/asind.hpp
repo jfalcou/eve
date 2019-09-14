@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ASIND_HPP_INCLUDED
 
 #include <eve/function/definition/asind.hpp>
-#include <eve/module/core/function/scalar/asind.hpp>
+#include <eve/module/core/function/generic/asind.hpp>
 
 #endif
