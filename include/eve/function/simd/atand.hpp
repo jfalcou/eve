@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_ATAND_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_ATAND_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ATAND_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ATAND_HPP_INCLUDED
 
-#include <eve/function/definition/atand.hpp>
+#include <eve/function/scalar/atand.hpp>
 #include <eve/module/core/function/generic/atand.hpp>
 
 #endif
