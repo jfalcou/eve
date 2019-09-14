@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOTD_HPP_INCLUDED
 
 #include <eve/function/scalar/acotd.hpp>
-//#include <eve/function/simd/acotd.hpp>
+#include <eve/function/simd/acotd.hpp>
 
 #endif

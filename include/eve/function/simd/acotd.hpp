@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_ACOTD_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_ACOTD_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ACOTD_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ACOTD_HPP_INCLUDED
 
-#include <eve/function/definition/acotd.hpp>
+#include <eve/function/scalar/acotd.hpp>
 #include <eve/module/core/function/generic/acotd.hpp>
 
 #endif
