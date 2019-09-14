@@ -159,7 +159,7 @@ jobs:
     environment:
       TARGET: basic
       REPLICATION: 8
-      OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
     <<: *steps_test_gcc
   gcc_sse2_basic:
     <<: *config_gcc_x86
@@ -240,7 +240,7 @@ jobs:
     environment:
       TARGET: core.scalar
       REPLICATION: 8
-      OPTIONS: "--DCMAKE_BUILD_TYPE=Release"
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
     <<: *steps_test_gcc
   gcc_sse2_scalar:
     <<: *config_gcc_x86
@@ -321,7 +321,7 @@ jobs:
     environment:
       TARGET: core.simd
       REPLICATION: 2
-      OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
     <<: *steps_test_gcc
   gcc_sse2_simd:
     <<: *config_gcc_x86
