@@ -8,10 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_INDEG_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_INDEG_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_INDEG_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_INDEG_HPP_INCLUDED
 
-#include <eve/function/definition/indeg.hpp>
-#include <eve/module/core/function/generic/indeg.hpp>
+#include <eve/function/scalar/indeg.hpp>
 
 #endif

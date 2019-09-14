@@ -18,6 +18,7 @@
 #include <eve/function/asin.hpp>
 #include <eve/function/atan.hpp>
 #include <eve/function/atan2.hpp>
+#include <eve/function/indeg.hpp>
 
 
 #endif
