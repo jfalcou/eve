@@ -1,19 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_INVERSE_TRIGO_HPP_INCLUDED
-#define EVE_FUNCTION_INVERSE_TRIGO_HPP_INCLUDED
 
-// helper file to include all inverse trigonometric functions
-#include <eve/function/asin.hpp>
-#include <eve/function/atan.hpp>
-#include <eve/function/atan2.hpp>
-
-
-#endif
+#include <cstdint>
+using Type = std::uint16_t;
+#include "oneminus.hpp"
