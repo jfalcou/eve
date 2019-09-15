@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check oneminus behavior on wide",
   wide<Type, T>  lhs([](auto i, auto) { return i%2; }), 
     tst([](auto i, auto) { return i%3; }),                     
     ref([](auto i, auto) { return eve::oneminus(Type(i%2)); }), 
-    refc([](auto i, auto) { return eve::oneminus[i%3](Type(i%2)); });  
+    refc([](auto i, auto) { return eve::oneminus[i%3](Type(i%2)); });
   TTS_EQUAL(ref, eve::oneminus(lhs));
   TTS_EQUAL(refc, eve::oneminus[tst](lhs));
   TTS_EQUAL(lhs , eve::oneminus[1 > 2](lhs));

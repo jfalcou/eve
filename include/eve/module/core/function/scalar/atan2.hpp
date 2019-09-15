@@ -29,6 +29,7 @@
 #include <eve/assert.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/module/core/detail/scalar/atan_kernel.hpp>
 
 namespace eve::detail
@@ -38,7 +39,7 @@ namespace eve::detail
                                        , T const &a0
                                        , T const &a1    
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -59,7 +60,7 @@ namespace eve::detail
                                        , T a0
                                        , T a1    
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

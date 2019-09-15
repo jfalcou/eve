@@ -17,6 +17,7 @@
 #include <eve/function/indeg.hpp>
 #include <eve/tags.hpp>
 #include <eve/assert.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -26,7 +27,7 @@ namespace eve::detail
                                        , T const &a0
                                        , T const &a1    
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -45,7 +46,7 @@ namespace eve::detail
                                        , T a0
                                        , T a1    
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

@@ -35,7 +35,7 @@ namespace eve::detail
 {
 
   template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto asec_(EVE_SUPPORTS(simd_)
+  EVE_FORCEINLINE auto asec_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)

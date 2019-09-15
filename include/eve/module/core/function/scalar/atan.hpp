@@ -19,6 +19,7 @@
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/core/detail/scalar/atan_kernel.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -26,7 +27,8 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan_(EVE_SUPPORTS(cpu_)
-                                  , T const &a) noexcept
+                                      , T const &a) noexcept
+  requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

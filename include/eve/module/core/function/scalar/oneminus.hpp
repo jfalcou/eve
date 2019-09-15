@@ -14,8 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/detail/meta.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -23,8 +23,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_)
-                                     , T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
+                                          , T const &a) noexcept
+  requires(T, Vectorizable<T>)
   {
     return static_cast<T>(One<T>()-a); 
   }
@@ -32,9 +33,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(simd_)
-                                     , U const & cond
-                                     , T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
+                                          , U const & cond
+                                          , T const &a) noexcept
+  requires(T, Vectorizable<T>)
   {
     return cond ? oneminus(a) : a;
   } 

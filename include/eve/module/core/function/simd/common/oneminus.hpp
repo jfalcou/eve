@@ -23,6 +23,8 @@
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
+#include <eve/tags.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -30,24 +32,55 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(simd_),
-                            wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_),
+                                 wide<T, N, ABI> const &v) noexcept
   {
     return One(as(v))-v; 
   }
   
-
+  // -----------------------------------------------------------------------------------------------
+  // Saturated
+  template<typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_)
+                                , saturated_type const &
+                                , wide<T, N, ABI> const &v) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>) return oneminus(v); 
+    else if constexpr(std::is_signed_v<T>)
+    {
+      return if_else(v < Valmin(as(v))+2, Valmax(as(v)), oneminus(v));
+    }                                
+    else // if constexpr(std::is_unsigned_v<T>)
+    {
+      return if_else(v > One(as(v), eve::zero_, oneminus(v))); 
+    }
+  }
+  
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(simd_)
-                                     , U const & cond
-                                     , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
+                                          , U const & cond
+                                          , wide<T, N, ABI> const &v) noexcept
   {
     if constexpr(!is_vectorized_v<U>)
       return cond ? oneminus(v) : v;
     else
       return if_else(cond, One(as(v))-v, v);
+  }
+  
+  // -----------------------------------------------------------------------------------------------
+  // Masked Saturated case
+  template<typename U, typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
+                                          , U const & cond
+                                          , saturated_type const &
+                                          , wide<T, N, ABI> const &v) noexcept
+  {
+    if constexpr(!is_vectorized_v<U>)
+      return cond ? saturated_(oneminus)(v) : v;
+    else
+      return if_else(cond, saturated_(oneminus)(v));
   }
 
 }
