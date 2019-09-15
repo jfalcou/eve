@@ -334,7 +334,7 @@ jobs:
     <<: *config_gcc_x86
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_simd:
@@ -369,14 +369,14 @@ jobs:
     <<: *config_gcc_arm
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-mfpu=neon -Wno-psabi"
     <<: *steps_test_neon
   arm_aarch64_simd:
     <<: *config_gcc_aarch64
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
   ppc_vsx_simd:
