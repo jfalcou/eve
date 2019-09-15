@@ -19,6 +19,13 @@
 #include <eve/function/atan.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/indeg.hpp>
+#include <eve/function/acosd.hpp>
+#include <eve/function/acotd.hpp>
+#include <eve/function/asecd.hpp>
+#include <eve/function/acscd.hpp>
+#include <eve/function/asind.hpp>
+#include <eve/function/atand.hpp>
+#include <eve/function/atan2d.hpp>
 
 
 #endif

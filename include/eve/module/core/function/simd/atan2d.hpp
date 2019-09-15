@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ATAN2D_HPP_INCLUDED
-#define EVE_FUNCTION_ATAN2D_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ATAN2D_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_ATAN2D_HPP_INCLUDED
 
-#include <eve/function/scalar/atan2d.hpp>
-#include <eve/function/simd/atan2d.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/atan2d.hpp>
 
 #endif
