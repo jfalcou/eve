@@ -20,6 +20,8 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
@@ -52,7 +54,7 @@ namespace eve::detail
     }                                
     else // if constexpr(std::is_unsigned_v<T>)
     {
-      return if_else(v > One(as(v), eve::zero_, oneminus(v))); 
+      return if_else(v > One(as(v)), eve::zero_, oneminus(v)); 
     }
   }
   
@@ -80,7 +82,7 @@ namespace eve::detail
     if constexpr(!is_vectorized_v<U>)
       return cond ? saturated_(oneminus)(v) : v;
     else
-      return if_else(cond, saturated_(oneminus)(v));
+      return if_else(cond, saturated_(oneminus)(v), v);
   }
 
 }
