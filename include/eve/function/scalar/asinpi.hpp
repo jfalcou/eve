@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ASINPI_HPP_INCLUDED
 
 #include <eve/function/definition/asinpi.hpp>
-#include <eve/module/core/function/scalar/asinpi.hpp>
+#include <eve/module/core/function/generic/asinpi.hpp>
 
 #endif

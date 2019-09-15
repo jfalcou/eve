@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASECPI_HPP_INCLUDED
 
 #include <eve/function/scalar/asecpi.hpp>
-//#include <eve/function/simd/asecpi.hpp>
+#include <eve/function/simd/asecpi.hpp>
 
 #endif
