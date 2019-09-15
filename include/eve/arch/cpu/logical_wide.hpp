@@ -54,14 +54,25 @@ namespace eve
     // Ctor
     EVE_FORCEINLINE logical() noexcept {}
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
-        : data_([&r]() {
-          if constexpr( N::value == 1 && sizeof(Type) == 8 &&
-                        std::is_same_v<ABI, neon64_> && supports_aarch64
-                      )
-            return logical<Type>(r);
-          else
-            return r;
-        }())
+#if !defined(__aarch64__)
+          : data_ ( [&r]()
+                    {
+                      if constexpr( N::value == 1 && sizeof(Type) == 8 &&
+                                    std::is_same_v<ABI, neon64_>
+                                  )
+                      {
+                        return logical<Type>(r);
+                      }
+                      else
+                      {
+                       return r;
+                      }
+                    }()
+                  )
+#else
+        : data_(r)
+#endif
+
     {
     }
 
