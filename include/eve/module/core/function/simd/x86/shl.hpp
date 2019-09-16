@@ -15,6 +15,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_or.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
