@@ -31,16 +31,6 @@ docker_ppc64: &docker_ppc64
         EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
         EXTRA_LIB: lib64
         EXTRA_NAME: ld64.so.1
-docker_arm: &docker_arm
-  docker:
-    - image: ubuntu:latest
-      environment:
-        COMPILER_PACKAGE: g++-8-arm-linux-gnueabihf
-        COMPILER: arm-linux-gnueabihf-g++-8
-        RUN_COMMAND: qemu-arm
-        EXTRA_PATH: /usr/arm-linux-gnueabihf/lib
-        EXTRA_LIB: lib
-        EXTRA_NAME: ld-linux-armhf.so.3
 docker_aarch64: &docker_aarch64
   docker:
     - image: ubuntu:latest
@@ -61,8 +51,6 @@ config_clang_avx2: &config_clang_avx2
   <<: *docker_clang
 config_gcc_ppc64: &config_gcc_ppc64
   <<: *docker_ppc64
-config_gcc_arm: &config_gcc_arm
- <<: *docker_arm
 config_gcc_aarch64: &config_gcc_aarch64
  <<: *docker_aarch64
 
@@ -97,19 +85,6 @@ steps_test_ppc64: &steps_test_ppc64
         command: . .circleci/prepare.sh
     - run:
         name: Setup PowerPC 64
-        command: . .circleci/prepare_cc.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh
-
-steps_test_neon: &steps_test_neon
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Setup ARM
         command: . .circleci/prepare_cc.sh
     - run:
         name: Running tests
@@ -154,6 +129,13 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-DEVE_NO_SIMD"
     <<: *steps_test_gcc
+  gcc_release_basic:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: basic
+      REPLICATION: 8
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+    <<: *steps_test_gcc
   gcc_sse2_basic:
     <<: *config_gcc_x86
     environment:
@@ -196,13 +178,6 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_basic:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -Wno-psabi"
-    <<: *steps_test_neon
   arm_aarch64_basic:
     <<: *config_gcc_aarch64
     environment:
@@ -227,6 +202,13 @@ jobs:
       TARGET: core.scalar
       REPLICATION: 8
       OPTIONS: "-DEVE_NO_SIMD"
+    <<: *steps_test_gcc
+  gcc_release_scalar:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.scalar
+      REPLICATION: 8
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
     <<: *steps_test_gcc
   gcc_sse2_scalar:
     <<: *config_gcc_x86
@@ -270,13 +252,6 @@ jobs:
       REPLICATION: 8
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_scalar:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mfpu=neon -Wno-psabi"
-    <<: *steps_test_neon
   arm_aarch64_scalar:
     <<: *config_gcc_aarch64
     environment:
@@ -302,6 +277,13 @@ jobs:
       REPLICATION: 2
       OPTIONS: "-DEVE_NO_SIMD"
     <<: *steps_test_gcc
+  gcc_release_simd:
+    <<: *config_gcc_x86
+    environment:
+      TARGET: core.simd
+      REPLICATION: 2
+      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+    <<: *steps_test_gcc
   gcc_sse2_simd:
     <<: *config_gcc_x86
     environment:
@@ -313,7 +295,7 @@ jobs:
     <<: *config_gcc_x86
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-msse4.2"
     <<: *steps_test_gcc
   gcc_avx_simd:
@@ -344,25 +326,18 @@ jobs:
       REPLICATION: 4
       OPTIONS: "-mavx2"
     <<: *steps_test_clang_
-  arm_neon_simd:
-    <<: *config_gcc_arm
-    environment:
-      TARGET: core.simd
-      REPLICATION: 4
-      OPTIONS: "-mfpu=neon -Wno-psabi"
-    <<: *steps_test_neon
   arm_aarch64_simd:
     <<: *config_gcc_aarch64
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-Wno-psabi"
     <<: *steps_test_aarch64
   ppc_vsx_simd:
     <<: *config_gcc_ppc64
     environment:
       TARGET: core.simd
-      REPLICATION: 4
+      REPLICATION: 2
       OPTIONS: "-mvsx -mpower8-vector"
     <<: *steps_test_ppc64
 
@@ -374,9 +349,9 @@ workflows:
     ## All architecture tests in parallel
     ##==============================================================================================
       - arm_aarch64_basic
-      - arm_neon_basic
       - ppc_vsx_basic
       - gcc_emu_basic
+      - gcc_release_basic
       - gcc_sse2_basic
       - gcc_sse4_basic
       - gcc_avx_basic
@@ -386,9 +361,9 @@ workflows:
       - sync_basic:
           requires:
             - arm_aarch64_basic
-            - arm_neon_basic
             - ppc_vsx_basic
             - gcc_emu_basic
+            - gcc_release_basic
             - gcc_sse2_basic
             - gcc_sse4_basic
             - gcc_avx_basic
@@ -402,13 +377,13 @@ workflows:
       - arm_aarch64_scalar:
           requires:
             - sync_basic
-      - arm_neon_scalar:
-          requires:
-            - sync_basic
       - ppc_vsx_scalar:
           requires:
             - sync_basic
       - gcc_emu_scalar:
+          requires:
+            - sync_basic
+      - gcc_release_scalar:
           requires:
             - sync_basic
       - gcc_sse2_scalar:
@@ -432,8 +407,9 @@ workflows:
       - sync_scalar:
           requires:
             - arm_aarch64_scalar
-            - arm_neon_scalar
             - ppc_vsx_scalar
+            - gcc_emu_scalar
+            - gcc_release_scalar
             - gcc_sse2_scalar
             - gcc_sse4_scalar
             - gcc_avx_scalar
@@ -447,13 +423,13 @@ workflows:
       - arm_aarch64_simd:
           requires:
             - sync_scalar
-      - arm_neon_simd:
-          requires:
-            - sync_scalar
       - ppc_vsx_simd:
           requires:
             - sync_scalar
       - gcc_emu_simd:
+          requires:
+            - sync_scalar
+      - gcc_release_simd:
           requires:
             - sync_scalar
       - gcc_sse2_simd:

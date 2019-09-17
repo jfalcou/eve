@@ -55,15 +55,24 @@ namespace eve
     EVE_FORCEINLINE logical() noexcept {}
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
 #if !defined(__aarch64__)
-        : data_([&r]() {
-          if constexpr(N::value == 1 && sizeof(Type) == 8 && std::is_same_v<ABI, neon64_>)
-            return logical<Type>(r);
-          else
-            return r;
-        }())
+          : data_ ( [&r]()
+                    {
+                      if constexpr( N::value == 1 && sizeof(Type) == 8 &&
+                                    std::is_same_v<ABI, neon64_>
+                                  )
+                      {
+                        return logical<Type>(r);
+                      }
+                      else
+                      {
+                       return r;
+                      }
+                    }()
+                  )
 #else
         : data_(r)
 #endif
+
     {
     }
 
@@ -128,11 +137,14 @@ namespace eve
     EVE_FORCEINLINE
     logical(Generator &&g,
             std::enable_if_t<std::is_invocable_v<Generator, size_type, size_type>> * = 0) noexcept
-    {
-      for(size_type i = 0; i < size(); ++i)
-        this->operator[](i) =
-            static_cast<logical<Type>>(std::forward<Generator>(g)(i, static_size));
-    }
+    : data_ ( detail::fill( as_<logical>{}, abi_type{},
+                            [&](int i, int c)
+                            {
+                              return static_cast<logical<Type>>(std::forward<Generator>(g)(i,c));
+                            }
+                          )
+            )
+    {}
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pair of sub-wide
