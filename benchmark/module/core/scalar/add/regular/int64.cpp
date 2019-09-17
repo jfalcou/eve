@@ -11,7 +11,7 @@
 #include <eve/function/add.hpp>
 #include <cstddef>
 
-#define TYPE()        std::int64_t
+#define TYPE()        std::int64_t 
 #define FUNCTION()    eve::add
 #define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,-100,100)
 
