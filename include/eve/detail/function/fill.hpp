@@ -51,9 +51,4 @@ namespace eve::detail
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
-#  pragma GCC diagnostic pop
-#endif
-
-
 #endif
