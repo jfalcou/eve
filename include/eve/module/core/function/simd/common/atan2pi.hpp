@@ -19,6 +19,7 @@
 #include <eve/tags.hpp>
 #include <eve/assert.hpp>
 #include <eve/platform.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <type_traits>
 
 namespace eve::detail

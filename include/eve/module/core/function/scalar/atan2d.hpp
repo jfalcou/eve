@@ -55,7 +55,7 @@ namespace eve::detail
     else 
     {
       static_assert(std::is_floating_point_v<T>
-                   , "[atan2d pedantic_ scalar] - type is not an IEEEValue"); 
+                   , "[atan2d pedantic_ scalar] - type is not an IEEEValue");
     }    
   }
 }

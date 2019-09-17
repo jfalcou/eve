@@ -13,6 +13,6 @@
 
 #define TYPE()        eve::wide<float>
 #define FUNCTION()    eve::rsqrt
-#define SAMPLES(N)    random<T>(N,-100.,100.)
+#define SAMPLES(N)    random<T>(N,0.,100.)
 
 #include "bench.hpp"
