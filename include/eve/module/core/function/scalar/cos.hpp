@@ -15,11 +15,10 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/sin_kernel.hpp>
-#include <eve/module/core/detail/scalar/cos_kernel.hpp>   
+#include <eve/module/core/detail/generic/cos_kernel.hpp>   
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bitwise_xor.hpp>
-#include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>

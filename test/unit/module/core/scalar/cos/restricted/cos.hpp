@@ -59,9 +59,6 @@ TTS_CASE("Check eve::restricted_(eve::cos) behavior")
   TTS_ULP_EQUAL(eve::restricted_(eve::cos)(eve::Pio_2<Type>()), eve::Nan<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::cos)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::cos)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  std::cout << eve::restricted_(eve::cos)(-eve::Pio_4<Type>()) << std::endl;
-  std::cout << eve::restricted_(eve::cos)(eve::Pio_4<Type>()) << std::endl; 
-  std::cout << eve::Sqrt_2o_2<Type>() << std::endl;                                        
 }
 
 

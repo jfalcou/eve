@@ -8,12 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQZ_HPP
-#define IS_EQZ_HPP
+#ifndef COS_HPP
+#define COS_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/simd/cos.hpp>
+#include <eve/constant/pio_4.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
@@ -31,9 +32,9 @@ TTS_CASE_TPL("Check cos behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::cos(Type(i)); });  
-  TTS_ULP_EQUAL(ref, eve::cos(lhs), 0.5);
+  wide<Type, T>  lhs([](auto i, auto) { return eve::Pio_4<Type>()/Type(i); }), 
+    ref([](auto i, auto) { return eve::restricted_(eve::cos)( eve::Pio_4<Type>()/Type(i)); });  
+  TTS_ULP_EQUAL(ref, eve::restricted_(eve::cos)(lhs), 0.5);
 }
 
 

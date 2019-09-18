@@ -15,7 +15,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/allbits.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/tags.hpp>
@@ -40,9 +44,7 @@ namespace eve::detail
     {
       auto pi2_16 = static_cast<T>(0.61685027506808491367715568749226); 
       auto x2 = sqr(a0); 
-      tst = is_not_less_equal(x2, pi2_16); 
-//      EVE_ASSERT(!all(test), "Restricted cos called with arg magnitude greater than Pi/4"); 
-      return if else(tst, Allbits(as(a0)), cos_eval(x)); 
+      return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, cos_eval(x2)); 
     }
     else
     {
