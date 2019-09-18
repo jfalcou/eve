@@ -46,7 +46,7 @@ namespace eve::detail
             detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
-    return indeg(pedantic_(atan2))(a0, a1); 
+    return indeg(pedantic_(atan2)(a0, a1)); 
   }
 }
 
