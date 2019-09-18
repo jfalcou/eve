@@ -27,10 +27,10 @@ namespace eve
     using type = logical<typename as_wide<Type, Size>::type>;
   };
 
-  template<typename T, typename N, typename ABI, typename Size>
-  struct as_wide<wide<T, N, ABI>, Size>
+  template<typename Type, typename N, typename Size>
+  struct as_wide<wide<Type,N>,Size>
   {
-    using type = wide<T, Size, ABI>;
+    using type = wide<Type, Size>;
   };
 
   template<typename Type, typename Size>

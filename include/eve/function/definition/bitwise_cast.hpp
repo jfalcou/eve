@@ -12,18 +12,10 @@
 #define EVE_FUNCTION_DEFINITION_BITWISE_CAST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/as.hpp>
 
 namespace eve
 {
-  EVE_DECLARE_CALLABLE(bitwise_cast_)
-
-  template<typename Target, typename Origin>
-  auto bitwise_cast(Origin const &o) noexcept
-      -> decltype(detail::callable_object<tag::bitwise_cast_>{}(o, as_<Target>{}))
-  {
-    return detail::callable_object<tag::bitwise_cast_>{}(o, as_<Target>{});
-  }
+  EVE_MAKE_CALLABLE(bitwise_cast_, bitwise_cast);
 }
 
 #endif

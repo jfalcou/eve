@@ -50,6 +50,8 @@ namespace eve
     static constexpr size_type   static_size      = parent::static_size;
     static constexpr std::size_t static_alignment = parent::static_alignment;
 
+    template<typename TT> using rebind = logical<wide<TT>>;
+
     // ---------------------------------------------------------------------------------------------
     // Ctor
     EVE_FORCEINLINE logical() noexcept {}
@@ -241,13 +243,13 @@ namespace eve
 
     EVE_FORCEINLINE constexpr bits_type bits() const noexcept
     {
-      return bitwise_cast<bits_type>(mask());
+      return bitwise_cast(mask(), as_<bits_type>{});
     }
 
     /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr mask_type mask() const noexcept
     {
-      return bitwise_cast<mask_type>(self());
+      return bitwise_cast(self(), as_<mask_type>{});
     }
 
     // ---------------------------------------------------------------------------------------------

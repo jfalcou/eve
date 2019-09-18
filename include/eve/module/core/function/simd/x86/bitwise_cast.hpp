@@ -27,7 +27,8 @@ namespace eve::detail
                                                       as_<wide<Target, M, sse_>> const &) noexcept
   {
     // Idempotent call
-    if constexpr(std::is_same_v<Source, Target>) return v0;
+    if constexpr(std::is_same_v<Source, Target>) return wide<Target, M, sse_>{v0.storage()};
+
     // bitwise_cast from float
     else if constexpr(std::is_same_v<Source, float>)
     {
@@ -92,7 +93,7 @@ namespace eve::detail
                                                       as_<wide<Target, M, avx_>> const &) noexcept
   {
     // Idempotent call
-    if constexpr(std::is_same_v<Source, Target>) return v0;
+    if constexpr(std::is_same_v<Source, Target>) return wide<Target, M, avx_>{v0.storage()};
 
     // bitwise_cast from float
     else if constexpr(std::is_same_v<Source, float>)
