@@ -49,7 +49,7 @@ namespace eve::detail
         using t_t = eve::wide<T,N,ABI>; 
         auto z = Pio_2(as(a0))-eve::asin(a0);
         // small correction with pio_2lo
-        return z+ Ieee_constant<t_t, 0XB33BBD2EUL, 0X3C91A62633145C07ULL>();
+        return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
       }   
       else
       {

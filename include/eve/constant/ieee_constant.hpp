@@ -23,15 +23,36 @@ namespace eve
   EVE_FORCEINLINE auto Ieee_constant(as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
-    static_assert ( std::is_floating_point_v<t_t>
-                  , "[eve::Iee_constant] -this function is not to be used with integralValue template parameter"
-                  );
-    
-    using i_t = detail::as_integer_t<t_t, unsigned>;
-    if constexpr(std::is_same_v<t_t, float>)
-      return T(bitwise_cast<t_t>(i_t(BitsPatternfloat)));
+    if constexpr(!std::is_floating_point_v<t_t>)
+    {
+      static_assert ( std::is_floating_point_v<t_t>
+                    , "[eve::Iee_constant] -this function is not to be used with integralValue template parameter"
+                    );
+      return T{};
+    }
     else
-      return T(bitwise_cast<t_t>(i_t(BitsPatterndouble)));
+    {
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        if constexpr(sizeof(t_t) != sizeof(BitsPatternfloat))
+        {
+          static_assert(sizeof(t_t) == sizeof(BitsPatternfloat),
+                        "[eve::ieeeconstant] floating_point case - BitsPatternfloat has not the correct size");
+          return T{};
+        }
+        else return static_cast<T>(bitwise_cast<t_t>(BitsPatternfloat));
+      }
+      else // if constexpr(std::is_same_v<t_t, double>)
+      {
+        if constexpr(sizeof(t_t) != sizeof(BitsPatterndouble))
+        {
+          static_assert(sizeof(t_t) == sizeof(BitsPatterndouble),
+                        "[eve::ieeeconstant] floating_point case - BitsPatterndouble has not the correct size");
+          return T{};
+        }
+        else return static_cast<T>(bitwise_cast<t_t>(BitsPatterndouble));
+      }
+    }
   }
 }
 

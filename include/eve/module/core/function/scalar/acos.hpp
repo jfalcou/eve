@@ -44,7 +44,7 @@ namespace eve::detail
     {
       T z = Pio_2<T>()-eve::asin(a0);
       // small correction with pio_2lo
-      return z+ Ieee_constant<T, 0XB33BBD2EUL, 0X3C91A62633145C07ULL>();
+      return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
     }
     else
     {
