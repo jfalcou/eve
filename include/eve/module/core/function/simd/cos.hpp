@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COS_HPP_INCLUDED
-#define EVE_FUNCTION_COS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COS_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COS_HPP_INCLUDED
 
-#include <eve/function/scalar/cos.hpp>
-#include <eve/function/simd/cos.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/cos.hpp>
 
 #endif
