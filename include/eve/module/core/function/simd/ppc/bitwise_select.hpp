@@ -25,7 +25,7 @@ namespace eve::detail
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
 
-    return vec_sel(v1.storage(), v0.storage(), bitwise_cast<i_t>(m).storage());
+    return vec_sel(v1.storage(), v0.storage(), bitwise_cast(m,as_<i_t>()).storage());
   }
 }
 
