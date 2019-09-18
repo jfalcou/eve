@@ -32,7 +32,7 @@ namespace eve
     if constexpr(std::is_integral_v<t_t>)
       return T(mask);
     else
-      return T(bitwise_cast<t_t>(i_t(mask)));
+      return T(bitwise_cast(i_t(mask), as_<t_t>() ));
   }
 
   EVE_MAKE_NAMED_CONSTANT(allbits_, Allbits);
