@@ -26,7 +26,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       using si_t = eve::detail::as_integer_t<T, signed>;
-      return as_logical_t<T>(bitwise_cast<si_t>(a) >= si_t(0));
+      return as_logical_t<T>(bitwise_cast(a,as_<si_t>{}) >= si_t(0));
     }
     else if constexpr(std::is_signed_v<T>)
       return a >= T(0);
