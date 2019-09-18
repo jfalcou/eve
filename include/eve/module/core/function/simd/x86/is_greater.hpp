@@ -60,8 +60,12 @@ namespace eve::detail
         using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
         using l_t    = eve::as_logical_t<t_t>;
         s_t const sm = Signmask<s_t>();
-        return eve::bitwise_cast<l_t>(
-            eve::is_greater(eve::bitwise_cast<s_t>(v0) - sm, eve::bitwise_cast<s_t>(v1) - sm));
+
+        return eve::bitwise_cast( eve::is_greater ( eve::bitwise_cast(v0,as(sm)) - sm,
+                                                    eve::bitwise_cast(v1,as(sm)) - sm
+                                                  ),
+                                  as_<l_t>{}
+                                );
       }
     }
   }
@@ -99,8 +103,12 @@ namespace eve::detail
           using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, avx_>;
           using l_t    = eve::as_logical_t<t_t>;
           s_t const sm = Signmask<s_t>();
-          return eve::bitwise_cast<l_t>(
-              eve::is_greater(eve::bitwise_cast<s_t>(v0) - sm, eve::bitwise_cast<s_t>(v1) - sm));
+
+        return eve::bitwise_cast( eve::is_greater ( eve::bitwise_cast(v0,as(sm)) - sm,
+                                                    eve::bitwise_cast(v1,as(sm)) - sm
+                                                  ),
+                                  as_<l_t>{}
+                                );
         }
       }
       else

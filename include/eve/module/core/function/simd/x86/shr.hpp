@@ -34,8 +34,8 @@ namespace eve::detail
       {
         using int_t     = std::uint16_t;
         using gen_t     = wide<int_t, fixed<N::value / 2>>;
-        t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
-        t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
+        t_t const Mask1 = bitwise_cast(gen_t(0x00ff),as(a0));
+        t_t const Mask2 = bitwise_cast(gen_t(0xff00),as(a0));
         t_t       tmp   = bitwise_and(a0, Mask1);
         t_t       tmp1  = _mm_srli_epi16(tmp, int(a1));
         tmp1            = bitwise_and(tmp1, Mask1);
@@ -68,7 +68,7 @@ namespace eve::detail
     if constexpr(supports_xop)
     {
       using si_t = wide<as_integer_t<I, signed>, N, sse_>;
-      auto sa1   = -bitwise_cast<si_t>(a1);
+      auto sa1   = -bitwise_cast(a1, as_<si_t>{});
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) == 1)
