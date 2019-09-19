@@ -31,10 +31,10 @@ TTS_CASE_TPL("Check acotd behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::acotd(Type(i)); });  
-  TTS_ULP_EQUAL(ref, eve::acotd(lhs), 0.5);
-}
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+                ref([](auto i, auto) { return eve::acotd(Type(i)); });
 
+  TTS_ULP_EQUAL(ref, eve::acotd(lhs), 1);
+}
 
 #endif

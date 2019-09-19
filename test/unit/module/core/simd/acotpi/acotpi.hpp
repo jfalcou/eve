@@ -31,10 +31,10 @@ TTS_CASE_TPL("Check acotpi behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::acotpi(Type(i)); });  
-  TTS_ULP_EQUAL(ref, eve::acotpi(lhs), 0.5);
-}
+  wide<Type, T> lhs([](auto i, auto) { return i; }),
+                ref([](auto i, auto) { return eve::acotpi(Type(i)); });
 
+  TTS_ULP_EQUAL(ref, eve::acotpi(lhs), 1);
+}
 
 #endif
