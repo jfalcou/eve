@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/detail/scalar/sin_kernel.hpp>
+#include <eve/module/core/detail/generic/sin_kernel.hpp>
 #include <eve/module/core/detail/generic/cos_kernel.hpp>   
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
@@ -24,7 +24,9 @@
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/pio_4.hpp>
+#include <eve/constant/pio_2.hpp>   
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -59,38 +61,37 @@ namespace eve::detail
     }   
   }
 
-  template<typename T, typename TAG>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
-                                      , TAG const &       
+                                      , small_type const &       
                                       , T const &a0) noexcept
+  requires(T, Vectorizable<T>)
   {
-    static_assert(std::is_floating_point_v<T>, "still not implemented");
-    return T{}; 
-    
-// //        using redu_t = trig_reduction<A0,unit_tag,tag::not_simd_type, mode>;
-// //        using eval_t = trig_evaluation<A0,tag::not_simd_type>;
-// //        using i_t    = bd::as_integer_t<A0, signed>;           // signed integer type associated to A0
-// //        using style_t = typename mode::type;
-//     if constexpr(std::is_floating_point_v<T>)
-//     {
-//       using i_t = detail::as_integer_t<A0, signed>;
-//       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
-//       const T x = eve::abs(a0);
-//       T xr = Nan<T>();
-//       i_t n = static_cast<i_t>(detail::reduce(radian_type{}, TAG{}, x, xr));
-//       i_t swap_bit = n&One<i_t>();
-//       i_t sign_bit = shl(bitwise_xor(swap_bit, (n&Two<i_t>())>>1), sizeof(i_t)*8-1);
-//       T z = sqr(xr);
-//       if (swap_bit)
-//         z = sin_eval(z, xr);
-//       else
-//         z = cos_eval(z);
-//       return bitwise_xor(z,sign_bit); 
-//     }
-//     else
-//     {
-//    static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
-//     }   
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      using i_t =  detail::as_integer_t<T, signed>; 
+      auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
+      auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
+      auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
+      T x = eve::abs(a0);
+      if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>(); //Nan or Inf input
+      i_t n = x > Pio_4<T>(); 
+      if (n)
+      {
+        T xr = x-pio2_1;
+        xr -= pio2_2;
+        xr -= pio2_3;
+        return bitwise_xor(detail::sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1));
+      }
+      else
+      {
+        return detail::cos_eval(sqr(x));
+      }
+    }
+    else
+    {
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+    }   
   }
 }
 

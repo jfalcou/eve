@@ -15,13 +15,20 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/module/core/detail/generic/sin_kernel.hpp>
+#include <eve/module/core/detail/generic/cos_kernel.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/pio_4.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/signmask.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -52,20 +59,35 @@ namespace eve::detail
     }   
   }
 
-  template<typename T,  typename N,  typename ABI,  typename TAG>
+  template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                           , TAG const &     
+                           , small_type const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    static_assert(std::is_floating_point_v<T>, "still not implemented");
-    return T{}; 
-//     if constexpr(std::is_floating_point_v<T>)
-//     {
-//     }
-//     else
-//     {
-//       static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
-//     }   
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      using t_t  = eve::wide<T,N,ABI>;
+      auto pio2_1 = Ieee_constant<t_t, 0X3FC90F80, 0X3FF921FB54400000LL>();
+      auto pio2_2 = Ieee_constant<t_t, 0X37354400, 0X3DD0B4611A600000LL>();
+      auto pio2_3 = Ieee_constant<t_t, 0X2E85A300, 0X3BA3198A2E000000LL>();
+      t_t x = eve::abs(a0);
+      t_t n = if_else/*[as(t_t())]*/(is_not_less_equal(x, Pio_4<t_t>()), eve::one_, eve::Zero<t_t>()); //TODO
+//      t_t n = -wide_cast < t_t >(bitwise_cast<i_t>(is_not_less_equal(x, Pio_4<t_t>()))); 
+      t_t xr =  x-pio2_1;
+      xr -= pio2_2;
+      xr -= pio2_3;
+      xr = if_else(n, xr, x); 
+      auto sign_bit = if_else(n, Signmask<t_t>(), Zero<t_t>()); 
+      const t_t z = sqr(xr);
+      const t_t se = bitwise_xor(detail::sin_eval(z, xr), sign_bit);
+      const t_t ce = detail::cos_eval(z);
+      const t_t z1 = if_else(n, se, ce);
+      return if_else(is_not_less_equal(x, Pio_2<t_t>()), Nan<t_t>(), z1); 
+    }
+    else
+    {
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+    }   
   }
 }
 

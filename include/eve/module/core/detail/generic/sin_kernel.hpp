@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_DETAIL_SCALAR_SIN_KERNEL_HPP_INCLUDED
-#define EVE_MODULE_CORE_DETAIL_SCALAR_SIN_KERNEL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_DETAIL_GENERIC_SIN_KERNEL_HPP_INCLUDED
+#define EVE_MODULE_CORE_DETAIL_GENERIC_SIN_KERNEL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
@@ -22,14 +22,13 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto sin_eval( T  z,  T x) noexcept
-  requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr auto sin_eval( const T & z,  const T & x) noexcept
   {
     // here T is float or double and x positive
-    static_assert(std::is_floating_point_v<T>
+    static_assert(std::is_floating_point_v<value_type_t<T>>
                  , "[detail;:sin_kernel] - entry type is not IEEEValue"); 
 
-    if constexpr(std::is_same_v<T, float>)
+    if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
        T  y1 = horn<T
           , 0xbe2aaaa2
