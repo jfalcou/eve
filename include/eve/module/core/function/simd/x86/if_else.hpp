@@ -28,10 +28,10 @@ namespace eve::detail
                                             wide<U, N, sse_> const &v1,
                                             wide<U, N, sse_> const &v2) noexcept
   {
-    using u_t = wide<U, N, sse_>;
-
     if constexpr(std::is_same_v<U, float>)
-    { return _mm_blendv_ps(v2, v1, bitwise_cast(bitwise_mask(v0),as(v2))); }
+    {
+      return _mm_blendv_ps(v2, v1, bitwise_cast(bitwise_mask(v0),as(v2)));
+    }
     else if constexpr(std::is_same_v<U, double>)
     {
       return _mm_blendv_pd(v2, v1, bitwise_cast(bitwise_mask(v0),as(v2)));
@@ -50,8 +50,6 @@ namespace eve::detail
                                             wide<U, N, avx_> const &v1,
                                             wide<U, N, avx_> const &v2) noexcept
   {
-    using u_t = wide<U, N, avx_>;
-
     if constexpr(std::is_same_v<U, float>)
     {
       return _mm256_blendv_ps(v2, v1, bitwise_cast(bitwise_mask(v0),as(v2)));
@@ -78,7 +76,7 @@ namespace eve::detail
           using f_t = wide<as_floating_point_t<U>, N, avx_>;
           return bitwise_cast( if_else( v0, bitwise_cast(v1,as_<f_t>())
                                           , bitwise_cast(v2,as_<f_t>())
-                                      ),
+                                      )
                               , as(v2)
                               );
         }

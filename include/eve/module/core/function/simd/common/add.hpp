@@ -87,25 +87,32 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T, U>)
       {
-        using vt_t = value_type_t<T>; 
+        using vt_t = value_type_t<T>;
         if constexpr(std::is_integral_v<vt_t>)
         {
           if constexpr(std::is_signed_v<vt_t>)
           {
             if constexpr( sizeof(vt_t) >= 4)
             {
-              using su_t = std::conditional_t<sizeof(vt_t) == 4, uint32_t, uint64_t>; 
+              using su_t = std::conditional_t<sizeof(vt_t) == 4, uint32_t, uint64_t>;
               using u_t = wide < su_t, typename T::cardinal_type, t_abi>;
-              u_t ux = bitwise_cast<u_t>(a);
-              u_t uy = bitwise_cast<u_t>(b);
-              u_t res = ux + uy;
-              
+              auto ux = bitwise_cast(a,as_<u_t>());
+              auto uy = bitwise_cast(b,as(ux));
+              u_t  res = ux + uy;
+
               ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
-              return  bitwise_cast<T>(if_else(is_gez(bitwise_cast<T>(bitwise_ornot(bitwise_xor(ux,uy)
-                                                                                  , bitwise_xor(uy,res))))
-                                             , ux, res));
+              return  bitwise_cast( if_else ( is_gez( bitwise_cast( bitwise_ornot ( bitwise_xor(ux,uy)
+                                                                                  , bitwise_xor(uy,res)
+                                                                                  )
+                                                                  , as(a)
+                                                                  )
+                                                    )
+                                             , ux, res
+                                             )
+                                  , as(a)
+                                  );
             }
-            else return map( eve::add, st, a, b); 
+            else return map( eve::add, st, a, b);
           }
           else // if  constexpr(std::is_unsigned_v<vt_t>)
           {

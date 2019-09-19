@@ -31,7 +31,10 @@ namespace eve::detail
       as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    if constexpr(!is_vectorized_v<U>) { return logical_andnot(a, T{b}); }
+    if constexpr(!is_vectorized_v<U>)
+    {
+      return logical_andnot(a, T{b});
+    }
     else if constexpr(!is_vectorized_v<T>)
     {
       return logical_andnot(U{a}, b);
@@ -41,14 +44,16 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr(is_aggregated_v<typename T::abi_type>)
-        { return aggregate(eve::logical_andnot, a, b); }
+        {
+          return aggregate(eve::logical_andnot, a, b);
+        }
         else if constexpr(is_emulated_v<typename T::abi_type>)
         {
           return map(eve::logical_andnot, a, b);
         }
         else
         {
-          return bitwise_cast<as_logical_t<T>>(bitwise_andnot(bitwise_mask(a), bitwise_mask(b)));
+          return bitwise_cast(bitwise_andnot(bitwise_mask(a), bitwise_mask(b)), as_<as_logical_t<T>>());
         }
       }
       else
@@ -67,7 +72,7 @@ namespace eve::detail
                                                                               Vectorized<U>,
                                                                               EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(bitwise_andnot(a.bits(), b.bits()));
+    return bitwise_cast(bitwise_andnot(a.bits(), b.bits()), as(a));
   }
 
   template<typename T, typename U>
@@ -78,7 +83,7 @@ namespace eve::detail
                                                                      Vectorized<U>,
                                                                      EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(bitwise_andnot(a.bits(), bitwise_mask(b)));
+    return bitwise_cast(bitwise_andnot(a.bits(), bitwise_mask(b)), as(a));
   }
 
   template<typename T, typename U>
@@ -89,7 +94,7 @@ namespace eve::detail
                                                                               Vectorized<U>,
                                                                               EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<U>>(bitwise_andnot(bitwise_mask(a), b.bits()));
+    return bitwise_cast(bitwise_andnot(bitwise_mask(a), b.bits()), as(b));
   }
 }
 

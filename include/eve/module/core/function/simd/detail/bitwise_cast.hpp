@@ -68,7 +68,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<In, typename Out::type>)
       return v0;
     else
-      return bitwise_cast<typename Out::type>(type{v0.storage()}).storage();
+      return bitwise_cast(type{v0.storage()}, as_<typename Out::type>()).storage();
   };
 
   // Logical -> Logical with different storage case
@@ -80,7 +80,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<In, typename Out::type>)
       return v0;
     else
-      return bitwise_cast<typename Out::type>(bitwise_cast<type>(v0));
+      return bitwise_cast(bitwise_cast(v0,as_<type>()), as_<typename Out::type>());
   };
 }
 

@@ -64,7 +64,7 @@ namespace eve::detail
             EqualCardinal<T,U>
           )
   {
-    return bitwise_cast<logical<T>>( is_equal(a.bits(),b.bits()) );
+    return bitwise_cast(is_equal(a.bits(), b.bits()),as(a));
   }
 }
 

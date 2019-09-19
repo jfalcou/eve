@@ -46,7 +46,7 @@ namespace eve::detail
         }
         else
         {
-          return bitwise_cast<as_logical_t<T>>(bitwise_and(bitwise_mask(a), bitwise_mask(b)));
+          return bitwise_cast(bitwise_and(bitwise_mask(a), bitwise_mask(b)), as_<as_logical_t<T>>());
         }
       }
       else
@@ -65,7 +65,7 @@ namespace eve::detail
                                                                            Vectorized<U>,
                                                                            EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(bitwise_and(a.bits(), b.bits()));
+    return bitwise_cast(bitwise_and(a.bits(), b.bits()), as(a));
   }
 
   template<typename T, typename U>
@@ -76,7 +76,7 @@ namespace eve::detail
                                                                   Vectorized<U>,
                                                                   EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(bitwise_and(a.bits(), bitwise_mask(b)));
+    return bitwise_cast(bitwise_and(a.bits(), bitwise_mask(b)), as(a));
   }
 
   template<typename T, typename U>
@@ -87,9 +87,8 @@ namespace eve::detail
                                                                            Vectorized<U>,
                                                                            EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<U>>(bitwise_and(bitwise_mask(a), b.bits()));
+    return bitwise_cast(bitwise_and(bitwise_mask(a), b.bits()), as(b));
   }
-
 }
 
 #endif

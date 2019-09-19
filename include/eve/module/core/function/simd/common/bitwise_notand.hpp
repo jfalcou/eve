@@ -1,6 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -38,7 +39,7 @@ namespace eve::detail
       // this will ensure that no scalar conversion will take place in aggregated
       // in the case vector and scalar not of the value type
       {
-        return eve::bitwise_notand(a, T(bitwise_cast<vt_t>(b)));
+        return eve::bitwise_notand(a, T(bitwise_cast(b,as_<vt_t>())));
       }
       else
       {
@@ -49,12 +50,11 @@ namespace eve::detail
     }
     else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
-      return map(eve::bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+      return map(bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
     else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return aggregate(
-          eve::bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+      return aggregate(bitwise_notand, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
     else if constexpr(is_vectorized_v<T> && !is_vectorized_v<U>)
     {
@@ -62,7 +62,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      return eve::bitwise_notand(a, bitwise_cast<T>(b));
+      return eve::bitwise_notand(a, bitwise_cast(b,as(a)));
     }
     else
     {

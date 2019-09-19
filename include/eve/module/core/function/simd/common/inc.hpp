@@ -44,13 +44,18 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   inc_(EVE_SUPPORTS(cpu_), U const &cond, wide<T, N, ABI> const &v) noexcept
   {
-    using t_t = wide<T, N, ABI>;
     if constexpr(!is_vectorized_v<U>)
+    {
       return cond ? inc(v) : v;
+    }
     else if constexpr(std::is_integral_v<T>)
-      return v - (bitwise_mask(bitwise_cast<t_t>(cond)));
+    {
+      return v - (bitwise_mask(bitwise_cast(cond,as(v))));
+    }
     else
+    {
       return if_else(cond, v + One(as(v)), v);
+    }
   }
 
   // -----------------------------------------------------------------------------------------------

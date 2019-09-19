@@ -42,11 +42,11 @@ namespace eve::detail
       if constexpr(is_vectorizable_v<U>)
       {
         using u_t = wide<as_integer_t<value_type_t<T>, unsigned>, typename T::cardinal_type, t_abi>;
-        return bitwise_cast<T>(eve::shr(bitwise_cast<u_t>(a), int(b)));
+        return bitwise_cast(eve::shr(bitwise_cast(a,as_<u_t>()), int(b)),as(a));
       }
       else
       {
-        return bitwise_cast<T>(map(eve::bitwise_shr, a, b));
+        return bitwise_cast(map(eve::bitwise_shr, a, b), as(a));
       }
     }
   }

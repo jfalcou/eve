@@ -17,6 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/assert.hpp>
+#include <eve/as.hpp>
 #include <cstring>
 
 namespace eve::detail
