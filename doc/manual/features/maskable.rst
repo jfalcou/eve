@@ -3,7 +3,7 @@
 Maskable
 ========
 
-:ref:`feature-maaskable` is a feature dedicated to simd operations that allow to choose the elements of an simd wide
+:ref:`feature-maskable` is a feature dedicated to simd operations that allow to choose the elements of an simd wide
 on which  a function object can be applied **masking** the other ones.
 
 Syntax
@@ -19,11 +19,11 @@ Syntax
 Example
 -------
 
-.. include:: ../../../../test/doc/mask.cpp
+.. include:: ../../../test/doc/mask.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/mask.txt
+.. include:: ../../../test/doc/mask.txt
   :literal:
 

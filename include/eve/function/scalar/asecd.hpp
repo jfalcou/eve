@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ASECD_HPP_INCLUDED
 
 #include <eve/function/definition/asecd.hpp>
-#include <eve/module/core/function/scalar/asecd.hpp>
+#include <eve/module/core/function/generic/asecd.hpp>
 
 #endif

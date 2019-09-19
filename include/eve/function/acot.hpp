@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOT_HPP_INCLUDED
 
 #include <eve/function/scalar/acot.hpp>
-//#include <eve/function/simd/acot.hpp>
+#include <eve/function/simd/acot.hpp>
 
 #endif

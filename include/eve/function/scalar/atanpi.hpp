@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ATANPI_HPP_INCLUDED
 
 #include <eve/function/definition/atanpi.hpp>
-#include <eve/module/core/function/scalar/atanpi.hpp>
+#include <eve/module/core/function/generic/atanpi.hpp>
 
 #endif

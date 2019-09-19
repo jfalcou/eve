@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ONEMINUS_HPP_INCLUDED
 
 #include <eve/function/scalar/oneminus.hpp>
-//#include <eve/function/simd/oneminus.hpp>
+#include <eve/function/simd/oneminus.hpp>
 
 #endif

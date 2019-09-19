@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_HYPOT_HPP_INCLUDED
 
 #include <eve/function/scalar/hypot.hpp>
-//#include <eve/function/simd/hypot.hpp>
+#include <eve/function/simd/hypot.hpp>
 
 #endif

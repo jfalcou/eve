@@ -11,3 +11,4 @@ Functions
    bitwise.rst
    logical.rst
    predicate.rst
+   trigonometric.rst

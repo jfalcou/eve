@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOSPI_HPP_INCLUDED
 
 #include <eve/function/scalar/acospi.hpp>
-//#include <eve/function/simd/acospi.hpp>
+#include <eve/function/simd/acospi.hpp>
 
 #endif

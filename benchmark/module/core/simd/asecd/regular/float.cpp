@@ -8,11 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/add.hpp>
-#include <cstddef>
+#include <eve/function/asecd.hpp>
+#include <eve/wide.hpp>
 
-#define TYPE()        std::int64_t
-#define FUNCTION()    eve::add
-#define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,-100,100)
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::asecd
+#define SAMPLES(N)    random<T>(N,-1.,1.)
 
 #include "bench.hpp"

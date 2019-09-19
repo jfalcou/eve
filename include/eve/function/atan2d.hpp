@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ATAN2D_HPP_INCLUDED
 
 #include <eve/function/scalar/atan2d.hpp>
-//#include <eve/function/simd/atan2d.hpp>
+#include <eve/function/simd/atan2d.hpp>
 
 #endif

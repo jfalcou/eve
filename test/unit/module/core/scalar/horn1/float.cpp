@@ -10,7 +10,7 @@
 
 using Type = float;
 #include "horn1.hpp"
-TTS_CASE("Check eve::horn1 behavior")
+TTS_CASE("Check eve::horn1 behavior") 
 {
   using eve::detail::horn1; 
   TTS_EQUAL((horn1<Type,0x0U>(Type(0))), Type(0));

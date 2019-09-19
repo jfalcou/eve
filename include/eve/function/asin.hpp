@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASIN_HPP_INCLUDED
 
 #include <eve/function/scalar/asin.hpp>
-//#include <eve/function/simd/asin.hpp>
+#include <eve/function/simd/asin.hpp>
 
 #endif

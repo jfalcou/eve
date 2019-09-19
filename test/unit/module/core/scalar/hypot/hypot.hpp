@@ -28,7 +28,7 @@ TTS_CASE("Check eve::hypot behavior")
 {
   using eve::hypot;
   // specific values tests
-#ifndef BOOST_SIMD_NO_INVALIDS
+#ifndef EVE_NO_INVALIDS
   TTS_ULP_EQUAL(hypot(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>(), 0);
   TTS_ULP_EQUAL(hypot(eve::Minf<Type>(), eve::Minf<Type>()), eve::Inf<Type>(), 0);
   TTS_ULP_EQUAL(hypot(eve::Nan<Type>(), eve::Nan<Type>()), eve::Nan<Type>(), 0);

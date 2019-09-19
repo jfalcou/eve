@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_INDEG_HPP_INCLUDED
 
 #include <eve/function/definition/indeg.hpp>
-#include <eve/module/core/function/scalar/indeg.hpp>
+#include <eve/module/core/function/generic/indeg.hpp>
 
 #endif

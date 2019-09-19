@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ACOSD_HPP_INCLUDED
 
 #include <eve/function/definition/acosd.hpp>
-#include <eve/module/core/function/scalar/acosd.hpp>
+#include <eve/module/core/function/generic/acosd.hpp>
 
 #endif

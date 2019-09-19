@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #ifndef HORN_HPP
-#define HORN_HPP
+#define HORN_HPP 
 
 #include <eve/module/core/detail/generic/horn.hpp>
 #include "test.hpp"

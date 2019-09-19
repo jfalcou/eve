@@ -1,0 +1,8 @@
+---- simd
+<- pf =                  (0, 1, -1, 1.5708, 3.14159, inf, -inf, -nan)
+-> eve::indeg(pf) =      (0, 57.2958, -57.2958, 90, 180, inf, -inf, -nan)
+---- scalar
+<- xf =                  1
+-> eve::indeg(xf) =      57.2958
+<- yf =                  3.14159
+-> eve::indeg(yf) =      180
