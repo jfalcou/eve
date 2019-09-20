@@ -1,41 +1,32 @@
 #include <eve/function/binarize.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/binarizetvalmax.hpp>
+#include <eve/function/is_greater.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<int16_t, eve::fixed<8>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf  = {0.0f,
-                1.0f,
-                -1.0f,
-                -2.0f,
-                eve::Sqrtvalmax<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
-  int16_t svm = eve::Sqrtvalmax<int16_t>();
-  wide_it pi  = {0, 1, -1, -2, svm - 1, svm, svm + 1, svm + 2};
+  wide_ft pf  = {0.0f,1.0f,-1.0f,-2.0f};
+  wide_ft qf  = {1.0f,-1.0f,-2.0f,4.0f}; 
+  
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                  " << pf << '\n'
-            << "-> eve::binarize(pf) = " << eve::binarize(pf) << '\n'
-            << "<- pi =                  " << pi << '\n'
-            << "-> eve::binarize(pi) = " << eve::binarize(pi) << '\n'
-            << "-> eve::saturated_(eve::binarize)(pi) = " << eve::saturated_(eve::binarize)(pi) << '\n';
+            << "<- pf =                                     " << pf << '\n'
+            << "<- qf =                                     " << qf << '\n'   
+            << "-> eve::binarize(p < qf) =                  " << eve::binarize(pf < qf) << '\n'
+            << "-> eve::binarize(p < qf,  10) =             " << eve::binarize(pf < qf,  10) << '\n'
+            << "-> eve::binarize(p < qf,  eve::allbits_) =  " << eve::binarize(pf < qf,  eve::allbits_) << '\n'
+            << "-> eve::binarize(p < qf,  eve::mone_) =     " << eve::binarize(pf < qf,  eve::mone_) << '\n'; 
 
   float   xf = 1.0f;
-  int32_t yf = eve::Sqrtvalmax<int32_t>() + 10;
+  int32_t yf = 2.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                  " << xf << '\n'
-            << "-> eve::binarize(xf) = " << eve::binarize(xf) << '\n'
-            << "<- yf =                  " << yf << '\n'
-            << "-> eve::binarize(yf) = " << eve::binarize(yf) << '\n';
+            << "<- xf =                                     " << xf << '\n'
+            << "<- yf =                                     " << yf << '\n'   
+            << "-> eve::binarize(eve::is_less(xf, yf))    = " << eve::binarize(eve::is_greater(xf, yf)) << '\n'
+            << "-> eve::binarize(eve::is_less(xf, yf), 5) = " << eve::binarize(eve::is_greater(xf, yf)) << '\n';    
+
   return 0;
 }
