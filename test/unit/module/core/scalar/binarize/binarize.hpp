@@ -17,31 +17,30 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/false.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/binarizetvalmax.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check binarize return type") { TTS_EXPR_IS(eve::binarize(Type(0)), Type); }
-
+ 
 TTS_CASE("Check eve::binarize behavior")
 {
-  TTS_EQUAL(eve::binarize(Type{1}), Type(1));
-  TTS_EQUAL(eve::binarize(Type{2}), Type(4));
-
-  if constexpr(std::is_signed_v<Type>) { TTS_EQUAL(eve::binarize(static_cast<Type>(-2)), Type(4)); }
-  if constexpr(std::is_floating_point_v<Type>)
-  {
-    TTS_IEEE_EQUAL(eve::binarize(eve::Nan<Type>()), eve::Nan<Type>());
-    TTS_IEEE_EQUAL(eve::binarize(-eve::Nan<Type>()), eve::Nan<Type>());
-    TTS_EQUAL(eve::binarize(eve::Mzero<Type>()), Type(0));
-    TTS_EQUAL(eve::binarize(eve::Zero<Type>()), Type(0));
-    if constexpr(std::is_integral_v<Type>)
-      TTS_EQUAL(eve::saturated_(eve::binarize)(eve::inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>());
+  TTS_EQUAL(eve::binarize(eve::is_greater(Type{1}, Type(2))), Type(0));
+  TTS_EQUAL(eve::binarize(eve::is_greater(Type{2}, Type(1))), Type(1));
+  
+  if constexpr(std::is_signed_v<Type>) {
+    TTS_EQUAL(eve::binarize(eve::is_greater(Type{2},  Type(1)), Type(-2)), Type(-2));
+    TTS_EQUAL(eve::binarize(eve::is_greater(Type{0}, Type(1)), Type(-2)), Type(0));
+    TTS_EQUAL(eve::binarize(eve::is_greater(Type{1}, Type(2)), eve::mone_), Type(0));
+    TTS_EQUAL(eve::binarize(eve::is_greater(Type{2}, Type(1)), eve::mone_), Type(-1));
   }
+  TTS_EQUAL(eve::binarize(eve::is_greater(Type{2}, Type(1)), Type(2)), Type(2));
+  TTS_EQUAL(eve::binarize(eve::is_greater(Type{0}, Type(1)), Type(2)), Type(0));
+  TTS_EQUAL(eve::binarize(eve::is_greater(Type{0}, Type(1)), eve::allbits_), Type(0));
+  TTS_IEEE_EQUAL(eve::binarize(eve::is_greater(Type{2}, Type(1)), eve::allbits_), eve::Allbits<Type>());
 }
 
 #endif

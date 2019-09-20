@@ -14,36 +14,65 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/constant/binarizetvalmax.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/is_greater.hpp>
+#include <eve/ext/as_wide.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/allbits.hpp>
+#include <eve/function/bitwise_and.hpp>
+#include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE wide<T, N, ABI>
-                  binarize_(EVE_SUPPORTS(cpu_), saturated_type const &, wide<T, N, ABI> const &a0) noexcept
+  EVE_FORCEINLINE
+  wide<T, N, ABI> binarize_(EVE_SUPPORTS(cpu_)
+                           , logical<wide<T, N, ABI>> const &cond
+                           ) noexcept
   {
-    if(std::is_integral_v<T>)
-    {
-      if constexpr(std::is_signed_v<T>)
-      {
-        return if_else(eve::saturated_(eve::abs)(a0) > Sqrtvalmax(as(a0)), Valmax(as(a0)), binarize(a0));
-      }
-      else
-      {
-        return if_else((a0 > Sqrtvalmax(as(a0))), Valmax(as(a0)), binarize(a0));
-      }
-    }
-    else
-    {
-      return binarize(a0);
-    }
+    using t_t = wide<T, N, ABI>; 
+    return  bitwise_and(One<t_t>(),cond.bits());
   }
+
+  template<typename T, typename N, typename ABI, typename U>
+  EVE_FORCEINLINE 
+  auto binarize_(EVE_SUPPORTS(cpu_)
+                , logical<wide<T, N, ABI>> const &cond
+                , U const & val 
+                ) noexcept
+  requires(wide<T, N, ABI>, Vectorizable<U>)
+  {
+    using t_t = wide<T, N, ABI>; 
+    return  bitwise_and(t_t(val),cond.bits());
+  }
+
+  
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE 
+  wide<T, N, ABI>  binarize_( EVE_SUPPORTS(cpu_)
+                 , logical<wide<T, N, ABI>> const &cond
+                 ,  eve::callable_allbits_ const &
+                 ) noexcept
+  {
+    return cond.mask();
+  }
+
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr
+  wide<T, N, ABI>  binarize_( EVE_SUPPORTS(cpu_)
+                 , logical<wide<T, N, ABI>> const &cond
+                 ,  eve::callable_mone_ const &
+                 ) noexcept
+  {
+    if constexpr(std::is_integral_v<T>)
+      return  cond.mask();
+    else
+      return  binarize(cond,eve::Mone<T>());
+  }
+
 }
 
 #endif

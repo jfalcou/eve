@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_BINARIZE_HPP_INCLUDED
 
 #include <eve/arch.hpp>
+#include <eve/module/core/function/scalar/binarize.hpp>
 #include <eve/module/core/function/simd/common/binarize.hpp>
 
 #endif
