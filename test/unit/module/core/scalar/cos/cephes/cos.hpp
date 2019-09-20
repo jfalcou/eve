@@ -61,8 +61,8 @@ TTS_CASE("Check eve::cephes_(eve::cos) behavior")
   TTS_ULP_EQUAL(eve::cephes_(eve::cos)(eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::cephes_(eve::cos)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::cephes_(eve::cos)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cos)(3*eve::Pio_4<Type>()/2), Type(0.382683432365090), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cos)(3*eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cos)(3*eve::Pio_4<Type>()/2), Type(0.3826834323650897717284599840304), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cos)(3*eve::Pio_2<Type>()), eve::Zero<Type>(), 1.0);
 }
 
 

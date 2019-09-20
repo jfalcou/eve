@@ -52,9 +52,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto pi2_16 = static_cast<T>(0.61685027506808491367715568749226); 
+      auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
       auto x2 = sqr(a0); 
-//      EVE_ASSERT(!test, "Restricted cos called with arg magnitude greater than Pi/4"); 
       if (is_not_less_equal(x2, pi2_16)) return Nan<T>(); 
       return detail::cos_eval(x2);
     }

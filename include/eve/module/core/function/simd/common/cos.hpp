@@ -112,7 +112,7 @@ namespace eve::detail
       xr   = fnma(n, pio2_3, xr);
 //       using i_t = detail::as_integer_t<T>; 
 //       n = wide_cast<i_t>(n)&i_t(3);
-      n = n - 4*trunc(n*T(0.25)); 
+      n = n - 4*trunc(n*T(0.25));  //TODO if it is better ?
       auto tmp = if_else(n >= t_t(2), One<t_t>(), Zero<t_t>());//TODO
       auto swap_bit = (fma(t_t(-2), tmp, n));
       auto sign_bit = if_else(bitwise_xor(swap_bit, tmp), Signmask<t_t>(),  Zero<t_t>());//TODO

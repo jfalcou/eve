@@ -36,9 +36,6 @@ TTS_CASE_TPL("Check cos behavior on wide",
   wide<Type, T>  lhs([](auto i, auto) { return (i%2 ? 1:-1)*3*eve::Pio_4<Type>()/Type(i+1); }), 
     ref([](auto i, auto) { return eve::small_(eve::cos)( (i%2 ? 1:-1)*3*eve::Pio_4<Type>()/Type(i+1)); });  
   TTS_ULP_EQUAL(ref, eve::small_(eve::cos)(lhs), 0.5);
- //  std::cout << "ref                        " << ref << std::endl;
-//   auto r =  eve::small_(eve::cos)(lhs); 
-//   std::cout << "eve::small_(eve::cos)(lhs) " << r <<  std::endl;
 }
 
 
