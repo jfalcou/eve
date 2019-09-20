@@ -37,7 +37,7 @@ namespace eve::detail
     using t_t = wide<T, N, ABI>; 
     return  bitwise_and(One<t_t>(),cond.bits());
   }
-
+ 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE 
   wide<T, N, ABI> binarize_(EVE_SUPPORTS(cpu_)
