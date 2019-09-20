@@ -8,12 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_BINARIZE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_BINARIZE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BINARIZE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_BINARIZE_HPP_INCLUDED
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/scalar/binarize.hpp>
-#include <eve/module/core/function/simd/common/binarize.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/detail/abi.hpp>
+
+namespace eve::detail
+{
+  template<typename T>
+  EVE_FORCEINLINE constexpr T binarize_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return a * a;
+  }
+}
 
 #endif
- 

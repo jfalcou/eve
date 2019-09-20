@@ -1,6 +1,6 @@
 .. _function-binarize:
 
-########
+######## 
 binarize
 ########
 

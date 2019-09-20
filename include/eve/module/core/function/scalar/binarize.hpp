@@ -19,7 +19,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/constant/nan.hpp> 
 #include <type_traits>
 
 namespace eve::detail
