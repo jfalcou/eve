@@ -21,6 +21,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/bitwise_and.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -39,40 +40,30 @@ namespace eve::detail
 
   template<typename T, typename N, typename ABI, typename U>
   EVE_FORCEINLINE 
-  auto binarize_(EVE_SUPPORTS(cpu_)
-                , logical<wide<T, N, ABI>> const &cond
-                , U const & val 
-                ) noexcept
-  requires(wide<T, N, ABI>, Vectorizable<U>)
+  wide<T, N, ABI> binarize_(EVE_SUPPORTS(cpu_)
+                           , logical<wide<T, N, ABI>> const &cond
+                           , U const & val 
+                           ) noexcept
   {
-    using t_t = wide<T, N, ABI>; 
-    return  bitwise_and(t_t(val),cond.bits());
-  }
-
-  
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE 
-  wide<T, N, ABI>  binarize_( EVE_SUPPORTS(cpu_)
-                 , logical<wide<T, N, ABI>> const &cond
-                 ,  eve::callable_allbits_ const &
-                 ) noexcept
-  {
-    return cond.mask();
-  }
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE constexpr
-  wide<T, N, ABI>  binarize_( EVE_SUPPORTS(cpu_)
-                 , logical<wide<T, N, ABI>> const &cond
-                 ,  eve::callable_mone_ const &
-                 ) noexcept
-  {
-    if constexpr(std::is_integral_v<T>)
-      return  cond.mask();
+    if constexpr(is_vectorizable_v<U>)
+    {
+      using t_t = wide<T, N, ABI>; 
+      return  bitwise_and(t_t(val),cond.bits());
+    }
+    else if constexpr(std::is_same_v<U, eve::callable_allbits_>)
+    {
+       return cond.mask();
+    }
+    else if constexpr(std::is_same_v<U, eve::callable_mone_>)
+    {
+      if constexpr(std::is_integral_v<T>) return  cond.mask();
+      else return  binarize(cond,eve::Mone<T>());
+    }
     else
-      return  binarize(cond,eve::Mone<T>());
+    {
+      static_assert(is_vectorizable_v<U>, "second parameter in binarize must be scalar"); 
+    }
   }
-
 }
 
 #endif

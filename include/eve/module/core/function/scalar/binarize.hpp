@@ -24,15 +24,6 @@
 
 namespace eve::detail
 {
-
-  template<typename T,  typename U>
-  EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
-                                           logical<U> const & cond,
-                                           T const &a0) noexcept
-  requires(T, Vectorizable<T>,  Vectorizable<U>)
-  {
-    return bitwise_and(U(a0), cond.bits());
-  }
   
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
@@ -42,6 +33,15 @@ namespace eve::detail
     return  bitwise_and(U(1), cond.bits()); 
   }
   
+  template<typename T,  typename U>
+  EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
+                                           logical<U> const & cond,
+                                           T const &a0) noexcept
+  requires(T, Vectorizable<T>,  Vectorizable<U>)
+  {
+    return bitwise_and(U(a0), cond.bits());
+  }
+
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
