@@ -26,6 +26,7 @@
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/shr.hpp>
+#include <eve/function/saturated.hpp>
 #include <eve/constant/valmax.hpp>
 
 namespace eve::detail

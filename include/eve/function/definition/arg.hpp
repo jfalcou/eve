@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 namespace eve

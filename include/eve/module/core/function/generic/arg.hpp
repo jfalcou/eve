@@ -20,7 +20,7 @@
 #include <eve/constant/pi.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {

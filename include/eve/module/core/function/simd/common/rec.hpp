@@ -24,7 +24,8 @@
 #include <eve/constant/one.hpp>
 #include <eve/forward.hpp>
 #include <eve/assert.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 namespace eve::detail

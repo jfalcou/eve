@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/inpi.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
