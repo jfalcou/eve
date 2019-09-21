@@ -16,7 +16,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/numeric.hpp>
 #include <type_traits>
 
 namespace eve::detail

@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/inpi.hpp>
 #include <eve/function/atan.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/assert.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/vectorized.hpp>

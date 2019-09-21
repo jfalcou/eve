@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SATURATED_HPP_INCLUDED
-#define EVE_FUNCTION_SATURATED_HPP_INCLUDED
+#ifndef EVE_FUNCTION_PEDANTIC_HPP_INCLUDED
+#define EVE_FUNCTION_PEDANTIC_HPP_INCLUDED
 
 #include <type_traits>
 #include <eve/detail/abi.hpp>
@@ -18,21 +18,21 @@ namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct saturated_type
+  struct pedantic_type
   {
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
     {
-      return [f](auto const &... args) { return f(saturated_type{}, args...); };
+      return [f](auto const &... args) { return f(pedantic_type{}, args...); };
     }
   };
-
+  
   //================================================================================================
-  // Function decorator - saturated mode
+  // Function decorator - pedantic mode
   template<typename Function>
-  constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
+  constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
   {
-    return saturated_type{}(f);
+    return pedantic_type{}(f);
   }
 }
 

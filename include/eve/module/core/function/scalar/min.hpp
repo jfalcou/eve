@@ -14,7 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/numeric.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/is_nan.hpp>
 
