@@ -52,9 +52,9 @@ TTS_CASE("Check eve::acosd behavior")
 #endif
   TTS_ULP_EQUAL(eve::acosd(eve::Half<Type>()), Type(60), 0.5);
   TTS_ULP_EQUAL(eve::acosd(eve::Mhalf<Type>()), Type(120), 0.5);
-  TTS_ULP_EQUAL(eve::acosd(eve::Mone<Type>()), Type(180), 0);
+  TTS_ULP_EQUAL(eve::acosd(eve::Mone<Type>()), Type(180), 0.5);
   TTS_ULP_EQUAL(eve::acosd(eve::One<Type>()), eve::Zero<Type>(), 22);
-  TTS_ULP_EQUAL(eve::acosd(eve::Zero<Type>()),Type(90), 0); 
+  TTS_ULP_EQUAL(eve::acosd(eve::Zero<Type>()),Type(90), 0.5); 
 }
 
 TTS_CASE("Check eve::acosd[pedantic_] behavior")
@@ -67,8 +67,8 @@ TTS_CASE("Check eve::acosd[pedantic_] behavior")
 #endif
   TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Half<Type>()), Type(60), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Mhalf<Type>()), Type(120), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Mone<Type>()), Type(180), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Mone<Type>()), Type(180), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::One<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Zero<Type>()),Type(90), 0); 
+  TTS_ULP_EQUAL(eve::pedantic_(eve::acosd)(eve::Zero<Type>()),Type(90), 0.5); 
 } 
 #endif
