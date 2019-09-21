@@ -29,7 +29,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/signnz.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/assert.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>

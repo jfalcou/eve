@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/indeg.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 namespace eve::detail

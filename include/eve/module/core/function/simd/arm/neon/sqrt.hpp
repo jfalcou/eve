@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/is_not_finite.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail

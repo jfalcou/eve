@@ -16,7 +16,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 #if defined(EVE_COMP_IS_MSVC)

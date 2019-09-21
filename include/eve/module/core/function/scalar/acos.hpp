@@ -30,7 +30,7 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/pedantic.hpp>
 #include <type_traits>
 
 namespace eve::detail

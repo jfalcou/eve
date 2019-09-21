@@ -18,7 +18,8 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/forward.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/pedantic.hpp>
 
 #if !defined(EVE_NO_INFINITIES)
 #  include <eve/constant/mzero.hpp>

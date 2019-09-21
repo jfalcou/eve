@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/max.hpp>

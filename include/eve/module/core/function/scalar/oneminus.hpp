@@ -19,6 +19,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/saturated.hpp>
 #include <type_traits>
 
 namespace eve::detail
