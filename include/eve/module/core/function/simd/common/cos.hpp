@@ -29,6 +29,8 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/rem_pio2_cephes.hpp>
 #include <eve/function/rem_pio2_medium.hpp>
+#include <eve/function/rem_pio2.hpp>
+#include <eve/function/rem_pio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -108,14 +110,6 @@ namespace eve::detail
       const t_t x = eve::abs(a0);
       auto [n, xr] = rem_pio2_cephes(x);
       return detail::cos_finalize(n, xr); 
-//       auto tmp = binarize(n >= t_t(2)); 
-//       auto swap_bit = (fma(t_t(-2), tmp, n));
-//       auto sign_bit = binarize(is_nez(bitwise_xor(swap_bit,tmp)), Signmask<T>()); 
-//       t_t z = sqr(xr);
-//       t_t se = sin_eval(z, xr);
-//       t_t ce = cos_eval(z);
-//       t_t z1 = if_else(swap_bit, se, ce);
-//       return bitwise_xor(z1, sign_bit); 
     }
     else
     {
@@ -134,14 +128,24 @@ namespace eve::detail
       const t_t x = eve::abs(a0);
       auto [n, xr] = rem_pio2_medium(x); 
       return detail::cos_finalize(n, xr); 
-//       auto tmp =  binarize(n >= t_t(2));
-//       auto swap_bit = (fma(t_t(-2), tmp, n));
-//       auto sign_bit = binarize(is_nez(bitwise_xor(swap_bit, tmp)), Signmask<T>()); 
-//       t_t z = sqr(xr);
-//       t_t se = sin_eval(z, xr);
-//       t_t ce = cos_eval(z);
-//       t_t z1 = if_else(swap_bit, se, ce);
-//       return bitwise_xor(z1, sign_bit); 
+    }
+    else
+    {
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+    }   
+  }   
+  
+  template<typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+                           , big_type const &       
+                           , eve::wide<T,N,ABI> const &a0) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      using t_t  = eve::wide<T,N,ABI>;
+      const t_t x = eve::abs(a0);
+      auto [n, xr] = rem_pio2(x);
+      return detail::cos_finalize(n, xr); 
     }
     else
     {

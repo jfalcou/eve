@@ -62,8 +62,6 @@ TTS_CASE("Check eve::small_(eve::cos) behavior")
   TTS_ULP_EQUAL(eve::small_(eve::cos)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cos)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cos)(3*eve::Pio_4<Type>()/2), Type(0.382683432365090), 1.5);
-  std::cout << eve::small_(eve::cos)(3*eve::Pio_4<Type>()/2) << std::endl;
-  std::cout << Type(0.382683432365090) << std::endl;
 }
 
 

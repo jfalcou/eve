@@ -8,35 +8,32 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef COS_HPP
-#define COS_HPP
+#ifndef REM_PIO2_MEDIUM_HPP
+#define REM_PIO2_MEDIUM_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/cos.hpp>
-#include <eve/constant/pio_4.hpp>
+#include <eve/function/simd/rem_pio2_medium.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check cos behavior on wide",
+TTS_CASE_TPL("Check rem_pio2_medium behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>
-            )
+             fixed<64>)
 {
-  using eve::wide;
   using eve::logical;
+  using eve::wide;
 
-  wide<Type, T>  lhs([](auto i, auto) { return (i%2 ? 1:-1)*40*eve::Pio_4<Type>()/Type(i+1); }), 
-    ref([](auto i, auto) { return eve::cephes_(eve::cos)( (i%2 ? 1:-1)*40*eve::Pio_4<Type>()/Type(i+1)); });  
-  TTS_ULP_EQUAL(ref, eve::cephes_(eve::cos)(lhs), 0.5);
+  wide<Type, T> lhs([](auto i, auto) { return 10*i; }),
+      ref([](auto i, auto) { return eve::rem_pio2_medium(Type(10*i)); });
+  TTS_EQUAL(ref, eve::rem_pio2_medium(lhs));
 }
-
 
 #endif

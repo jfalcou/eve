@@ -14,8 +14,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-// #include <eve/module/core/detail/generic/sin_kernel.hpp>
-// #include <eve/module/core/detail/generic/cos_kernel.hpp>   
 #include <eve/module/core/detail/scalar/cos_finalize.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitwise_xor.hpp>
@@ -25,6 +23,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/rem_pio2_cephes.hpp>
 #include <eve/function/rem_pio2_medium.hpp>
+#include <eve/function/rem_pio2.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
@@ -108,20 +107,10 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-//      using i_t =  detail::as_integer_t<T, signed>; 
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
       auto [fn, xr] = rem_pio2_cephes(x); 
       return detail::cos_finalize(fn, xr); 
-//       i_t n = i_t(fn);
-//       i_t swap_bit = n&i_t(1);
-//       i_t sign_bit = shl(bitwise_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
-//       T z = sqr(xr);
-//       if (swap_bit)
-//         z = sin_eval(z, xr);
-//       else
-//         z = cos_eval(z);
-//       return bitwise_xor(z,sign_bit);
     }
     else
     {
@@ -137,24 +126,10 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-//      using i_t =  detail::as_integer_t<T, signed>; 
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
       auto [fn, xr] = rem_pio2_medium(x); 
       return detail::cos_finalize(fn, xr); 
-//       i_t n = i_t(fn); //&i_t(3);
-//       i_t swap_bit = n&i_t(1);
-//       i_t sign_bit = shl(bitwise_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
-// //          std::cout << "n         " <<  n << std::endl;
-// //          std::cout << "swap_bit  " <<  swap_bit << std::endl;
-// //          std::cout << "sign_bit  " <<  sign_bit << std::endl;
-// //          std::cout << "xr        " <<  xr       << std::endl;
-//       T z = sqr(xr);
-//       if (swap_bit)
-//         z = sin_eval(z, xr);
-//       else
-//         z = cos_eval(z);
-//       return bitwise_xor(z,sign_bit);
     }
     else
     {
@@ -162,24 +137,24 @@ namespace eve::detail
     }   
   }  
   
-//   template<typename T>
-//   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
-//                                      , big_type const &       
-//                                      , T const &a0) noexcept
-//   requires(T, Vectorizable<T>)
-//   {
-//     if constexpr(std::is_floating_point_v<T>)
-//     {
-//       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
-//       const T x =  abs(a0);
-//       auto [fn, xr] = rem_pio2(x); 
-//       return detail::cos_finalize(fn, xr); 
-//     }
-//     else
-//     {
-//       static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
-//     }   
-//   }
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+                                     , big_type const &       
+                                     , T const &a0) noexcept
+  requires(T, Vectorizable<T>)
+  {
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
+      const T x =  abs(a0);
+      auto [fn, xr] = rem_pio2(x);
+      return detail::cos_finalize(fn, xr); 
+    }
+    else
+    {
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+    }   
+  }
 }
 
 #endif
