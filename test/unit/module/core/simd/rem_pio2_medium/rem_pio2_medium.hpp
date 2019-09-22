@@ -8,18 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef REM_PIO2_MEDIUM_HPP
-#define REM_PIO2_MEDIUM_HPP
+#ifndef REM_PIO2_MEDIUM_MEDIUM_HPP
+#define REM_PIO2_MEDIUM_MEDIUM_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/rem_pio2_medium.hpp>
+#include <eve/function/simd/rem_pio2_medium_medium.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE_TPL("Check rem_pio2_medium behavior on wide",
+TTS_CASE_TPL("Check rem_pio2_medium_medium behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check rem_pio2_medium behavior on wide",
   using eve::wide;
 
   wide<Type, T> lhs([](auto i, auto) { return 10*i; }),
-      ref([](auto i, auto) { return eve::rem_pio2_medium(Type(10*i)); });
-  TTS_EQUAL(ref, eve::rem_pio2_medium(lhs));
+      ref([](auto i, auto) { return eve::rem_pio2_medium_medium(Type(10*i)); });
+  TTS_EQUAL(ref, eve::rem_pio2_medium_medium(lhs));
 }
 
 #endif
