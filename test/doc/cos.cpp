@@ -16,7 +16,7 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                      " << pf << '\n'
-    << "-> eve::cos(pf) =            " << eve::cos(pf) << '\n'; 
+    << "-> eve::cos(pf) =            " << eve::medium_(eve::cos)(pf) << '\n'; 
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
@@ -24,8 +24,8 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                      " << xf << '\n'
-    << "-> eve::cos(xf) =            " << eve::cos(xf) << '\n'
+    << "-> eve::cos(xf) =            " <<  eve::medium_(eve::cos)(xf) << '\n'
     << "<- yf =                      " << yf << '\n'
-    << "-> eve::cos(yf) =            " << eve::cos(yf) << '\n'; 
+    << "-> eve::cos(yf) =            " <<  eve::medium_(eve::cos)(yf) << '\n'; 
   return 0;
 }

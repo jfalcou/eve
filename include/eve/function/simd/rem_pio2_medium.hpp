@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_QUADRANT_HPP_INCLUDED
-#define EVE_FUNCTION_QUADRANT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_REM_PIO2_MEDIUM_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_REM_PIO2_MEDIUM_HPP_INCLUDED
 
-#include <eve/function/scalar/quadrant.hpp>
-#include <eve/function/simd/quadrant.hpp>
+#include <eve/function/scalar/rem_pio2_medium.hpp>
+#include <eve/module/core/function/generic/rem_pio2_medium.hpp>
 
 #endif

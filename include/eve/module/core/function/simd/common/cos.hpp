@@ -15,8 +15,10 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/module/core/detail/generic/sin_kernel.hpp>
-#include <eve/module/core/detail/generic/cos_kernel.hpp>
+// #include <eve/module/core/detail/generic/sin_kernel.hpp>
+// #include <eve/module/core/detail/generic/cos_kernel.hpp>
+#include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
@@ -25,6 +27,8 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/rem_pio2_cephes.hpp>
+#include <eve/function/rem_pio2_medium.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -39,12 +43,12 @@
 namespace eve::detail
 {
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                            , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    return regular_(cos)(a0); 
-  }
+//   template<typename T,  typename N,  typename ABI>
+//   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+//                             , eve::wide<T,N,ABI> const &a0) noexcept
+//   {
+//     return regular_(cos)(a0); 
+//   }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
@@ -53,7 +57,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto pi2_16 = static_cast<T>(0.61685027506808491367715568749226); 
+      auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
       auto x2 = sqr(a0); 
       return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, cos_eval(x2)); 
     }
@@ -75,13 +79,12 @@ namespace eve::detail
       auto pio2_2 = Ieee_constant<t_t, 0X37354400, 0X3DD0B4611A600000LL>();
       auto pio2_3 = Ieee_constant<t_t, 0X2E85A300, 0X3BA3198A2E000000LL>();
       t_t x = eve::abs(a0);
-      t_t n = if_else/*[as(t_t())]*/(is_not_less_equal(x, Pio_4<t_t>()), eve::one_, eve::Zero<t_t>()); //TODO
-//      t_t n = -wide_cast < t_t >(bitwise_cast<i_t>(is_not_less_equal(x, Pio_4<t_t>()))); 
+      t_t n = binarize(is_not_less_equal(x, Pio_4<t_t>())); 
       t_t xr =  x-pio2_1;
       xr -= pio2_2;
       xr -= pio2_3;
       xr = if_else(n, xr, x); 
-      auto sign_bit = if_else(n, Signmask<t_t>(), Zero<t_t>()); 
+      auto sign_bit = binarize(is_nez(n), Signmask<T>());
       const t_t z = sqr(xr);
       const t_t se = bitwise_xor(detail::sin_eval(z, xr), sign_bit);
       const t_t ce = detail::cos_eval(z);
@@ -102,31 +105,49 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       using t_t  = eve::wide<T,N,ABI>;
-      auto pio2_1 = Ieee_constant<t_t, 0X3FC90F80, 0X3FF921FB54400000LL>();
-      auto pio2_2 = Ieee_constant<t_t, 0X37354400, 0X3DD0B4611A600000LL>();
-      auto pio2_3 = Ieee_constant<t_t, 0X2E85A300, 0X3BA3198A2E000000LL>();
       const t_t x = eve::abs(a0);
-      t_t n =  eve::nearest(x*Twoopi<t_t>());
-      t_t xr = fnma(n, pio2_1, x);
-      xr   = fnma(n, pio2_2, xr);
-      xr   = fnma(n, pio2_3, xr);
-//       using i_t = detail::as_integer_t<T>; 
-//       n = wide_cast<i_t>(n)&i_t(3);
-      n = n - 4*trunc(n*T(0.25));  //TODO if it is better ?
-      auto tmp = if_else(n >= t_t(2), One<t_t>(), Zero<t_t>());//TODO
-      auto swap_bit = (fma(t_t(-2), tmp, n));
-      auto sign_bit = if_else(bitwise_xor(swap_bit, tmp), Signmask<t_t>(),  Zero<t_t>());//TODO
-      t_t z = sqr(xr);
-      t_t se = sin_eval(z, xr);
-      t_t ce = cos_eval(z);
-      t_t z1 = if_else(swap_bit, se, ce);
-      return bitwise_xor(z1, sign_bit); 
+      auto [n, xr] = rem_pio2_cephes(x);
+      return detail::cos_finalize(n, xr); 
+//       auto tmp = binarize(n >= t_t(2)); 
+//       auto swap_bit = (fma(t_t(-2), tmp, n));
+//       auto sign_bit = binarize(is_nez(bitwise_xor(swap_bit,tmp)), Signmask<T>()); 
+//       t_t z = sqr(xr);
+//       t_t se = sin_eval(z, xr);
+//       t_t ce = cos_eval(z);
+//       t_t z1 = if_else(swap_bit, se, ce);
+//       return bitwise_xor(z1, sign_bit); 
     }
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
     }   
-  }  
+  }
+
+   template<typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+                           , medium_type const &       
+                           , eve::wide<T,N,ABI> const &a0) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      using t_t  = eve::wide<T,N,ABI>;
+      const t_t x = eve::abs(a0);
+      auto [n, xr] = rem_pio2_medium(x); 
+      return detail::cos_finalize(n, xr); 
+//       auto tmp =  binarize(n >= t_t(2));
+//       auto swap_bit = (fma(t_t(-2), tmp, n));
+//       auto sign_bit = binarize(is_nez(bitwise_xor(swap_bit, tmp)), Signmask<T>()); 
+//       t_t z = sqr(xr);
+//       t_t se = sin_eval(z, xr);
+//       t_t ce = cos_eval(z);
+//       t_t z1 = if_else(swap_bit, se, ce);
+//       return bitwise_xor(z1, sign_bit); 
+    }
+    else
+    {
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+    }   
+  }   
 }
 
 #endif

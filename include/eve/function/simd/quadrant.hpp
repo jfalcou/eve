@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_QUADRANT_HPP_INCLUDED
-#define EVE_FUNCTION_QUADRANT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_QUADRANT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_QUADRANT_HPP_INCLUDED
 
 #include <eve/function/scalar/quadrant.hpp>
-#include <eve/function/simd/quadrant.hpp>
+#include <eve/module/core/function/generic/quadrant.hpp>
 
 #endif

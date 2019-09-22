@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_QUADRANT_HPP_INCLUDED
 
 #include <eve/function/definition/quadrant.hpp>
-#include <eve/module/core/function/scalar/quadrant.hpp>
+#include <eve/module/core/function/generic/quadrant.hpp>
 
 #endif
