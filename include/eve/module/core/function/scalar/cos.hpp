@@ -43,7 +43,7 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, Vectorizable<T>)
   {
-    return regular_(eve::cos)(a0); 
+    return big_(eve::cos)(a0); 
   }
 
   template<typename T>

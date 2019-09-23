@@ -10,6 +10,11 @@
 ##==================================================================================================
 ## scalar benchmarks
 list_benchs("scalar/all/regular" "core" ${all_types})
+list_benchs("scalar/cos/regular" "core" ${real_types})
+list_benchs("scalar/cos/restricted" "core" ${real_types})
+list_benchs("scalar/cos/small" "core" ${real_types})
+list_benchs("scalar/cos/medium" "core" ${real_types}) 
+list_benchs("scalar/cos/big" "core" ${real_types})   
 list_benchs("scalar/acos/regular" "core" ${real_types})
 list_benchs("scalar/acosd/regular" "core" ${real_types})
 list_benchs("scalar/acospi/regular" "core" ${real_types})
@@ -107,9 +112,14 @@ list_benchs("scalar/sqrt/regular" "core" ${all_types})
 list_benchs("scalar/rsqrt/regular" "core" ${real_types})
 list_benchs("scalar/sqr/regular"  "core" ${all_types})  
  
-##==================================================================================================
+##================================================================================================== 
 ## simd benchmarks
 list_benchs("simd/all/regular" "core" ${all_types})
+list_benchs("simd/cos/regular" "core" ${real_types})
+list_benchs("simd/cos/restricted" "core" ${real_types})
+list_benchs("simd/cos/small" "core" ${real_types})
+list_benchs("simd/cos/medium" "core" ${real_types}) 
+list_benchs("simd/cos/big" "core" ${real_types})   
 list_benchs("simd/acos/regular" "core" ${real_types})
 list_benchs("simd/acosd/regular" "core" ${real_types})
 list_benchs("simd/acospi/regular" "core" ${real_types})
@@ -236,3 +246,10 @@ list_benchs("simd/rec/raw" "core" ${real_types})
 list_benchs("simd/rec/pedantic" "core" ${real_types})
 
 
+##================================================================================================== 
+## ref benchmarks
+list_benchs("ref/cos/regular" "core" ${real_types})
+list_benchs("ref/cos/restricted" "core" ${real_types})
+list_benchs("ref/cos/small" "core" ${real_types})
+list_benchs("ref/cos/medium" "core" ${real_types}) 
+list_benchs("ref/cos/big" "core" ${real_types})   

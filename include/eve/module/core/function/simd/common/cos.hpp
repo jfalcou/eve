@@ -45,12 +45,12 @@
 namespace eve::detail
 {
 
-//   template<typename T,  typename N,  typename ABI>
-//   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-//                             , eve::wide<T,N,ABI> const &a0) noexcept
-//   {
-//     return regular_(cos)(a0); 
-//   }
+  template<typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+                            , eve::wide<T,N,ABI> const &a0) noexcept
+  {
+    return big_(cos)(a0); 
+  }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
