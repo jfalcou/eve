@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/load.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <eve/wide.hpp>
 #include <type_traits>
 #include <tuple>

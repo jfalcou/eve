@@ -49,7 +49,17 @@ namespace eve::detail
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    return big_(cos)(a0); 
+//     x =  abs(a0);
+//     if (all(x <= Pio_4(as(x))))          return restricted_(cos)(a0);
+//     else if   (all(x <= Pio_2(as(x))))   return small_(cos)(a0);
+//     else if   (all(x <= T(63)))          return cephes_(cos)(a0);
+//     else {
+//       static constexpr mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
+//       if   (all((x <= mpi)))   return medium_(cos)(a0);
+//     }
+//         else
+    return big_(cos)(a0);           
+                   
   }
 
   template<typename T,  typename N,  typename ABI>

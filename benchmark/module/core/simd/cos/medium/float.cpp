@@ -14,6 +14,6 @@
 
 #define TYPE()        eve::wide<float>
 #define FUNCTION()    eve::medium_(eve::cos)
-#define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,-64*eve::Pi<T>(),64*eve::Pi<T>())
 
 #include "bench.hpp"
