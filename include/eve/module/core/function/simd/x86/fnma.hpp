@@ -21,10 +21,10 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE auto fnma_(EVE_SUPPORTS(avx2_),
-                             wide<T, N, sse_> const &a,
-                             wide<T, N, sse_> const &b,
-                             wide<T, N, sse_> const &c) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_> fnma_(EVE_SUPPORTS(avx2_),
+                                         wide<T, N, sse_> const &a,
+                                         wide<T, N, sse_> const &b,
+                                         wide<T, N, sse_> const &c) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -43,10 +43,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto fnma_(EVE_SUPPORTS(avx2_),
-                             wide<T, N, avx_> const &a,
-                             wide<T, N, avx_> const &b,
-                             wide<T, N, avx_> const &c) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_> fnma_(EVE_SUPPORTS(avx2_),
+                                         wide<T, N, avx_> const &a,
+                                         wide<T, N, avx_> const &b,
+                                         wide<T, N, avx_> const &c) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
