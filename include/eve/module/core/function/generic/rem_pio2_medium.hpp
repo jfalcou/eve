@@ -68,6 +68,12 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
       // ok for |x| <= 2^19*(pi/2), medium_ size */
+      //      * pio2_1:   first  33 bit of pi/2
+      //      * pio2_1t:  pi/2 - pio2_1
+      //      * pio2_2:   second 33 bit of pi/2
+      //      * pio2_2t:  pi/2 - (pio2_1+pio2_2)
+      //      * pio2_3:   third  33 bit of pi/2
+      //      * pio2_3t:  pi/2 - (pio2_1+pio2_2+pio2_3)
       auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
       auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
       auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
