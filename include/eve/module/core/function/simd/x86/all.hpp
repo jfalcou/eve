@@ -34,13 +34,13 @@ namespace eve::detail
       {
         using i8_t = wide<int8_t, fixed<16> , sse_>;
         using t_t  = wide<T, N, sse_>; 
-        static constexpr int mask = 0xF >> (4-N::value); 
+        static constexpr int mask = 0xF >> (4-N::value);
+        static constexpr int smask = mask << N::value;
         if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {
           static constexpr int sv = N::value*sizeof(T); 
-          auto z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
-          i8_t z1= _mm_bsrli_si128(z, sv);
-          return _mm_movemask_ps(bitwise_cast<t_t>(z1)) == mask;
+          i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
+          return _mm_movemask_ps(bitwise_cast<t_t>(z)) == smask;
         }
         else  return _mm_movemask_ps(v.mask()) == mask;
       }
@@ -49,12 +49,12 @@ namespace eve::detail
         using i8_t = wide<int8_t, fixed<16> , sse_>;
         using t_t  = wide<T, N, sse_>; 
         static constexpr int mask = 0x3 >> (2-N::value);
+        static constexpr int smask = mask << N::value;
         if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {
           static constexpr int sv = N::value*sizeof(T); 
-          auto z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
-          i8_t z1= _mm_bsrli_si128(z, sv);
-          return _mm_movemask_pd(bitwise_cast<t_t>(z1)) == mask;
+          i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
+          return _mm_movemask_pd(bitwise_cast<t_t>(z)) == smask;
         }
         else return _mm_movemask_pd(v.mask()) == mask;
       }
@@ -62,14 +62,14 @@ namespace eve::detail
     else
     {
       static constexpr int mask = 0xFFFF >> (16-sizeof(T)*N::value); 
+      static constexpr int smask = mask <<  sizeof(T)*N::value; 
       if constexpr(sizeof(T) == 1)
       {
         static constexpr int sv = N::value; 
         if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {
           auto z = _mm_bslli_si128(v.mask(), sv); 
-          auto z1= _mm_bsrli_si128(z, sv);
-          return _mm_movemask_epi8(z1) == mask;
+          return _mm_movemask_epi8(z) == smask;
         }
         else return _mm_movemask_epi8(v.mask()) == mask;
       }
@@ -80,8 +80,7 @@ namespace eve::detail
        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {         
           auto z = _mm_bslli_si128(bitwise_cast<i8_t >(v.mask()), sv); 
-          auto z1= _mm_bsrli_si128(z, sv);
-          return _mm_movemask_epi8(z1) == mask;
+          return _mm_movemask_epi8(z) == smask;
         }
         else return _mm_movemask_epi8(bitwise_cast<i8_t >(v.mask())) == mask;
       }
