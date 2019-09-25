@@ -10,6 +10,7 @@
 ##==================================================================================================
 ## scalar tests
 list_tests("scalar/abs"     "core" ${all_types})
+list_tests("scalar/all"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/arg" "core" ${real_types})
 list_tests("scalar/acos" "core" ${real_types})  
@@ -178,6 +179,7 @@ add_unit_test( "core" scalar/signmask.cpp )
 ## SIMD tests
 add_unit_test( "core" simd/bitwise_cast.cpp )
 list_tests("simd/abs" "core" ${all_types})
+list_tests("simd/all" "core" ${all_types})
 list_tests("simd/add"         "core" ${all_types})
 list_tests("simd/acos" "core" ${real_types}) 
 list_tests("simd/acot" "core" ${real_types}) 
