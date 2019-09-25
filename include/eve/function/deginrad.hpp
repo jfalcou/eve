@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COSD_HPP_INCLUDED
-#define EVE_FUNCTION_COSD_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEGINRAD_HPP_INCLUDED
+#define EVE_FUNCTION_DEGINRAD_HPP_INCLUDED
 
-#include <eve/function/scalar/cosd.hpp>
-#include <eve/function/simd/cosd.hpp>
+#include <eve/function/scalar/deginrad.hpp>
+#include <eve/function/simd/deginrad.hpp>
 
 #endif
