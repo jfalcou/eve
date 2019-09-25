@@ -15,8 +15,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
-// #include <eve/module/core/detail/generic/sin_kernel.hpp>
-// #include <eve/module/core/detail/generic/cos_kernel.hpp>
 #include <eve/module/core/detail/simd/cos_finalize.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/bitwise_xor.hpp>
@@ -39,6 +37,7 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/signmask.hpp>
+#include <eve/function/trigo_tags.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -49,7 +48,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-//     x =  abs(a0);
+//     auto x =  abs(a0);
 //     if (all(x <= Pio_4(as(x))))          return restricted_(cos)(a0);
 //     else if   (all(x <= Pio_2(as(x))))   return small_(cos)(a0);
 //     else if   (all(x <= T(63)))          return cephes_(cos)(a0);

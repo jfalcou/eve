@@ -41,7 +41,7 @@ namespace eve::detail
         std::tie(tmp[i],txr[i]) =  eve::rem_pio2(a0[i]);
       }
       return r_t( load(eve::as_aligned<t_t::static_alignment>(&tmp[ 0 ]), eve::as_<t_t>())
-                , load(eve::as_aligned<t_t::static_alignment>(&tmp[ 0 ]), eve::as_<t_t>()));
+                , load(eve::as_aligned<t_t::static_alignment>(&txr[ 0 ]), eve::as_<t_t>()));
     }
     else
     {

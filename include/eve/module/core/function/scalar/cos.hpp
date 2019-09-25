@@ -32,7 +32,7 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/trigo_tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -43,23 +43,20 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, Vectorizable<T>)
   {
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                            , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    x =  abs(a0);
-    if (x <= Pio_4(as(x)))          return restricted_(cos)(a0);
-    else if   (x <= Pio_2(as(x)))   return small_(cos)(a0);
-    else if   (x <= T(63))          return cephes_(cos)(a0);
-    else {
-      static constexpr mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
-      if   (x <= mpi)   return medium_(cos)(a0);
-    }
+    const T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18p
+    auto x =  abs(a0);
+    if (x <= Pio_4(as(x)))        return restricted_(cos)(a0);
+    else if (x <= Pio_2(as(x)))   return small_(cos)(a0);
+    else if (x <= T(63))          return cephes_(cos)(a0);
+    else if   ( x <= mpi)         return medium_(cos)(a0);
     else
     {
       if constexpr(std::is_same_v<T, float>)
       {
-        if(x < 4.2166e+08f) return float(eve::cos(double(x))); 
+        if(x < 4.2166e+08f)
+          return float(eve::cos(double(x)));
+        else
+          return big_(cos)(a0); 
       }
       else   return big_(cos)(a0);           
     }

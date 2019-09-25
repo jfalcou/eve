@@ -12,7 +12,7 @@
 #include <eve/constant/pi.hpp>
 #include <eve/wide.hpp>
 
-#define TYPE()        <double
+#define TYPE()        double
 #define FUNCTION()    eve::cephes_(eve::cos)
 #define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
 

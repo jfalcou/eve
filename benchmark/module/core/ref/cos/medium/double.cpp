@@ -14,6 +14,6 @@
 
 #define TYPE()        double
 #define FUNCTION()    [](double a){return std::cos(a);}    
-#define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,-8.235e+05,8.235e+05)
 
 #include "bench.hpp"

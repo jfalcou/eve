@@ -14,6 +14,6 @@
 
 #define TYPE()        double
 #define FUNCTION()    eve::cos
-#define SAMPLES(N)    random<T>(N,-1000*eve::Pi<T>(),1000*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,-1000000*eve::Pi<T>(),1000000*eve::Pi<T>())
 
 #include "bench.hpp"

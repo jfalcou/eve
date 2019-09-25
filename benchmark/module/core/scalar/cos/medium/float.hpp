@@ -14,6 +14,6 @@
 
 #define TYPE()        eve::wide<flot>
 #define FUNCTION()    eve::cos
-#define SAMPLES(N)    random<T>(N,-10*Pi<T>(),10*Pi<T>())
+#define SAMPLES(N)    random<T>(N,-63*Pi<T>(),63*Pi<T>())
 
 #include "bench.hpp"

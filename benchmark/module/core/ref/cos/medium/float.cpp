@@ -14,6 +14,6 @@
 
 #define TYPE()        float
 #define FUNCTION()    [](float a){return std::cos(a);}
-#define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,-63*eve::Pi<T>(),63*eve::Pi<T>())
 
 #include "bench.hpp"
