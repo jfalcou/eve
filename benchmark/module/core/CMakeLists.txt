@@ -9,6 +9,7 @@
 
 ##==================================================================================================
 ## scalar benchmarks
+list_benchs("scalar/all/regular" "core" ${all_types})
 list_benchs("scalar/acos/regular" "core" ${real_types})
 list_benchs("scalar/acosd/regular" "core" ${real_types})
 list_benchs("scalar/acospi/regular" "core" ${real_types})
@@ -108,6 +109,7 @@ list_benchs("scalar/sqr/regular"  "core" ${all_types})
  
 ##==================================================================================================
 ## simd benchmarks
+list_benchs("simd/all/regular" "core" ${all_types})
 list_benchs("simd/acos/regular" "core" ${real_types})
 list_benchs("simd/acosd/regular" "core" ${real_types})
 list_benchs("simd/acospi/regular" "core" ${real_types})
