@@ -29,12 +29,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pi.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/as_logical.hpp>
 #include <type_traits>
 
 TTS_CASE("Check cosd return type")
@@ -44,11 +38,11 @@ TTS_CASE("Check cosd return type")
 
 TTS_CASE("Check eve::cosd behavior")
 {
-  using eve::cos; 
-#ifndef BOOST_SIMD_NO_INVALIDS
-  TTS_ULP_EQUAL(cosd(eve::Inf<T>()),  eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(cosd(eve::Minf<T>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(cosd(eve::Nan<T>()),  eve::Nan<Type>(), 0.5);
+
+#ifndef EVE_SIMD_NO_INVALIDS
+  TTS_ULP_EQUAL(cosd(eve::Inf<Type>()),  eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(eve::Nan<Type>()),  eve::Nan<Type>(), 0.5);
 #endif
   TTS_ULP_EQUAL(cosd(Type(-180)),       eve::Mone<Type>(), 0.5);
   TTS_ULP_EQUAL(cosd(Type(-45)),        eve::Sqrt_2o_2<Type>(), 0.5);

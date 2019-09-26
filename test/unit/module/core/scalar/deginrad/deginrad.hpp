@@ -35,7 +35,8 @@ TTS_CASE("Check deginrad return type")
 
 TTS_CASE("Check eve::deginrad behavior")
 {
-#ifndef BOOST_SIMD_NO_INVALIDS
+
+#ifndef EVE_SIMD_NO_INVALIDS
   TTS_ULP_EQUAL(eve::deginrad(eve::Inf<Type>()), eve::Inf<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::deginrad(eve::Minf<Type>()), eve::Minf<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::deginrad(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);

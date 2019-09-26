@@ -24,7 +24,7 @@ namespace eve
   using is_trigonometric_tag_t = typename is_trigonometric_tag<T>::type;
 
   template<typename T>
-  static inline constexpr bool is_trigonometric_tag_t_v = is_trigonometric_tag_t<T>::value;
+  static inline constexpr bool is_trigonometric_tag_v = is_trigonometric_tag_t<T>::value;
 
   struct restricted_type 
   {

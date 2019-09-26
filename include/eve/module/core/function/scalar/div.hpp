@@ -28,8 +28,8 @@
 
 namespace eve::detail
 {
-#ifdef BOOST_MSVC
-#pragma warning(push)
+#ifdef EVE_COMP_IS_MSVC
+#pragma warning(push) 
 #pragma warning(disable: 4723) // potential divide by 0
 #endif
 
@@ -64,7 +64,7 @@ namespace eve::detail
   }
 }
 
-#ifdef BOOST_MSVC
+#ifdef EVE_COMP_IS_MSVC
 # pragma warning(pop)
 #endif
 

@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/cos.hpp>
 #include <eve/function/trigo_tags.hpp>
+#include <eve/function/deginrad.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -35,7 +36,7 @@ namespace eve::detail
                                      , T const &a0) noexcept
   {
     if constexpr(eve::is_trigonometric_tag_v<TAG>)
-    return tag(cos)(deginrad(a0));
+      return cos(tag, deginrad(a0));
     else
     {
       static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cosd ]: Used tag is unsupported"); 
