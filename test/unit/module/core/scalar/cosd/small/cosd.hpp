@@ -47,22 +47,18 @@ TTS_CASE("Check cosd return type")
 TTS_CASE("Check eve::small_(eve::cosd) behavior")
 {
 
-#ifndef EVE_NO_INVALIDS 
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Inf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+#ifndef BOOST_SIMD_NO_INVALIDS
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(bs::Inf<Type>()),  bs::Nan<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(bs::Minf<Type>()), bs::Nan<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(bs::Nan<Type>()),  bs::Nan<r_t>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(2*eve::Pi<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(-2*eve::Pi<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(-eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(-eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Pi<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(-eve::Pi<Type>()), eve::Nan<Type>(), 0.5);   
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(3*eve::Pio_4<Type>()/2), Type(0.382683432365090), 1.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(-180)),       bs::Mone<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(-45)),        bs::Sqrt_2o_2<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(-90)),        bs::Zero<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(180)),        bs::Mone<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(45)),         bs::Sqrt_2o_2<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(T(90)),         bs::Zero<r_t>(), 0.5);
+  STF_ULP_EQUAL(eve::small_(eve::cosd)(bs::Zero<Type>()), bs::One<r_t>(), 0.5);
 }
-
 
 #endif

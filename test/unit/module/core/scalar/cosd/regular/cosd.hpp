@@ -44,16 +44,18 @@ TTS_CASE("Check cosd return type")
 
 TTS_CASE("Check eve::cosd behavior")
 {
+  using eve::cos; 
+#ifndef BOOST_SIMD_NO_INVALIDS
+  TTS_ULP_EQUAL(cosd(eve::Inf<T>()),  eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(eve::Minf<T>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(eve::Nan<T>()),  eve::Nan<Type>(), 0.5);
+#endif
+  TTS_ULP_EQUAL(cosd(Type(-180)),       eve::Mone<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(Type(-45)),        eve::Sqrt_2o_2<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(Type(-90)),        eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(Type(180)),        eve::Mone<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(Type(45)),         eve::Sqrt_2o_2<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(Type(90)),         eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(cosd(eve::Zero<Type>()), eve::One<Type>(), 0.5);
+}
 
-#ifndef EVE_SIMD_NO_INVALIDS
-  TTS_ULP_EQUAL(eve::cosd(eve::Inf<Type>()), eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(eve::cosd(eve::Minf<Type>()), eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(eve::cosd(eve::Nan<Type>()), eve::Nan<Type>(), 0);
-#endif
-  TTS_ULP_EQUAL(eve::cosd(eve::Half<Type>()), eve::Pi<Type>()/3, 0.5);
-  TTS_ULP_EQUAL(eve::cosd(eve::Mhalf<Type>()), 2*eve::Pi<Type>()/3, 0.5);
-  TTS_ULP_EQUAL(eve::cosd(eve::Mone<Type>()), eve::Pi<Type>(), 0);
-  TTS_ULP_EQUAL(eve::cosd(eve::One<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cosd(eve::Zero<Type>()), eve::Pio_2<Type>(), 0); 
-} 
-#endif

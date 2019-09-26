@@ -46,19 +46,19 @@ TTS_CASE("Check cosd return type")
 
 TTS_CASE("Check eve::restricted_(eve::cosd) behavior")
 {
-
-#ifndef EVE_NO_INVALIDS
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Inf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+  using eve::cosd; 
+#ifndef BOOST_SIMD_NO_INVALIDS
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(eve::Inf<Type>()),  eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(eve::Minf<Type>()), eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(eve::Nan<Type>()),  eve::Nan<r_t>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(-eve::Pi<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(-eve::Pio_2<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(-eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Pi<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Pio_2<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(-180)),       eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(-45)),        eve::Sqrt_2o_2<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(-90)),        eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(180)),        eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(45)),         eve::Sqrt_2o_2<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(T(90)),         eve::Nan<r_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(cosd)(eve::Zero<Type>()), eve::One<r_t>(), 0.5);
 }
 
 

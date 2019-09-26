@@ -38,7 +38,6 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail

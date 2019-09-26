@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/cos.hpp>
-#include <eve/function/trigonometric_tags.hpp>
+#include <eve/function/trigo_tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,11 +24,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cosd_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
-  {
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cosd_(EVE_SUPPORTS(cpu_)
-                            , eve::wide<T,N,ABI> const &a0) noexcept
+
   {
     return cos(deginrad(a0)); 
   }
@@ -37,14 +33,13 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cosd_(EVE_SUPPORTS(cpu_)
                                      , TAG const & tag
                                      , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
   {
-    if constexpr(eve::is_trigonometric_tag_v<TAG>)
-      return tag(cos)(deginrad(a0));
-    else
-    {
-      static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cos scalar]: Used tag is unsupported"); 
-    }
+    //   if constexpr(eve::is_trigonometric_tag_v<TAG>)
+    return TAG{}(cos)(deginrad(a0));
+//     else
+//     {
+//       static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cosd ]: Used tag is unsupported"); 
+//     }
   }
 
 }

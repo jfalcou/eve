@@ -48,17 +48,19 @@ namespace eve::detail
     if (x <= Pio_4(as(x)))        return restricted_(cos)(a0);
     else if (x <= Pio_2(as(x)))   return small_(cos)(a0);
     else if (x <= T(63))          return cephes_(cos)(a0);
-    else if   ( x <= mpi)         return medium_(cos)(a0);
+    else if ( x <= mpi)           return medium_(cos)(a0);
     else
     {
       if constexpr(std::is_same_v<T, float>)
       {
-        if(x < 4.2166e+08f)
-          return float(eve::cos(double(x)));
+        if(x < 8.235e+05f)
+          return float(eve::medium_(eve::cos)(double(x)));
+        else if(x < 4.2166e+08f)
+          return float(eve::big_(eve::cos)(double(x)));
         else
-          return big_(cos)(a0); 
+          return big_(eve::cos)(a0); 
       }
-      else   return big_(cos)(a0);           
+      else   return big_(eve::cos)(a0);           
     }
   }
   

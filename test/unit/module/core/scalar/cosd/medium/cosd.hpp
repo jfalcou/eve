@@ -47,24 +47,23 @@ TTS_CASE("Check cosd return type")
 TTS_CASE("Check eve::medium_(eve::cosd) behavior")
 {
 
-#ifndef EVE_NO_INVALIDS 
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Inf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+#ifndef BOOST_SIMD_NO_INVALIDS
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(eve::Inf<Type>()),  eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(eve::Nan<Type>()),  eve::Nan<Type>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(2*eve::Pi<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-2*eve::Pi<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Pi<Type>()), eve::Mone<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-eve::Pi<Type>()), eve::Mone<Type>(), 0.5);   
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(3*eve::Pio_4<Type>()/2), Type(0.3826834323650897717284599840304), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(3*eve::Pio_2<Type>()), eve::Zero<Type>(), 1);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-3*eve::Pio_2<Type>()), eve::Zero<Type>(), 1);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(-180)),       eve::Mone<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(-45)),        eve::Sqrt_2o_2<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(-90)),        eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(180)),        eve::Mone<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(45)),         eve::Sqrt_2o_2<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(Type(90)),         eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium__(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(Type(135)/2), Type(0.3826834323650897717284599840304), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(Type(270)), eve::Zero<Type>(), 1);
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(Type(-270)), eve::Zero<Type>(), 1);
 }
+
 
 
 #endif
