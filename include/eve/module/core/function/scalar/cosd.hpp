@@ -34,12 +34,12 @@ namespace eve::detail
                                      , TAG const & tag
                                      , T const &a0) noexcept
   {
-    //   if constexpr(eve::is_trigonometric_tag_v<TAG>)
-    return TAG{}(cos)(deginrad(a0));
-//     else
-//     {
-//       static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cosd ]: Used tag is unsupported"); 
-//     }
+    if constexpr(eve::is_trigonometric_tag_v<TAG>)
+    return tag(cos)(deginrad(a0));
+    else
+    {
+      static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cosd ]: Used tag is unsupported"); 
+    }
   }
 
 }

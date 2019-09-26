@@ -14,6 +14,6 @@
 
 #define TYPE()        float
 #define FUNCTION()    eve::big_(eve::cos)
-#define SAMPLES(N)    random<T>(N,-1000000*eve::Pi<T>(),1000000*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,-1.0E20f,1.0E20f)
 
 #include "bench.hpp"
