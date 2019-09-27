@@ -57,8 +57,8 @@ TTS_CASE("Check eve::small_(eve::cosd) behavior")
   TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(-90)),        eve::Zero<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(180)),        eve::Nan<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(45)),         eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(90)),         eve::Zero<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(90)),         eve::Zero<Type>(), 0.5);
 }
 
 #endif

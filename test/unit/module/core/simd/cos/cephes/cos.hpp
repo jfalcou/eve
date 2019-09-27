@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check cos behavior on wide",
   using eve::logical;
 
   wide<Type, T>  lhs([](auto i, auto) { return (i%2 ? 1:-1)*40*eve::Pio_4<Type>()/Type(i+1); }), 
-    ref([](auto i, auto) { return eve::cephes_(eve::cos)( (i%2 ? 1:-1)*40*eve::Pio_4<Type>()/Type(i+1)); });  
+    ref([](auto i, auto) { return eve::cephes_(eve::cos)( (i%2 ? 1:-1)*40*eve::Pio_4<Type>()/Type(i+1)); });
   TTS_ULP_EQUAL(ref, eve::cephes_(eve::cos)(lhs), 0.5);
 }
 
