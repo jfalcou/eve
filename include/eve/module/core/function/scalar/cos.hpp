@@ -25,6 +25,7 @@
 #include <eve/function/rem_pio2_cephes.hpp>
 #include <eve/function/rem_pio2_medium.hpp>
 #include <eve/function/rem_pio2.hpp>
+#include <eve/function/reduce_large.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
@@ -140,8 +141,16 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-      auto [fn, xr] = rem_pio2(x);
-      return detail::cos_finalize(fn, xr); 
+      if constexpr(std::is_same_v<T, float>)
+      {
+        auto [fn, xr] = reduce_large(x);
+        return detail::cos_finalize(fn, xr);
+      }
+      else
+      {
+        auto [fn, xr] = rem_pio2(x);
+        return detail::cos_finalize(fn, xr);
+      }
     }
     else
     {

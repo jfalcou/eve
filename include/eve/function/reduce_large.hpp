@@ -8,12 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cos.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/wide.hpp>
+#ifndef EVE_FUNCTION_REDUCE_LARGE_HPP_INCLUDED
+#define EVE_FUNCTION_REDUCE_LARGE_HPP_INCLUDED
 
-#define TYPE()        double
-#define FUNCTION()    [](double a){return std::cos(a);}  
-#define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
+#include <eve/function/scalar/reduce_large.hpp>
+#include <eve/function/simd/reduce_large.hpp>
 
-#include "bench.hpp"
+#endif

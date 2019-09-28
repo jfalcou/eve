@@ -32,7 +32,6 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cosd_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-
   {
     return cos(big_type{}, deginrad(a0)); 
   }
@@ -99,7 +98,6 @@ namespace eve::detail
       auto fn =  quadrant(xi); 
       return detail::cos_finalize(fn, xr);
     }
-    
     else
     {
       static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged cosd ]: Used tag is unsupported"); 

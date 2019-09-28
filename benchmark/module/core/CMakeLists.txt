@@ -10,6 +10,9 @@
 ##==================================================================================================
 ## scalar benchmarks
 list_benchs("scalar/all/regular" "core" ${all_types})
+list_benchs("scalar/cosd/regular" "core" ${real_types})
+list_benchs("scalar/cosd/restricted" "core" ${real_types})
+list_benchs("scalar/cosd/small" "core" ${real_types})
 list_benchs("scalar/cos/regular" "core" ${real_types})
 list_benchs("scalar/cos/restricted" "core" ${real_types})
 list_benchs("scalar/cos/small" "core" ${real_types})
@@ -116,6 +119,9 @@ list_benchs("scalar/sqr/regular"  "core" ${all_types})
 ##================================================================================================== 
 ## simd benchmarks
 list_benchs("simd/all/regular" "core" ${all_types})
+list_benchs("simd/cosd/regular" "core" ${real_types})
+list_benchs("simd/cosd/restricted" "core" ${real_types})
+list_benchs("simd/cosd/small" "core" ${real_types})
 list_benchs("simd/cos/regular" "core" ${real_types})
 list_benchs("simd/cos/restricted" "core" ${real_types})
 list_benchs("simd/cos/small" "core" ${real_types})

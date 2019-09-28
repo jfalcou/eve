@@ -1,19 +1,12 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2019 Jean-Thierry Lapreste
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cos.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/wide.hpp>
 
-#define TYPE()        double
-#define FUNCTION()    [](double a){return std::cos(a);}  
-#define SAMPLES(N)    random<T>(N,-20*eve::Pi<T>(),20*eve::Pi<T>())
-
-#include "bench.hpp"
+using Type = double;
+#include "reduce_large.hpp"
