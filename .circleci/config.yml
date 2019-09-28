@@ -16,437 +16,299 @@ docker_gcc: &docker_gcc
     - image: gcc:latest
       environment:
         COMPILER: g++
-docker_clang: &docker_clang
-  docker:
-    - image: teeks99/clang-ubuntu:8
-      environment:
-        COMPILER: clang++-8
-docker_ppc64: &docker_ppc64
-  docker:
-    - image: ubuntu:latest
-      environment:
-        COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
-        COMPILER: powerpc64-linux-gnu-g++-8
-        RUN_COMMAND: qemu-ppc64
-        EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
-        EXTRA_LIB: lib64
-        EXTRA_NAME: ld64.so.1
-docker_aarch64: &docker_aarch64
-  docker:
-    - image: ubuntu:latest
-      environment:
-        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
-        COMPILER: aarch64-linux-gnu-g++-8
-        RUN_COMMAND: qemu-aarch64
-        EXTRA_PATH: /usr/aarch64-linux-gnu/lib/
-        EXTRA_LIB: lib
-        EXTRA_NAME: ld-linux-aarch64.so.1
+# docker_clang: &docker_clang
+#   docker:
+#     - image: teeks99/clang-ubuntu:8
+#       environment:
+#         COMPILER: clang++-8
+# docker_ppc64: &docker_ppc64
+#   docker:
+#     - image: ubuntu:latest
+#       environment:
+#         COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
+#         COMPILER: powerpc64-linux-gnu-g++-8
+#         RUN_COMMAND: qemu-ppc64
+#         EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
+#         EXTRA_LIB: lib64
+#         EXTRA_NAME: ld64.so.1
+# docker_aarch64: &docker_aarch64
+#   docker:
+#     - image: ubuntu:latest
+#       environment:
+#         COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
+#         COMPILER: aarch64-linux-gnu-g++-8
+#         RUN_COMMAND: qemu-aarch64
+#         EXTRA_PATH: /usr/aarch64-linux-gnu/lib/
+#         EXTRA_LIB: lib
+#         EXTRA_NAME: ld-linux-aarch64.so.1
 
 ##==================================================================================================
 ## Build configurations
 ##==================================================================================================
 config_gcc_x86: &config_gcc_x86
   <<: *docker_gcc
-config_clang_avx2: &config_clang_avx2
-  <<: *docker_clang
-config_gcc_ppc64: &config_gcc_ppc64
-  <<: *docker_ppc64
-config_gcc_aarch64: &config_gcc_aarch64
- <<: *docker_aarch64
+# config_clang_x86: &config_clang_x86
+#   <<: *docker_clang
+# config_gcc_ppc64: &config_gcc_ppc64
+#   <<: *docker_ppc64
+# config_gcc_aarch64: &config_gcc_aarch64
+#  <<: *docker_aarch64
 
 ##==================================================================================================
 ## Build steps
 ##==================================================================================================
-steps_test_gcc: &steps_test_gcc
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh
+# steps_test_gcc: &steps_test_gcc
+#   steps:
+#     - checkout
+#     - run:
+#         name: Setup dependencies
+#         command: . .circleci/prepare.sh
+#     - run:
+#         name: Running Basic Tests
+#         command: . .circleci/perform_basic.sh
 
-steps_test_clang_: &steps_test_clang_
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh clang++-8
+# steps_test_clang: &steps_test_clang
+#   steps:
+#     - checkout
+#     - run:
+#         name: Setup dependencies
+#         command: . .circleci/prepare.sh
+#     - run:
+#         name: Running tests
+#         command: . .circleci/run.sh clang++-8
 
-steps_test_ppc64: &steps_test_ppc64
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Setup PowerPC 64
-        command: . .circleci/prepare_cc.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh
+# steps_test_ppc64: &steps_test_ppc64
+#   steps:
+#     - checkout
+#     - run:
+#         name: Setup dependencies
+#         command: . .circleci/prepare.sh
+#     - run:
+#         name: Setup PowerPC 64
+#         command: . .circleci/prepare_cc.sh
+#     - run:
+#         name: Running tests
+#         command: . .circleci/run.sh
 
-steps_test_aarch64: &steps_test_aarch64
-  steps:
-    - checkout
-    - run:
-        name: Setup dependencies
-        command: . .circleci/prepare.sh
-    - run:
-        name: Setup AARCH64
-        command: . .circleci/prepare_cc.sh
-    - run:
-        name: Running tests
-        command: . .circleci/run.sh
+# steps_test_aarch64: &steps_test_aarch64
+#   steps:
+#     - checkout
+#     - run:
+#         name: Setup dependencies
+#         command: . .circleci/prepare.sh
+#     - run:
+#         name: Setup AARCH64
+#         command: . .circleci/prepare_cc.sh
+#     - run:
+#         name: Running tests
+#         command: . .circleci/run.sh
 
 ##==================================================================================================
 ## Jobs list
 ##==================================================================================================
 jobs:
   ##================================================================================================
-  ## Synchronization jobs
+  ## Non-SIMD tests
   ##================================================================================================
-  sync_basic:
-    <<: *docker_gcc
+  gcc_x86:
+    <<: *config_gcc_x86
     steps:
-      - run: echo "Test doc.unit completed"
-  sync_scalar:
-    <<: *docker_gcc
-    steps:
-      - run: echo "Test core.scalar.unit completed"
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running Basic Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE2
+          command: VARIANT="emulation" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
+  # gcc_release_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+  #   <<: *steps_test_gcc
+  # gcc_sse2_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-msse2"
+  #   <<: *steps_test_gcc
+  # gcc_sse4_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-msse4.2"
+  #   <<: *steps_test_gcc
+  # gcc_avx_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-mavx"
+  #   <<: *steps_test_gcc
+  # gcc_fma3_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-mavx -mfma"
+  #   <<: *steps_test_gcc
+  # gcc_avx2_basic:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-mavx2"
+  #   <<: *steps_test_gcc
+  # clang_x86_basic:
+  #   <<: *config_clang_x86
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-mavx2"
+  #   <<: *steps_test_clang_
+  # arm_aarch64_basic:
+  #   <<: *config_gcc_aarch64
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-Wno-psabi"
+  #   <<: *steps_test_aarch64
+  # ppc_vsx_basic:
+  #   <<: *config_gcc_ppc64
+  #   environment:
+  #     TARGET: basic
+  #     REPLICATION: 8
+  #     OPTIONS: "-mvsx -mpower8-vector"
+  #   <<: *steps_test_ppc64
 
-  ##================================================================================================ 
-  ## Basic tests
-  ##================================================================================================
-  gcc_emu_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-DEVE_NO_SIMD"
-    <<: *steps_test_gcc
-  gcc_release_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
-    <<: *steps_test_gcc
-  gcc_sse2_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-msse2"
-    <<: *steps_test_gcc
-  gcc_sse4_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-msse4.2"
-    <<: *steps_test_gcc
-  gcc_avx_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mavx"
-    <<: *steps_test_gcc
-  gcc_fma3_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mavx -mfma"
-    <<: *steps_test_gcc
-  gcc_avx2_basic:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_gcc
-  clang_avx2_basic:
-    <<: *config_clang_avx2
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_clang_
-  arm_aarch64_basic:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-Wno-psabi"
-    <<: *steps_test_aarch64
-  ppc_vsx_basic:
-    <<: *config_gcc_ppc64
-    environment:
-      TARGET: basic
-      REPLICATION: 8
-      OPTIONS: "-mvsx -mpower8-vector"
-    <<: *steps_test_ppc64
-
-  ##================================================================================================
-  ## Scalar tests
-  ##================================================================================================
-  gcc_emu_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-DEVE_NO_SIMD"
-    <<: *steps_test_gcc
-  gcc_release_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
-    <<: *steps_test_gcc
-  gcc_sse2_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-msse2"
-    <<: *steps_test_gcc
-  gcc_sse4_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-msse4.2"
-    <<: *steps_test_gcc
-  gcc_avx_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mavx"
-    <<: *steps_test_gcc
-  gcc_fma3_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mavx -mfma"
-    <<: *steps_test_gcc
-  gcc_avx2_scalar:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_gcc
-  clang_avx2_scalar:
-    <<: *config_clang_avx2
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mavx2"
-    <<: *steps_test_clang_
-  arm_aarch64_scalar:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-Wno-psabi"
-    <<: *steps_test_aarch64
-  ppc_vsx_scalar:
-    <<: *config_gcc_ppc64
-    environment:
-      TARGET: core.scalar
-      REPLICATION: 8
-      OPTIONS: "-mvsx -mpower8-vector"
-    <<: *steps_test_ppc64
-
-  ##================================================================================================
-  ## SIMD tests
-  ##================================================================================================
-  gcc_emu_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-DEVE_NO_SIMD"
-    <<: *steps_test_gcc
-  gcc_release_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
-    <<: *steps_test_gcc
-  gcc_sse2_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-msse2"
-    <<: *steps_test_gcc
-  gcc_sse4_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-msse4.2"
-    <<: *steps_test_gcc
-  gcc_avx_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 4
-      OPTIONS: "-mavx"
-    <<: *steps_test_gcc
-  gcc_fma3_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 4
-      OPTIONS: "-mavx -mfma"
-    <<: *steps_test_gcc
-  gcc_avx2_simd:
-    <<: *config_gcc_x86
-    environment:
-      TARGET: core.simd
-      REPLICATION: 4
-      OPTIONS: "-mavx2"
-    <<: *steps_test_gcc
-  clang_avx2_simd:
-    <<: *config_clang_avx2
-    environment:
-      TARGET: core.simd
-      REPLICATION: 4
-      OPTIONS: "-mavx2"
-    <<: *steps_test_clang_
-  arm_aarch64_simd:
-    <<: *config_gcc_aarch64
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-Wno-psabi"
-    <<: *steps_test_aarch64
-  ppc_vsx_simd:
-    <<: *config_gcc_ppc64
-    environment:
-      TARGET: core.simd
-      REPLICATION: 2
-      OPTIONS: "-mvsx -mpower8-vector"
-    <<: *steps_test_ppc64
+  # ##================================================================================================
+  # ## SIMD tests
+  # ##================================================================================================
+  # gcc_emu_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     OPTIONS: "-DEVE_NO_SIMD"
+  #   <<: *steps_test_gcc
+  # gcc_release_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
+  #   <<: *steps_test_gcc
+  # gcc_sse2_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     OPTIONS: "-msse2"
+  #   <<: *steps_test_gcc
+  # gcc_sse4_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     OPTIONS: "-msse4.2"
+  #   <<: *steps_test_gcc
+  # gcc_avx_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 4
+  #     OPTIONS: "-mavx"
+  #   <<: *steps_test_gcc
+  # gcc_fma3_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 4
+  #     OPTIONS: "-mavx -mfma"
+  #   <<: *steps_test_gcc
+  # gcc_avx2_simd:
+  #   <<: *config_gcc_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 4
+  #     OPTIONS: "-mavx2"
+  #   <<: *steps_test_gcc
+  # clang_x86_simd:
+  #   <<: *config_clang_x86
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 4
+  #     OPTIONS: "-mavx2"
+  #   <<: *steps_test_clang_
+  # arm_aarch64_simd:
+  #   <<: *config_gcc_aarch64
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     OPTIONS: "-Wno-psabi"
+  #   <<: *steps_test_aarch64
+  # ppc_vsx_simd:
+  #   <<: *config_gcc_ppc64
+  #   environment:
+  #     TARGET: core.simd
+  #     REPLICATION: 2
+  #     OPTIONS: "-mvsx -mpower8-vector"
+  #   <<: *steps_test_ppc64
 
 workflows:
   version: 2
   build_and_test:
     jobs:
     ##==============================================================================================
-    ## All architecture tests in parallel
+    ## All Basic tests
     ##==============================================================================================
-      - arm_aarch64_basic
-      - ppc_vsx_basic
-      - gcc_emu_basic
-      - gcc_release_basic
-      - gcc_sse2_basic
-      - gcc_sse4_basic
-      - gcc_avx_basic
-      - gcc_fma3_basic
-      - gcc_avx2_basic
-      - clang_avx2_basic
-      - sync_basic:
-          requires:
-            - arm_aarch64_basic
-            - ppc_vsx_basic
-            - gcc_emu_basic
-            - gcc_release_basic
-            - gcc_sse2_basic
-            - gcc_sse4_basic
-            - gcc_avx_basic
-            - gcc_fma3_basic
-            - gcc_avx2_basic
-            - clang_avx2_basic
-
-    ##==============================================================================================
-    ## All Scalar tests in parallel
-    ##==============================================================================================
-      - arm_aarch64_scalar:
-          requires:
-            - sync_basic
-      - ppc_vsx_scalar:
-          requires:
-            - sync_basic
-      - gcc_emu_scalar:
-          requires:
-            - sync_basic
-      - gcc_release_scalar:
-          requires:
-            - sync_basic
-      - gcc_sse2_scalar:
-          requires:
-            - sync_basic
-      - gcc_sse4_scalar:
-          requires:
-            - sync_basic
-      - gcc_avx_scalar:
-          requires:
-            - sync_basic
-      - gcc_fma3_scalar:
-          requires:
-            - sync_basic
-      - gcc_avx2_scalar:
-          requires:
-            - sync_basic
-      - clang_avx2_scalar:
-          requires:
-            - sync_basic
-      - sync_scalar:
-          requires:
-            - arm_aarch64_scalar
-            - ppc_vsx_scalar
-            - gcc_emu_scalar
-            - gcc_release_scalar
-            - gcc_sse2_scalar
-            - gcc_sse4_scalar
-            - gcc_avx_scalar
-            - gcc_fma3_scalar
-            - gcc_avx2_scalar
-            - clang_avx2_scalar
+      - gcc_x86
+#       - ppc_vsx_basic
+#       - gcc_emu_basic
+#       - gcc_release_basic
+#       - gcc_sse2_basic
+#       - gcc_sse4_basic
+#       - gcc_avx_basic
+#       - gcc_fma3_basic
+#       - gcc_avx2_basic
+#       - clang_x86_basic
 
     ##==============================================================================================
     ## All SIMD tests in parallel
     ##==============================================================================================
-      - arm_aarch64_simd:
-          requires:
-            - sync_scalar
-      - ppc_vsx_simd:
-          requires:
-            - sync_scalar
-      - gcc_emu_simd:
-          requires:
-            - sync_scalar
-      - gcc_release_simd:
-          requires:
-            - sync_scalar
-      - gcc_sse2_simd:
-          requires:
-            - sync_scalar
-      - gcc_sse4_simd:
-          requires:
-            - sync_scalar
-      - gcc_avx_simd:
-          requires:
-            - sync_scalar
-      - gcc_fma3_simd:
-          requires:
-            - sync_scalar
-      - gcc_avx2_simd:
-          requires:
-            - sync_scalar
-      - clang_avx2_simd:
-          requires:
-            - sync_scalar
+#       - arm_aarch64_simd:
+#           requires:
+#             - sync_scalar
+#       - ppc_vsx_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_emu_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_release_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_sse2_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_sse4_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_avx_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_fma3_simd:
+#           requires:
+#             - sync_scalar
+#       - gcc_avx2_simd:
+#           requires:
+#             - sync_scalar
+#       - clang_x86_simd:
+#           requires:
+#             - sync_scalar
