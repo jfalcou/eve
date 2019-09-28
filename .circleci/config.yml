@@ -147,157 +147,155 @@ jobs:
           name: Running Basic Tests - PPC64 VSX
           command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
 
-  # ##================================================================================================
-  # ## SIMD tests
-  # ##================================================================================================
-  # gcc_emu_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     OPTIONS: "-DEVE_NO_SIMD"
-  #   <<: *steps_test_gcc
-  # gcc_release_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     CMAKE_OPTIONS: "-DCMAKE_BUILD_TYPE=Release"
-  #   <<: *steps_test_gcc
-  # gcc_sse2_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     OPTIONS: "-msse2"
-  #   <<: *steps_test_gcc
-  # gcc_sse4_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     OPTIONS: "-msse4.2"
-  #   <<: *steps_test_gcc
-  # gcc_avx_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 4
-  #     OPTIONS: "-mavx"
-  #   <<: *steps_test_gcc
-  # gcc_fma3_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 4
-  #     OPTIONS: "-mavx -mfma"
-  #   <<: *steps_test_gcc
-  # gcc_avx2_simd:
-  #   <<: *config_gcc_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 4
-  #     OPTIONS: "-mavx2"
-  #   <<: *steps_test_gcc
-  # clang_x86_simd:
-  #   <<: *config_clang_x86
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 4
-  #     OPTIONS: "-mavx2"
-  #   <<: *steps_test_clang_
-  # arm_aarch64_simd:
-  #   <<: *config_gcc_aarch64
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     OPTIONS: "-Wno-psabi"
-  #   <<: *steps_test_aarch64
-  # ppc_vsx_simd:
-  #   <<: *config_gcc_ppc64
-  #   environment:
-  #     TARGET: core.simd
-  #     REPLICATION: 2
-  #     OPTIONS: "-mvsx -mpower8-vector"
-  #   <<: *steps_test_ppc64
+  ##================================================================================================
+  ## SIMD tests
+  ##================================================================================================
+  gcc_x86_emulation:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
+
+  gcc_x86_sse2:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
+
+  gcc_x86_sse4:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
+
+  gcc_x86_avx:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - AVX
+          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
+
+  gcc_x86_fma:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - FMA
+          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh
+
+  gcc_x86_avx2:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Running SIMD Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
+
+  arm_aarch64_simd:
+    <<: *config_aarch64
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Setup AARCH64
+          command: . .circleci/prepare_cc.sh
+      - run:
+          name: Running SIMD Tests - AARCH64 NEON
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
+
+  ppc64_vsx:
+    <<: *config_gcc_ppc64
+    steps:
+      - checkout
+      - run:
+          name: Setup dependencies
+          command: . .circleci/prepare.sh
+      - run:
+          name: Setup PowerPC64
+          command: . .circleci/prepare_cc.sh
+      - run:
+          name: Running Basic Tests - PPC64 VSX
+          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh
 
 workflows:
   version: 2
   build_and_test:
     jobs:
     ##==============================================================================================
-    ## All Basic tests
+    ## All tests
     ##==============================================================================================
       - gcc_x86
-      - arm_aarch64
-      - ppc64:
-          requires:
-            - arm_aarch64
-      - clang_x86:
+      # - arm_aarch64
+      ## REACTIVATE LATER
+      # - ppc64:
+      #     requires:
+      #       - arm_aarch64
+      - clang_x86
+      #:
+      #   requires:
+      #     - gcc_x86
+      ## REACTIVATE LATER
+      #       - ppc64
+      # - arm_aarch64_simd:
+      #     requires:
+      #       - clang_x86
+      - gcc_x86_sse2:
           requires:
             - gcc_x86
-            - ppc64
-
-    ##==============================================================================================
-    ## All SIMD tests in parallel
-    ##==============================================================================================
-#       - arm_aarch64_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - ppc_vsx_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_emu_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_release_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_sse2_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_sse4_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_avx_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_fma3_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - gcc_avx2_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
-#       - clang_x86_simd:
-#           requires:
-#             - gcc_x86
-#             - clang_x86
-#             - arm_aarch64
-#             - ppc64
+            - clang_x86
+      - gcc_x86_sse4:
+          requires:
+            - gcc_x86
+            - clang_x86
+      - gcc_x86_avx:
+          requires:
+            - gcc_x86_sse2
+            - gcc_x86_sse4
+      - gcc_x86_avx2:
+          requires:
+            - gcc_x86_sse2
+            - gcc_x86_sse4
+      - gcc_x86_fma:
+          requires:
+            - gcc_x86_avx
+            - gcc_x86_avx2
+      - gcc_x86_emulation:
+          requires:
+            - gcc_x86_avx
+            - gcc_x86_avx2
+      ## REACTIVATE LATER
+      # - arm_aarch64_simd:
+      #     requires:
+      #       - gcc_x86_fma
+      #       - gcc_x86_emulation
+      # - ppc64_vsx:
+      #     requires:
+      #       - gcc_x86_fma
+      #       - gcc_x86_emulation
