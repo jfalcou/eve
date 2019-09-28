@@ -39,6 +39,7 @@ fi
 ##==================================================================================================
 ## Run every test up to SIMD
 ##==================================================================================================
-ninja basic.unit      -j 8 && ninja core.scalar.unit  -j 8 && \
-ctest -R ^arch.*.unit -j 8 && ctest -R ^doc.*.unit    -j 8 && \
-ctest -R ^api.*.unit  -j 8 && ctest -R ^core.scalar.*.unit -j 8
+ninja arch.unit         -j 8 && ctest -R ^arch.*.unit        -j 8 && \
+ninja doc.unit          -j 8 && ctest -R ^doc.*.unit         -j 8 && \
+ninja api.unit          -j 8 && ctest -R ^api.*.unit         -j 8 && \
+ninja core.scalar.unit  -j 8 && ctest -R ^core.scalar.*.unit -j 8
