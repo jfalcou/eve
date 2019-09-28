@@ -33,7 +33,7 @@ then
   echo "Updating path for $EXTRA_PATH/$EXTRA_NAME ..."
   LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EXTRA_PATH
   export LD_LIBRARY_PATH
-  ln -s $EXTRA_PATH/$EXTRA_NAME /$EXTRA_LIB/$EXTRA_NAME
+  ln -sf $EXTRA_PATH/$EXTRA_NAME /$EXTRA_LIB/$EXTRA_NAME
 fi
 
 ##==================================================================================================
