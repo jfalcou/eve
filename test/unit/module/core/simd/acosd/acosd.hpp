@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_EQZ_HPP
-#define IS_EQZ_HPP
+#ifndef ACOSD_HPP
+#define ACOSD_HPP
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -31,9 +31,9 @@ TTS_CASE_TPL("Check acosd behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::acosd(Type(i)); }),
-    refp([](auto i, auto) { return eve::pedantic_(eve::acosd)(Type(i)); });  
+  wide<Type, T>  lhs([](auto i, auto) { return (i%2 ? 1 : -1)*Type(1)/(i+1); }), 
+  ref([](auto i, auto) { return eve::acosd( (i%2 ? 1 : -1)*Type(1)/(i+1)); }),  
+  refp([](auto i, auto) { return eve::pedantic_(eve::acosd)((i%2 ? 1 : -1)*Type(1)/(i+1)); });  
   TTS_ULP_EQUAL(refp, eve::pedantic_(eve::acosd)(lhs), 24);
   TTS_ULP_EQUAL(ref, eve::acosd(lhs), 24); 
 }
