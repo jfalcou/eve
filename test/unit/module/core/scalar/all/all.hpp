@@ -29,8 +29,7 @@ TTS_CASE("Check eve::all behavior")
   TTS_EQUAL(eve::all(Type{2}), true);
   if constexpr(std::is_floating_point_v<Type>)
   {
-     TTS_EQUAL(eve::all(0.0), false);
-     TTS_EQUAL(eve::all(-0.0), false);
+    TTS_EQUAL(eve::all(-0.0), false); //tested because of the high bit set
   }
 }
 

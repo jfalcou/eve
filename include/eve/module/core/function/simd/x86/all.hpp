@@ -65,9 +65,9 @@ namespace eve::detail
       static constexpr int smask = mask <<  sizeof(T)*N::value; 
       if constexpr(sizeof(T) == 1)
       {
-        static constexpr int sv = N::value; 
-        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
+       if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {
+          static constexpr int sv = N::value; 
           auto z = _mm_bslli_si128(v.mask(), sv); 
           return _mm_movemask_epi8(z) == smask;
         }
@@ -75,10 +75,10 @@ namespace eve::detail
       }
       else
       {
-       using i8_t = wide<int8_t, fixed<16> , sse_>;
-       static constexpr int sv = N::value*sizeof(T); 
-       if constexpr(N::value*sizeof(T) != 16) // "small" wide types
+        using i8_t = wide<int8_t, fixed<16> , sse_>;
+        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
         {         
+          static constexpr int sv = N::value*sizeof(T); 
           auto z = _mm_bslli_si128(bitwise_cast<i8_t >(v.mask()), sv); 
           return _mm_movemask_epi8(z) == smask;
         }

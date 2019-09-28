@@ -39,7 +39,6 @@ TTS_CASE_TPL("Check all behavior on wide",
   for(int j=0; j < T::value; ++j)
   {
     wide<Type, T> rhs([j](int i, int) { return i > j ? 0 :i; }); 
-    std::cout << rhs << std::endl;
     TTS_EQUAL(false, eve::all(rhs));
   }
 }
