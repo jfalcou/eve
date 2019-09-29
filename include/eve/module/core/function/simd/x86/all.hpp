@@ -18,6 +18,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/forward.hpp>
 #include <eve/wide.hpp>
+#include <eve/arch/limits.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -28,46 +29,46 @@ namespace eve::detail
   EVE_FORCEINLINE bool  all_(EVE_SUPPORTS(sse2_)
                             , logical<wide<T, N, sse_>> const &v) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    static constexpr int Bytes = limits<eve::sse2_>::bytes; 
+    if constexpr(std::is_same_v<T, float>)
     {
-      if constexpr(std::is_same_v<T, float>)
+      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      static constexpr int Card = Bytes/sizeof(T); 
+      static constexpr int SH = (Card-N::value); 
+      static constexpr int mask = 0xF >> SH;
+      if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
       {
-        using i8_t = wide<int8_t, fixed<16> , sse_>;
-        static constexpr int SH = (4-N::value); 
-        static constexpr int mask = 0xF >> SH;
-        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
-        {
-          using t_t  = wide<float, fixed<4>, sse_>;
-          static constexpr int sv = SH*sizeof(T); 
-          static constexpr int smask = mask << SH;
-          i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv);
-          return _mm_movemask_ps(bitwise_cast<t_t>(z)) == smask;
-        }
-        else  return _mm_movemask_ps(v.mask()) == mask;
+        using t_t  = wide<float, fixed<Card>, sse_>;
+        static constexpr int sv = SH*sizeof(T); 
+        static constexpr int smask = mask << SH;
+        i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv);
+        return _mm_movemask_ps(bitwise_cast<t_t>(z)) == smask;
       }
-      else if constexpr(std::is_same_v<T, double>)
+      else  return _mm_movemask_ps(v.mask()) == mask;
+    }
+    else if constexpr(std::is_same_v<T, double>)
+    {
+      static constexpr int Card = Bytes/sizeof(T); 
+      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      static constexpr int SH = (Card-N::value); 
+      static constexpr int mask = 0x3 >> SH;
+      if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
       {
-        using i8_t = wide<int8_t, fixed<16> , sse_>;
-        static constexpr int SH = (2-N::value); 
-        static constexpr int mask = 0x3 >> SH;
-        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
-        {
-          using t_t  = wide<double, fixed <2>, sse_>; 
-          static constexpr int sv = SH*sizeof(T); 
-          static constexpr int smask = mask << SH;
-          i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
-          return _mm_movemask_pd(bitwise_cast<t_t>(z)) == smask;
-        }
-        else return _mm_movemask_pd(v.mask()) == mask;
+        using t_t  = wide<double, fixed <Card>, sse_>; 
+        static constexpr int sv = SH*sizeof(T); 
+        static constexpr int smask = mask << SH;
+        i8_t z = _mm_bslli_si128(bitwise_cast<i8_t>(v.mask()), sv); 
+        return _mm_movemask_pd(bitwise_cast<t_t>(z)) == smask;
       }
+      else return _mm_movemask_pd(v.mask()) == mask;
     }  
-    else
+    else // if constexpr(std::is_integral_v<T>)
     {
-      static constexpr int SH   = (16-sizeof(T)*N::value); 
+      static constexpr int SH   = (Bytes-sizeof(T)*N::value); 
       static constexpr int mask = 0xFFFF >> SH; 
       if constexpr(sizeof(T) == 1)
       {
-       if constexpr(N::value*sizeof(T) != 16) // "small" wide types
+        if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
         {
           static constexpr int smask = mask <<  SH; 
           static constexpr int sv = SH; 
@@ -78,8 +79,8 @@ namespace eve::detail
       }
       else
       {
-        using i8_t = wide<int8_t, fixed<16> , sse_>;
-        if constexpr(N::value*sizeof(T) != 16) // "small" wide types
+        using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+        if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
         {         
           static constexpr int smask = mask <<  SH; 
           static constexpr int sv = SH; 

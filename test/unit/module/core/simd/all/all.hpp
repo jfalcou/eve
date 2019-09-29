@@ -11,7 +11,7 @@
 #ifndef ALL_HPP
 #define ALL_HPP
 
-#include "test.hpp"
+#include "test.hpp"  
 #include <tts/tests/relation.hpp>
 #include <eve/function/all.hpp>
 #include <eve/wide.hpp>
@@ -26,8 +26,8 @@ TTS_CASE_TPL("Check all behavior on wide",
              fixed<2>,
              fixed<4>, 
              fixed<8>,
-             fixed<16>,
-             fixed<32>,
+             fixed<16>, 
+             fixed<32>, 
              fixed<64>
             )
 {
@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check all behavior on wide",
       TTS_EQUAL(true, eve::all(rhs4));
     else
       TTS_EQUAL(false, eve::all(rhs4));    
-  }
+  } 
 }
 
 #endif
