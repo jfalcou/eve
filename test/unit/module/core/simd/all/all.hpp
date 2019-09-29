@@ -33,13 +33,22 @@ TTS_CASE_TPL("Check all behavior on wide",
 {
   using eve::wide;
   
-  wide<Type, T> lhs([](int i, int) { return i+1; });
+  wide<Type, T> lhs([](int i, int) { return Type(1); });
+  std::cout << "lhs " << lhs << std::endl; 
   TTS_EQUAL(true, eve::all(lhs));
-  
   for(int j=0; j < T::value; ++j)
   {
-    wide<Type, T> rhs([j](int i, int) { return i > j ? 0 :i; }); 
-    TTS_EQUAL(false, eve::all(rhs));
+    wide<Type, T> rhs1([j](int i, int) { return i >= j ? 0 : 1; });
+    wide<Type, T> rhs2([j](int i, int) { return i <= j ? 0 : 1; });   
+    wide<Type, T> rhs3([j](int i, int) { return i == j ? 0 : 1; });
+    wide<Type, T> rhs4([j](int i, int) { return i == j ? 1 : 0; });   
+    TTS_EQUAL(false, eve::all(rhs1));
+    TTS_EQUAL(false, eve::all(rhs2));    
+    TTS_EQUAL(false, eve::all(rhs3));
+    if constexpr(T::value == 1)
+      TTS_EQUAL(true, eve::all(rhs4));
+    else
+      TTS_EQUAL(false, eve::all(rhs4));    
   }
 }
 
