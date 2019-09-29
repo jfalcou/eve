@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/bitwise_and.hpp>
-#include <eve/function/reduce_fast.hpp>
+#include <eve/function/reduce_fast.hpp> 
 // #include <eve/function/fnma.hpp>
 // #include <eve/function/quadrant.hpp>
 // #include <eve/function/nearest.hpp>
@@ -33,9 +33,10 @@ namespace eve::detail
   //    multiply computes the exact 2.62-bit fixed-point modulo.  Since the result
   //    can have at most 29 leading zeros after the binary point, the double
   //    precision result is accurate to 33 bits.  
-  
+
+  template < typename N, typename ABI>
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
-                                     , float const &x) noexcept
+                                     , wide<float, N, ABI>const &x) noexcept
   {
     // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
     //   only 8 new bits are added per entry, making the table 4 times larger.  
@@ -50,11 +51,11 @@ namespace eve::detail
         0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
       };
     static const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
-    auto [sn, sr] =  reduce_fast(x); 
-    if (all(x <= 120.0f)) return std::tuple<float, float>(sn, sr)); 
+//    auto [sn, sr] =  reduce_fast(x); 
+//    if (all(x <= 120.0f)) return std::tuple<float, float>(sn, sr); 
     auto xi =  bitwise_cast<uint32_t>(x); 
-    const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15];
-    int shift = (xi >> 23) & 7;
+    const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15u];
+    auto shift = (xi >> 23) & 7;
     uint64_t n, res0, res1, res2;
     
     xi = (xi & 0xffffff) | 0x800000;
@@ -69,10 +70,13 @@ namespace eve::detail
     n = (res0 + (1ULL << 61)) >> 62;
     res0 -= n << 62;
     double xx = (int64_t)res0;
-      return std::tuple<float, float>(static_cast<float>(n), static_cast<float>(xx * pi63));
-    }
-    
+    return if_else(x <= 120.0f,
+                   reduce_fast(x),
+                   std::tuple<float, float>(static_cast<float>(n), static_cast<float>(xx * pi63));
+                   }
+      
   }
 }
 
 #endif
+ 
