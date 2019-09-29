@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <numeric>
 #include <iostream>
+#include <type_traits>
 
 namespace eve::bench
 {
@@ -120,8 +121,9 @@ namespace eve::bench
                                   );
     }
 
-    private:
-    std::vector<out_type> output;
+  private:
+    using o_t = std::conditional_t< std::is_same_v<out_type,bool>, int, out_type>; 
+    std::vector < o_t >  output; 
   };
 }
 
