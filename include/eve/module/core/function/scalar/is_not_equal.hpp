@@ -30,7 +30,7 @@ namespace eve::detail
     { return static_cast<bool>(a) != static_cast<bool>(b); }
     else
     {
-      return a != b;
+      return a!= b; 
     }
   }
 }
