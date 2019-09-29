@@ -20,20 +20,21 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitofsign.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/function/is_greater.hpp>
-#include <eve/function/is_less.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
@@ -48,7 +49,8 @@ namespace eve::detail
       using t_t = eve::wide<T,N,ABI>;
       auto z = Pio_2(as(a0))-eve::asin(a0);
       // small correction with pio_2lo
-      return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
+      return if_else(a0 == One(as(a0)), eve::zero_,
+                     z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>());
     }
   }
 
