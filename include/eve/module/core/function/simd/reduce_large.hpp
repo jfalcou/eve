@@ -50,10 +50,11 @@ namespace eve::detail
         0x34ddc0db, 0xddc0db62, 0xc0db6295, 0xdb629599,
         0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
       };
+    using ui_t =   wide<uint32_t, N, ABI>
     static const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
 //    auto [sn, sr] =  reduce_fast(x); 
 //    if (all(x <= 120.0f)) return std::tuple<float, float>(sn, sr); 
-    auto xi =  bitwise_cast<uint32_t>(x); 
+    auto xi =  bitwise_cast(x, as_<ui_t>())); 
     const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15u];
     auto shift = (xi >> 23) & 7;
     uint64_t n, res0, res1, res2;

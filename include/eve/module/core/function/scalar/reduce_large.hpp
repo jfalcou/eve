@@ -55,7 +55,7 @@ namespace eve::detail
       return reduce_fast(x); 
     }
     else{
-      auto xi =  bitwise_cast<uint32_t>(x); 
+      auto xi =  bitwise_cast(x, as_<uint32_t>()); 
       const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15];
       int shift = (xi >> 23) & 7;
       uint64_t n, res0, res1, res2;
