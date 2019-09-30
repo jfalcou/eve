@@ -35,8 +35,8 @@ namespace eve::detail
     if constexpr(sizeof(T) == 1)
     {
       using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
-      t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
-      t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
+      t_t const Mask1 = bitwise_cast(gen_t(0x00ff),as(a0));
+      t_t const Mask2 = bitwise_cast(gen_t(0xff00),as(a0));
       t_t       tmp   = bitwise_and(a0, Mask1);
       t_t       tmp1  = _mm_slli_epi16(tmp, a1);
       tmp1            = bitwise_and(tmp1, Mask1);
@@ -93,8 +93,8 @@ namespace eve::detail
       {
         using t_t       = wide<T, N, avx_>;
         using gen_t     = wide<std::uint16_t, fixed<N::value / 2>>;
-        t_t const Mask1 = bitwise_cast<t_t>(gen_t(0x00ff));
-        t_t const Mask2 = bitwise_cast<t_t>(gen_t(0xff00));
+        t_t const Mask1 = bitwise_cast(gen_t(0x00ff),as(a0));
+        t_t const Mask2 = bitwise_cast(gen_t(0xff00),as(a0));
         t_t       tmp   = bitwise_and(a0, Mask1);
         t_t       tmp1  = _mm256_slli_epi16(tmp, a1);
         tmp1            = bitwise_and(tmp1, Mask1);
@@ -125,7 +125,7 @@ namespace eve::detail
       else
         return map(shl, a0, a1);
     };
-    ignore(ifxop_choice); 
+    ignore(ifxop_choice);
     if constexpr(current_api >= avx2)
     {
       if constexpr(sizeof(T) <= 2)

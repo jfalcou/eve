@@ -24,15 +24,15 @@
 
 namespace eve::detail
 {
-  
+
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond) noexcept
   requires(U, Vectorizable<U>)
   {
-    return  bitwise_and(U(1), cond.bits()); 
+    return  bitwise_and(U(1), cond.bits());
   }
-  
+
   template<typename T,  typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond,
@@ -48,17 +48,17 @@ namespace eve::detail
                                           , eve::callable_allbits_ const & ) noexcept
   requires(U, Vectorizable<U>)
   {
-    return  bitwise_cast<U>(cond.bits());
+    return  bitwise_cast(cond.bits(), as_<U>());
   }
-  
+
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
                                           , eve::callable_mone_ const & ) noexcept
   requires(U, Vectorizable<U>)
   {
-    if constexpr(std::is_integral_v<U>) 
-      return bitwise_cast<U>(cond.bits());
+    if constexpr(std::is_integral_v<U>)
+      return bitwise_cast(cond.bits(), as_<U>());
     else
       return binarize(cond, U(-1));
   }

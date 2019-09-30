@@ -37,14 +37,16 @@ namespace eve::detail
     else if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) | bitwise_cast<b_t>(b)));
+      auto const tgt = as_<b_t>();
+
+      return bitwise_cast(b_t(bitwise_cast(a,tgt) | bitwise_cast(b,tgt)),as(a));
     }
     else
     {
       if constexpr(std::is_same_v<T, U>) { return a | b; }
       else
       {
-        return a | bitwise_cast<T>(b);
+        return a | bitwise_cast(b,as(a));
       }
     }
   }

@@ -27,7 +27,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      return bitwise_cast<T>(~bitwise_cast<b_t>(a));
+      return bitwise_cast(~bitwise_cast(a,as_<b_t>()), as(a));
     }
     else
     {

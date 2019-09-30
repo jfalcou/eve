@@ -11,7 +11,7 @@
 #ifndef ALL_HPP
 #define ALL_HPP
 
-#include "test.hpp"  
+#include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/function/all.hpp>
 #include <eve/wide.hpp>
@@ -22,34 +22,34 @@
 using eve::fixed;
 
 TTS_CASE_TPL("Check all behavior on wide",
-             fixed<1>, 
+             fixed<1>,
              fixed<2>,
-             fixed<4>, 
+             fixed<4>,
              fixed<8>,
-             fixed<16>, 
-             fixed<32>, 
+             fixed<16>,
+             fixed<32>,
              fixed<64>
             )
 {
   using eve::wide;
-  
+
   wide<Type, T> lhs([](int i, int) { return Type(1); });
-  std::cout << "lhs " << lhs << std::endl; 
+
   TTS_EQUAL(true, eve::all(lhs));
+
   for(int j=0; j < T::value; ++j)
   {
     wide<Type, T> rhs1([j](int i, int) { return i >= j ? 0 : 1; });
-    wide<Type, T> rhs2([j](int i, int) { return i <= j ? 0 : 1; });   
+    wide<Type, T> rhs2([j](int i, int) { return i <= j ? 0 : 1; });
     wide<Type, T> rhs3([j](int i, int) { return i == j ? 0 : 1; });
-    wide<Type, T> rhs4([j](int i, int) { return i == j ? 1 : 0; });   
+    wide<Type, T> rhs4([j](int i, int) { return i == j ? 1 : 0; });
+
     TTS_EQUAL(false, eve::all(rhs1));
-    TTS_EQUAL(false, eve::all(rhs2));    
+    TTS_EQUAL(false, eve::all(rhs2));
     TTS_EQUAL(false, eve::all(rhs3));
-    if constexpr(T::value == 1)
-      TTS_EQUAL(true, eve::all(rhs4));
-    else
-      TTS_EQUAL(false, eve::all(rhs4));    
-  } 
+
+    TTS_EQUAL((T::value == 1), eve::all(rhs4));
+  }
 }
 
 #endif

@@ -63,7 +63,7 @@ namespace eve::detail
   {
     using t_t      = std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>;
     auto cond_mask = bitwise_mask(cond);
-    return bitwise_cast<t_t>(bitwise_select(cond_mask, t.mask(), f.mask()));
+    return bitwise_cast(bitwise_select(cond_mask, t.mask(), f.mask()), as_<t_t>());
   }
 
   //------------------------------------------------------------------------------------------------

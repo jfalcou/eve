@@ -50,10 +50,10 @@ namespace eve::detail
     else
     {
       if constexpr(!is_vectorized_v<V>)
-      { return eve::bitwise_select(a, b, U(bitwise_cast<ut_t>(c))); }
+      { return eve::bitwise_select(a, b, U(bitwise_cast(c,as_<ut_t>()))); }
       else if constexpr(!is_vectorized_v<U>)
       {
-        return eve::bitwise_select(a, V(bitwise_cast<vt_t>(b)), c);
+        return eve::bitwise_select(a, V(bitwise_cast(b,as_<vt_t>())), c);
       }
       else
       {

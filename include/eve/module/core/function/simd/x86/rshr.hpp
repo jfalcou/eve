@@ -33,7 +33,7 @@ namespace eve::detail
     if constexpr(supports_xop)
     {
       using si_t = wide<as_integer_t<I, signed>, N, sse_>;
-      auto sa1   = -bitwise_cast<si_t>(a1);
+      auto sa1   = -bitwise_cast(a1, as_<si_t>{});
       if(std::is_signed_v<I>)
       {
         if constexpr(sizeof(T) == 1)

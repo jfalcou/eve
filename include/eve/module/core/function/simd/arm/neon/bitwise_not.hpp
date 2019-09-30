@@ -23,12 +23,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, neon64_> bitwise_not_(EVE_SUPPORTS(neon128_),
                                                    wide<T, N, neon64_> const &v0) noexcept
   {
-    using t_t  = wide<T, N, neon64_>;
     using i_t  = wide<as_integer_t<T, unsigned>, N>;
-    using in_t = typename t_t::storage_type;
+    using in_t = typename wide<T, N, neon64_>::storage_type;
 
     if constexpr(std::is_floating_point_v<T>)
-      return bitwise_cast<t_t>(bitwise_not(bitwise_cast<i_t>(v0)));
+      return bitwise_cast(bitwise_not(bitwise_cast(v0,as_<i_t>{})), as(v0));
 
     if constexpr(std::is_same_v<in_t, int64x1_t>)
       return vreinterpret_s64_s32(vmvn_s32(vreinterpret_s32_s64(v0)));
@@ -48,12 +47,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, neon128_> bitwise_not_(EVE_SUPPORTS(neon128_),
                                                     wide<T, N, neon128_> const &v0) noexcept
   {
-    using t_t  = wide<T, N, neon128_>;
     using i_t  = wide<as_integer_t<T, unsigned>, N>;
-    using in_t = typename t_t::storage_type;
+    using in_t = typename wide<T, N, neon128_>::storage_type;
 
     if constexpr(std::is_floating_point_v<T>)
-      return bitwise_cast<t_t>(bitwise_not(bitwise_cast<i_t>(v0)));
+      return bitwise_cast(bitwise_not(bitwise_cast(v0,as_<i_t>{})),as(v0));
 
     if constexpr(std::is_same_v<in_t, int64x2_t>)
       return vreinterpretq_s64_s32(vmvnq_s32(vreinterpretq_s32_s64(v0)));

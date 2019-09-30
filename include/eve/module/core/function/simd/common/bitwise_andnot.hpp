@@ -39,7 +39,7 @@ namespace eve::detail
       // this will ensure that no scalar conversion will take place in aggregated
       // in the case vector and scalar not of the value type
       {
-        return eve::bitwise_andnot(a, T(bitwise_cast<vt_t>(b)));
+        return eve::bitwise_andnot(a, T(bitwise_cast(b,as_<vt_t>())));
       }
       else
       {
@@ -63,7 +63,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      return eve::bitwise_andnot(a, bitwise_cast<T>(b));
+      return eve::bitwise_andnot(a, bitwise_cast(b,as(a)));
     }
     else
     {

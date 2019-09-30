@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
   {
-    store(bitwise_cast<wide<T, N, ABI>>(value), (T *)(ptr));
+    store(bitwise_cast(value,as_<wide<T, N, ABI>>{}), (T *)(ptr));
   }
 
   // -----------------------------------------------------------------------------------------------

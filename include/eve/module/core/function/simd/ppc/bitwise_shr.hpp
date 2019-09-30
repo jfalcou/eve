@@ -28,7 +28,7 @@ namespace eve::detail
   requires(wide<T, N, ppc_>, Integral<I>, Integral<T>)
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
-    return wide<T, N, ppc_>(vec_sr(v0.storage(), bitwise_cast<i_t>(v1).storage()));
+    return wide<T, N, ppc_>(vec_sr(v0.storage(), bitwise_cast(v1,as_<i_t>()).storage()));
   }
 
   template<typename T, typename N, typename I>

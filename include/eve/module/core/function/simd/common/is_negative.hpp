@@ -29,7 +29,7 @@ namespace eve::detail
     {
       using swi_t = wide<eve::detail::as_integer_t<T, signed>, N>;
       using lwi_t = as_logical_t<wide<T, N, ABI>>;
-      return bitwise_cast<lwi_t>(is_ltz(bitwise_cast<swi_t>(v)));
+      return bitwise_cast(is_ltz(bitwise_cast(v,as_<swi_t>())), as_<lwi_t>());
     }
   }
 

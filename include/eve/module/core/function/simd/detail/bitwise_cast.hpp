@@ -27,7 +27,7 @@ namespace eve::detail
                       typename tgt_t::cardinal_type,
                       typename tgt_t::abi_type>;
 
-    return bitwise_cast<type>(v0).storage();
+    return bitwise_cast(v0, as_<type>()).storage();
   };
 
   // Arithmetic -> Logical with different storage case
@@ -39,7 +39,7 @@ namespace eve::detail
                            typename type::cardinal_type,
                            typename type::abi_type>;
 
-    auto that = bitwise_cast<local_tgt>(v0);
+    auto that = bitwise_cast(v0, as_<local_tgt>());
     return type((typename type::storage_type)(that.storage()));
   };
 
@@ -48,7 +48,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto l2a_isocast_(In const &v0, Out const &) noexcept
   {
     using type = wide<typename In::value_type::value_type, typename In::cardinal_type>;
-    return bitwise_cast<typename Out::type>(type{v0.storage()});
+    return bitwise_cast(type{v0.storage()}, as_<typename Out::type>());
   };
 
   // Logical -> Arithmetic with different storage case
@@ -68,7 +68,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<In, typename Out::type>)
       return v0;
     else
-      return bitwise_cast<typename Out::type>(type{v0.storage()}).storage();
+      return bitwise_cast(type{v0.storage()}, as_<typename Out::type>()).storage();
   };
 
   // Logical -> Logical with different storage case
@@ -80,7 +80,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<In, typename Out::type>)
       return v0;
     else
-      return bitwise_cast<typename Out::type>(bitwise_cast<type>(v0));
+      return bitwise_cast(bitwise_cast(v0,as_<type>()), as_<typename Out::type>());
   };
 }
 

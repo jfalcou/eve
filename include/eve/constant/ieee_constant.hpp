@@ -40,7 +40,7 @@ namespace eve
                         "[eve::ieeeconstant] floating_point case - BitsPatternfloat has not the correct size");
           return T{};
         }
-        else return static_cast<T>(bitwise_cast<t_t>(BitsPatternfloat));
+        else return static_cast<T>(bitwise_cast(BitsPatternfloat, as_<t_t>()));
       }
       else // if constexpr(std::is_same_v<t_t, double>)
       {
@@ -50,7 +50,7 @@ namespace eve
                         "[eve::ieeeconstant] floating_point case - BitsPatterndouble has not the correct size");
           return T{};
         }
-        else return static_cast<T>(bitwise_cast<t_t>(BitsPatterndouble));
+        else return static_cast<T>(bitwise_cast(BitsPatterndouble, as_<t_t>()));
       }
     }
   }

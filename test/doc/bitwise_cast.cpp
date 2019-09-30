@@ -12,12 +12,12 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                            " << pf << '\n'
-            << "-> eve::bitwise_cast<wide_it>(pf) = " << eve::bitwise_cast<wide_it>(pf) << '\n';
+            << "-> eve::bitwise_cast(pf,as_<wide_it>()) = " << eve::bitwise_cast(pf, eve::as_<wide_it>()) << '\n';
 
   float xf = 2.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                            " << xf << '\n'
-            << "-> eve::bitwise_cast<iT>(xf) =      " << eve::bitwise_cast<iT>(xf) << '\n';
+            << "-> eve::bitwise_cast(xf, as_<iT>()) =      " << eve::bitwise_cast(xf, eve::as_<iT>()) << '\n';
   return 0;
 }

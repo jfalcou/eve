@@ -43,7 +43,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto logical_not_(EVE_SUPPORTS(cpu_),
                                               logical<wide<T, N, ABI>> const &a) noexcept
   {
-    return eve::bitwise_cast<logical<wide<T, N, ABI>>>(eve::bitwise_not(a.bits()));
+    return eve::bitwise_cast(eve::bitwise_not(a.bits()),as(a));
   }
 }
 

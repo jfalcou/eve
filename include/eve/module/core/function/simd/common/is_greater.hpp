@@ -58,7 +58,7 @@ namespace eve::detail
                                                                           Vectorized<U>,
                                                                           EqualCardinal<T, U>)
   {
-    return bitwise_cast<logical<T>>(is_greater(a.bits(), b.bits()));
+    return bitwise_cast(is_greater(a.bits(), b.bits()),as(a));
   }
 }
 
