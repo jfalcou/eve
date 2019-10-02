@@ -8,10 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_WIDE_CAST_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_WIDE_CAST_HPP_INCLUDED
 
-#include <eve/function/definition/wide_cast.hpp>
-#include <eve/module/core/function/scalar/wide_cast.hpp>
-
-#endif
+#include <cstdint>
+using Type = std::uint32_t;
+#include "wide_cast.hpp"
