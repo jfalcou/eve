@@ -22,12 +22,12 @@ namespace eve::detail
 {
   // Required by the aggregate skeleton - IF YOU END UP HERE, YOU'VE BEEN A NAUGHTY USER
   template<typename T, typename U>
-  U wide_cast_(EVE_SUPPORTS(simd_),T const &,as_<U> const&);
+  U wide_cast_(EVE_SUPPORTS(cpu_),T const &,as_<U> const&);
 
 
   // Don't do anything if we idem-cast
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto wide_cast_ ( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE auto wide_cast_ ( EVE_SUPPORTS(cpu_),
                                     wide<T, N, ABI> const & v0, as_<T> const&
                                   ) noexcept
   {
@@ -36,7 +36,7 @@ namespace eve::detail
 
   // Generic case for arithmetic
   template<typename T, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE wide<U,N> wide_cast_( EVE_SUPPORTS(simd_),
+  EVE_FORCEINLINE wide<U,N> wide_cast_( EVE_SUPPORTS(cpu_),
                                         wide<T, N, ABI> const & v0, as_<U> const& tgt
                                       ) noexcept
   {
