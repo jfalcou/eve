@@ -17,11 +17,14 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
+  //================================================================================================
+  // Unaligned pointer
   template<typename U, typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const* ptr, wide<T, N, ABI> const &v) noexcept
   requires( wide<U,N>, Integral<T> )
@@ -40,6 +43,27 @@ namespace eve::detail
   requires( wide<U,N>, Integral<T> )
   {
     return if_else(cond, gather(ptr,v), Zero(as<wide<U,N>>()));
+  }
+
+  //================================================================================================
+  // Aligned pointer
+  template<typename U, std::size_t S, typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto gather_( EVE_SUPPORTS(cpu_),
+                                aligned_ptr<U,S> ptr, wide<T, N, ABI> const &v
+                              ) noexcept
+  requires( wide<U,N>, Integral<T> )
+  {
+    return gather(ptr.get(),v);
+  }
+
+  template<typename U, std::size_t S, typename X, typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto gather_( EVE_SUPPORTS(cpu_),
+                                logical<X> const& cond,
+                                aligned_ptr<U,S> ptr, wide<T, N, ABI> const &v
+                              ) noexcept
+  requires( wide<U,N>, Integral<T> )
+  {
+    return if_else(cond, gather(ptr.get(),v), Zero(as<wide<U,N>>()));
   }
 }
 
