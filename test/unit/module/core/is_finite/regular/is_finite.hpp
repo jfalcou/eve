@@ -11,7 +11,7 @@
 #ifndef IS_FINITE_HPP
 #define IS_FINITE_HPP
 
-#include <eve/function/scalar/is_finite.hpp>
+#include <eve/function/is_finite.hpp>
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

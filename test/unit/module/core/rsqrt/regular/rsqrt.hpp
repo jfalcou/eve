@@ -11,7 +11,7 @@
 #ifndef RSQRT_HPP
 #define RSQRT_HPP
 
-#include <eve/function/scalar/rsqrt.hpp>
+#include <eve/function/rsqrt.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

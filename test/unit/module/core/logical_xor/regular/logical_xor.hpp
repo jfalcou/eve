@@ -16,7 +16,7 @@
 #include <tts/tests/types.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/function/scalar/logical_xor.hpp>
+#include <eve/function/logical_xor.hpp>
 
 TTS_CASE("Check logical_xor return type")
 {

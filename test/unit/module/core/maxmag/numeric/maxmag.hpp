@@ -14,7 +14,7 @@
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
-#include <eve/function/scalar/maxmag.hpp>
+#include <eve/function/maxmag.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <type_traits>

@@ -11,7 +11,7 @@
 #ifndef FMA_HPP
 #define FMA_HPP
 
-#include <eve/function/scalar/fma.hpp>
+#include <eve/function/fma.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

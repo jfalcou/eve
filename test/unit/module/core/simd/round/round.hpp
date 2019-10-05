@@ -17,11 +17,11 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/function/scalar/round.hpp>
-#include <eve/function/scalar/ceil.hpp>
-#include <eve/function/scalar/trunc.hpp>
-#include <eve/function/scalar/floor.hpp>
-#include <eve/function/scalar/nearest.hpp>
+#include <eve/function/round.hpp>
+#include <eve/function/ceil.hpp>
+#include <eve/function/trunc.hpp>
+#include <eve/function/floor.hpp>
+#include <eve/function/nearest.hpp>
 using eve::fixed;
 
 TTS_CASE_TPL("Check round behavior on wide",

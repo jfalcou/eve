@@ -11,7 +11,7 @@
 #ifndef ADD_HPP
 #define ADD_HPP
 
-#include <eve/function/scalar/add.hpp>
+#include <eve/function/add.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <eve/constant/true.hpp>

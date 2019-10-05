@@ -11,7 +11,7 @@
 #ifndef DIV_HPP
 #define DIV_HPP
 
-#include <eve/function/scalar/div.hpp>
+#include <eve/function/div.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -21,7 +21,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <type_traits>
- 
+
 TTS_CASE("Check div return type")
 {
   TTS_EXPR_IS(eve::saturated_(eve::div)(Type(), Type()), Type);

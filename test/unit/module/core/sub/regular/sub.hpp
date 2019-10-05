@@ -11,7 +11,7 @@
 #ifndef SUB_HPP
 #define SUB_HPP
 
-#include <eve/function/scalar/sub.hpp>
+#include <eve/function/sub.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

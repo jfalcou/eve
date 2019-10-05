@@ -11,7 +11,7 @@
 #ifndef IS_LESSGREATER_HPP
 #define IS_LESSGREATER_HPP
 
-#include <eve/function/scalar/is_lessgreater.hpp>
+#include <eve/function/is_lessgreater.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

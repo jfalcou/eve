@@ -11,7 +11,7 @@
 #ifndef IF_ELSE_HPP
 #define IF_ELSE_HPP
 
-#include <eve/function/scalar/if_else.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <tts/tts.hpp>

@@ -11,7 +11,7 @@
 #ifndef IF_ELSE_HPP
 #define IF_ELSE_HPP
 
-#include <eve/function/scalar/if_else.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/mone.hpp>
@@ -26,7 +26,7 @@ TTS_CASE("Check if_else mone return type")
   TTS_EXPR_IS(eve::if_else(Type(), Type(), eve::mone_), Type);
   TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), Type(), eve::mone_), Type);
   TTS_EXPR_IS(eve::if_else(true, Type(), eve::mone_), Type);
-  
+
   TTS_EXPR_IS(eve::if_else(Type(), eve::mone_, Type()), Type);
   TTS_EXPR_IS(eve::if_else(eve::logical<Type>(), eve::mone_, Type()), Type);
   TTS_EXPR_IS(eve::if_else(true, eve::mone_, Type()), Type);
@@ -53,7 +53,7 @@ TTS_CASE("Check if_else(., ., mone_) behavior ")
   TTS_IEEE_EQUAL(eve::if_else(0, eve::mone_, t), t);
   TTS_IEEE_EQUAL(eve::if_else(0.0, eve::mone_, t), t);
   TTS_IEEE_EQUAL(eve::if_else(false, eve::mone_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False<Type>(), eve::mone_, t), t);  
+  TTS_IEEE_EQUAL(eve::if_else(eve::False<Type>(), eve::mone_, t), t);
 }
 
 #endif

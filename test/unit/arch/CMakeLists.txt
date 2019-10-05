@@ -10,4 +10,4 @@ set(  SOURCES
       is_supported.cpp
    )
 
-add_unit_test( "arch" ${SOURCES} )
+make_unit( "arch" ${SOURCES} )

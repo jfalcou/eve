@@ -11,14 +11,14 @@
 #ifndef BINARIZE_HPP
 #define BINARIZE_HPP
 
-#include <eve/function/scalar/binarize.hpp>
+#include <eve/function/binarize.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/scalar/is_greater.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
 
@@ -31,7 +31,7 @@ TTS_CASE("Check eve::binarize on logicals behavior")
 {
   TTS_EQUAL(eve::binarize(eve::is_greater(Type{1}, Type(2))), Type(0));
   TTS_EQUAL(eve::binarize(eve::is_greater(Type{2}, Type(1))), Type(1));
-  
+
   if constexpr(std::is_signed_v<Type>) {
     TTS_EQUAL(eve::binarize(eve::is_greater(Type{2},  Type(1)), Type(-2)), Type(-2));
     TTS_EQUAL(eve::binarize(eve::is_greater(Type{0}, Type(1)), Type(-2)), Type(0));

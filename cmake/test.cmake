@@ -5,9 +5,20 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-
 include(download)
+include(generate_test)
 include(add_parent_target)
+
+##==================================================================================================
+## Common variables
+##==================================================================================================
+set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
+set(_TestSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
+if( MSVC )
+  set( _TestOptions /std:c++latest -W3 -EHsc)
+else()
+  set( _TestOptions -std=c++17 -Wall -Wno-missing-braces )
+endif()
 
 ##==================================================================================================
 ## Basic type roots
@@ -18,71 +29,83 @@ set(uint_types      uint64 uint32 uint16 uint8        )
 set(integral_types  "${int_types};${uint_types}"      )
 set(all_types       "${real_types};${integral_types}" )
 
-##==================================================================================================
-## Centralize all required setup for unit tests
-##==================================================================================================
-function(add_unit_test root)
-  if( MSVC )
-    set( options /std:c++latest -W3 -EHsc)
+
+macro(to_std type output)
+  if(${type} MATCHES "^[u]?int[a-zA-Z]*")
+    set(${output} "std::${type}_t")
   else()
-    set( options -std=c++17 -Wall -Wno-missing-braces )
+    set(${output} "${type}")
   endif()
+endmacro()
 
+##==================================================================================================
+## Setup a basic test
+##==================================================================================================
+function(make_unit root)
   foreach(file ${ARGN})
-    string(REPLACE ".cpp" ".unit" base ${file})
-    string(REPLACE "/"    "." base ${base})
-    string(REPLACE "\\"   "." base ${base})
-    set(test "${root}.${base}")
+    generate_test(${root} "" "" ${file})
+  endforeach()
+endfunction()
 
-    add_executable( ${test}  ${file})
-    target_compile_options  ( ${test} PUBLIC ${options} )
+##==================================================================================================
+## Generate a complete family of test
+##==================================================================================================
+function(make_all_units)
+  # Parse our options to find name, arch and types to generate
+  set(oneValueArgs ROOT NAME)
+  set(multiValueArgs TYPES ARCH)
+  cmake_parse_arguments(GEN_TEST "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
-    set_property( TARGET ${test}
-                  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                )
+  # Locate all subdirectory for current test
+  file(GLOB locations "${GEN_TEST_NAME}/*")
 
-    if (CMAKE_CROSSCOMPILING_CMD)
-      add_test( NAME ${test}
-                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}> --no-color --pass
-              )
-    else()
-      add_test( NAME ${test}
-                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND $<TARGET_FILE:${test}> --no-color --pass
-              )
-    endif()
+  # Generate tests for each variant location
+  foreach( variant ${locations})
 
-    set_target_properties ( ${test} PROPERTIES
-                            EXCLUDE_FROM_DEFAULT_BUILD TRUE
-                            EXCLUDE_FROM_ALL TRUE
-                            ${MAKE_UNIT_TARGET_PROPERTIES}
-                          )
+    # header to include in autogen tests
+    set(header "${variant}/${GEN_TEST_NAME}")
 
-    target_include_directories( ${test}
-                                PRIVATE
-                                  ${tts_SOURCE_DIR}/include
-                                  ${PROJECT_SOURCE_DIR}/test
-                                  ${PROJECT_SOURCE_DIR}/include
-                              )
+    # Locate relative path for simpler autogen file paths
+    file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
 
-    target_link_libraries(${test} tts)
-    add_dependencies(unit ${test})
+    # Generate test for each arch
+    foreach( arch ${GEN_TEST_ARCH})
+      # Scalar case just uses the types as setup
+      if( arch STREQUAL scalar)
+        foreach(type ${GEN_TEST_TYPES})
+          to_std("${type}" target)
+          set(file_to_compile "${_TestSrcDir}/${base_file}.scalar.${type}.cpp")
 
-    add_parent_target(${test})
+          configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
+          generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
+                          "${base_file}.scalar.${type}.cpp"
+                        )
+        endforeach()
+      endif()
+
+      # SIMD case uses the types x cardinals as setup
+      if( arch STREQUAL simd)
+        # We need to copy the header inside the generator template for concatenating tests properly
+        file(READ "${header}.hpp" code )
+        foreach(type ${GEN_TEST_TYPES})
+          to_std("${type}" target)
+          set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")
+
+          configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
+          generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                          "${base_file}.simd.${type}.cpp"
+                        )
+        endforeach()
+      endif()
+
+    endforeach()
   endforeach()
 endfunction()
 
 ##==================================================================================================
 ## Create a test that succeed if its compilation fails
 ##==================================================================================================
-function(add_build_test root)
-  if( MSVC )
-    set( options /std:c++latest -W3 -EHsc)
-  else()
-    set( options -std=c++17 -Wall -Wno-missing-braces )
-  endif()
-
+function(check_failure root)
   foreach(file ${ARGN})
     string(REPLACE ".cpp" ".unit" base ${file})
     string(REPLACE "/"    "." base ${base})
@@ -91,7 +114,7 @@ function(add_build_test root)
 
     set( test_lib "${test}_lib")
     add_library( ${test_lib} OBJECT EXCLUDE_FROM_ALL ${file})
-    target_compile_options  ( ${test_lib} PUBLIC ${options} )
+    target_compile_options  ( ${test_lib} PUBLIC ${_TestOptions} )
 
     add_test( NAME ${test}
               COMMAND ${CMAKE_COMMAND} --build . --target ${test_lib} --config $<CONFIGURATION>
@@ -124,31 +147,32 @@ endfunction()
 ##==================================================================================================
 ## Generate a list of tests from a type list
 ##==================================================================================================
-function (list_tests root unit)
+function (make_units root unit)
   set(sources )
 
   foreach(e ${ARGN})
     list(APPEND sources "${root}/${e}.cpp")
   endforeach(e)
 
-  add_unit_test( ${unit} "${sources}" )
+  make_unit( ${unit} "${sources}" )
 endfunction()
 
 ##==================================================================================================
 ## Generate a list of compilation tests from a type list
 ##==================================================================================================
-function (list_build_tests root unit)
+function (check_failures root unit)
   set(sources )
 
   foreach(e ${ARGN})
     list(APPEND sources "${root}/${e}.cpp")
   endforeach(e)
 
-  add_build_test( ${unit} "${sources}" )
+  check_failure( ${unit} "${sources}" )
 endfunction()
 
 ##==================================================================================================
-## Disable testing/doc for tts
+## Setup TTS
+##==================================================================================================
 set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
 set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
 
@@ -161,15 +185,28 @@ download_project( PROJ                tts
 
 add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
 
+##==================================================================================================
 ## Setup our tests
+##==================================================================================================
 add_custom_target(tests)
 add_custom_target(unit)
 add_dependencies(tests unit)
 
+##==================================================================================================
 ## Setup aggregation of tests
+##==================================================================================================
+add_custom_target(core.unit)
+add_custom_target(core.scalar.unit)
+add_custom_target(core.simd.unit)
+add_dependencies(core.unit core.scalar.unit)
+add_dependencies(core.unit core.simd.unit)
+
 add_custom_target(basic.unit)
 add_dependencies(basic.unit arch.unit)
 add_dependencies(basic.unit doc.unit)
 add_dependencies(basic.unit api.unit)
 
+##==================================================================================================
+## Incldue tests themselves
+##==================================================================================================
 add_subdirectory(${PROJECT_SOURCE_DIR}/test/)

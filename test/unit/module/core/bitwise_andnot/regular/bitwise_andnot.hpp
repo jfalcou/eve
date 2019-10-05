@@ -11,12 +11,12 @@
 #ifndef BITWISE_ANDNOT_HPP
 #define BITWISE_ANDNOT_HPP
 
-#include <eve/function/scalar/bitwise_andnot.hpp>
+#include <eve/function/bitwise_andnot.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/allbits.hpp>
@@ -28,7 +28,7 @@ TTS_CASE("Check bitwise_andnot return type")
   TTS_EXPR_IS(eve::bitwise_andnot(Type(), Type()), Type);
   TTS_EXPR_IS(eve::bitwise_andnot(Type(), eve::detail::as_integer_t<Type>()), Type);
   using ui_t = eve::detail::as_integer_t<Type, unsigned>;
-  using si_t = eve::detail::as_integer_t<Type, signed>; 
+  using si_t = eve::detail::as_integer_t<Type, signed>;
   TTS_EXPR_IS(eve::bitwise_andnot(Type(),ui_t()) , Type);
   TTS_EXPR_IS(eve::bitwise_andnot(Type(),si_t()) , Type);
   TTS_EXPR_IS(eve::bitwise_andnot(ui_t(), Type()), ui_t);
@@ -46,7 +46,7 @@ TTS_CASE( "Check bitwise_andnot behavior")
     TTS_EQUAL(eve::bitwise_andnot(Type(3), Type(2)), Type(1));
     TTS_EQUAL(eve::bitwise_andnot(Type(3), Type(1)), Type(2));
     using ui_t = eve::detail::as_integer_t<Type, unsigned>;
-    using si_t = eve::detail::as_integer_t<Type, signed>; 
+    using si_t = eve::detail::as_integer_t<Type, signed>;
     TTS_EQUAL(eve::bitwise_andnot(eve::One<Type>(), eve::Zero<ui_t>()), eve::One<Type>());
     TTS_EQUAL(eve::bitwise_andnot(eve::One<Type>(), eve::Zero<si_t>()), eve::One<Type>());
     TTS_EQUAL(eve::bitwise_andnot(eve::One<ui_t>(), eve::Zero<Type>()), eve::One<ui_t>());

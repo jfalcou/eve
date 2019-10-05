@@ -11,14 +11,14 @@
 #ifndef ADD_HPP
 #define ADD_HPP
 
-#include <eve/function/scalar/add.hpp>
+#include <eve/function/add.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <type_traits>
- 
+
 TTS_CASE("Check add return type")
 {
   TTS_EXPR_IS(eve::saturated_(eve::add)(Type(), Type()), Type);

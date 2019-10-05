@@ -11,7 +11,7 @@
 #ifndef IS_NAN_HPP
 #define IS_NAN_HPP
 
-#include <eve/function/scalar/is_nan.hpp>
+#include <eve/function/is_nan.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

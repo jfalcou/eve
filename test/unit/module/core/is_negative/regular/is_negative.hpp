@@ -11,7 +11,7 @@
 #ifndef IS_NEGATIVE_HPP
 #define IS_NEGATIVE_HPP
 
-#include <eve/function/scalar/is_negative.hpp>
+#include <eve/function/is_negative.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -37,12 +37,12 @@ TTS_CASE("Check eve::is_negative behavior")
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_negative(eve::Zero<Type>()), eve::False<Type>());
-    TTS_EQUAL(eve::is_negative(eve::Mzero<Type>()), eve::True<Type>());  
+    TTS_EQUAL(eve::is_negative(eve::Mzero<Type>()), eve::True<Type>());
   }
   if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_negative(eve::Nan<Type>()), eve::True<Type>());
-    TTS_EQUAL(eve::is_negative(-eve::Nan<Type>()), eve::False<Type>());    
+    TTS_EQUAL(eve::is_negative(-eve::Nan<Type>()), eve::False<Type>());
   }
   TTS_EQUAL(eve::is_negative(Type(0)), eve::False<Type>());
   TTS_EQUAL(eve::is_negative(Type(3)), eve::False<Type>());

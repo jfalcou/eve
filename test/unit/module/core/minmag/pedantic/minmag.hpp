@@ -11,7 +11,7 @@
 #ifndef MINMAG_HPP
 #define MINMAG_HPP
 
-#include <eve/function/scalar/minmag.hpp>
+#include <eve/function/minmag.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <tts/tts.hpp>

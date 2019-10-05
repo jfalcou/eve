@@ -11,7 +11,7 @@
 #ifndef HYPOT_HPP
 #define HYPOT_HPP
 
-#include <eve/function/scalar/hypot.hpp>
+#include <eve/function/hypot.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -33,7 +33,7 @@ TTS_CASE("Check hypot return type")
 
 TTS_CASE("Check eve::hypot behavior")
 {
-  // non conforming to standard 
+  // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
     TTS_ULP_EQUAL(eve::hypot(eve::Nan<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
@@ -46,6 +46,6 @@ TTS_CASE("Check eve::hypot behavior")
   TTS_ULP_EQUAL(eve::hypot(eve::One<Type>(), eve::One<Type>()), eve::Sqrt_2<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::hypot(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>(), 0);
   TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2), 0.5);
-} 
+}
 
 #endif

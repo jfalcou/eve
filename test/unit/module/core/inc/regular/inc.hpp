@@ -11,11 +11,11 @@
 #ifndef INC_HPP
 #define INC_HPP
 
-#include <eve/function/scalar/inc.hpp>
+#include <eve/function/inc.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
@@ -25,7 +25,7 @@ TTS_CASE("Check eve::inc behavior")
 {
   TTS_EQUAL(eve::inc(Type{1}), Type(2));
   TTS_EQUAL(eve::inc(Type{2}), Type(3));
-  
+
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::inc(-Type(2)), -Type(1));

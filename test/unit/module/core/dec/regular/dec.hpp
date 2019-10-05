@@ -11,11 +11,11 @@
 #ifndef DEC_HPP
 #define DEC_HPP
 
-#include <eve/function/scalar/dec.hpp>
+#include <eve/function/dec.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
@@ -27,7 +27,7 @@ TTS_CASE("Check eve::dec behavior")
   TTS_EQUAL(eve::dec(Type{2}), Type(1));
   TTS_EQUAL(eve::dec[ Type(1) > Type(0) ](Type(1)), Type(0));
   TTS_EQUAL(eve::dec[ Type(1) > Type(2) ](eve::Zero<Type>()), Type(0));
-  
+
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::dec(-Type(2)), -Type(3));

@@ -16,7 +16,7 @@
 #include <tts/tests/types.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/function/scalar/logical_and.hpp>
+#include <eve/function/logical_and.hpp>
 
 TTS_CASE("Check logical_and return type")
 {

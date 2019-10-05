@@ -11,7 +11,7 @@
 #ifndef TRUNC_HPP
 #define TRUNC_HPP
 
-#include <eve/function/scalar/trunc.hpp>
+#include <eve/function/trunc.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -32,7 +32,7 @@ TTS_CASE("Check eve::trunc behavior")
   if constexpr(std::is_floating_point_v<Type>)
   {
    TTS_EQUAL(eve::trunc(static_cast<Type>(-1.3)), Type(-1));
-   TTS_EQUAL(eve::trunc(static_cast<Type>(-1.5)), Type(-1));    
+   TTS_EQUAL(eve::trunc(static_cast<Type>(-1.5)), Type(-1));
    TTS_EQUAL(eve::trunc(static_cast<Type>(-1.6)), Type(-1));
    TTS_EQUAL(eve::trunc(static_cast<Type>(1.3)), Type(1));
    TTS_EQUAL(eve::trunc(static_cast<Type>(1.5)), Type(1));

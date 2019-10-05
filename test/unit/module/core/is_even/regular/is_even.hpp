@@ -11,7 +11,7 @@
 #ifndef IS_EVEN_HPP
 #define IS_EVEN_HPP
 
-#include <eve/function/scalar/is_even.hpp>
+#include <eve/function/is_even.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

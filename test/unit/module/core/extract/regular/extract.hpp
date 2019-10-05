@@ -11,11 +11,11 @@
 #ifndef EXTRACT_HPP
 #define EXTRACT_HPP
 
-#include <eve/function/scalar/extract.hpp>
+#include <eve/function/extract.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/meta.hpp>
@@ -27,7 +27,7 @@ TTS_CASE("Check extract return type")
   using u_t = eve::detail::as_integer_t<Type, unsigned>;
   TTS_EXPR_IS(eve::extract(Type(), i_t()), Type);
   TTS_EXPR_IS(eve::extract(Type(), u_t()), Type);
-  TTS_EXPR_IS(eve::extract(Type(), int()), Type); 
+  TTS_EXPR_IS(eve::extract(Type(), int()), Type);
 }
 
 TTS_CASE("Check eve::extract behavior")

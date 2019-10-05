@@ -11,7 +11,7 @@
 #ifndef MINMAG_HPP
 #define MINMAG_HPP
 
-#include <eve/function/scalar/minmag.hpp>
+#include <eve/function/minmag.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

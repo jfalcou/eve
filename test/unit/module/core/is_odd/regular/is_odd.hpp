@@ -11,7 +11,7 @@
 #ifndef IS_ODD_HPP
 #define IS_ODD_HPP
 
-#include <eve/function/scalar/is_odd.hpp>
+#include <eve/function/is_odd.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

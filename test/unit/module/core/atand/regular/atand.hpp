@@ -11,7 +11,7 @@
 #ifndef ATAND_HPP
 #define ATAND_HPP
 
-#include <eve/function/scalar/atand.hpp>
+#include <eve/function/atand.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -19,15 +19,15 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>  
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/scalar/is_negative.hpp>
-#include <eve/function/scalar/is_positive.hpp>
-#include <eve/function/scalar/indeg.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
+#include <eve/function/indeg.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <cmath>
@@ -52,10 +52,10 @@ TTS_CASE("Check eve::eve::atand behavior")
   TTS_ULP_EQUAL(eve::atand(eve::Mhalf<Type>()), eve::indeg(Type(-4.636476090008061e-01)), 0.5);
   TTS_ULP_EQUAL(eve::atand(eve::Mone<Type>()),  -Type(45),                                0.5);
   TTS_ULP_EQUAL(eve::atand(eve::One<Type>()),   Type(45),                                 0.5);
-  TTS_ULP_EQUAL(eve::atand(eve::Zero<Type>()),   eve::Zero<Type>(),                       0.5);        
+  TTS_ULP_EQUAL(eve::atand(eve::Zero<Type>()),   eve::Zero<Type>(),                       0.5);
   TTS_EXPECT(eve::is_negative(eve::atand(eve::Mzero<Type>())));
   TTS_EXPECT(eve::is_positive(eve::atand(eve::Zero<Type>())));
-}  
+}
 
 
 #endif

@@ -11,7 +11,7 @@
 #ifndef BITWISE_NOT_HPP
 #define BITWISE_NOT_HPP
 
-#include <eve/function/scalar/bitwise_not.hpp>
+#include <eve/function/bitwise_not.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -36,8 +36,8 @@ TTS_CASE("Check eve::bitwise_not behavior")
   if constexpr(std::is_integral_v<Type>)
   {
     TTS_EQUAL(eve::bitwise_not(static_cast<Type>(0x1234567890ABCDEFULL)), static_cast<Type>(0xEDCBA9876F543210ULL));
-    TTS_EQUAL(eve::bitwise_not(eve::Zero<Type>()), eve::Mone<Type>());   
-    TTS_EQUAL(eve::bitwise_not(eve::Mone<Type>()), eve::Zero<Type>());   
+    TTS_EQUAL(eve::bitwise_not(eve::Zero<Type>()), eve::Mone<Type>());
+    TTS_EQUAL(eve::bitwise_not(eve::Mone<Type>()), eve::Zero<Type>());
   }
 }
 

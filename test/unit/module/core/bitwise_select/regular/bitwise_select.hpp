@@ -11,11 +11,11 @@
 #ifndef BITWISE_SELECT_HPP
 #define BITWISE_SELECT_HPP
 
-#include <eve/function/scalar/bitwise_select.hpp>
+#include <eve/function/bitwise_select.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/allbits.hpp> 
+#include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/detail/meta.hpp>
@@ -51,7 +51,7 @@ TTS_CASE( "Check bitwise_select behavior")
                                 , eve::Zero<Type>()
                                 )
                 , mask
-                ); 
+                );
 }
 
 #endif

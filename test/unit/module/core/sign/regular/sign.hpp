@@ -12,7 +12,7 @@
 #define SIGN_HPP
 
 #include "test.hpp"
-#include <eve/function/scalar/sign.hpp>
+#include <eve/function/sign.hpp>
 #include <tts/tests/basic.hpp>
 #include <tts/tests/types.hpp>
 

@@ -11,7 +11,7 @@
 #ifndef MUL_HPP
 #define MUL_HPP
 
-#include <eve/function/scalar/mul.hpp>
+#include <eve/function/mul.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

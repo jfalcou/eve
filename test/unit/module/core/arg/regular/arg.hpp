@@ -11,14 +11,14 @@
 #ifndef ARG_HPP
 #define ARG_HPP
 
-#include <eve/function/scalar/arg.hpp>
+#include <eve/function/arg.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/minf.hpp>
@@ -40,7 +40,7 @@ TTS_CASE("Check arg return type")
 }
 
 TTS_CASE("Check eve::pedantic_(eve::arg) behavior")
-{ 
+{
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_EQUAL(eve::arg(eve::Inf<Type>()), eve::Zero<Type>());
@@ -50,6 +50,6 @@ TTS_CASE("Check eve::pedantic_(eve::arg) behavior")
   TTS_EQUAL(eve::arg(eve::One<Type>()), eve::Zero<Type>());
   TTS_EQUAL(eve::arg(eve::Zero<Type>()), eve::Zero<Type>());
   TTS_EQUAL(eve::arg(eve::Mzero<Type>()), eve::Pi<Type>());
-} 
+}
 
 #endif

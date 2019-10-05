@@ -11,14 +11,14 @@
 #ifndef COPYSIGN_HPP
 #define COPYSIGN_HPP
 
-#include <eve/function/scalar/copysign.hpp>
+#include <eve/function/copysign.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp> 
+#include <eve/constant/mzero.hpp>
 #include <type_traits>
 
 TTS_CASE("Check copysign return type") { TTS_EXPR_IS(eve::copysign(Type(), Type()), Type); }
@@ -44,7 +44,7 @@ TTS_CASE("Check eve::copysign behavior")
     TTS_EQUAL(copysign(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
     TTS_EQUAL(copysign(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
     TTS_EQUAL(copysign(eve::One<Type>(), eve::Zero<Type>()), eve::One<Type>());
-  } 
+  }
 }
 
 #endif

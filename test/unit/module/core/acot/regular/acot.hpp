@@ -11,20 +11,20 @@
 #ifndef ACOT_HPP
 #define ACOT_HPP
 
-#include <eve/function/scalar/acot.hpp>
+#include <eve/function/acot.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
+#include <eve/constant/minf.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>  
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
@@ -53,7 +53,7 @@ TTS_CASE("Check eve::acot behavior")
   TTS_ULP_EQUAL(eve::acot(eve::Mone<Type>()),   -eve::Pio_4<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::acot(eve::One<Type>()),    eve::Pio_4<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::acot(eve::Zero<Type>()),   eve::Pio_2<Type>(), 1);
-  TTS_ULP_EQUAL(eve::acot(eve::Mzero<Type>()),  -eve::Pio_2<Type>(), 1);       
+  TTS_ULP_EQUAL(eve::acot(eve::Mzero<Type>()),  -eve::Pio_2<Type>(), 1);
   TTS_ULP_EQUAL(eve::acot(eve::rec(eve::Smallestposval<Type>())), eve::Smallestposval<Type>(), 0.5);
-} 
+}
 #endif

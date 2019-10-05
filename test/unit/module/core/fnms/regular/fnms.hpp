@@ -11,7 +11,7 @@
 #ifndef FNMS_HPP
 #define FNMS_HPP
 
-#include <eve/function/scalar/fnms.hpp>
+#include <eve/function/fnms.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
