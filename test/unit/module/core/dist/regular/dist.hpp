@@ -11,7 +11,7 @@
 #ifndef DIST_HPP
 #define DIST_HPP
 
-#include <eve/function/scalar/dist.hpp>
+#include <eve/function/dist.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

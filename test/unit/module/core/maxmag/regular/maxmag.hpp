@@ -11,7 +11,7 @@
 #ifndef MAXMAG_HPP
 #define MAXMAG_HPP
 
-#include <eve/function/scalar/maxmag.hpp>
+#include <eve/function/maxmag.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

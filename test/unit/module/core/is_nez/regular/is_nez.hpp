@@ -11,7 +11,7 @@
 #ifndef IS_NEZ_HPP
 #define IS_NEZ_HPP
 
-#include <eve/function/scalar/is_nez.hpp>
+#include <eve/function/is_nez.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

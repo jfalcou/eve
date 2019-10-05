@@ -7,7 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/scalar/popcnt.hpp>
+#include <eve/function/popcnt.hpp>
 
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>

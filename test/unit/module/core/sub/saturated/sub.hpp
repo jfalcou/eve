@@ -11,14 +11,14 @@
 #ifndef SUB_HPP
 #define SUB_HPP
 
-#include <eve/function/scalar/sub.hpp>
+#include <eve/function/sub.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <type_traits>
- 
+
 TTS_CASE("Check sub return type")
 {
   TTS_EXPR_IS(eve::saturated_(eve::sub)(Type(), Type()), Type);

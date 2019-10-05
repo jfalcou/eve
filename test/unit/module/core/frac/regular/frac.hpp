@@ -11,7 +11,7 @@
 #ifndef FRAC_HPP
 #define FRAC_HPP
 
-#include <eve/function/scalar/frac.hpp>
+#include <eve/function/frac.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -30,14 +30,14 @@ TTS_CASE("Check eve::frac behavior")
   if constexpr(std::is_signed_v<Type>)
   {
     TTS_EQUAL(eve::frac(static_cast<Type>(-2)), Type(0));
-    TTS_EQUAL(eve::frac(static_cast<Type>(1)) , Type(0));   
+    TTS_EQUAL(eve::frac(static_cast<Type>(1)) , Type(0));
   }
   if constexpr(std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::frac(Type(3) / Type(-2)), Type(-1) / 2);
     TTS_EQUAL(eve::frac(Type(3) / Type(2)), Type(1) / 2);
     TTS_ULP_EQUAL(eve::frac(Type(4) / Type(3)), Type(1) / 3, 0.5);
-    TTS_ULP_EQUAL(eve::frac(Type(4) / Type(-3)), Type(-1) / 3, 0.5);  
+    TTS_ULP_EQUAL(eve::frac(Type(4) / Type(-3)), Type(-1) / 3, 0.5);
   }
 }
 

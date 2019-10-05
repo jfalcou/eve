@@ -12,7 +12,7 @@
 #define IS_NORMAL_HPP
 
 #include "test.hpp"
-#include <eve/function/scalar/is_normal.hpp>
+#include <eve/function/is_normal.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <tts/tests/basic.hpp>
 #include <tts/tests/types.hpp>

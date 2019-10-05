@@ -16,7 +16,7 @@
 #include <tts/tests/types.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/function/scalar/logical_notand.hpp>
+#include <eve/function/logical_notand.hpp>
 
 TTS_CASE("Check logical_notand return type")
 {

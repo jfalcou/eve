@@ -11,20 +11,20 @@
 #ifndef BITOFSIGN_HPP
 #define BITOFSIGN_HPP
 
-#include <eve/function/scalar/bitofsign.hpp>
+#include <eve/function/bitofsign.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/scalar/is_positive.hpp>
-#include <eve/function/scalar/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
+#include <eve/function/is_negative.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 
@@ -42,7 +42,7 @@ TTS_CASE("Check eve::bitofsign behavior")
       TTS_EXPECT(eve::is_negative(eve::bitofsign(eve::Minf<Type>())));
     }
     TTS_EQUAL(eve::bitofsign(eve::Zero<Type>()), eve::Zero<Type>());
-    TTS_EQUAL(eve::bitofsign(eve::Mzero<Type>()), eve::Mzero<Type>());    
+    TTS_EQUAL(eve::bitofsign(eve::Mzero<Type>()), eve::Mzero<Type>());
     TTS_EXPECT(eve::is_positive(eve::bitofsign(eve::Zero<Type>())));
     TTS_EXPECT(eve::is_negative(eve::bitofsign(eve::Mzero<Type>())));
     TTS_EQUAL(eve::bitofsign(eve::One<Type>()), eve::Zero<Type>());

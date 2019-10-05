@@ -15,7 +15,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/function/scalar/if_else.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/zero.hpp>

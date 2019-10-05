@@ -11,7 +11,7 @@
 #ifndef DIV_HPP
 #define DIV_HPP
 
-#include <eve/function/scalar/div.hpp>
+#include <eve/function/div.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

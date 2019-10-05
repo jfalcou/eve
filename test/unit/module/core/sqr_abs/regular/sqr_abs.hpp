@@ -11,7 +11,7 @@
 #ifndef SQR_ABS_HPP
 #define SQR_ABS_HPP
 
-#include <eve/function/scalar/sqr_abs.hpp>
+#include <eve/function/sqr_abs.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -29,7 +29,7 @@ TTS_CASE("Check eve::sqr_abs behavior")
 {
   TTS_EQUAL(eve::sqr_abs(Type{1}), Type(1));
   TTS_EQUAL(eve::sqr_abs(Type{2}), Type(4));
-  
+
   TTS_EQUAL(eve::sqr_abs(static_cast<Type>(-2)), Type(4));
   TTS_EQUAL(eve::sqr_abs(eve::Mzero<Type>()), Type(0));
   TTS_EQUAL(eve::sqr_abs(eve::Zero<Type>()), Type(0));

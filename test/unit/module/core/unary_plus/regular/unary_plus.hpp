@@ -11,15 +11,15 @@
 #ifndef UNARY_PLUS_HPP
 #define UNARY_PLUS_HPP
 
-#include <eve/function/scalar/unary_plus.hpp>
+#include <eve/function/unary_plus.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>  
+#include <eve/constant/valmax.hpp>
 #include <type_traits>
 
 TTS_CASE("Check unary_plus return type")

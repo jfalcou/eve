@@ -11,7 +11,7 @@
 #ifndef NEAREST_HPP
 #define NEAREST_HPP
 
-#include <eve/function/scalar/nearest.hpp>
+#include <eve/function/nearest.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -32,13 +32,13 @@ TTS_CASE("Check eve::nearest behavior")
   if constexpr(std::is_floating_point_v<Type>)
   {
    TTS_EQUAL(eve::nearest(static_cast<Type>(-1.3)), Type(-1));
-   TTS_EQUAL(eve::nearest(static_cast<Type>(-1.5)), Type(-2));    
+   TTS_EQUAL(eve::nearest(static_cast<Type>(-1.5)), Type(-2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(-1.6)), Type(-2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(1.3)), Type(1));
    TTS_EQUAL(eve::nearest(static_cast<Type>(1.5)), Type(2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(1.6)), Type(2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(-2.3)), Type(-2));
-   TTS_EQUAL(eve::nearest(static_cast<Type>(-2.5)), Type(-2));    
+   TTS_EQUAL(eve::nearest(static_cast<Type>(-2.5)), Type(-2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(-2.6)), Type(-3));
    TTS_EQUAL(eve::nearest(static_cast<Type>(2.3)), Type(2));
    TTS_EQUAL(eve::nearest(static_cast<Type>(2.5)), Type(2));

@@ -11,7 +11,7 @@
 #ifndef ATANPI_HPP
 #define ATANPI_HPP
 
-#include <eve/function/scalar/atanpi.hpp>
+#include <eve/function/atanpi.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -19,15 +19,15 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>  
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/scalar/is_negative.hpp>
-#include <eve/function/scalar/is_positive.hpp>
-#include <eve/function/scalar/inpi.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
+#include <eve/function/inpi.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <cmath>
@@ -52,10 +52,10 @@ TTS_CASE("Check eve::eve::atanpi behavior")
   TTS_ULP_EQUAL(eve::atanpi(eve::Mhalf<Type>()), eve::inpi(Type(-4.636476090008061e-01)), 0.5);
   TTS_ULP_EQUAL(eve::atanpi(eve::Mone<Type>()),  -Type(0.25),                             0.5);
   TTS_ULP_EQUAL(eve::atanpi(eve::One<Type>()),   Type(0.25),                              0.5);
-  TTS_ULP_EQUAL(eve::atanpi(eve::Zero<Type>()),   eve::Zero<Type>(),                      0.5);        
+  TTS_ULP_EQUAL(eve::atanpi(eve::Zero<Type>()),   eve::Zero<Type>(),                      0.5);
   TTS_EXPECT(eve::is_negative(eve::atanpi(eve::Mzero<Type>())));
   TTS_EXPECT(eve::is_positive(eve::atanpi(eve::Zero<Type>())));
-}  
+}
 
 
 #endif

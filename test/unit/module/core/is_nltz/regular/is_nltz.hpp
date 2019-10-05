@@ -11,7 +11,7 @@
 #ifndef IS_NLTZ_HPP
 #define IS_NLTZ_HPP
 
-#include <eve/function/scalar/is_nltz.hpp>
+#include <eve/function/is_nltz.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

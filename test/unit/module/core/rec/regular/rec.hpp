@@ -11,11 +11,11 @@
 #ifndef REC_HPP
 #define REC_HPP
 
-#include <eve/function/scalar/rec.hpp>
+#include <eve/function/rec.hpp>
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/function/scalar/rec.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>

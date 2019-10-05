@@ -11,7 +11,7 @@
 #ifndef ONEMINUS_HPP
 #define ONEMINUS_HPP
 
-#include <eve/function/scalar/oneminus.hpp>
+#include <eve/function/oneminus.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

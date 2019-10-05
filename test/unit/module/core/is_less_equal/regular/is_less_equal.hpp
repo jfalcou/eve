@@ -11,7 +11,7 @@
 #ifndef IS_LESS_EQUAL_HPP
 #define IS_LESS_EQUAL_HPP
 
-#include <eve/function/scalar/is_less_equal.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

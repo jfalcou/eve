@@ -11,7 +11,7 @@
 #ifndef CLAMP_HPP
 #define CLAMP_HPP
 
-#include <eve/function/scalar/clamp.hpp>
+#include <eve/function/clamp.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -25,7 +25,7 @@ TTS_CASE("Check eve::clamp behavior")
   TTS_EQUAL(eve::clamp(Type(2), Type(2), Type(4)), Type(2));
   TTS_EQUAL(eve::clamp(Type(3), Type(2), Type(4)), Type(3));
   TTS_EQUAL(eve::clamp(Type(4), Type(2), Type(4)), Type(4));
-  TTS_EQUAL(eve::clamp(Type(5), Type(2), Type(4)), Type(4)); 
+  TTS_EQUAL(eve::clamp(Type(5), Type(2), Type(4)), Type(4));
 }
 
 #endif

@@ -11,7 +11,7 @@
 #ifndef BITWISE_CAST_HPP
 #define BITWISE_CAST_HPP
 
-#include <eve/function/scalar/bitwise_cast.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/detail/meta.hpp>

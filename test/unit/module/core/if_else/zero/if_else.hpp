@@ -12,7 +12,7 @@
 #define IF_ELSE_HPP
 
 
-#include <eve/function/scalar/if_else.hpp>
+#include <eve/function/if_else.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

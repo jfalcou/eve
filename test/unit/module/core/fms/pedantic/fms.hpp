@@ -11,7 +11,7 @@
 #ifndef FMS_HPP
 #define FMS_HPP
 
-#include <eve/function/scalar/fms.hpp>
+#include <eve/function/fms.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

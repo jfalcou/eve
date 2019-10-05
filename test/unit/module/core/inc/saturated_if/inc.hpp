@@ -11,16 +11,16 @@
 #ifndef INC_HPP
 #define INC_HPP
 
-#include <eve/function/scalar/inc.hpp>
+#include <eve/function/inc.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <type_traits>
- 
+
 TTS_CASE("Check saturated conditional inc return type")
 {
   TTS_EXPR_IS(eve::saturated_(eve::inc)(Type()), Type);

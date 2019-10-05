@@ -11,7 +11,7 @@
 #ifndef IS_GTZ_HPP
 #define IS_GTZ_HPP
 
-#include <eve/function/scalar/is_gtz.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

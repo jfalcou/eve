@@ -11,7 +11,7 @@
 #ifndef UNARY_MINUS_HPP
 #define UNARY_MINUS_HPP
 
-#include <eve/function/scalar/unary_minus.hpp>
+#include <eve/function/unary_minus.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

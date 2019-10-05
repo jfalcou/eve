@@ -11,7 +11,7 @@
 #ifndef SHL_HPP
 #define SHL_HPP
 
-#include <eve/function/scalar/shl.hpp>
+#include <eve/function/shl.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

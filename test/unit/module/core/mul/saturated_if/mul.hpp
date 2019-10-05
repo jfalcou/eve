@@ -11,12 +11,12 @@
 #ifndef MUL_HPP
 #define MUL_HPP
 
-#include <eve/function/scalar/add.hpp>
+#include <eve/function/add.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/function/mul.hpp>
 #include <tts/tts.hpp>
-#include <tts/tests/relation.hpp> 
+#include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
 
@@ -32,8 +32,8 @@ TTS_CASE("Check conditional saturated mul behavior")
   Type tv{2};
   Type fv{3};
   auto t = eve::True<Type>();
-  auto f = eve::False<Type>();    
- 
+  auto f = eve::False<Type>();
+
   TTS_EQUAL ( eve::saturated_(eve::mul[ 1    ])(tv, fv), tv*fv);
   TTS_EQUAL ( eve::saturated_(eve::mul[ 1.0  ])(tv, fv), tv*fv);
   TTS_EQUAL ( eve::saturated_(eve::mul[ true ])(tv, fv), tv*fv);

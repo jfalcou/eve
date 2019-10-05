@@ -11,14 +11,14 @@
 #ifndef INPI_HPP
 #define INPI_HPP
 
-#include <eve/function/scalar/inpi.hpp>
+#include <eve/function/inpi.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp> 
+#include <eve/constant/pio_4.hpp>
 #include <eve/constant/zero.hpp>
 #include <type_traits>
 

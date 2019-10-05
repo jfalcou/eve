@@ -11,7 +11,7 @@
 #ifndef IS_GEZ_HPP
 #define IS_GEZ_HPP
 
-#include <eve/function/scalar/is_gez.hpp>
+#include <eve/function/is_gez.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

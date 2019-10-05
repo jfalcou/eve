@@ -11,7 +11,7 @@
 #ifndef ALL_HPP
 #define ALL_HPP
 
-#include <eve/function/scalar/all.hpp>
+#include <eve/function/all.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
@@ -39,7 +39,7 @@ TTS_CASE("Check eve::all behavior")
     {
       TTS_EQUAL(eve::all(eve::Nan<Type>()), true);
     }
-    TTS_EQUAL(eve::all(eve::Mzero<Type>()), false); 
+    TTS_EQUAL(eve::all(eve::Mzero<Type>()), false);
   }
 }
 

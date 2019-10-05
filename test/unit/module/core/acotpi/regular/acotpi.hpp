@@ -11,21 +11,21 @@
 #ifndef ACOTPI_HPP
 #define ACOTPI_HPP
 
-#include <eve/function/scalar/acotpi.hpp>
-#include <eve/function/scalar/inpi.hpp>
+#include <eve/function/acotpi.hpp>
+#include <eve/function/inpi.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
+#include <eve/constant/minf.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>  
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>   
+#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>

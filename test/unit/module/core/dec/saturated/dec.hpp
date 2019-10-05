@@ -11,16 +11,16 @@
 #ifndef DEC_HPP
 #define DEC_HPP
 
-#include <eve/function/scalar/dec.hpp>
+#include <eve/function/dec.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>  
+#include <eve/constant/mzero.hpp>
 #include <type_traits>
- 
+
 TTS_CASE("Check dec return type")
 {
   TTS_EXPR_IS(eve::saturated_(eve::dec)(Type()), Type);

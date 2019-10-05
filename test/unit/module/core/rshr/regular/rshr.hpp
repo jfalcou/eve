@@ -12,7 +12,7 @@
 #define RSHR_HPP
 
 
-#include <eve/function/scalar/rshr.hpp>
+#include <eve/function/rshr.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>

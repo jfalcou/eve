@@ -11,7 +11,7 @@
 #ifndef MAX_HPP
 #define MAX_HPP
 
-#include <eve/function/scalar/max.hpp>
+#include <eve/function/max.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <tts/tts.hpp>

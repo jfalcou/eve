@@ -11,7 +11,7 @@
 #ifndef BITWISE_MASK_HPP
 #define BITWISE_MASK_HPP
 
-#include <eve/function/scalar/bitwise_mask.hpp>
+#include <eve/function/bitwise_mask.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -29,7 +29,7 @@ TTS_CASE("Check bitwise_mask return type")
 TTS_CASE("Check eve::bitwise_mask behavior")
 {
   TTS_EQUAL(eve::bitwise_mask(Type{0}), Type(0));
-  TTS_EQUAL(eve::bitwise_mask(-Type{0}), Type(0));    
+  TTS_EQUAL(eve::bitwise_mask(-Type{0}), Type(0));
   TTS_IEEE_EQUAL(eve::bitwise_mask(Type{1}), eve::Allbits<Type>());
   TTS_EQUAL(eve::bitwise_mask(eve::False<Type>()), Type(0));
   TTS_IEEE_EQUAL(eve::bitwise_mask(eve::True<Type>()), eve::Allbits<Type>());

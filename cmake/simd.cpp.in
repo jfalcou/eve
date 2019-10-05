@@ -1,0 +1,50 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+
+#define Value ${target}
+#define Type eve::wide<Value,eve::fixed<Cardinal>>
+#define EVE_TEST_TYPENAME TTS_STRING(Type)
+
+// Cardinal 1 test
+#define Cardinal 1
+${code}
+#undef Cardinal
+
+// Cardinal 2 test
+#define Cardinal 2
+${code}
+#undef Cardinal
+
+// Cardinal 4 test
+#define Cardinal 4
+${code}
+#undef Cardinal
+
+// Cardinal 8 test
+#define Cardinal 8
+${code}
+#undef Cardinal
+
+// Cardinal 16 test
+#define Cardinal 16
+${code}
+#undef Cardinal
+
+// Cardinal 32 test
+#define Cardinal 32
+${code}
+#undef Cardinal
+
+// Cardinal 64 test
+#define Cardinal 64
+${code}
+#undef Cardinal

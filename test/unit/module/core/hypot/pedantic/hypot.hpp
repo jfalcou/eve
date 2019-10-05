@@ -11,14 +11,14 @@
 #ifndef HYPOT_HPP
 #define HYPOT_HPP
 
-#include <eve/function/scalar/hypot.hpp>
+#include <eve/function/hypot.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
@@ -44,5 +44,5 @@ TTS_CASE("Check eve::eve::pedantic_(eve::hypot) behavior")
   TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>(), 0);
   TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Zero<Type>(), eve::Valmax<Type>()), eve::Valmax<Type>(), 0);
   TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2), 0.5);
-} 
+}
 #endif

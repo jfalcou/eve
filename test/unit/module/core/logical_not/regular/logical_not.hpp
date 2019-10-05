@@ -18,7 +18,7 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/function/scalar/logical_not.hpp>
+#include <eve/function/logical_not.hpp>
 TTS_CASE("Check logical_not return type")
 {
   using eve::logical;

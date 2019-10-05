@@ -11,16 +11,16 @@
 #ifndef ACOS_HPP
 #define ACOS_HPP
 
-#include <eve/function/scalar/acos.hpp>
+#include <eve/function/acos.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>  
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pio_2.hpp>
@@ -43,14 +43,16 @@ TTS_CASE("Check eve::pedantic_(eve::acos) behavior")
   {
     TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
     TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(2)), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(-2)), eve::Nan<Type>(), 0); 
+    TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(-2)), eve::Nan<Type>(), 0);
   }
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::Half<Type>()), eve::Pi<Type>()/3, 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::Mhalf<Type>()), 2*eve::Pi<Type>()/3, 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::Mone<Type>()), eve::Pi<Type>(), 0);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::One<Type>()), eve::Zero<Type>(), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(eve::Zero<Type>()), eve::Pio_2<Type>(), 0);
+
   TTS_EXPECT(eve::is_positive(eve::pedantic_(eve::acos)(eve::One<Type>())));
+
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(8.414715528e-01)), std::acos(Type(8.414715528e-01)), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(9.689134359e-01)), std::acos(Type(9.689134359e-01)), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(9.922192097e-01)), std::acos(Type(9.922192097e-01)), 0.5);
@@ -62,5 +64,5 @@ TTS_CASE("Check eve::pedantic_(eve::acos) behavior")
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(9.999996424e-01)), std::acos(Type(9.999996424e-01)), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(9.999999404e-01)), std::acos(Type(9.999999404e-01)), 0.5);
   TTS_ULP_EQUAL(eve::pedantic_(eve::acos)(Type(9.999999404e-01)), std::acos(Type(9.999999404e-01)), 0.5);
-} 
+}
 #endif

@@ -12,7 +12,7 @@
 #define SIGNNZ_HPP
 
 #include "test.hpp"
-#include <eve/function/scalar/signnz.hpp>
+#include <eve/function/signnz.hpp>
 #include <tts/tests/basic.hpp>
 #include <tts/tests/types.hpp>
 

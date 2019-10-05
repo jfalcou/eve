@@ -11,7 +11,7 @@
 #ifndef MIN_HPP
 #define MIN_HPP
 
-#include <eve/function/scalar/min.hpp>
+#include <eve/function/min.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

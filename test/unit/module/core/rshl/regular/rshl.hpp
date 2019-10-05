@@ -11,7 +11,7 @@
 #ifndef RSHL_HPP
 #define RSHL_HPP
 
-#include <eve/function/scalar/rshl.hpp>
+#include <eve/function/rshl.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
