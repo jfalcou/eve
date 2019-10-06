@@ -46,6 +46,22 @@ namespace eve::detail
       return T{}; 
     }
   }
+
+    template < typename N,  typename ABI>
+  EVE_FORCEINLINE auto  reduce_fast_(EVE_SUPPORTS(cpu_)
+                                         , wide < float, N, ABI> const &x) noexcept
+  {
+    static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
+    using t_t = wide < float, N, ABI>;        
+    using d_t = wide < double, N, ABI>; 
+    d_t r = wide_cast(x, as(double()))* pi_inv;
+    auto  n = wide_cast((wide_cast(r, as(int32_t()))+ 0x800000
+                        ) >> 24
+                       , as(double()));
+    auto xr = wide_cast(x - n * Pio_2<double>(), as(float()));
+    auto fn =  wide_cast(quadrant(n),as(float())); 
+    return std::tuple<t_t, t_t>{fn, xr}; 
+  }  
 }
 
 #endif

@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/bitwise_and.hpp>
+#include <eve/function/wide_cast.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/quadrant.hpp>
 #include <eve/function/nearest.hpp>
@@ -25,6 +26,7 @@
 
 namespace eve::detail
 {
+  
   EVE_FORCEINLINE auto  reduce_fast_(EVE_SUPPORTS(cpu_)
                                          , float const &x) noexcept
   {
@@ -35,6 +37,9 @@ namespace eve::detail
     float fn =  n&3; 
     return std::tuple<float, float>{fn, xr}; 
   }
+
+
 }
+
 
 #endif

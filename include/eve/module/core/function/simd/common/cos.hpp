@@ -29,6 +29,7 @@
 #include <eve/function/rem_pio2_medium.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/function/rem_pio2.hpp>
+#include <eve/function/reduce_fast.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -38,6 +39,7 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/function/trigo_tags.hpp>
+#include <eve/function/all.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -47,17 +49,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-//     auto x =  abs(a0);
-//     if (all(x <= Pio_4(as(x))))          return restricted_(cos)(a0);
-//     else if   (all(x <= Pio_2(as(x))))   return small_(cos)(a0);
-//     else if   (all(x <= T(63)))          return cephes_(cos)(a0);
-//     else {
-//       static constexpr mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
-//       if   (all((x <= mpi)))   return medium_(cos)(a0);
-//     }
-//         else
-    return big_(cos)(a0);           
-                   
+    auto x =  abs(a0);
+    if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
+    else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
+    else if(all(x <= T(63)))          return cephes_(cos)(a0);
+    else {
+      static  T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
+      if   (all((x <= mpi)))   return medium_(cos)(a0);
+      else
+        return big_(cos)(a0);
+    }
   }
 
   template<typename T,  typename N,  typename ABI>
@@ -134,7 +135,8 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-      auto [n, xr] = rem_pio2_medium(x); 
+//      auto [n, xr] = rem_pio2_medium(x);
+      auto [n, xr] = reduce_fast(x); 
       return detail::cos_finalize(n, xr); 
     }
     else
