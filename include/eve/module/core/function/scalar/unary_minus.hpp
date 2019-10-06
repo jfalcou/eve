@@ -25,6 +25,16 @@ namespace eve::detail
   {
     return -a;
   }
+  
+  // -----------------------------------------------------------------------------------------------
+  // conditinnal  case
+  template<typename T,  typename U>
+  EVE_FORCEINLINE constexpr T unary_minus_(EVE_SUPPORTS(cpu_)
+                                          , U const &cond 
+                                          , T const &a) noexcept
+  {
+    return cond ? -a : a;
+  }
 }
 
 #endif
