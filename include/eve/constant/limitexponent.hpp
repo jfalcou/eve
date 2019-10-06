@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/as_logical.hpp> 
 #include <eve/is_logical.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -25,11 +26,12 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE auto Limitexponent(as_<T> const & = {})
   {
-    using i_t = as_integer_t<T>;
-    if  constexpr(std::isfloating_point_v<T>)
+    using t_t = detail::value_type_t<T>; 
+    using i_t = detail::as_integer_t<t_t>;
+    if  constexpr(std::is_floating_point_v<t_t>)
     {
-      if constexpr(std::is_same_v<T, float>) return i_t(1286);
-      if constexpr(std::is_same_v<T, double >) return i_t(1024);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(1286);
+      if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
     }
     else
       return i_t(0); 

@@ -25,11 +25,12 @@ namespace eve
   template<typename T>
   EVE_FORCEINLINE auto Minexponent(as_<T> const & = {})
   {
-    using i_t = as_integer_t<T>;
-    if  constexpr(std::isfloating_point_v<T>)
+    using t_t = detail::value_type_t<T>; 
+    using i_t = detail::as_integer_t<t_t>;
+    if  constexpr(std::is_floating_point_v<t_t>)
     {
-      if constexpr(std::is_same_v<T, float>) return i_t(-126);
-      if constexpr(std::is_same_v<T, double >) return i_t(-1022);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(-126);
+      if constexpr(std::is_same_v<t_t, double >) return i_t(-1022);
     }
     else
       return i_t(0); 

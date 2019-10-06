@@ -17,9 +17,10 @@
 TTS_CASE("Check eve::ldexp behavior")
 {
   TTS_EQUAL(eve::ldexp(Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::ldexp(Type{0}, Type{1}), Type{1});
+  TTS_EQUAL(eve::ldexp(Type{0}, Type{1}), Type{0});
   TTS_EQUAL(eve::ldexp(Type{1}, Type{0}), Type{1});
   TTS_EQUAL(eve::ldexp(Type{1}, Type{1}), Type{2});
+  TTS_EQUAL(eve::ldexp(Type{1}, Type{2}), Type{4});
 }
 
 #endif
