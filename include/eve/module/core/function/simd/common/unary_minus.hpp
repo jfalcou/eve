@@ -17,6 +17,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -34,6 +36,19 @@ namespace eve::detail
       if constexpr(is_aggregated_v<ABI>) return aggregate(eve::unary_minus, v);
       if constexpr(is_emulated_v<ABI>) return map(eve::unary_minus, v);
     }
+  }
+  
+ // -----------------------------------------------------------------------------------------------
+  // Conditionnal
+  template<typename T, typename U, typename N, typename ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(cpu_),
+                                               U const & cond, 
+                                               wide<T, N, ABI> const &v) noexcept
+  {
+    if constexpr(is_vectorizable_v<U>)
+      return cond ? unary_minus(v) : v;
+    else
+      return if_else(cond, unary_minus(v), v); 
   }
 
 }

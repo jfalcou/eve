@@ -22,5 +22,12 @@ TTS_CASE("Check eve::unary_minus behavior")
   TTS_EQUAL(eve::unary_minus(Type{1}), Type{-1});
   TTS_EQUAL(eve::unary_minus(Type{-2}), Type{2});
 }
+TTS_CASE("Check conditionnal  eve::unary_minus behavior")
+{
+  TTS_EQUAL(eve::unary_minus[1](Type{1}), Type{-1});
+  TTS_EQUAL(eve::unary_minus[1](Type{-2}), Type{2});
+  TTS_EQUAL(eve::unary_minus[0](Type{1}), Type{1});
+  TTS_EQUAL(eve::unary_minus[0](Type{-2}), Type{-2});
+}
 
 #endif
