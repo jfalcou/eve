@@ -9,6 +9,7 @@
 
 ##==================================================================================================
 ## scalar tests
+list_tests("scalar/binarize_c"     "core" ${all_types})    
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/all"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -223,6 +224,7 @@ list_tests("simd/bitwise_xor" "core" ${all_types})
 list_tests("simd/clamp" "core" ${all_types})
 list_tests("simd/saturate" "core" ${all_types})
 list_tests("simd/binarize" "core" ${all_types})
+list_tests("simd/binarize_c" "core" ${all_types})   
 list_tests("simd/conj" "core" ${real_types})
 list_tests("simd/copysign" "core" ${all_types})
 list_tests("simd/dec" "core" ${all_types})
