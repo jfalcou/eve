@@ -8,45 +8,63 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ALL_HPP
-#define ALL_HPP
-
 #include <eve/function/all.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/platform.hpp>
 #include <eve/logical.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check all return type") {
-  TTS_EXPR_IS(eve::all(eve::logical<Type>()), bool);
-  TTS_EXPR_IS(eve::all(Type()), bool);
+TTS_CASE("Check all return type")
+{
+  TTS_EXPR_IS( (eve::all(eve::logical<Type>())) , bool);
+  TTS_EXPR_IS( (eve::all(Type()))               , bool);
 }
 
-TTS_CASE("Check eve::all behavior")
+TTS_CASE("Check eve::all behavior on arithmetic")
 {
-  TTS_EQUAL(eve::all(Type{0}), false);
-  TTS_EQUAL(eve::all(Type{1}), true);
-  TTS_EQUAL(eve::all(Type{2}), true);
-  if constexpr(std::is_floating_point_v<Type>)
+  TTS_EXPECT    ( (eve::all(Type{1})) );
+  TTS_EXPECT_NOT( (eve::all(Type{0})) );
+
+  if constexpr(std::is_floating_point_v<Value>)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EQUAL(eve::all(eve::Nan<Type>()), true);
+      TTS_EXPECT(eve::all(eve::Nan<Type>()));
     }
-    TTS_EQUAL(eve::all(eve::Mzero<Type>()), false);
+
+    TTS_EXPECT_NOT(eve::all(eve::Mzero<Type>()));
   }
-}
 
-TTS_CASE("Check eve::all with logical entries behavior")
-{
-  TTS_EQUAL(eve::all(eve::True<Type>()), true);
-  TTS_EQUAL(eve::all(eve::False<Type>()), false);
-}
+#if defined(EVE_SIMD_TESTS)
+  for(int j=0; j < Cardinal; ++j)
+  {
+    Type rhs1,rhs2, rhs3, rhs4;
 
+    for(int i=0; i< Cardinal; ++i)
+    {
+      rhs1[i] = i >= j ? 0 : 1;
+      rhs2[i] = i <= j ? 0 : 1;
+      rhs3[i] = i == j ? 0 : 1;
+      rhs4[i] = i == j ? 1 : 0;
+    }
+
+    TTS_EXPECT_NOT(eve::all(rhs1));
+    TTS_EXPECT_NOT(eve::all(rhs2));
+    TTS_EXPECT_NOT(eve::all(rhs3));
+
+    if constexpr(Cardinal == 1) TTS_EXPECT(eve::all(rhs4));
+    else                        TTS_EXPECT_NOT(eve::all(rhs4));
+  }
 #endif
+}
+
+TTS_CASE("Check eve::all behavior on logical")
+{
+  TTS_EXPECT    (eve::all(eve::True<Type>()));
+  TTS_EXPECT_NOT(eve::all(eve::False<Type>()));
+}
