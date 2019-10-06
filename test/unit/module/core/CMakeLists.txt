@@ -22,9 +22,13 @@ list_tests("scalar/tofloat"        "core" ${integral_types})
 list_tests("scalar/touint"          "core" ${real_types})
 list_tests("scalar/binarize_c"     "core" ${all_types})    
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 list_tests("scalar/ldexp"   "core" ${all_types})
 >>>>>>> ldexp unit tests
+=======
+list_tests("scalar/ldexp"   "core" ${real_types})
+>>>>>>> ldexp ok
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/next"     "core" ${all_types})
 list_tests("scalar/prev"     "core" ${all_types})
@@ -201,9 +205,13 @@ add_unit_test( "core" scalar/signmask.cpp )
 ##==================================================================================================
 ## SIMD tests
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 list_tests("simd/ldexp"   "core" ${all_types})
 >>>>>>> ldexp unit tests
+=======
+list_tests("simd/ldexp"   "core" ${real_types})
+>>>>>>> ldexp ok
 add_unit_test( "core" simd/bitwise_cast.cpp )
 list_tests("simd/toint" "core" ${real_types})
 list_tests("simd/tofloat" "core" ${integral_types})
