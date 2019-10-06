@@ -13,6 +13,8 @@ list_tests("scalar/toint"          "core" ${real_types})
 list_tests("scalar/tofloat"        "core" ${integral_types})
 list_tests("scalar/touint"          "core" ${real_types})
 list_tests("scalar/binarize_c"     "core" ${all_types})    
+list_tests("scalar/binarize_c"     "core" ${all_types})    
+list_tests("scalar/ldexp"   "core" ${all_types})
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/all"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -181,6 +183,7 @@ add_unit_test( "core" scalar/signmask.cpp )
 
 ##==================================================================================================
 ## SIMD tests
+list_tests("simd/ldexp"   "core" ${all_types})
 add_unit_test( "core" simd/bitwise_cast.cpp )
 list_tests("simd/toint" "core" ${real_types})
 list_tests("simd/tofloat" "core" ${integral_types})
