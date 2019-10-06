@@ -8,40 +8,46 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ADD_HPP
-#define ADD_HPP
-
 #include <eve/function/add.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 #include <type_traits>
+#include <algorithm>
 
-TTS_CASE("Check conditional add return type")
+TTS_CASE("Check eve::add[condition] return type")
 {
-  TTS_EXPR_IS(eve::add[ Type() ](Type(), Type()), Type);
-  TTS_EXPR_IS(eve::add[ eve::logical<Type>() ](Type(), Type()), Type);
-  TTS_EXPR_IS(eve::add[ true ](Type(), Type()), Type);
+  TTS_EXPR_IS( (eve::add[ Type() ](Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::add[ eve::logical<Type>() ](Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::add[ true ](Type(), Type())), (Type));
 }
 
-TTS_CASE("Check conditional add behavior")
+TTS_CASE("Check eve::add[condition] behavior")
 {
   Type tv{2};
   Type fv{3};
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_EQUAL(eve::add[ 1 ](tv, fv), tv + fv);
-  TTS_EQUAL(eve::add[ 1.0 ](tv, fv), tv + fv);
-  TTS_EQUAL(eve::add[ true ](tv, fv), tv + fv);
-  TTS_EQUAL(eve::add[ t ](tv, fv), tv + fv);
-  TTS_EQUAL(eve::add[ 0 ](tv, fv), tv);
-  TTS_EQUAL(eve::add[ 0.0 ](tv, fv), tv);
-  TTS_EQUAL(eve::add[ false ](tv, fv), tv);
-  TTS_EQUAL(eve::add[ f ](tv, fv), tv);
-}
+  // All basic TRUE
+  TTS_ALL_EQUAL(eve::add[ 1 ](tv, fv)     , tv + fv);
+  TTS_ALL_EQUAL(eve::add[ 1.0 ](tv, fv)   , tv + fv);
+  TTS_ALL_EQUAL(eve::add[ true ](tv, fv)  , tv + fv);
+  TTS_ALL_EQUAL(eve::add[ t ](tv, fv)     , tv + fv);
 
-#endif
+  // All basic FALSE
+  TTS_ALL_EQUAL(eve::add[ 0 ](tv, fv)     , tv);
+  TTS_ALL_EQUAL(eve::add[ 0.0 ](tv, fv)   , tv);
+  TTS_ALL_EQUAL(eve::add[ false ](tv, fv) , tv);
+  TTS_ALL_EQUAL(eve::add[ f ](tv, fv)     , tv);
+
+  // Mixed case
+  eve::as_logical_t<Type> m;
+  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
+                , [k = true](auto& e) mutable { e = k; k = !k; }
+                );
+
+  TTS_ALL_EQUAL(eve::add[ m ](tv, fv) , eve::if_else(m,tv + fv, tv) );
+}

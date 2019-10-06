@@ -13,12 +13,12 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check abs return type for: " EVE_TEST_TYPENAME)
+TTS_CASE("Check abs return type")
 {
   TTS_EXPR_IS(eve::abs(Type()), (Type));
 }
 
-TTS_CASE("Check eve::abs behavior on: " EVE_TEST_TYPENAME)
+TTS_CASE("Check eve::abs behavior")
 {
   TTS_EQUAL(eve::abs(Type{0}), Type(0));
   TTS_EQUAL(eve::abs(Type{1}), Type(1));

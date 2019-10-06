@@ -85,8 +85,6 @@ function(make_all_units)
 
       # SIMD case uses the types x cardinals as setup
       if( arch STREQUAL simd)
-        # We need to copy the header inside the generator template for concatenating tests properly
-        file(READ "${header}.hpp" code )
         foreach(type ${GEN_TEST_TYPES})
           to_std("${type}" target)
           set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")

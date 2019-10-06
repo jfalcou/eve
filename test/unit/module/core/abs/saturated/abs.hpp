@@ -26,7 +26,7 @@ TTS_CASE("Check eve::saturated_(eve::abs) behavior")
   TTS_EQUAL(eve::saturated_(eve::abs)(Type{1}), Type(1));
   TTS_EQUAL(eve::saturated_(eve::abs)(Type{2}), Type(2));
 
-  if constexpr(std::is_signed_v<eve::detail::value_type_t<Type>>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<Type>(-1)), Type(1));
     TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<Type>(-2)), Type(2));

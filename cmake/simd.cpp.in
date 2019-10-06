@@ -8,43 +8,62 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#define TTS_FUNCTION      TTS_UNIQUE(TTS_CAT(tts_function, EVE_COUNTER))
+#define TTS_CALLER        TTS_UNIQUE(TTS_CAT(tts_caller, EVE_COUNTER))
+#define TTS_REGISTRATION  TTS_UNIQUE(TTS_CAT(tts_registration, EVE_COUNTER))
+
 #include "test.hpp"
+
+#define EVE_SIMD_TESTS
 
 #define Value ${target}
 #define Type eve::wide<Value,eve::fixed<Cardinal>>
-#define EVE_TEST_TYPENAME TTS_STRING(Type)
 
 // Cardinal 1 test
 #define Cardinal 1
-${code}
+#define EVE_COUNTER 1
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 2 test
 #define Cardinal 2
-${code}
+#define EVE_COUNTER 2
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 4 test
 #define Cardinal 4
-${code}
+#define EVE_COUNTER 4
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 8 test
 #define Cardinal 8
-${code}
+#define EVE_COUNTER 8
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 16 test
 #define Cardinal 16
-${code}
+#define EVE_COUNTER 16
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 32 test
 #define Cardinal 32
-${code}
+#define EVE_COUNTER 32
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER
 
 // Cardinal 64 test
 #define Cardinal 64
-${code}
+#define EVE_COUNTER 64
+#include "${header}.hpp"
 #undef Cardinal
+#undef EVE_COUNTER

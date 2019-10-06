@@ -23,11 +23,12 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Basic case
-  template<typename T, typename U>
+  template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
                                           U const &t,
-                                          U const &f) noexcept requires(U, vectorizable<T>)
+                                          V const &f) noexcept
+  requires(U, Vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : f;
   }
