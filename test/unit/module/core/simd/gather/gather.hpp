@@ -37,6 +37,10 @@ TTS_CASE_TPL( "Check gather behavior: int32 indexes, unaligned pointer",
   wide<Type,T> ref( [&](auto i, auto) { return data[maps[i]]; } );
 
   TTS_EQUAL( ref, eve::gather(&data[0], maps) );
+
+  const Type* cdata = &data[0];
+  TTS_EQUAL( ref, eve::gather(cdata, maps) );
+
 }
 
 TTS_CASE_TPL( "Check gather behavior: int64 indexes, unaligned pointer",
@@ -58,6 +62,9 @@ TTS_CASE_TPL( "Check gather behavior: int64 indexes, unaligned pointer",
   wide<Type,T> ref( [&](auto i, auto) { return data[maps[i]]; } );
 
   TTS_EQUAL( ref, eve::gather(&data[0], maps) );
+
+  const Type* cdata = &data[0];
+  TTS_EQUAL( ref, eve::gather(cdata, maps) );
 }
 
 TTS_CASE_TPL( "Check gather behavior: int32 indexes, aligned pointer",
@@ -81,6 +88,9 @@ TTS_CASE_TPL( "Check gather behavior: int32 indexes, aligned pointer",
   wide<Type,T> ref( [&](auto i, auto) { return data[maps[i]]; } );
 
   TTS_EQUAL( ref, eve::gather( eve::as_aligned<alg>(&data[0]), maps) );
+
+  const Type* cdata = &data[0];
+  TTS_EQUAL( ref, eve::gather( eve::as_aligned<alg>(cdata), maps) );
 }
 
 TTS_CASE_TPL( "Check gather behavior: int64 indexes, aligned pointer",
@@ -104,6 +114,9 @@ TTS_CASE_TPL( "Check gather behavior: int64 indexes, aligned pointer",
   wide<Type,T> ref( [&](auto i, auto) { return data[maps[i]]; } );
 
   TTS_EQUAL( ref, eve::gather( eve::as_aligned<alg>(&data[0]), maps) );
+
+  const Type* cdata = &data[0];
+  TTS_EQUAL( ref, eve::gather( eve::as_aligned<alg>(cdata), maps) );
 }
 
 #endif

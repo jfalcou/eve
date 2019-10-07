@@ -51,7 +51,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto gather_( EVE_SUPPORTS(cpu_),
                                 aligned_ptr<U,S> ptr, wide<T, N, ABI> const &v
                               ) noexcept
-  requires( wide<U,N>, Integral<T> )
+  requires( wide<std::remove_const_t<U>,N>, Integral<T> )
   {
     return gather(ptr.get(),v);
   }
@@ -61,9 +61,9 @@ namespace eve::detail
                                 logical<X> const& cond,
                                 aligned_ptr<U,S> ptr, wide<T, N, ABI> const &v
                               ) noexcept
-  requires( wide<U,N>, Integral<T> )
+  requires( wide<std::remove_const_t<U>,N>, Integral<T> )
   {
-    return if_else(cond, gather(ptr.get(),v), Zero(as<wide<U,N>>()));
+    return if_else(cond, gather(ptr.get(),v), Zero(as<wide<std::remove_const_t<U>,N>>()));
   }
 }
 
