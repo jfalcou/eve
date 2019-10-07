@@ -20,6 +20,7 @@ add_subdirectory(failure)
 list_tests("scalar/toint"          "core" ${real_types})
 list_tests("scalar/tofloat"        "core" ${integral_types})
 list_tests("scalar/touint"          "core" ${real_types})
+list_tests("scalar/exponentbits"     "core" ${real_types})    
 list_tests("scalar/binarize_c"     "core" ${all_types})    
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -39,7 +40,6 @@ list_tests("scalar/any"     "core" ${all_types})
 >>>>>>> ldexp unit tests
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/arg" "core" ${real_types})
-list_tests("scalar/exponentbits" "core" ${real_types})
 list_tests("scalar/acos" "core" ${real_types})
 list_tests("scalar/acot" "core" ${real_types})
 list_tests("scalar/acsc" "core" ${real_types})
@@ -207,10 +207,14 @@ add_unit_test( "core" scalar/signmask.cpp )
 ## SIMD tests
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 list_tests("simd/ldexp"   "core" ${all_types})
 >>>>>>> ldexp unit tests
 =======
+=======
+list_tests("simd/exponentbits"     "core" ${real_types})    
+>>>>>>> exponentbits
 list_tests("simd/ldexp"   "core" ${real_types})
 >>>>>>> ldexp ok
 add_unit_test( "core" simd/bitwise_cast.cpp )
@@ -252,7 +256,6 @@ list_tests("simd/inpi" "core" ${real_types})
 list_tests("simd/average" "core" ${all_types})
 list_tests("simd/nextafter" "core" ${all_types})
 list_tests("simd/arg" "core" ${real_types})
-list_tests("simd/exponentbits" "core" ${real_types})
 list_tests("simd/bitofsign" "core" ${all_types})
 list_tests("simd/bitwise_and" "core" ${all_types})
 list_tests("simd/bitwise_andnot" "core" ${all_types})
