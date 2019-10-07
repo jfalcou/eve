@@ -31,8 +31,9 @@ TTS_CASE_TPL("Check exponentbits behavior on wide",
   using eve::logical;
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }),
-      ref([](auto i, auto) { return eve::exponentbits(Type(i)); });
+  using i_t = eve::detail::as_integer_t<Type, signed>; 
+  wide<Type, T> lhs([](auto i, auto) { return 10*i*i; }); 
+  wide<i_t, T>   ref([](auto i, auto) { return eve::exponentbits(Type(i*i*10)); });
   TTS_EQUAL(ref, eve::exponentbits(lhs));
 }
 
