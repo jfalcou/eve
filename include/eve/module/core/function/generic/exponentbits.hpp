@@ -16,6 +16,7 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/constant/maxexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/detail/meta.hpp>
@@ -24,10 +25,11 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  requires(T,  Floating<value_type_t<T>>)
   {
-    using t_t =  value_type_t<T>; 
-    return bitwise_and((2*Maxexponent<t_t>()+1)<<Nbmantissabits<t_t>(), a0);
+    using v_t = value_type_t<T>;
+    using i_t = as_integer_t<T>; 
+    i_t i(shl(2*Maxexponent<v_t>()+1, Nbmantissabits<v_t>())); 
+    return bitwise_and(i, a);
   }
 }
 

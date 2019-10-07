@@ -36,7 +36,7 @@ namespace eve::detail
     {
       if constexpr(sizeof(U) == sizeof(vt_t))
       // this will ensure that no scalar conversion will take place in aggregated
-      // in the case vector and scalar not of the value type
+      // in the case vector and scalar which is  not of the value type
       {
         return eve::bitwise_and(a, T(bitwise_cast(b,as_<vt_t>())));
       }

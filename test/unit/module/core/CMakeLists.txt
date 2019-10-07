@@ -9,13 +9,13 @@
 
 ##==================================================================================================
 ## scalar tests
+list_tests("scalar/exponentbits"     "core" ${real_types})    
 list_tests("scalar/binarize_c"     "core" ${all_types})    
 list_tests("scalar/ldexp"   "core" ${real_types})
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/all"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/arg" "core" ${real_types})
-list_tests("scalar/exponentbits" "core" ${real_types})
 list_tests("scalar/acos" "core" ${real_types})
 list_tests("scalar/acot" "core" ${real_types})
 list_tests("scalar/acsc" "core" ${real_types})
@@ -180,6 +180,7 @@ add_unit_test( "core" scalar/signmask.cpp )
 
 ##==================================================================================================
 ## SIMD tests
+list_tests("simd/exponentbits"     "core" ${real_types})    
 list_tests("simd/ldexp"   "core" ${real_types})
 add_unit_test( "core" simd/bitwise_cast.cpp )
 list_tests("simd/abs" "core" ${all_types})
@@ -210,7 +211,6 @@ list_tests("simd/indeg" "core" ${real_types})
 list_tests("simd/inpi" "core" ${real_types})
 list_tests("simd/average" "core" ${all_types})
 list_tests("simd/arg" "core" ${real_types})
-list_tests("simd/exponentbits" "core" ${real_types})
 list_tests("simd/bitofsign" "core" ${all_types})
 list_tests("simd/bitwise_and" "core" ${all_types})
 list_tests("simd/bitwise_andnot" "core" ${all_types})

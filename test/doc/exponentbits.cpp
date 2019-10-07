@@ -23,17 +23,15 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                      " << pf << '\n'
-            << "-> eve::exponentbits(pf) =            " << eve::exponentbits(pf) << '\n'
-            << "-> eve::pedantic_(eve::exponentbits)(pf) = " << eve::pedantic_(eve::exponentbits)(pf) << '\n';
+            << "-> eve::exponentbits(pf) =   " << std::hex << eve::exponentbits(pf) << '\n'; 
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                      " << xf << '\n'
-            << "-> eve::exponentbits(xf) =            " << eve::exponentbits(xf) << '\n'
-            << "<- yf =                      " << yf << '\n'
-            << "-> eve::exponentbits(yf) =            " << eve::exponentbits(yf) << '\n'
-            << "-> eve::pedantic_(eve::exponentbits)(yf) = " << eve::pedantic_(eve::exponentbits)(yf) << '\n';
+            << "<- xf =                      " << std::dec << xf << '\n'
+            << "-> eve::exponentbits(xf) =   " << std::hex << eve::exponentbits(xf) << '\n'
+            << "<- yf =                      " << std::dec << yf << '\n'
+            << "-> eve::exponentbits(yf) =   " << std::hex << eve::exponentbits(yf) << '\n'; 
   return 0;
 }
