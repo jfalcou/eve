@@ -34,11 +34,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto  reduce_fast_(EVE_SUPPORTS(cpu_)
                                     , wide < float, N, ABI> const &x) noexcept
   {
-    static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
+//    static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
     using t_t = wide < float, N, ABI>;        
     using d_t = wide < double, N>;
     d_t dx =wide_cast(x, as<double>()); 
-    d_t n  =  eve::nearest(dx * pi_inv);
+    d_t n  =  eve::nearest(dx * Twoopi<double>()); //pi_inv);
 //    std::cout << "n " << n << std::endl; 
 // //     auto  n = wide_cast((wide_cast(r, as(int32_t()))+ 0x800000
 // //                         ) >> 24

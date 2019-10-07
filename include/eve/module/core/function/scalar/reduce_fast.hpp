@@ -35,7 +35,7 @@ namespace eve::detail
     int32_t  n = ((int32_t)r + 0x800000) >> 24;
     float xr = x - n * Pio_2<double>();
     float fn =  n&3; 
-    return std::tuple<float, float>{fn, xr}; 
+    return std::tuple<float, float, float>{fn, xr, 0.0f}; 
   }
 
 

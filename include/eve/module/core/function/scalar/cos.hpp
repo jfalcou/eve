@@ -141,16 +141,16 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-      if constexpr(std::is_same_v<T, float>)
-      {
-        auto [fn, xr] = reduce_large(x);
-        return detail::cos_finalize(fn, xr);
-      }
-      else
-      {
-        auto [fn, xr] = rem_pio2(x);
-        return detail::cos_finalize(fn, xr);
-      }
+//       if constexpr(std::is_same_v<T, float>)
+//       {
+        auto [fn, xr, dxr] = reduce_large(x);
+        return detail::cos_finalize(fn, xr, dxr);
+ //      }
+//       else
+//       {
+//         auto [fn, xr] = rem_pio2(x);
+//         return detail::cos_finalize(fn, xr);
+//       }
     }
     else
     {
@@ -167,7 +167,7 @@ namespace eve::detail
       pio2_1t = 1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
     double fn = nearest(x*Twoopi<double>());
     double xr = fnms(fn, pio2_1t, fnms(fn, pio2_1, x)); 
-    return detail::cos_finalize(fn, xr); 
+    return detail::cos_finalize(fn, xr, 0.0); 
   }
 
   template<typename T>

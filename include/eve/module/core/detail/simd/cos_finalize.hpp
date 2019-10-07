@@ -30,7 +30,8 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE constexpr wide<T, N, ABI>
   cos_finalize( wide<T, N, ABI> const & fn
-              , wide<T, N, ABI> const & xr) noexcept
+              , wide<T, N, ABI> const & xr
+              , wide<T, N, ABI> const & dxr ) noexcept
   {
     using t_t = wide<T, N, ABI>; 
     auto tmp =  binarize(fn >= t_t(2));
@@ -39,7 +40,7 @@ namespace eve::detail
     t_t z = sqr(xr);
     t_t se = sin_eval(z, xr);
     t_t ce = cos_eval(z);
-    t_t z1 = if_else(swap_bit, se, ce);
+    t_t z1 = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
     return bitwise_xor(z1, sign_bit); 
   }
 }

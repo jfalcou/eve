@@ -30,10 +30,22 @@ TTS_CASE_TPL("Check reduce_fast behavior on wide",
 {
   using eve::logical;
   using eve::wide;
-
-  wide<Type, T> lhs([](auto i, auto) { return 10*i; }),
-      ref([](auto i, auto) { return eve::reduce_fast(Type(10*i)); });
-  TTS_EQUAL(ref, eve::reduce_fast(lhs));
+  
+  wide<Type, T> lhs([](auto i, auto) { return Type(2*i+3); }); 
+  Type sn[T::value], sx[T::value], z; 
+  for(int i=0; i < T::value; i++)
+  {
+    std::tie(sn[i], sx[i], z) = eve::reduce_fast(Type(2*i+3));
+  }
+  wide<Type, T> refn([sn](auto i, auto){ return sn[i]; } );
+  wide<Type, T> refx([sx](auto i, auto){ return sx[i]; } );
+  std::cout << "lhs " << lhs << std::endl; 
+  auto [n, x] =  eve::reduce_fast(lhs);
+  TTS_EQUAL(refn, n);
+  TTS_EQUAL(refx, x); 
+  
+  
 }
 
 #endif
+ 

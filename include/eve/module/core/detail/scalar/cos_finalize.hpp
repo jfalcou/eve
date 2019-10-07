@@ -19,6 +19,8 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/fnma.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <type_traits>
 
@@ -26,7 +28,7 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto cos_finalize( T fn, T xr) noexcept
+  EVE_FORCEINLINE constexpr auto cos_finalize( T fn, T xr, T dxr) noexcept
   requires(T, Vectorizable<T>)
   {
      using i_t =  detail::as_integer_t<T, signed>; 
@@ -34,10 +36,13 @@ namespace eve::detail
      i_t swap_bit = n&i_t(1);
      i_t sign_bit = shl(bitwise_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
      T z = sqr(xr);
-     if (swap_bit)
-       z = sin_eval(z, xr);
-     else
-       z = cos_eval(z);
+     T  se = sin_eval(z, xr);
+     T  ce = cos_eval(z);
+     z =  swap_bit ?  fma(dxr, ce, se) : fnma(se, dxr, ce); 
+//      if (swap_bit)
+//        z = sin_eval(z, xr);
+//      else
+//        z = cos_eval(z);
      return bitwise_xor(z,sign_bit); 
   }
 }

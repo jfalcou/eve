@@ -74,7 +74,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }
 
@@ -104,7 +104,7 @@ namespace eve::detail
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }
 
@@ -118,11 +118,11 @@ namespace eve::detail
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
       auto [n, xr] = rem_pio2_cephes(x);
-      return detail::cos_finalize(n, xr); 
+      return detail::cos_finalize(n, xr, t_t(0)); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }
 
@@ -135,13 +135,12 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-//      auto [n, xr] = rem_pio2_medium(x);
-      auto [n, xr] = reduce_fast(x); 
-      return detail::cos_finalize(n, xr); 
+     auto [n, xr] = rem_pio2_medium(x);
+     return detail::cos_finalize(n, xr, t_t(0)); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }   
   
@@ -154,12 +153,13 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-      auto [n, xr] = rem_pio2(x);
-      return detail::cos_finalize(n, xr); 
+//     auto [n, xr] = rem_pio2(x);
+     auto [n, xr, dxr] = reduce_large(x); 
+      return detail::cos_finalize(n, xr, dxr); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }   
 }

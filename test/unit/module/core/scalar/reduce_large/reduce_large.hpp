@@ -26,19 +26,19 @@
 TTS_CASE("Check eve::reduce_large behavior")
 {
   TTS_EQUAL(0, 0);
-  if constexpr(sizeof(Type) == 4)
-  {
     for(int i=0; i < 20000 ; i+= 100)
     {
       Type x = i*i*1.2345; 
-      auto [n, xr] = eve::reduce_large(x);
-      auto [n1, xr1] = eve::rem_pio2(x); 
+      auto [n, xr, dxr] = eve::reduce_large(x);
+      auto [n1, xr1] = eve::rem_pio2(x);
+      std::cout << std::setprecision(15) << " dxr = " <<  dxr <<  std::endl;
       std::cout << " x =  " << x << " -> xr =  " << xr << " quad =  " <<  n <<  std::endl;
       std::cout << " x =  " << x << " -> xr1 =  " << xr1 << " quad1 =  " <<  n1 <<  std::endl;
+      std::cout << " diff " << xr-xr1 << std::endl; 
       TTS_ULP_EQUAL(xr, xr1, 0.5); 
       TTS_EQUAL(n, n1); 
     }
-  }
+
 }
 
 #endif

@@ -8,12 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_REDUCE_LARGE_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_REDUCE_LARGE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_LARGE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_LARGE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/reduce_fast.hpp>
+#include <eve/constant/constant.hpp>
 // #include <eve/function/fnma.hpp>
 // #include <eve/function/quadrant.hpp>
 // #include <eve/function/nearest.hpp>
@@ -72,10 +73,47 @@ namespace eve::detail
       n = (res0 + (1ULL << 61)) >> 62;
       res0 -= n << 62;
       double xx = (int64_t)res0;
-      return std::tuple<float, float>(static_cast<float>(n), static_cast<float>(xx * pi63));
+      return std::tuple<float, float, float>(static_cast<float>(n), static_cast<float>(xx * pi63), 0.0f);
     }
-    
   }
+
+//            mp1 = {{0x3FF921FB, 0x58000000} },
+//            mp2 = {{0xBE4DDE97, 0x3C000000} },
+//            mp3 = {{0xBC8CB3B3, 0x99D747F2} },
+//            pp3 = {{0xBC8CB3B3, 0x98000000} },
+//            pp4 = {{0xbacd747f, 0x23e32ed7} },
+//          hpinv = {{0x3FE45F30, 0x6DC9C883} },
+//          toint = {{0x43380000, 0x00000000} };
+ 
+/* Reduce range of x to within PI/2 with abs (x) < 105414350.  The high part
+   is written to a, the low part to da.  Range reduction is accurate to 136
+   bits so that when x is large and *a very close to zero, all 53 bits of *a
+   are correct.  */
+
+  EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
+                                     , double const &x) noexcept
+  {
+    double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
+    double    mp2 = Constant<double, 0xBE4DDE973C000000ULL>();  /*-1.3909067675399456e-08 */
+    double    pp3 = Constant<double, 0xBC8CB3B398000000ULL>();  /*-4.9790e-17             */
+    double    pp4 = Constant<double, 0xbacd747f23e32ed7ULL>();  /*-1.9035e-25             */
+   
+//     double t = (x * hpinv + toint);
+//     double xn = t - toint;
+    auto xn =  nearest(x*Twoopi<double>()); 
+    double y = (x - xn * mp1) - xn * mp2;
+    double n = quadrant(xn); 
+    double t1 = xn * pp3;
+    double t2 = y - t1;
+    double da = (y - t2) - t1;
+    
+    t1 = xn * pp4;
+    double a = t2 - t1;
+    da += (t2 - a) - t1;
+    
+    return std::tuple<double, double, double>(n, a, da); 
+  }
+
 }
 
 #endif
