@@ -39,62 +39,6 @@ namespace eve::detail
     using type = T;
   };
 
-  // Normalize integral types to std::*int*_t types
-  template<typename T>
-  struct normalize
-  {
-    template<std::size_t Size, bool Sign, typename Dummy = void>
-    struct fetch;
-
-    template<typename Dummy>
-    struct fetch<1, true, Dummy>
-    {
-      using type = std::int8_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, true, Dummy>
-    {
-      using type = std::int16_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, true, Dummy>
-    {
-      using type = std::int32_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, true, Dummy>
-    {
-      using type = std::int64_t;
-    };
-
-    template<typename Dummy>
-    struct fetch<1, false, Dummy>
-    {
-      using type = std::uint8_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, false, Dummy>
-    {
-      using type = std::uint16_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, false, Dummy>
-    {
-      using type = std::uint32_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, false, Dummy>
-    {
-      using type = std::uint64_t;
-    };
-
-    using selection = std::conditional_t<std::is_integral_v<T> && !std::is_same_v<T, bool>,
-                                         fetch<sizeof(T), std::is_signed_v<T>>,
-                                         always<T>>;
-
-    using type = typename selection::type;
-  };
-
   // Extract value_type from type
   template<typename T, typename Enable = void>
   struct value_type
@@ -178,10 +122,10 @@ namespace eve::detail
   // Upgrade a type (u)int(xx) -> (u)int(min(2xx, 64)
   //                float -> double,  double -> double
   template < typename T, bool is = std::is_integral_v<T>>
-  struct upgrade 
+  struct upgrade
   {
-    using type = T; 
-  }; 
+    using type = T;
+  };
 
   template < typename T>
   struct upgrade < T, true>
@@ -230,18 +174,18 @@ namespace eve::detail
     {
       using type = std::uint64_t;
     };
-    
+
     using sel = fetch<sizeof(T), std::is_signed_v<T>>;
     using type = typename sel::type;
-    
-  }; 
-    
+
+  };
+
   template < typename T>
   struct upgrade < T, false>
   {
-    using type = double; 
+    using type = double;
   };
-  
+
   template<typename T>
   using upgrade_t = typename upgrade<T>::type;
 
