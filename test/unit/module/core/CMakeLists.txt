@@ -31,12 +31,10 @@ list_tests("scalar/ldexp"   "core" ${all_types})
 list_tests("scalar/ldexp"   "core" ${real_types})
 >>>>>>> ldexp ok
 list_tests("scalar/abs"     "core" ${all_types})
-<<<<<<< HEAD
 list_tests("scalar/next"     "core" ${all_types})
 list_tests("scalar/prev"     "core" ${all_types})
-=======
 list_tests("scalar/exponent"     "core" ${real_types})
->>>>>>> exponent
+list_tests("scalar/mantissa"     "core" ${real_types})
 list_tests("scalar/all"     "core" ${all_types})
 <<<<<<< HEAD
 list_tests("scalar/any"     "core" ${all_types})
@@ -226,12 +224,10 @@ list_tests("simd/toint" "core" ${real_types})
 list_tests("simd/tofloat" "core" ${integral_types})
 list_tests("simd/touint" "core" ${real_types})
 list_tests("simd/abs" "core" ${all_types})
-<<<<<<< HEAD
 list_tests("simd/next" "core" ${all_types})
 list_tests("simd/prev" "core" ${all_types})
-=======
 list_tests("simd/exponent" "core" ${real_types})
->>>>>>> exponent
+list_tests("simd/mantissa" "core" ${real_types})
 list_tests("simd/all" "core" ${all_types})
 <<<<<<< HEAD
 list_tests("simd/any" "core" ${all_types})
