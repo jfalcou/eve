@@ -28,7 +28,7 @@ namespace eve::detail
                                           T const &cond,
                                           U const &t,
                                           V const &f) noexcept
-  requires(U, Vectorizable<T>)
+  requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : f;
   }
