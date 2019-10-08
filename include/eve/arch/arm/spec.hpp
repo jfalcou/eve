@@ -32,6 +32,11 @@ namespace eve
 #      include <arm_neon.h>
 #    endif
 #  endif
+#  if !defined(__aarch64__)
+#    ifndef EVE_NO_DENORMALS
+#      define EVE_NO_DENORMALS
+#    endif
+#  endif
 #endif
 
 // NEON SIMD API
