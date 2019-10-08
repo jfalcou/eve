@@ -19,11 +19,13 @@
 #include <eve/function/all.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_shl.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/logical_or.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/rshl.hpp>
 #include <eve/function/sub.hpp>
@@ -79,7 +81,7 @@ namespace eve::detail
         else  // U is floating point
         {
             using t_t = value_type_t<T>;
-          EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
+            EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
           using i_t =  detail::as_integer_t<t_t, signed>; 
           return ldexp(a, i_t(trunc(b)));
         }
@@ -114,7 +116,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
+          EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "argument 2 is not a flint or is not finite");
           return ldexp(a, wide_cast(trunc(b), as<i_t>())); 
         }
       }
@@ -231,7 +233,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
+          EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "argument 2 is not a flint or is not finite");
           return pedantic_(ldexp)(a, wide_cast(trunc(b), as<i_t>())); 
         }
       }
