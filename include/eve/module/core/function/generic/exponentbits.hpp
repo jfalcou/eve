@@ -14,6 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_cast.hpp>
+#include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/maxexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/function/shl.hpp>
@@ -24,12 +26,11 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE  auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    using v_t = value_type_t<T>;
     using i_t = as_integer_t<T>; 
-    i_t i(shl(2*Maxexponent<v_t>()+1, Nbmantissabits<v_t>())); 
-    return bitwise_and(i, a);
+    const auto msk =  Ieee_constant<T, 0x7f800000U, 0x7ff0000000000000ULL>();
+    return bitwise_and(bitwise_cast(msk, as<i_t>()), a); 
   }
 }
 
