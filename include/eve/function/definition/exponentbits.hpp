@@ -29,14 +29,6 @@ namespace eve
                       "[eve::exponentbits] - No support for integral types"
                     );
     }
-
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::exponentbits_), pedantic_type const&, T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::pedantic_(eve::exponentbits)] - No support for integral types"
-                    );
-    }
   }
 
   EVE_MAKE_CALLABLE(exponentbits_, exponentbits);
