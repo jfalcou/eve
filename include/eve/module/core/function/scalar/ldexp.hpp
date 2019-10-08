@@ -93,7 +93,7 @@ namespace eve::detail
         using i_t = as_integer_t<T>;
         i_t e =  static_cast<i_t>(a1);
         T f = One<T>();
-        if constexpr(platform::supports_denormals)
+        if constexpr(eve::platform::supports_denormals)
         {
           if (e < Minexponent<T>())   //(BOOST_UNLIKELY
           {
