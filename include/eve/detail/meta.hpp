@@ -17,7 +17,7 @@
 #include <utility>
 #include <cstdint>
 #include <cstddef>
-
+ 
 namespace eve::detail
 {
   // Silence unused warning
@@ -263,6 +263,12 @@ namespace eve::detail
 
   template<typename T, typename Sign = sign_of_t<T>>
   using as_integer_t = typename as_integer<T, Sign>::type;
+
+  template<template < class, class, class> typename W, typename T, typename N,  typename ABI, typename Sign>
+  struct as_integer < W<T, N, ABI>, Sign>
+  {
+    using type = W<as_integer_t<T, Sign>, N, ABI>; 
+  };
 
   // Generate integral types from sign + size
   template<std::size_t Size>
