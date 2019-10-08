@@ -23,8 +23,8 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s) noexcept;
+   template<typename T, typename N>  wide<IT,N> operator()( wide<T,N> const& v) noexcept;
+   template<typename T> constexpr    IT         operator()( T s) noexcept;
 
 .. rubric:: Parameters
 
@@ -33,7 +33,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter which must be floating-point based.
+* [1,2] A value with the  type ``IT = as_integer_t<T>`` the signed integral type of same size as ``T``
 
 Notes
 *****
