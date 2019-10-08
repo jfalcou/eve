@@ -6,7 +6,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-add_subdirectory(arch)
-add_subdirectory(api)
-add_subdirectory(module)
-add_subdirectory(meta)
+##==================================================================================================
+## General meta tests
+list_tests("as_integer"  "meta" ${all_types})

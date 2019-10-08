@@ -262,7 +262,7 @@ namespace eve::detail
   };
 
 
-  template<typename T, typename Sign = sign_of_t<T>>
+  template<typename T, typename Sign = sign_of_t<value_type_t<T>>>
   using as_integer_t = typename as_integer<T, Sign>::type;
 
   template<template < class, class, class> typename W, typename T, typename N,  typename ABI, typename Sign>
