@@ -1,0 +1,8 @@
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::exponentbits(pf) =   (0, 3f800000, 3f800000, 40000000, 0, 7f800000, 7f800000, 7f800000)
+---- scalar
+<- xf =                      1
+-> eve::exponentbits(xf) =   3f800000
+<- yf =                      -nan
+-> eve::exponentbits(yf) =   7f800000

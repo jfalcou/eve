@@ -168,6 +168,7 @@ make_unit( "doc.function.predicate" is_unordered.cpp )
 =======
 add_unit_test( "doc.function.predicates" convert.cpp )
 add_unit_test( "doc.function.ieee" ldexp.cpp )
+add_unit_test( "doc.function.ieee" exponentbits.cpp )
 add_unit_test( "doc.function.predicates" binarize.cpp )
 add_unit_test( "doc.function.predicates" binarize_c.cpp )
 add_unit_test( "doc.function.arithmetic" deco.cpp )
