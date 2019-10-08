@@ -6,7 +6,7 @@
 #include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<double, eve::fixed<8>>;
 
 int main()
 {

@@ -28,9 +28,8 @@ TTS_CASE_TPL("Check mantissa behavior on wide",
              fixed<64>)
 {
   using eve::wide;
-  using i_t =  eve::detail::as_integer_t<Type>; 
   wide<Type, T> lhs([](int i, int) { return i % 2 ? 10*i + 2 : -10*i - 2; }); 
-  wide<i_t,  T> ref([](int i, int) { return eve::mantissa(Type(i % 2 ? 10*i + 2 : -10*i - 2)); });
+  wide<Type,  T> ref([](int i, int) { return eve::mantissa(Type(i % 2 ? 10*i + 2 : -10*i - 2)); });
   TTS_EQUAL(ref, eve::mantissa(lhs));
 }
 
