@@ -45,7 +45,6 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<U>)
     {
       using i_t =  as_integer_t<U, signed>; 
-      EVE_ASSERT(is_flint(a1)||is_not_finite(a1), "argument 2 is not a flint nor is not_finite");
       return ldexp(a0, i_t(trunc(a1))); // TODO itrunc
     }
     else 
