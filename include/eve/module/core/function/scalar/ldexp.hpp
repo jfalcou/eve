@@ -42,29 +42,18 @@ namespace eve::detail
                                     , U const &a1) noexcept
   requires(T, Vectorizable<T>, Vectorizable<U>)
   {
-    if constexpr(std::is_integral_v<T>)
+    if constexpr(std::is_floating_point_v<U>)
     {
-      if constexpr(std::is_integral_v<U>)
-        return rshl(a0, a1); //(a1>0)?(a0<<a1):(a0>>a1);
-      else
-        EVE_ASSERT(false,
-                   "[ eve::ldexp] - If argument 1 is integral argument 2 must be integral." );
+      using i_t =  as_integer_t<U, signed>; 
+      EVE_ASSERT(is_flint(a1)||is_not_finite(a1), "argument 2 is not a flint nor is not_finite");
+      return ldexp(a0, i_t(trunc(a1))); // TODO itrunc
     }
-    else
+    else 
     {
-      if constexpr(std::is_floating_point_v<U>)
-      {
-        using i_t =  as_integer_t<U, signed>; 
-        EVE_ASSERT(is_flint(a1)||is_not_finite(a1), "argument 2 is not a flint nor is not_finite");
-        return ldexp(a0, i_t(trunc(a1))); // TODO itrunc
-      }
-      else 
-      {
-        using i_t = detail::as_integer_t<T>;
-        i_t ik =  a1+Maxexponent<T>();
-        ik = bitwise_shl(ik, Nbmantissabits<T>());
-        return a0*bitwise_cast(ik, as(T()));
-      }
+      using i_t = detail::as_integer_t<T>;
+      i_t ik =  a1+Maxexponent<T>();
+      ik = bitwise_shl(ik, Nbmantissabits<T>());
+      return a0*bitwise_cast(ik, as(T()));
     }
   }
   
@@ -77,37 +66,30 @@ namespace eve::detail
                                     , U const &a1) noexcept
   requires(T, Vectorizable<T>, Vectorizable<U>)
   {
-    if constexpr(std::is_integral_v<T>)
+    if constexpr(std::is_floating_point_v<U>)
     {
-      return ldexp(a0, a1); 
+      using i_t =  as_integer_t<U, signed>; 
+      return pedantic_(ldexp)(a0, i_t(trunc(a1))); //TODO itrunc(a1)
     }
     else
     {
-      if constexpr(std::is_floating_point_v<U>)
+      using i_t = as_integer_t<T>;
+      i_t e =  static_cast<i_t>(a1);
+      T f = One<T>();
+      if constexpr(eve::platform::supports_denormals)
       {
-        using i_t =  as_integer_t<U, signed>; 
-        return pedantic_(ldexp)(a0, i_t(trunc(a1))); //TODO itrunc(a1)
-      }
-      else
-      {
-        using i_t = as_integer_t<T>;
-        i_t e =  static_cast<i_t>(a1);
-        T f = One<T>();
-        if constexpr(eve::platform::supports_denormals)
+        if (e < Minexponent<T>())   //(BOOST_UNLIKELY
         {
-          if (e < Minexponent<T>())   //(BOOST_UNLIKELY
-          {
-            e -= Minexponent<T>();
-            f = Smallestposval<T>();
-          }
+          e -= Minexponent<T>();
+          f = Smallestposval<T>();
         }
-        i_t b = (e == Limitexponent<T>());
-        f += static_cast<T>(b);
-        e -= b;
-        e += Maxexponent<T>();
-        e = bitwise_shl(e, Nbmantissabits<T>());
-        return a0*bitwise_cast(e, as(T()))*f;
       }
+      i_t b = (e == Limitexponent<T>());
+      f += static_cast<T>(b);
+      e -= b;
+      e += Maxexponent<T>();
+      e = bitwise_shl(e, Nbmantissabits<T>());
+      return a0*bitwise_cast(e, as(T()))*f;
     }
   }
 }
