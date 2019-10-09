@@ -26,13 +26,14 @@ int main()
             << "<- qi =              " << qi << '\n'
             << "-> eve::ldexp(pf, qi) = " << eve::ldexp(pf, qi) << '\n';
 
-  iT xi = 2, mxi = -2, yi = 3;
+  float xf = 2, mxf = -2;
+  iT yi = 3;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi  =                      " << xi << '\n'
-            << "<- mxi =                      " << mxi << '\n'
+            << "<- xf  =                      " << xf << '\n'
+            << "<- mxf =                      " << mxf << '\n'
             << "<- yi  =                      " << yi << '\n'
-            << "-> eve::ldexp(xi, yi) = " << eve::ldexp(xi, yi) << '\n'
-            << "-> eve::ldexp(mxi, yi)= " << eve::ldexp(mxi, yi) << '\n';
+            << "-> eve::ldexp(xf, yi) = " << eve::ldexp(xf, yi) << '\n'
+            << "-> eve::ldexp(mxf, yi)= " << eve::ldexp(mxf, yi) << '\n';
   return 0;
 }
