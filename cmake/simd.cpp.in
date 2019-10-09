@@ -17,6 +17,21 @@
 #define EVE_SIMD_TESTS
 
 #define Value ${target}
+#define Base eve::wide<Value>
+
+inline constexpr auto base_cardinal   = Base::static_size;
+inline constexpr auto large_cardinal  = 2*Base::static_size;
+inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_size/2 : 1;
+
+// Native size test
+#define Type Base
+#define Cardinal base_cardinal
+#define EVE_COUNTER N
+#include "${header}.hpp"
+#undef Cardinal
+#undef Type
+#undef EVE_COUNTER
+
 #define Type eve::wide<Value,eve::fixed<Cardinal>>
 
 // Cardinal 1 test
@@ -26,44 +41,18 @@
 #undef Cardinal
 #undef EVE_COUNTER
 
-// Cardinal 2 test
-#define Cardinal 2
-#define EVE_COUNTER 2
+// Cardinal 2*Base Cardinal test
+#define Cardinal large_cardinal
+#define EVE_COUNTER 2N
 #include "${header}.hpp"
 #undef Cardinal
 #undef EVE_COUNTER
 
-// Cardinal 4 test
-#define Cardinal 4
-#define EVE_COUNTER 4
+// Cardinal 1/2*Base Cardinal test
+#define Cardinal small_cardinal
+#define EVE_COUNTER N2
 #include "${header}.hpp"
 #undef Cardinal
 #undef EVE_COUNTER
 
-// Cardinal 8 test
-#define Cardinal 8
-#define EVE_COUNTER 8
-#include "${header}.hpp"
-#undef Cardinal
-#undef EVE_COUNTER
-
-// Cardinal 16 test
-#define Cardinal 16
-#define EVE_COUNTER 16
-#include "${header}.hpp"
-#undef Cardinal
-#undef EVE_COUNTER
-
-// Cardinal 32 test
-#define Cardinal 32
-#define EVE_COUNTER 32
-#include "${header}.hpp"
-#undef Cardinal
-#undef EVE_COUNTER
-
-// Cardinal 64 test
-#define Cardinal 64
-#define EVE_COUNTER 64
-#include "${header}.hpp"
-#undef Cardinal
-#undef EVE_COUNTER
+#undef Type
