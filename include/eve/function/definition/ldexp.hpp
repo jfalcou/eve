@@ -13,7 +13,6 @@
 
 #include <eve/detail/overload.hpp>  
 #include <eve/function/is_flint.hpp>
-#include <eve/function/is_not_finite.hpp>
 #include <eve/function/all.hpp> 
 
 namespace eve
@@ -26,11 +25,11 @@ namespace eve
     EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, U const& b)
     {
       if constexpr(is_vectorized_v<U> && is_vectorized_v<T>)
-       if constexpr (U::cardinal_type::value != T::cardinal_type::value)
-         static_assert(U::cardinal_type::value != T::cardinal_type::value, "[eve::ldexp] - no support for current simd api"); 
+        if constexpr (U::cardinal_type::value != T::cardinal_type::value)
+          static_assert(U::cardinal_type::value != T::cardinal_type::value, "[eve::ldexp] - no support for current simd api"); 
       static_assert(std::is_floating_point_v<value_type_t<T>>, "[eve::ldexp] first parameter must be floating point");
       if constexpr(std::is_floating_point_v<value_type_t<U>>)
-        EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "[eve::ldexp] argument 2 is floating, not a flint or is not finite");
+        EVE_ASSERT(all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
     }
     
     template<typename T, typename U>
@@ -41,7 +40,7 @@ namespace eve
           static_assert(U::cardinal_type::value != T::cardinal_type::value, "[eve::ldexp] - no support for current simd api"); 
       static_assert(std::is_floating_point_v<value_type_t<T>>, "ldexp first parameter must be floating point");
       if constexpr(std::is_floating_point_v<value_type_t<U>>)
-        EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "ldexp argument 2 is floating, not a flint or is not finite");
+        EVE_ASSERT(all(is_flint(b)), "ldexp argument 2 is floating but not a flint");
     }
   }
 
