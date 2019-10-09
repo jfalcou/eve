@@ -53,12 +53,7 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
 
-    if constexpr(!std::is_floating_point_v<value_type_t<T>>)
-    {
-      static_assert(std::is_floating_point_v<value_type_t<T>>, "first parameter must be floating point");
-      return{}; 
-    }
-    else if constexpr( is_vectorizable_v<U>) // U is scalar
+    if constexpr( is_vectorizable_v<U>) // U is scalar
     {
       if constexpr( is_emulated_v<t_abi>)
       {
@@ -80,8 +75,7 @@ namespace eve::detail
         } 
         else  // U is floating point
         {
-            using t_t = value_type_t<T>;
-            EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
+          using t_t = value_type_t<T>;
           using i_t =  detail::as_integer_t<t_t, signed>; 
           return ldexp(a, i_t(trunc(b)));
         }
@@ -90,11 +84,7 @@ namespace eve::detail
     else // constexpr( is_vectorized_v<U>)
     {
       using u_abi = abi_type_t<U>;
-      if constexpr (U::cardinal_type::value != T::cardinal_type::value)
-      {
-        static_assert(U::cardinal_type::value != T::cardinal_type::value, "[eve::ldexp] - no support for current simd api");
-      }
-      else if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+      if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
       {
         return map( eve::ldexp, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
       }
@@ -116,7 +106,6 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "argument 2 is not a flint or is not finite");
           return ldexp(a, wide_cast(trunc(b), as<i_t>())); 
         }
       }
@@ -148,34 +137,26 @@ namespace eve::detail
       {
         if constexpr(std::is_integral_v<U>)
         {
-          if constexpr(std::is_floating_point_v<value_type_t<T>>())
+          using t_t = value_type_t<T>; 
+          using i_t = detail::as_integer_t<t_t, signed>; 
+          i_t ik =  b+Maxexponent<t_t>();
+          i_t e = b;  
+          auto f = One<T>();
+          if constexpr( eve::platform::supports_denormals)
           {
-            using t_t = value_type_t<T>; 
-            using i_t = detail::as_integer_t<t_t, signed>; 
-            i_t ik =  b+Maxexponent<t_t>();
-            i_t e = b;  
-            auto f = One<T>();
-            if constexpr( eve::platform::supports_denormals)
-            {
-              auto denormal =  is_less(e, Minexponent<t_t>());
-              e = sub[denormal]( e, Minexponent<t_t>());
-              f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
-            }
-            auto test = is_equal(e, Limitexponent<t_t>());
-            f = inc[test](f);
-            e = dec[test](e);
-            e += Maxexponent<t_t>();
-            e = bitwise_shl(e, Nbmantissabits<T>());
-            return b*bitwise_cast(e, as(t_t()))*f;
+            auto denormal =  is_less(e, Minexponent<t_t>());
+            e = sub[denormal]( e, Minexponent<t_t>());
+            f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
           }
-          else
-          {
-            return rshl(a, b);
-          }
-        } 
+          auto test = is_equal(e, Limitexponent<t_t>());
+          f = inc[test](f);
+          e = dec[test](e);
+          e += Maxexponent<t_t>();
+          e = bitwise_shl(e, Nbmantissabits<T>());
+          return b*bitwise_cast(e, as(t_t()))*f;
+        }
         else  // U is floating point
         {
-          EVE_ASSERT(is_flint(b)||is_not_finite(b), "argument 2 is not a flint or is not finite");
           using i_t =  detail::as_integer_t<U, signed>; 
           return pedantic_(ldexp)(a, wide_cast(trunc(b), as<i_t>())); 
         }
@@ -192,48 +173,35 @@ namespace eve::detail
       {
         return aggregate( eve::ldexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
       }
-      else if (U::cardinal_type::value != T::cardinal_type::value)
-      {      
-        static_assert(wrong<T, U>, "[eve::ldexp] - no support for current simd api");
-        return {};     
-      }
       else 
       {
         if constexpr(std::is_integral_v<value_type_t<U>>)
         {
-          if constexpr(std::is_floating_point_v<T>())
+          using t_t = value_type_t<T>; 
+          using i_t = as_integer_t<t_t, signed>;
+          auto e = wide_cast(b, as<i_t>()); 
+          auto f = One<T>();
+          if constexpr( eve::platform::supports_denormals)
           {
-            using t_t = value_type_t<T>; 
-            using i_t = as_integer_t<t_t, signed>;
-            auto e = wide_cast(b, as<i_t>()); 
-            auto f = One<T>();
-            if constexpr( eve::platform::supports_denormals)
-            {
-              auto denormal =  is_less(e, Minexponent<t_t>());
-              e = sub[denormal]( e, Minexponent<t_t>());
-              f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
-            }
-            auto test = is_equal(e, Limitexponent<t_t>());
-            f = inc[test](f);
-            e = dec[test](e);
-            e += Maxexponent<t_t>();
-            e = bitwise_shl(e, Nbmantissabits<t_t>());
-            return b*bitwise_cast(e, as(t_t()))*f;
-            
-            auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
-            ik = shl(ik, Nbmantissabits<t_t>());
-            return b*bitwise_cast(ik, as<T>());
+            auto denormal =  is_less(e, Minexponent<t_t>());
+            e = sub[denormal]( e, Minexponent<t_t>());
+            f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
           }
-          else
-          {
-            return rshl(a, b);
-          }
+          auto test = is_equal(e, Limitexponent<t_t>());
+          f = inc[test](f);
+          e = dec[test](e);
+          e += Maxexponent<t_t>();
+          e = bitwise_shl(e, Nbmantissabits<t_t>());
+          return b*bitwise_cast(e, as(t_t()))*f;
+          
+          auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
+          ik = shl(ik, Nbmantissabits<t_t>());
+          return b*bitwise_cast(ik, as<T>());
         }
         else // U is vector of floating
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          EVE_ASSERT(all(is_flint(b)||is_not_finite(b)), "argument 2 is not a flint or is not finite");
           return pedantic_(ldexp)(a, wide_cast(trunc(b), as<i_t>())); 
         }
       }
