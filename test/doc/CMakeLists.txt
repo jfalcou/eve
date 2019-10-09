@@ -11,6 +11,7 @@
 ## documentation tests
 add_unit_test( "doc.function.predicates" convert.cpp )
 add_unit_test( "doc.function.ieee" ldexp.cpp )
+add_unit_test( "doc.function.ieee" ifrexp.cpp )
 add_unit_test( "doc.function.ieee" exponent.cpp )
 add_unit_test( "doc.function.ieee" mantissa.cpp )
 add_unit_test( "doc.function.ieee" exponentbits.cpp )
