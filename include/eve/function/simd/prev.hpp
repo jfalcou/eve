@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_PREV_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_PREV_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_PREV_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_PREV_HPP_INCLUDED
 
-#include <eve/function/definition/prev.hpp>
+#include <eve/function/scalar/prev.hpp>
 #include <eve/module/core/function/generic/prev.hpp>
 
 #endif
