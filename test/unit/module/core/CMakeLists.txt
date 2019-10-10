@@ -33,7 +33,11 @@ list_tests("scalar/ldexp"   "core" ${real_types})
 >>>>>>> ldexp ok
 =======
 list_tests("scalar/ifrexp"   "core" ${real_types})
+<<<<<<< HEAD
 >>>>>>> ifrexp
+=======
+list_tests("scalar/frexp"   "core" ${real_types})
+>>>>>>> frexp with tests
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/next"     "core" ${all_types})
 list_tests("scalar/prev"     "core" ${all_types})
@@ -226,7 +230,11 @@ list_tests("simd/ldexp"   "core" ${real_types})
 >>>>>>> ldexp ok
 =======
 list_tests("simd/ifrexp"   "core" ${real_types})
+<<<<<<< HEAD
 >>>>>>> ifrexp
+=======
+list_tests("simd/frexp"   "core" ${real_types})
+>>>>>>> frexp with tests
 add_unit_test( "core" simd/bitwise_cast.cpp )
 list_tests("simd/toint" "core" ${real_types})
 list_tests("simd/tofloat" "core" ${integral_types})
