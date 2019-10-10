@@ -22,7 +22,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T> EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::sqrt_), T const& v)
+    template<typename T> EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sqrt_), T const& v)
     {
       if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
       {

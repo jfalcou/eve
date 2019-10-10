@@ -23,7 +23,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::arg_), T const&)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::arg_), T const&)
     {
       static_assert ( std::is_floating_point_v<value_type_t<T>>,
                       "[eve::arg] - No support for integral types"
@@ -31,7 +31,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::arg_), pedantic_type const&, T const&)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(pedantic_type, eve::tag::arg_), T const&)
     {
       static_assert ( std::is_floating_point_v<value_type_t<T>>,
                       "[eve::pedantic_(eve::arg)] - No support for integral types"

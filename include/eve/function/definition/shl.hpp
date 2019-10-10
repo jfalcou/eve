@@ -23,7 +23,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::shl_), T const& v, S const& s)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shl_), T const& v, S const& s)
     {
       EVE_ASSERT( assert_good_shift<T>(s),
                   "[eve::shl] Shifting by " << s

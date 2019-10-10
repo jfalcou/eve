@@ -22,7 +22,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::conj_), T const&)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::conj_), T const&)
     {
       static_assert ( std::is_floating_point_v<value_type_t<T>>,
                       "[eve::conj] - No support for integral types"

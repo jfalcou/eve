@@ -12,6 +12,7 @@
 #define EVE_DETAIL_OVERLOAD_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <utility>
 
@@ -33,7 +34,7 @@
       EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
           -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...))              \
       {                                                                                            \
-        check(delay_t{}, tag::TAG{}, std::forward<Args>(args)...);                                 \
+        check(delay_t{}, ::eve::detail::types<tag::TAG>{}, std::forward<Args>(args)...);           \
         return TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...);                     \
       };                                                                                           \
     };                                                                                             \
@@ -47,7 +48,7 @@
       EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
           -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, Mode{}, std::forward<Args>(args)...))      \
       {                                                                                            \
-        check(delay_t{}, tag::TAG{}, state_, std::forward<Args>(args)...);                         \
+        check(delay_t{}, ::eve::detail::types<Mode, tag::TAG>{}, std::forward<Args>(args)...);     \
         return TAG(delay_t{}, EVE_CURRENT_API{}, state_, std::forward<Args>(args)...);             \
       };                                                                                           \
     };                                                                                             \
@@ -61,6 +62,9 @@
 
 // Flag a function to support delayed calls on given architecture
 #define EVE_SUPPORTS(ARCH) delay_t const &, ARCH const &
+
+// Flag a function to support delayed calls on given architecture
+#define EVE_MATCH_CALL(...) delay_t const &, ::eve::detail::types<__VA_ARGS__> const &
 
 // Flag a function to support delayed calls on given architecture
 #define EVE_RETARGET(ARCH)                                                                         \

@@ -24,7 +24,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename I>
-    EVE_FORCEINLINE void check( EVE_SUPPORTS(eve::tag::extract_),
+    EVE_FORCEINLINE void check( EVE_MATCH_CALL(eve::tag::extract_),
                                 T const&, I const& i
                               )
     {
@@ -34,7 +34,7 @@ namespace eve
     }
 
     template<typename T, typename I, auto V>
-    EVE_FORCEINLINE void check( EVE_SUPPORTS(eve::tag::extract_),
+    EVE_FORCEINLINE void check( EVE_MATCH_CALL(eve::tag::extract_),
                                 T const&, std::integral_constant<I, V> const&
                               )
     {
