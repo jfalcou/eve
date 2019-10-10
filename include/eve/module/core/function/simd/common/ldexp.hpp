@@ -70,7 +70,7 @@ namespace eve::detail
           using t_t = value_type_t<T>;
           using i_t = detail::as_integer_t<t_t, signed>; 
           i_t ik =  b+Maxexponent<t_t>();
-          ik = shl(ik, Nbmantissabits<T>());
+          ik = shl(ik, Nbmantissabits<t_t>());
           return a*bitwise_cast(ik, as<t_t>());
         } 
         else  // U is floating point

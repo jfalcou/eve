@@ -11,7 +11,6 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_it qi = {-10, 2, -2, 3, -1, 4, 2, -6};
   wide_ft pf = {eve::Mindenormal<float>(),
                 1.0f,
                 -1.0f,
@@ -21,19 +20,17 @@ int main()
                 0.0f,
                 -2.0f};
 
+  auto [m, e] =  eve::pedantic_(eve::ifrexp)(pf); 
   std::cout << "---- simd" << '\n'
-            << "<- pf =              " << pf << '\n'
-            << "<- qi =              " << qi << '\n'
-            << "-> eve::ifrexp(pf, qi) = " << eve::ifrexp(pf, qi) << '\n';
+            << "<- pf =                               " << pf << '\n'
+            << "-> eve::pedantic_(eve::ifrexp)(pf) = [" << m << ", \n"
+            << "                                      " << e << "] \n"; 
 
-  float xf = 2, mxf = -2;
-  iT yi = 3;
+  float xf = 2;
+  auto [sm, se] =  eve::ifrexp(xf); 
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf  =                      " << xf << '\n'
-            << "<- mxf =                      " << mxf << '\n'
-            << "<- yi  =                      " << yi << '\n'
-            << "-> eve::ifrexp(xf, yi) = " << eve::ifrexp(xf, yi) << '\n'
-            << "-> eve::ifrexp(mxf, yi)= " << eve::ifrexp(mxf, yi) << '\n';
+            << "<- xf  =              " << xf << '\n'
+            << "-> eve::ifrexp(xf) = [" << sm << ", " << se << "]\n"; 
   return 0;
 }
