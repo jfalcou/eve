@@ -44,14 +44,14 @@ TTS_CASE("Check pedantic(eve::acospi) behavior")
 
   TTS_EXPECT( all(eve::is_positive(pedantic_(eve::acospi)(Type(1.)))) );
 
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(8.414715528e-01)), Type(inpi(std::acos(Value(8.414715528e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.689134359e-01)), Type(inpi(std::acos(Value(9.689134359e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.922192097e-01)), Type(inpi(std::acos(Value(9.922192097e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.995127916e-01)), Type(inpi(std::acos(Value(9.995127916e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.998779893e-01)), Type(inpi(std::acos(Value(9.998779893e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999695420e-01)), Type(inpi(std::acos(Value(9.999695420e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999927878e-01)), Type(inpi(std::acos(Value(9.999927878e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999984503e-01)), Type(inpi(std::acos(Value(9.999984503e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999996424e-01)), Type(inpi(std::acos(Value(9.999996424e-01)))), 0.5);
-  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999999404e-01)), Type(inpi(std::acos(Value(9.999999404e-01)))), 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(8.414715528e-01)), Type(inpi(std::acos(Value(8.414715528e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.689134359e-01)), Type(inpi(std::acos(Value(9.689134359e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.922192097e-01)), Type(inpi(std::acos(Value(9.922192097e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.995127916e-01)), Type(inpi(std::acos(Value(9.995127916e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.998779893e-01)), Type(inpi(std::acos(Value(9.998779893e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999695420e-01)), Type(inpi(std::acos(Value(9.999695420e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999927878e-01)), Type(inpi(std::acos(Value(9.999927878e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999984503e-01)), Type(inpi(std::acos(Value(9.999984503e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999996424e-01)), Type(inpi(std::acos(Value(9.999996424e-01)))), 1);
+  TTS_ULP_EQUAL(pedantic_(eve::acospi)(Type(9.999999404e-01)), Type(inpi(std::acos(Value(9.999999404e-01)))), 1);
 }
