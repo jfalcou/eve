@@ -14,7 +14,7 @@ nextafter
    }
 
     This function object called with x and y returns the  next representable value of x in the
-    direction of y. If x equals y, then x is returned.
+    direction of y. If x equals y, or y is Nan then x is returned.
 
 
 Synopsis
@@ -39,6 +39,10 @@ Synopsis
 
 * [1,3] A value with the same type as the first parameter.
 
+Notes
+******
+
+  - A ``pedantic_`` version ensures that if the second parameter is a Nan a Nan is returned to fit to the standard behaviour.
 
 Example
 *******

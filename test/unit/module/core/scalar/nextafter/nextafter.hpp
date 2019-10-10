@@ -29,7 +29,7 @@
 
 TTS_CASE("Check eve::nextafter return type") { TTS_EXPR_IS(eve::nextafter(Type(), Type()), Type); }
 
-TTS_CASE("Check eve::eve::nextafter behavior")
+TTS_CASE("Check eve::nextafter behavior")
 {
   if constexpr(std::is_floating_point_v<Type>)
   {
@@ -39,11 +39,31 @@ TTS_CASE("Check eve::eve::nextafter behavior")
     TTS_EQUAL(eve::nextafter(eve::One<Type>(), eve::Inf<Type>()), eve::One<Type>()+eve::Eps<Type>());
     TTS_EQUAL(eve::nextafter(eve::Valmax<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
     TTS_EQUAL(eve::nextafter(eve::Mone<Type>(), eve::One<Type>()), eve::Mone<Type>()+eve::Eps<Type>()/2);
-    TTS_EQUAL(eve::nextafter(eve::Zero<Type>(), eve::One<Type>()), eve::Bitincrement<Type>()); 
-  }
+    TTS_EQUAL(eve::nextafter(eve::Zero<Type>(), eve::One<Type>()), eve::Bitincrement<Type>());
+    //non standard behaviour
+    TTS_IEEE_EQUAL(eve::nextafter(eve::One<Type>(), eve::Nan<Type>()), eve::One<Type>());   
+   }
   TTS_EQUAL(eve::nextafter(Type(1), Type(3)), eve::next(Type(1)));
   TTS_EQUAL(eve::nextafter(Type(5), Type(3)), eve::prev(Type(5)));
   TTS_EQUAL( eve::nextafter(Type(5), Type(5)), Type(5)); 
+}
+
+TS_CASE("Check eve::pedantic_(eve::nextafter) behavior")
+{
+  if constexpr(std::is_floating_point_v<Type>)
+  {
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Minf<Type>(), eve::One<Type>()), eve::Valmin<Type>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::nextafter)(eve::Nan<Type>(), eve::One<Type>()), eve::Nan<Type>());
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::One<Type>(), eve::Inf<Type>()), eve::One<Type>()+eve::Eps<Type>());
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Valmax<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Mone<Type>(), eve::One<Type>()), eve::Mone<Type>()+eve::Eps<Type>()/2);
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Zero<Type>(), eve::One<Type>()), eve::Bitincrement<Type>());
+    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::One<Type>(), eve::Nan<Type>()), eve::Nan<Type>()); 
+  }
+  TTS_EQUAL(eve::pedantic_(eve::nextafter)(Type(1), Type(3)), eve::next(Type(1)));
+  TTS_EQUAL(eve::pedantic_(eve::nextafter)(Type(5), Type(3)), eve::prev(Type(5)));
+  TTS_EQUAL( eve::pedantic_(eve::nextafter)(Type(5), Type(5)), Type(5)); 
 }
 
 #endif

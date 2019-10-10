@@ -15,7 +15,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/generic/next_kernel.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/if_else.hpp>
@@ -44,7 +43,7 @@ namespace eve::detail
       }
       else
       {
-        return z; ;
+        return z;
       }
     }
     else // if constexpr(std::is_integral_v<value_type_t<T>>)
@@ -73,7 +72,7 @@ namespace eve::detail
       }
       else
       {
-        return z; ;
+        return z;
       }
     }
     else // if constexpr(std::is_integral_v<T>)
@@ -97,7 +96,7 @@ namespace eve::detail
       }
       else
       {
-        return z; ;
+        return z;
       }
     }
     else // if constexpr(std::is_integral_v<value_type_t<T>>)
@@ -111,13 +110,8 @@ namespace eve::detail
                                       , T const &a
                                       , U const &n) noexcept
   {
-   if constexpr(!std::is_integral_v<value_type_t<U>>)
+    if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      static_assert(std::is_integral_v<value_type_t<U>>, "[prev] : second parameter must be of integral type");
-    }
-    else if constexpr(std::is_floating_point_v<value_type_t<T>>)
-    {
-      EVE_ASSERT(all(is_gez(n)), "[prev] : second parameter must be positive");
       auto z =  bitfloating(sub(bitinteger(a), n)); 
       if constexpr(eve::platform::supports_nans)
       {
@@ -125,7 +119,7 @@ namespace eve::detail
       }
       else
       {
-        return z; ;
+        return z;
       }
     }
     else // if constexpr(std::is_integral_v<T>)

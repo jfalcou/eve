@@ -16,8 +16,10 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/next.hpp>
+#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {
@@ -27,6 +29,16 @@ namespace eve::detail
   requires(T, Vectorizable<T>)
   {
     return (x < y) ? next(x) : ((y < x) ? prev(x) : x); 
+  }
+  
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto
+  nextafter_(EVE_SUPPORTS(cpu_)
+            ,  pedantic_type const &
+            , T const &x, T const &y) noexcept
+  requires(T, Vectorizable<T>)
+  {
+    return  is_unordered(x, y)?Nan<T>() : nextafter(x, y); 
   }
 }
 

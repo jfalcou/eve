@@ -18,8 +18,10 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/function/prev.hpp>
-#include <eve/function/next.hpp>    
+#include <eve/function/next.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/forward.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <type_traits>
@@ -33,7 +35,16 @@ namespace eve::detail
   requires(T, Vectorized<T>)
   {
     return if_else(x < y,  next(x), if_else(y < x, prev(x), x)); 
- 
+  }
+
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_)
+                                 , pedantic_type const &   
+                                 , T const &x
+                                 , U const &y) noexcept
+  requires(T, Vectorized<T>)
+  {
+    return if_else(is_unordered(x, y), allbits_, nextafter(x, y)); 
   }
 }
 

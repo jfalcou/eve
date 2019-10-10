@@ -51,6 +51,8 @@ Notes
 
   - the second parameter elements are to be positive integral values.
 
+  - If the second parameter is 0 the first parameter is returned.
+
 Options
 *******
 
