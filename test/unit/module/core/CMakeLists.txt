@@ -12,7 +12,7 @@
 ##==================================================================================================
 make_all_units(ROOT core NAME abs     ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME acos    ARCH scalar simd TYPES ${real_types})
-# make_all_units(ROOT core NAME acosd   ARCH scalar simd TYPES ${real_types})
+make_all_units(ROOT core NAME acosd   ARCH scalar simd TYPES ${real_types})
 # make_all_units(ROOT core NAME acospi  ARCH scalar simd TYPES ${real_types})
 # make_all_units(ROOT core NAME acot    ARCH scalar simd TYPES ${real_types})
 # make_all_units(ROOT core NAME acotd   ARCH scalar simd TYPES ${real_types})
