@@ -22,7 +22,7 @@
 namespace eve
 {
   EVE_MAKE_CALLABLE(limitexponent_, limitexponent_);
-
+ 
   template<typename T>
   EVE_FORCEINLINE auto Limitexponent(as_<T> const & = {})
   {
@@ -30,7 +30,7 @@ namespace eve
     using i_t = detail::as_integer_t<t_t>;
     if  constexpr(std::is_floating_point_v<t_t>)
     {
-      if constexpr(std::is_same_v<t_t, float>) return i_t(1286);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(128);
       if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
     }
     else
