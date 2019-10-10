@@ -18,6 +18,7 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_shr.hpp>
 #include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -34,30 +35,31 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <tuple>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // Raw case
-  template<typename T, typename U>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
-                                    , raw_tpe const &
-                                    , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
+                                        , raw_type const &
+                                        , T const &a0) noexcept
+  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
-    using t_t = value_type_t<T>; 
-    auto r1   = bitwise_and(Expobits_mask<T>, a0);
+    using t_t = value_type_t<T>;
+    using i_t = as_integer_t<T, signed>; 
+    auto r1   = bitwise_and(bitwise_cast(Expobits_mask<T>, as<i_t>()), bitwise_cast(a0, as<i_t>()));
     auto x    = bitwise_notand(Expobits_mask<T>, a0);
-    return  { bitwise_or(x,Half<T>()), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    return  std::tuple<T, i_t>{ bitwise_or(x,Half<T>()), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
   }
   
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T, typename U>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
-                                    , raw_tpe const &
-                                    , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
+                                        , T const &a0) noexcept
+  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if(!a0) return {T(0),i_t(0)};
@@ -66,11 +68,11 @@ namespace eve::detail
   
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
-  template<typename T, typename U>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if (a0 == 0 || is_not_finite(a0))
@@ -86,21 +88,23 @@ namespace eve::detail
         i_t t = i_t(0);
         if(is_eqz(r1)) // denormal
         {
-          a0 *= Twotonmb<A0>();
-          r1  r1    = bitwise_and(Expobits_mask<T>, a0);  // extract exp. again
+          a0 *= Twotonmb<T>();
+          r1    = bitwise_and(Expobits_mask<T>, a0);  // extract exp. again
           t   = nmb;
-        }
-      }
-      
-      T x  = bitwise_andnot(a0, Expobits_mask<T>());               // clear exp. in a0
-      r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
-      if (r1 > Limitexponent<A0>()) return {a0, i_t(0)};
-
-      if constexpr(eve::platform::supports_denormals)
-      {
+        }        
+        T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
+        r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
+        if (r1 > Limitexponent<T>()) return {a0, i_t(0)};       
         r1 -= t;
+        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
       }
-      return {bitwise_or(x,Half<T>()), r1};
+      else
+      {
+        T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
+        r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
+        if (r1 > Limitexponent<T>()) return {a0, i_t(0)};
+        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
+      }
     }
   }
 }
