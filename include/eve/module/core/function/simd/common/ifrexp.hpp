@@ -11,203 +11,100 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IFREXP_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IFREXP_HPP_INCLUDED
 
+
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shl.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/rshl.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/wide_cast.hpp>
-#include <eve/constant/limitexponent.hpp>
-#include <eve/constant/minexponent.hpp> 
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/forward.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/tags.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
+#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bitwise_shr.hpp>
+#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_andnot.hpp>   
+#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bitwise_or.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_denormal.hpp>
+#include <eve/function/is_not_finite.hpp>
+#include <eve/function/logical_notand.hpp>
+#include <eve/constant/limitexponent.hpp>
+#include <eve/constant/maxexponent.hpp> 
+#include <eve/constant/maxexponentm1.hpp>
+#include <eve/constant/nbmantissabits.hpp>
+#include <eve/constant/expobits_mask.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/twotonmb.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/platform.hpp>
 #include <type_traits>
+#include <tuple>
 
 namespace eve::detail
 {
-
   // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<typename T, typename U>
-  EVE_FORCEINLINE  auto ifrexp_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires( T, Vectorized<T>)
+  // Raw case
+  template<typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
+                                        , raw_type const &
+                                        , wide<T, N, ABI> const & a0) noexcept
   {
-    using t_abi = abi_type_t<T>;
-
-    if constexpr( is_vectorizable_v<U>) // U is scalar
-    {
-      if constexpr( is_emulated_v<t_abi>)
-      {
-        return map( eve::ifrexp, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else if constexpr( is_aggregated_v<t_abi>)
-      {
-        return aggregate( eve::ifrexp, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else
-      {
-        if constexpr(std::is_integral_v<U>)
-        {
-          using t_t = value_type_t<T>;
-          using i_t = detail::as_integer_t<t_t, signed>; 
-          i_t ik =  b+Maxexponent<t_t>();
-          ik = shl(ik, Nbmantissabits<T>());
-          return a*bitwise_cast(ik, as<t_t>());
-        } 
-        else  // U is floating point
-        {
-          using t_t = value_type_t<T>;
-          using i_t =  detail::as_integer_t<t_t, signed>; 
-          return ifrexp(a, i_t(trunc(b)));
-        }
-      }
-    }
-    else // constexpr( is_vectorized_v<U>)
-    {
-      using u_abi = abi_type_t<U>;
-      if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
-      {
-        return map( eve::ifrexp, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
-      {
-        return aggregate( eve::ifrexp, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else 
-      {
-        if constexpr(std::is_integral_v<value_type_t<U>>)
-        {
-          using t_t = value_type_t<T>; 
-          using i_t = as_integer_t<t_t, signed>;
-          auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
-          ik = shl(ik, Nbmantissabits<t_t>());
-          return a*bitwise_cast(ik, as<T>());
-        }
-        else // U is vector of floating
-        {
-          using t_t = value_type_t<T>; 
-          using i_t = as_integer_t<t_t, signed>;
-          return ifrexp(a, wide_cast(trunc(b), as<i_t>())); 
-        }
-      }
-    }
+    using t_t = wide<T, N, ABI>; 
+    using i_t = as_integer_t<t_t, signed>; 
+    auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
+    auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
+    return  std::tuple<t_t, i_t>{ bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
   }
   
   // -----------------------------------------------------------------------------------------------
-  // pedantic case
-  template<typename T, typename U>
-  EVE_FORCEINLINE  auto ifrexp_(EVE_SUPPORTS(cpu_)
-                            , pedantic_type const & pdt 
-                            , T const &a
-                            , U const &b) noexcept
-  requires( T, Vectorized<T>)
+  // Regular case
+  template<typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
+                                        , wide<T, N, ABI>  a0) noexcept
   {
-    using t_abi = abi_type_t<T>;
+    using t_t = wide<T, N, ABI>; 
+    using i_t = as_integer_t<t_t, signed>; 
+    auto [m, e] =  raw_(ifrexp)(a0);
+    auto test = is_nez(a0);
+    return std::tuple<t_t, i_t>{if_else(test, m, eve::zero_), if_else(test, e, eve::zero_)}; 
+  }
+  
+  // -----------------------------------------------------------------------------------------------
+  // Pedantic case
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
+                                    , pedantic_type const & 
+                                    , wide<T, N, ABI> const & a0) noexcept
+  {
+     using t_t = wide<T, N, ABI>; 
+     using i_t = as_integer_t<t_t, signed>;
+     t_t aa0 = a0;
+     i_t t(0); 
+     if constexpr(eve::platform::supports_denormals)
+     {
+       auto test = is_denormal(a0);
+       t = if_else(test,Nbmantissabits<t_t>(), eve::zero_);
+       aa0 = if_else(test, Twotonmb<T>()*a0, a0);
+     }
+     auto r1 = bitwise_and(Expobits_mask<t_t>(), aa0); //extract exp.
+     auto x  = bitwise_notand(Expobits_mask<t_t>(), aa0);
+     r1 = bitwise_shr(r1,Nbmantissabits<T>()) - Maxexponentm1<T>();
+     auto r0 = bitwise_or(Half<t_t>(), x);
+     auto test0 = is_nez(aa0);
+     auto test1 = is_greater(r1,Limitexponent<t_t>());
+     r1 = if_else(logical_notand(test1, test0), r1, eve::zero_);
 
-    if constexpr( is_vectorizable_v<U>) // U is scalar
-    {
-      if constexpr( is_emulated_v<t_abi>)
-      {
-        return map( eve::ifrexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else if constexpr( is_aggregated_v<t_abi>)
-      {
-        return aggregate( eve::ifrexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else
-      {
-        if constexpr(std::is_integral_v<U>)
-        {
-          using t_t = value_type_t<T>; 
-          using i_t = detail::as_integer_t<t_t, signed>; 
-          i_t ik =  b+Maxexponent<t_t>();
-          i_t e = b;  
-          auto f = One<T>();
-          if constexpr( eve::platform::supports_denormals)
-          {
-            auto denormal =  is_less(e, Minexponent<t_t>());
-            e = sub[denormal]( e, Minexponent<t_t>());
-            f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
-          }
-          auto test = is_equal(e, Limitexponent<t_t>());
-          f = inc[test](f);
-          e = dec[test](e);
-          e += Maxexponent<t_t>();
-          e = bitwise_shl(e, Nbmantissabits<T>());
-          return b*bitwise_cast(e, as(t_t()))*f;
-        }
-        else  // U is floating point
-        {
-          using i_t =  detail::as_integer_t<U, signed>; 
-          return pedantic_(ifrexp)(a, wide_cast(trunc(b), as<i_t>())); 
-        }
-      }
-    }
-    else // constexpr( is_vectorized_v<U>)
-    {
-      using u_abi = abi_type_t<U>;
-      if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
-      {
-        return map( eve::ifrexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
-      {
-        return aggregate( eve::ifrexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
-      }
-      else 
-      {
-        if constexpr(std::is_integral_v<value_type_t<U>>)
-        {
-          using t_t = value_type_t<T>; 
-          using i_t = as_integer_t<t_t, signed>;
-          auto e = wide_cast(b, as<i_t>()); 
-          auto f = One<T>();
-          if constexpr( eve::platform::supports_denormals)
-          {
-            auto denormal =  is_less(e, Minexponent<t_t>());
-            e = sub[denormal]( e, Minexponent<t_t>());
-            f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
-          }
-          auto test = is_equal(e, Limitexponent<t_t>());
-          f = inc[test](f);
-          e = dec[test](e);
-          e += Maxexponent<t_t>();
-          e = bitwise_shl(e, Nbmantissabits<t_t>());
-          return b*bitwise_cast(e, as(t_t()))*f;
-          
-          auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
-          ik = shl(ik, Nbmantissabits<t_t>());
-          return b*bitwise_cast(ik, as<T>());
-        }
-        else // U is vector of floating
-        {
-          using t_t = value_type_t<T>; 
-          using i_t = as_integer_t<t_t, signed>;
-          return pedantic_(ifrexp)(a, wide_cast(trunc(b), as<i_t>())); 
-        }
-      }
-    }
+     if constexpr(eve::platform::supports_denormals)
+     {
+       r1 -= t ;
+     }
+     return std::tuple<t_t, i_t>{ if_else(test0, add[test1](r0,aa0), eve::zero_), r1};
   }
 }
-
 
 #endif

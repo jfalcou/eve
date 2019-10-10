@@ -26,7 +26,7 @@ namespace eve
   EVE_FORCEINLINE auto Nbmantissabits(as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>; 
-    using i_t = detail::as_integer_t<t_t>;
+    using i_t = detail::as_integer_t<T>;
     if  constexpr(std::is_floating_point_v<t_t>)
     {
       if constexpr(std::is_same_v<t_t, float>) return i_t(23);
