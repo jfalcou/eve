@@ -18,9 +18,11 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_shr.hpp>
 #include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_andnot.hpp>   
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/bitwise_or.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/maxexponent.hpp> 
@@ -44,21 +46,21 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
-                                        , T const &a0) noexcept
+                                        , T a0) noexcept
   requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
     using t_t = value_type_t<T>;
     using i_t = as_integer_t<T, signed>; 
-    auto r1   = bitwise_and(bitwise_cast(Expobits_mask<T>, as<i_t>()), bitwise_cast(a0, as<i_t>()));
-    auto x    = bitwise_notand(Expobits_mask<T>, a0);
-    return  std::tuple<T, i_t>{ bitwise_or(x,Half<T>()), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    auto r1   = bitwise_and(Expobits_mask<T>(), a0);
+    auto x    = bitwise_notand(Expobits_mask<T>(), a0);
+    return  std::tuple<T, i_t>{ bitwise_or(Half<T>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
   }
   
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
-                                        , T const &a0) noexcept
+                                        , T a0) noexcept
   requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
     using i_t = as_integer_t<T, signed>;
@@ -71,7 +73,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
-                                    , T const &a0) noexcept
+                                    , T a0) noexcept
   requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
   {
     using i_t = as_integer_t<T, signed>;
@@ -82,14 +84,14 @@ namespace eve::detail
     else
     {
       auto nmb  = Nbmantissabits<T>();
-      i_t r1    = bitwise_and(Expobits_mask<T>, a0);  // extract exp.
+      i_t r1    = bitwise_and(Expobits_mask<T>(), a0);  // extract exp.
       if constexpr(eve::platform::supports_denormals)
       {
         i_t t = i_t(0);
         if(is_eqz(r1)) // denormal
         {
           a0 *= Twotonmb<T>();
-          r1    = bitwise_and(Expobits_mask<T>, a0);  // extract exp. again
+          r1  = bitwise_and(Expobits_mask<T>(), a0);  // extract exp. again
           t   = nmb;
         }        
         T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
