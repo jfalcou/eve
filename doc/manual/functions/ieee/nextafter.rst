@@ -13,8 +13,8 @@ nextafter
       constexpr /* implementation defined */ nextafter = {};
    }
 
-    This function object called with x and y returns the  the next representable value of x in the
-    direction of y. is returned. If x equals y, then x is returned.
+    This function object called with x and y returns the  next representable value of x in the
+    direction of y. If x equals y, then x is returned.
 
 
 Synopsis
@@ -24,19 +24,20 @@ Synopsis
   :linenos:
 
    template<typename T, typename U, typename N>  wide<T,N> operator()( wide<T,N> const& x, wide<T,N> const& y) noexcept;
-   template<typename T> constexpr T                        operator()( T s, T t) noexcept;
+   template<typename T, typename U, typename N>  wide<T,N> operator()( wide<T,N> const& x, T z) noexcept;
+   template<typename T> constexpr T                        operator()( T s, T z) noexcept;
 
-* [1-3] Computes the element-wise nextafter (n-th) value of the :ref:`wide <type-wide>`.
-* [4-5] Computes the nextafter (n-th) value of the scalar.
-
+* [1] Computes the element_wise next representable value of x in the direction of y. If x equals y, then x is returned.
+* [2] Computes the element_wise next representable value of x in the direction of z. If x equals y, then x is returned. 
+* [3] Computes the next representable value of s in the direction of z. If x equals z, then s is returned. 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **x**, **y**: Instance of :ref:`type-wide`.
+* **s**, **z**: Scalar value.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* [1,3] A value with the same type as the first parameter.
 
 
 Example

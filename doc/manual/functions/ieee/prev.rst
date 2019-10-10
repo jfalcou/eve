@@ -29,8 +29,13 @@ Synopsis
    template<typename T> constexpr T                        operator()( T s ) noexcept;
    template<typename T> constexpr T                        operator()( T s, U n) noexcept;
 
-* [1-3] Computes the element-wise prev (n-th) value of the :ref:`wide <type-wide>`.
-* [4-5] Computes the prev (n-th) value of the scalar.
+
+* [1] Computes the element-wise geatest representable element strictly less than the first parameter 
+* [2] Computes the element-wise  n-th geatest representable element strictly less than the first parameter 
+* [3] Computes the element-wise m-th geatest representable element strictly less than the first parameter
+* [4] Computes the geatest representable element strictly less than the first parameter
+* [5] Computes the geatest  n-th geatest representable element strictly less than the first parameter 
+
 
 .. rubric:: Parameters
 
@@ -39,7 +44,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* [1,5] A value with the same type as the first parameter.
 
 Notes
 ******
