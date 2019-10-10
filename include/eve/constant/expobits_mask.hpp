@@ -23,7 +23,7 @@ namespace eve
   EVE_MAKE_CALLABLE(expobits_mask_, expobits_mask_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Expobits_Mask(as_<T> const & = {})
+  EVE_FORCEINLINE auto Expobits_mask(as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>; 
     using i_t = detail::as_integer_t<T, signed>;
@@ -36,7 +36,7 @@ namespace eve
       return i_t(0); 
   }
 
-  EVE_MAKE_NAMED_CONSTANT(expobits_mask_, Expobits_Mask);
+  EVE_MAKE_NAMED_CONSTANT(expobits_mask_, Expobits_mask);
 }
 
 #endif
