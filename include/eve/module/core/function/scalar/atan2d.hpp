@@ -16,7 +16,6 @@
 #include <eve/function/atan2.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/assert.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
@@ -33,11 +32,7 @@ namespace eve::detail
     {
       return indeg(atan2(a0, a1)); 
     }
-    else 
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>
-                   , "[atan2d scalar] -type is not an IEEEValue"); 
-    }    
+    return T(); 
   }
   
   template<typename T>
@@ -52,11 +47,7 @@ namespace eve::detail
     {
       return indeg(pedantic_(atan2)(a0, a1)); 
     }
-    else 
-    {
-      static_assert(std::is_floating_point_v<T>
-                   , "[atan2d pedantic_ scalar] - type is not an IEEEValue");
-    }    
+    return T(); 
   }
 }
 

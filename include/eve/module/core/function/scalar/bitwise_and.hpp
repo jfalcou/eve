@@ -23,9 +23,8 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
-                                                                             Vectorizable<T>,
-                                                                             Vectorizable<U>)
+  bitwise_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires(T, Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr(sizeof(T) != sizeof(U))
     {

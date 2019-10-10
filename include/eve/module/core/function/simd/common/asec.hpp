@@ -57,11 +57,8 @@ namespace eve::detail
         return if_else(is_equal(a0, One(as(a0))), eve::zero_ ,tmp);
 
       }
-      else
-      {
-        EVE_ASSERT(std::is_floating_point_v<T>, "[eve::asec simd] - type is not an IEEEValue"); 
-      }
     }
+    return wide<T,N,ABI>();
   }
 
 }

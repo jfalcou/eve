@@ -25,16 +25,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto acsc_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    if constexpr( is_aggregated_v<ABI> )
-      return aggregate(eve::acsc, a0);
-    else if constexpr( is_emulated_v<ABI>   )
-      return map(eve::acsc, a0);
-    else if constexpr( std::is_floating_point_v<T> )
-      return eve::asin(rec(a0));
-    else
+    if constexpr( std::is_floating_point_v<T> )
     {
-      EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acsc simd] - type is not an IEEEValue"); 
+      if constexpr( is_aggregated_v<ABI> )
+        return aggregate(eve::acsc, a0);
+      else if constexpr( is_emulated_v<ABI>)
+        return map(eve::acsc, a0);
+      else 
+        return eve::asin(rec(a0));
     }
+    return eve::wide<T,N,ABI>(); 
   }
 }
 

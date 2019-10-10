@@ -26,7 +26,6 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/assert.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <eve/concept/vectorizable.hpp>
@@ -47,11 +46,7 @@ namespace eve::detail
       T z = detail::atan_kernel(q, eve::rec(q));
       return (is_positive(a1)? z: Pi<T>()-z)*signnz(a0);
     }
-    else 
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>
-                   , "[atan2 scalar] -type is not an IEEEValue"); 
-    }    
+    return T(); 
   }
   
   template<typename T>
@@ -82,11 +77,7 @@ namespace eve::detail
       z = (is_positive(a1)? z: Pi<T>()-z)*sgn;
       return is_eqz(a0) ? if_else(is_negative(a1), Pi(as(a0))*sgn, eve::zero_) : z;
     }
-    else 
-    {
-      static_assert(std::is_floating_point_v<T>
-                   , "[atan2 pedantic_ scalar] - type is not an IEEEValue"); 
-    }    
+    return T(); 
   }
 }
 

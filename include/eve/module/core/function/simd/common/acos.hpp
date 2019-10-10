@@ -44,18 +44,15 @@ namespace eve::detail
         return aggregate(eve::acos, a0);
       else if constexpr( is_emulated_v<ABI>   )
         return map(eve::acos, a0);
-      else if constexpr( std::is_floating_point_v<T> )
+      else 
       {
         using t_t = eve::wide<T,N,ABI>; 
         auto z = Pio_2(as(a0))-eve::asin(a0);
         // small correction with pio_2lo
         return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
       }   
-      else
-      {
-        EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acos simd] - type is not an IEEEValue"); 
-      }
     }
+    return wide<T,N,ABI>(); 
   }
 
   template<typename T,  typename N,  typename ABI>
@@ -69,7 +66,7 @@ namespace eve::detail
         return aggregate(eve::acos, a0);
       else if constexpr( is_emulated_v<ABI>   )
         return map(eve::acos, a0);
-      else if constexpr( std::is_floating_point_v<T> )
+      else
       {
         auto x = eve::abs(a0);
         auto x_larger_05 = is_greater(x, eve::Half(as(a0)));
@@ -84,13 +81,9 @@ namespace eve::detail
         x  = eve::if_else(is_less(a0, eve::Mhalf(as(a0))), eve::Pi(as(a0))-x, x);
         return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0))-x);
       }   
-      else
-      {
-        EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acos simd] - type is not an IEEEValue"); 
-      }
     }
+    return wide<T,N,ABI>(); 
   }
-
 }
 
 #endif

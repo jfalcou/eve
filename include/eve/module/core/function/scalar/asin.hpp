@@ -112,10 +112,7 @@ namespace eve::detail
         return bitwise_xor(sgn, zz);
       }
     }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::asin scalar ] - type is not an IEEEValue"); 
-    }      
+    return T(); 
   }
 
 }

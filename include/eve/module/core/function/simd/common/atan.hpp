@@ -12,7 +12,6 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_ATAN_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/assert.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/assert.hpp>
@@ -40,11 +39,7 @@ namespace eve::detail
         return bitwise_xor(atan_kernelw(x, rec(x)), bitofsign(a));
       }   
     }
-    else
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>
-                , "[eve::atan simd] - type is not an IEEEValue"); 
-    }
+    return wide<T,N,ABI>(); 
   }
 }
 

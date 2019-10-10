@@ -32,11 +32,8 @@ namespace eve::detail
     {
       T x  = eve::abs(a);
       return bitwise_xor(atan_kernel(rec(x), x), bitofsign(a));
-   }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acot scalar ] - type is not an IEEEValue"); 
     }
+    return T(); 
   }
 }
 

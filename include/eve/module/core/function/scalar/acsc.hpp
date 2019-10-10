@@ -15,7 +15,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/asin.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,10 +28,7 @@ namespace eve::detail
     {
       return eve::asin(rec(a0));  
     }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acsc scalar ] - type is not an IEEEValue"); 
-    }      
+    return T();   
   }
 
 }

@@ -15,6 +15,19 @@
 
 namespace eve
 {
+  namespace tag { struct atan_; }
+
+  namespace detail
+  {
+    template<typename T>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::atan_), T const&)
+    {
+      static_assert ( std::is_floating_point_v<value_type_t<T>>,
+                      "[eve::atan] - No support for integral types"
+                    );
+    }
+  }
+
   EVE_MAKE_CALLABLE(atan_, atan);
 }
 

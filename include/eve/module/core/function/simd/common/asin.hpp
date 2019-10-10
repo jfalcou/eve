@@ -124,11 +124,10 @@ namespace eve::detail
         }
       }
     }
-    else
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>, "[eve::asin simd] - type is not an IEEEValue"); 
-    }
-  }
+    return wide<T,N,ABI>(); 
+  }  
+
+  
 }
 
 #endif

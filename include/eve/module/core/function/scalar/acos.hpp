@@ -46,10 +46,7 @@ namespace eve::detail
       // small correction with pio_2lo
       return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
     }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acos scalar ] - type is not an IEEEValue"); 
-    }
+    return T(); 
   }
   
   template<typename T>
@@ -77,10 +74,7 @@ namespace eve::detail
       z = z + Pio_4<T>();
       return z;
     }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acos[pedantic_] scalar ] - type is not an IEEEValue"); 
-    }   
+    return T(); 
   }
 }
 

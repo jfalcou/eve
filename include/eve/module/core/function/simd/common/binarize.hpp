@@ -59,10 +59,7 @@ namespace eve::detail
       if constexpr(std::is_integral_v<T>) return  cond.mask();
       else return  binarize(cond,eve::Mone<T>());
     }
-    else
-    {
-      static_assert(is_vectorizable_v<U>, "second parameter in binarize must be scalar"); 
-    }
+    return wide<T, N, ABI>(); 
   }
 }
 

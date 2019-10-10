@@ -16,7 +16,6 @@
 #include <eve/function/atan2.hpp>
 #include <eve/function/inpi.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/assert.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
@@ -29,15 +28,7 @@ namespace eve::detail
                                        ) noexcept
   requires(T,  Vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return inpi(atan2(a0, a1)); 
-    }
-    else 
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>
-                   , "[atan2pi scalar] -type is not an IEEEValue"); 
-    }    
+    return inpi(atan2(a0, a1)); 
   }
   
   template<typename T>
@@ -48,15 +39,7 @@ namespace eve::detail
                                        ) noexcept
   requires(T,  Vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return inpi(pedantic_(atan2)(a0, a1)); 
-    }
-    else 
-    {
-      static_assert(std::is_floating_point_v<T>
-                   , "[atan2pi pedantic_ scalar] - type is not an IEEEValue"); 
-    }    
+    return inpi(pedantic_(atan2)(a0, a1)); 
   }
 }
 

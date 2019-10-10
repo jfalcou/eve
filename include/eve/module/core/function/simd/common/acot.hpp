@@ -36,14 +36,11 @@ namespace eve::detail
         return map(eve::acot, a);
       else
       {
-        eve::wide<T,N,ABI> x  = eve::abs(a);
+        auto x  = eve::abs(a);
         return bitwise_xor(atan_kernelw(rec(x), x), bitofsign(a));
       }   
     }
-    else
-    {
-      EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acot simd ] - type is not an IEEEValue"); 
-    }
+    return wide<T,N,ABI>(); 
   }
 }
 
