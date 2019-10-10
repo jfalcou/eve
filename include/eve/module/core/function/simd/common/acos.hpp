@@ -41,9 +41,13 @@ namespace eve::detail
   requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
+    {
       return aggregate(eve::acos, a0);
+    }
     else if constexpr( is_emulated_v<ABI>   )
+    {
       return map(eve::acos, a0);
+    }
     else
     {
       using t_t = eve::wide<T,N,ABI>;
@@ -61,10 +65,14 @@ namespace eve::detail
   requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
-      return aggregate(eve::acos, a0);
+    {
+      return aggregate(eve::pedantic_(eve::acos), a0);
+    }
     else if constexpr( is_emulated_v<ABI>   )
-      return map(eve::acos, a0);
-    else
+    {
+      return map(eve::pedantic_(eve::acos), a0);
+    }
+    else if constexpr( std::is_floating_point_v<T> )
     {
       auto x = eve::abs(a0);
       auto x_larger_05 = is_greater(x, eve::Half(as(a0)));
