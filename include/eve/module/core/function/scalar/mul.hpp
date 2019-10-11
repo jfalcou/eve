@@ -51,7 +51,7 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) <= 2)
       {
-        using up_t = std::conditional_t<sizeof(T) == 1, int16_t, int32_t>;
+        using up_t =  upgrade_t<T>;
         return static_cast<T>(saturate[as_<T>()](static_cast<up_t>(a)*static_cast<up_t>(b)));
       }
        else if constexpr(sizeof(T) == 4)
@@ -92,13 +92,9 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) <= 4)
       {
-        enum ST { siz = sizeof(T) };
-        enum Sizee {value = sizeof(T)*8-1 };
-        
-        using up_t = std::conditional_t<ST::siz == 1, uint16_t
-          , std::conditional_t<ST::siz == 2, uint32_t, uint64_t > >;  
+        using up_t =  upgrade_t<T>;
         up_t res = up_t(a)*up_t(b);
-        return static_cast<T>(res) | bitwise_mask(static_cast<T>(res >> Sizee::value));
+        return (res > Valmax<T>()) ? Valmax<T>() : static_cast<T>(res); 
       }
       else
       {
