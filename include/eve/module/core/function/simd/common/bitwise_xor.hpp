@@ -69,7 +69,11 @@ namespace eve::detail
     {
       return eve::bitwise_xor(a, bitwise_cast(b,as(a)));
     }
-    return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+    else
+    {
+      static_assert(wrong<T, U>, "[eve::bitwise_xor] - Missing implementation"); 
+      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+    }
   }
 }
 

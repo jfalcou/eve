@@ -12,7 +12,7 @@
 #define EVE_FUNCTION_DEFINITION_DIST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/function/saturated.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <type_traits>
 

@@ -50,7 +50,7 @@ namespace eve::detail
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
-      static_assert(wrong<T, U>, "[eve::sub] - no support for current simd api");
+      static_assert(wrong<T, U>, "[eve::sub] - Missing implementation support");
       return {};
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
@@ -119,7 +119,7 @@ namespace eve::detail
       }
       else
       {
-        static_assert(wrong<T, U>, "[saturated_(eve::sub)] - no support for current simd api");
+        static_assert(wrong<T, U>, "[eve::saturated_(eve::sub)] -  - Missing implementation support");
         return {};
       }
     }

@@ -62,11 +62,15 @@ namespace eve::detail
     {
       return aggregate(eve::bitwise_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
     }
-    else
+    else if (is_vectorized_v<T> && is_vectorized_v<U>)
     {
       return eve::bitwise_and(a, bitwise_cast(b,as(a)));
     }
-    return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+    else
+    {
+      static_assert(wrong<T, U>, "[eve::bitwise_and] - Missing implementation"); 
+      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+    }
   }
 }
 

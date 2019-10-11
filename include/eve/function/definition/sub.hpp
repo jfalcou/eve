@@ -10,12 +10,54 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_DEFINITION_SUB_HPP_INCLUDED
 #define EVE_FUNCTION_DEFINITION_SUB_HPP_INCLUDED
-
 #include <eve/detail/overload.hpp>
+#include <eve/function/saturated.hpp>
+#include <eve/concept/vectorized.hpp>
+#include <type_traits>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(sub_, sub);
+  namespace tag { struct sub_; }
+
+  namespace detail
+  {
+    template<typename T, typename U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sub_), T const&, U const &)
+    {
+      constexpr bool is_vec_t = is_vectorized_v<T>;
+      constexpr bool is_vec_u = is_vectorized_v<U>; 
+      if constexpr(is_vec_t && is_vec_u)
+      {
+        static_assert(std::is_same_v<T, U>,
+                    "[eve::sub]  - SIMD arguments have not the same type");
+
+      }
+      else  if constexpr(!is_vec_t && !is_vec_u)
+      {
+        static_assert(std::is_same_v<T, U>,
+                    "[eve::sub]  - scalar argument has not the same types");
+      }
+    }
+    template<typename T, typename U>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::sub_), T const&, U const &)
+    {
+      constexpr bool is_vec_t = is_vectorized_v<T>;
+      constexpr bool is_vec_u = is_vectorized_v<U>; 
+      if constexpr(is_vec_t && is_vec_u)
+      {
+        static_assert(std::is_same_v<T, U>,
+                    "[eve::saturated_(eve::sub)]  - SIMD arguments have not the same type");
+
+      }
+      else  if constexpr(!is_vec_t && !is_vec_u)
+      {
+        static_assert(std::is_same_v<T, U>,
+                    "[eve::saturated_(eve::sub)]  - scalar argument has not the same types");
+      }
+    }
+  }
+
+   EVE_MAKE_CALLABLE(sub_, sub);
 }
 
 #endif

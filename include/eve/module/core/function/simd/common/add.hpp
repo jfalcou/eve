@@ -53,7 +53,7 @@ namespace eve::detail
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
-      static_assert(wrong<T, U>, "[eve::add] - no support for current simd api");
+      static_assert(wrong<T, U>, "[eve::add] - Missing implementation"); 
       return {};
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
