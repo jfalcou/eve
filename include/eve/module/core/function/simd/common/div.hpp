@@ -67,12 +67,7 @@ namespace eve::detail
                     , abi_cast<value_type_t<T>>(b) );
         }
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::div] common - cannot divide wide of different types");
-        return {};
-      }
+      return std::conditional_t<is_vectorized_v<T>,T,U>(); 
     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
@@ -114,10 +109,7 @@ namespace eve::detail
            using sT = value_type_t<T>;
           auto iseqzb = is_eqz(b);
           // replace valmin/-1 by (valmin+1)/-1
-//          auto x = a + if_else<T>(inc(b) | (a + Valmin<T>()), eve::zero_, eve::one_);
-//          auto x = inc.not_[inc(b) | (a + Valmin<T>())](a);
           auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
-//          auto x = a + if_else   (inc(b) | (a + Valmin<T>()), T(0), T(1)); 
           // negative -> valmin
           // positive -> valmax
           const T x2 = bitwise_xor(Valmax<T>(), shr(x, sizeof(sT)*8-1));
@@ -133,13 +125,8 @@ namespace eve::detail
            return div(aa, bb);
         }                          
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::div saturated] common - cannot divide wide of different types");
-        return {};
-      }
-    }
+      return std::conditional_t<is_vectorized_v<T>,T,U>(); 
+     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::div(abi_cast<U>(a), abi_cast<T>(b) );

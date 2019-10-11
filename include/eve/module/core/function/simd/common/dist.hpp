@@ -43,12 +43,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>) { return eve::max(a, b) - eve::min(a, b); }
-      else
-      {
-        static_assert(wrong<T, U>, "[eve::dist] - no support for current simd api");
-        return {};
-      }
+      return eve::max(a, b) - eve::min(a, b); 
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
