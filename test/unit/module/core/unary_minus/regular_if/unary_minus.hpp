@@ -8,40 +8,43 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef UNARY_MINUS_HPP
-#define UNARY_MINUS_HPP
-
 #include <eve/function/unary_minus.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/logical.hpp>
-#include <type_traits>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check conditional unary_minus return type")
+TTS_CASE("Check conditional eve::unary_minus return type")
 {
-  TTS_EXPR_IS(eve::unary_minus[ Type() ](Type()), Type);
-  TTS_EXPR_IS(eve::unary_minus[ eve::logical<Type>() ](Type()), Type);
-  TTS_EXPR_IS(eve::unary_minus[ true ](Type()), Type);
+  TTS_EXPR_IS(eve::unary_minus[ Value(0)  ](Type(0))              , (Type));
+  TTS_EXPR_IS(eve::unary_minus[ (Type(0)) ](Type(0))              , (Type));
+  TTS_EXPR_IS(eve::unary_minus[ (eve::logical<Type>(0))](Type(0)) , (Type));
+  TTS_EXPR_IS(eve::unary_minus[ eve::logical<Value>(0) ](Type(0)) , (Type));
+  TTS_EXPR_IS(eve::unary_minus[ true ](Type(0))                   , (Type));
 }
 
-TTS_CASE("Check conditional unary_minus behavior")
+TTS_CASE("Check conditional eve::unary_minus behavior")
 {
-  Type tv{2};
-  Type fv{3};
+  Type tv(2);
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_EQUAL(eve::unary_minus[ 1 ](tv, fv), -tv);
-  TTS_EQUAL(eve::unary_minus[ 1.0 ](tv, fv), -tv);
-  TTS_EQUAL(eve::unary_minus[ true ](tv, fv), -tv);
-  TTS_EQUAL(eve::unary_minus[ t ](tv, fv), -tv);
-  TTS_EQUAL(eve::unary_minus[ 0 ](tv, fv), tv);
-  TTS_EQUAL(eve::unary_minus[ 0.0 ](tv, fv), tv);
-  TTS_EQUAL(eve::unary_minus[ false ](tv, fv), tv);
-  TTS_EQUAL(eve::unary_minus[ f ](tv, fv), tv);
-}
+  TTS_EQUAL(eve::unary_minus[ 1 ](tv)   , (Type(-tv)));
+  TTS_EQUAL(eve::unary_minus[ 1.0 ](tv) , (Type(-tv)));
+  TTS_EQUAL(eve::unary_minus[ true ](tv), (Type(-tv)));
+  TTS_EQUAL(eve::unary_minus[ t ](tv)   , (Type(-tv)));
 
-#endif
+  TTS_EQUAL(eve::unary_minus[ 0 ](tv)     , tv);
+  TTS_EQUAL(eve::unary_minus[ 0.0 ](tv)   , tv);
+  TTS_EQUAL(eve::unary_minus[ false ](tv) , tv);
+  TTS_EQUAL(eve::unary_minus[ f ](tv)     , tv);
+
+    // Mixed case
+  eve::as_logical_t<Type> m;
+  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
+                , [k = true](auto& e) mutable { e = k; k = !k; }
+                );
+
+  TTS_ALL_EQUAL(eve::unary_minus[ m ](tv), eve::if_else(m,  (Type(-tv)), tv) );
+}

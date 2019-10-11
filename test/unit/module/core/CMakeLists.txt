@@ -195,9 +195,8 @@ make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 # make_units("sub/regular_if"                 "core" ${all_types})
 # make_units("sub/saturated_if"               "core" ${all_types})
 
-# make_units("unary_plus/regular"             "core" ${all_types})
-# make_units("unary_minus/regular"            "core" ${all_types})
-# ##st_tests("unary_minus/regular_if"         "core" ${all_types})
+make_all_units(ROOT core NAME unary_plus    ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME unary_minus   ARCH scalar simd TYPES ${all_types} )
 
 # make_unit( "core" scalar/inf.cpp )
 # make_unit( "core" scalar/minf.cpp )

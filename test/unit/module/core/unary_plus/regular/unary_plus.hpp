@@ -8,28 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef UNARY_PLUS_HPP
-#define UNARY_PLUS_HPP
-
 #include <eve/function/unary_plus.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <type_traits>
 
-TTS_CASE("Check unary_plus return type")
+TTS_CASE("Check eve::unary_plus return type")
 {
-  TTS_EXPR_IS(eve::unary_plus(Type()), Type);
+  TTS_EXPR_IS(eve::unary_plus(Type()), (Type));
 }
 
-TTS_CASE("Check  eve::unary_plus behaviour")
+TTS_CASE("Check eve::unary_plus behavior")
 {
-  TTS_EQUAL(eve::unary_plus(eve::One<Type>()),  eve::One<Type>());
+  TTS_EQUAL(eve::unary_plus(Type(1)), (Type(1)));
 }
-
-#endif
