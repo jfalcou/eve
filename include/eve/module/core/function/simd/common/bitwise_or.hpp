@@ -31,9 +31,19 @@ namespace eve::detail
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<T>;
-    using vt_u  = value_type_t<U>;
+    using vu_t  = value_type_t<U>;
 
-    if constexpr(is_vectorizable_v<U>  && !is_vectorizable_v<T>)
+    if constexpr(is_vectorizable_v<T> && !is_vectorizable_v<U>)
+    {
+      if constexpr(sizeof(T) == sizeof(vu_t))
+      // this will ensure that no scalar conversion will take place in aggregated
+      // in the case vector and scalar not of the value type
+      {
+        return eve::bitwise_or(U(bitwise_cast(a,as_<vu_t>())), b);
+      }
+      else return U(); 
+    } 
+    else if constexpr(is_vectorizable_v<U> && !is_vectorizable_v<T>)
     {
       if constexpr(sizeof(U) == sizeof(vt_t))
       // this will ensure that no scalar conversion will take place in aggregated
@@ -41,18 +51,7 @@ namespace eve::detail
       {
         return eve::bitwise_or(a, T(bitwise_cast(b,as_<vt_t>())));
       }
-     return T(); 
-    }
-    else if constexpr(is_vectorizable_v<T> && !is_vectorizable_v<U>)
-    {
-      using t_t = wide<T, fixed<cardinal_v<U>>>; 
-      if constexpr(sizeof(T) == sizeof(vt_u))
-        // this will ensure that no scalar conversion will take place in aggregated
-        // in the case vector and scalar not of the value type
-      {
-        return eve::bitwise_or(t_t(a), bitwise_cast(b,as_<t_t>()));
-      }
-      return t_t(); 
+      else return T(); 
     }
     else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
@@ -62,18 +61,14 @@ namespace eve::detail
     {
       return aggregate(eve::bitwise_or, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
     }
-    else if constexpr(is_vectorized_v<T> && !is_vectorized_v<U>)
-    {
-      return eve::bitwise_or(a, T{b});
-    }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      static_assert(wrong<T, U>, "[eve::bitwise_or] - Missing implementation"); 
-      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+      return eve::bitwise_or(a, bitwise_cast(b,as(a)));
     }
     else
     {
-      return eve::bitwise_or(a, bitwise_cast(b,as(a)));
+      static_assert(wrong<T, U>, "[eve::bitwise_or] - Missing implementation"); 
+      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
     }
   }
 }
