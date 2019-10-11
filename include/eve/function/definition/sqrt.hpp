@@ -26,7 +26,7 @@ namespace eve
     {
       if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
       {
-        EVE_ASSERT(v >= 0, "[eve::sqrt] Invalid parameter: " << v );
+        EVE_ASSERT(v >= 0, "[eve::sqrt] - Invalid parameter: " << v );
       }
     }
   }

@@ -37,18 +37,6 @@ namespace eve::detail
                                                                         Integral<value_type_t<U>>,
                                                                         Integral<value_type_t<T>>)
   {
-    if constexpr(is_vectorized_v<U>)
-    {
-      EVE_ASSERT(detail::assert_good_shift<T>(eve::abs(v1)),
-                 "[ eve::rshr ] (SIMD) - At least a shift absolute value ("
-                     << eve::abs(v1) << ") is out of range [0, " << sizeof(T) * 8 << "[.");
-    }
-    else
-    {
-      EVE_ASSERT(detail::assert_good_shift<T>(eve::abs(v1)),
-                 "[ eve::rshr ] (SIMD) - Shift absolute value ("
-                     << eve::abs(v1) << ") is out of range [0, " << sizeof(T) * 8 << "[.");
-    }
     if constexpr(std::is_unsigned_v<value_type_t<U>>)
       return shl(v0, v1);
     else
@@ -60,37 +48,6 @@ namespace eve::detail
 #endif
     }
   }
-
-  //  template<typename T, typename U, typename N, typename ABI>
-  //   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(cpu_)
-  //                             , wide<T, N, ABI> const &v0
-  //                             , wide<U, N, ABI> const &v1) noexcept
-  //   {
-  //     if constexpr(is_vectorized<U>)
-  //     {
-  //       EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
-  //                   "[ eve::rshr ] (SIMD) - At least a shift absolute value (" << eve::abs(v1)
-  //                   << ") is out of range [0, " << sizeof(T) * 8 << "[."
-  //                 );
-  //     }
-  //     else
-  //     {
-  //       EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(v1)),
-  //                 "[ eve::rshr ] (SIMD) - Shift absolute value (" << eve::abs(v1)
-  //                 << ") is out of range [0, " << sizeof(T) * 8 << "[."
-  //                 );
-  //     }
-  //     if constexpr(std::is_unsigned_v<U>)  return shl(v0, v1);
-  //     else
-  //     {
-  //       #ifndef NDEBUG
-  //       return if_else(is_gtz(v1), shr(v0, max(Zero(as(v1)), v1))
-  //                     , shl(v0, max(Zero(as(v1)), -v1)));
-  //       #else
-  //       return if_else(is_gtz(v1), shr(v0, v1), shl(v0, -v1));
-  //       #endif
-  //     }
-  //   }
 }
 
 #endif

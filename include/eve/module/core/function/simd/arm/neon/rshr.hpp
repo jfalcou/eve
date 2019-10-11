@@ -17,7 +17,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,9 +28,6 @@ namespace eve::detail
                                                                               Integral<I>,
                                                                               Integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr ] (neon64) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, -v1);
   }
 
@@ -51,9 +47,6 @@ namespace eve::detail
                                                                                Integral<I>,
                                                                                Integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr ] (neon128) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, -v1);
   }
 

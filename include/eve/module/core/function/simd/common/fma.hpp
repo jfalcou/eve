@@ -57,12 +57,9 @@ namespace eve::detail
         else
           return a * b + c;
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> && std::is_same_v<T, V>,
-                      "[eve::fma] - Incompatible types.");
-        return {};
-      }
+      return       std::conditional_t<!is_vectorized_v<T>,
+        std::conditional_t<is_vectorized_v<U>, U, V>, T>(); 
+
     }
   }
 }

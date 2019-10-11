@@ -23,12 +23,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr T indeg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>
-                    , "[eve::indeg] -this function is not to be used with integral types"
-                    );
-      auto radindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
-      auto radindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();
-      return fma(a, radindegr, a*radindeg);
+    auto radindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
+    auto radindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();
+    return fma(a, radindegr, a*radindeg);
   }
 }
 

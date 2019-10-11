@@ -27,9 +27,6 @@ namespace eve::detail
         wide<T, N, sse_> const &a0,
         wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, Integral<T>, Integral<I>)
   {
-    EVE_ASSERT((assert_good_shift<wide<T, N, sse_>>(a1)),
-               "[eve::rshl xop sse] -  At least one of "
-                   << a1 << "elements is out of the range [0, " << sizeof(T) * 8 << "[.");
     if constexpr(supports_xop)
     {
       if(std::is_signed_v<I>)

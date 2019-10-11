@@ -46,11 +46,7 @@ namespace eve::detail
           return eve::sqrt(fma(a, a, sqr(b)));
         }
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U>, "[eve::hypot] - Incompatibles or non floating types.");
-        return {};
-      }
+      return  std::conditional_t<is_vectorized_v<T>, T, U>(); 
     }
   }
 }

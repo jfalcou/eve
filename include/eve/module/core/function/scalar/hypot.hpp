@@ -26,11 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   hypot_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-      return sqrt(fma(a0, a0, sqr(a1)));
-    else
-      static_assert(std::is_floating_point_v<T>,
-                    "eve::[hypot] - not defined from non floating types");
+    return sqrt(fma(a0, a0, sqr(a1)));
   }
 }
 

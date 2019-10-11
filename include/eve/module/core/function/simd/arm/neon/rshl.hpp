@@ -29,9 +29,6 @@ namespace eve::detail
                                                                               Integral<I>,
                                                                               Integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshl ] (neon64) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, v1);
   }
 
@@ -51,9 +48,6 @@ namespace eve::detail
                                                                                Integral<I>,
                                                                                Integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshl ] (neon128) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, v1);
   }
 
