@@ -54,7 +54,7 @@ make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types
 # make_units("bitwise_xor/regular"            "core" ${all_types})
 
 make_all_units(ROOT core NAME ceil   ARCH scalar simd TYPES ${all_types} )
-# make_units("clamp/regular"                  "core" ${all_types})
+make_all_units(ROOT core NAME clamp   ARCH scalar simd TYPES ${all_types} )
 # make_units("conj/regular"                   "core" ${real_types})
 # make_units("copysign/regular"               "core" ${all_types})
 
@@ -67,7 +67,7 @@ make_all_units(ROOT core NAME ceil   ARCH scalar simd TYPES ${all_types} )
 # make_units("div/regular_if"                 "core" ${all_types})
 # make_units("div/saturated_if"               "core" ${all_types})
 
-# make_units("extract/regular"                "core" ${all_types})
+make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 
 # make_units("floor/regular"                  "core" ${all_types})
 # make_units("fma/regular"                    "core" ${all_types})
@@ -147,8 +147,8 @@ make_all_units(ROOT core NAME ceil   ARCH scalar simd TYPES ${all_types} )
 # make_units("logical_or/regular"             "core" ${all_types})
 # make_units("logical_ornot/regular"          "core" ${all_types})
 # make_units("logical_xor/regular"            "core" ${all_types})
-# make_units("max/numeric"                    "core" ${all_types})
 
+# make_units("max/numeric"                    "core" ${all_types})
 # make_units("max/regular"                    "core" ${all_types})
 # make_units("max/pedantic"                   "core" ${all_types})
 # make_units("maxmag/numeric"                 "core" ${all_types})
