@@ -43,9 +43,9 @@ namespace eve::detail
     {
       return aggregate( eve::is_equal, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
-    else if constexpr( is_vectorized_v<T> & is_vectorized_v<U> )
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
-      static_assert(wrong<T, U>, "[eve::is_equal] - no support for current simd api ");
+      static_assert(wrong<T, U>, "[eve::is_equal] - Missing implementation ");
       return {};
     }
     else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )

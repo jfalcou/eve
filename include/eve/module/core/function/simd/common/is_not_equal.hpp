@@ -42,12 +42,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>) { return logical_not(is_equal(a, b)); }
-      else
-      {
-        static_assert(wrong<T, U>, "[eve::is_not_equal] - no support for current simd api ");
-        return {};
-      }
+      return logical_not(is_equal(a, b));
     }
     else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {

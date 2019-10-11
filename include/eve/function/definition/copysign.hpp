@@ -19,26 +19,18 @@
 namespace eve
 {
   namespace tag { struct copysign_; }
-
+  
   namespace detail
   {
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::copysign_), T const&, U const &)
     {
-      constexpr bool is_vec_t = is_vectorized_v<T>;
-      constexpr bool is_vec_u = is_vectorized_v<U>; 
       static_assert(std::is_same_v<value_type_t<U>, value_type_t<T>>,
                     "[eve::copysign]  - value types must be the same");
-      if constexpr(is_vec_t && is_vec_u)
-      {
-        static_assert(cardinal_v<U> == cardinal_v<T>,
-                      "[eve::copysign]  - cannot copysign on types of different cardinal");
-        
-      }
     }
   }
-  
-  EVE_MAKE_CALLABLE(copysign_, copysign);
+
+EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
 #endif

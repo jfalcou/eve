@@ -51,20 +51,11 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>)
-      {
-        if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        { return is_not_equal(a, b) && (is_not_nan(a) || is_not_nan(b)); }
-        else
-        {
-          return is_not_equal(a, b);
-        }
-      }
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      { return is_not_equal(a, b) && (is_not_nan(a) || is_not_nan(b)); }
       else
       {
-        static_assert(std::is_same_v<T, U>,
-                      "[eve::is_not_equal_with_equal_nans]  - no support for current simd api");
-        return {};
+        return is_not_equal(a, b);
       }
     }
     else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )

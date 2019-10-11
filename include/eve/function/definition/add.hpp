@@ -54,7 +54,7 @@ namespace eve
       else  if constexpr(!is_vec_t && !is_vec_u)
       {
         static_assert(std::is_same_v<T, U>,
-                    "[eve::saturated_(eve::add)]  - scalar argument has not the same types");
+                    "[eve::saturated_(eve::add)]  - Scalar arguments have not the same types");
       }
     }
   }

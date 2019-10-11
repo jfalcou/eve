@@ -43,19 +43,11 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>)
-      {
-        if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        { return logical_and(is_equal(a, a), is_equal(b, b)); }
-        else
-        {
-          return True(as(a));
-        }
-      }
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      { return logical_and(is_equal(a, a), is_equal(b, b)); }
       else
       {
-        static_assert(wrong<T, U>, "[eve::is_ordered] - no support for current simd api ");
-        return {};
+        return True(as(a));
       }
     }
     else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )

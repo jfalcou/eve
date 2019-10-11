@@ -70,12 +70,12 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      return eve::bitwise_andnot(a, bitwise_cast(b,as(a)));
+      static_assert(wrong<T, U>, "[eve::bitwise_andnot] - Missing implementation"); 
+      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
     }
     else
     {
-      static_assert(wrong<T, U>, "[eve::bitwise_andnot] - Missing implementation"); 
-      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+      return eve::bitwise_andnot(a, bitwise_cast(b,as(a)));
     }
   }
 }
