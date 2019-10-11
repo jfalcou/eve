@@ -16,7 +16,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/scalar/bitwise_cast.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -26,13 +25,7 @@ namespace eve::detail
   bitwise_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires(T, Vectorizable<T>, Vectorizable<U>)
   {
-    if constexpr(sizeof(T) != sizeof(U))
-    {
-      static_assert(sizeof(T) == sizeof(U),
-                    "[eve::bitwise_and] scalar - Arguments have incompatible size");
-      return {};
-    }
-    else if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
       auto const tgt = as_<b_t>();

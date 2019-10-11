@@ -51,7 +51,8 @@ TTS_CASE_TPL("Check bitwise_and behavior on wide + scalar",
       ref([](auto i, auto c) { return eve::bitwise_and(Type(i % 3), Type(7)); });
 
   TTS_EQUAL(ref, eve::bitwise_and(lhs, Type(7)));
-
+  TTS_EQUAL(ref, eve::bitwise_and(Type(7), lhs)); 
+  
   TTS_EQUAL(ref, lhs & Type(7));
 }
 

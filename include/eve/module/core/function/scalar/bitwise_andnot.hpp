@@ -28,14 +28,7 @@ namespace eve::detail
                                                                                 Vectorizable<T>,
                                                                                 Vectorizable<U>)
   {
-    if constexpr((sizeof(T) != sizeof(U)))
-    {
-      static_assert(sizeof(T) == sizeof(U),
-                    "[eve::bitwise_andnot] scalar - Arguments have incompatible size");
-      return {};
-    }
-    else
-      return bitwise_and(a, bitwise_not(b));
+    return bitwise_and(a, bitwise_not(b));
   }
 }
 

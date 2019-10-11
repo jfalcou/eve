@@ -32,8 +32,9 @@ namespace eve::detail
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<T>;
+    using vt_u  = value_type_t<U>;
 
-    if constexpr(is_vectorizable_v<U> && !std::is_same_v<vt_t, U>)
+    if constexpr(is_vectorizable_v<U>  && !is_vectorizable_v<T>)
     {
       if constexpr(sizeof(U) == sizeof(vt_t))
       // this will ensure that no scalar conversion will take place in aggregated
@@ -41,12 +42,18 @@ namespace eve::detail
       {
         return eve::bitwise_andnot(a, T(bitwise_cast(b,as_<vt_t>())));
       }
-      else
+      return T(); 
+    }
+    else if constexpr(is_vectorizable_v<T> && !is_vectorizable_v<U>)
+    {
+      using t_t = wide<T, fixed<cardinal_v<U>>>; 
+      if constexpr(sizeof(T) == sizeof(vt_u))
+        // this will ensure that no scalar conversion will take place in aggregated
+        // in the case vector and scalar not of the value type
       {
-        static_assert(sizeof(U) == sizeof(vt_t),
-                      "[eve::bitwise_andnot] common - Types size mismatch");
-        return {};
+        return eve::bitwise_andnot(t_t(a), bitwise_cast(b,as_<t_t>()));
       }
+      return t_t(); 
     }
     else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
@@ -65,11 +72,7 @@ namespace eve::detail
     {
       return eve::bitwise_andnot(a, bitwise_cast(b,as(a)));
     }
-    else
-    {
-      static_assert(wrong<T, U>, "[eve::bitwise_andnot] common  - no support for current simd api");
-      return {};
-    }
+    return std::conditional_t<is_vectorized_v<T>, T, U>(); 
   }
 }
 

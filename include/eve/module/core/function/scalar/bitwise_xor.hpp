@@ -28,10 +28,7 @@ namespace eve::detail
                                                                              Vectorizable<T>,
                                                                              Vectorizable<U>)
   {
-    if constexpr(sizeof(T) != sizeof(U))
-      static_assert(sizeof(T) == sizeof(U),
-                    "[eve::bitwise_xor] scalar - Arguments have incompatible size");
-    else if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::is_floating_point_v<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
       auto const tgt = as_<b_t>{};

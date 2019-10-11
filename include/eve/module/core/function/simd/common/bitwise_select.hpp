@@ -35,45 +35,29 @@ namespace eve::detail
     using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<U>;
     using ut_t  = value_type_t<V>;
-    if constexpr(is_vectorized_v<V> && is_vectorized_v<U> && (sizeof(U) != sizeof(V)))
+
+    if constexpr(!is_vectorized_v<V>)
     {
-      static_assert((sizeof(U) == sizeof(V)),
-                    "[eve::bitwise_select] simd - global Types size mismatch");
-      return {};
+      return eve::bitwise_select(a, b, U(bitwise_cast(c,as_<ut_t>())));
     }
-    else if constexpr((is_vectorized_v<V> ^ is_vectorized_v<U>)&&(sizeof(ut_t) != sizeof(vt_t)))
+    else if constexpr(!is_vectorized_v<U>)
     {
-      static_assert((sizeof(ut_t) == sizeof(vt_t)),
-                    "[eve::bitwise_select] simd - Types size mismatch");
-      return {};
+      return eve::bitwise_select(a, V(bitwise_cast(b,as_<vt_t>())), c);
     }
     else
     {
-      if constexpr(!is_vectorized_v<V>)
-      { return eve::bitwise_select(a, b, U(bitwise_cast(c,as_<ut_t>()))); }
-      else if constexpr(!is_vectorized_v<U>)
+      // here U and V are vectorized and are equal
+      if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
       {
-        return eve::bitwise_select(a, V(bitwise_cast(b,as_<vt_t>())), c);
+        return map(eve::bitwise_select, a, b, c);
+      }
+      else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+      {
+        return aggregate(eve::bitwise_select, a, b, c);
       }
       else
       {
-        // here U and V are vectorized and are equal
-        if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
-        { return map(eve::bitwise_select, a, b, c); }
-        else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
-        {
-          return aggregate(eve::bitwise_select, a, b, c);
-        }
-        else
-        {
-          if constexpr(sizeof(T) == sizeof(U))
-          { return bitwise_or(bitwise_and(b, a), bitwise_andnot(c, a)); }
-          else
-          {
-            static_assert(wrong<T, U>, "[eve::bitwise_select] - no support for current simd api");
-            return {};
-          }
-        }
+        return bitwise_or(bitwise_and(b, a), bitwise_andnot(c, a));
       }
     }
   }
