@@ -13,7 +13,6 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/assert_utils.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

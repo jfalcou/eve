@@ -11,7 +11,6 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_SHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_SHL_HPP_INCLUDED
 
-#include <eve/assert.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>

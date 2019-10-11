@@ -17,7 +17,6 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <cstddef>
-#include <iostream>
 
 namespace eve
 {
