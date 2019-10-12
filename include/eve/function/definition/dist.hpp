@@ -19,36 +19,7 @@
 
 namespace eve
 {
- namespace tag { struct dist_; }
-
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::dist_), T const&, U const &)
-    {
-      constexpr bool is_vec_t = is_vectorized_v<T>;
-      constexpr bool is_vec_u = is_vectorized_v<U>; 
-      if constexpr(is_vec_t && is_vec_u)
-      {
-        static_assert(std::is_same_v<T, U>,
-                    "[eve::dist]  - SIMD arguments have not the same type");
-      }
-    }
-  
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::dist_), T const&, U const &)
-    {
-      constexpr bool is_vec_t = is_vectorized_v<T>;
-      constexpr bool is_vec_u = is_vectorized_v<U>; 
-      if constexpr(is_vec_t && is_vec_u)
-      {
-        static_assert(std::is_same_v<T, U>,
-                    "[eve::dist]  - SIMD arguments have not the same type");
-      }
-    }
-  }
-
-  EVE_MAKE_CALLABLE(dist_, dist);
+   EVE_MAKE_CALLABLE(dist_, dist);
 }
 
 #endif
