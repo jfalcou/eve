@@ -8,54 +8,46 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ATANPI_HPP
-#define ATANPI_HPP
-
 #include <eve/function/atanpi.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/function/all.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/pio_4.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
-#include <eve/function/inpi.hpp>
 #include <eve/platform.hpp>
-#include <type_traits>
-#include <cmath>
+#include <tts/tests/precision.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check atanpi return type")
+TTS_CASE("Check eve::atanpi return type")
 {
-  TTS_EXPR_IS(eve::atanpi(Type(0)),  Type);
+  TTS_EXPR_IS(eve::atanpi(Type(0)), (Type));
 }
 
 TTS_CASE("Check eve::eve::atanpi behavior")
 {
+  using eve::all;
+
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::atanpi(eve::Nan<Type>()), eve::Nan<Type>(), 0);
+    TTS_IEEE_EQUAL(eve::atanpi(eve::Nan<Type>()), (eve::Nan<Type>()) );
   }
+
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atanpi(eve::Inf<Type>()),   Type(0.5), 0);
-    TTS_ULP_EQUAL(eve::atanpi(eve::Minf<Type>()), -Type(0.5), 0);
+    TTS_IEEE_EQUAL(eve::atanpi(eve::Inf<Type>()) , (Type( 0.5)) );
+    TTS_IEEE_EQUAL(eve::atanpi(eve::Minf<Type>()), (Type(-0.5)) );
   }
-  TTS_ULP_EQUAL(eve::atanpi(eve::Half<Type>()),  eve::inpi(Type(4.636476090008061e-01)),  0.5);
-  TTS_ULP_EQUAL(eve::atanpi(eve::Mhalf<Type>()), eve::inpi(Type(-4.636476090008061e-01)), 0.5);
-  TTS_ULP_EQUAL(eve::atanpi(eve::Mone<Type>()),  -Type(0.25),                             0.5);
-  TTS_ULP_EQUAL(eve::atanpi(eve::One<Type>()),   Type(0.25),                              0.5);
-  TTS_ULP_EQUAL(eve::atanpi(eve::Zero<Type>()),   eve::Zero<Type>(),                      0.5);
-  TTS_EXPECT(eve::is_negative(eve::atanpi(eve::Mzero<Type>())));
-  TTS_EXPECT(eve::is_positive(eve::atanpi(eve::Zero<Type>())));
+
+  TTS_ULP_EQUAL(eve::atanpi(Type(0.5))  , (eve::inpi(Type(4.636476090008061e-01))) , 0.5);
+  TTS_ULP_EQUAL(eve::atanpi(Type(-0.5)) , (eve::inpi(Type(-4.636476090008061e-01))), 0.5);
+  TTS_ULP_EQUAL(eve::atanpi(Type(-1.))  , -Type(0.25)           , 0.5);
+  TTS_ULP_EQUAL(eve::atanpi(Type(1.))   ,  Type(0.25)           , 0.5);
+  TTS_ULP_EQUAL(eve::atanpi(Type(0.))   , (Type(0))                     , 0.5);
+
+  TTS_EXPECT(all(eve::is_positive(eve::atanpi((Type(0)))))          );
+  TTS_EXPECT(all(eve::is_negative(eve::atanpi(eve::Mzero<Type>()))) );
 }
-
-
-#endif
