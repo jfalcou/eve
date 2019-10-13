@@ -8,26 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef CONJ_HPP
-#define CONJ_HPP
-
 #include <eve/function/conj.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
-#include <cmath>
 
-TTS_CASE("Check conj return type")
+TTS_CASE("Check eve::conj return type")
 {
-  TTS_EXPR_IS(eve::conj(Type(0)),  Type);
+  TTS_EXPR_IS(eve::conj(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::conj behavior")
+TTS_CASE("Check eve::conj behavior")
 {
-  TTS_ULP_EQUAL(eve::conj(eve::One<Type>()),    eve::One<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::conj(Type(1)), (Type)(1), 0.5);
 }
-
-#endif
