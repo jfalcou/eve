@@ -67,7 +67,6 @@ namespace eve::detail
                     , abi_cast<value_type_t<T>>(b) );
         }
       }
-      return std::conditional_t<is_vectorized_v<T>,T,U>(); 
     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
@@ -125,7 +124,7 @@ namespace eve::detail
            return div(aa, bb);
         }                          
       }
-      return std::conditional_t<is_vectorized_v<T>,T,U>(); 
+      return T(); 
      }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {

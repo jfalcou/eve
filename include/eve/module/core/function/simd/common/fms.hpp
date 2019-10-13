@@ -57,7 +57,7 @@ namespace eve::detail
         else
           return eve::fma(a, b, -c);
       }
-      return std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>(); 
+      return T(); 
     }
   }
 }

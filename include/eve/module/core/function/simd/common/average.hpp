@@ -39,7 +39,7 @@ namespace eve::detail
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
       static_assert(wrong<T, U>, "[eve::average] - Missing implementation support");
-      return std::conditional_t<is_vectorized_v<T>, T, U>();
+      return T(); 
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
