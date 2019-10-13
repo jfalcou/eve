@@ -8,79 +8,82 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ATAN2PI_HPP
-#define ATAN2PI_HPP
-
 #include <eve/function/atan2pi.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/minf.hpp>  
-#include <eve/constant/inf.hpp>
-#include <eve/constant/mhalf.hpp>  
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
-#include <eve/constant/zero.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_negative.hpp>
-#include <eve/function/pedantic.hpp>
-#include <type_traits>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/pio_4.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/pi.hpp>
 #include <eve/platform.hpp>
+#include <tts/tests/precision.hpp>
+#include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check pedantic_(eve::atan2pi) return type")
+TTS_CASE( "Check pedantic_(eve::atan2pi) return type" )
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::atan2pi)(Type(0), Type(0)),  Type);
+  using eve::pedantic_;
+  TTS_EXPR_IS(pedantic_(eve::atan2pi)(Type(0), Type(0)), (Type));
 }
 
- TTS_CASE("Check eve::atan2pi behavior")
+TTS_CASE("Check pedantic_(eve::atan2pi) behavior")
 {
+  using eve::is_negative;
+  using eve::is_positive;
+  using eve::pedantic_;
+  using eve::all;
+
+  auto mzero = eve::Mzero<Type>();
+
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(),eve::One<Type>()), Type(0.5), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(),eve::Mone<Type>()), Type(0.5), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(),eve::One<Type>()), -Type(0.5), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(),eve::Mone<Type>()), -Type(0.5), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::Minf<Type>()), Type(1), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Minf<Type>()), -Type(1), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::Inf<Type>()), eve::Zero<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Inf<Type>()), -eve::Zero<Type>(), 0.5);
-    TTS_EXPECT(eve::is_negative(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Inf<Type>())));
-    TTS_EXPECT(eve::is_positive(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::Inf<Type>())));
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(),eve::Minf<Type>()), -Type(3)*Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(),eve::Minf<Type>()), Type(3)*Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(),eve::Inf<Type>()), -Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(),eve::Inf<Type>()), Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(), eve::Inf<Type>()), Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Inf<Type>(),eve::One<Type>()), Type(0.5), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(), eve::Minf<Type>()), -Type(3)*Type(0.25), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Minf<Type>(),eve::One<Type>()), -Type(0.5), 0.5);
+    auto inf  = eve::Inf<Type>();
+    auto minf = eve::Minf<Type>();
+
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf         , (Type(1.))  ), (Type(0.5))  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf         , (Type(-1.)) ), (Type(0.5))  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(minf        , (Type(1.))  ), (Type(-0.5)) , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(minf        , (Type(-1.)) ), (Type(-0.5)) , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type( 1.)) , minf        ), (Type(1.))   , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-1.)) , minf        ), (Type(-1.))  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type( 1.)) , inf         ), (Type(0.))   , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-1.)) , inf         ), mzero        , 0.5);
+
+    TTS_EXPECT( all(is_negative(pedantic_(eve::atan2pi)((Type(-1.)), inf))) );
+    TTS_EXPECT( all(is_positive(pedantic_(eve::atan2pi)((Type(1.)) , inf))) );
+
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(minf, minf      ), (Type(-0.75)), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf , minf      ), (Type(0.75)) , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(minf, inf       ), (Type(-0.25)), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf , inf       ), (Type(0.25)) , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf , (Type(1.))), (Type(0.5))  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(minf, (Type(1.))), (Type(-0.5)) , 0.5);
   }
+
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Nan<Type>(), eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Nan<Type>(), eve::Zero<Type>()), eve::Nan<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Zero<Type>(), eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(),eve::Inf<Type>()), eve::Zero<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(),eve::Minf<Type>()), Type(1), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(eve::Nan<Type>(), eve::Nan<Type>()) , eve::Nan<Type>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(eve::Nan<Type>(), (Type(0.)))       , eve::Nan<Type>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(0.))      , eve::Nan<Type>()) , eve::Nan<Type>(), 0.5);
   }
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Half<Type>(), eve::Half<Type>()), Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mhalf<Type>(), eve::Mhalf<Type>()), -Type(3)*Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Mone<Type>()), -Type(3)*Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::One<Type>()), Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mzero<Type>(), eve::Zero<Type>()), eve::Mzero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mzero<Type>(), eve::Mzero<Type>()), -Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mzero<Type>(), eve::Mone<Type>()), -Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Zero<Type>(), eve::Mzero<Type>()), Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Zero<Type>(), eve::Mone<Type>()), Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Mzero<Type>()), -Type(0.5), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::Mone<Type>(), eve::Zero<Type>()), -Type(0.5), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::Mzero<Type>()), Type(0.5), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::atan2pi)(eve::One<Type>(), eve::Zero<Type>()), Type(0.5), 0.5);
-} 
-#endif
+
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(0.5)) , (Type(0.5)) ) , (Type(0.25))  , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-0.5)), (Type(-0.5))) , (Type(-0.75)) , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-1.)) , (Type(-1.)) ) , (Type(-0.75)) , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(1.))  , (Type(1.))  ) , (Type(0.25))  , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(0.))  , (Type(0.))  ) , (Type(0.))    , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(mzero       , (Type(0.))  ) , mzero         , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(mzero       , mzero       ) , (Type(-1.))   , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(mzero       , (Type(-1.)) ) , (Type(-1.))   , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(0.))  , mzero       ) , (Type(1.))    , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(0.))  , (Type(-1.)) ) , (Type(1.))    , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-1.)) , mzero       ) , (Type(-0.5))  , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(-1.)) , (Type(0.))  ) , (Type(-0.5))  , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(1.))  , mzero       ) , (Type(0.5))   , 0.5);
+  TTS_ULP_EQUAL(pedantic_(eve::atan2pi)((Type(1.))  , (Type(0.))  ) , (Type(0.5))   , 0.5);
+}
