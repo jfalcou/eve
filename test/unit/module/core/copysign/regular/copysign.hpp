@@ -8,43 +8,38 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef COPYSIGN_HPP
-#define COPYSIGN_HPP
-
 #include <eve/function/copysign.hpp>
-#include <tts/tts.hpp>
+#include <eve/constant/mzero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>
 #include <type_traits>
 
-TTS_CASE("Check copysign return type") { TTS_EXPR_IS(eve::copysign(Type(), Type()), Type); }
+TTS_CASE("Check eve::copysign return type")
+{
+  TTS_EXPR_IS(eve::copysign(Type(), Type()), (Type));
+}
 
 TTS_CASE("Check eve::copysign behavior")
 {
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::Mzero<Type>()), eve::Mone<Type>());
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::Zero<Type>()), eve::One<Type>());
+    TTS_EQUAL(eve::copysign((Type(1.)), eve::Mzero<Type>()), (Type(-1.)));
+    TTS_EQUAL(eve::copysign((Type(1.)), (Type(0.))        ), (Type(1.)));
   }
-  if constexpr(std::is_signed_v<Type>)
+  else if constexpr(std::is_signed_v<Value>)
   {
-    TTS_EQUAL(copysign(eve::Mone<Type>(), eve::Mone<Type>()), eve::Mone<Type>());
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-    TTS_EQUAL(copysign(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-    TTS_EQUAL(copysign(eve::Mone<Type>(), eve::One<Type>()), eve::One<Type>());
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::Mone<Type>()), eve::Mone<Type>());
-    TTS_EQUAL(copysign(eve::Mone<Type>(), eve::Zero<Type>()), eve::One<Type>());
+    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(-1.)) ) , (Type(-1.)) );
+    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(1.))  ) , (Type(1.))  );
+    TTS_EQUAL(eve::copysign((Type(1.)) , (Type(1.))  ) , (Type(1.))  );
+    TTS_EQUAL(eve::copysign((Type(1.)) , (Type(-1.)) ) , (Type(-1.)) );
+
+    TTS_EQUAL(eve::copysign((Type(0.)) , (Type(0.))) , (Type(0.))  );
+    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(0.))) , (Type(1.))  );
   }
   else
   {
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-    TTS_EQUAL(copysign(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-    TTS_EQUAL(copysign(eve::One<Type>(), eve::Zero<Type>()), eve::One<Type>());
+    TTS_EQUAL(eve::copysign((Type(1.)), (Type(1.))), (Type(1.)) );
+    TTS_EQUAL(eve::copysign((Type(1.)), (Type(0.))), (Type(1.)) );
+    TTS_EQUAL(eve::copysign((Type(0.)), (Type(0.))), (Type(0.)) );
   }
 }
-
-#endif
