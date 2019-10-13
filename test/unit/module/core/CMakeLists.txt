@@ -140,9 +140,8 @@ make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 # make_units("minmag/numeric"                 "core" ${all_types})
 # make_units("mul/regular"                    "core" ${all_types})
 
-make_all_units(ROOT core NAME nearest  ARCH scalar simd TYPES ${all_types} )
-
-# make_units("oneminus
+make_all_units(ROOT core NAME nearest   ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME oneminus  ARCH scalar simd TYPES ${all_types} )
 
 # make_units("popcnt/regular"                 "core" ${integral_types})
 
