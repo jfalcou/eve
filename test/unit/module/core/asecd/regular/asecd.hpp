@@ -27,8 +27,8 @@ TTS_CASE("Check eve::asecd behavior")
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::asecd(eve::Inf<Type>()) , (Type(90)));
-    TTS_IEEE_EQUAL(eve::asecd(eve::Minf<Type>()), (Type(90)));
+    TTS_ULP_EQUAL(eve::asecd(eve::Inf<Type>()) , (Type(90)), 0.5);
+    TTS_ULP_EQUAL(eve::asecd(eve::Minf<Type>()), (Type(90)), 0.5);
   }
 
   if constexpr( eve::platform::supports_nans )
