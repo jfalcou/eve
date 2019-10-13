@@ -53,9 +53,9 @@ make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types
 # make_units("bitwise_shr/regular"            "core" ${integral_types})
 # make_units("bitwise_xor/regular"            "core" ${all_types})
 
-make_all_units(ROOT core NAME ceil   ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT core NAME clamp   ARCH scalar simd TYPES ${all_types} )
-# make_units("conj/regular"                   "core" ${real_types})
+make_all_units(ROOT core NAME ceil  ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME clamp ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME conj  ARCH scalar simd TYPES ${real_types})
 # make_units("copysign/regular"               "core" ${all_types})
 
 # make_units("dec/regular"                    "core" ${all_types})
