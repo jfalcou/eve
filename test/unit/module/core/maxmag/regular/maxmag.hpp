@@ -8,30 +8,46 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MAXMAG_HPP
-#define MAXMAG_HPP
-
 #include <eve/function/maxmag.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
+#include <tts/tests/types.hpp>
+
+TTS_CASE("Check eve::maxmag return type")
+{
+  TTS_EXPR_IS(eve::maxmag(Type(0)  , Type(0) ) , (Type));
+  TTS_EXPR_IS(eve::maxmag(Value(0) , Type(0) ) , (Type));
+  TTS_EXPR_IS(eve::maxmag(Type(0)  , Value(0)) , (Type));
+}
 
 TTS_CASE("Check eve::maxmag behavior")
 {
-  TTS_EQUAL(eve::maxmag(Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::maxmag(Type{0}, Type{1}), Type{1});
-  TTS_EQUAL(eve::maxmag(Type{1}, Type{0}), Type{1});
-  TTS_EQUAL(eve::maxmag(Type{1}, Type{2}), Type{2});
-  TTS_EQUAL(eve::maxmag(Type{2}, Type{1}), Type{2});
-  if constexpr(std::is_signed_v<Type>)
+  TTS_EQUAL(eve::maxmag((Type(0)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::maxmag((Type(0)), (Type(1))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Type(1)), (Type(0))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Type(1)), (Type(1))), (Type(1)));
+
+  TTS_EQUAL(eve::maxmag((Value(0)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::maxmag((Value(0)), (Type(1))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Value(1)), (Type(0))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Value(1)), (Type(1))), (Type(1)));
+
+  TTS_EQUAL(eve::maxmag((Type(0)), (Value(0))), (Type(0)));
+  TTS_EQUAL(eve::maxmag((Type(0)), (Value(1))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Type(1)), (Value(0))), (Type(1)));
+  TTS_EQUAL(eve::maxmag((Type(1)), (Value(1))), (Type(1)));
+
+  if constexpr(std::is_signed_v<Value>)
   {
-    TTS_EQUAL(eve::maxmag(static_cast<Type>(-1), Type{2}), Type{2});
-    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{1}), static_cast<Type>(-2));
-    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), Type{2}), Type{2});
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-1), (Type(2))), (Type(2)));
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), (Type(1))), static_cast<Type>(-2));
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), (Type(2))), (Type(2)));
+
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-1), (Value(2))), (Type(2)));
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), (Value(1))), static_cast<Type>(-2));
+    TTS_EQUAL(eve::maxmag(static_cast<Type>(-2), (Value(2))), (Type(2)));
+
+    TTS_EQUAL(eve::maxmag(static_cast<Value>(-1), (Type(2))), (Type(2)));
+    TTS_EQUAL(eve::maxmag(static_cast<Value>(-2), (Type(1))), static_cast<Type>(-2));
+    TTS_EQUAL(eve::maxmag(static_cast<Value>(-2), (Type(2))), (Type(2)));
   }
 }
-
-#endif
-
