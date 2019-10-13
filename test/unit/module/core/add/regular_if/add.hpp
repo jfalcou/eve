@@ -32,16 +32,16 @@ TTS_CASE("Check eve::add[condition] behavior")
   auto f = eve::False<Type>();
 
   // All basic TRUE
-  TTS_ALL_EQUAL(eve::add[ 1 ](tv, fv)     , tv + fv);
-  TTS_ALL_EQUAL(eve::add[ 1.0 ](tv, fv)   , tv + fv);
-  TTS_ALL_EQUAL(eve::add[ true ](tv, fv)  , tv + fv);
-  TTS_ALL_EQUAL(eve::add[ t ](tv, fv)     , tv + fv);
+  TTS_EQUAL(eve::add[ 1 ](tv, fv)     , tv + fv);
+  TTS_EQUAL(eve::add[ 1.0 ](tv, fv)   , tv + fv);
+  TTS_EQUAL(eve::add[ true ](tv, fv)  , tv + fv);
+  TTS_EQUAL(eve::add[ t ](tv, fv)     , tv + fv);
 
   // All basic FALSE
-  TTS_ALL_EQUAL(eve::add[ 0 ](tv, fv)     , tv);
-  TTS_ALL_EQUAL(eve::add[ 0.0 ](tv, fv)   , tv);
-  TTS_ALL_EQUAL(eve::add[ false ](tv, fv) , tv);
-  TTS_ALL_EQUAL(eve::add[ f ](tv, fv)     , tv);
+  TTS_EQUAL(eve::add[ 0 ](tv, fv)     , tv);
+  TTS_EQUAL(eve::add[ 0.0 ](tv, fv)   , tv);
+  TTS_EQUAL(eve::add[ false ](tv, fv) , tv);
+  TTS_EQUAL(eve::add[ f ](tv, fv)     , tv);
 
   // Mixed case
   eve::as_logical_t<Type> m;
@@ -49,5 +49,5 @@ TTS_CASE("Check eve::add[condition] behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_ALL_EQUAL(eve::add[ m ](tv, fv) , eve::if_else(m,tv + fv, tv) );
+  TTS_EQUAL(eve::add[ m ](tv, fv) , eve::if_else(m,tv + fv, tv) );
 }

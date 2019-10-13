@@ -19,7 +19,7 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check all return type")
+TTS_CASE("Check eve::all return type")
 {
   TTS_EXPR_IS( (eve::all(eve::logical<Type>())) , bool);
   TTS_EXPR_IS( (eve::all(Type()))               , bool);

@@ -61,5 +61,5 @@ TTS_CASE("Check eve::saturated_(eve::oneminus) behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_ALL_EQUAL(eve::saturated_(eve::oneminus[ m ])(tv), eve::if_else(m, res, tv) );
+  TTS_EQUAL(eve::saturated_(eve::oneminus[ m ])(tv), eve::if_else(m, res, tv) );
 }

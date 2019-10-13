@@ -31,12 +31,12 @@ TTS_CASE("Check eve::arg behavior")
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ALL_EQUAL( (eve::arg(eve::Inf<Type>())) , (eve::Zero<Type>()) );
-    TTS_ALL_EQUAL( (eve::arg(eve::Minf<Type>())), (eve::Pi<Type>())   );
+    TTS_EQUAL( (eve::arg(eve::Inf<Type>())) , (eve::Zero<Type>()) );
+    TTS_EQUAL( (eve::arg(eve::Minf<Type>())), (eve::Pi<Type>())   );
   }
 
-  TTS_ALL_EQUAL( (eve::arg(eve::Mone<Type>()))  , (eve::Pi<Type>())   );
-  TTS_ALL_EQUAL( (eve::arg(eve::One<Type>()))   , (eve::Zero<Type>()) );
-  TTS_ALL_EQUAL( (eve::arg(eve::Zero<Type>()))  , (eve::Zero<Type>()) );
-  TTS_ALL_EQUAL( (eve::arg(eve::Mzero<Type>())) , (eve::Pi<Type>())   );
+  TTS_EQUAL( (eve::arg(eve::Mone<Type>()))  , (eve::Pi<Type>())   );
+  TTS_EQUAL( (eve::arg(eve::One<Type>()))   , (eve::Zero<Type>()) );
+  TTS_EQUAL( (eve::arg(eve::Zero<Type>()))  , (eve::Zero<Type>()) );
+  TTS_EQUAL( (eve::arg(eve::Mzero<Type>())) , (eve::Pi<Type>())   );
 }

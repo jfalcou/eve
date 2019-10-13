@@ -32,15 +32,15 @@ TTS_CASE("Check saturated conditional add behavior")
   auto t = eve::True<Type>();
   auto f = eve::False<Type>();
 
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ 1 ])(tv, fv)    , eve::saturated_(eve::add)(tv,fv));
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ 1.0 ])(tv, fv)  , eve::saturated_(eve::add)(tv,fv));
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ true ])(tv, fv) , eve::saturated_(eve::add)(tv,fv));
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ t ])(tv, fv)    , eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ 1 ])(tv, fv)    , eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ 1.0 ])(tv, fv)  , eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ true ])(tv, fv) , eve::saturated_(eve::add)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::add[ t ])(tv, fv)    , eve::saturated_(eve::add)(tv,fv));
 
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ 0 ])(tv, fv)    , tv);
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ 0.0 ])(tv, fv)  , tv);
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ false ])(tv, fv), tv);
-  TTS_ALL_EQUAL(eve::saturated_(eve::add[ f ])(tv, fv)    , tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ 0 ])(tv, fv)    , tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ 0.0 ])(tv, fv)  , tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ false ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::add[ f ])(tv, fv)    , tv);
 
   // Mixed case
   eve::as_logical_t<Type> m;
@@ -48,7 +48,7 @@ TTS_CASE("Check saturated conditional add behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_ALL_EQUAL ( eve::saturated_(eve::add[ m ])(tv, fv),
+  TTS_EQUAL ( eve::saturated_(eve::add[ m ])(tv, fv),
                   eve::if_else(m, eve::saturated_(eve::add)(tv,fv), tv)
                 );
 

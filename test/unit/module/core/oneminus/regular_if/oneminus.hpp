@@ -46,5 +46,5 @@ TTS_CASE("Check eve::oneminus behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_ALL_EQUAL(eve::oneminus[ m ](tv), eve::if_else(m, (Type(-1)), tv) );
+  TTS_EQUAL(eve::oneminus[ m ](tv), eve::if_else(m, (Type(-1)), tv) );
 }

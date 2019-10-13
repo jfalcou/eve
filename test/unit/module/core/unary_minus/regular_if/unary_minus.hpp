@@ -46,5 +46,5 @@ TTS_CASE("Check conditional eve::unary_minus behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_ALL_EQUAL(eve::unary_minus[ m ](tv), eve::if_else(m,  (Type(-tv)), tv) );
+  TTS_EQUAL(eve::unary_minus[ m ](tv), eve::if_else(m,  (Type(-tv)), tv) );
 }
