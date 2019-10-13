@@ -42,6 +42,7 @@ make_all_units(ROOT core NAME binarize_c      ARCH scalar simd TYPES ${all_types
 make_all_units(ROOT core NAME bitofsign       ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_and     ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_andnot  ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME bitwise_cast    ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_mask    ARCH scalar simd TYPES ${all_types} )
 # make_units("bitwise_not/regular"            "core" ${all_types})
 # make_units("bitwise_notand/regular"         "core" ${all_types})
@@ -172,7 +173,6 @@ make_all_units(ROOT core NAME unary_minus   ARCH scalar simd TYPES ${all_types} 
 
 ##==================================================================================================
 ## Specialty function unit tests
-# make_units("bitwise_cast/regular"           "core" ${all_types})
 # make_unit( "core" simd/wide_cast.cpp )
 
 ##==================================================================================================
