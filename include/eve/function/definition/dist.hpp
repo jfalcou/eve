@@ -19,7 +19,7 @@
 
 namespace eve
 {
-   EVE_MAKE_CALLABLE(dist_, dist);
+  EVE_MAKE_CALLABLE(dist_, dist);
 }
 
 #endif

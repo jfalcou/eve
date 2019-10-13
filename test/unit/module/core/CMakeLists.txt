@@ -380,3 +380,5 @@ list_tests("simd/wide_cast/uint64" "core" ${all_types})
 
 add_build_test( "core" failure/conditionnal/is_equal.cpp )
 add_build_test( "core" failure/conditionnal/is_not_equal.cpp )
+add_build_test( "core" failure/acos.cpp )
+add_build_test( "core" failure/asin.cpp )

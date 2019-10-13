@@ -28,11 +28,17 @@ namespace eve::detail
     if constexpr( std::is_floating_point_v<T> )
     {
       if constexpr( is_aggregated_v<ABI> )
+      {
         return aggregate(eve::acsc, a0);
+      }
       else if constexpr( is_emulated_v<ABI>)
+      {
         return map(eve::acsc, a0);
-      else 
+      }
+      else
+      {
         return eve::asin(rec(a0));
+      }
     }
     return eve::wide<T,N,ABI>(); 
   }

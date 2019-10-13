@@ -25,7 +25,7 @@ namespace eve
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bitwise_cast_), T const&,  as_<Target> const &)
     {
       static_assert(sizeof(Target) == sizeof(T),
-                    "[eve::bitwise_cast]  - vector arguments has not the same global size");
+                    "[eve::bitwise_cast]  - arguments has not the same global size");
     }
   }
 

@@ -12,8 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_FMA_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <type_traits>
 
 namespace eve
 {

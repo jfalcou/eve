@@ -12,8 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_FMS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <type_traits>
 
 namespace eve
 {

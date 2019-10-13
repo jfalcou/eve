@@ -37,52 +37,46 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
+  requires( eve::wide<T,N,ABI>, Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( is_aggregated_v<ABI> )
+      return aggregate(eve::acos, a0);
+    else if constexpr( is_emulated_v<ABI>   )
+      return map(eve::acos, a0);
+    else 
     {
-      if constexpr( is_aggregated_v<ABI> )
-        return aggregate(eve::acos, a0);
-      else if constexpr( is_emulated_v<ABI>   )
-        return map(eve::acos, a0);
-      else 
-      {
-        using t_t = eve::wide<T,N,ABI>; 
-        auto z = Pio_2(as(a0))-eve::asin(a0);
-        // small correction with pio_2lo
-        return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
-      }   
-    }
-    return wide<T,N,ABI>(); 
+      using t_t = eve::wide<T,N,ABI>; 
+      auto z = Pio_2(as(a0))-eve::asin(a0);
+      // small correction with pio_2lo
+      return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
+    }   
   }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                             ,  pedantic_type const &     
                             , eve::wide<T,N,ABI> const &a0) noexcept
+  requires( eve::wide<T,N,ABI>, Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( is_aggregated_v<ABI> )
+      return aggregate(eve::acos, a0);
+    else if constexpr( is_emulated_v<ABI>   )
+      return map(eve::acos, a0);
+    else
     {
-      if constexpr( is_aggregated_v<ABI> )
-        return aggregate(eve::acos, a0);
-      else if constexpr( is_emulated_v<ABI>   )
-        return map(eve::acos, a0);
-      else
-      {
-        auto x = eve::abs(a0);
-        auto x_larger_05 = is_greater(x, eve::Half(as(a0)));
-        // for T same as float
-        // 2130706432 values computed.
-        // 1968272987 values (92.38%) within 0.0 ULPs
-        //  162433445 values (7.62%)  within 0.5 ULPs
-        // 8.5 cycles/element SSE4.2 g++-4.8
-        x  = if_else(x_larger_05, eve::sqrt(fma(eve::Mhalf(as(a0)), x, eve::Half(as(a0)))), a0);
-        x  = asin(x);
-        x =  add[x_larger_05](x, x);
-        x  = eve::if_else(is_less(a0, eve::Mhalf(as(a0))), eve::Pi(as(a0))-x, x);
-        return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0))-x);
-      }   
-    }
-    return wide<T,N,ABI>(); 
+      auto x = eve::abs(a0);
+      auto x_larger_05 = is_greater(x, eve::Half(as(a0)));
+      // for T same as float
+      // 2130706432 values computed.
+      // 1968272987 values (92.38%) within 0.0 ULPs
+      //  162433445 values (7.62%)  within 0.5 ULPs
+      // 8.5 cycles/element SSE4.2 g++-4.8
+      x  = if_else(x_larger_05, eve::sqrt(fma(eve::Mhalf(as(a0)), x, eve::Half(as(a0)))), a0);
+      x  = asin(x);
+      x =  add[x_larger_05](x, x);
+      x  = eve::if_else(is_less(a0, eve::Mhalf(as(a0))), eve::Pi(as(a0))-x, x);
+      return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0))-x);
+    }   
   }
 }
 

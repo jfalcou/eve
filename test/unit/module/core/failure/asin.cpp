@@ -8,14 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_FNMA_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_FNMA_HPP_INCLUDED
+#include <eve/wide.hpp>
+#include <eve/function/asin.hpp>
 
-#include <eve/detail/overload.hpp>
+int a;
+eve::wide<int> va;
 
-namespace eve
-{
-   EVE_MAKE_CALLABLE(fnma_, fnma);
-}
+//==================================================================================================
+// None of those should compiles
+//==================================================================================================
+auto r1  = eve::asin(a);
+auto r2  = eve::asin(va);
 
-#endif

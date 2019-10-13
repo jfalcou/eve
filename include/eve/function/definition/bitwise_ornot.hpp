@@ -41,7 +41,7 @@ namespace eve
       else 
       {
         static_assert(sizeof(U) == sizeof(T),
-                    "[eve::bitwise_ornot]  - vector arguments has not the same global size");
+                    "[eve::bitwise_ornot]  - SIMD arguments have not the same global size");
       }
     }
   }
