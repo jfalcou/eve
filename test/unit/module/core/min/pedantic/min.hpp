@@ -8,30 +8,44 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MIN_HPP
-#define MIN_HPP
-
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <eve/function/min.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::min behavior")
+TTS_CASE("Check eve::pedantic_(eve::min) return type")
 {
-  TTS_EQUAL(eve::pedantic_(eve::min)(Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::pedantic_(eve::min)(Type{0}, Type{1}), Type{0});
-  TTS_EQUAL(eve::pedantic_(eve::min)(Type{1}, Type{0}), Type{0});
-  TTS_EQUAL(eve::pedantic_(eve::min)(Type{1}, Type{1}), Type{1});
-  if constexpr(std::is_floating_point_v<Type>)
-  {
-    Type n = eve::Nan<Type>();
-    Type o = eve::One<Type>();
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)(n, o), n);
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)(o, n), o);
-  }
+  TTS_EXPR_IS(eve::pedantic_(eve::min)(Type(0)  , Type(0) ) , (Type));
+  TTS_EXPR_IS(eve::pedantic_(eve::min)(Value(0) , Type(0) ) , (Type));
+  TTS_EXPR_IS(eve::pedantic_(eve::min)(Type(0)  , Value(0)) , (Type));
 }
 
-#endif
+TTS_CASE("Check eve::pedantic_(eve::min) behavior")
+{
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(0)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(0)), (Type(1))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(1)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(1)), (Type(1))), (Type(1)));
+
+  TTS_EQUAL(eve::pedantic_(eve::min)((Value(0)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Value(0)), (Type(1))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Value(1)), (Type(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Value(1)), (Type(1))), (Type(1)));
+
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(0)), (Value(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(0)), (Value(1))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(1)), (Value(0))), (Type(0)));
+  TTS_EQUAL(eve::pedantic_(eve::min)((Type(1)), (Value(1))), (Type(1)));
+
+  if constexpr(std::is_floating_point_v<Type>)
+  {
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((eve::Nan<Type>() ), (Type(1))) , (eve::Nan<Type>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((eve::Nan<Value>()), (Type(1))) , (eve::Nan<Type>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((eve::Nan<Type>() ), (Value(1))), (eve::Nan<Type>()) );
+
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((Type(1)) , (eve::Nan<Type>())  ), (Type(1)) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((Value(1)), (eve::Nan<Type>())  ), (Type(1)) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::min)((Type(1)) , (eve::Nan<Value>()) ), (Type(1)) );
+  }
+}
