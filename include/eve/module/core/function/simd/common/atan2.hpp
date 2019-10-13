@@ -72,7 +72,7 @@ namespace eve::detail
         {
           auto q = eve::abs(a0/a1);
           auto z = detail::atan_kernelw(q, eve::rec(q));
-          return if_else(is_positive(a1), z, Pi(as(a0))*signnz(a0));
+          return if_else(is_positive(a1), z, (Pi(as(a0))-z))*signnz(a0);
         }
       }
     }
@@ -103,11 +103,11 @@ namespace eve::detail
       {
         if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          return aggregate( eve::atan2, eve::pedantic_, a0, a1);
+          return aggregate( eve::pedantic_(eve::atan2), a0, a1);
         }
         else if constexpr( is_emulated_v<typename T::abi_type> )
         {
-          return map( eve::atan2, eve::pedantic_, a0, a1);
+          return map( eve::pedantic_(eve::atan2), a0, a1);
         }
         else
         {
@@ -121,7 +121,7 @@ namespace eve::detail
 
           T q = eve::abs(a00/a10);
           T z = atan_kernelw(q, rec(q));
-          //T z = atan(abs(a0/a1));  // case a1 > 0,  a0 > 0
+
           T sgn = signnz(a0);
           z = eve::if_else(eve::is_positive(a10), z, eve::Pi(as(a0))-z)*sgn;
           z = eve::if_else( eve::is_eqz(a00),
