@@ -41,7 +41,7 @@ make_all_units(ROOT core NAME binarize        ARCH scalar simd TYPES ${all_types
 make_all_units(ROOT core NAME binarize_c      ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitofsign       ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_and     ARCH scalar simd TYPES ${all_types} )
-# make_units("bitwise_andnot/regular"         "core" ${all_types})
+make_all_units(ROOT core NAME bitwise_andnot  ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_mask    ARCH scalar simd TYPES ${all_types} )
 # make_units("bitwise_not/regular"            "core" ${all_types})
 # make_units("bitwise_notand/regular"         "core" ${all_types})
