@@ -53,10 +53,10 @@ make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types
 # make_units("bitwise_shr/regular"            "core" ${integral_types})
 # make_units("bitwise_xor/regular"            "core" ${all_types})
 
-make_all_units(ROOT core NAME ceil  ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT core NAME clamp ARCH scalar simd TYPES ${all_types} )
-make_all_units(ROOT core NAME conj  ARCH scalar simd TYPES ${real_types})
-# make_units("copysign/regular"               "core" ${all_types})
+make_all_units(ROOT core NAME ceil      ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME clamp     ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME conj      ARCH scalar simd TYPES ${real_types})
+make_all_units(ROOT core NAME copysign  ARCH scalar simd TYPES ${all_types})
 
 # make_units("dec/regular"                    "core" ${all_types})
 # make_units("dist/regular"                   "core" ${all_types})
@@ -80,6 +80,7 @@ make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 # make_units("inc/saturated"                  "core" ${all_types})
 # make_units("indeg/regular"                  "core" ${real_types})
 # make_units("inpi/regular"                   "core" ${real_types})
+
 # make_units("is_denormal/regular"            "core" ${all_types})
 # make_units("is_equal/regular"               "core" ${all_types})
 # make_units("is_eqz/regular"                 "core" ${all_types})
