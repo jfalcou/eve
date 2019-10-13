@@ -18,7 +18,8 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr T sqr_abs_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto sqr_abs_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  requires(T, Floating<value_type_t<T>>)
   {
     return sqr(a);
   }

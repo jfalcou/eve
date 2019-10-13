@@ -23,12 +23,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
+  requires(T, Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
       return eve::asin(rec(a0));  
-    }
-    return T();   
   }
 
 }

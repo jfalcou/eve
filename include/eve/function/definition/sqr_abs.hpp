@@ -17,19 +17,6 @@
 
 namespace eve
 {
-  namespace tag { struct sqr_abs_; }
-
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sqr_abs_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::sqr_abs] - No support for integral types"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(sqr_abs_, sqr_abs);
 }
 

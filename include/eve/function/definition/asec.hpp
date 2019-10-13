@@ -16,19 +16,6 @@
 
 namespace eve
 {
- namespace tag { struct asec_; }
-
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::asec_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::asec] - No support for integral types"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(asec_, asec);
 }
 

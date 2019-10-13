@@ -28,18 +28,15 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto atan_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a) noexcept
+  requires(eve::wide<T,N,ABI>, Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::atan, a);
+    else if constexpr( is_emulated_v<ABI> ) return map(eve::atan, a);
+    else
     {
-      if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::atan, a);
-      else if constexpr( is_emulated_v<ABI> ) return map(eve::atan, a);
-      else
-      {
-        eve::wide<T,N,ABI> x  = eve::abs(a);
-        return bitwise_xor(atan_kernelw(x, rec(x)), bitofsign(a));
-      }   
-    }
-    return wide<T,N,ABI>(); 
+      eve::wide<T,N,ABI> x  = eve::abs(a);
+      return bitwise_xor(atan_kernelw(x, rec(x)), bitofsign(a));
+    }   
   }
 }
 

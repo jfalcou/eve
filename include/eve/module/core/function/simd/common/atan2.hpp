@@ -43,43 +43,39 @@ namespace eve::detail
                                         , U const &a1    
                                         ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            Floating<value_type_t<T>>,
+            Floating<value_type_t<U>>
           )
   {
-    using st_t = value_type_t<T>;
-    using su_t = value_type_t<U>;
-    if constexpr(std::is_floating_point_v<st_t> && std::is_floating_point_v<su_t>)
+    if constexpr( !is_vectorized_v<U> )
     {
-      if constexpr( !is_vectorized_v<U> )
+      return atan2(a0, T{a1});
+    }
+    else if constexpr( !is_vectorized_v<T> )
+    {
+      return atan2(U{a0},a1);
+    }
+    else
+    {
+      if constexpr(std::is_same_v<T,U>)
       {
-        return atan2(a0, T{a1});
-      }
-      else if constexpr( !is_vectorized_v<T> )
-      {
-        return atan2(U{a0},a1);
-      }
-      else
-      {
-        if constexpr(std::is_same_v<T,U>)
+        if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          if constexpr( is_aggregated_v<typename T::abi_type> )
-          {
-            return aggregate( eve::atan2, a0, a1); 
-          }
-          else if constexpr( is_emulated_v<typename T::abi_type> )
-          {
-            return map( eve::atan2, a0, a1);
-          }
-          else 
-          {
-            auto q = eve::abs(a0/a1); 
-            auto z = detail::atan_kernelw(q, eve::rec(q));
-            return if_else(is_positive(a1), z, Pi(as(a0))*signnz(a0));
-          }
+          return aggregate( eve::atan2, a0, a1); 
+        }
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::atan2, a0, a1);
+        }
+        else 
+        {
+          auto q = eve::abs(a0/a1); 
+          auto z = detail::atan_kernelw(q, eve::rec(q));
+          return if_else(is_positive(a1), z, Pi(as(a0))*signnz(a0));
         }
       }
     }
-    return std::conditional_t<is_vectorized_v<T>,T,U>(); 
   }
 
   template<typename T, typename U>
@@ -89,58 +85,53 @@ namespace eve::detail
                              , U const &a1    
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
-          )
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            Floating<value_type_t<T>>,
+            Floating<value_type_t<U>>)
   {
-    using st_t = value_type_t<T>;
-    using su_t = value_type_t<U>;
-    if constexpr(std::is_floating_point_v<st_t> && std::is_floating_point_v<su_t>)
+    if constexpr( !is_vectorized_v<U> )
     {
-      if constexpr( !is_vectorized_v<U> )
+      return atan2(a0, T{a1});
+    }
+    else if constexpr( !is_vectorized_v<T> )
+    {
+      return atan2(U{a0},a1);
+    }
+    else
+    {
+      if constexpr(std::is_same_v<T,U>)
       {
-        return atan2(a0, T{a1});
-      }
-      else if constexpr( !is_vectorized_v<T> )
-      {
-        return atan2(U{a0},a1);
-      }
-      else
-      {
-        if constexpr(std::is_same_v<T,U>)
+        if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          if constexpr( is_aggregated_v<typename T::abi_type> )
-          {
-            return aggregate( eve::atan2, eve::pedantic_, a0, a1); 
-          }
-          else if constexpr( is_emulated_v<typename T::abi_type> )
-          {
-            return map( eve::atan2, eve::pedantic_, a0, a1);
-          }
-          else
-          {
-            T a00 = a0, a10 = a1;
-            if constexpr(platform::supports_infinites)
-            {
-              auto test1 =  eve::logical_and(eve::is_infinite(a0),  eve::is_infinite(a1));
-              a00 =  eve::if_else(test1, eve::copysign(One(as(a0)), a00), a00);
-              a10 =  eve::if_else(test1, eve::copysign(One(as(a0)), a10), a10);
-            }
-            
-            T q = eve::abs(a00/a10);
-            T z = atan_kernelw(q, rec(q));
-            //T z = atan(abs(a0/a1));  // case a1 > 0,  a0 > 0
-            T sgn = signnz(a0);
-            z = eve::if_else(eve::is_positive(a10), z, eve::Pi(as(a0))-z)*sgn;
-            z = eve::if_else( eve::is_eqz(a00),
-                              eve::if_else( eve::is_negative(a10),  eve::Pi(as(a0))*sgn, eve::zero_),
-                              z);
-            if constexpr(platform::supports_nans)
-              return  eve::if_else( is_unordered(a00, a10), eve::allbits_, z);
-            else
-              return z;
-          }
+          return aggregate( eve::atan2, eve::pedantic_, a0, a1); 
         }
-        return std::conditional_t<is_vectorized_v<T>,T,U>(); 
+        else if constexpr( is_emulated_v<typename T::abi_type> )
+        {
+          return map( eve::atan2, eve::pedantic_, a0, a1);
+        }
+        else
+        {
+          T a00 = a0, a10 = a1;
+          if constexpr(platform::supports_infinites)
+          {
+            auto test1 =  eve::logical_and(eve::is_infinite(a0),  eve::is_infinite(a1));
+            a00 =  eve::if_else(test1, eve::copysign(One(as(a0)), a00), a00);
+            a10 =  eve::if_else(test1, eve::copysign(One(as(a0)), a10), a10);
+          }
+          
+          T q = eve::abs(a00/a10);
+          T z = atan_kernelw(q, rec(q));
+          //T z = atan(abs(a0/a1));  // case a1 > 0,  a0 > 0
+          T sgn = signnz(a0);
+          z = eve::if_else(eve::is_positive(a10), z, eve::Pi(as(a0))-z)*sgn;
+          z = eve::if_else( eve::is_eqz(a00),
+                            eve::if_else( eve::is_negative(a10),  eve::Pi(as(a0))*sgn, eve::zero_),
+                            z);
+          if constexpr(platform::supports_nans)
+            return  eve::if_else( is_unordered(a00, a10), eve::allbits_, z);
+          else
+            return z;
+        }
       }
     }
   }

@@ -16,19 +16,6 @@
 
 namespace eve
 {
- namespace tag { struct acot_; }
-
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::acot_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::acot] - No support for integral types"
-                    );
-    }
-  }
-  
   EVE_MAKE_CALLABLE(acot_, acot);
 }
 

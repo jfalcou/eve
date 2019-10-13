@@ -18,59 +18,6 @@
 
 namespace eve
 {
-  namespace tag { struct atan2d_; }
-  
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::atan2d_), T const&, U const &)
-    {
-      constexpr bool is_vec_t = is_vectorized_v<T>;
-      constexpr bool is_vec_u = is_vectorized_v<U>; 
-      if constexpr(is_vec_t)
-        static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                        "[eve::atan2d] - No support for integral types"
-                      );
-      if constexpr(is_vec_u)
-        static_assert ( std::is_floating_point_v<value_type_t<U>>,
-                        "[eve::atan2d] - No support for integral types"
-                      );
-      if constexpr(!is_vec_t && !is_vec_u)
-      {
-        static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                        "[eve::atan2d] - No support for integral types"
-                      );
-        static_assert ( std::is_floating_point_v<value_type_t<U>>,
-                        "[eve::atan2d] - No support for integral types"
-                      );
-      }      
-    }
-    
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(pedantic_type, eve::tag::atan2d_), T const&, U const &)
-    {
-      constexpr bool is_vec_t = is_vectorized_v<T>;
-      constexpr bool is_vec_u = is_vectorized_v<U>; 
-      if constexpr(is_vec_t)
-        static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                        "[eve::pedantic_(eve::atan2d)] - No support for integral types"
-                      );
-      if constexpr(is_vec_u)
-        static_assert ( std::is_floating_point_v<value_type_t<U>>,
-                        "[eve::pedantic_(eve::atan2d)] - No support for integral types"
-                      );
-      if constexpr(!is_vec_t && !is_vec_u)
-      {
-        static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                        "[eve::pedantic_(eve::atan2d)] - No support for integral types"
-                      );
-        static_assert ( std::is_floating_point_v<value_type_t<U>>,
-                        "[eve::pedantic_(eve::atan2d)] - No support for integral types"
-                      );
-      }
-    }
-  }
-  
   EVE_MAKE_CALLABLE(atan2d_, atan2d);
 }
 

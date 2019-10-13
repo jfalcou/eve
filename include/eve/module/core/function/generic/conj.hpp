@@ -13,11 +13,13 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr T conj_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto conj_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  requires(T, Floating<value_type_t<T>>)
   {
     return a;
   }

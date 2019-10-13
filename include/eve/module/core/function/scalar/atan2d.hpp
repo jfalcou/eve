@@ -26,13 +26,9 @@ namespace eve::detail
                                        , T const &a0
                                        , T const &a1    
                                        ) noexcept
-  requires(T,  Vectorizable<T>)
+  requires(T,  Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return indeg(atan2(a0, a1)); 
-    }
-    return T(); 
+    return indeg(atan2(a0, a1)); 
   }
   
   template<typename T>
@@ -41,13 +37,9 @@ namespace eve::detail
                                        , T a0
                                        , T a1    
                                        ) noexcept
-  requires(T,  Vectorizable<T>)
+  requires(T,  Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return indeg(pedantic_(atan2)(a0, a1)); 
-    }
-    return T(); 
+    return indeg(pedantic_(atan2)(a0, a1)); 
   }
 }
 

@@ -24,23 +24,20 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acsc_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
+  requires( eve::wide<T,N,ABI>, Floating<T>)
   {
-    if constexpr( std::is_floating_point_v<T> )
+    if constexpr( is_aggregated_v<ABI> )
     {
-      if constexpr( is_aggregated_v<ABI> )
-      {
-        return aggregate(eve::acsc, a0);
-      }
-      else if constexpr( is_emulated_v<ABI>)
-      {
-        return map(eve::acsc, a0);
-      }
-      else
-      {
-        return eve::asin(rec(a0));
-      }
+      return aggregate(eve::acsc, a0);
     }
-    return eve::wide<T,N,ABI>(); 
+    else if constexpr( is_emulated_v<ABI>)
+    {
+      return map(eve::acsc, a0);
+    }
+    else
+    {
+      return eve::asin(rec(a0));
+    }
   }
 }
 

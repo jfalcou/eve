@@ -28,14 +28,10 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T,  Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      T x  = eve::abs(a);
-      return bitwise_xor(atan_kernel(x, rec(x)), bitofsign(a));
-    }
-    return T(); 
+    T x  = eve::abs(a);
+    return bitwise_xor(atan_kernel(x, rec(x)), bitofsign(a));
   }
 }
 

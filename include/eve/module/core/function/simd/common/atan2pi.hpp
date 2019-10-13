@@ -29,7 +29,9 @@ namespace eve::detail
                                         , U const &a1    
                                         ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            Floating<value_type_t<T>>,
+            Floating<value_type_t<U>>
           )
   {
     return inpi(atan2(a0, a1)); 
@@ -43,7 +45,9 @@ namespace eve::detail
                              , U const &a1    
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            Floating<value_type_t<T>>,
+            Floating<value_type_t<U>>
           )
   {
     return inpi(pedantic_(atan2)(a0, a1)); 

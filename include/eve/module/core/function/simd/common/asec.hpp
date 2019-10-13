@@ -37,30 +37,26 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto asec_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
+  requires( eve::wide<T,N,ABI>, Floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
+    using t_t = wide<T,N,ABI>;
+    if constexpr( is_aggregated_v<ABI> )
+      return aggregate(eve::asec, a0);
+    else if constexpr( is_emulated_v<ABI>   )
+      return map(eve::asec, a0);
+    else if constexpr( std::is_same_v<T, double> )
     {
-      using t_t = wide<T,N,ABI>;
-      if constexpr( is_aggregated_v<ABI> )
-        return aggregate(eve::asec, a0);
-      else if constexpr( is_emulated_v<ABI>   )
-        return map(eve::asec, a0);
-      else if constexpr( std::is_same_v<T, double> )
-      {
-        auto tmp =  (Pio_2(as(a0))-acsc(a0)) +  Constant<t_t, 0x3c91a62633145c07ll>();
-        return if_else(is_equal(a0, One(as(a0))), eve::zero_, tmp);
-
-      }   
-      else if constexpr( std::is_same_v<T, float> )
-      {
-        auto tmp =  (eve::Pio_2(as(a0))-eve::acsc(a0)) + Constant<t_t,  0XB33BBD2EU>(); 
-        return if_else(is_equal(a0, One(as(a0))), eve::zero_ ,tmp);
-
-      }
+      auto tmp =  (Pio_2(as(a0))-acsc(a0)) +  Constant<t_t, 0x3c91a62633145c07ll>();
+      return if_else(is_equal(a0, One(as(a0))), eve::zero_, tmp);
+      
+    }   
+    else if constexpr( std::is_same_v<T, float> )
+    {
+      auto tmp =  (eve::Pio_2(as(a0))-eve::acsc(a0)) + Constant<t_t,  0XB33BBD2EU>(); 
+      return if_else(is_equal(a0, One(as(a0))), eve::zero_ ,tmp);
+      
     }
-    return wide<T,N,ABI>();
   }
-
 }
 
 #endif

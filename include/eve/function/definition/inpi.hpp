@@ -17,19 +17,6 @@
 
 namespace eve
 {
- namespace tag { struct inpi_; }
-
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::inpi_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::inpi] - No support for integral types"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(inpi_, inpi);
 }
 
