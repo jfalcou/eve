@@ -12,24 +12,9 @@
 #define EVE_FUNCTION_DEFINITION_EXPONENT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <type_traits>
 
 namespace eve
 {
-  namespace tag { struct exponent_; }
-  
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::exponent_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::exponent] - No support for integral types"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(exponent_, exponent);
 }
 

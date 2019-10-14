@@ -12,24 +12,9 @@
 #define EVE_FUNCTION_DEFINITION_MANTISSA_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <type_traits>
 
 namespace eve
 {
-  namespace tag { struct mantissa_; }
-  
-  namespace detail
-  {
-    template<typename T>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::mantissa_), T const&)
-    {
-      static_assert ( std::is_floating_point_v<value_type_t<T>>,
-                      "[eve::mantissa] - No support for integral types"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(mantissa_, mantissa);
 }
 
