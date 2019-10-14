@@ -21,6 +21,9 @@ namespace eve::detail
   using if_ = std::enable_if_t<Condition>;
 
   template<typename From, typename To>
+  using same = std::enable_if_t<std::is_same_v<From, To>>;
+
+  template<typename From, typename To>
   using convertible = std::enable_if_t<std::is_convertible_v<From, To>>;
 
   template<typename T>

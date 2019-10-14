@@ -15,7 +15,7 @@
 
 namespace eve
 {
-   EVE_MAKE_CALLABLE(fnma_, fnma);
+  EVE_MAKE_CALLABLE(fnma_, fnma);
 }
 
 #endif

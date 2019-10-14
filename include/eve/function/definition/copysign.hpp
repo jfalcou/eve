@@ -17,19 +17,7 @@
 
 namespace eve
 {
-  namespace tag { struct copysign_; }
-  
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::copysign_), T const&, U const &)
-    {
-      static_assert(std::is_same_v<value_type_t<U>, value_type_t<T>>,
-                    "[eve::copysign]  - value types must be the same");
-    }
-  }
-
-EVE_MAKE_CALLABLE(copysign_, copysign);
+  EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
 #endif

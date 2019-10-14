@@ -15,7 +15,7 @@
 
 namespace eve
 {
-   EVE_MAKE_CALLABLE(indeg_, indeg);
+  EVE_MAKE_CALLABLE(indeg_, indeg);
 }
 
 #endif
