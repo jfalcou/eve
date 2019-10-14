@@ -16,7 +16,6 @@
 #include <eve/function/atan2.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail

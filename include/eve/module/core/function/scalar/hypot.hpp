@@ -17,14 +17,14 @@
 #include <eve/function/scalar/fma.hpp>
 #include <eve/function/scalar/sqr.hpp>
 #include <eve/function/scalar/sqrt.hpp>
-#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  hypot_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
+  hypot_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
+  requires(T, Floating<T>)
   {
     return sqrt(fma(a0, a0, sqr(a1)));
   }

@@ -28,7 +28,6 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <eve/concept/vectorizable.hpp>
 #include <eve/module/core/detail/scalar/atan_kernel.hpp>
 
 namespace eve::detail
