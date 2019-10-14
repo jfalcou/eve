@@ -22,7 +22,6 @@
 #include <eve/function/sub.hpp>
 #include <eve/function/exponentbits.hpp>
 #include <eve/constant/maxexponent.hpp>
-#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 
@@ -31,7 +30,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto exponent_(EVE_SUPPORTS(cpu_),
                                       T const &a) noexcept
-  requires(as_integer_t<T>, Vectorizable<T>)
+  requires(as_integer_t<T>, Floating<T>)
   {
     if (is_eqz(a)) return as_integer_t<T>(0); 
     if (is_not_finite(a)) return as_integer_t<T>(0); 
