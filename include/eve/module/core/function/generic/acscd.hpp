@@ -25,9 +25,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acscd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, Floating<value_type_t<T>>)
+  requires(T, behave_as<floating,T>)
   {
-    return indeg(acsc(a0)); 
+    return indeg(acsc(a0));
   }
 
 }

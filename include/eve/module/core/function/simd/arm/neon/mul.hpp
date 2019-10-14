@@ -53,7 +53,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(neon128_),
                             U const &                  v0,
                             wide<T, N, neon64_> const &v1) noexcept requires(wide<T, N, neon64_>,
-                                                                             Vectorizable<U>)
+                                                                             vectorizable<U>)
   {
     return mul(v1, v0);
   }
@@ -61,7 +61,7 @@ namespace eve::detail
   template<typename T, typename N, typename U>
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon64_> const &v0,
-                            U const &v1) noexcept requires(wide<T, N, neon64_>, Vectorizable<U>)
+                            U const &v1) noexcept requires(wide<T, N, neon64_>, vectorizable<U>)
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -124,7 +124,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(neon128_),
                             U const &                   v0,
                             wide<T, N, neon128_> const &v1) noexcept requires(wide<T, N, neon128_>,
-                                                                              Vectorizable<U>)
+                                                                              vectorizable<U>)
   {
     return mul(v1, v0);
   }
@@ -132,7 +132,7 @@ namespace eve::detail
   template<typename T, typename N, typename U>
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon128_> const &v0,
-                            U const &v1) noexcept requires(wide<T, N, neon128_>, Vectorizable<U>)
+                            U const &v1) noexcept requires(wide<T, N, neon128_>, vectorizable<U>)
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;

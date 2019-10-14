@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto sqr_(EVE_SUPPORTS(cpu_),
                                       saturated_type const &,
-                                      T const &a0) noexcept requires(T, Vectorizable<T>)
+                                      T const &a0) noexcept requires(T, vectorizable<T>)
   {
     if(std::is_integral_v<T>)
     {

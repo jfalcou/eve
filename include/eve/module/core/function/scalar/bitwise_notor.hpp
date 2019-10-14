@@ -25,8 +25,8 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   bitwise_notor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
-                                                                               Vectorizable<T>,
-                                                                               Vectorizable<U>)
+                                                                               vectorizable<T>,
+                                                                               vectorizable<U>)
   {
     return eve::bitwise_or(eve::bitwise_not(a), b);
   }

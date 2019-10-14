@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  average_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, Vectorizable<T>)
+  average_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, vectorizable<T>)
   {
     if constexpr(std::is_integral_v<T>) { return (a0 & a1) + ((a0 ^ a1) >> 1); }
     else

@@ -26,7 +26,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     return a + b;
   }
@@ -38,7 +38,7 @@ namespace eve::detail
                      , saturated_type const&
                      , T const& a
                      , T const& b) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -51,12 +51,12 @@ namespace eve::detail
         // large signed integral case
         using u_t = std::make_unsigned_t<T>;
         enum sizee { value = sizeof(T)*8-1 };
-        
+
         u_t ux = a, uy = b;
         u_t res = ux + uy;
-        
+
         ux = (ux >> sizee::value) + std::numeric_limits<T>::max();
-        
+
         if( T((ux ^ uy) | ~(uy ^ res)) >= T(0)) return ux;
         return static_cast<T>(res);
       }

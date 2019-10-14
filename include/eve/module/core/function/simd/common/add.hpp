@@ -37,7 +37,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -53,7 +53,7 @@ namespace eve::detail
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
-      static_assert(wrong<T, U>, "[eve::add] - Missing implementation"); 
+      static_assert(wrong<T, U>, "[eve::add] - Missing implementation");
       return {};
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
@@ -70,7 +70,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;

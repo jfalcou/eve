@@ -24,7 +24,7 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acsc_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, Floating<T>)
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {

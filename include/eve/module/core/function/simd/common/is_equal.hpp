@@ -29,7 +29,7 @@ namespace eve::detail
                                 , T const &a
                                 , U const &b) noexcept
   requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -60,8 +60,8 @@ namespace eve::detail
                                  , logical<U> const &b
                                  ) noexcept
   requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
+            vectorized<T>, vectorized<U>,
+            equal_cardinal<T,U>
           )
   {
     return bitwise_cast(is_equal(a.bits(), b.bits()),as(a));

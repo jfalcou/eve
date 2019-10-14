@@ -21,7 +21,7 @@
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>    
+#include <eve/function/sqrt.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
@@ -37,7 +37,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asin_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
     T x = eve::abs(a0);
     T sgn = eve::bitofsign(a0);
@@ -59,7 +59,7 @@ namespace eve::detail
         > (z);
       z1 = eve::fma(z1, z*x, x);
       z = if_else(x_larger_05, eve::Pio_2<T>()-(z1+z1), z1);
-      return eve::bitwise_xor(z, sgn);      
+      return eve::bitwise_xor(z, sgn);
     }
     else
     {

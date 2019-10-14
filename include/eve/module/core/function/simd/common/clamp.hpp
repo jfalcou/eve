@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto clamp_(EVE_SUPPORTS(cpu_), T const &x, U const &lo, V const &hi) noexcept
-  requires( T, Vectorized<T> )
+  requires( T, vectorized<T> )
   {
     if constexpr( !is_vectorized_v<U> || !is_vectorized_v<V>)
     {
@@ -31,7 +31,7 @@ namespace eve::detail
     }
     else
     {
-      using abi_t = typename T::abi_type;     
+      using abi_t = typename T::abi_type;
       if constexpr(is_emulated_v<abi_t>)
       {
         return map(eve::clamp, x, lo, hi);

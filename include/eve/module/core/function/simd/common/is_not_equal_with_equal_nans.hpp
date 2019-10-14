@@ -31,7 +31,7 @@ namespace eve::detail
                  , T const &a
                  , U const &b) noexcept
   requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -39,13 +39,13 @@ namespace eve::detail
 
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
-      return map(eve::is_not_equal, nt, 
+      return map(eve::is_not_equal, nt,
                  abi_cast<value_type_t<U>>(a),
                  abi_cast<value_type_t<T>>(b));
     }
     else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return aggregate(eve::is_not_equal, nt, 
+      return aggregate(eve::is_not_equal, nt,
                        abi_cast<value_type_t<U>>(a),
                        abi_cast<value_type_t<T>>(b));
     }
@@ -71,8 +71,8 @@ namespace eve::detail
                  , logical<T> const &a, logical<U> const &b
                 ) noexcept
   requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
+            vectorized<T>, vectorized<U>,
+            equal_cardinal<T,U>
           )
   {
     return is_not_equal(a, b);

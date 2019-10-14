@@ -24,22 +24,22 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan2pi_( EVE_SUPPORTS(cpu_)
                                        , T const &a0
-                                       , T const &a1    
+                                       , T const &a1
                                        ) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
-    return inpi(atan2(a0, a1)); 
+    return inpi(atan2(a0, a1));
   }
-  
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan2pi_( EVE_SUPPORTS(cpu_)
-                                       , pedantic_type const &  
+                                       , pedantic_type const &
                                        , T a0
-                                       , T a1    
+                                       , T a1
                                        ) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
-    return inpi(pedantic_(atan2)(a0, a1)); 
+    return inpi(pedantic_(atan2)(a0, a1));
   }
 }
 

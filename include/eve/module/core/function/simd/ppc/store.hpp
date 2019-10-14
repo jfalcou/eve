@@ -24,7 +24,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
                               wide<T, N, ppc_> const &value,
-                              T *                     ptr) noexcept requires(void, Vectorizable<T>)
+                              T *                     ptr) noexcept requires(void, vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<vmx_>::bytes)
     {
@@ -48,7 +48,7 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(vmx_),
                               wide<T, S, ppc_> const &value,
-                              aligned_ptr<T, N>       ptr) noexcept requires(void, Vectorizable<T>)
+                              aligned_ptr<T, N>       ptr) noexcept requires(void, vectorizable<T>)
   {
     if constexpr((N >= limits<vmx_>::bytes) && current_api == eve::vmx)
     { vec_st(value.storage(), 0, ptr.get()); }

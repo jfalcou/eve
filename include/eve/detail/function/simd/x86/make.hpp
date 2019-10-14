@@ -26,7 +26,7 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits make
-  template<typename T, typename... Vs, typename = Arithmetic<T>>
+  template<typename T, typename... Vs, typename = arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::sse_ const &, Vs... vs) noexcept
   {
     static_assert(sizeof...(Vs) <= limits<eve::sse2_>::bytes / sizeof(T),
@@ -74,7 +74,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename V, typename = Arithmetic<T>>
+  template<typename T, typename V, typename = arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::sse_ const &, V v) noexcept
   {
     if constexpr(std::is_same_v<T, double>) { return _mm_set1_pd(static_cast<double>(v)); }
@@ -100,7 +100,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits make
-  template<typename T, typename... Vs, typename = Arithmetic<T>>
+  template<typename T, typename... Vs, typename = arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::avx_ const &, Vs... vs) noexcept
   {
     static_assert(sizeof...(Vs) <= limits<eve::avx_>::bytes / sizeof(T),
@@ -120,7 +120,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename V, typename = Arithmetic<T>>
+  template<typename T, typename V, typename = arithmetic<T>>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::avx_ const &, V v) noexcept
   {
     if constexpr(std::is_same_v<T, double>) { return _mm256_set1_pd(v); }

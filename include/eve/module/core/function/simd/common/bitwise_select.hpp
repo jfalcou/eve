@@ -28,8 +28,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bitwise_select_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
       std::conditional_t<is_vectorized_v<V>, V, U>,
-      Vectorized<T>,
-      detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>)
+      vectorized<T>,
+      detail::either<is_vectorized_v<V>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;

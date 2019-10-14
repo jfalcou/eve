@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
                                      as_<Target> const &) noexcept
-  requires(Target, Vectorizable<T>)
+  requires(Target, vectorizable<T>)
   {
     if constexpr(std::is_same_v<T, Target>)
     {

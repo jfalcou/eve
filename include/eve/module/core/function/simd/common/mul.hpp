@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -54,7 +54,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -72,7 +72,7 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T, U>)
       {
-        using vt_t = value_type_t<T>; 
+        using vt_t = value_type_t<T>;
         if constexpr(std::is_floating_point_v<vt_t>)
         {return mul(a, b);
         }
@@ -80,9 +80,9 @@ namespace eve::detail
         {
           using sup_t =  upgrade_t<vt_t>;
           auto z =  mul(wide_cast(a, as<sup_t>()), wide_cast(b, as<sup_t>()));
-          auto s =  saturate(as<vt_t>(), z); 
-          return wide_cast(s, as<vt_t>()); 
-        }      
+          auto s =  saturate(as<vt_t>(), z);
+          return wide_cast(s, as<vt_t>());
+        }
         else
         {
           return map(mul, st, a, b);
@@ -98,7 +98,7 @@ namespace eve::detail
     {
       return eve::mul(st, abi_cast<U>(a), abi_cast<T>(b) );
     }
-  }  
+  }
 }
 
 namespace eve

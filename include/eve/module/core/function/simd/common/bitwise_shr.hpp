@@ -24,7 +24,7 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto bitwise_shr_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires(T, Vectorized<T>, Integral<value_type_t<U>>, Integral<value_type_t<T>>)
+  requires(T, vectorized<T>, integral<value_type_t<U>>, integral<value_type_t<T>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;

@@ -25,19 +25,19 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, Floating<value_type_t<T>>)
+  requires(T, behave_as<floating,T>)
   {
-    return indeg(acos(a0)); 
+    return indeg(acos(a0));
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
-                                  , pedantic_type const &      
+                                  , pedantic_type const &
                                   , T const &a0) noexcept
-  requires(T, Floating<value_type_t<T>>)
+  requires(T, behave_as<floating,T>)
   {
-    return indeg(eve::pedantic_(acos)(a0)); 
-  } 
+    return indeg(eve::pedantic_(acos)(a0));
+  }
 }
 
 #endif

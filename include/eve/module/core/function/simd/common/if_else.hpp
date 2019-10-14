@@ -40,9 +40,9 @@ namespace eve::detail
            T const &cond,
            U const &t,
            V const &f) noexcept requires(std::conditional_t<is_vectorized_v<U>, U, V>,
-                                         Vectorized<T>,
-                                         detail::Either<is_vectorized_v<U>, is_vectorized_v<V>>,
-                                         HasCompatibleCardinal<typename T::cardinal_type, U, V>)
+                                         vectorized<T>,
+                                         detail::either<is_vectorized_v<U>, is_vectorized_v<V>>,
+                                         has_compatible_cardinal<typename T::cardinal_type, U, V>)
   {
     auto cond_mask = bitwise_mask(cond);
     return bitwise_select(cond_mask, t, f);
@@ -57,9 +57,9 @@ namespace eve::detail
            logical<U> const &t,
            logical<V> const
                &f) noexcept requires(std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>,
-                                     Vectorized<T>,
-                                     detail::Either<is_vectorized_v<U>, is_vectorized_v<V>>,
-                                     HasCompatibleCardinal<typename T::cardinal_type, U, V>)
+                                     vectorized<T>,
+                                     detail::either<is_vectorized_v<U>, is_vectorized_v<V>>,
+                                     has_compatible_cardinal<typename T::cardinal_type, U, V>)
   {
     using t_t      = std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>;
     auto cond_mask = bitwise_mask(cond);
@@ -75,9 +75,9 @@ namespace eve::detail
            U const &t,
            eve::callable_zero_ const
                &) noexcept requires(U,
-                                    Vectorized<T>,
-                                    Vectorized<U>,
-                                    HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                    vectorized<T>,
+                                    vectorized<U>,
+                                    has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bitwise_and(t, bitwise_mask(cond));
   }
@@ -88,9 +88,9 @@ namespace eve::detail
            T const &cond,
            eve::callable_zero_ const &,
            U const &t) noexcept requires(U,
-                                         Vectorized<T>,
-                                         Vectorized<U>,
-                                         HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                         vectorized<T>,
+                                         vectorized<U>,
+                                         has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bitwise_andnot(t, bitwise_mask(cond));
   }
@@ -104,9 +104,9 @@ namespace eve::detail
            U const &t,
            eve::callable_allbits_ const
                &) noexcept requires(U,
-                                    Vectorized<T>,
-                                    Vectorized<U>,
-                                    HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                    vectorized<T>,
+                                    vectorized<U>,
+                                    has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bitwise_ornot(t, bitwise_mask(cond));
   }
@@ -117,9 +117,9 @@ namespace eve::detail
            T const &cond,
            eve::callable_allbits_ const &,
            U const &t) noexcept requires(U,
-                                         Vectorized<T>,
-                                         Vectorized<U>,
-                                         HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                         vectorized<T>,
+                                         vectorized<U>,
+                                         has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bitwise_or(t, bitwise_mask(cond));
   }
@@ -133,9 +133,9 @@ namespace eve::detail
            U const &t,
            eve::callable_one_ const
                &) noexcept requires(U,
-                                    Vectorized<T>,
-                                    Vectorized<U>,
-                                    HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                    vectorized<T>,
+                                    vectorized<U>,
+                                    has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
     { return unary_minus(bitwise_ornot(unary_minus(t), bitwise_mask(cond))); }
@@ -151,9 +151,9 @@ namespace eve::detail
            T const &cond,
            eve::callable_one_ const &,
            U const &t) noexcept requires(U,
-                                         Vectorized<T>,
-                                         Vectorized<U>,
-                                         HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                         vectorized<T>,
+                                         vectorized<U>,
+                                         has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
     { return unary_minus(bitwise_or(unary_minus(t), bitwise_mask(cond))); }
@@ -172,9 +172,9 @@ namespace eve::detail
            U const &t,
            eve::callable_mone_ const
                &) noexcept requires(U,
-                                    Vectorized<T>,
-                                    Vectorized<U>,
-                                    HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                    vectorized<T>,
+                                    vectorized<U>,
+                                    has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>) { return bitwise_ornot(t, bitwise_mask(cond)); }
     else
@@ -189,9 +189,9 @@ namespace eve::detail
            T const &cond,
            eve::callable_mone_ const &,
            U const &t) noexcept requires(U,
-                                         Vectorized<T>,
-                                         Vectorized<U>,
-                                         HasCompatibleCardinal<typename T::cardinal_type, U>)
+                                         vectorized<T>,
+                                         vectorized<U>,
+                                         has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>) { return bitwise_or(t, bitwise_mask(cond)); }
     else

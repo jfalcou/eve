@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/fms.hpp>   
+#include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bitwise_xor.hpp>
@@ -40,15 +40,15 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto asin_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, Floating<T>)
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
       return aggregate(eve::asin, a0);
     else if constexpr( is_emulated_v<ABI>   )
       return map(eve::asin, a0);
-    else 
+    else
     {
-      using t_t =  wide<T,N,ABI>; 
+      using t_t =  wide<T,N,ABI>;
       auto x = eve::abs(a0);
       auto sgn = eve::bitofsign(a0);
       if constexpr(std::is_same_v<T, float>)
@@ -112,7 +112,7 @@ namespace eve::detail
           >(zz2);
         zz2 = fma(x, z, x);
         return eve::if_else(eve::is_greater(x,eve::One<t_t>()),
-                            eve::allbits_, 
+                            eve::allbits_,
                             eve::bitwise_xor(eve::if_else( small_,
                                                            x,
                                                            eve::if_else(x > ct1, zz1, zz2)
@@ -122,7 +122,7 @@ namespace eve::detail
                            );
       }
     }
-  }  
+  }
 }
 
 #endif

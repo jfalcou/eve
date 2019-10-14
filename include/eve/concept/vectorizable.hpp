@@ -61,7 +61,7 @@ namespace eve
   inline constexpr bool is_vectorizable_v = is_vectorizable_t<Type>::value;
 
   template<typename Type>
-  using Vectorizable = std::enable_if_t<is_vectorizable_v<Type>>;
+  using vectorizable = std::enable_if_t<is_vectorizable_v<Type>>;
 }
 
 #endif

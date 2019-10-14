@@ -26,7 +26,7 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp> 
+#include <eve/constant/mhalf.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <type_traits>
@@ -37,26 +37,26 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, Floating<T>)
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
       return aggregate(eve::acos, a0);
     else if constexpr( is_emulated_v<ABI>   )
       return map(eve::acos, a0);
-    else 
+    else
     {
-      using t_t = eve::wide<T,N,ABI>; 
+      using t_t = eve::wide<T,N,ABI>;
       auto z = Pio_2(as(a0))-eve::asin(a0);
       // small correction with pio_2lo
       return z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
-    }   
+    }
   }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
-                            ,  pedantic_type const &     
+                            ,  pedantic_type const &
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, Floating<T>)
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
       return aggregate(eve::acos, a0);
@@ -76,7 +76,7 @@ namespace eve::detail
       x =  add[x_larger_05](x, x);
       x  = eve::if_else(is_less(a0, eve::Mhalf(as(a0))), eve::Pi(as(a0))-x, x);
       return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0))-x);
-    }   
+    }
   }
 }
 

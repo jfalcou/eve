@@ -30,7 +30,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto is_not_denormal_(EVE_SUPPORTS(cpu_),
                                                   T const &a) noexcept requires(as_logical_t<T>,
-                                                                                Vectorizable<T>)
+                                                                                vectorizable<T>)
   {
     if constexpr(std::is_integral_v<T> || is_logical_v<T> || !platform::supports_denormals)
     { return True<T>(); }

@@ -26,8 +26,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto rshl_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon64_> const &v0,
                              wide<I, N, neon64_> const &v1) noexcept requires(wide<T, N, neon64_>,
-                                                                              Integral<I>,
-                                                                              Integral<T>)
+                                                                              integral<I>,
+                                                                              integral<T>)
   {
     return neon_shifter(v0, v1);
   }
@@ -35,7 +35,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto rshl_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon64_> const &v0,
-                             I v1) noexcept requires(wide<T, N, neon64_>, Integral<I>, Integral<T>)
+                             I v1) noexcept requires(wide<T, N, neon64_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::rshl(v0, i_t(v1));
@@ -45,8 +45,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto rshl_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon128_> const &v0,
                              wide<I, N, neon128_> const &v1) noexcept requires(wide<T, N, neon128_>,
-                                                                               Integral<I>,
-                                                                               Integral<T>)
+                                                                               integral<I>,
+                                                                               integral<T>)
   {
     return neon_shifter(v0, v1);
   }
@@ -54,7 +54,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto rshl_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon128_> const &v0,
-                             I v1) noexcept requires(wide<T, N, neon128_>, Integral<I>, Integral<T>)
+                             I v1) noexcept requires(wide<T, N, neon128_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::rshl(v0, i_t(v1));

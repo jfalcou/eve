@@ -21,7 +21,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nez.hpp>     
+#include <eve/function/is_nez.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/logical_and.hpp>
@@ -38,7 +38,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -80,7 +80,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -122,14 +122,14 @@ namespace eve::detail
           auto bb = if_else(iseqzb, One(as(a)), b);
           auto aa = if_else(iseqzb, bitwise_mask(a), a);
            return div(aa, bb);
-        }                          
+        }
       }
-      return T(); 
+      return T();
      }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::div(abi_cast<U>(a), abi_cast<T>(b) );
-    }    
+    }
   }
 }
 

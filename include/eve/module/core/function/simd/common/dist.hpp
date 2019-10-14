@@ -30,7 +30,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -43,7 +43,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      return eve::max(a, b) - eve::min(a, b); 
+      return eve::max(a, b) - eve::min(a, b);
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
@@ -59,7 +59,7 @@ namespace eve::detail
         saturated_type const &,
         T const &v0,
         U const &v1) noexcept requires(std::conditional_t<is_vectorized_v<T>, T, U>,
-                                       detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+                                       detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     auto d = dist(v0, v1);
     if constexpr(std::is_integral_v<value_type_t<T>> && std::is_signed_v<value_type_t<T>>)

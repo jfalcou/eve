@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto average_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires(
       std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -39,7 +39,7 @@ namespace eve::detail
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
       static_assert(wrong<T, U>, "[eve::average] - Missing implementation support");
-      return T(); 
+      return T();
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {

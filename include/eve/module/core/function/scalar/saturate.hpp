@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   saturate_(EVE_SUPPORTS(cpu_),
             as_<Target> const &,
-            U const &a0) noexcept requires(U, Vectorizable<Target>, Vectorizable<U>)
+            U const &a0) noexcept requires(U, vectorizable<Target>, vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<Target>) // saturating to floating point
     {

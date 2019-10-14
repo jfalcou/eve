@@ -24,9 +24,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto is_not_equal_(
       EVE_SUPPORTS(cpu_),
-      numeric_type const &, 
+      numeric_type const &,
       T const &a,
-      U const &b) noexcept requires(as_logical_t<T>, Vectorizable<T>, Vectorizable<U>)
+      U const &b) noexcept requires(as_logical_t<T>, vectorizable<T>, vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<T>) { return (a != b) && ((a == a) || (b == b)); }
     else

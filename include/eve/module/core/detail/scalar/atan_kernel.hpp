@@ -18,7 +18,7 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/is_equal.hpp> 
+#include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_greater.hpp>
@@ -39,17 +39,17 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr
   auto atan_kernel( T  x,  T recx ) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>
-                 , "[detail;:atan_kernel] - entry type is not IEEEValue"); 
+                 , "[detail;:atan_kernel] - entry type is not IEEEValue");
     auto flag1 = x <  Ieee_constant<T,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
     auto flag2 = (x >= Ieee_constant<T, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>()) && flag1; // tan(pi/8)
     T yy = flag1 ? T(0) : Pio_2(as(x));
     if (flag2) yy =  Pio_4(as(x));
     T xx =  flag1 ? x : -recx;
-    if (flag2) xx = eve::dec(x)/eve::inc(x); 
+    if (flag2) xx = eve::dec(x)/eve::inc(x);
     T z = eve::sqr(xx);
     if constexpr(std::is_same_v<T, float>)
     {

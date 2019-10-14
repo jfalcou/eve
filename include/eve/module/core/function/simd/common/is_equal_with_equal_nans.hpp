@@ -32,7 +32,7 @@ namespace eve::detail
                  , T const &a
                  , U const &b) noexcept
   requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -60,14 +60,14 @@ namespace eve::detail
         {
           return is_equal(a, b);
         }
-      }    
+      }
     }
     else //if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
     {
       return eve::is_equal(nt, abi_cast<U>(a), abi_cast<T>(b) );
     }
   }
- 
+
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr
   auto is_equal_( EVE_SUPPORTS(cpu_)
@@ -75,8 +75,8 @@ namespace eve::detail
                  , logical<T> const &a, logical<U> const &b
                 ) noexcept
   requires( logical<T>,
-            Vectorized<T>, Vectorized<U>,
-            EqualCardinal<T,U>
+            vectorized<T>, vectorized<U>,
+            equal_cardinal<T,U>
           )
   {
     return is_equal(a, b);

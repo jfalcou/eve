@@ -40,7 +40,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
     if constexpr(std::is_same_v<T, double>)
     {
@@ -52,7 +52,7 @@ namespace eve::detail
       if (is_equal(a0, One(as(a0)))) return Zero(as(a0));
       return  Pio_2(as(a0))+(Constant<T,  0XB33BBD2EU>()-acsc(a0));
     }
-    return T(); 
+    return T();
   }
 
 }

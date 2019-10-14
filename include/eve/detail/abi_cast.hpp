@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  // Cast to Target unless Origin is Vectorized
+  // Cast to Target unless Origin is vectorized<
   template<typename Target, typename Origin>
   decltype(auto) abi_cast(Origin &&o)
   {

@@ -23,8 +23,8 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   logical_notor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(as_logical_t<T>,
-                                                                               Vectorizable<T>,
-                                                                               Vectorizable<U>)
+                                                                               vectorizable<T>,
+                                                                               vectorizable<U>)
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
     { return !static_cast<bool>(a) || static_cast<bool>(b); }

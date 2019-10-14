@@ -27,13 +27,13 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto bitwise_ornot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<T>;
     using vu_t  = value_type_t<U>;
-    
+
 
     if constexpr(is_vectorizable_v<T> && !is_vectorizable_v<U>)
     {
@@ -43,8 +43,8 @@ namespace eve::detail
       {
         return eve::bitwise_ornot(U(bitwise_cast(a,as_<vu_t>())), b);
       }
-      else return U(); 
-    } 
+      else return U();
+    }
     else if constexpr(is_vectorizable_v<U> && !is_vectorizable_v<T>)
     {
       if constexpr(sizeof(U) == sizeof(vt_t))
@@ -53,7 +53,7 @@ namespace eve::detail
       {
         return eve::bitwise_ornot(a, T(bitwise_cast(b,as_<vt_t>())));
       }
-      else return T(); 
+      else return T();
     }
     else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
@@ -70,8 +70,8 @@ namespace eve::detail
     }
     else
     {
-      static_assert(wrong<T, U>, "[eve::bitwise_ornot] - Missing implementation"); 
-      return std::conditional_t<is_vectorized_v<T>, T, U>(); 
+      static_assert(wrong<T, U>, "[eve::bitwise_ornot] - Missing implementation");
+      return std::conditional_t<is_vectorized_v<T>, T, U>();
     }
   }
 }

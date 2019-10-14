@@ -35,26 +35,26 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan2_( EVE_SUPPORTS(cpu_)
                                        , T const &a0
-                                       , T const &a1    
+                                       , T const &a1
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  floating<T>)
   {
     T q = eve::abs(a0/a1);
     T z = detail::atan_kernel(q, eve::rec(q));
     return (is_positive(a1)? z: Pi<T>()-z)*signnz(a0);
   }
-  
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto atan2_( EVE_SUPPORTS(cpu_)
-                                       , pedantic_type const &  
+                                       , pedantic_type const &
                                        , T a0
-                                       , T a1    
+                                       , T a1
                                        ) noexcept
-  requires(T,  Floating<T>)
+  requires(T,  floating<T>)
   {
     if constexpr(platform::supports_nans)
       if (is_unordered(a0, a1)) return Nan(as(a0));
-    
+
     if constexpr(platform::supports_infinites)
     {
       if (is_infinite(a0) && is_infinite(a1))
@@ -63,7 +63,7 @@ namespace eve::detail
         a1 = copysign(One(as(a0)), a1);
       }
     }
-    
+
     T q = eve::abs(a0/a1);
     T z = detail::atan_kernel(q, rec(q));
     T sgn = signnz(a0);

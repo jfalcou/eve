@@ -26,31 +26,31 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2pi_( EVE_SUPPORTS(cpu_)
                                         , T const &a0
-                                        , U const &a1    
+                                        , U const &a1
                                         ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            Floating<value_type_t<T>>,
-            Floating<value_type_t<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>
           )
   {
-    return inpi(atan2(a0, a1)); 
+    return inpi(atan2(a0, a1));
   }
 
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2pi_( EVE_SUPPORTS(cpu_)
-                             , pedantic_type const &  
+                             , pedantic_type const &
                              , T const &a0
-                             , U const &a1    
+                             , U const &a1
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            Floating<value_type_t<T>>,
-            Floating<value_type_t<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>
           )
   {
-    return inpi(pedantic_(atan2)(a0, a1)); 
+    return inpi(pedantic_(atan2)(a0, a1));
   }
 }
 

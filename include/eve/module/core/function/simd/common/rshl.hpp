@@ -33,9 +33,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto
   rshl_(EVE_SUPPORTS(cpu_), T const &v0, U const &v1) noexcept requires(T,
-                                                                        Vectorized<T>,
-                                                                        Integral<value_type_t<U>>,
-                                                                        Integral<value_type_t<T>>)
+                                                                        vectorized<T>,
+                                                                        integral<value_type_t<U>>,
+                                                                        integral<value_type_t<T>>)
   {
     if constexpr(std::is_unsigned_v<value_type_t<U>>)
       return shl(v0, v1);

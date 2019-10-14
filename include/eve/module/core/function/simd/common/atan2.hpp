@@ -40,12 +40,12 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2_( EVE_SUPPORTS(cpu_)
                                         , T const &a0
-                                        , U const &a1    
+                                        , U const &a1
                                         ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            Floating<value_type_t<T>>,
-            Floating<value_type_t<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>
           )
   {
     if constexpr( !is_vectorized_v<U> )
@@ -62,15 +62,15 @@ namespace eve::detail
       {
         if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          return aggregate( eve::atan2, a0, a1); 
+          return aggregate( eve::atan2, a0, a1);
         }
         else if constexpr( is_emulated_v<typename T::abi_type> )
         {
           return map( eve::atan2, a0, a1);
         }
-        else 
+        else
         {
-          auto q = eve::abs(a0/a1); 
+          auto q = eve::abs(a0/a1);
           auto z = detail::atan_kernelw(q, eve::rec(q));
           return if_else(is_positive(a1), z, Pi(as(a0))*signnz(a0));
         }
@@ -80,14 +80,14 @@ namespace eve::detail
 
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2_( EVE_SUPPORTS(cpu_)
-                             , pedantic_type const &  
+                             , pedantic_type const &
                              , T const &a0
-                             , U const &a1    
+                             , U const &a1
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            Floating<value_type_t<T>>,
-            Floating<value_type_t<U>>)
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>)
   {
     if constexpr( !is_vectorized_v<U> )
     {
@@ -103,7 +103,7 @@ namespace eve::detail
       {
         if constexpr( is_aggregated_v<typename T::abi_type> )
         {
-          return aggregate( eve::atan2, eve::pedantic_, a0, a1); 
+          return aggregate( eve::atan2, eve::pedantic_, a0, a1);
         }
         else if constexpr( is_emulated_v<typename T::abi_type> )
         {
@@ -118,7 +118,7 @@ namespace eve::detail
             a00 =  eve::if_else(test1, eve::copysign(One(as(a0)), a00), a00);
             a10 =  eve::if_else(test1, eve::copysign(One(as(a0)), a10), a10);
           }
-          
+
           T q = eve::abs(a00/a10);
           T z = atan_kernelw(q, rec(q));
           //T z = atan(abs(a0/a1));  // case a1 > 0,  a0 > 0

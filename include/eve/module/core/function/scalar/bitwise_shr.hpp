@@ -20,7 +20,7 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept requires(T, Integral<U>, Integral<T>)
+  bitwise_shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept requires(T, integral<U>, integral<T>)
   {
     using u_t = eve::detail::as_integer_t<T, unsigned>;
     return T(u_t(a0) >> a1);

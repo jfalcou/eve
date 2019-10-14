@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acot_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a) noexcept
-  requires( eve::wide<T,N,ABI>, Floating<T>)
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {
@@ -41,7 +41,7 @@ namespace eve::detail
     {
       auto x  = eve::abs(a);
       return bitwise_xor(atan_kernelw(rec(x), x), bitofsign(a));
-    }   
+    }
   }
 }
 

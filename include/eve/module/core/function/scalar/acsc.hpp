@@ -23,9 +23,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, Floating<T>)
+  requires(T, floating<T>)
   {
-      return eve::asin(rec(a0));  
+      return eve::asin(rec(a0));
   }
 
 }

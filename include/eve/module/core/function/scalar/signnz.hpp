@@ -26,7 +26,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto signnz_(EVE_SUPPORTS(cpu_),
-                                         T const &a) noexcept requires(T, Vectorizable<T>)
+                                         T const &a) noexcept requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

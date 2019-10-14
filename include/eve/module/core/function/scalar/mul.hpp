@@ -29,7 +29,7 @@ namespace eve::detail
   // regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, Vectorizable<T>)
+  mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, vectorizable<T>)
   {
     return a * b;
   }
@@ -38,10 +38,10 @@ namespace eve::detail
   // Saturated case
   template<typename T>
   EVE_FORCEINLINE constexpr auto mul_(EVE_SUPPORTS(cpu_)
-                                    ,  saturated_type const & 
+                                    ,  saturated_type const &
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -58,8 +58,8 @@ namespace eve::detail
       {
         using un_t = std::make_unsigned_t<T>;
         using up_t = int64_t;
-        enum Sizee{ value = sizeof(T)*8-1 }; 
-        
+        enum Sizee{ value = sizeof(T)*8-1 };
+
         up_t res = up_t(a)*up_t(b);
         un_t res2 = (un_t(a ^ b) >> Sizee::value) + Valmax<T>();
         T hi = (res >> (Sizee::value+1));
@@ -81,7 +81,7 @@ namespace eve::detail
             return (z < amini)
             ? ( sgn ? Valmin<T>():Valmax<T>())
             : mini*maxi;
-          }; 
+          };
         if (bb >= aa)
           return aux(a, b, aa, bb);
         else
@@ -94,7 +94,7 @@ namespace eve::detail
       {
         using up_t =  upgrade_t<T>;
         up_t res = up_t(a)*up_t(b);
-        return (res > Valmax<T>()) ? Valmax<T>() : static_cast<T>(res); 
+        return (res > Valmax<T>()) ? Valmax<T>() : static_cast<T>(res);
       }
       else
       {
@@ -102,7 +102,7 @@ namespace eve::detail
         {
           T z = Valmax<T>()/maxi;
           return (z < mini) ? Valmax<T>() : mini*maxi;
-        }; 
+        };
         if (b == 0 || a == 0) return Zero<T>();
         if (b >= a)
           return aux(a, b);

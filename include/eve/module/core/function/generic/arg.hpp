@@ -27,14 +27,14 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  requires(T, Floating<value_type_t<T>>)
+  requires(T, behave_as<floating,T>)
   {
     return if_else(is_negative(a), Pi(as(a)), eve::zero_);
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const &a) noexcept
-  requires(T, Floating<value_type_t<T>>)
+  requires(T, behave_as<floating,T>)
   {
     auto r = arg(a);
 
