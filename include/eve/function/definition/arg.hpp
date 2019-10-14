@@ -12,9 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_ARG_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/pedantic.hpp>
-#include <type_traits>
 
 namespace eve
 {

@@ -12,8 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_INPI_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <type_traits>
 
 namespace eve
 {

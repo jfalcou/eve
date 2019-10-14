@@ -12,9 +12,7 @@
 #define EVE_FUNCTION_DEFINITION_BINARIZE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/is_logical.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
 #include <type_traits>

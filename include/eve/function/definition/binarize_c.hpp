@@ -13,7 +13,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/is_logical.hpp>
 #include <type_traits>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>

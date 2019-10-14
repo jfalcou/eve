@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_ACOT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <type_traits>
 
 namespace eve
 {

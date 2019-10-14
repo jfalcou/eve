@@ -12,9 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_ATAN2_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <eve/function/pedantic.hpp>
-#include <type_traits>
 
 namespace eve
 {

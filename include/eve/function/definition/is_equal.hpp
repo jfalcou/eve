@@ -12,9 +12,6 @@
 #define EVE_FUNCTION_DEFINITION_IS_EQUAL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <type_traits>
 
 namespace eve
 {

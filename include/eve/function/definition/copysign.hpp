@@ -13,7 +13,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/cardinal.hpp>
 #include <type_traits>
 
 namespace eve
