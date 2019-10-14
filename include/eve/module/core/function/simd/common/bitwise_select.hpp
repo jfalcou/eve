@@ -19,6 +19,8 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/bitwise_andnot.hpp>
 #include <eve/function/bitwise_or.hpp>
+#include <eve/concept/vectorized.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -26,10 +28,10 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto
-  bitwise_select_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
-      std::conditional_t<is_vectorized_v<V>, V, U>,
-      vectorized<T>,
-      detail::either<is_vectorized_v<V>, is_vectorized_v<U>>)
+  bitwise_select_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept 
+  requires( std::conditional_t<is_vectorized_v<V>, V, U>,
+            bitwise_compatible<T,U>,bitwise_compatible<T,V>,
+            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;

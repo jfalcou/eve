@@ -24,8 +24,8 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b)
-    noexcept requires(T, vectorizable<T>,  vectorizable<U>)
+  bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires(T, vectorizable<T>, vectorizable<U>, bitwise_compatible<T,U>)
   {
     return bitwise_and(bitwise_not(a), b);
   }

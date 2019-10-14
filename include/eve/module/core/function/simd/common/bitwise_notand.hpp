@@ -25,9 +25,10 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto
-  bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
-      std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+  bitwise_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
+            bitwise_compatible<T,U>,
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;

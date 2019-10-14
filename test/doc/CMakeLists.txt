@@ -12,7 +12,6 @@
 add_unit_test( "doc.function.predicates" binarize.cpp )
 add_unit_test( "doc.function.predicates" binarize_c.cpp )
 add_unit_test( "doc.function.arithmetic" deco.cpp )
-add_unit_test( "doc.function.arithmetic" mask.cpp )  
 add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" all.cpp )
 add_unit_test( "doc.function.invtrig" acos.cpp )

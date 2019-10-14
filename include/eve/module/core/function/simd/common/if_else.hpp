@@ -42,7 +42,8 @@ namespace eve::detail
            V const &f) noexcept requires(std::conditional_t<is_vectorized_v<U>, U, V>,
                                          vectorized<T>,
                                          detail::either<is_vectorized_v<U>, is_vectorized_v<V>>,
-                                         has_compatible_cardinal<typename T::cardinal_type, U, V>)
+                                         has_compatible_cardinal<typename T::cardinal_type, U, V>
+                                        )
   {
     auto cond_mask = bitwise_mask(cond);
     return bitwise_select(cond_mask, t, f);

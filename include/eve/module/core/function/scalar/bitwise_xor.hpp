@@ -24,9 +24,8 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
-                                                                             vectorizable<T>,
-                                                                             vectorizable<U>)
+  bitwise_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept 
+  requires(T, vectorizable<T>, vectorizable<U>, bitwise_compatible<T,U>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
