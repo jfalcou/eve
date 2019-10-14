@@ -34,7 +34,6 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/concept/vectorizable.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <tuple>
@@ -47,13 +46,14 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
                                         , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
+  requires(std::tuple<T, as_integer_t<T, signed>>, Floating<T>)
   {
     using t_t = value_type_t<T>;
     using i_t = as_integer_t<T, signed>; 
     auto r1   = bitwise_and(Expobits_mask<T>(), a0);
     auto x    = bitwise_notand(Expobits_mask<T>(), a0);
-    return  std::tuple<T, i_t>{ bitwise_or(Half<T>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    return  std::tuple<T, i_t>{ bitwise_or(Half<T>(), x),
+                                bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
+  requires(std::tuple<T, as_integer_t<T, signed>>, Floating<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if(!a0) return {T(0),i_t(0)};
@@ -74,7 +74,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, Vectorizable<T>)
+  requires(std::tuple<T, as_integer_t<T, signed>>, Floating<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if (a0 == 0 || is_not_finite(a0))

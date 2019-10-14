@@ -49,7 +49,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto ldexp_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires( T, Vectorized<T>)
+  requires( T, Floating<T>)
   {
     using t_abi = abi_type_t<T>;
 
