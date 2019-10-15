@@ -46,7 +46,7 @@ make_all_units(ROOT core NAME bitwise_cast    ARCH scalar simd TYPES ${all_types
 make_all_units(ROOT core NAME bitwise_mask    ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_not     ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_notand  ARCH scalar simd TYPES ${all_types} )
-# make_units("bitwise_notor/regular"          "core" ${all_types})
+make_all_units(ROOT core NAME bitwise_notor   ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_or      ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_ornot   ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types} )
