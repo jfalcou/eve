@@ -52,7 +52,7 @@ make_all_units(ROOT core NAME bitwise_notand  ARCH scalar simd TYPES ${all_types
 make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types} )
 # make_units("bitwise_shl/regular"            "core" ${integral_types})
 # make_units("bitwise_shr/regular"            "core" ${integral_types})
-# make_units("bitwise_xor/regular"            "core" ${all_types})
+make_all_units(ROOT core NAME bitwise_xor     ARCH scalar simd TYPES ${all_types} )
 
 make_all_units(ROOT core NAME ceil      ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME clamp     ARCH scalar simd TYPES ${all_types} )
