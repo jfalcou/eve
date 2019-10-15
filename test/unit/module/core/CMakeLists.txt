@@ -50,7 +50,7 @@ make_all_units(ROOT core NAME bitwise_notand  ARCH scalar simd TYPES ${all_types
 # make_units("bitwise_or/regular"             "core" ${all_types})
 # make_units("bitwise_ornot/regular"          "core" ${all_types})
 make_all_units(ROOT core NAME bitwise_select  ARCH scalar simd TYPES ${all_types} )
-# make_units("bitwise_shl/regular"            "core" ${integral_types})
+make_all_units(ROOT core NAME bitwise_shl     ARCH scalar simd TYPES ${integral_types} )
 # make_units("bitwise_shr/regular"            "core" ${integral_types})
 make_all_units(ROOT core NAME bitwise_xor     ARCH scalar simd TYPES ${all_types} )
 
