@@ -52,7 +52,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
                                         , wide<T, N, ABI> const & a0) noexcept
-  requires(wide<T, N, ABI>,  Floating<T>); 
+  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating<T>) 
   {
     using t_t = wide<T, N, ABI>; 
     using i_t = as_integer_t<t_t, signed>; 
@@ -66,7 +66,7 @@ namespace eve::detail
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , wide<T, N, ABI>  a0) noexcept
-  requires(wide<T, N, ABI>,  Floating<T>); 
+  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating<T>) 
   {
     using t_t = wide<T, N, ABI>; 
     using i_t = as_integer_t<t_t, signed>; 
@@ -81,7 +81,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , wide<T, N, ABI> const & a0) noexcept
-  requires(wide<T, N, ABI>,  Floating<T>); 
+  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating<T>) 
   {
      using t_t = wide<T, N, ABI>; 
      using i_t = as_integer_t<t_t, signed>;
