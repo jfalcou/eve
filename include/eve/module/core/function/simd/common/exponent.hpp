@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto exponent_(EVE_SUPPORTS(cpu_)
                                 , wide<T, N, ABI> const &a) noexcept
-  requires(as_integer_t<wide<T, N, ABI>>, Floating<T>)
+  requires(as_integer_t<wide<T, N, ABI>>, floating<T>)
   {
     auto x = shr(exponentbits(a), Nbmantissabits<T>());
     auto test = is_nez(a);

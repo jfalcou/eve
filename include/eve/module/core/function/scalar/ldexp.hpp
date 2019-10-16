@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ldexp_(EVE_SUPPORTS(cpu_)
                                     , T const &a0
                                     , U const &a1) noexcept
-  requires(T, Vectorizable<T>, Vectorizable<U>)
+  requires(T, floating<T>, vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<U>)
     {
@@ -63,7 +63,7 @@ namespace eve::detail
                                     , pedantic_type const & 
                                     , T const &a0
                                     , U const &a1) noexcept
-  requires(T, Vectorizable<T>, Vectorizable<U>)
+  requires(T, floating<T>, vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<U>)
     {
