@@ -29,7 +29,7 @@ namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto mantissa_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
-  requires(as_integer_t<wide<T, N, ABI>>, Floating<T>)
+  requires(wide<T, N, ABI>, floating<T>)
   {
     auto test =  is_eqz(a);
     if constexpr(eve::platform::supports_invalids)

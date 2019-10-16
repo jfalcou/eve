@@ -13,6 +13,7 @@
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/cardinal.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -54,9 +55,9 @@ namespace eve::detail
                                      , decltype( std::declval<T>() <= std::declval<U>() )
                                      , decltype( std::declval<T>() >= std::declval<U>() )
                                      >;
- template<typename T>
+  template<typename T>
   using totally_ordered= totally_ordered_with<T,T>;
-  
+
 }
 
 #endif
