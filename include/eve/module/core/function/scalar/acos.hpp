@@ -37,13 +37,12 @@
 
 namespace eve::detail
 {
-
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
   requires(T, floating_point<T>)
   {
-    //if(a0 == One(as(a0))) return Zero(as(a0));
+    if(a0 == One(as(a0))) return Zero(as(a0));
     T z = Pio_2<T>()-eve::asin(a0);
     // small correction with pio_2lo
     return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();

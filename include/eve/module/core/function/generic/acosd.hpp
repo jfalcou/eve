@@ -23,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(acos(a0));
+    return indeg(eve::acos(a0));
   }
 
   template<typename T>
@@ -32,7 +32,7 @@ namespace eve::detail
                                         ) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(eve::pedantic_(acos)(a0));
+    return indeg(eve::pedantic_(eve::acos)(a0));
   }
 }
 
