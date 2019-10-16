@@ -17,19 +17,14 @@
 
 namespace eve
 {
-  namespace tag { struct bitwise_cast_; }
-  
-  namespace detail
-  {
-    template<typename T, typename Target>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bitwise_cast_), T const&,  as_<Target> const &)
-    {
-      static_assert(sizeof(Target) == sizeof(T),
-                    "[eve::bitwise_cast]  - arguments has not the same global size");
-    }
-  }
-
   EVE_MAKE_CALLABLE(bitwise_cast_, bitwise_cast);
+}
+
+// Concept based on bitwise_cast
+namespace eve::detail
+{
+  template<typename T, typename U>
+  using bitwise_compatible = std::void_t<decltype( bitwise_cast(std::declval<T>(), as<U>()) )>;
 }
 
 #endif
