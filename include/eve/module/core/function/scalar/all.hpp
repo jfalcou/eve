@@ -22,18 +22,18 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto all_(EVE_SUPPORTS(cpu_),
                                       T const &a) noexcept
-  requires(bool, Vectorizable<T>)
+  requires(bool, vectorizable<T>)
   {
-    return a; 
+    return a;
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto all_(EVE_SUPPORTS(cpu_),
                                       logical<T> const &a) noexcept
-  requires(bool, Vectorizable<T>)
+  requires(bool, vectorizable<T>)
   {
-    return a; 
-  }  
+    return a;
+  }
 }
 
 #endif

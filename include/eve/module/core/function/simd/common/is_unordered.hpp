@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -43,19 +43,11 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>)
-      {
-        if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        { return logical_or(is_not_equal(a, a), is_not_equal(b, b)); }
-        else
-        {
-          return False(as(a));
-        }
-      }
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      { return logical_or(is_not_equal(a, a), is_not_equal(b, b)); }
       else
       {
-        static_assert(wrong<T, U>, "[eve::is_unordered] - no support for current simd api ");
-        return {};
+        return False(as(a));
       }
     }
     else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
@@ -68,9 +60,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_unordered_(EVE_SUPPORTS(cpu_),
                                      logical<T> const &,
                                      logical<U> const &) noexcept requires(logical<T>,
-                                                                           Vectorized<T>,
-                                                                           Vectorized<U>,
-                                                                           EqualCardinal<T, U>)
+                                                                           vectorized<T>,
+                                                                           vectorized<U>,
+                                                                           equal_cardinal<T, U>)
   {
     return False<T>();
   }

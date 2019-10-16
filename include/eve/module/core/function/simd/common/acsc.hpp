@@ -24,16 +24,19 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acsc_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
+    {
       return aggregate(eve::acsc, a0);
-    else if constexpr( is_emulated_v<ABI>   )
+    }
+    else if constexpr( is_emulated_v<ABI>)
+    {
       return map(eve::acsc, a0);
-    else if constexpr( std::is_floating_point_v<T> )
-      return eve::asin(rec(a0));
+    }
     else
     {
-      EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acsc simd] - type is not an IEEEValue"); 
+      return eve::asin(rec(a0));
     }
   }
 }

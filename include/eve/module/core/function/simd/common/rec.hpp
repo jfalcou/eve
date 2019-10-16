@@ -23,7 +23,6 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/pedantic.hpp>
 #include <type_traits>

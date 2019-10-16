@@ -17,7 +17,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -26,19 +25,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon64_> const &v0,
                              wide<I, N, neon64_> const &v1) noexcept requires(wide<T, N, neon64_>,
-                                                                              Integral<I>,
-                                                                              Integral<T>)
+                                                                              integral<I>,
+                                                                              integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr ] (neon64) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, -v1);
   }
 
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon64_> const &v0,
-                             I v1) noexcept requires(wide<T, N, neon64_>, Integral<I>, Integral<T>)
+                             I v1) noexcept requires(wide<T, N, neon64_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::rshr(v0, i_t(v1));
@@ -48,19 +44,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon128_> const &v0,
                              wide<I, N, neon128_> const &v1) noexcept requires(wide<T, N, neon128_>,
-                                                                               Integral<I>,
-                                                                               Integral<T>)
+                                                                               integral<I>,
+                                                                               integral<T>)
   {
-    EVE_ASSERT(detail::assert_good_shift<T>(abs(v1)),
-               "[ eve::rshr ] (neon128) - A shift absolute value abs("
-                   << v1 << ") is out of the range [0, " << sizeof(T) * 8 << "[.");
     return neon_shifter(v0, -v1);
   }
 
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(neon128_),
                              wide<T, N, neon128_> const &v0,
-                             I v1) noexcept requires(wide<T, N, neon128_>, Integral<I>, Integral<T>)
+                             I v1) noexcept requires(wide<T, N, neon128_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::rshr(v0, i_t(v1));

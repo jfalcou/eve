@@ -27,22 +27,20 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acot_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a) noexcept
+  requires( eve::wide<T,N,ABI>, floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( is_aggregated_v<ABI> )
     {
-      if constexpr( is_aggregated_v<ABI> )
-        return aggregate(eve::acot, a);
-      else if constexpr( is_emulated_v<ABI>   )
-        return map(eve::acot, a);
-      else
-      {
-        eve::wide<T,N,ABI> x  = eve::abs(a);
-        return bitwise_xor(atan_kernelw(rec(x), x), bitofsign(a));
-      }   
+      return aggregate(eve::acot, a);
+    }
+    else if constexpr( is_emulated_v<ABI> )
+    {
+      return map(eve::acot, a);
     }
     else
     {
-      EVE_ASSERT(std::is_floating_point_v<T>, "[eve::acot simd ] - type is not an IEEEValue"); 
+      auto x  = eve::abs(a);
+      return bitwise_xor(atan_kernelw(rec(x), x), bitofsign(a));
     }
   }
 }

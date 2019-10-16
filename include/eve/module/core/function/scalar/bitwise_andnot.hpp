@@ -24,18 +24,10 @@ namespace eve::detail
   // Regular case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bitwise_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
-                                                                                Vectorizable<T>,
-                                                                                Vectorizable<U>)
+  bitwise_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires(T, vectorizable<T>, vectorizable<U>, bitwise_compatible<T,U>)
   {
-    if constexpr((sizeof(T) != sizeof(U)))
-    {
-      static_assert(sizeof(T) == sizeof(U),
-                    "[eve::bitwise_andnot] scalar - Arguments have incompatible size");
-      return {};
-    }
-    else
-      return bitwise_and(a, bitwise_not(b));
+    return bitwise_and(a, bitwise_not(b));
   }
 }
 

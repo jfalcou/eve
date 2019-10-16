@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
       std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
   {
     static constexpr auto vT = is_vectorized_v<T>;
     static constexpr auto vU = is_vectorized_v<U>;
@@ -57,12 +57,7 @@ namespace eve::detail
         else
           return eve::fma(a, b, -c);
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> && std::is_same_v<T, V>,
-                      "[eve::fms] - Incompatible types.");
-        return {};
-      }
+      return T();
     }
   }
 }

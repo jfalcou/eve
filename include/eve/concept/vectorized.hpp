@@ -66,13 +66,13 @@ namespace eve
   inline constexpr bool is_vectorized_v = is_vectorized_t<Type>::value;
 
   template<typename Type>
-  using Vectorized = std::enable_if_t<is_vectorized_v<Type>>;
+  using vectorized = std::enable_if_t<is_vectorized_v<Type>>;
 
   template<typename T, typename U>
-  using EqualCardinal = std::enable_if_t<T::static_size == U::static_size>;
+  using equal_cardinal = std::enable_if_t<T::static_size == U::static_size>;
 
   template<typename N, typename... Us>
-  using HasCompatibleCardinal =
+  using has_compatible_cardinal =
       std::enable_if_t<(((cardinal_v<Us> == N::value) || (cardinal_v<Us> == 1)) && ...)>;
 }
 

@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &tgt,
                             eve::ppc_ const &,
                             T *ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                      Vectorizable<T>)
+                                                      vectorizable<T>)
   {
     if constexpr(current_api == eve::vmx)
     {
@@ -58,7 +58,7 @@ namespace eve::detail
   load(as_<wide<T, N>> const &tgt,
        eve::ppc_ const &      mode,
        aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
-                                                    Vectorizable<T>)
+                                                    vectorizable<T>)
   {
     if constexpr(current_api == eve::vmx)
     {

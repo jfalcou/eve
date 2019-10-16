@@ -20,7 +20,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/constant/nan.hpp> 
+#include <eve/constant/nan.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -28,8 +28,8 @@ namespace eve::detail
 
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_c_(EVE_SUPPORTS(cpu_),
-                                           logical<U> const & cond) noexcept 
-  requires(U, Vectorizable<U>)
+                                           logical<U> const & cond) noexcept
+  requires(U, vectorizable<U>)
   {
     return  bitwise_andnot(U(1), cond.bits());
   }
@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_c_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond,
                                            T const &a0) noexcept
-  requires(T, Vectorizable<T>,  Vectorizable<U>)
+  requires(T, vectorizable<T>,  vectorizable<U>)
   {
     return bitwise_andnot(U(a0), cond.bits());
   }
@@ -47,7 +47,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_c_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
                                           , eve::callable_allbits_ const & ) noexcept
-  requires(U, Vectorizable<U>)
+  requires(U, vectorizable<U>)
   {
     return  bitwise_cast(bitwise_not(cond.bits()), as_<U>());
   }
@@ -56,7 +56,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_c_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
                                           , eve::callable_mone_ const & ) noexcept
-  requires(U, Vectorizable<U>)
+  requires(U, vectorizable<U>)
   {
     if constexpr(std::is_integral_v<U>)
       return bitwise_cast(bitwise_not(cond.bits()), as_<U>());

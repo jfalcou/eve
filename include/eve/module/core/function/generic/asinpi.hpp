@@ -25,8 +25,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asinpi_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
+  requires(T, behave_as<floating,T>)
   {
-    return inpi(asin(a0)); 
+    return inpi(asin(a0));
   }
 
 }

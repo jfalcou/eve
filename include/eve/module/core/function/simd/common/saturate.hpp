@@ -32,7 +32,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_),
                                  as_<Target> const &    at,
                                  wide<U, N, ABI> const &v) noexcept requires(wide<U, N, ABI>,
-                                                                             Vectorizable<Target>)
+                                                                             vectorizable<Target>)
   {
     using u_t = wide<U, N, ABI>;
     if constexpr(is_aggregated_v<ABI>)

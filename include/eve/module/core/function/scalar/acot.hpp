@@ -27,16 +27,10 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
+  requires(T, floating<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      T x  = eve::abs(a);
-      return bitwise_xor(atan_kernel(rec(x), x), bitofsign(a));
-   }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acot scalar ] - type is not an IEEEValue"); 
-    }
+    T x  = eve::abs(a);
+    return bitwise_xor(atan_kernel(rec(x), x), bitofsign(a));
   }
 }
 

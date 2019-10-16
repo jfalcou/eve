@@ -17,7 +17,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-//#include <eve/wide_cast.hpp>
+#include <eve/function/wide_cast.hpp>
+#include <eve/function/saturate.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,7 +26,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -38,7 +39,7 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
-      static_assert(std::is_same_v<T, U>, "[eve::mul] - no support for current simd api");
+      static_assert(wrong<T, U>, "[eve::mul] - Missing implementation");
       return {};
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
@@ -53,7 +54,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -71,14 +72,17 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T, U>)
       {
-        using vt_t = value_type_t<T>; 
-        if constexpr(std::is_floating_point_v<vt_t>) return mul(a, b);
-// TODO  UNCOMMENT WHEN wide_cast AVAILABLE        
-//         else if constexpr(sizeof(vt_t) <= 4)
-//         {
-//           using sup_t =  upgrade_t<vt_t>; 
-//           return wide_cast<T>(saturate<T>(mul(wide_cast<sup_t>(a), wide_cast<sup_t>(b)))); 
-//         }      
+        using vt_t = value_type_t<T>;
+        if constexpr(std::is_floating_point_v<vt_t>)
+        {return mul(a, b);
+        }
+        else if constexpr(sizeof(vt_t) <= 4)
+        {
+          using sup_t =  upgrade_t<vt_t>;
+          auto z =  mul(wide_cast(a, as<sup_t>()), wide_cast(b, as<sup_t>()));
+          auto s =  saturate(as<vt_t>(), z);
+          return wide_cast(s, as<vt_t>());
+        }
         else
         {
           return map(mul, st, a, b);
@@ -86,7 +90,7 @@ namespace eve::detail
       }
       else
       {
-        static_assert(std::is_same_v<T, U>, "[eve::mul] - no support for current simd api");
+        static_assert(wrong<T, U>, "[eve::mul] - Missing implementationi");
         return {};
       }
     }
@@ -94,7 +98,7 @@ namespace eve::detail
     {
       return eve::mul(st, abi_cast<U>(a), abi_cast<T>(b) );
     }
-  }  
+  }
 }
 
 namespace eve

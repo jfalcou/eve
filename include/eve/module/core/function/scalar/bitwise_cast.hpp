@@ -16,7 +16,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/assert.hpp>
 #include <eve/as.hpp>
 #include <cstring>
 
@@ -25,15 +24,10 @@ namespace eve::detail
   template<typename T, typename Target>
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
-                                     as_<Target> const &) noexcept requires(Target, Vectorizable<T>)
+                                     as_<Target> const &) noexcept
+  requires(Target, vectorizable<T>)
   {
-    if constexpr((sizeof(T) != sizeof(Target)))
-    {
-      static_assert(sizeof(T) == sizeof(Target),
-                    "[eve::bitwise_cast] scalar - Parameters size mismatch");
-      return {};
-    }
-    else if constexpr(std::is_same_v<T, Target>)
+    if constexpr(std::is_same_v<T, Target>)
     {
       return a;
     }

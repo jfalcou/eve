@@ -25,7 +25,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  is_even_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorizable<T>)
+  is_even_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return is_flint(a * Half(as(a)));

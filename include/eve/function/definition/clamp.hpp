@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/assert.hpp>
 
 namespace eve
@@ -22,7 +23,10 @@ namespace eve
   namespace detail
   {
     template<typename X, typename L, typename H>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_), X const&, L const& lo, H const& hi)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_)
+                              , X const&
+                              , L const& lo
+                              , H const& hi)
     {
       EVE_ASSERT(assert_all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
     }

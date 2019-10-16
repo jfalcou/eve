@@ -29,37 +29,37 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
                                           , T const &a) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
-    return static_cast<T>(One<T>()-a); 
+    return static_cast<T>(One<T>()-a);
   }
-  
+
    // -----------------------------------------------------------------------------------------------
   // Saturated
   template<typename T>
   EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_)
                                 , saturated_type const &
                                 , T const &v) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>) return oneminus(v); 
+    if constexpr(std::is_floating_point_v<T>) return oneminus(v);
     else if constexpr(std::is_signed_v<T>)
     {
       return (v <= Valmin<T>()+2) ? Valmax<T>() : oneminus(v);
-    }                                
+    }
     else // if constexpr(std::is_unsigned_v<T>)
     {
-      return if_else(v > One(as(v)), eve::zero_, oneminus(v)); 
+      return if_else(v > One(as(v)), eve::zero_, oneminus(v));
     }
   }
-   
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T>
   EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
                                           , U const & cond
                                           , T const &a) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     return cond ? oneminus(a) : a;
   }
@@ -71,11 +71,11 @@ namespace eve::detail
                                           , U const & cond
                                           , saturated_type const &
                                           , T const &v) noexcept
-  requires(T, Vectorizable<T>, Vectorizable<U>)
+  requires(T, vectorizable<T>, vectorizable<U>)
   {
     return cond ? saturated_(oneminus)(v) : v;
   }
- 
+
 }
 
 #endif

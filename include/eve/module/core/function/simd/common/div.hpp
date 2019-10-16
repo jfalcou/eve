@@ -21,7 +21,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nez.hpp>     
+#include <eve/function/is_nez.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/logical_and.hpp>
@@ -38,7 +38,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -67,12 +67,6 @@ namespace eve::detail
                     , abi_cast<value_type_t<T>>(b) );
         }
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::div] common - cannot divide wide of different types");
-        return {};
-      }
     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
@@ -86,7 +80,7 @@ namespace eve::detail
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -114,10 +108,7 @@ namespace eve::detail
            using sT = value_type_t<T>;
           auto iseqzb = is_eqz(b);
           // replace valmin/-1 by (valmin+1)/-1
-//          auto x = a + if_else<T>(inc(b) | (a + Valmin<T>()), eve::zero_, eve::one_);
-//          auto x = inc.not_[inc(b) | (a + Valmin<T>())](a);
           auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
-//          auto x = a + if_else   (inc(b) | (a + Valmin<T>()), T(0), T(1)); 
           // negative -> valmin
           // positive -> valmax
           const T x2 = bitwise_xor(Valmax<T>(), shr(x, sizeof(sT)*8-1));
@@ -131,19 +122,14 @@ namespace eve::detail
           auto bb = if_else(iseqzb, One(as(a)), b);
           auto aa = if_else(iseqzb, bitwise_mask(a), a);
            return div(aa, bb);
-        }                          
+        }
       }
-      else
-      {
-        static_assert(std::is_same_v<T, U> 
-                     , "[eve::div saturated] common - cannot divide wide of different types");
-        return {};
-      }
-    }
+      return T();
+     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
       return eve::div(abi_cast<U>(a), abi_cast<T>(b) );
-    }    
+    }
   }
 }
 

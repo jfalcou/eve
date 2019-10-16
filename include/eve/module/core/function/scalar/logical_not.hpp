@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, Vectorizable<T>)
+  logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorizable<T>)
   {
     return !a;
   }
@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   logical_not_(EVE_SUPPORTS(cpu_), logical<T> const &a) noexcept requires(as_logical_t<T>,
-                                                                          Vectorizable<T>)
+                                                                          vectorizable<T>)
   {
     return a.not_value();
   }

@@ -17,7 +17,6 @@
 #include <eve/function/inpi.hpp>
 #include <eve/function/atan.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/assert.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <type_traits>
@@ -27,27 +26,31 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2pi_( EVE_SUPPORTS(cpu_)
                                         , T const &a0
-                                        , U const &a1    
+                                        , U const &a1
                                         ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>
           )
   {
-    return inpi(atan2(a0, a1)); 
+    return inpi(atan2(a0, a1));
   }
 
-  
+
   template<typename T, typename U>
   EVE_FORCEINLINE auto atan2pi_( EVE_SUPPORTS(cpu_)
-                             , pedantic_type const &  
+                             , pedantic_type const &
                              , T const &a0
-                             , U const &a1    
+                             , U const &a1
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+            behave_as<floating,T>,
+            floating<value_type_t<U>>
           )
   {
-    return inpi(pedantic_(atan2)(a0, a1)); 
+    return inpi(pedantic_(atan2)(a0, a1));
   }
 }
 

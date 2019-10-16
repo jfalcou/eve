@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_not_greater_equal_(
       EVE_SUPPORTS(cpu_),
       T const &a,
-      U const &b) noexcept requires(as_logical_t<T>, Vectorizable<T>, Vectorizable<U>)
+      U const &b) noexcept requires(as_logical_t<T>, vectorizable<T>, vectorizable<U>)
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
     { return static_cast<bool>(a) < static_cast<bool>(b); }

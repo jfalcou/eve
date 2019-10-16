@@ -41,7 +41,7 @@ namespace eve::detail
       return eve::nearest(a);
     else
     {
-      static_assert(wrong<TAG>, "bad option for round call");
+      return T(); 
     }
   }
 }

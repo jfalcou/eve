@@ -26,7 +26,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto trunc_(EVE_SUPPORTS(cpu_),
-                                        T const &a0) noexcept requires(T, Vectorizable<T>)
+                                        T const &a0) noexcept requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return eve::abs(a0) < Maxflint<T>() ? raw_(trunc)(a0) : a0;
@@ -38,7 +38,7 @@ namespace eve::detail
   // Raw case
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  trunc_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0) noexcept requires(T, Vectorizable<T>)
+  trunc_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0) noexcept requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return static_cast<T>(static_cast<as_integer_t<T>>(a0));

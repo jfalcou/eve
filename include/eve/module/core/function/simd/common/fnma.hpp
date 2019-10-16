@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fnma_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
       std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
   {
     return eve::fma(-a, b, c);
   }

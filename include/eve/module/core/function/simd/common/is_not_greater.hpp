@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   is_not_greater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
       as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
-      detail::Either<is_vectorized_v<T>, is_vectorized_v<U>>)
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -43,19 +43,11 @@ namespace eve::detail
     }
     else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
     {
-      if constexpr(std::is_same_v<T, U>)
-      {
-        if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        { return is_less_equal(a, b) || is_unordered(a, b); }
-        else
-        {
-          return is_less_equal(a, b);
-        }
-      }
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+      { return is_less_equal(a, b) || is_unordered(a, b); }
       else
       {
-        static_assert(wrong<T, U>, "[eve::is_not_greater] - no support for current simd api ");
-        return {};
+        return is_less_equal(a, b);
       }
     }
     else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
@@ -68,9 +60,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto is_not_greater_(EVE_SUPPORTS(cpu_),
                                        logical<T> const &a,
                                        logical<U> const &b) noexcept requires(logical<T>,
-                                                                              Vectorized<T>,
-                                                                              Vectorized<U>,
-                                                                              EqualCardinal<T, U>)
+                                                                              vectorized<T>,
+                                                                              vectorized<U>,
+                                                                              equal_cardinal<T, U>)
   {
     return bitwise_cast(is_not_greater(a.bits(), b.bits()),as(a));
   }

@@ -25,17 +25,19 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
+  requires(T, behave_as<floating,T>)
   {
-    return inpi(acos(a0)); 
+    return inpi(acos(a0));
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_)
-                                  , pedantic_type const &      
+                                  , pedantic_type const &
                                   , T const &a0) noexcept
+  requires(T, behave_as<floating,T>)
   {
-    return inpi(eve::pedantic_(acos)(a0)); 
-  } 
+    return inpi(eve::pedantic_(acos)(a0));
+  }
 }
 
 #endif

@@ -20,12 +20,10 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr T inpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  requires(T, behave_as<floating,T>)
   {
-    static_assert ( std::is_floating_point_v<detail::value_type_t<T>>
-                    , "[eve::inpi] -this function is not to be used with integral types"
-                    );
-      return Invpi(as(a))*a;
+    return Invpi(as(a))*a;
   }
 }
 

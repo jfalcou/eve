@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  sub_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, Vectorizable<T>)
+  sub_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept requires(T, vectorizable<T>)
   {
     return a - b;
   }
@@ -35,7 +35,7 @@ namespace eve::detail
                      , saturated_type const&
                      , T const& a
                      , T const& b) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -47,13 +47,13 @@ namespace eve::detail
       {
         using u_t = std::make_unsigned_t<T>;
         enum sizee { value = sizeof(T)*8-1 };
-        
+
         u_t ux = a;
         u_t uy = b;
         u_t res = ux - uy;
-        
-        ux = (ux >> sizee::value) + std::numeric_limits<T>::max(); 
-        
+
+        ux = (ux >> sizee::value) + std::numeric_limits<T>::max();
+
         if(T((ux ^ uy) & (ux ^ res)) < T(0)) res = ux;
         return static_cast<T>(res);
       }
@@ -70,7 +70,7 @@ namespace eve::detail
       T r  = a - b;
       return r & -(r <= a);
     }
-  } 
+  }
 }
 
 #endif

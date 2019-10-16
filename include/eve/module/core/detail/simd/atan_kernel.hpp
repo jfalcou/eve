@@ -27,7 +27,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_greater.hpp>
-#include <eve/function/is_greater_equal.hpp>   
+#include <eve/function/is_greater_equal.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/unary_minus.hpp>
@@ -43,20 +43,20 @@
 namespace eve::detail
 {
   template<typename T, typename N,  typename ABI>
-  EVE_FORCEINLINE 
+  EVE_FORCEINLINE
   auto atan_kernelw( wide<T, N, ABI> x,  wide<T, N, ABI> recx ) noexcept
-  requires(wide<T, N, ABI>, Floating<T>)
+  requires(wide<T, N, ABI>, floating<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>
-                 , "[detail;:atan_kernelw] - entry type is not IEEEValue"); 
-    using t_t =  wide<T, N, ABI>; 
+                 , "[detail;:atan_kernelw] - entry type is not IEEEValue");
+    using t_t =  wide<T, N, ABI>;
     const auto flag1 = x <  Ieee_constant<t_t,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
     const auto flag2 = eve::logical_and(x >= Ieee_constant<t_t, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
     t_t yy =  eve::if_else(flag1, eve::zero_, Pio_2(as(x)));
     yy =  eve::if_else(flag2, Pio_4(as(x)), yy);
     t_t xx =   eve::if_else(flag1, x, -recx);
-    xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx); 
+    xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx);
     t_t z = eve::sqr(xx);
     if constexpr(std::is_same_v<T, float>)
     {

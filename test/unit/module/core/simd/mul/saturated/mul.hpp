@@ -47,11 +47,11 @@ TTS_CASE_TPL("Check mul behavior on wide + scalar",
 { 
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return i; }),
-    ref([](auto i, auto) { return eve::saturated_(eve::mul)(Type(i), Type(4)); });
+  wide<Type, T> lhs([](auto i, auto) { return Type(i); }),
+    ref([](auto i, auto) { return eve::saturated_(eve::mul)(Type(i), Type(8)); });
 
-  TTS_EQUAL(ref, eve::saturated_(eve::mul)(lhs, Type(4)));
-  TTS_EQUAL(ref, eve::saturated_(eve::mul)(Type(4), lhs));
+  TTS_EQUAL(ref, eve::saturated_(eve::mul)(lhs, Type(8)));
+  TTS_EQUAL(ref, eve::saturated_(eve::mul)(Type(8), lhs));
 }
 
 #endif

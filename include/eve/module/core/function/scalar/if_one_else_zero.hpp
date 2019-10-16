@@ -27,7 +27,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_one_ const &,
-           eve::callable_zero_ const &) noexcept requires(T, Vectorizable<T>)
+           eve::callable_zero_ const &) noexcept requires(T, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? One<T>() : Zero<T>();
   }
@@ -37,7 +37,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            logical<T> const &cond,
            eve::callable_one_ const &,
-           eve::callable_zero_ const &) noexcept requires(T, Vectorizable<T>)
+           eve::callable_zero_ const &) noexcept requires(T, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? One<T>() : Zero<T>();
   }
@@ -48,7 +48,7 @@ namespace eve::detail
       as_<TARGET> const &,
       T const &cond,
       eve::callable_one_ const &,
-      eve::callable_zero_ const &) noexcept requires(TARGET, Vectorizable<TARGET>, Vectorizable<T>)
+      eve::callable_zero_ const &) noexcept requires(TARGET, vectorizable<TARGET>, vectorizable<T>)
   {
     return is_nez(cond) ? One<TARGET>() : Zero<TARGET>();
   }

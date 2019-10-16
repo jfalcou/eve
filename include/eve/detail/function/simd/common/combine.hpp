@@ -11,8 +11,9 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
 #if defined(EVE_COMP_IS_GNUC)

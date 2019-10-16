@@ -21,17 +21,20 @@
 #include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr T arg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  requires(T, behave_as<floating,T>)
   {
     return if_else(is_negative(a), Pi(as(a)), eve::zero_);
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr T arg_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const &a) noexcept
+  requires(T, behave_as<floating,T>)
   {
     auto r = arg(a);
 

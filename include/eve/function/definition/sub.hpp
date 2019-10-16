@@ -10,7 +10,6 @@
 //==================================================================================================
 #ifndef EVE_FUNCTION_DEFINITION_SUB_HPP_INCLUDED
 #define EVE_FUNCTION_DEFINITION_SUB_HPP_INCLUDED
-
 #include <eve/detail/overload.hpp>
 
 namespace eve

@@ -26,7 +26,7 @@
 namespace eve::detail
 {
 #ifdef BOOST_MSVC
-#pragma warning(push) 
+#pragma warning(push)
 #pragma warning(disable: 4723) // potential divide by 0
 #endif
 
@@ -34,7 +34,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_)
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     return a/b;
   }
@@ -43,10 +43,10 @@ namespace eve::detail
   // saturated
   template<typename T>
   EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_)
-                                     , saturated_type const &  
+                                     , saturated_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) return a0/a1;
     else if constexpr(std::is_signed_v<T>)
@@ -64,7 +64,7 @@ namespace eve::detail
 #ifdef BOOST_MSVC
 # pragma warning(pop)
 #endif
- 
+
 #endif
 
 #include <eve/module/core/function/scalar/if_div.hpp>

@@ -32,27 +32,27 @@ namespace eve::detail
       , U const &a
       , V const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
           )
   {
     if constexpr(is_vectorized_v<T>)  return div(a, if_else(cond, b, eve::one_));
     else  return cond ? div(a, b) : a;
   }
-  
+
   //-----------------------------------------------------------------------------------------------
   //  Saturated Masked case
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE  auto div_( EVE_SUPPORTS(cpu_)
                             , T const &cond
-                            , saturated_type const & 
+                            , saturated_type const &
                             , U const &a
                             , V const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::Either<is_vectorized_v<V>, is_vectorized_v<U>>
+            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
           )
   {
     if constexpr(is_vectorized_v<T>) return if_else(cond, saturated_(div)(a, b), a);
-    else return cond ? saturated_(div)(a, b) : a; 
+    else return cond ? saturated_(div)(a, b) : a;
   }
 }
 

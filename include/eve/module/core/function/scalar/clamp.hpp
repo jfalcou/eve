@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto clamp_(EVE_SUPPORTS(cpu_),T const &v,T const &lo,T const &hi)
-  noexcept requires(T, Vectorizable<T>)
+  noexcept requires(T, vectorizable<T>)
   {
     return (v < lo) ? lo : (hi < v) ? hi : v;
   }

@@ -25,8 +25,9 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto atand_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
+  requires(T, behave_as<floating,T>)
   {
-    return indeg(atan(a0)); 
+    return indeg(atan(a0));
   }
 
 }

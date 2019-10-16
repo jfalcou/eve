@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename Tag, typename T>
   EVE_FORCEINLINE constexpr auto
   minmag_(EVE_SUPPORTS(cpu_), Tag tag, T const &a0, T const &a1) noexcept requires(T,
-                                                                                   Vectorizable<T>)
+                                                                                   vectorizable<T>)
   {
     auto aa0 = eve::abs(a0);
     auto aa1 = eve::abs(a1);
