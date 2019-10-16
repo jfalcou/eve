@@ -21,7 +21,7 @@ namespace eve::detail
   using if_ = std::enable_if_t<Condition>;
 
   template<typename From, typename To>
-  using same = std::enable_if_t<std::is_same_v<From, To>>;
+  using same_as = std::enable_if_t<std::is_same_v<From, To>>;
 
   template<typename From, typename To>
   using convertible = std::enable_if_t<std::is_convertible_v<From, To>>;
@@ -33,7 +33,7 @@ namespace eve::detail
   using integral = std::enable_if_t<std::is_integral_v<T>>;
 
   template<typename T>
-  using floating = std::enable_if_t<std::is_floating_point_v<T>>;
+  using floating_point = std::enable_if_t<std::is_floating_point_v<T>>;
 
   template<bool... Conditions>
   using either = std::enable_if_t<(Conditions || ...)>;

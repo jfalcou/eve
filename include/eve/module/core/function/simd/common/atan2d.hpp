@@ -30,7 +30,7 @@ namespace eve::detail
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
             behave_as<floating,T>,
-            floating<value_type_t<U>>
+            floating_point<value_type_t<U>>
           )
   {
     return indeg(atan2(a0, a1));
@@ -46,7 +46,7 @@ namespace eve::detail
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
             behave_as<floating,T>,
-            floating<value_type_t<U>>
+            floating_point<value_type_t<U>>
           )
   {
     return indeg(pedantic_(atan2)(a0, a1));
