@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/bitwise_ornot.hpp>
-#include <eve/constant/allbits.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -18,57 +16,65 @@
 TTS_CASE("Check eve::bitwise_ornot return type")
 {
   using eve::detail::as_integer_t;
+  using ui_t = as_integer_t<Type, unsigned>;
+  using vi_t = as_integer_t<Value, unsigned>;
 
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(), Type())  , (Type));
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(), Value()) , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(),(as_integer_t<Type, unsigned>())) , (Type));
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(),(as_integer_t<Value, unsigned>())), (Type));
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(),(as_integer_t<Type, signed>()))   , (Type));
-  TTS_EXPR_IS(eve::bitwise_ornot(Type(),(as_integer_t<Value, signed>()))  , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_ornot((as_integer_t<Type, unsigned>()) , Type()), (as_integer_t<Type, unsigned>));
-  TTS_EXPR_IS(eve::bitwise_ornot((as_integer_t<Type, signed>())   , Type()), (as_integer_t<Type, signed>));
+  TTS_EXPR_IS(eve::bitwise_ornot(Type(), Type()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_ornot(Type(), Value()), (Type));
+  TTS_EXPR_IS(eve::bitwise_ornot(Type(), ui_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_ornot(Type(), vi_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_ornot(ui_t(), Type()) , ui_t  );
 }
 
-TTS_CASE( "Check bitwise_ornot behavior")
+TTS_CASE( "Check eve::bitwise_ornot behavior")
 {
   using eve::detail::as_integer_t;
   using eve::bitwise_cast;
   using eve::as;
 
-  using ui_t = as_integer_t<Type, unsigned>;
+  using ui_t = as_integer_t<Type , unsigned>;
   using vi_t = as_integer_t<Value, unsigned>;
-  using si_t = as_integer_t<Type, signed>;
-  using wi_t = as_integer_t<Value, signed>;
 
-  auto vz = Type(0);
-  auto sz = Value(0);
-  auto vo = eve::Allbits<Type>();
-  auto so = eve::Allbits<Value>();
+  constexpr auto u  = 0xAAAAAAAAAAAAAAAAULL;
+  constexpr auto d  = 0x6666666666666666ULL;
+  constexpr auto m  = 0x7777777777777777ULL;
+  constexpr auto n  = 0xBBBBBBBBBBBBBBBBULL;
 
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vz, vz), vo );
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vz, sz), vo );
-  TTS_EQUAL     (eve::bitwise_ornot(vz, vo), vz );
-  TTS_EQUAL     (eve::bitwise_ornot(vz, so), vz );
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vo, vz), vo );
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vo, sz), vo );
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vo, vo), vo );
-  TTS_IEEE_EQUAL(eve::bitwise_ornot(vo, so), vo );
+  ui_t uu( static_cast<vi_t>(u) );
+  ui_t ud( static_cast<vi_t>(d) );
+  ui_t um( static_cast<vi_t>(m) );
+  ui_t un( static_cast<vi_t>(n) );
+  auto td = bitwise_cast(ud, as<Type>());
+  auto tu = bitwise_cast(uu, as<Type>());
+  auto tm = bitwise_cast(um, as<Type>());
+  auto tn = bitwise_cast(un, as<Type>());
 
-  TTS_EQUAL(eve::bitwise_ornot((Type(0)), ui_t(~1)), bitwise_cast(ui_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_ornot((Type(0)), vi_t(~1)), bitwise_cast(ui_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_ornot((Type(0)), si_t(~1)), bitwise_cast(si_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_ornot((Type(0)), wi_t(~1)), bitwise_cast(si_t(1),as<Type>()));
+  vi_t su( static_cast<vi_t>(u) );
+  vi_t sd( static_cast<vi_t>(d) );
+  auto vu = bitwise_cast(su, as<Value>());
+  auto vd = bitwise_cast(sd, as<Value>());
 
-  TTS_EQUAL(eve::bitwise_ornot(ui_t(0), (Type(0))), eve::Allbits<ui_t>());
-  TTS_EQUAL(eve::bitwise_ornot(si_t(0), (Type(0))), eve::Allbits<si_t>());
-
-  if constexpr(std::is_integral_v<Value>)
+  TTS_SUBCASE("wide<T> x wide<T> case")
   {
-    TTS_EQUAL(eve::bitwise_ornot(Type(2), Type(~1) ) , Type(3));
-    TTS_EQUAL(eve::bitwise_ornot(Type(2), Value(~1)) , Type(3));
-    TTS_EQUAL(eve::bitwise_ornot(Type(2), Type(~1) ) , Type(3));
-    TTS_EQUAL(eve::bitwise_ornot(Type(2), Value(~1)) , Type(3));
+    TTS_EQUAL(eve::bitwise_ornot(tu,td),tn);
+    TTS_EQUAL(eve::bitwise_ornot(td,tu),tm);
+  }
+
+  TTS_SUBCASE("wide<T> x T case")
+  {
+    TTS_EQUAL(eve::bitwise_ornot(tu,vd),tn);
+    TTS_EQUAL(eve::bitwise_ornot(td,vu),tm);
+  }
+
+  TTS_SUBCASE("wide<T> x wide<U> case")
+  {
+    TTS_EQUAL(eve::bitwise_ornot(tu,ud),tn);
+    TTS_EQUAL(eve::bitwise_ornot(td,uu),tm);
+  }
+
+  TTS_SUBCASE("wide<T> x U case")
+  {
+    TTS_EQUAL(eve::bitwise_ornot(tu,sd),tn);
+    TTS_EQUAL(eve::bitwise_ornot(td,su),tm);
   }
 }
