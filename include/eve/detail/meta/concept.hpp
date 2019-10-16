@@ -42,12 +42,18 @@ namespace eve::detail
   using behave_as = Concept< value_type_t<Ts>... >;
 
   template<typename T, typename U>
-  using bitwise_compatible = std::enable_if_t
-                              < (sizeof(U) == sizeof(T)) ||
-                                (     (cardinal_v<U> == 1 || cardinal_v<T> == 1)
-                                  &&  (sizeof(value_type_t<U>) == sizeof(value_type_t<T>))
-                                )
-                              >;
+  using equality_comparable_with = std::void_t< decltype( std::declval<T>() == std::declval<U>() )>;
+
+  template<typename T, typename U>
+  using equality_comparable_with = equality_comparable_with<T,T>;
+
+  template<typename T, typename U>
+  using totally_ordered = std::void_t< equality_comparable_with<T,U>
+                                     , decltype( std::declval<T>() < std::declval<U>() )
+                                     , decltype( std::declval<T>() > std::declval<U>() )
+                                     , decltype( std::declval<T>() <= std::declval<U>() )
+                                     , decltype( std::declval<T>() >= std::declval<U>() )
+                                     >;
 }
 
 #endif
