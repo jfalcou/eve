@@ -9,26 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/bitwise_notand.hpp>
-#include <eve/constant/allbits.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE("Check eve::bitwise_notand return type")
 {
   using eve::detail::as_integer_t;
+  using ui_t = as_integer_t<Type, unsigned>;
+  using vi_t = as_integer_t<Value, unsigned>;
 
-  TTS_EXPR_IS(eve::bitwise_notand(Type(), Type())  , (Type));
-  TTS_EXPR_IS(eve::bitwise_notand(Type(), Value()) , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_notand(Type(),(as_integer_t<Type, unsigned>())) , (Type));
-  TTS_EXPR_IS(eve::bitwise_notand(Type(),(as_integer_t<Value, unsigned>())), (Type));
-  TTS_EXPR_IS(eve::bitwise_notand(Type(),(as_integer_t<Type, signed>()))   , (Type));
-  TTS_EXPR_IS(eve::bitwise_notand(Type(),(as_integer_t<Value, signed>()))  , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_notand((as_integer_t<Type, unsigned>()) , Type()), (as_integer_t<Type, unsigned>));
-  TTS_EXPR_IS(eve::bitwise_notand((as_integer_t<Type, signed>())   , Type()), (as_integer_t<Type, signed>));
+  TTS_EXPR_IS(eve::bitwise_notand(Type(), Type()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_notand(Type(), Value()), (Type));
+  TTS_EXPR_IS(eve::bitwise_notand(Type(), ui_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_notand(Type(), vi_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_notand(ui_t(), Type()) , ui_t  );
 }
 
 TTS_CASE( "Check eve::bitwise_notand behavior")
@@ -37,33 +32,53 @@ TTS_CASE( "Check eve::bitwise_notand behavior")
   using eve::bitwise_cast;
   using eve::as;
 
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), (Type(0)))  , (Type(0)));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), (Value(0))) , (Type(0)));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), (Type(1)))  , (Type(1)));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), (Value(1))) , (Type(1)));
-  TTS_EQUAL(eve::bitwise_notand((Type(1)), (Type(1)))  , (Type(0)));
-  TTS_EQUAL(eve::bitwise_notand((Type(1)), (Value(1))) , (Type(0)));
-  TTS_EQUAL(eve::bitwise_notand((Type(1)), (Type(0)))  , (Type(0)));
-  TTS_EQUAL(eve::bitwise_notand((Type(1)), (Value(0))) , (Type(0)));
-
-  using ui_t = as_integer_t<Type, unsigned>;
+  using ui_t = as_integer_t<Type , unsigned>;
   using vi_t = as_integer_t<Value, unsigned>;
-  using si_t = as_integer_t<Type, signed>;
-  using wi_t = as_integer_t<Value, signed>;
 
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), ui_t(1)), bitwise_cast(ui_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), vi_t(1)), bitwise_cast(ui_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), si_t(1)), bitwise_cast(si_t(1),as<Type>()));
-  TTS_EQUAL(eve::bitwise_notand((Type(0)), wi_t(1)), bitwise_cast(si_t(1),as<Type>()));
+  constexpr auto u  = 0x5555555555555555ULL;
+  constexpr auto d  = 0xAAAAAAAAAAAAAAAAULL;
 
-  TTS_EQUAL(eve::bitwise_notand(ui_t(0), (Type(1))), bitwise_cast(Type(1),as<ui_t>()));
-  TTS_EQUAL(eve::bitwise_notand(si_t(0), (Type(1))), bitwise_cast(Type(1),as<si_t>()));
+  auto tz = Type(0);
 
-  if constexpr(std::is_integral_v<Value>)
+  ui_t uu( static_cast<vi_t>(u) );
+  ui_t ud( static_cast<vi_t>(d) );
+  auto td = bitwise_cast(ud, as<Type>());
+  auto tu = bitwise_cast(uu, as<Type>());
+
+  vi_t su( static_cast<vi_t>(u) );
+  vi_t sd( static_cast<vi_t>(d) );
+  auto vu = bitwise_cast(su, as<Value>());
+  auto vd = bitwise_cast(sd, as<Value>());
+
+  TTS_SUBCASE("wide<T> x wide<T> case")
   {
-    TTS_EQUAL(eve::bitwise_notand(Type(~3), Type(2) ) , Type(2));
-    TTS_EQUAL(eve::bitwise_notand(Type(~3), Value(2)) , Type(2));
-    TTS_EQUAL(eve::bitwise_notand(Type(~3), Type(1) ) , Type(1));
-    TTS_EQUAL(eve::bitwise_notand(Type(~3), Value(1)) , Type(1));
+    TTS_EQUAL(eve::bitwise_notand(tu,tu),tz);
+    TTS_EQUAL(eve::bitwise_notand(tu,td),td);
+    TTS_EQUAL(eve::bitwise_notand(td,tu),tu);
+    TTS_EQUAL(eve::bitwise_notand(td,td),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x T case")
+  {
+    TTS_EQUAL(eve::bitwise_notand(tu,vu),tz);
+    TTS_EQUAL(eve::bitwise_notand(tu,vd),td);
+    TTS_EQUAL(eve::bitwise_notand(td,vu),tu);
+    TTS_EQUAL(eve::bitwise_notand(td,vd),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x wide<U> case")
+  {
+    TTS_EQUAL(eve::bitwise_notand(tu,uu),tz);
+    TTS_EQUAL(eve::bitwise_notand(tu,ud),td);
+    TTS_EQUAL(eve::bitwise_notand(td,uu),tu);
+    TTS_EQUAL(eve::bitwise_notand(td,ud),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x U case")
+  {
+    TTS_EQUAL(eve::bitwise_notand(tu,su),tz);
+    TTS_EQUAL(eve::bitwise_notand(tu,sd),td);
+    TTS_EQUAL(eve::bitwise_notand(td,su),tu);
+    TTS_EQUAL(eve::bitwise_notand(td,sd),tz);
   }
 }

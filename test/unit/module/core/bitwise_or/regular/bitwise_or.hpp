@@ -16,50 +16,66 @@
 TTS_CASE("Check eve::bitwise_or return type")
 {
   using eve::detail::as_integer_t;
-
-  TTS_EXPR_IS(eve::bitwise_or(Type(), Type())  , (Type));
-  TTS_EXPR_IS(eve::bitwise_or(Type(), Value()) , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_or(Type(),(as_integer_t<Type, unsigned>())) , (Type));
-  TTS_EXPR_IS(eve::bitwise_or(Type(),(as_integer_t<Value, unsigned>())), (Type));
-  TTS_EXPR_IS(eve::bitwise_or(Type(),(as_integer_t<Type, signed>()))   , (Type));
-  TTS_EXPR_IS(eve::bitwise_or(Type(),(as_integer_t<Value, signed>()))  , (Type));
-
-  TTS_EXPR_IS(eve::bitwise_or((as_integer_t<Type, unsigned>()) , Type()), (as_integer_t<Type, unsigned>));
-  TTS_EXPR_IS(eve::bitwise_or((as_integer_t<Type, signed>())   , Type()), (as_integer_t<Type, signed>));
-}
-
-TTS_CASE( "Check bitwise_or behavior")
-{
-  using eve::detail::as_integer_t;
-
-  TTS_EQUAL(eve::bitwise_or((Type(0)), (Type(0)))  , (Type(0)));
-  TTS_EQUAL(eve::bitwise_or((Type(0)), (Value(0))) , (Type(0)));
-  TTS_EQUAL(eve::bitwise_or((Type(0)), (Type(1)))  , (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(0)), (Value(1))) , (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), (Type(1)))  , (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), (Value(1))) , (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), (Type(0)))  , (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), (Value(0))) , (Type(1)));
-
   using ui_t = as_integer_t<Type, unsigned>;
   using vi_t = as_integer_t<Value, unsigned>;
-  using si_t = as_integer_t<Type, signed>;
-  using wi_t = as_integer_t<Value, signed>;
 
-  TTS_EQUAL(eve::bitwise_or((Type(1)), ui_t(0)), (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), vi_t(0)), (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), si_t(0)), (Type(1)));
-  TTS_EQUAL(eve::bitwise_or((Type(1)), wi_t(0)), (Type(1)));
+  TTS_EXPR_IS(eve::bitwise_or(Type(), Type()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_or(Type(), Value()), (Type));
+  TTS_EXPR_IS(eve::bitwise_or(Type(), ui_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_or(Type(), vi_t()) , (Type));
+  TTS_EXPR_IS(eve::bitwise_or(ui_t(), Type()) , ui_t  );
+}
 
-  TTS_EQUAL(eve::bitwise_or(ui_t(1), (Type(0))), ui_t(1));
-  TTS_EQUAL(eve::bitwise_or(si_t(1), (Type(0))), si_t(1));
+TTS_CASE( "Check eve::bitwise_or behavior")
+{
+  using eve::detail::as_integer_t;
+  using eve::bitwise_cast;
+  using eve::as;
 
-  if constexpr(std::is_integral_v<Value>)
+  using ui_t = as_integer_t<Type , unsigned>;
+  using vi_t = as_integer_t<Value, unsigned>;
+
+  constexpr auto u  = 0x5555555555555555ULL;
+
+  auto tz = Type(0);
+  auto vz = Value(0);
+
+  ui_t uu( static_cast<vi_t>(u) );
+  ui_t uz( static_cast<vi_t>(0) );
+  auto tu = bitwise_cast(uu, as<Type>());
+
+  vi_t su( static_cast<vi_t>(u) );
+  auto vu = bitwise_cast(su, as<Value>());
+
+  TTS_SUBCASE("wide<T> x wide<T> case")
   {
-    TTS_EQUAL(eve::bitwise_or(Type(2), Type(1) ) , Type(3));
-    TTS_EQUAL(eve::bitwise_or(Type(2), Value(1)) , Type(3));
-    TTS_EQUAL(eve::bitwise_or(Type(2), Type(1) ) , Type(3));
-    TTS_EQUAL(eve::bitwise_or(Type(2), Value(1)) , Type(3));
+    TTS_EQUAL(eve::bitwise_or(tu,tu),tu);
+    TTS_EQUAL(eve::bitwise_or(tu,tz),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,tu),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,tz),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x T case")
+  {
+    TTS_EQUAL(eve::bitwise_or(tu,vu),tu);
+    TTS_EQUAL(eve::bitwise_or(tu,vz),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,vu),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,vz),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x wide<U> case")
+  {
+    TTS_EQUAL(eve::bitwise_or(tu,uu),tu);
+    TTS_EQUAL(eve::bitwise_or(tu,uz),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,uu),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,uz),tz);
+  }
+
+  TTS_SUBCASE("wide<T> x U case")
+  {
+    TTS_EQUAL(eve::bitwise_or(tu,vu),tu);
+    TTS_EQUAL(eve::bitwise_or(tu,vz),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,vu),tu);
+    TTS_EQUAL(eve::bitwise_or(tz,vz),tz);
   }
 }
