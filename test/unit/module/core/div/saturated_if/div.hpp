@@ -8,60 +8,43 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef DIV_HPP
-#define DIV_HPP
-
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
 #include <eve/function/div.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/logical.hpp>
 
-TTS_CASE( "Check div return type" )
+
+TTS_CASE("Check conditional saturated(eve::div) return type")
 {
-  TTS_EXPR_IS(eve::saturated_(eve::div[Type()])( Type(), Type() ) , Type );
-  TTS_EXPR_IS(eve::saturated_(eve::div[eve::logical<Type>()])( Type(), Type() ) , Type );
-  TTS_EXPR_IS(eve::saturated_(eve::div[true])( Type(), Type() ) , Type );
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ Type()              ])(Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ eve::logical<Type>()])(Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ true                ])(Type(), Type())), (Type));
 }
 
-TTS_CASE("Check eve::saturated_(eve::div) behavior")
+TTS_CASE("Check conditional saturated(eve::div) behavior")
 {
-  if constexpr(std::is_integral_v<Type>)
-  {
-    if constexpr(std::is_signed_v<Type>)
-    {
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Mone<Type>(), eve::Mone<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmax<Type>(),eve::Mone<Type>()), eve::Valmin<Type>()+eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmax<Type>(),eve::One<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmin<Type>(),eve::Mone<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Mone<Type>(), eve::Zero<Type>()), eve::Valmin<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(Type(-2), eve::Zero<Type>()), eve::Valmin<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmin<Type>(), eve::Zero<Type>()), eve::Valmin<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::One<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(Type(2), eve::Zero<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-    }
-    else
-    {
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmax<Type>(),eve::One<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::One<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(Type(2), eve::Zero<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::div)(eve::Valmax<Type>(), eve::Zero<Type>()), eve::Valmax<Type>());
-    }
-  }
-  else
-  {
-    TTS_EQUAL(eve::saturated_(eve::div)(Type{0} , Type{1}), Type{0});
-    TTS_EQUAL(eve::saturated_(eve::div)(Type{1} , Type{1}), Type{1});
-    TTS_EQUAL(eve::saturated_(eve::div)(Type{12}, Type{4}), Type{3});
-    TTS_EQUAL(eve::saturated_(eve::div)(Type{1} , Type{2}), Type(0.5));
-  }
-}
+  Type tv{eve::Valmax<Type>()};
+  Type fv{3};
+  auto t = eve::True<Type>();
+  auto f = eve::False<Type>();
 
-#endif
+  TTS_EQUAL(eve::saturated_(eve::div[ 1 ])(tv, fv)    , eve::saturated_(eve::div)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::div[ 1.0 ])(tv, fv)  , eve::saturated_(eve::div)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::div[ true ])(tv, fv) , eve::saturated_(eve::div)(tv,fv));
+  TTS_EQUAL(eve::saturated_(eve::div[ t ])(tv, fv)    , eve::saturated_(eve::div)(tv,fv));
+
+  TTS_EQUAL(eve::saturated_(eve::div[ 0 ])(tv, fv)    , tv);
+  TTS_EQUAL(eve::saturated_(eve::div[ 0.0 ])(tv, fv)  , tv);
+  TTS_EQUAL(eve::saturated_(eve::div[ false ])(tv, fv), tv);
+  TTS_EQUAL(eve::saturated_(eve::div[ f ])(tv, fv)    , tv);
+
+  // Mixed case
+  eve::as_logical_t<Type> m;
+  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
+                , [k = true](auto& e) mutable { e = k; k = !k; }
+                );
+
+  TTS_EQUAL ( eve::saturated_(eve::div[ m ])(tv, fv),
+                  eve::if_else(m, eve::saturated_(eve::div)(tv,fv), tv)
+                );
+
+}

@@ -61,7 +61,7 @@ make_all_units(ROOT core NAME copysign  ARCH scalar simd TYPES ${all_types})
 
 make_all_units(ROOT core NAME dec  ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME dist ARCH scalar simd TYPES ${all_types} )
-# make_units("div/regular"                    "core" ${all_types})
+make_all_units(ROOT core NAME div ARCH scalar simd TYPES ${all_types} )
 
 make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 
@@ -72,13 +72,14 @@ make_all_units(ROOT core NAME floor      ARCH scalar simd TYPES ${all_types} )
 # make_units("fnms/regular"                   "core" ${all_types})
 make_all_units(ROOT core NAME frac       ARCH scalar simd TYPES ${all_types} )
 
+# make_units("gather"                   "core" ${real_types})
+
 # make_units("horn/regular"                   "core" ${real_types})
 # make_units("horn1/regular"                  "core" ${real_types})
 # make_units("hypot/regular"                  "core" ${real_types})
 
 # make_units("if_else/regular"                "core" ${all_types})
 # make_units("inc/regular"                    "core" ${all_types})
-# make_units("inc/saturated"                  "core" ${all_types})
 # make_units("indeg/regular"                  "core" ${real_types})
 # make_units("inpi/regular"                   "core" ${real_types})
 
