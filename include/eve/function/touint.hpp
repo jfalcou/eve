@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TOUINT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_TOUINT_HPP_INCLUDED 
 #define EVE_FUNCTION_TOUINT_HPP_INCLUDED
 
 #include <eve/function/scalar/touint.hpp>
-//#include <eve/function/simd/touint.hpp>
+#include <eve/function/simd/touint.hpp>
 
 #endif

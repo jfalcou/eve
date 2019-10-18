@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  EVE - Expressive Vector Engine
+  EVE - Expressive Vector Engine 
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_TOFLOAT_HPP_INCLUDED
 
 #include <eve/function/definition/tofloat.hpp>
-#include <eve/module/core/function/scalar/tofloat.hpp>
+#include <eve/module/core/function/generic/tofloat.hpp>
 
 #endif
