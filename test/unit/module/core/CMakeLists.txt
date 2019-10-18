@@ -70,7 +70,7 @@ make_all_units(ROOT core NAME floor      ARCH scalar simd TYPES ${all_types} )
 # make_units("fms/regular"                    "core" ${all_types})
 # make_units("fnma/regular"                   "core" ${all_types})
 # make_units("fnms/regular"                   "core" ${all_types})
-# make_units("frac/regular"                   "core" ${all_types})
+make_all_units(ROOT core NAME frac       ARCH scalar simd TYPES ${all_types} )
 
 # make_units("horn/regular"                   "core" ${real_types})
 # make_units("horn1/regular"                  "core" ${real_types})
