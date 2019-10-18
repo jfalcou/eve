@@ -39,7 +39,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, floating<T>)
+  requires(T, floating_point<T>)
   {
     T z = Pio_2<T>()-eve::asin(a0);
     // small correction with pio_2lo
@@ -50,7 +50,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                       ,  pedantic_type const &
                                       , T const &a0) noexcept
-  requires(T, floating<T>)
+  requires(T, floating_point<T>)
   {
     if constexpr(std::is_same_v<T, float>)
     {

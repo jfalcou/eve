@@ -24,7 +24,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   hypot_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, floating<T>)
+  requires(T, floating_point<T>)
   {
     return sqrt(fma(a0, a0, sqr(a1)));
   }

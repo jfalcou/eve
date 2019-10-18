@@ -37,7 +37,7 @@ namespace eve::detail
                                        , T const &a0
                                        , T const &a1
                                        ) noexcept
-  requires(T,  floating<T>)
+  requires(T,  floating_point<T>)
   {
     T q = eve::abs(a0/a1);
     T z = detail::atan_kernel(q, eve::rec(q));
@@ -50,7 +50,7 @@ namespace eve::detail
                                        , T a0
                                        , T a1
                                        ) noexcept
-  requires(T,  floating<T>)
+  requires(T,  floating_point<T>)
   {
     if constexpr(platform::supports_nans)
       if (is_unordered(a0, a1)) return Nan(as(a0));

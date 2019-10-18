@@ -21,7 +21,7 @@ namespace eve::detail
   using if_ = std::enable_if_t<Condition>;
 
   template<typename From, typename To>
-  using same = std::enable_if_t<std::is_same_v<From, To>>;
+  using same_as = std::enable_if_t<std::is_same_v<From, To>>;
 
   template<typename From, typename To>
   using convertible = std::enable_if_t<std::is_convertible_v<From, To>>;
@@ -33,7 +33,7 @@ namespace eve::detail
   using integral = std::enable_if_t<std::is_integral_v<T>>;
 
   template<typename T>
-  using floating = std::enable_if_t<std::is_floating_point_v<T>>;
+  using floating_point = std::enable_if_t<std::is_floating_point_v<T>>;
 
   template<bool... Conditions>
   using either = std::enable_if_t<(Conditions || ...)>;
@@ -42,12 +42,18 @@ namespace eve::detail
   using behave_as = Concept< value_type_t<Ts>... >;
 
   template<typename T, typename U>
-  using bitwise_compatible = std::enable_if_t
-                              < (sizeof(U) == sizeof(T)) ||
-                                (     (cardinal_v<U> == 1 || cardinal_v<T> == 1)
-                                  &&  (sizeof(value_type_t<U>) == sizeof(value_type_t<T>))
-                                )
-                              >;
+  using equality_comparable_with = std::void_t< decltype( std::declval<T>() == std::declval<U>() )>;
+
+  template<typename T, typename U>
+  using equality_comparable_with = equality_comparable_with<T,T>;
+
+  template<typename T, typename U>
+  using totally_ordered = std::void_t< equality_comparable_with<T,U>
+                                     , decltype( std::declval<T>() < std::declval<U>() )
+                                     , decltype( std::declval<T>() > std::declval<U>() )
+                                     , decltype( std::declval<T>() <= std::declval<U>() )
+                                     , decltype( std::declval<T>() >= std::declval<U>() )
+                                     >;
 }
 
 #endif

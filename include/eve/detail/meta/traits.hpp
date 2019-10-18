@@ -232,6 +232,19 @@ namespace eve::detail
   // False value with dependent type
   template<typename... T>
   inline constexpr bool wrong = false;
+
+  // Turns a pseudo-concept into a traits
+  template<template<class...> class Concept, typename List, typename Enable = void>
+  struct as_trait_impl : std::false_type
+  {};
+
+  template<template<class...> class Concept,typename... T>
+  struct as_trait_impl<Concept, types<T...>, std::void_t<Concept<T...>> > : std::true_type
+  {};
+
+  template<template<class...> class Concept,typename... T>
+  struct as_trait : as_trait_impl<Concept, types<T...>>
+  {};
 }
 
 #endif

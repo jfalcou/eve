@@ -19,16 +19,16 @@
 
 namespace eve::detail
 {
-  template<typename T,
-           typename N,
-           typename X1,
-           typename U,
-           typename M,
-           typename X2,
-           typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
+  template< typename T, typename N, typename X1
+          , typename U, typename M, typename X2
+          >
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      wide<T, N, X1> const &     v0,
                                      as_<wide<U, M, X2>> const &tgt) noexcept
+  requires( wide<U, M, X2>
+          , either<!is_native<X1>::value,!is_native<X2>::value>
+          , if_<sizeof(wide<T, N, X1>) == sizeof(wide<U, M, X2>)>
+          )
   {
     wide<U, M, X2> that;
 
@@ -41,16 +41,16 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T,
-           typename N,
-           typename X1,
-           typename U,
-           typename M,
-           typename X2,
-           typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
+  template< typename T, typename N, typename X1
+          , typename U, typename M, typename X2
+          >
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      logical<wide<T, N, X1>> const &v0,
                                      as_<wide<U, M, X2>> const &    tgt) noexcept
+  requires( wide<U, M, X2>
+          , either<!is_native<X1>::value,!is_native<X2>::value>
+          , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(wide<U, M, X2>)>
+          )
   {
     wide<U, M, X2> that;
 
@@ -63,16 +63,16 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T,
-           typename N,
-           typename X1,
-           typename U,
-           typename M,
-           typename X2,
-           typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
+  template< typename T, typename N, typename X1
+          , typename U, typename M, typename X2
+          >
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      wide<T, N, X1> const &              v0,
                                      as_<logical<wide<U, M, X2>>> const &tgt) noexcept
+  requires( logical<wide<U, M, X2>>
+          , either<!is_native<X1>::value,!is_native<X2>::value>
+          , if_<sizeof(wide<T, N, X1>) == sizeof(logical<wide<U, M, X2>>)>
+          )
   {
     logical<wide<U, M, X2>> that;
 
@@ -85,16 +85,16 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T,
-           typename N,
-           typename X1,
-           typename U,
-           typename M,
-           typename X2,
-           typename = std::enable_if_t<!is_native<X1>::value || !is_native<X2>::value>>
+  template< typename T, typename N, typename X1
+          , typename U, typename M, typename X2
+          >
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      logical<wide<T, N, X1>> const &     v0,
                                      as_<logical<wide<U, M, X2>>> const &tgt) noexcept
+  requires( logical<wide<U, M, X2>>
+          , either<!is_native<X1>::value,!is_native<X2>::value>
+          , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(logical<wide<U, M, X2>>)>
+          )
   {
     logical<wide<U, M, X2>> that;
 

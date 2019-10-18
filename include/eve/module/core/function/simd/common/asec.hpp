@@ -37,7 +37,7 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto asec_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, floating<T>)
+  requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     using t_t = wide<T,N,ABI>;
     if constexpr( is_aggregated_v<ABI> )

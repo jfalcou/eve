@@ -45,7 +45,7 @@ namespace eve::detail
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE
   auto atan_kernelw( wide<T, N, ABI> x,  wide<T, N, ABI> recx ) noexcept
-  requires(wide<T, N, ABI>, floating<T>)
+  requires(wide<T, N, ABI>, floating_point<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>

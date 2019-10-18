@@ -39,7 +39,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr
   auto atan_kernel( T  x,  T recx ) noexcept
-  requires(T, floating<T>)
+  requires(T, floating_point<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>

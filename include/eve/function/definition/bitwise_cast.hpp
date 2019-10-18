@@ -12,24 +12,33 @@
 #define EVE_FUNCTION_DEFINITION_BITWISE_CAST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
 namespace eve
 {
-  namespace tag { struct bitwise_cast_; }
-  
-  namespace detail
-  {
-    template<typename T, typename Target>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bitwise_cast_), T const&,  as_<Target> const &)
-    {
-      static_assert(sizeof(Target) == sizeof(T),
-                    "[eve::bitwise_cast]  - arguments has not the same global size");
-    }
-  }
-
   EVE_MAKE_CALLABLE(bitwise_cast_, bitwise_cast);
+}
+
+// Concept based on bitwise_cast
+namespace eve::detail
+{
+  template<typename T, typename U>
+  using bits_convertible_with = std::void_t<decltype( bitwise_cast(std::declval<T>(), as<U>()) )>;
+
+    // Concept based on bitwise_cast support
+  template<typename T, typename U>
+  using mixed_bitwise_compatible = std::void_t< vectorizable<T>,
+                                                bits_convertible_with<T, value_type_t<U>>
+                                              >;
+
+  template<typename T, typename U>
+  using bitwise_compatible = either < as_trait< bits_convertible_with, T, U>::value
+                                    , as_trait< mixed_bitwise_compatible, T, U>::value
+                                    , as_trait< mixed_bitwise_compatible, U, T>::value
+                                    >;
 }
 
 #endif
