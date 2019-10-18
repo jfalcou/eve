@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
                                         , TAG const & tag_
                                         , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating, T>)
+  requires(std::tuple<T, T>, behave_as<floating_point, T>)
   {
     auto [m, e] = ifrexp(tag_, a0);
     if constexpr(is_vectorizable_v<T>)
@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
                                         , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating, T>)
+  requires(std::tuple<T, T>, behave_as<floating_point, T>)
   {
     auto [m, e] = ifrexp(a0); 
     if constexpr(is_vectorizable_v<T>)

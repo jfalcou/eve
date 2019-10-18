@@ -257,6 +257,10 @@ namespace eve::detail
 
   template<typename T>
   inline constexpr auto count_v = count<T>::value;
+
+  template<template<class...> class Concept,typename... T>
+  bool as_trait_v = as_trait<Concept, types<T...>>::value; 
+ 
 }
 
 #endif
