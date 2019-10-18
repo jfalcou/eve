@@ -53,7 +53,14 @@ namespace eve::detail
                                  ) noexcept
   requires(OUT, vectorizable<IN>, vectorizable<OUT>)
   {
-    return static_cast<OUT>(max(v0, Zero(as(v0))));  
+    if constexpr(std::is_unsigned_v<OUT>)
+    {
+      return static_cast<OUT>(eve::max(v0, Zero(as(v0))));
+    }  
+    else
+    {
+      return static_cast<OUT>(v0);
+    } 
   }
 
   
