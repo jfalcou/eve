@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_)
                                        , T const &a) noexcept
-  requires(as_integer_t<T>, behave_as<floating,T>)
+  requires(as_integer_t<T>, behave_as<floating_point,T>)
   {
     return convert(a, as_<as_integer_t<value_type_t<T>>>()); ;
   }
@@ -32,7 +32,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_)
                                        , Tag const& tag_
                                        , T const &a) noexcept
-  requires(as_integer_t<T>, behave_as<floating,T>)
+  requires(as_integer_t<T>, behave_as<floating_point,T>)
   {
     return convert(tag_, a, as_<as_integer_t<value_type_t<T>>>()); ;
   }
