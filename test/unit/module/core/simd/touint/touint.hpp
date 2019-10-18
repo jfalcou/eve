@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check touint behavior on wide",
   }
   {
   wide<Type, T> lhs([](auto i, auto) { return i%2 ? i : -i; }); 
-  i_t  ref([](auto i, auto) { return eve::touint(Type(i%2 ? i : -i)); });
+  i_t  ref([](auto i, auto) { return eve::pedantic_(eve::touint)(Type(i%2 ? i : -i)); });
   TTS_EQUAL(ref, eve::pedantic_(eve::touint)(lhs));
   }
 }
