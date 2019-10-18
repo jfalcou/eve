@@ -22,7 +22,7 @@
 #include <eve/constant/valmax.hpp>
 #include <type_traits>
 
-TTS_CASE("Check tofloat return type") { TTS_EXPR_IS(eve::tofloat(Type(0)), eve::detail::as_integer_t<Type>); }
+TTS_CASE("Check tofloat return type") { TTS_EXPR_IS(eve::tofloat(Type(0)), eve::detail::as_floating_point_t<Type>); }
 
 TTS_CASE("Check eve::tofloat behavior")
 {
