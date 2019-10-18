@@ -245,6 +245,10 @@ namespace eve::detail
   template<template<class...> class Concept,typename... T>
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
+
+  template<template<class...> class Concept,typename... T>
+  bool as_trait_v = as_trait<Concept, types<T...>>::value; 
+ 
 }
 
 #endif

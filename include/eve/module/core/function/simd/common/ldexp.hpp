@@ -49,7 +49,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto ldexp_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires( T, vectorized<T>, behave_as<floating, T>, compatible<T, U>)
+  requires( T, vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
   {
     using t_abi = abi_type_t<T>;
 
@@ -119,7 +119,7 @@ namespace eve::detail
                             , pedantic_type const & pdt 
                             , T const &a
                             , U const &b) noexcept
-  requires( T, vectorized<T>, behave_as<floating, T>, compatible<T, U>)
+  requires( T, vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
   {
     using t_abi = abi_type_t<T>;
 
