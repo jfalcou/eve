@@ -48,7 +48,7 @@ TTS_CASE("Check eve::nextafter behavior")
   TTS_EQUAL( eve::nextafter(Type(5), Type(5)), Type(5)); 
 }
 
-TS_CASE("Check eve::pedantic_(eve::nextafter) behavior")
+TTS_CASE("Check eve::pedantic_(eve::nextafter) behavior")
 {
   if constexpr(std::is_floating_point_v<Type>)
   {

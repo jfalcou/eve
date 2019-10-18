@@ -32,7 +32,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_)
                                  , T const &x
                                  , U const &y) noexcept
-  requires(T, Vectorized<T>)
+  requires(T, vectorized<T>)
   {
     return if_else(x < y,  next(x), if_else(y < x, prev(x), x)); 
   }
@@ -42,7 +42,7 @@ namespace eve::detail
                                  , pedantic_type const &   
                                  , T const &x
                                  , U const &y) noexcept
-  requires(T, Vectorized<T>)
+  requires(T, vectorized<T>)
   {
     return if_else(is_unordered(x, y), allbits_, nextafter(x, y)); 
   }
