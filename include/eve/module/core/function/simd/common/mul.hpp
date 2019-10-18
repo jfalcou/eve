@@ -17,7 +17,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/saturate.hpp>
 #include <type_traits>
 
@@ -79,9 +79,9 @@ namespace eve::detail
         else if constexpr(sizeof(vt_t) <= 4)
         {
           using sup_t =  upgrade_t<vt_t>;
-          auto z =  mul(wide_cast(a, as<sup_t>()), wide_cast(b, as<sup_t>()));
-          auto s =  saturate(as<vt_t>(), z);
-          return wide_cast(s, as<vt_t>());
+          auto z =  mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
+          auto s =  saturate(as<vt_t>(), z); //TODO saturated_(convert) ?
+          return convert(s, as<vt_t>());
         }
         else
         {
