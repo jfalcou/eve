@@ -12,6 +12,8 @@
 #define EVE_FUNCTION_DEFINITION_BITWISE_CAST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
