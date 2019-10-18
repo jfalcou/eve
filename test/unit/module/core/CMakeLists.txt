@@ -65,7 +65,7 @@ make_all_units(ROOT core NAME dist ARCH scalar simd TYPES ${all_types} )
 
 make_all_units(ROOT core NAME extract  ARCH scalar simd TYPES ${all_types} )
 
-# make_units("floor/regular"                  "core" ${all_types})
+make_all_units(ROOT core NAME floor      ARCH scalar simd TYPES ${all_types} )
 # make_units("fma/regular"                    "core" ${all_types})
 # make_units("fms/regular"                    "core" ${all_types})
 # make_units("fnma/regular"                   "core" ${all_types})
