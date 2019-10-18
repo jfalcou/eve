@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TOINT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_TOINT_HPP_INCLUDED 
 #define EVE_FUNCTION_TOINT_HPP_INCLUDED
 
 #include <eve/function/scalar/toint.hpp>
-//#include <eve/function/simd/toint.hpp>
+#include <eve/function/simd/toint.hpp>
 
 #endif

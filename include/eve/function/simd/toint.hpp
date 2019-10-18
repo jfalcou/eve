@@ -1,6 +1,6 @@
 //==================================================================================================
-/** 
-  EVE - Expressive Vector Engine
+/**
+  EVE - Expressive Vector Engine 
   Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
 
@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_TOINT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_TOINT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_TOINT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_TOINT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(toint_, toint);
-}
+#include <eve/function/scalar/toint.hpp>
+#include <eve/module/core/function/generic/toint.hpp>
 
 #endif
