@@ -1,4 +1,4 @@
-//================================================================================================== 
+//==================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
@@ -38,7 +38,7 @@ TTS_CASE("Check eve::toint behavior")
 
 TTS_CASE("Check pedantic_(eve::toint behavior)")
 {
-  using r_t = as_integer_t<Type>; 
+  using r_t = eve::detail::as_integer_t<Type>; 
   TTS_EQUAL(eve::pedantic_(eve::toint)(Type{1}), r_t(1));
   TTS_EQUAL(eve::pedantic_(eve::toint)(Type{2}), r_t(2));
 

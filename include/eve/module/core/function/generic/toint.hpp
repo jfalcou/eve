@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/pedantic.hpp>        
 #include <eve/function/saturated.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve::detail
@@ -25,7 +25,7 @@ namespace eve::detail
                                        , T const &a) noexcept
   requires(as_integer_t<T>, behave_as<floating,T>)
   {
-    return wide_cast(a, as_<as_integer_t<value_type_t<T>>>()); ;
+    return convert(a, as_<as_integer_t<value_type_t<T>>>()); ;
   }
   
   template<typename T, typename Tag>
@@ -34,7 +34,7 @@ namespace eve::detail
                                        , T const &a) noexcept
   requires(as_integer_t<T>, behave_as<floating,T>)
   {
-    return wide_cast(tag_, a, as_<as_integer_t<value_type_t<T>>>()); ;
+    return convert(tag_, a, as_<as_integer_t<value_type_t<T>>>()); ;
   }
 }
 
