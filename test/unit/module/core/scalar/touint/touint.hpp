@@ -30,7 +30,6 @@ TTS_CASE("Check eve::touint behavior")
   TTS_EQUAL(eve::touint(Type{1}), r_t(1));
   TTS_EQUAL(eve::touint(Type{2}), r_t(2));
 
-  TTS_EQUAL(eve::touint(Type(-2)), r_t(0));
   TTS_EQUAL(eve::touint(eve::Mzero<Type>()), r_t(0));
   TTS_EQUAL(eve::touint(eve::Zero<Type>()), r_t(0));
   TTS_EQUAL(eve::touint(Type(1.2357)), static_cast< r_t>(1.2357));

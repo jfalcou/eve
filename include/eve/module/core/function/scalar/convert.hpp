@@ -14,9 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/constant/zero.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -51,7 +53,7 @@ namespace eve::detail
                                  ) noexcept
   requires(OUT, vectorizable<IN>, vectorizable<OUT>)
   {
-    return convert(v0, tgt);  
+    return static_cast<OUT>(max(v0, Zero(as(v0))));  
   }
 
   
@@ -75,6 +77,10 @@ namespace eve::detail
       if constexpr(std::is_floating_point_v<IN> || (sizeof(OUT) <= sizeof(IN)))
       {
         return convert(saturate(as<OUT>(v0)), as<OUT>()); 
+      }
+      else
+      {
+        return convert(v0, tgt);  
       }
     }
     else        
