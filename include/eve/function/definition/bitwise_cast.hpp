@@ -24,7 +24,19 @@ namespace eve
 namespace eve::detail
 {
   template<typename T, typename U>
-  using bitwise_compatible = std::void_t<decltype( bitwise_cast(std::declval<T>(), as<U>()) )>;
+  using bits_convertible_with = std::void_t<decltype( bitwise_cast(std::declval<T>(), as<U>()) )>;
+
+    // Concept based on bitwise_cast support
+  template<typename T, typename U>
+  using mixed_bitwise_compatible = std::void_t< vectorizable<T>,
+                                                bits_convertible_with<T, value_type_t<U>>
+                                              >;
+
+  template<typename T, typename U>
+  using bitwise_compatible = either < as_trait< bits_convertible_with, T, U>::value
+                                    , as_trait< mixed_bitwise_compatible, T, U>::value
+                                    , as_trait< mixed_bitwise_compatible, U, T>::value
+                                    >;
 }
 
 #endif
