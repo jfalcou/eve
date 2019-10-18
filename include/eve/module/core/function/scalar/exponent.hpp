@@ -30,7 +30,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto exponent_(EVE_SUPPORTS(cpu_),
                                       T const &a) noexcept
-  requires(as_integer_t<T>, floating<T>)
+  requires(as_integer_t<T>, floating_point<T>)
   {
     if (is_eqz(a)) return as_integer_t<T>(0); 
     if (is_not_finite(a)) return as_integer_t<T>(0); 

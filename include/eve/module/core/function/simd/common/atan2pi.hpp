@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/inpi.hpp>
-#include <eve/function/atan.hpp>
+#include <eve/function/atan2.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/vectorized.hpp>
@@ -31,7 +31,7 @@ namespace eve::detail
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
             behave_as<floating_point,T>,
-            floating_point<value_type_t<U>>
+            behave_as<floating_point,U>
           )
   {
     return inpi(atan2(a0, a1));
@@ -46,13 +46,8 @@ namespace eve::detail
                              ) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
-<<<<<<< HEAD
             behave_as<floating_point,T>,
-            floating_point<value_type_t<U>>
-=======
-            behave_as<floating,T>,
-            behave_as<floating,U>
->>>>>>> requires modifs
+            behave_as<floating_point,U>
           )
   {
     return inpi(pedantic_(atan2)(a0, a1));
