@@ -29,7 +29,7 @@ namespace eve::detail
     if constexpr(sizeof(vt_t) < 4)
     {
       //     auto aa = convert(a, as<int32_t>());
-      return convert(a, as_<float>());
+      return convert(a, single_);
     }
     else
     {

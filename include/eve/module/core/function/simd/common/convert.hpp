@@ -54,8 +54,7 @@ namespace eve::detail
     }
     else
     {
-      // If not, just map static_cast
-      return map( [](auto e, auto) { return static_cast<OUT>(e); }, v0, tgt );
+      return map(convert, v0, tgt)
     }
   }
   
@@ -118,7 +117,7 @@ namespace eve::detail
   {
     if constexpr( is_aggregated_v<ABI> && is_aggregated_v<typename wide<OUT,N>::abi_type>)
     {
-      return aggregate(eve::convert, sat_, v0, tgt);
+      return aggregate(saturated_(eve::convert), v0, tgt);
     }
     else if constexpr(std::is_same_v<IN, OUT>)
     {
