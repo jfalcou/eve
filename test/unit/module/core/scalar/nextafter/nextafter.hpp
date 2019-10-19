@@ -59,7 +59,7 @@ TTS_CASE("Check eve::pedantic_(eve::nextafter) behavior")
     TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Valmax<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
     TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Mone<Type>(), eve::One<Type>()), eve::Mone<Type>()+eve::Eps<Type>()/2);
     TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::Zero<Type>(), eve::One<Type>()), eve::Bitincrement<Type>());
-    TTS_EQUAL(eve::pedantic_(eve::nextafter)(eve::One<Type>(), eve::Nan<Type>()), eve::Nan<Type>()); 
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::nextafter)(eve::One<Type>(), eve::Nan<Type>()), eve::Nan<Type>()); 
   }
   TTS_EQUAL(eve::pedantic_(eve::nextafter)(Type(1), Type(3)), eve::next(Type(1)));
   TTS_EQUAL(eve::pedantic_(eve::nextafter)(Type(5), Type(3)), eve::prev(Type(5)));
