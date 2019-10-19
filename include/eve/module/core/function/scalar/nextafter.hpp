@@ -16,6 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/next.hpp>
@@ -38,7 +39,7 @@ namespace eve::detail
             , T const &x, T const &y) noexcept
   requires(T, vectorizable<T>, behave_as<totally_ordered, T>)
   {
-    return  is_unordered(x, y)?Nan<T>() : nextafter(x, y); 
+    return  is_unordered(x, y) ? Nan<T>() : nextafter(x, y); 
   }
 }
 
