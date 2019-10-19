@@ -24,13 +24,16 @@ namespace eve
   namespace detail
   {
     template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const&,  U const & n)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const& a,  U const & n)
     {
-      EVE_ASSERT(all(is_gez(n)), "[next] : second parameter must be positive"); 
+      if constexpr(!std::is_same_v<T, saturated_type>) //TODO suppress
+      {
+        EVE_ASSERT(all(is_gez(n)), "[next] : second parameter must be positive");
+      }
     }
     
     template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_, saturated_type), T const&,  U const & n)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::next_), T const&,  U const & n)
     {
       EVE_ASSERT(all(is_gez(n)), "[saturated_(next)] : second parameter must be positive"); 
     }
