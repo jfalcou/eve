@@ -10,7 +10,7 @@
 #ifndef EXP2_HPP
 #define EXP2_HPP
 
-#include <eve/function/exp.hpp>
+#include <eve/function/exp2.hpp>
 #include <eve/wide.hpp>
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -20,7 +20,7 @@
 #include <iomanip>
 
 using eve::fixed;
-TTS_CASE_TPL("Check exp behavior on wide",
+TTS_CASE_TPL("Check abs behavior on wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
@@ -30,17 +30,17 @@ TTS_CASE_TPL("Check exp behavior on wide",
              fixed<64>)
 {
   using t_t =  eve::wide<Type, T>; 
-  TTS_EXPR_IS ( eve::exp(t_t(0)), t_t);
+  TTS_EXPR_IS ( eve::exp2(t_t(0)), t_t);
   
-  TTS_ULP_EQUAL(eve::exp(t_t(1)), t_t(std::exp(Type(1))), 0.5);
-  TTS_ULP_EQUAL(eve::exp(t_t(2)), t_t(std::exp(Type(2))), 0.5);
-  TTS_ULP_EQUAL(eve::exp(t_t(-2)),t_t(std::exp(Type(-2))), 0.5);
-  TTS_ULP_EQUAL(eve::exp(t_t(0)), t_t(Type(1)), 0.5);
+  TTS_ULP_EQUAL(eve::exp2(t_t(1)), t_t(std::exp2(Type(1))), 0.5);
+  TTS_ULP_EQUAL(eve::exp2(t_t(2)), t_t(std::exp2(Type(1))), 0.5);
+  TTS_ULP_EQUAL(eve::exp2(t_t(-2)),t_t(std::exp2(Type(-2))), 0.5);
+  TTS_ULP_EQUAL(eve::exp2(t_t(0)), t_t(Type(1)), 0.5);
   
   for(int i=1; i < 70; i *= 3)
   {
-    TTS_ULP_EQUAL(eve::exp(t_t(i)), t_t(std::exp(Type(i))), 0.5);
-    TTS_ULP_EQUAL(eve::exp(-t_t(i)), t_t(std::exp(Type(-i))), 0.5); 
+    TTS_ULP_EQUAL(eve::exp2(t_t(i)), t_t(std::exp2(Type(i))), 0.5);
+    TTS_ULP_EQUAL(eve::exp2(-t_t(i)), t_t(std::exp2(Type(-i))), 0.5); 
   }
 }
 

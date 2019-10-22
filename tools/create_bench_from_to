@@ -38,11 +38,11 @@ mkdir -p $rootdir/$where/scalar/$to
 
 for fil in double float int8 int16 int32 int64 uint8 uint16 uint32 uint64
 do
-  cp -n $rootdir/$where/scalar/$1/$fil.cpp    $where/scalar/$2/$fil.cpp
-  cp -n $rootdir/$where/simd/$1/$fil.cpp    $where/simd/$2/$fil.cpp
-  cd $rootdir/$where/scalar/$2
+  cp -n $rootdir/$where/scalar/$1/regular/$fil.cpp    $where/scalar/$2/regular/$fil.cpp
+  cp -n $rootdir/$where/simd/$1/regular/$fil.cpp    $where/simd/$2/regular/$fil.cpp
+  cd $rootdir/$where/scalar/$2/regular
   sed -i "s/$from/$to/g"   $fil.cpp
-  cd $rootdir/$where/simd/$2
+  cd $rootdir/$where/simd/$2/regular
   sed -i "s/$from/$to/g"   $fil.cpp
   cd $rootdir
 done
