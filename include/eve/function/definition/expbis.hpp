@@ -8,10 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXP_HPP_INCLUDED
-#define EVE_FUNCTION_EXP_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_EXPBIS_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_EXPBIS_HPP_INCLUDED
 
-#include <eve/function/scalar/exp.hpp>
-#include <eve/function/simd/exp.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(expbis_, expbis);
+}
 
 #endif
