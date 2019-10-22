@@ -9,7 +9,10 @@
 
 ##==================================================================================================
 ## scalar tests
-list_tests("scalar/binarize_c"     "core" ${all_types})
+list_tests("scalar/toint"          "core" ${real_types})
+list_tests("scalar/tofloat"        "core" ${integral_types})
+list_tests("scalar/touint"          "core" ${real_types})
+list_tests("scalar/binarize_c"     "core" ${all_types})    
 list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/all"     "core" ${all_types})
 list_tests("scalar/add"     "core" ${all_types})
@@ -179,6 +182,9 @@ add_unit_test( "core" scalar/signmask.cpp )
 ##==================================================================================================
 ## SIMD tests
 add_unit_test( "core" simd/bitwise_cast.cpp )
+list_tests("simd/toint" "core" ${real_types})
+list_tests("simd/tofloat" "core" ${integral_types})
+list_tests("simd/touint" "core" ${real_types})
 list_tests("simd/abs" "core" ${all_types})
 list_tests("simd/all" "core" ${all_types})
 list_tests("simd/add"         "core" ${all_types})
@@ -364,16 +370,16 @@ list_tests("simd/sqrt"    "core" ${all_types})
 list_tests("simd/sub"         "core" ${all_types})
 list_tests("simd/unary_minus" "core" ${all_types})
 list_tests("simd/unary_plus" "core" ${all_types})
-list_tests("simd/wide_cast/double" "core" ${all_types})
-list_tests("simd/wide_cast/float" "core" ${all_types})
-list_tests("simd/wide_cast/int32" "core" ${all_types})
-list_tests("simd/wide_cast/uint32" "core" ${all_types})
-list_tests("simd/wide_cast/int16" "core" ${all_types})
-list_tests("simd/wide_cast/uint16" "core" ${all_types})
-list_tests("simd/wide_cast/int8" "core" ${all_types})
-list_tests("simd/wide_cast/uint8" "core" ${all_types})
-list_tests("simd/wide_cast/int64" "core" ${all_types})
-list_tests("simd/wide_cast/uint64" "core" ${all_types})
+list_tests("simd/convert/double" "core" ${all_types})
+list_tests("simd/convert/float" "core" ${all_types})
+list_tests("simd/convert/int32" "core" ${all_types})
+list_tests("simd/convert/uint32" "core" ${all_types})
+list_tests("simd/convert/int16" "core" ${all_types})
+list_tests("simd/convert/uint16" "core" ${all_types})
+list_tests("simd/convert/int8" "core" ${all_types})
+list_tests("simd/convert/uint8" "core" ${all_types})
+list_tests("simd/convert/int64" "core" ${all_types})
+list_tests("simd/convert/uint64" "core" ${all_types})
 
 ##==================================================================================================
 ## Expected failures tests
