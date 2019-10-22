@@ -43,6 +43,7 @@ list_tests("scalar/cbrt"   "core" ${real_types})
 >>>>>>> cbrt
 =======
 list_tests("scalar/exp"   "core" ${real_types})
+list_tests("scalar/exp2"   "core" ${real_types})
 list_tests("scalar/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
 list_tests("scalar/frexp"   "core" ${real_types})
@@ -249,6 +250,7 @@ list_tests("simd/cbrt"   "core" ${real_types})
 >>>>>>> cbrt
 =======
 list_tests("simd/exp"   "core" ${real_types})
+list_tests("simd/exp2"   "core" ${real_types})
 list_tests("simd/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
 list_tests("simd/frexp"   "core" ${real_types})
