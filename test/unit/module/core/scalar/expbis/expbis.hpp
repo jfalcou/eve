@@ -21,16 +21,16 @@
 TTS_CASE("Check raw_(eve::expbis) behavior")
 {
   
-  TTS_EXPBISR_IS ( eve::expbis(Type(0)), Type);
-  TTS_ULP_EQUAL(eve::expbis(Type(1)), Type(std::expbis(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::expbis(Type(2)), Type(std::expbis(2.0)), 0.5);    
-  TTS_ULP_EQUAL(eve::expbis(Type(-2)),Type(std::expbis(-2.0)), 0.5);
+  TTS_EXPR_IS ( eve::expbis(Type(0)), Type);
+  TTS_ULP_EQUAL(eve::expbis(Type(1)), Type(std::exp(1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::expbis(Type(2)), Type(std::exp(2.0)), 0.5);    
+  TTS_ULP_EQUAL(eve::expbis(Type(-2)),Type(std::exp(-2.0)), 0.5);
   TTS_ULP_EQUAL(eve::expbis(Type(0)), Type(1), 0.5);
   
   for(int i=1; i < 70; i *= 3)
   {
-    TTS_ULP_EQUAL(eve::expbis(Type(i)), std::expbis(Type(i)), 0.5);
-    TTS_ULP_EQUAL(eve::expbis(-Type(i)), std::expbis(-Type(i)), 0.5); 
+    TTS_ULP_EQUAL(eve::expbis(Type(i)), std::exp(Type(i)), 0.5);
+    TTS_ULP_EQUAL(eve::expbis(-Type(i)), std::exp(-Type(i)), 0.5); 
   }
 }
 

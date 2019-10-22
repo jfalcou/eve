@@ -17,23 +17,23 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/module/core/detail/generic/expbis_kernel.hpp>
+#include <eve/module/core/detail/generic/exp_kernel.hpp>
 #include <type_traits>
 #include <tuple>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpbisr auto expbis_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto expbis_(EVE_SUPPORTS(cpu_)
                                      , const T &xx) noexcept
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
     const T Maxlog  =  Ieee_constant<T, 0x42b0c0a5U, 0x40862e42fefa39efULL>();
     const T Minlog  =  Ieee_constant<T, 0xc2b0c0a5U, 0xc086232bdd7abcd2ULL>(); 
-    T c = expbis_kernel(xx); 
+    T c = exp_kernel(xx); 
     c = if_else(is_less_equal(xx, Minlog), eve::zero_, c);
     c = if_else(is_greater_equal(xx, Maxlog), Inf<T>(), c);
-    if constexpbisr(eve::platform::supports_nans)
+    if constexpr(eve::platform::supports_nans)
       return if_else(is_nan(xx), xx, c);
     else
       return c;
