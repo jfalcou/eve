@@ -60,13 +60,12 @@ make_all_units(ROOT core NAME dec             ARCH scalar simd TYPES ${all_types
 make_all_units(ROOT core NAME dist            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME div             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME extract         ARCH scalar simd TYPES ${all_types}     )
-
-make_all_units(ROOT core NAME floor      ARCH scalar simd TYPES ${all_types} )
-# make_units("fma/regular"                    "core" ${all_types})
-# make_units("fms/regular"                    "core" ${all_types})
-# make_units("fnma/regular"                   "core" ${all_types})
-# make_units("fnms/regular"                   "core" ${all_types})
-make_all_units(ROOT core NAME frac       ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME floor           ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME fma             ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME fms             ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME fnma            ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME fnms            ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME frac            ARCH scalar simd TYPES ${all_types}     )
 
 # make_units("gather"                   "core" ${real_types})
 
