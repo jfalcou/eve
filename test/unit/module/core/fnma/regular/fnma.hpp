@@ -8,24 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef FNMA_HPP
-#define FNMA_HPP
-
 #include <eve/function/fnma.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check fnma return type") { TTS_EXPR_IS(eve::fnma(Type(), Type(), Type()), Type); }
-
-TTS_CASE("Check fnma behaviour")
+TTS_CASE("Check eve::fnma return type")
 {
-  TTS_EQUAL(eve::fnma(Type{0}, Type{0}, Type{0}), Type{0});
-  TTS_EQUAL(eve::fnma(Type{0}, Type{0}, Type{7}), Type{7});
-  TTS_EQUAL(eve::fnma(Type{2}, Type{0}, Type{7}), Type{7});
-  TTS_EQUAL(eve::fnma(Type{0}, Type{5}, Type{7}), Type{7});
-  TTS_EQUAL(eve::fnma(Type{2}, Type{5}, Type{7}), static_cast<Type>(-3));
+  TTS_EXPR_IS(eve::fnma(Type(), Type(), Type()), (Type));
 }
 
-#endif
+TTS_CASE("Check eve::fnma behavior")
+{
+  TTS_EQUAL(eve::fnma(Type(0), Type(0), Type(0)), (Type(0)));
+  TTS_EQUAL(eve::fnma(Type(0), Type(0), Type(7)), (Type(7)));
+  TTS_EQUAL(eve::fnma(Type(2), Type(0), Type(7)), (Type(7)));
+  TTS_EQUAL(eve::fnma(Type(0), Type(5), Type(7)), (Type(7)));
+  TTS_EQUAL(eve::fnma(Type(2), Type(5), Type(7)), static_cast<Type>(-3));
+}
