@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXP_HPP_INCLUDED
-#define EVE_FUNCTION_EXP_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SCALAR_EXPBIS_HPP_INCLUDED
+#define EVE_FUNCTION_SCALAR_EXPBIS_HPP_INCLUDED
 
-#include <eve/function/scalar/exp.hpp>
-#include <eve/function/simd/exp.hpp>
+#include <eve/function/definition/expbis.hpp>
+#include <eve/module/core/function/scalar/expbis.hpp>
 
 #endif

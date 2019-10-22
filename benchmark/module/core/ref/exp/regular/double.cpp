@@ -8,10 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXP_HPP_INCLUDED
-#define EVE_FUNCTION_EXP_HPP_INCLUDED
+#include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
+#include <cmath>
 
-#include <eve/function/scalar/exp.hpp>
-#include <eve/function/simd/exp.hpp>
 
-#endif
+#define TYPE()        double
+#define FUNCTION()    [](double x)              \
+  {                                             \
+    return std::exp(x);                         \
+  }                                             \
+/**/
+#define SAMPLES(N)    random<T>(N,-700.,700.)
+
+#include "bench.hpp"

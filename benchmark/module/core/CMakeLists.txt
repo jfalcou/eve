@@ -29,6 +29,7 @@ list_benchs("scalar/atan2d/regular" "core" ${real_types})
 list_benchs("scalar/atan2pi/regular" "core" ${real_types})
 list_benchs("scalar/atand/regular" "core" ${real_types})
 list_benchs("scalar/atanpi/regular" "core" ${real_types})
+list_benchs("scalar/exp/regular" "core" ${real_types})
 list_benchs("scalar/hypot/regular"  "core" ${real_types})       
 list_benchs("scalar/bitwise_and/regular" "core" ${all_types})
 list_benchs("scalar/add/regular" "core" ${all_types})
@@ -129,6 +130,7 @@ list_benchs("simd/atan2d/regular" "core" ${real_types})
 list_benchs("simd/atan2pi/regular" "core" ${real_types})
 list_benchs("simd/atand/regular" "core" ${real_types})
 list_benchs("simd/atanpi/regular" "core" ${real_types})
+list_benchs("simd/exp/regular" "core" ${real_types})
 list_benchs("simd/hypot/regular"  "core" ${real_types})       
 list_benchs("simd/arg/regular" "core" ${real_types})
 list_benchs("simd/average/regular" "core" ${all_types})
@@ -236,3 +238,6 @@ list_benchs("simd/rec/raw" "core" ${real_types})
 list_benchs("simd/rec/pedantic" "core" ${real_types})
 
 
+##==================================================================================================
+## ref benchmarks
+list_benchs("ref/exp/regular" "core" ${real_types})
