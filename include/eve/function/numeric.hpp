@@ -11,26 +11,28 @@
 #ifndef EVE_FUNCTION_NUMERIC_HPP_INCLUDED
 #define EVE_FUNCTION_NUMERIC_HPP_INCLUDED
 
-#include <type_traits>
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct numeric_type
+  struct numeric_type : decorator_
   {
     template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return [f](auto const &... args) { return f(numeric_type{}, args...); };
+      return  [f](auto&&... args)
+              {
+                return f(numeric_type{}, std::forward<decltype(args)>(args)...);
+              };
     }
   };
-  
+
   //================================================================================================
   // Function decorator - numeric mode
-  template<typename Function>
-  constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
+  template<typename Function> constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
   {
     return numeric_type{}(f);
   }
