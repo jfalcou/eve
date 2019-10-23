@@ -41,9 +41,9 @@ namespace eve::detail
                             , const T &xx) noexcept
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
-    using vt_t =  value_type<T>; 
-    auto k = nearest(xx);
-    auto x = xx-k;
+    using vt_t =  value_type_t<T>; 
+    T k = nearest(xx);
+    T x = xx-k;
     if constexpr(std::is_same_v<vt_t, float>)
     {
       // Remez polynom of degree 4 on [-0.5, 0.5] for (exp2(x)-1-x*log(2))/sqr(x)  tested in range: [-127 127]

@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check raw_(expbis) behavior on wide",
   Type tmp = 1; 
   t_t lhs([&tmp](auto,  auto){tmp*= 50; return tmp; });
   tmp = 1; 
-  t_t ref([&tmp](auto,  auto){tmp*= 50;  return std::expbis(tmp); }); 
+  t_t ref([&tmp](auto,  auto){tmp*= 50;  return std::exp(tmp); }); 
   TTS_ULP_EQUAL(eve::expbis(lhs),  ref, 1.0); 
           
             

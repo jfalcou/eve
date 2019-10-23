@@ -29,7 +29,7 @@
 #include <eve/function/mul.hpp>
 #include <eve/function/rshl.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/minexponent.hpp> 
 #include <eve/constant/maxexponent.hpp>
@@ -98,7 +98,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
+          auto ik =  convert(b, as<i_t>())+Maxexponent<t_t>();
           ik = shl(ik, Nbmantissabits<t_t>());
           return a*bitwise_cast(ik, as<T>());
         }
@@ -106,7 +106,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          return ldexp(a, wide_cast(trunc(b), as<i_t>())); 
+          return ldexp(a, convert(trunc(b), as<i_t>())); 
         }
       }
     }
@@ -158,7 +158,7 @@ namespace eve::detail
         else  // U is floating point
         {
           using i_t =  detail::as_integer_t<U, signed>; 
-          return pedantic_(ldexp)(a, wide_cast(trunc(b), as<i_t>())); 
+          return pedantic_(ldexp)(a, convert(trunc(b), as<i_t>())); 
         }
       }
     }
@@ -179,7 +179,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          auto e = wide_cast(b, as<i_t>()); 
+          auto e = convert(b, as<i_t>()); 
           auto f = One<T>();
           if constexpr( eve::platform::supports_denormals)
           {
@@ -194,7 +194,7 @@ namespace eve::detail
           e = bitwise_shl(e, Nbmantissabits<t_t>());
           return b*bitwise_cast(e, as(t_t()))*f;
           
-          auto ik =  wide_cast(b, as<i_t>())+Maxexponent<t_t>();
+          auto ik =  convert(b, as<i_t>())+Maxexponent<t_t>();
           ik = shl(ik, Nbmantissabits<t_t>());
           return b*bitwise_cast(ik, as<T>());
         }
@@ -202,7 +202,7 @@ namespace eve::detail
         {
           using t_t = value_type_t<T>; 
           using i_t = as_integer_t<t_t, signed>;
-          return pedantic_(ldexp)(a, wide_cast(trunc(b), as<i_t>())); 
+          return pedantic_(ldexp)(a, convert(trunc(b), as<i_t>())); 
         }
       }
     }

@@ -23,8 +23,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                      " << pf << '\n'
-            << "-> eve::expbis(pf) =            " << eve::expbis(pf) << '\n'
-            << "-> eve::pedantic_(eve::expbis)(pf) = " << eve::pedantic_(eve::expbis)(pf) << '\n';
+            << "-> eve::expbis(pf) =            " << eve::expbis(pf) << '\n'; 
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
@@ -33,7 +32,6 @@ int main()
             << "<- xf =                      " << xf << '\n'
             << "-> eve::expbis(xf) =            " << eve::expbis(xf) << '\n'
             << "<- yf =                      " << yf << '\n'
-            << "-> eve::expbis(yf) =            " << eve::expbis(yf) << '\n'
-            << "-> eve::pedantic_(eve::expbis)(yf) = " << eve::pedantic_(eve::expbis)(yf) << '\n';
+            << "-> eve::expbis(yf) =            " << eve::expbis(yf) << '\n'; 
   return 0;
 }
