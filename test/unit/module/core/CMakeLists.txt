@@ -43,7 +43,8 @@ list_tests("scalar/cbrt"   "core" ${real_types})
 >>>>>>> cbrt
 =======
 list_tests("scalar/exp"   "core" ${real_types})
-list_tests("scalar/exp2"   "core" ${real_types})
+list_tests("scalar/exp2"   "core" ${all_types})
+list_tests("scalar/exp10"   "core" ${all_types})
 list_tests("scalar/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
 list_tests("scalar/frexp"   "core" ${real_types})
@@ -219,7 +220,7 @@ list_tests("scalar/unary_plus" "core" ${all_types})
 
 add_unit_test( "core" scalar/inf.cpp )
 add_unit_test( "core" scalar/minf.cpp )
-add_unit_test( "core" scalar/nan.cpp )
+add_unit_test( "core" scalar/nan.cpp ) 
 add_unit_test( "core" scalar/mzero.cpp )
 add_unit_test( "core" scalar/signmask.cpp )
 
@@ -250,7 +251,8 @@ list_tests("simd/cbrt"   "core" ${real_types})
 >>>>>>> cbrt
 =======
 list_tests("simd/exp"   "core" ${real_types})
-list_tests("simd/exp2"   "core" ${real_types})
+list_tests("simd/exp2"   "core" ${all_types})
+list_tests("simd/exp10"   "core" ${all_types})
 list_tests("simd/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
 list_tests("simd/frexp"   "core" ${real_types})

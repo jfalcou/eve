@@ -33,15 +33,32 @@ TTS_CASE_TPL("Check abs behavior on wide",
   using t_t =  eve::wide<Type, T>; 
   TTS_EXPR_IS ( eve::exp2(t_t(0)), t_t);
   
-  TTS_ULP_EQUAL(eve::exp2(t_t(1)), t_t(std::exp2(Type(1))), 0.5);
-  TTS_ULP_EQUAL(eve::exp2(t_t(2)), t_t(std::exp2(Type(2))), 0.5);
-  TTS_ULP_EQUAL(eve::exp2(t_t(-2)),t_t(std::exp2(Type(-2))), 0.5);
-  TTS_ULP_EQUAL(eve::exp2(t_t(0)), t_t(Type(1)), 0.5);
-  
-  for(int i=1; i < eve::Maxlog2<Type>(); i *= 3)
+ if constexpr(std::is_floating_point_v<Type>)
   {
-    TTS_ULP_EQUAL(eve::exp2(t_t(i)), t_t(std::exp2(Type(i))), 0.5);
-    TTS_ULP_EQUAL(eve::exp2(-t_t(i)), t_t(std::exp2(Type(-i))), 0.5); 
+    TTS_ULP_EQUAL(eve::exp2(t_t(1)), t_t(std::exp2(Type(1))), 0.5);
+    TTS_ULP_EQUAL(eve::exp2(t_t(2)), t_t(std::exp2(Type(2))), 0.5);
+    TTS_ULP_EQUAL(eve::exp2(t_t(-2)),t_t(std::exp2(Type(-2))), 0.5);
+    TTS_ULP_EQUAL(eve::exp2(t_t(0)), t_t(Type(1)), 0.5);
+    
+    for(int i=1; i < eve::Maxlog2<Type>(); i *= 3)
+    {
+      TTS_ULP_EQUAL(eve::exp2(t_t(i)), t_t(std::exp2(Type(i))), 0.5);
+      TTS_ULP_EQUAL(eve::exp2(-t_t(i)), t_t(std::exp2(Type(-i))), 0.5); 
+    }
+  }
+  else if constexpr(std::is_signed_v<Type>)
+  {
+    for(unsigned int i=0; i < sizeof(Type)*8-1; ++i)
+    {
+      TTS_ULP_EQUAL(eve::exp2(t_t(i)), t_t(std::pow(2, Type(i))), 0.5);
+    }
+  }
+  else
+  {
+    for(unsigned int i=0; i < sizeof(Type)*8; ++i)
+    {
+      TTS_EQUAL(eve::exp2(t_t(i)), t_t(std::exp2(Type(i))));
+    }
   }
 }
 

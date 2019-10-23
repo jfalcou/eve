@@ -18,7 +18,9 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_integer_t<T>
+  toint_(EVE_SUPPORTS(cpu_)
+        , T const &a) noexcept
   {
     if constexpr( std::is_integral_v< value_type_t<T> > )
     {
@@ -31,7 +33,10 @@ namespace eve::detail
   }
 
   template<typename T, typename Tag>
-  EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_), Tag const& tag_, T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_integer_t<T>
+  toint_(EVE_SUPPORTS(cpu_)
+        , Tag const& tag_
+        , T const &a) noexcept
   {
     if constexpr( std::is_integral_v< value_type_t<T> > )
     {
