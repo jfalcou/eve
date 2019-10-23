@@ -26,6 +26,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>

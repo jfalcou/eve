@@ -17,16 +17,21 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/detail/meta.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto tofloat_(EVE_SUPPORTS(cpu_)
-                                         , T const &a) noexcept
-  requires( as_floating_point_t<T>, behave_as<integral,T>)
+  EVE_FORCEINLINE constexpr as_floating_point_t<T>
+  tofloat_(EVE_SUPPORTS(cpu_)
+          , T const &a) noexcept
   {
     using vt_t = value_type_t<T>;
-    if constexpr(sizeof(vt_t) < 4)
+    if constexpr(std::is_floating_point_v<vt_t>)
+    {
+      return a; 
+    }
+    else if constexpr(sizeof(vt_t) < 4)
     {
       //     auto aa = convert(a, as<int32_t>());
       return convert(a, single_);

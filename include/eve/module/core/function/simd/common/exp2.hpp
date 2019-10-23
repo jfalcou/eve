@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/bitwise_shl.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
@@ -39,48 +40,55 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto exp2_(EVE_SUPPORTS(cpu_)
                             , const T &xx) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  requires(T, vectorized<T>)
   {
     using vt_t =  value_type_t<T>; 
-    T k = nearest(xx);
-    T x = xx-k;
-    if constexpr(std::is_same_v<vt_t, float>)
+    if constexpr(std::is_floating_point_v<vt_t>)
     {
-      // Remez polynom of degree 4 on [-0.5, 0.5] for (exp2(x)-1-x*log(2))/sqr(x)  tested in range: [-127 127]
-      // 2247884800 values computed.
-      // 2224606419 values (98.96%)  within 0.0 ULPs
-      // 23278381 values (1.04%)   within 0.5 ULPs
-      // 3.5 cycles/value  (SSE4.2 g++-4.8)
-      T y = horn<T,
-        0x3e75fdf1,  //    2.4022652e-01
-        0x3d6356eb,  //    5.5502813e-02
-        0x3c1d9422,  //    9.6178371e-03
-        0x3ab01218,  //    1.3433127e-03
-        0x3922c8c4   //    1.5524315e-04
-        >(x);
-      x = inc(fma(y, sqr(x), x*Log_2<T>()));
+      T k = nearest(xx);
+      T x = xx-k;
+      if constexpr(std::is_same_v<vt_t, float>)
+      {
+        // Remez polynom of degree 4 on [-0.5, 0.5] for (exp2(x)-1-x*log(2))/sqr(x)  tested in range: [-127 127]
+        // 2247884800 values computed.
+        // 2224606419 values (98.96%)  within 0.0 ULPs
+        // 23278381 values (1.04%)   within 0.5 ULPs
+        // 3.5 cycles/value  (SSE4.2 g++-4.8)
+        T y = horn<T,
+          0x3e75fdf1,  //    2.4022652e-01
+          0x3d6356eb,  //    5.5502813e-02
+          0x3c1d9422,  //    9.6178371e-03
+          0x3ab01218,  //    1.3433127e-03
+          0x3922c8c4   //    1.5524315e-04
+          >(x);
+        x = inc(fma(y, sqr(x), x*Log_2<T>()));
+      }
+      else
+      {
+        x*= Log_2<T>();
+        T t =  sqr(x);
+        T c = fnma(t,
+                   horn<T
+                  , 0x3fc555555555553eull
+                  , 0xbf66c16c16bebd93ull
+                  , 0x3f11566aaf25de2cull
+                  , 0xbebbbd41c5d26bf1ull
+                  , 0x3e66376972bea4d0ull
+                   > (t), x); //x-h*t
+        x = oneminus(((-(x*c)/(T(2)-c))-x));     
+      }
+      auto c = ldexp(x, k);
+      c = if_else(is_less_equal(xx, Minlog2<T>()), eve::zero_, c);
+      c = if_else(is_greater_equal(xx, Maxlog2<T>()), Inf<T>(), c);
+      if constexpr(eve::platform::supports_nans)
+        return if_else(is_nan(xx), xx, c);
+      else
+        return c;
     }
     else
     {
-      x*= Log_2<T>();
-      T t =  sqr(x);
-      T c = fnma(t,
-                 horn<T
-                , 0x3fc555555555553eull
-                , 0xbf66c16c16bebd93ull
-                , 0x3f11566aaf25de2cull
-                , 0xbebbbd41c5d26bf1ull
-                , 0x3e66376972bea4d0ull
-                 > (t), x); //x-h*t
-      x = oneminus(((-(x*c)/(T(2)-c))-x));     
+      return bitwise_shl(T(1), xx);     
     }
-    auto c = ldexp(x, k);
-    c = if_else(is_less_equal(xx, Minlog2<T>()), eve::zero_, c);
-    c = if_else(is_greater_equal(xx, Maxlog2<T>()), Inf<T>(), c);
-    if constexpr(eve::platform::supports_nans)
-      return if_else(is_nan(xx), xx, c);
-    else
-      return c;
   }
 }
 

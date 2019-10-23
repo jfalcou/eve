@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_MAXLOG2_HPP_INCLUDED
-#define EVE_CONSTANT_MAXLOG2_HPP_INCLUDED
+#ifndef EVE_CONSTANT_MINLOG10_HPP_INCLUDED
+#define EVE_CONSTANT_MINLOG10_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -18,29 +18,25 @@
 #include <eve/as.hpp>
 /*
    if T is double
-    r = 1023.0;
+      r = 308.2547155599167;
     else if T is float
-    r = 127.0;
+      r = 38.23080825805664;
 */
 namespace eve
 {
-  EVE_MAKE_CALLABLE(maxlog2_, maxlog2_);
+  EVE_MAKE_CALLABLE(minlog10_, minlog10_);
 
   template<typename T>
-  constexpr EVE_FORCEINLINE auto Maxlog2(as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto Minlog10(as_<T> const & = {}) noexcept
+  requires(T, detail::behave_as<detail::floating_point, T>)
   {
     using t_t = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42fe0000U>();
-    if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x408ff80000000000ULL>();
-    if constexpr(std::is_integral_v<t_t>)
-    {
-      if constexpr(std::is_signed_v<t_t>) return T(sizeof(t_t)-2);
-      else return T(sizeof(t_t)-1);            
-    }
+    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0xc2179999U>();
+    if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc0734413509f79feULL>();
   }
 
-    EVE_MAKE_NAMED_CONSTANT(maxlog2_, Maxlog2);
+  EVE_MAKE_NAMED_CONSTANT(minlog10_, Minlog10);
 }
 
 #endif
