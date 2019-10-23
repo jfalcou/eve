@@ -15,7 +15,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/ifrexp.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 #include <tuple>
@@ -34,7 +34,7 @@ namespace eve::detail
     if constexpr(is_vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
-      return  std::tuple<T, T>{m, wide_cast(e, as<value_type_t<T>>())};
+      return  std::tuple<T, T>{m, convert(e, as<value_type_t<T>>())};
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ namespace eve::detail
     if constexpr(is_vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
-      return  std::tuple<T, T>{m, wide_cast(e, as<value_type_t<T>>())};
+      return  std::tuple<T, T>{m, convert(e, as<value_type_t<T>>())};
   }
 }
 

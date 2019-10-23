@@ -10,8 +10,6 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  using eve::pedantic_;
-
   wide_ft pf = {0.0f,
                 1.0f,
                 -1.0f,
@@ -23,8 +21,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                      " << pf << '\n'
-            << "-> eve::exp(pf) =            " << eve::exp(pf) << '\n'
-            << "-> eve::pedantic_(eve::exp)(pf) = " << eve::pedantic_(eve::exp)(pf) << '\n';
+            << "-> eve::exp(pf) =            " << eve::exp(pf) << '\n'; 
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
@@ -33,7 +30,6 @@ int main()
             << "<- xf =                      " << xf << '\n'
             << "-> eve::exp(xf) =            " << eve::exp(xf) << '\n'
             << "<- yf =                      " << yf << '\n'
-            << "-> eve::exp(yf) =            " << eve::exp(yf) << '\n'
-            << "-> eve::pedantic_(eve::exp)(yf) = " << eve::pedantic_(eve::exp)(yf) << '\n';
+            << "-> eve::exp(yf) =            " << eve::exp(yf) << '\n'; 
   return 0;
 }
