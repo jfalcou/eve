@@ -15,7 +15,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/tags.hpp>
-#include <eve/function/wide_cast.hpp>
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_shl.hpp>
 #include <eve/function/rshl.hpp>

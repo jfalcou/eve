@@ -12,7 +12,6 @@
 list_tests("scalar/toint"          "core" ${real_types})
 list_tests("scalar/tofloat"        "core" ${integral_types})
 list_tests("scalar/touint"          "core" ${real_types})
-list_tests("scalar/binarize_c"     "core" ${all_types})    
 list_tests("scalar/exponentbits"     "core" ${real_types})    
 list_tests("scalar/binarize_c"     "core" ${all_types})    
 list_tests("scalar/ldexp"   "core" ${real_types})
