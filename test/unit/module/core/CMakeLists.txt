@@ -73,8 +73,8 @@ make_all_units(ROOT core NAME hypot           ARCH scalar simd TYPES ${real_type
 
 # make_units("if_else/regular"                "core" ${all_types})
 # make_units("inc/regular"                    "core" ${all_types})
-# make_units("indeg/regular"                  "core" ${real_types})
-# make_units("inpi/regular"                   "core" ${real_types})
+make_all_units(ROOT core NAME indeg           ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME inpi            ARCH scalar simd TYPES ${real_types}    )
 
 # make_units("is_denormal/regular"            "core" ${all_types})
 # make_units("is_equal/regular"               "core" ${all_types})
