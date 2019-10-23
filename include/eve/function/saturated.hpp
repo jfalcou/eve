@@ -11,26 +11,28 @@
 #ifndef EVE_FUNCTION_SATURATED_HPP_INCLUDED
 #define EVE_FUNCTION_SATURATED_HPP_INCLUDED
 
-#include <type_traits>
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct saturated_type
+  struct saturated_type : decorator_
   {
     template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return [f](auto const &... args) { return f(saturated_type{}, args...); };
+      return  [f](auto&&... args)
+              {
+                return f(saturated_type{}, std::forward<decltype(args)>(args)...);
+              };
     }
   };
 
   //================================================================================================
   // Function decorator - saturated mode
-  template<typename Function>
-  constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
+  template<typename Function> constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
   {
     return saturated_type{}(f);
   }

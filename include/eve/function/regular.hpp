@@ -11,26 +11,28 @@
 #ifndef EVE_FUNCTION_REGULAR_HPP_INCLUDED
 #define EVE_FUNCTION_REGULAR_HPP_INCLUDED
 
-#include <type_traits>
+#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct regular_type
+  struct regular_type : decorator_
   {
     template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) noexcept
+    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return [f](auto const &... args) { return f(args...); };
+      return  [f](auto&&... args)
+              {
+                return f(std::forward<decltype(args)>(args)...);
+              };
     }
   };
-  
+
   //================================================================================================
   // Function decorator - regular mode
-  template<typename Function>
-  constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
+  template<typename Function> constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
   {
     return regular_type{}(f);
   }

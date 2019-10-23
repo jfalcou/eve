@@ -30,26 +30,58 @@
           : conditionnal_support<tag::TAG, eve::supports_conditionnal<tag::TAG>::value>            \
     {                                                                                              \
       using tag_type = tag::TAG;                                                                   \
-      template<typename... Args>                                                                   \
-      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
-          -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...))              \
+                                                                                                   \
+      template<typename Arg, typename... Args>                                                     \
+      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept           \
+          -> decltype ( TAG(delay_t{}, EVE_CURRENT_API{},                                          \
+                        std::forward<Arg>(d), std::forward<Args>(args)...)                         \
+                      )                                                                            \
       {                                                                                            \
-        check(delay_t{}, ::eve::detail::types<tag::TAG>{}, std::forward<Args>(args)...);           \
-        return TAG(delay_t{}, EVE_CURRENT_API{}, std::forward<Args>(args)...);                     \
+        if constexpr( is_decorator<std::decay_t<Arg>>::value )                                     \
+        {                                                                                          \
+          check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag::TAG>{},                   \
+                  std::forward<Args>(args)...                                                      \
+                );                                                                                 \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+          check ( delay_t{}, ::eve::detail::types<tag::TAG>{}, std::forward<Arg>(d),               \
+                  std::forward<Args>(args)...                                                      \
+                );                                                                                 \
+        }                                                                                          \
+                                                                                                   \
+        return TAG(delay_t{},EVE_CURRENT_API{},std::forward<Arg>(d),std::forward<Args>(args)...);  \
       };                                                                                           \
     };                                                                                             \
                                                                                                    \
-    template<typename Mode, typename Dummy>                                                        \
-    struct callable_object<tag::TAG, Mode, Dummy>                                                  \
+    template<typename Condition, typename Dummy>                                                   \
+    struct callable_object<tag::TAG, Condition, Dummy>                                             \
     {                                                                                              \
-      Mode state_;                                                                                 \
+      Condition state_;                                                                            \
       using tag_type = tag::TAG;                                                                   \
-      template<typename... Args>                                                                   \
-      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
-          -> decltype(TAG(delay_t{}, EVE_CURRENT_API{}, Mode{}, std::forward<Args>(args)...))      \
+                                                                                                   \
+      template<typename Arg, typename... Args>                                                     \
+      EVE_FORCEINLINE constexpr auto operator()(Arg&& d, Args &&... args) const noexcept           \
+          -> decltype ( TAG(delay_t{}, EVE_CURRENT_API{},                                          \
+                         state_, std::forward<Arg>(d), std::forward<Args>(args)...)                \
+                      )                                                                            \
       {                                                                                            \
-        check(delay_t{}, ::eve::detail::types<Mode, tag::TAG>{}, std::forward<Args>(args)...);     \
-        return TAG(delay_t{}, EVE_CURRENT_API{}, state_, std::forward<Args>(args)...);             \
+        if constexpr( is_decorator<std::decay_t<Arg>>::value )                                     \
+        {                                                                                          \
+          check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag::TAG>{},                   \
+                  state_, std::forward<Args>(args)...                                              \
+                );                                                                                 \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+          check ( delay_t{}, ::eve::detail::types<tag::TAG>{},std::forward<Arg>(d),                \
+                  state_, std::forward<Args>(args)...                                              \
+                );                                                                                 \
+        }                                                                                          \
+                                                                                                   \
+        return TAG( delay_t{},EVE_CURRENT_API{}, state_,                                           \
+                    std::forward<Arg>(d),std::forward<Args>(args)...                               \
+                  );                                                                               \
       };                                                                                           \
     };                                                                                             \
   }                                                                                                \
@@ -82,30 +114,45 @@
   }                                                                                                \
 /**/
 
-// basic type to support delayed calls
 namespace eve
 {
+  //================================================================================================
+  // decorator mark-up and detection
+  struct decorator_ {};
+  template<typename ID> struct is_decorator : std::is_base_of<decorator_,ID> {};
+
   namespace detail
   {
+    //==============================================================================================
+    // basic type to support delayed calls
     struct delay_t
     {
     };
 
+    //==============================================================================================
+    // Helper for conditional function negation optimization
     template<typename T>
     struct not_t
     {
       T value;
     };
 
+    //==============================================================================================
     // Extension point for centralizing asserts & static_asserts
     template<typename Tag, typename... Args>
     void check(delay_t const&, Tag const&, Args const&... ) {}
 
-    template<typename Tag, typename Mode = void, typename Enabler = void>
+    //==============================================================================================
+    // callable_object forward declaration
+    template< typename Tag,
+              typename Condition = void,
+              typename Dummy     = void
+            >
     struct callable_object;
 
+    //==============================================================================================
     // Extension point for controlling supports for foo[cond](...) calls
-    template<typename Tag, bool isSUpported>
+    template<typename Tag, bool isSupported>
     struct conditionnal_support
     {
       template<typename Condition>
@@ -129,6 +176,7 @@ namespace eve
     template<typename Tag> struct conditionnal_support<Tag,false> {};
   }
 
+  //==============================================================================================
   // Traits for foo[cond](...) supports
   template<typename Tag>
   struct supports_conditionnal : std::true_type
