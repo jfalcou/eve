@@ -8,34 +8,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef INPI_HPP
-#define INPI_HPP
-
 #include <eve/function/inpi.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
-#include <eve/constant/zero.hpp>
-#include <type_traits>
+#include <tts/tests/precision.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check inpi return type")
+TTS_CASE("Check eve::inpi return type")
 {
-  TTS_EXPR_IS(eve::inpi(Type(0)),  Type);
+  TTS_EXPR_IS(eve::inpi(Type(0)), (Type));
 }
 
 TTS_CASE("Check eve::inpi behavior")
 {
-  TTS_ULP_EQUAL(eve::inpi(-eve::Pi<Type>()), -Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(-eve::Pio_2<Type>()), -Type(0.5), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(-eve::Pio_4<Type>()), -Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(eve::Pi<Type>()), Type(1), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(eve::Pio_2<Type>()), Type(0.5), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(eve::Pio_4<Type>()), Type(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::inpi(eve::Zero<Type>()), eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::inpi(-eve::Pi<Type>()   ), (Type(-1    )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi(-eve::Pi<Type>()/3 ), (Type(-1./3.)), 0.5);
+  TTS_ULP_EQUAL(eve::inpi(-eve::Pio_2<Type>()), (Type(-0.5  )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi(-eve::Pio_4<Type>()), (Type(-0.25 )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi( (Type(0))         ), (Type( 0    )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi( eve::Pio_4<Type>()), (Type( 0.25 )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi( eve::Pio_2<Type>()), (Type( 0.5  )), 0.5);
+  TTS_ULP_EQUAL(eve::inpi( eve::Pi<Type>()/3 ), (Type( 1./3.)), 0.5);
+  TTS_ULP_EQUAL(eve::inpi( eve::Pi<Type>()   ), (Type( 1    )), 0.5);
 }
-
-#endif
