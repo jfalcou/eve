@@ -20,7 +20,6 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/nearest.hpp>
@@ -49,7 +48,6 @@ namespace eve::detail
       using vt_t =  value_type_t<T>;
       if (is_greater_equal(x, Maxlog2<T>())) return Inf<T>();
       if (is_less_equal(x, Minlog2<T>())) return Zero<T>();
-      if constexpr(eve::platform::supports_nans) if (is_nan(x)) return x;
       auto k = nearest(x);
       x = x-k;
       if constexpr(std::is_same_v<vt_t, float>)

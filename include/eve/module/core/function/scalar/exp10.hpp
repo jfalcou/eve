@@ -20,7 +20,6 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/nearest.hpp>
@@ -57,8 +56,6 @@ namespace eve::detail
       const T Log10_2lo =  Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
       if (is_greater_equal(x, Maxlog10<T>())) return Inf<T>();
       if (is_less_equal(x, Minlog10<T>())) return Zero<T>();
-      if constexpr(eve::platform::supports_nans) if (is_nan(x)) return x;
-      // reduce
       auto c = nearest(Invlog10_2<T>()*x);
       auto k = it_t(c);
       x = fnma(c, Log10_2hi, x); //x-c*L

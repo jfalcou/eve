@@ -82,13 +82,9 @@ namespace eve::detail
                >(t), x); //x-h*t
       c = oneminus((((lo-(x*c)/(T(2)-c))-hi)));
     }
-    x =  eve::ldexp(c, k);    
+    x =  eve::ldexp(c, k);
     c = if_else(is_less_equal(xx, Minlog<T>()), eve::zero_, x);
-    c = if_else(is_greater_equal(xx, Maxlog<T>()), Inf<T>(), x);
-    if constexpr(eve::platform::supports_nans)
-      return if_else(is_nan(xx), xx, x);
-    else
-      return c;
+    return if_else(is_greater_equal(xx, Maxlog<T>()), Inf<T>(), c);
   }
 }
 
