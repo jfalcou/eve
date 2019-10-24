@@ -7,8 +7,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EXP2_HPP
-#define EXP2_HPP
+#ifndef EXP_HPP
+#define EXP_HPP
 
 #include <eve/function/exp.hpp>
 #include <eve/wide.hpp>
@@ -16,6 +16,13 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
+#include <eve/platform.hpp>
 #include <cmath>
 #include <iomanip>
 
@@ -36,6 +43,14 @@ TTS_CASE_TPL("Check exp behavior on wide",
   TTS_ULP_EQUAL(eve::exp(t_t(2)), t_t(std::exp(Type(2))), 0.5);
   TTS_ULP_EQUAL(eve::exp(t_t(-2)),t_t(std::exp(Type(-2))), 0.5);
   TTS_ULP_EQUAL(eve::exp(t_t(0)), t_t(Type(1)), 0.5);
+  if constexpr(eve::platform::supports_invalids)
+  {
+    TTS_IEEE_EQUAL(eve::exp(eve::Nan<t_t>()), eve::Nan<t_t>()); 
+    TTS_IEEE_EQUAL(eve::exp(eve::Inf<t_t>()), eve::Inf<t_t>());
+    TTS_IEEE_EQUAL(eve::exp(eve::Minf<t_t>()), eve::Zero<t_t>());
+  }
+  TTS_IEEE_EQUAL(eve::exp(eve::Maxlog<t_t>()), eve::Inf<t_t>());
+  TTS_IEEE_EQUAL(eve::exp(eve::Minlog<t_t>()), eve::Zero<t_t>());
   
   for(int i=1; i < 70; i *= 3)
   {

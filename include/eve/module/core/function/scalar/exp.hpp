@@ -53,8 +53,6 @@ namespace eve::detail
     const T Invlog_2=  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
     if (is_greater_equal(x, Maxlog<T>())) return Inf<T>();
     if (is_less_equal(x, Minlog<T>())) return Zero<T>();
-    if constexpr(eve::platform::supports_nans) if (is_nan(x)) return x;
-    // reduce
     auto c = nearest(Invlog_2*x);
     auto k = it_t(c);
     x = fnma(c, Log_2hi, x); //x-c*L

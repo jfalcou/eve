@@ -18,7 +18,6 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_nan.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/nearest.hpp>
@@ -90,11 +89,7 @@ namespace eve::detail
       }
       c = ldexp(c, k);
       c = if_else(is_less_equal(xx, Minlog10<T>()), eve::zero_, c);
-      c = if_else(is_greater_equal(xx, Maxlog10<T>()), Inf<T>(), c);
-      if constexpr(eve::platform::supports_nans)
-        return if_else(is_nan(xx), xx, c);
-      else
-        return c;
+      return if_else(is_greater_equal(xx, Maxlog10<T>()), Inf<T>(), c);
     }
     else
     {
