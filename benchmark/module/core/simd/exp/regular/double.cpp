@@ -13,6 +13,6 @@
 
 #define TYPE()        eve::wide<double>; 
 #define FUNCTION()    eve::exp
-#define SAMPLES(N)    random<T>(N,-100.,100.)
+#define SAMPLES(N)    random<T>(N,-300.,300.)
 
 #include "bench.hpp"

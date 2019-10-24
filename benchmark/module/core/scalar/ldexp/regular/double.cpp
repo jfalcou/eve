@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/exp.hpp>
+#include <eve/function/ldexp.hpp>
 
-#define TYPE()        float
-#define FUNCTION()    eve::exp
-#define SAMPLES(N)    random<T>(N,-80.0f,80.0f)
+#define TYPE()        double
+#define FUNCTION()    eve::ldexp
+#define SAMPLES(N)    random<T>(N,-100.,100.),random<std::int64_t>(N,-100,100)
 
 #include "bench.hpp"

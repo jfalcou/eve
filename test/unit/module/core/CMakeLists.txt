@@ -45,8 +45,11 @@ list_tests("scalar/cbrt"   "core" ${real_types})
 list_tests("scalar/exp"   "core" ${real_types})
 list_tests("scalar/exp2"   "core" ${all_types})
 list_tests("scalar/exp10"   "core" ${all_types})
+<<<<<<< HEAD
 list_tests("scalar/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
+=======
+>>>>>>> some benches + suppressing expbis test
 list_tests("scalar/frexp"   "core" ${real_types})
 >>>>>>> frexp with tests
 list_tests("scalar/abs"     "core" ${all_types})
@@ -253,8 +256,11 @@ list_tests("simd/cbrt"   "core" ${real_types})
 list_tests("simd/exp"   "core" ${real_types})
 list_tests("simd/exp2"   "core" ${all_types})
 list_tests("simd/exp10"   "core" ${all_types})
+<<<<<<< HEAD
 list_tests("simd/expbis"   "core" ${real_types})
 >>>>>>> exp and expbis to test another algo
+=======
+>>>>>>> some benches + suppressing expbis test
 list_tests("simd/frexp"   "core" ${real_types})
 >>>>>>> frexp with tests
 add_unit_test( "core" simd/bitwise_cast.cpp )

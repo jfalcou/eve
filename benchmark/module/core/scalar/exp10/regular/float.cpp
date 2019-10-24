@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_EXPBIS_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_EXPBIS_HPP_INCLUDED
+#include <eve/function/exp2.hpp>
 
-#include <eve/detail/overload.hpp>
+#define TYPE()        float
+#define FUNCTION()    eve::exp10
+#define SAMPLES(N)    random<T>(N,-30.0f,30.0f)
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(expbis_, expbis);
-}
-
-#endif
+#include "bench.hpp"

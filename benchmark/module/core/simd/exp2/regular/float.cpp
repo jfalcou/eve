@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXPBIS_HPP_INCLUDED
-#define EVE_FUNCTION_EXPBIS_HPP_INCLUDED
+#include <eve/function/exp2.hpp>
+#include <eve/wide.hpp>
 
-#include <eve/function/scalar/expbis.hpp>
-#include <eve/function/simd/expbis.hpp>
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::exp2
+#define SAMPLES(N)    random<T>(N,-100.0f,100.0f)
 
-#endif
+#include "bench.hpp"
