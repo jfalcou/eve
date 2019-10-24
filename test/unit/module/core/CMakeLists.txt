@@ -44,6 +44,7 @@ list_tests("scalar/cbrt"   "core" ${real_types})
 =======
 list_tests("scalar/exp"   "core" ${real_types})
 list_tests("scalar/exp2"   "core" ${all_types})
+list_tests("scalar/expm1"   "core" ${real_types})
 list_tests("scalar/exp10"   "core" ${all_types})
 <<<<<<< HEAD
 list_tests("scalar/expbis"   "core" ${real_types})
@@ -255,6 +256,7 @@ list_tests("simd/cbrt"   "core" ${real_types})
 =======
 list_tests("simd/exp"   "core" ${real_types})
 list_tests("simd/exp2"   "core" ${all_types})
+list_tests("simd/expm1"   "core" ${real_types})
 list_tests("simd/exp10"   "core" ${all_types})
 <<<<<<< HEAD
 list_tests("simd/expbis"   "core" ${real_types})
