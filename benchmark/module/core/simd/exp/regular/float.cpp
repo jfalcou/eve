@@ -13,6 +13,6 @@
 
 #define TYPE()        eve::wide<float>
 #define FUNCTION()    eve::exp
-#define SAMPLES(N)    random<T>(N,-100.0f,100.0f)
+#define SAMPLES(N)    random<T>(N,-80.0f,80.0f)
 
 #include "bench.hpp"

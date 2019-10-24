@@ -2,15 +2,16 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
- 
+  Copyright 2019 Jean-Thierry LAPRESTE
+
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_EXPBIS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_EXPBIS_HPP_INCLUDED
+#include <eve/function/exp2.hpp>
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/expbis.hpp>
+#define TYPE()        double
+#define FUNCTION()    eve::exp10
+#define SAMPLES(N)    random<T>(N,-300.,300.)
 
-#endif
+#include "bench.hpp"
