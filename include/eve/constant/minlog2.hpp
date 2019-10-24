@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/detail/meta.hpp>
+#include <type_traits>
 #include <eve/as.hpp>
 /*
    if T is double
@@ -28,7 +29,6 @@ namespace eve
 
   template<typename T>
   constexpr EVE_FORCEINLINE auto Minlog2(as_<T> const & = {}) noexcept
-  requires(T, detail::behave_as<detail::floating_point, T>)
   {
     using t_t = detail::value_type_t<T>;
     
