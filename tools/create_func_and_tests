@@ -37,6 +37,6 @@ source $rootdir/tools/create_func_from_to $from $to
 source $rootdir/tools/create_simd_test_from_to $from $to
 source $rootdir/tools/create_scalar_test_from_to $from $to
 source $rootdir/tools/create_doc_test_from_to $from $to
-source $rootdir/tools/create_bench_from_to $from $to
+#source $rootdir/tools/create_bench_from_to $from $to
 #source $rootdir/tools/is_purely_common $to
 
