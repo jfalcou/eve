@@ -137,12 +137,10 @@ make_all_units(ROOT core NAME oneminus  ARCH scalar simd TYPES ${all_types} )
 # make_units("popcnt/regular"                 "core" ${integral_types})
 
 # make_units("rec/regular"                    "core" ${all_types})
-# make_units("round/regular"                  "core" ${all_types})
+make_all_units(ROOT core NAME round  ARCH scalar simd TYPES ${all_types} )
 # make_units("rshl/regular"                   "core" ${integral_types})
 # make_units("rshr/regular"                   "core" ${integral_types})
 # make_units("rsqrt/regular"                  "core" ${real_types})
-
-make_all_units(ROOT core NAME trunc    ARCH scalar simd TYPES ${all_types} )
 
 # make_units("saturate/regular"               "core" ${all_types})
 # make_units("shl/regular"                    "core" ${integral_types})
@@ -154,6 +152,7 @@ make_all_units(ROOT core NAME trunc    ARCH scalar simd TYPES ${all_types} )
 # make_units("sqrt
 # make_units("sub
 
+make_all_units(ROOT core NAME trunc    ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_plus    ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_minus   ARCH scalar simd TYPES ${all_types} )
 

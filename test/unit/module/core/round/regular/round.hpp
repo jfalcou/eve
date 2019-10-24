@@ -8,41 +8,31 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef ROUND_HPP
-#define ROUND_HPP
-
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
-#include <eve/tags.hpp>
-#include <eve/function/ceil.hpp>
+#include <eve/function/round.hpp>
+#include <eve/function/nearest.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/round.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
+#include <eve/function/ceil.hpp>
+#include <eve/tags.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check round return type") { TTS_EXPR_IS(eve::round(Type(0)), Type); }
+TTS_CASE("Check eve::round return type")
+{
+  TTS_EXPR_IS(eve::round(Type(0)), (Type));
+}
 
 TTS_CASE("Check eve::round behavior")
 {
-  TTS_EQUAL(eve::round(eve::One<Type>(), eve::upward_), eve::ceil(eve::One<Type>()));
-  TTS_EQUAL(eve::round(eve::One<Type>(), eve::downward_), eve::floor(eve::One<Type>()));
-  TTS_EQUAL(eve::round(eve::One<Type>(), eve::toward_zero_), eve::trunc(eve::One<Type>()));
-  TTS_EQUAL(eve::round(eve::One<Type>(), eve::to_nearest_), eve::nearest(eve::One<Type>()));
-  TTS_EQUAL(eve::round(eve::One<Type>()), eve::nearest(eve::One<Type>()));
+  TTS_EQUAL(eve::round((Type(1.7)), eve::upward_      ), eve::ceil   ((Type(1.7))) );
+  TTS_EQUAL(eve::round((Type(1.7)), eve::downward_    ), eve::floor  ((Type(1.7))) );
+  TTS_EQUAL(eve::round((Type(1.7)), eve::toward_zero_ ), eve::trunc  ((Type(1.7))) );
+  TTS_EQUAL(eve::round((Type(1.7)), eve::to_nearest_  ), eve::nearest((Type(1.7))) );
+  TTS_EQUAL(eve::round((Type(1.7))                    ), eve::nearest((Type(1.7))) );
 
-  if constexpr(std::is_floating_point_v<Type>)
-  {
-    TTS_EQUAL(eve::round(eve::Half<Type>(), eve::upward_), eve::ceil(eve::Half<Type>()));
-    TTS_EQUAL(eve::round(eve::Half<Type>(), eve::downward_), eve::floor(eve::Half<Type>()));
-    TTS_EQUAL(eve::round(eve::Half<Type>(), eve::toward_zero_), eve::trunc(eve::Half<Type>()));
-    TTS_EQUAL(eve::round(eve::Half<Type>(), eve::to_nearest_), eve::nearest(eve::Half<Type>()));
-    TTS_EQUAL(eve::round(eve::Half<Type>()), eve::nearest(eve::Half<Type>()));
-  }
+  TTS_EQUAL(eve::round((Type(1.3)), eve::upward_      ), eve::ceil   ((Type(1.3))) );
+  TTS_EQUAL(eve::round((Type(1.3)), eve::downward_    ), eve::floor  ((Type(1.3))) );
+  TTS_EQUAL(eve::round((Type(1.3)), eve::toward_zero_ ), eve::trunc  ((Type(1.3))) );
+  TTS_EQUAL(eve::round((Type(1.3)), eve::to_nearest_  ), eve::nearest((Type(1.3))) );
+  TTS_EQUAL(eve::round((Type(1.3))                    ), eve::nearest((Type(1.3))) );
 }
-
-#endif
