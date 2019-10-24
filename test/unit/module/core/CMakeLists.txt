@@ -70,9 +70,8 @@ make_all_units(ROOT core NAME gather          ARCH simd        TYPES ${all_types
 make_all_units(ROOT core NAME horn            ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME horn1           ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME hypot           ARCH scalar simd TYPES ${real_types}    )
-
 make_all_units(ROOT core NAME if_else         ARCH scalar simd TYPES ${all_types}     )
-#make_all_units(ROOT core NAME inc             ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME inc             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME indeg           ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME inpi            ARCH scalar simd TYPES ${real_types}    )
 
