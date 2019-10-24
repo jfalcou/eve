@@ -40,8 +40,8 @@ TTS_CASE("Check raw_(eve::exp2) behavior")
       TTS_IEEE_EQUAL(eve::exp2(eve::Inf<Type>()), eve::Inf<Type>());
       TTS_IEEE_EQUAL(eve::exp2(eve::Minf<Type>()), eve::Zero<Type>());
     }
-    TTS_IEEE_EQUAL(eve::exp2(eve::Maxlog<Type>()), eve::Inf<Type>());
-    TTS_IEEE_EQUAL(eve::exp2(eve::Minlog<Type>()), eve::Zero<Type>());
+    TTS_IEEE_EQUAL(eve::exp2(eve::Maxlog2<Type>()), eve::Inf<Type>());
+    TTS_IEEE_EQUAL(eve::exp2(eve::Minlog2<Type>()), eve::Zero<Type>());
     
     for(int i=1; i < eve::Maxlog2<Type>(); i *= 3)
     {
@@ -51,7 +51,7 @@ TTS_CASE("Check raw_(eve::exp2) behavior")
   }
   else 
   {
-    for(unsigned int i=0; i < eve::Maxlog2<Type>(); ++i)
+    for(Type i=0; i < eve::Maxlog2<Type>(); ++i)
     {
       TTS_EQUAL(eve::exp2(Type(i)), Type(std::pow(2, Type(i))));
     }
