@@ -27,12 +27,13 @@ namespace eve
     template<typename T, typename S>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::exp2_), T const& v, S const& s)
     {
-      if constexpr(std::is_integral_v<value_type_t<T>>)
+      using vt_t = value_type_t<T>; 
+      if constexpr(std::is_integral_v<vt_t>)
       {
         EVE_ASSERT( all(is_gez(s)),
                     "[eve::exp2] - with integral entries the parameter element(s) must be greater then 0"
                   );
-        EVE_ASSERT( all(is_less(s, sizeof(vt_t)*8-std::is_signed_v<value_type_t<T>)),
+        EVE_ASSERT( all(is_less(s, sizeof(vt_t)*8-std::is_signed_v<vt_t>)),
                     "[eve::exp2]  - overflow caused by too large integral entry"
                   );
       }
