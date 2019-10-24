@@ -51,8 +51,8 @@ TTS_CASE_TPL("Check abs behavior on wide",
       TTS_IEEE_EQUAL(eve::exp10(eve::Inf<t_t>()), eve::Inf<t_t>());
       TTS_IEEE_EQUAL(eve::exp10(eve::Minf<t_t>()), eve::Zero<t_t>());
     }
-    TTS_IEEE_EQUAL(eve::exp10(eve::Maxlog2<t_t>()), eve::Inf<t_t>());
-    TTS_IEEE_EQUAL(eve::exp10(eve::Minlog2<t_t>()), eve::Zero<t_t>());
+    TTS_IEEE_EQUAL(eve::exp10(eve::Maxlog10<t_t>()), eve::Inf<t_t>());
+    TTS_IEEE_EQUAL(eve::exp10(eve::Minlog10<t_t>()), eve::Zero<t_t>());
       
     for(int i=1; i < eve::Maxlog10<Type>(); i *= 3)
     {
