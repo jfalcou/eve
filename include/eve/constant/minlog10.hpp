@@ -28,12 +28,12 @@ namespace eve
 
   template<typename T>
   constexpr EVE_FORCEINLINE auto Minlog10(as_<T> const & = {}) noexcept
-  requires(T, detail::behave_as<detail::floating_point, T>)
   {
     using t_t = detail::value_type_t<T>;
 
     if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0xc2179999U>();
     if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc0734413509f79feULL>();
+    if constexpr(std::is_integral_v<t_t>) return T(0); 
   }
 
   EVE_MAKE_NAMED_CONSTANT(minlog10_, Minlog10);
