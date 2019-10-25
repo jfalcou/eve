@@ -146,12 +146,16 @@ make_all_units(ROOT core NAME round           ARCH scalar simd TYPES ${all_types
 # make_units("shl/regular"                    "core" ${integral_types})
 # make_units("shr/regular"                    "core" ${integral_types})
 # make_units("sign/regular"                   "core" ${all_types})
-# make_units("signnz/regular"                 "core" ${all_types})
+make_all_units(ROOT core NAME signnz          ARCH scalar simd TYPES ${all_types}  )
 make_all_units(ROOT core NAME sqr             ARCH scalar simd TYPES ${all_types}  )
 make_all_units(ROOT core NAME sqr_abs         ARCH scalar simd TYPES ${real_types} )
 make_all_units(ROOT core NAME sqrt            ARCH scalar simd TYPES ${real_types} )
 # make_units("sub
 
+make_all_units(ROOT core NAME trunc           ARCH scalar simd TYPES ${all_types} )
+# make_all_units(ROOT core NAME tofloat           ARCH scalar simd TYPES ${all_types} )
+# make_all_units(ROOT core NAME toint           ARCH scalar simd TYPES ${all_types} )
+# make_all_units(ROOT core NAME touint           ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME trunc           ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_plus      ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_minus     ARCH scalar simd TYPES ${all_types} )
