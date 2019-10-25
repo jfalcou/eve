@@ -148,7 +148,7 @@ make_all_units(ROOT core NAME sqrt            ARCH scalar simd TYPES ${real_type
 # make_units("sub
 make_all_units(ROOT core NAME trunc           ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME tofloat         ARCH scalar simd TYPES ${all_types} )
-# make_all_units(ROOT core NAME toint           ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME toint           ARCH scalar simd TYPES ${all_types} )
 # make_all_units(ROOT core NAME touint           ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_plus      ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_minus     ARCH scalar simd TYPES ${all_types} )
