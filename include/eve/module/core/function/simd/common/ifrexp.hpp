@@ -25,6 +25,7 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/bitwise_or.hpp>
+#include <eve/function/combine.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp> 
 #include <eve/function/is_denormal.hpp>
@@ -55,7 +56,13 @@ namespace eve::detail
   requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(raw_(eve::ifrexp), a0); 
-    else if constexpr(is_aggregated_v<ABI> ) return aggregate(raw_(eve::ifrexp), a0);
+    else if constexpr(is_aggregated_v<ABI> )
+    {
+      auto  [lo, hi] = a0.slice();
+      auto  [xhi, ehi]   = raw_(ifrexp)(hi);
+      auto  [xlo, elo]   = raw_(ifrexp)(lo);
+      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+    }
     else
     {
       using t_t = wide<T, N, ABI>; 
@@ -74,7 +81,13 @@ namespace eve::detail
   requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(eve::ifrexp, a0); 
-    else if constexpr(is_aggregated_v<ABI> ) return aggregate(eve::ifrexp, a0);
+    else if constexpr(is_aggregated_v<ABI> ) 
+    {
+      auto [lo, hi] = a0.slice();
+      auto [xhi, ehi]   = ifrexp(hi);
+      auto [xlo, elo]   = ifrexp(lo);
+      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+    }
     else
     {
       using t_t = wide<T, N, ABI>; 
@@ -94,7 +107,13 @@ namespace eve::detail
   requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(pedantic_(eve::ifrexp), a0); 
-    else if constexpr(is_aggregated_v<ABI> ) return aggregate(pedantic_(eve::ifrexp), a0);
+    else if constexpr(is_aggregated_v<ABI> ) 
+    {
+      auto [lo, hi] = a0.slice();
+      auto [xhi, ehi]   = pedantic_(ifrexp)(hi);
+      auto [xlo, elo]   = pedantic_(ifrexp)(lo);
+      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
+    }
     else
     {
       using t_t = wide<T, N, ABI>; 
