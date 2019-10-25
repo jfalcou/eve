@@ -26,13 +26,11 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqr.hpp>
-//#include <eve/function/toint.hpp> TODO
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/zero.hpp>
-//#include <eve/module/core/detail/generic/exp_kernel.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
