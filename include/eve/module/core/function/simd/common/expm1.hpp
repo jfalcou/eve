@@ -50,58 +50,64 @@ namespace eve::detail
                                        , T xx) noexcept
   requires(T, behave_as<floating_point, T>, vectorized<T>)
   {
-    using v_t = value_type_t<T>; 
-    using i_t = as_integer_t<T>;
-    const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-    const T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-    const T Invlog_2 =  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
-    T k  = nearest(Invlog_2*xx);
-    if constexpr(std::is_same_v<v_t, float>)
-    {
-      T x = fnma(k, Log_2hi, xx);
-      x =  fnma(k, Log_2lo, x);
-      T hx  = x*Half<T>();
-      T hxs = x*hx;
-      T r1 = horn<T,
-        0X3F800000U, // 1
-        0XBD08887FU, // -3.3333298E-02
-        0X3ACF6DB4U  // 1.5825541E-03
-        > (hxs);
-      T t  = fnma(r1, hx, T(3));
-      T e  = hxs*((r1-t)/(T(6) - x*t));
-      e  = fms(x, e, hxs);
-      i_t ik =  toint(k);
-      T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<v_t>()), as<T>());
-      T y = oneminus(two2mk)-(e-x);
-      k = ldexp(y, ik);    
-    }
+    using t_abi = abi_type_t<T>;
+    if constexpr(is_emulated_v<t_abi> ) return map(eve::expm1, xx); 
+    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::expm1, xx);
     else
     {
-      T hi = fnma(k, Log_2hi, xx);
-      T lo = k*Log_2lo;
-      T x  = hi-lo;
-      T hxs = sqr(x)*Half<T>();
-      T r1 = horn<T,
-        0X3FF0000000000000ULL,
-        0XBFA11111111110F4ULL,
-        0X3F5A01A019FE5585ULL,
-        0XBF14CE199EAADBB7ULL,
-        0X3ED0CFCA86E65239ULL,
-        0XBE8AFDB76E09C32DULL
-        > (hxs);
-      T t  = T(3)-r1*Half<T>()*x;
-      T e  = hxs*((r1-t)/(T(6) - x*t));
-      T c = (hi-x)-lo;
-      e  = (x*(e-c)-c)-hxs;
-      i_t ik =  toint(k);
-      T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
-      T ct1= oneminus(two2mk)-(e-x);
-      T ct2= inc((x-(e+two2mk)));
-      T y = if_else((k < T(20)),ct1,ct2);
-      k = ldexp(y, ik);
-    } 
-    k = if_else (is_greater_equal(xx, Maxlog<T>()), Inf<T>(), k);
-    return if_else (is_less_equal(xx, Logeps<T>()), eve::mone_, k);
+      using v_t = value_type_t<T>; 
+      using i_t = as_integer_t<T>;
+      const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
+      const T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+      const T Invlog_2 =  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
+      T k  = nearest(Invlog_2*xx);
+      if constexpr(std::is_same_v<v_t, float>)
+      {
+        T x = fnma(k, Log_2hi, xx);
+        x =  fnma(k, Log_2lo, x);
+        T hx  = x*Half<T>();
+        T hxs = x*hx;
+        T r1 = horn<T,
+          0X3F800000U, // 1
+          0XBD08887FU, // -3.3333298E-02
+          0X3ACF6DB4U  // 1.5825541E-03
+          > (hxs);
+        T t  = fnma(r1, hx, T(3));
+        T e  = hxs*((r1-t)/(T(6) - x*t));
+        e  = fms(x, e, hxs);
+        i_t ik =  toint(k);
+        T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<v_t>()), as<T>());
+        T y = oneminus(two2mk)-(e-x);
+        k = ldexp(y, ik);    
+      }
+      else
+      {
+        T hi = fnma(k, Log_2hi, xx);
+        T lo = k*Log_2lo;
+        T x  = hi-lo;
+        T hxs = sqr(x)*Half<T>();
+        T r1 = horn<T,
+          0X3FF0000000000000ULL,
+          0XBFA11111111110F4ULL,
+          0X3F5A01A019FE5585ULL,
+          0XBF14CE199EAADBB7ULL,
+          0X3ED0CFCA86E65239ULL,
+          0XBE8AFDB76E09C32DULL
+          > (hxs);
+        T t  = T(3)-r1*Half<T>()*x;
+        T e  = hxs*((r1-t)/(T(6) - x*t));
+        T c = (hi-x)-lo;
+        e  = (x*(e-c)-c)-hxs;
+        i_t ik =  toint(k);
+        T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
+        T ct1= oneminus(two2mk)-(e-x);
+        T ct2= inc((x-(e+two2mk)));
+        T y = if_else((k < T(20)),ct1,ct2);
+        k = ldexp(y, ik);
+      } 
+      k = if_else (is_greater_equal(xx, Maxlog<T>()), Inf<T>(), k);
+      return if_else (is_less_equal(xx, Logeps<T>()), eve::mone_, k);
+    }
   }
 }
 
