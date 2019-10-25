@@ -33,6 +33,12 @@ namespace eve
     using type = wide<Type, Size>;
   };
 
+  template<template<class...> class Type, typename... Ts, typename Size>
+  struct as_wide< Type<Ts...>,Size>
+  {
+    using type = Type< typename as_wide<Ts,Size>::type... >;
+  };
+
   template<typename Type, typename Size>
   using as_wide_t = typename as_wide<Type, Size>::type;
 }

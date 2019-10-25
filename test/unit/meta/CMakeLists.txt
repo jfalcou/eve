@@ -10,4 +10,5 @@
 ## General meta tests
 add_unit_test( "meta" as_floating_point.cpp )
 add_unit_test( "meta" as_integer.cpp )
+add_unit_test( "meta" as_wide.cpp )
 add_unit_test( "meta" sign_of.cpp )
