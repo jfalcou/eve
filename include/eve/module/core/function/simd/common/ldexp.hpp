@@ -127,11 +127,11 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<t_abi>)
       {
-        return map( eve::ldexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+        return map( eve::ldexp, pdt, abi_cast<value_type_t<U>>(a), b );
       }
       else if constexpr( is_aggregated_v<t_abi>)
       {
-        return aggregate( eve::ldexp, pdt, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+        return aggregate( eve::ldexp, pdt, abi_cast<value_type_t<U>>(a), b );
       }
       else
       {
@@ -153,7 +153,7 @@ namespace eve::detail
           e = dec[test](e);
           e += Maxexponent<t_t>();
           e = bitwise_shl(e, Nbmantissabits<T>());
-          return b*bitwise_cast(e, as(t_t()))*f;
+          return a*bitwise_cast(e, as(t_t()))*f;
         }
         else  // U is floating point
         {
@@ -185,18 +185,14 @@ namespace eve::detail
           {
             auto denormal =  is_less(e, Minexponent<t_t>());
             e = sub[denormal]( e, Minexponent<t_t>());
-            f = if_else(denormal, Smallestposval<t_t>(), One<t_t>());
+            f = if_else(denormal, Smallestposval<t_t>(), One<T>());
           }
           auto test = is_equal(e, Limitexponent<t_t>());
           f = inc[test](f);
           e = dec[test](e);
           e += Maxexponent<t_t>();
-          e = bitwise_shl(e, Nbmantissabits<t_t>());
-          return b*bitwise_cast(e, as(t_t()))*f;
-          
-          auto ik =  convert(b, as<i_t>())+Maxexponent<t_t>();
-          ik = shl(ik, Nbmantissabits<t_t>());
-          return b*bitwise_cast(ik, as<T>());
+          e = bitwise_shl(e, Nbmantissabits<T>());
+          return a*bitwise_cast(e, as<T>())*f;
         }
         else // U is vector of floating
         {

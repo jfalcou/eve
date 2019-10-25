@@ -11,20 +11,28 @@
 #ifndef HYPOT_HPP
 #define HYPOT_HPP
 
+
+#include <eve/function/hypot.hpp>
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
-#include <eve/function/simd/hypot.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/true.hpp>
+#include <tts/tests/precision.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/sqrt_2.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
+#include <type_traits>
+#include <iomanip>
 
 using eve::fixed;
-
+using eve::wide; 
 TTS_CASE_TPL("Check hypot behavior on homogeneous wide",
              fixed<1>,
              fixed<2>,
@@ -32,31 +40,77 @@ TTS_CASE_TPL("Check hypot behavior on homogeneous wide",
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>)  // specific values tests
 {
-  using eve::wide;
-  wide<Type, T> lhs([](auto i, auto c) { return Type(c - i); }),
-      rhs([](auto i, auto) { return Type(i); }),
-      ref([](auto i, auto c) { return eve::hypot(Type(c - i), Type(i)); });
-  wide<Type, T> val(eve::hypot(lhs, rhs));
-  TTS_ULP_EQUAL(ref, val, 1);
-}
+  using t_t = wide<Type, T>; 
+  if constexpr(eve::platform::supports_invalids)
+  {
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<t_t>(), eve::Inf<t_t>()), eve::Inf<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Minf<t_t>(), eve::Minf<t_t>()), eve::Inf<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<t_t>(), eve::Nan<t_t>()), eve::Nan<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<t_t>(), eve::Inf<t_t>()), eve::Nan<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<t_t>(), eve::Nan<t_t>()), eve::Nan<t_t>(), 0);
+  }
+  
+  TTS_ULP_EQUAL(eve::hypot(eve::Mone<t_t>(), eve::Mone<t_t>()), eve::Sqrt_2<t_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(eve::One<t_t>(), eve::One<t_t>()), eve::Sqrt_2<t_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(eve::Zero<t_t>(), eve::Zero<t_t>()), eve::Zero<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<t_t>(), eve::Zero<t_t>()), eve::Inf<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Zero<t_t>(), eve::Valmax<t_t>()), eve::Inf<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<t_t>(), eve::Sqrt_2<t_t>()), t_t(2), 0.5);
+  if constexpr(eve::platform::supports_denormals)
+  {
+    TTS_ULP_EQUAL(eve::hypot(eve::Mindenormal<t_t>(),eve::Mindenormal<t_t>()), eve::Sqrt_2<t_t>()*eve::Mindenormal<t_t>(), 0.5); 
+    TTS_ULP_EQUAL(eve::hypot(eve::Smallestposval<t_t>(),eve::Smallestposval<t_t>()), eve::Sqrt_2<t_t>()*eve::Smallestposval<t_t>(), 0.5); 
+  }
+  
+  
+  for(int i=0; i < eve::Maxlog<Type>() ;  i+= 2*sizeof(t_t))
+  {
+    Type sz = eve::exp(Type(i)/2); //no overflow
+    t_t z = t_t(sz); 
+    TTS_ULP_EQUAL(eve::hypot(z, eve::Sqrt_2<t_t>()), t_t(std::hypot(sz, eve::Sqrt_2<Type>())), 0.5);
+    TTS_ULP_EQUAL(eve::hypot(z, z), t_t(std::hypot(sz, sz)), 0.5);
+  }
+} 
 
-TTS_CASE_TPL("Check hypot behavior on wide + scalar",
+TTS_CASE_TPL("Check pedantic hypot behavior on homogeneous wide",
              fixed<1>,
              fixed<2>,
              fixed<4>,
              fixed<8>,
              fixed<16>,
              fixed<32>,
-             fixed<64>)
+             fixed<64>)  // specific values tests
 {
-  using eve::wide;
-
-  wide<Type, T> lhs([](auto i, auto c) { return Type(i % 3); }),
-      ref([](auto i, auto c) { return eve::hypot(Type(i % 3), Type(7)); }),
-      val(eve::hypot(lhs, Type(7)));
-  TTS_ULP_EQUAL(ref, val, 1);
-}
-
+  using t_t = wide<Type, T>; 
+  if constexpr(eve::platform::supports_invalids)
+  {
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<t_t>(), eve::Inf<t_t>()), eve::Inf<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Minf<t_t>(), eve::Minf<t_t>()), eve::Inf<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<t_t>(), eve::Nan<t_t>()), eve::Nan<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<t_t>(), eve::Inf<t_t>()), eve::Inf<t_t>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<t_t>(), eve::Nan<t_t>()), eve::Inf<t_t>(), 0);
+  }
+  
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Mone<t_t>(), eve::Mone<t_t>()), eve::Sqrt_2<t_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::One<t_t>(), eve::One<t_t>()), eve::Sqrt_2<t_t>(), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Zero<t_t>(), eve::Zero<t_t>()), eve::Zero<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Valmax<t_t>(), eve::Zero<t_t>()), eve::Valmax<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Zero<t_t>(), eve::Valmax<t_t>()), eve::Valmax<t_t>(), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Sqrt_2<t_t>(), eve::Sqrt_2<t_t>()), t_t(2), 0.5);
+  if constexpr(eve::platform::supports_denormals)
+  {
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Mindenormal<t_t>(),eve::Mindenormal<t_t>()), eve::Sqrt_2<t_t>()*eve::Mindenormal<t_t>(), 0.5); 
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Smallestposval<t_t>(),eve::Smallestposval<t_t>()), eve::Sqrt_2<t_t>()*eve::Smallestposval<t_t>(), 0.5); 
+  }
+  
+  for(int i=0; i < eve::Maxlog<Type>() ; i+= 2*sizeof(t_t))
+  {
+    Type sz = eve::exp(Type(i));
+    t_t z =t_t(sz); 
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(z, eve::Sqrt_2<t_t>()), t_t(std::hypot(sz, eve::Sqrt_2<Type>())), 0.5);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(z, z), t_t(std::hypot(sz, sz)), 0.5);
+  }
+} 
 #endif

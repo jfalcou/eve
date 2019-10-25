@@ -26,7 +26,7 @@
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_eqz.hpp> 
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_notand.hpp>
@@ -52,13 +52,18 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
                                         , wide<T, N, ABI> const & a0) noexcept
-  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating_point<T>) 
+  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
-    using t_t = wide<T, N, ABI>; 
-    using i_t = as_integer_t<t_t, signed>; 
-    auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
-    auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
-    return  std::tuple<t_t, i_t>{ bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    if constexpr(is_emulated_v<ABI> ) return map(raw_(eve::ifrexp), a0); 
+    else if constexpr(is_aggregated_v<ABI> ) return aggregate(raw_(eve::ifrexp), a0);
+    else
+    {
+      using t_t = wide<T, N, ABI>; 
+      using i_t = as_integer_t<t_t, signed>; 
+      auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
+      auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
+      return  std::tuple<t_t, i_t>{ bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    }
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -66,13 +71,18 @@ namespace eve::detail
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , wide<T, N, ABI>  a0) noexcept
-  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating_point<T>) 
+  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
-    using t_t = wide<T, N, ABI>; 
-    using i_t = as_integer_t<t_t, signed>; 
-    auto [m, e] =  raw_(ifrexp)(a0);
-    auto test = is_nez(a0);
-    return std::tuple<t_t, i_t>{if_else(test, m, eve::zero_), if_else(test, e, eve::zero_)}; 
+    if constexpr(is_emulated_v<ABI> ) return map(eve::ifrexp, a0); 
+    else if constexpr(is_aggregated_v<ABI> ) return aggregate(eve::ifrexp, a0);
+    else
+    {
+      using t_t = wide<T, N, ABI>; 
+      using i_t = as_integer_t<t_t, signed>; 
+      auto [m, e] =  raw_(ifrexp)(a0);
+      auto test = is_nez(a0);
+      return std::tuple<t_t, i_t>{if_else(test, m, eve::zero_), if_else(test, e, eve::zero_)};
+    }
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -81,31 +91,36 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , wide<T, N, ABI> const & a0) noexcept
-  requires( std::tuple<wide<T, N, ABI>, as_integer_t<wide<T, N, ABI>, signed>>, floating_point<T>) 
+  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
-     using t_t = wide<T, N, ABI>; 
-     using i_t = as_integer_t<t_t, signed>;
-     t_t aa0 = a0;
-     i_t t(0); 
-     if constexpr(eve::platform::supports_denormals)
-     {
-       auto test = is_denormal(a0);
-       t = if_else(test,Nbmantissabits<t_t>(), eve::zero_);
-       aa0 = if_else(test, Twotonmb<T>()*a0, a0);
-     }
-     auto r1 = bitwise_and(Expobits_mask<t_t>(), aa0); //extract exp.
-     auto x  = bitwise_notand(Expobits_mask<t_t>(), aa0);
-     r1 = bitwise_shr(r1,Nbmantissabits<T>()) - Maxexponentm1<T>();
-     auto r0 = bitwise_or(Half<t_t>(), x);
-     auto test0 = is_nez(aa0);
-     auto test1 = is_greater(r1,Limitexponent<t_t>());
-     r1 = if_else(logical_notand(test1, test0), r1, eve::zero_);
-
-     if constexpr(eve::platform::supports_denormals)
-     {
-       r1 -= t ;
-     }
-     return std::tuple<t_t, i_t>{ if_else(test0, add[test1](r0,aa0), eve::zero_), r1};
+    if constexpr(is_emulated_v<ABI> ) return map(pedantic_(eve::ifrexp), a0); 
+    else if constexpr(is_aggregated_v<ABI> ) return aggregate(pedantic_(eve::ifrexp), a0);
+    else
+    {
+      using t_t = wide<T, N, ABI>; 
+      using i_t = as_integer_t<t_t, signed>;
+      t_t aa0 = a0;
+      i_t t(0); 
+      if constexpr(eve::platform::supports_denormals)
+      {
+        auto test = is_denormal(a0);
+        t = if_else(test,Nbmantissabits<t_t>(), eve::zero_);
+        aa0 = if_else(test, Twotonmb<T>()*a0, a0);
+      }
+      auto r1 = bitwise_and(Expobits_mask<t_t>(), aa0); //extract exp.
+      auto x  = bitwise_notand(Expobits_mask<t_t>(), aa0);
+      r1 = bitwise_shr(r1,Nbmantissabits<T>()) - Maxexponentm1<T>();
+      auto r0 = bitwise_or(Half<t_t>(), x);
+      auto test0 = is_nez(aa0);
+      auto test1 = is_greater(r1,Limitexponent<t_t>());
+      r1 = if_else(logical_notand(test1, test0), r1, eve::zero_);
+      
+      if constexpr(eve::platform::supports_denormals)
+      {
+        r1 -= t ;
+      }
+      return std::tuple<t_t, i_t>{ if_else(test0, add[test1](r0,aa0), eve::zero_), r1};
+    }
   }
 }
 
