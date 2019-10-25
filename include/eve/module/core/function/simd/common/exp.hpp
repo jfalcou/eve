@@ -43,48 +43,54 @@ namespace eve::detail
                                      , const T &xx) noexcept
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
-    using vt_t =  value_type_t<T>;
-    const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-    const T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-    const T Invlog_2=  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
-    auto c = nearest(Invlog_2*xx);
-    auto k = c;
-    auto x = fnma(c, Log_2hi, xx); //x-c*L
-    if constexpr(std::is_same_v<vt_t, float>)
-    {
-      x = fnma(c, Log_2lo, x);   
-      // Remez polynomial of degree 4 on [-0.5 0.5] for (exp(x)-1-x)/sqr(x)
-      // tested in range: [-88.3763, 88.3763]
-      //2214928753 values (98.98%)  within 0.0 ULPs
-      //  22831063 values (1.02%)   within 0.5 ULPs
-      //  4.89648 cycles/value (SSE4.2 g++-4.8)
-      T y = horn<T,
-        0x3f000000, //  5.0000000e-01
-        0x3e2aa9a5, //  1.6666277e-01
-        0x3d2aa957, //  4.1665401e-02
-        0x3c098d8b, //  8.3955629e-03
-        0x3ab778cf  //  1.3997796e-03
-        >(x);
-      c = inc(fma(y, sqr(x), x));
+   using t_abi = abi_type_t<T>;
+   if constexpr(is_emulated_v<t_abi> ) return map(eve::exp, xx); 
+   else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::exp, xx);
+   else
+   {
+     using vt_t =  value_type_t<T>;
+     const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
+     const T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+     const T Invlog_2=  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
+     auto c = nearest(Invlog_2*xx);
+     auto k = c;
+     auto x = fnma(c, Log_2hi, xx); //x-c*L
+     if constexpr(std::is_same_v<vt_t, float>)
+     {
+       x = fnma(c, Log_2lo, x);   
+       // Remez polynomial of degree 4 on [-0.5 0.5] for (exp(x)-1-x)/sqr(x)
+       // tested in range: [-88.3763, 88.3763]
+       //2214928753 values (98.98%)  within 0.0 ULPs
+       //  22831063 values (1.02%)   within 0.5 ULPs
+       //  4.89648 cycles/value (SSE4.2 g++-4.8)
+       T y = horn<T,
+         0x3f000000, //  5.0000000e-01
+         0x3e2aa9a5, //  1.6666277e-01
+         0x3d2aa957, //  4.1665401e-02
+         0x3c098d8b, //  8.3955629e-03
+         0x3ab778cf  //  1.3997796e-03
+         >(x);
+       c = inc(fma(y, sqr(x), x));
+     }
+     else
+     {
+       T hi = x;
+       T lo = c*Log_2lo;
+       x = hi-lo; 
+       T t = sqr(x);
+       c = fnma(t, horn<T
+               , 0x3fc555555555553eull
+               , 0xbf66c16c16bebd93ull
+               , 0x3f11566aaf25de2cull
+               , 0xbebbbd41c5d26bf1ull
+               , 0x3e66376972bea4d0ull
+                >(t), x); //x-h*t
+        c = oneminus((((lo-(x*c)/(T(2)-c))-hi)));
+      }
+      x =  eve::ldexp(c, k);
+      c = if_else(is_less_equal(xx, Minlog<T>()), eve::zero_, x);
+      return if_else(is_greater_equal(xx, Maxlog<T>()), Inf<T>(), c);
     }
-    else
-    {
-      T hi = x;
-      T lo = c*Log_2lo;
-      x = hi-lo; 
-      T t = sqr(x);
-      c = fnma(t, horn<T
-              , 0x3fc555555555553eull
-              , 0xbf66c16c16bebd93ull
-              , 0x3f11566aaf25de2cull
-              , 0xbebbbd41c5d26bf1ull
-              , 0x3e66376972bea4d0ull
-               >(t), x); //x-h*t
-      c = oneminus((((lo-(x*c)/(T(2)-c))-hi)));
-    }
-    x =  eve::ldexp(c, k);
-    c = if_else(is_less_equal(xx, Minlog<T>()), eve::zero_, x);
-    return if_else(is_greater_equal(xx, Maxlog<T>()), Inf<T>(), c);
   }
 }
 

@@ -32,9 +32,7 @@ TTS_CASE_TPL("Check abs behavior on wide",
              fixed<2>,
              fixed<4>,
              fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+             fixed<16>)
 {
   using t_t =  eve::wide<Type, T>; 
   TTS_EXPR_IS ( eve::expm1(t_t(0)), t_t);

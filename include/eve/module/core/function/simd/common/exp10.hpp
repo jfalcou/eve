@@ -45,55 +45,61 @@ namespace eve::detail
                             , const T &xx) noexcept
   requires(T, vectorized<T>)
   {
-    using vt_t =  value_type_t<T>; 
-    if constexpr(std::is_floating_point_v<vt_t>)
+    using t_abi = abi_type_t<T>;
+    if constexpr(is_emulated_v<t_abi> ) return map(eve::exp10, xx); 
+    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::exp10, xx);
+    else
     {
-      const T Log10_2hi =  Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
-      const T Log10_2lo =  Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
-      auto c = nearest(Invlog10_2<T>()*xx);
-      auto k = toint(c);
-      auto x = fnma(c, Log10_2hi, xx); //x-c*L
-      x = fnma(c, Log10_2lo, x);   
-      if constexpr(std::is_same_v<vt_t, float>)
+      using vt_t =  value_type_t<T>; 
+      if constexpr(std::is_floating_point_v<vt_t>)
       {
-        // Remez polynom of degree 5 on [-0.5, 0.5]*log10(2) for (exp10(x)-1)/x   tested in range: [-37.9, 38.2308]
-        //  2217772528 values computed.
-        //  2198853506 values (99.15%)  within 0.0 ULPs
-        //  18919022 values (0.85%)   within 0.5 ULPs
-        //      5.2 cycles/value  (SSE4.2 g++-4.8)
-        c = inc(horn<T,
-                0x40135d8e, //    2.3025851e+00
-                0x4029a926, //    2.6509490e+00
-                0x400237da, //    2.0346589e+00
-                0x3f95eb4c, //    1.1712432e+00
-                0x3f0aacef, //    5.4170126e-01
-                0x3e54dff1  //    2.0788552e-01
-                >(x)*x);
+        const T Log10_2hi =  Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
+        const T Log10_2lo =  Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
+        auto c = nearest(Invlog10_2<T>()*xx);
+        auto k = toint(c);
+        auto x = fnma(c, Log10_2hi, xx); //x-c*L
+        x = fnma(c, Log10_2lo, x);   
+        if constexpr(std::is_same_v<vt_t, float>)
+        {
+          // Remez polynom of degree 5 on [-0.5, 0.5]*log10(2) for (exp10(x)-1)/x   tested in range: [-37.9, 38.2308]
+          //  2217772528 values computed.
+          //  2198853506 values (99.15%)  within 0.0 ULPs
+          //  18919022 values (0.85%)   within 0.5 ULPs
+          //      5.2 cycles/value  (SSE4.2 g++-4.8)
+          c = inc(horn<T,
+                  0x40135d8e, //    2.3025851e+00
+                  0x4029a926, //    2.6509490e+00
+                  0x400237da, //    2.0346589e+00
+                  0x3f95eb4c, //    1.1712432e+00
+                  0x3f0aacef, //    5.4170126e-01
+                  0x3e54dff1  //    2.0788552e-01
+                  >(x)*x);
+        }
+        else
+        {
+          T xx = sqr(x);
+          T px = x*horn<T,
+            0x40a2b4798e134a01ull,
+            0x40796b7a050349e4ull,
+            0x40277d9474c55934ull,
+            0x3fa4fd75f3062dd4ull
+            > (xx);
+          T x2 =  px/(horn1<T,
+                      0x40a03f37650df6e2ull,
+                      0x4093e05eefd67782ull,
+                      0x405545fdce51ca08ull
+                      //   0x3ff0000000000000ull
+                      > (xx)-px);
+          c = inc(x2+x2);
+        }
+        c = ldexp(c, k);
+        c = if_else(is_less_equal(xx, Minlog10<T>()), eve::zero_, c);
+        return if_else(is_greater_equal(xx, Maxlog10<T>()), Inf<T>(), c);
       }
       else
       {
-        T xx = sqr(x);
-        T px = x*horn<T,
-          0x40a2b4798e134a01ull,
-          0x40796b7a050349e4ull,
-          0x40277d9474c55934ull,
-          0x3fa4fd75f3062dd4ull
-          > (xx);
-        T x2 =  px/(horn1<T,
-                    0x40a03f37650df6e2ull,
-                    0x4093e05eefd67782ull,
-                    0x405545fdce51ca08ull
-                    //   0x3ff0000000000000ull
-                    > (xx)-px);
-        c = inc(x2+x2);
+        return pedantic_(convert)( exp10(tofloat(xx)), as<vt_t>()); 
       }
-      c = ldexp(c, k);
-      c = if_else(is_less_equal(xx, Minlog10<T>()), eve::zero_, c);
-      return if_else(is_greater_equal(xx, Maxlog10<T>()), Inf<T>(), c);
-    }
-    else
-    {
-      return pedantic_(convert)( exp10(tofloat(xx)), as<vt_t>()); 
     }
   }
 }
