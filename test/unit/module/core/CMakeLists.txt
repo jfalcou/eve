@@ -148,11 +148,11 @@ make_all_units(ROOT core NAME round  ARCH scalar simd TYPES ${all_types} )
 # make_units("sign/regular"                   "core" ${all_types})
 # make_units("signnz/regular"                 "core" ${all_types})
 # make_units("sqr
-# make_units("sqr_abs/regular"                "core" ${real_types})
+make_all_units(ROOT core NAME sqr_abs  ARCH scalar simd TYPES ${real_types} )
 # make_units("sqrt
 # make_units("sub
 
-make_all_units(ROOT core NAME trunc    ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME trunc         ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_plus    ARCH scalar simd TYPES ${all_types} )
 make_all_units(ROOT core NAME unary_minus   ARCH scalar simd TYPES ${all_types} )
 
@@ -161,10 +161,6 @@ make_all_units(ROOT core NAME unary_minus   ARCH scalar simd TYPES ${all_types} 
 # make_unit( "core" scalar/nan.cpp )
 # make_unit( "core" scalar/mzero.cpp )
 # make_unit( "core" scalar/signmask.cpp )
-
-##==================================================================================================
-## Specialty function unit tests
-# make_unit( "core" simd/wide_cast.cpp )
 
 ##==================================================================================================
 ## Expected failures tests
