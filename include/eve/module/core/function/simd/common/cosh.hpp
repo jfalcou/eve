@@ -39,19 +39,19 @@ namespace eve::detail
                                      , const T &a0) noexcept
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
-   using t_abi = abi_type_t<T>;
-   if constexpr(is_emulated_v<t_abi> ) return map(eve::cosh, a0); 
-   else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::cosh, a0);
-   else
-   {
-     T x = eve::abs(a0);
-     auto test1 = (x >  Maxlog<T>()-Log_2<T>());
-     T fac = if_else(test1, Half<T>(), One<T>());
-     T tmp = exp(x*fac);
-     T tmp1 = Half<T>()*tmp;
-     return if_else(test1, tmp1*tmp, average(tmp, rec(tmp))); 
-   }
-   }
+    using t_abi = abi_type_t<T>;
+    if constexpr(is_emulated_v<t_abi> ) return map(eve::cosh, a0); 
+    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::cosh, a0);
+    else
+    {
+      T x = eve::abs(a0);
+      auto test1 = (x >  Maxlog<T>()-Log_2<T>());
+      T fac = if_else(test1, Half<T>(), One<T>());
+      T tmp = exp(x*fac);
+      T tmp1 = Half<T>()*tmp;
+      return if_else(test1, tmp1*tmp, average(tmp, rec(tmp))); 
+    }
   }
-  
+}
+
 #endif
