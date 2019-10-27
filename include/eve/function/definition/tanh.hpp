@@ -8,10 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COTH_HPP_INCLUDED
-#define EVE_FUNCTION_COTH_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_TANH_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_TANH_HPP_INCLUDED
 
-#include <eve/function/scalar/coth.hpp>
-#include <eve/function/simd/coth.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(tanh_, tanh);
+}
 
 #endif
