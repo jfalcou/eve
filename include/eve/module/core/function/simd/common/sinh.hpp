@@ -20,6 +20,7 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/div.hpp>
 #include <eve/constant/maxlog.hpp>
@@ -42,9 +43,12 @@ namespace eve::detail
       auto h = copysign(Half<T>(), a0); 
       auto t = expm1(x);
       auto u = t/(t+1);
-      auto z = if_else(is_less(x, Maxlog<T>()), fnma(t, u, t), u);
-      z = h*(t+z);
-      return if_else(is_eqz(a0)||is_infinite(a0), a0, z);
+      auto z = if_else(is_less(x, One<T>()), fnma(t, u, t), u);
+      z = (t+z);
+      return h*if_else(is_eqz(a0)
+                      , x
+                      , if_else(is_greater(x, Maxlog<T>()), Inf<T>(), z)
+                      );
     }; 
   }
 }
