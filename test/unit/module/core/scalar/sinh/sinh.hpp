@@ -48,6 +48,8 @@ TTS_CASE("Check raw_(eve::sinh) behavior")
   {
     TTS_ULP_EQUAL(eve::sinh(Type(i)), std::sinh(Type(i)), 0.5);
     TTS_ULP_EQUAL(eve::sinh(-Type(i)), std::sinh(-Type(i)), 0.5); 
+    TTS_ULP_EQUAL(eve::sinh(1/Type(i)), std::sinh(1/Type(i)), 0.5);
+    TTS_ULP_EQUAL(eve::sinh(-1/Type(i)), std::sinh(1/Type(-i)), 0.5); 
   }
 }
 

@@ -54,6 +54,8 @@ TTS_CASE_TPL("Check cosh behavior on wide",
   {
     TTS_ULP_EQUAL(eve::cosh(t_t(i)), t_t(std::cosh(Type(i))), 0.5);
     TTS_ULP_EQUAL(eve::cosh(-t_t(i)), t_t(std::cosh(Type(-i))), 0.5); 
+    TTS_ULP_EQUAL(eve::cosh(1/t_t(i)), t_t(std::cosh(1/Type(i))), 0.5);
+    TTS_ULP_EQUAL(eve::cosh(-1/t_t(i)), t_t(std::cosh(1/Type(-i))), 0.5); 
   }
 }
 

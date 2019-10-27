@@ -8,14 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_TANH_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_TANH_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SCALAR_SINCOSH_HPP_INCLUDED
+#define EVE_FUNCTION_SCALAR_SINCOSH_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(tanh_, tanh);
-}
+#include <eve/function/definition/sincosh.hpp>
+#include <eve/module/core/function/scalar/sincosh.hpp>
 
 #endif

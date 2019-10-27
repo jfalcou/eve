@@ -59,6 +59,8 @@ TTS_CASE_TPL("Check sinh behavior on wide",
   {
     TTS_ULP_EQUAL(eve::sinh(t_t(i)), t_t(std::sinh(Type(i))), 0.5);
     TTS_ULP_EQUAL(eve::sinh(-t_t(i)), t_t(std::sinh(Type(-i))), 0.5); 
+    TTS_ULP_EQUAL(eve::sinh(1/t_t(i)), t_t(std::sinh(1/Type(i))), 0.5);
+    TTS_ULP_EQUAL(eve::sinh(-1/t_t(i)), t_t(std::sinh(1/Type(-i))), 0.5); 
   }
 }
 
