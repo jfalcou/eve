@@ -26,10 +26,7 @@ namespace eve
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const& a,  U const & n)
     {
-      if constexpr(!std::is_same_v<T, saturated_type>) //TODO suppress
-      {
-        EVE_ASSERT(all(is_gez(n)), "[next] : second parameter must be positive");
-      }
+      EVE_ASSERT(all(is_gez(n)), "[next] : second parameter must be positive");
     }
     
     template<typename T, typename U>
