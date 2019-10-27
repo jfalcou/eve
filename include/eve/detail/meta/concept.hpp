@@ -48,12 +48,15 @@ namespace eve::detail
   using equality_comparable = equality_comparable_with<T,T>;
 
   template<typename T, typename U>
-  using totally_ordered = std::void_t< equality_comparable_with<T,U>
+  using totally_ordered_with = std::void_t< equality_comparable_with<T,U>
                                      , decltype( std::declval<T>() < std::declval<U>() )
                                      , decltype( std::declval<T>() > std::declval<U>() )
                                      , decltype( std::declval<T>() <= std::declval<U>() )
                                      , decltype( std::declval<T>() >= std::declval<U>() )
                                      >;
+ template<typename T>
+  using totally_ordered= totally_ordered_with<T,T>;
+  
 }
 
 #endif

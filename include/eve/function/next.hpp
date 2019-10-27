@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_NEXT_HPP_INCLUDED
 
 #include <eve/function/scalar/next.hpp>
-//#include <eve/function/simd/next.hpp>
+#include <eve/function/simd/next.hpp>
 
 #endif

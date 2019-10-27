@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_PREV_HPP_INCLUDED
 
 #include <eve/function/definition/prev.hpp>
-#include <eve/module/core/function/scalar/prev.hpp>
+#include <eve/module/core/function/generic/prev.hpp>
 
 #endif
