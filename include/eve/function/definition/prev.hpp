@@ -27,13 +27,13 @@ namespace eve
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::prev_), T const&,  U const & n)
     {
-        EVE_ASSERT(all(is_gez(n)), "[prev] : second parameter must be positive"); 
+        EVE_ASSERT(all(is_gez(n)), "[eve::prev] : second parameter must be positive"); 
     } 
     
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_), T const&,  U const & n)
     {
-      EVE_ASSERT(all(is_gez(n)), "[saturated_(prev)] : second parameter must be positive");
+      EVE_ASSERT(all(is_gez(n)), "[[eve::saturated_([eve::prev)] : second parameter must be positive");
     }
   }
 
