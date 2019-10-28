@@ -31,6 +31,11 @@ namespace eve
   {
   };
 
+  template<template<class...> class Type, typename T0, typename... Ts>
+  struct cardinal< Type<T0,Ts...>> : cardinal<T0>
+  {
+  };
+
   template<typename Type>
   inline constexpr auto cardinal_v = cardinal<Type>::value;
 
