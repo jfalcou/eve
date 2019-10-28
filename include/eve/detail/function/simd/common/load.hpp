@@ -53,42 +53,17 @@ namespace eve::detail
   template<typename Pack, typename Pointer>
   EVE_FORCEINLINE Pack load(as_<Pack> const &tgt, eve::aggregated_ const &, Pointer ptr) noexcept
   {
-    using storage_t = typename Pack::storage_type;
-    using subwide_t = typename storage_t::value_type;
+    using str_t = typename Pack::storage_type;
+    using sub_t = typename str_t::value_type;
+    Pack that;
 
-    return Pack(storage_t{subwide_t(ptr), subwide_t(ptr + subwide_t::size())});
-  }
-
-  template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &       tgt,
-                            eve::aggregated_ const &mode,
-                            aligned_ptr<T, N>       ptr) noexcept
-  {
-    using storage_t = typename Pack::storage_type;
-    using subwide_t = typename storage_t::value_type;
-    return Pack(storage_t{subwide_t(ptr), subwide_t(ptr + subwide_t::size())});
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // Aggregation of logical<wide>
-  template<typename Pack, typename Pointer>
-  EVE_FORCEINLINE logical<Pack>
-                  load(as_<logical<Pack>> const &tgt, eve::aggregated_ const &, Pointer ptr) noexcept
-  {
-    using subwide_t =
-        logical<wide<typename Pack::value_type, typename Pack::cardinal_type::split_type>>;
-
-    return logical<Pack>(subwide_t(ptr), subwide_t(ptr + subwide_t::size()));
-  }
-
-  template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE logical<Pack>
-                  load(as_<logical<Pack>> const &tgt, eve::aggregated_ const &mode, aligned_ptr<T, N> ptr) noexcept
-  {
-    using subwide_t =
-        logical<wide<typename Pack::value_type, typename Pack::cardinal_type::split_type>>;
-
-    return logical<Pack>(subwide_t(ptr), subwide_t(ptr + subwide_t::size()));
+    that.storage().apply( [&](auto&... v)
+                          {
+                            int offset = 0;
+                            ( (( v = sub_t(ptr + offset), offset+=str_t::small_size),...) );
+                          }
+                        );
+    return that.storage();
   }
 }
 

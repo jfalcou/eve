@@ -26,7 +26,7 @@ namespace eve::detail
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
        logical<T> *ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type,
-                                          Native<ABI>)
+                                          native<ABI>)
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, (T *)ptr));
@@ -37,7 +37,7 @@ namespace eve::detail
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
        aligned_ptr<logical<T>, Align>
-           ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, Native<ABI>)
+           ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, native<ABI>)
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));
