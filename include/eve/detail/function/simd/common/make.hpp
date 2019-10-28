@@ -45,8 +45,7 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Aggregation
   template<typename Pack, typename V0, typename... Values>
-  EVE_FORCEINLINE Pack
-                  make(as_<Pack> const &tgt, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
+  EVE_FORCEINLINE Pack make(as_<Pack> const &tgt, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
   {
     return make(tgt, eve::emulated_{}, v0, vs...);
   }
@@ -54,9 +53,11 @@ namespace eve::detail
   template<typename Pack, typename Value>
   EVE_FORCEINLINE Pack make(as_<Pack> const &, eve::aggregated_ const &, Value vs) noexcept
   {
-    using sub_t = typename Pack::storage_type::value_type;
-    sub_t sub_value(vs);
-    return Pack{sub_value, sub_value};
+    typename Pack::storage_type::value_type sub_value(vs);
+    Pack that;
+
+    that.storage().apply( [&sub_value](auto&... v) { ((v = sub_value),...); } );
+    return that;
   }
 }
 
