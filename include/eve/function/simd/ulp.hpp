@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_ULP_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_ULP_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ULP_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ULP_HPP_INCLUDED
 
-#include <eve/function/definition/ulp.hpp>
+#include <eve/function/scalar/ulp.hpp>
 #include <eve/module/core/function/generic/ulp.hpp>
 
 #endif

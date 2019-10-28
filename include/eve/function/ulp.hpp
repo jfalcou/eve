@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ULP_HPP_INCLUDED
 
 #include <eve/function/scalar/ulp.hpp>
-//#include <eve/function/simd/ulp.hpp>
+#include <eve/function/simd/ulp.hpp>
 
 #endif
