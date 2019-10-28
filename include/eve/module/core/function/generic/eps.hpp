@@ -49,14 +49,13 @@ namespace eve::detail
     using v_t = value_type_t<T>; 
     auto a = eve::abs(a0);
     auto e1 = exponent(a)-Nbmantissabits<T>();
-    auto e = bitwise_cast<A0>(bitwise_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())));
-    if constexpr(eve::platform::supports_denormal)
+    auto e = bitwise_cast(bitwise_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())), as<T>());
+    e =  add[is_not_finite(a)](e, Nan<T>()); 
+    if constexpr(eve::platform::supports_denormals)
     {
-      return add[is_not_finite(a)](
-        , if_else(is_less(a, Smallestposval<T>()), Mindenormal<T>(), e)
-        , Nan<T>()
-      );
-      else return if_else( is_not_finite(a), eve::allbits_, e);
+      return  if_else(is_less(a, Smallestposval<T>()), Mindenormal<T>(), e); 
+    }
+    else return e; 
   }
   
   template<typename T>

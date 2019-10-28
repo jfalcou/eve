@@ -43,12 +43,12 @@ TTS_CASE("Check eve::eps behavior")
       TTS_IEEE_EQUAL(eps(eve::Minf<Type>()), eve::Nan<Type>());
       TTS_IEEE_EQUAL(eps(eve::Nan<Type>()), eve::Nan<Type>());
     }
-    TTS_EQUAL(eps(Type{-1}), bs::Eps<Type>());
-    TTS_EQUAL(eps(Type{1}) , bs::Eps<Type>());
+    TTS_EQUAL(eps(eve::Mone<Type>()), eve::Eps<Type>());
+    TTS_EQUAL(eps(eve::One<Type>()) , eve::Eps<Type>());
     
     if constexpr(eve::platform::supports_denormals)
     {
-      TTS_EQUAL(eps(Type{0}), bs::Mindenormal<Type>());
+      TTS_EQUAL(eps(Type{0}), eve::Mindenormal<Type>());
     }
   } 
   else
