@@ -14,11 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/constant.hpp>
+#include <eve/function/eps.hpp>
 #include <eve/as.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(eps_, eps_);
 
   template<typename T>
   EVE_FORCEINLINE auto Eps(as_<T> const & = {})

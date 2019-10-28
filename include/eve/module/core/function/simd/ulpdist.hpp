@@ -8,18 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ULPDIST_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_ULPDIST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/saturated.hpp>
-#include <type_traits>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(eps_, eps);
-}
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/ulpdist.hpp>
 
 #endif
