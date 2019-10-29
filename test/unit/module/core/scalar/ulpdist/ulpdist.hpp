@@ -21,6 +21,9 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/next.hpp>
+#include <eve/function/prev.hpp>
+#include <eve/function/nb_values.hpp>
 #include <eve/function/unary_minus.hpp>
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -54,11 +57,20 @@ TTS_CASE("Check eve::ulpdist  behavior")
     TTS_EQUAL( ulpdist(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>()/2)))
              , Type(0.25)
              );
+    Type a =  Type(1);
+    Type b =  eve::prev(a); 
+    for(int i=0; i <1000 ; i++)
+    {
+      TTS_EQUAL( ulpdist(a, b), Type(eve::nb_values(a, b))/2); 
+      a = b;
+      b = eve::prev(a); 
+    }
   }
   TTS_EQUAL(ulpdist(eve::Mone<Type>(), eve::Mone<Type>()), eve::Zero<Type>());
   TTS_EQUAL(ulpdist(eve::One<Type>(), eve::One<Type>()), eve::Zero<Type>());
   TTS_EQUAL(ulpdist(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-  
+
+
 }
 
 #endif

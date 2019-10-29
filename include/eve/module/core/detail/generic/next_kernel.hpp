@@ -29,7 +29,7 @@ namespace eve::detail
   {
     using r_t = as_integer_t<T>; 
     r_t a0 = bitwise_cast(a, as<r_t>());
-    return if_else(is_positive(a), a0, Signmask<r_t>()-a0 );
+    return if_else(is_positive(a), a0, sub(Signmask<r_t>(), a0) );
   }
 
   template<typename T>
