@@ -1,18 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2018 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/div.hpp>
-#include <eve/wide.hpp>
 
-#define TYPE()        eve::wide<int64_t>
-#define FUNCTION()    eve::div
-#define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,1,100)
-
-#include "bench.hpp"
+#include <cstdint>
+using Type = std::int16_t;
+#include "div.hpp"

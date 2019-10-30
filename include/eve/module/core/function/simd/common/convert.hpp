@@ -163,12 +163,25 @@ namespace eve::detail
                          );
         }
       }
+      else  // input is integral     
+      {
+        if constexpr(sizeof(OUT) > sizeof(IN))
+        {
+          return convert(v0, tgt);
+        }
+        else
+        {
+          IN Vax = Valmax<OUT>();
+          IN Vim = Valmin<OUT>();
+          return convert(clamp(v0, Vim, Vax), tgt);
+        }        
+      }
     }
-    else
+    else // OUTPUT is floating point   
     {
-      return convert(v0, tgt);
+      return convert(v0, tgt);  
     }
-  }
+  }  
 }
 
 #endif
