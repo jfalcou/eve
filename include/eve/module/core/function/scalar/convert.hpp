@@ -84,7 +84,7 @@ namespace eve::detail
     }
     else if constexpr(std::is_integral_v<OUT>)
     {
-      if constexpr(std::is_floating_point_v<IN>)
+      if constexpr(std::is_floating_point_v<IN>) // input is floating point
       {
         if constexpr(sizeof(OUT) != sizeof(IN))
         {
@@ -107,12 +107,21 @@ namespace eve::detail
           return static_cast<OUT>(v0);
         }
       }
-      else
+      else // input is integral
       {
-        return convert(v0, tgt);  
+        if constexpr(sizeof(OUT) > sizeof(IN))
+        {
+          return convert(v0, tgt);
+        }
+        else
+        {
+          IN Vax = Valmax<OUT>();
+          IN Vim = Valmin<OUT>();
+          return static_cast<OUT>(clamp(v0, Vim, Vax));
+        }        
       }
     }
-    else        
+    else // OUTPUT is floating point   
     {
       return convert(v0, tgt);  
     } 
