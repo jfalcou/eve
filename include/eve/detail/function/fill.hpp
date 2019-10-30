@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
+#include <eve/cardinal.hpp>
 
 namespace eve::detail
 {
@@ -22,6 +23,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fill(as_<Pack> const&, ABI const&, Generator&& g, int offset = 0) noexcept
   {
+    static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
+
     if constexpr(is_aggregated_v<ABI>)
     {
       using sub_t = typename Pack::storage_type::value_type;
@@ -29,12 +32,12 @@ namespace eve::detail
       return combine( EVE_CURRENT_API{},
                       sub_t ( [&](auto i, auto c)
                               {
-                                return std::forward<Generator>(g)(i,Pack::static_size);
+                                return std::forward<Generator>(g)(i,sz);
                               }
                             ),
                       sub_t ( [&](auto i, auto c)
                               {
-                                return std::forward<Generator>(g)(i+Pack::static_size/2,Pack::static_size);
+                                return std::forward<Generator>(g)(i+sz/2,sz);
                               }
                             )
                     );
@@ -43,8 +46,8 @@ namespace eve::detail
     {
       Pack that;
 
-      for(typename Pack::size_type i = 0; i < Pack::static_size; ++i)
-        that[i] = std::forward<Generator>(g)(i, Pack::static_size);
+      for(typename Pack::size_type i = 0; i < sz; ++i)
+        that[i] = std::forward<Generator>(g)(i, sz);
 
       return that;
     }

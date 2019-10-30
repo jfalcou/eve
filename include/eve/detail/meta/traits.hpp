@@ -245,6 +245,18 @@ namespace eve::detail
   template<template<class...> class Concept,typename... T>
   struct as_trait : as_trait_impl<Concept, types<T...>>
   {};
+
+  // How many items in tuple-like things ? 0 means non-tuple
+  template<typename T>
+  struct count : std::integral_constant<std::size_t,0>
+  {};
+
+  template<template<class...> class W, typename... T>
+  struct count<W<T...>> : std::integral_constant<std::size_t,sizeof...(T)>
+  {};
+
+  template<typename T>
+  inline constexpr auto count_v = count<T>::value;
 }
 
 #endif
