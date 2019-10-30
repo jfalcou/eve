@@ -16,6 +16,7 @@ add_subdirectory(core)
 =======
 ## documentation tests
 <<<<<<< HEAD
+<<<<<<< HEAD
 make_unit( "doc.function.predicates" binarize.cpp )
 make_unit( "doc.function.predicates" binarize_c.cpp )
 make_unit( "doc.function.arithmetic" deco.cpp )
@@ -158,6 +159,8 @@ make_unit( "doc.function.predicate" is_not_nan.cpp )
 make_unit( "doc.function.predicate" is_ordered.cpp )
 make_unit( "doc.function.predicate" is_unordered.cpp )
 =======
+=======
+>>>>>>> iround
 add_unit_test( "doc.function.predicates" convert.cpp )
 add_unit_test( "doc.function.predicates" binarize.cpp )
 add_unit_test( "doc.function.predicates" binarize_c.cpp )
@@ -166,7 +169,10 @@ add_unit_test( "doc.function.arithmetic" abs.cpp )
 add_unit_test( "doc.function.arithmetic" next.cpp )
 add_unit_test( "doc.function.arithmetic" prev.cpp )
 add_unit_test( "doc.function.arithmetic" all.cpp )
+<<<<<<< HEAD
 add_unit_test( "doc.function.arithmetic" any.cpp )
+=======
+>>>>>>> iround
 add_unit_test( "doc.function.invtrig" acos.cpp )
 add_unit_test( "doc.function.invtrig" acot.cpp ) 
 add_unit_test( "doc.function.invtrig" acsc.cpp )
@@ -196,6 +202,10 @@ add_unit_test( "doc.function.arithmetic" nearest.cpp )
 add_unit_test( "doc.function.arithmetic" ceil.cpp )
 add_unit_test( "doc.function.arithmetic" floor.cpp )
 add_unit_test( "doc.function.arithmetic" round.cpp )
+<<<<<<< HEAD
+=======
+add_unit_test( "doc.function.arithmetic" iround.cpp )
+>>>>>>> iround
 add_unit_test( "doc.function.arithmetic" min.cpp )
 add_unit_test( "doc.function.arithmetic" maxmag.cpp )
 add_unit_test( "doc.function.arithmetic" minmag.cpp )
@@ -303,5 +313,9 @@ add_unit_test( "doc.function.predicate" is_not_less_equal.cpp )
 add_unit_test( "doc.function.predicate" is_not_nan.cpp )
 add_unit_test( "doc.function.predicate" is_ordered.cpp )
 add_unit_test( "doc.function.predicate" is_unordered.cpp )
+<<<<<<< HEAD
 >>>>>>> any
 >>>>>>> any
+=======
+>>>>>>> iround
+>>>>>>> iround
