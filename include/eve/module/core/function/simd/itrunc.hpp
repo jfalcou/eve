@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_IFLOOR_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_IFLOOR_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ITRUNC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_ITRUNC_HPP_INCLUDED
 
-#include <eve/function/definition/ifloor.hpp>
-#include <eve/module/core/function/generic/ifloor.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/generic/itrunc.hpp>
 
 #endif

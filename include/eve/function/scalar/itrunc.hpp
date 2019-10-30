@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ITRUNC_HPP_INCLUDED
 
 #include <eve/function/definition/itrunc.hpp>
-#include <eve/module/core/function/scalar/itrunc.hpp>
+#include <eve/module/core/function/generic/itrunc.hpp>
 
 #endif
