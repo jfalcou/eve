@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_ICEIL_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_ICEIL_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_ICEIL_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_ICEIL_HPP_INCLUDED
 
-#include <eve/function/definition/iceil.hpp>
+#include <eve/function/scalar/iceil.hpp>
 #include <eve/module/core/function/generic/iceil.hpp>
 
 #endif

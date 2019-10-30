@@ -23,7 +23,10 @@ list_tests("scalar/abs"     "core" ${all_types})
 list_tests("scalar/next"     "core" ${all_types})
 list_tests("scalar/prev"     "core" ${all_types})
 list_tests("scalar/all"     "core" ${all_types})
+<<<<<<< HEAD
 list_tests("scalar/any"     "core" ${all_types})
+=======
+>>>>>>> iceil + convert bugs correction
 list_tests("scalar/add"     "core" ${all_types})
 list_tests("scalar/arg" "core" ${real_types})
 list_tests("scalar/acos" "core" ${real_types})
@@ -166,6 +169,10 @@ list_tests("scalar/nearest"     "core" ${all_types})
 list_tests("scalar/trunc"       "core" ${all_types})
 list_tests("scalar/floor"       "core" ${all_types})
 list_tests("scalar/ceil"        "core" ${all_types})
+<<<<<<< HEAD
+=======
+list_tests("scalar/iceil"        "core" ${all_types})  
+>>>>>>> iceil + convert bugs correction
 list_tests("scalar/oneminus/arithmetic"    "core" ${all_types})
 list_tests("scalar/oneminus/saturated"     "core" ${all_types})
 list_tests("scalar/popcnt"  "core" ${integral_types})
@@ -199,7 +206,10 @@ list_tests("simd/abs" "core" ${all_types})
 list_tests("simd/next" "core" ${all_types})
 list_tests("simd/prev" "core" ${all_types})
 list_tests("simd/all" "core" ${all_types})
+<<<<<<< HEAD
 list_tests("simd/any" "core" ${all_types})
+=======
+>>>>>>> iceil + convert bugs correction
 list_tests("simd/add"         "core" ${all_types})
 list_tests("simd/acos" "core" ${real_types})
 list_tests("simd/acot" "core" ${real_types})
@@ -369,6 +379,10 @@ list_tests("simd/oneminus/saturated"     "core" ${all_types})
 list_tests("simd/trunc"   "core" ${all_types})
 list_tests("simd/floor" "core" ${all_types})
 list_tests("simd/ceil"   "core" ${all_types})
+<<<<<<< HEAD
+=======
+list_tests("simd/iceil"   "core" ${all_types})    
+>>>>>>> iceil + convert bugs correction
 list_tests("simd/rec" "core" ${all_types})
 list_tests("simd/round" "core" ${all_types})
 list_tests("simd/rshl" "core" ${integral_types})
@@ -394,7 +408,11 @@ list_tests("simd/convert/int8" "core" ${all_types})
 list_tests("simd/convert/uint8" "core" ${all_types})
 list_tests("simd/convert/int64" "core" ${all_types})
 list_tests("simd/convert/uint64" "core" ${all_types})
+<<<<<<< HEAD
 >>>>>>> any
+=======
+>>>>>>> iceil + convert bugs correction
+>>>>>>> iceil + convert bugs correction
 
 ##==================================================================================================
 ## Elementwise function unit tests
