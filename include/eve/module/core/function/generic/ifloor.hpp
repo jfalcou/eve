@@ -16,7 +16,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/toint.hpp>
-#include <eve/constant/allbits.hpp>
 #include <type_traits>
 
 namespace eve::detail
