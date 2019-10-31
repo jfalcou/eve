@@ -30,8 +30,8 @@ namespace eve::detail
     auto x = eve::abs(a0+a0);
     auto test =  x > 0.5493*2;
     auto t = expm1(x);
-    auto rt2 = rec(t+Type(2)); 
-    auto z1 = fnma(Type(2), rt2, Type(1));
+    auto rt2 = rec(t+T(2)); 
+    auto z1 = fnma(T(2), rt2, T(1));
     auto z2 = t*rt2;
     auto r = test ? z1 : z2; 
     return is_negative(a0) ? -r : r; 

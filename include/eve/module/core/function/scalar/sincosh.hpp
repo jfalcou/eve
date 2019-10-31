@@ -37,17 +37,27 @@ namespace eve::detail
   requires(std::pair<T, T>, floating_point<T>)
   {
     T x = eve::abs(a0);
-    auto t = expm1(x);
-    auto u = t/(t+1);
-    auto z = if_else(is_less(x, One<T>()), fnma(t, u, t), u);
-    auto h = copysign(Half<T>(), a0); 
-    z = h*(t+z);
-    auto sh =  h*if_else(is_eqz(a0)
-                        , x
-                        , if_else(is_greater(x, Maxlog<T>()), Inf<T>(), z)
-                        );
-    auto ch = inc(average(u, t)); 
-    return { ch, sh };
+    auto h = copysign(Half<T>(), a0);
+    if (x > Maxlog<T>()+Log_2<T>())
+    {
+      return { h*Inf<T>(), Inf<T>()}; 
+    }
+    else if (x > Maxlog<T>())
+    {
+      auto sh = exp(x*Half<T>());
+      sh = ((h*sh)*sh);
+      auto ch = abs(sh); 
+      return { sh, ch };
+    }
+    else
+    {
+      auto t = expm1(x);
+      auto u = t/(t+1);
+      auto sh = fnma(t, u, t);
+      sh = h*(t+sh);
+      auto ch = fma(Half<T>()*t, u, One<T>());
+      return { sh, ch };
+    }
   }
 }
 

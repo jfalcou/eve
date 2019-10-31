@@ -19,17 +19,19 @@ int main()
                 eve::Minf<float>(),
                 eve::Nan<float>()};
 
+  auto [sh, ch] =  eve::sincosh(pf); 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                      " << pf << '\n'
-            << "-> eve::sincosh(pf) =            " << eve::sincosh(pf) << '\n'; 
+            << "<- pf =                " << pf << '\n'
+            << "-> eve::sincosh(pf) = [ " << sh << '\n'
+            << "                      , " << ch << "]\n"; 
 
   float xf = 1.0f;
-  float yf = -1.0f;
+  auto [ssh, sch] =  eve::sincosh(xf); 
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                      " << xf << '\n'
-            << "-> eve::sincosh(xf) =            " << eve::sincosh(xf) << '\n'
-            << "<- yf =                      " << yf << '\n'
-            << "-> eve::sincosh(yf) =            " << eve::sincosh(yf) << '\n'; 
+            << "<- xf =                  " << xf << '\n'
+            << "-> eve::sincosh(xf)  = [ " << ssh << '\n'
+            << "                       , " << sch << "]\n"; 
+
   return 0;
 }

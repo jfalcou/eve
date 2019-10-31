@@ -22,7 +22,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
-#include <eve/platform.hpp>
+#include <eve/platform.hpp> 
 #include <cmath>
 #include <iomanip>
 
