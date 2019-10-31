@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_TOWARDS_ZERO_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SCALAR_DIV_TOWARDS_ZERO_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_mask.hpp>
-#include <eve/function/iceil.hpp>
+#include <eve/function/itrunc.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/valmax.hpp>
@@ -32,35 +32,49 @@ namespace eve::detail
 #pragma warning(push)
 #pragma warning(disable: 4723) // potential divide by 0
 #endif
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_)
-                                     , T const &a
-                                     , T const &b) noexcept
-  requires(T, vectorizable<T>)
-  {
-    return a/b;
-  }
-
+  
   //-----------------------------------------------------------------------------------------------
-  // saturated
+  // div toward_zero_
   template<typename T>
   EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_)
-                                     , saturated_type const &
                                      , T const &a0
-                                     , T const &a1) noexcept
+                                     , T const &a1
+                                     , toward_zero_type const &
+                                     ) noexcept
   requires(T, vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>) return a0/a1;
+    if constexpr(std::is_floating_point_v<T>)  return trunc(a0/a1);
     else if constexpr(std::is_signed_v<T>)
     {
-      using ui_t = as_integer_t<T, unsigned>;
-      T aa0 = a0 + !((a1 + One(as(a0))) | ((ui_t)a0 + Valmin(as(a0))));
-      if (a1)  return aa0/a1;
-      else if (a0) return Valmax(as(a0)) + ((ui_t)a0 >> (sizeof(T)*8-1));
-      else return Zero(as(a0));
+      if constexpr(std::is_same_v<T, std::int64_t>)
+      {
+        if (!a0) return  Zero<T>();
+        if(a1)
+        {
+         return div(a0, a1);
+        }
+        else
+          return ((a0>0) ? Valmax<T>() : Valmin<T>());
+      }
+      else
+      {
+        if(a1)
+        {
+          return saturated_(convert)(itrunc(static_cast<double>(a0)/static_cast<double>(a1)), as<T>());
+        }
+        else
+          return (a0) ? ((a0>0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();        
+      }
     }
-    else /*if constexpr(!std::is_signed_v<T>)*/ return a1 ? a0/a1 : bitwise_mask(a0);
+    else //if constexpr(std::is_unsigned_v<T>)
+    {
+      if(a1)
+      {
+       return div(a0, a1);
+      }
+      else
+        return bitwise_mask(a0);
+    }
   }
 }
 
@@ -70,7 +84,4 @@ namespace eve::detail
 
 #endif
 
-#include <eve/module/core/function/scalar/if_div.hpp>
-#include <eve/module/core/function/scalar/div_upward.hpp>
-#include <eve/module/core/function/scalar/div_downward.hpp>
-#include <eve/module/core/function/scalar/div_towards_zero.hpp>
+
