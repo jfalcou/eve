@@ -42,6 +42,7 @@ TTS_CASE("Check eve::saturated_(eve::div) behavior")
       TTS_EQUAL(eve::div(eve::Valmin<Type>(), eve::Zero<Type>(), eve::upward_), eve::Valmin<Type>());
       TTS_EQUAL(eve::div(eve::One<Type>(),    eve::Zero<Type>(), eve::upward_), eve::Valmax<Type>());
       TTS_EQUAL(eve::div(eve::Valmax<Type>(), eve::Zero<Type>(), eve::upward_), eve::Valmax<Type>());
+      TTS_EQUAL(eve::div(eve::Mone<Type>(),   Type(2), eve::upward_), eve::Zero<Type>());
     }
     else
     {
@@ -54,12 +55,15 @@ TTS_CASE("Check eve::saturated_(eve::div) behavior")
   }
   else
   {
-    TTS_EQUAL(eve::div(Type{0} , Type{1}, eve::upward_), Type{0});
-    TTS_EQUAL(eve::div(Type{1} , Type{1}, eve::upward_), Type{1});
-    TTS_EQUAL(eve::div(Type{12}, Type{4}, eve::upward_), Type{3});
-    TTS_EQUAL(eve::div(Type{1} , Type{2}, eve::upward_), Type(1));
+    TTS_EQUAL(eve::div(static_cast<Type>(-1) , Type{2}, eve::upward_), Type(0));
+    TTS_EQUAL(eve::div(static_cast<Type>(-4) , Type{3}, eve::upward_), Type(-1));
   }
   
+  TTS_EQUAL(eve::div(Type{0} , Type{1}, eve::upward_), Type{0});
+  TTS_EQUAL(eve::div(Type{1} , Type{1}, eve::upward_), Type{1});
+  TTS_EQUAL(eve::div(Type{12}, Type{4}, eve::upward_), Type{3});
+  TTS_EQUAL(eve::div(Type{1} , Type{2}, eve::upward_), Type(1));
+  TTS_EQUAL(eve::div(Type{4} , Type{3}, eve::upward_), Type(2));
 }
 
 #endif
