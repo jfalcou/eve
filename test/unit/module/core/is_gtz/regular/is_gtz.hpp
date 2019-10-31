@@ -8,26 +8,32 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_nan.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::is_nan return type")
+TTS_CASE("Check eve::is_gtz return type")
 {
-  TTS_EXPR_IS(eve::is_nan(Type(0)), (eve::logical<Type>));
+  using eve::logical;
+
+  TTS_EXPR_IS(eve::is_gtz(Type() ), (logical<Type>));
 }
 
-TTS_CASE("Check eve::is_nan behavior")
+TTS_CASE("Check eve::is_gtz behavior")
 {
-  TTS_EQUAL(eve::is_nan(Type(0)), eve::False<Type>());
-  TTS_EQUAL(eve::is_nan(Type(2)), eve::False<Type>());
-
-  if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_nans)
+  if constexpr(std::is_signed_v<Type>)
   {
-    TTS_EQUAL(eve::is_nan(eve::Nan<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_gtz(Type(-1)), eve::False<Type>());
   }
+
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  {
+    TTS_EQUAL(eve::is_gtz(eve::Nan<Type>()), eve::False<Type>());
+  }
+
+  TTS_EQUAL(eve::is_gtz(Type(0)), eve::False<Type>());
+  TTS_EQUAL(eve::is_gtz(Type(3)), eve::True<Type>());
 }
