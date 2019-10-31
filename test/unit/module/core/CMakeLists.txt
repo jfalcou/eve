@@ -102,7 +102,7 @@ make_all_units(ROOT core NAME is_even               ARCH scalar simd TYPES ${all
 # make_all_units(ROOT core NAME is_not_equal           ARCH scalar simd TYPES ${all_types})
 # make_all_units(ROOT core NAME is_not_finite          ARCH scalar simd TYPES ${all_types})
 # make_all_units(ROOT core NAME is_not_greater         ARCH scalar simd TYPES ${all_types})
-#make_all_units(ROOT core NAME is_not_greater_equal  ARCH scalar simd TYPES ${all_types})
+# make_all_units(ROOT core NAME is_not_greater_equal  ARCH scalar simd TYPES ${all_types})
 # make_all_units(ROOT core NAME is_not_imag            ARCH scalar simd TYPES ${real_types})
 # make_all_units(ROOT core NAME is_not_inf             ARCH scalar simd TYPES ${all_types})
 # make_all_units(ROOT core NAME is_not_less            ARCH scalar simd TYPES ${all_types})
@@ -148,7 +148,7 @@ make_all_units(ROOT core NAME sqrt                  ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME trunc                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME tofloat               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all_types}     )
-# make_all_units(ROOT core NAME touint                 ARCH scalar simd TYPES ${all_types} )
+make_all_units(ROOT core NAME touint                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
 
