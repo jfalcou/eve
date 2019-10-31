@@ -14,10 +14,14 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/average.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/copysign.hpp>
+//#include <eve/function/nbtrue.hpp>
 #include <eve/function/expm1.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/function/mul.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/log_2.hpp>
@@ -28,13 +32,6 @@
 
 namespace eve::detail
 {
-  //////////////////////////////////////////////////////////////////////////////
-  // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
-  // respectively computed
-  // *  in the first case sincosh (e+rec(e))/2
-  // *  in the second     sincosh is (e/2)*e (avoiding undue overflow)
-  // Threshold is Maxlog
-  //////////////////////////////////////////////////////////////////////////////
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE  auto sincosh_(EVE_SUPPORTS(cpu_)
                                      , wide<T, N, ABI> const &a0) noexcept
@@ -52,17 +49,19 @@ namespace eve::detail
     else
     {
       auto x = eve::abs(a0);
+      auto h = copysign(Half<T>(), a0);
+      auto test = is_greater(x,  Maxlog<T>()); //&&is_less(x,  Maxlog<T>()+Log_2<T>()); 
+//      auto nb = nbTrue(test); 
       auto t = expm1(x);
       auto u = t/(t+1);
-      auto z = if_else(is_less(x, One<T>()), fnma(t, u, t), u);
-      auto h = copysign(Half<T>(), a0); 
-      z = h*(t+z);
-      auto sh =  h*if_else(is_eqz(a0)
-                      , x
-                      , if_else(is_greater(x, Maxlog<T>()), Inf<T>(), z)
-                      );
-      auto ch = inc(average(u, t)); 
-      return { ch, sh }; 
+      auto sh = h*(t+fnma(t, u, t));
+      auto ch = fma(Half<T>()*t, u, One<T>());
+//      if (nb == 0) return {sh, ch};
+      auto z = exp(x*Half<T>());
+      z = (h*z)*z; 
+      sh = if_else(test, z, sh);
+      ch = if_else(test, abs(sh), ch); 
+      return { sh, ch };
     }
   }
 }

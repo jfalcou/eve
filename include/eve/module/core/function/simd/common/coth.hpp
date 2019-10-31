@@ -33,7 +33,7 @@ namespace eve::detail
     {
       auto x = eve::abs(a0+a0);
       auto t = rec(expm1(x));
-      auto r = fma(Type(2), t, Type(1)); 
+      auto r = fma(T(2), t, T(1)); 
       return copysign(r, a0); 
     }
   }
