@@ -19,7 +19,6 @@
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>
-#include <iostream>
 
 namespace eve::detail
 {
