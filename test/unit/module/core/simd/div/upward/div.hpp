@@ -24,13 +24,13 @@
 using eve::fixed; 
 
 TTS_CASE_TPL("Check eve::div upward behavior",
- //             fixed<1>,
-//              fixed<2>,
-//              fixed<4>,
-             fixed<8>//,
-//              fixed<16>,
-//              fixed<32>,
-//              fixed<64>
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>
             )
 {
   using eve::wide; 
@@ -54,21 +54,23 @@ TTS_CASE_TPL("Check eve::div upward behavior",
     }
     else
     {
-      TTS_EQUAL(eve::div(eve::One<t_t>()   , eve::One<t_t>() , eve::upward_)    , eve::One<t_t>());
-      TTS_EQUAL(eve::div(eve::Valmax<t_t>(),eve::One<t_t>()  , eve::upward_)  , eve::Valmax<t_t>());
-      TTS_EQUAL(eve::div(eve::Zero<t_t>()  , eve::Zero<t_t>(), eve::upward_)  , eve::Zero<t_t>());
-      TTS_EQUAL(eve::div(eve::One<t_t>()   , eve::Zero<t_t>(), eve::upward_)   , eve::Valmax<t_t>());
-      TTS_EQUAL(eve::div(eve::Valmax<t_t>(), eve::Zero<t_t>(), eve::upward_), eve::Valmax<t_t>());
+      TTS_EQUAL(eve::div(eve::One<t_t>()   , eve::One<t_t>() , eve::upward_) , eve::One<t_t>());
+      TTS_EQUAL(eve::div(eve::Valmax<t_t>(),eve::One<t_t>()  , eve::upward_) , eve::Valmax<t_t>());
+      TTS_EQUAL(eve::div(eve::Zero<t_t>()  , eve::Zero<t_t>(), eve::upward_) , eve::Zero<t_t>());
+      TTS_EQUAL(eve::div(eve::One<t_t>()   , eve::Zero<t_t>(), eve::upward_) , eve::Valmax<t_t>());
+      TTS_EQUAL(eve::div(eve::Valmax<t_t>(), eve::Zero<t_t>(), eve::upward_) , eve::Valmax<t_t>());
     }
   }
   else
   {
-    TTS_EQUAL(eve::div(t_t{0} , t_t{1}, eve::upward_), t_t{0});
-    TTS_EQUAL(eve::div(t_t{1} , t_t{1}, eve::upward_), t_t{1});
-    TTS_EQUAL(eve::div(t_t{12}, t_t{4}, eve::upward_), t_t{3});
-    TTS_EQUAL(eve::div(t_t{1} , t_t{2}, eve::upward_), t_t(1));
+    TTS_EQUAL(eve::div(t_t(-1) , t_t{2}, eve::upward_), t_t(0));
+    TTS_EQUAL(eve::div(t_t(-4) , t_t{3}, eve::upward_), t_t(-1));
   }
-  
+  TTS_EQUAL(eve::div(t_t{0} , t_t{1}, eve::upward_), t_t{0});
+  TTS_EQUAL(eve::div(t_t{1} , t_t{1}, eve::upward_), t_t{1});
+  TTS_EQUAL(eve::div(t_t{12}, t_t{4}, eve::upward_), t_t{3});
+  TTS_EQUAL(eve::div(t_t{1} , t_t{2}, eve::upward_), t_t(1));
+  TTS_EQUAL(eve::div(t_t{4} , t_t{3}, eve::upward_), t_t(2));
 }
 
 #endif
