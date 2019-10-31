@@ -19,8 +19,10 @@ namespace eve::detail
   // Check if a given ABI is native
   template<typename X>
   struct is_native
-      : std::integral_constant<bool,
-                               !std::is_same_v<X, aggregated_> && !std::is_same_v<X, emulated_>>
+      : std::integral_constant< bool,
+                                  !std::is_same_v<X, aggregated_> && !std::is_same_v<X, emulated_>
+                              &&  !std::is_void_v<X>
+                              >
   {
   };
 

@@ -19,6 +19,7 @@
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -65,16 +66,16 @@ namespace eve::detail
   };
 
   // MAP skeleton used to emulate SIMD operations
-  template<typename Out, typename B0, typename... Bs>
-  EVE_FORCEINLINE auto rebuild( B0 const& p0, Bs const&... ps) noexcept
+  template<typename Out, typename... Bs>
+  EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {
     static constexpr auto sz = count_v<Out>;
 
-    if constexpr( (sz != 0) && ! is_native_v<abi_type_t<B0>> )
+    if constexpr( (sz != 0) && !is_vectorized_v<Out> )
     {
       auto const inside = [&](auto const& I)
       {
-        return std::tuple_element_t<I,Out>(std::get<I>(p0),std::get<I>(ps)...);
+        return std::tuple_element_t<I,Out>(std::get<I>(ps)...);
       };
 
       return detail::apply<sz>( [&]( auto const&... I)
@@ -87,7 +88,7 @@ namespace eve::detail
     }
     else
     {
-      return Out{p0,ps...};
+      return Out{ps...};
     }
   }
 
