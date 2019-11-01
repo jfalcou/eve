@@ -40,7 +40,6 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
-    std::cout << "icitte" << std::endl; 
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
       return map(eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));

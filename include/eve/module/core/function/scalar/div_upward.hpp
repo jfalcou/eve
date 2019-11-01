@@ -63,9 +63,6 @@ namespace eve::detail
       {
         if(a1)
         {
-          std::cout << a0 <<  "  " << a1 << std::endl;
-          std::cout << static_cast<double>(a0)/static_cast<double>(a1) << std::endl;
-          std::cout << iceil(static_cast<double>(a0)/static_cast<double>(a1)) << std::endl;
           return saturated_(convert)(iceil(static_cast<double>(a0)/static_cast<double>(a1)), as<T>());
         }
         else
