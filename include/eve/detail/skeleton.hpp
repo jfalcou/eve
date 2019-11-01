@@ -74,13 +74,14 @@ namespace eve::detail
     {
       auto const inside = [&](auto const& I)
       {
-        return std::tuple_element_t<I,Out>(std::get<I>(ps)...);
+        using idx_t = std::decay_t<decltype(I)>;
+        return std::tuple_element_t<idx_t::value,Out>(std::get<idx_t::value>(ps)...);
       };
 
       return detail::apply<sz>( [&]( auto const&... I)
       {
         Out that;
-        ((std::get<I>(that) = inside(I)),...);
+        ((std::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
         return that;
       }
       );
