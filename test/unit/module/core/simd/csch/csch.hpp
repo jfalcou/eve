@@ -41,10 +41,10 @@ TTS_CASE_TPL("Check csch behavior on wide",
   using t_t =  eve::wide<Type, T>; 
   TTS_EXPR_IS ( eve::csch(t_t(0)), t_t);
   
-  TTS_ULP_EQUAL(eve::csch(t_t(1)), t_t(eve::rec(std::sinh(Type(1)))), 0.5);
-  TTS_ULP_EQUAL(eve::csch(t_t(2)), t_t(eve::rec(std::sinh(Type(2)))), 0.5);
-  TTS_ULP_EQUAL(eve::csch(t_t(-2)),t_t(eve::rec(std::sinh(Type(-2)))), 0.5);
-  TTS_ULP_EQUAL(eve::csch(t_t(-1)),t_t(eve::rec(std::sinh(Type(-1)))), 0.5);
+  TTS_ULP_EQUAL(eve::csch(t_t(1)), t_t(eve::rec(std::sinh(Type(1)))), 1);
+  TTS_ULP_EQUAL(eve::csch(t_t(2)), t_t(eve::rec(std::sinh(Type(2)))), 1);
+  TTS_ULP_EQUAL(eve::csch(t_t(-2)),t_t(eve::rec(std::sinh(Type(-2)))), 1);
+  TTS_ULP_EQUAL(eve::csch(t_t(-1)),t_t(eve::rec(std::sinh(Type(-1)))), 1);
   TTS_IEEE_EQUAL(eve::csch(t_t(0)), t_t(eve::Inf<Type>()));
   TTS_IEEE_EQUAL(eve::csch(t_t(-0.0)), t_t(eve::Minf<Type>()));
   if constexpr(eve::platform::supports_invalids)
@@ -58,10 +58,10 @@ TTS_CASE_TPL("Check csch behavior on wide",
   
   for(int i=1; i < eve::Maxlog<Type>(); i *= 2)
   {
-    TTS_ULP_EQUAL(eve::csch(t_t(i)), t_t(eve::rec(std::sinh(Type(i)))), 0.5);
-    TTS_ULP_EQUAL(eve::csch(-t_t(i)), t_t(eve::rec(std::sinh(Type(-i)))), 0.5); 
-    TTS_ULP_EQUAL(eve::csch(1/t_t(i)), t_t(eve::rec(std::sinh(1/Type(i)))), 0.5);
-    TTS_ULP_EQUAL(eve::csch(-1/t_t(i)), t_t(eve::rec(std::sinh(1/Type(-i)))), 0.5); 
+    TTS_ULP_EQUAL(eve::csch(t_t(i)), t_t(eve::rec(std::sinh(Type(i)))), 1);
+    TTS_ULP_EQUAL(eve::csch(-t_t(i)), t_t(eve::rec(std::sinh(Type(-i)))), 1); 
+    TTS_ULP_EQUAL(eve::csch(1/t_t(i)), t_t(eve::rec(std::sinh(1/Type(i)))), 1);
+    TTS_ULP_EQUAL(eve::csch(-1/t_t(i)), t_t(eve::rec(std::sinh(1/Type(-i)))), 1); 
   }
 }
 
