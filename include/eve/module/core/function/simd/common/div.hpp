@@ -163,3 +163,4 @@ namespace eve
 #include <eve/module/core/function/simd/common/div_upward.hpp>
 #include <eve/module/core/function/simd/common/div_downward.hpp>
 #include <eve/module/core/function/simd/common/div_towards_zero.hpp>
+#include <eve/module/core/function/simd/common/div_to_nearest.hpp>

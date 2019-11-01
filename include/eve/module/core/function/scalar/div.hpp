@@ -74,3 +74,4 @@ namespace eve::detail
 #include <eve/module/core/function/scalar/div_upward.hpp>
 #include <eve/module/core/function/scalar/div_downward.hpp>
 #include <eve/module/core/function/scalar/div_towards_zero.hpp>
+#include <eve/module/core/function/scalar/div_to_nearest.hpp>

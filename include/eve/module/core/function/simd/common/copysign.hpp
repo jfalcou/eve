@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/logical_and.hpp>
@@ -40,7 +40,7 @@ namespace eve::detail
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
-
+    std::cout << "icitte" << std::endl; 
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
       return map(eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
@@ -65,7 +65,7 @@ namespace eve::detail
           }
           else
           {
-            return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a) * signnz(b));
+            return if_else(a == Valmin(as(a)) && is_gtz(b), Valmax(as(a)), eve::abs(a) * signnz(b));
           }
         }
       }
