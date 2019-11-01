@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_REM_HPP_INCLUDED
-#define EVE_FUNCTION_REM_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_REM_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_REM_HPP_INCLUDED
 
 #include <eve/function/scalar/rem.hpp>
-#include <eve/function/simd/rem.hpp>
+#include <eve/module/core/function/simd/rem.hpp>
 
 #endif
