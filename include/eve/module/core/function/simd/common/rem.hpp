@@ -1,0 +1,121 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_REM_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_REM_HPP_INCLUDED
+
+#include <eve/detail/overload.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/function/div.hpp>
+#include <eve/function/fnma.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/tags.hpp>
+#include <eve/details/meta.hpp>
+#include <type_traits>
+
+namespace eve::detail
+{
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto rem_(EVE_SUPPORTS(cpu_)
+                                     , T const &a
+                                     , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  {
+    return rem(a, b, toward_zero_);
+  }
+
+ //-----------------------------------------------------------------------------------------------
+  //Pedantic_
+   template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto rem_(EVE_SUPPORTS(cpu_)
+                                     , pedantic_type const & pdt_
+                                     , T const &a
+                                     , U const &b) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  {
+    return pedantic_(rem)(a, b, toward_zero_);
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  //Tagged
+  template<typename T, typename U, typename Tag>
+  EVE_FORCEINLINE constexpr auto rem_(EVE_SUPPORTS(cpu_)
+                                     , T const &a0
+                                     , U const &a1
+                                     , Tag const & tag_) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  {
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( eve::rem, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b), tag_ );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( eve::rem, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b), tag_ );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T, U>)
+      {
+        return  fnma(a1, div(a0, a1, tag_), a0);
+      }
+    }
+    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::rem(abi_cast<U>(a), abi_cast<T>(b), tag_);
+    }
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  //Pedantic_,  Tagged
+  template<typename T, typename Tag>
+  EVE_FORCEINLINE constexpr auto rem_(EVE_SUPPORTS(cpu_)
+                                     , pedantic_type const & pdt_
+                                     , T const &a0
+                                     , U const &a1
+                                     , Tag const & tag_) noexcept
+  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  {
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
+    {
+      return map( pdt_(eve::rem), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b), tag_ );
+    }
+    else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
+    {
+      return aggregate( pdt_(eve::rem), abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b), tag_ );
+    }
+    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      if constexpr(std::is_same_v<T, U>)
+      {
+        return  fnma(a1, div(a0, a1, tag_), a0);
+      }
+    }
+    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+     return if_else (is_nez(a1)), fnma(a1, div(a0, a1, tag_), a0), a0); 
+    } 
+  }
+}
+
+#endif
