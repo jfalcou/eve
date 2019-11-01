@@ -26,17 +26,17 @@ using eve::fixed;
 TTS_CASE_TPL("Check eve::div to_nearest behavior",
              fixed<1>,
              fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>
+             fixed<4>//,
+//              fixed<8>,
+//              fixed<16>,
+//              fixed<32>,
+//              fixed<64>
             )
 {
   using eve::wide; 
   using t_t = wide<Type, T>; 
   TTS_EXPR_IS(eve::div(t_t(1), t_t(1), eve::to_nearest_) , t_t);
-
+  
   if constexpr(std::is_integral_v<Type>)
   {
     if constexpr(std::is_signed_v<Type>)

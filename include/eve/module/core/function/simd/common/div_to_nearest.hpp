@@ -34,7 +34,6 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitwise_xor.hpp>
-#include <eve/function/sign.hpp>
 #include <eve/function/logical_ornot.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -78,16 +77,16 @@ namespace eve::detail
         {
           if constexpr(std::is_same_v<v_t, std::int64_t>)
           {
-            auto aa = saturated_(eve::abs(a));
-            auto bb = saturated_(eve::abs(b)); 
-            bb = if_else(is_eqz(b), eve::one_, bb);
-            auto q = convert(eve::saturated_(eve::div)(convert(aa, as<uint64_t>()), convert(bb, as<uint64_t>()), tnt_), as<v_t>());
-//             auto rx2 = 2*(aa-q*bb);
-//             q = if_else (is_greater_equal(rx2, bb)
-//                         , inc[logical_ornot(rx2 != bb, is_even(q))](q)
-//                         , q); 
+            auto aa = saturated_(eve::abs)(a);
+            auto bb = saturated_(eve::abs)(b);
+            bb = if_else(is_eqz(bb), eve::allbits_, bb);
+            auto q = eve::saturated_(eve::div)(aa, bb); 
+            auto rx2 = 2*(aa-q*bb);
+            q = if_else (is_greater_equal(rx2, bb)
+                        , inc[logical_ornot(rx2 != bb, is_even(q))](q)
+                        , q); 
             return if_else(is_nez(b)
-                          , eve::copysign(q, sign(a)*sign(b)) 
+                          , eve::copysign(q, a^b) 
                           , if_else(is_eqz(a)
                                    , eve::zero_
                                    , if_else(is_gtz(a)
