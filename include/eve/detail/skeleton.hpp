@@ -19,6 +19,7 @@
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>
+#include <tuple>
 
 namespace eve::detail
 {
