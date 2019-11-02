@@ -141,7 +141,7 @@ make_all_units(ROOT core NAME popcnt                ARCH scalar      TYPES ${int
 make_all_units(ROOT core NAME round                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rshl                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME rshr                  ARCH scalar simd TYPES ${integral_types})
-# make_all_units(ROOT core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME rsqrt                 ARCH scalar simd TYPES ${real_types}    )
 # make_all_units(ROOT core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME shl                   ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME shr                   ARCH scalar simd TYPES ${integral_types})
