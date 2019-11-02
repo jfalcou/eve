@@ -1,13 +1,13 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019  Jean-Thierry Lapresté
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-
 #include <eve/constant/inf.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
