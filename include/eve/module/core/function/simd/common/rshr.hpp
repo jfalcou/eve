@@ -38,7 +38,9 @@ namespace eve::detail
                                                                         integral<value_type_t<T>>)
   {
     if constexpr(std::is_unsigned_v<value_type_t<U>>)
-      return shl(v0, v1);
+    {
+      return shr(v0, v1);
+    }
     else
     {
 #ifndef NDEBUG

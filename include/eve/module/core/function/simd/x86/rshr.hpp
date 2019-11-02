@@ -34,31 +34,48 @@ namespace eve::detail
       if(std::is_signed_v<I>)
       {
         if constexpr(sizeof(T) == 1)
+        {
           return _mm_sha_epi8(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 2)
+        {
           return _mm_sha_epi16(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 4)
+        {
           return _mm_sha_epi32(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 8)
+        {
           return _mm_sha_epi64(a0, sa1);
+        }
       }
       else
       {
         auto sa1 = -a1;
         if constexpr(sizeof(T) == 1)
+        {
           return _mm_shl_epi8(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 2)
+        {
           return _mm_shl_epi16(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 4)
+        {
           return _mm_shl_epi32(a0, sa1);
+        }
         else if constexpr(sizeof(T) == 8)
+        {
           return _mm_shl_epi64(a0, sa1);
+        }
       }
     }
     else
+    {
       return map(eve::rshr, a0, a1);
+    }
   }
-
 }
 
 #endif
