@@ -8,6 +8,12 @@
 ##==================================================================================================
 
 ##==================================================================================================
+## Other tests
+##==================================================================================================
+add_subdirectory(constant)
+add_subdirectory(failure)
+
+##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 make_all_units(ROOT core NAME abs                   ARCH scalar simd TYPES ${all_types}     )
@@ -152,14 +158,3 @@ make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME touint                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
-
-##==================================================================================================
-## Constants tests
-# make_unit( core scalar/inf.cpp )
-# make_unit( core scalar/minf.cpp )
-# make_unit( core scalar/nan.cpp )
-# make_unit( core scalar/mzero.cpp )
-# make_unit( core scalar/signmask.cpp )
-
-##==================================================================================================
-add_subdirectory(failure)
