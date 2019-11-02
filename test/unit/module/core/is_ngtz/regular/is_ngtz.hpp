@@ -8,24 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_NGTZ_HPP
-#define IS_NGTZ_HPP
-
 #include <eve/function/is_ngtz.hpp>
-#include <tts/tts.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
 
-TTS_CASE("Check is_ngtz return type")
+TTS_CASE("Check eve::is_ngtz return type")
 {
-  TTS_EXPR_IS(eve::is_ngtz(Type()), eve::as_logical_t<Type>);
+  using eve::logical;
+
+  TTS_EXPR_IS(eve::is_ngtz(Type() ), (logical<Type>));
 }
 
 TTS_CASE("Check eve::is_ngtz behavior")
@@ -34,16 +28,12 @@ TTS_CASE("Check eve::is_ngtz behavior")
   {
     TTS_EQUAL(eve::is_ngtz(Type(-1)), eve::True<Type>());
   }
+
   if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
   {
     TTS_EQUAL(eve::is_ngtz(eve::Nan<Type>()), eve::True<Type>());
   }
-  if constexpr(std::is_floating_point_v<Type>)
-  {
-    TTS_EQUAL(eve::is_ngtz(eve::Mzero<Type>()), eve::True<Type>());
-  }
+
   TTS_EQUAL(eve::is_ngtz(Type(0)), eve::True<Type>());
   TTS_EQUAL(eve::is_ngtz(Type(3)), eve::False<Type>());
 }
-
-#endif
