@@ -8,43 +8,38 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef REC_HPP
-#define REC_HPP
-
 #include <eve/function/rec.hpp>
-#include "test.hpp"
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
+#include <tts/tests/precision.hpp>
+#include <tts/tests/types.hpp>
 #include <type_traits>
 
-
-TTS_CASE("Check raw_(rec) behavior")
+TTS_CASE("Check eve::raw_(eve::raw_(eve::rec)) return type")
 {
-  if constexpr(std::is_floating_point_v<Type>)
+  TTS_EXPR_IS(eve::raw_(eve::rec)(Type(0)), (Type));
+}
+
+TTS_CASE("Check eve::raw_(eve::rec) behavior")
+{
+  if constexpr(std::is_floating_point_v<Value>)
   {
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(0)), eve::Inf<Type>());
-    TTS_EQUAL(eve::raw_(eve::rec)(-Type(0)), eve::Minf<Type>());
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(1)), Type(1));
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(2)), Type(1) / Type(2));
+    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( Type(1)) , (Type(1))     , 0.2);
+    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( Type(47)), (Type(1./47.)), 0.2);
   }
   else
   {
-    if constexpr(std::is_signed_v<Type>)
+    if constexpr(std::is_signed_v<Value>)
     {
-      TTS_EQUAL(eve::raw_(eve::rec)(Type(-1)), Type(-1));
-      TTS_EQUAL(eve::raw_(eve::rec)(Type(-2)), Type(0));
-      TTS_EQUAL(eve::raw_(eve::rec)(Type(-47)), Type(0));
+      TTS_EQUAL(eve::raw_(eve::rec)(Type(- 1)), (Type(-1)));
+      TTS_EQUAL(eve::raw_(eve::rec)(Type(-47)), (Type( 0)));
     }
-
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(0)), eve::Valmax<Type>());
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(1)), Type(1));
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(2)), Type(0));
-    TTS_EQUAL(eve::raw_(eve::rec)(Type(47)), Type(0));
+    else
+    {
+      TTS_EQUAL(eve::raw_(eve::rec)(Type(1)) , (Type(1)));
+      TTS_EQUAL(eve::raw_(eve::rec)(Type(47)), (Type(0)));
+    }
   }
 }
-
-#endif

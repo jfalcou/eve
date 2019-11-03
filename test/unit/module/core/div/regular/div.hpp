@@ -25,7 +25,7 @@ TTS_CASE("Check eve::div behavior")
   TTS_EQUAL(eve::div(Type(12), Type(4)), (Type(3  )));
   TTS_EQUAL(eve::div(Type( 1), Type(2)), (Type(0.5)));
 
-  if constexpr(std::is_signed_v<Type>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::div(Type(-1), Type(1)) , (Type(-1)));
     TTS_EQUAL(eve::div(Type(-6), Type(-2)), (Type( 3)));
