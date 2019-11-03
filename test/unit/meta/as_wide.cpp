@@ -15,7 +15,7 @@
 #include <tuple>
 #include <vector>
 
-TTS_CASE_TPL("Check as_wide on scalar", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL("Check as_wide on scalar", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES  )
 {
   using eve::as_wide_t;
   using eve::logical;
@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check as_wide on scalar", TTS_NUMERIC_TYPES)
   TTS_TYPE_IS((as_wide_t<logical<T>, fixed<4>>) , (logical<wide<T,fixed<4>>> ) );
 }
 
-TTS_CASE_TPL("Check as_wide on wide", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL("Check as_wide on wide", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES)
 {
   using eve::as_wide_t;
   using eve::logical;
