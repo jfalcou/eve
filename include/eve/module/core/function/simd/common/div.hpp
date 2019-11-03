@@ -95,6 +95,14 @@ namespace eve::detail
       return aggregate( eve::div, st, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
+    else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
+    {
+      return saturated_(div)(a, T(b)); 
+    }
+    else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
+    {
+      return saturated_(div)(U(a), b); 
+    }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(std::is_same_v<T, U>)
@@ -121,7 +129,7 @@ namespace eve::detail
           auto iseqzb = is_eqz(b);
           auto bb = if_else(iseqzb, One(as(a)), b);
           auto aa = if_else(iseqzb, bitwise_mask(a), a);
-           return div(aa, bb);
+          return div(aa, bb);
         }
       }
       return T();
