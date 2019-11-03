@@ -34,13 +34,36 @@ namespace eve::detail
   }
 
   // Subparts extraction
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
+  {
+    if constexpr(is_vectorized_v<T>)
+      return eve::detail::slice(std::forward<T>(t), upper_);
+    else
+      return std::forward<T>(t);
+  }
+
+  // Lower values extraction
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
+  {
+    if constexpr(is_vectorized_v<T>)
+      return eve::detail::slice(std::forward<T>(t), lower_);
+    else
+      return std::forward<T>(t);
+  }
+
   template<typename T, typename I>
   EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
   {
     if constexpr(is_vectorized_v<T>)
+    {
       return std::forward<T>(t).storage().segments[idx];
+    }
     else
+    {
       return std::forward<T>(t);
+    }
   }
 
   // Compute a transformed wide type
@@ -121,23 +144,32 @@ namespace eve::detail
   EVE_FORCEINLINE auto aggregate(Func &&f, Ts &&... ts)
   {
     using wide_t = typename wide_result<Func, Ts...>::type;
-    using str_t  = typename wide_t::storage_type;
 
-    wide_t that;
+    if constexpr( is_aggregated_v< abi_type_t<wide_t> >)
+    {
+      using str_t  = typename wide_t::storage_type;
 
-    detail::apply<str_t::replication>
-    ( [&](auto const&... I)
-      {
-        ( ( aggregate_step<std::decay_t<decltype(I)>::value>
-                          ::perform ( std::forward<Func>(f),
-                                      that.storage(), std::forward<Ts>(ts)...
-                                    )
-          ),...
-        );
-      }
-    );
+      wide_t that;
 
-    return that;
+      detail::apply<str_t::replication>
+      ( [&](auto const&... I)
+        {
+          ( ( aggregate_step<std::decay_t<decltype(I)>::value>
+                            ::perform ( std::forward<Func>(f),
+                                        that.storage(), std::forward<Ts>(ts)...
+                                      )
+            ),...
+          );
+        }
+      );
+
+      return that;
+    }
+    else
+    {
+      return wide_t{std::forward<Func>(f)(lower(std::forward<Ts>(ts))...),
+                    std::forward<Func>(f)(upper(std::forward<Ts>(ts))...)};
+    }
   }
 }
 

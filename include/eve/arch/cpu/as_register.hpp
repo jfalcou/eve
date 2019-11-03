@@ -38,14 +38,14 @@ namespace eve::ext
       using segment_type  = std::array<value_type,replication>;
       segment_type        segments;
 
-      template<typename Func> void apply(Func const& f) noexcept
+      template<typename Func> auto apply(Func const& f) noexcept
       {
-        detail::apply<replication>( [&](auto const&... I) { f(segments[I]...); } );
+        return detail::apply<replication>( [&](auto const&... I) { return f(segments[I]...); } );
       }
 
-      template<typename Func> void apply(Func const& f) const noexcept
+      template<typename Func> auto apply(Func const& f) const noexcept
       {
-        detail::apply<replication>( [&](auto const&... I) { f(segments[I]...); } );
+        return detail::apply<replication>( [&](auto const&... I) { return f(segments[I]...); } );
       }
     };
   };
