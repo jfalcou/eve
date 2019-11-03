@@ -23,8 +23,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fill(as_<Pack> const&, ABI const&, Generator&& g, int offset = 0) noexcept
   {
-    static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
-
     if constexpr(is_aggregated_v<ABI>)
     {
       using str_t = typename Pack::storage_type;
@@ -48,6 +46,7 @@ namespace eve::detail
     }
     else
     {
+      static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
       Pack that;
 
       for(typename Pack::size_type i = 0; i < sz; ++i)
