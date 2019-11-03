@@ -11,6 +11,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/constant/mzero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
@@ -26,7 +27,7 @@ TTS_CASE("Check eve::rec behavior")
   if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_infinites)
   {
     TTS_ULP_EQUAL(eve::rec( Type(0)), (eve::Inf<Type>()) , 0.5);
-    TTS_ULP_EQUAL(eve::rec(-Type(0)), (eve::Minf<Type>()), 0.5);
+    TTS_ALL_ULP_EQUAL(eve::rec(eve::Mzero<Type>()), (eve::Minf<Type>()), 0.5);
     TTS_ULP_EQUAL(eve::rec( Type(1)), (Type(1))          , 0.5);
     TTS_ULP_EQUAL(eve::rec( Type(2)), (Type(1./2.))      , 0.5);
   }
