@@ -8,48 +8,39 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef REC_HPP
-#define REC_HPP
-
-#include <eve/function/rec.hpp>
-#include "test.hpp"
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
+#include <tts/tests/precision.hpp>
+#include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check rec return type")
+TTS_CASE("Check eve::rec return type")
 {
-  TTS_EXPR_IS(eve::rec(Type(0)), Type);
-  TTS_EXPR_IS(eve::raw_(eve::rec)(Type(0)), Type);
+  TTS_EXPR_IS(eve::rec(Type(0)), (Type));
 }
 
 TTS_CASE("Check eve::rec behavior")
 {
-  if constexpr(std::is_floating_point_v<Type> && eve::platform::supports_infinites)
+  if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_infinites)
   {
-    TTS_EQUAL(eve::rec(Type(0)), eve::Inf<Type>());
-    TTS_EQUAL(eve::rec(-Type(0)), eve::Minf<Type>());
-    TTS_EQUAL(eve::rec(Type(1)), Type(1));
-    TTS_EQUAL(eve::rec(Type(2)), Type(1) / Type(2));
+    TTS_ULP_EQUAL(eve::rec( Type(0)), (eve::Inf<Type>()) , 0.5);
+    TTS_ULP_EQUAL(eve::rec(-Type(0)), (eve::Minf<Type>()), 0.5);
+    TTS_ULP_EQUAL(eve::rec( Type(1)), (Type(1))          , 0.5);
+    TTS_ULP_EQUAL(eve::rec( Type(2)), (Type(1./2.))      , 0.5);
   }
   else
   {
-    if constexpr(std::is_signed_v<Type>)
+    if constexpr(std::is_signed_v<Value>)
     {
-      TTS_EQUAL(eve::rec(Type(-1)), Type(-1));
-      TTS_EQUAL(eve::rec(Type(-2)), Type(0));
-      TTS_EQUAL(eve::rec(Type(-47)), Type(0));
+      TTS_EQUAL(eve::rec(Type(- 1)), (Type(-1)));
+      TTS_EQUAL(eve::rec(Type(-47)), (Type( 0)));
     }
-
-    TTS_EQUAL(eve::rec(Type(0)), eve::Valmax<Type>());
-    TTS_EQUAL(eve::rec(Type(1)), Type(1));
-    TTS_EQUAL(eve::rec(Type(2)), Type(0));
-    TTS_EQUAL(eve::rec(Type(47)), Type(0));
+    else
+    {
+      TTS_EQUAL(eve::rec(Type(1)) , (Type(1)));
+      TTS_EQUAL(eve::rec(Type(47)), (Type(0)));
+    }
   }
 }
-
-#endif
