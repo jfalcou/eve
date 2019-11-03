@@ -34,8 +34,9 @@ namespace eve::ext
       static constexpr auto small_size  = expected_cardinal_v<Type>;
       static constexpr auto replication = Cardinal::value/small_size;
 
-      using value_type = as_wide_t<Type, fixed<expected_cardinal_v<Type>>>;
-      std::array<value_type,replication> segments;
+      using value_type    = as_wide_t<Type, fixed<expected_cardinal_v<Type>>>;
+      using segment_type  = std::array<value_type,replication>;
+      segment_type        segments;
 
       template<typename Func> void apply(Func const& f) noexcept
       {
