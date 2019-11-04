@@ -24,6 +24,8 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/forward.hpp>
 #include <eve/concept/vectorized.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/detail/meta.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -32,9 +34,29 @@ namespace eve::detail
   EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_)
                                  , T const &x
                                  , U const &y) noexcept
-  requires(T, vectorized<T>, behave_as<totally_ordered, T>)
+  requires( std::conditional_t<is_vectorized_v<T>, T, U>
+          , either<is_vectorized_v<T>, is_vectorized_v<U>>
+          , behave_as<totally_ordered, T>)
   {
-    return if_else(x < y,  next(x), if_else(y < x, prev(x), x)); 
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    {
+      return map(eve::nextafter, abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
+    }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    {
+      return aggregate(eve::nextafter, abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
+    }
+    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    {
+      return if_else(x < y,  next(x), if_else(y < x, prev(x), x)); 
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::pedantic_(eve::nextafter)(abi_cast<U>(x), abi_cast<T>(y));
+    }  
   }
 
   template<typename T, typename U>
@@ -42,9 +64,32 @@ namespace eve::detail
                                  , pedantic_type const &   
                                  , T const &x
                                  , U const &y) noexcept
-  requires(T, vectorized<T>, behave_as<totally_ordered, T>)
+  requires( std::conditional_t<is_vectorized_v<T>, T, U>
+          , either<is_vectorized_v<T>, is_vectorized_v<U>>
+          , behave_as<totally_ordered, T>)
   {
-    return if_else(is_unordered(x, y), allbits_, nextafter(x, y)); 
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    {
+      return map(eve::pedantic_(eve::nextafter), abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
+    }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    {
+      return aggregate(eve::pedantic_(eve::nextafter), abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
+    }
+    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    {
+      if constexpr(std::is_floating_point_v<value_type_t<T>>)
+        return if_else(is_unordered(x, y), eve::allbits_, nextafter(x, y));
+      else
+        return nextafter(x, y); 
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::pedantic_(eve::nextafter)(abi_cast<U>(x), abi_cast<T>(y));
+    } 
   }
 }
 
