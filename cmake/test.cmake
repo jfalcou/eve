@@ -52,8 +52,8 @@ endfunction()
 ##==================================================================================================
 function(make_all_units)
   # Parse our options to find name, arch and types to generate
-  set(oneValueArgs ROOT NAME)
   set(multiValueArgs TYPES ARCH)
+  set(oneValueArgs ROOT NAME CARDINAL)
   cmake_parse_arguments(GEN_TEST "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
   # Locate all subdirectory for current test
@@ -90,9 +90,17 @@ function(make_all_units)
           set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")
 
           configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
-          generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
-                          "${base_file}.simd.${type}.cpp"
-                        )
+
+          if(GEN_TEST_CARDINAL)
+            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                            "${base_file}.simd.${type}.cpp"
+                            "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
+                          )
+          else()
+            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                            "${base_file}.simd.${type}.cpp"
+                          )
+          endif()
         endforeach()
       endif()
 

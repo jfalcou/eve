@@ -16,6 +16,11 @@ function(generate_test root rootpath dep file)
   set(test "${root}.${base}")
 
   add_executable( ${test}  "${rootpath}${file}")
+
+  if( ${ARGC} EQUAL 5)
+    target_compile_definitions( ${test} PUBLIC ${ARGV4})
+  endif()
+
   target_compile_options  ( ${test} PUBLIC ${_TestOptions} )
 
   set_property( TARGET ${test}
@@ -49,8 +54,9 @@ function(generate_test root rootpath dep file)
 
   target_link_libraries(${test} tts)
   add_dependencies(unit ${test})
+
   if( NOT dep STREQUAL "")
-  add_dependencies(${dep} ${test})
+    add_dependencies(${dep} ${test})
   endif()
 
   add_parent_target(${test})
