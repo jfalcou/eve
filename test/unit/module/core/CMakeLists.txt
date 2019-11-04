@@ -150,7 +150,7 @@ make_all_units(ROOT core NAME signnz                ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME sqr                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME sqr_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME sqrt                  ARCH scalar simd TYPES ${real_types}    )
-# make_all_units(ROOT core NAME sub                   ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME sub                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME trunc                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME tofloat               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all_types}     )
