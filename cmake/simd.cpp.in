@@ -19,6 +19,7 @@
 #define Value ${target}
 #define Base eve::wide<Value>
 
+#if !defined(EVE_CUSTOM_CARDINAL)
 inline constexpr auto base_cardinal   = Base::static_size;
 inline constexpr auto large_cardinal  = 2*Base::static_size;
 inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_size/2 : 1;
@@ -56,3 +57,16 @@ inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_siz
 #undef EVE_COUNTER
 
 #undef Type
+
+#else
+
+#define Type eve::wide<Value,eve::fixed<EVE_CUSTOM_CARDINAL>>
+
+// Specific  Cardinal test
+#define Cardinal EVE_CUSTOM_CARDINAL
+#define EVE_COUNTER XXX
+#include "${header}.hpp"
+#undef Cardinal
+#undef EVE_COUNTER
+
+#endif
