@@ -135,6 +135,7 @@ make_all_units(ROOT core NAME min                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME minmag                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )    
 make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME popcnt                ARCH scalar      TYPES ${integral_types})
 make_all_units(ROOT core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
