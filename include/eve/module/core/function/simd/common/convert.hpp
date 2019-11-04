@@ -41,27 +41,20 @@ namespace eve::detail
     return v0;
   }
 
+  //================================================================================================
   // Generic case for arithmetic
+  //================================================================================================
   template<typename T, typename N, typename ABI, typename OUT>
   EVE_FORCEINLINE wide<OUT,N> convert_( EVE_SUPPORTS(cpu_),
                                         wide<T, N, ABI> const & v0, as_<OUT> const& tgt
                                       ) noexcept
   {
-    // Both source and target needs to be aggregate for the optimization to make sense
-    if constexpr( is_aggregated_v<ABI> && is_aggregated_v<typename wide<OUT,N>::abi_type>)
-    {
-      return aggregate(eve::convert, v0, tgt);
-    }
-    else
-    {
-      return map(convert, v0, tgt); 
-    }
+    return map(convert, v0, tgt);
   }
-  
-  //////////////////////////////////////////////////////////////////////////////////////
-  // pedantic case
-  //////////////////////////////////////////////////////////////////////////////////////
 
+  //================================================================================================
+  // pedantic case
+  //================================================================================================
   template<typename IN, typename N, typename ABI, typename OUT>
   EVE_FORCEINLINE wide<OUT,N> convert_( EVE_SUPPORTS(cpu_)
                                       , pedantic_type const & ped_
@@ -70,7 +63,7 @@ namespace eve::detail
   {
     if constexpr( is_aggregated_v<ABI> && is_aggregated_v<typename wide<OUT,N>::abi_type>)
     {
-      return aggregate(eve::convert, ped_, v00, tgt);
+      return aggregate( eve::pedantic_(eve::convert), v00, tgt);
     }
     else if constexpr(std::is_same_v<IN, double> && std::is_same_v<OUT, int64_t>)
     {
@@ -79,13 +72,13 @@ namespace eve::detail
       const OUT Vax = -OUT(Vim32);
       auto z = v00*1.52587890625000e-05; //v0*2^(-16);
       auto t2 = trunc(z);
-      auto t1 = z-t2; 
+      auto t1 = z-t2;
       auto z1 = convert(t1*65536.0, as<OUT>())+shl(convert(t2, as<OUT>()), 16);
       return if_else(logical_and(z1 == Vim, is_gtz(v00)), Vax, z1);
     }
     else if constexpr(std::is_floating_point_v<IN> && std::is_same_v<OUT, as_integer_t<IN, unsigned>> )
     {
-      auto v0 =  eve::max(v00, Zero(as(v00))); 
+      auto v0 =  eve::max(v00, Zero(as(v00)));
       using r_t = as_integer_t<IN, unsigned>;
       using si_t = as_integer_t<IN, signed>;
       IN sign_f = inc(IN(Valmax<si_t>()));
@@ -97,18 +90,17 @@ namespace eve::detail
     }
     else if constexpr(std::is_signed_v<IN> && std::is_unsigned_v<OUT> )
     {
-      return convert(eve::max(v00, Zero(as(v00))), as<OUT>()); 
+      return convert(eve::max(v00, Zero(as(v00))), as<OUT>());
     }
     else
     {
-      return convert(v00, as<OUT>()); 
+      return convert(v00, as<OUT>());
     }
   }
-  
-  //////////////////////////////////////////////////////////////////////////////////////
+
+  //================================================================================================
   // saturated case
-  //////////////////////////////////////////////////////////////////////////////////////
-  
+  //================================================================================================
   template<typename IN, typename N, typename ABI, typename OUT>
   EVE_FORCEINLINE wide<OUT,N> convert_( EVE_SUPPORTS(cpu_)
                                       , saturated_type const & sat_
@@ -117,24 +109,24 @@ namespace eve::detail
   {
     if constexpr( is_aggregated_v<ABI> && is_aggregated_v<typename wide<OUT,N>::abi_type>)
     {
-      return aggregate(saturated_(eve::convert), v0, tgt);
+      return aggregate(eve::saturated_(eve::convert), v0, tgt);
     }
     else if constexpr(std::is_same_v<IN, OUT>)
     {
-      return v0; 
+      return v0;
     }
     else if constexpr(std::is_integral_v<OUT>)
     {
       if constexpr(std::is_floating_point_v<IN> || (sizeof(OUT) <= sizeof(IN)))
       {
-        return convert(saturate(as<OUT>(), v0), tgt); 
+        return convert(saturate(as<OUT>(), v0), tgt);
       }
     }
-    else        
+    else
     {
-      return convert(v0, tgt);  
-    } 
-  }  
+      return convert(v0, tgt);
+    }
+  }
 }
 
 #endif
