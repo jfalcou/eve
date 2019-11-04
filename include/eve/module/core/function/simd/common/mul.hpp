@@ -85,7 +85,7 @@ namespace eve::detail
         }
         else
         {
-          return map(mul, st, a, b);
+          return map( eve::saturated_(eve::mul), a, b);
         }
       }
       else
