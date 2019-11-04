@@ -38,7 +38,7 @@ namespace eve::detail
                                       , U const &b) noexcept
   requires( U, vectorizable<T> )
   {
-    if constexpr(std::is_floating_point_v<T>) return  cond ? a*b : a;
+    if constexpr(std::is_floating_point_v<U>) return  cond ? a*b : a;
     else return cond ? saturated_(mul)(a, b) : a;
   }
 }
