@@ -17,6 +17,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <type_traits>
