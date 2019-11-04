@@ -17,6 +17,7 @@
 #include <eve/module/core/detail/generic/next_kernel.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/dec.hpp>
@@ -64,8 +65,8 @@ namespace eve::detail
     }
     else if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      EVE_ASSERT(all(is_gez(n)), "[prev] : second parameter must be positive");
-      auto z =  bitfloating(saturated_(sub)(bitinteger(a), n)); 
+      using i_t = as_integer_t<value_type_t<T>>; 
+      auto z =  bitfloating(saturated_(sub)(bitinteger(a), convert(n, as<i_t>()))); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -77,7 +78,7 @@ namespace eve::detail
     }
     else // if constexpr(std::is_integral_v<T>)
     {
-      return saturated_(sub)(a, n);
+      return saturated_(sub)(a,  convert(n, as<value_type_t<T>>()));
     }
   }
   
@@ -112,7 +113,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      auto z =  bitfloating(sub(bitinteger(a), n)); 
+      using i_t = as_integer_t<value_type_t<T>>; 
+      auto z =  bitfloating(sub(bitinteger(a), convert(n, as<i_t>())));  
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -124,7 +126,7 @@ namespace eve::detail
     }
     else // if constexpr(std::is_integral_v<T>)
     {
-      return sub(a, n);
+      return sub(a,  convert(n, as<value_type_t<T>>()));
     }
   }
 }
