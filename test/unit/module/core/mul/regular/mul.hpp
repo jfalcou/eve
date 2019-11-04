@@ -8,51 +8,39 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MUL_HPP
-#define MUL_HPP
-
 #include <eve/function/mul.hpp>
-#include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <tts/tests/precision.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/platform.hpp>
+#include <type_traits>
+
+TTS_CASE("Check eve::mul return type")
+{
+  TTS_EXPR_IS(eve::mul(Type(), Type()), (Type));
+}
 
 TTS_CASE("Check eve::mul behavior")
 {
-  TTS_EQUAL(eve::mul(eve::One<Type>(), eve::One<Type>()), Type(1));
-  TTS_EQUAL(eve::mul(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-  if constexpr(std::is_integral_v<Type>)
+  TTS_EQUAL(eve::mul(Type( 0), Type(1)), (Type(0  )));
+  TTS_EQUAL(eve::mul(Type( 1), Type(1)), (Type(1  )));
+  TTS_EQUAL(eve::mul(Type(12), Type(4)), (Type(48 )));
+
+  TTS_EQUAL(eve::mul(Value( 0), Type(1)), (Type(0  )));
+  TTS_EQUAL(eve::mul(Value( 1), Type(1)), (Type(1  )));
+  TTS_EQUAL(eve::mul(Value(12), Type(4)), (Type(48 )));
+
+  TTS_EQUAL(eve::mul(Type( 0), Value(1)), (Type(0  )));
+  TTS_EQUAL(eve::mul(Type( 1), Value(1)), (Type(1  )));
+  TTS_EQUAL(eve::mul(Type(12), Value(4)), (Type(48 )));
+
+  if constexpr(std::is_signed_v<Value>)
   {
-    if constexpr(std::is_signed_v<Type>)
-    {
-      TTS_EQUAL(eve::mul(eve::Mone<Type>(), eve::Mone<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::mul(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::mul(eve::Valmax<Type>(),eve::Mone<Type>()), eve::Valmin<Type>()+eve::One<Type>());
-      TTS_EQUAL(eve::mul(eve::Valmax<Type>(),eve::One<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::mul(eve::Valmin<Type>(),eve::Mone<Type>()), eve::Valmin<Type>());
-      TTS_EQUAL(eve::mul(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-    }
-    else
-    {
-      TTS_EQUAL(eve::mul(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::mul(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-    }
-  }
-  else if constexpr(eve::platform::supports_invalids)
-  {
-    TTS_EQUAL(eve::mul(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
-    TTS_EQUAL(eve::mul(eve::Minf<Type>(), eve::Minf<Type>()), eve::Inf<Type>());
-    TTS_IEEE_EQUAL(eve::mul(eve::Nan<Type>(), eve::Nan<Type>()), eve::Nan<Type>());
+    TTS_EQUAL(eve::mul(Type(-1), Type(1)) , (Type(-1)));
+    TTS_EQUAL(eve::mul(Type(-6), Type(-2)), (Type(12)));
+
+    TTS_EQUAL(eve::mul(Value(-1), Type(1)) , (Type(-1)));
+    TTS_EQUAL(eve::mul(Value(-6), Type(-2)), (Type(12)));
+
+    TTS_EQUAL(eve::mul(Type(-1), Value(1)) , (Type(-1)));
+    TTS_EQUAL(eve::mul(Type(-6), Value(-2)), (Type(12)));
   }
 }
-
-#endif

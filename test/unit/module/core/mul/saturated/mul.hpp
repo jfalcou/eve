@@ -8,54 +8,75 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MUL_HPP
-#define MUL_HPP
-
 #include <eve/function/mul.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <tts/tests/precision.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/platform.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
+#include <type_traits>
 
-TTS_CASE("Check saturated_(eve::mul behavior")
+TTS_CASE("Check saturated_(eve::mul) return type")
 {
-  TTS_EQUAL(eve::saturated_(eve::mul)(eve::One<Type>(), eve::One<Type>()), Type(1));
-  TTS_EQUAL(eve::saturated_(eve::mul)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-  if constexpr(std::is_integral_v<Type>)
+  TTS_EXPR_IS(eve::saturated_(eve::mul)(Type(), Type()), (Type));
+}
+
+TTS_CASE("Check saturated_(eve::mul) behavior")
+{
+  using eve::saturated_;
+
+  if constexpr(std::is_integral_v<Value>)
   {
-    if constexpr(std::is_signed_v<Type>)
+    auto tvmax = eve::Valmax<Type>();
+    auto tvmin = eve::Valmin<Type>();
+    auto vmax = eve::Valmax<Value>();
+    auto vmin = eve::Valmin<Value>();
+    
+    if constexpr(std::is_signed_v<Value>)
     {
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Mone<Type>(), eve::Mone<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmax<Type>(), eve::Valmax<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmax<Type>(),Type(2)), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmax<Type>(),eve::Mone<Type>()), eve::Valmin<Type>()+eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmax<Type>(),eve::One<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmin<Type>(),eve::Mone<Type>()), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       , (Type(-2))), tvmin);
+      TTS_EQUAL(saturated_(eve::mul)(tvmin       , (Type(-2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Type(-1))  , (Type( 0))), Type(0));
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       ,      tvmax), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       ,      tvmin), tvmin);
+      
+      TTS_EQUAL(saturated_(eve::mul)(vmax       , (Type(-2))), tvmin);
+      TTS_EQUAL(saturated_(eve::mul)(vmin       , (Type(-2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Value(-1)), (Type( 0))), Type(0));
+      TTS_EQUAL(saturated_(eve::mul)(vmax       ,      tvmax), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)(vmax       ,      tvmin), tvmin);
+      
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       , (Value(-2))), tvmin);
+      TTS_EQUAL(saturated_(eve::mul)(tvmin       , (Value(-2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Type(-1))  , (Value( 0))), Type(0));
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       ,        vmax), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)(tvmax       ,        vmin), tvmin);
+      
     }
     else
     {
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Valmax<Type>(),Type(2)), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::mul)(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
+      TTS_EQUAL(saturated_(eve::mul)(tvmax    , (Type(2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Type(2)), tvmax)    , tvmax);
+      
+      TTS_EQUAL(saturated_(eve::mul)(vmax      , (Type(2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Value(2)), tvmax)    , tvmax);
+      
+      TTS_EQUAL(saturated_(eve::mul)(tvmax     , (Value(2))), tvmax);
+      TTS_EQUAL(saturated_(eve::mul)((Type(2)) , vmax )     , tvmax);
+      
     }
   }
-  else if constexpr(eve::platform::supports_invalids)
+  else
   {
-    TTS_EQUAL(eve::saturated_(eve::mul)(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
-    TTS_EQUAL(eve::saturated_(eve::mul)(eve::Minf<Type>(), eve::Minf<Type>()), eve::Inf<Type>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::mul)(eve::Nan<Type>(), eve::Nan<Type>()), eve::Nan<Type>());
+    TTS_EQUAL(saturated_(eve::mul)(Type( 0) , Type(1)), Type(0  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Type( 1) , Type(1)), Type(1  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Type(12) , Type(4)), Type(48  ) );
+    
+    TTS_EQUAL(saturated_(eve::mul)(Value( 0) , Type(1)), Type(0  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Value( 1) , Type(1)), Type(1  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Value(12) , Type(4)), Type(48  ) );
+    
+    TTS_EQUAL(saturated_(eve::mul)(Type( 0) , Value(1)), Type(0  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Type( 1) , Value(1)), Type(1  ) );
+    TTS_EQUAL(saturated_(eve::mul)(Type(12) , Value(4)), Type(48  ) );
   }
 }
-
-#endif
