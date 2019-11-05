@@ -50,7 +50,7 @@ namespace eve::detail
 
   template<typename T, typename U>
   EVE_FORCEINLINE  auto mul_(EVE_SUPPORTS(cpu_)
-                            ,  saturated_type const & st
+                            ,  saturated_type const &
                             , T const &a
                             , U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>,T,U>,
@@ -96,7 +96,7 @@ namespace eve::detail
     }
     else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
-      return eve::mul(st, abi_cast<U>(a), abi_cast<T>(b) );
+      return eve::saturated_(eve::mul)(abi_cast<U>(a), abi_cast<T>(b) );
     }
   }
 }
