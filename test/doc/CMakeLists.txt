@@ -18,7 +18,10 @@ add_subdirectory(core)
 ## documentation tests
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> fresh start CMakelist from refurb for tests
 
 =======
 <<<<<<< HEAD
@@ -166,6 +169,8 @@ make_unit( "doc.function.predicate" is_not_nan.cpp )
 make_unit( "doc.function.predicate" is_ordered.cpp )
 make_unit( "doc.function.predicate" is_unordered.cpp )
 =======
+=======
+>>>>>>> fresh start CMakelist from refurb for tests
 add_unit_test( "doc.function.predicates" convert.cpp )
 add_unit_test( "doc.function.ieee" ldexp.cpp )
 add_unit_test( "doc.function.ieee" ifrexp.cpp )
@@ -339,10 +344,19 @@ add_unit_test( "doc.function.predicate" is_not_nan.cpp )
 add_unit_test( "doc.function.predicate" is_ordered.cpp )
 add_unit_test( "doc.function.predicate" is_unordered.cpp )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> any
 >>>>>>> any
 =======
 >>>>>>> exponentbits first pass
+=======
+>>>>>>> fresh start CMakelist from refurb for tests
 >>>>>>> exponentbits first pass
 >>>>>>> exponentbits first pass
+<<<<<<< HEAD
 >>>>>>> exponentbits first pass
+=======
+=======
+
+>>>>>>> fresh start CMakelist from refurb for tests
+>>>>>>> fresh start CMakelist from refurb for tests

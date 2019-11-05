@@ -15,6 +15,7 @@ add_subdirectory(constant)
 add_subdirectory(failure) 
 =======
 add_subdirectory(failure)
+<<<<<<< HEAD
 =======
 ## scalar tests
 list_tests("scalar/toint"          "core" ${real_types})
@@ -492,10 +493,14 @@ list_tests("simd/convert/uint64" "core" ${all_types})
 =======
 >>>>>>> ldexp unit tests
 >>>>>>> ldexp unit tests
+<<<<<<< HEAD
 >>>>>>> ldexp unit tests
+=======
+=======
+>>>>>>> fresh start CMakelist from refurb for tests
+>>>>>>> fresh start CMakelist from refurb for tests
 
 ##==================================================================================================
-<<<<<<< HEAD
 ## Elementwise function unit tests
 ##==================================================================================================
 make_all_units(ROOT core NAME abs                   ARCH scalar simd TYPES ${all_types}     )
@@ -602,7 +607,7 @@ make_all_units(ROOT core NAME is_not_imag           ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME is_not_inf            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_less           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_less_equal     ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME is_not_nan            ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME is_not_nan            ARCH scalar simd TYPES ${all_types}     ) 
 make_all_units(ROOT core NAME is_not_real           ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME is_odd                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_ordered            ARCH scalar simd TYPES ${all_types}     )
@@ -652,42 +657,3 @@ make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME touint                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
-=======
-## Expected failures tests
-
-add_build_test( "core" failure/conditionnal/is_equal.cpp )
-add_build_test( "core" failure/conditionnal/is_not_equal.cpp )
-add_build_test( "core" failure/acos.cpp )
-add_build_test( "core" failure/asin.cpp )
-add_build_test( "core" failure/acot.cpp )
-add_build_test( "core" failure/asec.cpp )
-add_build_test( "core" failure/acsc.cpp )
-add_build_test( "core" failure/atan.cpp )
-add_build_test( "core" failure/atan2.cpp )
-add_build_test( "core" failure/atan2d.cpp )
-add_build_test( "core" failure/atan2pi.cpp )
-add_build_test( "core" failure/acosd.cpp )
-add_build_test( "core" failure/asind.cpp )
-add_build_test( "core" failure/acotd.cpp )
-add_build_test( "core" failure/asecd.cpp )
-add_build_test( "core" failure/acscd.cpp )
-add_build_test( "core" failure/atand.cpp )
-add_build_test( "core" failure/acospi.cpp )
-add_build_test( "core" failure/asinpi.cpp )
-add_build_test( "core" failure/acotpi.cpp )
-add_build_test( "core" failure/asecpi.cpp )
-add_build_test( "core" failure/bitwise_cast.cpp )
-add_build_test( "core" failure/bitwise_and.cpp )
-add_build_test( "core" failure/acscpi.cpp )   
-add_build_test( "core" failure/atanpi.cpp )  
-add_build_test( "core" failure/exponentbits.cpp )
-add_build_test( "core" failure/exponent.cpp )  
-add_build_test( "core" failure/mantissa.cpp )
-add_build_test( "core" failure/ldexp.cpp )
-add_build_test( "core" failure/frexp.cpp )    
-add_build_test( "core" failure/ifrexp.cpp )       
-add_build_test( "core" failure/indeg.cpp )
-add_build_test( "core" failure/inpi.cpp )
-add_build_test( "core" failure/sqr_abs.cpp )
-add_build_test( "core" failure/arg.cpp )
->>>>>>> more failure tests
