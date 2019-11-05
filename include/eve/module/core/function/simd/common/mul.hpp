@@ -62,11 +62,11 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return map( eve::mul, st, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return map( eve::saturated_(eve::mul), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::mul, st, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return aggregate( eve::saturated_(eve::mul), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
