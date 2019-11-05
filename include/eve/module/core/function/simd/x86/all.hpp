@@ -17,7 +17,6 @@
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/forward.hpp>
-#include <eve/wide.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
 
@@ -33,7 +32,8 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)
     {
-      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
+
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
       static constexpr int mask = 0xF >> SH;
@@ -54,7 +54,8 @@ namespace eve::detail
     }
     else if constexpr(std::is_same_v<T, double>)
     {
-      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
+
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
       static constexpr int mask = 0x3 >> SH;
@@ -95,7 +96,8 @@ namespace eve::detail
       }
       else
       {
-        using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+        using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
+
         if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
         {
           static constexpr int smask = mask <<  SH;
@@ -138,7 +140,8 @@ namespace eve::detail
         }
         else
         {
-          using i8_t = wide<int8_t, fixed<32> , avx_>;
+          using i8_t = typename wide<T, N, avx_>::template rebind<int8_t, fixed<32>>;
+
           return _mm256_movemask_epi8(bitwise_cast(v.mask(), as_<i8_t >())) == int(0xFFFFFFFF);
         }
       }

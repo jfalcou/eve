@@ -12,8 +12,8 @@
 #define EVE_FUNCTION_DEFINITION_CLAMP_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/all.hpp>
 #include <eve/assert.hpp>
 
 namespace eve
@@ -28,7 +28,7 @@ namespace eve
                               , L const& lo
                               , H const& hi)
     {
-      EVE_ASSERT(assert_all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
+      EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
     }
   }
 
