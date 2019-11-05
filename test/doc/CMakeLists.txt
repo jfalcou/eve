@@ -13,6 +13,7 @@
 ##==================================================================================================
 add_subdirectory(core)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 ## documentation tests
@@ -360,3 +361,5 @@ add_unit_test( "doc.function.predicate" is_unordered.cpp )
 
 >>>>>>> fresh start CMakelist from refurb for tests
 >>>>>>> fresh start CMakelist from refurb for tests
+=======
+>>>>>>> cbrt
