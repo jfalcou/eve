@@ -19,6 +19,7 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
@@ -50,6 +51,7 @@ namespace eve::detail
   requires(T, floating_point<T>)
   {
     using i_t = as_integer_t<T>;
+    if (is_eqz(xx)) return xx; 
     if (is_greater_equal(xx, Maxlog<T>())) return Inf<T>();
     if (is_less_equal(xx, Logeps<T>())) return Mone<T>();
     const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();

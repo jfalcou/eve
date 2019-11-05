@@ -19,6 +19,7 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
@@ -106,6 +107,7 @@ namespace eve::detail
         k = ldexp(y, ik);
       } 
       k = if_else (is_greater_equal(xx, Maxlog<T>()), Inf<T>(), k);
+      k = if_else (is_eqz(xx), xx, k); 
       return if_else (is_less_equal(xx, Logeps<T>()), eve::mone_, k);
     }
   }
