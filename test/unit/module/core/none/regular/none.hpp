@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/any.hpp>
+#include <eve/function/none.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/true.hpp>
@@ -19,25 +19,25 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::any return type")
+TTS_CASE("Check eve::none return type")
 {
-  TTS_EXPR_IS( (eve::any(eve::logical<Type>())) , bool);
-  TTS_EXPR_IS( (eve::any(Type()))               , bool);
+  TTS_EXPR_IS( (eve::none(eve::logical<Type>())) , bool);
+  TTS_EXPR_IS( (eve::none(Type()))               , bool);
 }
 
-TTS_CASE("Check eve::any behavior on arithmetic")
+TTS_CASE("Check eve::none behavior on arithmetic")
 {
-  TTS_EXPECT    ( (eve::any(Type{1})) );
-  TTS_EXPECT_NOT( (eve::any(Type{0})) );
+  TTS_EXPECT_NOT    ( (eve::none(Type{1})) );
+  TTS_EXPECT      ( (eve::none(Type{0})) );
 
   if constexpr(std::is_floating_point_v<Value>)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EXPECT(eve::any(eve::Nan<Type>()));
+      TTS_EXPECT_NOT(eve::none(eve::Nan<Type>()));
     }
 
-    TTS_EXPECT_NOT(eve::any(eve::Mzero<Type>()));
+    TTS_EXPECT(eve::none(eve::Mzero<Type>()));
   }
 
 #if defined(EVE_SIMD_TESTS)
@@ -53,20 +53,19 @@ TTS_CASE("Check eve::any behavior on arithmetic")
       rhs4[i] = i == j ? 0 : 1;
     }
 
-    TTS_EXPECT(eve::any(rhs1));
-    std::cout << Cardinal << " -> " <<  j << " -> " << rhs2 << " -> "<< (eve::any(rhs2)) << std::endl; 
-    if (Cardinal != j+1) TTS_EXPECT(eve::any(rhs2));
-    else                 TTS_EXPECT_NOT(eve::any(rhs2));
-    TTS_EXPECT(eve::any(rhs3));
+    TTS_EXPECT_NOT(eve::none(rhs1));
+    if (Cardinal != j+1) TTS_EXPECT_NOT(eve::none(rhs2));
+    else               TTS_EXPECT(eve::none(rhs2));
+    TTS_EXPECT_NOT(eve::none(rhs3));
 
-    if constexpr(Cardinal == 1) TTS_EXPECT_NOT(eve::any(rhs4));
-    else                        TTS_EXPECT(eve::any(rhs4));
+    if constexpr(Cardinal == 1) TTS_EXPECT(eve::none(rhs4));
+    else                        TTS_EXPECT_NOT(eve::none(rhs4));
   }
 #endif
 }
 
-TTS_CASE("Check eve::any behavior on logical")
+TTS_CASE("Check eve::none behavior on logical")
 {
-  TTS_EXPECT    (eve::any(eve::True<Type>()));
-  TTS_EXPECT_NOT(eve::any(eve::False<Type>()));
+  TTS_EXPECT_NOT    (eve::none(eve::True<Type>()));
+  TTS_EXPECT        (eve::none(eve::False<Type>()));
 }
