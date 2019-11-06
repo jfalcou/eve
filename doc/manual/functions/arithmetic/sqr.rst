@@ -45,10 +45,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/sqr.cpp
+.. include:: ../../../../test/doc/core/sqr.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/sqr.txt
+.. include:: ../../../../test/doc/core/sqr.txt
   :literal:

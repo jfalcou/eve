@@ -53,10 +53,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/abs.cpp
+.. include:: ../../../../test/doc/core/abs.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/abs.txt
+.. include:: ../../../../test/doc/core/abs.txt
   :literal:

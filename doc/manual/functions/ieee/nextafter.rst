@@ -28,8 +28,8 @@ Synopsis
    template<typename T> constexpr T                        operator()( T s, T z) noexcept;
 
 * [1] Computes the element_wise next representable value of x in the direction of y. If x equals y, then x is returned.
-* [2] Computes the element_wise next representable value of x in the direction of z. If x equals y, then x is returned. 
-* [3] Computes the next representable value of s in the direction of z. If x equals z, then s is returned. 
+* [2] Computes the element_wise next representable value of x in the direction of z. If x equals y, then x is returned.
+* [3] Computes the next representable value of s in the direction of z. If x equals z, then s is returned.
 .. rubric:: Parameters
 
 * **x**, **y**: Instance of :ref:`type-wide`.
@@ -47,10 +47,10 @@ Notes
 Example
 *******
 
-.. include:: ../../../../test/doc/nextafter.cpp
+.. include:: ../../../../test/doc/core/nextafter.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/nextafter.txt
+.. include:: ../../../../test/doc/core/nextafter.txt
   :literal:

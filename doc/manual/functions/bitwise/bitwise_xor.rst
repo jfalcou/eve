@@ -60,10 +60,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_xor.cpp
+.. include:: ../../../../test/doc/core/bitwise_xor.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_xor.txt
+.. include:: ../../../../test/doc/core/bitwise_xor.txt
   :literal:

@@ -47,11 +47,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_not_imag.cpp
+.. include:: ../../../../test/doc/core/is_not_imag.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_not_imag.txt
+.. include:: ../../../../test/doc/core/is_not_imag.txt
   :literal:
 

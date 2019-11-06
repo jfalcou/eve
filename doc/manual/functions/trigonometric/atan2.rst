@@ -75,11 +75,11 @@ Notes
 Example
 *******
 
-.. include:: ../../../../test/doc/atan2.cpp
+.. include:: ../../../../test/doc/core/atan2.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/atan2.txt
+.. include:: ../../../../test/doc/core/atan2.txt
   :literal:
 

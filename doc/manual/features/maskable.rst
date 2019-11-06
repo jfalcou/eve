@@ -19,11 +19,11 @@ Syntax
 Example
 -------
 
-.. include:: ../../../test/doc/mask.cpp
+.. include:: ../../../test/doc/core/mask.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../test/doc/mask.txt
+.. include:: ../../../test/doc/core/mask.txt
   :literal:
 

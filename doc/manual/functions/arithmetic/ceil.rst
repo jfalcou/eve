@@ -50,10 +50,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/ceil.cpp
+.. include:: ../../../../test/doc/core/ceil.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/ceil.txt
+.. include:: ../../../../test/doc/core/ceil.txt
   :literal:

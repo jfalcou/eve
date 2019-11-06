@@ -1,8 +1,0 @@
----- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::asec(pf) =            (-nan, 0, 3.14159, 2.0944, -nan, 1.5708, 1.5708, -nan)
----- scalar
-<- xf =                      1
--> eve::asec(xf) =            0
-<- yf =                      -nan
--> eve::asec(yf) =            nan

@@ -3,7 +3,7 @@
 ####
 frac
 ####
- 
+
 **Required header:** ``#include <eve/function/frac.hpp>``
 
 .. code-block:: c++
@@ -45,10 +45,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/frac.cpp
+.. include:: ../../../../test/doc/core/frac.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/frac.txt
+.. include:: ../../../../test/doc/core/frac.txt
   :literal:

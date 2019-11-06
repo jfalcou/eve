@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/log1p.cpp
+.. include:: ../../../../test/doc/core/log1p.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/log1p.txt
+.. include:: ../../../../test/doc/core/log1p.txt
   :literal:
 

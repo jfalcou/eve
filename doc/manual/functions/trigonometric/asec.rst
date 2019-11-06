@@ -14,8 +14,8 @@ asec
    }
 
 Function object computing  the inverse secant in radian: (:math:`\arccos(1/x)`) of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
-       
+
+
 ********
 Synopsis
 ********
@@ -28,7 +28,7 @@ Synopsis
 
 * [1] Computes elementwise the mathematical value :math:`\arccos(1/v)`.
 * [2] Computes the mathematical value :math:`\arccos(1/s)`.
-  
+
 
 .. rubric:: Parameters
 
@@ -48,11 +48,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/asec.cpp
+.. include:: ../../../../test/doc/core/asec.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/asec.txt
+.. include:: ../../../../test/doc/core/asec.txt
   :literal:
 

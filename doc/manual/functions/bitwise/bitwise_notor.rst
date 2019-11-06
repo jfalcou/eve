@@ -62,10 +62,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_notor.cpp
+.. include:: ../../../../test/doc/core/bitwise_notor.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_notor.txt
+.. include:: ../../../../test/doc/core/bitwise_notor.txt
   :literal:

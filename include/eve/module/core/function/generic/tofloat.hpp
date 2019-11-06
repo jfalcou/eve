@@ -35,7 +35,20 @@ namespace eve::detail
     }
     else
     {
-      return convert(a, as_<as_floating_point_t<value_type_t<T>>>()); ;
+      return convert(a, as_<as_floating_point_t<value_type_t<T>>>());
+    }
+  }
+
+  template<typename T, typename Tag>
+  EVE_FORCEINLINE constexpr auto tofloat_(EVE_SUPPORTS(cpu_), Tag const& tag_, T const &a) noexcept
+  {
+    if constexpr( std::is_integral_v< value_type_t<T> > )
+    {
+      return a;
+    }
+    else
+    {
+      return convert(tag_, a, as_<as_floating_point_t<value_type_t<T>>>());
     }
   }
 }

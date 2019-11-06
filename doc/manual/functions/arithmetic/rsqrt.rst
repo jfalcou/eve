@@ -38,8 +38,8 @@ Synopsis
 
 Notes
 *******
- 
- Not defined for Integral typed entries 
+
+ Not defined for Integral typed entries
 
 Options
 *******
@@ -49,10 +49,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/rsqrt.cpp
+.. include:: ../../../../test/doc/core/rsqrt.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/rsqrt.txt
+.. include:: ../../../../test/doc/core/rsqrt.txt
   :literal:

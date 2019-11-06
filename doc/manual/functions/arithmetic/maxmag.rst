@@ -57,10 +57,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/maxmag.cpp
+.. include:: ../../../../test/doc/core/maxmag.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/maxmag.txt
+.. include:: ../../../../test/doc/core/maxmag.txt
   :literal:

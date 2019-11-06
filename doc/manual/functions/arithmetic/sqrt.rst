@@ -38,8 +38,8 @@ Synopsis
 
 Notes
 *******
- 
- For postive Integral typed entries the return is the truncation of the real result 
+
+ For postive Integral typed entries the return is the truncation of the real result
 
 Options
 *******
@@ -49,10 +49,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/sqrt.cpp
+.. include:: ../../../../test/doc/core/sqrt.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/sqrt.txt
+.. include:: ../../../../test/doc/core/sqrt.txt
   :literal:

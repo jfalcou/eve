@@ -1,6 +1,8 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
+##
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -33,10 +35,19 @@ function(generate_test root rootpath dep file)
               COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${test}> --no-color --pass
             )
   else()
+    if ( ${root} MATCHES "doc.*")
+    string(REPLACE "." "/" doc_path ${root})
+    string(REPLACE ".cpp" ".txt" doc_output ${file})
+    add_test( NAME ${test}
+              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+              COMMAND sh -c "$<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/test/${doc_path}/${doc_output}"
+            )
+    else()
     add_test( NAME ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               COMMAND $<TARGET_FILE:${test}> --no-color --pass
             )
+    endif()
   endif()
 
   set_target_properties ( ${test} PROPERTIES

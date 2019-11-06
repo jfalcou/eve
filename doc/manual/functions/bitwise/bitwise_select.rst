@@ -49,10 +49,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_select.cpp
+.. include:: ../../../../test/doc/core/bitwise_select.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_select.txt
+.. include:: ../../../../test/doc/core/bitwise_select.txt
   :literal:

@@ -48,19 +48,19 @@ Options
 *******
 
   this object function can be called with an optional tag parameter that change its meaning:
- 
+
   - ``round(a, to_nearest_ )`` is equivalent to the call ``nearest(a)``
   - ``round(a, toward_zero_)`` is equivalent to the call ``trunc(a)``
-  - ``round(a, upward_ )`` is equivalent to the call ``ceil(a)``     
+  - ``round(a, upward_ )`` is equivalent to the call ``ceil(a)``
   - ``round(a, downward_)`` is equivalent to the call ``floor(a)``
 
 Example
 *******
 
-.. include:: ../../../../test/doc/round.cpp
+.. include:: ../../../../test/doc/core/round.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/round.txt
+.. include:: ../../../../test/doc/core/round.txt
   :literal:

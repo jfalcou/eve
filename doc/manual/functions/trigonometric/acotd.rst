@@ -14,10 +14,10 @@ acotd
    }
 
 Function object computing the inverse sine in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
+
 ``acotd(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[0, 180[` such that :math:`\cot(r) == x`.
 
-        
+
 ********
 Synopsis
 ********
@@ -30,7 +30,7 @@ Synopsis
 
 * [1] Computes elementwise the mathematical value :math:`\arctan(1/v)` in degrees.
 * [2] Computes the mathematical value :math:`\arctan(1/v)` in degrees.
-  
+
 
 .. rubric:: Parameters
 
@@ -50,11 +50,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/acotd.cpp
+.. include:: ../../../../test/doc/core/acotd.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/acotd.txt
+.. include:: ../../../../test/doc/core/acotd.txt
   :literal:
 

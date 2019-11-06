@@ -1,0 +1,10 @@
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::toint(pf) =            (0, 1, -1, -2, 0, -2147483648, -2147483648, -2147483648)
+-> eve::pedantic_(eve::toint)(pf) = (0, 1, -1, -2, 0, -2147483648, -2147483648, -2147483648)
+---- scalar
+<- xf =                      1
+-> eve::toint(xf) =            1
+<- yf =                      -nan
+-> eve::toint(yf) =            0
+-> eve::pedantic_(eve::toint)(yf) = 0

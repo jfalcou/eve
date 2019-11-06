@@ -60,10 +60,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/minmag.cpp
+.. include:: ../../../../test/doc/core/minmag.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/minmag.txt
+.. include:: ../../../../test/doc/core/minmag.txt
   :literal:

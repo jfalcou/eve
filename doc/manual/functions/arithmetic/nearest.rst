@@ -53,10 +53,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/nearest.cpp
+.. include:: ../../../../test/doc/core/nearest.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/nearest.txt
+.. include:: ../../../../test/doc/core/nearest.txt
   :literal:

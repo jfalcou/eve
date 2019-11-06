@@ -42,10 +42,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitofsign.cpp
+.. include:: ../../../../test/doc/core/bitofsign.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitofsign.txt
+.. include:: ../../../../test/doc/core/bitofsign.txt
   :literal:

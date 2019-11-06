@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/min.cpp
+.. include:: ../../../../test/doc/core/min.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/min.txt
+.. include:: ../../../../test/doc/core/min.txt
   :literal:

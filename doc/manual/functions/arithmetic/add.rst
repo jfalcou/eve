@@ -46,10 +46,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/add.cpp
+.. include:: ../../../../test/doc/core/add.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/add.txt
+.. include:: ../../../../test/doc/core/add.txt
   :literal:

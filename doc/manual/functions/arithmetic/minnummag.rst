@@ -45,14 +45,14 @@ Notes
 *****
 
  - For :ref:`concept-ieeevalue` entries, this object function returns a nan value if and only if both entries are a nan value.
- 
+
 Example
 *******
 
-.. include:: ../../../../test/doc/minnummag.cpp
+.. include:: ../../../../test/doc/core/minnummag.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/minnummag.txt
+.. include:: ../../../../test/doc/core/minnummag.txt
   :literal:

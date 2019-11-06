@@ -43,17 +43,17 @@ Options
 Notes
 *****
 
-This function coincides with identity on ref:`concept-ieeevalue` and is not defined for 
-:ref:`concept-integralvalue`  types. 
+This function coincides with identity on ref:`concept-ieeevalue` and is not defined for
+:ref:`concept-integralvalue`  types.
 Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide.
 
 Example
 *******
 
-.. include:: ../../../../test/doc/conj.cpp
+.. include:: ../../../../test/doc/core/conj.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/conj.txt
+.. include:: ../../../../test/doc/core/conj.txt
   :literal:

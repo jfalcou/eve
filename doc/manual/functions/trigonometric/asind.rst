@@ -14,10 +14,10 @@ asind
    }
 
 Function object computing the inverse sine in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
+
 ``asind(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[-90, 90[` such that :math:`\sin(r) == x`.
 If :math:`x` is outside :math:`[-1, 1[` the result is a Nan.
-        
+
 ********
 Synopsis
 ********
@@ -30,7 +30,7 @@ Synopsis
 
 * [1] Computes elementwise the mathematical value :math:`\arcsin(v)` in degrees.
 * [2] Computes the mathematical value :math:`\arcsin(s)` in degrees.
-  
+
 
 .. rubric:: Parameters
 
@@ -50,11 +50,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/asind.cpp
+.. include:: ../../../../test/doc/core/asind.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/asind.txt
+.. include:: ../../../../test/doc/core/asind.txt
   :literal:
 

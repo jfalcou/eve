@@ -1,0 +1,12 @@
+---- simd
+ <- si =                              (2, -3, 0, 4)
+ <- lsi =                             (true, false, false, true)
+ <- pi =                              (3, -2, -10, 0)
+ -> eve::if_zero_else(si, eve::zero_, pi) =        (0, 0, -10, 0)
+ -> eve::if_else(lsi, eve::zero, pi_) =       (0, -2, -10, 0)
+---- scalar
+ ssi =                                3
+ lssi =                               false
+ xi =                                 3
+ -> eve::if_else(ssi, eve::zero_, xi) =       0
+ -> eve::if_else(lssi, xi, eve::zero_, xi) =      3

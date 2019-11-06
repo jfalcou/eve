@@ -42,16 +42,16 @@ Options
 Notes
 *****
 
-This function coincides with ``sqr`` on :ref:`concept-ieeevalue` entries but is not defined for :ref:`concept-integralvalue` types. 
+This function coincides with ``sqr`` on :ref:`concept-ieeevalue` entries but is not defined for :ref:`concept-integralvalue` types.
 Its use will be extended in a future complex module. On complex entries `sqr` and `sqr_abs do not coincide`.
 
 Example
 *******
 
-.. include:: ../../../../test/doc/sqr_abs.cpp
+.. include:: ../../../../test/doc/core/sqr_abs.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/sqr_abs.txt
+.. include:: ../../../../test/doc/core/sqr_abs.txt
   :literal:

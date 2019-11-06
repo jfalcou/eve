@@ -13,7 +13,7 @@ shl
       constexpr /* implementation defined */ shl = {};
    }
 
-Function object performing a shift to the left of an :ref:`IntegralValue <concept-integralvalue>`  by 
+Function object performing a shift to the left of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size.
 
 ********
@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/shl.cpp
+.. include:: ../../../../test/doc/core/shl.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/shl.txt
+.. include:: ../../../../test/doc/core/shl.txt
   :literal:
