@@ -60,6 +60,10 @@ namespace eve::detail
       return aggregate( eve::div, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b), upt_ );
     }
+    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::div(abi_cast<U>(a), abi_cast<T>(b), upt_ );
+    }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(std::is_same_v<T, U>)
@@ -111,10 +115,6 @@ namespace eve::detail
           return if_else(is_nez(b), q, bitwise_mask(a));
         }
         return T();
-      }
-      else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
-      {
-        return eve::div(abi_cast<U>(a), abi_cast<T>(b), upt_ );
       }
     }
   }
