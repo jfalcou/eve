@@ -12,7 +12,11 @@
 #define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 
 #include <eve/ext/as_register.hpp>
+#include <eve/ext/as_wide.hpp>
+#include <eve/arch/expected_cardinal.hpp>
+#include <eve/detail/meta/tools.hpp>
 #include <eve/forward.hpp>
+#include <array>
 
 namespace eve::ext
 {
@@ -25,11 +29,24 @@ namespace eve::ext
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::aggregated_>
   {
-    using substorage_type = eve::wide<Type, typename Cardinal::split_type>;
     struct type
     {
-      using value_type = substorage_type;
-      substorage_type lo, hi;
+      static constexpr auto small_size  = expected_cardinal_v<Type>;
+      static constexpr auto replication = Cardinal::value/small_size;
+
+      using value_type    = as_wide_t<Type, fixed<expected_cardinal_v<Type>>>;
+      using segment_type  = std::array<value_type,replication>;
+      segment_type        segments;
+
+      template<typename Func> auto apply(Func const& f) noexcept
+      {
+        return detail::apply<replication>( [&](auto const&... I) { return f(segments[I]...); } );
+      }
+
+      template<typename Func> auto apply(Func const& f) const noexcept
+      {
+        return detail::apply<replication>( [&](auto const&... I) { return f(segments[I]...); } );
+      }
     };
   };
 }

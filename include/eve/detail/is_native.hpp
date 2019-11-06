@@ -34,7 +34,7 @@ namespace eve::detail
 
   // Associated Concept-like entity
   template<typename T>
-  using Native = std::enable_if_t<is_native_v<T>>;
+  using native = std::enable_if_t<is_native_v<T>>;
 
   // Check aggregated/emulated status of ABI
   template<typename X>

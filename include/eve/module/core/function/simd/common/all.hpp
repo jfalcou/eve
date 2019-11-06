@@ -12,40 +12,34 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_ALL_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/extract.hpp>
 #include <eve/logical.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_)
-                           , logical<wide<T, N, ABI>> const &v) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
   {
     if constexpr(is_aggregated_v<ABI>)
     {
-     
-      auto [ sl, sh] = v.slice(); 
-      return all(sl) && all(sh);
+      return v.storage().apply( [](auto const&... e) { return eve::all((e.bits() & ...)); } );
     }
-    else 
+    else
     {
       for(int i=0; i < N::value ; ++i)
       {
-        if (!extract(v, i)) return false; 
+        if (!extract(v, i)) return false;
       }
-      return true; 
+      return true;
     }
   }
 
   template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_)
-                           , wide<T, N, ABI> const &v) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
   {
-    return all(is_nez(v)); 
+    return all(is_nez(v));
   }
 }
 

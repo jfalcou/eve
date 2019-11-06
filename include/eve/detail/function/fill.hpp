@@ -23,27 +23,30 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fill(as_<Pack> const&, ABI const&, Generator&& g, int offset = 0) noexcept
   {
-    static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
-
     if constexpr(is_aggregated_v<ABI>)
     {
-      using sub_t = typename Pack::storage_type::value_type;
+      using str_t = typename Pack::storage_type;
+      using sub_t = typename str_t::value_type;
+      Pack that;
 
-      return combine( EVE_CURRENT_API{},
-                      sub_t ( [&](auto i, auto c)
-                              {
-                                return std::forward<Generator>(g)(i,sz);
-                              }
-                            ),
-                      sub_t ( [&](auto i, auto c)
-                              {
-                                return std::forward<Generator>(g)(i+sz/2,sz);
-                              }
-                            )
-                    );
+      that.storage().apply( [&](auto&... v)
+                            {
+                              int k = 0;
+                              ( (( v = sub_t ( [&](auto i, auto c)
+                                            {
+                                              return std::forward<Generator>(g)(i+k,Pack::static_size);
+                                            }
+                                            )
+                                , k+=str_t::small_size
+                                ),...)
+                              );
+                            }
+                          );
+      return that;
     }
     else
     {
+      static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
       Pack that;
 
       for(typename Pack::size_type i = 0; i < sz; ++i)

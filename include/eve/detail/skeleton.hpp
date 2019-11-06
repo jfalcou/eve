@@ -33,7 +33,7 @@ namespace eve::detail
       return std::forward<T>(t);
   }
 
-  // Upper values extraction
+  // Subparts extraction
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
@@ -51,6 +51,19 @@ namespace eve::detail
       return eve::detail::slice(std::forward<T>(t), lower_);
     else
       return std::forward<T>(t);
+  }
+
+  template<typename T, typename I>
+  EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
+  {
+    if constexpr(is_vectorized_v<T>)
+    {
+      return std::forward<T>(t).storage().segments[idx];
+    }
+    else
+    {
+      return std::forward<T>(t);
+    }
   }
 
   // Compute a transformed wide type
@@ -117,22 +130,46 @@ namespace eve::detail
   }
 
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
-  struct aggregate_wide
+  template<std::size_t I> struct aggregate_step
   {
     // Not a lambda as we need force-inlining
-    template<typename Func, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&f, Ts &&... ts) const -> decltype(auto)
+    template<typename Func, typename Out, typename... Ts>
+    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &&... ts) -> decltype(auto)
     {
-      using wide_t = typename wide_result<Func, Ts...>::type;
-      return wide_t{std::forward<Func>(f)(lower(std::forward<Ts>(ts))...),
-                    std::forward<Func>(f)(upper(std::forward<Ts>(ts))...)};
+      dst.segments[I] =  std::forward<Func>(f)( subpart(std::forward<Ts>(ts),I)... );
     }
   };
 
   template<typename Func, typename... Ts>
   EVE_FORCEINLINE auto aggregate(Func &&f, Ts &&... ts)
   {
-    return aggregate_wide{}(std::forward<Func>(f), std::forward<Ts>(ts)...);
+    using wide_t = typename wide_result<Func, Ts...>::type;
+
+    if constexpr( is_aggregated_v< abi_type_t<wide_t> >)
+    {
+      using str_t  = typename wide_t::storage_type;
+
+      wide_t that;
+
+      detail::apply<str_t::replication>
+      ( [&](auto const&... I)
+        {
+          ( ( aggregate_step<std::decay_t<decltype(I)>::value>
+                            ::perform ( std::forward<Func>(f),
+                                        that.storage(), std::forward<Ts>(ts)...
+                                      )
+            ),...
+          );
+        }
+      );
+
+      return that;
+    }
+    else
+    {
+      return wide_t{std::forward<Func>(f)(lower(std::forward<Ts>(ts))...),
+                    std::forward<Func>(f)(upper(std::forward<Ts>(ts))...)};
+    }
   }
 }
 

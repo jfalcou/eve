@@ -26,11 +26,11 @@ namespace eve
     template<typename T, typename S>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const& v, S const& s)
     {
-      EVE_ASSERT( assert_good_shift<T>(abs(s)),
+      EVE_ASSERT( assert_good_shift<T>(eve::abs(s)),
                   "[eve::rshl] - Shifting by " << s
                   << " is out of the range ]"
-                  << -sizeof(value_type_t<T>) * 8
-                  << ", "                
+                  << -int(sizeof(value_type_t<T>) * 8)
+                  << ", "
                   << sizeof(value_type_t<T>) * 8
                   << "[."
                 );
