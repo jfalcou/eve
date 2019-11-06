@@ -666,8 +666,12 @@ make_all_units(ROOT core NAME saturate              ARCH scalar simd TYPES ${all
 # make_all_units(ROOT core NAME saturate              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME sech                  ARCH scalar simd TYPES ${real_types}    )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> sech
 =======
+=======
+make_all_units(ROOT core NAME sincosh               ARCH scalar simd TYPES ${real_types}    )
+>>>>>>> sincosh tests
 make_all_units(ROOT core NAME sinh                  ARCH scalar simd TYPES ${real_types}    )
 >>>>>>> sinh
 make_all_units(ROOT core NAME shl                   ARCH scalar simd TYPES ${integral_types})
