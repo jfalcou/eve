@@ -13,6 +13,7 @@
 add_subdirectory(constant) 
 add_subdirectory(failure)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 ## scalar tests
@@ -423,6 +424,8 @@ list_tests("simd/convert/int64" "core" ${all_types})
 list_tests("simd/convert/uint64" "core" ${all_types})
 >>>>>>> iceil + convert bugs correction
 >>>>>>> inearest
+=======
+>>>>>>> div with options tests
 
 ##==================================================================================================
 ## Elementwise function unit tests
