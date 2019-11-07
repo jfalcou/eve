@@ -37,10 +37,13 @@ namespace eve::detail
       }
       else if constexpr(sizeof(T) ==  4)
       {
-        return convert(div(convert(v0, as<double>()), convert(v1, as<double>())), as<T>());
+        return  convert(div(convert(v0, as<double>()), convert(v1, as<double>())), as<T>());
       }
-       else
+      else
+      {
         return map(div, v0, v1);
+      }
+      
     }
   }
 

@@ -23,7 +23,6 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
@@ -41,8 +40,8 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       auto r =
-          if_else(is_gtz(a), One(as(a)), eve::zero_) - if_else(is_ltz(a), One(as(a)), eve::zero_);
-
+        if_else(is_gtz(a), One(as(a)), eve::zero_) - if_else(is_ltz(a), One(as(a)), eve::zero_);
+      
 #ifdef EVE_NO_NANS
       return r;
 #else
@@ -53,7 +52,7 @@ namespace eve::detail
     {
       if constexpr(std::is_signed_v<T>)
         return if_else(is_gtz(a), One(as(a)), eve::zero_) -
-               if_else(is_ltz(a), One(as(a)), eve::zero_);
+        if_else(is_ltz(a), One(as(a)), eve::zero_);
       else
       {
         return if_else(a, One(as(a)), eve::zero_);

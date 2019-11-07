@@ -16,7 +16,7 @@
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/function/scalar/is_ltz.hpp>
 #include <eve/function/scalar/is_gtz.hpp>
-#include <eve/function/scalar/shr.hpp>
+#include <eve/function/shr.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
