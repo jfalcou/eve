@@ -113,7 +113,6 @@ namespace eve::detail
         {
           auto bb = if_else(is_eqz(b), eve::allbits_, b); 
           T q = saturated_(div)(a, bb);
-          q = dec[is_nez(a-q*b)](q); 
           return if_else(is_nez(b), q, bitwise_mask(a));
         }
         return T();

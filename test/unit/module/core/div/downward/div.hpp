@@ -28,6 +28,9 @@ TTS_CASE("Check eve::div behavior")
     TTS_EQUAL(eve::div(eve::Mone<Type>()  , Type{2} , eve::downward_), Type(-1));
     TTS_EQUAL(eve::div(eve::Mone<Value>() , Type{2} , eve::downward_), Type(-1));
     TTS_EQUAL(eve::div(eve::Mone<Type>()  , Value{2}, eve::downward_), Type(-1));
+    TTS_EQUAL(eve::div(Type(-4)  , Type{3} , eve::downward_), Type(-2));
+    TTS_EQUAL(eve::div(Value(-4) , Type{3} , eve::downward_), Type(-2));
+    TTS_EQUAL(eve::div(Type(-4)  , Value{3}, eve::downward_), Type(-2));
   }
   TTS_EQUAL(eve::div(Type{12}, Type{4}, eve::downward_), Type{3});
   TTS_EQUAL(eve::div(Type{1} , Type{2}, eve::downward_), Type(0));
