@@ -33,7 +33,8 @@
 #include <eve/function/shr.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/function/saturate.hpp>
+#include <eve/function/trunc.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -59,6 +60,10 @@ namespace eve::detail
       return aggregate( eve::div, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
+    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::div(abi_cast<U>(a), abi_cast<T>(b) );
+    }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
       if constexpr(std::is_same_v<T, U>)
@@ -69,14 +74,23 @@ namespace eve::detail
         }
         else
         {
-          return map( eve::div, abi_cast<value_type_t<U>>(a)
-                    , abi_cast<value_type_t<T>>(b) );
+          if constexpr(sizeof(T) == 8)
+          {
+            return map( eve::div, abi_cast<value_type_t<U>>(a)
+                      , abi_cast<value_type_t<T>>(b) );
+          }
+          else if constexpr(sizeof(T) == 4)
+          {
+             return convert(div(convert(a, double_)), convert(b, double_), as <value_type_t<T>>());
+          }
+          else //if constexpr(sizeof(T) <  4)
+          {
+            return convert(div(convert(a, single_)), convert(b, single_), as <value_type_t<T>>());
+          }
+          
         }
       }
-    }
-    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
-    {
-      return eve::div(abi_cast<U>(a), abi_cast<T>(b) );
+     return T(); 
     }
   }
 
@@ -94,11 +108,11 @@ namespace eve::detail
 
     if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
     {
-      return map( eve::div, st, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      return map( saturated_(eve::div), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::div, st, abi_cast<value_type_t<U>>(a)
+      return aggregate( saturated_(eve::div), abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b) );
     }
     else if constexpr( is_vectorized_v<T> && !is_vectorized_v<U> )
@@ -108,6 +122,10 @@ namespace eve::detail
     else if constexpr( !is_vectorized_v<T> && is_vectorized_v<U> )
     {
       return saturated_(div)(U(a), b); 
+    }
+    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    {
+      return eve::div(st, abi_cast<U>(a), abi_cast<T>(b) );
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
@@ -119,7 +137,7 @@ namespace eve::detail
         }
         else if constexpr(std::is_signed_v<value_type_t<T>>)
         {
-           using sT = value_type_t<T>;
+          using sT = value_type_t<T>;
           auto iseqzb = is_eqz(b);
           // replace valmin/-1 by (valmin+1)/-1
           auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
@@ -140,10 +158,6 @@ namespace eve::detail
       }
       return T();
      }
-    else //if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
-    {
-      return eve::div(st, abi_cast<U>(a), abi_cast<T>(b) );
-    }
   }
 }
 
