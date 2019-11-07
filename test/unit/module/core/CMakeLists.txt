@@ -10,7 +10,7 @@
 ##==================================================================================================
 ## Other tests
 ##==================================================================================================
-add_subdirectory(constant) 
+add_subdirectory(constant)
 add_subdirectory(failure)
 
 ##==================================================================================================
@@ -28,7 +28,7 @@ make_all_units(ROOT core NAME acscd                 ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME acscpi                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME add                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME all                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME any                   ARCH scalar simd TYPES ${all_types}     ) 
+make_all_units(ROOT core NAME any                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME arg                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME asec                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME asecd                 ARCH scalar simd TYPES ${real_types}    )
@@ -62,6 +62,7 @@ make_all_units(ROOT core NAME bitwise_xor           ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME ceil                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME conj                  ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME copysign              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME dec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME dist                  ARCH scalar simd TYPES ${all_types}     )
@@ -137,12 +138,12 @@ make_all_units(ROOT core NAME minmag                ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )  
-make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )       
-make_all_units(ROOT core NAME none                   ARCH scalar simd TYPES ${all_types}     ) 
+make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME none                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME popcnt                ARCH scalar      TYPES ${integral_types})
-make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )    
+make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME round                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rshl                  ARCH scalar simd TYPES ${integral_types})
