@@ -19,7 +19,7 @@
 
 TTS_CASE("Check eve::iround return type")
 {
-  TTS_EXPR_IS(eve::iround(Type(0)), (Type));
+  TTS_EXPR_IS(eve::iround(Type(0)), (eve::detail::as_integer_t<Type>));
 }
 
 TTS_CASE("Check eve::iround behavior")
