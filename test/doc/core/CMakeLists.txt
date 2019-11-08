@@ -2,7 +2,7 @@
 ##  EVE - Expressive Vector Engine
 ##
 ##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2019 Jean-Thierry LAPRESTE 
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -60,7 +60,7 @@ make_unit( "doc.core" dec.cpp                           )
 make_unit( "doc.core" deco.cpp                          )
 make_unit( "doc.core" dist.cpp                          )
 make_unit( "doc.core" div.cpp                           )
-make_unit( "doc.core" floor.cpp                         )
+make_unit( "doc.core" floor.cpp                         ) 
 make_unit( "doc.core" fma.cpp                           )
 make_unit( "doc.core" fms.cpp                           )
 make_unit( "doc.core" fnma.cpp                          )

@@ -14,6 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/sub.hpp>
+#include <eve/function/is_greater_equal.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -23,12 +26,12 @@ namespace eve::detail
   // 128 bits <-> 128 bits
   template<typename In, typename N, typename Out>
   EVE_FORCEINLINE wide<Out,N> convert_( EVE_SUPPORTS(sse2_),
-                                          wide<In, N, sse_> const & v0, as_<Out> const& tgt
-                                        ) noexcept
+                                        wide<In, N, sse_> const & v0, as_<Out> const& tgt
+                                      ) noexcept
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-
+    
     // Convert to double
     if constexpr( std::is_same_v<Out, double> )
     {
@@ -36,7 +39,7 @@ namespace eve::detail
       {
         return _mm_cvtps_pd(v0);
       }
-      else if constexpr( std::is_integral_v<In> && (sizeof(In) == 4) && (N::value<=2))
+      else if constexpr( std::is_same_v<In, std::int32_t> && (N::value<=2) )
       {
         return _mm_cvtepi32_pd(v0);
       }
@@ -52,7 +55,7 @@ namespace eve::detail
       {
         return _mm_cvtpd_ps(v0);
       }
-      else if constexpr( std::is_integral_v<In> && (sizeof(In) == 4) && (N::value<=2))
+      else if constexpr( std::is_same_v<In, std::int32_t> && (N::value<=2))
       {
         return _mm_cvtepi32_ps(v0);
       }
@@ -70,7 +73,14 @@ namespace eve::detail
       }
       else if constexpr( std::is_same_v<In,double> && (N::value<=2) )
       {
-        return _mm_cvttpd_epi32(v0);
+        if constexpr(std::is_signed_v<Out>)
+        {
+          return _mm_cvttpd_epi32(v0);
+        }
+        else
+        {
+          return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }         
       }
       // SSE 4+ has more integral conversion
       else if constexpr(current_api >= sse4_1)
@@ -144,17 +154,33 @@ namespace eve::detail
       return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
   }
-
+  
   //================================================================================================
   // 256 bits <-> 256 bits
   template<typename In, typename N, typename Out>
   EVE_FORCEINLINE wide<Out,N> convert_( EVE_SUPPORTS(avx_),
-                                          wide<In, N, avx_> const & v0, as_<Out> const& tgt
-                                        ) noexcept
+                                        wide<In, N, avx_> const & v0, as_<Out> const& tgt
+                                      ) noexcept
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-
+    
+    // Convert to double
+    if constexpr( std::is_same_v<Out, double> )
+    {
+      if constexpr( std::is_same_v<In,float> && (N::value<=4))
+      {
+        return _mm256_cvtps_pd(v0);
+      }
+      else if constexpr( std::is_same_v<In, std::int32_t> && (N::value<=4) )
+      {
+        return _mm256_cvtepi32_pd(v0);
+      }
+      else
+      {
+        return convert_(EVE_RETARGET(simd_), v0, tgt);
+      }
+    }
     // Convert to float
     if constexpr( std::is_same_v<Out, float> )
     {
@@ -162,7 +188,7 @@ namespace eve::detail
       {
         return  _mm256_cvtpd_ps(v0);
       }
-      else if constexpr(  std::is_integral_v<In> && (sizeof(In) == 4)  && (N::value==4))
+      else if constexpr(   std::is_same_v<In, std::int32_t> && (N::value==4))
       {
         return _mm256_cvtepi32_ps(v0);
       }
@@ -180,7 +206,14 @@ namespace eve::detail
       }
       else if constexpr( std::is_same_v<In,float> && (N::value==8) )
       {
-        return  _mm256_cvttps_epi32(v0);
+        if constexpr(std::is_signed_v<Out>)
+        {
+          return  _mm256_cvttps_epi32(v0);
+        }
+        else
+        {
+          return convert_(EVE_RETARGET(simd_), v0, tgt);
+        }                
       }
       else
       {
@@ -192,17 +225,17 @@ namespace eve::detail
       return convert_(EVE_RETARGET(sse2_), v0, tgt);
     }
   }
-
+  
   //================================================================================================
   // 256 bits <-> 128 bits
   template<typename In, typename N, typename Out>
   EVE_FORCEINLINE wide<Out,N> convert_( EVE_SUPPORTS(avx_),
-                                          wide<In, N, sse_> const & v0, as_<Out> const& tgt
-                                        ) noexcept
+                                        wide<In, N, sse_> const & v0, as_<Out> const& tgt
+                                      ) noexcept
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-
+    
     // Convert to double
     if constexpr( std::is_same_v<Out, double> )
     {
@@ -210,7 +243,7 @@ namespace eve::detail
       {
         return  _mm256_cvtps_pd(v0);
       }
-      else if constexpr(  std::is_integral_v<In> && (sizeof(In) == 4) && (N::value == 4) )
+      else if constexpr(  std::is_same_v<In, std::int32_t> && (sizeof(In) == 4) && (N::value == 4) )
       {
         return _mm256_cvtepi32_pd(v0);
       }
@@ -285,7 +318,7 @@ namespace eve::detail
       return convert_(EVE_RETARGET(sse2_), v0, tgt);
     }
   }
-
+  
   /////////////////////////////////////////////////////////////////////////////////////
   // saturated conversions
   //////////////////////////////////////////////////////////////////////////////////////
@@ -293,13 +326,13 @@ namespace eve::detail
   // 128 bits <-> 128 bits
   template<typename In, typename N, typename Out>
   EVE_FORCEINLINE wide<Out,N> convert_( EVE_SUPPORTS(sse2_)
-                                        , saturated_type const & sat_
-                                        , wide<In, N> const & v0, as_<Out> const& tgt
-                                        ) noexcept
+                                      , saturated_type const & sat_
+                                      , wide<In, N> const & v0, as_<Out> const& tgt
+                                      ) noexcept
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-
+    
     if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<Out,int8_t> && (N::value <= 16))
     {
       if constexpr(N::value == 16)
@@ -328,8 +361,8 @@ namespace eve::detail
     {
       if constexpr(N::value == 16)
       {
-      auto [ low, high ] = v0.slice();
-      return _mm_packus_epi16(low, high);
+        auto [ low, high ] = v0.slice();
+        return _mm_packus_epi16(low, high);
       }
       else if constexpr(N::value <= 8)
       {
@@ -346,9 +379,9 @@ namespace eve::detail
   // 256 bits <-> 256 bits
   template<typename In, typename N, typename Out>
   EVE_FORCEINLINE wide<Out,N> convert_( EVE_SUPPORTS(avx2_)
-                                        , saturated_type const & sat_
-                                        , wide<In, N> const & v0, as_<Out> const& tgt
-                                        ) noexcept
+                                      , saturated_type const & sat_
+                                      , wide<In, N> const & v0, as_<Out> const& tgt
+                                      ) noexcept
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;

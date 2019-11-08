@@ -13,6 +13,6 @@
 
 #define TYPE()        eve::wide<int64_t>
 #define FUNCTION()    eve::div
-#define SAMPLES(N)    random<T>(N,-100.,100.),random<T>(N,-100.,100.)
+#define SAMPLES(N)    random<T>(N,-100,100),random<T>(N,1,100)
 
 #include "bench.hpp"

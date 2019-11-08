@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_IFLOOR_HPP_INCLUDED
 
 #include <eve/function/definition/ifloor.hpp>
-#include <eve/module/core/function/scalar/ifloor.hpp>
+#include <eve/module/core/function/generic/ifloor.hpp>
 
 #endif

@@ -18,14 +18,14 @@ int main()
                 eve::Inf<float>(),
                 eve::Minf<float>(),
                 eve::Nan<float>()};
-
+  
   std::cout << "---- simd" << '\n'
             << "<- pf =                  " << pf << '\n'
             << "-> eve::sign(pf) = " << eve::sign(pf) << '\n';
-
+  
   float xf = 1.0f;
   float yf = eve::Mindenormal<float>();
-
+  
   std::cout << "---- scalar" << '\n'
             << "<- xf =                  " << xf << '\n'
             << "-> eve::sign(xf) = " << eve::sign(xf) << '\n'

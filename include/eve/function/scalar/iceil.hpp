@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ICEIL_HPP_INCLUDED
 
 #include <eve/function/definition/iceil.hpp>
-#include <eve/module/core/function/scalar/iceil.hpp>
+#include <eve/module/core/function/generic/iceil.hpp>
 
 #endif

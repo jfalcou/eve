@@ -14,14 +14,17 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <type_traits>
 #include <eve/function/bitwise_mask.hpp>
+#include <eve/function/iceil.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <eve/tags.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -68,3 +71,7 @@ namespace eve::detail
 #endif
 
 #include <eve/module/core/function/scalar/if_div.hpp>
+#include <eve/module/core/function/scalar/div_upward.hpp>
+#include <eve/module/core/function/scalar/div_downward.hpp>
+#include <eve/module/core/function/scalar/div_towards_zero.hpp>
+#include <eve/module/core/function/scalar/div_to_nearest.hpp>

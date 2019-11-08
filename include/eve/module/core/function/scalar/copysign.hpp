@@ -38,8 +38,11 @@ namespace eve::detail
       if constexpr(std::is_unsigned_v<T>)
         return a0;
       else
-        return ((a0 == Valmin(as(a0)) && (a1 < 0))) ? Valmax(as(a0))
-                                                    : eve::abs(a0) * signnz(a1);
+      {     
+        return (a0 == Valmin(as(a0)))
+          ? ((a1 > 0) ? Valmax(as(a0)) : a0) 
+          : eve::abs(a0) * signnz(a1);
+      }
     }
   }
 }
