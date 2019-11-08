@@ -16,6 +16,7 @@ add_subdirectory(failure)
 =======
 add_subdirectory(failure)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ## scalar tests
 list_tests("scalar/toint"          "core" ${real_types})
@@ -499,6 +500,8 @@ list_tests("simd/convert/uint64" "core" ${all_types})
 =======
 >>>>>>> fresh start CMakelist from refurb for tests
 >>>>>>> fresh start CMakelist from refurb for tests
+=======
+>>>>>>> CMakeList
 
 ##==================================================================================================
 ## Elementwise function unit tests
