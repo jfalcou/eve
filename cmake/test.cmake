@@ -65,46 +65,48 @@ function(make_all_units)
     # header to include in autogen tests
     set(header "${variant}/${GEN_TEST_NAME}")
 
-    # Locate relative path for simpler autogen file paths
-    file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
+    if(EXISTS "${header}.hpp")
+      # Locate relative path for simpler autogen file paths
+      file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
 
-    # Generate test for each arch
-    foreach( arch ${GEN_TEST_ARCH})
-      # Scalar case just uses the types as setup
-      if( arch STREQUAL scalar)
-        foreach(type ${GEN_TEST_TYPES})
-          to_std("${type}" target)
-          set(file_to_compile "${_TestSrcDir}/${base_file}.scalar.${type}.cpp")
+      # Generate test for each arch
+      foreach( arch ${GEN_TEST_ARCH})
+        # Scalar case just uses the types as setup
+        if( arch STREQUAL scalar)
+          foreach(type ${GEN_TEST_TYPES})
+            to_std("${type}" target)
+            set(file_to_compile "${_TestSrcDir}/${base_file}.scalar.${type}.cpp")
 
-          configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
-          generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
-                          "${base_file}.scalar.${type}.cpp"
-                        )
-        endforeach()
-      endif()
-
-      # SIMD case uses the types x cardinals as setup
-      if( arch STREQUAL simd)
-        foreach(type ${GEN_TEST_TYPES})
-          to_std("${type}" target)
-          set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")
-
-          configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
-
-          if(GEN_TEST_CARDINAL)
-            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
-                            "${base_file}.simd.${type}.cpp"
-                            "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
+            configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
+            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
+                            "${base_file}.scalar.${type}.cpp"
                           )
-          else()
-            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
-                            "${base_file}.simd.${type}.cpp"
-                          )
-          endif()
-        endforeach()
-      endif()
+          endforeach()
+        endif()
 
-    endforeach()
+        # SIMD case uses the types x cardinals as setup
+        if( arch STREQUAL simd)
+          foreach(type ${GEN_TEST_TYPES})
+            to_std("${type}" target)
+            set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")
+
+            configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
+
+            if(GEN_TEST_CARDINAL)
+              generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                              "${base_file}.simd.${type}.cpp"
+                              "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
+                            )
+            else()
+              generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                              "${base_file}.simd.${type}.cpp"
+                            )
+            endif()
+          endforeach()
+        endif()
+      endforeach()
+    endif()
+
   endforeach()
 endfunction()
 
