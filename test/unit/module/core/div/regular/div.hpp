@@ -42,6 +42,7 @@ TTS_CASE("Check eve::div behavior")
     TTS_EQUAL(eve::div(eve::Valmax<Type>(), Type(2)), Type(eve::Valmax<i_t>() >> 1));
     TTS_EQUAL(eve::div(eve::Valmax<Value>(), Type(2)), Type(eve::Valmax<i_t>() >> 1));
     TTS_EQUAL(eve::div(eve::Valmax<Type>(), Value(2)), Type(eve::Valmax<i_t>() >> 1));  
+
     TTS_EQUAL(eve::div(eve::Valmax<Type>(), Type(1)), Type(eve::Valmax<i_t>())); 
     TTS_EQUAL(eve::div(eve::Valmax<Value>(), Type(1)), Type(eve::Valmax<i_t>()));
     TTS_EQUAL(eve::div(eve::Valmax<Type>(), Value(1)), Type(eve::Valmax<i_t>()));  
