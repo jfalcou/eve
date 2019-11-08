@@ -33,11 +33,11 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) < 4)
       {
-        return convert(div(convert(v0, as<float>()), convert(v1, as<float>())), as<T>());
+        return convert(div(convert(v0, single_), convert(v1, single_)), as<T>());
       }
-      else if constexpr(sizeof(T) ==  4)
+      else if constexpr(sizeof(T) ==  4 && std::is_signed_v<T>)
       {
-        return  convert(div(convert(v0, as<double>()), convert(v1, as<double>())), as<T>());
+        return  convert(div(convert(v0, double_), convert(v1, double_)), as<T>());
       }
       else
       {
