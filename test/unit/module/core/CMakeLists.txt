@@ -62,7 +62,7 @@ make_all_units(ROOT core NAME bitwise_xor           ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME ceil                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME conj                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     )
+# make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME copysign              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME dec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME dist                  ARCH scalar simd TYPES ${all_types}     )
