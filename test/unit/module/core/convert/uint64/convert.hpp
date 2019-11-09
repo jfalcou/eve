@@ -35,8 +35,12 @@ TTS_CASE("Check eve::convert behavior")
   using target_t = std::uint64_t;
 #endif
 
-  TTS_EQUAL(eve::convert(eve::Valmin<Type>(), eve::uint64_), static_cast<target_t>(eve::Valmin<Value>()) );
   TTS_EQUAL(eve::convert((Type(0))          , eve::uint64_), static_cast<target_t>(0) );
   TTS_EQUAL(eve::convert((Type(42.69))      , eve::uint64_), static_cast<target_t>(Value(42.69)) );
-  TTS_EQUAL(eve::convert(eve::Valmax<Type>(), eve::uint64_), static_cast<target_t>(eve::Valmax<Value>()) );
+  if constexpr(std::is_integral_v<Value>)
+  {
+    // with floating value this test produces undefined behaviour
+    TTS_EQUAL(eve::convert(eve::Valmin<Type>(), eve::uint64_), static_cast<target_t>(eve::Valmin<Value>()) );
+    TTS_EQUAL(eve::convert(eve::Valmax<Type>(), eve::uint64_), static_cast<target_t>(eve::Valmax<Value>()) );
+  }
 }

@@ -15,6 +15,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/is_ngez.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/saturated.hpp>
@@ -38,35 +39,20 @@ namespace eve::detail
 
   template<typename IN, typename OUT>
   EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_),
-                                   IN const & v0, as_<OUT> const& tgt
-                                 ) noexcept
+                                 IN const & v0, as_<OUT> const& tgt
+                               ) noexcept
   requires(OUT, vectorizable<IN>, vectorizable<OUT>)
   {
-    return static_cast<OUT>(v0); 
+    std::cout <<  "scalar " << std::endl;
+    std::cout <<  "Valmin<IN>()                   " << Valmin<IN>() << std::endl;
+    std::cout <<  "v0                             " << v0 << std::endl; 
+    std::cout <<  "is_eqz(Valmin<IN>()-v0)        "<< is_eqz(Valmin<IN>()-v0) << std::endl;
+    std::cout <<  "static_cast<OUT>(Valmin<IN>()) " << static_cast<OUT>(Valmin<IN>())<< std::endl;
+    std::cout <<  std::hexfloat <<  "v0 hex                            " << v0 << std::endl;
+    std::cout <<  std::hexfloat <<  "Valmin<IN>() hex                  " << Valmin<IN>() <<  std::dec << std::endl;
+    return static_cast<OUT>(v0);
   }
-  
-  //////////////////////////////////////////////////////////////////////////////////////
-  // pedantic case
-  //////////////////////////////////////////////////////////////////////////////////////
-
-  template<typename IN, typename OUT>
-  EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_)
-                                 , pedantic_type const &
-                                 , IN const & v0, as_<OUT> const& tgt
-                                 ) noexcept
-  requires(OUT, vectorizable<IN>, vectorizable<OUT>)
-  {
-    if constexpr(std::is_unsigned_v<OUT>)
-    {
-      return static_cast<OUT>(eve::max(v0, Zero(as(v0))));
-    }  
-    else
-    {
-      return static_cast<OUT>(v0);
-    } 
-  }
-
-  
+    
   //////////////////////////////////////////////////////////////////////////////////////
   // saturated case
   //////////////////////////////////////////////////////////////////////////////////////

@@ -11,7 +11,7 @@
 ## Other tests
 ##==================================================================================================
 add_subdirectory(constant)
-add_subdirectory(failure)
+add_subdirectory(failure) 
 
 ##==================================================================================================
 ## Elementwise function unit tests
