@@ -60,37 +60,37 @@ namespace eve::detail
       }
       if constexpr(sizeof...(vs) == 2 && sizeof(T) == 4)
       {
-        return _mm_setr_epi32(static_cast<int>(vs)..., 0, 0);
+        return _mm_setr_epi32(static_cast<T>(vs)..., 0, 0);
       }
 
       if constexpr(sizeof...(vs) == 8 && sizeof(T) == 2)
       {
-        return _mm_setr_epi16(static_cast<short>(vs)...);
+        return _mm_setr_epi16(static_cast<T>(vs)...);
       }
       if constexpr(sizeof...(vs) == 4 && sizeof(T) == 2)
       {
-        return _mm_setr_epi16(static_cast<short>(vs)..., 0, 0, 0, 0);
+        return _mm_setr_epi16(static_cast<T>(vs)..., 0, 0, 0, 0);
       }
       if constexpr(sizeof...(vs) == 2 && sizeof(T) == 2)
       {
-        return _mm_setr_epi16(static_cast<short>(vs)..., 0, 0, 0, 0, 0, 0);
+        return _mm_setr_epi16(static_cast<T>(vs)..., 0, 0, 0, 0, 0, 0);
       }
 
       if constexpr(sizeof...(vs) == 16 && sizeof(T) == 1)
       {
-        return _mm_setr_epi8(static_cast<char>(vs)...);
+        return _mm_setr_epi8(static_cast<T>(vs)...);
       }
       if constexpr(sizeof...(vs) == 8 && sizeof(T) == 1)
       {
-        return _mm_setr_epi8(static_cast<char>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0);
+        return _mm_setr_epi8(static_cast<T>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0);
       }
       if constexpr(sizeof...(vs) == 4 && sizeof(T) == 1)
       {
-        return _mm_setr_epi8(static_cast<char>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        return _mm_setr_epi8(static_cast<T>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
       }
       if constexpr(sizeof...(vs) == 2 && sizeof(T) == 1)
       {
-        return _mm_setr_epi8(static_cast<char>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        return _mm_setr_epi8(static_cast<T>(vs)..., 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
       }
     }
   }
@@ -116,9 +116,9 @@ namespace eve::detail
         detail::ignore(that);
         return that;
       }
-      if constexpr(sizeof(T) == 4) return _mm_set1_epi32(static_cast<int>(v));
-      if constexpr(sizeof(T) == 2) return _mm_set1_epi16(static_cast<short>(v));
-      if constexpr(sizeof(T) == 1) return _mm_set1_epi8(static_cast<char>(v));
+      if constexpr(sizeof(T) == 4) return _mm_set1_epi32(static_cast<T>(v));
+      if constexpr(sizeof(T) == 2) return _mm_set1_epi16(static_cast<T>(v));
+      if constexpr(sizeof(T) == 1) return _mm_set1_epi8(static_cast<T>(v));
     }
   }
 
@@ -160,10 +160,10 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(sizeof(T) == 8) return _mm256_set1_epi64x(v);
-      if constexpr(sizeof(T) == 4) return _mm256_set1_epi32(v);
-      if constexpr(sizeof(T) == 2) return _mm256_set1_epi16(v);
-      if constexpr(sizeof(T) == 1) return _mm256_set1_epi8(v);
+      if constexpr(sizeof(T) == 8) return _mm256_set1_epi64x(static_cast<T>(v));
+      if constexpr(sizeof(T) == 4) return _mm256_set1_epi32(static_cast<T>(v));
+      if constexpr(sizeof(T) == 2) return _mm256_set1_epi16(static_cast<T>(v));
+      if constexpr(sizeof(T) == 1) return _mm256_set1_epi8(static_cast<T>(v));
     }
   }
 
