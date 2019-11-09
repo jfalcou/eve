@@ -39,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(tag_, a, as_<as_integer_t<value_type_t<T>>>());
+      return tag_(convert)(a, as_<as_integer_t<value_type_t<T>>>());
     }
   }
 }
