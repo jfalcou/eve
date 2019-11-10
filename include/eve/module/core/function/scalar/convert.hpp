@@ -20,6 +20,7 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/function/clamp.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
