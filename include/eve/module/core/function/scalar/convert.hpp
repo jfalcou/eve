@@ -43,13 +43,13 @@ namespace eve::detail
                                ) noexcept
   requires(OUT, vectorizable<IN>, vectorizable<OUT>)
   {
-    std::cout <<  "scalar " << std::endl;
-    std::cout <<  "Valmin<IN>()                   " << Valmin<IN>() << std::endl;
-    std::cout <<  "v0                             " << v0 << std::endl; 
-    std::cout <<  "is_eqz(Valmin<IN>()-v0)        "<< is_eqz(Valmin<IN>()-v0) << std::endl;
-    std::cout <<  "static_cast<OUT>(Valmin<IN>()) " << static_cast<OUT>(Valmin<IN>())<< std::endl;
-    std::cout <<  std::hexfloat <<  "v0 hex                            " << v0 << std::endl;
-    std::cout <<  std::hexfloat <<  "Valmin<IN>() hex                  " << Valmin<IN>() <<  std::dec << std::endl;
+//     std::cout <<  "scalar " << std::endl;
+//     std::cout <<  "Valmin<IN>()                   " << Valmin<IN>() << std::endl;
+//     std::cout <<  "v0                             " << v0 << std::endl; 
+//     std::cout <<  "is_eqz(Valmin<IN>()-v0)        "<< is_eqz(Valmin<IN>()-v0) << std::endl;
+//     std::cout <<  "static_cast<OUT>(Valmin<IN>()) " << static_cast<OUT>(Valmin<IN>())<< std::endl;
+//     std::cout <<  std::hexfloat <<  "v0 hex                            " << v0 << std::endl;
+//     std::cout <<  std::hexfloat <<  "Valmin<IN>() hex                  " << Valmin<IN>() <<  std::dec << std::endl;
     return static_cast<OUT>(v0);
   }
     
