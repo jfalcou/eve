@@ -23,31 +23,39 @@ TTS_CASE("Check eve::saturate return type")
 
 TTS_CASE("Check eve::saturate behavior")
 {
-  if constexpr(std::is_signed_v<Value>)
+  TTS_EQUAL(eve::saturate(eve::int64_, (Type(0))          ), (Type(0))     );
+  TTS_EQUAL(eve::saturate(eve::int64_, (Type(42.69))      ), (Type(42.69)) );
+  if constexpr(std::is_floating_point_v<Value>)
   {
-    if constexpr(sizeof(Value) <= sizeof(std::int64_t))
+    TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int64_t>())));
+    TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int64_t>())) ); 
+  }
+  else
+  {
+    if constexpr(std::is_signed_v<Value>)
     {
-      TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), eve::Valmin<Type>() );
+      if constexpr(sizeof(Value) <= sizeof(std::int64_t))
+      {
+        TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), eve::Valmin<Type>() );
+      }
+      else
+      {
+        TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int64_t>())) );
+      }
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int64_t>())) );
+      TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), (Type(0)) );
     }
-  }
-  else
-  {
-    TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmin<Type>()), (Type(0)) );
-  }
-
-  TTS_EQUAL(eve::saturate(eve::int64_, (Type(0))          ), (Type(0))     );
-  TTS_EQUAL(eve::saturate(eve::int64_, (Type(42.69))      ), (Type(42.69)) );
-
-  if constexpr(sizeof(Value) < sizeof(std::int64_t))
-  {
-    TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmax<Type>()), eve::Valmax<Type>() );
-  }
-  else
-  {
-//    TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int64_t>())) ); // TODO
+    
+   
+    if constexpr(sizeof(Value) < sizeof(std::int64_t))
+    {
+      TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmax<Type>()), eve::Valmax<Type>() );
+    }
+    else
+    {
+      TTS_EQUAL(eve::saturate(eve::int64_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int64_t>())) ); 
+    }
   }
 }

@@ -26,19 +26,27 @@ TTS_CASE("Check eve::saturate behavior")
   TTS_EQUAL(eve::saturate(eve::uint32_, (Type(0))          ), (Type(0))     );
   TTS_EQUAL(eve::saturate(eve::uint32_, (Type(42.69))      ), (Type(42.69)) );
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
-    if constexpr(sizeof(Value) <= sizeof(std::int32_t))
+    TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmin<Type>()), (Type(0)));
+    TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::uint32_t>())) ); 
+  }
+  else
+  {
+    if constexpr(std::is_signed_v<Value>)
     {
-      TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), eve::Valmax<Type>() );
+      if constexpr(sizeof(Value) <= sizeof(std::int32_t))
+      {
+        TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), eve::Valmax<Type>() );
+      }
+      else
+      {
+        TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::uint32_t>())) );
+      }
     }
     else
     {
       TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::uint32_t>())) );
     }
-  }
-  else
-  {
-    TTS_EQUAL(eve::saturate(eve::uint32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::uint32_t>())) );
   }
 }

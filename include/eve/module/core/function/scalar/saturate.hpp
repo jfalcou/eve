@@ -52,12 +52,19 @@ namespace eve::detail
     {
       if constexpr(std::is_signed_v<Target>) // saturating to signed integer
       {
-        if constexpr(std::is_signed_v<U>) // from a signed
+        if constexpr(std::is_floating_point_v<U>)
+        {
+          return clamp(a0, static_cast<U>(Valmin<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+        else if constexpr(std::is_signed_v<U>) // from a signed
         {
           if constexpr(sizeof(Target) >= sizeof(U))
             return a0;
           else
+          {
             return clamp(a0, static_cast<U>(Valmin<Target>()), static_cast<U>(Valmax<Target>()));
+          }
+          
         }
         else // from an unsigned
         {
@@ -66,7 +73,11 @@ namespace eve::detail
       }
       else // saturating to unsigned integer
       {
-        if constexpr(!std::is_signed_v<U>) // from a unsigned
+        if constexpr(std::is_floating_point_v<U>)
+        {
+          return clamp(a0, static_cast<U>(Zero<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+         if constexpr(!std::is_signed_v<U>) // from a unsigned
         {
           if constexpr(sizeof(Target) >= sizeof(U))
             return a0;
