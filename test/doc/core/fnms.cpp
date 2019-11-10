@@ -8,7 +8,7 @@ int main()
 {
   wide_t oi = {2, -3, 0, 4};
   wide_t pi = {3, -2, -10, 0};
-  wide_t qi = {4, -1, 0, 5};
+  wide_t qi = {4, -1, 1, 5};
 
   std::cout << "---- oimd" << '\n'
             << " <- oi =                          " << oi << '\n'

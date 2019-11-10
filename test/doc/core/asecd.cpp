@@ -19,7 +19,7 @@ int main()
     << "-> eve::asecd(pf) =          " << eve::asecd(pf) << '\n'; 
 
   float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  float yf = -2.0;
 
   std::cout
     << "---- scalar"  << '\n'
