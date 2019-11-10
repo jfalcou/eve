@@ -48,12 +48,6 @@ namespace eve::detail
       }
       else // from an integer
       {
-//           std::cout << "Valmin<Target>() "<< Valmin<Target>() << std::endl;
-//           std::cout << "Valmax<Target>() "<< Valmax<Target>() << std::endl;  
-//           std::cout << "static_cast<U>(Valmin<Target>()) "<< static_cast<U>(Valmin<Target>()) << std::endl;
-//           std::cout << "static_cast<U>(Valmax<Target>()) "<< static_cast<U>(Valmax<Target>()) << std::endl;
-//           std::cout << "saturated_(convert)(Valmax<Target>(), as_<U>) " << saturated_(convert)(Valmax<Target>(), as_<U>()) << std::endl;
-//           std::cout << "saturated_(convert)(Valmin<Target>(), as_<U>) " << saturated_(convert)(Valmin<Target>(), as_<U>()) << std::endl;
           auto vmin = saturated_(convert)(Valmin<Target>(), as_<U>());
           auto vmax = saturated_(convert)(Valmax<Target>(), as_<U>()); 
           return clamp(a0, vmin, vmax);

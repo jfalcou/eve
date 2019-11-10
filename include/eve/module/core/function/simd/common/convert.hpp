@@ -52,12 +52,6 @@ namespace eve::detail
                                         wide<T, N, ABI> const & v0, as_<OUT> const& tgt
                                       ) noexcept
   {
-//     std::cout << "common" << std::endl; 
-//     if constexpr( is_aggregated_v<ABI> && is_aggregated_v<typename wide<OUT,N>::abi_type>)
-//     {
-//       return aggregate( eve::convert, v0, tgt);
-//     }
-//    else
     return map(convert, v0, tgt);
   }
 
