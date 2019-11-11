@@ -44,7 +44,7 @@ namespace eve::detail
     }
     else
     {
-      return tag_(convert)(a, as_<as_integer_t<value_type_t<T>>>());
+      return saturated_(convert)(a, as_<as_integer_t<value_type_t<T>>>()); //pedantic_
     }
   }
 }
