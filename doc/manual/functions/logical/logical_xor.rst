@@ -52,10 +52,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/logical_xor.cpp
+.. include:: ../../../../test/doc/core/logical_xor.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/logical_xor.txt
+.. include:: ../../../../test/doc/core/logical_xor.txt
   :literal:

@@ -31,10 +31,10 @@ Synopsis
    template<typename T, typename N, typename U> wide<U,N> operator()( wide<T,N> const& v, U s , wide<U,N> const& w)
    template<typename T, typename U> constexpr   T         operator()( T r, U s, U t ) noexcept;
 
-* [1] Selects elements between **w** and **x** based on the values of **v**. 
-* [2,3] Selects  **s** or **t** based on the values of **v**. 
-* [4] Selects  between **w** elements and **s**  based on the values of **v**. 
-* [5] Selects  between **s** and **w** elements based on the values of **v**.    
+* [1] Selects elements between **w** and **x** based on the values of **v**.
+* [2,3] Selects  **s** or **t** based on the values of **v**.
+* [4] Selects  between **w** elements and **s**  based on the values of **v**.
+* [5] Selects  between **s** and **w** elements based on the values of **v**.
 * [6] Selects **r** or **t** based on **r**.
 
 .. rubric:: Parameters
@@ -46,7 +46,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,4,5] A value of the type **wide<U,N>**                  
+* [1,4,5] A value of the type **wide<U,N>**
 * [2,3]   A value of the type **wide<T,N>**
 * [6]
 
@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/ifnot_else.cpp
+.. include:: ../../../../test/doc/core/ifnot_else.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/ifnot_else.txt
+.. include:: ../../../../test/doc/core/ifnot_else.txt
   :literal:

@@ -13,7 +13,7 @@ shr
       constexpr /* implementation defined */ shr = {};
    }
 
-Function object performing an arithmetic  shift to the right of an :ref:`IntegralValue <concept-integralvalue>`  by 
+Function object performing an arithmetic  shift to the right of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size.
 
 ********
@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/shr.cpp
+.. include:: ../../../../test/doc/core/shr.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/shr.txt
+.. include:: ../../../../test/doc/core/shr.txt
   :literal:

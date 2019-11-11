@@ -13,7 +13,7 @@ bitwise_shl
       constexpr /* implementation defined */ bitwise_shl = {};
    }
 
-Function object performing a bitwise shift  to the left of an :ref:`IntegralValue <concept-integralvalue>`  by 
+Function object performing a bitwise shift  to the left of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>` with the same number of elements and same element size.
 
 ********
@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_shl.cpp
+.. include:: ../../../../test/doc/core/bitwise_shl.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_shl.txt
+.. include:: ../../../../test/doc/core/bitwise_shl.txt
   :literal:

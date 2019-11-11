@@ -29,7 +29,7 @@ Synopsis
 
 * [1] Computes the mathematical value :math:`\arctan(v)`.
 * [2] Computes the mathematical value :math:`\arctan(s)`.
- 
+
 .. rubric:: Parameters
 
 * **v** : An :ref:`concept-IEEEValue` instance
@@ -48,11 +48,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/atan.cpp
+.. include:: ../../../../test/doc/core/atan.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/atan.txt
+.. include:: ../../../../test/doc/core/atan.txt
   :literal:
 

@@ -50,10 +50,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_not.cpp
+.. include:: ../../../../test/doc/core/bitwise_not.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_not.txt
+.. include:: ../../../../test/doc/core/bitwise_not.txt
   :literal:

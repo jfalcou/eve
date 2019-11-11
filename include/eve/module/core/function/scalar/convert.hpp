@@ -14,11 +14,16 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/is_ngez.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/function/clamp.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -35,35 +40,13 @@ namespace eve::detail
 
   template<typename IN, typename OUT>
   EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_),
-                                   IN const & v0, as_<OUT> const& tgt
-                                 ) noexcept
+                                 IN const & v0, as_<OUT> const& tgt
+                               ) noexcept
   requires(OUT, vectorizable<IN>, vectorizable<OUT>)
   {
-    return static_cast<OUT>(v0); 
+    return static_cast<OUT>(v0);
   }
-  
-  //////////////////////////////////////////////////////////////////////////////////////
-  // pedantic case
-  //////////////////////////////////////////////////////////////////////////////////////
-
-  template<typename IN, typename OUT>
-  EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_)
-                                 , pedantic_type const &
-                                 , IN const & v0, as_<OUT> const& tgt
-                                 ) noexcept
-  requires(OUT, vectorizable<IN>, vectorizable<OUT>)
-  {
-    if constexpr(std::is_unsigned_v<OUT>)
-    {
-      return static_cast<OUT>(eve::max(v0, Zero(as(v0))));
-    }  
-    else
-    {
-      return static_cast<OUT>(v0);
-    } 
-  }
-
-  
+    
   //////////////////////////////////////////////////////////////////////////////////////
   // saturated case
   //////////////////////////////////////////////////////////////////////////////////////
@@ -81,16 +64,44 @@ namespace eve::detail
     }
     else if constexpr(std::is_integral_v<OUT>)
     {
-      if constexpr(std::is_floating_point_v<IN> || (sizeof(OUT) <= sizeof(IN)))
+      if constexpr(std::is_floating_point_v<IN>) // input is floating point
       {
-        return convert(saturate(as<OUT>(v0)), as<OUT>()); 
+        if constexpr(sizeof(OUT) != sizeof(IN))
+        {
+          return convert(saturate(as<OUT>(), v0), as<OUT>()); 
+        }
+        else if constexpr(std::is_signed_v<OUT>) //float -> int32 or double -> int64
+        {
+          if constexpr(eve::platform::supports_nans)
+          {
+            if (is_nan(v0)) return Zero<OUT>();
+          }
+          if (v0 >= Valmax<OUT>()) return Valmax<OUT>();
+          if (v0 <= Valmin<OUT>()) return Valmin<OUT>();
+          return static_cast<OUT>(v0);
+        }
+        else //float -> uint32 or double -> uint64
+        {
+          if (is_ngez(v0)) return Zero<OUT>();
+          if (v0 >= Valmax<OUT>()) return Valmax<OUT>();
+          return static_cast<OUT>(v0);
+        }
       }
-      else
+      else // input is integral
       {
-        return convert(v0, tgt);  
+        if constexpr(sizeof(OUT) > sizeof(IN))
+        {
+          return convert(v0, tgt);
+        }
+        else
+        {
+          IN Vax = Valmax<OUT>();
+          IN Vim = Valmin<OUT>();
+          return static_cast<OUT>(clamp(v0, Vim, Vax));
+        }        
       }
     }
-    else        
+    else // OUTPUT is floating point   
     {
       return convert(v0, tgt);  
     } 

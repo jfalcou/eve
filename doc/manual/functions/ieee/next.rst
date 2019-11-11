@@ -13,7 +13,7 @@ next
       constexpr /* implementation defined */ next = {};
    }
 
-    This function object returns the  (`n`-th if the second parameter is present) least representable 
+    This function object returns the  (`n`-th if the second parameter is present) least representable
     element strictly greater than the parameter
 
 
@@ -29,11 +29,11 @@ Synopsis
    template<typename T> constexpr T                        operator()( T s ) noexcept;
    template<typename T> constexpr T                        operator()( T s, U n) noexcept;
 
-* [1] Computes the element-wise least representable element strictly greater than the first parameter 
-* [2] Computes the element-wise  n-th least representable element strictly greater than the first parameter 
+* [1] Computes the element-wise least representable element strictly greater than the first parameter
+* [2] Computes the element-wise  n-th least representable element strictly greater than the first parameter
 * [3] Computes the element-wise m-th least representable element strictly greater than the first parameter
 * [4] Computes the least representable element strictly greater than the first parameter
-* [5] Computes the least  n-th least representable element strictly greater than the first parameter 
+* [5] Computes the least  n-th least representable element strictly greater than the first parameter
 
 .. rubric:: Parameters
 
@@ -59,10 +59,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/next.cpp
+.. include:: ../../../../test/doc/core/next.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/next.txt
+.. include:: ../../../../test/doc/core/next.txt
   :literal:

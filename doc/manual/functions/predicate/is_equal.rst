@@ -55,10 +55,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_equal.cpp
+.. include:: ../../../../test/doc/core/is_equal.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/is_equal.txt
+.. include:: ../../../../test/doc/core/is_equal.txt
   :literal:

@@ -84,26 +84,19 @@ namespace eve::detail
   {
     static constexpr auto sz = count_v<Out>;
 
-    if constexpr( (sz != 0) && !is_vectorized_v<Out> )
+    auto const inside = [&](auto const& I)
     {
-      auto const inside = [&](auto const& I)
-      {
-        using idx_t = std::decay_t<decltype(I)>;
-        return std::tuple_element_t<idx_t::value,Out>(std::get<idx_t::value>(ps)...);
-      };
+      using idx_t = std::decay_t<decltype(I)>;
+      return std::tuple_element_t<idx_t::value,Out>(std::get<idx_t::value>(ps)...);
+    };
 
-      return detail::apply<sz>( [&]( auto const&... I)
-      {
-        Out that;
-        ((std::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
-        return that;
-      }
-      );
-    }
-    else
+    return detail::apply<sz>( [&]( auto const&... I)
     {
-      return Out{ps...};
+      Out that;
+      ((std::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+      return that;
     }
+    );
   }
 
   struct map_
@@ -123,7 +116,16 @@ namespace eve::detail
 
     auto impl = [&](auto... I)
     {
-      return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
+      static constexpr auto sz = count_v<w_t>;
+
+      if constexpr( (sz != 0) && !is_vectorized_v<w_t> )
+      {
+        return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
+      }
+      else
+      {
+        return w_t{map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...};
+      }
     };
 
     return apply<cardinal_v<w_t>>(impl);

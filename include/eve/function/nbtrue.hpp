@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_NBTRUE_HPP_INCLUDED
 
 #include <eve/function/scalar/nbtrue.hpp>
-//#include <eve/function/simd/nbtrue.hpp>
+#include <eve/function/simd/nbtrue.hpp>
 
 #endif

@@ -52,10 +52,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/logical_or.cpp
+.. include:: ../../../../test/doc/core/logical_or.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/logical_or.txt
+.. include:: ../../../../test/doc/core/logical_or.txt
   :literal:

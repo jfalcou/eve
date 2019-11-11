@@ -1,0 +1,10 @@
+---- simd
+<- pf =                            (-1, 0, -3, -32768)
+-> eve::all(pf) =                  0
+<- qf =                            (-1, 2, -3, -32768)
+-> eve::all(qf) =                  1
+---- scalar
+<- xf =                            -0
+-> eve::all(xf) =                  0
+<- yf =                            -3
+-> eve::all(yf) =                  1

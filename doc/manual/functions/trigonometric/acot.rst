@@ -29,7 +29,7 @@ Synopsis
 
 * [1] Computes the mathematical value :math:`\arctan(1/v)` .
 * [2] Computes the mathematical value :math:`\arctan(1/s)`.
-  
+
 
 .. rubric:: Parameters
 
@@ -49,11 +49,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/acot.cpp
+.. include:: ../../../../test/doc/core/acot.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/acot.txt
+.. include:: ../../../../test/doc/core/acot.txt
   :literal:
 

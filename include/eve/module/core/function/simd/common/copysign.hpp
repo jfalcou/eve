@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/bitwise_or.hpp>
 #include <eve/function/bitwise_notand.hpp>
 #include <eve/function/logical_and.hpp>
@@ -35,11 +35,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>, T, U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            same_as<value_type_t<T>, value_type_t<U>>)
+            same_as<value_type_t<T>, value_type_t<U>>
+          )
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
-
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
     {
       return map(eve::copysign, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
@@ -53,14 +53,18 @@ namespace eve::detail
       if constexpr(std::is_same_v<T, U>)
       {
         if constexpr(std::is_floating_point_v<value_type_t<T>>)
-        { return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a)); }
+        {
+          return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+        }
         else
         {
           if constexpr(std::is_unsigned_v<value_type_t<T>>)
+          {
             return a;
+          }
           else
           {
-            return if_else(a == Valmin(as(a)) && is_ltz(b), Valmax(as(a)), eve::abs(a) * signnz(b));
+            return if_else(a == Valmin(as(a)) && is_gtz(b), Valmax(as(a)), eve::abs(a) * signnz(b));
           }
         }
       }

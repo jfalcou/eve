@@ -41,15 +41,15 @@ Options
 *******
 
   - the saturated_ options acts as ``saturated_(sub)(1,x)``
-  
+
 
 Example
 *******
 
-.. include:: ../../../../test/doc/oneminus.cpp
+.. include:: ../../../../test/doc/core/oneminus.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/oneminus.txt
+.. include:: ../../../../test/doc/core/oneminus.txt
   :literal:

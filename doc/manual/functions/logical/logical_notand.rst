@@ -56,10 +56,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/logical_notand.cpp
+.. include:: ../../../../test/doc/core/logical_notand.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/logical_notand.txt
+.. include:: ../../../../test/doc/core/logical_notand.txt
   :literal:

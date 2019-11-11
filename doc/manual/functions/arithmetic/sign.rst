@@ -45,10 +45,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/sign.cpp
+.. include:: ../../../../test/doc/core/sign.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/sign.txt
+.. include:: ../../../../test/doc/core/sign.txt
   :literal:

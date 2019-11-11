@@ -25,6 +25,8 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
@@ -35,12 +37,12 @@
 
 namespace eve::detail
 {
-
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
   requires(T, floating_point<T>)
   {
+    if(a0 == One(as(a0))) return Zero(as(a0));
     T z = Pio_2<T>()-eve::asin(a0);
     // small correction with pio_2lo
     return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
@@ -62,8 +64,11 @@ namespace eve::detail
     }
     else if constexpr(std::is_same_v<T, double>)
     {
-      if (eve::abs(a0) > 1.0) return Nan<T>();
-      if( a0 > 0.5)
+      if(a0 == One(as(a0)))
+        return Zero(as(a0));
+      else if (eve::abs(a0) > 1.0)
+        return Nan<T>();
+      else if( a0 > 0.5)
       {
         return 2.0 * eve::asin(  sqrt(fma(-0.5, a0, 0.5) )) ;
       }

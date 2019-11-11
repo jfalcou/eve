@@ -45,10 +45,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/logical_not.cpp
+.. include:: ../../../../test/doc/core/logical_not.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/logical_not.txt
+.. include:: ../../../../test/doc/core/logical_not.txt
   :literal:

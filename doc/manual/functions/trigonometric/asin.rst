@@ -14,10 +14,10 @@ asin
    }
 
 Function object computing the inverse sine of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
+
 ``asin(x)`` returns the arc :math:`r` in the interval   :math:`[-\pi/2, \pi/2[` such that :math:`\sin(r) == x`.
 If :math:`x` is outside :math:`[-1, 1[` the result is a Nan.
-        
+
 ********
 Synopsis
 ********
@@ -30,7 +30,7 @@ Synopsis
 
 * [1] Computes the mathematical value :math:`\arcsin(v)` .
 * [2] Computes the mathematical value :math:`\arcsin(s)`.
-   
+
 
 .. rubric:: Parameters
 
@@ -50,11 +50,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/asin.cpp
+.. include:: ../../../../test/doc/core/asin.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/asin.txt
+.. include:: ../../../../test/doc/core/asin.txt
   :literal:
 

@@ -41,21 +41,21 @@ Options
 *******
 
   With the pedantic_ option this function return a nan for a nan entry.
-  
+
 Notes
 *****
 
 This function is not defined for :ref:`concept-integralvalue` types.
-For :ref:`IEEEValue <concept-ieeevalue>`  entries it returns the value zero if the bit of sign of the entry is not set and the value ``pi`` if it is set. 
+For :ref:`IEEEValue <concept-ieeevalue>`  entries it returns the value zero if the bit of sign of the entry is not set and the value ``pi`` if it is set.
 Its use will be extended in a future complex module.
 
 Example
 *******
 
-.. include:: ../../../../test/doc/arg.cpp
+.. include:: ../../../../test/doc/core/arg.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/arg.txt
+.. include:: ../../../../test/doc/core/arg.txt
   :literal:

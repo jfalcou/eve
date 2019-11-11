@@ -1,0 +1,8 @@
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::acosd(pf) =          (90, 0, 180, nan, 90, -nan, nan, -nan)
+---- scalar
+<- xf =                      1
+-> eve::acosd(xf) =            0
+<- yf =                      0.5
+-> eve::acosd(yf) =            60

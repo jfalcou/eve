@@ -13,8 +13,8 @@ rshl
       constexpr /* implementation defined */ rshl = {};
    }
 
-Function object performing a relative shift to the left or the right of an :ref:`IntegralValue <concept-integralvalue>`  by 
-another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size. The shift direction is left 
+Function object performing a relative shift to the left or the right of an :ref:`IntegralValue <concept-integralvalue>`  by
+another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size. The shift direction is left
 (resp. right) if the shift is positive (resp. negative)
 
 ********
@@ -46,7 +46,7 @@ Synopsis
 
 .. rubric:: Notes
 
-*  shifts  greater or equal to zero are to the left, less or equal to zero to the right. 
+*  shifts  greater or equal to zero are to the left, less or equal to zero to the right.
 *  shifts absolute values must not be greater or equal to the size in bit of the element shifted or an assert is issued.
 
 *******
@@ -59,10 +59,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/rshl.cpp
+.. include:: ../../../../test/doc/core/rshl.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/rshl.txt
+.. include:: ../../../../test/doc/core/rshl.txt
   :literal:

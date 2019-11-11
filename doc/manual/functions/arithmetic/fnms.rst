@@ -41,7 +41,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1:4] A value of the type **wide<T,N>**                  
+* [1:4] A value of the type **wide<T,N>**
 * [6]     A value of type **U**
 
 
@@ -69,17 +69,17 @@ Notes
 Options
 *******
 
-    - pedantic_: ``fnms[pedantic_](x,y,z)`` ensures the fnms conformant properties and allows SIMD 
+    - pedantic_: ``fnms[pedantic_](x,y,z)`` ensures the fnms conformant properties and allows SIMD
       acceleration if available.
 
 *******
 Example
 *******
 
-.. include:: ../../../../test/doc/fnms.cpp
+.. include:: ../../../../test/doc/core/fnms.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/fnms.txt
+.. include:: ../../../../test/doc/core/fnms.txt
   :literal:

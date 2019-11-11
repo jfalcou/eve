@@ -47,10 +47,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/copysign.cpp
+.. include:: ../../../../test/doc/core/copysign.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/copysign.txt
+.. include:: ../../../../test/doc/core/copysign.txt
   :literal:

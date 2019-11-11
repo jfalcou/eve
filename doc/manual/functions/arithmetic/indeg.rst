@@ -43,10 +43,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/indeg.cpp
+.. include:: ../../../../test/doc/core/indeg.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/indeg.txt
+.. include:: ../../../../test/doc/core/indeg.txt
   :literal:

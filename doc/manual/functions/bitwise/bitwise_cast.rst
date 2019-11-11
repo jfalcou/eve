@@ -55,10 +55,10 @@ Synopsis
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_cast.cpp
+.. include:: ../../../../test/doc/core/bitwise_cast.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_cast.txt
+.. include:: ../../../../test/doc/core/bitwise_cast.txt
   :literal:

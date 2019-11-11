@@ -56,10 +56,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_lessgreater.cpp
+.. include:: ../../../../test/doc/core/is_lessgreater.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/is_lessgreater.txt
+.. include:: ../../../../test/doc/core/is_lessgreater.txt
   :literal:

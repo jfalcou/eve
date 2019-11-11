@@ -55,10 +55,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/binarize.cpp
+.. include:: ../../../../test/doc/core/binarize.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/binarize.txt
+.. include:: ../../../../test/doc/core/binarize.txt
   :literal:

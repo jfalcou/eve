@@ -19,17 +19,17 @@ Existing decorators
   - ``pedantic_``      : perhaps slower but acting conforming to standard in corner cases
   - ``regular`` `      : as no decorator
   - ``saturated``      : saturated oeration
-  - ``numeric_```      : prefer non Nan numbers to Nans when possible 
+  - ``numeric_```      : prefer non Nan numbers to Nans when possible
 
 
 Example
 -------
 
-.. include:: ../../../test/doc/deco.cpp
+.. include:: ../../../test/doc/core/deco.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../test/doc/deco.txt
+.. include:: ../../../test/doc/core/deco.txt
   :literal:
 

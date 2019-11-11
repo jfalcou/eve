@@ -14,7 +14,9 @@
 #include <eve/wide.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check as_integer on scalar", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL( "Check sign_of on scalar",
+              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
+            )
 {
   using eve::detail::sign_of_t;
 
@@ -28,7 +30,9 @@ TTS_CASE_TPL("Check as_integer on scalar", TTS_NUMERIC_TYPES)
   }
 }
 
-TTS_CASE_TPL("Check as_integer on logical scalar", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL( "Check sign_of on logical scalar",
+              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
+            )
 {
   using eve::detail::sign_of_t;
   using eve::logical;
@@ -43,7 +47,9 @@ TTS_CASE_TPL("Check as_integer on logical scalar", TTS_NUMERIC_TYPES)
   }
 }
 
-TTS_CASE_TPL("Check as_integer on wide", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL( "Check sign_of on wide",
+              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
+            )
 {
   using eve::detail::sign_of_t;
   using eve::wide;
@@ -58,7 +64,9 @@ TTS_CASE_TPL("Check as_integer on wide", TTS_NUMERIC_TYPES)
   }
 }
 
-TTS_CASE_TPL("Check as_integer on logical wide", TTS_NUMERIC_TYPES)
+TTS_CASE_TPL( "Check sign_of on logical wide",
+              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
+            )
 {
   using eve::detail::sign_of_t;
   using eve::logical;

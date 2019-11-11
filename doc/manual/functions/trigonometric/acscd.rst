@@ -14,10 +14,10 @@ acscd
    }
 
 Function object computing the inverse cosine in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
+
 ``acscd(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[0, 180[` such that :math:`\cos(r) == x`.
 If :math:`x` is outside :math:`[-1, 1[` the result is a Nan.
-        
+
 ********
 Synopsis
 ********
@@ -30,7 +30,7 @@ Synopsis
 
 * [1] Computes elementwise the mathematical value :math:`\arccos(v)` in degrees.
 * [2] Computes the mathematical value :math:`\arccos(s)` in degrees.
-  
+
 
 .. rubric:: Parameters
 
@@ -50,11 +50,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/acscd.cpp
+.. include:: ../../../../test/doc/core/acscd.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/acscd.txt
+.. include:: ../../../../test/doc/core/acscd.txt
   :literal:
 

@@ -1,0 +1,72 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#define TTS_FUNCTION      TTS_UNIQUE(TTS_CAT(tts_function, EVE_COUNTER))
+#define TTS_CALLER        TTS_UNIQUE(TTS_CAT(tts_caller, EVE_COUNTER))
+#define TTS_REGISTRATION  TTS_UNIQUE(TTS_CAT(tts_registration, EVE_COUNTER))
+
+#include "test.hpp"
+
+#define EVE_SIMD_TESTS
+
+#define Value ${target}
+#define Base eve::wide<Value>
+
+#if !defined(EVE_CUSTOM_CARDINAL)
+inline constexpr auto base_cardinal   = Base::static_size;
+inline constexpr auto large_cardinal  = 2*Base::static_size;
+inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_size/2 : 1;
+
+// Native size test
+#define Type Base
+#define Cardinal base_cardinal
+#define EVE_COUNTER N
+#include "${header}.hpp"
+#undef Cardinal
+#undef Type
+#undef EVE_COUNTER
+
+#define Type eve::wide<Value,eve::fixed<Cardinal>>
+
+// Cardinal 1 test
+#define Cardinal 1
+#define EVE_COUNTER 1
+#include "${header}.hpp"
+#undef Cardinal
+#undef EVE_COUNTER
+
+// Cardinal 2*Base Cardinal test
+#define Cardinal large_cardinal
+#define EVE_COUNTER 2N
+#include "${header}.hpp"
+#undef Cardinal
+#undef EVE_COUNTER
+
+// Cardinal 1/2*Base Cardinal test
+#define Cardinal small_cardinal
+#define EVE_COUNTER N2
+#include "${header}.hpp"
+#undef Cardinal
+#undef EVE_COUNTER
+
+#undef Type
+
+#else
+
+#define Type eve::wide<Value,eve::fixed<EVE_CUSTOM_CARDINAL>>
+
+// Specific  Cardinal test
+#define Cardinal EVE_CUSTOM_CARDINAL
+#define EVE_COUNTER XXX
+#include "${header}.hpp"
+#undef Cardinal
+#undef EVE_COUNTER
+
+#endif

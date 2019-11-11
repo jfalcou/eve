@@ -50,10 +50,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_mask.cpp
+.. include:: ../../../../test/doc/core/bitwise_mask.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_mask.txt
+.. include:: ../../../../test/doc/core/bitwise_mask.txt
   :literal:

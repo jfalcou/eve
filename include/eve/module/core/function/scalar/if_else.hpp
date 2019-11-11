@@ -23,11 +23,12 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Basic case
-  template<typename T, typename U>
+  template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
                                           U const &t,
-                                          U const &f) noexcept requires(U, vectorizable<T>)
+                                          V const &f) noexcept
+  requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : f;
   }
@@ -39,7 +40,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            U const &t,
-           eve::callable_zero_ const &) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           eve::callable_zero_ const &) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : U(0);
   }
@@ -49,7 +50,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_zero_ const &,
-           U const &t) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           U const &t) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? U(0) : t;
   }
@@ -61,7 +62,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            U const &t,
-           eve::callable_allbits_ const &) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           eve::callable_allbits_ const &) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : Allbits(as(t));
   }
@@ -71,7 +72,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_allbits_ const &,
-           U const &t) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           U const &t) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? Allbits(as(t)) : t;
   }
@@ -83,7 +84,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            U const &t,
-           eve::callable_one_ const &) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           eve::callable_one_ const &) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : One(as(t));
   }
@@ -93,7 +94,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_one_ const &,
-           U const &t) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           U const &t) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? One(as(t)) : t;
   }
@@ -105,7 +106,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            U const &t,
-           eve::callable_mone_ const &) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           eve::callable_mone_ const &) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? t : Mone(as(t));
   }
@@ -115,7 +116,7 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_mone_ const &,
-           U const &t) noexcept requires(U, vectorizable<T>, vectorizable<U>)
+           U const &t) noexcept requires(U, vectorizable<T>)
   {
     return static_cast<bool>(cond) ? Mone(as(t)) : t;
   }

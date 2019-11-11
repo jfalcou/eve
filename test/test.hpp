@@ -74,11 +74,11 @@ namespace tts::ext
 
 int main(int argc, char **argv)
 {
-  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Build type: ";
+  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Assertions: ";
 #ifdef NDEBUG
-  std::cout << "Release\n";
+  std::cout << "Disabled\n";
 #else
-  std::cout << "Debug\n";
+  std::cout << "Enabled\n";
 #endif
 
   ::tts::env runtime(argc, argv, std::cout);

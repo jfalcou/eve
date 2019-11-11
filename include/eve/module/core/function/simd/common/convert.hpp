@@ -23,9 +23,12 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/is_less_equal.hpp>
+#include <eve/function/is_ngez.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
@@ -117,16 +120,68 @@ namespace eve::detail
     }
     else if constexpr(std::is_integral_v<OUT>)
     {
-      if constexpr(std::is_floating_point_v<IN> || (sizeof(OUT) <= sizeof(IN)))
+      if constexpr(std::is_floating_point_v<IN>)
       {
-        return convert(saturate(as<OUT>(), v0), tgt);
+        if constexpr(sizeof(OUT) != sizeof(IN))
+        {
+          return convert(saturate(as<OUT>(), v0), tgt); 
+        }
+        else if constexpr(std::is_signed_v<OUT>) //float -> int32 or double -> int64
+        {
+          using t_t =  wide<IN, N, ABI>; 
+          using sr_t = OUT;
+          using  r_t = wide<sr_t, N>; 
+          t_t Vax(Valmax<sr_t>());
+          t_t Vim(Valmin<sr_t>());
+          if constexpr(eve::platform::supports_nans)
+          {
+            t_t v00 = if_else(is_nan(v0), eve::zero_, v0);
+            return if_else(is_less_equal(v00, Vim), Valmin<r_t>(),
+                           if_else(is_greater_equal(v00, Vax), Valmax<r_t>(),
+                                   pedantic_(convert)(v00, tgt)
+                                  )
+                          );            
+          }
+          else
+          {
+            return if_else(is_less_equal(v0, Vim), Valmin<r_t>(),
+                           if_else(is_greater_equal(v0, Vax), Valmax<r_t>(),
+                                   pedantic_(convert)(v0, tgt)
+                                  )
+                          );            
+          }
+        }
+        else //float -> uint32 or double -> uint64
+        {
+          using sr_t = OUT;
+          using  r_t = wide<sr_t, N>; 
+          const r_t Vax(Valmax<sr_t>());
+          return if_else(is_ngez(v0), eve::zero_
+                        , if_else(is_greater_equal(v0, Vax), Valmax<r_t>(),
+                                   pedantic_(convert)(v0, tgt)
+                                 )
+                         );
+        }
+      }
+      else  // input is integral     
+      {
+        if constexpr(sizeof(OUT) > sizeof(IN))
+        {
+          return convert(v0, tgt);
+        }
+        else
+        {
+          IN Vax = Valmax<OUT>();
+          IN Vim = Valmin<OUT>();
+          return convert(clamp(v0, Vim, Vax), tgt);
+        }        
       }
     }
-    else
+    else // OUTPUT is floating point   
     {
-      return convert(v0, tgt);
+      return convert(v0, tgt);  
     }
-  }
+  }  
 }
 
 #endif

@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/min.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/clamp.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/constant/valmin.hpp>
@@ -46,18 +47,29 @@ namespace eve::detail
         }
       }
       else // from an integer
-        return a0;
+      {
+          auto vmin = saturated_(convert)(Valmin<Target>(), as_<U>());
+          auto vmax = saturated_(convert)(Valmax<Target>(), as_<U>()); 
+          return clamp(a0, vmin, vmax);
+      }
     }
     else // saturating to integer
     {
       if constexpr(std::is_signed_v<Target>) // saturating to signed integer
       {
-        if constexpr(std::is_signed_v<U>) // from a signed
+        if constexpr(std::is_floating_point_v<U>)
+        {
+          return clamp(a0, static_cast<U>(Valmin<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+        else if constexpr(std::is_signed_v<U>) // from a signed
         {
           if constexpr(sizeof(Target) >= sizeof(U))
             return a0;
           else
+          {
             return clamp(a0, static_cast<U>(Valmin<Target>()), static_cast<U>(Valmax<Target>()));
+          }
+          
         }
         else // from an unsigned
         {
@@ -66,7 +78,11 @@ namespace eve::detail
       }
       else // saturating to unsigned integer
       {
-        if constexpr(!std::is_signed_v<U>) // from a unsigned
+        if constexpr(std::is_floating_point_v<U>)
+        {
+          return clamp(a0, static_cast<U>(Zero<Target>()), static_cast<U>(Valmax<Target>()));
+        }
+         if constexpr(!std::is_signed_v<U>) // from a unsigned
         {
           if constexpr(sizeof(Target) >= sizeof(U))
             return a0;

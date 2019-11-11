@@ -13,30 +13,26 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/acos.hpp>
-#include <eve/function/indeg.hpp>
 #include <eve/function/pedantic.hpp>
-#include <type_traits>
+#include <eve/function/indeg.hpp>
+#include <eve/function/acos.hpp>
 
 namespace eve::detail
 {
-
   template<typename T>
-  EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+  EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(acos(a0));
+    return indeg(eve::acos(a0));
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
-                                  , pedantic_type const &
-                                  , T const &a0) noexcept
+  EVE_FORCEINLINE constexpr auto acosd_ ( EVE_SUPPORTS(cpu_)
+                                        , pedantic_type const &, T const &a0
+                                        ) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(eve::pedantic_(acos)(a0));
+    return indeg(eve::pedantic_(eve::acos)(a0));
   }
 }
 

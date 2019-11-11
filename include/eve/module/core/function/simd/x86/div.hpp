@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/function/convert.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,7 +30,21 @@ namespace eve::detail
     else if constexpr(std::is_same_v<T, float>)
       return _mm_div_ps(v0, v1);
     else if constexpr(std::is_integral_v<T>)
-      return map(div, v0, v1);
+    {
+      if constexpr(sizeof(T) < 4)
+      {
+        return convert(div(convert(v0, single_), convert(v1, single_)), as<T>());
+      }
+      else if constexpr(sizeof(T) ==  4 && std::is_signed_v<T>)
+      {
+        return  convert(div(convert(v0, double_), convert(v1, double_)), as<T>());
+      }
+      else
+      {
+        return map(div, v0, v1);
+      }
+      
+    }
   }
 
   // -----------------------------------------------------------------------------------------------

@@ -49,7 +49,7 @@ Notes
 
 * For :ref:`concept-integralvalue` types, it returns a rounded value at a distance guaranteed
   to be less than or equal to 0.5 of the average floating value, but may differ
-  by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide 
+  by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
   simd intrinsics, it is possible that the scalar results may differ by one unit from
   simd ones.
 
@@ -63,10 +63,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/average.cpp
+.. include:: ../../../../test/doc/core/average.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/average.txt
+.. include:: ../../../../test/doc/core/average.txt
   :literal:

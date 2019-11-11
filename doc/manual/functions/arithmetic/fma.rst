@@ -41,7 +41,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1:4] A value of the type **wide<T,N>**                  
+* [1:4] A value of the type **wide<T,N>**
 * [5]     A value of type **U**
 
 
@@ -63,7 +63,7 @@ Notes
 
     If you need pedantic fma capabilities in all circumstances in your own
     code you can use the pedantic_ option (although it can be very expensive).
-    pedantic_ option ensures the fused conformant properties and allows SIMD 
+    pedantic_ option ensures the fused conformant properties and allows SIMD
     acceleration if available.
 
 *******
@@ -77,10 +77,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/fma.cpp
+.. include:: ../../../../test/doc/core/fma.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/fma.txt
+.. include:: ../../../../test/doc/core/fma.txt
   :literal:

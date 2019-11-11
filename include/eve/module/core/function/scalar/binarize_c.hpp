@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_c_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond,
                                            T const &a0) noexcept
-  requires(T, vectorizable<T>,  vectorizable<U>)
+  requires(U, vectorizable<T>,  vectorizable<U>)
   {
     return bitwise_andnot(U(a0), cond.bits());
   }

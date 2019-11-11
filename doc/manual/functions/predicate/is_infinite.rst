@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_infinite.cpp
+.. include:: ../../../../test/doc/core/is_infinite.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_infinite.txt
+.. include:: ../../../../test/doc/core/is_infinite.txt
   :literal:
 

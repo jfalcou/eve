@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_nan.cpp
+.. include:: ../../../../test/doc/core/is_nan.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_nan.txt
+.. include:: ../../../../test/doc/core/is_nan.txt
   :literal:
 

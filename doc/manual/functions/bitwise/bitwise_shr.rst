@@ -13,7 +13,7 @@ bitwise_shr
       constexpr /* implementation defined */ bitwise_shr = {};
    }
 
-Function object performing a bitwise shift  to the right of an :ref:`IntegralValue <concept-integralvalue>`  by 
+Function object performing a bitwise shift  to the right of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>` with the same number of elements and same element size.
 
 ********
@@ -58,10 +58,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/bitwise_shr.cpp
+.. include:: ../../../../test/doc/core/bitwise_shr.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bitwise_shr.txt
+.. include:: ../../../../test/doc/core/bitwise_shr.txt
   :literal:

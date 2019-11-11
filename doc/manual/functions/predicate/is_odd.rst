@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_odd.cpp
+.. include:: ../../../../test/doc/core/is_odd.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_odd.txt
+.. include:: ../../../../test/doc/core/is_odd.txt
   :literal:
 

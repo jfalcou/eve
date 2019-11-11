@@ -50,10 +50,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/trunc.cpp
+.. include:: ../../../../test/doc/core/trunc.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/trunc.txt
+.. include:: ../../../../test/doc/core/trunc.txt
   :literal:

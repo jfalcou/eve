@@ -14,8 +14,8 @@ acsc
    }
 
 Function object computing  the inverse cosecant in radian: (:math:`\arcsin(1/x)`) of an :ref:`IEEEValue <concept-ieeevalue>` **v**
-   
-       
+
+
 ********
 Synopsis
 ********
@@ -28,7 +28,7 @@ Synopsis
 
 * [1] Computes elementwise the mathematical value :math:`\arcsin(1/v)`.
 * [2] Computes the mathematical value :math:`\arcsin(1/s)`.
-  
+
 
 .. rubric:: Parameters
 
@@ -48,11 +48,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/acsc.cpp
+.. include:: ../../../../test/doc/core/acsc.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/acsc.txt
+.. include:: ../../../../test/doc/core/acsc.txt
   :literal:
 

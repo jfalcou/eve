@@ -41,7 +41,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1:4] A value of the type **wide<T,N>**                  
+* [1:4] A value of the type **wide<T,N>**
 * [6]     A value of type **U**
 
 
@@ -69,17 +69,17 @@ Notes
 Options
 *******
 
-    - pedantic_: ``fnma[pedantic_](x,y,z)`` ensures the fnma conformant properties and allows SIMD 
+    - pedantic_: ``fnma[pedantic_](x,y,z)`` ensures the fnma conformant properties and allows SIMD
       acceleration if available.
 
 *******
 Example
 *******
 
-.. include:: ../../../../test/doc/fnma.cpp
+.. include:: ../../../../test/doc/core/fnma.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/fnma.txt
+.. include:: ../../../../test/doc/core/fnma.txt
   :literal:

@@ -31,7 +31,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>) { return (a != b) && ((a == a) || (b == b)); }
     else
     {
-      return a != b;
+      return is_not_equal(a, b);
     }
   }
 }

@@ -45,11 +45,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_flint.cpp
+.. include:: ../../../../test/doc/core/is_flint.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_flint.txt
+.. include:: ../../../../test/doc/core/is_flint.txt
   :literal:
 
