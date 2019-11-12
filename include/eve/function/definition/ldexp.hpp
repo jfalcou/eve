@@ -11,10 +11,31 @@
 #ifndef EVE_FUNCTION_DEFINITION_LDEXP_HPP_INCLUDED
 #define EVE_FUNCTION_DEFINITION_LDEXP_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/overload.hpp>  
+#include <eve/function/is_flint.hpp>
+#include <eve/function/all.hpp> 
 
 namespace eve
 {
+  namespace tag { struct ldexp_; }
+
+  namespace detail
+  {
+    template<typename T, typename U>
+    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, U const& b)
+    {
+      if constexpr(std::is_floating_point_v<value_type_t<U>>)
+        EVE_ASSERT(all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
+    }
+    
+    template<typename T, typename U>
+    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), pedantic_type const&, T const&, U const& b)
+    {
+      if constexpr(std::is_floating_point_v<value_type_t<U>>)
+        EVE_ASSERT(all(is_flint(b)), "ldexp argument 2 is floating but not a flint");
+    }
+  }
+
   EVE_MAKE_CALLABLE(ldexp_, ldexp);
 }
 

@@ -2,17 +2,15 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
-
+ 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_LDEXP_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_LDEXP_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_LDEXP_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_LDEXP_HPP_INCLUDED
 
-#include <eve/function/definition/ldexp.hpp>
-#include <eve/module/core/function/scalar/ldexp.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/ldexp.hpp>
 
 #endif
- 
