@@ -1,8 +1,8 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
 ##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
-## 
+##  Copyright 2019 Jean-Thierry Lapreste
+##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
@@ -192,5 +192,4 @@ make_all_units(ROOT core NAME ulp                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )  
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
-
 
