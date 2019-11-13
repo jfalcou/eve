@@ -69,6 +69,8 @@ make_all_units(ROOT core NAME dec                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME dist                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME div                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME exp                   ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME exp2                  ARCH scalar simd TYPES ${all_types}     )   
+make_all_units(ROOT core NAME exp10                 ARCH scalar simd TYPES ${all_types}     ) 
 make_all_units(ROOT core NAME extract               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME floor                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME fma                   ARCH scalar simd TYPES ${all_types}     )

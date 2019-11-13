@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {
