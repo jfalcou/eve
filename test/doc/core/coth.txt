@@ -1,0 +1,8 @@
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::coth(pf) =            (inf, 1.31304, -1.31304, -1.03731, inf, 1, -1, -nan)
+---- scalar
+<- xf =                      1
+-> eve::coth(xf) =            1.31304
+<- yf =                      -1
+-> eve::coth(yf) =            -1.31304
