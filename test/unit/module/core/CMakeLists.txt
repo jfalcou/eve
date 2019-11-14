@@ -150,6 +150,7 @@ make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME popcnt                ARCH scalar      TYPES ${integral_types})
 make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME rem                   ARCH scalar simd TYPES ${signed_types}  )    
 make_all_units(ROOT core NAME round                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rshl                  ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME rshr                  ARCH scalar simd TYPES ${integral_types})
