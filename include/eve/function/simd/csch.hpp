@@ -2,16 +2,15 @@
 /**
   EVE - Expressive Vector Engine
   Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SECH_HPP_INCLUDED
-#define EVE_FUNCTION_SECH_HPP_INCLUDED
-
-#include <eve/function/scalar/sech.hpp>
-#include <eve/function/simd/sech.hpp>
+#ifndef EVE_FUNCTION_SIMD_CSCH_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_CSCH_HPP_INCLUDED
+ 
+#include <eve/function/scalar/csch.hpp>
+#include <eve/module/core/function/simd/csch.hpp>
 
 #endif
