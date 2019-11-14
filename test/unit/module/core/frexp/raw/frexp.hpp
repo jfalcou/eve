@@ -8,10 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FREXP_HPP_INCLUDED
-#define EVE_FUNCTION_FREXP_HPP_INCLUDED
+#include <eve/function/frexp.hpp>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
+#include <type_traits>
 
-#include <eve/function/scalar/frexp.hpp>
-#include <eve/function/simd/frexp.hpp>
+TTS_CASE("Check frexp return type")
+{
+  TTS_EXPR_IS(eve::raw_(eve::frexp)(Type()), (std::tuple<Type,Type>));
+}
 
-#endif
+TTS_CASE("Check eve::raw_(eve::frexp) behavior")
+{
+  auto [p0, p1] = eve::raw_(eve::frexp)(Type(1));
+  TTS_EQUAL(p0, Type(0.5));
+  TTS_EQUAL(p1, Type(1));
+
+
+}

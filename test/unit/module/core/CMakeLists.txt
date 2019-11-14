@@ -82,6 +82,7 @@ make_all_units(ROOT core NAME fms                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME fnma                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME fnms                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME frac                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME frexp                 ARCH scalar simd TYPES ${real_types}    ) 
 make_all_units(ROOT core NAME gather                ARCH simd        TYPES ${all_types}     )
 make_all_units(ROOT core NAME horn                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME horn1                 ARCH scalar simd TYPES ${real_types}    )
