@@ -162,10 +162,6 @@ make_all_units(ROOT core NAME maxmag                ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME min                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME minmag                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )       
-make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )       
-make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )  
 make_all_units(ROOT core NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )       
 make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
@@ -202,4 +198,3 @@ make_all_units(ROOT core NAME ulp                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )  
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
-
