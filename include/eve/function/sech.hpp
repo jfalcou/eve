@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SECH_HPP_INCLUDED
 
 #include <eve/function/scalar/sech.hpp>
-//#include <eve/function/simd/sech.hpp>
+#include <eve/function/simd/sech.hpp>
 
 #endif

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_CBRT_HPP_INCLUDED
 
 #include <eve/function/scalar/cbrt.hpp>
-//#include <eve/function/simd/cbrt.hpp>
+#include <eve/function/simd/cbrt.hpp>
 
 #endif

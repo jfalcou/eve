@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_CSCH_HPP_INCLUDED
 
 #include <eve/function/scalar/csch.hpp>
-//#include <eve/function/simd/csch.hpp>
+#include <eve/function/simd/csch.hpp>
 
 #endif

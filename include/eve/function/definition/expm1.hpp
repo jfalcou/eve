@@ -15,6 +15,7 @@
 
 namespace eve
 {
+ 
   EVE_MAKE_CALLABLE(expm1_, expm1);
 }
 

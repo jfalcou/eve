@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_COSH_HPP_INCLUDED
 
 #include <eve/function/scalar/cosh.hpp>
-//#include <eve/function/simd/cosh.hpp>
+#include <eve/function/simd/cosh.hpp>
 
 #endif

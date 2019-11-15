@@ -13,6 +13,7 @@
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/cardinal.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,7 +25,11 @@ namespace eve::detail
   using same_as = std::enable_if_t<std::is_same_v<From, To>>;
 
   template<typename From, typename To>
+  using same_card = std::enable_if_t<cardinal_v<From> == cardinal_v<To>>;
+
+  template<typename From, typename To>
   using convertible = std::enable_if_t<std::is_convertible_v<From, To>>;
+
 
   template<typename T>
   using arithmetic = std::enable_if_t<std::is_arithmetic_v<T>>;
@@ -54,8 +59,14 @@ namespace eve::detail
                                      , decltype( std::declval<T>() <= std::declval<U>() )
                                      , decltype( std::declval<T>() >= std::declval<U>() )
                                      >;
- template<typename T>
+  template<typename T>
   using totally_ordered= totally_ordered_with<T,T>;
+
+  template<typename T, typename U>
+  using compatible = either < as_trait<same_card, T, U>::value 
+                              , is_vectorizable<T>::value 
+                              , is_vectorizable<U>::value 
+  >;
   
 }
 

@@ -17,6 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/forward.hpp>
