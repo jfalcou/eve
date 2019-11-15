@@ -18,21 +18,21 @@
 
 TTS_CASE("Check eve::saturate return type")
 {
-  TTS_EXPR_IS(eve::saturate( eve::as<float>(), (Type()) ), (Type));
-  TTS_EXPR_IS(eve::saturate( eve::single_     , (Type()) ), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()), eve::as<float>()), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()), eve::single_    ), (Type));
 }
 
 TTS_CASE("Check eve::saturate behavior")
 {
-  TTS_EQUAL(eve::saturate(eve::single_, (Type(42.69))      ), (Type(42.69)) );
-  TTS_EQUAL(eve::saturate(eve::single_, (Type(0))          ), (Type(0))     );
-//  TTS_EQUAL(eve::saturate(eve::single_, eve::Valmax<Type>()), (Type(eve::saturated_(eve::convert)(eve::Valmax<Value>(), eve::as_<float>()))) ); //TODO
+  TTS_EQUAL(eve::saturate((Type(42.69)),       eve::single_), (Type(42.69)) );
+  TTS_EQUAL(eve::saturate((Type(0))    ,       eve::single_), (Type(0))     );
+//  TTS_EQUAL(eve::saturate( eve::Valmax<Type>(),       eve::single_), (Type(eve::saturated_(eve::convert)(eve::Valmax<Value>(), eve::as_<float>()))) ); //TODO
   if constexpr(std::is_same_v<Value, double>)
   {
-    TTS_EQUAL(eve::saturate(eve::single_, eve::Valmin<Type>()), Type(eve::Valmin<float>()) );
+    TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::single_), Type(eve::Valmin<float>()) );
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::single_, eve::Valmin<Type>()), (Type(eve::saturated_(eve::convert)(eve::Valmin<Value>(), eve::as_<float>()))) );
+    TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::single_), (Type(eve::saturated_(eve::convert)(eve::Valmin<Value>(), eve::as_<float>()))) );
   }
 }

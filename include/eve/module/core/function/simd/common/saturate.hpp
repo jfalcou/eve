@@ -29,16 +29,17 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename Target, typename N, typename ABI, typename U>
-  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_),
-                                 as_<Target> const &    at,
-                                 wide<U, N, ABI> const &v) noexcept requires(wide<U, N, ABI>,
-                                                                             vectorizable<Target>)
+  EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_)
+                                , wide<U, N, ABI> const &v
+                                , as_<Target> const &    at)
+    noexcept requires(wide<U, N, ABI>,
+                      vectorizable<Target>)
   {
     using u_t = wide<U, N, ABI>;
     if constexpr(is_aggregated_v<ABI>)
-      return aggregate(eve::saturate, at, v);
+      return aggregate(eve::saturate, v, at);
     else if constexpr(is_emulated_v<ABI>)
-      return map(eve::saturate, at, v);
+      return map(eve::saturate, v, at);
     else
     {
       if constexpr(std::is_floating_point_v<Target>) // saturating to floating point

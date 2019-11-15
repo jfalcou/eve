@@ -80,7 +80,7 @@ namespace eve::detail
         {
           using sup_t =  upgrade_t<vt_t>;
           auto z =  mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
-          auto s =  saturate(as<vt_t>(), z); //TODO saturated_(convert) ?
+          auto s =  saturate(z, as<vt_t>()); //TODO saturated_(convert) ?
           return convert(s, as<vt_t>());
         }
         else

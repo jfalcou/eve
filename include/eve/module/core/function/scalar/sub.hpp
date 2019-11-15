@@ -61,7 +61,7 @@ namespace eve::detail
       {
         // small signed integral case
         auto r = a-b;
-        return static_cast<T>(saturate[as_<T>()](r));
+        return static_cast<T>(saturate(r, as<T>()));
       }
     }
     else // if constexpr( std::is_unsigned_v<T> )

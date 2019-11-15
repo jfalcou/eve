@@ -17,18 +17,18 @@
 
 TTS_CASE("Check eve::saturate return type")
 {
-  TTS_EXPR_IS(eve::saturate( eve::as<std::int32_t>(), (Type()) ), (Type));
-  TTS_EXPR_IS(eve::saturate( eve::int32_            , (Type()) ), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()),   eve::as<std::int32_t>()), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()),   eve::int32_            ), (Type));
 }
 
 TTS_CASE("Check eve::saturate behavior")
 {
-  TTS_EQUAL(eve::saturate(eve::int32_, (Type(0))          ), (Type(0))     );
-  TTS_EQUAL(eve::saturate(eve::int32_, (Type(42.69))      ), (Type(42.69)) );
+  TTS_EQUAL(eve::saturate((Type(0)), eve::int32_    ), (Type(0))     );
+  TTS_EQUAL(eve::saturate((Type(42.69)), eve::int32_), (Type(42.69)) );
   if constexpr(std::is_floating_point_v<Value>)
   {
-     TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int32_t>())));
-     TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int32_t>())) ); 
+     TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int32_), (Type(eve::Valmin<std::int32_t>())));
+     TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::int32_), (Type(eve::Valmax<std::int32_t>())) ); 
   }
   else
   {
@@ -36,26 +36,26 @@ TTS_CASE("Check eve::saturate behavior")
     {
       if constexpr(sizeof(Value) <= sizeof(std::int32_t))
       {
-        TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmin<Type>()), eve::Valmin<Type>() );
+        TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int32_), eve::Valmin<Type>() );
       }
       else
       {
-        TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int32_t>())) );
+        TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int32_), (Type(eve::Valmin<std::int32_t>())) );
       }
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmin<Type>()), (Type(0)) );
+      TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int32_), (Type(0)) );
     }
     
     
     if constexpr(sizeof(Value) < sizeof(std::int32_t))
     {
-      TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmax<Type>()), eve::Valmax<Type>() );
+      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::int32_), eve::Valmax<Type>() );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::int32_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int32_t>())) ); // TODO
+      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::int32_), (Type(eve::Valmax<std::int32_t>())) ); // TODO
     }
   }
 }
