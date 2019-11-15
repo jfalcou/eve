@@ -160,11 +160,8 @@ make_all_units(ROOT core NAME maxmag                ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME min                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME minmag                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME mul                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )       
-make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )       
-make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )  
 make_all_units(ROOT core NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )       
 make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
@@ -191,7 +188,6 @@ make_all_units(ROOT core NAME sqr_abs               ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME sqrt                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME sub                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME tanh                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT core NAME trunc                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME tofloat               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME touint                ARCH scalar simd TYPES ${all_types}     )
@@ -200,5 +196,5 @@ make_all_units(ROOT core NAME ulp                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )  
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
+
 
