@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_EXPONENTBITS_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_EXPONENTBITS_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_EXPONENT_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_EXPONENT_HPP_INCLUDED
 
-#include <eve/function/definition/exponentbits.hpp>
-#include <eve/module/core/function/generic/exponentbits.hpp>
+#include <eve/function/scalar/exponent.hpp>
+#include <eve/module/core/function/simd/exponent.hpp>
 
 #endif
