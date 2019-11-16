@@ -33,7 +33,7 @@ TTS_CASE("Check eve::saturate behavior")
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::uint8_), (Type(eve::Valmax<std::int8_t>())) );
+      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::uint8_), (Type(eve::Valmax<std::uint8_t>())) );
     }
   }
   else
