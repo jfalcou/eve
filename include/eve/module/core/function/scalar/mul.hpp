@@ -53,8 +53,8 @@ namespace eve::detail
       {
         using up_t =  upgrade_t<T>;
         return static_cast<T>(saturate(static_cast<up_t>(a)*static_cast<up_t>(b), as<T>()));
-    }
-       else if constexpr(sizeof(T) == 4)
+      }
+      else if constexpr(sizeof(T) == 4)
       {
         using un_t = std::make_unsigned_t<T>;
         using up_t = int64_t;
