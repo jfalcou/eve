@@ -19,6 +19,7 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
+#include <eve/function/frexp.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_nan.hpp>
@@ -247,7 +248,7 @@ namespace eve::detail
     else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log2, a0);
     else
     {
-      if constexpr(std::is_same_v<T, float>)
+      if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
         T xx =  a0;
         T dk = Zero<T>();
@@ -296,9 +297,9 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(eve::allbits_, is_ngez(a0), zz);
+        return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else //double
+      else // if constexpr(std::is_same_v<value_type_t<T>, double)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log2f.c */
         /*
@@ -328,8 +329,8 @@ namespace eve::detail
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         auto [x, kk] = frexp(xx);
         auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
-        dk += if_dec(x_lt_sqrthf, kk);
-        T f = dec(x+if_else_zero(x_lt_sqrthf, x));
+        dk += dec[x_lt_sqrthf](kk);
+        T f = dec(x+if_else(x_lt_sqrthf, x, eve::zero_));
         T s = f/(T(2) + f);
         T z = sqr(s);
         T w = sqr(z);
@@ -395,7 +396,7 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(eve::allbits_, is_ngez(a0), zz);
+        return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
   }
