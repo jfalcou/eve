@@ -17,22 +17,22 @@
 
 TTS_CASE("Check eve::saturate return type")
 {
-  TTS_EXPR_IS(eve::saturate( eve::as<std::int8_t>(), (Type()) ), (Type));
-  TTS_EXPR_IS(eve::saturate( eve::int8_            , (Type()) ), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()), eve::as<std::int8_t>()), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()), eve::int8_            ), (Type));
 }
 
 TTS_CASE("Check eve::saturate behavior")
 {
   if constexpr(std::is_signed_v<Value>)
   {
-    TTS_EQUAL(eve::saturate(eve::int8_, eve::Valmin<Type>()), (Type(eve::Valmin<std::int8_t>())) );
+    TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int8_), (Type(eve::Valmin<std::int8_t>())) );
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::int8_, eve::Valmin<Type>()), (Type(0)) );
+    TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::int8_), (Type(0)) );
   }
-
-  TTS_EQUAL(eve::saturate(eve::int8_, (Type(0))          ), (Type(0))     );
-  TTS_EQUAL(eve::saturate(eve::int8_, (Type(42.69))      ), (Type(42.69)) );
-  TTS_EQUAL(eve::saturate(eve::int8_, eve::Valmax<Type>()), (Type(eve::Valmax<std::int8_t>())) );
+  
+  TTS_EQUAL(eve::saturate((Type(0)), eve::int8_          ), (Type(0))     );
+  TTS_EQUAL(eve::saturate((Type(42.69)), eve::int8_       ), (Type(42.69)) );
+  TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::int8_), (Type(eve::Valmax<std::int8_t>())) );
 }

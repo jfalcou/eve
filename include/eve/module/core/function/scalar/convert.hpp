@@ -68,7 +68,7 @@ namespace eve::detail
       {
         if constexpr(sizeof(OUT) != sizeof(IN))
         {
-          return convert(saturate(as<OUT>(), v0), as<OUT>()); 
+          return convert(saturate(v0, as<OUT>()), as<OUT>()); 
         }
         else if constexpr(std::is_signed_v<OUT>) //float -> int32 or double -> int64
         {

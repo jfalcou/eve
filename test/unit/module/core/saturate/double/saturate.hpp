@@ -17,14 +17,14 @@
 
 TTS_CASE("Check eve::saturate return type")
 {
-  TTS_EXPR_IS(eve::saturate( eve::as<double>(), (Type()) ), (Type));
-  TTS_EXPR_IS(eve::saturate( eve::double_     , (Type()) ), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()),   eve::as<double>()), (Type));
+  TTS_EXPR_IS(eve::saturate((Type()),   eve::double_     ), (Type));
 }
 
 TTS_CASE("Check eve::saturate behavior")
 {
-  TTS_EQUAL(eve::saturate(eve::double_, eve::Valmin<Type>()), eve::Valmin<Type>() );
-  TTS_EQUAL(eve::saturate(eve::double_, (Type(0))          ), (Type(0))           );
-  TTS_EQUAL(eve::saturate(eve::double_, (Type(42.69))      ), (Type(42.69))       );
-  TTS_EQUAL(eve::saturate(eve::double_, eve::Valmax<Type>()), eve::Valmax<Type>() );
+  TTS_EQUAL(eve::saturate(eve::Valmin<Type>(), eve::double_), eve::Valmin<Type>() );
+  TTS_EQUAL(eve::saturate((Type(0))          , eve::double_), (Type(0))           );
+  TTS_EQUAL(eve::saturate((Type(42.69))      , eve::double_), (Type(42.69))       );
+  TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::double_), eve::Valmax<Type>() );
 }

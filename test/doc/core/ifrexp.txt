@@ -1,7 +1,7 @@
 ---- simd
 <- pf =                               (1.4013e-45, 1, -1, inf, -inf, -nan, 0, -2)
--> eve::pedantic_(eve::frexp)(pf) = [(0.5, 0.5, -0.5, inf, -inf, -nan, 0, -0.5), 
+-> eve::pedantic_(eve::ifrexp)(pf) = [(0.5, 0.5, -0.5, inf, -inf, -nan, 0, -0.5), 
                                       (-148, 1, 1, 0, 0, 0, 0, 2)] 
 ---- scalar
 <- xf  =              2
--> eve::frexp(xf) = [0.5, 2]
+-> eve::ifrexp(xf) = [0.5, 2]

@@ -29,9 +29,10 @@ namespace eve::detail
   // Identity case
   template<typename Target, typename U>
   EVE_FORCEINLINE constexpr auto
-  saturate_(EVE_SUPPORTS(cpu_),
-            as_<Target> const &,
-            U const &a0) noexcept requires(U, vectorizable<Target>, vectorizable<U>)
+  saturate_(EVE_SUPPORTS(cpu_)
+           , U const &a0
+           , as_<Target> const &) noexcept
+  requires(U, vectorizable<Target>, vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<Target>) // saturating to floating point
     {
