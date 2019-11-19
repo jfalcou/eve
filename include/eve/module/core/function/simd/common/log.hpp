@@ -19,6 +19,7 @@
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
+#include <eve/function/frexp.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_nan.hpp>
@@ -275,8 +276,8 @@ namespace eve::detail
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         auto [x, kk] = frexp(xx);
         auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
-        dk += if_dec(x_lt_sqrthf, kk);
-        T f = dec(x+if_else_zero(x_lt_sqrthf, x));
+        dk += dec[x_lt_sqrthf](kk);
+        T f = dec(x+if_else(x_lt_sqrthf, x, eve::zero_));
         T s = f/(T(2) + f);
         T z = sqr(s);
         T w = sqr(z);
@@ -286,18 +287,16 @@ namespace eve::detail
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
-        T Invlog_2lo =  Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
         T zz; 
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
-        }
-        
+        }        
         else
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(eve::allbits_, is_ngez(a0), zz);
+        return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
   }
