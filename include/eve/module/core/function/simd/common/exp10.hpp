@@ -98,7 +98,7 @@ namespace eve::detail
       }
       else
       {
-        return pedantic_(convert)( exp10(tofloat(xx)), as<vt_t>()); 
+        return /*pedantic_*/(convert)( exp10(tofloat(xx)), as<vt_t>()); 
       }
     }
   }

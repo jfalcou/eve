@@ -346,9 +346,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm_packs_epi16(low, high);
       }
+      else if constexpr(N::value == 8)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm_packs_epi16(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low; 
+      }
       else if constexpr(N::value <= 8)
       {
-        return _mm_packs_epi16(v0, v0);
+        return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }
     }
     else if constexpr( std::is_same_v<In,int32_t> && std::is_same_v<Out,int16_t> && (N::value <= 8))
@@ -358,9 +364,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm_packs_epi32(low, high);
       }
+      else if constexpr(N::value == 4)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm_packs_epi16(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low; 
+      }
       else if constexpr(N::value <= 4)
       {
-        return _mm_packs_epi32(v0, v0);
+        return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }       
     }
     else if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<Out,uint8_t> && (N::value <= 16))
@@ -370,9 +382,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm_packus_epi16(low, high);
       }
+      else if constexpr(N::value == 8)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm_packus_epi16(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low; 
+      }
       else if constexpr(N::value <= 8)
       {
-        return _mm_packus_epi16(v0, v0);
+        return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }
     }
     else
@@ -411,9 +429,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm256_packs_epi32(low, high);
       }
+      else if constexpr(N::value == 8)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm256_packs_epi32(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low; 
+      }
       else if constexpr(N::value <= 8)
       {
-        return _mm256_packs_epi32(v0, v0);
+        return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }
     }
     else if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<Out,uint8_t> && (N::value <= 32))
@@ -423,9 +447,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm256_packus_epi16(low, high);
       }
+       else if constexpr(N::value == 16)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm256_packus_epi16(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low; 
+      }
       else if constexpr(N::value <= 16)
       {
-        return _mm256_packus_epi16(v0, v0);
+         return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }
     }
     else if constexpr( std::is_same_v<In,int32_t> && std::is_same_v<Out,uint16_t> && (N::value <= 16))
@@ -435,9 +465,15 @@ namespace eve::detail
         auto [ low, high ] = v0.slice();
         return _mm256_packus_epi32(low, high);
       }
+      else if constexpr(N::value == 8)
+      {
+        wide<Out, fixed<2*N::value>> tmp = _mm256_packus_epi32(v0, v0);
+        auto [low, hi] = tmp.slice();
+        return low;
+      }
       else if constexpr(N::value <= 8)
       {
-        return _mm256_packus_epi16(v0, v0);
+        return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
       }
     }
     else

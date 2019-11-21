@@ -15,7 +15,7 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::convert return type")
+TTS_CASE("Check eve::saturated_(eve::convert) return type")
 { 
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<std::uint16_t, eve::fixed<Cardinal>>;
@@ -23,11 +23,11 @@ TTS_CASE("Check eve::convert return type")
   using target_t = std::uint16_t;
 #endif
 
-  TTS_EXPR_IS(eve::convert(Type(), eve::as<std::uint16_t>()), target_t);
-  TTS_EXPR_IS(eve::convert(Type(), eve::uint16_)     , target_t);
+  TTS_EXPR_IS(eve::saturated_(eve::convert)(Type(), eve::as<std::uint16_t>()), target_t);
+  TTS_EXPR_IS(eve::saturated_(eve::convert)(Type(), eve::uint16_)     , target_t);
 }
 
-TTS_CASE("Check eve::convert behavior")
+TTS_CASE("Check eve::saturated_(eve::convert) behavior")
 {
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<std::uint16_t, eve::fixed<Cardinal>>;
@@ -35,12 +35,20 @@ TTS_CASE("Check eve::convert behavior")
   using target_t = std::uint16_t;
 #endif
 
-  TTS_EQUAL(eve::convert((Type(0))          , eve::uint16_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::convert((Type(42.69))      , eve::uint16_), static_cast<target_t>(Value(42.69)) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((Type(0))          , eve::uint16_), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((Type(42.69))      , eve::uint16_), static_cast<target_t>(Value(42.69)) );
   if constexpr(std::is_integral_v<Value>)
   {   
     // with floating value this test produces undefined behaviour
-    TTS_EQUAL(eve::convert(eve::Valmin<Type>(), eve::uint16_), static_cast<target_t>(eve::Valmin<Type>()) );
-    TTS_EQUAL(eve::convert(eve::Valmax<Type>(), eve::uint16_), static_cast<target_t>(eve::Valmax<Value>()) );
+    
+    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<Type>(), eve::uint16_), (target_t(0)) ); 
+    if constexpr(sizeof(Value) <= 2)
+    {
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<Type>(), eve::uint16_), target_t(eve::Valmax<Value>()) );
+    }
+    else
+    {
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<Type>(), eve::uint16_), (eve::Valmax<target_t>()) );
+    }
   }
 }
