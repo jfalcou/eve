@@ -35,7 +35,6 @@ TTS_CASE("Check eve::saturated_(eve::convert) behavior")
   using target_t = std::int64_t;
 #endif
 
-  TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<Type>(), eve::int64_), static_cast<target_t>(eve::Valmin<Value>()) );
   TTS_EQUAL(eve::saturated_(eve::convert)((Type(0))          , eve::int64_), static_cast<target_t>(0) );
   TTS_EQUAL(eve::saturated_(eve::convert)((Type(42.69))      , eve::int64_), static_cast<target_t>(Value(42.69)) );
   if constexpr(std::is_integral_v<Value>)
@@ -44,6 +43,7 @@ TTS_CASE("Check eve::saturated_(eve::convert) behavior")
     {
       // with floating value this test produces undefined behaviour
       TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<Type>(), eve::int64_), static_cast<target_t>(eve::Valmax<Value>()) );    
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<Type>(), eve::int64_), static_cast<target_t>(eve::Valmin<Value>()) );
     }
     else
     {
