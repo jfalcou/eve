@@ -12,6 +12,10 @@
 #define EVE_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_gez.hpp>
+#include <eve/function/saturated.hpp>
+#include <type_traits>
 
 namespace eve
 {

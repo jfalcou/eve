@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ULPDIST_HPP_INCLUDED
 
 #include <eve/function/scalar/ulpdist.hpp>
-//#include <eve/function/simd/ulpdist.hpp>
+#include <eve/function/simd/ulpdist.hpp>
 
 #endif

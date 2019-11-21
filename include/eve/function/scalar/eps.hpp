@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_EPS_HPP_INCLUDED
 
 #include <eve/function/definition/eps.hpp>
-#include <eve/module/core/function/scalar/eps.hpp>
+#include <eve/module/core/function/generic/eps.hpp>
 
 #endif

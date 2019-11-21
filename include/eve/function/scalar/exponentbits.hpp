@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_EXPONENTBITS_HPP_INCLUDED
 
 #include <eve/function/definition/exponentbits.hpp>
-#include <eve/module/core/function/scalar/exponentbits.hpp>
+#include <eve/module/core/function/generic/exponentbits.hpp>
 
 #endif
