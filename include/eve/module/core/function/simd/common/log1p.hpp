@@ -83,8 +83,8 @@ namespace eve::detail
       auto [x, k] = frexp(uf);
       auto  x_lt_sqrthf = (Invsqrt_2<T>() >  x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      k = if_dec(x_lt_sqrthf, k);
-      T f = dec(x+if_else_zero(x_lt_sqrthf, x));
+      k = dec[x_lt_sqrthf](k);
+      T f = dec(x+if_else(x_lt_sqrthf, x, eve::zero_));
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       T  c = if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
       T hfsq = Half<T>()*sqr(f);
@@ -113,7 +113,7 @@ namespace eve::detail
       {
         zz = if_else(isnez, r, Minf<T>());
       }
-      return if_else(is_ngez(a0), eve::allbits_, zz);
+      return if_else(is_ngez(uf), eve::allbits_, zz);
     }
   }
   
@@ -136,13 +136,13 @@ namespace eve::detail
       auto isnez = is_nez(uf);
       if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
-        uiT iu = bitwise_cast(uf, as<uiT>);
+        uiT iu = bitwise_cast(uf, as<uiT>());
         iu += 0x3f800000 - 0x3f3504f3;
-        iT k = bitwise_cast(iu>>23, as<iT>) - 0x7f;
+        iT k = bitwise_cast(iu>>23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         iu = (iu&0x007fffff) + 0x3f3504f3;
-        T f =  dec(bitwise_cast(iu, as<T>));
+        T f =  dec(bitwise_cast(iu, as<T>()));
         T s = f/(2.0f + f);
         T z = sqr(s);
         T w = sqr(z);
@@ -162,7 +162,7 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         } 
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(uf), eve::allbits_, zz);
       }
       else // if constexpr(std::is_same_v<value_type_t<T>, double)
       {
@@ -178,13 +178,13 @@ namespace eve::detail
          * ====================================================
          */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        uiT hu = bitwise_cast(uf, as<uiT>)>>32;
+        uiT hu = bitwise_cast(uf, as<uiT>())>>32;
         hu += 0x3ff00000 - 0x3fe6a09e;
-        iT k = bitwise_cast(hu>>20, as<iT> ) - 0x3ff;
+        iT k = bitwise_cast(hu>>20, as<iT>() ) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         T  c =  if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
-        hu =  (hu&0x000fffff) + 0x3fe6a09e;
-        T f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>))), as<T>);
+        hu =  (hu&0x000fffffull) + 0x3fe6a09e;
+        T f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>()) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>()))), as<T>());
         f = dec(f);
         
         T hfsq = Half<T>()*sqr(f);
@@ -206,7 +206,7 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         } 
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(uf), eve::allbits_, zz);
       }
     }
   }
