@@ -18,6 +18,7 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/mone.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -29,15 +30,15 @@ TTS_CASE("Check eve::musl_(eve::log1p) return type")
   TTS_EXPR_IS(eve::musl_(eve::log1p)(Type(0)), (Type));
 }
 
-TTS_CASE_TPL (" log1p",  TTS_IEEE_TYPES)
+TTS_CASE(" log1p")
 {
 
   if constexpr(eve::platform::supports_invalids)
   {
     TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Inf<Type>()), eve::Inf<Type>(), 0);
     TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Nan<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Mone<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Zero<Type>()), eve::Minf<Type>(), 0);
+    TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Mone<Type>()), eve::Minf<Type>(), 0);
+    TTS_ULP_EQUAL(eve::plain_(eve::log1p)(eve::Zero<Type>()), eve::Zero<Type>(), 0);
   }
   if constexpr(eve::platform::supports_denormals)
   {

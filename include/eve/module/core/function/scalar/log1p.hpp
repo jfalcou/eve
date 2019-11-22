@@ -21,6 +21,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/musl.hpp>
+#include <eve/function/oneminus.hpp>
 #include <eve/function/plain.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
@@ -94,9 +95,9 @@ namespace eve::detail
       {
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
         T uf =  inc(x);
-        uiT iu = bitwise_cast(uf, as<uiT>);
+        uiT iu = bitwise_cast(uf, as<uiT>());
         iu += 0x3f800000 - 0x3f3504f3;
-        k = bitwise_cast(iu>>23, as<iT>) - 0x7f;
+        k = bitwise_cast(iu>>23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if (k < 25)
         {
@@ -106,7 +107,7 @@ namespace eve::detail
 
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
         iu = (iu&0x007fffff) + 0x3f3504f3;
-        f =  dec(bitwise_cast(iu, as<T>));
+        f =  dec(bitwise_cast(iu, as<T>()));
       }
       T s = f/(2.0f + f);
       T z = sqr(s);
@@ -132,7 +133,7 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      uiT hx = bitwise_cast(x, as<uiT>) >> 32;
+      uiT hx = bitwise_cast(x, as<uiT>()) >> 32;
       iT k = 1;
       
       T c = Zero<T>();
@@ -157,7 +158,7 @@ namespace eve::detail
       {
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         T uf =  inc(x);
-        uiT hu = bitwise_cast(uf, as<uiT>)>>32;
+        uiT hu = bitwise_cast(uf, as<uiT>())>>32;
         hu += 0x3ff00000 - 0x3fe6a09e;
         k = (int)(hu>>20) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
@@ -167,7 +168,7 @@ namespace eve::detail
           c /= uf;
         }
         hu =  (hu&0x000fffff) + 0x3fe6a09e;
-        f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>))), as<T>);
+        f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>()) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>()))), as<T>());
         f = dec(f);
       }
 

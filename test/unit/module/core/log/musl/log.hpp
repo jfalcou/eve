@@ -26,7 +26,7 @@ TTS_CASE("Check eve::musl_(eve::log) return type")
   TTS_EXPR_IS(eve::musl_(eve::log)(Type(0)), (Type));
 }
 
-TTS_CASE_TPL (" log",  TTS_IEEE_TYPES)
+TTS_CASE (" log")
 {
 
   if constexpr(eve::platform::supports_invalids)
