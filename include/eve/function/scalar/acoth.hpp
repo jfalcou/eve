@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_ACOTH_HPP_INCLUDED
 
 #include <eve/function/definition/acoth.hpp>
-#include <eve/module/core/function/scalar/acoth.hpp>
+#include <eve/module/core/function/generic/acoth.hpp>
 
 #endif

@@ -23,6 +23,7 @@ make_all_units(ROOT core NAME acosh                 ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME acospi                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME acot                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME acotd                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME acoth                 ARCH scalar simd TYPES ${real_types}    )   
 make_all_units(ROOT core NAME acotpi                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME acsc                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME acscd                 ARCH scalar simd TYPES ${real_types}    )
