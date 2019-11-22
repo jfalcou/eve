@@ -37,6 +37,7 @@ make_all_units(ROOT core NAME asecd                 ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME asecpi                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME asin                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME asind                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT core NAME asinh                 ARCH scalar simd TYPES ${real_types}    ) 
 make_all_units(ROOT core NAME asinpi                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME atan                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME atand                 ARCH scalar simd TYPES ${real_types}    )
