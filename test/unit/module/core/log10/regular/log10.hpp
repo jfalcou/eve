@@ -26,7 +26,7 @@ TTS_CASE("Check eve::log10 return type")
   TTS_EXPR_IS(eve::log10(Type(0)), (Type));
 }
 
-TTS_CASE_TPL (" log10",  TTS_IEEE_TYPES)
+TTS_CASE(" log10")
 {
 
   if constexpr(eve::platform::supports_invalids)

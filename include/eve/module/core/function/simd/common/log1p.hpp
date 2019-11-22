@@ -76,14 +76,13 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      using uiT = as_integer_t<T, unsigned>;
-      using iT  = as_integer_t<T,   signed>;
+      T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
+      T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       T uf =  inc(a0);
       auto isnez = is_nez(uf);
       auto [x, k] = frexp(uf);
-      auto  x_lt_sqrthf = (Sqrt_2o_2<T>() >  x);
+      auto  x_lt_sqrthf = (Invsqrt_2<T>() >  x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      auto  x_lt_sqrthf = (Sqrt_2o_2<T>() >  x);
       k = if_dec(x_lt_sqrthf, k);
       T f = dec(x+if_else_zero(x_lt_sqrthf, x));
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
@@ -104,7 +103,7 @@ namespace eve::detail
         t2= z*horn<T, 0x3fe5555555555593ll, 0x3fd2492494229359ll, 0x3fc7466496cb03dell, 0x3fc2f112df3e5244ll> (w);
       }
       T R = t2 + t1;
-      T r = fma(k, Log_2hi<T>(), ((fma(s, (hfsq+R), k*Log_2lo<T>()+c) - hfsq) + f));
+      T r = fma(k, Log_2hi, ((fma(s, (hfsq+R), k*Log_2lo+c) - hfsq) + f));
       T zz; 
       if constexpr(eve::platform::supports_infinites)
       {
@@ -129,17 +128,21 @@ namespace eve::detail
     else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log1p, a0);
     else
     {
+      using uiT = as_integer_t<T, unsigned>;
+      using iT  = as_integer_t<T,   signed>;
+      T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
+      T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T uf =  inc(a0);
       auto isnez = is_nez(uf);
       if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
-        uiT iu = bitwise_cast<uiT>(uf);
+        uiT iu = bitwise_cast(uf, as<uiT>);
         iu += 0x3f800000 - 0x3f3504f3;
-        iT k = bitwise_cast<iT>(iu>>23) - 0x7f;
+        iT k = bitwise_cast(iu>>23, as<iT>) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         iu = (iu&0x007fffff) + 0x3f3504f3;
-        T f =  dec(bitwise_cast<T>(iu));
+        T f =  dec(bitwise_cast(iu, as<T>));
         T s = f/(2.0f + f);
         T z = sqr(s);
         T w = sqr(z);
@@ -149,7 +152,7 @@ namespace eve::detail
         T hfsq = Half<T>()*sqr(f);
         T dk = tofloat(k);
         T  c = if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
-        T r = fma(dk, Log_2hi<T>(), ((fma(s, (hfsq+R), dk*Log_2lo<T>()+c) - hfsq) + f));
+        T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f));
         T zz; 
         if constexpr(eve::platform::supports_infinites)
         {
@@ -175,13 +178,13 @@ namespace eve::detail
          * ====================================================
          */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        uiT hu = bitwise_cast<uiT>(uf)>>32;
+        uiT hu = bitwise_cast(uf, as<uiT>)>>32;
         hu += 0x3ff00000 - 0x3fe6a09e;
-        iT k = bitwise_cast<iT>(hu>>20) - 0x3ff;
+        iT k = bitwise_cast(hu>>20, as<iT> ) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         T  c =  if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
         hu =  (hu&0x000fffff) + 0x3fe6a09e;
-        T f = bitwise_cast<T>( bitwise_cast<uiT>(hu<<32) | (bitwise_and(0xffffffffull, bitwise_cast<uiT>(uf))));
+        T f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>))), as<T>);
         f = dec(f);
         
         T hfsq = Half<T>()*sqr(f);
@@ -193,7 +196,7 @@ namespace eve::detail
           , 0x3fc7466496cb03dell, 0x3fc2f112df3e5244ll> (w);
         T R = t2 + t1;
         T dk = tofloat(k);
-        T r = fma(dk, Log_2hi<T>(), ((fma(s, (hfsq+R), dk*Log_2lo<T>()+c) - hfsq) + f)); 
+        T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f)); 
         T zz; 
         if constexpr(eve::platform::supports_infinites)
         {
