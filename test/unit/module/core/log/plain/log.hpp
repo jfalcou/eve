@@ -45,4 +45,5 @@ TTS_CASE (" log")
   TTS_ULP_EQUAL(eve::plain_(eve::log)(Type(2)), Type(std::log(Value(2))), 0);
   TTS_ULP_EQUAL(eve::plain_(eve::log)(Type(8)), Type(std::log(Value(8))), 0);
   TTS_ULP_EQUAL(eve::plain_(eve::log)(Type(64)), Type(std::log(Value(64))), 0);
+  TTS_ULP_EQUAL(eve::plain_(eve::log)(Type(2.118033886)), Type(std::log(Value(2.118033886))), 0);
 }
