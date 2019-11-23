@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_)
                                              , T const &a0) noexcept
-  requires(std::tuple<T, T>, Vectorizable<T>)
+  requires(std::tuple<T, T>, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {

@@ -22,7 +22,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/wide.hpp>
 // #include <eve/function/fnma.hpp>
 // #include <eve/function/quadrant.hpp>
@@ -70,18 +70,18 @@ namespace eve::detail
 //     auto xi =  bitwise_cast(x, as_<ui_t>());
 //     auto index =  bitwise_and(shr(xi, 26), 15); 
 // //    auto arr0 = gather(&__inv_pio4[0], index);
-//     auto arr4 = wide_cast(gather(&__inv_pio4[0], index+4), as<uint64_t>());
-//     auto arr8 = wide_cast(gather(&__inv_pio4[0], index+8), as<uint64_t>()); 
+//     auto arr4 = convert(gather(&__inv_pio4[0], index+4), as<uint64_t>());
+//     auto arr8 = convert(gather(&__inv_pio4[0], index+8), as<uint64_t>()); 
 //      auto arr0 = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-// //     auto arr4 = wide_cast(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+4), as<uint64_t>());
-// //     auto arr8 = wide_cast(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+8), as<uint64_t>()); 
+// //     auto arr4 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+4), as<uint64_t>());
+// //     auto arr8 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+8), as<uint64_t>()); 
 //     auto shift = bitwise_and(shr(xi, 23), 7);
     
 //     xi = bitwise_or(bitwise_and(xi, 0xffffff), 0x800000); 
 //     xi = shl(xi, shift);
-//     auto xi64 = wide_cast(xi, as<uint64_t>());
+//     auto xi64 = convert(xi, as<uint64_t>());
     
-//     auto res0 = wide_cast(xi * arr0, as<uint64_t>());
+//     auto res0 = convert(xi * arr0, as<uint64_t>());
 //     auto res1 = xi64 * arr4;
 //     auto res2 = xi64 * arr8;
 //     res0 = bitwise_or(shr(res2, 32), shl(res0, 32));
@@ -89,10 +89,10 @@ namespace eve::detail
     
 //     auto n = shr((res0 + (1ULL << 61)), 62);
 //     res0 -= n << 62;
-//     auto xx =  wide_cast(wide_cast(res0, as<int64_t>()), as<double>());
+//     auto xx =  convert(convert(res0, as<int64_t>()), as<double>());
     
-//     return std::tuple<t_t, t_t, t_t>(if_else(xle120, sn, wide_cast(n, as<float>()))
-//                                     , if_else(xle120, sr, wide_cast(xx * pi63, as<float>()))
+//     return std::tuple<t_t, t_t, t_t>(if_else(xle120, sn, convert(n, as<float>()))
+//                                     , if_else(xle120, sr, convert(xx * pi63, as<float>()))
 //                                     , t_t(0)); 
 //   }
 
@@ -127,10 +127,10 @@ namespace eve::detail
                                      , wide<float, N, ABI> const &x) noexcept
   {
     using t_t = wide<float, N, ABI>; 
-    auto [n, xr, dxr] = reduce_large(wide_cast(x, as<double>()));
-    return std::tuple<t_t, t_t, t_t>(wide_cast(n, as<float>())
-                                          , wide_cast(xr, as<float>())
-                                          , wide_cast(dxr, as<float>())); 
+    auto [n, xr, dxr] = reduce_large(convert(x, as<double>()));
+    return std::tuple<t_t, t_t, t_t>(convert(n, as<float>())
+                                          , convert(xr, as<float>())
+                                          , convert(dxr, as<float>())); 
   }
  
 }

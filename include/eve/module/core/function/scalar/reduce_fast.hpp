@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/bitwise_and.hpp>
-#include <eve/function/wide_cast.hpp>
+//#include <eve/function/convert.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/quadrant.hpp>
 #include <eve/function/nearest.hpp>

@@ -27,7 +27,8 @@ namespace eve::detail
 
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
-  requires(U, Vectorizable<U>)
+                                           logical<U> const & cond) noexcept 
+  requires(U, vectorizable<U>)
   {
     return  bitwise_and(U(1), cond.bits());
   }

@@ -22,7 +22,7 @@
 #include <eve/function/fnma.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>
-#include <eve/function/wide_cast.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/rem_pio2_medium.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
@@ -37,16 +37,16 @@ namespace eve::detail
 //    static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
     using t_t = wide < float, N, ABI>;        
     using d_t = wide < double, N>;
-    d_t dx =wide_cast(x, as<double>()); 
+    d_t dx =convert(x, as<double>()); 
     d_t n  =  eve::nearest(dx * Twoopi<double>()); //pi_inv);
 //    std::cout << "n " << n << std::endl; 
-// //     auto  n = wide_cast((wide_cast(r, as(int32_t()))+ 0x800000
+// //     auto  n = convert((convert(r, as(int32_t()))+ 0x800000
 // //                         ) >> 24
 // //                        , as(double()));
      d_t z = fnma(n,  Pio_2<double>(), dx); 
-// //    auto xr = wide_cast(x - n * Pio_2<double>(), as<float>());
-     auto xr = wide_cast(z,as<float>()); 
-     auto fn = wide_cast(quadrant(n),as<float>());
+// //    auto xr = convert(x - n * Pio_2<double>(), as<float>());
+     auto xr = convert(z,as<float>()); 
+     auto fn = convert(quadrant(n),as<float>());
 //    return std::tuple<t_t, t_t>(t_t(0), t_t(0)); 
     return std::tuple<t_t, t_t>{fn, xr}; 
   }
@@ -64,9 +64,9 @@ namespace eve::detail
 //                                          , wide<float, N, ABI> const &x) noexcept
 //   {
 //     static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
-//     auto dblx = wide_cast<double>(x); 
+//     auto dblx = convert<double>(x); 
 //     auto r = dblx * pi_inv;
-//     auto  n = wide_cast<float>(wide_cast<int32_t>(r) + 0x800000) >> 24);
+//     auto  n = convert<float>(convert<int32_t>(r) + 0x800000) >> 24);
 //     float xr = x - n * Pio_2<double>();
 //     float fn =  n&3; 
 //     return std::tuple<float, float>{fn, xr}; 

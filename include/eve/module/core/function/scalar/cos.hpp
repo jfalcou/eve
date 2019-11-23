@@ -44,7 +44,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -63,7 +63,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                       , small_type const &       
                                       , T a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -97,7 +97,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                       , cephes_type const &       
                                       , T a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -116,7 +116,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , medium_type const &       
                                      , T a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -135,7 +135,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , big_type const &       
                                      , T a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -173,7 +173,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
 //    const T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18p
     auto x =  abs(a0);
