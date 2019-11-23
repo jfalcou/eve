@@ -70,8 +70,8 @@ namespace eve::detail
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
     using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(eve::log, a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log, a0);
+    if constexpr(is_emulated_v<t_abi> ) return map(musl_(eve::log), a0); 
+    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(musl_(eve::log), a0);
     else
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
@@ -200,13 +200,13 @@ namespace eve::detail
   requires(T, vectorized<T>, behave_as<floating_point, T>)
   {
     using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(eve::log, a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log, a0);
+    if constexpr(is_emulated_v<t_abi> ) return map(plain_(eve::log), a0); 
+    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(plain_(eve::log), a0);
     else
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-      if constexpr(std::is_same_v<T, float>)
+      if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
         T xx =  a0;
         T dk = Zero<T>();
@@ -244,9 +244,9 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(eve::allbits_, is_ngez(a0), zz);
+        return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else //double
+      else if constexpr(std::is_same_v<value_type_t<T>, double>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
         /*
