@@ -31,8 +31,8 @@ TTS_CASE("Check eve::eve::small_(eve::cos) behavior")
     TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
     TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
   }
-  TTS_ULP_EQUAL(eve::small_(eve::cos)(Type(1)), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cos)(Type(-1)),eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cos)(Type(1)),  Type(std::cos(1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cos)(Type(-1)), Type(std::cos(-1.0)), 0.5); 
   TTS_IEEE_EQUAL((eve::small_(eve::cos)(Type(0))), (Type(1)));
   TTS_IEEE_EQUAL((eve::small_(eve::cos)(eve::Mzero<Type>())), (Type(1)));
   TTS_ULP_EQUAL((eve::small_(eve::cos)(eve::Pio_4<Type>())), (Type(std::cos(eve::Pio_4<Value>()))), 0.5);

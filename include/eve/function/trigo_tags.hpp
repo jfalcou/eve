@@ -26,6 +26,7 @@ namespace eve
   template<typename T>
   static inline constexpr bool is_trigonometric_tag_v = is_trigonometric_tag_t<T>::value;
 
+  //===================================================================================== 
   struct restricted_type 
   {
     template<typename Function>
@@ -38,6 +39,7 @@ namespace eve
   template <> 
   struct is_trigonometric_tag<restricted_type> : std::true_type{};
   
+  //===================================================================================== 
   struct small_type
   {
     template<typename Function>
@@ -50,6 +52,7 @@ namespace eve
   template <> 
   struct is_trigonometric_tag<small_type> : std::true_type{};
 
+  //===================================================================================== 
   struct cephes_type
   {
     template<typename Function>
@@ -62,6 +65,7 @@ namespace eve
   template <> 
   struct is_trigonometric_tag<cephes_type> : std::true_type{};
 
+  //===================================================================================== 
   struct medium_type
   {
     template<typename Function>
@@ -74,6 +78,7 @@ namespace eve
   template <> 
   struct is_trigonometric_tag<medium_type> : std::true_type{};
 
+  //===================================================================================== 
   struct big_type
   {
     template<typename Function>
