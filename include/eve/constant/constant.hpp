@@ -32,9 +32,9 @@ namespace eve
     {
       if constexpr(sizeof(t_t) != sizeof(BitsPattern))
       {
-//         static_assert ( sizeof(t_t) == sizeof(BitsPattern),
-//                         "[eve::constant] floating_point case - BitsPattern has not the correct size"
-//                       );
+        static_assert ( sizeof(t_t) == sizeof(BitsPattern),
+                        "[eve::constant] floating_point case - BitsPattern has not the correct size"
+                      );
         return T{};
       }
       else

@@ -39,7 +39,7 @@ namespace eve::detail
   requires(T, floating_point<T>)
   {
     T x = eve::abs(a0);
-    if constexpr(std::is_same_v<T, float>)
+    if constexpr(std::is_same_v<T, double>)
     {
       if  (x < eve::Sqrteps<T>())
       {
@@ -64,7 +64,7 @@ namespace eve::detail
         return bitwise_xor(z, bitofsign(a0));
       }
     }
-    else // if constexpr(std::is_same_v<T, float>)
+    else if constexpr(std::is_same_v<T, float>)
     {
       // Exhaustive test for: boost::dispatch::functor<eve::tag::asinh_, boost::simd::tag::sse4_2_>
       //              versus:  float(boost::math::asinh(double)
@@ -80,11 +80,11 @@ namespace eve::detail
       if( x < 0.5f)
       {
         z = horn<T
-          , 0x3f800000
-          , 0xbe2aa9ad
-          , 0x3d9949b1
-          , 0xbd2ee581
-          , 0x3ca4d6e6
+          , 0x3f800000U
+          , 0xbe2aa9adU
+          , 0x3d9949b1U
+          , 0xbd2ee581U
+          , 0x3ca4d6e6U
           > (x2)*x;
       }
       else if (x > Oneosqrteps<T>())
