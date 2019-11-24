@@ -28,7 +28,7 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto cos_finalize( T fn, T xr, T dxr) noexcept
+  EVE_FORCEINLINE constexpr auto cos_finalize( T fn, T xr, T dxr = T(0)) noexcept
   requires(T, vectorizable<T>)
   {
      using i_t =  detail::as_integer_t<T, signed>; 
