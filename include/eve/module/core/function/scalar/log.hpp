@@ -20,8 +20,8 @@
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/musl.hpp>
-#include <eve/function/plain.hpp>
+#include <eve/detail/function/musl.hpp>
+#include <eve/detail/function/plain.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/tofloat.hpp>

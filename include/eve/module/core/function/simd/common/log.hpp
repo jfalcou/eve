@@ -26,8 +26,8 @@
 #include <eve/function/is_ngez.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/musl.hpp>
-#include <eve/function/plain.hpp>
+#include <eve/detail/function/musl.hpp>
+#include <eve/detail/function/plain.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqr.hpp>
