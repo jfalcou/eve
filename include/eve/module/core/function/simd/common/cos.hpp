@@ -153,7 +153,8 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-//     auto [n, xr] = rem_pio2(x);
+//      auto [n, xr] = rem_pio2(x);
+//      t_t dxr(0); 
      auto [n, xr, dxr] = reduce_large(x); 
       return detail::cos_finalize(n, xr, dxr); 
     }

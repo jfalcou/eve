@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto sin_eval( T  z,  T x) noexcept
-  requires(T, Vectorizable<T>)
+  requires(T, vectorizable<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_floating_point_v<T>

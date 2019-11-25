@@ -42,4 +42,7 @@ TTS_CASE("Check eve::eve::cos behavior")
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(-100000.0))),Type(std::cos(-100000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(100000000.0))), Type(std::cos(100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(-100000000.0))),Type(std::cos(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(eve::Valmax<Type>()))),Type(std::cos(eve::Valmax<Value>())), 0.5);
+  std::cout << eve::big_(eve::cos)(Type(eve::Valmax<Type>()/10)) << std::endl;
+  std::cout << Type(std::cos(eve::Valmax<Value>()/10))<< std::endl;
 }
