@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_LOG10_HPP_INCLUDED
 
 #include <eve/function/scalar/log10.hpp>
-//#include <eve/function/simd/log10.hpp>
+#include <eve/function/simd/log10.hpp>
 
 #endif
