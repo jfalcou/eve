@@ -15,7 +15,12 @@ function(generate_test root rootpath dep file)
   string(REPLACE ".cpp" ".unit" base ${file})
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
-  set(test "${root}.${base}")
+
+  if( NOT root STREQUAL "")
+    set(test "${root}.${base}")
+  else()
+    set(test "${base}")
+  endif()
 
   add_executable( ${test}  "${rootpath}${file}")
 
