@@ -6,6 +6,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-add_subdirectory(doc)
-add_subdirectory(random)
-add_subdirectory(unit)
+##==================================================================================================
+## General random tests
+make_all_units(ROOT random NAME acos ARCH scalar simd TYPES ${real_types} CARDINAL -1)
