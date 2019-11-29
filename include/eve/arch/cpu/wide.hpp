@@ -16,6 +16,7 @@
 #include <eve/ext/base_wide.hpp>
 #include <eve/ext/as_register.hpp>
 #include <eve/detail/function/combine.hpp>
+#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
@@ -233,6 +234,14 @@ namespace eve
     EVE_FORCEINLINE const_reverse_iterator crend() const noexcept
     {
       return const_reverse_iterator(cbegin());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Dynamic index lookup
+    template<typename Index>
+    EVE_FORCEINLINE wide operator[](wide<Index,Size> const& idx) noexcept
+    {
+      return lookup(*this,idx);
     }
 
     // ---------------------------------------------------------------------------------------------
