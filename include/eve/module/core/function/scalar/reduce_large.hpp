@@ -12,50 +12,39 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_LARGE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/constant/constant.hpp>
-// #include <eve/function/fnma.hpp>
-// #include <eve/function/quadrant.hpp>
-// #include <eve/function/nearest.hpp>
-// #include <eve/function/trunc.hpp>
-// #include <eve/constant/pio_2.hpp>
-// #include <eve/constant/twoopi.hpp>
+#include <eve/constant/pio_4.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
 #include <tuple>
 
 namespace eve::detail
 {
-  //    Reduce the range of XI to a multiple of PI/2 using fast integer arithmetic.
-  //    XI is a reinterpreted float and must be >= 2.0f (the sign bit is ignored).
-  //    Return the modulo between -PI/4 and PI/4 and store the quadrant in NP.
-  //    Reduction uses a table of 4/PI with 192 bits of precision.  A 32x96->128 bit
-  //    multiply computes the exact 2.62-bit fixed-point modulo.  Since the result
-  //    can have at most 29 leading zeros after the binary point, the double
-  //    precision result is accurate to 33 bits.  
-  
+  // x is always positive here TODO an ASSERT in def
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , float const &x) noexcept
   {
-    // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
-    //   only 8 new bits are added per entry, making the table 4 times larger.  
-    
-    const uint32_t __inv_pio4[24] =
-      {
-        0xa2,       0xa2f9,   0xa2f983,   0xa2f9836e,
-        0xf9836e4e, 0x836e4e44, 0x6e4e4415, 0x4e441529,
-        0x441529fc, 0x1529fc27, 0x29fc2757, 0xfc2757d1,
-        0x2757d1f5, 0x57d1f534, 0xd1f534dd, 0xf534ddc0,
-        0x34ddc0db, 0xddc0db62, 0xc0db6295, 0xdb629599,
-        0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
-      };
-    static const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
-    if (x <= 120.0f)
+    if (x <= 200.277f) //255*(pi/4)
     {
       return reduce_fast(x); 
     }
-    else{
+    else
+    {
+      // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
+      //   only 8 new bits are added per entry, making the table 4 times larger.  
+      constexpr const uint32_t __inv_pio4[24] =
+        {
+          0xa2,       0xa2f9,   0xa2f983,   0xa2f9836e,
+          0xf9836e4e, 0x836e4e44, 0x6e4e4415, 0x4e441529,
+          0x441529fc, 0x1529fc27, 0x29fc2757, 0xfc2757d1,
+          0x2757d1f5, 0x57d1f534, 0xd1f534dd, 0xf534ddc0,
+          0x34ddc0db, 0xddc0db62, 0xc0db6295, 0xdb629599,
+          0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
+        };
+      constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
       auto xi =  bitwise_cast(x, as_<uint32_t>()); 
       const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15];
       int shift = (xi >> 23) & 7;
@@ -77,43 +66,109 @@ namespace eve::detail
     }
   }
 
-//            mp1 = {{0x3FF921FB, 0x58000000} },
-//            mp2 = {{0xBE4DDE97, 0x3C000000} },
-//            mp3 = {{0xBC8CB3B3, 0x99D747F2} },
-//            pp3 = {{0xBC8CB3B3, 0x98000000} },
-//            pp4 = {{0xbacd747f, 0x23e32ed7} },
-//          hpinv = {{0x3FE45F30, 0x6DC9C883} },
-//          toint = {{0x43380000, 0x00000000} };
- 
-/* Reduce range of x to within PI/2 with abs (x) < 105414350.  The high part
-   is written to a, the low part to da.  Range reduction is accurate to 136
-   bits so that when x is large and *a very close to zero, all 53 bits of *a
-   are correct.  */
-
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
-                                     , double const &x) noexcept
+                                     , double const &xx) noexcept
   {
+    using mynumber = union { std::int32_t i[2]; double x; };
+    constexpr int HIGH_HALF = 1; 
+    
+    double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */              
+    double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */   
+    double    hp0 = Constant<double, 0x3FF921FB54442D18ULL>();  /* 1.5707963267948966     */
+    double    hp1 = Constant<double, 0x3C91A62633145C07ULL>();  /* 6.123233995736766e-17  */
     double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
-    double    mp2 = Constant<double, 0xBE4DDE973C000000ULL>();  /*-1.3909067675399456e-08 */
-    double    pp3 = Constant<double, 0xBC8CB3B398000000ULL>();  /*-4.9790e-17             */
-    double    pp4 = Constant<double, 0xbacd747f23e32ed7ULL>();  /*-1.9035e-25             */
-   
-//     double t = (x * hpinv + toint);
-//     double xn = t - toint;
-    auto xn =  nearest(x*Twoopi<double>()); 
-    double y = (x - xn * mp1) - xn * mp2;
-    double n = quadrant(xn); 
-    double t1 = xn * pp3;
-    double t2 = y - t1;
-    double da = (y - t2) - t1;
+    double    mp2 = Constant<double, 0xBE4DDE9740000000ULL>();  /*-1.3909067675399456e-08 */
+    double x = xx*tm600;
+    double t = x*split;   /* split x to two numbers */
+    double x1=t-(t-x);
+    double x2=x-x1;
+    double sum=0;
     
-    t1 = xn * pp4;
-    double a = t2 - t1;
-    da += (t2 - a) - t1;
+    auto pass = [](double x1, double & b1, double &bb1){
+      double toverp[75] = { /*  2/ PI base 24*/
+        10680707.0,  7228996.0,  1387004.0,  2578385.0, 16069853.0,
+        12639074.0,  9804092.0,  4427841.0, 16666979.0, 11263675.0,
+        12935607.0,  2387514.0,  4345298.0, 14681673.0,  3074569.0,
+        13734428.0, 16653803.0,  1880361.0, 10960616.0,  8533493.0,
+        3062596.0,  8710556.0,  7349940.0,  6258241.0,  3772886.0,
+        3769171.0,  3798172.0,  8675211.0, 12450088.0,  3874808.0,
+        9961438.0,   366607.0, 15675153.0,  9132554.0,  7151469.0,
+        3571407.0,  2607881.0, 12013382.0,  4155038.0,  6285869.0,
+        7677882.0, 13102053.0, 15825725.0,   473591.0,  9065106.0,
+        15363067.0,  6271263.0,  9264392.0,  5636912.0,  4652155.0,
+        7056368.0, 13614112.0, 10155062.0,  1944035.0,  9527646.0,
+        15080200.0,  6658437.0,  6231200.0,  6832269.0, 16767104.0,
+        5075751.0,  3212806.0,  1398474.0,  7579849.0,  6349435.0,
+        12618859.0,  4703257.0, 12806093.0, 14477321.0,  2786137.0,
+        12875403.0,  9837734.0, 14528324.0, 13719321.0,   343717.0 };
+      double   t576 = Constant<double, 0x63f0000000000000ULL>();  /* 2 ^ 576  */              
+      double   tm24 = Constant<double, 0x3e70000000000000ULL>();  /* 2 ^- 24  */              
+      double    big = Constant<double, 0x4338000000000000ULL>();  /*  6755399441055744      */
+      double   big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
+      double sum = 0; 
+      int k; 
+      mynumber u; 
+      u.x = x1;
+      k = (u.i[HIGH_HALF]>>20)&2047;
+      k = (k-450)/24;
+      k = eve::max(k, 0);
+      mynumber gor;
+      gor.x = t576;
+      gor.i[HIGH_HALF] -= ((k*24)<<20);
+      double r[6]; 
+      for (int i=0;i<6;++i)
+      {
+        r[i] = x1*toverp[k+i]*gor.x;
+        gor.x *= tm24;
+      }
+      double s; 
+      for (int i=0;i<3;++i) {
+        s=(r[i]+big)-big;
+        sum+=s;
+        r[i]-=s;
+      }
+      double t=0;
+      for (int i=0;i<6;++i)  t+=r[5-i];
+      double bb=(((((r[0]-t)+r[1])+r[2])+r[3])+r[4])+r[5];
+      s=(t+big)-big;
+      sum+=s;
+      t-=s;
+      double b=t+bb;
+      bb=(t-b)+bb;
+      s=(sum+big1)-big1;
+      sum-=s;
+      b1=b;
+      bb1=bb;
+      return sum; 
+    }; 
     
-    return std::tuple<double, double, double>(n, a, da); 
+    double b1, bb1, b2, bb2; 
+    auto sum1 = pass(x1, b1, bb1);
+    auto sum2 = pass(x2, b2, bb2);
+    sum =  sum1+sum2; 
+    double b=b1+b2;
+    double bb = (eve::abs(b1)>eve::abs(b2))? (b1-b)+b2 : (b2-b)+b1;
+    if (b > 0.5)
+    {
+      b-=1.0;
+      sum+=1.0;
+    }
+    else if (b < -0.5)
+    {
+      b+=1.0;
+      sum-=1.0;
+    }
+    double s=b+(bb+bb1+bb2);
+    t=((b-s)+bb)+(bb1+bb2);
+    b=s*split;
+    double t1=b-(b-s);
+    double t2=s-t1;
+    b=s*hp0;
+    bb=(((t1*mp1-b)+t1*mp2)+t2*mp1)+(t2*mp2+s*hp1+t*hp0);
+    s=b+bb;
+    t=(b-s)+bb;
+    return std::tuple<double, double, double>(static_cast<double>((int) sum&3), s, t);
   }
-
 }
 
 #endif

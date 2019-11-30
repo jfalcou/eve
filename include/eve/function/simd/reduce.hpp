@@ -8,11 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_REDUCE_FAST_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_REDUCE_FAST_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_REDUCE_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_REDUCE_HPP_INCLUDED
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/reduce_fast.hpp>
-
+#include <eve/function/scalar/reduce.hpp>
+#include <eve/module/core/function/scalar/reduce.hpp>
+#include <eve/module/core/function/simd/reduce.hpp>
 
 #endif

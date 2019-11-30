@@ -27,21 +27,21 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_)
                                              , T const &a0) noexcept
-  requires(std::tuple<T, T>, vectorizable<T>)
+  requires(std::tuple<T, T, T>, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      using r_t =  std::tuple<T, T>; 
+      using r_t =  std::tuple<T, T, T>; 
       if constexpr(std::is_same_v<T, double>)
       {
-        if (a0 == Inf<T>()) return r_t(Zero<T>(), Nan<T>());
+        if (a0 == Inf<T>()) return r_t(Zero<T>(), Nan<T>(), Nan<T>());
         T y[2];
         std::int32_t n = __ieee754_rem_pio2(a0, y);
-        return r_t(static_cast<T>(n&std::int32_t(3)), y[0]);
+        return r_t(static_cast<T>(n&std::int32_t(3)), y[0], y[1]);
       }
       else if constexpr(std::is_same_v<T, float>)
       {
-        if (a0 == Inf<T>()) return r_t(Zero<T>(), Nan<T>());
+        if (a0 == Inf<T>()) return r_t(Zero<T>(), Nan<T>(), Nan<T>());
         // This is the musl way
         // pio2_1:   first 25 bits of pi/2
         // pio2_1t:  pi/2 - pio2_1
@@ -53,16 +53,17 @@ namespace eve::detail
         {
           /* 25+53 bit pi is good enough for medium size */
           double fn = nearest(double(a0)*Twoopi<double>());
-          return {static_cast<float>(quadrant(fn)), static_cast<float>((a0 - fn*pio2_1) - fn*pio2_1t)};
+          return {static_cast<float>(quadrant(fn)), static_cast<float>((a0 - fn*pio2_1) - fn*pio2_1t), 0.0f};
         }
-        auto [fn, x] =  eve::rem_pio2(double(a0));
-        return {static_cast<float>(fn), static_cast<float>(x)};
+        auto [fn, x, dx] =  eve::rem_pio2(double(a0));
+        float fx = static_cast<float>(x);
+        return {static_cast<float>(fn), fx, 0.0f };
       }
     }
     else
     {
       static_assert(std::is_floating_point_v<value_type_t<T>>, "rem_pio2 parameter is not IEEEValue");
-      return {T{}, T{}}; 
+      return {T{}, T{}, T{}}; 
     }
   }
 }

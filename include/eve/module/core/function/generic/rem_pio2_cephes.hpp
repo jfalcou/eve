@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/fnma.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/quadrant.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
@@ -38,12 +39,12 @@ namespace eve::detail
       T xr = fnma(n, pio2_1, x);
       xr   = fnma(n, pio2_2, xr);
       xr   = fnma(n, pio2_3, xr);
-      return std::tuple<T, T>{quadrant(n), xr}; 
+      return std::tuple<T, T, T>{quadrant(n), xr, T(0)}; 
     }
     else
     {
       static_assert(std::is_floating_point_v<value_type_t<T>>, "rem_pio2_cephes paramete is not IEEEValue"); 
-      return T{}; 
+      return std::tuple<T, T, T>(T{},T{},T{}); 
     }
   }
 }

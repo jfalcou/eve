@@ -32,7 +32,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      // ok for |x| <= 2^19*(pi/2), medium_ size */
+      // ok for |x| <= 2^19*(pi/2), double 2^7*(pi/2) float medium_ size */
       auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
       auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
       auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
@@ -60,7 +60,7 @@ namespace eve::detail
     }
   }
 
-   template<typename T>
+  template<typename T>
   EVE_FORCEINLINE auto  rem_pio2_medium_(EVE_SUPPORTS(cpu_)
                                         , pedantic_type const &
                                         , T const &x) noexcept

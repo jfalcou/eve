@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_QUADRANT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/function/bitwise_and.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/floor.hpp>
@@ -25,12 +26,24 @@ namespace eve::detail
                                        , T const &a) noexcept
   {
     using v_t = value_type_t<T>; 
-    if constexpr(std::is_floating_point_v<v_t>)
+    using t_abi = abi_type_t<T>;
+    if constexpr(is_emulated_v<t_abi>)
     {
-      T b = a*T(0.25);
-      return (b-floor(b))*T(4);
+      return map(eve::quadrant, a);
     }
-    else return bitwise_and(a, T(3));
+    else if constexpr(is_aggregated_v<t_abi>)
+    {
+      return aggregate(eve::quadrant, a);
+    }
+    else
+    {
+      if constexpr(std::is_floating_point_v<v_t>)
+      {
+        T b = a*T(0.25);
+        return (b-floor(b))*T(4);
+      }
+      else return bitwise_and(a, T(3));
+    }
   }
 }
 

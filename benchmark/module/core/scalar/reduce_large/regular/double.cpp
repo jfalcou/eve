@@ -8,11 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_REDUCE_FAST_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_REDUCE_FAST_HPP_INCLUDED
+#include <eve/function/reduce_large.hpp>
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/reduce_fast.hpp>
+#define TYPE()        double
+#define FUNCTION()    eve::reduce_large
+#define SAMPLES(N)    random<T>(N,0.,10000000.)
 
-
-#endif
+#include "bench.hpp"
