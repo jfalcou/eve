@@ -55,16 +55,9 @@ namespace eve::detail
             return if_else(is_infinite(v), v, clamp(v, mn, mx));
           }
         }
-        else // if constexpr(std::is_integral_v<U>)
+        else if constexpr(std::is_integral_v<U>)
         {
-          if constexpr(sizeof(Target) > sizeof(U))
-          {
-            return v;
-          }
-          else
-          {
-            return  clamp(v, u_t(Valmin<Target>()), u_t(Valmax<Target>()));
-          }         
+          return v;
         }
       }
       
