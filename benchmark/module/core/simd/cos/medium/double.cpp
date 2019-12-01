@@ -14,6 +14,6 @@
 
 #define TYPE()        eve::wide<double>
 #define FUNCTION()    eve::medium_(eve::cos)
-#define SAMPLES(N)    random<T>(N,-8.0E5*eve::Pi<T>(),8.0E5*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,0.0, 281474976710656.0)
 
 #include "bench.hpp"

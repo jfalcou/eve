@@ -10,10 +10,9 @@
 //==================================================================================================
 #include <eve/function/cos.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/pi.hpp>
 
 #define TYPE()        float
 #define FUNCTION()    eve::medium_(eve::cos)
-#define SAMPLES(N)    random<T>(N,-63*eve::Pi<T>(),63*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,0.0f, 281474976710656.0f)
 
 #include "bench.hpp"

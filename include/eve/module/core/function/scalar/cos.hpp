@@ -17,6 +17,7 @@
 #include <eve/module/core/detail/scalar/cos_finalize.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitwise_xor.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>    
 #include <eve/function/is_not_less_equal.hpp>
@@ -152,13 +153,14 @@ namespace eve::detail
   EVE_FORCEINLINE float cos_upgrade( float a0) noexcept
   {
     if (is_not_finite(a0)) return Nan<float>(); //Nan or Inf input
-    const double x =  abs(a0);
+    double x =  abs(a0);
     static const double
-      pio2_1  = 1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
-      pio2_1t = 1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
+      pio2_1  = -1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
+      pio2_1t = -1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
     double fn = nearest(x*Twoopi<double>());
-    double xr = fnms(fn, pio2_1t, fnms(fn, pio2_1, x)); 
-    return detail::cos_finalize(fn, xr, 0.0); 
+    double xr = fma(fn, pio2_1t, fma(fn, pio2_1, x));
+    float fxr = float(xr); 
+    return detail::cos_finalize(float(fn), float(xr), float(xr-fxr)); 
   }
 
   template<typename T>
@@ -170,6 +172,7 @@ namespace eve::detail
     auto x =  abs(a0);
     if (x <= Pio_4(as(x)))        return restricted_(cos)(x);
     else if (x <= Pio_2(as(x)))   return small_(cos)(x);
+//    else if (std::is_same_v<T, float> && (x < 4.2166e+08f)) return cos_upgrade(x);
     else if ( x <= medthresh)     return medium_(cos)(x);
     else return big_(cos)(x);      
 //    else return std::cos(x); 

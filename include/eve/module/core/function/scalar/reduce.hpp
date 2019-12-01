@@ -40,7 +40,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_same_v<T, double>)
       {
-        if (x <= 120.0f)  return reduce_fast(x); 
+        if (x <= 200.0f)  return reduce_fast(x); 
         else if (x <=  281474976710656.0) return reduce_medium(x); 
         else return reduce_large(x); 
       }

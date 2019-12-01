@@ -14,6 +14,6 @@
 
 #define TYPE()        double
 #define FUNCTION()    eve::big_(eve::cos)
-#define SAMPLES(N)    random<T>(N,-1.0E20,1.0E20)
+#define SAMPLES(N)    random<T>(N,0.0,1.0E308)
 
 #include "bench.hpp"

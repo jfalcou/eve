@@ -43,6 +43,11 @@
 namespace eve::detail
 {
 
+  // limites d'usages
+  // restricted abs(x) < pi/4
+  // small      abs(x) < pi/2
+  // medium     abs(x) < 1.89e+15f (float) et  281474976710656.0 (double)
+  // upgrade    abs(x) <  4.2166e+08f float seulement
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
@@ -109,17 +114,38 @@ namespace eve::detail
 //     }   
 //   }
 
-   template<typename T,  typename N,  typename ABI>
+  template<typename N,  typename ABI>
+  EVE_FORCEINLINE auto cos_upgrade( eve::wide<float,N,ABI> const & a0) noexcept
+  {
+//    using dt_t = eve::wide<double,N,ABI>;
+    auto x =  eve::abs(convert(a0, double_)); 
+    static const double
+      pio2_1  = -1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
+      pio2_1t = -1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
+    auto fn = nearest(x*Twoopi<double>());
+    auto xr = fma(fn, pio2_1t, fma(fn, pio2_1, x));
+    auto fxr = convert(xr, single_); 
+    return detail::cos_finalize( convert(fn, single_), fxr, convert(xr-convert(fxr, double_), single_)); 
+  }
+  
+  template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                            , medium_type const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-     auto [n, xr, dxr] = reduce_medium(x);
-     return detail::cos_finalize(n, xr, dxr); 
+//       if constexpr(std::is_same_v<T, float>)
+//       {
+//         return map(medium_(cos), a0);
+//       }
+//       else
+//       {
+        using t_t  = eve::wide<T,N,ABI>;
+        const t_t x = eve::abs(a0);
+        auto [n, xr, dxr] = reduce_medium(x);
+        return detail::cos_finalize(n, xr, dxr); 
+        //     }
     }
     else
     {
@@ -145,6 +171,7 @@ namespace eve::detail
     }   
   }
 
+
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
@@ -153,6 +180,11 @@ namespace eve::detail
     auto x =  abs(a0);
     if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
+//     else if constexpr(std::is_same_v<T, float>)
+//     {
+//       if (all(x < 4.2166e+08f)) return cos_upgrade(x);
+//       else return big_(cos)(x);
+//     }
     else if(all(x <= medthresh))      return medium_(cos)(a0);
     else
     {

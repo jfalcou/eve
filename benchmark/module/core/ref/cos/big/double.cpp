@@ -9,11 +9,10 @@
 **/
 //==================================================================================================
 #include <cmath>
-#include <eve/constant/pi.hpp>
 #include <eve/wide.hpp>
 
 #define TYPE()        double
 #define FUNCTION()    [](double a){return std::cos(a);}    
-#define SAMPLES(N)    random<T>(N,-1000000*eve::Pi<T>(),1000000*eve::Pi<T>())
+#define SAMPLES(N)    random<T>(N,0.0, 1.0e38)
 
 #include "bench.hpp"

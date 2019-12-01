@@ -12,8 +12,8 @@
 #include <eve/constant/pi.hpp>
 #include <eve/wide.hpp>
 
-#define TYPE()        eve::wide<flot>
+#define TYPE()        eve::wide<float>
 #define FUNCTION()    eve::cos
-#define SAMPLES(N)    random<T>(N,-10*Pi<T>(),10*Pi<T>())
+#define SAMPLES(N)    random<T>(N,0.0f, 1.0e38f)
 
 #include "bench.hpp"

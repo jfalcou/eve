@@ -8,12 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <cmath>
-#include <eve/wide.hpp>
+#include <cmath> 
 #include <eve/constant/pi.hpp>
+#include <eve/wide.hpp>
 
 #define TYPE()        float
-#define FUNCTION()    [](float a){return std::cos(a);}    
-#define SAMPLES(N)    random<T>(N,-1000000*eve::Pi<T>(),1000000*eve::Pi<T>())
+#define FUNCTION()    [](float a){return std::cos(a);}   
+#define SAMPLES(N)    random<T>(N,0.0f,1.0e38f)
 
 #include "bench.hpp"
