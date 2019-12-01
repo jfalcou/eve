@@ -14,6 +14,7 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/precision.hpp>
+#include <tts/tests/sequence.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
