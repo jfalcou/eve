@@ -22,10 +22,9 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/nearest.hpp>
-#include <eve/function/rem_pio2_cephes.hpp>
-#include <eve/function/rem_pio2_medium.hpp>
-#include <eve/function/rem_pio2.hpp>
 #include <eve/function/reduce_large.hpp>
+#include <eve/function/reduce_medium.hpp>
+#include <eve/function/reduce_fast.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
@@ -69,7 +68,7 @@ namespace eve::detail
     {
       using i_t =  detail::as_integer_t<T, signed>; 
       T x = eve::abs(a0);
-      if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>(); //Nan or Inf input
+      if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>();
       i_t n = x > Pio_4<T>(); 
       if (n)
       {
@@ -93,24 +92,24 @@ namespace eve::detail
   }
 
   
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
-                                      , cephes_type const &       
-                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
-      const T x =  abs(a0);
-      auto [fn, xr] = rem_pio2_cephes(x); 
-      return detail::cos_finalize(fn, xr); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
-    }   
-  }
+//   template<typename T>
+//   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+//                                       , cephes_type const &       
+//                                       , T a0) noexcept
+//   requires(T, vectorizable<T>)
+//   {
+//     if constexpr(std::is_floating_point_v<T>)
+//     {
+//       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
+//       const T x =  abs(a0);
+//       auto [fn, xr] = rem_pio2_cephes(x); 
+//       return detail::cos_finalize(fn, xr); 
+//     }
+//     else
+//     {
+//       static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+//     }   
+//   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
@@ -122,8 +121,8 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-      auto [fn, xr] = rem_pio2_medium(x); 
-      return detail::cos_finalize(fn, xr); 
+      auto [fn, xr, dxr] = reduce_medium(x); 
+      return detail::cos_finalize(fn, xr, dxr); 
     }
     else
     {
@@ -141,16 +140,8 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-//       if constexpr(std::is_same_v<T, float>)
-//       {
-        auto [fn, xr, dxr] = reduce_large(x);
-        return detail::cos_finalize(fn, xr, dxr);
- //      }
-//       else
-//       {
-//         auto [fn, xr] = rem_pio2(x);
-//         return detail::cos_finalize(fn, xr);
-//       }
+      auto [fn, xr, dxr] = reduce_large(x);
+      return detail::cos_finalize(fn, xr, dxr);
     }
     else
     {
@@ -175,14 +166,15 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-//    const T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18p
+    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
     if (x <= Pio_4(as(x)))        return restricted_(cos)(x);
     else if (x <= Pio_2(as(x)))   return small_(cos)(x);
-//    else if (x <= T(63))          return cephes_(cos)(x);
-//    else if ( x <= mpi)           return medium_(cos)(x);
-    else return std::cos(x); 
- //    else if (std::is_same_v<T, float>)
+    else if ( x <= medthresh)     return medium_(cos)(x);
+    else return big_(cos)(x);      
+//    else return std::cos(x); 
+
+    //    else if (std::is_same_v<T, float>)
 //     {
 //       if(x < 4.2166e+08f)      return cos_upgrade(x);
 //       else return big_(cos)(x); 

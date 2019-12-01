@@ -25,11 +25,9 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/rem_pio2_cephes.hpp> 
-#include <eve/function/rem_pio2_medium.hpp>
-#include <eve/function/rem_pio2.hpp>
-#include <eve/function/rem_pio2.hpp>
 #include <eve/function/reduce_fast.hpp>
+#include <eve/function/reduce_medium.hpp>
+#include <eve/function/reduce_large.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -45,21 +43,6 @@
 namespace eve::detail
 {
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                            , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    auto x =  abs(a0);
-    if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
-    else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
-    else if(all(x <= T(63)))          return cephes_(cos)(a0);
-    else {
-      static  T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
-      if   (all((x <= mpi)))   return medium_(cos)(a0);
-      else
-        return big_(cos)(a0);
-    }
-  }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
@@ -108,23 +91,23 @@ namespace eve::detail
     }   
   }
 
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                           , cephes_type const &       
-                           , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-      auto [n, xr] = rem_pio2_cephes(x);
-      return detail::cos_finalize(n, xr, t_t(0)); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
-    }   
-  }
+//   template<typename T,  typename N,  typename ABI>
+//   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+//                            , cephes_type const &       
+//                            , eve::wide<T,N,ABI> const &a0) noexcept
+//   {
+//     if constexpr(std::is_floating_point_v<T>)
+//     {
+//       using t_t  = eve::wide<T,N,ABI>;
+//       const t_t x = eve::abs(a0);
+//       auto [n, xr] = rem_pio2_cephes(x);
+//       return detail::cos_finalize(n, xr, t_t(0)); 
+//     }
+//     else
+//     {
+//       static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
+//     }   
+//   }
 
    template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
@@ -135,8 +118,8 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-     auto [n, xr] = rem_pio2_medium(x);
-     return detail::cos_finalize(n, xr, t_t(0)); 
+     auto [n, xr, dxr] = reduce_medium(x);
+     return detail::cos_finalize(n, xr, dxr); 
     }
     else
     {
@@ -153,16 +136,37 @@ namespace eve::detail
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-//      auto [n, xr] = rem_pio2(x);
-//      t_t dxr(0); 
-     auto [n, xr, dxr] = reduce_large(x); 
+      auto [n, xr, dxr] = reduce_large(x); 
       return detail::cos_finalize(n, xr, dxr); 
     }
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
-  }   
+  }
+
+  template<typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
+                            , eve::wide<T,N,ABI> const &a0) noexcept
+  {
+    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
+    auto x =  abs(a0);
+    if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
+    else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
+    else if(all(x <= medthresh))      return medium_(cos)(a0);
+    else
+    {
+      return big_(cos)(x);
+    }
+    
+//     else {
+//       static  T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
+//       if   (all((x <= mpi)))   return medium_(cos)(a0);
+//       else
+//         return big_(cos)(a0);
+//     }
+  }
+  
 }
 
 #endif

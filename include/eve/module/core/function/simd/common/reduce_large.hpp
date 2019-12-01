@@ -136,7 +136,7 @@ namespace eve::detail
         auto dsr1 = convert(z - convert(sr1, double_), single_); 
         auto br  = if_else(xle200, sr,  sr1);
         auto dbr = if_else(xle200, dsr, dsr1); 
-        
+        br = if_else(is_not_finite(x), eve::allbits_, br); 
         using r_t =  std::tuple<t_t, t_t, t_t>; 
         return r_t(bn, br,dbr); 
       }      
