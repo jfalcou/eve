@@ -12,52 +12,38 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/function/is_nltz.hpp>
 #include <eve/function/reduce_fast.hpp>
+#include <eve/function/reduce_medium.hpp>
 #include <eve/function/reduce_large.hpp>
-#include <eve/constant/constant.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/assert.hpp>
 #include <type_traits>
 #include <tuple>
 
 namespace eve::detail
 {
-  // x is always positive here TODO an ASSERT in def
+  template < typename T>
   EVE_FORCEINLINE auto  reduce_(EVE_SUPPORTS(cpu_)
-                                     , float const &xx) noexcept
+                                     , T const &x) noexcept
   {
-    auto x =  abs(xx); 
-    if (x <= Pio_4<float>())
-    {
-      return  std::tuple<float, float, float>(x, 0.0f, 0.0f); 
-    }
-    if (x <= 120.0f)
-    {
-      return reduce_fast(x); 
-    }
+    EVE_ASSERT(is_nltz(x), "attempted reduce with negative argument"); 
+    if (x <= Pio_4<T>()) return  std::tuple<T, T, T>(T(0), x, T(0)); 
     else
     {
-      return reduce_large(x); 
-    }
-  }
-  
-  EVE_FORCEINLINE auto  reduce_(EVE_SUPPORTS(cpu_)
-                                     , double const &xx) noexcept
-  {
-    auto x =  abs(xx); 
-    if (x <= Pio_4<double>())
-    {
-      return  std::tuple<double, double, double>(x, 0.0f, 0.0f); 
-    }
-    if (x <= 120.0f)
-    {
-      return reduce_fast(x); 
-    }
-    else
-    {
-      return reduce_large(x); 
+      if constexpr(std::is_same_v<T, float>)
+      {                   
+        if (x <= 200.0f)  return reduce_fast(x); 
+        else if (x <= 1.89e+15f) return reduce_medium(x); 
+        else return reduce_large(x); 
+      }
+      else if constexpr(std::is_same_v<T, double>)
+      {
+        if (x <= 120.0f)  return reduce_fast(x); 
+        else if (x <=  281474976710656.0) return reduce_medium(x); 
+        else return reduce_large(x); 
+      }
     }
   }
 }
