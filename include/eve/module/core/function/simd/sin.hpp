@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIN_HPP_INCLUDED
-#define EVE_FUNCTION_SIN_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_SIN_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_SIN_HPP_INCLUDED
 
-#include <eve/function/scalar/sin.hpp>
-#include <eve/function/simd/sin.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/sin.hpp>
 
 #endif
