@@ -22,6 +22,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
+#include <eve/constant/eps.hpp>
 #include <type_traits>
 
 
@@ -39,8 +40,8 @@ namespace eve::detail
     T z = sqr(xr);
     T  se = sin_eval(z, xr);
     T  ce = cos_eval(z);
-    z =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
-    return bitwise_xor(z,sign_bit);
+    xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
+    return bitwise_xor(xr,sign_bit);
   }
 }
 

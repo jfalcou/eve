@@ -43,12 +43,12 @@
 namespace eve::detail
 {
 
-  // limites d'usages
+  // limites d'usages  0.5ulp de std::sin
   // restricted abs(x) < pi/4
   // small      abs(x) < pi/2
-  // medium     abs(x) < 1.89e+15f (float) et  281474976710656.0 (double)
-  // upgrade    abs(x) <  4.2166e+08f float seulement
-
+  // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
+  // big        le reste
+  
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                            , restricted_type const &     

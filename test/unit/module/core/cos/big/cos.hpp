@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/cos.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
@@ -43,6 +45,14 @@ TTS_CASE("Check eve::eve::cos behavior")
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(100000000.0))), Type(std::cos(100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(-100000000.0))),Type(std::cos(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(eve::Valmax<Type>()))),Type(std::cos(eve::Valmax<Value>())), 0.5);
-  std::cout << eve::big_(eve::cos)(Type(eve::Valmax<Type>()/10)) << std::endl;
-  std::cout << Type(std::cos(eve::Valmax<Value>()/10))<< std::endl;
+  TTS_ULP_EQUAL((eve::big_(eve::cos)(Type(eve::Valmax<Type>()))/10),Type(std::cos(eve::Valmax<Value>())/10), 0.5);
+
+  Value z =  eve::Valmax<Value>(); 
+  while(true)
+  {
+    std::cout << "z " << z << std::endl; 
+    TTS_ULP_EQUAL(eve::big_(eve::cos)(Type(z)),Type(std::cos(Value(z))), 0.5);
+    z/= 5.123;
+    if (eve::all(eve::is_eqz(z))) break; 
+ }
 }

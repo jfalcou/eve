@@ -35,6 +35,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/all.hpp>
@@ -125,7 +126,7 @@ namespace eve::detail
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
       auto [n, xr, dxr] = reduce_large(x); 
-      return detail::sin_finalize(bitofsign(a0), n, xr, dxr); 
+      return if_else(is_not_less_equal(x, Eps<t_t>()), detail::sin_finalize(bitofsign(a0), n, xr, dxr), a0); 
     }
     else
     {
@@ -145,7 +146,7 @@ namespace eve::detail
     else if(all(x <= medthresh))      return medium_(sin)(a0); //TODO
     else
     {
-      return big_(sin)(x);
+      return big_(sin)(a0);
     }
   }
 }

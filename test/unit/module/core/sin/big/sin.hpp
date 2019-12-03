@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/sin.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
@@ -49,4 +51,12 @@ TTS_CASE("Check eve::eve::sin behavior")
   TTS_ULP_EQUAL((eve::big_(eve::sin)(Type(-100000000.0))),Type(std::sin(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sin)(Type(eve::Valmax<Type>()))),Type(std::sin(eve::Valmax<Value>())), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sin)(Type(eve::Valmax<Type>()))/10),Type(std::sin(eve::Valmax<Value>())/10), 0.5);     
+  Value z =  eve::Valmax<Value>(); 
+  while(true)
+  {
+    std::cout << std::setprecision(20) << "z " << z << std::endl; 
+    TTS_ULP_EQUAL(eve::big_(eve::sin)(Type(z)),Type(std::sin(Value(z))), 0.5);
+    z/= 5.123;
+    if (eve::all(eve::is_eqz(z))) break; 
+  }
 }

@@ -26,6 +26,7 @@
 #include <eve/function/reduce_large.hpp>
 #include <eve/function/reduce_medium.hpp>
 #include <eve/function/reduce_fast.hpp>
+#include <eve/function/rem_pio2.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/nan.hpp>
@@ -141,7 +142,7 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-      auto [fn, xr, dxr] = reduce_large(x);
+      auto [fn, xr, dxr] = rem_pio2(x); //reduce_large(x);
       return detail::cos_finalize(fn, xr, dxr);
     }
     else

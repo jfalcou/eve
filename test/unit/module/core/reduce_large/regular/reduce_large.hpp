@@ -23,23 +23,24 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <utility>
 
-TTS_CASE("Check eve::reduce_large return type")
-{
-  TTS_EXPR_IS(eve::reduce_large(Type(0)), (std::tuple<Type, Type, Type>));
-}
+// TTS_CASE("Check eve::reduce_large return type")
+// {
+//   TTS_EXPR_IS(eve::reduce_large(Type(0)), (std::tuple<Type, Type, Type>));
+// }
 
 TTS_CASE("Check eve::eve::reduce_large behavior")
 {
 
-  Value zz = 1.0e38; //eve::Valmax<Value>();
+  Value zz = 9007199254740992.0; //eve::Valmax<Value>();
   int i = 0; 
-  while (zz > 10)
+  while (zz > 1.0)
   {
     std::cout << i << " -> " << zz << std::endl;
     ++i; 
@@ -47,10 +48,11 @@ TTS_CASE("Check eve::eve::reduce_large behavior")
     Type n0, r0, dr0, n1, r1, dr1; //, dr1; 
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);
     std::tie(n1, r1, dr1) = eve::reduce_large(z);
-
-    TTS_ULP_EQUAL(r0, r1, 0.5);
+    std::cout << r0 <<  " < -> " << r1 << std::endl; 
+    TTS_ULP_EQUAL(r0+dr0, r1+dr1, 0.5);qqq
+//    TTS_EQUAL(dr0, dr1); 
     TTS_EQUAL(n0, n1);
-    zz /= 1.5f;     
+    zz /= 10;     
   }
 }
 

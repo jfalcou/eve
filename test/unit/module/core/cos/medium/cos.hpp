@@ -9,10 +9,12 @@
 **/
 //==================================================================================================
 #include <eve/function/cos.hpp>
+#include <eve/function/sin.hpp>    
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/function/next.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -49,3 +51,26 @@ TTS_CASE("Check eve::eve::cos behavior")
     TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(-100000.0))),Type(std::cos(Value(-100000.0))), 0.5);
   }
 }
+
+// TTS_CASE("exhaustive check")
+// {
+//   TTS_EQUAL(0, 0); 
+//   int i =  1; 
+//   float zz =  0.0f;  
+//   while (true)
+//   {
+//     auto c0 = eve::medium_(eve::cos)(zz); 
+//     auto c1 =              std::cos(zz);
+//     auto ulp = eve::ulpdist(c0, c1);
+//     if (ulp > 0.5)
+//     {
+//       std::cout << std::endl << "ulp = " << ulp << " for zz = " << zz << std::endl;
+//       break; 
+//     }
+//     if (i%1000000000 == 0) std::cout << std::endl << "i = " << i << " -> " << zz << std::endl; 
+//     if (i%10000000  == 0) std::cout << "." << std::flush; 
+//     if ( zz == eve::Valmax<Value>()) break; 
+//     zz = eve::next(zz);
+//     ++i; 
+//   }
+// }

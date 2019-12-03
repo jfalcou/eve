@@ -22,6 +22,7 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>    
 #include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/reduce_large.hpp>
@@ -34,13 +35,18 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <eve/constant/signmask.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  
+  // limites d'usages à 0.5ulp de std::sin
+  // restricted abs(x) < pi/4
+  // small      abs(x) < pi/2
+  // medium     abs(x) <   9.83416e+14 (float) et  281474976710656.0 (double)
+  // big        le reste
+ 
   template<typename T>
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
@@ -71,21 +77,24 @@ namespace eve::detail
     {
       using i_t = as_integer_t<T, signed>; 
       T x = eve::abs(a0);
+      if (is_less_equal(x, Eps<T>())) return a0; 
       if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>();
       i_t n = x > Pio_4<T>(); 
       if (n)
       {
+        std::cout << "icitte " << n << std::endl; 
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
         auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
         auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
         T xr = x-pio2_1;
         xr -= pio2_2;
         xr -= pio2_3;
+
         return  bitwise_xor(bitofsign(a0), cos_eval(sqr(xr)));
       }
       else
       {
-        return bitwise_xor(bitofsign(a0), sin_eval(sqr(x), x));
+        return sin_eval(sqr(x), a0); //bitwise_xor(bitofsign(a0), sin_eval(sqr(x), x));
       }
     }
     else
@@ -123,6 +132,7 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
+      if (x < Eps<T>()) return a0; 
       auto [fn, xr, dxr] = reduce_large(x);
       return detail::sin_finalize(bitofsign(a0), fn, xr, dxr);
     }
@@ -139,10 +149,10 @@ namespace eve::detail
   {
     const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (x <= Pio_4(as(x)))        return restricted_(sin)(x);
-    else if (x <= Pio_2(as(x)))   return small_(sin)(x);
-    else if ( x <= medthresh)     return medium_(sin)(x); //TODO
-    else return big_(sin)(x);      
+    if (x <= Pio_4(as(x)))        return restricted_(sin)(a0);
+    else if (x <= Pio_2(as(x)))   return small_(sin)(a0);
+    else if ( x <= medthresh)     return medium_(sin)(a0); //TODO
+    else return big_(sin)(a0);      
   }
   
 }

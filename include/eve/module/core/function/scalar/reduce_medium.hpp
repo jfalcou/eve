@@ -16,6 +16,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/rem_pio2_cephes.hpp>
+#include <eve/function/reduce_fast.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/detail/abi.hpp>
@@ -73,7 +74,11 @@ namespace eve::detail
     float dfa = (a-double(fa))+da;
     if (eve::abs(fa) > Pio_4<float>())
     {
-      auto [n1, fa1, fa1c] = eve::rem_pio2_cephes(fa);
+//       std::cout << x << std::endl;
+//       std::cout << fa << std::endl;
+//       std::cout << " ========= " << std::endl;
+//       std::abort(); 
+      auto [n1, fa1, fa1c] = eve::reduce_fast(fa); //eve::rem_pio2_cephes(fa);
       n = float(int(n+n1)&3); 
       return std::tuple<float, float, float>(n, fa1, 0.0f); 
     }
