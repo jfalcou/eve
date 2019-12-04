@@ -70,6 +70,7 @@ make_all_units(ROOT core NAME conj                  ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     ) 
 make_all_units(ROOT core NAME copysign              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME cos                   ARCH scalar simd TYPES ${real_types}    ) 
+make_all_units(ROOT core NAME cot                   ARCH scalar simd TYPES ${real_types}    )    
 make_all_units(ROOT core NAME cosh                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME coth                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME csch                  ARCH scalar simd TYPES ${real_types}    )    
