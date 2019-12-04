@@ -40,7 +40,7 @@ TTS_CASE("Check eve::eve::reduce_fast behavior")
   while (zz !=  eve::Zero<Value>())
   {
     ++i; 
-   std::cout << i << " -> " << zz << std::endl;
+//   std::cout << i << " -> " << zz << std::endl;
     auto z =  Type(zz);
     Type n0, r0, dr0, n1, r1, dr1; 
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);

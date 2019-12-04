@@ -33,8 +33,8 @@ TTS_CASE("Check eve::reduce_large behavior")
       auto [n1, xr1] = eve::rem_pio2(x);
       std::cout << std::setprecision(15) << " dxr = " <<  dxr <<  std::endl;
       std::cout << " x =  " << x << " -> xr =  " << xr << " quad =  " <<  n <<  std::endl;
-      std::cout << " x =  " << x << " -> xr1 =  " << xr1 << " quad1 =  " <<  n1 <<  std::endl;
-      std::cout << " diff " << xr-xr1 << std::endl; 
+//       std::cout << " x =  " << x << " -> xr1 =  " << xr1 << " quad1 =  " <<  n1 <<  std::endl;
+//       std::cout << " diff " << xr-xr1 << std::endl; 
       TTS_ULP_EQUAL(xr, xr1, 0.5); 
       TTS_EQUAL(n, n1); 
     }

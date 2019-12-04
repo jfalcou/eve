@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check reduce_fast behavior on wide",
   }
   wide<Type, T> refn([sn](auto i, auto){ return sn[i]; } );
   wide<Type, T> refx([sx](auto i, auto){ return sx[i]; } );
-  std::cout << "lhs " << lhs << std::endl; 
+//  std::cout << "lhs " << lhs << std::endl; 
   auto [n, x] =  eve::reduce_fast(lhs);
   TTS_EQUAL(refn, n);
   TTS_EQUAL(refx, x); 

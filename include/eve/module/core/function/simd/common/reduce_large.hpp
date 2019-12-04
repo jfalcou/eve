@@ -16,7 +16,6 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/reduce_fast.hpp>
-#include <eve/function/rem_pio2_cephes.hpp>
 #include <eve/function/reduce_medium.hpp> 
 #include <eve/function/gather.hpp>
 #include <eve/function/add.hpp>
@@ -66,29 +65,6 @@ namespace eve::detail
       {
         return reduce_fast(x);
       }
-//       else
-//       {
-// //         auto xle2to23 = x < 8388608.0f; //2^23
-// //         if (all(xle2to23))
-// //         {
-// //           auto xx =  convert(x, double_);
-// //           auto [dsn, dsr] =  rem_pio2_cephes(xx);
-// //           auto sn = convert(dsn, single_);
-// //           auto sr = convert(dsr, single_);
-// //           return std::tuple<t_t, t_t, t_t>(sn, sr, t_t(0)); 
-// //         }
-// //         else
-// //         {
-//         auto xle2to26_51 = x <105414350.0f; //2^26.51
-//         if (all(xle2to26_51))
-//         {
-//           auto xx =  convert(x, double_);
-//           auto [dsn, dsr, dsrc] =  reduce_medium(xx);
-//           auto sn = convert(dsn, single_);
-//           auto sr = convert(dsr, single_);
-//           auto src= convert(dsr, single_);  
-//           return std::tuple<t_t, t_t, t_t>(sn, sr, src); 
-//         }
       else
       {
         using ui_t =  wide<uint32_t, N, ABI>;
@@ -104,14 +80,8 @@ namespace eve::detail
           };
         constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
         auto [sn, sr, dsr] =  reduce_fast(x);
-        auto xle200 = x <= 200.0f; 
-        if (all(xle200)) return std::tuple<t_t, t_t, t_t>(sn, sr, dsr); 
         auto xi =  bitwise_cast(x, as_<ui_t>());
         auto index =  bitwise_and(shr(xi, 26), 15); 
-//     auto arr0 = gather(&__inv_pio4[0], index);
-//     auto arr4 = convert(gather(&__inv_pio4[0], index+4), as<uint64_t>());
-//     auto arr8 = convert(gather(&__inv_pio4[0], index+8), as<uint64_t>()); 
-        
         auto arr0 = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
         auto arr4 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+4), as<uint64_t>());
         auto arr8 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+8), as<uint64_t>()); 
@@ -140,10 +110,6 @@ namespace eve::detail
         using r_t =  std::tuple<t_t, t_t, t_t>; 
         return r_t(bn, br,dbr); 
       }      
-//         auto [nd, xd, xcd] = reduce_large(convert(x, double_));
-//         return std::tuple<t_t, t_t, t_t>(convert(nd, single_), convert(xd, single_), t_t(0.0f)); //convert(xcd, single_)); 
-//           return map(eve::reduce_large, x);
-//       }
     }
   }
   

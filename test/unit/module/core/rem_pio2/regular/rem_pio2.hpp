@@ -44,10 +44,10 @@ TTS_CASE("Check eve::eve::rem_pio2 behavior")
     std::cout << i << " -> " << zz << std::endl;
     ++i; 
     auto z =  Type(zz);
-    Type n0, r0, dr0, n1, r1; //, dr1; 
-   std::tie(n1, r1, dr1) = eve::reduce_large(z);
+    Type n0, r0, dr0, n1, r1, dr1; //, dr1; 
+    std::tie(n1, r1, dr1) = eve::reduce_large(z);
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);
-
+    
     TTS_ULP_EQUAL(r0, r1, 0.5);
     TTS_EQUAL(n0, n1);
     zz /= 1.1;     
@@ -80,7 +80,7 @@ TTS_CASE("Check eve::eve::rem_pio2 behavior")
 //     {
 //       nn1 =  nn0 = 0;
 //     }
-    
+
 //     auto dc = eve::ulpdist(std::cos(r0+nn0), std::cos(r1+nn1));
 //     auto ds = eve::ulpdist(std::sin(r0+nn0), std::sin(r1+nn1));
 //     if(dc > 0.5 || ds >  0.5)
@@ -127,7 +127,7 @@ TTS_CASE("Check eve::eve::rem_pio2 behavior")
 //       }
 //    }            
 //     if (abs(r1) > 0.78539818525315f) break; 
-    if ( zz == eve::Valmax<Value>()) break; 
-    zz = eve::next(zz); 
-  }
-}
+//     if ( zz == eve::Valmax<Value>()) break; 
+//     zz = eve::next(zz); 
+//   }
+// }

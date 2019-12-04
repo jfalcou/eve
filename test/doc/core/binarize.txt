@@ -9,8 +9,4 @@
 <- xf =                                     1
 <- yf =                                     2
 -> eve::binarize(eve::is_less(xf, yf))    = 0
-<<<<<<< HEAD:test/doc/core/binarize.txt
-
-=======
--> eve::binarize(eve::is_less(xf, yf), 5) = 0  
->>>>>>> doc for binarize:test/doc/binarize.txt
+-> eve::binarize(eve::is_less(xf, yf), 5) = 0

@@ -33,8 +33,8 @@ TTS_CASE("Check eve::reduce_fast behavior")
       Type x = i*eve::Pi<Type>()/8; 
       auto [n, xr, xrc] = eve::reduce_fast(x);
       auto [n1, xr1, xrc1] = eve::rem_pio2(x); 
-      std::cout << " x =  " << x << " -> xr =  " << xr << " quad =  " <<  n <<  std::endl;
-      std::cout << " x =  " << x << " -> xr1 =  " << xr1 << " quad1 =  " <<  n1 <<  std::endl;
+//       std::cout << " x =  " << x << " -> xr =  " << xr << " quad =  " <<  n <<  std::endl;
+//       std::cout << " x =  " << x << " -> xr1 =  " << xr1 << " quad1 =  " <<  n1 <<  std::endl;
       TTS_ULP_EQUAL(x, xr, 0.5); 
     }
   }

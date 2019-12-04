@@ -63,7 +63,7 @@ namespace eve::detail
     double xn1 = (xn + 8.0e22) - 8.0e22;
     double xn2 = xn - xn1;
     double y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, double(x))))); 
-    double n = quadrant(xn); //  int4 n = v.i[LOW_HALF] & 3;
+    double n = quadrant(xn);
     double da = xn1 * pp3;
     double t = y - da;
     da = (y - t) - da;
@@ -74,11 +74,7 @@ namespace eve::detail
     float dfa = (a-double(fa))+da;
     if (eve::abs(fa) > Pio_4<float>())
     {
-//       std::cout << x << std::endl;
-//       std::cout << fa << std::endl;
-//       std::cout << " ========= " << std::endl;
-//       std::abort(); 
-      auto [n1, fa1, fa1c] = eve::reduce_fast(fa); //eve::rem_pio2_cephes(fa);
+      auto [n1, fa1, fa1c] = eve::reduce_fast(fa);
       n = float(int(n+n1)&3); 
       return std::tuple<float, float, float>(n, fa1, 0.0f); 
     }

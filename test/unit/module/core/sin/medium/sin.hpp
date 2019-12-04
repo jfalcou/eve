@@ -37,7 +37,6 @@ TTS_CASE("Check eve::eve::sin behavior")
     TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
   }
   TTS_ULP_EQUAL(eve::medium_(eve::sin)(Type(1)), Type(std::sin(1.0)), 0.5);
-  std::cout << eve::medium_(eve::sin)(Type(1)) << " <-> " << Type(std::sin(1.0)) << std::endl; 
   TTS_ULP_EQUAL(eve::medium_(eve::sin)(Type(-1)),Type(std::sin(-1.0)), 0.5);
   TTS_IEEE_EQUAL((eve::medium_(eve::sin)(Type(0))), (Type(0)));
   TTS_IEEE_EQUAL((eve::medium_(eve::sin)(eve::Mzero<Type>())), (Type(0)));
@@ -49,13 +48,10 @@ TTS_CASE("Check eve::eve::sin behavior")
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(-100.0))),Type(std::sin(Value(-100.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(100000.0))), Type(std::sin(Value(100000.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(-100000.0))),Type(std::sin(Value(-100000.0))), 0.5);
-  Value z = Value( 7.8929017350860050431e-129 );
-  std::cout << (eve::big_(eve::sin)(Type(z))-Type(z)) << std::endl;
-  std::cout << (          Type(std::sin (z))-Type(z)) << std::endl;                         
-  z =  eve::Valmax<Value>(); 
+  auto z =  eve::Valmax<Value>(); 
   while(true)
   {
-    std::cout << std::setprecision(20) << "z " << z << std::endl; 
+//    std::cout << std::setprecision(20) << "z " << z << std::endl; 
     TTS_ULP_EQUAL(eve::big_(eve::sin)(Type(z)),Type(std::sin(Value(z))), 0.5);
     z/= 5.123;
     if (eve::all(eve::is_eqz(z))) break;

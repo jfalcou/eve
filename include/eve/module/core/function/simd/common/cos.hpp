@@ -96,24 +96,6 @@ namespace eve::detail
     }   
   }
 
-//   template<typename T,  typename N,  typename ABI>
-//   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-//                            , cephes_type const &       
-//                            , eve::wide<T,N,ABI> const &a0) noexcept
-//   {
-//     if constexpr(std::is_floating_point_v<T>)
-//     {
-//       using t_t  = eve::wide<T,N,ABI>;
-//       const t_t x = eve::abs(a0);
-//       auto [n, xr] = rem_pio2_cephes(x);
-//       return detail::cos_finalize(n, xr, t_t(0)); 
-//     }
-//     else
-//     {
-//       static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
-//     }   
-//   }
-
   template<typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_upgrade( eve::wide<float,N,ABI> const & a0) noexcept
   {
@@ -135,17 +117,10 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-//       if constexpr(std::is_same_v<T, float>)
-//       {
-//         return map(medium_(cos), a0);
-//       }
-//       else
-//       {
-        using t_t  = eve::wide<T,N,ABI>;
-        const t_t x = eve::abs(a0);
-        auto [n, xr, dxr] = reduce_medium(x);
-        return detail::cos_finalize(n, xr, dxr); 
-        //     }
+      using t_t  = eve::wide<T,N,ABI>;
+      const t_t x = eve::abs(a0);
+      auto [n, xr, dxr] = reduce_medium(x);
+      return detail::cos_finalize(n, xr, dxr); 
     }
     else
     {
@@ -180,25 +155,9 @@ namespace eve::detail
     auto x =  abs(a0);
     if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
-//     else if constexpr(std::is_same_v<T, float>)
-//     {
-//       if (all(x < 4.2166e+08f)) return cos_upgrade(x);
-//       else return big_(cos)(x);
-//     }
     else if(all(x <= medthresh))      return medium_(cos)(a0);
-    else
-    {
-      return big_(cos)(x);
-    }
-    
-//     else {
-//       static  T mpi = Ieee_constant < T, 0X43490FDBU, 0X412921FB54442D1AULL>(); // 2^6pi,  2^18pi
-//       if   (all((x <= mpi)))   return medium_(cos)(a0);
-//       else
-//         return big_(cos)(a0);
-//     }
+    else return big_(cos)(x);
   }
-  
 }
 
 #endif

@@ -26,7 +26,6 @@
 #include <eve/constant/twoopi.hpp>
 #include <eve/constant/twoopi.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/rem_pio2_cephes.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
 #include <tuple>

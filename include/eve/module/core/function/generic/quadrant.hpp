@@ -18,7 +18,7 @@
 #include <eve/function/floor.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
-
+ //  int4 n = v.i[LOW_HALF] & 3; improve quadrant ?
 namespace eve::detail
 {
   template<typename T>

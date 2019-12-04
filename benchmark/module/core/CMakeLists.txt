@@ -121,6 +121,12 @@ list_benchs("scalar/rem_pio2/regular" "core" ${real_types})
 list_benchs("scalar/sqrt/regular" "core" ${all_types})  
 list_benchs("scalar/rsqrt/regular" "core" ${real_types})
 list_benchs("scalar/sqr/regular"  "core" ${all_types})  
+list_benchs("scalar/tan/regular" "core" ${real_types})
+list_benchs("scalar/tan/restricted" "core" ${real_types})
+list_benchs("scalar/tan/small" "core" ${real_types})
+list_benchs("scalar/tan/medium" "core" ${real_types}) 
+list_benchs("scalar/tan/big" "core" ${real_types})  
+
  
 ##================================================================================================== 
 ## simd benchmarks
@@ -264,6 +270,11 @@ list_benchs("simd/reduce/fast"         "core" ${real_types})
 list_benchs("simd/reduce/medium"       "core" ${real_types})   
 list_benchs("simd/reduce/large"        "core" ${real_types})  
 list_benchs("simd/rem_pio2/regular" "core" ${real_types})
+list_benchs("simd/tan/regular" "core" ${real_types})
+list_benchs("simd/tan/restricted" "core" ${real_types})
+list_benchs("simd/tan/small" "core" ${real_types})
+list_benchs("simd/tan/medium" "core" ${real_types}) 
+list_benchs("simd/tan/big" "core" ${real_types})   
 
 
 ##================================================================================================== 
@@ -273,3 +284,8 @@ list_benchs("ref/cos/restricted" "core" ${real_types})
 list_benchs("ref/cos/small" "core" ${real_types})
 list_benchs("ref/cos/medium" "core" ${real_types}) 
 list_benchs("ref/cos/big" "core" ${real_types})   
+list_benchs("ref/tan/regular" "core" ${real_types})
+list_benchs("ref/tan/restricted" "core" ${real_types})
+list_benchs("ref/tan/small" "core" ${real_types})
+list_benchs("ref/tan/medium" "core" ${real_types}) 
+list_benchs("ref/tan/big" "core" ${real_types})   

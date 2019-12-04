@@ -30,10 +30,10 @@
 #include <tts/tests/types.hpp>
 #include <utility>
 
-// TTS_CASE("Check eve::reduce_large return type")
-// {
-//   TTS_EXPR_IS(eve::reduce_large(Type(0)), (std::tuple<Type, Type, Type>));
-// }
+TTS_CASE("Check eve::reduce_large return type")
+{
+  TTS_EXPR_IS(eve::reduce_large(Type(0)), (std::tuple<Type, Type, Type>));
+}
 
 TTS_CASE("Check eve::eve::reduce_large behavior")
 {
@@ -42,14 +42,14 @@ TTS_CASE("Check eve::eve::reduce_large behavior")
   int i = 0; 
   while (zz > 1.0)
   {
-    std::cout << i << " -> " << zz << std::endl;
+//    std::cout << i << " -> " << zz << std::endl;
     ++i; 
     auto z =  Type(zz);
     Type n0, r0, dr0, n1, r1, dr1; //, dr1; 
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);
     std::tie(n1, r1, dr1) = eve::reduce_large(z);
-    std::cout << r0 <<  " < -> " << r1 << std::endl; 
-    TTS_ULP_EQUAL(r0+dr0, r1+dr1, 0.5);qqq
+//    std::cout << r0 <<  " < -> " << r1 << std::endl; 
+    TTS_ULP_EQUAL(r0+dr0, r1+dr1, 0.5);
 //    TTS_EQUAL(dr0, dr1); 
     TTS_EQUAL(n0, n1);
     zz /= 10;     

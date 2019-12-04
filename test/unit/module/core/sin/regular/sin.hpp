@@ -46,7 +46,7 @@ TTS_CASE("Check eve::eve::sin behavior")
   Value z =  eve::Valmax<Value>(); 
   while(true)
   {
-    std::cout << std::setprecision(20) << "z " << z << std::endl; 
+//    std::cout << std::setprecision(20) << "z " << z << std::endl; 
     TTS_ULP_EQUAL(eve::big_(eve::sin)(Type(z)),Type(std::sin(Value(z))), 0.5);
     z/= 5.1234;
     if (eve::all(eve::is_eqz(z))) break; 
