@@ -82,7 +82,6 @@ namespace eve::detail
       i_t n = x > Pio_4<T>(); 
       if (n)
       {
-        std::cout << "icitte " << n << std::endl; 
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
         auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
         auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();

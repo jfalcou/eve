@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/concept/vectorized.hpp>
 #include <eve/as.hpp>
 #include <cstring>
 
@@ -25,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitwise_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
                                      as_<Target> const &) noexcept
-  requires(Target, vectorizable<T>, if_<(sizeof(T) == sizeof(Target))>)
+  requires(Target, detail::either<!is_vectorized_v<T>, is_vectorizable_v<T>>, if_<(sizeof(T) == sizeof(Target))>)
   {
     if constexpr(std::is_same_v<T, Target>)
     {

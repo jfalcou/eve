@@ -38,10 +38,6 @@ namespace eve::detail
      T  se = sin_eval(z, xr);
      T  ce = cos_eval(z);
      z =  swap_bit ?  fma(dxr, ce, se) : fnma(se, dxr, ce); 
-//      if (swap_bit)
-//        z = sin_eval(z, xr);
-//      else
-//        z = cos_eval(z);
      return bitwise_xor(z,sign_bit); 
   }
 }

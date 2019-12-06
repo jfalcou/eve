@@ -130,19 +130,6 @@ namespace eve::detail
     }   
   }
 
-//   EVE_FORCEINLINE float cos_upgrade( float a0) noexcept
-//   {
-//     if (is_not_finite(a0)) return Nan<float>(); //Nan or Inf input
-//     double x =  abs(a0);
-//     static const double
-//       pio2_1  = -1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
-//       pio2_1t = -1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
-//     double fn = nearest(x*Twoopi<double>());
-//     double xr = fma(fn, pio2_1t, fma(fn, pio2_1, x));
-//     float fxr = float(xr); 
-//     return cos_finalize(float(fn), float(xr), float(xr-fxr)); 
-//   }
-
   template<typename T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
