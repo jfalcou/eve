@@ -21,7 +21,6 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/constant/mhalf.hpp>
 #include <eve/constant/signmask.hpp>
 #include <type_traits>
 

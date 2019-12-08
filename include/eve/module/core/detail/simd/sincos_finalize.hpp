@@ -39,10 +39,8 @@ namespace eve::detail
     using t_t = wide<T, N, ABI>; 
     auto tmp =  binarize(fn >= t_t(2));
     auto swap_bit = (fma(t_t(-2), tmp, fn));
-//   auto swap_bit^tmp = eve::abs(oneminus(fn)) != One<t_t>(); 
     auto cos_sign_bit = binarize(is_nez(bitwise_xor(swap_bit, tmp)), Signmask<T>());
     auto sin_sign_bit = bitwise_xor(bitofsign(a0),if_else(tmp, Signmask<t_t>(), eve::zero_));
-    std::cout <<sin_sign_bit << " --- " << is_negative(sin_sign_bit) << std::endl; 
     auto z = eve::sqr(xr);
     auto se = sin_eval(z, xr);
     auto ce = cos_eval(z);

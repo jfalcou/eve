@@ -49,10 +49,10 @@ TTS_CASE("Check eve::eve::reduce_large behavior")
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);
     std::tie(n1, r1, dr1) = eve::reduce_large(z);
 //    std::cout << r0 <<  " < -> " << r1 << std::endl; 
-    TTS_ULP_EQUAL(r0+dr0, r1+dr1, 0.5);
+    TTS_ULP_EQUAL(r0, r1, 0.5);
 //    TTS_EQUAL(dr0, dr1); 
     TTS_EQUAL(n0, n1);
-    zz /= 10;     
+    zz /= 1.534;     
   }
 }
 

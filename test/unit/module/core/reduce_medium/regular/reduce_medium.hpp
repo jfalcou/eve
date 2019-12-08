@@ -51,7 +51,7 @@ TTS_CASE("Check eve::eve::reduce_medium behavior")
 
     TTS_ULP_EQUAL(r0, r1, 0.5);
     TTS_EQUAL(n0, n1);
-    zz /= 1.5f;     
+    zz /= 1.543f;     
   }
 }
 

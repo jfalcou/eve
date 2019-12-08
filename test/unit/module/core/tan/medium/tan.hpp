@@ -53,7 +53,7 @@ TTS_CASE("Check eve::eve::tan behavior")
   while(true)
   {
     std::cout << std::setprecision(20) << "z " << z << std::endl; 
-    TTS_ULP_EQUAL(eve::big_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 0.5);
+    TTS_ULP_EQUAL(eve::medium_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 0.5);
     z/= 5.123;
     if (eve::all(eve::is_eqz(z))) break;
   }
