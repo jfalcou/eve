@@ -52,9 +52,8 @@ TTS_CASE("Check eve::eve::tan behavior")
   auto z =  eve::Ieee_constant < Value, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.76859e+15 (float) et  281474976710656.0 (double)
   while(true)
   {
-    std::cout << std::setprecision(20) << "z " << z << std::endl; 
     TTS_ULP_EQUAL(eve::medium_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 0.5);
-    z/= 5.123;
+    z/=10;
     if (eve::all(eve::is_eqz(z))) break;
   }
 }

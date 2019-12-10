@@ -135,12 +135,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
+    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); 
     auto x =  eve::abs(a0);
     if (all(x <= Pio_4(as(x))))       return restricted_(tan)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(tan)(a0);
     else if(all(x <= medthresh))      return medium_(tan)(a0);
-    else return big_(tan)(x);
+    else                              return big_(tan)(a0);
   }
 }
 

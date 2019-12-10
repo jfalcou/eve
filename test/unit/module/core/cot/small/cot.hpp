@@ -40,7 +40,6 @@ TTS_CASE("Check eve::eve::small_(eve::cot) behavior")
     TTS_IEEE_EQUAL(eve::small_(eve::cot)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
   }
   TTS_ULP_EQUAL(eve::small_(eve::cot)(Type(1)),  Type(my_stdcot(1.0)), 0.5);
-  std::cout << eve::small_(eve::cot)(Type(1)) << "   " << Type(my_stdcot(1.0)) << std::endl; 
   TTS_ULP_EQUAL(eve::small_(eve::cot)(Type(-1)), Type(my_stdcot(-1.0)), 0.5); 
   TTS_IEEE_EQUAL((eve::small_(eve::cot)(Type(0))), (eve::Inf<Type>()));
   TTS_IEEE_EQUAL((eve::small_(eve::cot)(eve::Mzero<Type>())), (eve::Minf<Type>()));
@@ -58,22 +57,6 @@ TTS_CASE("Check eve::eve::small_(eve::cot) behavior")
   TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 1);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 0.5);
-  
-//   while(true)
-//   {
-//     int i = 1; 
-//     z = eve::prev(z);
-//     TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 0.5);
-//     if (eve::all(eve::ulpdist((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z)))) <= 0.5))
-//     {
-//       std::cout << i << std::endl;
-//       std::cout << std::setprecision(20) << z << std::endl;
-//       std::cout << eve::small_(eve::cot)(Type(z))<< std::endl;
-//    
-//       break; 
-//     }
-//        ++i;
-//        if 
-//   }
+
   
 }

@@ -47,12 +47,14 @@ TTS_CASE("Check eve::eve::cot behavior")
   TTS_ULP_EQUAL(eve::cot(Type(-100000.0)),Type(my_stdcot(-100000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::cot)(Type(-100000000.0))),Type(my_stdcot(-100000000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::cot)(Type(eve::Valmax<Type>()))),Type(my_stdcot(eve::Valmax<Value>())), 1.5);
-  
+  int i = 0; 
   Value z =  eve::Valmax<Value>(); 
   while(true)
   {
+    ++i; 
     TTS_ULP_EQUAL(eve::big_(eve::cot)(Type(z)),Type(my_stdcot(Value(z))), 1.5);
     z/= 5.1234;
+    if (i == 300) break; 
     if (eve::all(eve::is_eqz(z))) break; 
   }
 }

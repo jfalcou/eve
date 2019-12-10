@@ -40,8 +40,6 @@ TTS_CASE("Check eve::eve::small_(eve::tan) behavior")
   TTS_IEEE_EQUAL((eve::small_(eve::tan)(eve::Mzero<Type>())), (Type(0)));
   TTS_EXPECT(eve::all(eve::is_negative(eve::small_(eve::tan)(eve::Mzero<Type>()))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::small_(eve::tan)(eve::Zero<Type>()))));
-//   TTS_ULP_EQUAL((eve::small_(eve::tan)(eve::Pio_2<Type>())), (Type(std::tan(eve::Pio_2<Value>()))), 0.5);
-//   TTS_ULP_EQUAL((eve::small_(eve::tan)(-eve::Pio_2<Type>())),(Type(std::tan(-eve::Pio_2<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::tan)(eve::Pio_4<Type>())), (Type(std::tan(eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::tan)(-eve::Pio_4<Type>())),(Type(std::tan(-eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::tan)(eve::Pio_4<Type>()/2)), (Type(std::tan(eve::Pio_4<Value>()/2))), 0.5);
@@ -54,20 +52,4 @@ TTS_CASE("Check eve::eve::small_(eve::tan) behavior")
   TTS_ULP_EQUAL((eve::small_(eve::tan)(Type(z))), (Type(std::tan(z))), 1);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::tan)(Type(z))), (Type(std::tan(z))), 0.5);
-  
-//   while(true)
-//   {
-//     int i = 1; 
-//     z = eve::prev(z);
-//     TTS_ULP_EQUAL((eve::small_(eve::tan)(Type(z))), (Type(std::tan(z))), 0.5);
-//     if (eve::ulpdist((eve::small_(eve::tan)(Type(z))), (Type(std::tan(z)))) <= 0.5)
-//     {
-//       std::cout << i << std::endl;
-//       std::cout << std::setprecision(20) << z << std::endl;
-//       std::cout << eve::small_(eve::tan)(Type(z))<< std::endl;
-//       ++i;
-//       break; 
-//     }
-//   }
-  
 }

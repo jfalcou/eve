@@ -141,7 +141,7 @@ namespace eve::detail
     if (all(x <= Pio_4(as(x))))       return restricted_(cot)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(cot)(a0);
     else if(all(x <= medthresh))      return medium_(cot)(a0);
-    else return big_(cot)(x);
+    else return big_(cot)(a0);
   }
 }
 

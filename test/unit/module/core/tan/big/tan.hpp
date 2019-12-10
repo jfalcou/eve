@@ -51,12 +51,15 @@ TTS_CASE("Check eve::eve::tan behavior")
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(-100000000.0))),Type(std::tan(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(eve::Valmax<Type>()))),Type(std::tan(eve::Valmax<Value>())), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(eve::Valmax<Type>()))/10),Type(std::tan(eve::Valmax<Value>())/10), 0.5);     
-  Value z =  eve::Valmax<Value>(); 
+  Value z =  eve::Valmax<Value>();
+  int i = 0; 
   while(true)
   {
-//    std::cout << std::setprecision(20) << "z " << z << std::endl; 
     TTS_ULP_EQUAL(eve::big_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 1);
+    TTS_ULP_EQUAL(eve::big_(eve::tan)(-Type(z)),Type(std::tan(-Value(z))), 1);     
     z/= 5.123;
+    ++i; 
+    if (i == 300) break; 
     if (eve::all(eve::is_eqz(z))) break; 
   }
 }
