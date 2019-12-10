@@ -31,25 +31,21 @@ TTS_CASE("Check sincos return type")
 
 TTS_CASE("Check (eve::sincos behavior")
 {
-  static const int N = 14; 
+  static const int N = 16; 
   Value x[N] = {  eve::Pi<Value>()/8, -eve::Pi<Value>()/8
                   , eve::Pi<Value>()/4, -eve::Pi<Value>()/4
                   , Value(1), Value(-1)
                   , Value(10), Value(-10)
                   , Value(1000000), Value(-1000000)
-                  , Value(1000000000), Value(-1000000000) 
-                  , eve::Valmax<Value>()/100000, eve::Valmin<Value>()*10}; 
+                  , Value(1000000000), Value(-1000000000)
+                  , eve::Valmax<Value>(), eve::Valmin<Value>()    
+                  , eve::Valmax<Value>()/100000, eve::Valmin<Value>()/10000}; 
   
   for(int i=0; i < N ; ++i)
   {
     Type p0, p1; 
     std::tie(p0, p1) = eve::big_(eve::sincos)(Type(x[i]));
-    std::cout <<  x[i] << " s===================================================== " << std::endl; 
     TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 0.5);
-    std::cout << std::setprecision(20) << "p0 " << p0 << " -> " << Type(std::sin(x[i])) << " -> " << eve::big_(eve::sin)(Type(x[i])) << std::endl;
-    std::cout <<  x[i] <<  " c===================================================== " << std::endl; 
     TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 0.5);
-    std::cout << std::setprecision(20) << "p1 " << p1 << " -> " << Type(std::cos(x[i])) << " -> " << eve::big_(eve::cos)(Type(x[i])) << std::endl;   
   }
-  
 }

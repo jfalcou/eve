@@ -40,7 +40,6 @@ TTS_CASE("Check eve::eve::reduce_fast behavior")
   while (zz !=  eve::Zero<Value>())
   {
     ++i; 
-//   std::cout << i << " -> " << zz << std::endl;
     auto z =  Type(zz);
     Type n0, r0, dr0, n1, r1, dr1; 
     std::tie(n0, r0, dr0) = eve::rem_pio2(z);
@@ -50,27 +49,4 @@ TTS_CASE("Check eve::eve::reduce_fast behavior")
     zz /= fac;     
   }
 
-
-// TTS_CASE("Check eve::eve::reduce_fast behavior")
-// {
-//   int i = 0; 
-//   Value zz = 200.0f; //eve::Valmax<Value>();
-//   while (true)
-//   {
-//     ++i;
-//     if (i%100000 == 0) std::cout << zz << std::endl; 
-//     Type n0, r0, dr0, n1, r1, dr1; 
-//     std::tie(n0, r0, dr0) = eve::rem_pio2(zz);
-//     std::tie(n1, r1, dr1) = eve::reduce_fast(zz);
-//     TTS_ULP_EQUAL(r0, r1, 0.5);
-//     TTS_EQUAL(n0, n1);
-//     auto d = eve::ulpdist(r1, r0);
-//     if (d > 0.5 || zz == eve::Valmax<Value>())
-//     {
-//       std::cout << "i = " << i << " z =  " << eve::prev(zz) << std::endl;
-//       std::cout << "ulp =  " << d << std::endl;
-//       break; 
-//     }
-//     zz  = eve::next(zz) ;   
-//  }
 }

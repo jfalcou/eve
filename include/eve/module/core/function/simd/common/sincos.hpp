@@ -133,7 +133,7 @@ EVE_FORCEINLINE auto internal_sincos(medium_type const &
     if (all(x <= Pio_4(as(x))))       return restricted_(sincos)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(sincos)(a0);
     else if(all(x <= medthresh))      return medium_(sincos)(a0);
-    else return big_(sincos)(x);
+    else return big_(sincos)(a0);
   }
 }
 

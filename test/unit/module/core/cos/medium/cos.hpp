@@ -40,37 +40,21 @@ TTS_CASE("Check eve::eve::cos behavior")
   TTS_IEEE_EQUAL(eve::medium_(eve::cos)(eve::Mzero<Type>()), (Type(1)));
   TTS_ULP_EQUAL((eve::medium_(eve::cos)(eve::Pio_4<Type>())), (Type(std::cos(eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::cos)(-eve::Pio_4<Type>())),(Type(std::cos(-eve::Pio_4<Value>()))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(100.0))), Type(std::cos(Value(100.0))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(-100.0))),Type(std::cos(Value(-100.0))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(100000.0))), Type(std::cos(Value(100000.0))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(-100000.0))),Type(std::cos(Value(-100000.0))), 0.5);
+  
+  Value z;
   if constexpr(std::is_same_v<Value, float>)
-  {
-    TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(100.0))), Type(std::cos(Value(100.0))), 0.5);
-    TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(-100.0))),Type(std::cos(Value(-100.0))), 0.5);
-  }
+    z =  9.83416e+14f;
   else
+    z = 281474976710656.0; 
+  while(true)
   {
-    TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(100000.0))), Type(std::cos(Value(100000.0))), 0.5);
-    TTS_ULP_EQUAL((eve::medium_(eve::cos)(Type(-100000.0))),Type(std::cos(Value(-100000.0))), 0.5);
+    TTS_ULP_EQUAL(eve::medium_(eve::cos)(Type(z)),Type(std::cos(Value(z))), 0.5);
+    z/= 5.123;
+    if (eve::all(eve::is_eqz(z))) break;
   }
 }
 
-// TTS_CASE("exhaustive check")
-// {
-//   TTS_EQUAL(0, 0); 
-//   int i =  1; 
-//   float zz =  0.0f;  
-//   while (true)
-//   {
-//     auto c0 = eve::medium_(eve::cos)(zz); 
-//     auto c1 =              std::cos(zz);
-//     auto ulp = eve::ulpdist(c0, c1);
-//     if (ulp > 0.5)
-//     {
-//       std::cout << std::endl << "ulp = " << ulp << " for zz = " << zz << std::endl;
-//       break; 
-//     }
-//     if (i%1000000000 == 0) std::cout << std::endl << "i = " << i << " -> " << zz << std::endl; 
-//     if (i%10000000  == 0) std::cout << "." << std::flush; 
-//     if ( zz == eve::Valmax<Value>()) break; 
-//     zz = eve::next(zz);
-//     ++i; 
-//   }
-// }

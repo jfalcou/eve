@@ -56,7 +56,6 @@ TTS_CASE("Check eve::eve::sin behavior")
     z = 281474976710656.0; 
   while(true)
   {
-//    std::cout << std::setprecision(20) << "z " << z << std::endl; 
     TTS_ULP_EQUAL(eve::medium_(eve::sin)(Type(z)),Type(std::sin(Value(z))), 0.5);
     z/= 5.123;
     if (eve::all(eve::is_eqz(z))) break;

@@ -43,12 +43,8 @@ TTS_CASE("Check (eve::sincos behavior")
   {
     Type p0, p1; 
     std::tie(p0, p1) = eve::small_(eve::sincos)(Type(x[i]));
-    std::cout <<  x[i] << " s===================================================== " << std::endl; 
     TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 3.5);
-    std::cout << std::setprecision(20) << "p0 " << p0 << " -> " << Type(std::sin(x[i])) << " -> " << eve::small_(eve::sin)(Type(x[i])) << std::endl;
-    std::cout <<  x[i] <<  " c===================================================== " << std::endl; 
     TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 3.5);
-    std::cout << std::setprecision(20) << "p1 " << p1 << " -> " << Type(std::cos(x[i])) << " -> " << eve::small_(eve::cos)(Type(x[i])) << std::endl;   
   }
   
   Type p0, p1; 

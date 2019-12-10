@@ -46,9 +46,6 @@ TTS_CASE("Check eve::eve::cos behavior")
   Value z = eve::Valmax<Value>(); 
  for(int i=1; i < 100; i++)
  {
-//    std::cout <<  "i =  " << i << std::endl; 
-//    std::cout << (eve::cos)(Type(z)) << std::endl;
-//    std::cout << Type(std::cos(z))<< std::endl;
    TTS_ULP_EQUAL((eve::cos)(Type(z)),Type(std::cos(z)), 0.5);
    z = z/10; 
  }

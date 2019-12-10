@@ -41,7 +41,6 @@ namespace eve::detail
     i_t swap_bit = n&One<i_t>();
     T  sin_sign_bit = bitwise_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
     i_t cos_sign_bit = shl(bitwise_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
-    std::cout <<sin_sign_bit << " --- " << is_negative(sin_sign_bit) << std::endl; 
     ce0 = fnma(se0, dxr, ce0);
     se0 = fma(dxr, ce0, se0);
     if (swap_bit) std::swap(ce0, se0); 

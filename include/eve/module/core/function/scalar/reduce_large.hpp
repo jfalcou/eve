@@ -15,6 +15,10 @@
 #include <eve/function/bitwise_cast.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitwise_shr.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/fms.hpp>
+#include <eve/function/ldexp.hpp>
+#include <eve/function/two_split.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/constant/constant.hpp>
@@ -81,7 +85,6 @@ namespace eve::detail
   {
     constexpr int HIGH_HALF = 1;     
     using mynumber = union { std::int32_t i[2]; double x; };
-    //   std::cout << "i =  " << i << std::endl; 
     double toverp[75] = { /*  2/ PI base 24*/
       10680707.0,  7228996.0,  1387004.0,  2578385.0, 16069853.0,
       12639074.0,  9804092.0,  4427841.0, 16666979.0, 11263675.0,
@@ -112,7 +115,6 @@ namespace eve::detail
     mynumber gor;
     gor.x = t576;
     gor.i[HIGH_HALF] -= ((k*24)<<20);
-//      std::cout << "gor" << gor.x << "  ->  k " << k << std::endl; 
     double r[6]; 
     for (int i=0;i<6;++i)
     {
@@ -165,26 +167,12 @@ namespace eve::detail
     double sum(0);
     ui64_t zero_lo(0xFFFFFFFF00000000ULL);
     ui64_t tmp0 = bitwise_cast(x1, as_<ui64_t>());
-    
-// //      auto z = bitwise_and(tmp0, zero_lo); 
-// //       i32_t k;
-// //       k.hi = int32_t(z >> 32);
-// //       k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
-    
-    
+  
     alignas(sizeof(double)) i32_t k =  bitwise_cast(bitwise_and(tmp0, zero_lo), as_<i32_t>());
     k.hi =  bitwise_shr(k.hi, 20) & 2047;
     k.hi = eve::max((k.hi-450)/24, 0);
-// //       {
-// //         i32_t tmp;
-// //         tmp.hi = int32_t(t576 >> 32);
-// //         tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
-// //         std::cout << "hi 0 " << tmp.hi << std::endl; 
-// //       }
     
     alignas(sizeof(double)) auto tmp = bitwise_cast(t576, as_<i32_t>());
-//      std::cout << "hi 1 " << tmp.hi << std::endl; 
-    
     tmp.hi -= shl(k.hi*24, 20); 
     
     double gor = bitwise_cast(tmp, double_);
@@ -217,11 +205,83 @@ namespace eve::detail
     return std::tuple<double, double, double>(sum, b, bb); 
   }; 
   
+  EVE_FORCEINLINE auto pass2(double x1)
+  {
+    using ui64_t = uint64_t;
+    using i32_t = struct{ int32_t lo; int32_t hi; }; //TODO endianess pb in view
+    double toverp[75] = { /*  2/ PI base 24*/
+      10680707.0,  7228996.0,  1387004.0,  2578385.0, 16069853.0,
+      12639074.0,  9804092.0,  4427841.0, 16666979.0, 11263675.0,
+      12935607.0,  2387514.0,  4345298.0, 14681673.0,  3074569.0,
+      13734428.0, 16653803.0,  1880361.0, 10960616.0,  8533493.0,
+      3062596.0,  8710556.0,  7349940.0,  6258241.0,  3772886.0,
+      3769171.0,  3798172.0,  8675211.0, 12450088.0,  3874808.0,
+      9961438.0,   366607.0, 15675153.0,  9132554.0,  7151469.0,
+      3571407.0,  2607881.0, 12013382.0,  4155038.0,  6285869.0,
+      7677882.0, 13102053.0, 15825725.0,   473591.0,  9065106.0,
+      15363067.0,  6271263.0,  9264392.0,  5636912.0,  4652155.0,
+      7056368.0, 13614112.0, 10155062.0,  1944035.0,  9527646.0,
+      15080200.0,  6658437.0,  6231200.0,  6832269.0, 16767104.0,
+      5075751.0,  3212806.0,  1398474.0,  7579849.0,  6349435.0,
+      12618859.0,  4703257.0, 12806093.0, 14477321.0,  2786137.0,
+      12875403.0,  9837734.0, 14528324.0, 13719321.0,   343717.0 };
+    uint64_t  t576 = 0x63f0000000000000ULL;                      /* 2 ^ 576  */              
+    double    tm24 = Constant<double, 0x3e70000000000000ULL>();  /* 2 ^- 24  */              
+    double     big = Constant<double, 0x4338000000000000ULL>();  /*  6755399441055744      */
+    double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
+    double sum(0);
+    ui64_t zero_lo(0xFFFFFFFF00000000ULL);
+    auto z = bitwise_and(zero_lo, x1); 
+    i32_t k;
+    k.hi = int32_t(z >> 32);
+    k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
+    k.hi =  bitwise_shr(k.hi, 20) & 2047;
+    k.hi = eve::max((k.hi-450)/24, 0);
+    
+    i32_t tmp;
+    tmp.hi = int32_t(t576 >> 32);
+    tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
+    tmp.hi -= shl(k.hi*24, 20); 
+    
+    double gor = bitwise_cast(tmp, double_);
+    double r[6];
+    auto inds = shr(bitwise_cast(k, as<ui64_t>()), 32); 
+    for (int i=0;i<6;++i)
+    {
+      auto values = toverp[inds];
+      inds = inc(inds); 
+      r[i] = x1*values*gor;
+      gor *= tm24;
+    }
+    double s; 
+    for (int i=0;i<3;++i) {
+      s=(r[i]+big)-big;
+      sum+=s;
+      r[i]-=s;
+    }
+    double t(0);
+    for (int i=0;i<6;++i)  t+=r[5-i];
+    double bb=(((((r[0]-t)+r[1])+r[2])+r[3])+r[4])+r[5];
+    s=(t+big)-big;
+    sum+=s;
+    t-=s;
+    double b=t+bb;
+    bb=(t-b)+bb;
+    s=(sum+big1)-big1;
+    sum-=s;
+    return std::tuple<double, double, double>(sum, b, bb); 
+  }; 
+
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , double const &xx) noexcept
   {
     //  return rem_pio2(xx);
- 
+    if (eve::abs(xx) <= Pio_4<double>()) return std::tuple(0.0, xx, 0.0); 
+    // for x less than 9.23297861778572e-128 (smallestposval*2^600)
+    //   and greater than 2.20131364292740010161e-134  the following routine is incorrect
+    //   because  of the denormality of x*2^600 
+    //   it should return x inchanged in *a and *da 0 */
+    
     double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */              
     double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */   
     double    hp0 = Constant<double, 0x3FF921FB54442D18ULL>();  /* 1.5707963267948966     */
@@ -229,11 +289,9 @@ namespace eve::detail
     double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
     double    mp2 = Constant<double, 0xBE4DDE9740000000ULL>();  /*-1.3909067675399456e-08 */
     double x = xx*tm600;
-    double t = x*split;   /* split x to two numbers */
-    double x1=t-(t-x);
-    auto [sum1, b1, bb1] = pass(x1);
-    double x2=x-x1;
-    auto [sum2, b2, bb2] = pass(x2); 
+    auto [x1, x2] =  two_split(x);
+    auto [sum1, b1, bb1] = pass2(x1);
+    auto [sum2, b2, bb2] = pass2(x2);
     double sum =  sum1+sum2; 
     double b=b1+b2;
     double bb = (eve::abs(b1)>eve::abs(b2))? (b1-b)+b2 : (b2-b)+b1;
@@ -248,12 +306,21 @@ namespace eve::detail
       sum-=1.0;
     }
     double s=b+(bb+bb1+bb2);
-    t=((b-s)+bb)+(bb1+bb2);
+    double t=((b-s)+bb)+(bb1+bb2);
     b=s*split;
     double t1=b-(b-s);
     double t2=s-t1;
     b=s*hp0;
-    bb=(((t1*mp1-b)+t1*mp2)+t2*mp1)+(t2*mp2+s*hp1+t*hp0);
+    {
+      auto z1 = t1*mp1;
+      auto z2 = t1*mp2;
+      auto z3 = t2*mp1;
+      auto z4 = t2*mp2; 
+      auto z5 = s*hp1;
+      auto z6 = t*hp0;
+      bb = (((z1-b)+z2)+z3)+(z4+z5+z6); 
+    }
+    
     s=b+bb;
     t=(b-s)+bb;
     return std::tuple<double, double, double>(static_cast<double>((int) sum&3), s, t);
