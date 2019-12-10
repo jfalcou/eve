@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SEC_HPP_INCLUDED
-#define EVE_FUNCTION_SEC_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_CSC_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_CSC_HPP_INCLUDED
 
-#include <eve/function/scalar/sec.hpp>
-#include <eve/function/simd/sec.hpp>
+#include <eve/function/scalar/csc.hpp>
+#include <eve/module/core/function/simd/csc.hpp>
 
 #endif
