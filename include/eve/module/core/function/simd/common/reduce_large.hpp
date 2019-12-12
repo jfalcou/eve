@@ -26,6 +26,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_not_finite.hpp>
 #include <eve/function/bitwise_shr.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sub.hpp>
@@ -229,6 +230,7 @@ namespace eve::detail
       // fma ? TODO
       s=b+bb;
       t=(b-s)+bb;
+      s = if_else(is_not_finite(x), eve::allbits_,s); 
       return std::tuple<t_t, t_t, t_t>(quadrant(sum), s, t);
      }
   }

@@ -49,11 +49,10 @@ namespace eve::detail
   // small      abs(x) < pi/2
   // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
   // big        le reste
-  
+
   template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto sincos_(EVE_SUPPORTS(cpu_)
-                           , restricted_type const &     
-                           , eve::wide<T,N,ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto internal_sincos(restricted_type const &     
+                                      , eve::wide<T,N,ABI> const &a0) noexcept
   {
     using t_t  = eve::wide<T,N,ABI>;
     auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
@@ -80,27 +79,27 @@ namespace eve::detail
     xr = if_else(test, xr, x);
     return  sincos_finalize(a0, n, xr, t_t(0));
   }
-
-template<typename T,  typename N,  typename ABI>
-EVE_FORCEINLINE auto internal_sincos(medium_type const &       
-                                       , eve::wide<T,N,ABI> const &a0) noexcept
+  
+  template<typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto internal_sincos(medium_type const &       
+                                      , eve::wide<T,N,ABI> const &a0) noexcept
   {
     using t_t  = eve::wide<T,N,ABI>;
     const t_t x = eve::abs(a0);
     auto [n, xr, dxr] = reduce_medium(x);
     return sincos_finalize(a0, n, xr, dxr); 
   }   
-
+  
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto internal_sincos(big_type const &       
-                                       , eve::wide<T,N,ABI> const &a0) noexcept
+                                      , eve::wide<T,N,ABI> const &a0) noexcept
   {
     using t_t  = eve::wide<T,N,ABI>;
     const t_t x = eve::abs(a0);
     auto [n, xr, dxr] = reduce_large(x); 
     return sincos_finalize(a0, n, xr, dxr); 
   }
-
+  
   template<typename T,  typename N,  typename ABI, typename TAG>
   EVE_FORCEINLINE auto sincos_(EVE_SUPPORTS(cpu_)
                               , TAG const & tag       
@@ -108,7 +107,7 @@ EVE_FORCEINLINE auto internal_sincos(medium_type const &
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(is_emulated_v<ABI> ) return map(tag(sincos), a0); 
+      if constexpr(is_emulated_v<ABI> ) return map(TAG()(sincos), a0); 
       else if constexpr(is_aggregated_v<ABI> )
       {
         auto  [lo, hi] = a0.slice();
@@ -134,7 +133,7 @@ EVE_FORCEINLINE auto internal_sincos(medium_type const &
     else if(all(x <= Pio_2(as(x))))   return small_(sincos)(a0);
     else if(all(x <= medthresh))      return medium_(sincos)(a0);
     else return big_(sincos)(a0);
-  }
+  } 
 }
 
 #endif

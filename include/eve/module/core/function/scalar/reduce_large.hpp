@@ -17,6 +17,7 @@
 #include <eve/function/bitwise_shr.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
+#include <eve/function/is_not_finite.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/two_split.hpp>
 #include <eve/function/rem_pio2.hpp>
@@ -33,6 +34,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , float const &x) noexcept
   {
+    if (is_not_finite(x))
+    {
+      return std::tuple<float, float, float>{0.0f, Nan<float>(), 0.0f}; 
+    }
     if (x <= 200.277f) //255*(pi/4)
     {
       return reduce_fast(x); 
@@ -71,15 +76,6 @@ namespace eve::detail
       return std::tuple<float, float, float>(static_cast<float>(n), static_cast<float>(xx * pi63), 0.0f);
     }
   }
-//   template < typename T,  typename U>
-//   T bcast(U const& u,  const as_<T> &)
-//   {
-//     union { T out; U in;} x;
-//     x.in = u;
-//     return x.out;
-//   }
-
-
    
   EVE_FORCEINLINE auto pass(double x1)
   {
@@ -281,7 +277,8 @@ namespace eve::detail
     //   and greater than 2.20131364292740010161e-134  the following routine is incorrect
     //   because  of the denormality of x*2^600 
     //   it should return x inchanged in *a and *da 0 */
-    
+
+    if (is_not_finite(xx)) return std::tuple<double, double, double>{0.0, Nan<double>(), 0.0}; 
     double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */              
     double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */   
     double    hp0 = Constant<double, 0x3FF921FB54442D18ULL>();  /* 1.5707963267948966     */

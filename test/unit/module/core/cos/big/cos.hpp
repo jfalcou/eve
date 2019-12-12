@@ -31,8 +31,11 @@ TTS_CASE("Check eve::eve::cos behavior")
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::big_(eve::cos)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
+//    std::cout << eve::big_(eve::cos)(eve::Nan<Type>()) << std::endl; 
     TTS_IEEE_EQUAL(eve::big_(eve::cos)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
+//    std::cout << eve::big_(eve::cos)(eve::Inf<Type>()) << std::endl; 
     TTS_IEEE_EQUAL(eve::big_(eve::cos)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+//    std::cout << eve::big_(eve::cos)(eve::Minf<Type>()) << std::endl; 
   }
   TTS_ULP_EQUAL(eve::big_(eve::cos)(Type(1)), Type(std::cos(1.0)), 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::cos)(Type(-1)),Type(std::cos(-1.0)), 0.5);
