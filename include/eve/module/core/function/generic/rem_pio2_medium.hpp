@@ -51,7 +51,7 @@ namespace eve::detail
       r  = t2-w;
       w  = fn*pio2_3t-((t2-r)-w);
       T xr = r-w;
-      return std::tuple<T, T>{quadrant(fn), xr};
+      return std::make_tuple(quadrant(fn), xr);
     }
     else
     {
@@ -93,7 +93,7 @@ namespace eve::detail
       w  = fn*pio2_3t-((t2-r)-w);
       T xr = r-w;
       T xrc = (r-xr)-w;
-      return std::tuple<T, T, T>{quadrant(fn), xr, xrc};
+      return std::make_tuple(quadrant(fn), xr, xrc);
     }
     else
     {

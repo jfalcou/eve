@@ -55,7 +55,7 @@ namespace eve::detail
       auto  [lo, hi] = x.slice();
       auto  [nhi, xhi, dxhi]   = reduce_large(hi);
       auto  [nlo, xlo, dxlo]   = reduce_large(lo);
-      return std::tuple<t_t, t_t, t_t>(eve::combine( nlo, nhi)
+      return std::make_tuple(eve::combine( nlo, nhi)
                                       , eve::combine( xlo, xhi)
                                       , eve::combine( dxlo, dxhi));
     }
@@ -128,7 +128,7 @@ namespace eve::detail
       auto  [lo, hi] = xx.slice();
       auto  [nhi, xhi, dxhi]   = reduce_large(hi);
       auto  [nlo, xlo, dxlo]   = reduce_large(lo);
-      return std::tuple<t_t, t_t, t_t>(eve::combine( nlo, nhi)
+      return std::make_tuple(eve::combine( nlo, nhi)
                                       , eve::combine( xlo, xhi)
                                       , eve::combine( dxlo, dxhi));
     }
@@ -231,7 +231,7 @@ namespace eve::detail
       s=b+bb;
       t=(b-s)+bb;
       s = if_else(is_not_finite(x), eve::allbits_,s); 
-      return std::tuple<t_t, t_t, t_t>(quadrant(sum), s, t);
+      return std::make_tuple(quadrant(sum), s, t);
      }
   }
 }

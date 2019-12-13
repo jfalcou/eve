@@ -49,7 +49,6 @@ TTS_CASE("Check eve::eve::sin behavior")
     auto [n1, xr1, dxr1] = eve::rem_pio2(z);
     TTS_ULP_EQUAL(xr, xr1, 0.5); 
     TTS_EQUAL(n, n1); 
-    auto k = eve::ulpdist(xr, xr1);
     z/= 3;
     //  break;
     if (i == 300) break; 

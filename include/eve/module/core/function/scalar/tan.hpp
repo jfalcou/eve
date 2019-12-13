@@ -55,6 +55,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
 
@@ -90,7 +91,8 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue"); 
-    }   
+      return T(); 
+     }   
   }
   
   template<typename T>
@@ -103,13 +105,15 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       if (is_eqz(a0)) return a0;
-      const T x =  abs(a0);
-      auto [fn, xr, dxr] = reduce_medium(x); 
+      const T x =  eve::abs(a0);
+      auto [fn, xr, dxr] = reduce_medium(x);
+      
       return tan_finalize(a0, fn, xr, dxr); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue");
+      return T(); 
     }   
   }  
   
@@ -130,6 +134,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue"); 
+     return T(); 
     }   
   }
 

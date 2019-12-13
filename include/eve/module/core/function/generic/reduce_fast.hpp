@@ -38,7 +38,7 @@ namespace eve::detail
       T xr = fnma(n, pio2_1, x);
       xr   = fnma(n, pio2_2, xr);
       xr   = fnma(n, pio2_3, xr);
-      return std::tuple<T, T>{quadrant(n), xr}; 
+      return std::make_tuple(quadrant(n), xr); 
     }
     else
     {
@@ -60,7 +60,7 @@ namespace eve::detail
                        , as(double()));
     auto xr = wide_cast(x - n * Pio_2<double>(), as(float()));
     auto fn =  wide_cast(quadrant(n),as(float())); 
-    return std::tuple<t_t, t_t>{fn, xr}; 
+    return std::make_tuple(fn, xr); 
   }  
 }
 

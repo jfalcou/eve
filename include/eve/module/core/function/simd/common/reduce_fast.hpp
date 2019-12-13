@@ -48,7 +48,7 @@ namespace eve::detail
       auto  [lo, hi] = xx.slice();
       auto  [nhi, xhi, dxhi]   = reduce_fast(hi);
       auto  [nlo, xlo, dxlo]   = reduce_fast(lo);
-      return std::tuple<t_t, t_t, t_t>(eve::combine( nlo, nhi)
+      return std::make_tuple(eve::combine( nlo, nhi)
                                       , eve::combine( xlo, xhi)
                                       , eve::combine( dxlo, dxhi));
     }
@@ -57,7 +57,7 @@ namespace eve::detail
       auto x =  convert(xx, double_); 
       auto n =  nearest(x*Twoopi<double>()); 
       auto dxr = fma(n, -Pio_2<double>(), x); 
-      return std::tuple<t_t, t_t, t_t>{quadrant(convert(n, single_)), convert(dxr, single_), t_t(0.0f)}; 
+      return std::make_tuple(quadrant(convert(n, single_)), convert(dxr, single_), t_t(0.0f)); 
     }
   }
   
@@ -65,7 +65,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto  reduce_fast_(EVE_SUPPORTS(cpu_)
                                     , wide < double, N, ABI> const &x) noexcept
   {
-    using t_t = wide<double, N, ABI>; 
     if constexpr(is_emulated_v<ABI>)
     {
       return map(eve::reduce_fast, x);
@@ -75,7 +74,7 @@ namespace eve::detail
       auto  [lo, hi] = x.slice();
       auto  [nhi, xhi, dxhi]   = reduce_fast(hi);
       auto  [nlo, xlo, dxlo]   = reduce_fast(lo);
-      return std::tuple<t_t, t_t, t_t>(eve::combine( nlo, nhi)
+      return std::make_tuple(eve::combine( nlo, nhi)
                                       , eve::combine( xlo, xhi)
                                       , eve::combine( dxlo, dxhi));
     }
@@ -91,23 +90,8 @@ namespace eve::detail
       auto da = xn * mp3;
       auto a = y - da;
       da = (y - a) - da;
-
- //      double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
-//       double    mp2 = Constant<double, 0xBE4DDE973C000000ULL>();  /*-1.3909067675399456e-08 */
-//       double    pp3 = Constant<double, 0xBC8CB3B398000000ULL>();  /*-4.9790e-17             */
-//       double    pp4 = Constant<double, 0xbacd747f23e32ed7ULL>();  /*-1.9035e-25             */
-//       auto xn =  nearest(x*Twoopi<double>()); 
-//       auto y = (x - xn * mp1) - xn * mp2;
-//       auto n = quadrant(xn); 
-//       auto t1 = xn * pp3;
-//       auto t2 = y - t1;
-//       auto da = (y - t2) - t1;
-      
-//       t1 = xn * pp4;
-//       auto a = t2 - t1;
-//       da += (t2 - a) - t1;
-      
-      return std::tuple<t_t, t_t, t_t>(n, a, da); 
+     
+      return std::make_tuple(n, a, da); 
     }
   }
 }

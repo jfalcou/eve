@@ -36,7 +36,7 @@ namespace eve::detail
   {
     if (is_not_finite(x))
     {
-      return std::tuple<float, float, float>{0.0f, Nan<float>(), 0.0f}; 
+      return std::make_tuple(0.0f, Nan<float>(), 0.0f); 
     }
     if (x <= 200.277f) //255*(pi/4)
     {
@@ -73,7 +73,7 @@ namespace eve::detail
       n = (res0 + (1ULL << 61)) >> 62;
       res0 -= n << 62;
       double xx = (int64_t)res0;
-      return std::tuple<float, float, float>(static_cast<float>(n), static_cast<float>(xx * pi63), 0.0f);
+      return std::make_tuple(static_cast<float>(n), static_cast<float>(xx * pi63), 0.0f);
     }
   }
    
@@ -133,7 +133,7 @@ namespace eve::detail
     bb=(t-b)+bb;
     s=(sum+big1)-big1;
     sum-=s;
-    return std::tuple<double, double, double>(sum, b, bb); 
+    return std::make_tuple(sum, b, bb); 
   }; 
   
   EVE_FORCEINLINE auto pass1(double x1)
@@ -198,7 +198,7 @@ namespace eve::detail
     bb=(t-b)+bb;
     s=(sum+big1)-big1;
     sum-=s;
-    return std::tuple<double, double, double>(sum, b, bb); 
+    return std::make_tuple(sum, b, bb); 
   }; 
   
   EVE_FORCEINLINE auto pass2(double x1)
@@ -265,7 +265,7 @@ namespace eve::detail
     bb=(t-b)+bb;
     s=(sum+big1)-big1;
     sum-=s;
-    return std::tuple<double, double, double>(sum, b, bb); 
+    return std::make_tuple(sum, b, bb); 
   }; 
 
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
@@ -278,7 +278,7 @@ namespace eve::detail
     //   because  of the denormality of x*2^600 
     //   it should return x inchanged in *a and *da 0 */
 
-    if (is_not_finite(xx)) return std::tuple<double, double, double>{0.0, Nan<double>(), 0.0}; 
+    if (is_not_finite(xx)) return std::make_tuple(0.0, Nan<double>(), 0.0); 
     double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */              
     double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */   
     double    hp0 = Constant<double, 0x3FF921FB54442D18ULL>();  /* 1.5707963267948966     */
@@ -320,7 +320,7 @@ namespace eve::detail
     
     s=b+bb;
     t=(b-s)+bb;
-    return std::tuple<double, double, double>(static_cast<double>((int) sum&3), s, t);
+    return std::make_tuple(static_cast<double>((int) sum&3), s, t);
    }
 }
 

@@ -28,7 +28,7 @@ namespace eve::detail
     T const c = Ieee_constant<value_type_t<T>, 0x46000000U, 0x41a0000000000000ULL>()*a;
     T const c1 = c-a;
     T r0 = c-c1;
-    return std::tuple<T, T>{r0, a-r0}; 
+    return std::make_tuple(r0, a-r0); 
    }
 
 }

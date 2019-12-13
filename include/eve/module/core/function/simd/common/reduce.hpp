@@ -43,13 +43,13 @@ namespace eve::detail
       auto  [lo, hi] = x.slice();
       auto  [nhi, xhi, dxhi] = reduce(hi);
       auto  [nlo, xlo, dxlo] = reduce(lo);
-      return std::tuple<t_t, t_t, t_t>( eve::combine( nlo, nhi)
+      return std::make_tuple( eve::combine( nlo, nhi)
                                       , eve::combine( xlo, xhi)
                                       , eve::combine( dxlo, dxhi));
     }
     else
     {    
-      if (all(x <= Pio_4<T>())) return  std::tuple<t_t, t_t, t_t>(t_t(0), x, t_t(0)); 
+      if (all(x <= Pio_4<T>())) return  std::make_tuple(t_t(0), x, t_t(0)); 
       else
       {
         if constexpr(std::is_same_v<T, float>)

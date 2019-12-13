@@ -107,7 +107,8 @@ namespace eve::detail
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cos scalar ] - type is not an IEEEValue");
+      return T(); 
     }   
   }  
   

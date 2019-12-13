@@ -39,12 +39,12 @@ namespace eve::detail
       T xr = fnma(n, pio2_1, x);
       xr   = fnma(n, pio2_2, xr);
       xr   = fnma(n, pio2_3, xr);
-      return std::tuple<T, T, T>{quadrant(n), xr, T(0)}; 
+      return std::make_tuple(quadrant(n), xr, T(0)); 
     }
     else
     {
       static_assert(std::is_floating_point_v<value_type_t<T>>, "rem_pio2_cephes paramete is not IEEEValue"); 
-      return std::tuple<T, T, T>(T{},T{},T{}); 
+      return std::make_tuple(T{},T{},T{}); 
     }
   }
 }

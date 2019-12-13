@@ -45,8 +45,8 @@ namespace eve::detail
     auto se = sin_eval(z, xr);
     auto ce = cos_eval(z);
     auto test = is_nez(swap_bit);
-    return std::tuple<t_t, t_t>{ bitwise_xor(if_else(test, ce, se), sin_sign_bit)
-        , bitwise_xor(if_else(test, se, ce), cos_sign_bit) };
+    return std::make_tuple( bitwise_xor(if_else(test, ce, se), sin_sign_bit)
+                          , bitwise_xor(if_else(test, se, ce), cos_sign_bit) );
   }
 }
 

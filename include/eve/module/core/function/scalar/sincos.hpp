@@ -107,8 +107,6 @@ namespace eve::detail
       if (is_not_finite(a0)) return {Nan<T>(), Nan<T>()};
       const T x =  abs(a0);
       auto [fn, xr, dxr] = reduce_medium(x);
-//      return std::tuple<T, T>{sin_finalize(bitofsign(a0), fn, xr, dxr), cos_finalize(fn, xr, dxr)}; 
-        
       return sincos_finalize(bitofsign(a0), fn, xr, dxr); 
     }
     else

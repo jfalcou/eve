@@ -34,7 +34,7 @@ namespace eve::detail
     double xr = x - n * Pio_2<double>();
     float dxr = xr-float(xr); 
     float fn =  n&3; 
-    return std::tuple<float, float, float>{fn, xr, dxr}; 
+    return std::make_tuple(fn, float(xr), dxr); 
   }
 
    EVE_FORCEINLINE auto  reduce_fast_(EVE_SUPPORTS(cpu_)
@@ -50,7 +50,7 @@ namespace eve::detail
     auto da = xn * mp3;
     auto a = y - da;
     da = (y - a) - da;
-    return std::tuple<double, double, double>(n, a, da); 
+    return std::make_tuple(n, a, da); 
   }
 }
 

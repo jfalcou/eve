@@ -49,11 +49,10 @@ namespace eve::detail
   requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
   {
     using t_t = value_type_t<T>;
-    using i_t = as_integer_t<T, signed>; 
     auto r1   = bitwise_and(Expobits_mask<T>(), a0);
     auto x    = bitwise_notand(Expobits_mask<T>(), a0);
-    return  std::tuple<T, i_t>{ bitwise_or(Half<T>(), x),
-                                bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    return  std::make_tuple( bitwise_or(Half<T>(), x),
+                             bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>());
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -98,14 +97,14 @@ namespace eve::detail
         r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
         if (r1 > Limitexponent<T>()) return {a0, i_t(0)};       
         r1 -= t;
-        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
+        return std::make_tuple(bitwise_or(x,Half<T>()), r1);
       }
       else
       {
         T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
         r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
         if (r1 > Limitexponent<T>()) return {a0, i_t(0)};
-        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
+        return std::make_tuple(bitwise_or(x,Half<T>()), r1);
       }
     }
   }

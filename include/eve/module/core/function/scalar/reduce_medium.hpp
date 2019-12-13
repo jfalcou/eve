@@ -47,7 +47,7 @@ namespace eve::detail
     da = fma(xn, pp4, fnma(xn2, pp3, da));
     double a = t + da;
     da = (t - a) + da;
-    return std::tuple<double, double, double>(n, a, da); 
+    return std::make_tuple(n, a, da); 
   }
   
   /* float use  up to 1.0e15*/
@@ -63,7 +63,7 @@ namespace eve::detail
     double xn1 = (xn + 8.0e22) - 8.0e22;
     double xn2 = xn - xn1;
     double y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, double(x))))); 
-    double n = quadrant(xn);
+    float n = quadrant(xn);
     double da = xn1 * pp3;
     double t = y - da;
     da = (y - t) - da;
@@ -75,10 +75,10 @@ namespace eve::detail
     if (eve::abs(fa) > Pio_4<float>())
     {
       auto [n1, fa1, fa1c] = eve::reduce_fast(fa);
-      n = float(int(n+n1)&3); 
-      return std::tuple<float, float, float>(n, fa1, 0.0f); 
+      n = (int(n+n1)&3); 
+      return std::make_tuple(n, fa1, 0.0f); 
     }
-    return std::tuple<float, float, float>(n, fa, dfa); 
+    return std::make_tuple(n, fa, dfa); 
   }
 
 }

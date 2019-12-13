@@ -37,7 +37,6 @@ namespace eve::detail
   template<typename N, typename ABI>
   EVE_FORCEINLINE auto reduce_medium_(EVE_SUPPORTS(cpu_), wide<double, N, ABI> const &x) noexcept
   {
-    using t_t = wide<double, N, ABI>; 
     static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
     static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
     static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
@@ -54,7 +53,7 @@ namespace eve::detail
     da = fma(xn, pp4, fnma(xn2, pp3, da));
     auto a = t + da;
     da = (t - a) + da;   
-    return std::tuple<t_t, t_t, t_t>(n, a, da); 
+    return std::make_tuple(n, a, da); 
   }
   
   /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
@@ -86,9 +85,9 @@ namespace eve::detail
       t_t n1; 
       std::tie(n1, fa, dfa) =eve::reduce_fast(fa);
       n =quadrant(n+n1); 
-      return std::tuple<t_t, t_t, t_t>(n, fa, dfa); 
+      return std::make_tuple(n, fa, dfa); 
     }
-    return std::tuple<t_t, t_t, t_t>(n, fa, dfa); 
+    return std::make_tuple(n, fa, dfa); 
   }
   
 }

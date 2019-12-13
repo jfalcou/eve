@@ -54,11 +54,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto internal_sincos(restricted_type const &     
                                       , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    using t_t  = eve::wide<T,N,ABI>;
     auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
     auto x2 = sqr(a0);
     x2 = if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, x2);
-    return std::tuple<t_t, t_t>{sin_eval(x2, a0), cos_eval(x2)}; 
+    return std::make_tuple(sin_eval(x2, a0), cos_eval(x2)); 
   }
   
   template<typename T,  typename N,  typename ABI>
@@ -113,7 +112,7 @@ namespace eve::detail
         auto  [lo, hi] = a0.slice();
         auto  [xhi, ehi]   = TAG()(sincos)(hi);
         auto  [xlo, elo]   = TAG()(sincos)(lo);
-        return std::tuple<wide<T, N>, wide<T, N>>(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+        return std::make_tuple(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
       }
       else return internal_sincos(tag, a0);
     }
