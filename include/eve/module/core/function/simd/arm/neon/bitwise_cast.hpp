@@ -26,7 +26,7 @@ namespace eve::detail
                                 as_<wide<Target, M, neon64_>> const &) noexcept
   {
     // Idempotent call
-    if constexpr(std::is_same_v<Source, Target>) return v0;
+    if constexpr(std::is_same_v<Source, Target>) return wide<Target, M, neon64_>(v0.storage());
 
     using in_t  = typename wide<Source, N, neon64_>::storage_type;
     using tgt_t = typename wide<Target, M, neon64_>::storage_type;
@@ -190,7 +190,7 @@ namespace eve::detail
                                 as_<wide<Target, M, neon128_>> const &) noexcept
   {
     // Idempotent call
-    if constexpr(std::is_same_v<Source, Target>) return v0;
+    if constexpr(std::is_same_v<Source, Target>) return wide<Target, M, neon128_>(v0.storage());
 
     using in_t  = typename wide<Source, N, neon128_>::storage_type;
     using tgt_t = typename wide<Target, M, neon128_>::storage_type;

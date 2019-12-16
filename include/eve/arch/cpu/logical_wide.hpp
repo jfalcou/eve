@@ -226,6 +226,14 @@ namespace eve
     EVE_FORCEINLINE const_reverse_iterator crend() const noexcept { return data_.crend(); }
 
     // ---------------------------------------------------------------------------------------------
+    // Dynamic index lookup
+    template<typename Index>
+    EVE_FORCEINLINE logical operator[](wide<Index,N> const& idx) noexcept
+    {
+      return bitwise_cast(lookup(bits(),idx), as(*this));
+    }
+
+    // ---------------------------------------------------------------------------------------------
     // elementwise access
     EVE_FORCEINLINE reference operator[](std::size_t i) noexcept { return data_[ i ]; }
     EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept { return data_[ i ]; }
