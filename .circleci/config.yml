@@ -25,8 +25,8 @@ docker_ppc64: &docker_ppc64
   docker:
     - image: ubuntu:disco
       environment:
-        COMPILER_PACKAGE: g++-9-powerpc64-linux-gnu
-        COMPILER: powerpc64-linux-gnu-g++-9
+        COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
+        COMPILER: powerpc64-linux-gnu-g++-8
         RUN_COMMAND: qemu-ppc64
         EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
         EXTRA_LIB: lib64
@@ -35,8 +35,8 @@ docker_aarch64: &docker_aarch64
   docker:
     - image: ubuntu:disco
       environment:
-        COMPILER_PACKAGE: g++-9-aarch64-linux-gnu
-        COMPILER: aarch64-linux-gnu-g++-9
+        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
+        COMPILER: aarch64-linux-gnu-g++-8
         RUN_COMMAND: qemu-aarch64
         EXTRA_PATH: /usr/aarch64-linux-gnu/lib/
         EXTRA_LIB: lib
