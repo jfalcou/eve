@@ -17,6 +17,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/signmask.hpp>
+#include <eve/function/bitwise_xor.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -31,7 +33,17 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, ABI> unary_minus_(EVE_SUPPORTS(cpu_),
                                                wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(is_native_v<ABI>) { return Zero(as(v)) - v; }
+    if constexpr(is_native_v<ABI>)
+    {
+      if (std::is_floating_point_v<value_type_t<T>>)
+      {
+        return  bitwise_xor(v, Signmask(as(v))); 
+      }
+      else
+      {
+        return Zero(as(v)) - v;
+      }
+    }
     else
     {
       if constexpr(is_aggregated_v<ABI>) return aggregate(eve::unary_minus, v);
