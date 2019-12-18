@@ -18,6 +18,7 @@ TTS_CASE("wide random check on acos")
 {
   auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
 
-  eve::rng_producer<Type> p(-1,1);
+  //eve::rng_producer<Type> p(-1,1);
+  eve::exhaustive_producer<Type> p(0.5f,1.f);
   TTS_RANGE_CHECK(p, std_acos, eve::acos);
 }
