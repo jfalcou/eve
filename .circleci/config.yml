@@ -23,7 +23,7 @@ docker_clang: &docker_clang
         COMPILER: clang++-8
 docker_ppc64: &docker_ppc64
   docker:
-    - image: ubuntu:latest
+    - image: ubuntu:disco
       environment:
         COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
         COMPILER: powerpc64-linux-gnu-g++-8
@@ -33,7 +33,7 @@ docker_ppc64: &docker_ppc64
         EXTRA_NAME: ld64.so.1
 docker_aarch64: &docker_aarch64
   docker:
-    - image: ubuntu:latest
+    - image: ubuntu:disco
       environment:
         COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
         COMPILER: aarch64-linux-gnu-g++-8
