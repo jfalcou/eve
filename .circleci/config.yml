@@ -18,7 +18,7 @@ docker_gcc: &docker_gcc
         COMPILER: g++
 docker_clang: &docker_clang
   docker:
-    - image: teeks99/clang-ubuntu:8
+    - image: ubuntu:disco
       environment:
         COMPILER: clang++-8
 docker_ppc64: &docker_ppc64
@@ -97,6 +97,9 @@ jobs:
       - run:
           name: Setup dependencies
           command: . .circleci/prepare.sh
+      - run:
+          name: Install clang-8
+          command: 'apt-get update && sudo apt-get install -y clang-8'
       - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
