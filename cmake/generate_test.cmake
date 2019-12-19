@@ -68,7 +68,21 @@ function(generate_test root rootpath dep file)
                                 ${PROJECT_SOURCE_DIR}/include
                             )
 
-  target_link_libraries(${test} tts)
+  # No OpenMP 3.1 on MSVC
+  if ( ${base} MATCHES "random.*" OR ${base} MATCHES "exhaustive.*")
+    if( MSVC )
+      target_link_libraries(${test} tts)
+    else()
+      if(OpenMP_CXX_FOUND)
+        target_link_libraries(${test} tts OpenMP::OpenMP_CXX)
+      else()
+        target_link_libraries(${test} tts)
+      endif()
+    endif()
+  else()
+    target_link_libraries(${test} tts)
+  endif()
+
   add_dependencies(unit ${test})
 
   if( NOT dep STREQUAL "")

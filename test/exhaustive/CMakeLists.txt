@@ -7,5 +7,5 @@
 ##==================================================================================================
 
 ##==================================================================================================
-## General random tests
-make_all_units(ROOT random NAME acos ARCH scalar simd TYPES ${real_types} CARDINAL -1)
+## General exhaustive tests
+make_all_units(ROOT exhaustive NAME acos ARCH scalar simd TYPES float CARDINAL -1)

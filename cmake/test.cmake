@@ -30,7 +30,6 @@ set(integral_types  "${int_types};${uint_types}"      )
 set(all_types       "${real_types};${integral_types}" )
 set(signed_types    "${real_types};${int_types}"      )
 
-
 macro(to_std type output)
   if(${type} MATCHES "^[u]?int[a-zA-Z]*")
     set(${output} "std::${type}_t")
@@ -38,6 +37,11 @@ macro(to_std type output)
     set(${output} "${type}")
   endif()
 endmacro()
+
+##==================================================================================================
+## Some test *may* require OpenMP
+##==================================================================================================
+find_package(OpenMP)
 
 ##==================================================================================================
 ## Setup a basic test
@@ -211,10 +215,15 @@ add_custom_target(core.simd.unit)
 add_custom_target(random.unit)
 add_custom_target(random.scalar.unit)
 add_custom_target(random.simd.unit)
+add_custom_target(exhaustive.unit)
+add_custom_target(exhaustive.scalar.unit)
+add_custom_target(exhaustive.simd.unit)
 add_dependencies(core.unit core.scalar.unit)
 add_dependencies(core.unit core.simd.unit)
 add_dependencies(random.unit random.scalar.unit)
 add_dependencies(random.unit random.simd.unit)
+add_dependencies(exhaustive.unit exhaustive.scalar.unit)
+add_dependencies(exhaustive.unit exhaustive.simd.unit)
 
 add_custom_target(basic.unit)
 add_dependencies(basic.unit arch.unit)
