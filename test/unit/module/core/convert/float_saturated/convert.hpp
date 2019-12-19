@@ -12,7 +12,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>   
+#include <eve/constant/minf.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -44,9 +44,13 @@ TTS_CASE("Check eve::saturated_(eve::convert) behavior")
   }
   else
   {
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<Type>(), eve::single_), static_cast<target_t>(eve::Valmin<Value>()) );
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<Type>(), eve::single_), static_cast<target_t>(eve::Valmax<Value>()) );
+    if constexpr(sizeof(Value)<=sizeof(float))
+    {
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<Type>(), eve::single_), static_cast<target_t>(eve::Valmin<Value>()) );
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<Type>(), eve::single_), static_cast<target_t>(eve::Valmax<Value>()) );
+    }
   }
+
   TTS_EQUAL(eve::saturated_(eve::convert)((Type(0))          , eve::single_), static_cast<target_t>(0) );
   TTS_EQUAL(eve::saturated_(eve::convert)((Type(42.69))      , eve::single_), static_cast<target_t>(Value(42.69)) );
 }

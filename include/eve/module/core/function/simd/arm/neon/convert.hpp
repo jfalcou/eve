@@ -155,7 +155,7 @@ namespace eve::detail
             if constexpr(std::is_same_v<tgt_t,  int64x2_t>) return vcvtq_s64_f64(v0);
       else  if constexpr(std::is_same_v<tgt_t, uint64x2_t>) return vcvtq_u64_f64(v0);
       else  if constexpr(std::is_same_v<tgt_t,  int32x2_t>) return vmovn_s64(vcvtq_s64_f64(v0));
-      else  if constexpr(std::is_same_v<tgt_t, uint32x2_t>) return vmovn_s64(vcvtq_u64_f64(v0));
+      else  if constexpr(std::is_same_v<tgt_t, uint32x2_t>) return vmovn_u64(vcvtq_u64_f64(v0));
       else  return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
 #endif

@@ -23,7 +23,7 @@ docker_clang: &docker_clang
         COMPILER: clang++-8
 docker_ppc64: &docker_ppc64
   docker:
-    - image: ubuntu:latest
+    - image: ubuntu:disco
       environment:
         COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
         COMPILER: powerpc64-linux-gnu-g++-8
@@ -33,7 +33,7 @@ docker_ppc64: &docker_ppc64
         EXTRA_NAME: ld64.so.1
 docker_aarch64: &docker_aarch64
   docker:
-    - image: ubuntu:latest
+    - image: ubuntu:disco
       environment:
         COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
         COMPILER: aarch64-linux-gnu-g++-8
@@ -86,6 +86,9 @@ jobs:
       - run:
           name: Running Basic Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
 
   clang_x86:
     <<: *config_clang_x86
@@ -112,6 +115,9 @@ jobs:
       - run:
           name: Running Basic Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
 
   arm_aarch64:
     <<: *config_aarch64
@@ -129,6 +135,9 @@ jobs:
       - run:
           name: Running Basic Tests - AARCH64 NEON
           command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
 
   ppc64:
     <<: *config_gcc_ppc64
@@ -146,6 +155,9 @@ jobs:
       - run:
           name: Running Basic Tests - PPC64 VSX
           command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
 
   ##================================================================================================
   ## SIMD tests
@@ -216,7 +228,7 @@ jobs:
           name: Running SIMD Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
 
-  arm_aarch64_simd:
+  arm_aarch64_neon:
     <<: *config_aarch64
     steps:
       - checkout
@@ -252,28 +264,23 @@ workflows:
     ## All tests
     ##==============================================================================================
       - gcc_x86
-      # - arm_aarch64
-      ## REACTIVATE LATER
-      # - ppc64:
-      #     requires:
-      #       - arm_aarch64
       - clang_x86
-      #:
-      #   requires:
-      #     - gcc_x86
-      ## REACTIVATE LATER
-      #       - ppc64
-      # - arm_aarch64_simd:
-      #     requires:
-      #       - clang_x86
+      - arm_aarch64:
+          requires:
+            - gcc_x86
+            - clang_x86
+      - arm_aarch64_neon:
+          requires:
+            - gcc_x86
+            - clang_x86
       - x86_sse2:
           requires:
-            - gcc_x86
-            - clang_x86
+            - arm_aarch64
+            - arm_aarch64_neon
       - x86_sse4:
           requires:
-            - gcc_x86
-            - clang_x86
+            - arm_aarch64
+            - arm_aarch64_neon
       - x86_avx:
           requires:
             - x86_sse2
@@ -290,12 +297,11 @@ workflows:
           requires:
             - x86_avx
             - x86_avx2
-      ## REACTIVATE LATER
-      # - arm_aarch64_simd:
+      # - ppc64:
       #     requires:
-      #       - x86_fma
       #       - x86_emulation
+      #       - x86_fma
       # - ppc64_vsx:
       #     requires:
-      #       - x86_fma
       #       - x86_emulation
+      #       - x86_fma
