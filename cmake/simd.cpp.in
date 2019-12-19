@@ -16,8 +16,8 @@
 
 #define EVE_SIMD_TESTS
 
-#define Value ${target}
-#define Base eve::wide<Value>
+using Value = ${target};
+using Base  = ::eve::wide<Value>;
 
 #if !defined(EVE_CUSTOM_CARDINAL)
 inline constexpr auto base_cardinal   = Base::static_size;
