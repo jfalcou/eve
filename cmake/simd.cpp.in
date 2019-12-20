@@ -60,10 +60,15 @@ inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_siz
 
 #else
 
+#if EVE_CUSTOM_CARDINAL > 0
 #define Type eve::wide<Value,eve::fixed<EVE_CUSTOM_CARDINAL>>
+#define Cardinal EVE_CUSTOM_CARDINAL
+#else
+#define Type eve::wide<Value>
+#define Cardinal base_cardinal
+#endif
 
 // Specific  Cardinal test
-#define Cardinal EVE_CUSTOM_CARDINAL
 #define EVE_COUNTER XXX
 #include "${header}.hpp"
 #undef Cardinal

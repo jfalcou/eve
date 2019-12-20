@@ -30,7 +30,6 @@ set(integral_types  "${int_types};${uint_types}"      )
 set(all_types       "${real_types};${integral_types}" )
 set(signed_types    "${real_types};${int_types}"      )
 
-
 macro(to_std type output)
   if(${type} MATCHES "^[u]?int[a-zA-Z]*")
     set(${output} "std::${type}_t")
@@ -38,6 +37,11 @@ macro(to_std type output)
     set(${output} "${type}")
   endif()
 endmacro()
+
+##==================================================================================================
+## Some test *may* require OpenMP
+##==================================================================================================
+find_package(OpenMP)
 
 ##==================================================================================================
 ## Setup a basic test
@@ -67,6 +71,7 @@ function(make_all_units)
     set(header "${variant}/${GEN_TEST_NAME}")
 
     if(EXISTS "${header}.hpp")
+
       # Locate relative path for simpler autogen file paths
       file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
 
@@ -76,11 +81,11 @@ function(make_all_units)
         if( arch STREQUAL scalar)
           foreach(type ${GEN_TEST_TYPES})
             to_std("${type}" target)
-            set(file_to_compile "${_TestSrcDir}/${base_file}.scalar.${type}.cpp")
+            set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp")
 
             configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
-            generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
-                            "${base_file}.scalar.${type}.cpp"
+            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
+                            "${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp"
                           )
           endforeach()
         endif()
@@ -89,18 +94,18 @@ function(make_all_units)
         if( arch STREQUAL simd)
           foreach(type ${GEN_TEST_TYPES})
             to_std("${type}" target)
-            set(file_to_compile "${_TestSrcDir}/${base_file}.simd.${type}.cpp")
+            set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp")
 
             configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
 
             if(GEN_TEST_CARDINAL)
-              generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
-                              "${base_file}.simd.${type}.cpp"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                              "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                               "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
                             )
             else()
-              generate_test ( ${GEN_TEST_ROOT} "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
-                              "${base_file}.simd.${type}.cpp"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+                              "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                             )
             endif()
           endforeach()
@@ -207,8 +212,18 @@ add_dependencies(tests unit)
 add_custom_target(core.unit)
 add_custom_target(core.scalar.unit)
 add_custom_target(core.simd.unit)
+add_custom_target(random.unit)
+add_custom_target(random.scalar.unit)
+add_custom_target(random.simd.unit)
+add_custom_target(exhaustive.unit)
+add_custom_target(exhaustive.scalar.unit)
+add_custom_target(exhaustive.simd.unit)
 add_dependencies(core.unit core.scalar.unit)
 add_dependencies(core.unit core.simd.unit)
+add_dependencies(random.unit random.scalar.unit)
+add_dependencies(random.unit random.simd.unit)
+add_dependencies(exhaustive.unit exhaustive.scalar.unit)
+add_dependencies(exhaustive.unit exhaustive.simd.unit)
 
 add_custom_target(basic.unit)
 add_dependencies(basic.unit arch.unit)

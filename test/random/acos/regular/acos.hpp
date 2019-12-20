@@ -8,24 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef TEST_TEST_HPP
-#define TEST_TEST_HPP
-
-#define TTS_USE_CUSTOM_DRIVER
-#include <tts/tts.hpp>
+#include <eve/function/acos.hpp>
+#include <tts/tests/range.hpp>
 #include "measures.hpp"
+#include "producers.hpp"
+#include <cmath>
 
-int main(int argc, char **argv)
+TTS_CASE("wide random check on acos")
 {
-  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Assertions: ";
-#ifdef NDEBUG
-  std::cout << "Disabled\n";
-#else
-  std::cout << "Enabled\n";
-#endif
+  auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
 
-  ::tts::env runtime(argc, argv, std::cout);
-  return ::tts::run(runtime, ::tts::detail::suite, 0, 0);
+  eve::rng_producer<Type> p(-1,1);
+  TTS_RANGE_CHECK(p, std_acos, eve::acos);
 }
-
-#endif
