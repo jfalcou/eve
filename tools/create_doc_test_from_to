@@ -37,7 +37,7 @@ FROM="${from^^}"
 TO="${to^^}"
 icitte=$(pwd)
 
-testdoc=test/doc
+testdoc=test/doc/core
 
 cp -n $rootdir/$testdoc/$from.cpp    $rootdir/$testdoc/$to.cpp
 cd $rootdir/$testdoc
