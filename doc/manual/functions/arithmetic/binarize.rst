@@ -47,7 +47,7 @@ Synopsis
 Notes
 ******
 
-  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a ef:`concept-logicalvalue`.
+  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logicalvalue`.
 
 Options
 *******
