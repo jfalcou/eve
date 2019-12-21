@@ -1,21 +1,21 @@
-.. _function-atand:
+.. _function-atanpi:
 
-#####
-atand
-#####
+######
+atanpi
+######
 
-**Required header** ``#include <eve/function/atand.hpp>``
+**Required header** ``#include <eve/function/atanpi.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-     constexpr /* implementation defined */ atand = {};
+     constexpr /* implementation defined */ atanpi = {};
    }
 
 Function object computing the inverse tangent in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
 
-``atand(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[-90, 90[` such that :math:`\tan(r) == x`.
+``atanpi(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[-1,1[` such that :math:`\tan(1/r) == x`.
 
 ********
 Synopsis
@@ -42,18 +42,14 @@ Synopsis
 
 
 *******
-Options
-*******
-
-*******
 Example
 *******
 
-.. include:: ../../../../test/doc/core/atand.cpp
+.. include:: ../../../../test/doc/core/atanpi.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/core/atand.txt
+.. include:: ../../../../test/doc/core/atanpi.txt
   :literal:
 

@@ -28,8 +28,8 @@ Synopsis
    template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T            > constexpr   T         operator()( T s ) noexcept;
 
-* [1] Computes elementwise the mathematical value :math:`\arctan(1/v)` in degrees.
-* [2] Computes the mathematical value :math:`\arctan(1/v)` in degrees.
+* [1] Computes elementwise the mathematical value :math:`\arccot(1/v)` in degrees.
+* [2] Computes the mathematical value :math:`\arccot(1/v)` in degrees.
 
 
 .. rubric:: Parameters
