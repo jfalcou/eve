@@ -9,6 +9,7 @@ Functions
 
    arithmetic.rst
    bitwise.rst
+   horizontal.rst
    hyperbolic.rst
    logical.rst
    predicate.rst
