@@ -1,8 +1,8 @@
 .. _function-next:
 
-###
+####
 next
-###
+####
 
 **Required header:** ``#include <eve/function/next.hpp>``
 
