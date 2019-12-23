@@ -25,7 +25,7 @@ Synopsis
    template<typename T> constexp10r    T         operator()( T s ) noexcept;
 
 * [1] Computes the element-wise   base 10 exponential of the :ref:`wide <type-wide>`.
-* [10] Computes the base 10  exponential of the scalar.
+* [2] Computes the base 10  exponential of the scalar.
 
 .. rubric:: Parameters
 
@@ -34,7 +34,7 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,10] A value with the same type as the parameter. 
+* [1,2] A value with the same type as the parameter. 
 
 .. seealso::  :ref:`exp <function-exp>`,  :ref:`exp10 <function-*exp10>`,  :ref:`expm1 <function-*expm1>`,
   :ref:`log <function-log>`, :ref:`log <function-log>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, 

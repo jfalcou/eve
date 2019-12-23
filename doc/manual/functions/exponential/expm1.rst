@@ -13,7 +13,7 @@ expm1
       constexpm1r /* implementation defined */ expm1 = {};
    }
 
-Function object computing the  exponential minus one of(:math:`e^x-1`) of an :ref:`IEEEValue <concept-ieeevalue>`,
+Function object computing the  exponential minus one (:math:`e^x-1`) of an :ref:`IEEEValue <concept-ieeevalue>`,
 with good accuracy even near 0.
 
 Synopsis
@@ -25,8 +25,8 @@ Synopsis
    template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
    template<typename T> constexpm1r    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise exponential minus oneof the :ref:`wide <type-wide>`.
-* [10] Computes the base 10  exponential of the scalar.
+* [1] Computes the element-wise exponential minus one of the :ref:`wide <type-wide>`.
+* [2] Computes the base 10  exponential of the scalar.
 
 .. rubric:: Parameters
 
