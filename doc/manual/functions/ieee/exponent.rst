@@ -39,7 +39,7 @@ Synopsis
 Notes
 *****
 
-      The exponent :math:`e` and mantissa :math:`m` of a floating point entry :math:`x` are related by
+    The exponent :math:`e` and mantissa :math:`m` of a floating point entry :math:`x` are related by
     :math:`x =  m\times 2^e`, with  :math:`|m| \in [1, 2[` (except for :math:`x = 0`,
     where :math:`m=0` and :math:`e=0` ).
 

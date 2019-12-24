@@ -1,8 +1,8 @@
 .. _function-exp10:
 
-####
+#####
 exp10
-####
+#####
 
 **Required header:** ``#include <eve/function/exp10.hpp>``
 

@@ -41,7 +41,7 @@ Synopsis
 * [1,2] A value with the integral type associated to the parameters.
 
 
-.. seealso::  :ref:`ulpdist <function-ulpdist*>`,  :ref:`dist <function-dist>`
+.. seealso::  :ref:`ulpdist <function-ulpdist>`,  :ref:`dist <function-dist>`
 
 Example
 *******

@@ -1,8 +1,8 @@
 .. _function-nbtrue:
 
-#####
+######
 nbtrue
-#####
+######
 
 **Required header:** ``#include <eve/function/nbtrue.hpp>``
 

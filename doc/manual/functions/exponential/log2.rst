@@ -36,8 +36,7 @@ Synopsis
 * [1] A value of type **wide<T,N>**.
 * [2] A value of type **T**.
 
-.. seealso:: :ref:`log <function-log>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, 
-:ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-*exp10>`,  :ref:`expm1 <function-*expm1>`
+.. seealso:: :ref:`log <function-log>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-exp10>`,  :ref:`expm1 <function-expm1>`
 
 
 .. include:: ../../../../test/doc/core/log.cpp

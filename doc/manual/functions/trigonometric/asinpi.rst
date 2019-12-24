@@ -1,8 +1,8 @@
 .. _function-asinpi:
 
-#####
+######
 asinpi
-#####
+######
 
 **Required header** ``#include <eve/function/asinpi.hpp>``
 

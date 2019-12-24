@@ -2,7 +2,7 @@
 
 #####
 clamp
-##############
+#####
 
 **Required header:** ``#include <eve/function/clamp.hpp>``
 

@@ -9,6 +9,7 @@ Functions
 
    arithmetic.rst
    bitwise.rst
+   conversion.rst
    exponential.rst
    horizontal.rst
    hyperbolic.rst

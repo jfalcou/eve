@@ -25,7 +25,7 @@ Synopsis
    template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T            > constexpr   T         operator()( T s ) noexcept;
 
-* [1,2] Computes the mathematical value :math:`\log(v)/\log(2)`.
+* [1,2] Computes the mathematical value :math:`\log(v)/\log(10)`.
 
 .. rubric:: Parameters
 
@@ -36,8 +36,7 @@ Synopsis
 * [1] A value of type **wide<T,N>**.
 * [2] A value of type **T**.
 
-.. seealso:: :ref:`log <function-log>`, :ref:`log2 <function-log2>`, :ref:`log1p <function-log1p>`, 
-:ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-*exp10>`,  :ref:`expm1 <function-*expm1>`
+.. seealso:: :ref:`log <function-log>`, :ref:`log2 <function-log2>`, :ref:`log1p <function-log1p>`, :ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-exp10>`,  :ref:`expm1 <function-expm1>`
 
 
 .. include:: ../../../../test/doc/core/log.cpp

@@ -1,8 +1,8 @@
 .. _function-iround:
 
-#####
+######
 iround
-#####
+######
 
 **Required header:** ``#include <eve/function/iround.hpp>``
 

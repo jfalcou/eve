@@ -37,9 +37,7 @@ Synopsis
 * [2] A value of type **T**.
 
 .. seealso:: :ref:`log2 <function-log2>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, 
-:ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-*exp10>`,  :ref:`expm1 <function-*expm1>`
-
-
+ :ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-exp10>`,  :ref:`expm1 <function-expm1>`
 
 .. include:: ../../../../test/doc/core/log.cpp
   :literal:

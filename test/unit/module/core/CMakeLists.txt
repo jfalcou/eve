@@ -193,7 +193,6 @@ make_all_units(ROOT core NAME tofloat               ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME toint                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME touint                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME trunc                 ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME ulp                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_minus           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME unary_plus            ARCH scalar simd TYPES ${all_types}     )
