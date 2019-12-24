@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/ulpdist.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
