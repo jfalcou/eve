@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_TWO_SPLIT_HPP_INCLUDED
 
 #include <eve/function/scalar/two_split.hpp>
-//#include <eve/function/simd/two_split.hpp>
+#include <eve/function/simd/two_split.hpp>
 
 #endif

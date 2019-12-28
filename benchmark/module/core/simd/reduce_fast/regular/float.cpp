@@ -1,0 +1,18 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include <eve/function/reduce_fast.hpp>
+#include <eve/wide.hpp>
+
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::reduce_fast
+#define SAMPLES(N)    random<T>(N,0.0f, 200.0f)
+
+#include "bench.hpp"
