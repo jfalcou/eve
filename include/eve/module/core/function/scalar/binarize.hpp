@@ -19,7 +19,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/constant/nan.hpp> 
 #include <type_traits>
 
 namespace eve::detail
@@ -27,7 +27,7 @@ namespace eve::detail
 
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
-                                           logical<U> const & cond) noexcept
+                                           logical<U> const & cond) noexcept 
   requires(U, vectorizable<U>)
   {
     return  bit_and(U(1), cond.bits());

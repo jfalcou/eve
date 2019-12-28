@@ -15,3 +15,4 @@
 #include <eve/module/core/function/scalar/binarize.hpp>
 
 #endif
+ 

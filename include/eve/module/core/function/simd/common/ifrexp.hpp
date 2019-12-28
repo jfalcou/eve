@@ -61,15 +61,14 @@ namespace eve::detail
       auto  [lo, hi] = a0.slice();
       auto  [xhi, ehi]   = raw_(ifrexp)(hi);
       auto  [xlo, elo]   = raw_(ifrexp)(lo);
-      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+      return std::make_tuple(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
     }
     else
     {
       using t_t = wide<T, N, ABI>; 
-      using i_t = as_integer_t<t_t, signed>; 
-      auto r1   = bit_and(Expobits_mask<t_t>(), a0);
-      auto x    = bit_notand(Expobits_mask<t_t>(), a0);
-      return  std::tuple<t_t, i_t>{ bit_or(Half<t_t>(), x), bit_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+      auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
+      auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
+      return  std::make_tuple( bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>());
     }
   }
   
@@ -86,15 +85,13 @@ namespace eve::detail
       auto [lo, hi] = a0.slice();
       auto [xhi, ehi]   = ifrexp(hi);
       auto [xlo, elo]   = ifrexp(lo);
-      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+      return std::make_tuple(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
     }
     else
     {
-      using t_t = wide<T, N, ABI>; 
-      using i_t = as_integer_t<t_t, signed>; 
       auto [m, e] =  raw_(ifrexp)(a0);
       auto test = is_nez(a0);
-      return std::tuple<t_t, i_t>{if_else(test, m, eve::zero_), if_else(test, e, eve::zero_)};
+      return std::make_tuple(if_else(test, m, eve::zero_), if_else(test, e, eve::zero_));
     }
   }
   
@@ -112,7 +109,7 @@ namespace eve::detail
       auto [lo, hi] = a0.slice();
       auto [xhi, ehi]   = pedantic_(ifrexp)(hi);
       auto [xlo, elo]   = pedantic_(ifrexp)(lo);
-      return std::tuple<wide<T, N>, as_integer_t<wide<T, N>>>(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
+      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
     }
     else
     {
@@ -138,7 +135,7 @@ namespace eve::detail
       {
         r1 -= t ;
       }
-      return std::tuple<t_t, i_t>{ if_else(test0, add[test1](r0,aa0), eve::zero_), r1};
+      return std::make_tuple( if_else(test0, add[test1](r0,aa0), eve::zero_), r1);
     }
   }
 }

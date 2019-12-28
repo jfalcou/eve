@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SINCOS_HPP_INCLUDED
 
 #include <eve/function/scalar/sincos.hpp>
-//#include <eve/function/simd/sincos.hpp>
+#include <eve/function/simd/sincos.hpp>
 
 #endif

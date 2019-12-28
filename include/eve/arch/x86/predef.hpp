@@ -85,15 +85,15 @@
 #endif
 
 // Detect any supplemental variants
-#if defined(__FMA__)
+#if defined(__FMA__) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_FMA3
 #endif
 
-#if defined(__FMA4__)
+#if defined(__FMA4__) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_FMA4
 #endif
 
-#if defined(__XOP__)
+#if defined(__XOP__) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_XOP
 #endif
 
