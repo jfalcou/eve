@@ -27,16 +27,9 @@ namespace eve::detail
                                   , T const &a0) noexcept
   requires(T, floating_point<T>)
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return asinh(rec(a0));
-    }
-     else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::acsch scalar ] - type is not an IEEEValue"); 
-    }
+    return asinh(rec(a0));
   }
- 
+  
 }
 
 #endif
