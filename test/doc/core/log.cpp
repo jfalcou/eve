@@ -10,8 +10,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf =                            " << pf << '\n'
             << "-> eve::log(pf) =                  " << eve::log(pf) << '\n'; 
+
   float        xf = -32768.0f;
-  std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                            " << xf << '\n'
