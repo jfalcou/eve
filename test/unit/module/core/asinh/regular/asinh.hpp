@@ -14,6 +14,9 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -41,5 +44,7 @@ TTS_CASE("Check eve::asinh behavior")
   TTS_ULP_EQUAL(eve::asinh(Type( 0.5))         ,  Type(std::asinh(Value(0.5))), 0.5  );
   TTS_ULP_EQUAL(eve::asinh(Type(-0.5))         ,  Type(std::asinh(Value(-0.5))), 0.5  );
   TTS_ULP_EQUAL(eve::asinh(Type( 0. ))         ,  eve::Zero<Type>() , 0   );
+  TTS_EXPECT(eve::all(eve::is_negative(eve::asinh(eve::Minf<Type>()))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::asinh(eve::Inf<Type>()))));   
   TTS_ULP_EQUAL(eve::asinh(Type( 2. ))         ,  Type(std::asinh(Value(2))), 0.5  );
 }

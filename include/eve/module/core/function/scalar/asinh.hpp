@@ -19,6 +19,7 @@
 #include <eve/function/bitwise_xor.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
@@ -39,6 +40,7 @@ namespace eve::detail
   requires(T, floating_point<T>)
   {
     T x = eve::abs(a0);
+    if (is_eqz(a0)) return a0; 
     if constexpr(std::is_same_v<T, double>)
     {
       if  (x < eve::Sqrteps<T>())
