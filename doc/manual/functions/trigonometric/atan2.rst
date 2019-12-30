@@ -66,7 +66,7 @@ Notes
       -  If x is :math:`+\infty` and y is finite and negative, -0 is returned
       -  If either x is Nan or y is Nan, Nan is returned
 
-     The ``pedantic_`` decorator (call to ``eve::atan2[pedantic_](y, x)`` )
+     The ``pedantic_`` decorator (call to ``pedantic_(eve::atan2)(y, x)`` )
      ensures all these conditions, but the regular version
      (no decorator) will return a NaN if x and y are both either null or infinite,
      result which in fact is not more absurd than the IEEE choices.

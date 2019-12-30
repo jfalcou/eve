@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::acscd(xf) =            90
 <- yf =                      -nan
--> eve::acscd(yf) =            -nan
+-> eve::acscd(yf) =            nan

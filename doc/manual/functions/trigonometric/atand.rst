@@ -13,10 +13,9 @@ atand
      constexpr /* implementation defined */ atand = {};
    }
 
-Function object computing the inverse sine in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
+Function object computing the inverse tangent in degrees of an :ref:`IEEEValue <concept-ieeevalue>` **v**
 
-``atand(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[-90, 90[` such that :math:`\sin(r) == x`.
-If :math:`x` is outside :math:`[-1, 1[` the result is a Nan.
+``atand(x)`` returns the arc :math:`r` in the interval in degrees  :math:`[-90, 90[` such that :math:`\tan(r) == x`.
 
 ********
 Synopsis
@@ -28,8 +27,8 @@ Synopsis
    template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
    template<typename T            > constexpr   T         operator()( T s ) noexcept;
 
-* [1] Computes elementwise the mathematical value :math:`\arcsin(v)` in degrees.
-* [2] Computes the mathematical value :math:`\arcsin(s)` in degrees.
+* [1] Computes elementwise the mathematical value :math:`\arctan(v)` in degrees.
+* [2] Computes the mathematical value :math:`\arctan(s)` in degrees.
 
 
 .. rubric:: Parameters

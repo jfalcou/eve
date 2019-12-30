@@ -38,7 +38,7 @@ namespace eve::detail
   {
     using v_t =  value_type_t<T>; 
     using ui_t = as_integer_t<std::conditional_t<is_vectorized_v<T>, T, U>, unsigned>; 
-     if constexpr(std::is_floating_point_v<v_t>)
+    if constexpr(std::is_floating_point_v<v_t>)
     {
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);

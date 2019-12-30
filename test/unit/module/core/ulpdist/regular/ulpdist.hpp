@@ -23,8 +23,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
-//#include <eve/function/next.hpp>
-//#include <eve/function/prev.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <type_traits>
@@ -53,11 +51,11 @@ TTS_CASE("Check eve::ulpdist behavior")
              );
     
     TTS_EQUAL( (ulpdist(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>()))))
-             , Type(0.5)
+             , Type(1)
              );
     
     TTS_EQUAL( (ulpdist(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>()/2))))
-             , Type(0.25)
+             , Type(0.5)
              );
   }
   TTS_EQUAL((ulpdist(eve::Mone<Type>(), eve::Mone<Type>())), eve::Zero<Type>());

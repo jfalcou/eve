@@ -1,0 +1,6 @@
+---- simd
+<- pf =                            (-1, 2, -3, -32768)
+-> eve::rsqrt(pf) =                  (-nan, 0.707107, -nan, -nan)
+---- scalar
+<- xf =                            -32768
+-> eve::rsqrt(xf) =                  -nan
