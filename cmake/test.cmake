@@ -187,8 +187,9 @@ endfunction()
 ##==================================================================================================
 ## Setup TTS
 ##==================================================================================================
-set(TTS_BUILD_TEST OFF CACHE INTERNAL "OFF")
-set(TTS_BUILD_DOC  OFF CACHE INTERNAL "OFF")
+set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
+set(TTS_BUILD_DOC     OFF CACHE INTERNAL "OFF")
+set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
 
 download_project( PROJ                tts
                   GIT_REPOSITORY      https://github.com/jfalcou/tts.git
