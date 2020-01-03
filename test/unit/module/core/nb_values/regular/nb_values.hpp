@@ -20,8 +20,13 @@
 #include <eve/constant/minf.hpp>  
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/mzero.hpp> 
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/is_odd.hpp>
+#include <eve/function/is_even.hpp>
+#include <eve/function/all.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <type_traits>
@@ -57,10 +62,18 @@ TTS_CASE("Check eve::nb_values  behavior")
     TTS_EQUAL( nb_values(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>()/2)))
              , r_t(1)
              );
+    TTS_EQUAL( nb_values(eve::Mzero<Type>(), Type(eve::Zero<Type>()))
+             , r_t(1)
+             );
+    TTS_EXPECT(eve::all(eve::is_odd(nb_values(Type(-10), Type(10))))); 
+  }
+  else if constexpr(std::is_signed_v<Value>)
+  {
+    TTS_EXPECT(eve::all(eve::is_even(nb_values(Type(-10), Type(10)))));
   }
   else
   {
     TTS_EQUAL((nb_values(eve::One<Type>(), Type(10))), (r_t(9)));
-    TTS_EQUAL(nb_values(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<r_t>());
-  }
+    TTS_EQUAL(nb_values(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<r_t>()); 
+  }    
 }
