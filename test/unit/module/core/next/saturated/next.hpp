@@ -14,6 +14,7 @@
 #include <tts/tests/types.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
@@ -56,6 +57,8 @@ TTS_CASE("Check eve::saturated_(eve::next) one parameter behavior")
     TTS_EQUAL(eve::saturated_(eve::next)(eve::Minf<Type>())    , eve::Valmin<Type>());
     TTS_EQUAL(eve::saturated_(eve::next)(eve::Mone<Type>())    , eve::Mone<Type>()+eve::Eps<Type>()/2);
     TTS_EQUAL(eve::saturated_(eve::next)(eve::One<Type>())     , eve::One<Type>()+eve::Eps<Type>());
+    TTS_EQUAL(eve::next(eve::Mzero<Type>())   , (eve::Zero<Type>()));
+    TTS_EQUAL(eve::next(eve::Zero<Type>())    , (eve::Mindenormal<Type>()));
   }
 }
 

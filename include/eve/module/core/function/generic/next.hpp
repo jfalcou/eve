@@ -17,11 +17,17 @@
 #include <eve/module/core/detail/generic/next_kernel.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/add.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
@@ -37,7 +43,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      auto z =  bitfloating(saturated_(inc)(bitinteger(a))); 
+      auto z =  bitfloating(saturated_(inc)(bitinteger(a)));
+      z = if_else (is_negative(a) && is_positive(z), prev(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -63,6 +70,7 @@ namespace eve::detail
     {
       using i_t = as_integer_t<value_type_t<T>>; 
       auto z =  bitfloating(saturated_(add)(bitinteger(a), convert(n, as<i_t>()))); 
+      z = if_else (is_negative(a) && is_positive(z), prev(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -87,6 +95,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
       auto z =  bitfloating(inc(bitinteger(a))); 
+      z = if_else (is_negative(a) && is_positive(z), prev(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -111,6 +120,7 @@ namespace eve::detail
     {
       using i_t = as_integer_t<value_type_t<T>>; 
       auto z =  bitfloating(add(bitinteger(a), convert(n, as<i_t>()))); 
+      z = if_else (is_negative(a) && is_positive(z), prev(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);

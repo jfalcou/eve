@@ -21,6 +21,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/next.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -38,6 +39,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
       auto z =  bitfloating(saturated_(dec)(bitinteger(a))); 
+      z = if_else (is_eqz(a) && is_positive(a), Mzero(as(a)), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -67,6 +69,7 @@ namespace eve::detail
     {
       using i_t = as_integer_t<value_type_t<T>>; 
       auto z =  bitfloating(saturated_(sub)(bitinteger(a), convert(n, as<i_t>()))); 
+      z = if_else (is_negative(z) && is_positive(a), next(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -91,6 +94,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
       auto z =  bitfloating(dec(bitinteger(a))); 
+      z = if_else (is_eqz(a) && is_positive(a), Mzero(as(a)), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);
@@ -115,6 +119,7 @@ namespace eve::detail
     {
       using i_t = as_integer_t<value_type_t<T>>; 
       auto z =  bitfloating(sub(bitinteger(a), convert(n, as<i_t>())));  
+      z = if_else (is_negative(z) && is_positive(a), next(z), z); 
       if constexpr(eve::platform::supports_nans)
       {
         return if_else(is_nan(a), eve::allbits_, z);

@@ -18,8 +18,14 @@
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>    
 #include <type_traits>
 
 TTS_CASE("Check next return type")
@@ -55,6 +61,11 @@ TTS_CASE("Check eve::next one parameter behavior")
     TTS_EQUAL(eve::next(eve::Minf<Type>())    , (eve::Valmin<Type>()));
     TTS_EQUAL(eve::next(eve::Mone<Type>())    , (eve::Mone<Type>()+eve::Eps<Type>()/2));
     TTS_EQUAL(eve::next(eve::One<Type>())     , (eve::One<Type>()+eve::Eps<Type>()));
+    TTS_EQUAL(eve::next(eve::Mzero<Type>())   , (eve::Zero<Type>()));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::next(eve::Mzero<Type>())))); 
+    TTS_EQUAL(eve::next(-eve::Mindenormal<Type>())   , (eve::Mzero<Type>()));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::next(-eve::Mindenormal<Type>())))); 
+    TTS_EQUAL(eve::next(eve::Zero<Type>())    , (eve::Mindenormal<Type>()));
   }
 }
 
@@ -100,5 +111,15 @@ TTS_CASE("Check eve::next two parameters behavior")
     TTS_IEEE_EQUAL(eve::next(eve::Valmax<Value>(), i_t(2)), (eve::Nan<Type>()));
     TTS_EQUAL(eve::next(eve::Mone<Value>(), i_t(2))       , (eve::Mone<Type>()+eve::Eps<Type>()));
     TTS_EQUAL(eve::next(eve::One<Value>(), i_t(2))        , (eve::One<Type>()+eve::Eps<Type>()*2));
+
+    TTS_EQUAL(eve::next(eve::Zero<Type>(), 1)             , (eve::Mindenormal<Type>()));
+    TTS_EQUAL(eve::next(eve::Mzero<Type>(), 1)            , (eve::Zero<Type>()));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::next(eve::Zero<Type>(), 1) ))); 
+    TTS_EQUAL(eve::next(eve::Mzero<Type>(), 2)            , (eve::Mindenormal<Type>()));
+    TTS_EQUAL(eve::next(-eve::Mindenormal<Type>(), 3)     , (eve::Mindenormal<Type>()));
+    TTS_EQUAL(eve::next(-eve::Mindenormal<Type>(), 2)     , (eve::Zero<Type>()));
+    TTS_EQUAL(eve::next(-eve::Mindenormal<Type>(), 1)     , (eve::Mzero<Type>()));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::next(-eve::Mindenormal<Type>(), 1) ))); 
+    TTS_EXPECT(eve::all(eve::is_positive(eve::next(-eve::Mindenormal<Type>(), 2) ))); 
   }
 }
