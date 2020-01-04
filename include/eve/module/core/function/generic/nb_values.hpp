@@ -30,7 +30,6 @@
 
 namespace eve::detail
 {
-
   template<typename T, typename U>
   EVE_FORCEINLINE auto nb_values_(EVE_SUPPORTS(cpu_)
                                  , T const &a
@@ -55,9 +54,6 @@ namespace eve::detail
     else
       return bitwise_cast(dist(a, b), as<ui_t>()); 
   }
-
-
-  
 }
 
 #endif
