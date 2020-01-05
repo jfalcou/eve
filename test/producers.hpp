@@ -80,7 +80,7 @@ namespace eve
     T next()
     {
       T that( current_ );
-      current_ = eve::next(current_);
+      current_ = eve::next(current_, eve::cardinal_v<T>);
 
       return that;
     }
@@ -94,6 +94,13 @@ namespace eve
                 : current_( T(mn) )
                 , size_ ( eve::nb_values(base_type(mn),base_type(mx)) )
     {
+      auto p = tts::detail::begin(current_);
+
+      for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
+      {
+        *p = eve::next(*p,i);
+        ++p;
+      }
     }
 
     template<typename P>
