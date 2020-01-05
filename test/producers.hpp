@@ -43,10 +43,7 @@ namespace eve
 
     std::size_t size() const { return size_; }
 
-    static auto max() { return eve::Valmax<T>(); }
-
-    template<typename V1, typename V2>
-    static auto compare(V1 const& v1, V2 const& v2) { return eve::min(v1,v2); }
+    static auto max() { return eve::Valmax<base_type>(); }
 
     template<typename U, typename V>
     rng_producer(U mn, V mx)
@@ -80,9 +77,6 @@ namespace eve
     using bit_type   = eve::detail::as_integer_t<base_type,signed>;
     using value_type = T;
 
-    template<typename V1, typename V2>
-    static auto compare(V1 const& v1, V2 const& v2) { return eve::min(v1,v2); }
-
     T next()
     {
       T that( current_ );
@@ -91,7 +85,7 @@ namespace eve
       return that;
     }
 
-    static auto max() { return eve::Valmax<T>(); }
+    static auto max() { return eve::Valmax<base_type>(); }
 
     std::size_t size() const { return size_; }
 
