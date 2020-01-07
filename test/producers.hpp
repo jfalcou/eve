@@ -31,7 +31,11 @@ namespace eve
                                                 , std::uniform_real_distribution<base_type>
                                                 , std::uniform_int_distribution<base_type>
                                                 >;
-    T next()
+
+    T first() const noexcept  { return first_; }
+    T last()  const noexcept  { return last_;   }
+
+    T next() noexcept
     {
       T that;
       std::generate ( tts::detail::begin(that),
@@ -41,13 +45,15 @@ namespace eve
       return that;
     }
 
-    std::size_t size() const { return size_; }
+    std::size_t size() const noexcept { return size_; }
 
-    static auto max() { return eve::Valmax<base_type>(); }
+    static auto max() noexcept { return eve::Valmax<base_type>(); }
 
     template<typename U, typename V>
     rng_producer(U mn, V mx)
                 : distribution_(mn,mx)
+                , first_(mn)
+                , last_(mx)
                 , seed_{std::size_t(this->prng_seed()), std::size_t(0), std::size_t(1), this->count()}
                 , generator_(seed_)
                 , size_(this->count())
@@ -64,6 +70,8 @@ namespace eve
 
     private:
     distribution_type distribution_;
+    T                 first_;
+    T                 last_;
     std::seed_seq     seed_;
     std::mt19937      generator_;
     std::size_t       size_;
@@ -77,7 +85,10 @@ namespace eve
     using bit_type   = eve::detail::as_integer_t<base_type,signed>;
     using value_type = T;
 
-    T next()
+    T first() const noexcept  { return first_;  }
+    T last()  const noexcept  { return last_;   }
+
+    T next() noexcept
     {
       T that( current_ );
       current_ = eve::next(current_, eve::cardinal_v<T>);
@@ -85,13 +96,14 @@ namespace eve
       return that;
     }
 
-    static auto max() { return eve::Valmax<base_type>(); }
+    static auto max() noexcept { return eve::Valmax<base_type>(); }
 
-    std::size_t size() const { return size_; }
+    std::size_t size() const noexcept { return size_; }
 
     template<typename U, typename V>
     exhaustive_producer(U mn, V mx)
                 : current_( T(mn) )
+                , first_(mx), last_(mx)
                 , size_ ( eve::nb_values(base_type(mn),base_type(mx)) )
     {
       auto p = tts::detail::begin(current_);
@@ -112,6 +124,7 @@ namespace eve
 
     private:
     T           current_;
+    T           first_, last_;
     std::size_t size_;
   };
 }
