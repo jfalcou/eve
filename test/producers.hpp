@@ -103,7 +103,7 @@ namespace eve
     template<typename U, typename V>
     exhaustive_producer(U mn, V mx)
                 : current_( T(mn) )
-                , first_(mx), last_(mx)
+                , first_(mn), last_(mx)
                 , size_ ( eve::nb_values(base_type(mn),base_type(mx)) )
     {
       auto p = tts::detail::begin(current_);
