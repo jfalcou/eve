@@ -24,13 +24,13 @@ TTS_CASE("wide random check on is_not_finite")
   if constexpr(std::is_floating_point_v<Value>)
   {
     auto std_is_not_finite = tts::vectorize<l_t>( [](auto e) { return (std::fpclassify(e) == FP_INFINITE)
-                                                      ||  (std::fpclassify(e) == FP_NAN)); 
+                                                                     ||  (std::fpclassify(e) == FP_NAN); }); 
     eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }
   else
   {
-    auto std_is_not_finite = tts::vectorize<l_t>( [](auto e) { return falsee; } );
+    auto std_is_not_finite = tts::vectorize<l_t>( [](auto e) { return false; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }

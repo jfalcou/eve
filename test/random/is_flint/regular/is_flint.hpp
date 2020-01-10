@@ -23,8 +23,7 @@ TTS_CASE("wide random check on is_flint")
   using l_t = eve::as_logical_t<Type>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return (e!= e+Value(1))
-                                                 && (std::remainder(e, Value(1)) == Value(0)); } );
+    auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return (std::remainder(e, Value(1)) == Value(0)); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_flint, eve::is_flint);
   }

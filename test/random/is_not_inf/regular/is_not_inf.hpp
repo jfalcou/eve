@@ -29,7 +29,7 @@ TTS_CASE("wide random check on is_not_inf")
   }
   else
   {
-    auto std_is_not_inf = tts::vectorize<Type>( [](auto e) { return true; } );
+    auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return true; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
