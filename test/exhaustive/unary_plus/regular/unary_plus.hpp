@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on unary_plus")
+TTS_CASE("wide exhaustive check on unary_plus")
 {
     auto std_unary_plus = tts::vectorize<Type>( [](auto e) { return e; } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());

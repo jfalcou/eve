@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sinh")
+TTS_CASE("wide exhaustive check on sinh")
 {
   auto std_sinh = tts::vectorize<Type>( [](auto e) { return std::sinh(e); } );
 

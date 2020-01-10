@@ -16,9 +16,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on is_real")
+TTS_CASE("wide exhaustive check on is_real")
 {
-  auto std_is_real = tts::vectorize<Type>( [](auto e) { return std::is_real(e); } );
+  using l_t = eve::as_logical_t<Type>; 
+  auto std_is_real = tts::vectorize<l_t>( [](auto e) { return true; } );
 
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
   TTS_RANGE_CHECK(p, std_is_real, eve::is_real); 

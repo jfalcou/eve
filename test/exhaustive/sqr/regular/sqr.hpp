@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on sqr")
+TTS_CASE("wide exhaustive check on sqr")
 {
   auto std_sqr = tts::vectorize<Type>( [](auto e) { return e*e; } );
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());

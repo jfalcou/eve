@@ -19,7 +19,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on arg")
+TTS_CASE("wide exhaustive check on arg")
 {
   auto std_arg = tts::vectorize<Type>( [](auto e) { return eve::is_negative(e) ? eve::Pi<Value>() : eve::Zero<Value>(); } );
 

@@ -17,15 +17,15 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on iceil")
+TTS_CASE("wide exhaustive check on iceil")
 {
 
   if constexpr(std::is_floating_point_v<Value>)
   {
     using vi_t =  eve::detail::as_integer_t<Type>; 
-    using i_t = value_type_t<vi_t>; 
+    using i_t = eve::detail::value_type_t<vi_t>; 
     auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::exhaustive_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
   }
   else

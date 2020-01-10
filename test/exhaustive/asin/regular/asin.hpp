@@ -14,7 +14,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on asin")
+TTS_CASE("wide exhaustive check on asin")
 {
   auto std_asin = tts::vectorize<Type>( [](auto e) { return std::asin(e); } );
 

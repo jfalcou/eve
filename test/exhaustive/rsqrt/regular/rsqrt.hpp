@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on rsqrt")
+TTS_CASE("wide exhaustive check on rsqrt")
 {
   auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1)/std::sqrt(e); } );
 

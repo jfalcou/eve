@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on log2")
+TTS_CASE("wide exhaustive check on log2")
 {
   auto std_log2 = tts::vectorize<Type>( [](auto e) { return std::log2(e); } );
 

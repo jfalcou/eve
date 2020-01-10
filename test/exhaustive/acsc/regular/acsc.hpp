@@ -17,7 +17,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acsc")
+TTS_CASE("wide exhaustive check on acsc")
 {
   auto std_acsc = tts::vectorize<Type>( [](auto e) { return std::asin(eve::rec(e)); } );
 

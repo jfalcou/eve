@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exponentbits")
+TTS_CASE("wide exhaustive check on exponentbits")
 {
   auto std_exponentbits = tts::vectorize<Type>( [](auto e) { return std::exponentbits(e); } );
 

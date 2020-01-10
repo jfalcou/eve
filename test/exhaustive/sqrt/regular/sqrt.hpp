@@ -9,19 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/sqrt.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sqrt")
+TTS_CASE("wide exhaustive check on sqrt")
 {
   auto std_sqrt = tts::vectorize<Type>( [](auto e) { return std::sqrt(e); } );
 
-  eve::exhaustive_producer<Type> p(-1,1);
-  TTS_RANGE_CHECK(p, std_sqrt, eve::sqrt);
-  eve::exhaustive_producer<Type> p1(Value(0), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p1, std_sqrt, eve::sqrt);
-  
+  eve::exhaustive_producer<Type> p(Value(0), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_sqrt, eve::sqrt); 
 }

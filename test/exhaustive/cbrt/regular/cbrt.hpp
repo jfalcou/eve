@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cbrt")
+TTS_CASE("wide exhaustive check on cbrt")
 {
   auto std_cbrt = tts::vectorize<Type>( [](auto e) { return std::cbrt(e); } );
 

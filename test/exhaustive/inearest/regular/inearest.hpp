@@ -17,18 +17,18 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on inearest")
+TTS_CASE("wide exhaustive check on inearest")
 {
-
+  using i_t =  eve::detail::as_integer_t<Value>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_inearest = tts::vectorize<Type>( [](auto e) { return std::nearbyint(e); } );
+    auto std_inearest = tts::vectorize<i_t>( [](auto e) { return std::nearbyint(e); } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
   }
   else
   {
-    auto std_inearest = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_inearest = tts::vectorize<i_t>( [](auto e) { return e; } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
   }

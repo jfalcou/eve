@@ -18,7 +18,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on prev")
+TTS_CASE("wide exhaustive check on prev")
 {
 
   if constexpr(std::is_floating_point_v<Value>)

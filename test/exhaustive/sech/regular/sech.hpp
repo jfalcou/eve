@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sech")
+TTS_CASE("wide exhaustive check on sech")
 {
   auto std_sech = tts::vectorize<Type>( [](auto e) { return Value(1)/std::cosh(e); } );
 

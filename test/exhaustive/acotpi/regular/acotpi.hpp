@@ -18,7 +18,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acotpi")
+TTS_CASE("wide exhaustive check on acotpi")
 {
   auto std_acotpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::atan(eve::rec(e)); } );
 

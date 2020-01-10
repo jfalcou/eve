@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on atan")
+TTS_CASE("wide exhaustive check on atan")
 {
   auto std_atan = tts::vectorize<Type>( [](auto e) { return std::atan(e); } );
 

@@ -11,33 +11,26 @@
 #include <eve/function/is_finite.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on is_finite")
+TTS_CASE("wide exhaustive check on is_finite")
 {
-
+  using l_t = eve::as_logical_t<Type>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_is_finite = tts::vectorize<Type>( [](auto e) { return std::is_finite(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_finite = tts::vectorize<Type>( [](auto e) { return  std::is_finite(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
-  }
-  else
-  {
-    auto std_is_finite = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_is_finite = tts::vectorize<l_t>( [](auto e) { return std::isfinite(e); } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
   }
-  
-  
+  else 
+  {
+    auto std_is_finite = tts::vectorize<l_t>( [](auto e) { return  true; } );
+    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
+  }
 }

@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on ifrexp")
+TTS_CASE("wide exhaustive check on ifrexp")
 {
   auto std_ifrexp = tts::vectorize<Type>( [](auto e) { return std::ifrexp(e); } );
 

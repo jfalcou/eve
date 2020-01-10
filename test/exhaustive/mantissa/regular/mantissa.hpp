@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on mantissa")
+TTS_CASE("wide exhaustive check on mantissa")
 {
   auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp);  }; 
   auto std_mantissa = tts::vectorize<Type>( [ internal_f ](auto e) { return internal_f(e); } );

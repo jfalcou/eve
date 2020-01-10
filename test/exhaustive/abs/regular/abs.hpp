@@ -13,22 +13,23 @@
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
-#include "producers.hpp"  
-#include <type_traits> 
+#include "producers.hpp"
+#include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on abs")
+TTS_CASE("wide exhaustive check on abs")
 {
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) { return std::abs(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_abs = tts::vectorize<Type>( [](auto e) { return (e < 0) ? -e : e; } );
+    eve::exhaustive_producer<Type> p(-1,1);
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else if constexpr(std::is_signed_v<Value>)
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) { return (e < 0) ? -e : e; } );
+    auto std_abs = tts::vectorize<Type>( [](auto e) {
+                                           return (e < 0) ? -e : e; } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }

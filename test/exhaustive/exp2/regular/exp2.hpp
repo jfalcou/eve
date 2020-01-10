@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exp2")
+TTS_CASE("wide exhaustive check on exp2")
 {
   auto std_exp2 = tts::vectorize<Type>( [](auto e) { return std::exp2(e); } );
 

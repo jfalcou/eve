@@ -17,7 +17,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on csch")
+TTS_CASE("wide exhaustive check on csch")
 {
   auto std_csch = tts::vectorize<Type>( [](auto e) { return eve::rec(std::sin(e)); } );
 

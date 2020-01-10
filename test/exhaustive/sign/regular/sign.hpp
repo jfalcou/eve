@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on sign")
+TTS_CASE("wide exhaustive check on sign")
 {
 
   if constexpr(std::is_signed_v<Value>)

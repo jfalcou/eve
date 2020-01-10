@@ -15,7 +15,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on asind")
+TTS_CASE("wide exhaustive check on asind")
 {
   auto std_asind = tts::vectorize<Type>( [](auto e) { return eve::indeg(std::asin(e)); } );
 

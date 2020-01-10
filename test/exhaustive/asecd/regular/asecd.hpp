@@ -18,7 +18,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on asecd")
+TTS_CASE("wide exhaustive check on asecd")
 {
   auto std_asecd = tts::vectorize<Type>( [](auto e) { return eve::indeg(std::acos(eve::rec(e))); } );
 

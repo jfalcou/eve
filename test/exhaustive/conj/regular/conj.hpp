@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on conj")
+TTS_CASE("wide exhaustive check on conj")
 {
   auto std_conj = tts::vectorize<Type>( [](auto e) { return e; } );
 

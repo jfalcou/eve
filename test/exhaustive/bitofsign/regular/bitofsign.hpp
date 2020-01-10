@@ -20,7 +20,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on bitofsign")
+TTS_CASE("wide exhaustive check on bitofsign")
 {
 
   if constexpr(std::is_floating_point_v<Value>)
@@ -32,7 +32,9 @@ TTS_CASE("wide random check on bitofsign")
   }
   else if constexpr(std::is_signed_v<Value>)
   {
-    auto std_bitofsign = tts::vectorize<Type>( [](auto e) { return  Value(+std::signbit(e) << (sizeof(e)*8-1)); } );
+    auto std_bitofsign = tts::vectorize<Type>( [](auto e) {
+                                                 using i_t = eve::detail::as_integer_t<Value>; 
+                                                 return  Value(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }

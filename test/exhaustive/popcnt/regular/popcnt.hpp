@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on popcnt")
+TTS_CASE("wide exhaustive check on popcnt")
 {
   auto std_popcnt = tts::vectorize<Type>( [](auto e) { return std::popcnt(e); } );
 

@@ -17,7 +17,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on atanpi")
+TTS_CASE("wide exhaustive check on atanpi")
 {
   auto std_atanpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::atan(e); } );
 

@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on frexp")
+TTS_CASE("wide exhaustive check on frexp")
 {
   auto std_frexp = tts::vectorize<Type>( [](auto e) { return std::frexp(e); } );
 

@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on rec")
+TTS_CASE("wide exhaustive check on rec")
 {
   auto std_rec = tts::vectorize<Type>( [](auto e) { return Value(1)/e; } );
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());

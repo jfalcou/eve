@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acot")
+TTS_CASE("wide exhaustive check on acot")
 {
   auto std_acot = tts::vectorize<Type>( [](auto e) { return std::atan(eve::rec(e)); } );
 

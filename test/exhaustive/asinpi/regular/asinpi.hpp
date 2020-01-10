@@ -15,7 +15,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on asinpi")
+TTS_CASE("wide exhaustive check on asinpi")
 {
   auto std_asinpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::asin(e); } );
 

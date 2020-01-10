@@ -16,7 +16,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acosh")
+TTS_CASE("wide exhaustive check on acosh")
 {
   auto std_acosh = tts::vectorize<Type>( [](auto e) { return std::acosh(e); } );
 

@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on oneminus")
+TTS_CASE("wide exhaustive check on oneminus")
 {
   auto std_oneminus = tts::vectorize<Type>( [](auto e) { return Value(1)-e; } );
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());

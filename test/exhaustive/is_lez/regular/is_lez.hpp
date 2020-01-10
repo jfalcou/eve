@@ -11,33 +11,17 @@
 #include <eve/function/is_lez.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on is_lez")
+TTS_CASE("wide exhaustive check on is_lez")
 {
-
-  if constexpr(std::is_floating_point_v<Value>)
-  {
-    auto std_is_lez = tts::vectorize<Type>( [](auto e) { return std::is_lez(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_lez, eve::is_lez);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_lez = tts::vectorize<Type>( [](auto e) { return  std::is_lez(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_lez, eve::is_lez);
-  }
-  else
-  {
-    auto std_is_lez = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_lez, eve::is_lez);
-  }
-  
-  
+  using l_t = eve::as_logical_t<Type>; 
+  auto std_is_lez = tts::vectorize<l_t>( [](auto e) { return e <= Value(0); } );
+  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_is_lez, eve::is_lez);
 }

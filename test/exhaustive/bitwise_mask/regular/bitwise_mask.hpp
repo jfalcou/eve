@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on bitwise_mask")
+TTS_CASE("wide exhaustive check on bitwise_mask")
 {
   auto std_bitwise_mask = tts::vectorize<Type>( [](auto e) { return e ? eve::Allbits<Value>() : eve::Zero<Value>(); } );
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());

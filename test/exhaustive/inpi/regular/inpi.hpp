@@ -17,7 +17,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on inpi")
+TTS_CASE("wide exhaustive check on inpi")
 {
   auto std_inpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*e; } );
 

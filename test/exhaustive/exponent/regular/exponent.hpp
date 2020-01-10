@@ -18,7 +18,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exponent")
+TTS_CASE("wide exhaustive check on exponent")
 {
   using i_t = eve::detail::as_integer_t<Value>; 
   auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); }; 

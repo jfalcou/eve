@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on bitwise_not")
+TTS_CASE("wide exhaustive check on bitwise_not")
 {
   auto std_bitwise_not = tts::vectorize<Type>( [](auto e) { return  ~Value(e); } );
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
