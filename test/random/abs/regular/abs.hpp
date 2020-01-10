@@ -22,16 +22,15 @@ TTS_CASE("wide random check on abs")
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) { return std::abs(e); } );
+    auto std_abs = tts::vectorize<Type>( [](auto e) { return (e < 0) ? -e : e; } );
     eve::rng_producer<Type> p(-1,1);
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else if constexpr(std::is_signed_v<Value>)
   {
     auto std_abs = tts::vectorize<Type>( [](auto e) {
-                                           std::cout << int(e) << std::endl;
                                            return (e < 0) ? -e : e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else

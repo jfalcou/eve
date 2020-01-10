@@ -11,6 +11,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,25 +20,8 @@
 
 TTS_CASE("wide random check on is_eqz")
 {
-
-  if constexpr(std::is_floating_point_v<Value>)
-  {
-    auto std_is_eqz = tts::vectorize<Type>( [](auto e) { return std::is_eqz(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_eqz, eve::is_eqz);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_eqz = tts::vectorize<Type>( [](auto e) { return  std::is_eqz(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_eqz, eve::is_eqz);
-  }
-  else
-  {
-    auto std_is_eqz = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_eqz, eve::is_eqz);
-  }
-  
-  
+  using l_t = eve::as_logical_t<Type>; 
+  auto std_is_eqz = tts::vectorize<l_t>( [](auto e) { return e == Value(e); } );
+  eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_is_eqz, eve::is_eqz);
 }

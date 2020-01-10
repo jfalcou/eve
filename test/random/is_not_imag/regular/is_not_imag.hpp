@@ -18,7 +18,8 @@
 
 TTS_CASE("wide random check on is_not_imag")
 {
-  auto std_is_not_imag = tts::vectorize<Type>( [](auto e) { return std::is_not_imag(e); } );
+  using l_t =  eve::as_logical_t<Type>;
+   auto std_is_not_imag = tts::vectorize<l_t>( [](auto e) { return e!= Value(0); } );
 
   eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
   TTS_RANGE_CHECK(p, std_is_not_imag, eve::is_not_imag); 

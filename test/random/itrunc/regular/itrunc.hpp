@@ -19,22 +19,16 @@
 
 TTS_CASE("wide random check on itrunc")
 {
-
+  using vi_t =  eve::detail::as_integer_t<Type>;
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_itrunc = tts::vectorize<Type>( [](auto e) { return std::itrunc(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_itrunc = tts::vectorize<Type>( [](auto e) { return  std::itrunc(e); } );
+    auto std_itrunc = tts::vectorize<i_t>( [](auto e) { return std::itrunc(e); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
   }
   else
   {
-    auto std_itrunc = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_itrunc = tts::vectorize<i_t>( [](auto e) { return e; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
   }

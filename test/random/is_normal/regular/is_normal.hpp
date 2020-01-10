@@ -11,6 +11,7 @@
 #include <eve/function/is_normal.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,22 +20,16 @@
 
 TTS_CASE("wide random check on is_normal")
 {
-
+  using l_t = eve::as_logical_t<Type>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_is_normal = tts::vectorize<Type>( [](auto e) { return std::is_normal(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_normal, eve::is_normal);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_normal = tts::vectorize<Type>( [](auto e) { return  std::is_normal(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_is_normal = tts::vectorize<l_t>( [](auto e) { return std::fpclassify(e) == FP_NORMAL; } );
+    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_normal, eve::is_normal);
   }
   else
   {
-    auto std_is_normal = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_is_normal = tts::vectorize<l_t>( [](auto e) { return e !=  Value(0); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_normal, eve::is_normal);
   }

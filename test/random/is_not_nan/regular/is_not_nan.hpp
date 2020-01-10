@@ -11,6 +11,7 @@
 #include <eve/function/is_not_nan.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -22,19 +23,14 @@ TTS_CASE("wide random check on is_not_nan")
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_is_not_nan = tts::vectorize<Type>( [](auto e) { return std::is_not_nan(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_not_nan, eve::is_not_nan);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_not_nan = tts::vectorize<Type>( [](auto e) { return  std::is_not_nan(e); } );
+    using l_t =  eve::as_logical_t<Type>;
+    auto std_is_not_nan = tts::vectorize<l_t>( [](auto e) { return e == e; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_nan, eve::is_not_nan);
   }
   else
   {
-    auto std_is_not_nan = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_is_not_nan = tts::vectorize<l_t>( [](auto e) { return truee; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_nan, eve::is_not_nan);
   }

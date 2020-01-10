@@ -19,17 +19,17 @@
 
 TTS_CASE("wide random check on ifloor")
 {
-
+  using vi_t =  eve::detail::as_integer_t<Type>;
   if constexpr(std::is_floating_point_v<Value>)
   {
     using i_t =  eve::detail::as_integer_t<Value>; 
-    auto std_ifloor = tts::vectorize<Type>( [](auto e) { return i_t(std::floor(e)); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_ifloor = tts::vectorize<vi_t>( [](auto e) { return i_t(std::floor(e)); } );
+    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_ifloor, eve::ifloor);
   }
   else
   {
-    auto std_ifloor = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_ifloor = tts::vectorize<vi_t>( [](auto e) { return e; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_ifloor, eve::ifloor);
   }

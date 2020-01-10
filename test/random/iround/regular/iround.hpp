@@ -19,22 +19,17 @@
 
 TTS_CASE("wide random check on iround")
 {
-
+  using vi_t =  eve::detail::as_integer_t<Type>;
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_iround = tts::vectorize<Type>( [](auto e) { return std::iround(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_iround, eve::iround);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_iround = tts::vectorize<Type>( [](auto e) { return  std::iround(e); } );
+    using i_t =  eve::detail::as_integer_t<Value>; 
+    auto std_iround = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_iround, eve::iround);
   }
   else
   {
-    auto std_iround = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_iround = tts::vectorize<vi_t>( [](auto e) { return e; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_iround, eve::iround);
   }

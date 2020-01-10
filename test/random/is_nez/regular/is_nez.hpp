@@ -19,25 +19,8 @@
 
 TTS_CASE("wide random check on is_nez")
 {
-
-  if constexpr(std::is_floating_point_v<Value>)
-  {
-    auto std_is_nez = tts::vectorize<Type>( [](auto e) { return std::is_nez(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_nez, eve::is_nez);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_nez = tts::vectorize<Type>( [](auto e) { return  std::is_nez(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_nez, eve::is_nez);
-  }
-  else
-  {
-    auto std_is_nez = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_nez, eve::is_nez);
-  }
-  
-  
+  using l_t = eve::as_logical_t<Type>; 
+  auto std_is_nez = tts::vectorize<l_t>( [](auto e) { return e!= Value(0); } );
+  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_is_nez, eve::is_nez); 
 }

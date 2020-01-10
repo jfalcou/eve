@@ -11,6 +11,7 @@
 #include <eve/function/is_not_inf.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,22 +20,16 @@
 
 TTS_CASE("wide random check on is_not_inf")
 {
-
+  using l_t =  eve::as_logical_t<Type>;
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_is_not_inf = tts::vectorize<Type>( [](auto e) { return std::is_not_inf(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_is_not_inf = tts::vectorize<Type>( [](auto e) { return  std::is_not_inf(e); } );
+    auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return !std::isinf(e); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
   else
   {
-    auto std_is_not_inf = tts::vectorize<Type>( [](auto e) { return e; } );
+    auto std_is_not_inf = tts::vectorize<Type>( [](auto e) { return true; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
