@@ -15,10 +15,12 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/module/core/detail/generic/cbrt_kernel.hpp>
 #include <type_traits>
 #include <tuple>
@@ -44,12 +46,16 @@ namespace eve::detail
         sqr_cbtr2
       };
     
-    if(is_eqz(x) || is_not_finite(x)) return x; 
+    if(is_eqz(x) || is_not_finite(x)) return x;
+    auto ax =  eve::abs (x); 
+    auto test = (ax < 100*Smallestposval<T>());
+    if (test) ax = ldexp(ax, 54); 
     /* Reduce X.  XM now is an range 1.0 to 0.5.  */
-    auto [xm, xe] = raw_(ifrexp)(eve::abs (x));
+    auto [xm, xe] = raw_(ifrexp)(ax);
     T u = cbrt_kernel(xm); 
     u *= factor[2 + xe % 3];
-    return eve::ldexp(x > 0.0 ? u : -u, xe / 3);
+    auto exp = sub[test](int(xe)/3, 18); 
+    return eve::ldexp(x > 0.0 ? u : -u, exp);
   }
 
 }
