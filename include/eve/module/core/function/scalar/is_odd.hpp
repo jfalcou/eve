@@ -28,7 +28,10 @@ namespace eve::detail
   is_odd_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
-      return is_even(dec(a));
+    {
+      auto da = dec(a);     
+      return (a!= da) && is_even(da);
+    }
     else
       return (a & One(as(a)));
   }
