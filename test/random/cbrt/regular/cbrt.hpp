@@ -22,6 +22,4 @@ TTS_CASE("wide random check on cbrt")
 
   eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
   TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt); 
-  eve::rng_producer<Type> p1(-100, 100);
-  TTS_RANGE_CHECK(p1, std_cbrt, eve::cbrt); 
 }

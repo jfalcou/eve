@@ -14,10 +14,13 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/function/add.hpp>    
 #include <eve/function/abs.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_less.hpp>
 #include <eve/function/is_ltz.hpp>  
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/ldexp.hpp>
@@ -51,13 +54,16 @@ namespace eve::detail
          cbtr2,
          sqr_cbtr2
        };
-     
+     auto ax = eve::abs (x);
+     auto test = is_less(eve::abs(x), T(100)*Smallestposval<T>());
+     ax = if_else(test, ldexp(ax, 54), ax); 
      /* Reduce X.  XM now is an range  [0.5, 1.0].  */
-     auto [xm, xe] = raw_(ifrexp)(eve::abs (x));
+     auto [xm, xe] = raw_(ifrexp)(ax);
      T u = cbrt_kernel(xm); 
      u *= gather(&factor[0], 2 + xe-(xe/3)*3);
-     u = unary_minus[is_ltz(x)](u); 
-     return if_else(is_eqz(x) || is_not_finite(x), x, eve::ldexp(u, xe/3)); 
+     u = unary_minus[is_ltz(x)](u);
+     auto exp = add[test](xe/3, -18);
+     return if_else(is_eqz(x) || is_not_finite(x), x, eve::ldexp(u, exp)); 
    }
   }
 }
