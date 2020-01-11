@@ -24,7 +24,7 @@ TTS_CASE("wide exhaustive check on iround")
   {
     using i_t =  eve::detail::as_integer_t<Value>; 
     auto std_iround = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_iround, eve::iround);
   }
   else

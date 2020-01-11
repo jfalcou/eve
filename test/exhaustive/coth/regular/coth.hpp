@@ -19,10 +19,10 @@
 
 TTS_CASE("wide exhaustive check on coth")
 {
-  auto std_coth = tts::vectorize<Type>( [](auto e) { return eve;::rec(std::tanh(e)); } );
+  auto std_coth = tts::vectorize<Type>( [](auto e) { return eve::rec(std::tanh(e)); } );
 
   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), Value(-1));
   TTS_RANGE_CHECK(p, std_coth, eve::coth); 
-  eve::exhaustive_producer<Type> p(Value(1), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_coth, eve::coth); 
+  eve::exhaustive_producer<Type> p1(Value(1), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p1, std_coth, eve::coth); 
 }

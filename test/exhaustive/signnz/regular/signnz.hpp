@@ -22,7 +22,7 @@ TTS_CASE("wide exhaustive check on signnz")
 
   if constexpr(std::is_signed_v<Value>)
   {
-    auto std_signnz = tts::vectorize<Type>( [](auto e) {  return e >= 0 ? Value(1) : Value(-1); } );
+    auto std_signnz = tts::vectorize<Type>( [](auto e) {  return std::signbit(e) ? Value(-1) : Value(1); } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
