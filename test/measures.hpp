@@ -71,7 +71,7 @@ namespace tts::ext
   {
     inline double operator()(eve::logical<T> const &l, eve::logical<T> const &r) const
     {
-      return tts::ulpdist(l.bits(), r.bits());
+      return tts::ulpdist(-l.bits(), -r.bits());
     }
   };
 

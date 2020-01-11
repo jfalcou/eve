@@ -29,7 +29,15 @@ namespace eve::detail
   {
     return inpi(asec(a0));
   }
-
+  
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto asecpi_(EVE_SUPPORTS(cpu_)
+                                  , pedantic_type const &       
+                                  , T const &a0) noexcept
+  requires(T, behave_as<floating_point,T>)
+  {
+    return inpi(pedantic_(asec)(a0));
+  }
 }
 
 #endif
