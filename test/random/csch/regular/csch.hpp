@@ -10,8 +10,8 @@
 //==================================================================================================
 #include <eve/function/csch.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/constant/minlog.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,8 +19,8 @@
 
 TTS_CASE("wide random check on csch")
 {
-  auto std_csch = tts::vectorize<Type>( [](auto e) { return eve::rec(std::sin(e)); } );
+  auto std_csch = tts::vectorize<Type>( [](auto e) { return eve::rec(std::sinh(e)); } );
 
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<Type> p(-eve::Maxlog<Value>()+1, eve::Maxlog<Value>()-1);
   TTS_RANGE_CHECK(p, std_csch, eve::csch); 
 }

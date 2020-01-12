@@ -20,6 +20,6 @@ TTS_CASE("wide random check on expm1")
 {
   auto std_expm1 = tts::vectorize<Type>( [](auto e) { return std::expm1(e); } );
 
-  eve::rng_producer<Type> p(eve::Minlog<Value>(), eve::Maxlog<Value>());
+  eve::rng_producer<Type> p(eve::Minlog<Value>(), eve::Maxlog<Value>()-1);
   TTS_RANGE_CHECK(p, std_expm1, eve::expm1); 
 }
