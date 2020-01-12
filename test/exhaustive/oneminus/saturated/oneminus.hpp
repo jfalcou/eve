@@ -22,8 +22,8 @@ TTS_CASE("wide exhaustive check on oneminus")
 
   if constexpr(std::is_signed_v<Value>)
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return e == eve::Valmin<Value>() ? Valmax<Value>() : Value(1)-e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return e <= eve::Valmin<Value>()+1 ? Valmax<Value>() : Value(1)-e; } );
+    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
   }
   else
