@@ -51,10 +51,10 @@ namespace eve::detail
     else
     {
       using t_t = eve::wide<T,N,ABI>;
-      auto z = Pio_2(as(a0))-eve::asin(a0);
       // small correction with pio_2lo
       return if_else(a0 == One(as(a0)), eve::zero_,
-                     z+ Ieee_constant<t_t, 0XB33BBD2EU, 0X3C91A62633145C07ULL>());
+                     Pio_2(as(a0)) +  (Ieee_constant<t_t, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0)));
+
     }
   }
 
