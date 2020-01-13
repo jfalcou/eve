@@ -61,9 +61,9 @@ namespace eve
     }
 
     template<typename P>
-    rng_producer ( P const& src, std::size_t i, std::size_t p, std::size_t s)
+    rng_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t s)
                   : distribution_(src.self().distribution_)
-                  , seed_{std::size_t(this->prng_seed()),i,p,s}
+                  , seed_{std::size_t(this->prng_seed()),i0,i1,s}
                   , generator_(seed_)
                   , size_(src.self().size_)
     {}
@@ -116,10 +116,10 @@ namespace eve
     }
 
     template<typename P>
-    exhaustive_producer ( P const& src, std::size_t i, std::size_t p, std::size_t)
+    exhaustive_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t)
                   : exhaustive_producer(src.self())
     {
-      current_ = eve::next(current_,i*p);
+      current_ = eve::next(current_,i0);
     }
 
     private:
