@@ -32,11 +32,11 @@ namespace eve::detail
   
   template<typename T>
   EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
-                                  , pedantic_type const &      
+                                  , raw_type const &      
                                   , T const &a0) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(pedantic_(asec)(a0));
+    return indeg(raw_(asec)(a0));
   }
 
 }

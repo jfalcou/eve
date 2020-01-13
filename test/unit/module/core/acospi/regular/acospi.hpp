@@ -42,14 +42,14 @@ TTS_CASE("Check eve::acospi behavior")
 
   TTS_EXPECT( all(eve::is_positive(eve::acospi(Type(1.)))) );
 
-  TTS_ULP_EQUAL(eve::acospi(Type(8.414715528e-01)), Type(inpi(std::acos(Value(8.414715528e-01)))), 2.0 );
-  TTS_ULP_EQUAL(eve::acospi(Type(9.689134359e-01)), Type(inpi(std::acos(Value(9.689134359e-01)))), 4.0 );
-  TTS_ULP_EQUAL(eve::acospi(Type(9.922192097e-01)), Type(inpi(std::acos(Value(9.922192097e-01)))), 7.5 );
-  TTS_ULP_EQUAL(eve::acospi(Type(9.995127916e-01)), Type(inpi(std::acos(Value(9.995127916e-01)))), 26.5);
-  TTS_ULP_EQUAL(eve::acospi(Type(9.998779893e-01)), Type(inpi(std::acos(Value(9.998779893e-01)))), 44.5);
-  TTS_ULP_EQUAL(eve::acospi(Type(9.999695420e-01)), Type(inpi(std::acos(Value(9.999695420e-01)))), 142);
-  TTS_ULP_EQUAL(eve::acospi(Type(9.999927878e-01)), Type(inpi(std::acos(Value(9.999927878e-01)))), 234 );
-  TTS_ULP_EQUAL(eve::acospi(Type(9.999984503e-01)), Type(inpi(std::acos(Value(9.999984503e-01)))), 361.5);
-  TTS_ULP_EQUAL(eve::acospi(Type(9.999996424e-01)), Type(inpi(std::acos(Value(9.999996424e-01)))), 867.5);
-  TTS_ULP_EQUAL(eve::acospi(Type(9.999999404e-01)), Type(inpi(std::acos(Value(9.999999404e-01)))), 2081.0);
+  TTS_ULP_EQUAL(eve::acospi(Type(8.414715528e-01)), Type(inpi(std::acos(Value(8.414715528e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.689134359e-01)), Type(inpi(std::acos(Value(9.689134359e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.922192097e-01)), Type(inpi(std::acos(Value(9.922192097e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.995127916e-01)), Type(inpi(std::acos(Value(9.995127916e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.998779893e-01)), Type(inpi(std::acos(Value(9.998779893e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.999695420e-01)), Type(inpi(std::acos(Value(9.999695420e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.999927878e-01)), Type(inpi(std::acos(Value(9.999927878e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.999984503e-01)), Type(inpi(std::acos(Value(9.999984503e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.999996424e-01)), Type(inpi(std::acos(Value(9.999996424e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(Type(9.999999404e-01)), Type(inpi(std::acos(Value(9.999999404e-01)))), 1);
 }

@@ -32,26 +32,23 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
+                                  , raw_type const &     
                                   , T const &a0) noexcept
   requires(T, floating_point<T>)
   {
     if(a0 == One(as(a0))) return Zero(as(a0));
-      return Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
-//     T z = Pio_2<T>()-eve::asin(a0);
-//     // small correction with pio_2lo
-//     return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
+    return Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
-                                      ,  pedantic_type const &
                                       , T const &a0) noexcept
   requires(T, floating_point<T>)
   {

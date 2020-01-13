@@ -53,3 +53,4 @@ TTS_CASE("Check eve::acosd behavior")
   TTS_ULP_EQUAL(eve::acosd(Type(9.999996424e-01)), Type(indeg(std::acos(Value(9.999996424e-01)))), 867.5);
   TTS_ULP_EQUAL(eve::acosd(Type(9.999999404e-01)), Type(indeg(std::acos(Value(9.999999404e-01)))), 1643.5);
 }
+
