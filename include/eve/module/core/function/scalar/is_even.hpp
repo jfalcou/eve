@@ -16,7 +16,10 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -28,7 +31,16 @@ namespace eve::detail
   is_even_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
-      return is_flint(a * Half(as(a)));
+    {
+      if ( is_flint(a * Half(as(a))))
+      {
+        if constexpr(eve::platform::supports_denormals)
+          return abs(a) != Mindenormal<T>();
+        else
+          return abs(a) != Smallestposval<T>();
+      }
+      else return false; 
+    }
     else
       return (!(a & One(as(a))));
   }

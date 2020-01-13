@@ -18,8 +18,9 @@
 #include <eve/constant/one.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/is_not_equal.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -31,7 +32,10 @@ namespace eve::detail
   is_odd_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorized<T>)
   {
     if constexpr(std::is_floating_point_v<typename T::value_type>)
-      return is_even(dec(a));
+    {
+      auto da = dec(a);     
+      return (a!= da) && is_even(da);
+    }
     else
       return is_nez(bitwise_and(a, One(as(a))));
   }
