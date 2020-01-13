@@ -19,7 +19,7 @@
 
 TTS_CASE("wide exhaustive check on acoth")
 {
-  auto std_acoth = tts::vectorize<Type>( [](auto e) { return std::tanh(eve::rec(e)); } );
+  auto std_acoth = tts::vectorize<Type>( [](auto e) { return std::atanh(eve::rec(e)); } );
 
   eve::exhaustive_producer<Type> p1(Value(1), eve::Valmax<Value>());
   TTS_RANGE_CHECK(p1, std_acoth, eve::acoth); 

@@ -22,8 +22,8 @@ TTS_CASE("wide exhaustive check on sign")
 
   if constexpr(std::is_signed_v<Value>)
   {
-    auto std_sign = tts::vectorize<Type>( [](auto e) { return e > 0 ? Value(1) : ((e < 0) ? Value(0) : Value(-1)); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_sign = tts::vectorize<Type>( [](auto e) { return e > 0 ? Value(1) : ((e == 0) ? Value(0) : Value(-1)); } );
+    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_sign, eve::sign);
   }
   else
