@@ -76,7 +76,7 @@ make_all_units(ROOT random NAME is_ngtz           ARCH scalar simd TYPES ${all_t
 make_all_units(ROOT random NAME is_nlez           ARCH scalar simd TYPES ${all_types}       CARDINAL -1)    
 make_all_units(ROOT random NAME is_nltz           ARCH scalar simd TYPES ${all_types}       CARDINAL -1)  
 make_all_units(ROOT random NAME is_normal         ARCH scalar simd TYPES ${all_types}       CARDINAL -1)     
-make_all_units(ROOT random NAME is_not_denormal   ARCH scalar simd TYPES ${all_types}       CARDINAL -1)         
+make_all_units(ROOT random NAME is_not_denormal   ARCH scalar simd TYPES ${all_types}       CARDINAL -1)          
 make_all_units(ROOT random NAME is_not_finite     ARCH scalar simd TYPES ${all_types}       CARDINAL -1)    
 make_all_units(ROOT random NAME is_not_imag       ARCH scalar simd TYPES ${all_types}       CARDINAL -1)      
 make_all_units(ROOT random NAME is_not_inf        ARCH scalar simd TYPES ${all_types}       CARDINAL -1)     
