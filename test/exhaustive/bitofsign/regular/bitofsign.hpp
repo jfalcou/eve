@@ -37,5 +37,5 @@ TTS_CASE("wide exhaustive check on bitofsign")
                                                  return  Value(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
-  }  
+  }
 }
