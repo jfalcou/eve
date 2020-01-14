@@ -21,8 +21,8 @@
 
 namespace eve
 {
-  template<typename T>
-  struct rng_producer : tts::producer<rng_producer<T>>
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+  template<typename T>  struct rng_producer : tts::producer<rng_producer<T>>
   {
     using base_type  = eve::detail::value_type_t<T>;
     using value_type = T;
@@ -51,12 +51,12 @@ namespace eve
 
     template<typename U, typename V>
     rng_producer(U mn, V mx)
-                : distribution_(mn,mx)
-                , first_(mn)
-                , last_(mx)
-                , seed_{std::size_t(this->prng_seed()), std::size_t(0), std::size_t(1), this->count()}
-                , generator_(seed_)
-                , size_(this->count())
+      : distribution_(mn,mx)
+      , first_(mn)
+      , last_(mx)
+      , seed_{std::size_t(this->prng_seed()), std::size_t(0), std::size_t(1), this->count()}
+      , generator_(seed_)
+        , size_(this->count())
     {
     }
 
@@ -77,7 +77,7 @@ namespace eve
     std::size_t       size_;
   };
 
-
+  //////////////////////////////////////////////////////////////////////
   template<typename T>
   struct exhaustive_producer : tts::producer<exhaustive_producer<T>>
   {
