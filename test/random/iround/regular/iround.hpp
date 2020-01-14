@@ -24,7 +24,7 @@ TTS_CASE("wide random check on iround")
   {
     using i_t =  eve::detail::as_integer_t<Value>; 
     auto std_iround = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    eve::rng_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_iround, eve::iround);
   }
   else

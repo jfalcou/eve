@@ -29,7 +29,7 @@ TTS_CASE("wide random check on next")
   }
   else
   {
-    auto std_next = tts::vectorize<Type>( [](auto e) { return e == eve::Valmax<Value>(); } );
+    auto std_next = tts::vectorize<Type>( [](auto e) { return e == eve::Valmax<Value>() ? eve::Valmin<Value>() : e+1; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_next, eve::next);
   }

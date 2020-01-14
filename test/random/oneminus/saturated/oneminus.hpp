@@ -20,23 +20,17 @@
 TTS_CASE("wide random check on oneminus")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_signed_v<Value>)
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return Value(1)-e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return  Value(1)-e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
+    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return e <= eve::Valmin<Value>()+1 ? eve::Valmax<Value>() : Value(1)-e; } );
+    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated_(eve::oneminus));
   }
   else
   {
     auto std_oneminus = tts::vectorize<Type>( [](auto e) { return (e <= 1) ? Value(1)-e : Value(0); } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
+    TTS_RANGE_CHECK(p, std_oneminus, eve::saturated_(eve::oneminus));
   }
   
   

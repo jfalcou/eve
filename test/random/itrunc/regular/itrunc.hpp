@@ -24,7 +24,7 @@ TTS_CASE("wide random check on itrunc")
   {
     using i_t =  eve::detail::as_integer_t<Value>;
     auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return i_t(std::trunc(e)); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    eve::rng_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
   }
   else

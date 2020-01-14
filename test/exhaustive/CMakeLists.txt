@@ -41,7 +41,6 @@ make_all_units(ROOT exhaustive NAME conj              ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME cosh              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME coth              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME csch              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1) 
-make_all_units(ROOT exhaustive NAME eps               ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1) 
 make_all_units(ROOT exhaustive NAME exp               ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME exp10             ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME exp2              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   

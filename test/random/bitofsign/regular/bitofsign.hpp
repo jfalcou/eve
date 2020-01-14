@@ -25,12 +25,12 @@ TTS_CASE("wide random check on bitofsign")
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_bitofsign = tts::vectorize<Type>( [](auto e) { return std::copysign(e, eve::One<Value>()); } );
+    auto std_bitofsign = tts::vectorize<Type>( [](auto e) { return std::copysign(eve::One<Value>(), e); } );
     auto eve_bitofsign = [](auto e) { return eve::bitwise_xor(eve::bitofsign(e), eve::One<Value>()); }; 
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve_bitofsign);
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else
   {
     auto std_bitofsign = tts::vectorize<Type>( [](auto e) {
                                                  using i_t = eve::detail::as_integer_t<Value>; 
@@ -38,12 +38,4 @@ TTS_CASE("wide random check on bitofsign")
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }
-  else
-  {
-    auto std_bitofsign = tts::vectorize<Type>( [](auto ) { return Value(0); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
-  }
-  
-  
 }

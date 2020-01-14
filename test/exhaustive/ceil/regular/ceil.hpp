@@ -28,8 +28,8 @@ TTS_CASE("wide exhaustive check on ceil")
   }
   else if constexpr(std::is_signed_v<Value>)
   {
-    auto std_ceil = tts::vectorize<Type>( [](auto e) { return  std::ceil(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_ceil = tts::vectorize<Type>( [](auto e) { return  e; } );
+    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_ceil, eve::ceil);
   }
   else

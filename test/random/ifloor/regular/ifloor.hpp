@@ -24,7 +24,7 @@ TTS_CASE("wide random check on ifloor")
   {
     using i_t =  eve::detail::as_integer_t<Value>; 
     auto std_ifloor = tts::vectorize<vi_t>( [](auto e) { return i_t(std::floor(e)); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::rng_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_ifloor, eve::ifloor);
   }
   else

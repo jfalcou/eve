@@ -19,16 +19,17 @@
 
 TTS_CASE("wide random check on inearest")
 {
-  using i_t =  eve::detail::as_integer_t<Value>; 
+  using vi_t =  eve::detail::as_integer_t<Type>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_inearest = tts::vectorize<i_t>( [](auto e) { return std::nearbyint(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    using i_t =  eve::detail::as_integer_t<Value>; 
+    auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
+    eve::rng_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
   }
   else
   {
-    auto std_inearest = tts::vectorize<i_t>( [](auto e) { return e; } );
+    auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return e; } );
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
   }

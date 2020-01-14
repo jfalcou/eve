@@ -23,7 +23,7 @@ TTS_CASE("wide exhaustive check on eps")
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_eps = tts::vectorize<Type>( [](auto e) { return (e > 0 ? e : -e)*eve::Eps<Value>(); } );
+    auto std_eps = tts::vectorize<Type>( [](auto e) { return (e > 0 ? e : -e)*eve::Eps<Value>()/2; } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_eps, eve::eps);
   }

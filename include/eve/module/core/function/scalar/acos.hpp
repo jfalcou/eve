@@ -43,9 +43,10 @@ namespace eve::detail
   requires(T, floating_point<T>)
   {
     if(a0 == One(as(a0))) return Zero(as(a0));
-    T z = Pio_2<T>()-eve::asin(a0);
-    // small correction with pio_2lo
-    return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
+      return Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
+//     T z = Pio_2<T>()-eve::asin(a0);
+//     // small correction with pio_2lo
+//     return z+ Ieee_constant<T, 0XB33BBD2EU, 0X3C91A62633145C07ULL>();
   }
 
   template<typename T>

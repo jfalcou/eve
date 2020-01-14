@@ -46,7 +46,7 @@ TTS_CASE("Check eve::acos behavior")
   TTS_ULP_EQUAL(eve::acos(Type(8.414715528e-01)), Type(std::acos(Value(8.414715528e-01))), 1.5 );
   TTS_ULP_EQUAL(eve::acos(Type(9.689134359e-01)), Type(std::acos(Value(9.689134359e-01))), 4.0 );
   TTS_ULP_EQUAL(eve::acos(Type(9.922192097e-01)), Type(std::acos(Value(9.922192097e-01))), 7.5 );
-  TTS_ULP_EQUAL(eve::acos(Type(9.995127916e-01)), Type(std::acos(Value(9.995127916e-01))), 26.5);
+  TTS_ULP_EQUAL(eve::acos(Type(9.995127916e-01)), Type(std::acos(Value(9.995127916e-01))), 32.5);
   TTS_ULP_EQUAL(eve::acos(Type(9.998779893e-01)), Type(std::acos(Value(9.998779893e-01))), 44.5);
   TTS_ULP_EQUAL(eve::acos(Type(9.999695420e-01)), Type(std::acos(Value(9.999695420e-01))), 142);
   TTS_ULP_EQUAL(eve::acos(Type(9.999927878e-01)), Type(std::acos(Value(9.999927878e-01))), 234 );
