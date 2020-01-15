@@ -8,21 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/asec.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/function/asecpi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/invpi.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on asec")
+TTS_CASE("wide exhaustive check on asecpi")
 {
-  auto std_asec = tts::vectorize<Type>( [](auto e) { return std::acos(eve::rec(e)); } );
+  auto std_asecpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::acos(eve::rec(e)); } );
 
   eve::exhaustive_producer<Type> p1(eve::Valmin<Value>(), Value(-1));
-  TTS_RANGE_CHECK(p1, std_asec, eve::pedantic_(eve::asec)); 
+  TTS_ULP_RANGE_CHECK(p1, std_asecpi, eve::raw_(eve::asecpi), 512); 
   eve::exhaustive_producer<Type> p2(Value(1), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p2, std_asec, eve::pedantic_(eve::asec));
+  TTS_ULP_RANGE_CHECK(p2, std_asecpi, eve::raw_(eve::asecpi), 512); 
 }

@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/function/acos.hpp>
 
@@ -28,11 +28,11 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto acosd_ ( EVE_SUPPORTS(cpu_)
-                                        , pedantic_type const &, T const &a0
+                                        , raw_type const &, T const &a0
                                         ) noexcept
   requires(T, behave_as<floating_point,T>)
   {
-    return indeg(eve::pedantic_(eve::acos)(a0));
+    return indeg(eve::raw_(eve::acos)(a0));
   }
 }
 

@@ -12,6 +12,6 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ASEC_HPP_INCLUDED
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/asec.hpp>
+#include <eve/module/core/function/generic/asec.hpp>
 
 #endif

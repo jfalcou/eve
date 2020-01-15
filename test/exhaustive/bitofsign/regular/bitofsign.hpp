@@ -38,5 +38,4 @@ TTS_CASE("wide exhaustive check on bitofsign")
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }
-  
 }

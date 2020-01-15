@@ -8,16 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/acos.hpp>
+#include <eve/function/acosd.hpp>
+#include <eve/function/indeg.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acos")
+TTS_CASE("wide exhaustive check on acosd")
 {
-  auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
+  auto std_acosd = tts::vectorize<Type>( [](auto e) { return eve::indeg(std::acos(e)); } );
 
-  eve::rng_producer<Type> p(-1,1);
-  TTS_ULP_RANGE_CHECK(p, std_acos, eve::pedantic_(eve::acos), 1.0);
+  eve::exhaustive_producer<Type> p(-1, 1);
+  TTS_ULP_RANGE_CHECK(p, std_acosd, eve::raw_(eve::acosd), 512.0); 
 }

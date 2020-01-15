@@ -37,16 +37,17 @@ namespace eve::detail
 {
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
+                           ,  raw_type const & 
                             , eve::wide<T,N,ABI> const &a0) noexcept
   requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {
-      return aggregate(eve::acos, a0);
+      return aggregate(eve::raw_(eve::acos), a0);
     }
     else if constexpr( is_emulated_v<ABI>   )
     {
-      return map(eve::acos, a0);
+      return map(eve::raw_(eve::acos), a0);
     }
     else
     {
@@ -60,17 +61,16 @@ namespace eve::detail
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
-                            ,  pedantic_type const &
                             , eve::wide<T,N,ABI> const &a0) noexcept
   requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {
-      return aggregate(eve::pedantic_(eve::acos), a0);
+      return aggregate(eve::acos, a0);
     }
     else if constexpr( is_emulated_v<ABI>   )
     {
-      return map(eve::pedantic_(eve::acos), a0);
+      return map(eve::acos, a0);
     }
     else if constexpr( std::is_floating_point_v<T> )
     {

@@ -8,21 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/asecpi.hpp>
+#include <eve/function/acosd.hpp>
+#include <eve/function/indeg.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/invpi.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on asecpi")
+TTS_CASE("wide random check on acosd")
 {
-  auto std_asecpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::acos(eve::rec(e)); } );
+  auto std_acosd = tts::vectorize<Type>( [](auto e) { return eve::indeg(std::acos(e)); } );
+  double th = std::is_same_v<Value, double> ? 8192.0 : 1024.0; 
 
-  eve::exhaustive_producer<Type> p1(eve::Valmin<Value>(), Value(-1));
-  TTS_RANGE_CHECK(p1, std_asecpi, eve::pedantic_(eve::asecpi)); 
-  eve::exhaustive_producer<Type> p2(Value(1), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p2, std_asecpi, eve::pedantic_(eve::asecpi)); 
+  eve::rng_producer<Type> p(-1, 1);
+  TTS_ULP_RANGE_CHECK(p, std_acosd, eve::raw_(eve::acosd), th); 
 }
