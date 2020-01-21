@@ -133,6 +133,7 @@ namespace eve
     base_type   pmi_, pmx_; 
     std::size_t size_;
   };
+ 
 }
 
 
