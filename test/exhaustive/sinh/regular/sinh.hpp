@@ -9,8 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/sinh.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/constant/minlog.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -20,6 +20,6 @@ TTS_CASE("wide exhaustive check on sinh")
 {
   auto std_sinh = tts::vectorize<Type>( [](auto e) { return std::sinh(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<Type> p(eve::Minlog<Value>()+1, eve::Maxlog<Value>()-1);
   TTS_RANGE_CHECK(p, std_sinh, eve::sinh); 
 }
