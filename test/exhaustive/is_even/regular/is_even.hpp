@@ -22,7 +22,7 @@
 
 TTS_CASE("wide exhaustive check on is_even")
 {
-   using l_t = eve::as_logical_t<Type>; 
+  using l_t = eve::as_logical_t<Type>; 
   if constexpr(std::is_floating_point_v<Value>)
   {
     auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == trunc(e/2)*2; } );
