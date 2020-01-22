@@ -49,7 +49,7 @@ namespace eve::detail
     }
     else // if constexpr(std::is_unsigned_v<T>)
     {
-      return if_else(v > One(as(v)), eve::zero_, oneminus(v));
+      return if_else(v ==  Zero(as(v)), One(as(v)), eve::zero_);
     }
   }
 
