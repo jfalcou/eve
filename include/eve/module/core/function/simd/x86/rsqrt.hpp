@@ -57,8 +57,8 @@ namespace eve::detail
     auto a0 = raw_(rsqrt)(a00);
     auto y  = sqr(a0) * a00;
 
-     // Perform one Halley cubically convergent iteration
-     a0 = c8 * a0 * fnma(y, fnma(c3, y, c10), c15);
+    // Perform one Halley cubically convergent iteration
+    a0 = c8 * a0 * fnma(y, fnma(c3, y, c10), c15);
 
     if constexpr(std::is_same_v<v_t, double>)
     {

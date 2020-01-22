@@ -36,7 +36,7 @@ namespace eve
                                                 >;
 
     T first() const noexcept  { return first_; }
-    T last()  const noexcept  { return last_;   }
+    T last()  const noexcept  { return last_;  }
     
     T next() noexcept
     {
@@ -133,117 +133,6 @@ namespace eve
     base_type   pmi_, pmx_; 
     std::size_t size_;
   };
-
-//   //////////////////////////////////////////////////////////////////////
-//   template<typename T>
-//   struct linear_producer : tts::producer<linear_producer<T>>
-//   {
-//     using base_type  = eve::detail::value_type_t<T>;
-//     using bit_type   = eve::detail::as_integer_t<base_type,signed>;
-//     using value_type = T;
-
-//     T first() const noexcept  { return first_;  }
-//     T last()  const noexcept  { return last_;   }
-    
-//     T next() noexcept
-//     {
-//       T that( current_ );
-//       current_ = eve::saturated_(eve::next)(current_, eve::cardinal_v<T>);
-
-//       return eve::min(that, pmx_);
-//     }
-
-//     static auto max() noexcept { return eve::Valmax<base_type>(); }
-
-//     std::size_t size() const noexcept { return size_; }
-
-//     template<typename U, typename V>
-//     linear_producer(U mn, V mx)
-//                 : current_( T(mn) )
-//                 , first_(mn), last_(mx)
-//                 , pmx_(eve::prev(base_type(mx)))
-//                 , size_ (this->count())
-//                 , step_((*tts::detail::begin(last_)-*tts::detail::begin(first_))/size_)
-//     {
-//       auto p = tts::detail::begin(current_);
-
-//       for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
-//       {
-//         *p = *p+i*step_;
-//         *p = eve::min(*p, pmx_); 
-//         ++p;
-//       }
-//     }
-
-//     template<typename P>
-//     linear_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t)
-//                   : linear_producer(src.self())
-//     {
-//       current_ = current_+i0*step_;
-//       current_ = eve::min(current_, pmx_); 
-//     }
-
-//     private:
-//     T           current_;
-//     T           first_, last_;
-//     base_type   pmx_; 
-//     std::size_t size_;
-//     base_type   step_; 
-//   };
-
-
-//   //////////////////////////////////////////////////////////////////////
-//   template<typename T>
-//   struct strided_producer : tts::producer<strided_producer<T>>
-//   {
-//     using base_type  = eve::detail::value_type_t<T>;
-//     using bit_type   = eve::detail::as_integer_t<base_type,signed>;
-//     using value_type = T;
-
-//     T first() const noexcept  { return first_;  }
-//     T last()  const noexcept  { return last_;   }
-    
-//     T next() noexcept
-//     {
-//       T that( current_ );
-//       current_ = eve::next(current_, eve::cardinal_v<T>);
-
-//     }
-
-//     static auto max() noexcept { return eve::Valmax<base_type>(); }
-
-//     std::size_t size() const noexcept { return size_; }
-
-//     template<typename U, typename V>
-//     strided_producer(U mn, V stp)
-//                 : current_( T(mn) )
-//                 , first_(mn), last_(eve::Valmax<T>())
-//                 , size_ (this->count())
-//                 , step_(stp)
-//     {
-//       auto p = tts::detail::begin(current_);
-
-//       for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
-//       {
-//         *p = saturated_(add)(*p, i*step_);
-//         ++p;
-//       }
-//     }
-
-//     template<typename P>
-//     strided_producer ( P const& src, std::size_t i0, std::size_t , std::size_t)
-//                   : strided_producer(src.self())
-//     {
-//       current_ = saturated_(add)(current_, i0*step_);
-//     }
-
-//     private:
-//     T           current_;
-//     T           first_, last_;
-//     std::size_t size_;
-//     base_type   step_; 
-//   };
-  
 }
 
 
