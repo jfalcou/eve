@@ -12,11 +12,20 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/function/ulpdist.hpp>
+#include <eve/function/extract.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
+#include <cmath>
 
 TTS_CASE("Check eve::rsqrt return type")
 {
@@ -27,12 +36,30 @@ TTS_CASE("Check eve::rsqrt behavior")
 {
   TTS_ULP_EQUAL(eve::rsqrt(Type(1)), (Type(1  )), 0.5);
   TTS_ULP_EQUAL(eve::rsqrt(Type(4)), (Type(0.5)), 0.5);
-
-  if constexpr(std::is_floating_point_v<Type> && eve::platform::supports_invalids)
+  if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_invalids)
   {
     TTS_IEEE_EQUAL((eve::rsqrt(eve::Nan<Type>())) , (eve::Nan<Type>()));
     TTS_EQUAL(eve::rsqrt(eve::Mzero<Type>())      , eve::Inf<Type>());
     TTS_EQUAL(eve::rsqrt((Type(0)))               , eve::Inf<Type>());
   }
+  Value z0 =   eve::Mindenormal<Value>();
+  std::cout <<  std::hexfloat << z0 << std::endl;
+  std::cout <<  std::scientific<< z0 << std::endl;
+  Value z =   eve::Smallestposval<Value>();
+  std::cout <<  std::hexfloat << z << std::endl;
+  std::cout <<  std::scientific<< z << std::endl;
+  while (z >  eve::Mindenormal<Value>())
+  {
+    TTS_ULP_EQUAL(eve::rsqrt(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
+    auto u = eve::ulpdist( eve::rsqrt(Type(z)), Type(eve::rec(std::sqrt(z))));
+    if(eve::all(u >  2.0))
+    {
+      std::cout << " z " << std::scientific << z<< " ulpdist " << eve::extract(u, 0) << std::endl;
+      std::cout << " h " << std::hexfloat << z << std::endl; 
+      break; 
+    }
+    z /= 2; 
+  }
+ 
 }
 
