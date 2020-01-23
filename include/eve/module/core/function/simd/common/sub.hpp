@@ -19,10 +19,10 @@
 #include <eve/function/max.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_xor.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_xor.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/shr.hpp>
@@ -91,13 +91,13 @@ namespace eve::detail
             {
               using su_t =  std::conditional_t<sizeof(vt_t) == 4, uint32_t, uint64_t>;
               using u_t = wide < su_t, typename T::cardinal_type, t_abi>;
-              auto ux = bitwise_cast(a, as_<u_t>());
-              auto uy = bitwise_cast(b,as(ux));
+              auto ux = bit_cast(a, as_<u_t>());
+              auto uy = bit_cast(b,as(ux));
               u_t res = ux - uy;
 
               ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
-              return  bitwise_cast( if_else ( is_ltz( bitwise_cast( bitwise_and ( bitwise_xor(ux,uy)
-                                                                                , bitwise_xor(ux,res)
+              return  bit_cast( if_else ( is_ltz( bit_cast( bit_and ( bit_xor(ux,uy)
+                                                                                , bit_xor(ux,res)
                                                                                 )
                                                                   , as(a)
                                                                   )
@@ -112,7 +112,7 @@ namespace eve::detail
           else // if  constexpr(std::is_unsigned_v<vt_t>)
           {
             T r  = a - b;
-            return bitwise_and(r, bitwise_mask(is_less_equal(r, a)));
+            return bit_and(r, bit_mask(is_less_equal(r, a)));
           }
         }
         else return map( eve::sub, st, a, b);

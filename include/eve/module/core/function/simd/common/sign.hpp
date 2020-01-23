@@ -17,8 +17,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>

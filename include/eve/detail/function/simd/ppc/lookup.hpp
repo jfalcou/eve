@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/detail/function/simd/lookup.hpp>
 #include <eve/forward.hpp>
 
@@ -28,13 +28,13 @@ namespace eve::detail
 
     if constexpr(sizeof(I) == 1)
     {
-      return vec_perm(a.storage(),a.storage(), bitwise_cast(idx,as<t8_t>()).storage());
+      return vec_perm(a.storage(),a.storage(), bit_cast(idx,as<t8_t>()).storage());
     }
     else
     {
-      t8_t  i1 = lookup(bitwise_cast(idx<<shift<I>, as(i1)), t8_t{repeater<I>});
-            i1 = bitwise_cast(bitwise_cast(i1,as<wide<I,N,ppc_>>())+offset<I>,as<t8_t>());
-      return bitwise_cast( lookup(bitwise_cast(a, as<t8_t>()),i1), as(a));
+      t8_t  i1 = lookup(bit_cast(idx<<shift<I>, as(i1)), t8_t{repeater<I>});
+            i1 = bit_cast(bit_cast(i1,as<wide<I,N,ppc_>>())+offset<I>,as<t8_t>());
+      return bit_cast( lookup(bit_cast(a, as<t8_t>()),i1), as(a));
     }
   }
 }

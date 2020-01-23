@@ -16,8 +16,8 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_notand.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -32,7 +32,7 @@ namespace eve::detail
   requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
-      return bitwise_or(bitofsign(a1), bitwise_notand(Signmask(as(a0)), a0));
+      return bit_or(bitofsign(a1), bit_notand(Signmask(as(a0)), a0));
     else
     {
       if constexpr(std::is_unsigned_v<T>)

@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -45,7 +45,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
   {
-    store(bitwise_cast(value,as_<wide<T, N, ABI>>{}), (T *)(ptr));
+    store(bit_cast(value,as_<wide<T, N, ABI>>{}), (T *)(ptr));
   }
 
   // -----------------------------------------------------------------------------------------------

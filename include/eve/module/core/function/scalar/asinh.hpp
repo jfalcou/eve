@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -63,7 +63,7 @@ namespace eve::detail
         {
           z =  log(x+hypot(One<T>(), x));
         }
-        return bitwise_xor(z, bitofsign(a0));
+        return bit_xor(z, bitofsign(a0));
       }
     }
     else if constexpr(std::is_same_v<T, float>)
@@ -97,7 +97,7 @@ namespace eve::detail
       {
         z =  log(x+hypot(One<T>(), x));
       }
-      return bitwise_xor(z, bitofsign(a0));
+      return bit_xor(z, bitofsign(a0));
     }
   }
 }

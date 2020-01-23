@@ -20,7 +20,7 @@
 #include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/oneminus.hpp>
@@ -69,7 +69,7 @@ namespace eve::detail
           > (z);
         z1 = eve::fma(z1, z*x, x);
         z = if_else(x_larger_05, eve::Pio_2<t_t>()-(z1+z1), z1);
-        return eve::bitwise_xor(z, sgn);
+        return eve::bit_xor(z, sgn);
       }
       else
       {
@@ -113,7 +113,7 @@ namespace eve::detail
         zz2 = fma(x, z, x);
         return eve::if_else(eve::is_greater(x,eve::One<t_t>()),
                             eve::allbits_,
-                            eve::bitwise_xor(eve::if_else( small_,
+                            eve::bit_xor(eve::if_else( small_,
                                                            x,
                                                            eve::if_else(x > ct1, zz1, zz2)
                                                          )

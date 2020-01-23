@@ -11,7 +11,7 @@
 #ifndef TEST_PRODUCERS_HPP
 #define TEST_PRODUCERS_HPP
 
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/min.hpp>

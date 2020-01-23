@@ -17,7 +17,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/constant/true.hpp>

@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/core/detail/simd/atan_kernel.hpp>
 #include <type_traits>
@@ -40,7 +40,7 @@ namespace eve::detail
     else
     {
       auto x  = eve::abs(a);
-      return bitwise_xor(atan_kernelw(rec(x), x), bitofsign(a));
+      return bit_xor(atan_kernelw(rec(x), x), bitofsign(a));
     }
   }
 }

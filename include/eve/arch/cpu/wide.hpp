@@ -30,9 +30,9 @@
 #include <eve/function/add.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/div.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -319,21 +319,21 @@ namespace eve
     template<typename Other>
     EVE_FORCEINLINE wide &operator&=(Other const &other) noexcept
     {
-      *this = eve::bitwise_and(*this, other);
+      *this = eve::bit_and(*this, other);
       return *this;
     }
 
     template<typename Other>
     EVE_FORCEINLINE wide &operator|=(Other const &other) noexcept
     {
-      *this = eve::bitwise_or(*this, other);
+      *this = eve::bit_or(*this, other);
       return *this;
     }
 
     template<typename Other>
     EVE_FORCEINLINE wide &operator^=(Other const &other) noexcept
     {
-      *this = eve::bitwise_xor(*this, other);
+      *this = eve::bit_xor(*this, other);
       return *this;
     }
 

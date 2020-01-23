@@ -15,8 +15,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/tags.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shl.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_shl.hpp>
 #include <eve/function/rshl.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/is_flint.hpp>
@@ -50,8 +50,8 @@ namespace eve::detail
     {
       using i_t = detail::as_integer_t<T>;
       i_t ik =  a1+Maxexponent<T>();
-      ik = bitwise_shl(ik, Nbmantissabits<T>());
-      return a0*bitwise_cast(ik, as(T()));
+      ik = bit_shl(ik, Nbmantissabits<T>());
+      return a0*bit_cast(ik, as(T()));
     }
   }
   
@@ -86,8 +86,8 @@ namespace eve::detail
       f += static_cast<T>(b);
       e -= b;
       e += Maxexponent<T>();
-      e = bitwise_shl(e, Nbmantissabits<T>());
-      return a0*bitwise_cast(e, as(T()))*f;
+      e = bit_shl(e, Nbmantissabits<T>());
+      return a0*bit_cast(e, as(T()))*f;
     }
   }
 }

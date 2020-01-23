@@ -17,7 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/signmask.hpp>

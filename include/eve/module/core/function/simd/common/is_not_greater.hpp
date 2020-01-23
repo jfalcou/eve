@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/is_greater_equal.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
@@ -64,7 +64,7 @@ namespace eve::detail
                                                                               vectorized<U>,
                                                                               equal_cardinal<T, U>)
   {
-    return bitwise_cast(is_not_greater(a.bits(), b.bits()),as(a));
+    return bit_cast(is_not_greater(a.bits(), b.bits()),as(a));
   }
 }
 

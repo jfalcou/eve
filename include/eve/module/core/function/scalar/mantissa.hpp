@@ -15,8 +15,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/is_not_finite.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/constant/mantissamask.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/detail/meta.hpp>
@@ -34,7 +34,7 @@ namespace eve::detail
     {
       if(is_not_finite(a)) return a;
     }
-    return bitwise_or(bitwise_and(a,Mantissamask<T>()),One<T>());
+    return bit_or(bit_and(a,Mantissamask<T>()),One<T>());
   }
 }
 

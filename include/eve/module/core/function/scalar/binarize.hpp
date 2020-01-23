@@ -14,8 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
@@ -30,7 +30,7 @@ namespace eve::detail
                                            logical<U> const & cond) noexcept
   requires(U, vectorizable<U>)
   {
-    return  bitwise_and(U(1), cond.bits());
+    return  bit_and(U(1), cond.bits());
   }
 
   template<typename T,  typename U>
@@ -39,7 +39,7 @@ namespace eve::detail
                                            T const &a0) noexcept
   requires(U, vectorizable<T>,  vectorizable<U>)
   {
-    return bitwise_and(U(a0), cond.bits());
+    return bit_and(U(a0), cond.bits());
   }
 
   template<typename U>
@@ -48,7 +48,7 @@ namespace eve::detail
                                           , eve::callable_allbits_ const & ) noexcept
   requires(U, vectorizable<U>)
   {
-    return  bitwise_cast(cond.bits(), as_<U>());
+    return  bit_cast(cond.bits(), as_<U>());
   }
 
   template<typename U>
@@ -58,7 +58,7 @@ namespace eve::detail
   requires(U, vectorizable<U>)
   {
     if constexpr(std::is_integral_v<U>)
-      return bitwise_cast(cond.bits(), as_<U>());
+      return bit_cast(cond.bits(), as_<U>());
     else
       return binarize(cond, U(-1));
   }

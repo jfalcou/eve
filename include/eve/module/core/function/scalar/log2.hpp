@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
@@ -68,7 +68,7 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      uiT ix = bitwise_cast(x, as<uiT>());
+      uiT ix = bit_cast(x, as<uiT>());
       iT k = 0;
       if (ix < 0x00800000 || ix>>31)         /* x < 2**-126  */
       {
@@ -78,7 +78,7 @@ namespace eve::detail
         {        /* subnormal number, scale up x */
           k -= 25;
           x *= 33554432.0f;
-          ix = bitwise_cast(x, as<iT>());
+          ix = bit_cast(x, as<iT>());
         }
       }
       else if (ix >= 0x7f800000)
@@ -90,9 +90,9 @@ namespace eve::detail
       
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
-      k += bitwise_cast(ix>>23, as<iT>()) - 0x7f;
+      k += bit_cast(ix>>23, as<iT>()) - 0x7f;
       ix = (ix&0x007fffff) + 0x3f3504f3;
-      x =  bitwise_cast(ix, as<T>());
+      x =  bit_cast(ix, as<T>());
       T f = dec(x);
       T s = f/(2.0f + f);
       T z = sqr(s);
@@ -108,7 +108,7 @@ namespace eve::detail
       // Moreover all log2(exp2(i)) i =  1..31 are flint
       // I leave the code here in case an exotic proc will not play the game.
       //       T  hi = f - hfsq;
-      //       hi =  bitwise_and(hi, uiT(0xfffff000ul));
+      //       hi =  bit_and(hi, uiT(0xfffff000ul));
       //       T  lo = fma(s, hfsq+R, f - hi - hfsq);
       //       return fma((lo+hi), Invlog_2lo<T>(), lo*Invlog_2hi<T>() + hi*Invlog_2hi<T>() + k);
     }
@@ -125,7 +125,7 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      uiT hx = bitwise_cast(x, as<uiT>()) >> 32;
+      uiT hx = bit_cast(x, as<uiT>()) >> 32;
       iT k = 0;
       if (hx < 0x00100000 || hx>>31)
       {
@@ -138,7 +138,7 @@ namespace eve::detail
         {
           k -= 54;
           x *=  18014398509481984.0;
-          hx = bitwise_cast(x, as<uiT>()) >> 32;
+          hx = bit_cast(x, as<uiT>()) >> 32;
         }
       }
       else if (hx >= 0x7ff00000)
@@ -148,9 +148,9 @@ namespace eve::detail
       else if (x == One<T>()) return Zero<T>();
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       hx += 0x3ff00000 - 0x3fe6a09e;
-      k += bitwise_cast(hx>>20, as<iT>()) - 0x3ff;
+      k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
       hx = (hx&0x000fffff) + 0x3fe6a09e;
-      x = bitwise_cast( (uint64_t)hx<<32 | (bitwise_and(0xffffffffull, bitwise_cast(x, as<uiT>()))), as<T>());
+      x = bit_cast( (uint64_t)hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()))), as<T>());
       T f = dec(x);
       T hfsq = 0.5*sqr(f);
       T s = f/(2.0f + f);
@@ -199,7 +199,7 @@ namespace eve::detail
       T Invlog_2lo =  Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
       T Invlog_2hi =  Ieee_constant<T, 0x3fb8b000UL, 0x3ff7154765200000ULL>();
       T  hi = f - hfsq;
-      hi =  bitwise_and(hi, (Allbits<uiT>() << 32));
+      hi =  bit_and(hi, (Allbits<uiT>() << 32));
       T lo = f - hi - hfsq + s*(hfsq+R);
       
       T val_hi = hi*Invlog_2hi;

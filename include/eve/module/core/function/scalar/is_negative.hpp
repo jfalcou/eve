@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/false.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
@@ -28,7 +28,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       using si_t = eve::detail::as_integer_t<T, signed>;
-      return bitwise_cast(is_ltz(bitwise_cast(a,as_<si_t>{})), as_<as_logical_t<T>>{});
+      return bit_cast(is_ltz(bit_cast(a,as_<si_t>{})), as_<as_logical_t<T>>{});
     }
     else if constexpr(std::is_signed_v<T>)
     {

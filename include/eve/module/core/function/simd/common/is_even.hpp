@@ -21,7 +21,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -40,7 +40,7 @@ namespace eve::detail
         return is_flint(a * Half(as(a))) && (abs(a) != Smallestposval<T>());
     }
     else
-      return is_eqz(bitwise_and(a, One(as(a))));
+      return is_eqz(bit_and(a, One(as(a))));
   }
 }
 

@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/iceil.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
@@ -60,7 +60,7 @@ namespace eve::detail
       else if (a0) return Valmax(as(a0)) + ((ui_t)a0 >> (sizeof(T)*8-1));
       else return Zero(as(a0));
     }
-    else /*if constexpr(!std::is_signed_v<T>)*/ return a1 ? a0/a1 : bitwise_mask(a0);
+    else /*if constexpr(!std::is_signed_v<T>)*/ return a1 ? a0/a1 : bit_mask(a0);
   }
 }
 

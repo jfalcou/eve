@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/ifloor.hpp>
 #include <eve/function/iceil.hpp>
 #include <eve/function/dec.hpp>
@@ -78,7 +78,7 @@ namespace eve::detail
         return saturated_(div)(a0, a1);
       }
       else
-        return bitwise_mask(a0);
+        return bit_mask(a0);
     }
   }
 }

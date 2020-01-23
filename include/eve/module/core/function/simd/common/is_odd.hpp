@@ -37,7 +37,7 @@ namespace eve::detail
       return (a!= da) && is_even(da);
     }
     else
-      return is_nez(bitwise_and(a, One(as(a))));
+      return is_nez(bit_and(a, One(as(a))));
   }
 }
 

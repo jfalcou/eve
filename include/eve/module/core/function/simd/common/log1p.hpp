@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/frexp.hpp>
@@ -136,13 +136,13 @@ namespace eve::detail
       auto isnez = is_nez(uf);
       if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
-        uiT iu = bitwise_cast(uf, as<uiT>());
+        uiT iu = bit_cast(uf, as<uiT>());
         iu += 0x3f800000 - 0x3f3504f3;
-        iT k = bitwise_cast(iu>>23, as<iT>()) - 0x7f;
+        iT k = bit_cast(iu>>23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         iu = (iu&0x007fffff) + 0x3f3504f3;
-        T f =  dec(bitwise_cast(iu, as<T>()));
+        T f =  dec(bit_cast(iu, as<T>()));
         T s = f/(2.0f + f);
         T z = sqr(s);
         T w = sqr(z);
@@ -178,13 +178,13 @@ namespace eve::detail
          * ====================================================
          */
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        uiT hu = bitwise_cast(uf, as<uiT>())>>32;
+        uiT hu = bit_cast(uf, as<uiT>())>>32;
         hu += 0x3ff00000 - 0x3fe6a09e;
-        iT k = bitwise_cast(hu>>20, as<iT>() ) - 0x3ff;
+        iT k = bit_cast(hu>>20, as<iT>() ) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         T  c =  if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
         hu =  (hu&0x000fffffull) + 0x3fe6a09e;
-        T f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>()) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>()))), as<T>());
+        T f = bit_cast( bit_cast(hu<<32, as<uiT>()) | (bit_and(0xffffffffull, bit_cast(uf, as<uiT>()))), as<T>());
         f = dec(f);
         
         T hfsq = Half<T>()*sqr(f);

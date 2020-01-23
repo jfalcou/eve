@@ -13,7 +13,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -40,7 +40,7 @@ namespace eve
                         "[eve::ieeeconstant] floating_point case - BitsPatternfloat has not the correct size");
           return T{};
         }
-        else return static_cast<T>(bitwise_cast(BitsPatternfloat, as_<t_t>()));
+        else return static_cast<T>(bit_cast(BitsPatternfloat, as_<t_t>()));
       }
       else // if constexpr(std::is_same_v<t_t, double>)
       {
@@ -50,7 +50,7 @@ namespace eve
                         "[eve::ieeeconstant] floating_point case - BitsPatterndouble has not the correct size");
           return T{};
         }
-        else return static_cast<T>(bitwise_cast(BitsPatterndouble, as_<t_t>()));
+        else return static_cast<T>(bit_cast(BitsPatterndouble, as_<t_t>()));
       }
     }
   }

@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/signmask.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &a) noexcept
   {
-    return bitwise_and(a, Signmask(as(a)));
+    return bit_and(a, Signmask(as(a)));
   }
 }
 

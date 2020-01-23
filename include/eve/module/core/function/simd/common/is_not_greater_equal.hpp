@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/is_greater_equal.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/as_logical.hpp>

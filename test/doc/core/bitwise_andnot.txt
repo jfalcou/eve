@@ -1,8 +1,0 @@
----- simd
- <- pi =                         (3, 4294967294, 3, 3)
- <- qi =                         (4, 4294967295, 0, 4294967295)
- -> eve::bitwise_andnot(pi, qi) = (3, 0, 3, 0)
----- scalar
- xi =                            3
- yi =                            1
- -> eve::bitwise_andnot(xi, yi) = 2

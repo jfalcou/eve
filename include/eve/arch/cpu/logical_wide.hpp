@@ -230,7 +230,7 @@ namespace eve
     template<typename Index>
     EVE_FORCEINLINE logical operator[](wide<Index,N> const& idx) noexcept
     {
-      return bitwise_cast(lookup(bits(),idx), as(*this));
+      return bit_cast(lookup(bits(),idx), as(*this));
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -251,13 +251,13 @@ namespace eve
 
     EVE_FORCEINLINE constexpr bits_type bits() const noexcept
     {
-      return bitwise_cast(mask(), as_<bits_type>{});
+      return bit_cast(mask(), as_<bits_type>{});
     }
 
     /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr mask_type mask() const noexcept
     {
-      return bitwise_cast(self(), as_<mask_type>{});
+      return bit_cast(self(), as_<mask_type>{});
     }
 
     // ---------------------------------------------------------------------------------------------

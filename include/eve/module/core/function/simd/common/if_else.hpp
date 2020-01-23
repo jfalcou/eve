@@ -15,12 +15,12 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/bitwise_select.hpp>
-#include <eve/function/bitwise_andnot.hpp>
-#include <eve/function/bitwise_ornot.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bit_select.hpp>
+#include <eve/function/bit_andnot.hpp>
+#include <eve/function/bit_ornot.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/mone.hpp>
@@ -45,8 +45,8 @@ namespace eve::detail
                                          has_compatible_cardinal<typename T::cardinal_type, U, V>
                                         )
   {
-    auto cond_mask = bitwise_mask(cond);
-    return bitwise_select(cond_mask, t, f);
+    auto cond_mask = bit_mask(cond);
+    return bit_select(cond_mask, t, f);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ namespace eve::detail
                                      has_compatible_cardinal<typename T::cardinal_type, U, V>)
   {
     using t_t      = std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>;
-    auto cond_mask = bitwise_mask(cond);
-    return bitwise_cast(bitwise_select(cond_mask, t.mask(), f.mask()), as_<t_t>());
+    auto cond_mask = bit_mask(cond);
+    return bit_cast(bit_select(cond_mask, t.mask(), f.mask()), as_<t_t>());
   }
 
   //------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ namespace eve::detail
                                     vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    return bitwise_and(t, bitwise_mask(cond));
+    return bit_and(t, bit_mask(cond));
   }
 
   template<typename T, typename U>
@@ -93,7 +93,7 @@ namespace eve::detail
                                          vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    return bitwise_andnot(t, bitwise_mask(cond));
+    return bit_andnot(t, bit_mask(cond));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ namespace eve::detail
                                     vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    return bitwise_ornot(t, bitwise_mask(cond));
+    return bit_ornot(t, bit_mask(cond));
   }
 
   template<typename T, typename U>
@@ -122,7 +122,7 @@ namespace eve::detail
                                          vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    return bitwise_or(t, bitwise_mask(cond));
+    return bit_or(t, bit_mask(cond));
   }
 
   //------------------------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ namespace eve::detail
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
-    { return unary_minus(bitwise_ornot(unary_minus(t), bitwise_mask(cond))); }
+    { return unary_minus(bit_ornot(unary_minus(t), bit_mask(cond))); }
     else
     {
       return if_else(cond, t, eve::One<U>());
@@ -157,7 +157,7 @@ namespace eve::detail
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
-    { return unary_minus(bitwise_or(unary_minus(t), bitwise_mask(cond))); }
+    { return unary_minus(bit_or(unary_minus(t), bit_mask(cond))); }
     else
     {
       return if_else(cond, eve::One<U>(), t);
@@ -177,7 +177,7 @@ namespace eve::detail
                                     vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    if constexpr(std::is_integral_v<U>) { return bitwise_ornot(t, bitwise_mask(cond)); }
+    if constexpr(std::is_integral_v<U>) { return bit_ornot(t, bit_mask(cond)); }
     else
     {
       return if_else(cond, t, eve::Mone<U>());
@@ -194,7 +194,7 @@ namespace eve::detail
                                          vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
-    if constexpr(std::is_integral_v<U>) { return bitwise_or(t, bitwise_mask(cond)); }
+    if constexpr(std::is_integral_v<U>) { return bit_or(t, bit_mask(cond)); }
     else
     {
       return if_else(cond, eve::Mone<U>(), t);

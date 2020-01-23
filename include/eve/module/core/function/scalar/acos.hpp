@@ -20,7 +20,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/constant.hpp>

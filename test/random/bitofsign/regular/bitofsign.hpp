@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -26,7 +26,7 @@ TTS_CASE("wide random check on bitofsign")
   if constexpr(std::is_floating_point_v<Value>)
   {
     auto std_bitofsign = tts::vectorize<Type>( [](auto e) { return std::copysign(eve::One<Value>(), e); } );
-    auto eve_bitofsign = [](auto e) { return eve::bitwise_xor(eve::bitofsign(e), eve::One<Value>()); }; 
+    auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), eve::One<Value>()); }; 
     eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve_bitofsign);
   }

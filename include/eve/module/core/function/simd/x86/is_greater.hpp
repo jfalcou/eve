@@ -17,7 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/signmask.hpp>
 #include <type_traits>
@@ -61,8 +61,8 @@ namespace eve::detail
         using l_t    = eve::as_logical_t<t_t>;
         s_t const sm = Signmask<s_t>();
 
-        return eve::bitwise_cast( eve::is_greater ( eve::bitwise_cast(v0,as(sm)) - sm,
-                                                    eve::bitwise_cast(v1,as(sm)) - sm
+        return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
+                                                    eve::bit_cast(v1,as(sm)) - sm
                                                   ),
                                   as_<l_t>{}
                                 );
@@ -104,8 +104,8 @@ namespace eve::detail
           using l_t    = eve::as_logical_t<t_t>;
           s_t const sm = Signmask<s_t>();
 
-        return eve::bitwise_cast( eve::is_greater ( eve::bitwise_cast(v0,as(sm)) - sm,
-                                                    eve::bitwise_cast(v1,as(sm)) - sm
+        return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
+                                                    eve::bit_cast(v1,as(sm)) - sm
                                                   ),
                                   as_<l_t>{}
                                 );

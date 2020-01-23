@@ -20,7 +20,7 @@
 #include <eve/constant/mone.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/function/bitwise_andnot.hpp>
+#include <eve/function/bit_andnot.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/logical.hpp>
 #include <eve/forward.hpp>
@@ -35,7 +35,7 @@ namespace eve::detail
                            ) noexcept
   {
     using t_t = wide<T, N, ABI>; 
-    return  bitwise_andnot(One<t_t>(),cond.bits());
+    return  bit_andnot(One<t_t>(),cond.bits());
   }
  
   template<typename T, typename N, typename ABI, typename U>
@@ -48,15 +48,15 @@ namespace eve::detail
     if constexpr(is_vectorizable_v<U>)
     {
       using t_t = wide<T, N, ABI>; 
-      return  bitwise_andnot(t_t(val),cond.bits());
+      return  bit_andnot(t_t(val),cond.bits());
     }
     else if constexpr(std::is_same_v<U, eve::callable_allbits_>)
     {
-      return bitwise_not(cond.mask());
+      return bit_not(cond.mask());
     }
     else if constexpr(std::is_same_v<U, eve::callable_mone_>)
     {
-      if constexpr(std::is_integral_v<T>) return  bitwise_not(cond.mask());
+      if constexpr(std::is_integral_v<T>) return  bit_not(cond.mask());
       else return  binarize_c(cond,eve::Mone<T>());
     }
     return wide<T, N, ABI>(); 

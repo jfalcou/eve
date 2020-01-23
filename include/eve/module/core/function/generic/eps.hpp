@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -49,7 +49,7 @@ namespace eve::detail
     using v_t = value_type_t<T>; 
     auto a = eve::abs(a0);
     auto e1 = exponent(a)-Nbmantissabits<T>();
-    auto e = bitwise_cast(bitwise_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())), as<T>());
+    auto e = bit_cast(bit_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())), as<T>());
     e =  add[is_not_finite(a)](e, Nan<T>()); 
     if constexpr(eve::platform::supports_denormals)
     {

@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
@@ -24,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto bitofsign_(EVE_SUPPORTS(cpu_),
                                             T const &a) noexcept requires(T, vectorizable<T>)
   {
-    return bitwise_and(a, Signmask(as(a)));
+    return bit_and(a, Signmask(as(a)));
   }
 }
 

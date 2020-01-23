@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>   
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/log1p.hpp>
@@ -33,7 +33,7 @@ namespace eve::detail
       T absx = eve::abs(x);
       T t =  absx+absx;
       T z1 = oneminus(absx);
-      return bitwise_xor(bitofsign(x),
+      return bit_xor(bitofsign(x),
                          Half<T>()*log1p((absx < Half<T>())
                                           ? fma(t, absx/z1, t)
                                           : t/z1)

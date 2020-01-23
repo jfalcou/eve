@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/core/detail/scalar/atan_kernel.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -31,7 +31,7 @@ namespace eve::detail
   requires(T,  floating_point<T>)
   {
     T x  = eve::abs(a);
-    return bitwise_xor(atan_kernel(x, rec(x)), bitofsign(a));
+    return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
   }
 }
 

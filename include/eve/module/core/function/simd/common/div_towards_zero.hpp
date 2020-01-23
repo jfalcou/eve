@@ -19,8 +19,8 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -28,7 +28,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/constant/valmin.hpp>
@@ -108,7 +108,7 @@ namespace eve::detail
         else // if constexpr(std::is_unsigned_v<v_t>)
         {
           auto bb = if_else(is_eqz(b), eve::allbits_, b); 
-          return if_else(is_nez(b), div(a, bb), bitwise_mask(a));
+          return if_else(is_nez(b), div(a, bb), bit_mask(a));
         }
         return T();
       }
