@@ -19,8 +19,8 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -28,7 +28,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/constant/valmin.hpp>
@@ -80,7 +80,7 @@ namespace eve::detail
             auto bb = if_else(is_eqz(b), eve::one_, b);
             auto q = saturated_(eve::div)(a, bb);
             auto r =a-q*b;
-            q = saturated_(inc[is_nez(r)&&is_gez(bitwise_xor(a, b))])(q);
+            q = saturated_(inc[is_nez(r)&&is_gez(bit_xor(a, b))])(q);
             return if_else(is_nez(b)
                           , q
                           , if_else(is_eqz(a)
@@ -112,7 +112,7 @@ namespace eve::detail
           auto bb = if_else(is_eqz(b), eve::allbits_, b); 
           T q = saturated_(div)(a, bb);
           q = inc[is_nez(a-q*b)](q); 
-          return if_else(is_nez(b), q, bitwise_mask(a));
+          return if_else(is_nez(b), q, bit_mask(a));
         }
         return T();
       }

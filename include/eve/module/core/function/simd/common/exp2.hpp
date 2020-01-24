@@ -13,7 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_shl.hpp>
+#include <eve/function/bit_shl.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
@@ -87,7 +87,7 @@ namespace eve::detail
       }
       else
       {
-        return bitwise_shl(T(1), xx);
+        return bit_shl(T(1), xx);
       }
     }
   }

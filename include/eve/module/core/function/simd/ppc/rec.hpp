@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/refine_rec.hpp>
-#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/forward.hpp>
@@ -23,7 +23,7 @@
 
 #if !defined(EVE_NO_INFINITIES)
 #  include <eve/constant/mzero.hpp>
-#  include <eve/function/bitwise_and.hpp>
+#  include <eve/function/bit_and.hpp>
 #  include <eve/function/is_infinite.hpp>
 #endif
 
@@ -66,10 +66,10 @@ namespace eve::detail
     {
       auto estimate = rec(v0);
 
-      estimate = if_else(is_eqz(v0), bitwise_or(v0, Inf(as(v0))), estimate);
+      estimate = if_else(is_eqz(v0), bit_or(v0, Inf(as(v0))), estimate);
 
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
-      estimate = if_else(is_infinite(v0), bitwise_and(v0, Mzero(as(v0))), estimate);
+      estimate = if_else(is_infinite(v0), bit_and(v0, Mzero(as(v0))), estimate);
 #endif
 
       return estimate;

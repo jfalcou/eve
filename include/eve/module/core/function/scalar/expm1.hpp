@@ -73,7 +73,7 @@ namespace eve::detail
       T e  = hxs*((r1-t)/(T(6) - x*t));
       e  = fms(x, e, hxs);
       i_t ik =  toint(k);
-      T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
+      T two2mk = bit_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
       T y = oneminus(two2mk)-(e-x);
       return ldexp(y, ik);    
     }
@@ -96,7 +96,7 @@ namespace eve::detail
       T c = (hi-x)-lo;
       e  = (x*(e-c)-c)-hxs;
       i_t ik =  toint(k);
-      T two2mk = bitwise_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
+      T two2mk = bit_cast(shl(Maxexponent<T>()-ik,Nbmantissabits<T>()), as<T>());
       T ct1= oneminus(two2mk)-(e-x);
       T ct2= inc((x-(e+two2mk)));
       T y = if_else((k < T(20)),ct1,ct2);

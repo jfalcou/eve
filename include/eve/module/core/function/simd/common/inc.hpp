@@ -15,8 +15,8 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/add.hpp>
 #include <eve/constant/one.hpp>
@@ -50,7 +50,7 @@ namespace eve::detail
     }
     else if constexpr(std::is_integral_v<T>)
     {
-      return v - (bitwise_mask(bitwise_cast(cond,as(v))));
+      return v - (bit_mask(bit_cast(cond,as(v))));
     }
     else
     {

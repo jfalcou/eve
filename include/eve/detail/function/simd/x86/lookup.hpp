@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/detail/function/simd/lookup.hpp>
@@ -39,10 +39,10 @@ namespace eve::detail
       using t8_t = typename wide<T,N,sse_>::template rebind<std::uint8_t, fixed<16>>;
 
       t8_t  i1 = _mm_shuffle_epi8(idx<<shift<I>, t8_t{repeater<I>});
-            i1 = bitwise_cast(bitwise_cast(i1,as<wide<I,N,sse_>>())+offset<I>,as<t8_t>());
-      t8_t const blocks = _mm_shuffle_epi8(bitwise_cast(a,as<t8_t>()),i1);
+            i1 = bit_cast(bit_cast(i1,as<wide<I,N,sse_>>())+offset<I>,as<t8_t>());
+      t8_t const blocks = _mm_shuffle_epi8(bit_cast(a,as<t8_t>()),i1);
 
-      return bitwise_cast( blocks, as(a));
+      return bit_cast( blocks, as(a));
     }
   }
 

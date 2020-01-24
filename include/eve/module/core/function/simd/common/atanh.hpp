@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
@@ -39,7 +39,7 @@ namespace eve::detail
     T z1 = oneminus(absx);
     auto test =  is_less(absx, Half<T>());
     T tmp = if_else(test, absx, t)/z1;
-    return bitwise_xor(bitofsign(x), Half<T>()*log1p(if_else(test, fma(t,tmp,t), tmp)));
+    return bit_xor(bitofsign(x), Half<T>()*log1p(if_else(test, fma(t,tmp,t), tmp)));
   }
 }
 

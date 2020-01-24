@@ -13,8 +13,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/expobits_mask.hpp>
 #include <eve/constant/nbmantissabits.hpp>
@@ -29,7 +29,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   requires(as_integer_t<T>, behave_as<floating_point,T>)
   {
-    return bitwise_and(Expobits_mask<T>(), a); 
+    return bit_and(Expobits_mask<T>(), a); 
   }
 }
 

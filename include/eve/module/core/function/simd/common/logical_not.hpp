@@ -16,8 +16,8 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_not.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_not.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
@@ -43,7 +43,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto logical_not_(EVE_SUPPORTS(cpu_),
                                               logical<wide<T, N, ABI>> const &a) noexcept
   {
-    return eve::bitwise_cast(eve::bitwise_not(a.bits()),as(a));
+    return eve::bit_cast(eve::bit_not(a.bits()),as(a));
   }
 }
 

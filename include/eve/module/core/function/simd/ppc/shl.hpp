@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -28,7 +28,7 @@ namespace eve::detail
   {
     using t_t = wide<T, N, ppc_>;
     using i_t = wide<as_integer_t<T, unsigned>, N>;
-    return t_t(vec_sl(v0.storage(), bitwise_cast(v1,as_<i_t>()).storage()));
+    return t_t(vec_sl(v0.storage(), bit_cast(v1,as_<i_t>()).storage()));
   }
 
   template<typename T, typename N, typename I>

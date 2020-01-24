@@ -15,8 +15,8 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/constant/one.hpp>

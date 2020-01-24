@@ -14,8 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
@@ -42,7 +42,7 @@ namespace eve::detail
                                                                         vectorizable<U>)
   {
     if(std::is_integral_v<T>)
-      return static_cast<T>(a + bitwise_mask(T(cond)));
+      return static_cast<T>(a + bit_mask(T(cond)));
     else
       return cond ? dec(a) : a;
   }

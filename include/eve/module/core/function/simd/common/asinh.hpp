@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_greater.hpp>
@@ -46,7 +46,7 @@ namespace eve::detail
         z = if_else(is_equal(x, Inf<T>()), x, z);
       }
       z =  add[test](eve::log1p(z), Log_2<T>());
-      return bitwise_xor(bitofsign(a0), z);
+      return bit_xor(bitofsign(a0), z);
     }
     else // if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
@@ -72,14 +72,14 @@ namespace eve::detail
           , 0x3ca4d6e6
           > (x2)*x;
         
-        if(nb >= T::static_size) return  bitwise_xor(z, bts);
+        if(nb >= T::static_size) return  bit_xor(z, bts);
       }
       T tmp =  if_else(is_greater(x, Oneosqrteps<T>()),
                         x, average(x, hypot(One<T>(), x)));
 #ifndef  BOOST_SIMD_NO_NANS
-      return if_else(is_nan(a0), eve::allbits_, bitwise_xor(if_else(lthalf, z, log(tmp)+Log_2<T>()), bts));
+      return if_else(is_nan(a0), eve::allbits_, bit_xor(if_else(lthalf, z, log(tmp)+Log_2<T>()), bts));
 #else
-      return bitwise_xor(if_else(lthalf, z, log(tmp)+Log_2<T>()), bts);
+      return bit_xor(if_else(lthalf, z, log(tmp)+Log_2<T>()), bts);
 #endif
     }    
   }

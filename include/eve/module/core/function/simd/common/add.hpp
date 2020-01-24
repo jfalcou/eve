@@ -17,11 +17,11 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_xor.hpp>
-#include <eve/function/bitwise_ornot.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_xor.hpp>
+#include <eve/function/bit_ornot.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/is_gez.hpp>
@@ -97,13 +97,13 @@ namespace eve::detail
             {
               using su_t = std::conditional_t<sizeof(vt_t) == 4, uint32_t, uint64_t>;
               using u_t = wide < su_t, typename T::cardinal_type, t_abi>;
-              auto ux = bitwise_cast(a,as_<u_t>());
-              auto uy = bitwise_cast(b,as(ux));
+              auto ux = bit_cast(a,as_<u_t>());
+              auto uy = bit_cast(b,as(ux));
               u_t  res = ux + uy;
 
               ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
-              return  bitwise_cast( if_else ( is_gez( bitwise_cast( bitwise_ornot ( bitwise_xor(ux,uy)
-                                                                                  , bitwise_xor(uy,res)
+              return  bit_cast( if_else ( is_gez( bit_cast( bit_ornot ( bit_xor(ux,uy)
+                                                                                  , bit_xor(uy,res)
                                                                                   )
                                                                   , as(a)
                                                                   )
@@ -118,7 +118,7 @@ namespace eve::detail
           else // if  constexpr(std::is_unsigned_v<vt_t>)
           {
             T r  = a + b;
-            return bitwise_or(r, bitwise_mask(is_less(r, a)));
+            return bit_or(r, bit_mask(is_less(r, a)));
           }
         }
         else return map( eve::add, st, a, b);

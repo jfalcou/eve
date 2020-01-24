@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/function/bitwise_andnot.hpp>
+#include <eve/function/bit_andnot.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -28,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_),
                                       T const &a) noexcept requires(T, vectorizable<T>)
   {
-    if constexpr(std::is_floating_point_v<T>) { return bitwise_andnot(a, Mzero(as(a))); }
+    if constexpr(std::is_floating_point_v<T>) { return bit_andnot(a, Mzero(as(a))); }
     else if constexpr(std::is_unsigned_v<T>)
     {
       return a;

@@ -18,13 +18,13 @@
 #include <eve/tags.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shr.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_andnot.hpp>   
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_notand.hpp>
-#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_shr.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_andnot.hpp>   
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_notand.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp> 
@@ -67,9 +67,9 @@ namespace eve::detail
     {
       using t_t = wide<T, N, ABI>; 
       using i_t = as_integer_t<t_t, signed>; 
-      auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
-      auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
-      return  std::tuple<t_t, i_t>{ bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+      auto r1   = bit_and(Expobits_mask<t_t>(), a0);
+      auto x    = bit_notand(Expobits_mask<t_t>(), a0);
+      return  std::tuple<t_t, i_t>{ bit_or(Half<t_t>(), x), bit_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
     }
   }
   
@@ -126,10 +126,10 @@ namespace eve::detail
         t = if_else(test,Nbmantissabits<t_t>(), eve::zero_);
         aa0 = if_else(test, Twotonmb<T>()*a0, a0);
       }
-      auto r1 = bitwise_and(Expobits_mask<t_t>(), aa0); //extract exp.
-      auto x  = bitwise_notand(Expobits_mask<t_t>(), aa0);
-      r1 = bitwise_shr(r1,Nbmantissabits<T>()) - Maxexponentm1<T>();
-      auto r0 = bitwise_or(Half<t_t>(), x);
+      auto r1 = bit_and(Expobits_mask<t_t>(), aa0); //extract exp.
+      auto x  = bit_notand(Expobits_mask<t_t>(), aa0);
+      r1 = bit_shr(r1,Nbmantissabits<T>()) - Maxexponentm1<T>();
+      auto r0 = bit_or(Half<t_t>(), x);
       auto test0 = is_nez(aa0);
       auto test1 = is_greater(r1,Limitexponent<t_t>());
       r1 = if_else(logical_notand(test1, test0), r1, eve::zero_);

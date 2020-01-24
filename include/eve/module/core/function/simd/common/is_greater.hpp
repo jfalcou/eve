@@ -16,9 +16,9 @@
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_not.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_not.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -58,7 +58,7 @@ namespace eve::detail
                                                                           vectorized<U>,
                                                                           equal_cardinal<T, U>)
   {
-    return bitwise_cast(is_greater(a.bits(), b.bits()),as(a));
+    return bit_cast(is_greater(a.bits(), b.bits()),as(a));
   }
 }
 

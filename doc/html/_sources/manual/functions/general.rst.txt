@@ -8,6 +8,6 @@ Functions
    :maxdepth: 1
 
    arithmetic.rst
-   bitwise.rst
+   bit.rst
    logical.rst
    predicate.rst

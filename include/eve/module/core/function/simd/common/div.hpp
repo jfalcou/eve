@@ -19,8 +19,8 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -28,7 +28,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/constant/valmin.hpp>
@@ -143,7 +143,7 @@ namespace eve::detail
           auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
           // negative -> valmin
           // positive -> valmax
-          const T x2 = bitwise_xor(Valmax<T>(), shr(x, sizeof(sT)*8-1));
+          const T x2 = bit_xor(Valmax<T>(), shr(x, sizeof(sT)*8-1));
           x = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
           const T y = if_else(iseqzb, One<T>(), b);
           return div(x, y);
@@ -152,7 +152,7 @@ namespace eve::detail
         {
           auto iseqzb = is_eqz(b);
           auto bb = if_else(iseqzb, One(as(a)), b);
-          auto aa = if_else(iseqzb, bitwise_mask(a), a);
+          auto aa = if_else(iseqzb, bit_mask(a), a);
           return div(aa, bb);
         }
       }

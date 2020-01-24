@@ -22,8 +22,8 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/inearest.hpp>  
 #include <eve/function/rec.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/inc.hpp>
@@ -33,7 +33,7 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/logical_ornot.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
@@ -123,7 +123,7 @@ namespace eve::detail
           q = if_else(is_greater_equal(rx2, bb)
                      ,inc[logical_ornot(rx2 != bb, is_even(q))](q)
                      , q); 
-          return if_else(is_nez(b), q, bitwise_mask(a));         
+          return if_else(is_nez(b), q, bit_mask(a));         
         }
         return T();
       }

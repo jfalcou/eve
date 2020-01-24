@@ -18,7 +18,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
@@ -59,7 +59,7 @@ namespace eve::detail
         > (z);
       z1 = eve::fma(z1, z*x, x);
       z = if_else(x_larger_05, eve::Pio_2<T>()-(z1+z1), z1);
-      return eve::bitwise_xor(z, sgn);
+      return eve::bit_xor(z, sgn);
     }
     else
     {
@@ -108,7 +108,7 @@ namespace eve::detail
           >(zz);
         zz = fma(x, z, x);
       }
-      return bitwise_xor(sgn, zz);
+      return bit_xor(sgn, zz);
     }
   }
 }

@@ -17,7 +17,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/mzero.hpp>
-#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bit_notand.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <eve/function/max.hpp>
 #include <type_traits>
@@ -36,7 +36,7 @@ namespace eve::detail
     {
       if constexpr(std::is_unsigned_v<T>) return v;
       if constexpr(std::is_floating_point_v<T>)
-        return bitwise_notand(Mzero(as(v)), v);
+        return bit_notand(Mzero(as(v)), v);
       else if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
         return eve::max(v, -v);
     }

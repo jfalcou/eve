@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_mask.hpp>
 #include <eve/function/itrunc.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
@@ -73,7 +73,7 @@ namespace eve::detail
        return div(a0, a1);
       }
       else
-        return bitwise_mask(a0);
+        return bit_mask(a0);
     }
   }
 }

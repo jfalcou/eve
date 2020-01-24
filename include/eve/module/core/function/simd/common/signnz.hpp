@@ -38,15 +38,15 @@ namespace eve::detail
     {
 #ifndef EVE_SIMD_NO_NANS
       return if_else(
-          is_nan(a), eve::allbits_, bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a)));
+          is_nan(a), eve::allbits_, bit_or(One(as(a)), bit_and(Signmask(as(a)), a)));
 #else
-      return bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
+      return bit_or(One(as(a)), bit_and(Signmask(as(a)), a));
 #endif
     }
     else
     {
       if constexpr(std::is_signed_v<T>)
-        return bitwise_or(shr(a, (sizeof(T) * 8 - 1)), One(as(a)));
+        return bit_or(shr(a, (sizeof(T) * 8 - 1)), One(as(a)));
       else
         return One(as(a));
     }

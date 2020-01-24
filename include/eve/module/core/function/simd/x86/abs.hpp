@@ -26,7 +26,7 @@ namespace eve::detail
     if constexpr(std::is_unsigned_v<T>)
       return v;
     else if constexpr(std::is_floating_point_v<T>)
-      return bitwise_notand(Mzero(as(v)), v);
+      return bit_notand(Mzero(as(v)), v);
     else if constexpr(std::is_integral_v<T>)
     {
       if constexpr(sizeof(T) == 1)
@@ -48,7 +48,7 @@ namespace eve::detail
     if constexpr(std::is_unsigned_v<T>)
       return v;
     else if constexpr(std::is_floating_point_v<T>)
-      return bitwise_notand(Mzero(as(v)), v);
+      return bit_notand(Mzero(as(v)), v);
     else if constexpr(std::is_integral_v<T>)
     {
       if constexpr(current_api >= avx2)

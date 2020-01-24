@@ -16,7 +16,7 @@
 #include <eve/module/core/detail/generic/next_kernel.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_unordered.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/dist.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_ltz.hpp>
@@ -47,12 +47,12 @@ namespace eve::detail
       auto bb = eve::detail::bitinteger(b);
       auto z = if_else (is_unordered(a, b)
                      , eve::Valmax<ui_t>()
-                     , bitwise_cast(dist(bb, aa), as<ui_t>())
+                     , bit_cast(dist(bb, aa), as<ui_t>())
                      );
       return inc[is_ltz(signnz(a)*signnz(b))](z); 
     }
     else
-      return bitwise_cast(dist(a, b), as<ui_t>()); 
+      return bit_cast(dist(a, b), as<ui_t>()); 
   }
 }
 

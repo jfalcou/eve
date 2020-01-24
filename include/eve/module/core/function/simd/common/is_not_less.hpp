@@ -62,7 +62,7 @@ namespace eve::detail
                                                                            vectorized<U>,
                                                                            equal_cardinal<T, U>)
   {
-    return bitwise_cast(is_not_less(a.bits(), b.bits()), as(a));
+    return bit_cast(is_not_less(a.bits(), b.bits()), as(a));
   }
 }
 

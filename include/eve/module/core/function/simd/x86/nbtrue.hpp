@@ -42,9 +42,9 @@ namespace eve::detail
       {
         using t_t  = wide<float, fixed<Card>, sse_>;
         static constexpr int sv = SH*sizeof(T);
-        i8_t z = _mm_bslli_si128(bitwise_cast(v.mask(), as_<i8_t>()), sv);
+        i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
 
-        return popcnt(_mm_movemask_ps(bitwise_cast(z,as_<t_t>())));
+        return popcnt(_mm_movemask_ps(bit_cast(z,as_<t_t>())));
       }
       else
       {
@@ -61,9 +61,9 @@ namespace eve::detail
       {
         using t_t  = wide<double, fixed <Card>, sse_>;
         static constexpr int sv = SH*sizeof(T);
-        i8_t z = _mm_bslli_si128(bitwise_cast(v.mask(), as_<i8_t>()), sv);
+        i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
 
-        return popcnt(_mm_movemask_pd(bitwise_cast(z,as_<t_t>())));
+        return popcnt(_mm_movemask_pd(bit_cast(z,as_<t_t>())));
       }
       else
       {
@@ -94,12 +94,12 @@ namespace eve::detail
         if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
         {
           static constexpr int sv = SH;
-          auto z = _mm_bslli_si128(bitwise_cast(v.mask(), as_<i8_t >()), sv);
+          auto z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t >()), sv);
           return popcnt(_mm_movemask_epi8(z))/sizeof(T);
         }
         else
         {
-          return popcnt(_mm_movemask_epi8(bitwise_cast(v.mask(), as_<i8_t >())))/sizeof(T);
+          return popcnt(_mm_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
         }
       }
     }
@@ -133,7 +133,7 @@ namespace eve::detail
         else
         {
           using i8_t = wide<int8_t, fixed<32> , avx_>;
-          return popcnt(_mm256_movemask_epi8(bitwise_cast(v.mask(), as_<i8_t >())))/sizeof(T);
+          return popcnt(_mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
         }
       }
       else

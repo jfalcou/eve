@@ -18,7 +18,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
@@ -87,8 +87,8 @@ namespace eve::detail
       IN sign_f = inc(IN(Valmax<si_t>()));
       r_t sign_i = inc(r_t(Valmax<si_t>()));
       return if_else(is_less(v0, sign_f)
-                    , bitwise_cast(convert(v0, as<OUT>()), as<wide<OUT, N>>())
-                    , bitwise_cast(convert(v0 - sign_f, as<OUT>()), as<wide<OUT, N>>()) + sign_i
+                    , bit_cast(convert(v0, as<OUT>()), as<wide<OUT, N>>())
+                    , bit_cast(convert(v0 - sign_f, as<OUT>()), as<wide<OUT, N>>()) + sign_i
                     );
     }
     else if constexpr(std::is_signed_v<IN> && std::is_unsigned_v<OUT> )

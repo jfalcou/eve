@@ -31,11 +31,11 @@ namespace eve::detail
 
     if constexpr(std::is_signed_v<T>)
     {
-      return t_t(vec_sra(v0.storage(), bitwise_cast(v1,as_<i_t>()).storage()));
+      return t_t(vec_sra(v0.storage(), bit_cast(v1,as_<i_t>()).storage()));
     }
     else
     {
-      return t_t(vec_sr(v0.storage(), bitwise_cast(v1,as_<i_t>()).storage()));
+      return t_t(vec_sr(v0.storage(), bit_cast(v1,as_<i_t>()).storage()));
     }
   }
 

@@ -15,13 +15,13 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/tags.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shr.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_andnot.hpp>   
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_notand.hpp>
-#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_shr.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_andnot.hpp>   
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_notand.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/constant/limitexponent.hpp>
@@ -50,10 +50,10 @@ namespace eve::detail
   {
     using t_t = value_type_t<T>;
     using i_t = as_integer_t<T, signed>; 
-    auto r1   = bitwise_and(Expobits_mask<T>(), a0);
-    auto x    = bitwise_notand(Expobits_mask<T>(), a0);
-    return  std::tuple<T, i_t>{ bitwise_or(Half<T>(), x),
-                                bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
+    auto r1   = bit_and(Expobits_mask<T>(), a0);
+    auto x    = bit_notand(Expobits_mask<T>(), a0);
+    return  std::tuple<T, i_t>{ bit_or(Half<T>(), x),
+                                bit_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>()};
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -84,28 +84,28 @@ namespace eve::detail
     else
     {
       auto nmb  = Nbmantissabits<T>();
-      i_t r1    = bitwise_and(Expobits_mask<T>(), a0);  // extract exp.
+      i_t r1    = bit_and(Expobits_mask<T>(), a0);  // extract exp.
       if constexpr(eve::platform::supports_denormals)
       {
         i_t t = i_t(0);
         if(is_eqz(r1)) // denormal
         {
           a0 *= Twotonmb<T>();
-          r1  = bitwise_and(Expobits_mask<T>(), a0);  // extract exp. again
+          r1  = bit_and(Expobits_mask<T>(), a0);  // extract exp. again
           t   = nmb;
         }        
-        T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
-        r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
+        T x  = bit_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
+        r1 = bit_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
         if (r1 > Limitexponent<T>()) return {a0, i_t(0)};       
         r1 -= t;
-        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
+        return std::tuple<T, i_t>{bit_or(x,Half<T>()), r1};
       }
       else
       {
-        T x  = bitwise_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
-        r1 = bitwise_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
+        T x  = bit_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
+        r1 = bit_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
         if (r1 > Limitexponent<T>()) return {a0, i_t(0)};
-        return std::tuple<T, i_t>{bitwise_or(x,Half<T>()), r1};
+        return std::tuple<T, i_t>{bit_or(x,Half<T>()), r1};
       }
     }
   }

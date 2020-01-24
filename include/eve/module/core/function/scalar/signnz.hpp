@@ -13,8 +13,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/bitwise_and.hpp>
-#include <eve/function/scalar/bitwise_or.hpp>
+#include <eve/function/scalar/bit_and.hpp>
+#include <eve/function/scalar/bit_or.hpp>
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
@@ -31,9 +31,9 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
 #ifndef EVE_NO_NANS
-      return is_nan(a) ? Nan(as(a)) : bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
+      return is_nan(a) ? Nan(as(a)) : bit_or(One(as(a)), bit_and(Signmask(as(a)), a));
 #else
-      return bitwise_or(One(as(a)), bitwise_and(Signmask(as(a)), a));
+      return bit_or(One(as(a)), bit_and(Signmask(as(a)), a));
 #endif
     }
     else

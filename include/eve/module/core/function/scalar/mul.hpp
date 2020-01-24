@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/function/saturated.hpp>
@@ -71,7 +71,7 @@ namespace eve::detail
       {
         using un_t = std::make_unsigned_t<T>;
         if (b == 0 || a == 0) return Zero<T>();
-        T sgn =  bitwise_xor(bitofsign(a), bitofsign(b));
+        T sgn =  bit_xor(bitofsign(a), bitofsign(b));
         un_t aa = eve::abs(a);
         un_t bb = eve::abs(b);
         auto aux = [sgn](const T& mini,  const T& maxi,

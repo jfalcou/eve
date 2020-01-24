@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/frexp.hpp>
@@ -97,12 +97,12 @@ namespace eve::detail
             x = if_else(test, x*T(33554432ul), x);
           }
         }
-        uiT ix = bitwise_cast(x, as<uiT>());
+        uiT ix = bit_cast(x, as<uiT>());
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         ix += 0x3f800000 - 0x3f3504f3;
-        k += bitwise_cast(ix>>23, as<iT>()) - 0x7f;
+        k += bit_cast(ix>>23, as<iT>()) - 0x7f;
         ix = (ix&0x007fffff) + 0x3f3504f3;
-        x =  bitwise_cast(ix, as<T>());
+        x =  bit_cast(ix, as<T>());
         T f = dec(x);
         T s = f/(2.0f + f);
         T z = sqr(s);
@@ -113,7 +113,7 @@ namespace eve::detail
         T hfsq = Half<T>()*sqr(f);
         T dk = tofloat(k);
         T  hibits = f - hfsq;
-        hibits =  bitwise_and(hibits, uiT(0xfffff000ul));
+        hibits =  bit_and(hibits, uiT(0xfffff000ul));
         T  lobits = fma(s, hfsq+R, f - hibits - hfsq);
         //      T r = ((((dk*log10_2lo + (lobits+hibits)*ivln10lo) + lobits*ivln10hi) + hibits*ivln10hi) + dk*log10_2hi);
         T r = fma(dk, Log10_2hi,
@@ -159,11 +159,11 @@ namespace eve::detail
           }
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        uiT hx = bitwise_cast(x, as<uiT>()) >> 32;
+        uiT hx = bit_cast(x, as<uiT>()) >> 32;
         hx += 0x3ff00000 - 0x3fe6a09e;
-        k += bitwise_cast(hx>>20, as<iT>()) - 0x3ff;
-        hx = (bitwise_and(0x000fffffull, hx)) + 0x3fe6a09e;
-        x = bitwise_cast(hx<<32 | (bitwise_and(0xffffffffull, bitwise_cast(x, as<uiT>()) )), as<T>());
+        k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
+        hx = (bit_and(0x000fffffull, hx)) + 0x3fe6a09e;
+        x = bit_cast(hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()) )), as<T>());
         
         T f = dec(x);
         T s = f/(2.0f + f);
@@ -177,7 +177,7 @@ namespace eve::detail
         T dk =  tofloat(k); 
         //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
         T  hi = f - hfsq;
-        hi =  bitwise_and(hi, (Allbits<uiT>() << 32));
+        hi =  bit_and(hi, (Allbits<uiT>() << 32));
         T lo = f - hi - hfsq + s*(hfsq+R);
         T val_hi = hi*Invlog_10hi;
         T  y = dk*Log10_2hi;
@@ -262,7 +262,7 @@ namespace eve::detail
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
         T  hi = f - hfsq;
-        hi =  bitwise_and(hi, 0xfffff000u);
+        hi =  bit_and(hi, 0xfffff000u);
         T  lo = fma(s, hfsq+R, f - hi - hfsq);
         T r = fma(dk, Log10_2hi,
                   fma(hi, Invlog_10hi,
@@ -323,7 +323,7 @@ namespace eve::detail
         T hfsq = Half<T>()*sqr(f);
         //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
         T  hi = f - hfsq;
-        hi =  bitwise_and(hi, (Allbits<uiT>() << 32));
+        hi =  bit_and(hi, (Allbits<uiT>() << 32));
         T lo = f - hi - hfsq + s*(hfsq+R);
         T val_hi = hi*Invlog_10hi;
         T  y = dk*Log10_2hi;

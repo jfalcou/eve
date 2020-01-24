@@ -17,8 +17,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_notand.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/signnz.hpp>
@@ -54,7 +54,7 @@ namespace eve::detail
       {
         if constexpr(std::is_floating_point_v<value_type_t<T>>)
         {
-          return bitwise_or(bitofsign(b), bitwise_notand(Signmask(as(a)), a));
+          return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
         }
         else
         {

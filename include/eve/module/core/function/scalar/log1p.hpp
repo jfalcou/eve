@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/add.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp>
@@ -71,7 +71,7 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      uiT ix = bitwise_cast(x, as<uiT>());
+      uiT ix = bit_cast(x, as<uiT>());
       iT k = 1;
       T c = Zero<T>(), f = x;
       if (ix < 0x3ed413d0 || ix>>31)               /* 1+x < sqrt(2)+  */
@@ -95,9 +95,9 @@ namespace eve::detail
       {
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
         T uf =  inc(x);
-        uiT iu = bitwise_cast(uf, as<uiT>());
+        uiT iu = bit_cast(uf, as<uiT>());
         iu += 0x3f800000 - 0x3f3504f3;
-        k = bitwise_cast(iu>>23, as<iT>()) - 0x7f;
+        k = bit_cast(iu>>23, as<iT>()) - 0x7f;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
         if (k < 25)
         {
@@ -107,7 +107,7 @@ namespace eve::detail
 
         /* reduce u into [sqrt(2)/2, sqrt(2)] */
         iu = (iu&0x007fffff) + 0x3f3504f3;
-        f =  dec(bitwise_cast(iu, as<T>()));
+        f =  dec(bit_cast(iu, as<T>()));
       }
       T s = f/(2.0f + f);
       T z = sqr(s);
@@ -133,7 +133,7 @@ namespace eve::detail
        * is preserved.
        * ====================================================
        */
-      uiT hx = bitwise_cast(x, as<uiT>()) >> 32;
+      uiT hx = bit_cast(x, as<uiT>()) >> 32;
       iT k = 1;
       
       T c = Zero<T>();
@@ -158,7 +158,7 @@ namespace eve::detail
       {
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         T uf =  inc(x);
-        uiT hu = bitwise_cast(uf, as<uiT>())>>32;
+        uiT hu = bit_cast(uf, as<uiT>())>>32;
         hu += 0x3ff00000 - 0x3fe6a09e;
         k = (int)(hu>>20) - 0x3ff;
         /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
@@ -168,7 +168,7 @@ namespace eve::detail
           c /= uf;
         }
         hu =  (hu&0x000fffff) + 0x3fe6a09e;
-        f = bitwise_cast( bitwise_cast(hu<<32, as<uiT>()) | (bitwise_and(0xffffffffull, bitwise_cast(uf, as<uiT>()))), as<T>());
+        f = bit_cast( bit_cast(hu<<32, as<uiT>()) | (bit_and(0xffffffffull, bit_cast(uf, as<uiT>()))), as<T>());
         f = dec(f);
       }
 

@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/add.hpp>
@@ -39,10 +39,10 @@ namespace eve::detail
       if constexpr(std::is_floating_point_v<T>)
       {
         auto s   = bitofsign(a0);
-        auto v   = bitwise_xor(a0, s);
+        auto v   = bit_xor(a0, s);
         auto t2n = Twotonmb(as(a0));
         auto d0  = v + t2n;
-        return bitwise_xor(if_else(is_less(v, t2n), d0 - t2n, v), s);
+        return bit_xor(if_else(is_less(v, t2n), d0 - t2n, v), s);
       }
       else if constexpr(std::is_integral_v<T>)
         return a0;

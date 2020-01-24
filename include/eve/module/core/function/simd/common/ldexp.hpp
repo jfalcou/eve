@@ -17,8 +17,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shl.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_shl.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/if_else.hpp>
@@ -71,7 +71,7 @@ namespace eve::detail
           using i_t = detail::as_integer_t<t_t, signed>; 
           i_t ik =  b+Maxexponent<t_t>();
           ik = shl(ik, Nbmantissabits<t_t>());
-          return a*bitwise_cast(ik, as<t_t>());
+          return a*bit_cast(ik, as<t_t>());
         } 
         else  // U is floating point
         {
@@ -100,7 +100,7 @@ namespace eve::detail
           using i_t = as_integer_t<t_t, signed>;
           auto ik =  convert(b, as<i_t>())+Maxexponent<t_t>();
           ik = shl(ik, Nbmantissabits<t_t>());
-          return a*bitwise_cast(ik, as<T>());
+          return a*bit_cast(ik, as<T>());
         }
         else // U is vector of floating
         {
@@ -152,8 +152,8 @@ namespace eve::detail
           f = inc[test](f);
           e = dec[test](e);
           e += Maxexponent<t_t>();
-          e = bitwise_shl(e, Nbmantissabits<T>());
-          return a*bitwise_cast(e, as(t_t()))*f;
+          e = bit_shl(e, Nbmantissabits<T>());
+          return a*bit_cast(e, as(t_t()))*f;
         }
         else  // U is floating point
         {
@@ -191,8 +191,8 @@ namespace eve::detail
           f = inc[test](f);
           e = dec[test](e);
           e += Maxexponent<t_t>();
-          e = bitwise_shl(e, Nbmantissabits<T>());
-          return a*bitwise_cast(e, as<T>())*f;
+          e = bit_shl(e, Nbmantissabits<T>());
+          return a*bit_cast(e, as<T>())*f;
         }
         else // U is vector of floating
         {

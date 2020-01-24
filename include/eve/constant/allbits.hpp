@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -32,7 +32,7 @@ namespace eve
     if constexpr(std::is_integral_v<t_t>)
       return T(mask);
     else
-      return T(bitwise_cast(i_t(mask), as_<t_t>() ));
+      return T(bit_cast(i_t(mask), as_<t_t>() ));
   }
 
   EVE_MAKE_NAMED_CONSTANT(allbits_, Allbits);

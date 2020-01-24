@@ -17,7 +17,7 @@
 #include <eve/assert.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/core/detail/simd/atan_kernel.hpp>
 #include <type_traits>
@@ -35,7 +35,7 @@ namespace eve::detail
     else
     {
       eve::wide<T,N,ABI> x  = eve::abs(a);
-      return bitwise_xor(atan_kernelw(x, rec(x)), bitofsign(a));
+      return bit_xor(atan_kernelw(x, rec(x)), bitofsign(a));
     }
   }
 }

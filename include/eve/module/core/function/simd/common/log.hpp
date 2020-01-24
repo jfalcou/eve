@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/frexp.hpp>
@@ -104,12 +104,12 @@ namespace eve::detail
             x = if_else(test, x*T(8388608ul), x);
           }
         }
-        uiT ix = bitwise_cast(x, as<uiT>());
+        uiT ix = bit_cast(x, as<uiT>());
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         ix += 0x3f800000 - 0x3f3504f3;
-        k += bitwise_cast(ix>>23, as<iT>()) - 0x7f;
+        k += bit_cast(ix>>23, as<iT>()) - 0x7f;
         ix = (ix&0x007fffff) + 0x3f3504f3;
-        x =  bitwise_cast(ix, as<T>());
+        x =  bit_cast(ix, as<T>());
         T f = dec(x);
         T s = f/(2.0f + f);
         T z = sqr(s);
@@ -161,11 +161,11 @@ namespace eve::detail
           }
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        uiT hx = bitwise_cast(x, as<uiT>()) >> 32;
+        uiT hx = bit_cast(x, as<uiT>()) >> 32;
         hx += 0x3ff00000 - 0x3fe6a09e;
-        k += bitwise_cast(hx>>20, as<iT>()) - 0x3ff;
-        hx = (bitwise_and(0x000fffffull, hx)) + 0x3fe6a09e;
-        x = bitwise_cast(hx<<32 | (bitwise_and(0xffffffffull, bitwise_cast(x, as<uiT>()) )), as<T>());
+        k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
+        hx = (bit_and(0x000fffffull, hx)) + 0x3fe6a09e;
+        x = bit_cast(hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()) )), as<T>());
         
         T f = dec(x);
         T s = f/(2.0f + f);

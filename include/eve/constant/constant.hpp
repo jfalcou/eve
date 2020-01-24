@@ -13,7 +13,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -39,7 +39,7 @@ namespace eve
       }
       else
       {
-        return static_cast<T>(bitwise_cast(BitsPattern,as_<t_t>{}));
+        return static_cast<T>(bit_cast(BitsPattern,as_<t_t>{}));
       }
     }
   }

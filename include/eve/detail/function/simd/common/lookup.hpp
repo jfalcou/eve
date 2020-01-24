@@ -15,8 +15,8 @@
 #include <eve/detail/meta/concept.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_mask.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_mask.hpp>
 
 namespace eve::detail
 {
@@ -30,12 +30,12 @@ namespace eve::detail
     if constexpr( std::is_signed_v<I> )
     {
       return  apply<N::value>([&](auto... v) { return type{a[ idx[v]<0 ? 0 : idx[v]]...}; })
-            & bitwise_mask(idx>=0);
+            & bit_mask(idx>=0);
     }
     else
     {
       return  apply<N::value>([&](auto... v) { return type{a[idx[v]<N::value ? idx[v] : 0]...}; })
-            & bitwise_mask(idx<N::value);
+            & bit_mask(idx<N::value);
     }
   }
 }

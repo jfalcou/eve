@@ -14,9 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_mask.hpp>
-#include <eve/function/bitwise_or.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_mask.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/is_logical.hpp>
 #include <eve/concept/vectorized.hpp>
@@ -47,7 +47,7 @@ namespace eve::detail
         }
         else
         {
-          return bitwise_cast(bitwise_or(bitwise_mask(a), bitwise_mask(b)), as_<as_logical_t<T>>());
+          return bit_cast(bit_or(bit_mask(a), bit_mask(b)), as_<as_logical_t<T>>());
         }
       }
       else
@@ -66,7 +66,7 @@ namespace eve::detail
                                                                           vectorized<U>,
                                                                           equal_cardinal<T, U>)
   {
-    return bitwise_cast(bitwise_or(a.bits(), b.bits()), as(a));
+    return bit_cast(bit_or(a.bits(), b.bits()), as(a));
   }
 
   template<typename T, typename U>
@@ -77,7 +77,7 @@ namespace eve::detail
                                                                  vectorized<U>,
                                                                  equal_cardinal<T, U>)
   {
-    return bitwise_cast(bitwise_or(a.bits(), bitwise_mask(b)), as(a));
+    return bit_cast(bit_or(a.bits(), bit_mask(b)), as(a));
   }
 
   template<typename T, typename U>
@@ -88,7 +88,7 @@ namespace eve::detail
                                                                           vectorized<U>,
                                                                           equal_cardinal<T, U>)
   {
-    return bitwise_cast(bitwise_or(bitwise_mask(a), b.bits()), as(b));
+    return bit_cast(bit_or(bit_mask(a), b.bits()), as(b));
   }
 
 }

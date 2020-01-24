@@ -13,7 +13,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -28,7 +28,7 @@ namespace eve::detail
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
     using i_t = wide<as_integer_t<T, signed>, N>;
-    auto s1   = bitwise_cast(v1,as_<i_t>()).storage();
+    auto s1   = bit_cast(v1,as_<i_t>()).storage();
 
     if constexpr(is_signed_int && sizeof(T) == 8) return t_t(vshl_s64(v0, s1));
     if constexpr(is_signed_int && sizeof(T) == 4) return t_t(vshl_s32(v0, s1));
@@ -49,7 +49,7 @@ namespace eve::detail
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
     using i_t = wide<as_integer_t<T, signed>, N>;
-    auto s1   = bitwise_cast(v1,as_<i_t>()).storage();
+    auto s1   = bit_cast(v1,as_<i_t>()).storage();
 
     if constexpr(is_signed_int && sizeof(T) == 8) return t_t(vshlq_s64(v0, s1));
     if constexpr(is_signed_int && sizeof(T) == 4) return t_t(vshlq_s32(v0, s1));
