@@ -73,14 +73,14 @@ namespace eve::detail
       inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
       inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
       inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
-      return pedantic_(ldexp)(that_t(inv), -nn/2)
+      return pedantic_(ldexp)(that_t(inv), -nn/2); 
     }
     else if constexpr(std::is_same_v<T, float>)
     {
       auto inv = vrsqrte_f32(v0);
       inv      = vmul_f32(vrsqrts_f32(v0, inv * inv), inv);
       inv      = vmul_f32(vrsqrts_f32(v0, inv * inv), inv);
-      return pedantic_(ldexp)(that_t(inv), -nn/2)
+      return pedantic_(ldexp)(that_t(inv), -nn/2); 
     }
     else
     {
@@ -104,14 +104,14 @@ namespace eve::detail
       inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
       inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
       inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
-      return pedantic_(ldexp)(that_t(inv), -nn/2)
+      return pedantic_(ldexp)(that_t(inv), -nn/2); 
     }
     else if constexpr(std::is_same_v<T, float>)
     {
       auto inv = vrsqrteq_f32(v0);
       inv      = vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv);
       inv      = vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv);
-      return pedantic_(ldexp)(that_t(inv), -nn/2)
+      return pedantic_(ldexp)(that_t(inv), -nn/2); 
     }
     else
     {
