@@ -12,6 +12,8 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSQRT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/function/ifrexp.hpp>
+#include <eve/function/ldexp.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
