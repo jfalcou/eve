@@ -47,15 +47,10 @@ namespace eve::detail
       {
         if constexpr (std::is_same_v<Tag, numeric_type>)
         {
-          std::cout << "icitte" << std::endl;
           auto aa = if_else(is_nan(a), b, a);
           auto bb = if_else(is_nan(b), a, b);
-          std::cout << "a" << a << " aa" << aa  << std::endl;
-          std::cout << "b" << b << " bb" << bb  << std::endl;  
           auto z =  minmag(aa, bb);
-          std::cout << "z " << z << std::endl; 
           return z; 
-//          return if_else(is_nan(a), b, if_else(is_nan(b), a, minmag(a, b))); 
         }
         else
         {
