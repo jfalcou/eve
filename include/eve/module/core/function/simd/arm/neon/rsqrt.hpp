@@ -57,22 +57,28 @@ namespace eve::detail
   // Basic version
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon64_> const &v0) noexcept
+                                             wide<T, N, neon64_> const & x) noexcept
   {
     using that_t = wide<T, N, neon64_>;
+    using i_t = as_integer_t<that_t>;
+    i_t nn;
+    that_t v0; 
+    std::tie(v0, nn) =  pedantic_(ifrexp)(x);
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64)
     {
       auto inv = vrsqrte_f64(v0);
       inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
       inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
-      return that_t(vmul_f64(vrsqrts_f64(v0, inv * inv), inv));
+      inv      = vmul_f64(vrsqrts_f64(v0, inv * inv), inv);
+      return pedantic_(ldexp)(that_t(inv), -nn/2)
     }
     else if constexpr(std::is_same_v<T, float>)
     {
       auto inv = vrsqrte_f32(v0);
       inv      = vmul_f32(vrsqrts_f32(v0, inv * inv), inv);
-      return that_t(vmul_f32(vrsqrts_f32(v0, inv * inv), inv));
+      inv      = vmul_f32(vrsqrts_f32(v0, inv * inv), inv);
+      return pedantic_(ldexp)(that_t(inv), -nn/2)
     }
     else
     {
@@ -82,22 +88,28 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                              wide<T, N, neon128_> const &v0) noexcept
+                                              wide<T, N, neon128_> const &x) noexcept
   {
     using that_t = wide<T, N, neon128_>;
+    using i_t = as_integer_t<that_t>;
+    i_t nn;
+    that_t v0; 
+    std::tie(v0, nn) =  pedantic_(ifrexp)(x);
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64)
     {
       auto inv = vrsqrteq_f64(v0);
       inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
       inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
-      return that_t(vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv));
+      inv      = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
+      return pedantic_(ldexp)(that_t(inv), -nn/2)
     }
     else if constexpr(std::is_same_v<T, float>)
     {
       auto inv = vrsqrteq_f32(v0);
       inv      = vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv);
-      return that_t(vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv));
+      inv      = vmulq_f32(vrsqrtsq_f32(v0, inv * inv), inv);
+      return pedantic_(ldexp)(that_t(inv), -nn/2)
     }
     else
     {
