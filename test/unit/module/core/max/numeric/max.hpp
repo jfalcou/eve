@@ -38,7 +38,7 @@ TTS_CASE("Check eve::numeric_(eve::max) behavior")
   TTS_EQUAL(eve::numeric_(eve::max)((Type(1)), (Value(0))), (Type(1)));
   TTS_EQUAL(eve::numeric_(eve::max)((Type(1)), (Value(1))), (Type(1)));
 
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     TTS_IEEE_EQUAL(eve::numeric_(eve::max)((eve::Nan<Type>() ), (Type(1)))  , (Type(1)) );
     TTS_IEEE_EQUAL(eve::numeric_(eve::max)((eve::Nan<Value>()), (Type(1)))  , (Type(1)) );

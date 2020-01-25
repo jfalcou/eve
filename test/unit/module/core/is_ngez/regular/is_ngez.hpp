@@ -29,7 +29,7 @@ TTS_CASE("Check eve::is_ngez behavior")
     TTS_EQUAL(eve::is_ngez(Type(-1)), eve::True<Type>());
   }
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_ngez(eve::Nan<Type>()), eve::True<Type>());
   }

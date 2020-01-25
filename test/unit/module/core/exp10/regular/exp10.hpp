@@ -32,7 +32,7 @@ TTS_CASE("Check eve::exp10 behavior")
   
   TTS_ULP_EQUAL(eve::exp10(Type(1)), Type(10), 0.5);
   TTS_IEEE_EQUAL((eve::exp10(Type(0))), (Type(1)));
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     if constexpr( eve::platform::supports_invalids )
     {

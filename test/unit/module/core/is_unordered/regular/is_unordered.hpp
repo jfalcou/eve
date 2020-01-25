@@ -31,7 +31,7 @@ TTS_CASE("Check eve::is_unordered behavior on arithmetic")
   TTS_EQUAL(eve::is_unordered(Type(3), Type(1)), eve::False<Type>());
   TTS_EQUAL(eve::is_unordered(Type(1), Type(3)), eve::False<Type>());
 
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_unordered(eve::Nan<Type>(), Type(3)), eve::True<Type>());
     TTS_EQUAL(eve::is_unordered(Type(3), eve::Nan<Type>()), eve::True<Type>());

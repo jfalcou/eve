@@ -29,7 +29,7 @@
 //     TTS_EQUAL(eve::dec[-Type(1) > Type(0) ](eve::Zero<Type>()), Type(0));
 //   }
 
-//   if constexpr(std::is_floating_point_v<Type>)
+//   if constexpr(std::is_floating_point_v<Value>)
 //   {
 //     TTS_EQUAL(eve::dec(eve::Mzero<Type>()), Type(-1));
 //     TTS_EQUAL(eve::dec(eve::Zero<Type>()), Type(-1));

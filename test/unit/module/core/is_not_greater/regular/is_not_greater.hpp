@@ -26,7 +26,7 @@ TTS_CASE("Check eve::is_not_greater return type")
 
 TTS_CASE("Check eve::is_not_greater behavior")
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_not_greater(Type(1), eve::Nan<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_not_greater(eve::Nan<Type>(), Type(1)), eve::True<Type>());

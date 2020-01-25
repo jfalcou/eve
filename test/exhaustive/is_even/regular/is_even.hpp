@@ -23,7 +23,7 @@
 TTS_CASE("wide exhaustive check on is_even")
 {
    using l_t = eve::as_logical_t<Type>; 
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == trunc(e/2)*2; } );
     eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());

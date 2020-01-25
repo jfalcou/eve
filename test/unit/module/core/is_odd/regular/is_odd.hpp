@@ -32,7 +32,7 @@ TTS_CASE("Check eve::is_odd behavior")
   TTS_EQUAL(eve::is_odd(Type{1}), eve::True<Type>());
   TTS_EQUAL(eve::is_odd(Type{2}), eve::False<Type>());
   TTS_EQUAL(eve::is_odd(Type{3}), eve::True<Type>());
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_odd(eve::Half<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_odd(eve::Mzero<Type>()), eve::False<Type>());
