@@ -24,7 +24,7 @@
 //   TTS_EQUAL(eve::dec[ Type(1) > Type(0) ](Type(1)), Type(0));
 //   TTS_EQUAL(eve::dec[ Type(1) > Type(2) ](eve::Zero<Type>()), Type(0));
 
-//   if constexpr(std::is_signed_v<Type>)
+//   if constexpr(std::is_signed_v<Value>)
 //   {
 //     TTS_EQUAL(eve::dec[-Type(1) > Type(0) ](eve::Zero<Type>()), Type(0));
 //   }

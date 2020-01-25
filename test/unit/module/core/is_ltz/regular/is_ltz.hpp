@@ -24,7 +24,7 @@ TTS_CASE("Check eve::is_ltz return type")
 
 TTS_CASE("Check eve::is_ltz behavior")
 {
-  if constexpr(std::is_signed_v<Type>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::is_ltz(Type(-1)), eve::True<Type>());
   }

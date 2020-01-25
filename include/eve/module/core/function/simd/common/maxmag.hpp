@@ -36,20 +36,32 @@ namespace eve::detail
     using u_abi = abi_type_t<U>;
 
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
-    { return map(eve::maxmag, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    {
+      return map(tag(eve::maxmag), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+    }
     else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return aggregate(eve::maxmag, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+      return aggregate(tag(eve::maxmag), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
       if constexpr(std::is_same_v<T, U>)
       {
-        auto aa = eve::abs(a);
-        auto ab = eve::abs(b);
-        return if_else(is_not_greater_equal(ab, aa),
-                       a,
-                       if_else(is_not_greater_equal(aa, ab), b, tag(eve::max)(a, b)));
+        if constexpr (std::is_same_v<Tag, numeric_type>)
+        {
+          auto aa = if_else(is_nan(a), b, a);
+          auto bb = if_else(is_nan(b), a, b);
+          auto z =  maxmag(aa, bb);
+          return z; 
+        }
+        else
+        {
+          auto aa = eve::abs(a);
+          auto ab = eve::abs(b);
+          return if_else(is_not_greater_equal(ab, aa),
+                         a,
+                         if_else(is_not_greater_equal(aa, ab), b, tag(eve::max)(a, b)));
+        }
       }
       else
       {
@@ -59,7 +71,7 @@ namespace eve::detail
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
-      return eve::maxmag(abi_cast<U>(a), abi_cast<T>(b));
+      return tag(eve::maxmag)(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
 }

@@ -36,20 +36,35 @@ namespace eve::detail
     using u_abi = abi_type_t<U>;
 
     if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
-    { return map(eve::minmag, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    { return map(tag(eve::minmag), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
     else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return aggregate(eve::minmag, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
+      return aggregate(tag(eve::minmag), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
     else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
     {
       if constexpr(std::is_same_v<T, U>)
       {
-        auto aa = eve::abs(a);
-        auto ab = eve::abs(b);
-        return if_else(is_not_greater_equal(aa, ab),
-                       a,
-                       if_else(is_not_greater_equal(ab, aa), b, tag(eve::min)(a, b)));
+        if constexpr (std::is_same_v<Tag, numeric_type>)
+        {
+          std::cout << "icitte" << std::endl;
+          auto aa = if_else(is_nan(a), b, a);
+          auto bb = if_else(is_nan(b), a, b);
+          std::cout << "a" << a << " aa" << aa  << std::endl;
+          std::cout << "b" << b << " bb" << bb  << std::endl;  
+          auto z =  minmag(aa, bb);
+          std::cout << "z " << z << std::endl; 
+          return z; 
+//          return if_else(is_nan(a), b, if_else(is_nan(b), a, minmag(a, b))); 
+        }
+        else
+        {
+          auto aa = eve::abs(a);
+          auto ab = eve::abs(b);
+          return if_else(is_not_greater_equal(aa, ab),
+                         a,
+                         if_else(is_not_greater_equal(ab, aa), b, tag(eve::min)(a, b)));
+        }
       }
       else
       {
@@ -59,7 +74,7 @@ namespace eve::detail
     }
     else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
     {
-      return eve::minmag(abi_cast<U>(a), abi_cast<T>(b));
+      return tag(eve::minmag)(abi_cast<U>(a), abi_cast<T>(b));
     }
   }
 }

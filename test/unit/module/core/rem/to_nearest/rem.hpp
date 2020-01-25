@@ -23,7 +23,7 @@ TTS_CASE("Check rem return type")
 
 TTS_CASE("Check eve::rem behavior")
 {
-  if constexpr(std::is_integral_v<Type> && std::is_signed_v<Type>)
+  if constexpr(std::is_integral_v<Value> && std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::rem(eve::Mone<Type>()  , Type{2} , eve::to_nearest_), Type(-1));
     TTS_EQUAL(eve::rem(eve::Mone<Value>() , Type{2} , eve::to_nearest_), Type(-1));

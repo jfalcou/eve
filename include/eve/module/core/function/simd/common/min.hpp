@@ -18,6 +18,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nan.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -79,7 +80,7 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> || is_logical_v<T>)
       return eve::min(v0, v1);
     else
-      return if_else(is_nan(v1), v0, eve::min(v0, v1));
+      return if_else(is_unordered(v0, v1), v0, eve::min(v0, v1));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -95,7 +96,7 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> || is_logical_v<T>)
       return eve::min(v0, v1);
     else
-      return if_else(is_nan(v0), v1, min(v0, v1));
+      return if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, min(v0, v1)));
   }
 }
 

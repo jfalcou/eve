@@ -31,8 +31,8 @@ namespace eve::detail
   // Regular, Pedantic or numeric case
   template<typename Tag, typename T>
   EVE_FORCEINLINE constexpr auto
-  minmag_(EVE_SUPPORTS(cpu_), Tag tag, T const &a0, T const &a1) noexcept requires(T,
-                                                                                   vectorizable<T>)
+  minmag_(EVE_SUPPORTS(cpu_), Tag tag, T const &a0, T const &a1) noexcept 
+  requires(T, vectorizable<T>)
   {
     auto aa0 = eve::abs(a0);
     auto aa1 = eve::abs(a1);
