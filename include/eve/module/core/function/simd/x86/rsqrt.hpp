@@ -46,7 +46,6 @@ namespace eve::detail
     Pack a00; 
     std::tie(a00, nn) =  pedantic_(ifrexp)(x);
     auto tst = is_odd(nn);
-//    nn  = if_else(tst, nn-One(as(nn)), nn);
     nn  = dec[tst](nn); 
     a00 = mul[tst](a00,2); 
     // Local constants
