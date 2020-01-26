@@ -14,12 +14,23 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/function/bitwise_notand.hpp>
-#include <eve/function/unary_minus.hpp>
-#include <eve/function/max.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/dec.hpp>
+#include <eve/function/exp2.hpp>
+#include <eve/function/ifrexp.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_less_equal.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/log2.hpp>
+#include <eve/function/inc.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/bit_shr.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -36,21 +47,21 @@ namespace eve::detail
     {
       if constexpr(std::is_floating_point_v<value_type_t<T>>)
       {
-        return exp2(ceil(v));
+        auto [m, e] = ifrexp(v);
+        e = dec[(m == Half<T>())](e); 
+        return if_else(is_eqz(v), v, if_else(is_less_equal(v, One(as(v))), One(as(v)),ldexp(One(as(v)), e))); 
       }
       else 
       {
-        T a0 = v; 
-        T count = Zero(as(a0)); ; 
-        if (a0 && !(a0 & (a0 - 1))) return a0;  
-        
-        while( any(is_nez(a0)))
-        {  
-          a0 >>= 1;
-          inc[is_nez(a0)](count); 
-        }  
-        
-        return if_else(v && !(v & (v - 1)), v, One(as(a0)) << count);
+        auto a0 = v; 
+        auto test =  is_eqz(bit_and(a0, dec(a0))); 
+        if(all(test))
+          return a0;
+        else
+        {
+          auto tmp = if_else(test, Zero(as(a0)), inc(bit_or(a0, bit_shr(a0, 1)))); 
+          return if_else(test, a0, ceil2(tmp));
+        }
       }
     }
   }
