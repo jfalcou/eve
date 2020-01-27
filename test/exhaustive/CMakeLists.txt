@@ -49,6 +49,7 @@ make_all_units(ROOT exhaustive NAME expm1             ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME exponent          ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1) 
 ##make_all_units(ROOT exhaustive NAME exponentbits      ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)    
 make_all_units(ROOT exhaustive NAME floor             ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1) 
+make_all_units(ROOT exhaustive NAME floor2            ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)    
 make_all_units(ROOT exhaustive NAME frac              ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1) 
 make_all_units(ROOT exhaustive NAME iceil             ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)
 make_all_units(ROOT exhaustive NAME ifloor            ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)  
