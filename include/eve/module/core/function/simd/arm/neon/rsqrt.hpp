@@ -89,7 +89,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon128_> const &v00) noexcept
+                                             wide<T, N, neon128_> const &v0) noexcept
   {
     using that_t = wide<T, N, neon128_>;
 
