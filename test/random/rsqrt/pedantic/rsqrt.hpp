@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
@@ -20,6 +20,6 @@ TTS_CASE("wide exhaustive check on rsqrt")
 {
   auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1)/std::sqrt(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Smallestposval<Value>(), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_rsqrt, eve::rsqrt); 
+  eve::rng_producer<Type> p(Value(0), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt)); 
 }

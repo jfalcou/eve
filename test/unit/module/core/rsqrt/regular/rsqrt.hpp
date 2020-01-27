@@ -44,17 +44,4 @@ TTS_CASE("Check eve::rsqrt behavior")
     TTS_ALL_EQUAL((eve::rsqrt(eve::Mzero<Type>()))    , (eve::Inf<Type>()));
     TTS_ALL_EQUAL((eve::rsqrt((Type(0))))             , (eve::Inf<Type>()));
   }
-
-  Value z   = eve::Smallestposval<Value>();
-
-  while (z >  eve::Mindenormal<Value>())
-  {
-    TTS_ULP_EQUAL(eve::rsqrt(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
-    auto u = eve::ulpdist( eve::rsqrt(Type(z)), Type(eve::rec(std::sqrt(z))));
-    if(eve::all(u >  2.0))
-    {
-      break;
-    }
-    z /= 2;
-  }
 }
