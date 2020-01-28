@@ -27,6 +27,7 @@
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
@@ -53,6 +54,15 @@ namespace eve::detail
       ik = bit_shl(ik, Nbmantissabits<T>());
       return a0*bit_cast(ik, as(T()));
     }
+  }
+  
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto ldexp_(EVE_SUPPORTS(cpu_)
+                                    , regular_type const &    
+                                    , T const &a0
+                                    , U const &a1) noexcept
+  {
+    return ldexp(a0, a1); 
   }
   
   // -----------------------------------------------------------------------------------------------
