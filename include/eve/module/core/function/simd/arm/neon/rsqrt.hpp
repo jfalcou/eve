@@ -130,7 +130,7 @@ namespace eve::detail
       auto inv = rsqrt(v0);
       return that_t(pedantic_(eve::ldexp)(inv, -nn/2));
     }
-    else return rsqrt(v0);
+    else return rsqrt(v00);
   }
   
     
@@ -149,7 +149,7 @@ namespace eve::detail
       auto inv = rsqrt(v0);
       return that_t(pedantic_(eve::ldexp)(inv, -nn/2));
     }
-    else return rsqrt(v0);
+    else return rsqrt(v00);
   } 
 }
 
