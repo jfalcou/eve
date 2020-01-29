@@ -8,18 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/exp2.hpp>
-#include <eve/constant/minlog2.hpp>
-#include <eve/constant/maxlog2.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/constant/minlog.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exp2")
+TTS_CASE("wide random check on exp")
 {
-  auto std_exp2 = tts::vectorize<Type>( [](auto e) { return std::exp2(e); } );
+  auto std_exp = tts::vectorize<Type>( [](auto e) { return std::exp(e); } );
 
-  eve::rng_producer<Type> p(eve::Minlog2<Value>()+1, eve::Maxlog2<Value>());
-  TTS_RANGE_CHECK(p, std_exp2, eve::exp2); 
+  eve::rng_producer<Type> p(eve::Minlog<Value>(), eve::Maxlog<Value>());
+  TTS_RANGE_CHECK(p, std_exp, eve::pedantic_(eve::exp)); 
 }
