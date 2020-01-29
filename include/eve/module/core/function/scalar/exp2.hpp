@@ -85,7 +85,7 @@ namespace eve::detail
     }
     else
     {
-      return T(1) << x; 
+      return (x < T(0)) ? T(0) : T(1) << x; 
     }
   }
 
@@ -136,7 +136,7 @@ namespace eve::detail
     }
     else
     {
-      return T(1) << x; 
+        return (x < T(0)) ? T(0) : T(1) << x; 
     }
   } 
 }

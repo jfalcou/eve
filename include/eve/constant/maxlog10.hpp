@@ -40,7 +40,7 @@ namespace eve
     if constexpr(std::is_same_v<t_t, uint8_t>) return T(2);
     if constexpr(std::is_same_v<t_t, uint16_t>) return T(4);
     if constexpr(std::is_same_v<t_t, uint32_t>) return T(9);
-    if constexpr(std::is_same_v<t_t, uint64_t>) return T(19); 
+    if constexpr(std::is_same_v<t_t, uint64_t>) return T(18); 
   }
 
   EVE_MAKE_NAMED_CONSTANT(maxlog10_, Maxlog10);

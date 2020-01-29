@@ -20,6 +20,7 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/nearest.hpp>
@@ -89,7 +90,7 @@ namespace eve::detail
       }
       else
       {
-        return bit_shl(T(1), xx);
+        return if_else(is_ltz(xx), eve::zero_, bit_shl(T(1), xx));
       }
     }
   }
@@ -146,7 +147,7 @@ namespace eve::detail
       }
       else
       {
-        return bit_shl(T(1), xx);
+        return if_else(is_ltz(xx), eve::zero_, bit_shl(T(1), xx));
       }
     }
   }  

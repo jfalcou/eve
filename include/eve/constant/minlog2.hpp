@@ -32,12 +32,12 @@ namespace eve
   {
     using t_t = detail::value_type_t<T>;
     
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0xc2fe0000U>();
+    if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0xc2fe0000U>();
     if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc08ff00000000000ULL>();
-    if constexpr(std::is_integral_v<t_t>) return T(0); 
+    if constexpr(std::is_integral_v<t_t>)     return Valmin<T>();
   }
   
-    EVE_MAKE_NAMED_CONSTANT(minlog2_, Minlog2);
+  EVE_MAKE_NAMED_CONSTANT(minlog2_, Minlog2);
 }
 
 #endif
