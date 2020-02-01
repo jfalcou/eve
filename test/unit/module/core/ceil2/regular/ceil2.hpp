@@ -32,7 +32,7 @@ TTS_CASE("Check eve::ceil2 behavior")
     }
     for(int64_t i=z+1; i > 0; i/= 2)
     {
-      TTS_EQUAL(eve::ceil2(Type(i)), Type(std::exp2(std::ceil(std::log2(i)))));
+      TTS_EQUAL(eve::ceil2(Type(i)), Type(std::exp2l(std::ceil(::log2l(i)))));
     }
   }
   else  
