@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/mindenormal.hpp>
@@ -40,8 +39,7 @@ TTS_CASE("Check eve::rsqrt behavior")
 
   if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_invalids)
   {
-    TTS_ALL_IEEE_EQUAL((eve::rsqrt(eve::Nan<Type>())) , (eve::Nan<Type>()));
-    TTS_ALL_EQUAL((eve::rsqrt(eve::Mzero<Type>()))    , (eve::Inf<Type>()));
-    TTS_ALL_EQUAL((eve::rsqrt((Type(0))))             , (eve::Inf<Type>()));
+    TTS_IEEE_EQUAL((eve::rsqrt(eve::Nan<Type>())) , (eve::Nan<Type>()));
+    TTS_EQUAL((eve::rsqrt((Type(0))))             , (eve::Inf<Type>()));
   }
 }

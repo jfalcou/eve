@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/mindenormal.hpp>
@@ -41,24 +40,20 @@ TTS_CASE("Check eve::pedantic_(eve::rsqrt) behavior")
   if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_invalids)
   {
     TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<Type>())) , (eve::Nan<Type>()));
-    TTS_EQUAL(eve::pedantic_(eve::rsqrt)(eve::Mzero<Type>())      , eve::Inf<Type>());
     TTS_EQUAL(eve::pedantic_(eve::rsqrt)((Type(0)))               , eve::Inf<Type>());
   }
   auto z = eve::Mindenormal<Value>();
   TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
-  
+
   for(Value i=1; i < eve::Valmax<Value>() ; i*= 10 )
   {
-    z = eve::Smallestposval<Value>()*i; 
+    z = eve::Smallestposval<Value>()*i;
     TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
     if (eve::all(eve::ulpdist(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z)))) <=  2.0))
     {
       std::cout << z << std::endl;
       break;
     }
-    
   }
-  
- 
 }
 
