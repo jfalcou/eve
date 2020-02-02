@@ -25,7 +25,7 @@ TTS_CASE("Check eve::dist behavior")
   TTS_EQUAL(eve::dist(Type{1}, Type{0}), Type{1});
   TTS_EQUAL(eve::dist(Type{1}, Type{1}), Type{0});
 
-  if constexpr(std::is_signed_v<Type>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::dist(Type(-1), Type(1)), Type(2));
     TTS_EQUAL(eve::dist(Type(-2), Type(-6)), Type(4));

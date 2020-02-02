@@ -58,7 +58,7 @@ TTS_CASE("Check eve::operator> behavior")
 
 TTS_CASE("Check eve::is_greater_equal behavior")
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_greater_equal(Type(1), eve::Nan<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_greater_equal(eve::Nan<Type>(), Type(1)), eve::False<Type>());

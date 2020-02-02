@@ -24,12 +24,12 @@ TTS_CASE("Check eve::is_ngtz return type")
 
 TTS_CASE("Check eve::is_ngtz behavior")
 {
-  if constexpr(std::is_signed_v<Type>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::is_ngtz(Type(-1)), eve::True<Type>());
   }
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_ngtz(eve::Nan<Type>()), eve::True<Type>());
   }

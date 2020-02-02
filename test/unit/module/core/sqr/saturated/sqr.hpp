@@ -37,7 +37,7 @@ TTS_CASE("Check eve::sqr behavior")
     TTS_EQUAL(eve::saturated_(eve::sqr)(eve::Mzero<Type>()), (Type(0)));
   }
 
-  if constexpr(std::is_integral_v<Type>)
+  if constexpr(std::is_integral_v<Value>)
   {
     TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<Type>())), eve::Valmax<Type>());
   }

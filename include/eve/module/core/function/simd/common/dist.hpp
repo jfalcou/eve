@@ -57,17 +57,35 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   dist_(EVE_SUPPORTS(cpu_),
         saturated_type const &,
-        T const &v0,
-        U const &v1) noexcept requires(std::conditional_t<is_vectorized_v<T>, T, U>,
+        T const &a,
+        U const &b) noexcept requires(std::conditional_t<is_vectorized_v<T>, T, U>,
                                        detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
   {
-    auto d = dist(v0, v1);
-    if constexpr(std::is_integral_v<value_type_t<T>> && std::is_signed_v<value_type_t<T>>)
-    { return if_else(is_ltz(d), Valmax(as(v0)), d); }
-    else
+    using t_abi = abi_type_t<T>;
+    using u_abi = abi_type_t<U>;
+    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    { return map(eve::saturated_(eve::dist), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b)); }
+    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
     {
-      return d;
+      return aggregate(eve::saturated_(eve::dist), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
+    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    {
+      auto d = dist(a, b);
+      if constexpr(std::is_integral_v<value_type_t<T>> && std::is_signed_v<value_type_t<T>>)
+      {
+        return if_else(is_ltz(d), Valmax(as(a)), d);
+      }
+      else
+      {
+        return d;
+      }
+    }
+    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    {
+      return eve::saturated_(eve::dist)(abi_cast<U>(a), abi_cast<T>(b));
+    } 
+
   }
 }
 

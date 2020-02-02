@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/function/scalar/is_nan.hpp>
 #include <eve/function/scalar/is_ltz.hpp>
 #include <eve/function/scalar/is_gtz.hpp>
@@ -38,7 +39,10 @@ namespace eve::detail
     else
     {
       if constexpr(std::is_signed_v<T>)
+      {
+        if (a == Valmin<T>()) return T(-1); 
         return shr(a, (sizeof(T) * 8 - 1)) - shr(-a, (sizeof(T) * 8 - 1));
+      }
       else
         return T(!!a);
     }

@@ -30,16 +30,16 @@ TTS_CASE("Check is_positive return type")
 
 TTS_CASE("Check eve::is_positive behavior")
 {
-  if constexpr(std::is_signed_v<Type>)
+  if constexpr(std::is_signed_v<Value>)
   {
     TTS_EQUAL(eve::is_positive(Type(-1)), eve::False<Type>());
   }
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_positive(eve::Zero<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_positive(eve::Mzero<Type>()), eve::False<Type>());
   }
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_positive(eve::Nan<Type>()), eve::False<Type>());
     TTS_EQUAL(eve::is_positive(-eve::Nan<Type>()), eve::True<Type>());

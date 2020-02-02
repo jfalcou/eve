@@ -19,5 +19,5 @@ TTS_CASE("wide exhaustive check on acos")
   auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
 
   eve::exhaustive_producer<Type> p(-1,1);
-  TTS_ULP_RANGE_CHECK(p, std_acos, eve::raw_(eve::acos), 512);
+  TTS_ULP_RANGE_CHECK(p, std_acos, eve::raw_(eve::acos), 1024);
 }

@@ -38,6 +38,14 @@ namespace eve::detail
     // needed as by sqrt IEEE requirements : sqrt(-0.0) is -0.0
     return a0 ? rec(eve::sqrt(a0)) : Inf(as(a0));
   }
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto rsqrt_(EVE_SUPPORTS(cpu_)
+                                       , pedantic_type const &
+                                       , T const &a0) noexcept
+  requires(T,  floating_point<T>)
+  {
+    return eve::rsqrt(a0); 
+  }
 }
 
 #endif

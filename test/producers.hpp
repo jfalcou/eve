@@ -14,6 +14,9 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/nb_values.hpp>
 #include <eve/function/next.hpp>
+#include <eve/function/prev.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/clamp.hpp>
 #include <eve/function/min.hpp>
 #include <eve/constant/valmax.hpp>
 #include <algorithm>
@@ -33,8 +36,8 @@ namespace eve
                                                 >;
 
     T first() const noexcept  { return first_; }
-    T last()  const noexcept  { return last_;   }
-
+    T last()  const noexcept  { return last_;  }
+    
     T next() noexcept
     {
       T that;
@@ -73,7 +76,7 @@ namespace eve
     T                 first_;
     T                 last_;
     std::seed_seq     seed_;
-    std::mt19937      generator_;
+    std::mt19937      generator_; 
     std::size_t       size_;
   };
 
@@ -87,13 +90,11 @@ namespace eve
 
     T first() const noexcept  { return first_;  }
     T last()  const noexcept  { return last_;   }
-
     T next() noexcept
     {
       T that( current_ );
       current_ = eve::next(current_, eve::cardinal_v<T>);
-
-      return that;
+      return eve::clamp(that, pmi_, pmx_);
     }
 
     static auto max() noexcept { return eve::Valmax<base_type>(); }
@@ -104,6 +105,8 @@ namespace eve
     exhaustive_producer(U mn, V mx)
                 : current_( T(mn) )
                 , first_(mn), last_(mx)
+                , pmi_(base_type(mn))
+                , pmx_(eve::prev(base_type(mx)))  
                 , size_ ( eve::nb_values(base_type(mn),base_type(mx)) )
     {
       auto p = tts::detail::begin(current_);
@@ -111,6 +114,7 @@ namespace eve
       for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
       {
         *p = eve::next(*p,i);
+        *p = eve::clamp(*p, pmi_, pmx_); 
         ++p;
       }
     }
@@ -120,13 +124,16 @@ namespace eve
                   : exhaustive_producer(src.self())
     {
       current_ = eve::next(current_,i0);
+      current_ = eve::clamp(current_, pmi_, pmx_); 
     }
 
     private:
     T           current_;
     T           first_, last_;
+    base_type   pmi_, pmx_; 
     std::size_t size_;
   };
 }
+
 
 #endif

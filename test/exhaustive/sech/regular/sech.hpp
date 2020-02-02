@@ -9,8 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/sech.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/constant/minlog.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on sech")
 {
-  auto std_sech = tts::vectorize<Type>( [](auto e) { return Value(1)/std::cosh(e); } );
+  auto std_sech = tts::vectorize<Type>( [](auto e) { return Value(1)/std::cosh(double(e)); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<Type> p(eve::Minlog<Value>()+1, eve::Maxlog<Value>()-1);
   TTS_RANGE_CHECK(p, std_sech, eve::sech); 
 }

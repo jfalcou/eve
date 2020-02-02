@@ -29,7 +29,7 @@ TTS_CASE("Check is_not_less_equal return type")
 
 TTS_CASE("Check eve::is_not_less_equal behavior")
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Type>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
   {
     TTS_EQUAL(eve::is_not_less_equal(Type(1), eve::Nan<Type>()), eve::True<Type>());
     TTS_EQUAL(eve::is_not_less_equal(eve::Nan<Type>(), Type(1)), eve::True<Type>());

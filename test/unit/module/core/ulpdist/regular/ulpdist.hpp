@@ -37,7 +37,7 @@ TTS_CASE("Check eve::ulpdist behavior")
   using eve::ulpdist; 
   TTS_EXPR_IS( (ulpdist(Type(), Type())), (Type));
 
-  if constexpr(std::is_floating_point_v<Type>)
+  if constexpr(std::is_floating_point_v<Value>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
