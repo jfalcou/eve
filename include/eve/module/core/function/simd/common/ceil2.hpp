@@ -49,23 +49,6 @@ namespace eve::detail
       auto tmp =  floor2(v);
       return if_else(tmp < v, tmp*2,  tmp); 
     }
-    
- //      if constexpr(std::is_floating_point_v<value_type_t<T>>)
-//       {
-//         auto [m, e] = ifrexp(v);
-//         e = dec(e); 
-//         return if_else(is_eqz(v), v, if_else(is_less_equal(v, One(as(v))), One(as(v)),ldexp(One(as(v)), e))); 
-//       }
-//       else 
-//       {
-//         auto a0 = v;         
-//         for(int i=0, j = 1; i < sizeof(T)*8-1 ; ++i, j*= 2)
-//         {
-//           a0 |= bit_shr(a0, j); 
-//         }
-//         return a0-bit_shr(a0, 1); 
-//       }
-//     }
   }
 }
 

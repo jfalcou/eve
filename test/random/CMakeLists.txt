@@ -85,6 +85,7 @@ make_all_units(ROOT random NAME is_not_nan        ARCH scalar simd TYPES ${all_t
 make_all_units(ROOT random NAME is_not_real       ARCH scalar simd TYPES ${all_types}       CARDINAL -1)      
 make_all_units(ROOT random NAME is_odd            ARCH scalar simd TYPES ${all_types}       CARDINAL -1) 
 make_all_units(ROOT random NAME is_positive       ARCH scalar simd TYPES ${all_types}       CARDINAL -1)  
+make_all_units(ROOT random NAME is_pow2           ARCH scalar simd TYPES ${integral_types}  CARDINAL -1)  
 make_all_units(ROOT random NAME is_real           ARCH scalar simd TYPES ${real_types}      CARDINAL -1) 
 make_all_units(ROOT random NAME itrunc            ARCH scalar simd TYPES ${all_types}       CARDINAL -1)   
 make_all_units(ROOT random NAME log               ARCH scalar simd TYPES ${real_types}      CARDINAL -1)   

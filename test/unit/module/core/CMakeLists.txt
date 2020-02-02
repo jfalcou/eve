@@ -146,6 +146,7 @@ make_all_units(ROOT core NAME is_not_real           ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME is_odd                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_ordered            ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_positive           ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME is_pow2               ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME is_real               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME is_unordered          ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME itrunc                ARCH scalar simd TYPES ${all_types}     )
