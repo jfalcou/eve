@@ -8,18 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/popcnt.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/function/exp10.hpp>
+#include <eve/constant/minlog10.hpp>
+#include <eve/constant/maxlog10.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on popcnt")
+TTS_CASE("wide random check on exp10")
 {
-  auto std_popcnt = tts::vectorize<Type>( [](auto e) { return std::popcnt(e); } );
+  auto std_exp10 = tts::vectorize<Type>( [](auto e) { return ::nearbyintl(::exp10l(e)+0.5l); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_popcnt, eve::popcnt); 
+  eve::rng_producer<Type> p(eve::Minlog10<Value>(), eve::Maxlog10<Value>());
+  TTS_RANGE_CHECK(p, std_exp10, eve::pedantic_(eve::exp10)); 
 }

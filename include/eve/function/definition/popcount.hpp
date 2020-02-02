@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_POPCNT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_POPCNT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_POPCOUNT_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_POPCOUNT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(popcnt_, popcnt);
+  EVE_MAKE_CALLABLE(popcount_, popcount);
 }
 
 #endif

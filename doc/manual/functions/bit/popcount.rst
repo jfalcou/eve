@@ -1,16 +1,16 @@
 .. _function-popcnt:
 
-######
-popcnt
-######
+########
+popcount
+########
 
-**Required header:** ``#include <eve/function/popcnt.hpp>``
+**Required header:** ``#include <eve/function/popcount.hpp>``
 
 .. code-block:: c++
 
    namespace eve
    {
-      constexpr /* implementation defined */ popcnt = {};
+      constexpr /* implementation defined */ popcount = {};
    }
 
 Function object computing the *WHAT*  of a :ref:`Value <concept-value>`.
@@ -39,10 +39,10 @@ Synopsis
 Example
 *******
 
-.. include:: ../../../../test/doc/core/popcnt.cpp
+.. include:: ../../../../test/doc/core/popcount.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/core/popcnt.txt
+.. include:: ../../../../test/doc/core/popcount.txt
   :literal:

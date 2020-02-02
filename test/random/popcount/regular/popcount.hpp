@@ -8,18 +8,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/popcnt.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/function/popcount.hpp>
+#include <eve/function/bit_shr.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on popcnt")
+TTS_CASE("wide exhaustive check on popcount")
 {
-  auto std_popcnt = tts::vectorize<Type>( [](auto e) { return std::popcnt(e); } );
+  auto std_popcount = tts::vectorize<Type>(
+    [](auto e) { unsigned int j = 0;
+      for(int i = 0; i < sizeof(Value), ++i)
+      {
+        if e&Value(1) ++j;
+        e = bit_shr(e, 1);
+      }
+      return j }
+  );
 
   eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_popcnt, eve::popcnt); 
+  TTS_RANGE_CHECK(p, std_popcount, eve::popcount); 
 }

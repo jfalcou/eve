@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_POPCNT_HPP_INCLUDED
-#define EVE_FUNCTION_POPCNT_HPP_INCLUDED
+#ifndef EVE_FUNCTION_POPCOUNT_HPP_INCLUDED
+#define EVE_FUNCTION_POPCOUNT_HPP_INCLUDED
 
-#include <eve/function/scalar/popcnt.hpp>
-//#include <eve/function/simd/popcnt.hpp>
+#include <eve/function/scalar/popcount.hpp>
+//#include <eve/function/simd/popcount.hpp>
 
 #endif

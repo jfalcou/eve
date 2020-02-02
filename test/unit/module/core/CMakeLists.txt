@@ -176,7 +176,7 @@ make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME none                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME popcnt                ARCH scalar      TYPES ${integral_types})
+make_all_units(ROOT core NAME popcount              ARCH scalar      TYPES ${integral_types})
 make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME rem                   ARCH scalar simd TYPES ${signed_types}  )
