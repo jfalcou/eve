@@ -26,7 +26,7 @@ TTS_CASE("Check eve::ceil2 behavior")
   {
     using i_t =  eve::detail::as_integer_t<Value, signed>; 
     int64_t z = eve::Valmax<i_t>()/2; 
-    for(int64_t i=0; i < z; i+= z/100+1)
+    for(int64_t i=1; i < z; i+= z/100+1)
     {
       TTS_EQUAL(eve::ceil2(Type(i)), Type(double(std::exp2l(std::ceil(std::log2l(i))))));
     }
@@ -37,7 +37,7 @@ TTS_CASE("Check eve::ceil2 behavior")
   }
   else  
   {
-    TTS_EQUAL(eve::ceil2(Type(0))   , Type(0)); 
+    TTS_EQUAL(eve::ceil2(Type(0))   , Type(1)); 
     TTS_EQUAL(eve::ceil2(Type(1.3)) , Type(2));
     TTS_EQUAL(eve::ceil2(Type(1.5)) , Type(2));
     TTS_EQUAL(eve::ceil2(Type(1.6)) , Type(2));
