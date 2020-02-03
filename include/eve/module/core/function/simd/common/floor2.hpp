@@ -49,7 +49,7 @@ namespace eve::detail
       else 
       {
         auto a0 = v;         
-        for(int i=0, j = 1; i < sizeof(T)*8-1 ; ++i, j*= 2)
+        for(unsigned int i=0, j = 1; i < sizeof(T)*8-1 ; ++i, j*= 2)
         {
           a0 =  bit_or(a0, bit_shr(a0, j)); 
         }

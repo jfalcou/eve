@@ -45,7 +45,7 @@ namespace eve::detail
     else 
     {
       auto a0 = v;         
-      for(int j = 1; j < sizeof(T)*8 ; j*= 2)
+      for(unsigned int j = 1; j < sizeof(T)*8 ; j*= 2)
       {
         a0 |= bit_shr(a0, j); 
       }

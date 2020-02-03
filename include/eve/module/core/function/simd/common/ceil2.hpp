@@ -26,11 +26,7 @@
 #include <eve/function/floor2.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/log2.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_less.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <type_traits>
 
@@ -47,7 +43,9 @@ namespace eve::detail
     else if constexpr(is_native_v<ABI>)
     {
       auto tmp =  floor2(v);
-      return if_else(tmp < v, tmp*2,  tmp); 
+      return if_else(is_less_equal(v, One(as(v)))
+                    , One(as(v))
+                    , if_else(is_less(tmp, v), tmp*2,  tmp)); 
     }
   }
 }
