@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::acscpi(xf) =            0.5
 <- yf =                      -nan
--> eve::acscpi(yf) =            nan
+-> eve::acscpi(yf) =            -nan
