@@ -24,23 +24,20 @@ TTS_CASE("Check eve::ceil2 behavior")
 {
   if constexpr(!std::is_floating_point_v<Value>)
   {
-    using i_t =  eve::detail::as_integer_t<Value, signed>; 
-    int64_t z = eve::Valmax<i_t>()/2; 
-    for(int64_t i=1; i < z; i+= z/100+1)
+    for(Value z = 4; z < eve::Valmax<Value>()/4; z*=2)
     {
-      TTS_EQUAL(eve::ceil2(Type(i)), Type(double(std::exp2l(std::ceil(std::log2l(i))))));
-    }
-    for(int64_t i=z+1; i > 0; i/= 2)
-    {
-      TTS_EQUAL(eve::ceil2(Type(i)), Type(std::exp2l(std::ceil(::log2l(i)))));
+      TTS_EQUAL(eve::ceil2(Type(z))    , Type(z));
+      TTS_EQUAL(eve::ceil2(Type(z-1))  , Type(z));
+      TTS_EQUAL(eve::ceil2(Type(z/2+1)), Type(z));
     }
   }
   else  
   {
-    TTS_EQUAL(eve::ceil2(Type(0))   , Type(1)); 
-    TTS_EQUAL(eve::ceil2(Type(1.3)) , Type(2));
-    TTS_EQUAL(eve::ceil2(Type(1.5)) , Type(2));
-    TTS_EQUAL(eve::ceil2(Type(1.6)) , Type(2));
-    TTS_EQUAL(eve::ceil2(Type(2.9)) , Type(4));
+    TTS_EQUAL(eve::ceil2(Type(0))  , Type(1));
+    TTS_EQUAL(eve::ceil2(Type(1))  , Type(1));
+    TTS_EQUAL(eve::ceil2(Type(1.3)), Type(2));
+    TTS_EQUAL(eve::ceil2(Type(1.5)), Type(2));
+    TTS_EQUAL(eve::ceil2(Type(1.6)), Type(2));
+    TTS_EQUAL(eve::ceil2(Type(2.9)), Type(4));
   }
 }

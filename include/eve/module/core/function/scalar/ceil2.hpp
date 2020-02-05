@@ -27,12 +27,25 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto ceil2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  requires(T, vectorizable<T>)
+  requires(T, floating_point<T>)
+  {
+    if (v <= One(as(v))) return One(as(v)); 
+    if (is_less(v, One(as(v)))) return Zero(as(v)); 
+    auto [m, e] = ifrexp(v);
+    e = dec(e); 
+    auto tmp = ldexp(One(as(v)), e); 
+    return (tmp < v) ? tmp*2 : tmp; 
+  }
+
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto ceil2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  requires(T, unsigned_type<T>)
   {
     if (v <= One(as(v))) return One(as(v)); 
     auto tmp =  floor2(v);
     return (tmp < v) ? tmp*2 :  tmp; 
   }
+  
 }
 
 #endif

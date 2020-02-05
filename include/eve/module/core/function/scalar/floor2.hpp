@@ -24,6 +24,7 @@
 #include <eve/function/ceil.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
 
@@ -33,25 +34,28 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto floor2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  requires(T, vectorizable<T>)
+  requires(T, floating_point<T>)
   {
     if (is_less(v, One(as(v)))) return Zero(as(v)); 
-    if constexpr(std::is_floating_point_v<value_type_t<T>>)
-    {
-      auto [m, e] = ifrexp(v);
-      e = dec(e); 
-      return ldexp(One(as(v)), e); 
-    }
-    else 
-    {
-      auto a0 = v;         
-      for(unsigned int j = 1; j < sizeof(T)*8 ; j*= 2)
-      {
-        a0 |= bit_shr(a0, j); 
-      }
-      return a0-bit_shr(a0, 1); 
-    }
+    auto [m, e] = ifrexp(v);
+    e = dec(e); 
+    return ldexp(One(as(v)), e); 
   }
+
+
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto floor2_(EVE_SUPPORTS(cpu_), T v) noexcept
+  requires(T, unsigned_type<T>)
+  {
+    if (v == 0) return v;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    if constexpr( sizeof(T) >= 2 )  v |= v >>  8;
+    if constexpr( sizeof(T) >= 4 )  v |= v >> 16;
+    if constexpr( sizeof(T) >= 8 )  v |= v >> 32;
+    return v-(v>> 1); 
+  }  
 }
 
 #endif

@@ -1,8 +1,8 @@
 ---- simd
 <- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::acoth(pf) =            (-nan, inf, -inf, -0.549306, -nan, 0, -0, nan)
+-> eve::acoth(pf) =            (nan, inf, -inf, -0.549306, nan, 0, -0, -nan)
 ---- scalar
 <- xf =                      1
 -> eve::acoth(xf) =            inf
 <- yf =                      -nan
--> eve::acoth(yf) =            -nan
+-> eve::acoth(yf) =            nan

@@ -49,11 +49,13 @@ namespace eve::detail
       else 
       {
         auto a0 = v;         
-        for(unsigned int i=0, j = 1; i < sizeof(T)*8-1 ; ++i, j*= 2)
-        {
-          a0 =  bit_or(a0, bit_shr(a0, j)); 
-        }
-        return if_else(is_eqz(v), v, a0-bit_shr(a0, 1));
+        a0 |= a0 >> 1;
+        a0 |= a0 >> 2;
+        a0 |= a0 >> 4;
+        if constexpr( sizeof(T) >= 2 )  a0 |= a0 >>  8;
+        if constexpr( sizeof(T) >= 4 )  a0 |= a0 >> 16;
+        if constexpr( sizeof(T) >= 8 )  a0 |= a0 >> 32;
+        return a0-(a0>> 1); 
       }
     }
   }

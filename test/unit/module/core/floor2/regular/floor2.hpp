@@ -24,15 +24,12 @@ TTS_CASE("Check eve::floor2 behavior")
 {
   if constexpr(!std::is_floating_point_v<Value>)
   {
-    using i_t =  eve::detail::as_integer_t<Value, signed>; 
-    int64_t z = eve::Valmax<i_t>(); 
-    for(int64_t i=0,  j = 0; i < z && j < 1000; i+= z/100+1, ++j)
+    
+    for(Value z = 2; z < eve::Valmax<Value>()/2; z*=2)
     {
-      TTS_EQUAL(eve::floor2(Type(i)), i ?Type(double(std::exp2l(std::floor(std::log2l(i))))) : Type(0));
-    }
-    for(int64_t i=z/16; i > 1; i/= 2)
-    {
-      TTS_EQUAL(eve::floor2(Type(i)), Type(std::exp2l(std::floor(std::log2l(i)))));
+      TTS_EQUAL(eve::floor2(Type(z)), Type(z));
+      TTS_EQUAL(eve::floor2(Type(z+1)), Type(z));
+      TTS_EQUAL(eve::floor2(Type(3*(z/2)), Type(z));
     }
   }
   else  

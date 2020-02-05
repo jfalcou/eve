@@ -26,12 +26,6 @@ TTS_CASE("wide random check on floor2")
     eve::exhaustive_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
     TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
   }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_floor2 = tts::vectorize<Type>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );
-    eve::exhaustive_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
-    TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
-  }
   else
   {
     auto std_floor2 = tts::vectorize<Type>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );

@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::asind(xf) =            90
 <- yf =                      -nan
--> eve::asind(yf) =            -nan
+-> eve::asind(yf) =            nan

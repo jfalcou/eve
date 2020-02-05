@@ -22,20 +22,14 @@ TTS_CASE("wide random check on ceil2")
 
   if constexpr(std::is_floating_point_v<Value>)
   {
-    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2(std::ceil(std::log2(e)))); } );
-    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>()/2);
-    TTS_RANGE_CHECK(p, std_ceil2, eve::ceil2);
-  }
-  else if constexpr(std::is_signed_v<Value>)
-  {
-    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return   ((e <= 1) ? 1 : std::exp2(std::ceil(std::log2(e)))); } );
-    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>()/4);
     TTS_RANGE_CHECK(p, std_ceil2, eve::ceil2);
   }
   else
   {
-    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2(std::ceil(std::log2(e)))); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::rng_producer<Type> p(eve::Valmin<Value>(), (1ul << (sizeof(Value)*8-2)));
     TTS_RANGE_CHECK(p, std_ceil2, eve::ceil2);
   }
   

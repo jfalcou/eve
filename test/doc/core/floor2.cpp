@@ -1,7 +1,7 @@
 #include <eve/function/floor2.hpp>
 #include <eve/wide.hpp>
 
-using wide_it = eve::wide<std::int32_t, eve::fixed<8>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 
 int main()
 {
@@ -11,7 +11,7 @@ int main()
             << "<- pi =                   " << pi << '\n'
             << "-> eve::floor2(pi) =       " << eve::floor2(pi) << '\n';
 
-  std::int32_t xf = 48;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                   " << xf << '\n'
