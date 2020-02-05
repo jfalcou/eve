@@ -32,5 +32,5 @@ TTS_CASE("Check eve::popcount behavior")
   TTS_EQUAL(eve::popcount( Type(2)), (r_t(1))          );
   TTS_EQUAL(eve::popcount( Type(3)), (r_t(2))          );
   TTS_EQUAL(eve::popcount( Type(11)), (r_t(3))          );
-  TTS_EQUAL(eve::popcount( eve::Valmax<Type>()), Type(sizeof(Value)*8-std::is_signed_v<Value>)); 
+  TTS_EQUAL(eve::popcount( eve::Valmax<Type>()), r_t(sizeof(Value)*8-std::is_signed_v<Value>)); 
 }

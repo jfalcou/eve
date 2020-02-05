@@ -24,12 +24,11 @@ TTS_CASE("Check eve::floor2 behavior")
 {
   if constexpr(!std::is_floating_point_v<Value>)
   {
-    
     for(Value z = 2; z < eve::Valmax<Value>()/2; z*=2)
     {
       TTS_EQUAL(eve::floor2(Type(z)), Type(z));
       TTS_EQUAL(eve::floor2(Type(z+1)), Type(z));
-      TTS_EQUAL(eve::floor2(Type(3*(z/2)), Type(z));
+      TTS_EQUAL(eve::floor2(Type(3*(z/2))), Type(z));
     }
   }
   else  
@@ -41,3 +40,4 @@ TTS_CASE("Check eve::floor2 behavior")
     TTS_EQUAL(eve::floor2(Type(2.9)) , Type(2));
   }
 }
+  
