@@ -34,7 +34,6 @@ namespace eve::detail
 #else
       std::uint8_t  r   = __builtin_popcount(static_cast<std::uint32_t>(a0) & 0xFF);
 #endif
-      
       return r;
     }
     
@@ -43,9 +42,8 @@ namespace eve::detail
 #if defined(EVE_COMP_IS_MSVC)
       std::uint16_t r = __popcnt16(a0);
 #else
-      std::uint16_t r   = __builtin_popcount(static_cast<std::uint32_t>(a0) & 0xFFFF);
+      std::uint16_t r = __builtin_popcount(static_cast<std::uint32_t>(a0) & 0xFFFF);
 #endif
-      
       return r;
     }
     
@@ -54,9 +52,8 @@ namespace eve::detail
 #if defined(EVE_COMP_IS_MSVC)
       std::uint32_t r = __popcnt(a0);
 #else
-      std::uint32_t r   = __builtin_popcount(a0);
+      std::uint32_t r = __builtin_popcount(a0);
 #endif
-      
       return r;
     }
     
@@ -69,13 +66,12 @@ namespace eve::detail
       std::uint32_t lo0 = (a0 & 0xFFFFFFFF);
       
 #  if defined(EVE_COMP_IS_MSVC)
-      std::uint64_t r   = __popcnt(hi0) + __popcnt(lo0);
+      std::uint64_t r = __popcnt(hi0) + __popcnt(lo0);
 #  else
       std::uint64_t r = __builtin_popcount(hi0) + __builtin_popcount(lo0);
 #  endif
       
 #endif
-      
       return r;
     }
   }
