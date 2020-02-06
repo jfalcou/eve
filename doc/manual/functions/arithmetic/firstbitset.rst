@@ -13,7 +13,7 @@ firstbitset
       constexpr /* implementation defined */ firstbitset = {};
    }
 
-Function object computing the bit pattern (with the integral parameter type) in which the only bit set is
+Function object computing the bit pattern (with the integral parameter type) in which the only bit set (if it exists) is
 the first bit set (beginning with the least significant bit) in the parameter which must satisfy the
 :ref:`IntegralValue <concept-integralvalue>` concept.
 
@@ -38,6 +38,10 @@ Synopsis
 
 * [1,2] A value with the same type as the parameter.
 
+Note
+****
+
+  - With input 0 returns 0.
 
 Example
 *******

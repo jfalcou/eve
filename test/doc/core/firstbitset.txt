@@ -1,0 +1,6 @@
+---- simd
+<- pi =                   (-1, -2, -3, 27, 2, 3, 4, 7)
+-> eve::firstbitset(pi) =        (1, 2, 1, 1, 2, 1, 4, 1)
+---- scalar
+<- xi =                          31
+-> eve::firstbitset(xi) =        1

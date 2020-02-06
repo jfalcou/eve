@@ -87,6 +87,7 @@ make_all_units(ROOT core NAME exponent              ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME exponentbits          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME extract               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME firstbitset           ARCH scalar simd TYPES ${integral_types})
+make_all_units(ROOT core NAME firstbitunset         ARCH scalar simd TYPES ${integral_types})   
 make_all_units(ROOT core NAME floor                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME floor2                ARCH scalar simd TYPES ${uint_or_real_types} )   
 make_all_units(ROOT core NAME fma                   ARCH scalar simd TYPES ${all_types}     )
