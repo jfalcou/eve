@@ -11,7 +11,7 @@
 #ifndef EVE_DETAIL_BITSET_HPP_INCLUDED
 #define EVE_DETAIL_BITSET_HPP_INCLUDED
 
-#include <eve/function/scalar/popcnt.hpp>
+#include <eve/function/scalar/popcount.hpp>
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 #include <cstddef>
@@ -103,7 +103,7 @@ namespace eve::detail
 
     static constexpr std::size_t size() noexcept { return N; }
 
-    std::size_t    count() const noexcept { return boost::simd::popcnt(bits_); }
+    std::size_t    count() const noexcept { return boost::simd::popcount(bits_); }
     constexpr bool all() const noexcept { return bits_ == bitmask; }
     constexpr bool any() const noexcept { return bits_ != 0; }
     constexpr bool none() const noexcept { return bits_ == 0; }

@@ -16,7 +16,7 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/popcnt.hpp>
+#include <eve/function/popcount.hpp>
 #include <eve/forward.hpp>
 #include <eve/wide.hpp>
 #include <eve/arch/limits.hpp>
@@ -44,11 +44,11 @@ namespace eve::detail
         static constexpr int sv = SH*sizeof(T);
         i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
 
-        return popcnt(_mm_movemask_ps(bit_cast(z,as_<t_t>())));
+        return popcount(_mm_movemask_ps(bit_cast(z,as_<t_t>())));
       }
       else
       {
-        return popcnt(_mm_movemask_ps(v.mask()));
+        return popcount(_mm_movemask_ps(v.mask()));
       }
     }
     else if constexpr(std::is_same_v<T, double>)
@@ -63,11 +63,11 @@ namespace eve::detail
         static constexpr int sv = SH*sizeof(T);
         i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
 
-        return popcnt(_mm_movemask_pd(bit_cast(z,as_<t_t>())));
+        return popcount(_mm_movemask_pd(bit_cast(z,as_<t_t>())));
       }
       else
       {
-        return popcnt(_mm_movemask_pd(v.mask()));
+        return popcount(_mm_movemask_pd(v.mask()));
       }
     }
     else // if constexpr(std::is_integral_v<T>)
@@ -81,11 +81,11 @@ namespace eve::detail
           static constexpr int sv = SH;
           auto z = _mm_bslli_si128(v.mask(), sv);
 
-          return popcnt(_mm_movemask_epi8(z));
+          return popcount(_mm_movemask_epi8(z));
         }
         else
         {
-          return popcnt(_mm_movemask_epi8(v.mask()));
+          return popcount(_mm_movemask_epi8(v.mask()));
         }
       }
       else
@@ -95,11 +95,11 @@ namespace eve::detail
         {
           static constexpr int sv = SH;
           auto z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t >()), sv);
-          return popcnt(_mm_movemask_epi8(z))/sizeof(T);
+          return popcount(_mm_movemask_epi8(z))/sizeof(T);
         }
         else
         {
-          return popcnt(_mm_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
+          return popcount(_mm_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
         }
       }
     }
@@ -115,11 +115,11 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<T, float>)
       {
-        return popcnt(_mm256_movemask_ps(v.mask()));
+        return popcount(_mm256_movemask_ps(v.mask()));
       }
       else
       {
-        return popcnt(_mm256_movemask_pd(v.mask()));
+        return popcount(_mm256_movemask_pd(v.mask()));
       }
     }
     else
@@ -128,12 +128,12 @@ namespace eve::detail
       {
         if constexpr(sizeof(T) == 1)
         {
-          return popcnt(_mm256_movemask_epi8(v.mask()));
+          return popcount(_mm256_movemask_epi8(v.mask()));
         }
         else
         {
           using i8_t = wide<int8_t, fixed<32> , avx_>;
-          return popcnt(_mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
+          return popcount(_mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
         }
       }
       else

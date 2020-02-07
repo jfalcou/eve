@@ -38,6 +38,12 @@ namespace eve::detail
   using integral = std::enable_if_t<std::is_integral_v<T>>;
 
   template<typename T>
+  using unsigned_type = std::enable_if_t<std::is_unsigned_v<T>>;
+
+  template<typename T>
+  using signed_type = std::enable_if_t<std::is_signed_v<T>>;
+
+  template<typename T>
   using floating_point = std::enable_if_t<std::is_floating_point_v<T>>;
 
   template<bool... Conditions>
