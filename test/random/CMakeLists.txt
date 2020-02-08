@@ -51,7 +51,6 @@ make_all_units(ROOT random NAME firstbitset       ARCH scalar simd TYPES ${integ
 make_all_units(ROOT random NAME firstbitunset     ARCH scalar simd TYPES ${integral_types}  CARDINAL -1)      
 make_all_units(ROOT random NAME floor             ARCH scalar simd TYPES ${all_types}       CARDINAL -1) 
 make_all_units(ROOT random NAME floor2            ARCH scalar simd TYPES ${uint_or_real_types}       CARDINAL -1)
-make_all_units(ROOT random NAME floor             ARCH scalar simd TYPES ${all_types}       CARDINAL -1) 
 make_all_units(ROOT random NAME frac              ARCH scalar simd TYPES ${all_types}       CARDINAL -1) 
 make_all_units(ROOT random NAME iceil             ARCH scalar simd TYPES ${all_types}       CARDINAL -1)
 make_all_units(ROOT random NAME ifloor            ARCH scalar simd TYPES ${all_types}       CARDINAL -1)  
