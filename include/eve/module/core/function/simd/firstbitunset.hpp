@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FIRSTBITSET_HPP_INCLUDED
-#define EVE_FUNCTION_FIRSTBITSET_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_FIRSTBITUNSET_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_FIRSTBITUNSET_HPP_INCLUDED
 
-#include <eve/function/scalar/firstbitset.hpp>
-#include <eve/function/simd/firstbitset.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/scalar/firstbitunset.hpp>
+#include <eve/module/core/function/simd/common/firstbitunset.hpp>
 
 #endif

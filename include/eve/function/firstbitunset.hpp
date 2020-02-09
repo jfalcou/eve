@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_FIRSTBITUNSET_HPP_INCLUDED
 
 #include <eve/function/scalar/firstbitunset.hpp>
-//#include <eve/function/simd/firstbitunset.hpp>
+#include <eve/function/simd/firstbitunset.hpp>
 
 #endif
