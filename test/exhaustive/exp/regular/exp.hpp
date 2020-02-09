@@ -12,6 +12,7 @@
 #include <eve/constant/minlog.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/function/next.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
@@ -20,6 +21,6 @@ TTS_CASE("wide exhaustive check on exp")
 {
   auto std_exp = tts::vectorize<Type>( [](auto e) { return std::exp(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Minlog<Value>()+1, eve::Maxlog<Value>()-1);
+  eve::exhaustive_producer<Type> p(eve::next(eve::Minlog<Value>())+1, eve::Maxlog<Value>());
   TTS_RANGE_CHECK(p, std_exp, eve::exp); 
 }
