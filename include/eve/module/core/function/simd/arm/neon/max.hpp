@@ -75,7 +75,7 @@ namespace eve::detail
 #else
     auto tmp = eve::max(a0, a1);
 #endif
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_xor(a0, a1), tmp); 
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
   }
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> max_(EVE_SUPPORTS(neon128_),
@@ -88,7 +88,7 @@ namespace eve::detail
 #else
     auto tmp = eve::max(a0, a1);
 #endif
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_xor(a0, a1), tmp); 
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
   }
 
 }
