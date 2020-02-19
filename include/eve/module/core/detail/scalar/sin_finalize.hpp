@@ -18,7 +18,7 @@
 #include <eve/module/core/detail/generic/cos_kernel.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
@@ -36,12 +36,12 @@ namespace eve::detail
     if (is_not_finite(xr)) return Nan<T>();
     i_t n = toint(fn);
     i_t swap_bit = n&One<i_t>();
-    T  sign_bit = bitwise_xor(sbit, shl(n&i_t(2), sizeof(i_t)*8-2));
+    T  sign_bit = bit_xor(sbit, shl(n&i_t(2), sizeof(i_t)*8-2));
     T z = sqr(xr);
     T  se = sin_eval(z, xr);
     T  ce = cos_eval(z);
     xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
-    return bitwise_xor(xr,sign_bit);
+    return bit_xor(xr,sign_bit);
   }
 }
 

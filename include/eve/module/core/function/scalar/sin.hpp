@@ -17,7 +17,7 @@
 #include <eve/module/core/detail/scalar/sin_finalize.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>    
@@ -59,7 +59,7 @@ namespace eve::detail
       auto x2 = sqr(a0);
       auto x  = eve::abs(a0); 
       if (is_not_less_equal(x2, pi2_16)) return Nan<T>(); 
-      return bitwise_xor(detail::sin_eval(x2, x), bitofsign(a0));
+      return bit_xor(detail::sin_eval(x2, x), bitofsign(a0));
     }
     else
     {
@@ -89,11 +89,11 @@ namespace eve::detail
         xr -= pio2_2;
         xr -= pio2_3;
 
-        return  bitwise_xor(bitofsign(a0), cos_eval(sqr(xr)));
+        return  bit_xor(bitofsign(a0), cos_eval(sqr(xr)));
       }
       else
       {
-        return sin_eval(sqr(x), a0); //bitwise_xor(bitofsign(a0), sin_eval(sqr(x), x));
+        return sin_eval(sqr(x), a0); //bit_xor(bitofsign(a0), sin_eval(sqr(x), x));
       }
     }
     else

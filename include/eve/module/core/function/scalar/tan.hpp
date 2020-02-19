@@ -17,7 +17,7 @@
 #include <eve/module/core/detail/scalar/tan_finalize.hpp>
 #include <eve/module/core/detail/generic/tancot_kernel.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>    
@@ -81,7 +81,7 @@ namespace eve::detail
         xr -= pio2_2;
         xr -= pio2_3;
         T y = tancot_eval(xr);
-        return bitwise_xor(bitofsign(a0), -rec(y));
+        return bit_xor(bitofsign(a0), -rec(y));
       }
       else
       {

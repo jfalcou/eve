@@ -1,6 +1,6 @@
 ---- simd
 <- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::cosh(pf) =            (1, 1.54308, 1.54308, 3.7622, 1, inf, inf, nan)
+-> eve::cosh(pf) =            (1, 1.54308, 1.54308, 3.7622, 1, inf, inf, -nan)
 ---- scalar
 <- xf =                      1
 -> eve::cosh(xf) =            1.54308

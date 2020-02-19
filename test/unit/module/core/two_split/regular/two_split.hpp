@@ -13,9 +13,9 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/bitwise_cast.hpp>
-#include <eve/function/bitwise_shl.hpp>
-#include <eve/function/bitwise_shr.hpp> 
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_shl.hpp>
+#include <eve/function/bit_shr.hpp> 
 #include <utility>
 
 TTS_CASE("Check two_split return type")

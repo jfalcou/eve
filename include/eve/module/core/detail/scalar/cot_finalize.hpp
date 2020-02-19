@@ -18,7 +18,7 @@
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/rec.hpp>
@@ -38,7 +38,7 @@ namespace eve::detail
     T y = tancot_eval(xr);
     y =  (int(fn)&1) ? -y: rec(y);
     if (dxr) y+= dxr*fma(y, y, One<T>()); 
-    return bitwise_xor(y, bitofsign(a0));
+    return bit_xor(y, bitofsign(a0));
   }
 }
 

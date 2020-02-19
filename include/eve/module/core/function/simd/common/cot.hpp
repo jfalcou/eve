@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/cot_finalize.hpp>
 #include <eve/function/binarize.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -87,7 +87,7 @@ namespace eve::detail
 //      auto y = if_else(xr <= Eps<T>(), xr, tancot_eval(xr));
       auto y = tancot_eval(xr); 
       y = if_else(is_not_finite(a0), eve::allbits_, if_else(test, -y, rec(y))); 
-      return if_else(abs(a0) <= Eps<t_t>(), rec(a0), bitwise_xor(bitofsign(a0), y)); 
+      return if_else(abs(a0) <= Eps<t_t>(), rec(a0), bit_xor(bitofsign(a0), y)); 
     }
     else
     {

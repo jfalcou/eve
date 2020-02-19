@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/cos_finalize.hpp>
 #include <eve/function/binarize.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
@@ -85,7 +85,7 @@ namespace eve::detail
       xr = if_else(n, xr, x); 
       auto sign_bit = binarize(is_nez(n), Signmask<T>());
       const t_t z = sqr(xr);
-      const t_t se = bitwise_xor(detail::sin_eval(z, xr), sign_bit);
+      const t_t se = bit_xor(detail::sin_eval(z, xr), sign_bit);
       const t_t ce = detail::cos_eval(z);
       const t_t z1 = if_else(n, se, ce);
       return if_else(is_not_less_equal(x, Pio_2<t_t>()), Nan<t_t>(), z1); 

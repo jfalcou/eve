@@ -45,7 +45,7 @@ TTS_CASE("Check eve::pedantic_(eve::rsqrt) behavior")
   for(auto z = eve::Mindenormal<Value>(); z < eve::Valmax<Value>() ; z*= 10 )
   {
     TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
-    auto d = eve::ulpdist(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z)))); 
+//    auto d = eve::ulpdist(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z)))); 
 //     std::cout << z << " -> " << d << std::endl;
 //     if ( eve::any(d >=  2.0))
 //     {

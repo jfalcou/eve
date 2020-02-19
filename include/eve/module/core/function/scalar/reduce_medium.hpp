@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_MEDIUM_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/rem_pio2_cephes.hpp>

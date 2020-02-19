@@ -18,7 +18,7 @@
 #include <eve/module/core/detail/scalar/sin_finalize.hpp>
 #include <eve/module/core/detail/scalar/cos_finalize.hpp>   
 #include <eve/function/abs.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>    
@@ -82,8 +82,8 @@ namespace eve::detail
         T xr = x-pio2_1;
         xr -= pio2_2;
         xr -= pio2_3;
-        return {bitwise_xor(bitofsign(a0), cos_eval(sqr(xr)))
-                , bitwise_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1))};
+        return {bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
+                , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1))};
       }
       else
       {

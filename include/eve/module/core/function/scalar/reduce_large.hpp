@@ -12,9 +12,9 @@
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_REDUCE_LARGE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/function/bitwise_shr.hpp>
+#include <eve/function/bit_shr.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -56,7 +56,7 @@ namespace eve::detail
           0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
         };
       constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
-      auto xi =  bitwise_cast(x, as_<uint32_t>()); 
+      auto xi =  bit_cast(x, as_<uint32_t>()); 
       const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15];
       int shift = (xi >> 23) & 7;
       uint64_t n, res0, res1, res2;
@@ -162,19 +162,19 @@ namespace eve::detail
     double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
     double sum(0);
     ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-    ui64_t tmp0 = bitwise_cast(x1, as_<ui64_t>());
+    ui64_t tmp0 = bit_cast(x1, as_<ui64_t>());
   
-    alignas(sizeof(double)) i32_t k =  bitwise_cast(bitwise_and(tmp0, zero_lo), as_<i32_t>());
-    k.hi =  bitwise_shr(k.hi, 20) & 2047;
+    alignas(sizeof(double)) i32_t k =  bit_cast(bit_and(tmp0, zero_lo), as_<i32_t>());
+    k.hi =  bit_shr(k.hi, 20) & 2047;
     k.hi = eve::max((k.hi-450)/24, 0);
     
-    alignas(sizeof(double)) auto tmp = bitwise_cast(t576, as_<i32_t>());
+    alignas(sizeof(double)) auto tmp = bit_cast(t576, as_<i32_t>());
     tmp.hi -= shl(k.hi*24, 20); 
     
-    double gor = bitwise_cast(tmp, double_);
+    double gor = bit_cast(tmp, double_);
     k.hi = eve::max(k.hi, 0);
     double r[6];
-    auto inds = shr(bitwise_cast(k, as<ui64_t>()), 32); 
+    auto inds = shr(bit_cast(k, as<ui64_t>()), 32); 
     for (int i=0;i<6;++i)
     {
       auto values = toverp[inds];
@@ -227,11 +227,11 @@ namespace eve::detail
     double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
     double sum(0);
     ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-    auto z = bitwise_and(zero_lo, x1); 
+    auto z = bit_and(zero_lo, x1); 
     i32_t k;
     k.hi = int32_t(z >> 32);
     k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
-    k.hi =  bitwise_shr(k.hi, 20) & 2047;
+    k.hi =  bit_shr(k.hi, 20) & 2047;
     k.hi = eve::max((k.hi-450)/24, 0);
     
     i32_t tmp;
@@ -239,9 +239,9 @@ namespace eve::detail
     tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
     tmp.hi -= shl(k.hi*24, 20); 
     
-    double gor = bitwise_cast(tmp, double_);
+    double gor = bit_cast(tmp, double_);
     double r[6];
-    auto inds = shr(bitwise_cast(k, as<ui64_t>()), 32); 
+    auto inds = shr(bit_cast(k, as<ui64_t>()), 32); 
     for (int i=0;i<6;++i)
     {
       auto values = toverp[inds];
