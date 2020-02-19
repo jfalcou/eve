@@ -66,9 +66,9 @@ namespace eve::detail
     else
     {
       using t_t = wide<T, N, ABI>; 
-      auto r1   = bitwise_and(Expobits_mask<t_t>(), a0);
-      auto x    = bitwise_notand(Expobits_mask<t_t>(), a0);
-      return  std::make_tuple( bitwise_or(Half<t_t>(), x), bitwise_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>());
+      auto r1   = bit_and(Expobits_mask<t_t>(), a0);
+      auto x    = bit_notand(Expobits_mask<t_t>(), a0);
+      return  std::make_tuple( bit_or(Half<t_t>(), x), bit_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>());
     }
   }
   
