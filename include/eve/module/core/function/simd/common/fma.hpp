@@ -20,7 +20,7 @@
 #include <eve/function/mul.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/two_prod.hpp>
-#include <eve/function/two_mul.hpp>
+#include <eve/function/two_prod.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -28,6 +28,8 @@
 #include <eve/function/max.hpp>
 #include <eve/function/minmag.hpp>
 #include <eve/function/maxmag.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/numeric.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -71,9 +73,9 @@ namespace eve::detail
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   /// pedantic version
-  template<typename T, typename U, typename V>
+  template<typename D, typename T, typename U, typename V>
   EVE_FORCEINLINE auto
-  fma_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b, V const &c) noexcept requires(
+  fma_(EVE_SUPPORTS(cpu_), D const & deco, T const &a, U const &b, V const &c) noexcept requires(
       std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
       detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
   {
@@ -95,46 +97,49 @@ namespace eve::detail
       return pedantic_(fma)(V{a}, V{b}, c);
     else
     {
+      using v_t =  value_type_t<T>; 
       if constexpr(std::is_same_v<T, U> && std::is_same_v<T, V>)
       {
         using abi_t = typename T::abi_type;
         if constexpr(is_aggregated_v<abi_t>)
-          return aggregate(pedantic_(eve::fma), a, b, c);
+          return aggregate(deco(eve::fma), a, b, c);
         else if constexpr(is_emulated_v<abi_t>)
-          return map(pedantic_(eve::fma), a, b, c);
-        else if constexpr(std::is_same_v<value_type_t<T>, float>)
+          return map(deco(eve::fma), a, b, c);
+        else if constexpr(std::is_same_v<value_type_t<v_t>, float>)
         {
-          return convert(convert(a0, as<double>())*convert(a1, as<double>())
-                         + convert(a2, as<double>()), as<float>());
+          return convert(convert(a, as<double>())*convert(b, as<double>())
+                         + convert(c, as<double>()), as<float>());
         }
-        else    if constexpr(std::is_same_v<T, double>)
+        else if constexpr(std::is_same_v<v_t, double>)
         {
-          T p, rp, s, rs;
-#ifndef EVE_DONT_CARE_PEDANTIC_FMA_OVERFLOW
-          using iT = bd::as_integer_t<T>;
-          T amax =  maxmag(a0, a1);
-          T amin =  minmag(a0, a1);
-          iT e0 = -shr(exponent(amax), 1);
-          amax = pedantic_(ldexp)(amax, e0);
-          T a02 = pedantic_(ldexp)(a2, e0);
-          std::tie(p, rp) = two_prod(amax, amin);
-          std::tie(s, rs) = two_add(p, a02);
-          return pedantic_(ldexp)(s+(rp+rs), -e0);
-#else
-          auto [p, rp] = two_prod(a0, a1);
-          auto [s, rs] = two_add(p, a2);
-          return s+(rp+rs);
-#endif
+          if constexpr(std::is_same_v<D, numeric_type>)
+          {
+            using iT = as_integer_t<T>;
+            T amax =  maxmag(a, b);
+            T amin =  minmag(a, b);
+            iT e0 = -shr(exponent(amax), 1);
+            amax = pedantic_(ldexp)(amax, e0);
+            T a0 = pedantic_(ldexp)(a, e0);
+            auto [p, rp] = two_prod(amax, amin);
+            auto [s, rs] = two_add(p, a0);
+            return pedantic_(ldexp)(s+(rp+rs), -e0);
+          }
+          else if constexpr(std::is_same_v<D, pedantic_type>)
+          {
+            auto [p, rp] = two_prod(a, b);
+            auto [s, rs] = two_add(p, c);
+            return s+(rp+rs);
+          }
         }
-        else  constexpr(std::is_integral_v<T>)
+        else if constexpr(std::is_integral_v<v_t>)
         {
-          // pedantic fma has to ensure "no intermediate overflow".
+          // correct fma has to ensure "no intermediate overflow".
           // This is done in the case of signed integers by transtyping to unsigned type
           // to perform the computations in a guaranted 2-complement environment
           // since signed integer overflows in C++ produce "undefined results"
           using u_t = as_integer_t<T, unsigned>;
-          return static_cast<T>(fma( bit_cast(a0, as<u_t>()),  bit_cast<u_t>(a1, as<u_t>())
-                                   ,  bit_cast<u_t>(a2, as<u_t>())));
+          return bit_cast(fma( bit_cast(a, as<u_t>()),  bit_cast(b, as<u_t>())
+                             ,  bit_cast(c, as<u_t>())), as<T>());
         }
       }
       return  T();

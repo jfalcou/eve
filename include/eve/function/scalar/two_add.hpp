@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_TWO_ADD_HPP_INCLUDED
 
 #include <eve/function/definition/two_add.hpp>
-#include <eve/module/core/function/scalar/two_add.hpp>
+#include <eve/module/core/function/generic/two_add.hpp>
 
 #endif

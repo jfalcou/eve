@@ -42,6 +42,16 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vmla_u8(v2, v1, v0);
   }
 
+  template<typename D, typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> fma_(EVE_SUPPORTS(neon128_),
+                                           D const &, 
+                                           wide<T, N, neon64_> const &v0,
+                                           wide<T, N, neon64_> const &v1,
+                                           wide<T, N, neon64_> const &v2) noexcept
+  {
+    return fma(v0, v1, v2); 
+  }
+
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon128_> const &v0,
@@ -66,6 +76,18 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 2) return vmlaq_u16(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vmlaq_u8(v2, v1, v0);
   }
+
+  template<typename D, typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
+                                            D const &, 
+                                            wide<T, N, neon128_> const &v0,
+                                            wide<T, N, neon128_> const &v1,
+                                            wide<T, N, neon128_> const &v2) noexcept
+  {
+    return fma(v0, v1, v2); 
+  }
+
+  
 }
 
 #endif
