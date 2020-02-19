@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/sincos_finalize.hpp>
 #include <eve/function/binarize.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>

@@ -12,22 +12,22 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_REDUCE_LARGE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/reduce_medium.hpp> 
 #include <eve/function/gather.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/all.hpp>
-#include <eve/function/bitwise_and.hpp>
-#include <eve/function/bitwise_or.hpp>
-#include <eve/function/bitwise_cast.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
-#include <eve/function/bitwise_shr.hpp>
+#include <eve/function/bit_shr.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/convert.hpp>
@@ -81,21 +81,21 @@ namespace eve::detail
           };
         constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
         auto [sn, sr, dsr] =  reduce_fast(x);
-        auto xi =  bitwise_cast(x, as_<ui_t>());
-        auto index =  bitwise_and(shr(xi, 26), 15); 
+        auto xi =  bit_cast(x, as_<ui_t>());
+        auto index =  bit_and(shr(xi, 26), 15); 
         auto arr0 = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
         auto arr4 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+4), as<uint64_t>());
         auto arr8 = convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index+8), as<uint64_t>()); 
-        auto shift = bitwise_and(shr(xi, 23), 7);
+        auto shift = bit_and(shr(xi, 23), 7);
         
-        xi = bitwise_or(bitwise_and(xi, 0xffffff), 0x800000); 
+        xi = bit_or(bit_and(xi, 0xffffff), 0x800000); 
         xi = shl(xi, shift);
         auto xi64 = convert(xi, as<uint64_t>());
         
         auto res0 = convert(xi * arr0, as<uint64_t>());
         auto res1 = xi64 * arr4;
         auto res2 = xi64 * arr8;
-        res0 = bitwise_or(shr(res2, 32), shl(res0, 32));
+        res0 = bit_or(shr(res2, 32), shl(res0, 32));
         res0 += res1;
         
         auto n = shr((res0 + (1ULL << 61)), 62);
@@ -173,15 +173,15 @@ namespace eve::detail
         double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
         t_t sum(0);
         ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-        i32_t k = bitwise_cast(bitwise_and(bitwise_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
-        k =  bitwise_shr(k, 20) & 2047;
+        i32_t k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
+        k =  bit_shr(k, 20) & 2047;
         k = eve::max((k-450)/24, 0);
-        auto tmp = bitwise_cast(ui64_t(t576), as_<i32_t>());
+        auto tmp = bit_cast(ui64_t(t576), as_<i32_t>());
         tmp -= shl(k*24, 20); 
-        t_t gor = bitwise_cast(tmp, as_<t_t>()); 
+        t_t gor = bit_cast(tmp, as_<t_t>()); 
         k = eve::max(k, 0);
         t_t r[6];
-        auto inds = shr(bitwise_cast(k, as<ui64_t>()), 32); //TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+        auto inds = shr(bit_cast(k, as<ui64_t>()), 32); //TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
         for (int i=0;i<6;++i)
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);

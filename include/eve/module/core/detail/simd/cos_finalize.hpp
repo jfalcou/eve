@@ -19,7 +19,7 @@
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/signmask.hpp>
 #include <type_traits>
@@ -36,12 +36,12 @@ namespace eve::detail
     using t_t = wide<T, N, ABI>; 
     auto tmp =  binarize(fn >= t_t(2));
     auto swap_bit = (fma(t_t(-2), tmp, fn));
-    auto sign_bit = binarize(is_nez(bitwise_xor(swap_bit, tmp)), Signmask<T>()); 
+    auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<T>()); 
     t_t z = sqr(xr);
     t_t se = sin_eval(z, xr);
     t_t ce = cos_eval(z);
     t_t z1 = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
-    return bitwise_xor(z1, sign_bit); 
+    return bit_xor(z1, sign_bit); 
   }
 }
 

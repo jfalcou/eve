@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/detail/abi.hpp>
@@ -42,7 +42,7 @@ namespace eve::detail
         T b = a*T(0.25);
         return (b-floor(b))*T(4);
       }
-      else return bitwise_and(a, T(3));
+      else return bit_and(a, T(3));
     }
   }
 }

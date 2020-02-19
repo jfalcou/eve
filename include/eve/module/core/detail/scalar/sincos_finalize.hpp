@@ -17,7 +17,7 @@
 #include <eve/module/core/detail/generic/cos_kernel.hpp>
 #include <eve/module/core/detail/generic/sin_kernel.hpp>   
 #include <eve/function/shl.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
@@ -39,13 +39,13 @@ namespace eve::detail
     using i_t =  detail::as_integer_t<T, signed>; 
     i_t n = toint(fn);
     i_t swap_bit = n&One<i_t>();
-    T  sin_sign_bit = bitwise_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
-    i_t cos_sign_bit = shl(bitwise_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
+    T  sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
+    i_t cos_sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
     ce0 = fnma(se0, dxr, ce0);
     se0 = fma(dxr, ce0, se0);
     if (swap_bit) std::swap(ce0, se0); 
-    T se = bitwise_xor(se0,sin_sign_bit);   
-    T ce = bitwise_xor(ce0,cos_sign_bit);
+    T se = bit_xor(se0,sin_sign_bit);   
+    T ce = bit_xor(ce0,cos_sign_bit);
     return  std::tuple<T, T>{se, ce};
   }
 }

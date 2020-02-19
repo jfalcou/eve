@@ -43,8 +43,8 @@ TTS_CASE("Check eve::eve::cot behavior")
   TTS_ULP_EQUAL(eve::big_(eve::cot)(Type(-1)),Type(my_stdcot(-1.0)), 1.0); 
   TTS_IEEE_EQUAL(eve::big_(eve::cot)(Type(0)), (eve::Inf<Type>()));
   TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Mzero<Type>()), (eve::Minf<Type>()));
-  TTS_ULP_EQUAL((eve::big_(eve::cot)(eve::Pio_4<Type>())), (Type(my_stdcot(eve::Pio_4<Value>()))), 0.75);
-  TTS_ULP_EQUAL((eve::big_(eve::cot)(-eve::Pio_4<Type>())),(Type(my_stdcot(-eve::Pio_4<Value>()))), 0.75);
+  TTS_ULP_EQUAL((eve::big_(eve::cot)(eve::Pio_4<Type>())), (Type(my_stdcot(eve::Pio_4<Value>()))), 1.5);
+  TTS_ULP_EQUAL((eve::big_(eve::cot)(-eve::Pio_4<Type>())),(Type(my_stdcot(-eve::Pio_4<Value>()))), 1.5);
   TTS_ULP_EQUAL((eve::big_(eve::cot)(Type(100000.0))), Type(my_stdcot(100000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cot)(Type(-100000.0))),Type(my_stdcot(-100000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::cot)(Type(100000000.0))), Type(my_stdcot(100000000.0)), 0.5);

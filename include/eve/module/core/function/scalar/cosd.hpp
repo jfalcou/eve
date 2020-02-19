@@ -19,7 +19,7 @@
 #include <eve/function/cos.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/deginrad.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/nearest.hpp>
@@ -70,7 +70,7 @@ namespace eve::detail
       {
         x -= T(90);
         x =  deginrad(x); 
-        return bitwise_xor(sin_eval(x, sqr(x)), bitofsign(a0));        
+        return bit_xor(sin_eval(x, sqr(x)), bitofsign(a0));        
       }
       else
       {

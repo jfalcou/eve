@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_REM_PIO2_MEDIUM_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/bitwise_and.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/quadrant.hpp>
 #include <eve/function/nearest.hpp>

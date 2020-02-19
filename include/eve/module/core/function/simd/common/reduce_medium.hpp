@@ -17,7 +17,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/mzero.hpp>
-#include <eve/function/bitwise_notand.hpp>
+#include <eve/function/bit_notand.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/fma.hpp>

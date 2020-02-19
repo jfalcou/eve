@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/sin_finalize.hpp>
 #include <eve/function/binarize.hpp>
-#include <eve/function/bitwise_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
@@ -60,7 +60,7 @@ namespace eve::detail
       auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
       auto x  = eve::abs(a0); 
       auto x2 = sqr(a0); 
-      auto r = bitwise_xor(detail::sin_eval(x2, x), bitofsign(a0));
+      auto r = bit_xor(detail::sin_eval(x2, x), bitofsign(a0));
       return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r); 
     }
     else
@@ -89,7 +89,7 @@ namespace eve::detail
       const t_t z = sqr(xr);
       const t_t se = sin_eval(z, xr);
       const t_t ce = cos_eval(z);
-      const t_t z1 = bitwise_xor(bitofsign(a0), if_else(n, ce, se));
+      const t_t z1 = bit_xor(bitofsign(a0), if_else(n, ce, se));
       return if_else(is_not_less_equal(x, Pio_2<t_t>()), Nan<t_t>(), z1); 
     }
     else
