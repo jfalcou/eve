@@ -23,7 +23,7 @@ TTS_CASE("wide exhaustive check on popcount")
   using u_t =  eve::detail::as_integer_t<Type, unsigned>; 
   auto std_popcount = tts::vectorize<u_t>(
     [](auto e) { unsigned int j = 0;
-      for(int i = 0; i < sizeof(Value)*8; ++i)
+      for(unsigned int i = 0; i < sizeof(Value)*8; ++i)
       {
         if (e&Value(1)) ++j;
         e = eve::bit_shr(e, 1);

@@ -16,7 +16,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/function/extract.hpp>
-#include <eve/function/all.hpp>
+#include <eve/function/any.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/ulpdist.hpp>
@@ -42,18 +42,16 @@ TTS_CASE("Check eve::pedantic_(eve::rsqrt) behavior")
     TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<Type>())) , (eve::Nan<Type>()));
     TTS_EQUAL(eve::pedantic_(eve::rsqrt)((Type(0)))               , eve::Inf<Type>());
   }
-  auto z = eve::Mindenormal<Value>();
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
-
-  for(Value i=1; i < eve::Valmax<Value>() ; i*= 10 )
+  for(auto z = eve::Mindenormal<Value>(); z < eve::Valmax<Value>() ; z*= 10 )
   {
-    z = eve::Smallestposval<Value>()*i;
     TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z))), 2.0);
-    if (eve::all(eve::ulpdist(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z)))) <=  2.0))
-    {
-      std::cout << z << std::endl;
-      break;
-    }
+    auto d = eve::ulpdist(eve::pedantic_(eve::rsqrt)(Type(z)), Type(eve::rec(std::sqrt(z)))); 
+//     std::cout << z << " -> " << d << std::endl;
+//     if ( eve::any(d >=  2.0))
+//     {
+//       std::cout <<" * " << z << " -> " << eve::pedantic_(eve::rsqrt)(Type(z)) << "  " << Type(eve::rec(std::sqrt(z))) << "  " << d << std::endl;
+//       break;
+//     }
   }
 }
 
