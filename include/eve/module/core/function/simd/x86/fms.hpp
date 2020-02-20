@@ -136,7 +136,7 @@ namespace eve::detail
 
   template<typename D, typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fms_(EVE_SUPPORTS(avx2_),
-                                        D const &, 
+                                        D const & deco, 
                                         wide<T, N, avx_> const &a,
                                         wide<T, N, avx_> const &b,
                                         wide<T, N, avx_> const &c) noexcept

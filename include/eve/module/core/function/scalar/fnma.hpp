@@ -20,10 +20,20 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  fnma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept requires(T,
-                                                                                  vectorizable<T>)
+  fnma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
+  requires(T, vectorizable<T>)
   {
     return -a * b + c;
+  }
+  
+  template<typename D, typename T>
+  EVE_FORCEINLINE constexpr auto
+  fnma_(EVE_SUPPORTS(cpu_)
+      , D const & deco
+      , T const &a, T const &b, T const &c) noexcept
+  requires(T, vectorizable<T>)
+  {
+    return deco(fma)(-a, b, c);
   }
 }
 
