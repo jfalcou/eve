@@ -8,18 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rsqrt.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/function/sin.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide rng check on rsqrt")
+TTS_CASE("wide random check on sin")
 {
-  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1.0l/std::sqrt((long double)e)); } );
+  auto std_sin = tts::vectorize<Type>( [](auto e) { return std::sin(e); } );
 
-  eve::rng_producer<Type> p(Value(0), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt)); 
+  eve::rng_producer<Type> p(-Value(10000), Value(10000));
+  TTS_RANGE_CHECK(p, std_sin, eve::medium_(eve::sin)); 
 }

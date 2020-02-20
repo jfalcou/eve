@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rsqrt.hpp>
+#include <eve/function/sec.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -16,10 +16,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide rng check on rsqrt")
+TTS_CASE("wide random check on sec")
 {
-  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1.0l/std::sqrt((long double)e)); } );
+  auto std_sec = tts::vectorize<Type>( [](auto e) { return 1/std::cos(double(e)); } );
 
-  eve::rng_producer<Type> p(Value(0), eve::Valmax<Value>());
-  TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt)); 
+  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, std_sec, eve::sec); 
 }
