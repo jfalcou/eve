@@ -18,7 +18,7 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on popcount")
+TTS_CASE("wide rng check on popcount")
 {
   using u_t =  eve::detail::as_integer_t<Type, unsigned>; 
   auto std_popcount = tts::vectorize<u_t>(
