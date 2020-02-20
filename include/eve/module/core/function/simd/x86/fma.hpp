@@ -90,7 +90,7 @@ namespace eve::detail
   }
 
   /////////////////////////////////////////////////////////////////////////////////
-  /// pedantic_
+  /// pedantic_ numeric_
   template<typename D, typename T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> fma_(EVE_SUPPORTS(avx2_),
                                         D const &, 

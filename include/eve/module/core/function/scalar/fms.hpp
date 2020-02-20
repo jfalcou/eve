@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/concept/vectorizable.hpp>
 
 namespace eve::detail
@@ -24,6 +25,16 @@ namespace eve::detail
   requires(T, vectorizable<T>)
   {
     return a * b - c;
+  }
+  
+  template<typename D, typename T>
+  EVE_FORCEINLINE constexpr auto
+  fms_(EVE_SUPPORTS(cpu_)
+      , D const & deco
+      , T const &a, T const &b, T const &c) noexcept
+  requires(T, vectorizable<T>)
+  {
+    return deco(fma)(a, b, -c);
   }
 }
 
