@@ -38,6 +38,13 @@
 
 namespace eve::detail
 {
+  
+  template < typename T>
+  EVE_FORCEINLINE auto prevent_gcc_abusive_contract(const T & ab) noexcept
+  {
+    return ab+0;
+  }
+  
   template < typename N, typename ABI>
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , wide<float, N, ABI> const &x) noexcept
@@ -118,13 +125,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , wide<double, N, ABI> const &xx) noexcept
   {
+//    std::cout << "reduce_large" << std::endl; 
     using t_t   = wide<double, N, ABI>;
     if constexpr(is_emulated_v<ABI>)
     {
+//    std::cout << "reduce_large em" << std::endl; 
       return map(eve::reduce_large, xx);
     }
     else if constexpr(is_aggregated_v<ABI>)
     {
+//    std::cout << "reduce_large ag" << std::endl; 
       auto  [lo, hi] = xx.slice();
       auto  [nhi, xhi, dxhi]   = reduce_large(hi);
       auto  [nlo, xlo, dxlo]   = reduce_large(lo);
@@ -135,6 +145,7 @@ namespace eve::detail
     else // if constexpr(is_native_v<ABI>)
     {
 //      return rem_pio2(xx); 
+//    std::cout << "reduce_large true" << std::endl; 
       using ui64_t = wide<uint64_t, N>;
       using i32_t = wide<int32_t, fixed<2*N::value>>; 
       constexpr auto alg = t_t::static_alignment;
@@ -161,7 +172,7 @@ namespace eve::detail
       double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
       double    mp2 = Constant<double, 0xBE4DDE9740000000ULL>();  /*-1.3909067675399456e-08 */
       t_t x = xx*tm600;
-      t_t t = x*split;   /* split x to two numbers */
+      t_t t = prevent_gcc_abusive_contract(x*split);   /* split x to two numbers */
       t_t x1=t-(t-x);
       t_t x2=x-x1;
       t_t sum(0);
@@ -213,7 +224,7 @@ namespace eve::detail
       t_t b1, bb1, b2, bb2; 
       auto sum1 = pass(x1, b1, bb1);
       auto sum2 = pass(x2, b2, bb2);
-      sum =  sum1+sum2; 
+      sum =  sum1+sum2;
       t_t b=b1+b2;
       t_t bb = if_else(eve::abs(b1)>eve::abs(b2), (b1-b)+b2, (b2-b)+b1);
       auto test =  eve::abs(b) > 0.5;

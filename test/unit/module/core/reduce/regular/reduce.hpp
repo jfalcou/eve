@@ -12,6 +12,7 @@
 #include <eve/function/rem_pio2.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
+#include <eve/function/any.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/function/dist.hpp>  
 #include <eve/constant/mzero.hpp>
@@ -29,7 +30,7 @@
 
 TTS_CASE("Check eve::reduce_fast return type")
 {
-  TTS_EXPR_IS(eve::reduce_fast(Type(0)), (std::tuple<Type, Type, Type>));
+  TTS_EXPR_IS(eve::reduce(Type(0)), (std::tuple<Type, Type, Type>));
 }
 
 TTS_CASE("Check eve::eve::reduce_fast behavior")
@@ -46,6 +47,15 @@ TTS_CASE("Check eve::eve::reduce_fast behavior")
     std::tie(n1, r1, dr1) = eve::reduce(z);
     TTS_ULP_EQUAL(r0, r1, 0.5);
     TTS_EQUAL(n0, n1);
+    if (eve::any(eve::ulpdist(r0, r1) > 0.5)) {
+      std::cout << "r0 " << r0 << std::endl;
+      std::cout << "r1 " << r1 << std::endl;
+      std::cout << "n0 " << n0 << std::endl;
+      std::cout << "n1 " << n1 << std::endl;
+      std::cout << "zz " << zz << std::endl;     
+      std::cout << "zz " << std::hexfloat << zz << std::defaultfloat << std::endl;
+      break;
+    }
     zz /= fac;     
   }
 
