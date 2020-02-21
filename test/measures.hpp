@@ -18,15 +18,17 @@
 
 namespace tts
 {
-  template<typename Type,typename Func> auto vectorize(Func f)
+  template<typename Type,typename Func> auto vectorize(Func&& f)
   {
-    return [=](auto x){ Type that;
-                        std::transform( tts::detail::begin(x),tts::detail::end(x),
-                                        tts::detail::begin(that),
-                                        f
-                                      );
-                        return that;
-                      };
+    return  [func = std::forward<Func>(f)](auto const& x)
+            {
+              Type that;
+              std::transform( tts::detail::begin(x),tts::detail::end(x),
+                              tts::detail::begin(that),
+                              func
+                            );
+              return that;
+            };
   }
 }
 
