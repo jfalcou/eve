@@ -29,6 +29,7 @@
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
@@ -142,7 +143,7 @@ namespace eve::detail
     auto x =  abs(a0);
     if (x <= Pio_4(as(x)))        return restricted_(cot)(a0);
     else if (x <= Pio_2(as(x)))   return small_(cot)(a0);
-    else if (x <= medthresh)      return medium_(cot)(a0);
+    else if (x <= Reduce_medium_limits<T>())     return medium_(cot)(a0);
     else                          return big_(cot)(a0);      
   }
   

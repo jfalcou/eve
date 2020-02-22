@@ -19,6 +19,8 @@
 #include <eve/function/reduce_medium.hpp>
 #include <eve/function/reduce_large.hpp>
 #include <eve/constant/pio_4.hpp>
+#include <eve/constant/reduce_fast_limits.hpp>
+#include <eve/constant/reduce_medium_limits.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
@@ -52,18 +54,9 @@ namespace eve::detail
       if (all(x <= Pio_4<T>())) return  std::make_tuple(t_t(0), x, t_t(0)); 
       else
       {
-        if constexpr(std::is_same_v<T, float>)
-        {                   
-          if (all(x <= 120.0f))  return reduce_fast(x); 
-          else if (all(x <= 1.89e+15f)) return reduce_medium(x); 
-          else return reduce_large(x); 
-        }
-        else if constexpr(std::is_same_v<T, double>)
-        {
-          if (all(x <=  105414350.0))  return reduce_fast(x); 
-          else if (all(x <=  281474976710656.0)) return reduce_medium(x); 
-          else return reduce_large(x); 
-        }
+        if (all(x <= Reduce_fast_limits<T>()))  return reduce_fast(x); 
+        else if (all(x <= Reduce_medium_limits<T>())) return reduce_medium(x); 
+        else return reduce_large(x); 
       }
     }
   }

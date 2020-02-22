@@ -30,6 +30,7 @@
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/reduce_medium.hpp>
 #include <eve/function/reduce_large.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -44,13 +45,6 @@
 
 namespace eve::detail
 {
-
-  // limites d'usages  0.5ulp de std::sin
-  // restricted abs(x) < pi/4
-  // small      abs(x) < pi/2
-  // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
-  // big        le reste
-  
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
                            , restricted_type const &     
@@ -135,11 +129,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); 
     auto x =  eve::abs(a0);
     if (all(x <= Pio_4(as(x))))       return restricted_(tan)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(tan)(a0);
-    else if(all(x <= medthresh))      return medium_(tan)(a0);
+    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(tan)(a0);
     else                              return big_(tan)(a0);
   }
 }

@@ -30,6 +30,7 @@
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/reduce_medium.hpp>
 #include <eve/function/reduce_large.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -136,11 +137,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto cot_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  eve::abs(a0);
     if (all(x <= Pio_4(as(x))))       return restricted_(cot)(a0);
     else if(all(x <= Pio_2(as(x))))   return small_(cot)(a0);
-    else if(all(x <= medthresh))      return medium_(cot)(a0);
+    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(cot)(a0);
     else return big_(cot)(a0);
   }
 }

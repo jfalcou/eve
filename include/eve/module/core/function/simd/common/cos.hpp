@@ -27,6 +27,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/reduce_medium.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/function/reduce_large.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
@@ -41,14 +42,7 @@
 #include <type_traits>
 
 namespace eve::detail
-{
-
-  // limites d'usages  0.5ulp de std::sin
-  // restricted abs(x) < pi/4
-  // small      abs(x) < pi/2
-  // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
-  // big        le reste
-  
+{ 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                            , restricted_type const &     
@@ -99,7 +93,6 @@ namespace eve::detail
   template<typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_upgrade( eve::wide<float,N,ABI> const & a0) noexcept
   {
-//    using dt_t = eve::wide<double,N,ABI>;
     auto x =  eve::abs(convert(a0, double_)); 
     static const double
       pio2_1  = -1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
@@ -151,12 +144,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (all(x <= Pio_4(as(x))))       return restricted_(cos)(a0);
-    else if(all(x <= Pio_2(as(x))))   return small_(cos)(a0);
-    else if(all(x <= medthresh))      return medium_(cos)(a0);
-    else return big_(cos)(x);
+    if (all(x <= Pio_4(as(x))))                       return restricted_(cos)(a0);
+    else if(all(x <= Pio_2(as(x))))                   return small_(cos)(a0);
+    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(cos)(a0);
+    else                                              return big_(cos)(x);
   }
 }
 
