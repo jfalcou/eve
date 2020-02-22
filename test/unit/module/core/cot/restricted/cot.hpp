@@ -19,6 +19,7 @@
 #include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
+#include <eve/platform.hppdenormal.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -56,6 +57,11 @@ TTS_CASE("Check eve::eve::restricted_(eve::cot) behavior")
     ++i; 
     TTS_ULP_EQUAL(eve::restricted_(eve::cot)(Type(z)),Type(my_stdcot(Value(z))), 0.5);
     z/= 5.123;
+    if constexpr(!eve::platform::supports_denormals)
+    {
+      if (eve::is_denormal(z)) break; 
+    }
+    
     if (i == 300) break; 
     if (eve::all(eve::is_eqz(z))) break;
   } 
