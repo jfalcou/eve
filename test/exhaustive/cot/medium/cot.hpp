@@ -9,16 +9,26 @@
 **/
 //==================================================================================================
 #include <eve/function/cot.hpp>
-#include <eve/constant/maxlog.hpp>
+#include <eve/constant/reduce_medium_limits.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/platform.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cot")
+TTS_CASE("wide exhaustive check on cot")
 {
-  auto std_cot = tts::vectorize<Type>( [](auto e) { return 1/std::tan(e); } );
+  auto std_cot = tts::vectorize<Type>( [](auto e) { return 1/std::tan(double(e)); } );
 
-  eve::exhaustive_producer<Type> p(-Value(10000), Value(10000));
-  TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot)); 
+  if constexpr(eve::platform::supports_denormals)
+  {
+    eve::exhaustive_producer<Type>  p(-eve::Reduce_medium_limits<Value>(), eve::Reduce_medium_limits<Value>());
+    TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
+  }
+  else
+  {
+    eve::exhaustive_producer<Type>  p(eve::Smallestposval<Value>(), eve::Reduce_medium_limits<Value>());
+    TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
+  }
 }
