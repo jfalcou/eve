@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/sin.hpp>
-#include <eve/constant/maxlog.hpp>
+#include <eve/constant/reduce_medium_limits.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,6 +19,6 @@ TTS_CASE("wide random check on sin")
 {
   auto std_sin = tts::vectorize<Type>( [](auto e) { return std::sin(e); } );
 
-  eve::rng_producer<Type> p(-Value(10000), Value(10000));
+  eve::rng_producer<Type> p(-eve::Reduce_medium_limits<Value>(), eve::Reduce_medium_limits<Value>());
   TTS_RANGE_CHECK(p, std_sin, eve::medium_(eve::sin)); 
 }
