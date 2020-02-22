@@ -29,6 +29,7 @@
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
@@ -143,11 +144,10 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
     if (x <= Pio_4(as(x)))        return restricted_(tan)(a0);
     else if (x <= Pio_2(as(x)))   return small_(tan)(a0);
-    else if (x <= medthresh)      return medium_(tan)(a0);
+    else if (x <= Reduce_medium_limits<T>())      return medium_(tan)(a0);
     else                          return big_(tan)(a0);      
   }
   

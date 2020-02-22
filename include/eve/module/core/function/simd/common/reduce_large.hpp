@@ -16,7 +16,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp> 
+#include <eve/constant/reduce_fast_limits.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/all.hpp>
@@ -68,8 +68,8 @@ namespace eve::detail
     }
     else if constexpr(is_native_v<ABI>)
     {
-      auto xle200 = x <= 200.277f; 
-      if (all(xle200))
+      auto xlerfl = x <= Reduce_fast_limits<float>(); //200.277f; 
+      if (all(xlerfl))
       {
         return reduce_fast(x);
       }
@@ -108,12 +108,12 @@ namespace eve::detail
         auto n = shr((res0 + (1ULL << 61)), 62);
         res0 -= n << 62;
         auto xx =  convert(convert(res0, as<int64_t>()), as<double>());
-        auto bn = if_else(xle200, sn, convert(n, single_));
+        auto bn = if_else(xlerfl, sn, convert(n, single_));
         auto z = xx * pi63; 
         auto sr1  = convert(z, single_);
         auto dsr1 = convert(z - convert(sr1, double_), single_); 
-        auto br  = if_else(xle200, sr,  sr1);
-        auto dbr = if_else(xle200, dsr, dsr1); 
+        auto br  = if_else(xlerfl, sr,  sr1);
+        auto dbr = if_else(xlerfl, dsr, dsr1); 
         br = if_else(is_not_finite(x), eve::allbits_, br); 
         using r_t =  std::tuple<t_t, t_t, t_t>; 
         return r_t(bn, br,dbr); 

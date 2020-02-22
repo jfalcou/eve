@@ -27,6 +27,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/reduce_large.hpp>
 #include <eve/function/reduce_medium.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/function/reduce_fast.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
@@ -41,12 +42,6 @@
 
 namespace eve::detail
 {
-  // limites d'usages à 0.5ulp de std::sin
-  // restricted abs(x) < pi/4
-  // small      abs(x) < pi/2
-  // medium     abs(x) <   9.83416e+14 (float) et  281474976710656.0 (double)
-  // big        le reste
- 
   template<typename T>
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
@@ -146,11 +141,10 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (x <= Pio_4(as(x)))        return restricted_(sin)(a0);
-    else if (x <= Pio_2(as(x)))   return small_(sin)(a0);
-    else if ( x <= medthresh)     return medium_(sin)(a0);
+    if (x <= Pio_4(as(x)))                        return restricted_(sin)(a0);
+    else if (x <= Pio_2(as(x)))                   return small_(sin)(a0);
+    else if ( x <= Reduce_medium_limits<T>())     return medium_(sin)(a0);
     else return big_(sin)(a0);      
   }
   

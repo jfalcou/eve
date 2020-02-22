@@ -22,6 +22,7 @@
 #include <eve/function/two_split.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/function/reduce_fast.hpp>
+#include <eve/constant/reduce_fast_limits.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/detail/abi.hpp>
@@ -38,7 +39,7 @@ namespace eve::detail
     {
       return std::make_tuple(0.0f, Nan<float>(), 0.0f); 
     }
-    if (x <= 200.277f) //255*(pi/4)
+    if (x <= Reduce_fast_limits<float>()) 
     {
       return reduce_fast(x); 
     }

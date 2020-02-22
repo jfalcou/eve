@@ -31,6 +31,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
+#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/twoopi.hpp>
@@ -136,12 +137,11 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (x <= Pio_4(as(x)))        return restricted_(cos)(x);
-    else if (x <= Pio_2(as(x)))   return small_(cos)(x);
-    else if (x <= medthresh)      return medium_(cos)(x);
-    else                          return big_(cos)(x);      
+    if (x <= Pio_4(as(x)))                        return restricted_(cos)(x);
+    else if (x <= Pio_2(as(x)))                   return small_(cos)(x);
+    else if (x <= Reduce_medium_limits<T>())      return medium_(cos)(x);
+    else                                          return big_(cos)(x);      
   }
   
 }
