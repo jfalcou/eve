@@ -19,7 +19,7 @@
 #include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
-#include <eve/platform.hppdenormal.hpp>
+#include <eve/function/is_denormal.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
