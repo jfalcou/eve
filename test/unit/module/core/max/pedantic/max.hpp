@@ -10,7 +10,12 @@
 //==================================================================================================
 #include <eve/function/max.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_positive.hpp>
+#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
+#include <eve/constant/zero.hpp>
+#include <tts/tests/basic.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
@@ -47,5 +52,8 @@ TTS_CASE("Check eve::pedantic_(eve::max) behavior")
     TTS_IEEE_EQUAL(eve::pedantic_(eve::max)((Type(1)) , (eve::Nan<Type>())  ), (Type(1)) );
     TTS_IEEE_EQUAL(eve::pedantic_(eve::max)((Value(1)), (eve::Nan<Type>())  ), (Type(1)) );
     TTS_IEEE_EQUAL(eve::pedantic_(eve::max)((Type(1)) , (eve::Nan<Value>()) ), (Type(1)) );
+
+    TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::max)(eve::Mzero<Type>(), eve::Zero<Type>()))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::max)(eve::Zero<Type>(), eve::Mzero<Type>()))));    
   }
 }

@@ -14,6 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -38,6 +40,7 @@ namespace eve::detail
                                       T const &a0,
                                       T const &a1) noexcept requires(T, vectorizable<T>)
   {
+    if (is_eqz(a0) && is_eqz(a1)) return bit_and(a0, a1); 
     return (a0 < a1) ? a1 : a0;
   }
 
@@ -50,7 +53,10 @@ namespace eve::detail
                                       T const &a1) noexcept requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
+    {
+      if (is_eqz(a0) && is_eqz(a1)) return bit_and(a0, a1); 
       return (is_nan(a0)) ? a1 : max(a0, a1);
+    }
     else
       return max(a0, a1);
   }

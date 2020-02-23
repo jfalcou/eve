@@ -15,6 +15,9 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/logical_and.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nan.hpp>
@@ -80,7 +83,8 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> || is_logical_v<T>)
       return eve::max(v0, v1);
     else
-      return if_else(is_unordered(v0, v1), v0, eve::max(v0, v1));
+      return if_else(is_eqz(v0) && is_eqz(v1), bit_and(v0, v1),
+                     if_else(is_unordered(v0, v1), v0, eve::max(v0, v1)));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -96,7 +100,8 @@ namespace eve::detail
     if constexpr(std::is_integral_v<T> || is_logical_v<T>)
       return eve::max(v0, v1);
     else
-      return if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, max(v0, v1)));
+       return if_else(is_eqz(v0) && is_eqz(v1), bit_and(v0, v1),
+                      if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, max(v0, v1))));
   }
 }
 

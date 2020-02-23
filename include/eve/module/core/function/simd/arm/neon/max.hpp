@@ -12,6 +12,9 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_MAX_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
+#include <eve/function/logical_and.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
@@ -68,10 +71,11 @@ namespace eve::detail
                                            wide<T, N, neon64_> const &a1) noexcept
   {
 #if !defined(EVE_SIMD_NO_NANS)
-    return if_else(is_nan(a1), a0, eve::max(a0, a1));
+    auto tmp = if_else(is_nan(a1), a0, eve::max(a0, a1));
 #else
-    return eve::max(a0, a1);
+    auto tmp = eve::max(a0, a1);
 #endif
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
   }
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> max_(EVE_SUPPORTS(neon128_),
@@ -80,10 +84,11 @@ namespace eve::detail
                                             wide<T, N, neon128_> const &a1) noexcept
   {
 #if !defined(EVE_SIMD_NO_NANS)
-    return if_else(is_nan(a1), a0, eve::max(a0, a1));
+    auto tmp = if_else(is_nan(a1), a0, eve::max(a0, a1));
 #else
-    return eve::max(a0, a1);
+    auto tmp = eve::max(a0, a1);
 #endif
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
   }
 
 }
