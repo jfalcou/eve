@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/tan_finalize.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
@@ -27,10 +28,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/function/reduce_large.hpp>
-#include <eve/constant/reduce_medium_limits.hpp> 
+#include <eve/function/rempio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -58,6 +56,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
 
@@ -85,55 +84,40 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
  
-  template<typename T,  typename N,  typename ABI>
+  //////////////////////////////////////////////////////////////////////////////
+  /// big medium
+  template<typename D, typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
-                           , medium_type const &       
+                           , D const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_medium(x);
+      auto [n, xr, dxr] = D()(rempio2)(x);
       return tan_finalize(a0, n, xr, dxr); 
     }
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::tan simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }   
   
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
-                           , big_type const &       
-                           , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_large(x); 
-      return tan_finalize(a0, n, xr, dxr); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::tan simd ] - type is not an IEEEValue"); 
-    }   
-  }
-
-
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto tan_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  eve::abs(a0);
-    if (all(x <= Pio_4(as(x))))       return restricted_(tan)(a0);
-    else if(all(x <= Pio_2(as(x))))   return small_(tan)(a0);
-    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(tan)(a0);
-    else                              return big_(tan)(a0);
+    if (all(x <= Pio_4(as(x))))                           return restricted_(tan)(a0);
+    else if(all(x <= Pio_2(as(x))))                       return small_(tan)(a0);
+    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(tan)(a0);
+    else                                                  return big_(tan)(a0);
   }
 }
 

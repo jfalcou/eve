@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/tan_finalize.hpp>
 #include <eve/module/core/detail/generic/tancot_kernel.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/abs.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
@@ -24,12 +25,9 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/nearest.hpp>
-#include <eve/function/reduce_large.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/function/reduce_fast.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
@@ -96,18 +94,18 @@ namespace eve::detail
      }   
   }
   
-  template<typename T>
+  template<typename D, typename T>
   EVE_FORCEINLINE constexpr auto tan_(EVE_SUPPORTS(cpu_)
-                                     , medium_type const &       
+                                     , D const &       
                                      , T a0) noexcept
   requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
+      if (is_not_finite(a0)) return Nan<T>(); 
       if (is_eqz(a0)) return a0;
       const T x =  eve::abs(a0);
-      auto [fn, xr, dxr] = reduce_medium(x);
+      auto [fn, xr, dxr] = D()(rempio2)(x);
       
       return tan_finalize(a0, fn, xr, dxr); 
     }
@@ -117,27 +115,6 @@ namespace eve::detail
       return T(); 
     }   
   }  
-  
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto tan_(EVE_SUPPORTS(cpu_)
-                                     , big_type const &       
-                                     , T a0) noexcept
-  requires(T, vectorizable<T>)
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
-      if (is_eqz(a0)) return a0;
-      const T x =  abs(a0);
-      auto [fn, xr, dxr] = reduce_large(x);
-      return tan_finalize(a0, fn, xr, dxr);
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::tan scalar ] - type is not an IEEEValue"); 
-     return T(); 
-    }   
-  }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto tan_(EVE_SUPPORTS(cpu_)
@@ -145,10 +122,10 @@ namespace eve::detail
   requires(T, vectorizable<T>)
   {
     auto x =  abs(a0);
-    if (x <= Pio_4(as(x)))        return restricted_(tan)(a0);
-    else if (x <= Pio_2(as(x)))   return small_(tan)(a0);
-    else if (x <= Reduce_medium_limits<T>())      return medium_(tan)(a0);
-    else                          return big_(tan)(a0);      
+    if (x <= Pio_4(as(x)))                           return restricted_(tan)(a0);
+    else if (x <= Pio_2(as(x)))                      return small_(tan)(a0);
+    else if (x <= Rempio2_limit(medium_type(), T())) return medium_(tan)(a0);
+    else                                             return big_(tan)(a0);      
   }
   
 }

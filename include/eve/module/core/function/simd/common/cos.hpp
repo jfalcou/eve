@@ -15,6 +15,8 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <eve/module/core/detail/simd/rempio2_kernel.hpp>
 #include <eve/module/core/detail/simd/cos_finalize.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
@@ -25,10 +27,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/constant/reduce_medium_limits.hpp> 
-#include <eve/function/reduce_large.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -90,29 +89,19 @@ namespace eve::detail
     }   
   }
 
-  template<typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_upgrade( eve::wide<float,N,ABI> const & a0) noexcept
-  {
-    auto x =  eve::abs(convert(a0, double_)); 
-    static const double
-      pio2_1  = -1.57079631090164184570e+00, /* 0x3FF921FB, 0x50000000 */
-      pio2_1t = -1.58932547735281966916e-08; /* 0x3E5110b4, 0x611A6263 */
-    auto fn = nearest(x*Twoopi<double>());
-    auto xr = fma(fn, pio2_1t, fma(fn, pio2_1, x));
-    auto fxr = convert(xr, single_); 
-    return detail::cos_finalize( convert(fn, single_), fxr, convert(xr-convert(fxr, double_), single_)); 
-  }
-  
-  template<typename T,  typename N,  typename ABI>
+  ///////////////////////////////////////////////////////////////////////////
+  // big_,  medium_
+  template<typename D, typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                           , medium_type const &       
+                           , D const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_medium(x);
+      t_t n, xr, dxr; 
+      std::tie(n, xr, dxr) = D()(rempio2)(x); 
       return detail::cos_finalize(n, xr, dxr); 
     }
     else
@@ -120,35 +109,16 @@ namespace eve::detail
       static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
     }   
   }   
-  
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
-                           , big_type const &       
-                           , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_large(x); 
-      return detail::cos_finalize(n, xr, dxr); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::cos simd ] - type is not an IEEEValue"); 
-    }   
-  }
-
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  abs(a0);
-    if (all(x <= Pio_4(as(x))))                       return restricted_(cos)(a0);
-    else if(all(x <= Pio_2(as(x))))                   return small_(cos)(a0);
-    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(cos)(a0);
-    else                                              return big_(cos)(x);
+    if (all(x <= Pio_4(as(x))))                          return restricted_(cos)(a0);
+    else if(all(x <= Pio_2(as(x))))                      return small_(cos)(a0);
+    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(cos)(a0);
+    else                                                 return big_(cos)(a0);
   }
 }
 

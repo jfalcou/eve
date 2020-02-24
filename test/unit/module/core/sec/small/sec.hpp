@@ -16,6 +16,7 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/function/ulpdist.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/all.hpp>
 #include <eve/platform.hpp>

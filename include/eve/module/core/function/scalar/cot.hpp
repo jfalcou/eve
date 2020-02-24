@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/cot_finalize.hpp>
 #include <eve/module/core/detail/generic/tancot_kernel.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/abs.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
@@ -24,12 +25,10 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/nearest.hpp>
-#include <eve/function/reduce_large.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/function/reduce_fast.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/constant/reduce_medium_limits.hpp> 
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
@@ -93,19 +92,21 @@ namespace eve::detail
       static_assert(std::is_floating_point_v<T>, "[eve::cot scalar ] - type is not an IEEEValue"); 
     }   
   }
-  
-  template<typename T>
+
+  //////////////////////////////////////////////////////////////////
+  /// medium,  big
+  template<typename D, typename T>
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
-                                     , medium_type const &       
+                                     , D const &       
                                      , T a0) noexcept
   requires(T, vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
+      if (is_not_finite(a0)) return Nan<T>(); 
       const T x =  abs(a0);
       if (x < Eps<T>()) return rec(a0);             
-      auto [fn, xr, dxr] = reduce_medium(x); 
+      auto [fn, xr, dxr] = D()(rempio2)(x); 
       return cot_finalize(a0, fn, xr, dxr); 
     }
     else
@@ -116,35 +117,14 @@ namespace eve::detail
   
   template<typename T>
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
-                                     , big_type const &       
-                                     , T a0) noexcept
-  requires(T, vectorizable<T>)
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if (is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
-      const T x =  abs(a0);
-      if (x < Eps<T>()) return rec(a0);             
-      auto [fn, xr, dxr] = reduce_large(x);
-      return cot_finalize(a0, fn, xr, dxr);
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::cot scalar ] - type is not an IEEEValue"); 
-    }   
-  }
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (x <= Pio_4(as(x)))        return restricted_(cot)(a0);
-    else if (x <= Pio_2(as(x)))   return small_(cot)(a0);
-    else if (x <= Reduce_medium_limits<T>())     return medium_(cot)(a0);
-    else                          return big_(cot)(a0);      
+    if (x <= Pio_4(as(x)))                           return restricted_(cot)(a0);
+    else if (x <= Pio_2(as(x)))                      return small_(cot)(a0);
+    else if (x <= Rempio2_limit(medium_type(), T())) return medium_(cot)(a0);
+    else                                             return big_(cot)(a0);      
   }
   
 }

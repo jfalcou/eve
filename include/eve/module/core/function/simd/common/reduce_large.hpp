@@ -31,6 +31,7 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/module/core/detail/generic/workaround.hpp>
 #include <eve/wide.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
@@ -38,13 +39,7 @@
 
 namespace eve::detail
 {
-  
-  template < typename T>
-  EVE_FORCEINLINE auto prevent_gcc_abusive_contract(const T & ab) noexcept
-  {
-    return ab+0;
-  }
-  
+   
   template < typename N, typename ABI>
   EVE_FORCEINLINE auto  reduce_large_(EVE_SUPPORTS(cpu_)
                                      , wide<float, N, ABI> const &x) noexcept

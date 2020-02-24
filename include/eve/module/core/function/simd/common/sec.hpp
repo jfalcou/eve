@@ -24,12 +24,12 @@ namespace eve::detail
 
   template<typename T,  typename N,  typename ABI, typename Tag>
   EVE_FORCEINLINE auto sec_(EVE_SUPPORTS(cpu_)
-                           , Tag const &  tgt   
+                           , Tag const &  
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      return rec(eve::cos(tgt, a0)); 
+      return rec(Tag()(eve::cos)(a0)); 
     }
     else
     {

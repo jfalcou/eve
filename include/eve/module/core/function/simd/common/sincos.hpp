@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/sincos_finalize.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
@@ -25,9 +26,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/function/reduce_large.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -43,13 +42,6 @@
 
 namespace eve::detail
 {
-
-  // limites d'usages  0.5ulp de std::sin
-  // restricted abs(x) < pi/4
-  // small      abs(x) < pi/2
-  // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
-  // big        le reste
-
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto internal_sincos(restricted_type const &     
                                       , eve::wide<T,N,ABI> const &a0) noexcept
@@ -79,26 +71,18 @@ namespace eve::detail
     return  sincos_finalize(a0, n, xr, t_t(0));
   }
   
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto internal_sincos(medium_type const &       
+  //////////////////////////////////////////////////////////////////////////////
+  /// big medium
+  template<typename D, typename T,  typename N,  typename ABI>
+  EVE_FORCEINLINE auto internal_sincos(D const &       
                                       , eve::wide<T,N,ABI> const &a0) noexcept
   {
     using t_t  = eve::wide<T,N,ABI>;
     const t_t x = eve::abs(a0);
-    auto [n, xr, dxr] = reduce_medium(x);
+    auto [n, xr, dxr] = D()(rempio2)(x);
     return sincos_finalize(a0, n, xr, dxr); 
   }   
-  
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto internal_sincos(big_type const &       
-                                      , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    using t_t  = eve::wide<T,N,ABI>;
-    const t_t x = eve::abs(a0);
-    auto [n, xr, dxr] = reduce_large(x); 
-    return sincos_finalize(a0, n, xr, dxr); 
-  }
-  
+ 
   template<typename T,  typename N,  typename ABI, typename TAG>
   EVE_FORCEINLINE auto sincos_(EVE_SUPPORTS(cpu_)
                               , TAG const & tag       
@@ -126,12 +110,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto sincos_(EVE_SUPPORTS(cpu_)
                               , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    const T medthresh = Ieee_constant < T, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.89524E+15f
     auto x =  abs(a0);
-    if (all(x <= Pio_4(as(x))))       return restricted_(sincos)(a0);
-    else if(all(x <= Pio_2(as(x))))   return small_(sincos)(a0);
-    else if(all(x <= medthresh))      return medium_(sincos)(a0);
-    else return big_(sincos)(a0);
+    if (all(x <= Pio_4(as(x))))                          return restricted_(sincos)(a0);
+    else if(all(x <= Pio_2(as(x))))                      return small_(sincos)(a0);
+    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sincos)(a0);
+    else                                                 return big_(sincos)(a0);
   } 
 }
 

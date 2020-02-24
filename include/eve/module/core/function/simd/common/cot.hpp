@@ -27,9 +27,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/function/reduce_large.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/constant/reduce_medium_limits.hpp> 
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
@@ -45,13 +43,6 @@
 
 namespace eve::detail
 {
-
-  // limites d'usages  0.5ulp de std::sin
-  // restricted abs(x) < pi/4
-  // small      abs(x) < pi/2
-  // medium     abs(x) <  1.76859e+15 (float) et  281474976710656.0 (double)
-  // big        le reste
-  
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cot_(EVE_SUPPORTS(cpu_)
                            , restricted_type const &     
@@ -65,6 +56,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::cot simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
 
@@ -85,7 +77,6 @@ namespace eve::detail
       xr -= pio2_2;
       xr -= pio2_3;
       xr = if_else(test, xr, x);
-//      auto y = if_else(xr <= Eps<T>(), xr, tancot_eval(xr));
       auto y = tancot_eval(xr); 
       y = if_else(is_not_finite(a0), eve::allbits_, if_else(test, -y, rec(y))); 
       return if_else(abs(a0) <= Eps<t_t>(), rec(a0), bit_xor(bitofsign(a0), y)); 
@@ -93,55 +84,38 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::cot simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
  
-  template<typename T,  typename N,  typename ABI>
+  template<typename D, typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cot_(EVE_SUPPORTS(cpu_)
-                           , medium_type const &       
+                           , D const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
       using t_t  = eve::wide<T,N,ABI>;
       const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_medium(x);
+      auto [n, xr, dxr] = D()(rempio2)(x);
       return cot_finalize(a0, n, xr, dxr); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::cot simd ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::cot simd ] - type is not an IEEEValue");
+      return T(); 
     }   
   }   
-  
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto cot_(EVE_SUPPORTS(cpu_)
-                           , big_type const &       
-                           , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_large(x); 
-      return cot_finalize(a0, n, xr, dxr); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::cot simd ] - type is not an IEEEValue"); 
-    }   
-  }
-
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto cot_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  eve::abs(a0);
-    if (all(x <= Pio_4(as(x))))       return restricted_(cot)(a0);
-    else if(all(x <= Pio_2(as(x))))   return small_(cot)(a0);
-    else if(all(x <= Reduce_medium_limits<T>()))      return medium_(cot)(a0);
-    else return big_(cot)(a0);
+    if (all(x <= Pio_4(as(x))))                  return restricted_(cot)(a0);
+    else if(all(x <= Pio_2(as(x))))              return small_(cot)(a0);
+    else if(all(x <= Reduce_medium_limits<T>())) return medium_(cot)(a0);
+    else                                         return big_(cot)(a0);
   }
 }
 

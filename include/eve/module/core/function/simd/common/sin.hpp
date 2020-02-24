@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/sin_finalize.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fnma.hpp>
@@ -26,9 +27,7 @@
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/reduce_fast.hpp>
-#include <eve/function/reduce_medium.hpp>
-#include <eve/constant/reduce_medium_limits.hpp>      
-#include <eve/function/reduce_large.hpp>
+#include <eve/function/rempio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -44,8 +43,6 @@
 
 namespace eve::detail
 {
-
- 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sin_(EVE_SUPPORTS(cpu_)
                            , restricted_type const &     
@@ -62,6 +59,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::sin simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
 
@@ -91,55 +89,40 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<T>, "[eve::sin simd ] - type is not an IEEEValue"); 
+      return T(); 
     }   
   }
 
-  template<typename T,  typename N,  typename ABI>
+  //////////////////////////////////////////////////////////////////////////////
+  /// big medium
+  template<typename D, typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sin_(EVE_SUPPORTS(cpu_)
-                           , medium_type const &       
+                           , D const &       
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
         using t_t  = eve::wide<T,N,ABI>;
         const t_t x = eve::abs(a0);
-        auto [n, xr, dxr] = reduce_medium(x);
+        auto [n, xr, dxr] = D()(rempio2)(x);
         return detail::sin_finalize(bitofsign(a0), n, xr, dxr); 
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::sin simd ] - type is not an IEEEValue"); 
+      static_assert(std::is_floating_point_v<T>, "[eve::sin simd ] - type is not an IEEEValue");
+      return T(); 
     }   
   }   
   
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sin_(EVE_SUPPORTS(cpu_)
-                           , big_type const &       
-                           , eve::wide<T,N,ABI> const &a0) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      using t_t  = eve::wide<T,N,ABI>;
-      const t_t x = eve::abs(a0);
-      auto [n, xr, dxr] = reduce_large(x); 
-      return if_else(is_not_less_equal(x, Eps<t_t>()), detail::sin_finalize(bitofsign(a0), n, xr, dxr), a0); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::sin simd ] - type is not an IEEEValue"); 
-    }   
-  }
-
-
-  template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto sin_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  abs(a0);
-    if (all(x <= Pio_4(as(x))))                  return restricted_(sin)(a0);
-    else if(all(x <= Pio_2(as(x))))              return small_(sin)(a0);
-    else if(all(x <= Reduce_medium_limits<T>())) return medium_(sin)(a0);
-    else                                         return big_(sin)(a0);
+    if (all(x <= Pio_4(as(x))))                          return restricted_(sin)(a0);
+    else if(all(x <= Pio_2(as(x))))                      return small_(sin)(a0);
+    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sin)(a0);
+    else                                                 return big_(sin)(a0);
   }
 }
 

@@ -15,6 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/tags.hpp>
 #include <type_traits>
@@ -28,7 +29,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      auto z = trunc(a0);
+      T z = eve::trunc(a0);
       return dec[ z > a0 ](z);
     }
     else

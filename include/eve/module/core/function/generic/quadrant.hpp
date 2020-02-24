@@ -16,6 +16,7 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/floor.hpp>
+#include <eve/function/frac.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
  //  int4 n = v.i[LOW_HALF] & 3; improve quadrant ?
@@ -41,6 +42,7 @@ namespace eve::detail
       {
         T b = a*T(0.25);
         return (b-floor(b))*T(4);
+//        return frac(b)*4; 
       }
       else return bit_and(a, T(3));
     }
