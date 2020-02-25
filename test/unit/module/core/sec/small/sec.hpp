@@ -30,9 +30,9 @@ TTS_CASE("Check eve::small_(eve::sec) return type")
   TTS_EXPR_IS(eve::small_(eve::sec)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::small_(eve::sec) behavior")
+TTS_CASE("Check eve::small_(eve::sec) behavior")
 {
-  auto my_stdsec =  [](auto x){return eve::rec(std::cos(x));}; 
+  auto my_stdsec =  [](auto x){return eve::rec(std::cos(double(x)));}; 
   
   if constexpr( eve::platform::supports_invalids )
   {
@@ -51,7 +51,6 @@ TTS_CASE("Check eve::eve::small_(eve::sec) behavior")
   TTS_ULP_EQUAL((eve::small_(eve::sec)(eve::Pio_4<Type>()/2)), (Type(my_stdsec(eve::Pio_4<Value>()/2))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::sec)(-eve::Pio_4<Type>()/2)),(Type(my_stdsec(-eve::Pio_4<Value>()/2))), 0.5);
   auto z = eve::Pio_2<Value>(); 
-  TTS_ULP_EQUAL((eve::small_(eve::sec)(eve::Pio_2<Type>())), (Type(my_stdsec(eve::Pio_2<Value>()))), 5.5);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::sec)(Type(z))), (Type(my_stdsec(z))), 1);
   z = eve::prev(z); 

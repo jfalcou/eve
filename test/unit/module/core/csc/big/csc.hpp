@@ -24,14 +24,14 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::csc return type")
+TTS_CASE("Check eve::big_(eve::csc) return type")
 {
-  TTS_EXPR_IS(eve::csc(Type(0)), (Type));
+  TTS_EXPR_IS(eve::big_(eve::csc)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::csc behavior")
+TTS_CASE("Check eve::big_(eve::csc) behavior")
 {
-  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(x));}; 
+  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -51,14 +51,4 @@ TTS_CASE("Check eve::eve::csc behavior")
   TTS_ULP_EQUAL((eve::big_(eve::csc)(Type(-100000000.0))),Type(my_stdcsc(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::csc)(Type(eve::Valmax<Type>()))),Type(my_stdcsc(eve::Valmax<Value>())), 1.5);
   TTS_ULP_EQUAL((eve::big_(eve::csc)(Type(eve::Valmax<Type>()))/10),Type(my_stdcsc(eve::Valmax<Value>())/10), 1.5);     
-  Value z =  eve::Valmax<Value>();
-  int i = 0; 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::big_(eve::csc)(Type(z)),Type(my_stdcsc(Value(z))), 1.5);
-    z/= 5.123;
-    if (i == 300) break;
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

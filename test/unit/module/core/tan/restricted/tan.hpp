@@ -29,7 +29,7 @@ TTS_CASE("Check eve::restricted_(eve::tan) return type")
   TTS_EXPR_IS(eve::restricted_(eve::tan)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::restricted_(eve::tan) behavior")
+TTS_CASE("Check eve::restricted_(eve::tan) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
@@ -47,11 +47,4 @@ TTS_CASE("Check eve::eve::restricted_(eve::tan) behavior")
   TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<Type>())),(Type(std::tan(-eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::tan)(eve::Pio_4<Type>()/2)), (Type(std::tan(eve::Pio_4<Value>()/2))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<Type>()/2)),(Type(std::tan(-eve::Pio_4<Value>()/2))), 0.5);
-  auto z =  eve::Pio_4<Value>(); 
-  while(true)
-  {
-    TTS_ULP_EQUAL(eve::big_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 0.5);
-    z/= 5.123;
-    if (eve::all(eve::is_eqz(z))) break;
-  } 
 }

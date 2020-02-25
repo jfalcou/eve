@@ -25,9 +25,8 @@ TTS_CASE("Check eve::tan return type")
   TTS_EXPR_IS(eve::tan(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::tan behavior")
+TTS_CASE("Check eve::tan behavior")
 {
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::tan(eve::Nan<Type>()) , (eve::Nan<Type>()) );
@@ -44,12 +43,4 @@ TTS_CASE("Check eve::eve::tan behavior")
   TTS_ULP_EQUAL(eve::tan(Type(-100000.0)),Type(std::tan(-100000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::tan)(Type(-100000000.0))),Type(std::tan(-100000000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::tan)(Type(eve::Valmax<Type>()))),Type(std::tan(eve::Valmax<Value>())), 0.5);
-  
-  Value z =  eve::Valmax<Value>(); 
-  while(true)
-  {
-    TTS_ULP_EQUAL(eve::big_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 1.0);
-    z/= 5.1234;
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

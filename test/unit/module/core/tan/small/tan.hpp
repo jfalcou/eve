@@ -15,6 +15,7 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
@@ -26,7 +27,7 @@ TTS_CASE("Check eve::small_(eve::tan) return type")
   TTS_EXPR_IS(eve::small_(eve::tan)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::small_(eve::tan) behavior")
+TTS_CASE("Check eve::small_(eve::tan) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {

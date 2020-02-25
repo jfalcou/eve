@@ -23,12 +23,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::tan return type")
+TTS_CASE("Check eve::big_(eve::tan) return type")
 {
-  TTS_EXPR_IS(eve::tan(Type(0)), (Type));
+  TTS_EXPR_IS(eve::big_(eve::tan)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::tan behavior")
+TTS_CASE("Check eve::big_(eve::tan) behavior")
 {
 
   if constexpr( eve::platform::supports_invalids )
@@ -51,15 +51,4 @@ TTS_CASE("Check eve::eve::tan behavior")
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(-100000000.0))),Type(std::tan(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(eve::Valmax<Type>()))),Type(std::tan(eve::Valmax<Value>())), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::tan)(Type(eve::Valmax<Type>()))/10),Type(std::tan(eve::Valmax<Value>())/10), 0.5);     
-  Value z =  eve::Valmax<Value>();
-  int i = 0; 
-  while(true)
-  {
-    TTS_ULP_EQUAL(eve::big_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 1);
-    TTS_ULP_EQUAL(eve::big_(eve::tan)(-Type(z)),Type(std::tan(-Value(z))), 1);     
-    z/= 5.123;
-    ++i; 
-    if (i == 300) break; 
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

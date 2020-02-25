@@ -24,14 +24,14 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::sec return type")
+TTS_CASE("Check eve::big_(eve::sec) return type")
 {
   TTS_EXPR_IS(eve::sec(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::sec behavior")
+TTS_CASE("Check eve::big_(eve::sec) behavior")
 {
-  auto my_stdsec =  [](auto x){return eve::rec(std::cos(x));}; 
+  auto my_stdsec =  [](auto x){return eve::rec(std::cos(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -51,14 +51,4 @@ TTS_CASE("Check eve::eve::sec behavior")
   TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(-100000000.0))),Type(my_stdsec(-100000000.0)), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(eve::Valmax<Type>()))),Type(my_stdsec(eve::Valmax<Value>())), 1.5);
   TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(eve::Valmax<Type>()))/10),Type(my_stdsec(eve::Valmax<Value>())/10), 1.5);     
-  Value z =  eve::Valmax<Value>();
-  int i = 0; 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::big_(eve::sec)(Type(z)),Type(my_stdsec(Value(z))), 1.5);
-    z/= 5.123;
-    if (i == 300) break;
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

@@ -31,9 +31,9 @@ TTS_CASE("Check eve::restricted_(eve::cot) return type")
   TTS_EXPR_IS(eve::restricted_(eve::cot)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::restricted_(eve::cot) behavior")
+TTS_CASE("Check eve::restricted_(eve::cot) behavior")
 {
-  auto my_stdcot =  [](auto x){return eve::rec(std::tan(x));}; 
+  auto my_stdcot =  [](auto x){return eve::rec(std::tan(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {

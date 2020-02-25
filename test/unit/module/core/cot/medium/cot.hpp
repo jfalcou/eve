@@ -24,14 +24,14 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::cot return type")
+TTS_CASE("Check eve::medium_(eve::cot) return type")
 {
   TTS_EXPR_IS(eve::cot(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::cot behavior")
+TTS_CASE("Check eve::medium_(eve::cot) behavior")
 {
-  auto my_stdcot =  [](auto x){return eve::rec(std::tan(x));}; 
+  auto my_stdcot =  [](auto x){return eve::rec(std::tan(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -49,15 +49,5 @@ TTS_CASE("Check eve::eve::cot behavior")
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(-100.0))),Type(my_stdcot(Value(-100.0))), 1.5);
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(100000.0))), Type(my_stdcot(Value(100000.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(-100000.0))),Type(my_stdcot(Value(-100000.0))), 0.5);
-  auto z =  eve::Ieee_constant < Value, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.76859e+15 (float) et  281474976710656.0 (double)
-  int i = 0; 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::medium_(eve::cot)(Type(z)),Type(my_stdcot(Value(z))), 1.5);
-    z/= 5.123;
-    if (i == 0) break; 
-    if (eve::all(eve::is_eqz(z))) break;
-  }
 }
 

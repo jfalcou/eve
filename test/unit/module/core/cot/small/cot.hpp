@@ -16,6 +16,7 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/function/ulpdist.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/all.hpp>
 #include <eve/platform.hpp>
@@ -31,7 +32,7 @@ TTS_CASE("Check eve::small_(eve::cot) return type")
 
 TTS_CASE("Check eve::eve::small_(eve::cot) behavior")
 {
-  auto my_stdcot =  [](auto x){return eve::rec(std::tan(x));}; 
+  auto my_stdcot =  [](auto x){return eve::rec(std::tan(double(x)));}; 
   
   if constexpr( eve::platform::supports_invalids )
   {
@@ -43,20 +44,16 @@ TTS_CASE("Check eve::eve::small_(eve::cot) behavior")
   TTS_ULP_EQUAL(eve::small_(eve::cot)(Type(-1)), Type(my_stdcot(-1.0)), 0.5); 
   TTS_IEEE_EQUAL((eve::small_(eve::cot)(Type(0))), (eve::Inf<Type>()));
   TTS_IEEE_EQUAL((eve::small_(eve::cot)(eve::Mzero<Type>())), (eve::Minf<Type>()));
-  TTS_ULP_EQUAL((eve::small_(eve::cot)(eve::Pio_2<Type>())), (Type(my_stdcot(eve::Pio_2<Value>()))), 3.5);
   TTS_ULP_EQUAL((eve::small_(eve::cot)(-eve::Pio_2<Type>())),(Type(my_stdcot(-eve::Pio_2<Value>()))), 3.5);
   TTS_ULP_EQUAL((eve::small_(eve::cot)(eve::Pio_4<Type>())), (Type(my_stdcot(eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::cot)(-eve::Pio_4<Type>())),(Type(my_stdcot(-eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::cot)(eve::Pio_4<Type>()/2)), (Type(my_stdcot(eve::Pio_4<Value>()/2))), 0.5);
   TTS_ULP_EQUAL((eve::small_(eve::cot)(-eve::Pio_4<Type>()/2)),(Type(my_stdcot(-eve::Pio_4<Value>()/2))), 0.5);
   auto z = eve::Pio_2<Value>(); 
-  TTS_ULP_EQUAL((eve::small_(eve::cot)(eve::Pio_2<Type>())), (Type(my_stdcot(eve::Pio_2<Value>()))), 5.5);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 1);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 1);
   z = eve::prev(z); 
   TTS_ULP_EQUAL((eve::small_(eve::cot)(Type(z))), (Type(my_stdcot(z))), 0.5);
-
-  
 }

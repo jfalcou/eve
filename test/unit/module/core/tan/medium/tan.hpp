@@ -23,12 +23,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::tan return type")
+TTS_CASE("Check eve::medium_(eve::tan) return type")
 {
-  TTS_EXPR_IS(eve::tan(Type(0)), (Type));
+  TTS_EXPR_IS(eve::medium_(eve::tan)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::tan behavior")
+TTS_CASE("Check eve::medium_(eve::tan) behavior")
 {
 
   if constexpr( eve::platform::supports_invalids )
@@ -49,12 +49,5 @@ TTS_CASE("Check eve::eve::tan behavior")
   TTS_ULP_EQUAL((eve::medium_(eve::tan)(Type(-100.0))),Type(std::tan(Value(-100.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::tan)(Type(100000.0))), Type(std::tan(Value(100000.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::tan)(Type(-100000.0))),Type(std::tan(Value(-100000.0))), 0.5);
-  auto z =  eve::Ieee_constant < Value, 0x58d776beU,  0x42F0000000000000ULL >(); // 1.76859e+15 (float) et  281474976710656.0 (double)
-  while(true)
-  {
-    TTS_ULP_EQUAL(eve::medium_(eve::tan)(Type(z)),Type(std::tan(Value(z))), 0.5);
-    z/=10;
-    if (eve::all(eve::is_eqz(z))) break;
-  }
 }
 

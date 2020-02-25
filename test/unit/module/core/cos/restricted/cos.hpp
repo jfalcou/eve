@@ -17,6 +17,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
 TTS_CASE("Check eve::restricted_(eve::cos) return type")
 {

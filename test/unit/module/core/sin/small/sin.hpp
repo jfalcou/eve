@@ -15,6 +15,8 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -25,7 +27,7 @@ TTS_CASE("Check eve::small_(eve::sin) return type")
   TTS_EXPR_IS(eve::small_(eve::sin)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::small_(eve::sin) behavior")
+TTS_CASE("Check eve::small_(eve::sin) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {

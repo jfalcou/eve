@@ -17,7 +17,7 @@
 
 TTS_CASE("wide random check on cos")
 {
-  auto std_cos = tts::vectorize<Type>( [](auto e) { return std::cos(e); } );
+  auto std_cos = tts::vectorize<Type>( [](auto e) { return std::cos(double(e)); } );
 
   eve::exhaustive_producer<Type> p(-eve::Reduce_medium_limits<Value>(), eve::Reduce_medium_limits<Value>());
   TTS_RANGE_CHECK(p, std_cos, eve::medium_(eve::cos)); 

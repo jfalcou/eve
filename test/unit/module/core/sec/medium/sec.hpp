@@ -24,14 +24,14 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::sec return type")
+TTS_CASE("Check eve::medium_(eve::sec) return type")
 {
   TTS_EXPR_IS(eve::sec(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::sec behavior")
+TTS_CASE("Check eve::medium_(eve::sec) behavior")
 {
-  auto my_stdsec =  [](auto x){return eve::rec(std::cos(x));}; 
+  auto my_stdsec =  [](auto x){return eve::rec(std::cos(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {

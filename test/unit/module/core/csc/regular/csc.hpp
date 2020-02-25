@@ -27,9 +27,9 @@ TTS_CASE("Check eve::csc return type")
   TTS_EXPR_IS(eve::csc(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::csc behavior")
+TTS_CASE("Check eve::csc behavior")
 {
-   auto my_stdcsc =  [](auto x){return eve::rec(std::sin(x));}; 
+  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -47,14 +47,4 @@ TTS_CASE("Check eve::eve::csc behavior")
   TTS_ULP_EQUAL(eve::csc(Type(-100000.0)),Type(my_stdcsc(-100000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::csc)(Type(-100000000.0))),Type(my_stdcsc(-100000000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::csc)(Type(eve::Valmax<Type>()))),Type(my_stdcsc(eve::Valmax<Value>())), 1.5);
-  int i = 0; 
-  Value z =  eve::Valmax<Value>(); 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::csc(Type(z)),Type(my_stdcsc(Value(z))), 1.5);
-    z/= 5.1234;
-    if (i == 300) break; 
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

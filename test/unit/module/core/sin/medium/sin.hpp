@@ -23,12 +23,12 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::sin return type")
+TTS_CASE("Check eve::medium_(eve::sin) return type")
 {
-  TTS_EXPR_IS(eve::sin(Type(0)), (Type));
+  TTS_EXPR_IS(eve::medium_(eve::sin)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::sin behavior")
+TTS_CASE("Check eve::medium_(eve::sin) behavior")
 {
 
   if constexpr( eve::platform::supports_invalids )
@@ -49,16 +49,5 @@ TTS_CASE("Check eve::eve::sin behavior")
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(-100.0))),Type(std::sin(Value(-100.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(100000.0))), Type(std::sin(Value(100000.0))), 0.5);
   TTS_ULP_EQUAL((eve::medium_(eve::sin)(Type(-100000.0))),Type(std::sin(Value(-100000.0))), 0.5);
-  Value z;
-  if constexpr(std::is_same_v<Value, float>)
-    z =  9.83416e+14f;
-  else
-    z = 281474976710656.0; 
-  while(true)
-  {
-    TTS_ULP_EQUAL(eve::medium_(eve::sin)(Type(z)),Type(std::sin(Value(z))), 0.5);
-    z/= 5.123;
-    if (eve::all(eve::is_eqz(z))) break;
-  }
 }
 

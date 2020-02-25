@@ -46,6 +46,5 @@ TTS_CASE("Check eve::eve::restricted_(eve::sin) behavior")
   TTS_ULP_EQUAL((eve::restricted_(eve::sin)(eve::Pio_4<Type>())), (Type(std::sin(eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::sin)(-eve::Pio_4<Type>())),(Type(std::sin(-eve::Pio_4<Value>()))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::sin)(eve::Pio_4<Type>()/2)), (Type(std::sin(eve::Pio_4<Value>()/2))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::sin)(-eve::Pio_4<Type>()/2)),(Type(std::sin(-eve::Pio_4<Value>()/2))), 0.5);
-  
+  TTS_ULP_EQUAL((eve::restricted_(eve::sin)(-eve::Pio_4<Type>()/2)),(Type(std::sin(-eve::Pio_4<Value>()/2))), 0.5); 
 }

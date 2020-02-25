@@ -30,9 +30,9 @@ TTS_CASE("Check eve::restricted_(eve::csc) return type")
   TTS_EXPR_IS(eve::restricted_(eve::csc)(Type(0)), (Type));
 }
 
-TTS_CASE("Check eve::eve::restricted_(eve::csc) behavior")
+TTS_CASE("Check eve::restricted_(eve::csc) behavior")
 {
-  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(x));}; 
+  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(double(x)));}; 
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -49,14 +49,4 @@ TTS_CASE("Check eve::eve::restricted_(eve::csc) behavior")
   
   TTS_ULP_EQUAL((eve::restricted_(eve::csc)(eve::Pio_4<Type>()/2)), (Type(my_stdcsc(eve::Pio_4<Value>()/2))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::csc)(-eve::Pio_4<Type>()/2)),(Type(my_stdcsc(-eve::Pio_4<Value>()/2))), 0.5);
-  auto z =  eve::Pio_4<Value>();
-  int i = 0; 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::restricted_(eve::csc)(Type(z)),Type(my_stdcsc(Value(z))), 0.5);
-    z/= 5.123;
-    if (i == 300) break; 
-    if (eve::all(eve::is_eqz(z))) break;
-  } 
 }
