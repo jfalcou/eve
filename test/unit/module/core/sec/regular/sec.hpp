@@ -47,14 +47,4 @@ TTS_CASE("Check eve::sec behavior")
   TTS_ULP_EQUAL(eve::sec(Type(-100000.0)),Type(my_stdsec(-100000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::sec)(Type(-100000000.0))),Type(my_stdsec(-100000000.0)), 0.5);
   TTS_ULP_EQUAL(((eve::sec)(Type(eve::Valmax<Type>()))),Type(my_stdsec(eve::Valmax<Value>())), 1.5);
-  int i = 0; 
-  Value z =  eve::Valmax<Value>(); 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::sec(Type(z)),Type(my_stdsec(Value(z))), 1.5);
-    z/= 5.1234;
-    if (i == 300) break; 
-    if (eve::all(eve::is_eqz(z))) break; 
-  }
 }

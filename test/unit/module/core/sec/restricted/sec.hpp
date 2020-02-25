@@ -49,14 +49,4 @@ TTS_CASE("Check eve::restricted_(eve::sec) behavior")
   
   TTS_ULP_EQUAL((eve::restricted_(eve::sec)(eve::Pio_4<Type>()/2)), (Type(my_stdsec(eve::Pio_4<Value>()/2))), 0.5);
   TTS_ULP_EQUAL((eve::restricted_(eve::sec)(-eve::Pio_4<Type>()/2)),(Type(my_stdsec(-eve::Pio_4<Value>()/2))), 0.5);
-  auto z =  eve::Pio_4<Value>();
-  int i = 0; 
-  while(true)
-  {
-    ++i; 
-    TTS_ULP_EQUAL(eve::restricted_(eve::sec)(Type(z)),Type(my_stdsec(Value(z))), 0.5);
-    z/= 5.123;
-    if (i == 300) break; 
-    if (eve::all(eve::is_eqz(z))) break;
-  } 
 }

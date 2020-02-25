@@ -111,6 +111,7 @@ make_all_units(ROOT random NAME sech              ARCH scalar simd TYPES ${real_
 make_all_units(ROOT random NAME sign              ARCH scalar simd TYPES ${all_types}       CARDINAL -1)  
 make_all_units(ROOT random NAME signz             ARCH scalar simd TYPES ${all_types}       CARDINAL -1)  
 make_all_units(ROOT random NAME sin               ARCH scalar simd TYPES ${real_types}      CARDINAL -1) 
+make_all_units(ROOT random NAME sincos            ARCH scalar simd TYPES ${real_types}      CARDINAL -1)  
 make_all_units(ROOT random NAME sinh              ARCH scalar simd TYPES ${real_types}      CARDINAL -1) 
 make_all_units(ROOT random NAME sinhcosh          ARCH scalar simd TYPES ${real_types}      CARDINAL -1)      
 make_all_units(ROOT random NAME sqr               ARCH scalar simd TYPES ${real_types}      CARDINAL -1)  
