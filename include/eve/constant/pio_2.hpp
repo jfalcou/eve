@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/constant/constant.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 

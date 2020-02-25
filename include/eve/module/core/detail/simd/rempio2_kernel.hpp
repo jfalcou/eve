@@ -25,6 +25,7 @@
 #include <eve/function/gather.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_finite.hpp>
+#include <eve/function/logical_or.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/quadrant.hpp>
@@ -108,7 +109,7 @@ namespace eve::detail
       da = (t - a) + da;
       auto fa = convert(a, single_);
       auto dfa = convert((a-convert(fa, double_))+da, single_);
-      if (any(eve::abs(fa) > Pio_4<float>()) )
+      if (any(fa >= Pio_4<float>() || fa < - Pio_4<float>()) )
       {
         using t_t = wide<float, N, ABI>; 
         t_t n1; 

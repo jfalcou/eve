@@ -85,10 +85,10 @@ namespace eve::detail
     }
     else
     {    
-      if (all(x <= Rempio2_limits(restricted_type(), T())))  return  std::make_tuple(t_t(0), x, t_t(0)); 
-      else if (all(x <= Rempio2_limits(small_type(), T())))  return small_(rempio2)(x); 
-      else if (all(x <= Rempio2_limits(medium_type(), T()))) return medium_(rempio2)(x); 
-      else return big_(rempio2)(x); 
+      if (all(x <= Rempio2_limit(restricted_type(), T())))  return  std::make_tuple(t_t(0), x, t_t(0)); 
+      else if (all(x <= Rempio2_limit(small_type(), T())))  return small_(rempio2)(x); 
+      else if (all(x <= Rempio2_limit(medium_type(), T()))) return medium_(rempio2)(x); 
+      else                                                  return big_(rempio2)(x); 
     }
   }
 }

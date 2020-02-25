@@ -27,7 +27,7 @@
 
 TTS_CASE("Check sincos return type")
 {
-  TTS_EXPR_IS((eve::sincos(Type())), (std::tuple<Type,Type>));
+  TTS_EXPR_IS(eve::small_(eve::sincos(Type())), (std::tuple<Type,Type>));
 } 
 
 TTS_CASE("Check (eve::sincos behavior")

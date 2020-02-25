@@ -33,7 +33,7 @@ namespace eve::detail
     }
     else  if constexpr(std::is_same_v<D, medium_type>)
     {
-      return Ieee_constant<T, 0X58D6DE3DU, 0X42F0000000000000ULL>(); // 1889999955951616, 281474976710656, 
+      return Ieee_constant<T, 0x4e000000U/*0x52800040U 0X58D6DE3DU*/, 0X42F0000000000000ULL>(); // 274880004096/*1889999955951616*/, 281474976710656, 
     }
     else
     {

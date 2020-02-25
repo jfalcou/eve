@@ -59,7 +59,7 @@ namespace eve::detail
                                 , T const &x) noexcept
   requires(std::tuple<T, T, T>, vectorizable<T>)
   {
-    if (x <= Rempio2_limit(restricted_type(), T()))  return  std::make_tuple(T(0), x, T(0)); 
+    if (x < Rempio2_limit(restricted_type(), T()))  return  std::make_tuple(T(0), x, T(0)); 
     else if (x <= Rempio2_limit(small_type(), T()))  return small_(rempio2)(x); 
     else if (x <= Rempio2_limit(medium_type(), T())) return medium_(rempio2)(x); 
     else return big_(rempio2)(x); 

@@ -118,7 +118,7 @@ namespace eve::detail
       da = (t - a) + da;
       auto fa = convert(a, single_);
       auto dfa = convert((a-convert(fa, double_))+da, single_);
-      if (eve::abs(fa) > Pio_4<float>() )
+      if (fa >= Pio_4<float>() || fa < - Pio_4<float>())
       {
         T n1; 
         std::tie(n1, fa, dfa) = rempio2_small(fa);
@@ -201,7 +201,7 @@ namespace eve::detail
   requires(std::tuple<T, T, T>, vectorizable<T>)
   {
     if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
-    else if (xx <= Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));
+    else if (xx < Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {
       if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx); 
