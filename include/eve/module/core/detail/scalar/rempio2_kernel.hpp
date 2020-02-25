@@ -201,12 +201,13 @@ namespace eve::detail
   requires(std::tuple<T, T, T>, vectorizable<T>)
   {
     if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
-    else if (xx <= Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0)); 
+    else if (xx <= Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {
+      if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx); 
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
       //   only 8 new bits are added per entry, making the table 4 times larger.  
-      constexpr const uint32_t __inv_pio4[24] =
+      constexpr const uint32_t inv_pio4[24] =
         {
           0xa2,       0xa2f9,   0xa2f983,   0xa2f9836e,
           0xf9836e4e, 0x836e4e44, 0x6e4e4415, 0x4e441529,
@@ -217,7 +218,7 @@ namespace eve::detail
         };
       constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
       auto xi =  bit_cast(xx, as_<uint32_t>()); 
-      const uint32_t *arr = &__inv_pio4[(xi >> 26) & 15];
+      const uint32_t *arr = &inv_pio4[(xi >> 26) & 15];
       int shift = (xi >> 23) & 7;
       uint64_t n, res0, res1, res2;
       
