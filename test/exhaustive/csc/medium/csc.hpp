@@ -20,7 +20,7 @@
 TTS_CASE("wide exhaustive check on csc")
 {
   auto std_csc = tts::vectorize<Type>( [](auto e) { return 1/std::sin(double(e)); } );
-  auto l = eve::Rempio2_limit(eve::medium_type(), Value()); 
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), Value()); 
  
   if constexpr(eve::platform::supports_denormals)
   {

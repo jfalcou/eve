@@ -20,7 +20,7 @@
 TTS_CASE("wide random check on cot")
 {
   auto std_cot = tts::vectorize<Type>( [](auto e) { return 1/std::tan(double(e)); } );
-  auto l = eve::Rempio2_limit(eve::medium_type(), Value()>()
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), Value()); 
 
   if constexpr(eve::platform::supports_denormals)
   {
@@ -29,7 +29,7 @@ TTS_CASE("wide random check on cot")
   }
   else
   {
-    eve::rng_producer<Type>  p(-eve::Smallestposval<Value>(), l);
+    eve::rng_producer<Type>  p(eve::Smallestposval<Value>(), l);
     TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
   } 
 }
