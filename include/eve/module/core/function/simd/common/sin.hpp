@@ -26,7 +26,6 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/reduce_fast.hpp>
 #include <eve/function/rempio2.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>

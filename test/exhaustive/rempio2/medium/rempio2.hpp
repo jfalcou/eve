@@ -10,7 +10,6 @@
 //==================================================================================================
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
-#include <eve/constant/reduce_medium_limits.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

@@ -28,7 +28,7 @@
 #include <eve/function/trunc.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/rempio2.hpp>
-#include <eve/constant/reduce_medium_limits.hpp> 
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/one.hpp>
@@ -112,10 +112,10 @@ namespace eve::detail
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  eve::abs(a0);
-    if (all(x <= Pio_4(as(x))))                  return restricted_(cot)(a0);
-    else if(all(x <= Pio_2(as(x))))              return small_(cot)(a0);
-    else if(all(x <= Reduce_medium_limits<T>())) return medium_(cot)(a0);
-    else                                         return big_(cot)(a0);
+    if (all(x <= Pio_4(as(x))))                                   return restricted_(cot)(a0);
+    else if(all(x <= Pio_2(as(x))))                               return small_(cot)(a0);
+    else if(all(x <= Rempio2_limit(eve::medium_type(), Value()))) return medium_(cot)(a0);
+    else                                                          return big_(cot)(a0);
   }
 }
 

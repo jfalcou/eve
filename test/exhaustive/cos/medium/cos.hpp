@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/cos.hpp>
-#include <eve/constant/reduce_medium_limits.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,6 +19,7 @@ TTS_CASE("wide random check on cos")
 {
   auto std_cos = tts::vectorize<Type>( [](auto e) { return std::cos(double(e)); } );
 
-  eve::exhaustive_producer<Type> p(-eve::Reduce_medium_limits<Value>(), eve::Reduce_medium_limits<Value>());
+  auto l = eve::Rempio2_limit(eve::medium_type(), Value()>()
+  eve::exhaustive_producer<Type> p(-l, l));
   TTS_RANGE_CHECK(p, std_cos, eve::medium_(eve::cos)); 
 }

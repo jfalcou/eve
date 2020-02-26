@@ -36,15 +36,13 @@ TTS_CASE("Check (eve::sincos behavior")
   
   for(int i=0; i < 4 ; ++i)
   {
-    Type p0, p1; 
-    std::tie(p0, p1) = eve::restricted_(eve::sincos)(Type(x[i]));
+    auto [p0, p1] = eve::restricted_(eve::sincos)(Type(x[i]));
     TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 0.5);
     TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 0.5);
   }
   for(int i=4; i < 6 ; ++i)
   {
-    Type p0, p1; 
-    std::tie(p0, p1) = eve::restricted_(eve::sincos)(Type(x[i]));
+    auto [p0, p1] = eve::restricted_(eve::sincos)(Type(x[i]));
     TTS_ULP_EQUAL(p0, eve::Nan<Type>(), 0.5);
     TTS_ULP_EQUAL(p1, eve::Nan<Type>(), 0.5);
   }

@@ -27,7 +27,7 @@
 
 TTS_CASE("Check sincos return type")
 {
-  TTS_EXPR_IS(eve::small_(eve::sincos(Type())), (std::tuple<Type,Type>));
+  TTS_EXPR_IS(eve::small_(eve::sincos)(Type()), (std::tuple<Type,Type>));
 } 
 
 TTS_CASE("Check (eve::sincos behavior")
@@ -41,24 +41,8 @@ TTS_CASE("Check (eve::sincos behavior")
   
   for(int i=0; i < N ; ++i) 
   {
-    Type p0, p1; 
-    std::tie(p0, p1) = eve::small_(eve::sincos)(Type(x[i]));
+    auto [p0, p1] = eve::small_(eve::sincos)(Type(x[i]));
     TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 3.5);
     TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 3.5);
-  }
-  
-  Type p0, p1; 
-  std::tie(p0, p1) = eve::small_(eve::sincos)(Type(eve::Pi<Value>()));
-  TTS_ULP_EQUAL(p0, eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(p1, eve::Nan<Type>(), 0);    
-  std::tie(p0, p1) = eve::small_(eve::sincos)(Type(-eve::Pi<Value>()));
-  TTS_ULP_EQUAL(p0, eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(p1, eve::Nan<Type>(), 0);   
-  std::tie(p0, p1) = eve::small_(eve::sincos)(Type(3*eve::Pi<Value>()/4));
-  TTS_ULP_EQUAL(p0, eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(p1, eve::Nan<Type>(), 0);    
-  std::tie(p0, p1) = eve::small_(eve::sincos)(Type(-3*eve::Pi<Value>()/4));
-  TTS_ULP_EQUAL(p0, eve::Nan<Type>(), 0);
-  TTS_ULP_EQUAL(p1, eve::Nan<Type>(), 0);   
-  
+  } 
 }
