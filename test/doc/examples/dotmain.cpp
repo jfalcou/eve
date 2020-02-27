@@ -1,6 +1,7 @@
 // TODO wait for sum
 //! [dot-main]
 #include <numeric>
+#include <vector>
 #include <eve/function/load.hpp>
 //#include <eve/function/sum.hpp>
 #include <eve/wide.hpp>
