@@ -34,7 +34,6 @@ TTS_CASE("Check eve::pedantic_(eve::fma) behavior")
   {
     Type e = eve::Eps<Type>();
     TTS_EQUAL(eve::pedantic_(eve::fma)(eve::inc(e), eve::oneminus(e), eve::Mone<Type>()), (-eve::sqr(e)));
-    TTS_EQUAL(                        (eve::inc(e)* eve::oneminus(e)+ eve::Mone<Type>()) , eve::Zero<Type>()); 
   }
   
 }
