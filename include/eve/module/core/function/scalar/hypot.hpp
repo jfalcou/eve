@@ -79,7 +79,7 @@ namespace eve::detail
     }
   }
 
-   template<typename T>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto
   hypot_(EVE_SUPPORTS(cpu_)
         ,  pedantic_type const &
@@ -101,8 +101,8 @@ namespace eve::detail
     if (is_eqz(j)) return pedantic_(hypot)(a0, a1); 
     if constexpr(std::is_same_v<T, float>)
     {
-      return pedantic_(hypot)(double(a0), double(a1), double(a2)); 
-    }
+      return hypot(double(a0), double(a1), double(a2)); 
+    } 
     else
     {
       i_t e =  exponent(eve::max(eve::max(i, r), j));

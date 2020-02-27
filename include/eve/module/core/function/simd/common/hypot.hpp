@@ -102,7 +102,7 @@ namespace eve::detail
         {
           if constexpr(std::is_same_v<value_type_t<T>, float>)
           {
-            return convert(pedantic_(hypot)(convert(a, double_), convert(b, double_)), single_); 
+            return convert(hypot(convert(a, double_), convert(b, double_)), single_); 
           }
           else
           {
