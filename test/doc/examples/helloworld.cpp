@@ -17,7 +17,7 @@ int main()
   namespace bs = eve;
   //! [hello-namespace]
   //! [hello-wide]
-  using wide_t = eve::wide<float>;
+  using wide_t = eve::wide<float, eve::fixed<8>>;
   //! [hello-wide]
 
   //! [hello-def-ctor]

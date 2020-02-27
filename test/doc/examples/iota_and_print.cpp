@@ -4,8 +4,6 @@
 
 #include <eve/wide.hpp>
 
-namespace ba = boost::alignment;
-
 //! [iota-print]
 template <typename T>
 void iota_and_print()
