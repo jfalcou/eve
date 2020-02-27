@@ -15,6 +15,9 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/numeric.hpp>
 
 namespace eve::detail
 {
@@ -29,11 +32,12 @@ namespace eve::detail
   template<typename D, typename T>
   EVE_FORCEINLINE constexpr auto
   fnma_(EVE_SUPPORTS(cpu_)
-      , D const & deco
+      , D const & 
       , T const &a, T const &b, T const &c) noexcept
   requires(T, vectorizable<T>)
   {
-    return deco(fma)(-a, b, c);
+    T aa = -a; 
+    return D()(fma)(aa, b, c);
   }
 }
 

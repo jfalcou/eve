@@ -77,7 +77,7 @@ namespace eve::detail
       // to perform the computations in a guaranted 2-complement environment
       // since signed integer overflows in C++ produce "undefined results"
       using u_t = as_integer_t<T, unsigned>;
-      return static_cast<T>(fma( static_cast<u_t>(a0),  static_cast<u_t>(a1),  static_cast<u_t>(a2)));
+      return static_cast<T>( static_cast<u_t>(a0) * static_cast<u_t>(a1) + static_cast<u_t>(a2));
     }
   }
 }
