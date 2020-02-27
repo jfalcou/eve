@@ -2,14 +2,12 @@
 ##  EVE - Expressive Vector Engine
 ##
 ##  Copyright 2019 Joel FALCOU
-##  Copyright 2019 Jean-Thierry LAPRESTE
+##  Copyright 2019 Jean-Thierry LAPRESTE 
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-##==================================================================================================
-## documentation tests - core
-##==================================================================================================
-add_subdirectory(core)
-add_subdirectory(examples)
+#make_unit( "doc.examples" addvector.cpp                          )
+#make_unit( "doc.examples" distance.cpp                           )
+make_unit( "doc.examples" dotmain.cpp                            )    

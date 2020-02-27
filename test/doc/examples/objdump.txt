@@ -1,0 +1,5 @@
+//! [hello-objdump]
+addps  0x2e6(%rip),%xmm0
+mulps  0x2ff(%rip),%xmm0
+movaps %xmm0,(%rsp)
+//! [hello-objdump]
