@@ -1,11 +1,10 @@
+// wait for trigo TODO
 //! [mathematical-all]
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include <boost/align/aligned_allocator.hpp>
-#include <boost/align/aligned_delete.hpp>
 
 #include <eve/constant/pio_4.hpp>
 #include <eve/function/cos.hpp>
@@ -62,7 +61,7 @@ int main(int argc, char** argv)
 
   //! [mathematical-calc-individ]
   for (int i = 0; i < num_elements; i += wide_t::static_size) {
-    wide_t v0 = eve::load<wide_t>(&X[i]);
+    wide_t v0(&X[i]);
     eve::store(eve::sin(v0), &sinX[i]);
     eve::store(eve::cos(v0), &cosX[i]);
   }
@@ -72,7 +71,7 @@ int main(int argc, char** argv)
 
   //! [mathematical-calc-combine]
   for (int i = 0; i < num_elements; i += wide_t::static_size) {
-    wide_t v0 = eve::load<wide_t>(&X[i]);
+    wide_t v0(&X[i]);
     auto res  = eve::sincos(v0);
     eve::store(res.first, &sinX[i]);
     eve::store(res.second, &cosX[i]);

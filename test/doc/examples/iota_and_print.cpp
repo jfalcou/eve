@@ -3,10 +3,7 @@
 #include <numeric>
 
 #include <eve/wide.hpp>
-#include <boost/align/aligned_alloc.hpp>
-#include <boost/align/aligned_delete.hpp>
 
-namespace bs = eve;
 namespace ba = boost::alignment;
 
 //! [iota-print]
@@ -18,8 +15,7 @@ void iota_and_print()
   using wide_t = eve::wide<T>;
 
   // Allocates aligned memory using expected alignment
-  std::unique_ptr<T[], ba::aligned_delete> data(
-    (T*)(ba::aligned_alloc(wide_t::alignment, wide_t::static_size * sizeof(T))));
+  std::unique_ptr<T[]> data(new T[wide_t::static_size * sizeof(T)]);
   std::iota(data.get(), data.get() + wide_t::static_size, T(1));
 
   // Constructs a wide (which will call `eve::aligned_load<wide_t>` to

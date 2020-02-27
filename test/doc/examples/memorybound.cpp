@@ -3,11 +3,8 @@
 #include <iostream>
 #include <vector>
 
-#include <eve/function/aligned_store.hpp>
-#include <eve/function/cos.hpp>
+#include <eve/function/store.hpp>
 #include <eve/function/exp.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/memory/allocator.hpp>
 #include <eve/wide.hpp>
 
 int main()
@@ -16,8 +13,8 @@ int main()
   namespace bs = eve;
   using wide_t = eve::wide<float>;
   int size     = 80000000;
-  std::vector<float, eve::allocator<float>> data(size);
-  std::vector<float, eve::allocator<float>> output(size);
+  std::vector<float> data(size);
+  std::vector<float> output(size);
 
   auto t0 = high_resolution_clock::now();
   for (int i = 0; i < size; ++i) {
@@ -30,7 +27,7 @@ int main()
   for (int i = 0; i < size; i += wide_t::static_size) {
     wide_t v0(&data[i]);
     v0 = v0 * 2;
-    eve::aligned_store(v0, &output[i]);
+    eve::store(v0, &output[i]);
   }
   //! [memory-memory]
   t1 = high_resolution_clock::now();
@@ -47,7 +44,7 @@ int main()
   for (int i = 0; i < size; i += wide_t::static_size) {
     wide_t v0(&data[i]);
     v0 = eve::exp(eve::exp(v0));
-    eve::aligned_store(v0, &output[i]);
+    eve::store(v0, &output[i]);
   }
   //! [memory-compute]
   t1 = high_resolution_clock::now();

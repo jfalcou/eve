@@ -1,8 +1,7 @@
 //! [substract]
-#include <eve/function/load.hpp>
-#include <eve/function/minus.hpp>
+#include <eve/function/sub.hpp>
 #include <eve/function/store.hpp>
-#include <eve/meta/cardinal_of.hpp>
+#include <eve/cardinal.hpp>
 #include <eve/wide.hpp>
 #include <cstdlib>
 #include <iomanip>
@@ -24,7 +23,6 @@ void print(std::string mes, const T& out)
 
 int main()
 {
-  namespace bs = eve;
   size_t size  = 128;
   std::vector<int32_t> array(size);
   std::vector<int32_t> out(size);
@@ -33,7 +31,7 @@ int main()
   int32_t scalar = 42;
 
   using wide_t     = eve::wide<int32_t>;
-  size_t wide_card = eve::cardinal_of<wide_t>();
+  size_t wide_card = eve::cardinal_v<wide_t>;
 
   // Scalar version
   for (size_t i = 0; i < size; ++i) {
@@ -52,9 +50,9 @@ int main()
   }
 
   {
-    wide_t p_out, p_arr, pkvalue{scalar};
+    wide_t p_out, pkvalue{scalar};
     for (size_t i = 0; i < size; i += wide_card) {
-      p_arr = eve::load<wide_t>(array.data() + i);
+      wide_t p_arr(array.data() + i);
       p_out = p_arr - pkvalue;
       eve::store(p_out, out.data() + i);
     }
@@ -64,13 +62,13 @@ int main()
   {
     // set size to an arbitrary value
     size = 133;
-    wide_t p_out, p_arr, pkvalue{scalar};
+    wide_t p_out, pkvalue{scalar};
     array.resize(size);
     out.resize(size);
     std::iota(array.begin(), array.end(), 0);
     size_t i = 0;
     for (; i + wide_card <= size; i += wide_card) {
-      p_arr = eve::load<wide_t>(array.data() + i);
+      wide_t p_arr(array.data() + i);
       p_out = p_arr - pkvalue;
       eve::store(p_out, out.data() + i);
     }
@@ -84,5 +82,5 @@ int main()
 }
 // This code can be compiled using (for instance for gcc)
 // g++ substract.cpp -msse4.2 -std=c++11 -O3 -DNDEBUG -o substract
-// -I/path_to/boost_simd/ -I/path_to/boost/
+// -I/path_to/eve/ 
 //! [substract]

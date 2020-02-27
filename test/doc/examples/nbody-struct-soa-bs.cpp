@@ -4,12 +4,9 @@
 #include <iostream>
 #include <vector>
 
-#include <eve/function/aligned_load.hpp>
-#include <eve/function/aligned_store.hpp>
+#include <eve/function/store.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/wide.hpp>
-
-#include <eve/memory/allocator.hpp>
 
 typedef float T;
 namespace bs = eve;
@@ -17,9 +14,8 @@ using wide_t = eve::wide<T>;
 
 struct particles
 {
-  std::vector<T, eve::allocator<T>> x, y, z, m, vx, vy, vz;
   std::size_t size_;
-
+  std::vector<T> x, y, z, m, vx, vy, vz;
   particles(std::size_t size)
     : size_(size)
     , x(size + wide_t::static_size)
@@ -55,9 +51,9 @@ void nbody_step(particles& ps)
     wide_t pim{&ps.m[i]};
 
     for (std::size_t j = i + 1; j < ps.size(); ++j) {
-      auto pjx = eve::load<wide_t>(&ps.x[j]);
-      auto pjy = eve::load<wide_t>(&ps.y[j]);
-      auto pjz = eve::load<wide_t>(&ps.z[j]);
+      wide_t pjx(&ps.x[j]);
+      wide_t pjy(&ps.y[j]);
+      wide_t pjz(&ps.z[j]);
 
       auto dx = pjx - pix;
       auto dy = pjy - piy;
@@ -66,20 +62,21 @@ void nbody_step(particles& ps)
       auto inorm  = grav_con / eve::sqrt(dx * dx + dy * dy + dz * dz + epsilon);
       auto inorm3 = inorm * inorm * inorm;
 
-      auto fi = eve::load<wide_t>(&ps.m[j]) * inorm3;
+      wide_t fi(&ps.m[j]); 
+      fi *= inorm3;
       auto fj = pim * inorm3;
 
       ax += dx * fi;
       ay += dy * fi;
       az += dz * fi;
 
-      auto pjvx = eve::load<wide_t>(&ps.vx[j]);
+      wide_t pjvx(&ps.vx[j]);
       pjvx -= dx * fj;
       eve::store(pjvx, &ps.vx[j]);
-      auto pjvy = eve::load<wide_t>(&ps.vy[j]);
+      wide_t pjvy(&ps.vy[j]);
       pjvy -= dy * fj;
       eve::store(pjvy, &ps.vy[j]);
-      auto pjvz = eve::load<wide_t>(&ps.vz[j]);
+      wide_t pjvz(&ps.vz[j]);
       pjvz -= dz * fj;
       eve::store(pjvz, &ps.vz[j]);
     }
@@ -96,13 +93,13 @@ void nbody_step(particles& ps)
     piy += pivy;
     piz += pivz;
 
-    eve::aligned_store(pivx, &ps.vx[i]);
-    eve::aligned_store(pivy, &ps.vy[i]);
-    eve::aligned_store(pivz, &ps.vz[i]);
+    eve::store(pivx, &ps.vx[i]);
+    eve::store(pivy, &ps.vy[i]);
+    eve::store(pivz, &ps.vz[i]);
 
-    eve::aligned_store(pix, &ps.x[i]);
-    eve::aligned_store(piy, &ps.y[i]);
-    eve::aligned_store(piz, &ps.z[i]);
+    eve::store(pix, &ps.x[i]);
+    eve::store(piy, &ps.y[i]);
+    eve::store(piz, &ps.z[i]);
   }
 }
 //! [nbody-simd]

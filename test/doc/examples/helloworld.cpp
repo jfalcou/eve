@@ -1,12 +1,3 @@
-//==================================================================================================
-/*
-  Copyright 2016 NumScale SAS
-
-  Distributed under the Boost Software License, Version 1.0.
-  (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
-//==================================================================================================
-
 //! [hello]
 #include <iostream>
 #include <list>
@@ -16,12 +7,9 @@
 #include <eve/wide.hpp>
 //! [hello-include-wide]
 
-#include <eve/function/multiplies.hpp>
-#include <eve/function/plus.hpp>
-#include <eve/function/splat.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/store.hpp>
-
-#include <eve/memory/allocator.hpp>
 
 int main()
 {
@@ -43,13 +31,13 @@ int main()
   wide_t elevens{11};
 
   //! [hello-ptr-iota]
-  std::vector<float, eve::allocator<float>> values(1000);
+  std::vector<float> values(1000);
   std::iota(values.begin(), values.end(), float(0));
   wide_t ptr_wide(values.data());
   //! [hello-ptr-iota]
 
   //! [hello-iter-con]
-  std::vector<float, eve::allocator<float>> data(wide_t::static_size);
+  std::vector<float> data(wide_t::static_size);
   std::iota(data.begin(), data.begin() + wide_t::static_size, float(0));
   wide_t iter_wide(data.begin(), data.end());
   //! [hello-iter-con]
@@ -63,7 +51,7 @@ int main()
   //! [hello-ops]
 
   //! [hello-store]
-  std::vector<float, eve::allocator<float>> output(wide_t::static_size);
+  std::vector<float> output(wide_t::static_size);
   eve::store(res, &output[0]);
   //! [hello-store]
 

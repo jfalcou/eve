@@ -1,10 +1,10 @@
+// wait for algritms
 #include <eve/algorithm.hpp>
 #include <eve/wide.hpp>
 
 #include <eve/constant/one.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/memory/allocator.hpp>
 
 #include <chrono>
 #include <cstdlib>
@@ -41,8 +41,8 @@ int main(int argc, char** argv)
 {
   using T  = float;
   int size = std::atoi(argv[1]);
-  std::vector<T, eve::allocator<T>> activations(size);
-  std::vector<T, eve::allocator<T>> results(size);
+  std::vector<T> activations(size);
+  std::vector<T> results(size);
 
   std::generate(activations.begin(), activations.end(),
                 []() { return (T)std::rand() / std::numeric_limits<int>::max(); });

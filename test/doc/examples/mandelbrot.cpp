@@ -3,15 +3,15 @@
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <memory>
 
-#include <eve/memory/allocator.hpp>
 #include <eve/wide.hpp>
 
-#include <eve/function/aligned_load.hpp>
-#include <eve/function/aligned_store.hpp>
-#include <eve/function/enumerate.hpp>
+#include <eve/function/store.hpp>
+//#include <eve/function/enumerate.hpp>
+#include <eve/function/any.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/function/if_inc.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/sqr.hpp>
 
 // if you want to see the julia set
@@ -20,9 +20,9 @@
 // this suppose you have opencv installed and the proper libraries on your
 // compilation command
 // opencv_core opencv_imgproc opencv_highgui
-// #include <opencv2/contrib/contrib.hpp>
-// #include <opencv2/highgui/highgui.hpp>
-// #include <opencv2/imgproc/imgproc.hpp>
+// #include <opencv2/core.hpp>
+// #include <opencv2/highgui.hpp>
+// #include <opencv2/imgproc.hpp>
 
 typedef float T;
 namespace bs = eve;
@@ -34,7 +34,7 @@ struct mandelbrot
 {
   int size, max_iter;
   T x_min, x_max, y_min, y_max, x_range, y_range;
-  std::vector<int, eve::allocator<int>> iterations;
+  std::vector<int> iterations;
 
   mandelbrot(int size_, int max_iter_)
     : size(size_)
@@ -78,8 +78,10 @@ struct mandelbrot
   //! [mandelbrot-simd]
   void evaluate_simd()
   {
-    wide_t step =
-      eve::enumerate<wide_t>(0); // produce a vector containing {0, 1, ..., wide_t::static_size-1}
+    std::unique_ptr<T[]> data(new T[wide_t::static_size * sizeof(T)]);
+    std::iota(data.get(), data.get() + wide_t::static_size, T(1));
+    wide_t step(data.get()); 
+//  wide_t step = eve::enumerate<wide_t>(0); // produce a vector containing {0, 1, ..., wide_t::static_size-1}
     for (int i = 0; i < size; ++i) {
       wide_t x0{T(i) / T(size) * x_range + x_min};
       wide_t fac{y_range / T(size)};
@@ -100,23 +102,23 @@ struct mandelbrot
           x    = x2 - y2 + x0;
           mask = x2 + y2 < 4;
           ++iteration;
-          iter = eve::if_inc(mask, iter);
+          iter = eve::inc[mask](iter);
         } while (eve::any(mask) && iteration < max_iter);
-        eve::aligned_store(iter, &iterations[j + i * size]);
+        eve::store(iter, &iterations[j + i * size]);
       }
     }
   }
   //! [mandelbrot-simd]
 
-  // if you want to see the julia set
-  //    void display() {
-  //      cv::Mat display;
-  //      cv::Mat A(size, size, CV_32SC1, iterations.data());
-  //      A.convertTo(display, CV_8UC1, 255.0 / 1000.0);
-  //      cv::applyColorMap(display, display, cv::COLORMAP_JET);
-  //      cv::imshow("Mandelbrot", display);
-  //      cv::waitKey(0);
-  //    }
+//  if you want to see the julia set
+//      void display() {
+//        cv::Mat display;
+//        cv::Mat A(size, size, CV_32SC1, iterations.data());
+//        A.convertTo(display, CV_8UC1, 255.0 / 1000.0);
+//        cv::applyColorMap(display, display, cv::COLORMAP_JET);
+//        cv::imshow("Mandelbrot", display);
+//        cv::waitKey(0);
+//      }
 };
 
 int main(int argc, char** argv)
@@ -133,19 +135,19 @@ int main(int argc, char** argv)
   std::cout << " scalar " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
 
   t0 = hrc::now();
-  image.evaluate_simd();
+  image.evaluate_simd(); 
   t1 = hrc::now();
   std::cout << " simd " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
   // if you want to see the julia set
-  //  image.display();
+//  image.display();
 }
 //! [mandelbrot-all]
 
 // This code can be compiled using
 //    g++ mandelbrot.cpp -msse4.2 -std=c++11 -O3 -DNDEBUG -o mandelbrot
-//    -I/pathto/boost_simd//include -I/pathto/boost
+//    -I/pathto/eve/include 
 // or if you uncomment the opencv related lines to see the generated julia set
 // and use:
 //    g++ mandelbrot.cpp -msse4.2 -std=c++11 -O3 -DNDEBUG -o mandelbrot
-//    -I/pathto/boost_simd//include -I/pathto/boost -lopencv_core
-//    -lopencv_imgproc -lopencv_highgui -lopencv_contrib
+//    -I/pathto/eve/include  -lopencv_core
+//    -lopencv_imgproc -lopencv_highgui 

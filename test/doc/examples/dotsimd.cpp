@@ -1,7 +1,7 @@
-#include <eve/function/load.hpp>
-#include <eve/function/multiplies.hpp>
+// TODO wait for sum
+#include <eve/function/mul.hpp>
 #include <eve/function/plus.hpp>
-#include <eve/function/sum.hpp>
+//#include <eve/function/sum.hpp>
 #include <eve/wide.hpp>
 
 // [scalar-dot-simd]

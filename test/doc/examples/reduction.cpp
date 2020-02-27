@@ -1,10 +1,11 @@
+// wait for sum
 //! [reduc]
 #include <eve/constant/zero.hpp>
 #include <iostream>
 #include <numeric>
 #include <vector>
 
-#include <eve/meta/cardinal_of.hpp>
+#include <eve/cardinal.hpp>
 #include <eve/wide.hpp>
 //! [reduc-inc]
 #include <eve/function/sum.hpp>
@@ -17,7 +18,7 @@ int main()
   using wide_t = eve::wide<int32_t>;
 
   constexpr std::size_t size = 64;
-  std::int32_t card_int      = eve::cardinal_of<wide_t>();
+  std::int32_t card_int      = eve::cardinal<wide_t>();
 
   std::vector<int32_t> array(size);
   std::iota(array.begin(), array.end(), 0);
@@ -73,6 +74,6 @@ int main()
 //! [reduc-compile]
 // This code can be compiled using (for instance for gcc)
 // g++ reduction.cpp -msse4.2 -std=c++11 -O3 -DNDEBUG -o reduction
-// -I/path_to/boost_simd/ -I/path_to/boost/
+// -I/path_to/eve/ 
 //! [reduc-compile]
 //! [reduc]
