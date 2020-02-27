@@ -5,11 +5,10 @@
 #include <vector>
 #include <limits>
 
-#include <eve/function/aligned_load.hpp>
-#include <eve/function/aligned_store.hpp>
+#include <eve/function/load.hpp>
+#include <eve/function/store.hpp>
 #include <eve/function/hypot.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/memory/allocator.hpp>
 #include <eve/wide.hpp>
 
 int main(int argc, char** argv)
@@ -20,12 +19,12 @@ int main(int argc, char** argv)
   using wide_t = eve::wide<T>;
 
   std::size_t num_points = 1600000;
-  std::vector<T, eve::allocator<T>> X(num_points);
-  std::vector<T, eve::allocator<T>> Y(num_points);
-  std::vector<T, eve::allocator<T>> distance0(num_points);
-  std::vector<T, eve::allocator<T>> distance1(num_points);
-  std::vector<T, eve::allocator<T>> distance2(num_points);
-  std::vector<T, eve::allocator<T>> distance3(num_points);
+  std::vector<T> X(num_points);
+  std::vector<T> Y(num_points);
+  std::vector<T> distance0(num_points);
+  std::vector<T> distance1(num_points);
+  std::vector<T> distance2(num_points);
+  std::vector<T> distance3(num_points);
 
   std::generate(X.begin(), X.end(),
                 []() { return T(std::rand()) / std::numeric_limits<int>::max(); });
@@ -36,14 +35,12 @@ int main(int argc, char** argv)
 
   auto t0 = high_resolution_clock::now();
   //! [distance-hypot-scalar]
-  for (int i = 0; i < num_points; ++i) {
-    auto x       = refX - X[i];
-    auto y       = refY - Y[i];
+  for (size_t i = 0; i < num_points; ++i) {
     distance0[i] = std::hypot(refX - X[i], refY - Y[i]);
   }
   //! [distance-hypot-scalar]
   auto t1 = high_resolution_clock::now();
-  std::cout << " time scalar " << duration_cast<microseconds>(t1 - t0).count() << std::endl;
+  std::cout << " time std SCALAR hypot " << duration_cast<microseconds>(t1 - t0).count() << std::endl;
 
   //! [distance-hypot-time]
   t0 = high_resolution_clock::now();
@@ -51,28 +48,28 @@ int main(int argc, char** argv)
   wide_t vrefX = wide_t(refX);
   wide_t vrefY = wide_t(refY);
 
-  for (int i = 0; i < num_points; i += wide_t::static_size) {
-    wide_t vX  = eve::aligned_load<wide_t>(&X[i]);
-    wide_t vY  = eve::aligned_load<wide_t>(&Y[i]);
+  for (size_t i = 0; i < num_points; i += wide_t::static_size) {
+    wide_t vX(&X[i]);
+    wide_t vY(&Y[i]);
     wide_t res = eve::pedantic_(eve::hypot)(vrefX - vX, vrefY - vY);
-    eve::aligned_store(res, &distance1[i]);
+    eve::store(res, &distance1[i]);
   }
   //! [distance-hypot-calc]
 
   t1 = high_resolution_clock::now();
-  std::cout << " time SIMD hypot " << duration_cast<microseconds>(t1 - t0).count() << std::endl;
+  std::cout << " time pedantic SIMD hypot " << duration_cast<microseconds>(t1 - t0).count() << std::endl;
 
   t0 = high_resolution_clock::now();
   //! [distance-hypot-fast-hypot]
-  for (int i = 0; i < num_points; i += wide_t::static_size) {
-    wide_t vX  = eve::aligned_load<wide_t>(&X[i]);
-    wide_t vY  = eve::aligned_load<wide_t>(&Y[i]);
+  for (size_t i = 0; i < num_points; i += wide_t::static_size) {
+    wide_t vX(&X[i]);
+    wide_t vY(&Y[i]);
     wide_t res = eve::hypot(vrefX - vX, vrefY - vY);
-    eve::aligned_store(res, &distance2[i]);
+    eve::store(res, &distance2[i]);
   }
   ////! [distance-hypot-fast-hypot]
   t1 = high_resolution_clock::now();
-  std::cout << " time SIMD fast hypot " << duration_cast<microseconds>(t1 - t0).count()
+  std::cout << " time regular SIMD hypot " << duration_cast<microseconds>(t1 - t0).count()
             << std::endl;
 }
 //! [distance-hypot-all]

@@ -8,6 +8,8 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-#make_unit( "doc.examples" addvector.cpp                          )
-#make_unit( "doc.examples" distance.cpp                           )
-make_unit( "doc.examples" dotmain.cpp                            )    
+#make_unit( "doc.examples" addvector.cpp                           )
+#make_unit( "doc.examples" arraysubtract.cpp                       ) 
+#make_unit( "doc.examples" distance.cpp                            )
+make_unit( "doc.examples" dotmain.cpp                             ) 
+make_unit( "doc.examples" distance_hypot.cpp                      )   

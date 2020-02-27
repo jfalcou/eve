@@ -4,14 +4,14 @@
 #include <vector>
 
 //! [substract]
-#include <eve/meta/cardinal_of.hpp>
 #include <eve/wide.hpp>
+#include <eve/cardinal.hpp>
 
 //! [substract-include]
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
 //! [substract-include]
-#include <eve/function/minus.hpp>
+#include <eve/function/sub.hpp>
 
 int main()
 {
@@ -28,7 +28,7 @@ int main()
 
   //! [substract-cardinal]
   using wide_t     = eve::wide<int32_t>;
-  size_t wide_card = eve::cardinal_of<wide_t>();
+  size_t wide_card = eve::cardinal_v<wide_t>;
   //! [substract-cardinal]
 
   //! [substract-scalar]
@@ -60,10 +60,10 @@ int main()
   {
     //! [substract-load]
     // Using explicit load/store
-    wide_t p_out, p_arr, fortytwo{scalar};
+    wide_t fortytwo{scalar};
     for (size_t i = 0; i < size; i += wide_card) {
-      p_arr = eve::load<wide_t>(array.data() + i);
-      p_out = p_arr - fortytwo;
+      wide_t p_arr(array.data() + i);
+      wide_t p_out = p_arr - fortytwo;
       eve::store(p_out, out.data() + i);
     }
     //! [substract-load]
@@ -79,8 +79,8 @@ int main()
     out.resize(size);
     size_t i = 0;
     for (; i + wide_card <= size; i += wide_card) {
-      p_arr = eve::load<wide_t>(array.data() + i);
-      p_out = p_arr - fortytwo;
+      wide_t p_arr(array.data() + i);
+      wide_t p_out = p_arr - fortytwo;
       eve::store(p_out, out.data() + i);
     }
 

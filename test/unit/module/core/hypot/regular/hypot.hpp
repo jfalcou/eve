@@ -18,9 +18,10 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
 TTS_CASE("Check hypot return type")
-{
+{ 
   TTS_EXPR_IS(eve::hypot(Type(0), Type(0)), (Type));
 }
 
@@ -40,4 +41,22 @@ TTS_CASE("Check eve::hypot behavior")
   TTS_ULP_EQUAL(eve::hypot((Type( 1)), (Type( 1)))                  , eve::Sqrt_2<Type>() , 0.5);
   TTS_ULP_EQUAL(eve::hypot((Type( 0)), (Type( 0)))                  , (Type(0))           , 0  );
   TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2)             , 0.5);
+}
+
+TTS_CASE("Check 3 params eve::hypot behavior")
+{
+  // non conforming to standard
+  if constexpr(eve::platform::supports_invalids)
+  {
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<Type>(), eve::Inf<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<Type>(), eve::Nan<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
+  }
+  
+  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<Type>(), (Type(0)),            (Type(0)))          , eve::Inf<Type>(), 0);
+  TTS_ULP_EQUAL(eve::hypot((Type(0))          , (eve::Valmax<Type>()),  (Type(0))),        eve::Inf<Type>(), 0);
+  
+  TTS_ULP_EQUAL(eve::hypot((Type(-1)), (Type(-1)), (eve::Sqrt_2<Type>()))                   , Type(2) , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((Type( 1)), (Type( 1)), (eve::Sqrt_2<Type>()))                   , Type(2) , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((Type( 0)), (Type( 0)), (Type( 0)))                             , (Type(0)), 0  );
+  TTS_ULP_EQUAL(eve::hypot((Type( 1)), (Type( 1)), (Type( 1)))                             , Type(std::sqrt(Value(3))), 0.5); 
 }
