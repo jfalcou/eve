@@ -1,7 +1,15 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Contributors & Maintainers
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry Lapreste
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-add_subdirectory(real)
-add_subdirectory(complex)
+
+set(  SOURCES
+      literals.cpp
+   )
+
+make_unit( "complex" ${SOURCES} )
+
