@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_SINHCOSH_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_SINHCOSH_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_SINHCOSHCOSH_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_SINHCOSHCOSH_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(sinhcosh_, sinhcosh);
+  EVE_MAKE_CALLABLE(sinhcoshcosh_, sinhcoshcosh);
 }
 
 #endif
