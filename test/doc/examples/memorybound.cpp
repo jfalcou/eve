@@ -1,3 +1,13 @@
+//==================================================================================================
+/** 
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 #include <chrono>
 #include <cmath>
 #include <iostream>
@@ -17,8 +27,9 @@ int main()
   std::vector<float> output(size);
 
   auto t0 = high_resolution_clock::now();
+  data[0] = 1; 
   for (int i = 0; i < size; ++i) {
-    data[i] *= 2;
+    data[i] *= data[i-1]*1.01;
   }
   auto t1 = high_resolution_clock::now();
   std::cout << " time " << duration_cast<microseconds>(t1 - t0).count() << std::endl;

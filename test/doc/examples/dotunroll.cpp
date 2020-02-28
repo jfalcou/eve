@@ -1,3 +1,13 @@
+//==================================================================================================
+/** 
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 //! [scalar-dot-unroll]
 template <typename Value>
 Value dot(Value* first1, Value* last1, Value* first2)

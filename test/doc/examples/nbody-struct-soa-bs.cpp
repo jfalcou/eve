@@ -1,3 +1,13 @@
+//==================================================================================================
+/** 
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
 //! [nbody-all]
 #include <chrono>
 #include <cmath>
@@ -169,11 +179,10 @@ int main(int argc, char* argv[])
 {
   std::size_t size = 4096, steps = 10;
 
-  if (argc != 3) {
-    std::cerr << "E: Incorrect number of arguments, using " << size << " particles and " << steps
-              << " steps." << std::endl;
-  } else {
+  if (argc >=  2) {
     size  = std::stoll(argv[1], 0, 10);
+  }
+  if (argc >=  3) {
     steps = std::stoll(argv[2], 0, 10);
   }
 
