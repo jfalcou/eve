@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SCALAR_SINHCOSHCOSH_HPP_INCLUDED
-#define EVE_FUNCTION_SCALAR_SINHCOSHCOSH_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SCALAR_SINHCOSH_HPP_INCLUDED
+#define EVE_FUNCTION_SCALAR_SINHCOSH_HPP_INCLUDED
 
-#include <eve/function/definition/sinhcoshcosh.hpp>
-#include <eve/module/core/function/scalar/sinhcoshcosh.hpp>
+#include <eve/function/definition/sinhcosh.hpp>
+#include <eve/module/core/function/scalar/sinhcosh.hpp>
 
 #endif
