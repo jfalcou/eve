@@ -102,9 +102,15 @@ namespace eve::detail
         {
           if constexpr(std::is_same_v<value_type_t<T>, float>)
           {
-            return convert(hypot(convert(a, double_), convert(b, double_)), single_); 
+            auto test = logical_or(is_infinite(a), is_infinite(b));
+            auto res = convert(hypot(convert(a, double_), convert(b, double_)), single_); 
+            if constexpr(eve::platform::supports_invalids)
+            {
+              return if_else(test, Inf<T>(), res);
+            }
+            else return res;
           }
-          else
+            else if constexpr(std::is_same_v<value_type_t<T>, double>)
           {
             using iT = as_integer_t<T>;
             T r =  eve::abs(a);
@@ -207,9 +213,15 @@ namespace eve::detail
         {
           if constexpr(std::is_same_v<value_type_t<T>, float>)
           {
-            return convert(pedantic_(hypot)(convert(a, double_), convert(b, double_), convert(c, double_)), single_); 
+            auto test =  logical_or(is_infinite(a), logical_or(is_infinite(b), is_infinite(c)));
+            auto res =  convert(hypot(convert(a, double_), convert(b, double_), convert(c, double_)), single_); 
+            if constexpr(eve::platform::supports_invalids)
+            {
+              return if_else(test, Inf<T>(), res);
+            }
+            else return res;
           }
-          else
+          else if constexpr(std::is_same_v<value_type_t<T>, double>)
           {
             using iT = as_integer_t<T>;
             T r =  eve::abs(a);
@@ -225,7 +237,7 @@ namespace eve::detail
             {
               return if_else(logical_or(is_infinite(a), logical_or(is_infinite(b), is_infinite(c))), Inf<T>(), res);
             }
-            else  return res;
+            else return res;
           }
         }
       }
