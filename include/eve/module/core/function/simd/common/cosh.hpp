@@ -44,12 +44,20 @@ namespace eve::detail
     else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::cosh, a0);
     else
     {
-      T x = eve::abs(a0);
-      auto test1 = (x >  Maxlog<T>()-Log_2<T>());
-      T fac = if_else(test1, Half<T>(), One<T>());
-      T tmp = exp(x*fac);
-      T tmp1 = Half<T>()*tmp;
-      return if_else(test1, tmp1*tmp, average(tmp, rec(tmp))); 
+     T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
+      auto x = eve::abs(a0);
+      auto t = exp(x);
+      auto invt = if_else(x > T(22.0f), eve::zero_, rec(t)); 
+      auto c = average(t, invt); 
+      auto test = x <  ovflimit; 
+      if (eve::all(test)) return c;
+      
+      auto w = exp(x*Half<T>());
+      t = Half<T>()*w;
+      t *= w;
+      
+      c = if_else(test, c, t);
+      return c; 
     }
   }
 }

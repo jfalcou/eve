@@ -34,7 +34,19 @@ TTS_CASE("Check eve::eve::cosh behavior")
   }
   TTS_ULP_EQUAL(eve::cosh(Type(1)), Type(std::cosh(1.0)), 0.5);
   TTS_ULP_EQUAL(eve::cosh(Type(-1)),Type(std::cosh(-1.0)), 0.5);
-  TTS_IEEE_EQUAL((eve::cosh(Type(0))), (Type(1)));
-  TTS_IEEE_EQUAL((eve::cosh(eve::Mzero<Type>())), (Type(1)));
-
+  Value ovflimit =  eve::Ieee_constant<Value,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
+  std::array<Value, 10> a = {Value(1), Value(-1), Value(0), Value(-0.0), Value(10), Value(-10)
+                             , eve::Maxlog<Value>(), ovflimit/2, ovflimit, 2*ovflimit};
+  
+  for(size_t i=0; i < a.size(); ++i)
+  {
+    auto ch  = eve::cosh(Type(a[i]));
+    Value ch1 = std::cosh(double(a[i]));
+    std::cout << " ======================== " << std::endl; 
+    TTS_ULP_EQUAL(ch, (Type(ch1)), 0.5);
+    std::cout  <<" a[" << i << "] " << std::setprecision(20) << a[i]<< std::endl;
+    std::cout  <<" ch   " << std::setprecision(20) << ch << std::endl;
+    std::cout  <<" ch1  " << std::setprecision(20) << ch1 << std::endl;
+    std::cout << " ************************ " << std::endl; 
+  }
 }
