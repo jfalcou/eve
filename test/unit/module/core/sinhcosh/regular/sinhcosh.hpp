@@ -69,10 +69,12 @@ TTS_CASE("Check eve::sinhcosh behavior")
   }
   {  
     auto [sh, ch] = eve::sinhcosh(Type(-0.0)); 
+    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
     TTS_EXPECT(eve::all(eve::is_negative(sh)));
   }
   {
     auto [sh, ch] = eve::sinhcosh(Type(0.0)); 
+    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
     TTS_EXPECT(eve::all(eve::is_positive(sh)));
   }
 }

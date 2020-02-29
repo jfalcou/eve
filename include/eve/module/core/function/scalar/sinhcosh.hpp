@@ -39,7 +39,7 @@ namespace eve::detail
   {
     T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
     auto x = eve::abs(a0);
-    if (is_eqz(a0)) return std::make_tuple(a0, One<T>());
+    if (x < T(0x1.0p-28)) return std::make_tuple(a0, One<T>());
     auto h = (a0 > T(0)) ? T(1) : T(-1);
     if (x >= ovflimit)
     {

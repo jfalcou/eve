@@ -23,6 +23,8 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_greater.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_positive.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/div.hpp>
@@ -52,15 +54,15 @@ namespace eve::detail
     else
     {
       T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
-      auto h = if_else( is_gtz(a0), One<T>(), Mone<T>());   
+      auto h = if_else( is_positive(a0), One<T>(), Mone<T>());   
       auto x = eve::abs(a0);
       auto t = expm1(x);
       auto inct = inc(t); 
       auto u = t/inct;
       auto z =  fnma(t, u, t);
       auto s = Half<T>()*h*(z+t);
-      auto invt = if_else(x > T(22.0f), eve::zero_, rec(t)); 
-      auto c = average(t, invt); 
+      auto invt = if_else(x > T(22.0f), eve::zero_, rec(inct)); 
+      auto c = average(inct, invt); 
       auto test = x <  ovflimit; 
       if (eve::all(test)) return std::make_tuple(s, c);
       
