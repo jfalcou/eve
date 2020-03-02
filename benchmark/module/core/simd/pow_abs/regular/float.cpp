@@ -8,10 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_POW_HPP_INCLUDED
-#define EVE_FUNCTION_POW_HPP_INCLUDED
+#include <eve/function/hypot.hpp>
+#include <eve/wide.hpp>
 
-#include <eve/function/scalar/pow.hpp>
-#include <eve/function/simd/pow.hpp>
+#define TYPE()        eve::wide<float>
+#define FUNCTION()    eve::pow_abs
+#define SAMPLES(N)    random<T>(N,-100.,100.),random<T>(N,-100.,100.)
 
-#endif
+#include "bench.hpp"

@@ -5,4 +5,5 @@
 <- xf =                      1
 -> eve::asech(xf) =            0
 <- yf =                      -nan
+<<<<<<< HEAD
 -> eve::asech(yf) =            -nan

@@ -106,6 +106,10 @@ list_benchs("scalar/rec/pedantic" "core" ${real_types})
 list_benchs("scalar/sqrt/regular" "core" ${all_types})  
 list_benchs("scalar/rsqrt/regular" "core" ${real_types})
 list_benchs("scalar/sqr/regular"  "core" ${all_types})  
+list_benchs("scalar/pow/regular"  "core" ${real_types})
+list_benchs("scalar/pow/raw"  "core" ${real_types})
+list_benchs("scalar/pow_abs/regular"  "core" ${real_types})
+list_benchs("scalar/pow_abs/raw"  "core" ${real_types})
  
 ##==================================================================================================
 ## simd benchmarks
@@ -234,5 +238,9 @@ list_benchs("simd/inc/regular" "core" ${all_types})
 list_benchs("simd/rec/regular" "core" ${real_types})
 list_benchs("simd/rec/raw" "core" ${real_types})
 list_benchs("simd/rec/pedantic" "core" ${real_types})
+list_benchs("simd/pow/regular"  "core" ${real_types})
+list_benchs("simd/pow/raw"  "core" ${real_types})
+list_benchs("simd/pow_abs/regular"  "core" ${real_types})
+list_benchs("simd/pow_abs/raw"  "core" ${real_types})
 
 
