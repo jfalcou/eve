@@ -156,7 +156,7 @@ list_benchs("simd/nearest/regular" "core" ${all_types})
 list_benchs("simd/rshl/regular" "core" ${integral_types})
 list_benchs("simd/rshr/regular" "core" ${integral_types})
 list_benchs("simd/rsqrt/regular" "core" ${real_types})
-list_benchs("simd/saturate/regular" "core" ${all_types})
+#list_benchs("simd/saturate/regular" "core" ${all_types})
 list_benchs("simd/shl/regular" "core" ${integral_types})
 list_benchs("simd/shr/regular" "core" ${integral_types})
 list_benchs("simd/sign/regular" "core" ${all_types})
@@ -244,3 +244,4 @@ list_benchs("simd/pow_abs/regular"  "core" ${real_types})
 list_benchs("simd/pow_abs/raw"  "core" ${real_types})
 
 
+list_benchs("ref/pow/regular"  "core" ${real_types})

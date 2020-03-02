@@ -9,10 +9,11 @@
 **/
 //==================================================================================================
 #include <eve/function/pow.hpp>
-#include <eve/wide.hpp>
 
-#define TYPE()        eve::wide<float>
-#define FUNCTION()    eve::pow
+auto std_pow =  [](auto x, auto y){return std::pow(x, y); };
+
+#define TYPE()        float
+#define FUNCTION()    std_pow
 #define SAMPLES(N)    random<T>(N,-100.,100.),random<T>(N,-100.,100.)
 
 #include "bench.hpp"

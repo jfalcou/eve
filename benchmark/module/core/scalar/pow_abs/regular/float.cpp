@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/hypot.hpp>
+#include <eve/function/pow_abs.hpp>
 
 #define TYPE()        float
 #define FUNCTION()    eve::pow_abs

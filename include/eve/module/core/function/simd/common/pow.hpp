@@ -15,6 +15,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_infinite.hpp>  
@@ -26,6 +27,7 @@
 #include <eve/function/logical_andnot.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/pow_abs.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
@@ -42,7 +44,7 @@ namespace eve::detail
   requires( std::conditional_t<is_vectorized_v<T>, T, U>,
             detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
             behave_as<floating_point,T>,
-            floating_point<value_type_t<U>>)
+            behave_as<floating_point,U>)
   {
     if constexpr(!is_vectorized_v<U>)
     {
@@ -58,7 +60,7 @@ namespace eve::detail
       {
         auto nega = is_negative(a);
         T z = pow_abs(a, b);
-        z =  unary_minus[logical_and(is_odd(b), nega)](z); //neg[logical_and(is_odd(b), nega)](z);
+        z =  unary_minus[logical_and(is_odd(b), nega)](z); 
         auto invalid =  logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
         return if_else(invalid, eve::allbits_, z);
       }
@@ -66,30 +68,139 @@ namespace eve::detail
   }
 
   template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto
+  pow_(EVE_SUPPORTS(cpu_)
+      , T const &a0, U const &a1) noexcept
+  requires(T, vectorized<T>, behave_as<floating_point, T>, integral<U>)
+  {
+    if constexpr(std::is_unsigned_v<U>)
+    {
+      T base = a0;
+      U expo = a1;
+      
+      T result(1); 
+      while(expo)
+      {
+        if(is_odd(expo)) result *= base;
+        expo >>= 1;
+        base = sqr(base);
+      }
+      return result;
+    }
+    else 
+    {
+      using u_t =  as_integer_t<U, unsigned>;
+      T tmp = pow(a0, u_t(eve::abs(a1)));
+      return if_else (is_ltz(a1),  rec(tmp),  tmp); 
+    }
+  }
+  
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto
+  pow_(EVE_SUPPORTS(cpu_)
+      , T const &a0, U const &a1) noexcept
+  requires(T, vectorized<T>, vectorized<U>, behave_as<integral, U>)
+  {
+    if constexpr(std::is_unsigned_v<U>)
+    {
+      T base = a0;
+      U expo = a1;
+      
+      T result(1); 
+      while(any(expo))
+      {
+        result *= if_else(is_odd(expo), base, T(1));
+        expo >>= 1;
+        base = sqr(base);
+      }
+      return result;
+    }
+    else 
+    {
+      using u_t =  as_integer_t<U, unsigned>;
+      T tmp = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+      return unary_minus[a0 < 0 && is_odd(a1)](tmp); 
+    }
+  }
+    
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto
+  pow_(EVE_SUPPORTS(cpu_)
+      , T a0, U a1) noexcept
+  requires(T, vectorized<T>, behave_as<integral, T>, integral<U>)
+  {
+    if (a1 >= U(sizeof(T)*8-1-(std::is_signed_v<T>)) || a1 < 0) return T(0); 
+     constexpr const uint8_t highest_bit_set[] = {
+        0, 1, 2, 2, 3, 3, 3, 3,
+        4, 4, 4, 4, 4, 4, 4, 4,
+        5, 5, 5, 5, 5, 5, 5, 5,
+        5, 5, 5, 5, 5, 5, 5, 5,
+        6, 6, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 6, 6, 6}; // anything past 63 is a guaranteed overflow with base > 1
+
+     T result(1);
+    switch (highest_bit_set[a1]) {
+    case 6:
+        if (a1 & 1) result *= a0;
+        a1 >>= 1;
+        a0 *= a0;
+    case 5:
+        if (a1 & 1) result *= a0;
+        a1 >>= 1;
+        a0 *= a0;
+    case 4:
+        if (a1 & 1) result *= a0;
+        a1 >>= 1;
+        a0 *= a0;
+    case 3:
+        if (a1 & 1) result *= a0;
+        a1 >>= 1;
+        a0 *= a0;
+    case 2:
+        if (a1 & 1) result *= a0;
+        a1 >>= 1;
+        a0 *= a0;
+    case 1:
+        if (a1 & 1) result *= a0;
+    default:
+        return result;
+    }
+  }
+  
+  
+  template<typename T, typename U>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_)
                                , raw_type const &
                                , T const &a, U const &b) noexcept
   requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
-            behave_as<floating_point,T>,
-            floating_point<value_type_t<U>>)
+            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+           )
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(std::is_floating_point_v<value_type_t<T>> || std::is_floating_point_v<value_type_t<U>>)
     {
-      return pow_abs(a, T{b});
-    }
-    else if constexpr(!is_vectorized_v<T>)
-    {
-      return pow_abs(U{a}, b);
-    }
-    else
-    {
-      if constexpr(std::is_same_v<T, U>)
+      if constexpr(!is_vectorized_v<U>)
       {
-        return exp(b*log(a)); 
+        return pow_abs(a, T{b});
+      }
+      else if constexpr(!is_vectorized_v<T>)
+      {
+        return pow_abs(U{a}, b);
+      }
+      else
+      {
+        if constexpr(std::is_same_v<T, U>)
+        {
+          return exp(b*log(a)); 
+        }
       }
     }
-  } 
+    else      
+    {
+      return pow(a, b); 
+    }
+  }
 }
 
 #endif
