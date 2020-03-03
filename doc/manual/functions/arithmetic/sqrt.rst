@@ -44,7 +44,7 @@ Notes
 Options
 *******
 
-  - ``:ref:`raw_ <feature-decorator>```: if any fast and dirty intrinsic exists it will be returned by the ``sqrt[raw_]`` call
+  - With :ref:`raw_ <feature-decorator>` decorator: if any fast and dirty intrinsic exists it will be returned by the  call
 
 Example
 *******

@@ -18,14 +18,17 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/function/bitofsign.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/shr.hpp>
+#include <eve/function/pedantic.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/forward.hpp>
+#include <eve/platform.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -36,12 +39,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-#ifndef EVE_SIMD_NO_NANS
-      return if_else(
-          is_nan(a), eve::allbits_, bit_or(One(as(a)), bit_and(Signmask(as(a)), a)));
-#else
-      return bit_or(One(as(a)), bit_and(Signmask(as(a)), a));
-#endif
+      return if_else(is_nan(a), eve::allbits_, bit_or(One(as(a)), bitofsign(a)));
     }
     else
     {
@@ -50,6 +48,24 @@ namespace eve::detail
       else
         return One(as(a));
     }
+  }
+  
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto signnz_(EVE_SUPPORTS(cpu_)
+                              , pedantic_type const &
+                              , wide<T, N, ABI> const &a) noexcept
+  {
+    if constexpr(std::is_floating_point_v<T>)
+    {
+      if constexpr(eve::platform::supports_invalids)
+      {
+        return if_else(is_nan(a), eve::allbits_, signnz(a));
+      }
+      else
+      {
+        return signnz(a); 
+      }
+    } 
   }
 }
 
