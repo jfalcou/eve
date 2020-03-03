@@ -47,7 +47,7 @@ Notes
 Options
 *******
 
-  this object function can be called with an optional tag parameter that change its meaning:
+  this object function can be called with an optional tag parameter that changes its meaning:
 
   - ``iround(a, to_nearest_ )`` is equivalent to the call ``inearest(a)``
   - ``iround(a, toward_zero_)`` is equivalent to the call ``itrunc(a)``

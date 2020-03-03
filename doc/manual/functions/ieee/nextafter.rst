@@ -42,7 +42,7 @@ Synopsis
 Notes
 ******
 
-  - A ``pedantic_`` version ensures that if the second parameter is a Nan a Nan is returned to fit to the standard behaviour.
+  - A ``:ref:`pedantic_ <feature-decorator>``` version ensures that if the second parameter is a Nan a Nan is returned to fit to the standard behaviour.
 
 Example
 *******

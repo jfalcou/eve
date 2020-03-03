@@ -40,9 +40,9 @@ Synopsis
 Options
 *******
 
-  - raw_ if a proper intrinsic exist it is called with possibly poor accuracy in return
-  - regular_ with no decorator an accurate inverse is provided
-  - pedantic_ with integral inputs the inverse 0 is :ref:`Valmax <constant-Valmax>` of the type
+  - :ref:`raw_ <feature-decorator>` if a proper intrinsic exist it is called with possibly poor accuracy in return
+  - with no decorator an accurate inverse is provided
+  - :ref:`pedantic_ <feature-decorator>` with integral inputs the inverse 0 is :ref:`Valmax <constant-Valmax>` of the type
 
 
 .. seealso::  :ref:`div <function-div>`

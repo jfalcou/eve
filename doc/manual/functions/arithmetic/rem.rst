@@ -51,7 +51,7 @@ Notes
 Options
 *******
 
-  this object function can be called with pedantic_ decorator in which case (pedantic_(div) is used internally instead of div.
+  this object function can be called with :ref:`pedantic_ <feature-decorator>` decorator in which case (pedantic_(div) is used internally instead of div.
 
 .. seealso::  :ref:`round <function-round>`
 

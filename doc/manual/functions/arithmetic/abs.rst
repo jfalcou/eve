@@ -40,15 +40,13 @@ Notes
 ******
 
   - Be aware that for signed integers the absolute value of :ref:`Valmin <constant-valmin>` is
-    not representable  in the input type and the result is undefined.
+    not representable  in the input type and the result is undefined. Use the `:ref:`saturated_ <feature-decorator>`` decorator to avoid
+    this problem: if ``iT`` is a signed integer type, ``:ref:`saturated_ <feature-decorator>`(abs(Valmin<iT>())`` returns ``Valmax<iT>()``.
 
   - ``abs`` is a also a standard library function name and there possibly exists
     a C macro version which may be called instead of the boost simd version.
     To avoid this you may prefix ``abs`` using ``eve::abs`` notation.
 
-
-Options
-*******
 
 Example
 *******

@@ -42,9 +42,6 @@ Notes
   - if the expected result does not exists (input less than one) or is not representable in the parameter type 
     the result is undefined.
 
-Options
-*******
-
 Example
 *******
 

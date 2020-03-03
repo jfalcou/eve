@@ -46,9 +46,9 @@ Synopsis
 Options
 *******
 
-   regular (no_option) and raw_ are available.
+   regular (no_option) and :ref:`raw_ <feature-decorator>` are available.
 
-  - raw_ call ensures the IEEE requisites that the call returns a Nan.If :math:`x` is outside :math:`[-1, 1]` and
+  - :ref:`raw_ <feature-decorator>` call ensures the IEEE requisites that the call returns a Nan.If :math:`x` is outside :math:`[-1, 1]` and
     that  ``acosd`` returns +0 if the argument is +1. It has less accuracy near 1 than the regular call, but is 2 times speedier .
 
 *******

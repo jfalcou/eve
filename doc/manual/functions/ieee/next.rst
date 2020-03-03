@@ -54,7 +54,7 @@ Notes
 Options
 *******
 
-  with saturated_ options and integral input ``next(Valmax,n)`` is ``Valmax``
+  with :ref:`saturated_ <feature-decorator>` options and integral input ``next(Valmax,n)`` is ``Valmax``
 
 Example
 *******

@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::acos(xf) =            0
 <- yf =                      -nan
--> eve::acos(yf) =            nan
+-> eve::acos(yf) =            -nan

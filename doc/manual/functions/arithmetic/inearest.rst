@@ -14,7 +14,7 @@ inearest
    }
 
 Function object computing the rounding of the  value of a :ref:`Value <concept-value>`.
-If a value is an half-integer it is rounded to the inearest even value.
+If a value is an half-integer it is rounded to the nearest even value.
 
 Synopsis
 ********

@@ -13,6 +13,7 @@ int main()
             << "<- pf =                            " << pf << '\n'
             << "-> eve::abs(pf) =                  " << eve::abs(pf) << '\n'
             << "<- pi =                            " << pi << '\n'
+            << "-> eve::saturated_(eve::abs)(pi) = " << eve::saturated_(eve::abs)(pi) << '\n'
             << "-> eve::abs(pi) =                  " << eve::abs(pi) << '\n';
 
   float        xf = -32768.0f;
@@ -22,6 +23,7 @@ int main()
             << "<- xf =                            " << xf << '\n'
             << "-> eve::abs(xf) =                  " << eve::abs(xf) << '\n'
             << "<- xi =                            " << xi << '\n'
+            << "-> eve:saturated_(eve::abs)(xi)    " << eve::saturated_(eve::abs)(xi) << '\n'
             << "-> eve::abs(xi) =                  " << eve::abs(xi) << '\n';
   return 0;
 }
