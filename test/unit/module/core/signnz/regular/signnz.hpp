@@ -21,9 +21,12 @@ TTS_CASE("Check eve::signnz behavior")
 {
   TTS_EQUAL(eve::signnz(Type{0}), Type(1));
   TTS_EQUAL(eve::signnz(Type{2}), Type(1));
-
   if constexpr(std::is_signed_v<Value>)
   {
+    if constexpr(std::is_floating_point_v<Value>)
+    {
+      TTS_EQUAL(eve::signnz(static_cast<Type>(-0.0)), (Type(-1)));
+    }
     TTS_EQUAL(eve::signnz(static_cast<Type>(-2)), (Type(-1)));
   }
 }

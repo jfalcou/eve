@@ -53,7 +53,8 @@ Synopsis
 Options
 *******
 
-.. seealso::  :ref:`rshl <function-rshr>`,  :ref:`shl <function-rshr>`,  :ref:`shr <function-rshr>`
+.. seealso::  :ref:`rshl <function-rshr>`,  :ref:`shl <function-rshr>`,  :ref:`shr <function-rshr>`,
+        :ref:`bit_shl <function-bit_shl>`,  :ref:`bit_shr <function-bit_shr>`
 
 *******
 Example

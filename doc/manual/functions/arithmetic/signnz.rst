@@ -39,6 +39,10 @@ Synopsis
 Notes
 ******
 
+  - With floating point entry the ``signnz`` of negative zeo is -1
+  
+  - With :ref:`pedantic_ <feature-decorator>` decorator a nan entry will return a nan output
+
 Options
 *******
 
