@@ -36,9 +36,6 @@ Synopsis
 
 * [1,2] A value with the same type as the parameter.
 
-Options
-*******
-
 Example
 *******
 

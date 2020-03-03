@@ -45,7 +45,7 @@ Notes
 Options
 *******
 
-  - saturated_ decorator saturate the conversion.
+  - :ref:`saturated_ <feature-decorator>` decorator saturate the conversion.
 
 .. seealso::  :ref:`convert <function-convert>`,  :ref:`tofloat <function-tofloat>`,  :ref:`toint <function-toint>`
 

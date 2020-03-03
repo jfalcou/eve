@@ -36,6 +36,12 @@ Synopsis
 
 * [1,2] A value with the same type as the parameter. *TODO*
 
+Options
+*******
+
+  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  
+  - conditional call is allowed: ``inc[cond](a)`` is equivalent (but potentially optimized) to ``if_else(cond, inc(a), a)``
 
 .. seealso::  :ref:`inc <function-inc>`
 

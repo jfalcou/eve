@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::acospi(xf) =            0
 <- yf =                      -nan
--> eve::acospi(yf) =            nan
+-> eve::acospi(yf) =            -nan

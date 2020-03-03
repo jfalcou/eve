@@ -13,7 +13,7 @@ fnms
       constexpr /* implementation defined */ fnms = {};
    }
 
-Function object performing a fused negate-multiply/sub between three :ref:`Values <concept-value>` of same element type
+Function object performing a fused negate-multiply-sub between three :ref:`Values <concept-value>` of same element type
 
 
 ********
@@ -51,7 +51,7 @@ Notes
 
     The call ``fnms(x, y, z)`` is similar to ``-x*y-z``
 
-    But really conformant fused multiply/sub also implies
+    But really conformant fused negate-multiply-sub also implies
 
     - only one rounding
 
@@ -62,15 +62,18 @@ Notes
     wired capability).
 
     If you need pedantic fnms capabilities in all circumstances in your own
-    code you can use the pedantic_ option (although it can be very expensive).
-    pedantic_ option ensures the fnms properties and allows SIMD acceleration if available.
+    code you can use the :ref:`pedantic_ <feature-decorator>`  or :ref:`numeric_ <feature-decorator>` options
+    (although it can be very expensive).
 
 *******
 Options
 *******
 
-    - pedantic_: ``fnms[pedantic_](x,y,z)`` ensures the fnms conformant properties and allows SIMD
+    - :ref:`pedantic_ <feature-decorator>`:  ensures the fnms conformant properties and allows SIMD
       acceleration if available.
+
+    - :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
+      and allows SIMD acceleration if available.
 
 *******
 Example

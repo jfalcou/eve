@@ -56,7 +56,7 @@ Notes
 Options
 *******
 
-  with saturated_ options and integral input ``prev(Valmin,n)`` is ``Valmin``
+  with :ref:`saturated_ <feature-decorator>` options and integral input ``prev(Valmin,n)`` is ``Valmin``
 
 Example
 *******

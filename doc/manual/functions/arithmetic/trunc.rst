@@ -42,7 +42,7 @@ Notes
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``toward_zero_`` version.
 
-  - the  call to ``trunc(a)`` is equivalent to the call ``round[toward_zero_](a)``
+  - the  call to ``trunc(a)`` is equivalent to the call ``round(a,toward_zero_)``
 
 Options
 *******

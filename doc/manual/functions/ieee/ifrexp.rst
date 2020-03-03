@@ -44,9 +44,9 @@ Notes
 Options
 *******
 
-  - raw_: the raw_ option does not properly treat any of the corner cases described above
+  - :ref:`raw_ <feature-decorator>`: the raw_ option does not properly treat any of the corner cases described above
   - without options :math:`\infty` input is undefined behaviour and denormals are not properly treared
-  - pedantic_: is standard conforming even with denormals
+  - :ref:`pedantic_ <feature-decorator>`: is standard conforming even with denormals
 
 
 

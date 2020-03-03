@@ -43,8 +43,7 @@ Options
 Notes
 *****
 
-This function coincides with identity on ref:`concept-ieeevalue` and is not defined for
-:ref:`concept-integralvalue`  types.
+This function coincides with identity on ref:`concept-ieeevalue` and is not defined for :ref:`concept-integralvalue` types.
 Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide.
 
 Example

@@ -1,0 +1,8 @@
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::acsch(pf) =            (inf, 0.881374, -0.881374, -0.481212, inf, 0, -0, -nan)
+---- scalar
+<- xf =                      1
+-> eve::acsch(xf) =            0.881374
+<- yf =                      -nan
+-> eve::acsch(yf) =            -nan

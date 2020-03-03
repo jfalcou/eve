@@ -40,7 +40,7 @@ Synopsis
 Options
 *******
 
-  - the saturated_ options acts as ``saturated_(sub)(1,x)``
+  - the :ref:`saturated_ <feature-decorator>` decorator acts as ``saturated_(sub)(1,x)``
 
 
 Example

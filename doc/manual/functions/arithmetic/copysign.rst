@@ -26,9 +26,7 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
    template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
 
-* [1] Returns an element-wise copy of the sign of the second  :ref:`wide <type-wide>` to the first one.
-* [2] Returns an element-wise copy of the sign of the second prameter to  the first one.
-* [3] Returns an element-wise copy of the signs of the second prameter to the first one.
+* [1-3] Returns  element-wise value the first parameter with the sign of the second.
 * [4] Returns the first parameter with the sign of the second.
 
 .. rubric:: Parameters
@@ -40,9 +38,6 @@ Synopsis
 
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.
-
-Options
-*******
 
 Example
 *******

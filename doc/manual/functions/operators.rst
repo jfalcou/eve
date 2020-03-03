@@ -70,12 +70,12 @@ required headers in one shot.
 .. toctree::
    :maxdepth: 1
 
-   bitwise/bitwise_and
-   bitwise/bitwise_not
-   bitwise/bitwise_or
-   bitwise/bitwise_shl
-   bitwise/bitwise_shr
-   bitwise/bitwise_xor
+   bit/bit_and
+   bit/bit_not
+   bit/bit_or
+   bit/bit_shl
+   bit/bit_shr
+   bit/bit_xor
 
 
 

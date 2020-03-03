@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::acsc(xf) =            1.5708
 <- yf =                      -nan
--> eve::acsc(yf) =            nan
+-> eve::acsc(yf) =            -nan

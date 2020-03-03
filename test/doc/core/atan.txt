@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::atan(xf) =            0.785398
 <- yf =                      -nan
--> eve::atan(yf) =            -nan
+-> eve::atan(yf) =            nan

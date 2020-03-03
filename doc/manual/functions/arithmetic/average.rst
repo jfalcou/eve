@@ -22,7 +22,7 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v, wide<T,M> const& w ) noexcept;
+   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
    template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
    template<typename T>             constexpr   T         operator()( T s, T t ) noexcept;
 
@@ -32,8 +32,8 @@ Synopsis
 
 .. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide` satisfying ``sizeof(v) == sizeof(w)``.
-* **s**, **t**: Scalar values of type **U** satisfying ``sizeof(T) == sizeof(U)``.
+* **v**, **w**: Instances of :ref:`type-wide`.
+* **s**, **t**: Scalar values of type **T**.
 
 .. rubric:: Return value
 
@@ -52,12 +52,6 @@ Notes
   by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
   simd intrinsics, it is possible that the scalar results may differ by one unit from
   simd ones.
-
-
-
-*******
-Options
-*******
 
 *******
 Example
