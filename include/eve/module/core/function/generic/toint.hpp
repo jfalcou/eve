@@ -32,7 +32,7 @@ namespace eve::detail
   }
 
   template<typename T, typename Tag>
-  EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_), Tag const& tag_, T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto toint_(EVE_SUPPORTS(cpu_), Tag const& , T const &a) noexcept
   {
     if constexpr( std::is_integral_v< value_type_t<T> > )
     {
@@ -40,7 +40,7 @@ namespace eve::detail
     }
     else
     {
-      return tag_(convert)(a, as_<as_integer_t<value_type_t<T>>>());
+      return Tag()(convert)(a, as_<as_integer_t<value_type_t<T>>>());
     }
   }
 }

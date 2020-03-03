@@ -12,28 +12,20 @@ int main()
 {
   using eve::pedantic_;
 
-  wide_ft pf = {0.0f,
-                1.0f,
-                1.5f,
-                -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+  wide_ft pf = {0.0f, 1.0f, 1.5f, -2.0f
+               , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>()};
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                              " << pf << '\n'
-            << "-> eve::touint(pf) =                 " << eve::touint(pf) << '\n'
-            << "-> eve::pedantic_(eve::touint)(pf) = " << eve::pedantic_(eve::touint)(pf) << '\n';
+            << "-> eve::touint(pf) =                 " << eve::touint(pf) << '\n'; 
 
   float xf = 1.0f;
-  double yf = 36.5;
+  double yf = 36.5f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                              " << xf << '\n'
             << "-> eve::touint(xf) =                 " << eve::touint(xf) << '\n'
             << "<- yf =                              " << yf << '\n'
-            << "-> eve::touint(yf) =                 " << eve::touint(yf) << '\n'
-            << "-> eve::pedantic_(eve::touint)(yf) = " << eve::pedantic_(eve::touint)(yf) << '\n';
+            << "-> eve::touint(yf) =                 " << eve::touint(yf) << '\n'; 
   return 0;
 }

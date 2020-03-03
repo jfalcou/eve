@@ -43,6 +43,13 @@ Synopsis
 Options
 *******
 
+  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides  the saturated operation.
+  
+  - conditional call is allowed: ``div[cond](a,b)`` is equivalent (but optimized) to ``if_else(cond, div(a, b), a)``
+
+  - apart the preceding case infix notation can be used with operator ``/``. But be aware that for scalars `/`` 
+    is the C++ operator and it result is subject to automatic promotions.
+
 Example
 *******
 

@@ -27,9 +27,9 @@ namespace eve::detail
   }
 
   template<typename T, typename Tag>
-  EVE_FORCEINLINE constexpr auto touint_(EVE_SUPPORTS(cpu_), Tag const& tag_, T const &a) noexcept
+  EVE_FORCEINLINE constexpr auto touint_(EVE_SUPPORTS(cpu_), Tag const& , T const &a) noexcept
   {
-    return convert(tag_, a, as_<as_integer_t<value_type_t<T>, unsigned>>());
+    return Tag()(convert)(a, as_<as_integer_t<value_type_t<T>, unsigned>>());
   }
 }
 
