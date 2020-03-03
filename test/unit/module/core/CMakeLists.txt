@@ -166,6 +166,7 @@ make_all_units(ROOT core NAME logical_or            ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME logical_ornot         ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME logical_xor           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME lookup                ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME manhattan             ARCH scalar simd TYPES ${real_types}    )    
 make_all_units(ROOT core NAME mantissa              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME max                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME maxmag                ARCH scalar simd TYPES ${all_types}     )
