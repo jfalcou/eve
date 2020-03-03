@@ -1,40 +1,29 @@
 #include <eve/function/tofloat.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_it = eve::wide<std::int32_t, eve::fixed<8>>;
 
 int main()
 {
   using eve::pedantic_;
 
-  wide_ft pf = {0.0f,
-                1.0f,
-                -1.0f,
-                -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+  wide_it pi = {0, 1, -1, -2, -10000, -65535, eve::Valmax<std::int32_t>(), eve::Valmin<std::int32_t>()}; 
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                      " << pf << '\n'
-            << "-> eve::tofloat(pf) =            " << eve::tofloat(pf) << '\n'
-            << "-> eve::pedantic_(eve::tofloat)(pf) = " << eve::pedantic_(eve::tofloat)(pf) << '\n';
+            << "<- pi =                      " << pi << '\n'
+            << "-> eve::tofloat(pi) =            " << eve::tofloat(pi) << '\n'; 
 
-  float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  std::int32_t xi = 1; 
+  std::int32_t yi = eve::Valmax<std::int32_t>();
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                      " << xf << '\n'
-            << "-> eve::tofloat(xf) =            " << eve::tofloat(xf) << '\n'
-            << "<- yf =                      " << yf << '\n'
-            << "-> eve::tofloat(yf) =            " << eve::tofloat(yf) << '\n'
-            << "-> eve::pedantic_(eve::tofloat)(yf) = " << eve::pedantic_(eve::tofloat)(yf) << '\n';
+            << "<- xi =                      " << xi << '\n'
+            << "-> eve::tofloat(xf) =            " << eve::tofloat(xi) << '\n'
+            << "<- yi =                      " << yi << '\n'
+            << "-> eve::tofloat(yi) =            " << eve::tofloat(yi) << '\n'; 
   return 0;
 }

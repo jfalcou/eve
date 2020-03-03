@@ -48,7 +48,7 @@ namespace eve::detail
     }
     else
     {
-      return convert(tag_, a, as_<as_floating_point_t<value_type_t<T>>>());
+      return Tag()(convert)(a, as_<as_floating_point_t<value_type_t<T>>>());
     }
   }
 }
