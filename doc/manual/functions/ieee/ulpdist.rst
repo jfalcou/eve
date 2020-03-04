@@ -14,7 +14,7 @@ ulpdist
    }
 
 Function object computing the ulp-distance of  two :ref:`Values <concept-value>`. This is the number of values representable
-in the base type between the two enties divided by 2.
+in the base type between the two entries divided by 2.
 
 ********
 Synopsis

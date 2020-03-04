@@ -48,7 +48,7 @@ Synopsis
 
 * [1,4,5] A value of the type **wide<U,N>**
 * [2,3]   A value of the type **wide<T,N>**
-* [6]
+* [6]  A value of type **U**
 
 *******
 Options

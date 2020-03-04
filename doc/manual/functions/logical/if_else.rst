@@ -48,11 +48,20 @@ Synopsis
 
 * [1,4,5] A value of the type **wide<U,N>**
 * [2,3]   A value of the type **wide<T,N>**
-* [6]     A value of type **T**
+* [6]     A value of type **U**
 
 *******
 Options
 *******
+
+  - ``if_else`` can be subject to some optimization in case one amongst the second or third parameter has the static property
+    that all its bits are 0 (resp 1). In these cases replacing the entry by ``eve::zero_`` (resp. ``eve::allbits_`` enable the optimization.
+    This is also possible with ``eve::one_`` and ``eve::mone_``. 
+
+  - be aware that contrarily to regular ``if`` clauses ``if_else`` always evaluate both second and third parameters. So it is recommanded
+    not to use it with scalar tests unless one of the possible output is trivial.
+
+.. seealso::  :ref:`binarize<function-binarize>`,  :ref:`binarize<function-binarize_c>`
 
 *******
 Example
