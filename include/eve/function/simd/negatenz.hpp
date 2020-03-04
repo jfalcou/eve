@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NEGATE_HPP_INCLUDED
-#define EVE_FUNCTION_NEGATE_HPP_INCLUDED
+#ifndef EVE_FUNCTION_SIMD_NEGATENZ_HPP_INCLUDED
+#define EVE_FUNCTION_SIMD_NEGATENZ_HPP_INCLUDED
 
-#include <eve/function/scalar/negate.hpp>
-#include <eve/function/simd/negate.hpp>
+#include <eve/function/scalar/negatenz.hpp>
+#include <eve/module/core/function/simd/negatenz.hpp>
 
 #endif

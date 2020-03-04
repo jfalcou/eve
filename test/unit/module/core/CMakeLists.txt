@@ -176,6 +176,8 @@ make_all_units(ROOT core NAME mul                   ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nb_values             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nearest               ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME negate                ARCH scalar simd TYPES ${all_types}     )  
+make_all_units(ROOT core NAME negatenz             ARCH scalar simd TYPES ${all_types}     )      
 make_all_units(ROOT core NAME next                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME nextafter             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME none                  ARCH scalar simd TYPES ${all_types}     )

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_NEGATENZ_HPP_INCLUDED
 
 #include <eve/function/scalar/negatenz.hpp>
-//#include <eve/function/simd/negatenz.hpp>
+#include <eve/function/simd/negatenz.hpp>
 
 #endif
