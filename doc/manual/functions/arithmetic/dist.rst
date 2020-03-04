@@ -46,7 +46,7 @@ Options
 
   - if the expected result is not representable in the parameter return type the result is undefined.
 
-  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
 
 *******
 Example

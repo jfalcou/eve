@@ -43,7 +43,7 @@ Synopsis
 Options
 *******
 
-  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
   
   - conditional call is allowed: ``add[cond](a,b)`` is equivalent (but optimized) to ``if_else(cond, add(a, b), a)``
 

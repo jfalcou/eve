@@ -40,7 +40,7 @@ Synopsis
 Options
 *******
 
-  With the :ref:`:ref:`pedantic_ <feature-decorator>` <feature-decorator>` decorator this function return a Nan for a Nan entry.
+  With the :r:ref:`pedantic_ <feature-decorator> decorator this function return a Nan for a Nan entry.
 
 Notes
 *****

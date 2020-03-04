@@ -45,7 +45,7 @@ Synopsis
 Options
 *******
 
-  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides the saturated operation.
+  - :ref:`saturated_ <feature-decorator>` decorator provides the saturated operation.
   
   - conditional call is allowed: ``sub[cond](a,b)`` is equivalent (but optimized) to ``if_else(cond, sub(a, b), a)``
 
