@@ -13,6 +13,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -25,7 +27,7 @@ namespace eve::detail
                               , wide<T, N, sse_> const &a0, wide<T, N, sse_> const &a1) noexcept
   requires(wide<T, N, sse_>, integral<T>)
   {
-    if(std::is_signed_v<T>)
+    if constexpr(std::is_signed_v<T>)
     {
       if (sizeof(T) == 8) return  map(negate, a0, a1);
       if (sizeof(T) == 4) return  _mm_sign_epi32(a0, a1);
@@ -34,7 +36,7 @@ namespace eve::detail
     }
     else
     {
-      return a0; 
+      return if_else(is_eqz(a1), eve::zero_, a0); 
     }
   }
 }
