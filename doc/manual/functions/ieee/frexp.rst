@@ -40,15 +40,15 @@ Notes
 *****
 
   -  The second pair member is also floating. If you need an integral typed exponent use  :ref:`ifrexp <function-ifrexp>`
-  -  If arg is :math:`\pm0`, {:math:`\pm0`, :math:`\0`} is returned. 
-  -  If arg is NaN,            { NaN, Nan} is returned.
+  -  If arg is :math:`\pm0`, {:math:`\pm0`, :math:`0`} is returned. 
+  -  If arg is NaN,            {NaN, NaN} is returned.
 
 Options
 *******
 
   - :ref:`raw_ <feature-decorator>`: the ``raw_`` decorator does not properly treat any of the corner cases described above
-  - without options :math:`\infty` input is undefined behaviour and denormals are not properly treared
-  - :ref:`pedantic_ <feature-decorator>`: is standard conforming even with denormals
+  - without decorators :math:`\infty` input leads to undefined behaviour and denormals are not properly treated
+  - :ref:`pedantic_ <feature-decorator>`: is standard conforming even with denormals as soon as the platform support them.
 
 
 .. seealso::  :ref:`ifrexp <function-ifrexp>`,  :ref:`ldexp <function-ldexp>`

@@ -38,8 +38,8 @@ Synopsis
 
 Notes
 *****
-  -  If arg is :math:`\pm0`, {:math:`\pm0`, :math:`\0`} is returned.
-  -  If arg is NaN,            { NaN, Nan} is returned.
+  -  If arg is :math:`\pm0`, {:math:`\pm0`, :math:`0`} is returned.
+  -  If arg is NaN,            {NaN, 0} is returned.
 
 Options
 *******

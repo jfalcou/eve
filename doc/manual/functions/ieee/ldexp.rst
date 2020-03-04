@@ -48,6 +48,17 @@ Synopsis
 
 .. seealso::  :ref:`frexp <function-frexp>`, :ref:`ifrexp <function-ifrexp>`, :ref:`mantissa <function-mantissa>`, :ref:`exponent <function-exponent>`, 
 
+Notes
+*****
+
+  - without decorator ``ldexp`` has undefined behaviour on denormal inputs 
+  - with  :ref:`pedantic_ <feature-decorator>`,  ``ldexp`` is conformant to standard behaviour.
+     * If x is :math:`\pm0`, it is returned, unmodified.
+     * If x is :math:`\pm\infty` it is returned, unmodified.
+     * If exp is 0, then x is returned, unmodified.
+     * If x is NaN, a NaN is returned.
+  - if the second parameter is floating, the call ``ldexp(a,b)`` is equivalent to ``ldexp(a,itrunc(b))``. 
+
 *******
 Example
 *******
