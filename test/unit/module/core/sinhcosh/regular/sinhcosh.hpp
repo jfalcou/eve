@@ -57,24 +57,15 @@ TTS_CASE("Check eve::sinhcosh behavior")
     auto [sh, ch] = eve::sinhcosh(Type(a[i]));
     auto  sh1     = std::sinh(a[i]);
     auto  ch1     = std::cosh(a[i]);
-    std::cout << " ======================== " << std::endl; 
     TTS_ULP_EQUAL(sh, (Type(sh1)), 0.5);
     TTS_ULP_EQUAL(ch, (Type(ch1)), 0.5);
-    std::cout  <<" a[" << i << "] " << std::setprecision(20) << a[i]<< std::endl;
-    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
-    std::cout  <<" sh1  " << std::setprecision(20) << sh1 << std::endl;
-    std::cout  <<" ch   " << std::setprecision(20) << ch << std::endl;
-    std::cout  <<" ch1  " << std::setprecision(20) << ch1 << std::endl;
-    std::cout << " ************************ " << std::endl; 
   }
   {  
     auto [sh, ch] = eve::sinhcosh(Type(-0.0)); 
-    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
     TTS_EXPECT(eve::all(eve::is_negative(sh)));
   }
   {
     auto [sh, ch] = eve::sinhcosh(Type(0.0)); 
-    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
     TTS_EXPECT(eve::all(eve::is_positive(sh)));
   }
 }

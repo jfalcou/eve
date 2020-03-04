@@ -46,11 +46,6 @@ TTS_CASE("Check eve::eve::sinh behavior")
   {
     auto sh  = eve::sinh(Type(a[i]));
     Value sh1 = std::sinh(double(a[i]));
-    std::cout << " ======================== " << std::endl; 
     TTS_ULP_EQUAL(sh, (Type(sh1)), 0.5);
-    std::cout  <<" a[" << i << "] " << std::setprecision(20) << a[i]<< std::endl;
-    std::cout  <<" sh   " << std::setprecision(20) << sh << std::endl;
-    std::cout  <<" sh1  " << std::setprecision(20) << sh1 << std::endl;
-    std::cout << " ************************ " << std::endl; 
   }
 }

@@ -42,11 +42,6 @@ TTS_CASE("Check eve::eve::cosh behavior")
   {
     auto ch  = eve::cosh(Type(a[i]));
     Value ch1 = std::cosh(double(a[i]));
-    std::cout << " ======================== " << std::endl; 
     TTS_ULP_EQUAL(ch, (Type(ch1)), 0.5);
-    std::cout  <<" a[" << i << "] " << std::setprecision(20) << a[i]<< std::endl;
-    std::cout  <<" ch   " << std::setprecision(20) << ch << std::endl;
-    std::cout  <<" ch1  " << std::setprecision(20) << ch1 << std::endl;
-    std::cout << " ************************ " << std::endl; 
   }
 }
