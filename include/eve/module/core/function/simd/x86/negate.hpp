@@ -21,11 +21,11 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  negate_(EVE_SUPPORTS(ssse3_)
-                         , wide<T, N, sse_> const &a0, wide<T, N, sse_> const &a1) noexcept
+  EVE_FORCEINLINE auto negate_(EVE_SUPPORTS(ssse3_)
+                              , wide<T, N, sse_> const &a0, wide<T, N, sse_> const &a1) noexcept
+  requires(wide<T, N, sse_>, integral<T>)
   {
-    if(std::is_integral_v<T> && std::is_signed_v<T>)
+    if(std::is_signed_v<T>)
     {
       if (sizeof(T) == 8) return  map(negate, a0, a1);
       if (sizeof(T) == 4) return  _mm_sign_epi32(a0, a1);
@@ -34,7 +34,7 @@ namespace eve::detail
     }
     else
     {
-      return negate_(EVE_RETARGET(cpu_), a0, a1);
+      return a0; 
     }
   }
 }
