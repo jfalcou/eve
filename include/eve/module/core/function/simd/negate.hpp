@@ -1,17 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
   Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2019 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NEGATE_HPP_INCLUDED
-#define EVE_FUNCTION_NEGATE_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_NEGATE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_NEGATE_HPP_INCLUDED
 
-#include <eve/function/scalar/negate.hpp>
-#include <eve/function/simd/negate.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/negate.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/negate.hpp>
+#endif
 
 #endif
