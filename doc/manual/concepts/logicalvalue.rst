@@ -18,4 +18,4 @@ Example
 -------
 
   - ``eve::logical<double>``
-  - ``eve::wide<eve::logical<std::uint8_t>>``
+  - ``eve::logical<eve::wide<std::uint8_t>>``
