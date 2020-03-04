@@ -30,6 +30,19 @@ namespace eve::detail
     else
       return a0;
   }
+
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto
+  negatenz_(EVE_SUPPORTS(cpu_)
+           , pedantic_type const &
+           , T const &a0, T const &a1) noexcept
+  requires(T, vectorizable<T>)
+  {
+    if constexpr(std::is_signed_v<T>)
+      return a0*pedantic_(signnz)(a1);
+    else
+      return a0;
+  }
 }
 
 #endif

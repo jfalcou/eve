@@ -35,15 +35,7 @@ TTS_CASE(" negatenz behaviour")
       TTS_EQUAL(eve::negatenz(eve::Minf<Type>(), eve::Minf<Type>()), eve::Inf<Type>());
       TTS_ULP_EQUAL((eve::negatenz(eve::Nan<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
       TTS_ULP_EQUAL((eve::negatenz(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negatenz(eve::Zero<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negatenz(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negatenz(eve::One<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negatenz(eve::Nan<Type>(), eve::One<Type>())), eve::Nan<Type>(), 0);
     }
-    TTS_EQUAL((eve::negatenz(eve::Mone<Type>(), eve::Mone<Type>())), eve::One<Type>());
-    TTS_EQUAL((eve::negatenz(eve::One<Type>(), eve::One<Type>())), eve::One<Type>());
-    TTS_EQUAL((eve::negatenz(eve::Zero<Type>(), eve::Zero<Type>())), eve::Zero<Type>());
-    TTS_EQUAL((eve::negatenz(eve::One<Type>(), eve::Zero<Type>())), eve::One<Type>());
     TTS_EQUAL((eve::negatenz(eve::One<Type>(), eve::Mzero<Type>())), eve::Mone<Type>()); 
     TTS_EQUAL((eve::negatenz(Type(2), Type(-3))), Type(-2));
     TTS_EQUAL((eve::negatenz(Type(2), Type(3))), Type(2));

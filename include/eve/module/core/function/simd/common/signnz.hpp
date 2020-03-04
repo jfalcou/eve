@@ -39,7 +39,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      return if_else(is_nan(a), eve::allbits_, bit_or(One(as(a)), bitofsign(a)));
+      return  bit_or(One(as(a)), bitofsign(a));
     }
     else
     {
@@ -61,11 +61,11 @@ namespace eve::detail
       {
         return if_else(is_nan(a), eve::allbits_, signnz(a));
       }
-      else
-      {
-        return signnz(a); 
-      }
-    } 
+    }
+    else
+    {
+      return signnz(a); 
+    }
   }
 }
 
