@@ -42,6 +42,8 @@ Notes
 
   - unary_minus on floating point types  changes the bit of sign.
 
+  - conditional call is allowed: ``unary_minus[cond](a)`` is equivalent (but optimized) to ``if_else(cond, unary_minus(a), a)``
+
   - take care that the infix notation on scalar can imply C++ promotion as it is the original operator.
 
 

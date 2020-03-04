@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::asecpi(xf) =            0
 <- yf =                      -nan
--> eve::asecpi(yf) =            nan
+-> eve::asecpi(yf) =            -nan

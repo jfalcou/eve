@@ -24,8 +24,8 @@ Synopsis
    template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise  decrement of the :ref:`wide <type-wide>`.
-* [2] Computes the decrement of the scalar.
+* [1] Computes the element-wise  decrement  by 1 of the :ref:`wide <type-wide>`.
+* [2] Computes the decrement  by 1 of the scalar.
 
 .. rubric:: Parameters
 
@@ -36,6 +36,12 @@ Synopsis
 
 * [1,2] A value with the same type as the parameter. *TODO*
 
+Options
+*******
+
+  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  
+  - conditional call is allowed: ``dec[cond](a)`` is equivalent (but potentially optimized) to ``if_else(cond, dec(a), a)``
 
 .. seealso::  :ref:`inc <function-inc>`
 

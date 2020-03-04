@@ -36,7 +36,8 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter. *TODO*
+* [1,2,4] A value with the same type as the wide parameter. 
+* [3]     A value of type T.
 
 Notes
 *****
@@ -51,9 +52,8 @@ Notes
 Options
 *******
 
-  this object function can be called with pedantic_ decorator in which case (pedantic_(div) is used internally instead of div.
+  this object function can be called with :ref:`pedantic_ <feature-decorator>` decorator in which case (pedantic_(div) is used internally instead of div.
 
-.. seealso::  :ref:`round <function-round>`
 
 Example
 *******

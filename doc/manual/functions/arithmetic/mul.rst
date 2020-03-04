@@ -43,6 +43,13 @@ Synopsis
 Options
 *******
 
+  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  
+  - conditional call is allowed: ``mul[cond](a,b)`` is equivalent (but optimized) to ``if_else(cond, mul(a, b), a)``
+
+  - apart the preceding case infix notation can be used with operator ``*``. But be aware that for scalars `*`` 
+    is the C++ operator and it result is subject to automatic promotions.
+
 Example
 *******
 

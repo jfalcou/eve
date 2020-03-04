@@ -29,9 +29,9 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s , wide<T,N> const& w)
    template<typename U>                       constexpr T operator()( U r, U s, U t ) noexcept;
 
-* [1] performs element-wise clamp of the firdt parameter between the two other ones
-* [2:4] convert the scalar type U to the wide type and perform element-wise element-wise clamp of the firdt parameter between the two other ones
-* [5]  performs  clamp of the firdt parameter between the two other ones
+* [1] performs element-wise clamp of the first parameter between the two other ones
+* [2:4] convert the scalar type U to the wide type and perform element-wise element-wise clamp of the first parameter between the two other ones
+* [5]  performs  clamp of the first parameter between the two other ones
 
 .. rubric:: Parameters
 

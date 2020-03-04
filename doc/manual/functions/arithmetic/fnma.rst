@@ -13,7 +13,7 @@ fnma
       constexpr /* implementation defined */ fnma = {};
    }
 
-Function object performing a fused negate-multiply/add between three :ref:`Values <concept-value>` of same element type
+Function object performing a fused negate-multiply-add between three :ref:`Values <concept-value>` of same element type
 
 
 ********
@@ -51,7 +51,7 @@ Notes
 
     The call ``fnma(x, y, z)`` is similar to ``-x*y+z``
 
-    But really conformant fused negate-multiply/add also implies
+    But really conformant fused negate-multiply-add also implies
 
     - only one rounding
 
@@ -62,15 +62,19 @@ Notes
     wired capability).
 
     If you need pedantic fnma capabilities in all circumstances in your own
-    code you can use the pedantic_ option (although both can be very expensive).
-    pedantic_ option ensures the fnma properties and allows SIMD acceleration if available.
+    code you can use the :ref:`pedantic_ <feature-decorator>`  or :ref:`numeric_ <feature-decorator>` options
+    (although both can be very expensive).
+
 
 *******
 Options
 *******
 
-    - pedantic_: ``fnma[pedantic_](x,y,z)`` ensures the fnma conformant properties and allows SIMD
+    - :ref:`pedantic_ <feature-decorator>`: ensures the fnma conformant properties and allows SIMD
       acceleration if available.
+
+    - :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
+      and allows SIMD acceleration if available.
 
 *******
 Example

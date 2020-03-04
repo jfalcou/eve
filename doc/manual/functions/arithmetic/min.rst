@@ -46,14 +46,14 @@ Options
 
     With :ref:`concept-ieeevalue` types, there is three ways to call ``min``:
 
-    * ``min(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
+    * ``min(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems
+       the intrinsics can act in different ways;
 
-    * ``min[pedantic_](x, y)``: in which case the call is equivalent to ``if_else(x < y, x, y)``;
+    * with :ref:`pedantic_ <feature-decorator>`, in which case the call is equivalent to ``if_else(x < y, x, y)``;
 
-    * ``min[num_](x, y)``: in which case if an element of ``x`` or ``y`` is a nan the corresponding result is the other value.
+    *  with :ref:`numeric__ <feature-decorator>`, in which case if an element of ``x`` or ``y`` is a nan the corresponding result is the other value.
 
-    The first way is the speediest.
-
+    The first way is always the speediest.
 
 Example
 *******

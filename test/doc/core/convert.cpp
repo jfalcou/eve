@@ -16,8 +16,7 @@ int main()
             << "-> eve::saturated_(eve::convert)(pf, eve::as<std::int16_t>()) = " << eve::saturated_(eve::convert)(pf, eve::as<std::int16_t>()) << '\n'
             << "-> eve::convert(pf, eve::as<std::int16_t>()) =                  " << eve::convert(pf, eve::as<std::int16_t>()) << '\n'    
             << "<- pi =                                                         " << pi << '\n'
-            << "-> eve::convert(pi, eve::as<double>()) =                        " << eve::convert(pi, eve::as<double>()) << '\n'
-            << "-> eve::pedantic_(eve::convert)(pi, eve::as<double>()) =        " << eve::pedantic_(eve::convert)(pi, eve::as<double>()) << '\n';
+            << "-> eve::convert(pi, eve::as<double>()) =                        " << eve::convert(pi, eve::as<double>()) << '\n'; 
 
   double        xf = -64768.4f;
   std::int64_t xi = -64768;

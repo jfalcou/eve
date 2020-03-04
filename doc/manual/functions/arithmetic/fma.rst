@@ -13,7 +13,7 @@ fma
       constexpr /* implementation defined */ fma = {};
    }
 
-Function object performing a fused multiply/add between three :ref:`Values <concept-value>` of same element type
+Function object performing a fused multiply-add between three :ref:`Values <concept-value>` of same element type
 
 
 ********
@@ -29,8 +29,8 @@ Synopsis
    template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s , wide<T,N> const& w)
    template<typename U>                       constexpr T operator()( U r, U s, U t ) noexcept;
 
-* [1] performs element-wise fused multiply/add of the three parameters
-* [2:4] convert the scalar type U to the wide type and perform element-wise fused multiply/add of the three parameters
+* [1] performs element-wise fused multiply-add of the three parameters
+* [2:4] convert the scalar type U to the wide type and perform element-wise fused multiply-add of the three parameters
 * [5] computes fused multiply/add of the three parameters
 
 .. rubric:: Parameters
@@ -51,7 +51,7 @@ Notes
 
     The call ``fma(x, y, z)`` is similar to ``x*y+z``
 
-    But really conformant fused multiply/add also implies
+    But really conformant fused-multiply-add also implies
 
     - only one rounding
 
@@ -61,16 +61,18 @@ Notes
     in terms of performance for :ref:`concept-ieeevalue` ones (i.e. if the system has the hard
     wired capability).
 
-    If you need pedantic fma capabilities in all circumstances in your own
-    code you can use the pedantic_ option (although it can be very expensive).
-    pedantic_ option ensures the fused conformant properties and allows SIMD
-    acceleration if available.
+    If you need conformant fma capabilities in all circumstances in your own
+    code you can use the :ref:`pedantic_ <feature-decorator>` or :ref:`numeric_ <feature-decorator>` 
+    options (although it can be very expensive).
 
 *******
 Options
 *******
 
-    - pedantic_: ``fma[pedantic_](x,y,z)`` ensures the fma conformant properties
+    - :ref:`pedantic_ <feature-decorator>` decorator ensures the one rounding property
+      and allows SIMD acceleration if available.
+ 
+    - :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
       and allows SIMD acceleration if available.
 
 *******

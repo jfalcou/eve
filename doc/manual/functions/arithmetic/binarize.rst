@@ -30,9 +30,10 @@ Synopsis
    template<typename T, typename N>              wide<T,N> operator()  ( logical<T> s, mone_) noexcept;
    template<typename T, typename U>>             constexpr T operator()( logical<T> s, mone_) noexcept;
 
-* [1,2] Computes a potentially  optimized version of if_else(cond, 1,   0).
-* [3,4] Computes a potentially  optimized version of if_else(cond, val, 0).
-* [5,6] Computes a potentially  optimized version of if_else(cond, -1,  0).
+* [1,2] Computes a potentially  optimized version of ``if_else(cond, 1,   0)``.
+* [3,4] Computes a potentially  optimized version of ``if_else(cond, val, 0)``.
+* [5,6] Computes a potentially  optimized version of ``if_else(cond, nan, 0)``.
+* [7,8] Computes a potentially  optimized version of ``if_else(cond, -1,  0)``.
 
 .. rubric:: Parameters
 
@@ -48,9 +49,6 @@ Notes
 ******
 
   - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logicalvalue`.
-
-Options
-*******
 
 Example
 *******

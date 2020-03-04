@@ -25,7 +25,7 @@ Synopsis
    template<typename T> constexpr    T         operator()( T s ) noexcept;
 
 * [1] Computes the element-wise square of tha absolute value of the :ref:`wide <type-wide>`.
-* [2] Computes the square of tha absolute value of the scalar.
+* [2] Computes the square of the absolute value of the scalar.
 
 .. rubric:: Parameters
 
