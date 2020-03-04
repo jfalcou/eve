@@ -37,18 +37,18 @@ Synopsis
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`logicaltype-wide`.
+* **v**: Instance of :ref:`concept-logical`.
 * **s**: Scalar logical value.
 * **val** : Scalar value convertible to T
 
 .. rubric:: Return value
 
-* [1-6] A value with the same type as the base of the :ref:`concept-logicalvalue` first parameter.
+* [1-6] A value with the same type as the base of the :ref:`concept-logical` first parameter.
 
 Notes
 ******
 
-  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logicalvalue`.
+  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logical`.
 
 Example
 *******

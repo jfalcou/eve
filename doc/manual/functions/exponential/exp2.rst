@@ -36,7 +36,7 @@ Synopsis
 
 * [1,2] A value with the same type as the parameter. 
 
-.. seealso::  :ref:`exp <function-exp>`,  :ref:`exp10 <function-*exp10>`,  :ref:`expm1 <function-*expm1>`,
+.. seealso::  :ref:`exp <function-exp>`,  :ref:`exp10 <function-exp10>`,  :ref:`expm1 <function-expm1>`,
   :ref:`log <function-log>`, :ref:`log <function-log>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, 
 
 Example

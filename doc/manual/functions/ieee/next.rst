@@ -13,8 +13,8 @@ next
       constexpr /* implementation defined */ next = {};
    }
 
-    This function object returns the  (`n`-th if the second parameter is present) least representable
-    element strictly greater than the parameter
+This function object returns the  (`n`-th if the second parameter is present) least representable
+element strictly greater than the parameter
 
 
 Synopsis

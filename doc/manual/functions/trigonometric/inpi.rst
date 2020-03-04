@@ -37,8 +37,6 @@ Synopsis
 * [1,2] A value with the same type as the parameter. *TODO*
 
 
-.. seealso::  :ref:`deginrad <function-deginrad>`
-
 Example
 *******
 

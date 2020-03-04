@@ -30,6 +30,7 @@ Synopsis
 * [1] Computes the element_wise next representable value of x in the direction of y. If x equals y, then x is returned.
 * [2] Computes the element_wise next representable value of x in the direction of z. If x equals y, then x is returned.
 * [3] Computes the next representable value of s in the direction of z. If x equals z, then s is returned.
+
 .. rubric:: Parameters
 
 * **x**, **y**: Instance of :ref:`type-wide`.

@@ -33,7 +33,7 @@ Synopsis
 
 .. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide``.
+* **v**, **w**: Instances of :ref:`wide <type-wide>`.
 * **s**, **t**: Scalar values of type **U**.
 
 .. rubric:: Return value

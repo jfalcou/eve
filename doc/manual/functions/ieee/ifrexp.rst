@@ -13,7 +13,7 @@ ifrexp
       constexpr /* implementation defined */ ifrexp = {};
    }
 
-Function object Decomposing a :ref:`IEEEValue <ieeeconcept-value>` into a normalized fraction and an integral power of two.
+Function object Decomposing a :ref:`IEEEValue <concept-ieeevalue>` into a normalized fraction and an integral power of two.
 
 Synopsis
 ********
@@ -50,7 +50,7 @@ Options
 
 
 
-.. seealso::  :ref:`ifrexp <function-frexp>`,  :ref:`ldexp <function-ldexp`
+.. seealso::  :ref:`ifrexp <function-frexp>`,  :ref:`ldexp <function-ldexp>`
 
 Example
 *******

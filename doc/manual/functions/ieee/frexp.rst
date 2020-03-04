@@ -13,7 +13,7 @@ frexp
       constexpr /* implementation defined */ frexp = {};
    }
 
-Function object Decomposing a :ref:`IEEEValue <ieeeconcept-value>` into a normalized fraction and an integral power of two.
+Function object Decomposing a :ref:`IEEEValue <concept-ieeevalue>` into a normalized fraction and an integral power of two.
 
 Synopsis
 ********
@@ -39,7 +39,7 @@ Synopsis
 Notes
 *****
 
-  -  The second pair member is also floating. If you need an integral typed exponent use  :ref:`ifrexp <function-*ifrexp>`
+  -  The second pair member is also floating. If you need an integral typed exponent use  :ref:`ifrexp <function-ifrexp>`
   -  If arg is :math:`\pm0`, {:math:`\pm0`, :math:`\0`} is returned. 
   -  If arg is NaN,            { NaN, Nan} is returned.
 
@@ -51,7 +51,7 @@ Options
   - :ref:`pedantic_ <feature-decorator>`: is standard conforming even with denormals
 
 
-.. seealso::  :ref:`ifrexp <function-ifrexp>`,  :ref:`ldexp <function-ldexp`
+.. seealso::  :ref:`ifrexp <function-ifrexp>`,  :ref:`ldexp <function-ldexp>`
 
 Example
 *******

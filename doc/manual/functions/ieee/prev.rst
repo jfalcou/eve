@@ -13,8 +13,8 @@ prev
       constexpr /* implementation defined */ prev = {};
    }
 
-    This function object returns the  (`n`-th if the second parameter is present) greatest representable
-    element strictly less than the parameter
+This function object returns the  (`n`-th if the second parameter is present) greatest representable
+element strictly less than the parameter
 
 
 Synopsis
