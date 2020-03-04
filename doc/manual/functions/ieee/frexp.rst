@@ -46,7 +46,7 @@ Notes
 Options
 *******
 
-  - :ref:`raw_ <feature-decorator>`: the raw_ option does not properly treat any of the corner cases described above
+  - :ref:`raw_ <feature-decorator>`: the ``raw_`` decorator does not properly treat any of the corner cases described above
   - without options :math:`\infty` input is undefined behaviour and denormals are not properly treared
   - :ref:`pedantic_ <feature-decorator>`: is standard conforming even with denormals
 
