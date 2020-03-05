@@ -35,11 +35,17 @@ TTS_CASE("Check eve::eve::sinh behavior")
     TTS_IEEE_EQUAL(eve::sinh(eve::Inf<Type>()) , (eve::Inf<Type>()) );
     TTS_IEEE_EQUAL(eve::sinh(eve::Minf<Type>()), (eve::Minf<Type>()) );   
   }
-  TTS_ULP_EQUAL(eve::sinh(Type(1)), Type(std::sinh(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(Type(-1)),Type(std::sinh(-1.0)), 0.5);
-  TTS_IEEE_EQUAL((eve::sinh(Type(0))), (Type(0)));
-  TTS_IEEE_EQUAL((eve::sinh(eve::Mzero<Type>())), (Type(0)));
   TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(eve::Mzero<Type>()))) );
   TTS_EXPECT(eve::all(eve::is_positive(eve::sinh(Type(0))))            );
-
+  
+  Value ovflimit =  eve::Ieee_constant<Value,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
+  std::array<Value, 10> a = {Value(1), Value(-1), Value(0), Value(-0.0), Value(10), Value(-10)
+                             , eve::Maxlog<Value>(), ovflimit/2, ovflimit, 2*ovflimit};
+  
+  for(size_t i=0; i < a.size(); ++i)
+  {
+    auto sh  = eve::sinh(Type(a[i]));
+    Value sh1 = std::sinh(double(a[i]));
+    TTS_ULP_EQUAL(sh, (Type(sh1)), 0.5);
+  }
 }

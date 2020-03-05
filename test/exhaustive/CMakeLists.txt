@@ -108,6 +108,7 @@ make_all_units(ROOT exhaustive NAME sech              ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME sign              ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME signnz            ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sinh              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
+make_all_units(ROOT exhaustive NAME sinhcosh          ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME sqr               ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sqr_abs           ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sqrt              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
@@ -115,4 +116,3 @@ make_all_units(ROOT exhaustive NAME tanh              ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME trunc             ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)
 make_all_units(ROOT exhaustive NAME unary_minus       ARCH scalar simd TYPES ${signed_types_32}    CARDINAL -1)
 make_all_units(ROOT exhaustive NAME unary_plus        ARCH scalar simd TYPES ${all_types_32}       CARDINAL -1)
-  

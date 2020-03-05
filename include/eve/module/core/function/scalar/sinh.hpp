@@ -17,10 +17,10 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/fnma.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/div.hpp>
-#include <eve/constant/maxlog.hpp>
 #include <eve/constant/half.hpp>
 #include <type_traits>
 
@@ -31,19 +31,23 @@ namespace eve::detail
                                      , T a0) noexcept
   requires(T, floating_point<T>)
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(eve::sinh, a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::sinh, a0);
-    else
+    T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
+    auto x = eve::abs(a0);
+    if (is_eqz(a0)) return a0;
+    auto h = (a0 > T(0)) ? T(1) : T(-1);
+    if (x >= ovflimit)
     {
-      if(is_eqz(a0) || is_infinite(a0)) return a0; 
-      auto x = eve::abs(a0);
-      auto h = copysign(Half<T>(), a0); 
-      auto t = expm1(x);
-      auto u = t/(t+1);
-      auto z = is_less(x, Maxlog<T>()) ? fnma(t, u, t) : u;
-      return h*(t+z); 
-    }; 
+      auto w = exp(x*Half<T>());
+      auto t = Half<T>()*w;
+      t *= w;
+      return t*h; 
+    }
+    h*= Half<T>(); 
+    auto t = expm1(x);
+    auto inct = inc(t); 
+    auto u = t/inct;
+    auto s = h*(fnma(t, u, t)+t);
+    return s; 
   }
 }
 
