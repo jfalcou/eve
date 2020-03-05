@@ -5,6 +5,5 @@
 <- xf =                      1
 -> eve::acsch(xf) =            0.881374
 <- yf =                      -nan
-<<<<<<< HEAD
 -> eve::acsch(yf) =            -nan
 
