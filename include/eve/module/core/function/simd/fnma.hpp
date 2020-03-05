@@ -18,4 +18,8 @@
 #  include <eve/module/core/function/simd/x86/fnma.hpp>
 #endif
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/fnma.hpp>
+#endif
+
 #endif

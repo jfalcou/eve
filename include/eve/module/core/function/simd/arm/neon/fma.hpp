@@ -27,10 +27,10 @@ namespace eve::detail
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vmla_f64(v2, v1, v0);
+    if constexpr(std::is_same_v<T, double>) return vfma_f64(v2, v1, v0);
 #endif
 
-    if constexpr(std::is_same_v<T, float>) return vmla_f32(v2, v1, v0);
+    if constexpr(std::is_same_v<T, float>) return vfma_f32(v2, v1, v0);
 
     if constexpr(is_signed_int && sizeof(T) == 8) return map(fma, v0, v1, v2);
     if constexpr(is_signed_int && sizeof(T) == 4) return vmla_s32(v2, v1, v0);
@@ -40,6 +40,16 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 4) return vmla_u32(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 2) return vmla_u16(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vmla_u8(v2, v1, v0);
+  }
+
+  template<typename D, typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> fma_(EVE_SUPPORTS(neon128_),
+                                           D const &,
+                                           wide<T, N, neon64_> const &v0,
+                                           wide<T, N, neon64_> const &v1,
+                                           wide<T, N, neon64_> const &v2) noexcept
+  {
+    return fma(v0, v1, v2);
   }
 
   template<typename T, typename N>
@@ -52,10 +62,10 @@ namespace eve::detail
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vmlaq_f64(v2, v1, v0);
+    if constexpr(std::is_same_v<T, double>) return vfmaq_f64(v2, v1, v0);
 #endif
 
-    if constexpr(std::is_same_v<T, float>) return vmlaq_f32(v2, v1, v0);
+    if constexpr(std::is_same_v<T, float>) return vfmaq_f32(v2, v1, v0);
 
     if constexpr(is_signed_int && sizeof(T) == 8) return map(fma, v0, v1, v2);
     if constexpr(is_signed_int && sizeof(T) == 4) return vmlaq_s32(v2, v1, v0);
@@ -65,6 +75,16 @@ namespace eve::detail
     if constexpr(is_unsigned_int && sizeof(T) == 4) return vmlaq_u32(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 2) return vmlaq_u16(v2, v1, v0);
     if constexpr(is_unsigned_int && sizeof(T) == 1) return vmlaq_u8(v2, v1, v0);
+  }
+
+  template<typename D, typename T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
+                                            D const &,
+                                            wide<T, N, neon128_> const &v0,
+                                            wide<T, N, neon128_> const &v1,
+                                            wide<T, N, neon128_> const &v2) noexcept
+  {
+    return fma(v0, v1, v2);
   }
 }
 

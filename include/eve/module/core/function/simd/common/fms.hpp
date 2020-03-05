@@ -60,6 +60,18 @@ namespace eve::detail
       return T();
     }
   }
+
+  template<typename D, typename T, typename U, typename V>
+  EVE_FORCEINLINE auto
+  fms_(EVE_SUPPORTS(cpu_)
+     ,  D const & deco
+      , T const &a, U const &b, V const &c) noexcept requires(
+      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+  {
+    return deco(fma)(a, b, -c); 
+  }
+  
 }
 
 #endif

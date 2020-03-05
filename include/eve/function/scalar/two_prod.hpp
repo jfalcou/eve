@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_TWO_PROD_HPP_INCLUDED
 
 #include <eve/function/definition/two_prod.hpp>
-#include <eve/module/core/function/scalar/two_prod.hpp>
+#include <eve/module/core/function/generic/two_prod.hpp>
 
 #endif

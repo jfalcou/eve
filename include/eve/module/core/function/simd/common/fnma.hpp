@@ -31,6 +31,17 @@ namespace eve::detail
   {
     return eve::fma(-a, b, c);
   }
+
+  template<typename D, typename T, typename U, typename V>
+  EVE_FORCEINLINE auto
+  fnma_(EVE_SUPPORTS(cpu_)
+     ,  D const & deco
+      , T const &a, U const &b, V const &c) noexcept requires(
+      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
+      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+  {
+    return deco(fma)(-a, b, c); 
+  }  
 }
 
 #endif
