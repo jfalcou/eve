@@ -114,14 +114,13 @@ namespace eve::detail
         {
           if constexpr(std::is_same_v<D, numeric_type>)
           {
-            using iT = as_integer_t<T>;
-            T amax =  maxmag(a, b);
-            T amin =  minmag(a, b);
-            iT e0 = -shr(exponent(amax), 1);
+            auto amax =  maxmag(a, b);
+            auto amin =  minmag(a, b);
+            auto e0 = -shr(exponent(amax), 1);
             amax = pedantic_(ldexp)(amax, e0);
-            T a0 = pedantic_(ldexp)(a, e0);
+            auto c0 = pedantic_(ldexp)(c, e0);
             auto [p, rp] = two_prod(amax, amin);
-            auto [s, rs] = two_add(p, a0);
+            auto [s, rs] = two_add(p, c0);
             return pedantic_(ldexp)(s+(rp+rs), -e0);
           }
           else if constexpr(std::is_same_v<D, pedantic_type>)
