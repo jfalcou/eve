@@ -19,36 +19,29 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>              wide<T,N> operator()  ( logical<wide<T,N>> const& v) noexcept;
-   template<typename T>                          constexpr T operator()( logical<T> s ) noexcept;
-   template<typename T, typename N, typename U>  wide<T,N> operator()  ( logical<wide<T,N>> const& v, U val) noexcept;
-   template<typename T, typename U>>             constexpr T operator()( logical<T> s, U val ) noexcept;
-   template<typename T, typename N>              wide<T,N> operator()  ( logical<T> s, allbits_) noexcept;
-   template<typename T, typename U>>             constexpr T operator()( logical<T> s, allbits_) noexcept;
-   template<typename T, typename N>              wide<T,N> operator()  ( logical<T> s, mone_) noexcept;
-   template<typename T, typename U>>             constexpr T operator()( logical<T> s, mone_) noexcept;
+   template<typename T, typename U> constexpr T operator()( logical<T> c, U val = 1 ) noexcept;
 
-* [1,2] Computes a potentially  optimized version of ``if_else(cond, 0,   1)``.
-* [3,4] Computes a potentially  optimized version of ``if_else(cond, 0, val)``.
-* [5,6] Computes a potentially  optimized version of ``if_else(cond, 0, nan)``.
-* [7,8] Computes a potentially  optimized version of ``if_else(cond, 0,  -1)``.
+* Computes a potentially  optimized version of ``if_else(c, T(0), T(val))``.
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`concept-logical`.
-* **s**: Scalar logical value.
-* **val** : Scalar value convertible to T
+* **c**: Instance of a :ref:`logical value <concept-logical>`.
+* **val**: Instance of a ref:`concept-vectorizable` value convertible to T or `eve::mone_` or `eve::allbits_`
 
 .. rubric:: Return value
 
-* [1-6] A value with the same type as the base of the :ref:`concept-logical` first parameter.
+*  A value with the same type as the base of the :ref:`concept-logical` first parameter (i.e. **T**).
 
 Notes
 ******
 
-  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logical`.
+  - Be aware that for  the first parameter must not be a  :ref:`concept-value` nor a bool but a :ref:`concept-logical`
+    from the base of which the return type is infered.
+  
+  - U cannot be a vectorized type.
+
+.. seealso::  :ref:`binarize <function-binarize>`,  :ref:`if_else <function-if_else>`
 
 Example
 *******

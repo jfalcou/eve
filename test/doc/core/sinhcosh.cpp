@@ -1,4 +1,4 @@
-#include <eve/function/frexp.hpp>
+#include <eve/function/sinhcosh.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minf.hpp>
@@ -12,11 +12,11 @@ int main()
   wide_ft pf = {2.0f, 1.0f, -1.0f, eve::Inf<float>()
                 , eve::Minf<float>(), eve::Nan<float>(), 0.0f, -2.0f};
 
-  auto [sh, ch] =  eve::pedantic_(eve::sinhcosh)(pf); 
+  auto [sh, ch] =  eve::sinhcosh(pf); 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                                  " << pf << '\n'
-            << "-> eve::pedantic_(eve::sinhcosh)(pf) =  [" << sh << ", \n"
-            << "                                         " << ch << "] \n"; 
+            << "<- pf =                  " << pf << '\n'
+            << "-> eve::sinhcosh(pf) =  [" << sh << ", \n"
+            << "                         " << ch << "] \n"; 
 
   float xf = 2;
   auto [ssh, sch] =  eve::sinhcosh(xf); 

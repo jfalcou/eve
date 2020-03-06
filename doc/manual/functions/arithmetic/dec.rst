@@ -19,31 +19,28 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise  decrement  by 1 of the :ref:`wide <type-wide>`.
-* [2] Computes the decrement  by 1 of the scalar.
+*  Computes the element-wise absolute value of the :ref:`Value <concept-value>`.
 
-.. rubric:: Parameters
+.. rubric:: Parameter
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter. *TODO*
+* A value with the same type as the parameter.
 
 Options
 *******
 
   - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
   
-  - conditional call is allowed: ``dec[cond](a)`` is equivalent (but potentially optimized) to ``if_else(cond, dec(a), a)``
+  - :ref:`masked call <feature-maskable>` is allowed: ``dec[cond](x)`` is equivalent to ``if_else(cond, dec(x), x)``, 
+    but can be subject to optimization.
 
-.. seealso::  :ref:`inc <function-inc>`
+.. seealso::  :ref:`inc <function-inc>`, :ref:`oneminus <function-oneminus>`
 
 Example
 *******

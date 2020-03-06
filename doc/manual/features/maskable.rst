@@ -16,6 +16,18 @@ Syntax
   where ``T`` is ``decltype(func_(x, ...))``. (In particular this feature is not available if ``x``
   is not convertible to ``T``).
 
+The avaibility of such syntax is indicated explicitly in each function documentation page.
+
+Up to now the object function allowing this feature are:
+
+  * add
+  * dec
+  * div
+  * inc
+  * mul
+  * sub
+  * unary_minus
+  
 Example
 -------
 

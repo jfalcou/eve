@@ -20,30 +20,30 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T>             constexpr   T         operator()( T s, T t ) noexcept;
+   template<typename T> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1] Computes the element-wise average of the two :ref:`wide <type-wide>`.
-* [2] Computes the average of the scalar and each elements of the :ref:`type-wide` instance.
-* [3] Computes the average of the two scalars.
+* Computes the element-wise average of two :ref:`Values <concept-value>`.
+
 
 .. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide`.
-* **s**, **t**: Scalar values of type **T**.
+* Each parameter must be a :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the first parameter.
-* [3] A value of type **T**.
-
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 *******
 Notes
 *******
+
+* This function does not overflow.
 
 * Using `average(x, y)` for :ref:`concept-ieeevalue` entries is similar to  `(x+y)/2`
 

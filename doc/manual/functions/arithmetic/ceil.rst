@@ -19,22 +19,18 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise least integral values greater or equal to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the least integral value greater or equal to the value of the scalar.
+*  Computes the element-wise least integral value greater or equal to the  value of the parameter`.
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
 Notes
 ******
@@ -44,6 +40,7 @@ Notes
 
   - the call to ``ceil(a)`` is equivalent to the call ``round(a,upward_)``
 
+  - On :ref:`Integral Value <concept-integralvalue>` parameter it returns the input unchanged.
 
 
 Example

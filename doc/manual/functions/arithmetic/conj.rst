@@ -20,31 +20,25 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T x ) noexcept;
 
-* [1] Computes the element-wise conjugate of the :ref:`wide <type-wide>`.
-* [2] Computes the conjugate of the scalar.
+*  Computes the element-wise conjugate value of the :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
-
-Options
-*******
+* A value with the same type as the parameter.
 
 Notes
 *****
 
-This function coincides with identity on ref:`concept-ieeevalue` and is not defined for :ref:`concept-integralvalue` types.
-Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide.
+  - This function coincides with identity on ref:`concept-ieeevalue` and is not defined for :ref:`concept-integralvalue` types.
+
+  - Its use will be extended in a future complex module. On complex entries `conj` and identity do not coincide.
 
 Example
 *******

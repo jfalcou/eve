@@ -39,7 +39,8 @@ Synopsis
 
 .. rubric:: Return value
 
-* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  the common type of the  :ref:`concept-vectorizable` parameters.
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 
 *****

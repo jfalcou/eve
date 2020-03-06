@@ -19,22 +19,26 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T x ) noexcept;
 
-* [1] Returns the element-wise masking of all bits of the parameter except the highest one.
-* [2] Returns the masking of all bits of the parameter except the highest one. .
+* Returns the element-wise masking of all bits of the parameter except the highest one.
 
-.. rubric:: Parameters
+.. rubric:: Parameter
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
+
+Notes
+******
+
+ - This function is not a sign function: the results elements are always 
+   :math:`\pm0` for any :ref:`IEEEValue <concept-ieeevalue>` and has undefined behaviour on Nans.
+
+.. seealso::  :ref:`sign <function-sign>`,  :ref:`signz <function-signnz>`
 
 Example
 *******

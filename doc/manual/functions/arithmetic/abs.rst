@@ -19,31 +19,29 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise absolute value of the :ref:`wide <type-wide>`.
-* [2] Computes the absolute value of the scalar.
+*  Computes the element-wise absolute value of the :ref:`Value <concept-value>`.
 
-.. rubric:: Parameters
+.. rubric:: Parameter
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
 Notes
 ******
 
   - Be aware that for signed integers the absolute value of :ref:`Valmin <constant-valmin>` is
-    not representable  in the input type and the result is undefined. Use the `:ref:`saturated_ <feature-decorator>`` decorator to avoid
-    this problem: if ``iT`` is a signed integer type, ``:ref:`saturated_ <feature-decorator>`(abs(Valmin<iT>())`` returns ``Valmax<iT>()``.
+    not representable  in the input type and the result is undefined. Use the :ref:`saturated_ <feature-decorator>` decorator to avoid
+    this problem: if ``iT`` is a signed integer type, `:ref:`saturated_ <feature-decorator>`(abs(Valmin<iT>())` returns `Valmax<iT>()`.
 
-  - ``abs`` is a also a standard library function name and there possibly exists
+  - With :ref:`saturated_ <feature-decorator>` the result is guaranted to be positive or 0.
+
+  - Be also aware that ``abs`` is a also a standard library function name and there possibly exists
     a C macro version which may be called instead of the boost simd version.
     To avoid this you may prefix ``abs`` using ``eve::abs`` notation.
 

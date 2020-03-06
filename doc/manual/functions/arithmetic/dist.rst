@@ -20,33 +20,31 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<U,N> operator()( U s,                wide<T,N> const& w ) noexcept; 
-   template<typename T>             constexpr   T         operator()( T s, T t ) noexcept;
+   template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1] Computes the element-wise distance of the two :ref:`wide <type-wide>`.
-* [2] Computes the dist of the scalar and each elements of the :ref:`type-wide` instance.
-* [3] Computes the dist of the two scalars.
+* Computes the element-wise distance of two :ref:`Values <concept-value>`.
+
 
 .. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`wide <type-wide>`.
-* **s**, **t**: Scalar values of type **U**.
+* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
 
 .. rubric:: Return value
 
-* [1-3] A value with the same type as the wide parameter.
-* [3] A value of type **T**.
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 Options
 *******
 
   - if the expected result is not representable in the parameter return type the result is undefined.
 
-  - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  - With :ref:`saturated_ <feature-decorator>` decorator the result is saturated (so never undefined).
 
 *******
 Example

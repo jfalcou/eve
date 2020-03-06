@@ -19,25 +19,24 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
-   template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
+   template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1-3] Returns  element-wise value the first parameter with the sign of the second.
-* [4] Returns the first parameter with the sign of the second.
+* Computes the element-wise value the first parameter with the sign of the second.
+
 
 .. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide`.
-* **s**, **t**: Scalar values of type **U** which must be convertible to **T**.
+* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
 
 .. rubric:: Return value
 
-* [1-3] A value with the same type as the :ref:`type-wide` parameter.
-* [4] A value of type **T**.
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 Example
 *******

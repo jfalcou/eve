@@ -13,28 +13,31 @@ cbrt
       constexpr /* implementation defined */ cbrt = {};
    }
 
-Function object computing the cubic root  of a :ref:`IEEEValue <concept-ieeevalue>`
+Function object computing the cubic root of a :ref:`IEEEValue <concept-ieeevalue>`
 
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
 
-* [1] Computes the element-wise  cubic root of the :ref:`IEEEValue <concept-ieeevalue>`
-* [2] Computes the cubic root of the floating point scalar.
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
+
+*  Computes the element-wise cubic root value of the :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
+
+Notes
+*****
+
+  - If the argument is :math:`\pm0` or :math:`\pm\infty`, it is returned, unchanged
+  - If the argument is a NaN, a NaN is returned. 
 
 
 .. seealso::  :ref:`sqrt <function-sqrt>`,  :ref:`rsqrt <function-rsqrt>`
