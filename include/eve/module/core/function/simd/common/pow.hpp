@@ -130,7 +130,7 @@ namespace eve::detail
   requires(T, vectorized<T>, behave_as<integral, T>, integral<U>)
   {
     if (a1 >= U(sizeof(T)*8-1-(std::is_signed_v<T>)) || a1 < 0) return T(0); 
-     constexpr const uint8_t highest_bit_set[] = {
+     constexpr uint8_t highest_bit_set[] = {
         0, 1, 2, 2, 3, 3, 3, 3,
         4, 4, 4, 4, 4, 4, 4, 4,
         5, 5, 5, 5, 5, 5, 5, 5,
