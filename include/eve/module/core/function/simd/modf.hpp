@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MODF_HPP_INCLUDED
-#define EVE_FUNCTION_MODF_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_MODF_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_MODF_HPP_INCLUDED
 
-#include <eve/function/scalar/modf.hpp>
-#include <eve/function/simd/modf.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/simd/common/modf.hpp>
 
 #endif
