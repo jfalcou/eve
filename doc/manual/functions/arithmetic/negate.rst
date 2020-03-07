@@ -27,14 +27,16 @@ Synopsis
 *  Computes the element-wise product of the first parameter with the sign of the second.
 
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * Each parameter can be an :ref:`Ieee Value <concept-ieeevalue>` or a scalar.
 * All vectorized parameters must share the same type
 * If at least one parameter is vectorized, all scalar paramaters will be converted to its base type prior any other computations
 * If all parameters are scalar they must share the same floating type.
 
-.. rubric:: Return value
+Return value
+**************
 
 * If any parameter is vectorized, a value of this type else a value of  the common type of the scalar parameters.
 

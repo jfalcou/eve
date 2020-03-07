@@ -29,7 +29,8 @@ Synopsis
 * [2] Computes the element-wise hypot of the three entries.
 
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
@@ -37,7 +38,8 @@ Synopsis
   its base type prior any other computation.
 * If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-ieeevalue>` type.
 
-.. rubric:: Return value
+Return value
+************
 
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.

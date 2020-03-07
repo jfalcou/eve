@@ -13,7 +13,7 @@ dec
       constexpr /* implementation defined */ dec = {};
    }
 
-Function object decrement by 1 a :ref:`Value <concept-value>`.
+Function object returning  a :ref:`Value <concept-value>` decremented by 1 
 
 Synopsis
 ********
@@ -22,20 +22,21 @@ Synopsis
 
    template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-*  Computes the element-wise absolute value of the :ref:`Value <concept-value>`.
+*  Computes the element-wise  :ref:`Value <concept-value>` minus 1.
 
 .. rubric:: Parameter
 
 * Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 
 Options
 *******
 
-  - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  - With :ref:`saturated_ <feature-decorator>`, provides (no surprise) the saturated operation.
   
   - :ref:`masked call <feature-maskable>` is allowed: ``dec[cond](x)`` is equivalent to ``if_else(cond, dec(x), x)``, 
     but can be subject to optimization.

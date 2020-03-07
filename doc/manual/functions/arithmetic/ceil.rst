@@ -24,11 +24,13 @@ Synopsis
 
 *  Computes the element-wise least integral value greater or equal to the  value of the parameter`.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 
@@ -42,6 +44,7 @@ Notes
 
   - On :ref:`Integral Value <concept-integralvalue>` parameter it returns the input unchanged.
 
+.. seealso::  :ref:`iceil <function-iceil>`
 
 Example
 *******

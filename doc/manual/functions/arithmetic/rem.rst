@@ -29,12 +29,14 @@ Synopsis
 * [1:3] Computes the element-wise  remaider after division of the parameters.
 * [4] Computes the remaider after division of the two scalar.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**: Instance of :ref:`type-wide`.
 * **s**: Scalar value.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1,2,4] A value with the same type as the wide parameter. 
 * [3]     A value of type T.

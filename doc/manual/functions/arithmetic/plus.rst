@@ -27,12 +27,14 @@ Synopsis
 
 * [1,2] Returns the unchanged input value.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**: Instance of :ref:`type-wide`.
 * **s**: Scalar value.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1,2] A value with the same type as the parameter. *TODO*
 

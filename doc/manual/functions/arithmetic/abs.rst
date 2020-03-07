@@ -28,7 +28,8 @@ Synopsis
 
 * Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 
@@ -37,7 +38,7 @@ Notes
 
   - Be aware that for signed integers the absolute value of :ref:`Valmin <constant-valmin>` is
     not representable  in the input type and the result is undefined. Use the :ref:`saturated_ <feature-decorator>` decorator to avoid
-    this problem: if ``iT`` is a signed integer type, `:ref:`saturated_ <feature-decorator>`(abs(Valmin<iT>())` returns `Valmax<iT>()`.
+    this problem: if ``iT`` is a signed integer type, ``saturated_(abs(Valmin<iT>())`` returns ``Valmax<iT>()``.
 
   - With :ref:`saturated_ <feature-decorator>` the result is guaranted to be positive or 0.
 

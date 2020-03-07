@@ -27,7 +27,8 @@ Synopsis
 
 * performs element-wise fused negate-multiply-add of the three parameters
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
@@ -35,7 +36,8 @@ Synopsis
   its base type prior any other computation.
 * If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-ieeevalue>` type.
 
-.. rubric:: Return value
+Return value
+**************
 
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
@@ -50,7 +52,7 @@ Notes
 
     - only one rounding
 
-    - no "intermediate" overflow
+    - nointermediate" overflow
 
     Our ``fnma`` provides this for all :ref:`concept-integralvalue` types and also each time it is reasonable
     in terms of performance for :ref:`concept-ieeevalue` ones (i.e. if the system has the hard
@@ -68,7 +70,7 @@ Options
     - With :ref:`pedantic_ <feature-decorator>`: ensures the fnma conformant properties and allows SIMD
       acceleration if available.
 
-    - With :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
+    - With :ref:`numeric_ <feature-decorator>`: ensures the whole fma conformant properties
       and allows SIMD acceleration if available.
 
 *******

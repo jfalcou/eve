@@ -28,7 +28,8 @@ Synopsis
 
 * Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 

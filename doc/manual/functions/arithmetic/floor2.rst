@@ -25,11 +25,13 @@ Synopsis
 
 *  Computes the element-wise greatest power of two values less or equal to the value of the parameter`.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 

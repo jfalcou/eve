@@ -33,12 +33,14 @@ Synopsis
 * [3] Performs a bitwise left shift of **s** by each element of **w**.
 * [4] Performs a bitwise left shift of **s** by **t**.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**, **w**: Instances of :ref:`type-wide` satisfying  the :ref:`IntegralValue <concept-integralvalue>` concept.
 * **s**, **t**: Integer values.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1,2,4] A value with the same type as the first parameter.
 * [3] A value of type **wide<T,N>**.

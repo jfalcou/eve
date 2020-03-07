@@ -27,12 +27,14 @@ Synopsis
 * [1] Computes the element-wise non zero sign of the value of the :ref:`wide <type-wide>`, the sign of zero being one.
 * [2] Computes the non zero signnof the value of the scalar, the sign of zero being one.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**: Instance of :ref:`type-wide`.
 * **s**: Scalar value.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1,2] A value with the same type as the parameter.
 

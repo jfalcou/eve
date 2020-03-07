@@ -19,22 +19,20 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  as_integer_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    as_integer_t<T>         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise least integral values greater or equal to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the least integral value greater or equal to the value of the scalar.
+*  Computes the element-wise least integral value greater or equal to the value of the parameter`.
 
-.. rubric:: Parameters
+Parameters
+**********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+**************
 
-* [1,2] A value of the integral type associated to the parameter.
+* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the parameter.
 
 Notes
 ******
@@ -44,8 +42,7 @@ Notes
 
   - the call to ``iceil(a)`` is equivalent to the call ``iround[upward_](a)``
 
-Options
-*******
+.. seealso::  :ref:`ceil <function-ceil>`
 
 Example
 *******

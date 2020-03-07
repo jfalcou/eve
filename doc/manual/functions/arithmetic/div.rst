@@ -27,7 +27,8 @@ Synopsis
 [2] * Computes the element-wise division of two :ref:`Values <concept-value>` with rounding.
 
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * Each of the two first parameters must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
@@ -37,7 +38,8 @@ Synopsis
 * The third parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
   rounding mode. For :ref:`Integral Values <concept-integralvalue>` the parameter rounding default to ``toward_zero_``.
 
-.. rubric:: Return value
+Return value
+**************
 
 * If any of the two first parameters is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.

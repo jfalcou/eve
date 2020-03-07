@@ -24,12 +24,14 @@ Synopsis
 
 * Computes a potentially  optimized version of ``if_else(c, T(val), T(0))``.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **c**: Instance of a :ref:`logical value <concept-logical>`.
 * **val**: Instance of a ref:`concept-vectorizable` value convertible to T or `eve::mone_` or `eve::allbits_`
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the base of the :ref:`concept-logical` first parameter (i.e. **T**).
 

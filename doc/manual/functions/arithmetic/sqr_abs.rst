@@ -27,12 +27,14 @@ Synopsis
 * [1] Computes the element-wise square of tha absolute value of the :ref:`wide <type-wide>`.
 * [2] Computes the square of the absolute value of the scalar.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**: Instance of :ref:`type-wide`.
 * **s**: Scalar value.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1,2] A value with the same type as the parameter.
 

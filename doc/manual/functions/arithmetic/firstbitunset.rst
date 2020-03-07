@@ -13,9 +13,8 @@ firstbitunset
       constexpr /* implementation defined */ firstbitunset = {};
    }
 
-Function object computing the bit pattern (with the integral parameter type) in which the only bit set is
-the first bit not set (beginning with the least significant bit) in the parameter which must satisfy the
-:ref:`IntegralValue <concept-integralvalue>` concept.
+Function object computing the bit pattern in which the only bit set (if it exists) is
+the first bit not set (beginning with the least significant bit) in the input.
 
 Synopsis
 ********
@@ -30,10 +29,15 @@ Synopsis
 
 * Instance of a :ref:`Integral Value <concept-integralvalue>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 
+Note
+****
+
+  - If all bits are set the result is 0.
 
 Example
 *******

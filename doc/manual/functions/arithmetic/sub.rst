@@ -31,12 +31,14 @@ Synopsis
 * [2,3] Computes the difference of the scalar with each element of the wide instance.
 * [4] Computes the difference of both scalars.
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * **v**, **w**: Instances of :ref:`type-wide`.
 * **s**, **t**: Scalar values of type **U** convertible to **T**.
 
-.. rubric:: Return value
+Return value
+**************
 
 * [1-3] A value with the same type as the :ref:`type-wide` parameter.
 * [4] A value of type **T**.

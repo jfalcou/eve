@@ -25,11 +25,13 @@ Synopsis
 
 *  Computes the element-wise argument value of the :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Parameters
+Parameters 
+**********
 
 * Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+**************
 
 * A value with the same type as the parameter.
 

@@ -25,7 +25,8 @@ Synopsis
 * Computes the element-wise addition of two :ref:`Values <concept-value>`.
 
 
-.. rubric:: Parameters
+Parameters
+**********
 
 * Each parameter must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
@@ -33,7 +34,8 @@ Synopsis
   its base type prior any other computation.
 * If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
 
-.. rubric:: Return value
+Return value
+**************
 
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.

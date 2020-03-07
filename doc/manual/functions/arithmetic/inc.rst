@@ -13,35 +13,33 @@ inc
       constexpr /* implementation defined */ inc = {};
    }
 
-Function object increment by 1 a :ref:`Value <concept-value>`.
+Function object returning  a :ref:`Value <concept-value>` incremented by 1 
 
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise  increment of the :ref:`wide <type-wide>`.
-* [2] Computes the increment of the scalar.
+*  Computes the element-wise  :ref:`Value <concept-value>` plus 1.
 
-.. rubric:: Parameters
+.. rubric:: Parameter
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+**************
 
-* [1,2] A value with the same type as the parameter. *TODO*
+* A value with the same type as the parameter.
 
 Options
 *******
 
-  - :ref:`saturated_ <feature-decorator>` decorator provides (no surprise) the saturated operation.
+  - With :ref:`saturated_ <feature-decorator>`, provides (no surprise) the saturated operation.
   
-  - conditional call is allowed: ``inc[cond](a)`` is equivalent (but potentially optimized) to ``if_else(cond, inc(a), a)``
+  - :ref:`masked call <feature-maskable>` is allowed: ``inc[cond](a)`` is equivalent to ``if_else(cond, inc(a), a)``
+    but can be subject to optimization.
 
 .. seealso::  :ref:`inc <function-inc>`
 
