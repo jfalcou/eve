@@ -8,10 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_POW_ABS_HPP_INCLUDED
-#define EVE_FUNCTION_POW_ABS_HPP_INCLUDED
+#include <eve/function/pow.hpp>
+#include <cmath>
 
-#include <eve/function/scalar/pow_abs.hpp>
-#include <eve/function/simd/pow_abs.hpp>
+auto std_pow =  [](auto x, auto y){return std::pow(x, y); };
 
-#endif
+#define TYPE()        double
+#define FUNCTION()    std_pow
+#define SAMPLES(N)    random<T>(N,-100.,100.),random<T>(N,-100.,100.)
+
+#include "bench.hpp"

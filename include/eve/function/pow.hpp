@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_POW_HPP_INCLUDED
 
 #include <eve/function/scalar/pow.hpp>
-//#include <eve/function/simd/pow.hpp>
+#include <eve/function/simd/pow.hpp>
 
 #endif
