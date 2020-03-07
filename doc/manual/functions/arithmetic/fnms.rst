@@ -20,29 +20,25 @@ Function object performing a fused negate-multiply-sub between three :ref:`Value
 Synopsis
 ********
 
+
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w , wide<T,N> const& x ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v U s, U t ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w , U s ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s , wide<T,N> const& w)
-   template<typename U>                       constexpr T operator()( U r, U s, U t ) noexcept;
+   template<typename T,typename U,typename V>  auto operator()( T const& x, U cons & y, V const & z ) noexcept;
 
-* [1] performs element-wise fused negate-multiply/sub of the three parameters
-* [2:4] convert the scalar type U to the wide type and perform element-wise fused negate-multiply/sub of the three parameters
-* [5]  computes  fused negate-multiply/sub of the three parameters
+* performs element-wise fused negate-multiply-sub of the three parameters
 
 .. rubric:: Parameters
 
-* **v**, **w**, **x**: Instances of **wide<T,N>**
-* **r**, **s**, **t**: Scalar value  of type **U**
-
+* Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-ieeevalue>` type.
 
 .. rubric:: Return value
 
-* [1:4] A value of the type **wide<T,N>**
-* [6]     A value of type **U**
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 
 *****
@@ -69,10 +65,10 @@ Notes
 Options
 *******
 
-    - :ref:`pedantic_ <feature-decorator>`:  ensures the fnms conformant properties and allows SIMD
+    - With :ref:`pedantic_ <feature-decorator>`:  ensures the fnms conformant properties and allows SIMD
       acceleration if available.
 
-    - :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
+    - With :ref:`numeric_ <feature-decorator>` decorator ensures the whole fma conformant properties
       and allows SIMD acceleration if available.
 
 *******

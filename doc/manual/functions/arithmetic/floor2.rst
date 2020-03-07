@@ -18,23 +18,20 @@ Function object computing the greatest power of two value less or equal to the  
 Synopsis
 ********
 
+
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise greatest power of two values less or equal to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the greatest power of two value less or equal to the value of the scalar.
+*  Computes the element-wise greatest power of two values less or equal to the value of the parameter`.
 
 .. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 .. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
 Notes
 ******

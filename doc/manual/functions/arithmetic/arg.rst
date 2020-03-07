@@ -41,8 +41,8 @@ Options
 Notes
 *****
 
-  -  For :ref:`IEEEValue <concept-ieeevalue>` it returns the value zero (if the bit of sign of the entry is not set
-   ) or the value :math:`\pi` (if it is set).
+  -  For :ref:`IEEEValue <concept-ieeevalue>` it returns the value zero (if the bit of sign of the entry is not set)
+     or the value :math:`\pi` (if it is set).
    
   - Its use will be extended in a future complex module.
 
