@@ -20,7 +20,7 @@
 #include <eve/function/pedantic.hpp>
 #include <type_traits>
 
-#if defined(EVE_COMP_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
 #  pragma warning(push)
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
@@ -66,7 +66,7 @@ namespace eve::detail
   }
 }
 
-#if defined(EVE_COMP_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
 #  pragma warning(pop)
 #endif
 

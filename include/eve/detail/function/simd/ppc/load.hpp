@@ -12,11 +12,12 @@
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_LOAD_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/as.hpp>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wignored-attributes"
 #  pragma GCC diagnostic ignored "-Wdeprecated"
@@ -30,7 +31,7 @@ namespace eve::detail
                             T *ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                       vectorizable<T>)
   {
-    if constexpr(current_api == eve::vmx)
+    if constexpr(current_api == spy::vmx_)
     {
       if constexpr(sizeof(T) <= 8)
       { return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr)); }
@@ -39,7 +40,7 @@ namespace eve::detail
         return load(tgt, cpu_{}, ptr);
       }
     }
-    else if constexpr(current_api == eve::vsx)
+    else if constexpr(current_api == spy::vsx_)
     {
       if constexpr(std::is_integral_v<T>)
       {
@@ -60,7 +61,7 @@ namespace eve::detail
        aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                     vectorizable<T>)
   {
-    if constexpr(current_api == eve::vmx)
+    if constexpr(current_api == spy::vmx_)
     {
       if constexpr(sizeof(T) <= 8)
       {
@@ -70,7 +71,7 @@ namespace eve::detail
           return load(tgt, mode, ptr.get());
       }
     }
-    else if constexpr(current_api == eve::vsx)
+    else if constexpr(current_api == spy::vsx_)
     {
       if constexpr(std::is_integral_v<T>)
       {
@@ -85,7 +86,7 @@ namespace eve::detail
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 

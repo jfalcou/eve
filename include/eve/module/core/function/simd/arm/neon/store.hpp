@@ -100,7 +100,7 @@ namespace eve::detail
     }
   }
 
-#if defined(EVE_COMP_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, S, neon64_> const &value,

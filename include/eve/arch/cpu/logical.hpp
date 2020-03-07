@@ -11,12 +11,13 @@
 #ifndef EVE_ARCH_CPU_LOGICAL_HPP_INCLUDED
 #define EVE_ARCH_CPU_LOGICAL_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/spy.hpp>
 #include <iostream>
 #include <cstring>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wuninitialized"
 #  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
@@ -87,7 +88,7 @@ namespace eve
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 

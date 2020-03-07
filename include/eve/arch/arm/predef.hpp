@@ -11,15 +11,12 @@
 #ifndef EVE_ARCH_ARM_PREDEF_HPP_INCLUDED
 #define EVE_ARCH_ARM_PREDEF_HPP_INCLUDED
 
-// NEON version numbering
-#define EVE_NEON_VERSION 1000
+#include <eve/detail/spy.hpp>
 
-// Detect current highest NEON variant
-#undef EVE_HW_ARM
-
-#if !defined(EVE_HW_ARM)  && !defined(EVE_NO_SIMD) && (defined(__ARM_NEON__) ||                     \
-    defined(_M_ARM) || defined(__aarch64__))
-#  define EVE_HW_ARM EVE_NEON_VERSION
+// We successfully detected some native SIMD
+#if defined(SPY_SIMD_IS_ARM)
+#  define EVE_SUPPORTS_NATIVE_SIMD
+#  define EVE_HW_ARM
 #endif
 
 #endif

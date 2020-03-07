@@ -25,7 +25,7 @@ namespace eve::detail
     template<typename... Vs>
     auto operator()(Vs... vs) const
     {
-      using type = ext::as_register_t<T, fixed<sizeof...(vs)>, ABI>;
+      using type = as_register_t<T, fixed<sizeof...(vs)>, ABI>;
       type that{static_cast<T>(vs)...};
       return that;
     }
@@ -40,7 +40,7 @@ namespace eve::detail
     auto operator()(V v) const
     {
       auto impl = [&](auto... I) {
-        using type = ext::as_register_t<T, expected_cardinal_t<T, ABI>, ABI>;
+        using type = as_register_t<T, expected_cardinal_t<T, ABI>, ABI>;
         auto u     = static_cast<T>(v);
         return type{val(u, I)...};
       };
@@ -70,7 +70,7 @@ namespace eve::detail
     auto operator()(Vs... vs) const
     {
       using ltype = logical<T>;
-      using type  = ext::as_register_t<logical<T>, fixed<sizeof...(vs)>, ABI>;
+      using type  = as_register_t<logical<T>, fixed<sizeof...(vs)>, ABI>;
       type that{ltype(vs).bits()...};
       return that;
     }
@@ -80,7 +80,7 @@ namespace eve::detail
     {
       using ltype = logical<T>;
       auto impl   = [&](auto... I) {
-        using type = ext::as_register_t<ltype, expected_cardinal_t<ltype, ABI>, ABI>;
+        using type = as_register_t<ltype, expected_cardinal_t<ltype, ABI>, ABI>;
 
         auto u   = ltype(v).bits();
         auto val = [](auto vv, auto const &) { return vv; };

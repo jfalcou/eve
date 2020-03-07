@@ -19,65 +19,12 @@
 
 //==================================================================================================
 // Additionnal ISA support
-#if defined(EVE_SUPPORTS_FMA3)
-#  include <immintrin.h>
 namespace eve
 {
-  inline constexpr bool supports_fma3 = true;
+  inline constexpr bool supports_fma3     = spy::supports::fma_;
+  inline constexpr bool supports_fma4     = spy::supports::fma4_;
+  inline constexpr bool supports_xop      = spy::supports::xop_;
+  inline constexpr bool supports_aarch64  = spy::supports::aarch64_;
 }
-#else
-namespace eve
-{
-  inline constexpr bool supports_fma3 = false;
-}
-#endif
-
-#if defined(EVE_SUPPORTS_FMA4)
-#  if defined(EVE_COMP_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <fma4intrin.h>
-#  endif
-namespace eve
-{
-  inline constexpr bool supports_fma4 = true;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_fma4 = false;
-}
-#endif
-
-#if defined(EVE_SUPPORTS_XOP)
-#  if defined(EVE_COMP_IS_MSVC)
-#    include <intrin.h>
-#  else
-#    include <x86intrin.h>
-#    include <xopintrin.h>
-#  endif
-namespace eve
-{
-  inline constexpr bool supports_xop = true;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_xop = false;
-}
-#endif
-
-#if !defined(__aarch64__)
-namespace eve
-{
-  inline constexpr bool supports_aarch64 = false;
-}
-#else
-namespace eve
-{
-  inline constexpr bool supports_aarch64 = true;
-}
-#endif
 
 #endif

@@ -13,11 +13,12 @@
 
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <cstring>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #  pragma GCC diagnostic ignored "-Wuninitialized"
@@ -54,7 +55,7 @@ namespace eve::detail
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 
