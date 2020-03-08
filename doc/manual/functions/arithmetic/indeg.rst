@@ -20,24 +20,18 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & s ) noexcept;
 
-* [1] Converts element-wise the :ref:`wide <type-wide>`.
-* [2] Converts the scalar.
+*  Convert element-wise  the :ref:`Value <concept-value>` supposed to be expressed in radian to degrees units.
 
-Parameters
-**********
+.. rubric:: Parameters
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **s**: Instance of a :ref:`Value <concept-value>`.
 
-Return value
-**************
+.. rubric:: Return value
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
 Example
 *******

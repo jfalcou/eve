@@ -7,54 +7,39 @@ iround
 **Required header:** ``#include <eve/function/iround.hpp>``
 
 .. code-block:: c++
-
-   namespace eve
-   {
-      constexpr /* implementation defined */ iround = {};
-   }
-
-Function object computing the least integral value greater or equal to the  value of a :ref:`Value <concept-value>`.
-
-Synopsis
-********
-
-.. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>  as_integer_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    as_integer_t<T>         operator()( T s ) noexcept;
+   template<typename T             > constexpr T operator()( T const & x ) noexcept;
+   template<typename T,typename TAG> constexpr T operator()( T const & x, TAG const & ) noexcept;
 
-* [1] Computes the element-wise the round integral values to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the round integral value to the value of the scalar.
+* [1]  Computes the element-wise nearest integral value of the parameter`.
+* [2] Computes the element-wise rounding according **TAG** direction.
+
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **x**: Instance of a  :ref:`Value <concept-value>`.
+* TAG parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
+  rounding mode.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the parameter.
 
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
-    by default implements the ``to_nearest_`` version.
-
-  - the  call to ``iround(a)`` is equivalent to the call ``inearest(a)``
-
-Options
-*******
-
-  this object function can be called with an optional tag parameter that changes its meaning:
-
+  - This object function can be called with an optional tag parameter that changes its meaning:
   - ``iround(a, to_nearest_ )`` is equivalent to the call ``inearest(a)``
   - ``iround(a, toward_zero_)`` is equivalent to the call ``itrunc(a)``
   - ``iround(a, upward_ )`` is equivalent to the call ``iceil(a)``
   - ``iround(a, downward_)`` is equivalent to the call ``ifloor(a)``
+
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
+    by default implements the ``to_nearest_`` version.
+  - the  call to ``iround(a)`` is equivalent to the call ``iround(a, to_nearest_)``
 
 Example
 *******

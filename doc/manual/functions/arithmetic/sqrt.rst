@@ -46,7 +46,7 @@ Notes
 Options
 *******
 
-  - With :ref:`raw_ <feature-decorator>` decorator: if any fast and dirty intrinsic exists it will be returned by the  call
+  - With the :ref:`raw_ <feature-decorator>` decorator: if any fast and dirty intrinsic exists it will be returned by the  call
 
 Example
 *******

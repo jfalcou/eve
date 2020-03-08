@@ -30,11 +30,11 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
+* Each parameter must be an :ref:`Ieee Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
-* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-ieeevalue>` type.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-value>` type.
 
 Return value
 **************
@@ -60,17 +60,17 @@ Notes
     wired capability).
 
     If you need pedantic fnms capabilities in all circumstances in your own
-    code you can use the :ref:`pedantic_ <feature-decorator>`  or :ref:`numeric_ <feature-decorator>` options
+    code you can use the :ref:`pedantic_ <feature-decorator>`  or :ref:`numeric_ <feature-decorator>` decorators
     (although it can be very expensive).
 
 *******
 Options
 *******
 
-    - With :ref:`pedantic_ <feature-decorator>`:  ensures the fnms conformant properties and allows SIMD
+    - With the :ref:`pedantic_ <feature-decorator>` decorator:  ensures the fnms conformant properties and allows SIMD
       acceleration if available.
 
-    - With :ref:`numeric_ <feature-decorator>`: decorator ensures the whole fma conformant properties
+    - With the :ref:`numeric_ <feature-decorator>` decorator: decorator ensures the whole fma conformant properties
       and allows SIMD acceleration if available.
 
 *******

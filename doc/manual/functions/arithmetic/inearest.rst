@@ -20,24 +20,21 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  as_integer_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    as_integer_t<T>         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise the inearest integral values to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the inearest integral value to the value of the scalar.
+*  Computes the element-wise nearest integral value greater or equal to the :ref:`Value <concept-value>`.
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a  :ref:`Value <concept-ieeevalue>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the parameter.
+
 
 Notes
 ******
@@ -49,8 +46,7 @@ Notes
 
   - half-integral values are rounded to the inearest even integral
 
-Options
-*******
+.. seealso::  :ref:`nearest <function-ceil>`
 
 Example
 *******

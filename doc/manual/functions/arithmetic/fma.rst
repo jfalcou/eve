@@ -29,11 +29,11 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
+* Each parameter must be a :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
-* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-ieeevalue>` type.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Ieee Value <concept-value>` type.
 
 Return value
 **************
@@ -66,10 +66,10 @@ Notes
 Options
 *******
 
-    - With :ref:`pedantic_ <feature-decorator>`: ensures the one rounding property
+    - With the :ref:`pedantic_ <feature-decorator>` decorator: ensures the one rounding property
       and allows SIMD acceleration if available.
  
-    - With :ref:`numeric_ <feature-decorator>`:  ensures the whole fma conformant properties
+    - With the :ref:`numeric_ <feature-decorator>` decorator:  ensures the whole fma conformant properties
       and allows SIMD acceleration if available.
 
 *******

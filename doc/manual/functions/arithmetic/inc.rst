@@ -36,9 +36,9 @@ Return value
 Options
 *******
 
-  - With :ref:`saturated_ <feature-decorator>`, provides (no surprise) the saturated operation.
+  - With the :ref:`saturated_ <feature-decorator>` decorator, provides (no surprise) the saturated operation.
   
-  - :ref:`masked call <feature-maskable>` is allowed: ``inc[cond](a)`` is equivalent to ``if_else(cond, inc(a), a)``
+  - :ref:`masked <feature-maskable>` call is allowed: ``inc[cond](a)`` is equivalent to ``if_else(cond, inc(a), a)``
     but can be subject to optimization.
 
 .. seealso::  :ref:`inc <function-inc>`

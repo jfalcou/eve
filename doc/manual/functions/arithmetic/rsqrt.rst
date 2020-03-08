@@ -46,8 +46,8 @@ Notes
 Options
 *******
 
-  - with :ref:`raw_ <feature-decorator>` : if any fast and dirty intrinsic exists it 
-    will be returned with generally poor accuracy.
+  - with :ref:`raw_ <feature-decorator>` decorator: if any fast and dirty intrinsic exists it 
+    will be used with generally poor accuracy.
 
 Example
 *******

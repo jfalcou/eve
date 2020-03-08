@@ -13,7 +13,8 @@ hypot
       constexpr /* implementation defined */ hypot = {};
    }
 
-Function object the :math:`l_2`-norm  of two or three :ref:`Ieee Values <concept-ieeevalue>` i.e.  :math:`\sqrt{x^2+y^2}` or :math:`\sqrt{x^2+y^2+z^2}`.
+Function object the :math:`l_2`-norm  of two or three :ref:`Ieee Values <concept-ieeevalue>` i.e. 
+ :math:`\sqrt{x^2+y^2}` or :math:`\sqrt{x^2+y^2+z^2}`.
 
 ********
 Synopsis

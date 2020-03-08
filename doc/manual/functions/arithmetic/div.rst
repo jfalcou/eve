@@ -34,7 +34,7 @@ Parameters
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
-* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
 * The third parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
   rounding mode. For :ref:`Integral Values <concept-integralvalue>` the parameter rounding default to ``toward_zero_``.
 
@@ -51,7 +51,7 @@ Options
   - with a rounding option ``div[cond](x, y, TAG())`` the function behaves as computing the floating division with
     infinite precision then applying the rounding option to return a properly typed value.
 
-  - With :ref:`saturated_ <feature-decorator>` decorator provides  the saturated operation.
+  - With the :ref:`saturated_ <feature-decorator>` decorator provides  the saturated operation.
   
   - Masked call is allowed: ``div[cond](x, y)`` is equivalent to ``if_else(cond, div(x, y), x)``
 

@@ -32,7 +32,7 @@ Parameters
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
-* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-ieeevalue>` type.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
 
 Return value
 **************
@@ -43,7 +43,7 @@ Return value
 Options
 *******
 
-  - With :ref:`saturated_ <feature-decorator>` decorator the  operation is saturated for :ref:`Integral Values <concept-integralvalue>` entries.
+  - With the :ref:`saturated_ <feature-decorator>` decorator the  operation is saturated for :ref:`Integral Values <concept-integralvalue>` entries.
   
   - :ref:`masked call <feature-maskable>` is allowed: ``add[cond](x, y)`` is equivalent to ``if_else(cond, add(x, y), x)``, 
     but can be subject to optimization.

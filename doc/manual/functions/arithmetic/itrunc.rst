@@ -13,30 +13,36 @@ itrunc
       constexpr /* implementation defined */ itrunc = {};
    }
 
-Function object computing the greatest integral value less or equal to the  value of a :ref:`Value <concept-value>`.
+Function object computing the greatest integral part of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  as_integer_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    as_integer_t<T>         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise integral part values of the :ref:`wide <type-wide>`.
-* [2] Computes the integral part of the value of the scalar.
+*  Computes the element-wise integral part of the parameter`.
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the parameter.
+
+Notes
+******
+
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
+    implements the ``upward_`` version.
+
+  - the call to ``iceil(a)`` is equivalent to the call ``iround[upward_](a)``
+
+.. seealso::  :ref:`trunc <function-trunc>`
 
 Notes
 ******
@@ -44,10 +50,7 @@ Notes
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``toward_zero_`` version.
 
-  - the  call to ``itrunc(a)`` is equivalent to the call ``iround[toward_zero_](a)``
-
-Options
-*******
+  - the  call to ``itrunc(a)`` is equivalent to the call ``iround(a, toward_zero_)``
 
 Example
 *******

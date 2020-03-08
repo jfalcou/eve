@@ -13,7 +13,7 @@ trunc
       constexpr /* implementation defined */ trunc = {};
    }
 
-Function object computing the greatest integral value less or equal to the  value of a :ref:`Value <concept-value>`.
+Function object computing the greatest integral parte of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********

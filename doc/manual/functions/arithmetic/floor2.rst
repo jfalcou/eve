@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* **s**: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
+* Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************

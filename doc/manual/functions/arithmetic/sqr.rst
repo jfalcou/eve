@@ -41,7 +41,7 @@ Return value
 Options
 *******
 
-  - With :ref:`saturated_ <feature-decorator>` for  an integral entry ``a`` the call to ``saturated_(sqr)(a)`` return ``Valmax(as(a))`` as soon as the
+  - With the :ref:`saturated_ <feature-decorator>` decorator for  an integral entry ``a`` the call to ``saturated_(sqr)(a)`` return ``Valmax(as(a))`` as soon as the
     absolute value of ``a`` is greater than ``SqrtValmax(as(a))``
 
 Example

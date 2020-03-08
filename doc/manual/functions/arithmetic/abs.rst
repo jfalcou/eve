@@ -40,7 +40,7 @@ Notes
     not representable  in the input type and the result is undefined. Use the :ref:`saturated_ <feature-decorator>` decorator to avoid
     this problem: if ``iT`` is a signed integer type, ``saturated_(abs(Valmin<iT>())`` returns ``Valmax<iT>()``.
 
-  - With :ref:`saturated_ <feature-decorator>` the result is guaranted to be positive or 0.
+  - With the :ref:`saturated_ <feature-decorator>` decorator the result is guaranted to be positive or 0.
 
   - Be also aware that ``abs`` is a also a standard library function name and there possibly exists
     a C macro version which may be called instead of the boost simd version.

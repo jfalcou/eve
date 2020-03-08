@@ -50,14 +50,10 @@ Notes
 
     * ``minmag(x, y)`` in which case if ``x`` or ``y`` has a nan the result is system dependent as on various systems the intrinsics act differently
 
-    * with :ref:`pedantic_ <feature-decorator>`, in which case the call is equivalent to ``if_else(abs(x) < abs(y),x,y)``
+    * With :ref:`pedantic_ <feature-decorator>` decorator, in which case the call is equivalent to ``if_else(abs(x) < abs(y),x,y)``
 
-    * with :ref:`numeric__ <feature-decorator>`, in which case if ``x`` or ``y`` has a nan the corresponding result is the other value
+    * With :ref:`numeric__ <feature-decorator>` decorator, in which case if ``x`` or ``y`` has a nan the corresponding result is the other value
 
-    The first way is the speediest.
-
-Options
-*******
 
 Example
 *******
