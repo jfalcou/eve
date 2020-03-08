@@ -19,42 +19,39 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
-   template<typename T> constexpr               T         operator()( T a, T b ) noexcept;
+   template<typename T> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1] Computes the element-wise value of maximal magnitude between both :ref:`wides <type-wide>`.
-* [2,3] Computes the value of maximal magnitude between the scalar and each element of the :ref:`type-wide` instance.
-* [4] Computes the value of maximal magnitude between both scalars.
+* Computes the element-wise value of maximal magnitude between two :ref:`Values <concept-value>`.
 
 Parameters
 **********
 
-* **v**, **w**: Instances of :ref:`type-wide`.
-* **s**, **t**: Scalar values of type **U** which must be convertible to **T**.
-* **a**, **b**: Scalar values of type **T**
+* Each parameter must be a :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
 
 Return value
 **************
 
-* [1-3] A value with the same type as the :ref:`type-wide` parameter.
-* [4] A value of type **T**.
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
 
 Options
 *******
 
-    With the :ref:`concept-ieeevalue` types, there is three ways to call `maxmag`:
+    With :ref:`concept-ieeevalue` types, there is three ways to call `maxmag`:
 
-    * ``maxmag(x, y)``: in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems the intrinsics can act in different ways;
+    * With a regular call in which case if an element of ``x`` or ``y`` is a nan, the result 
+      is system dependent as on various systems the intrinsics can act in different ways;
 
-    * with :ref:`pedantic_ <feature-decorator>` decorator, in which case the call is equivalent to ``if_else(abs(x) < abs(y), x, y)``;
+    * With the :ref:`pedantic_ <feature-decorator>` decorator, in which case the call
+      is equivalent to ``if_else(abs(x) < abs(y), x, if_else(abs(x) > abs(y), y, pedantic_(max)(x,y)))``;
 
-    * with :ref:`numeric_ <feature-decorator>` decorator, in which case if an element of ``x`` or ``y`` is a nan the corresponding result is the other value.
-
-    The first way is always the speediest.
+    * With the :ref:`numeric_ <feature-decorator>` decorator, in which case if an element of ``x`` or ``y`` is a nan 
+      the result is always the other value.
 
 Example
 *******

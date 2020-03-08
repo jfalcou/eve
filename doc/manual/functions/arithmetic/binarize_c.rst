@@ -28,7 +28,7 @@ Parameters
 **********
 
 * **c**: Instance of a :ref:`logical value <concept-logical>`.
-* **val**: Instance of a ref:`concept-vectorizable` value convertible to T or `eve::mone_` or `eve::allbits_`
+* **val**: Instance of a :ref:`concept-vectorizable` value convertible to ``T`` or ``eve::mone_`` or ``eve::allbits_``
 
 Return value
 **************

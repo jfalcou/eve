@@ -22,7 +22,7 @@ Synopsis
 
    template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-*  Computes the element-wise least integral value greater or equal to the value of the parameter`.
+*  Computes the element-wise least integral value greater or equal to the value of the parameter.
 
 Parameters
 **********
@@ -40,7 +40,7 @@ Notes
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``downward_`` version.
 
-  - the  call to ``ifloor(a)`` is equivalent to the call ``iround[downward_](a)``
+  - the  call to ``ifloor(x)`` is equivalent to the call ``iround(x, downward_)``
 
 Options
 *******

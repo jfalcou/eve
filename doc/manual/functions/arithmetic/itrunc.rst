@@ -22,7 +22,7 @@ Synopsis
 
    template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-*  Computes the element-wise integral part of the parameter`.
+*  Computes the element-wise integral part of the parameter.
 
 Parameters
 **********
@@ -40,7 +40,7 @@ Notes
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``upward_`` version.
 
-  - the call to ``iceil(a)`` is equivalent to the call ``iround[upward_](a)``
+  - the call to ``iceil(x)`` is equivalent to the call ``iround(x, upward_ )``
 
 .. seealso::  :ref:`trunc <function-trunc>`
 

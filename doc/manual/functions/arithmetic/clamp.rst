@@ -45,7 +45,7 @@ Return value
 Notes
 *****
 
-  - the second and third parameters (respectively x and y) must satisfy x<y or the result has undefined behaviour 
+  - the second and third parameters (respectively ``y`` and ``z``) must satisfy ``y<z`` or the result has undefined behaviour 
 
 *******
 Example

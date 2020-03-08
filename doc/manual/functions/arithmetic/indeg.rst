@@ -21,15 +21,17 @@ Synopsis
 
 .. code-block:: c++
 
-   template<typename T> constexpr T operator()( T const & s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
 *  Convert element-wise  the :ref:`Value <concept-value>` supposed to be expressed in radian to degrees units.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **s**: Instance of a :ref:`Value <concept-value>`.
+*  Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+************
 
 * A value with the same type as the parameter.
 

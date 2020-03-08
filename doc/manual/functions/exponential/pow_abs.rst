@@ -69,7 +69,7 @@ Notes
 * With raw_ decorator  uses the naive formula :math:`e^{y\log |x|}'
          and so does not care for limits and leads to lower accuracy. In particular it returns NaN for negative base
  
-
+ 
 *******
 Options
 *******

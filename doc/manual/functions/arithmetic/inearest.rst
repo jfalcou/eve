@@ -39,12 +39,12 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_inearest``. This function object
-    implements the ``to_inearest_`` version.
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
+    implements the ``to_nearest_`` version.
 
-  - the  call to ``inearest(a)`` is equivalent to the call ``iround[to_inearest_](a)``
+  - the  call to ``inearest(x)`` is equivalent to the call ``iround(x, to_nearest_)``
 
-  - half-integral values are rounded to the inearest even integral
+  - half-integral values are rounded to the nearest even integral
 
 .. seealso::  :ref:`nearest <function-ceil>`
 

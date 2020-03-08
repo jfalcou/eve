@@ -24,7 +24,8 @@ Synopsis
 
 *  Computes the element-wise  :ref:`Value <concept-value>` plus 1.
 
-.. rubric:: Parameter
+Parameter
+*********
 
 * Instance of a :ref:`Value <concept-value>`.
 
@@ -38,7 +39,7 @@ Options
 
   - With the :ref:`saturated_ <feature-decorator>` decorator, provides (no surprise) the saturated operation.
   
-  - :ref:`masked <feature-maskable>` call is allowed: ``inc[cond](a)`` is equivalent to ``if_else(cond, inc(a), a)``
+  - :ref:`masked <feature-maskable>` call is allowed: ``inc[cond](x)`` is equivalent to ``if_else(cond, inc(x), x)``
     but can be subject to optimization.
 
 .. seealso::  :ref:`inc <function-inc>`

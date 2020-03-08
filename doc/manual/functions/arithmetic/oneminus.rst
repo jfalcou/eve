@@ -15,29 +15,25 @@ oneminus
 
 Function object computing ``1-x`` of a :ref:`Value <concept-value>` x.
 
-
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise oneminusument of the :ref:`wide <type-wide>`.
-* [2] Computes the oneminusument of the scalar.
+*  Computes ``1-x`` element-wise.
 
-Parameters
-**********
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
+
 
 Options
 *******

@@ -19,39 +19,55 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w) noexcept;
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v, T s) noexcept;
-   template<typename T, typename N>  wide<T,N> operator()( T s, wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s, T t ) noexcept;
+   template<typename T,typename U>               auto operator()( T const& x, U const& y ) noexcept;
+   template<typename T,typename U, typename TAG> auto operator()( T const& x, U const& y, TAG const & ) noexcept;  
 
-* [1:3] Computes the element-wise  remaider after division of the parameters.
-* [4] Computes the remaider after division of the two scalar.
+[1] * Computes the element-wise remainder after division of two :ref:`Values <concept-value>`.
+[2] * Computes the element-wise remainder after division of two :ref:`Values <concept-value>` with rounding.
+
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Each of the two first parameters must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
+* The third parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
+  rounding mode. For :ref:`Integral Values <concept-integralvalue>` the parameter rounding default to ``toward_zero_``.
 
 Return value
 **************
 
-* [1,2,4] A value with the same type as the wide parameter. 
-* [3]     A value of type T.
+* If any of the two first parameters is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
+
+
 
 Notes
 *****
 
-
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
     by default implements the ``to_nearest_`` version.
 
-  - the  call to ``rem(a,b)`` is equivalent to the call ``rem(a,b,toward_zero_)``
-  - the  call to ``rem(a,b,tag_)`` is equivalent to the call ``a-b*div(a, b, tag_));``
+  - the  call to ``rem(x, y)`` is equivalent to the call ``rem(x, y, toward_zero_)`` (similar the standard function ``std::fmod``).
+  - the  call to ``rem(x, y, tag_)`` is equivalent to the call ``a-b*div(a, b, tag_));``
+  - ``rem(x, y, to_nearest_)`` is similar the standard function ``std::remainder``
+ 
+  - unsigned :ref:`integral Values <concept-integralvalue>` type are only supported by the regular call or its tagged equivalent, because in the other
+    cases the remainder sign is not always positive.
 
-Options
+  - Limiting values for :ref:`Ieee Values <concept-ieeevalue>` with the call ``rem(x, y)`` are the following:
+
+       - if ``x`` is :math:`\pm\infty` , a Nan is returned;
+       - if ``x`` is :math:`\pm0` and ``y`` is not ``0``, ``0`` is returned (if the sign of ``x`` matters the :ref:`pedantic_ <feature-decorator>`
+         decorated version returns ``x``);
+       - if ``y`` is :math:`\pm0`, a  Nan is returned;
+       - if either argument is NaN, Nan is returned.
+
+Option
 *******
 
   this object function can be called with :ref:`pedantic_ <feature-decorator>` decorator in which case (pedantic_(div) is used internally instead of div.

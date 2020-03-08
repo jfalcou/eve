@@ -12,8 +12,8 @@ iround
    template<typename T             > constexpr T operator()( T const & x ) noexcept;
    template<typename T,typename TAG> constexpr T operator()( T const & x, TAG const & ) noexcept;
 
-* [1]  Computes the element-wise nearest integral value of the parameter`.
-* [2] Computes the element-wise rounding according **TAG** direction.
+* [1]  Computes the element-wise nearest integral value of the parameter.
+* [2] Computes the element-wise rounding according ``TAG`` direction.
 
 
 Parameters
@@ -21,7 +21,7 @@ Parameters
 
 * **x**: Instance of a  :ref:`Value <concept-value>`.
 * TAG parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
-  rounding mode.
+  rounding mode. It defaults to ``to_nearest_``.
 
 Return value
 **************
@@ -37,9 +37,8 @@ Notes
   - ``iround(a, upward_ )`` is equivalent to the call ``iceil(a)``
   - ``iround(a, downward_)`` is equivalent to the call ``ifloor(a)``
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
-    by default implements the ``to_nearest_`` version.
-  - the  call to ``iround(a)`` is equivalent to the call ``iround(a, to_nearest_)``
+  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. 
+  - the  call to ``iround(x)`` is equivalent to the call ``iround(x, to_nearest_)``
 
 Example
 *******

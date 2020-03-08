@@ -24,7 +24,8 @@ Synopsis
 
 *  Computes the element-wise absolute value of the :ref:`Value <concept-value>`.
 
-.. rubric:: Parameter
+Parameter
+*********
 
 * Instance of a :ref:`Value <concept-value>`.
 
