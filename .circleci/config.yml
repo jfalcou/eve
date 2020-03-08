@@ -79,13 +79,13 @@ jobs:
           command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AVX
-          command: VARIANT="avx" OPTIONS="-O3 -mavx -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx -mfma -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="fma" OPTIONS="-O3 -mavx -mfma" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-O3 -mavx2 -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - Scalar
           command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
@@ -134,10 +134,10 @@ jobs:
           command: . .circleci/prepare_cc.sh
       - run:
           name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - Scalar
           command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
@@ -154,10 +154,10 @@ jobs:
           command: . .circleci/prepare_cc.sh
       - run:
           name: Running Basic Tests - Emulation
-          command: VARIANT="vsx" OPTIONS="-DEVE_NO_SIMD -O3 -mvsx -mpower8-vector -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="vsx" OPTIONS="-DEVE_NO_SIMD -O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - PPC64 VSX
-          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector -ffp-contract=off" . .circleci/perform_basic.sh
+          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - Scalar
           command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh

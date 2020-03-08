@@ -16,9 +16,9 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on rsqrt")
+TTS_CASE("wide rng check on rsqrt")
 {
-  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1)/std::sqrt(e); } );
+  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1.0l/std::sqrt((long double)e)); } );
 
   eve::rng_producer<Type> p(Value(0), eve::Valmax<Value>());
   TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt)); 

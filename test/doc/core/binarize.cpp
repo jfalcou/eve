@@ -1,12 +1,12 @@
 #include <eve/function/binarize.hpp>
-#include <eve/wide.hpp>
+#include <eve/wide.hpp> 
 #include <eve/function/is_greater.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
-{
+{ 
   wide_ft pf  = {0.0f,1.0f,-1.0f,-2.0f};
   wide_ft qf  = {1.0f,-1.0f,-2.0f,4.0f}; 
   

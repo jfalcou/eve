@@ -34,7 +34,7 @@ namespace eve::detail
     if constexpr(is_vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
-      return  std::tuple<T, T>{m, convert(e, as<value_type_t<T>>())};
+      return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));
   }
   
   // -----------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ namespace eve::detail
     if constexpr(is_vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
-      return  std::tuple<T, T>{m, convert(e, as<value_type_t<T>>())};
+      return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));
   }
 }
 

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SCALAR_REM_PIO2_MEDIUM_HPP_INCLUDED
 
 #include <eve/function/definition/rem_pio2_medium.hpp>
-#include <eve/module/core/function/scalar/rem_pio2_medium.hpp>
+#include <eve/module/core/function/generic/rem_pio2_medium.hpp>
 
 #endif

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_QUADRANT_HPP_INCLUDED
 
 #include <eve/function/scalar/quadrant.hpp>
-//#include <eve/function/simd/quadrant.hpp>
+#include <eve/function/simd/quadrant.hpp>
 
 #endif
