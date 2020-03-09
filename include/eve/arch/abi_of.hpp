@@ -45,8 +45,18 @@ namespace eve
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
-          if constexpr( spy::supports::aarch64_ || (!f64 && width <= 16) )  return neon128_{};
-          else                                                              return emulated_{};
+          if constexpr( spy::supports::aarch64_ )
+          {
+            if constexpr(width <= 8)       return neon64_{};
+            else if constexpr(width == 16) return neon128_{};
+            else                           return emulated_{};
+          }
+          else
+          {
+            if constexpr(!f64 && width <= 8)       return neon64_{};
+            else if constexpr(!f64 && width == 16) return neon128_{};
+            else                                   return emulated_{};
+          }
         }
         else
         {

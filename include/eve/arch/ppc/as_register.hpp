@@ -85,7 +85,7 @@ namespace eve
       }
     }
 
-    using type = decltype(find(std::declval<T>()));
+    using type = decltype(find());
   };
 }
 #endif

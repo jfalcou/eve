@@ -32,11 +32,11 @@ namespace eve
   {
     static constexpr auto find()
     {
-      if constexpr( std::is_same_v<T,float> && Size::value <= 4)
+      if constexpr( std::is_same_v<T,float> && Size::value <= 2)
       {
         return float32x2_t{};
       }
-      else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
+      else if constexpr( std::is_same_v<T,double> && Size::value <= 1 )
       {
         if constexpr(spy::supports::aarch64_) return float64x1_t{};
         else                                  return emulated_{};
@@ -78,14 +78,14 @@ namespace eve
       else if constexpr( std::is_integral_v<T> )
       {
         constexpr bool signed_v = std::is_signed_v<T>;
-        if constexpr(  signed_v && (sizeof(T) == 1 )&& (Size::value <= 16) ) return int8x16_t{};
-        if constexpr(  signed_v && (sizeof(T) == 2 )&& (Size::value <= 8 ) ) return int16x8_t{};
-        if constexpr(  signed_v && (sizeof(T) == 4 )&& (Size::value <= 4 ) ) return int32x4_t{};
-        if constexpr(  signed_v && (sizeof(T) == 8 )&& (Size::value <= 2 ) ) return int64x2_t{};
-        if constexpr( !signed_v && (sizeof(T) == 1 )&& (Size::value <= 16) ) return uint8x16_t{};
-        if constexpr( !signed_v && (sizeof(T) == 2 )&& (Size::value <= 8 ) ) return uint16x8_t{};
-        if constexpr( !signed_v && (sizeof(T) == 4 )&& (Size::value <= 4 ) ) return uint32x4_t{};
-        if constexpr( !signed_v && (sizeof(T) == 8 )&& (Size::value <= 2 ) ) return uint64x2_t{};
+        if constexpr(  signed_v && (sizeof(T) == 1 )&& (Size::value == 16) ) return int8x16_t{};
+        if constexpr(  signed_v && (sizeof(T) == 2 )&& (Size::value == 8 ) ) return int16x8_t{};
+        if constexpr(  signed_v && (sizeof(T) == 4 )&& (Size::value == 4 ) ) return int32x4_t{};
+        if constexpr(  signed_v && (sizeof(T) == 8 )&& (Size::value == 2 ) ) return int64x2_t{};
+        if constexpr( !signed_v && (sizeof(T) == 1 )&& (Size::value == 16) ) return uint8x16_t{};
+        if constexpr( !signed_v && (sizeof(T) == 2 )&& (Size::value == 8 ) ) return uint16x8_t{};
+        if constexpr( !signed_v && (sizeof(T) == 4 )&& (Size::value == 4 ) ) return uint32x4_t{};
+        if constexpr( !signed_v && (sizeof(T) == 8 )&& (Size::value == 2 ) ) return uint64x2_t{};
       }
     }
 
