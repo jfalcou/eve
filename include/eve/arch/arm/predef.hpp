@@ -14,7 +14,7 @@
 #include <eve/detail/spy.hpp>
 
 // We successfully detected some native SIMD
-#if defined(SPY_SIMD_IS_ARM)
+#if defined(SPY_SIMD_IS_ARM) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_ARM
 #endif

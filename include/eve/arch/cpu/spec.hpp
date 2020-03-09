@@ -11,6 +11,8 @@
 #ifndef EVE_ARCH_CPU_SPEC_HPP_INCLUDED
 #define EVE_ARCH_CPU_SPEC_HPP_INCLUDED
 
+#include <eve/detail/spy.hpp>
+
 #if !defined(EVE_CURRENT_ABI)
 #  define EVE_CURRENT_ABI ::eve::emulated_
 #  define EVE_CURRENT_API ::eve::cpu_

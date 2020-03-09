@@ -45,7 +45,7 @@
 #include <eve/detail/spy.hpp>
 
 // We successfully detected some native SIMD
-#if defined(SPY_SIMD_IS_X86)
+#if defined(SPY_SIMD_IS_X86) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_X86
 #endif
