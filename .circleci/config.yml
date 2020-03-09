@@ -275,17 +275,25 @@ workflows:
           requires:
             - gcc_x86
             - clang_x86
-      - arm_aarch64_neon:
+      - ppc64:
           requires:
             - gcc_x86
             - clang_x86
-      - x86_sse2:
+      - arm_aarch64_neon:
           requires:
             - arm_aarch64
+            - ppc64
+      - ppc64_vsx:
+          requires:
+            - arm_aarch64
+            - ppc64
+      - x86_sse2:
+          requires:
+            - ppc64_vsx
             - arm_aarch64_neon
       - x86_sse4:
           requires:
-            - arm_aarch64
+            - ppc64_vsx
             - arm_aarch64_neon
       - x86_avx:
           requires:
@@ -303,11 +311,3 @@ workflows:
           requires:
             - x86_avx
             - x86_avx2
-      # - ppc64:
-      #     requires:
-      #       - x86_emulation
-      #       - x86_fma
-      # - ppc64_vsx:
-      #     requires:
-      #       - x86_emulation
-      #       - x86_fma
