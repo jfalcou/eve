@@ -22,7 +22,7 @@ Synopsis
 
    template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-*  Computes the element-wise least integral value greater or equal to the  value of the parameter`.
+*  Computes the element-wise least integral value greater or equal to the  value of the parameter.
 
 Parameters
 **********

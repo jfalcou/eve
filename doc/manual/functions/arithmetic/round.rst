@@ -15,46 +15,43 @@ round
 
 Function object computing the least integral value greater or equal to the  value of a :ref:`Value <concept-value>`.
 
-Synopsis
-********
-
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T             > constexpr T operator()( T const & x ) noexcept;
+   template<typename T,typename TAG> constexpr T operator()( T const & x, TAG const & ) noexcept;
 
-* [1] Computes the element-wise the round integral values to the value of the :ref:`wide <type-wide>`.
-* [2] Computes the round integral value to the value of the scalar.
+* [1]  Computes the element-wise nearest integral value of the parameter.
+* [2] Computes the element-wise rounding according ``TAG`` direction.
+
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* **x**: Instance of a  :ref:`Value <concept-value>`.
+* TAG parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
+  rounding mode. It defaults to ``to_nearest_``.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+*  A value with the same type as the first parameter.
 
 Notes
 ******
 
+  - This object function can be called with an optional tag parameter that change its meaning:
+
+  - ``round(x, to_nearest_ )`` is equivalent to the call ``nearest(x)``
+  - ``round(x, toward_zero_)`` is equivalent to the call ``trunc(x)``
+  - ``round(x, upward_ )`` is equivalent to the call ``ceil(x)``
+  - ``round(x, downward_)`` is equivalent to the call ``floor(x)``
+
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
     by default implements the ``to_nearest_`` version.
 
-  - the  call to ``round(a)`` is equivalent to the call ``nearest(a)``
+  - the  call to ``round(x)`` is equivalent to the call ``nearest(x)``
 
-Options
-*******
-
-  this object function can be called with an optional tag parameter that change its meaning:
-
-  - ``round(a, to_nearest_ )`` is equivalent to the call ``nearest(a)``
-  - ``round(a, toward_zero_)`` is equivalent to the call ``trunc(a)``
-  - ``round(a, upward_ )`` is equivalent to the call ``ceil(a)``
-  - ``round(a, downward_)`` is equivalent to the call ``floor(a)``
 
 Example
 *******

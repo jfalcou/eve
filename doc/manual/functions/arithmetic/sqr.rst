@@ -19,30 +19,27 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise square value of the :ref:`wide <type-wide>`.
-* [2] Computes the square value of the scalar.
+*  Computes the element-wise square value of the :ref:`Value <concept-value>`.
 
-Parameters
-**********
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
 Options
 *******
 
-  - With the :ref:`saturated_ <feature-decorator>` decorator for  an integral entry ``a`` the call to ``saturated_(sqr)(a)`` return ``Valmax(as(a))`` as soon as the
-    absolute value of ``a`` is greater than ``SqrtValmax(as(a))``
+  - With the :ref:`saturated_ <feature-decorator>` decorator for  an :ref:`Integral Value <concept-integralvalue>` entry ``x`` 
+    the call to ``saturated_(sqr)(x)`` returns ``Valmax(as(x))`` as soon as the
+    absolute value of ``x`` is greater than ``SqrtValmax(as(x))``
 
 Example
 *******

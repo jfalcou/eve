@@ -21,38 +21,29 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename U, typename N> wide<T,N> operator()( wide<T,N> const& v, wide<U,M> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( T                s, wide<U,M> const& w ) noexcept;
-   template<typename T, typename U> constexpr   T         operator()( T s, U t ) noexcept;
+   template<typename I, typename J> auto operator()( I const& x, J const& y ) noexcept;
 
-* [1] Performs a bitwise shift of each element of **v** by each element of **w**.
-* [2] Performs a bitwise shift of each element of **v** by **s**.
-* [3] Performs a bitwise shift of **s** by each element of **w**.
-* [4] Performs a bitwise shift of **s** by **t**.
+* Computes a bitwise left shift of each element of ``x`` by each element of ``y``.
+
 
 Parameters
 **********
 
-* **v**, **w**: Instances of :ref:`type-wide` satisfying  the :ref:`IntegralValue <concept-integralvalue>` concept.
-* **s**, **t**: Integer values.
+* Each parameter must be an instance of :ref:`Value <concept-integralvalue>`.
+* All  :ref:`concept-vectorized` parameters must share the same cardinal
+* If the first parameter is  :ref:`concept-vectorizable`, so must be the second
 
 Return value
 **************
 
-* [1,2,4] A value with the same type as the first parameter.
-* [3] A value of type **wide<T,N>**.
+* a value of the type of the first parameter.
 
-.. rubric:: Notes
+Notes
+*****
 
 * ``shr`` is a 'arithmetical' shift that does preserve the sign of the input:the input element is divided by 2 to the shift element.
 * All shift are to be greater or equal to zero and not greater or equal to the size in bit of the element shifted or an assert is issued.
-
-*******
-Options
-*******
 
 .. seealso::  :ref:`shl <function-shl>`
 

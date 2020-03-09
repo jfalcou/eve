@@ -19,31 +19,28 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise sign of the value of the :ref:`wide <type-wide>`.
-* [2] Computes the sign of the value of the scalar.
+*  Computes the element-wise sign (-1,0 or 1) of the :ref:`Value <concept-value>`.
 
-Parameters
-**********
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
-Notes
-******
 
 Options
 *******
 
+  - With the regular call the sign of Nan is undefined
+  - With the :ref:`pedantic_ <feature-decorator>` decorator the sign of a Nan is a Nan
+    
 Example
 *******
 

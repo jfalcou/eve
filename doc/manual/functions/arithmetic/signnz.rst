@@ -15,35 +15,29 @@ signnz
 
 Function object computing the signnz (-1 or 1) of a :ref:`Value <concept-value>`, the signnz of zero being one.
 
-Synopsis
-********
-
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise non zero sign of the value of the :ref:`wide <type-wide>`, the sign of zero being one.
-* [2] Computes the non zero signnof the value of the scalar, the sign of zero being one.
+*  Computes the element-wise non-zero sign (-1 or 1) of the :ref:`Value <concept-value>`.
 
-Parameters
-**********
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
 
-Notes
-******
 
-  - With floating point entry the ``signnz`` of negative zeo is -1
-  
-  - With the :ref:`pedantic_ <feature-decorator>` decorator a nan entry will return a nan output
+Options
+*******
+
+  - With the regular call the ``signnz`` of Nan is undefined
+  - With the :ref:`pedantic_ <feature-decorator>` decorator the ``signnz`` of a Nan is a Nan
+  - With a :ref:`Value <concept-ieeevalue>` the ``signnz`` of negative zero is ``-1``
 
 Options
 *******

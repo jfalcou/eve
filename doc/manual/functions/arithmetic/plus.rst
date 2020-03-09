@@ -20,28 +20,20 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1,2] Returns the unchanged input value.
+*  Returns the unchanged input value.
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter. *TODO*
-
-Notes
-*****
-
-  - take care that the infix notation on scalar an imply C++ promotion as it is the original operator.
+* A value with the sampe type as the parameter.
 
 .. seealso::  :ref:`minus <function-minus>`
 

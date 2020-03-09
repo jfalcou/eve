@@ -7,6 +7,16 @@ iround
 **Required header:** ``#include <eve/function/iround.hpp>``
 
 .. code-block:: c++
+
+   namespace eve
+   {
+      constexpr /* implementation defined */ iround = {};
+   }
+
+Synopsis
+********
+
+.. code-block:: c++
   :linenos:
 
    template<typename T             > constexpr T operator()( T const & x ) noexcept;
@@ -26,16 +36,16 @@ Parameters
 Return value
 **************
 
-* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the parameter.
+* A value with the  :ref:`Integral Value <concept-integralvalue>` associated to the first parameter.
 
 Notes
 ******
 
   - This object function can be called with an optional tag parameter that changes its meaning:
-  - ``iround(a, to_nearest_ )`` is equivalent to the call ``inearest(a)``
-  - ``iround(a, toward_zero_)`` is equivalent to the call ``itrunc(a)``
-  - ``iround(a, upward_ )`` is equivalent to the call ``iceil(a)``
-  - ``iround(a, downward_)`` is equivalent to the call ``ifloor(a)``
+  - ``iround(x, to_nearest_ )`` is equivalent to the call ``inearest(x)``
+  - ``iround(x, toward_zero_)`` is equivalent to the call ``itrunc(x)``
+  - ``iround(x, upward_ )`` is equivalent to the call ``iceil(x)``
+  - ``iround(x, downward_)`` is equivalent to the call ``ifloor(x)``
 
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. 
   - the  call to ``iround(x)`` is equivalent to the call ``iround(x, to_nearest_)``

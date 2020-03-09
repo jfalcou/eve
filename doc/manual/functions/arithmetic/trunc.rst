@@ -19,24 +19,21 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise integral part values of the :ref:`wide <type-wide>`.
-* [2] Computes the integral part of the value of the scalar.
+*  Computes the element-wise integral value greater or equal to of the parameter`.
 
 Parameters
 **********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
 
-* [1,2] A value with the same type as the parameter.
+* A value with the same type as the parameter.
+   template<typename T> constexpr    T         operator()( T s ) noexcept;
 
 Notes
 ******
@@ -44,7 +41,11 @@ Notes
   - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
     implements the ``toward_zero_`` version.
 
-  - the  call to ``trunc(a)`` is equivalent to the call ``round(a,toward_zero_)``
+  - the  call to ``trunc(x)`` is equivalent to the call ``round(x,toward_zero_)``
+
+ - On :ref:`Integral Value <concept-integralvalue>` parameter it returns the input unchanged.
+
+.. seealso::  :ref:`itrunc <function-itrunc>`
 
 Options
 *******

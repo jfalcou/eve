@@ -43,13 +43,14 @@ Return value
 Options
 *******
 
-  - With the :ref:`saturated_ <feature-decorator>` decorator the  operation is saturated for :ref:`Integral Values <concept-integralvalue>` entries.
+  - With the :ref:`saturated_ <feature-decorator>` decorator the  operation is saturated for 
+    :ref:`Integral Values <concept-integralvalue>` entries.
   
   - :ref:`masked call <feature-maskable>` is allowed: ``add[cond](x, y)`` is equivalent to ``if_else(cond, add(x, y), x)``, 
     but can be subject to optimization.
 
   - apart the preceding conditional case, infix notation can be used with operator ``+``. But be aware that if the two parameters 
-    are standard scalar integers, `+`` is the C++ operator and its result is subject to automatic promotions. 
+    are standard scalar integers, ``+`` is the C++ operator and its result is subject to automatic promotions. 
     This **IS NOT** the case for  :ref:`concept-vectorized` entries.
 
 Example
