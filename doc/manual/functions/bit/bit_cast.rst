@@ -10,8 +10,7 @@ bit_cast
 
    namespace eve
    {
-      template < typename T, typename U,  typename N> bit_cast( wide<U,N> const& v ) noexcept;
-      template < typename T, typename U             > bit_cast( U const& v) noexcept;
+      constexpr /* implementation defined */ bit_cast = {};
    }
 
 Function reinterpreting the bit pattern of a value to a possibly different type of same size.
@@ -21,34 +20,27 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-      template < typename T, typename U,  typename N> bit_cast( wide<U,N> const& v ) noexcept;
-      template < typename T, typename U             > bit_cast( U const& s) noexcept;
+   template<typename T, typename U>  U operator()( T const& x, as_<U> const &) noexcept;
 
-* [1] Reinterpret a :ref:`Value <concept-value>` **v** of type **wide<U,N>** as a :ref:`Value <concept-value>` of type **T**.
-* [2] Reinterpret a scalar value **s** of type **U** as a scalar value of type **T**
 
-.. rubric:: Template parameters
+* Reinterpret a :ref:`Value <concept-value>` of type ``T`` as a :ref:`Value <concept-value>` of type ``U``.
 
-* **T**: expected return type that satisfies:
+Parameters
+**********
 
-  * [1] ``sizeof(T) == sizeof(wide<U,N>)`` and **T** must be a :ref:`type-wide` type;
-  * [2] ``sizeof(T) == sizeof(U)``.
+* ``T`` and ``U`` must be simultaneously  :ref:`concept-vectorized` or  :ref:`concept-vectorizable` and of the same global size.
 
-.. rubric:: Parameters
+Return value
+************
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+*  A value of type ``U``.
 
-.. rubric:: Return value
+Notes
+*****
 
-* [1-2] A value of type **T**.
-
-.. rubric:: Notes
-
-* :ref:`function-bit_cast` does not allow to cast :ref:`type-wide` instances of cardinal 1 to
-  scalar as, for performance reasons, such instances are stored as native SIMD registers and
+* :ref:`function-bit_cast` does not allow to cast :ref:`type-wide` instances of cardinal ``1`` to
+  :ref:`concept-vectorizable` types as, for performance reasons, such instances are stored as native SIMD registers and
   consequently do not have the proper size to be reinterpreted.
 
 *******

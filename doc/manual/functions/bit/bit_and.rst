@@ -20,31 +20,29 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename M, typename U, typename N> wide<T,N> operator()( wide<T,N> const& v, wide<U,M> const& w ) noexcept;
-   template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
+   template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1] Performs a bit AND between both :ref:`wide <type-wide>`.
-* [2] Performs a bit AND between the scalar and each elements of the :ref:`type-wide` instance.
-* [3] Performs a bit AND between both scalars.
+* Performs a bit AND between both :ref:`Values <concept-value>`.
 
-.. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide` satisfying ``sizeof(v) == sizeof(w)``.
-* **s**, **t**: Scalar values of type **U** satisfying ``sizeof(T) == sizeof(U)``.
+Parameters
+**********
 
-.. rubric:: Return value
+* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* All parameters must share the same global size.
 
-* [1,2] A value with the same type as the first parameter.
-* [3] A value of type **T**.
+Return value
+************
 
-.. rubric:: Notes
+*  A value with the same type as the first parameter.
+
+Notes
+*****
 
 * There is no type restriction between operands of :ref:`function-bit_and` as long as the number
   of bits between them are equals. This implies that calls to :ref:`function-bit_and` on
-  :ref:`concept-ieeevalue` are possible as long as they are performed with a
+  :ref:`Ieee Values <concept-ieeevalue>` are possible as long as they are performed with a
   second parameters of proper size.
 
 * There is no cardinal restriction on the :ref:`concept-vectorized` operands of :ref:`function-bit_and`
@@ -52,9 +50,6 @@ Synopsis
   on :ref:`concept-vectorized` values of different cardinals are allowed as long as their total size
   in bits are equal.
 
-*******
-Options
-*******
 
 *******
 Example
