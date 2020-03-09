@@ -24,7 +24,7 @@ Synopsis
 
    template<typename I, typename J> auto operator()( I const& x, J const& y ) noexcept;
 
-* Computes a bitwise left shift of each element of ``x`` by each element of ``y``.
+* Computes an element-wise arithmetic left shift of each element of ``x`` by each element of ``y``.
 
 
 Parameters
@@ -42,8 +42,10 @@ Return value
 Notes
 *****
 
-* ``shr`` is a 'arithmetical' shift that does preserve the sign of the input:the input element is divided by 2 to the shift element.
-* All shift are to be greater or equal to zero and not greater or equal to the size in bit of the element shifted or an assert is issued.
+* ``shr`` is a 'arithmetical' shift that does preserve the sign of the input:the input element
+  is divided by 2 to the shift element.
+* All shift are to be greater or equal to zero and not greater or equal to the size in bit of the element shifted
+  or an assert is issued.
 
 .. seealso::  :ref:`shl <function-shl>`
 

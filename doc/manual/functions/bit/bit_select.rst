@@ -21,29 +21,24 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename M, typename U, typename N> wide<T,N> operator()( wide<T,N> const& v, wide<U,M> const& w , wide<U,M> const& x ) noexcept;
-   template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s, U t ) noexcept;
-   template<typename T, typename U> constexpr               T         operator()( T r, U s, U t ) noexcept;
+.. code-block:: c++
 
-* [1] Selects bits between **w** and **x** based on the value of **v**. This computation is equivalent to ``bit_or(bit_and(w, v), eve::bit_andnot(x, v))``.
-* [2] Selects bits between **s** and **t** based on the value of **v**. This computation is equivalent to ``bit_select(v, wide<T,N>(s), wide<T,N>(t))``.
-* [3] Selects bits between **s** and **t** based on the value of **r**. This computation is equivalent to ``bit_or(bit_and(s, r), eve::bit_andnot(t, r))``.
+   template<typename T, typename U> U operator()( T const& x, U const& y, U const& z ) noexcept;
 
-.. rubric:: Parameters
+* Selects bits between ``y`` and ``z`` based on the value of ``x``. This computation is equivalent to ``bit_or(bit_and(y, x), eve::bit_andnot(z, x))``.
 
-* **v**, **w**, **x**: Instances of :ref:`type-wide` satisfying ``sizeof(v) == sizeof(w)``, **w** and **x** sharing the same type.
-* **r**: Scalar value  of type **T**
-* **s**, **t**: Scalar values of type **U**. **U** must satisfy ``sizeof(T) == sizeof(U)``.
+Parameters
+***********
 
-.. rubric:: Return value
+* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* All parameters must share the same global size.
 
-* [1-3] A value of the type shared by the second and third parameter.
 
-*******
-Options
-*******
+Return value
+************
+
+* A value of the type shared by the second and third parameters.
 
 *******
 Example

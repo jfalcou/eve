@@ -24,7 +24,7 @@ Synopsis
 
    template<typename I, typename J> auto operator()( I const& x, J const& y ) noexcept;
 
-* Computes a bitwise left shift of each element of ``x`` by each element of ``y``.
+* Computes an element-wise  left shift of each element of ``x`` by each element of ``y``.
 
 
 Parameters

@@ -13,28 +13,26 @@ popcount
       constexpr /* implementation defined */ popcount = {};
    }
 
-Function object computing the *WHAT*  of a :ref:`Value <concept-value>`.
+Function object computing the bit count  of a :ref:`Value <concept-value>`.
 
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>  as_integer_t<wide<T,N>> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    as_integer_t<T>         operator()( T s ) noexcept;
+   template<typename T> constexpr as_integer_t<T> operator()( T const & x ) noexcept;
 
-* [1] Computes the element-wise  number of bits set of the :ref:`wide <type-wide>`.
-* [2] Computes the  number of bits set of the scalar.
+*  Computes element-wise the bit count of the :ref:`Value <concept-value>`.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* Instance of a :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+**************
 
-* [1,2] A value with the integral type associated to the parameter.
+* A value of the integral type associated to the parameter.
 
 Example
 *******
