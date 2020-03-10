@@ -18,7 +18,7 @@
 #include <eve/function/sin.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
-#include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/module/core/detail/simd/sin_finalize.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/all.hpp>

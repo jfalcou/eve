@@ -44,8 +44,10 @@ TTS_CASE("Check eve::big_(eve::sinpi) behavior")
   TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Mzero<Type>()), (Type(0)));
   TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(0.25))), (Type(std_sinpi(0.25))), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sinpi)(-Type(0.25))),(Type(std_sinpi(-0.25))), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(100000.0))), Type(0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(-100000.0))),Type(0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(100000.0))), Type(0), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(-100000.0))),Type(0), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(100000000.0))), Type(0), 0.5);
   TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(-100000000.0))),Type(0), 0.5);
-  }
+  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(-1000.5))),Type(-1), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sinpi)(Type(1000.5))),Type(1), 0.5);
+}

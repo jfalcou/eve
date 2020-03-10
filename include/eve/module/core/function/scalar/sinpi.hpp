@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/module/core/detail/scalar/sin_finalize.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/sin.hpp>
 #include <eve/function/trigo_tags.hpp>
@@ -44,8 +45,8 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       if (is_not_finite(a0)) return Nan<T>(); 
-      const T x =  abs(a0);
-      auto [fn, xr, dxr] = rem2(x); 
+      const T x =  eve::abs(a0);
+      auto [fn, xr, dxr] = rem2(x);
       return sin_finalize(bitofsign(a0), fn, xr, dxr); 
     }
     else
@@ -60,7 +61,7 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    auto x =  abs(a0);
+    auto x =  eve::abs(a0);
     if (eve::abs(x) <= T(0.25)) return restricted_(sinpi)(a0);
     else                        return big_(sinpi)(a0);      
   }
