@@ -26,9 +26,6 @@ namespace eve
 {
   template<typename T, typename Size> struct as_register<T, Size, eve::ppc_>
   {
-    template<typename U> static constexpr bool is_logical(U const&)           { return false; }
-    template<typename U> static constexpr bool is_logical(logical<U> const&)  { return true; }
-
     static constexpr bool size_check(std::size_t t, std::size_t s)
     {
       return (sizeof(T) == t) && (Size::value <= s);
@@ -36,51 +33,72 @@ namespace eve
 
     static constexpr auto find()
     {
-      if constexpr( std::is_same_v<T,float> && Size::value <= 4)
-      {
-        if constexpr(is_logical(T{})) return __vector bool int{};
-        else                          return __vector float{};
-      }
+      if constexpr( std::is_same_v<T,float> && Size::value <= 4) { return (__vector float){}; }
       else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
       {
-        if constexpr(spy::simd_instruction_set == spy::vsx_)
-        {
-          if constexpr(is_logical(T{})) return __vector bool long{};
-          else                          return __vector double{};
-        }
-        else
-        {
-          return emulated_{};
-        }
+        if constexpr(spy::simd_instruction_set == spy::vsx_)  { return (__vector double){}; }
+        else                                                  { return emulated_{};         }
       }
       else if constexpr( std::is_integral_v<T> )
       {
         constexpr bool signed_v = std::is_signed_v<T>;
 
-        if constexpr( signed_v && size_check(1,8) && is_logical(T{}) ) return __vector bool char{};
-        if constexpr( signed_v && size_check(1,8) && !is_logical(T{})) return __vector signed char{};
-        if constexpr( signed_v && size_check(2,4) && is_logical(T{}) ) return __vector bool short{};
-        if constexpr( signed_v && size_check(2,4) && !is_logical(T{})) return __vector signed short{};
-        if constexpr( signed_v && size_check(4,2) && is_logical(T{}) ) return __vector bool int{};
-        if constexpr( signed_v && size_check(4,2) && !is_logical(T{})) return __vector signed int{};
-        if constexpr(!signed_v && size_check(1,8) && is_logical(T{}) ) return __vector bool char{};
-        if constexpr(!signed_v && size_check(1,8) && !is_logical(T{})) return __vector unsigned char{};
-        if constexpr(!signed_v && size_check(2,4) && is_logical(T{}) ) return __vector bool short{};
-        if constexpr(!signed_v && size_check(2,4) && !is_logical(T{})) return __vector unsigned short{};
-        if constexpr(!signed_v && size_check(4,2) && is_logical(T{}) ) return __vector bool int{};
-        if constexpr(!signed_v && size_check(4,2) && !is_logical(T{})) return __vector unsigned int{};
+        if constexpr( signed_v && size_check(1,16)) return (__vector signed char){};
+        if constexpr( signed_v && size_check(2,8 )) return (__vector signed short){};
+        if constexpr( signed_v && size_check(4,4 )) return (__vector signed int){};
+        if constexpr(!signed_v && size_check(1,16)) return (__vector unsigned char){};
+        if constexpr(!signed_v && size_check(2,8 )) return (__vector unsigned short){};
+        if constexpr(!signed_v && size_check(4,4 )) return (__vector unsigned int){};
 
         if constexpr(spy::simd_instruction_set == spy::vsx_)
         {
-          if constexpr( signed_v && size_check(8,1) && is_logical(T{}) ) return __vector bool long{};
-          if constexpr( signed_v && size_check(8,1) && !is_logical(T{})) return __vector signed long{};
-          if constexpr(!signed_v && size_check(8,1) && is_logical(T{}) ) return __vector bool long{};
-          if constexpr(!signed_v && size_check(8,1) && !is_logical(T{})) return __vector unsigned long{};
+          if constexpr( signed_v && size_check(8,2)) return (__vector signed long){};
+          if constexpr(!signed_v && size_check(8,2)) return (__vector unsigned long){};
         }
         else
         {
-          if constexpr(  signed_v && size_check(8,1) ) return emulated_{};
-          if constexpr( !signed_v && size_check(8,1) ) return emulated_{};
+          if constexpr( size_check(8,1) ) return emulated_{};
+        }
+      }
+    }
+
+    using type = decltype(find());
+  };
+
+  template<typename T, typename Size> struct as_register<logical<T>, Size, eve::ppc_>
+  {
+    static constexpr bool size_check(std::size_t t, std::size_t s)
+    {
+      return (sizeof(T) == t) && (Size::value <= s);
+    }
+
+    static constexpr auto find()
+    {
+      if constexpr( std::is_same_v<T,float> && Size::value <= 4) { return (__vector __bool int){}; }
+      else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
+      {
+        if constexpr(spy::simd_instruction_set == spy::vsx_)  { return (__vector __bool long){}; }
+        else                                                  { return emulated_{}; }
+      }
+      else if constexpr( std::is_integral_v<T> )
+      {
+        constexpr bool signed_v = std::is_signed_v<T>;
+
+        if constexpr( signed_v && size_check(1,16) ) return (__vector __bool char){};
+        if constexpr( signed_v && size_check(2,8 ) ) return (__vector __bool short){};
+        if constexpr( signed_v && size_check(4,4 ) ) return (__vector __bool int){};
+        if constexpr(!signed_v && size_check(1,16) ) return (__vector __bool char){};
+        if constexpr(!signed_v && size_check(2,8 ) ) return (__vector __bool short){};
+        if constexpr(!signed_v && size_check(4,4 ) ) return (__vector __bool int){};
+
+        if constexpr(spy::simd_instruction_set == spy::vsx_)
+        {
+          if constexpr( signed_v && size_check(8,2) ) return (__vector __bool long){};
+          if constexpr(!signed_v && size_check(8,2) ) return (__vector __bool long){};
+        }
+        else
+        {
+          if constexpr(size_check(8,2) ) return emulated_{};
         }
       }
     }
