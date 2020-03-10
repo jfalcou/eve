@@ -14,10 +14,15 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/detail/generic/rem2.hpp>
-#include <eve/module/core/detail/scalar/cos_finalize.hpp>
-#include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/cos.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/is_not_finite.hpp>
+#include <eve/function/is_not_less_equal.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
+#include <eve/module/core/detail/generic/cos_kernel.hpp>
+#include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/constant/maxflint.hpp>
+#include <eve/constant/pi.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <type_traits>
 
@@ -44,7 +49,8 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       if (is_not_finite(a0)) return Nan<T>(); 
-      const T x =  abs(a0);
+      const T x =  eve::abs(a0);
+      if (x > Maxflint<T>()) return T(1); 
       auto [fn, xr, dxr] = rem2(x); 
       return cos_finalize(fn, xr, dxr); 
     }

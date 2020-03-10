@@ -16,9 +16,13 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/cos.hpp>
+#include <eve/function/is_greater.hpp>
+#include <eve/function/is_not_finite.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
+#include <eve/module/core/detail/generic/cos_kernel.hpp>
 #include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/constant/maxflint.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/all.hpp>
@@ -43,9 +47,22 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto x = eve::abs(a0);
-      auto [n, xr, dxr] = rem2(x); 
-      return detail::cos_finalize(n, xr, dxr); 
+     if constexpr(is_aggregated_v<ABI>)
+      {
+        return aggregate( restricted_(eve::cospi), a0);
+      }
+      else if constexpr(is_emulated_v<ABI>)
+      {
+        return map( restricted_(eve::cospi), a0);
+      }
+      else
+      {
+        auto x = eve::abs(a0);
+        x = if_else (is_not_finite(x), eve::allbits_, x); //Nan or Inf input
+        x = if_else (is_greater(x, Maxflint(as(x))), eve::zero_, x);
+        auto [n, xr, dxr] = rem2(x); 
+        return detail::cos_finalize(n, xr, dxr); 
+      }
     }
     else
     {

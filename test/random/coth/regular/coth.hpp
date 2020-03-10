@@ -12,6 +12,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/function/rec.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

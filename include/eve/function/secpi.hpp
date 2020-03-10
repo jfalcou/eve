@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SECPI_HPP_INCLUDED
 
 #include <eve/function/scalar/secpi.hpp>
-//#include <eve/function/simd/secpi.hpp>
+#include <eve/function/simd/secpi.hpp>
 
 #endif

@@ -8,18 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/detail/function/tmp/boost_math_cospi.hpp>
 #include <eve/function/cospi.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/maxflint.hpp>
-#include <eve/constant/pi.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
+#include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on cospi")
-{
-  auto std_cospi = tts::vectorize<Type>( [](auto e) { return std::cos(double(e)*eve::Pi<double>()); } );
 
-  eve::exhaustive_producer<Type> p(-eve::Maxflint<Value>(), eve::Maxflint<Value>());
-  TTS_RANGE_CHECK(p, std_cospi, eve::big_(eve::cospi)); 
+
+TTS_CASE("wide exhaustive check on cospi") 
+{
+  auto my_stdcospi =  tts::vectorize<Type>([](auto x){return boost::math::cos_pi(x); });
+  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi)); 
 }
+
+
+
+// #include <crlibm.h>
+
+// TTS_CASE("wide exhaustive check on cospi") 
+// {
+//   ::crlibm_init(); 
+//   auto my_stdcospi =  tts::vectorize<Type>([](Value x){return Value(::cospi_rn(x)); });
+//   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+//   TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi)); 
+// }

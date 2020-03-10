@@ -8,18 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>    
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sinpi")
+TTS_CASE("wide exhaustive check on sinpi")
 {
-  auto std_sinpi = tts::vectorize<Type>( [](auto e) { return std::sin(double(e)*eve::Pi<double>()); } );
-
-  eve::exhaustive_producer<Type> p(-eve::Maxflint<Value>(), eve::Maxflint<Value>());
-  TTS_RANGE_CHECK(p, std_sinpi, eve::sinpi); 
+  auto my_stdsinpi =  tts::vectorize<Type>([](auto x){return boost::math::sin_pi(x); });
+  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  TTS_RANGE_CHECK(p, my_stdsinpi, eve::sinpi); 
 }
