@@ -18,7 +18,7 @@
 
 TTS_CASE("wide exhaustive check on secpi")
 {
-  auto my_stdsecpi =  tts::vectorize<Type>([](auto x){return eve::rec(boost::math::cos_pi(x)); }); 
-  eve::exhaustive_producer<Type> p(-0.25, 0.25);
+  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return eve::rec(boost::math::cos_pi(x)); }); 
+  eve::exhaustive_producer<EVE_TYPE> p(-0.25, 0.25);
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::restricted_(eve::secpi)); 
 }

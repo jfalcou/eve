@@ -23,8 +23,8 @@
 
 TTS_CASE("wide exhaustive check on cospi") 
 {
-  auto my_stdcospi =  tts::vectorize<Type>([](auto x){return boost::math::cos_pi(x); });
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto my_stdcospi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::cos_pi(x); });
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi)); 
 }
 
@@ -35,7 +35,7 @@ TTS_CASE("wide exhaustive check on cospi")
 // TTS_CASE("wide exhaustive check on cospi") 
 // {
 //   ::crlibm_init(); 
-//   auto my_stdcospi =  tts::vectorize<Type>([](Value x){return Value(::cospi_rn(x)); });
-//   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+//   auto my_stdcospi =  tts::vectorize<EVE_TYPE>([](EVE_VALUE x){return EVE_VALUE(::cospi_rn(x)); });
+//   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
 //   TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi)); 
 // }

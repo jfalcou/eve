@@ -24,26 +24,21 @@
 
 TTS_CASE("Check eve::restricted_(eve::cospi) return type")
 {
-  TTS_EXPR_IS(eve::restricted_(eve::cospi)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::restricted_(eve::cospi)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::cospi behavior")
 {
-  using mpfr::mpreal;    
-  const int digits = 128;
-  mpreal::set_default_prec(mpfr::digits2bits(digits));
-  const mpreal pi          =    mpfr::const_pi();
-  auto mpfr_cospi =  [ = ](Value e){return Type(Value(mpfr::cos(pi*mpreal(e)))); }; 
-  
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(Type(0)), (Type(1)));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Mzero<Type>()), (Type(1)));
-  TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(Type(0.125))), (Type(mpfr_cospi(Value(0.125)))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(-Type(0.125))),(Type(mpfr_cospi(-Value(0.125)))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(-Type(0.125))),(Type(mpfr_cospi(-Value(0.125)))), 0.5);
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(EVE_TYPE(0)), (EVE_TYPE(1)));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
+  TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(EVE_TYPE(0.0625))), (EVE_TYPE(0.98078528040323044912618223613423903697393373089333)), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(-EVE_TYPE(0.0625))),(EVE_TYPE(0.98078528040323044912618223613423903697393373089333)), 0.5);
+
 }

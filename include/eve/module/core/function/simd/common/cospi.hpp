@@ -47,20 +47,20 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-     if constexpr(is_aggregated_v<ABI>)
+      if constexpr(is_aggregated_v<ABI>)
       {
-        return aggregate( restricted_(eve::cospi), a0);
+        return aggregate(D()(eve::cospi), a0);
       }
       else if constexpr(is_emulated_v<ABI>)
       {
-        return map( restricted_(eve::cospi), a0);
+        return map( D()(eve::cospi), a0);
       }
       else
       {
         auto x = eve::abs(a0);
         x = if_else (is_not_finite(x), eve::allbits_, x); //Nan or Inf input
         x = if_else (is_greater(x, Maxflint(as(x))), eve::zero_, x);
-        auto [n, xr, dxr] = rem2(x); 
+        auto [n, xr, dxr] = rem2(x);
         return detail::cos_finalize(n, xr, dxr); 
       }
     }

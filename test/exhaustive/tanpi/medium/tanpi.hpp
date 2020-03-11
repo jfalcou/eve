@@ -23,9 +23,9 @@
 
 TTS_CASE("wide exhaustive check on tanpi")
 {
-  auto my_stdtanpi =  tts::vectorize<Type>([](auto x){return  ((eve::frac(std::abs(x)) == eve::Half<Value>()))
-                                               ?  eve::Nan<Value>()
+  auto my_stdtanpi =  tts::vectorize<EVE_TYPE>([](auto x){return  ((eve::frac(std::abs(x)) == eve::Half<EVE_VALUE>()))
+                                               ?  eve::Nan<EVE_VALUE>()
                                                : boost::math::sin_pi(x)/boost::math::cos_pi(x); });
-  eve::exhaustive_producer<Type> p(Value(-100000.0), Value(100000.0));
+  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
   TTS_RANGE_CHECK(p, my_stdtanpi, eve::medium_(eve::tanpi)); 
 }

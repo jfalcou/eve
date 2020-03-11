@@ -25,9 +25,9 @@
 
 TTS_CASE("wide random check on tanpi")
 {
-  auto my_stdtanpi =  tts::vectorize<Type>([](auto x){return ((x < eve::Maxflint<Value>()) && eve::is_odd(x*2))
-                                               ?  eve::Nan<Value>()
+  auto my_stdtanpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((x < eve::Maxflint<EVE_VALUE>()) && eve::is_odd(x*2))
+                                               ?  eve::Nan<EVE_VALUE>()
                                                : boost::math::sin_pi(x)/boost::math::cos_pi(x); });
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdtanpi, eve::tanpi); 
 }

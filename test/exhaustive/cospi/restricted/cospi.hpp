@@ -18,7 +18,7 @@
 
 TTS_CASE("wide exhaustive check on cospi")
 {
-   auto my_stdcospi =  tts::vectorize<Type>([](auto x){return boost::math::cos_pi(x); }); 
-  eve::exhaustive_producer<Type> p(-0.25, 0.25);
+   auto my_stdcospi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::cos_pi(x); }); 
+  eve::exhaustive_producer<EVE_TYPE> p(-0.25, 0.25);
   TTS_RANGE_CHECK(p, my_stdcospi, eve::restricted_(eve::cospi)); 
 }

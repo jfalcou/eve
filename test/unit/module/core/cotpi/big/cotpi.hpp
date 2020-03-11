@@ -28,24 +28,24 @@
 
 TTS_CASE("Check eve::cotpi return type")
 {
-  TTS_EXPR_IS(eve::cotpi(Type(0)), (Type));
+  TTS_EXPR_IS(eve::cotpi(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::cotpi behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::big_(eve::cotpi)(Type(1)), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cotpi)(Type(-1)),eve::Nan<Type>(), 0.5);
-  TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(Type(0)),  eve::rec((Type(0))));
-  TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Mzero<Type>()),  eve::rec((Type(-0.0))));
-  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(Type(22))), (eve::Nan<Type>()), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(-Type(22))),(eve::Nan<Type>()), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(Type(100000.5))), Type(0), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(Type(-100000.5))),Type(0), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cotpi)(EVE_TYPE(1)), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cotpi)(EVE_TYPE(-1)),eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(EVE_TYPE(0)),  eve::rec((EVE_TYPE(0))));
+  TTS_IEEE_EQUAL(eve::big_(eve::cotpi)(eve::Mzero<EVE_TYPE>()),  eve::rec((EVE_TYPE(-0.0))));
+  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(EVE_TYPE(22))), (eve::Nan<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(-EVE_TYPE(22))),(eve::Nan<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(EVE_TYPE(100000.5))), EVE_TYPE(0), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::cotpi)(EVE_TYPE(-100000.5))),EVE_TYPE(0), 0.5);
 }
 

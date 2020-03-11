@@ -26,7 +26,7 @@
 
 TTS_CASE("wide random check on secpi") 
 {
-  auto my_stdsecpi =  tts::vectorize<Type>([](auto x){return ((x < eve::Maxflint<Value>()) && eve::is_odd(x*2)) ?  eve::Nan<Value>() : eve::rec(boost::math::cos_pi(x)); });
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((x < eve::Maxflint<EVE_VALUE>()) && eve::is_odd(x*2)) ?  eve::Nan<EVE_VALUE>() : eve::rec(boost::math::cos_pi(x)); });
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::big_(eve::secpi)); 
 }

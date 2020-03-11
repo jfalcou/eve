@@ -19,7 +19,7 @@
 
 TTS_CASE("wide exhaustive check on sinpi")
 {
-  auto my_stdsinpi =  tts::vectorize<Type>([](auto x){return boost::math::sin_pi(x); });
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::sin_pi(x); });
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdsinpi, eve::sinpi); 
 }

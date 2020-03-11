@@ -28,21 +28,21 @@
 
 TTS_CASE("Check eve::restricted_(eve::tanpi) return type")
 {
-  TTS_EXPR_IS(eve::restricted_(eve::tanpi)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::restricted_(eve::tanpi)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::tanpi behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_EXPECT(eve::all(eve::is_positive(eve::restricted_(eve::tanpi)(eve::Zero<Type>()))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::restricted_(eve::tanpi)(eve::Mzero<Type>()))));    
-  TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(Type(0)), (Type(0)));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Mzero<Type>()), (Type(0)));
-  TTS_ULP_EQUAL((eve::restricted_(eve::tanpi)(Type(0.125))), (Type(0.41421356237309504880168872420969807856967187537695)), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::tanpi)(-Type(0.125))),(Type(-0.41421356237309504880168872420969807856967187537695)), 0.5);
+  TTS_EXPECT(eve::all(eve::is_positive(eve::restricted_(eve::tanpi)(eve::Zero<EVE_TYPE>()))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::restricted_(eve::tanpi)(eve::Mzero<EVE_TYPE>()))));    
+  TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::tanpi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
+  TTS_ULP_EQUAL((eve::restricted_(eve::tanpi)(EVE_TYPE(0.125))), (EVE_TYPE(0.41421356237309504880168872420969807856967187537695)), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::tanpi)(-EVE_TYPE(0.125))),(EVE_TYPE(-0.41421356237309504880168872420969807856967187537695)), 0.5);
 }

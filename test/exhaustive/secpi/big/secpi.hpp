@@ -26,9 +26,9 @@
 
 TTS_CASE("wide exhaustive check on secpi") 
 {
-  auto my_stdsecpi =  tts::vectorize<Type>([](auto x){return ((eve::frac(std::abs(x)) == eve::Half<Value>()))
-                                               ?  eve::Nan<Value>()
+  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((eve::frac(std::abs(x)) == eve::Half<EVE_VALUE>()))
+                                               ?  eve::Nan<EVE_VALUE>()
                                                : eve::rec(boost::math::cos_pi(x)); });
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::big_(eve::secpi)); 
 }

@@ -22,8 +22,8 @@
 
 TTS_CASE("wide exhaustive check on sinpi") 
 {
-  auto my_stdsinpi =  tts::vectorize<Type>([](auto x){return boost::math::sin_pi(x); });
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::sin_pi(x); });
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi)); 
 }
 
@@ -34,7 +34,7 @@ TTS_CASE("wide exhaustive check on sinpi")
 // TTS_CASE("wide exhaustive check on sinpi") 
 // {
 //   ::crlibm_init(); 
-//   auto my_stdsinpi =  tts::vectorize<Type>([](Value x){return Value(::sinpi_rn(x)); });
-//   eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+//   auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](EVE_VALUE x){return EVE_VALUE(::sinpi_rn(x)); });
+//   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
 //   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi)); 
 // }

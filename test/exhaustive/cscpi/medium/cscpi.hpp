@@ -21,7 +21,7 @@
 
 TTS_CASE("wide exhaustive check on cscpi")
 {
-  auto my_stdcscpi =  tts::vectorize<Type>([](auto x){return (x == 0 || !eve::is_flint(x)) ? eve::rec(boost::math::sin_pi(x)) : eve::Nan<Value>(); });
-  eve::exhaustive_producer<Type> p(Value(-100000.0), Value(100000.0));
+  auto my_stdcscpi =  tts::vectorize<EVE_TYPE>([](auto x){return (x == 0 || !eve::is_flint(x)) ? eve::rec(boost::math::sin_pi(x)) : eve::Nan<EVE_VALUE>(); });
+  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
   TTS_RANGE_CHECK(p, my_stdcscpi, eve::medium_(eve::cscpi)); 
 }

@@ -25,7 +25,7 @@
 
 TTS_CASE("Check eve::tanpi return type")
 {
-  TTS_EXPR_IS(eve::tanpi(Type(0)), (Type));
+  TTS_EXPR_IS(eve::tanpi(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::tanpi behavior")
@@ -33,20 +33,20 @@ TTS_CASE("Check eve::eve::tanpi behavior")
  
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::tanpi)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL((eve::tanpi)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL((eve::tanpi)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL((eve::tanpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL((eve::tanpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL((eve::tanpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::tanpi(Type(1)), Type(0), 0.5);
-  TTS_ULP_EQUAL(eve::tanpi(Type(-1)),Type(0), 0.5);
-  TTS_IEEE_EQUAL(eve::tanpi(Type(0)), (Type(0)));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::tanpi(eve::Zero<Type>()))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::tanpi(eve::Mzero<Type>()))));    
-  TTS_IEEE_EQUAL(eve::tanpi(eve::Mzero<Type>()), (Type(0)));
-  TTS_ULP_EQUAL((eve::tanpi(Type(22.5))), (eve::Nan<Type>()), 0.5);
-  TTS_ULP_EQUAL((eve::tanpi(-Type(22.5))),(eve::Nan<Type>()), 0.5);
-  TTS_ULP_EQUAL((eve::tanpi(Type(100000.0))), Type(0), 0.5);
-  TTS_ULP_EQUAL((eve::tanpi(Type(-100000.0))),Type(0), 0.5);
-  TTS_ULP_EQUAL((eve::tanpi(Type(100000000.0))), Type(0), 0.5);
-  TTS_ULP_EQUAL((eve::tanpi(Type(-100000000.0))),Type(0), 0.5);
+  TTS_ULP_EQUAL(eve::tanpi(EVE_TYPE(1)), EVE_TYPE(0), 0.5);
+  TTS_ULP_EQUAL(eve::tanpi(EVE_TYPE(-1)),EVE_TYPE(0), 0.5);
+  TTS_IEEE_EQUAL(eve::tanpi(EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::tanpi(eve::Zero<EVE_TYPE>()))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::tanpi(eve::Mzero<EVE_TYPE>()))));    
+  TTS_IEEE_EQUAL(eve::tanpi(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
+  TTS_ULP_EQUAL((eve::tanpi(EVE_TYPE(22.5))), (eve::Nan<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL((eve::tanpi(-EVE_TYPE(22.5))),(eve::Nan<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL((eve::tanpi(EVE_TYPE(100000.0))), EVE_TYPE(0), 0.5);
+  TTS_ULP_EQUAL((eve::tanpi(EVE_TYPE(-100000.0))),EVE_TYPE(0), 0.5);
+  TTS_ULP_EQUAL((eve::tanpi(EVE_TYPE(100000000.0))), EVE_TYPE(0), 0.5);
+  TTS_ULP_EQUAL((eve::tanpi(EVE_TYPE(-100000000.0))),EVE_TYPE(0), 0.5);
 }

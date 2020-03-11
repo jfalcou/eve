@@ -26,19 +26,19 @@
 
 TTS_CASE("Check eve::restricted_(eve::cotpi) return type")
 {
-  TTS_EXPR_IS(eve::restricted_(eve::cotpi)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::restricted_(eve::cotpi)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::cotpi behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(Type(0)), (eve::Inf<Type>()));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Mzero<Type>()), (eve::Minf<Type>()));
-  TTS_ULP_EQUAL((eve::restricted_(eve::cotpi)(Type(0.125))), (Type(2.414213562373095048801688724209698078569671875377)), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cotpi)(Type(-0.125))), (Type(-2.414213562373095048801688724209698078569671875377)), 0.5);
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cotpi)(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()));
+  TTS_ULP_EQUAL((eve::restricted_(eve::cotpi)(EVE_TYPE(0.125))), (EVE_TYPE(2.414213562373095048801688724209698078569671875377)), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cotpi)(EVE_TYPE(-0.125))), (EVE_TYPE(-2.414213562373095048801688724209698078569671875377)), 0.5);
 }
