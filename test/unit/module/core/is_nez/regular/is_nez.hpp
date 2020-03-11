@@ -18,16 +18,16 @@
 
 TTS_CASE("Check eve::is_nez return type")
 {
-  TTS_EXPR_IS(eve::is_nez(Type(0)), (eve::logical<Type>));
+  TTS_EXPR_IS(eve::is_nez(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_nez behavior")
 {
-  TTS_EQUAL(eve::is_nez(Type(0)), eve::False<Type>() );
-  TTS_EQUAL(eve::is_nez(Type(2)), eve::True<Type>());
+  TTS_EQUAL(eve::is_nez(EVE_TYPE(0)), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_nez(EVE_TYPE(2)), eve::True<EVE_TYPE>());
 
-  if constexpr( std::is_floating_point_v<Value> )
+  if constexpr( std::is_floating_point_v<EVE_VALUE> )
   {
-    TTS_EQUAL(eve::is_nez(eve::Mzero<Type>()), eve::False<Type>() );
+    TTS_EQUAL(eve::is_nez(eve::Mzero<EVE_TYPE>()), eve::False<EVE_TYPE>() );
   }
 }

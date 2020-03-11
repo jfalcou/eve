@@ -19,20 +19,20 @@
 
 TTS_CASE("Check eve::round return type")
 {
-  TTS_EXPR_IS(eve::round(Type(0)), (Type));
+  TTS_EXPR_IS(eve::round(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::round behavior")
 {
-  TTS_EQUAL(eve::round((Type(1.7)), eve::upward_      ), eve::ceil   ((Type(1.7))) );
-  TTS_EQUAL(eve::round((Type(1.7)), eve::downward_    ), eve::floor  ((Type(1.7))) );
-  TTS_EQUAL(eve::round((Type(1.7)), eve::toward_zero_ ), eve::trunc  ((Type(1.7))) );
-  TTS_EQUAL(eve::round((Type(1.7)), eve::to_nearest_  ), eve::nearest((Type(1.7))) );
-  TTS_EQUAL(eve::round((Type(1.7))                    ), eve::nearest((Type(1.7))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.7)), eve::upward_      ), eve::ceil   ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.7)), eve::downward_    ), eve::floor  ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.7)), eve::toward_zero_ ), eve::trunc  ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.7)), eve::to_nearest_  ), eve::nearest((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.7))                    ), eve::nearest((EVE_TYPE(1.7))) );
 
-  TTS_EQUAL(eve::round((Type(1.3)), eve::upward_      ), eve::ceil   ((Type(1.3))) );
-  TTS_EQUAL(eve::round((Type(1.3)), eve::downward_    ), eve::floor  ((Type(1.3))) );
-  TTS_EQUAL(eve::round((Type(1.3)), eve::toward_zero_ ), eve::trunc  ((Type(1.3))) );
-  TTS_EQUAL(eve::round((Type(1.3)), eve::to_nearest_  ), eve::nearest((Type(1.3))) );
-  TTS_EQUAL(eve::round((Type(1.3))                    ), eve::nearest((Type(1.3))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.3)), eve::upward_      ), eve::ceil   ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.3)), eve::downward_    ), eve::floor  ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.3)), eve::toward_zero_ ), eve::trunc  ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.3)), eve::to_nearest_  ), eve::nearest((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::round((EVE_TYPE(1.3))                    ), eve::nearest((EVE_TYPE(1.3))) );
 }

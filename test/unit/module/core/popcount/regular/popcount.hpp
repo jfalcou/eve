@@ -21,16 +21,16 @@
 
 TTS_CASE("Check eve::popcount return type")
 {
-  TTS_EXPR_IS(eve::popcount(Type(0)), (eve::detail::as_integer_t<Type, unsigned>));
+  TTS_EXPR_IS(eve::popcount(EVE_TYPE(0)), (eve::detail::as_integer_t<EVE_TYPE, unsigned>));
 }
 
 TTS_CASE("Check eve::popcount behavior")
 {
-  using r_t = eve::detail::as_integer_t<Type, unsigned>; 
-  TTS_EQUAL(eve::popcount( Type(0)), (eve::Zero<r_t>()));
-  TTS_EQUAL(eve::popcount( Type(1)), (r_t(1))          );
-  TTS_EQUAL(eve::popcount( Type(2)), (r_t(1))          );
-  TTS_EQUAL(eve::popcount( Type(3)), (r_t(2))          );
-  TTS_EQUAL(eve::popcount( Type(11)), (r_t(3))          );
-  TTS_EQUAL(eve::popcount( eve::Valmax<Type>()), r_t(sizeof(Value)*8-std::is_signed_v<Value>)); 
+  using r_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>; 
+  TTS_EQUAL(eve::popcount( EVE_TYPE(0)), (eve::Zero<r_t>()));
+  TTS_EQUAL(eve::popcount( EVE_TYPE(1)), (r_t(1))          );
+  TTS_EQUAL(eve::popcount( EVE_TYPE(2)), (r_t(1))          );
+  TTS_EQUAL(eve::popcount( EVE_TYPE(3)), (r_t(2))          );
+  TTS_EQUAL(eve::popcount( EVE_TYPE(11)), (r_t(3))          );
+  TTS_EQUAL(eve::popcount( eve::Valmax<EVE_TYPE>()), r_t(sizeof(EVE_VALUE)*8-std::is_signed_v<EVE_VALUE>)); 
 }

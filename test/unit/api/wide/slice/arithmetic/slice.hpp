@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check slicing for arithmetic wide",
 {
   using eve::wide;
 
-  wide<Type, T>                      simd([](auto i, auto) { return 1 + i; });
-  wide<Type, typename T::split_type> ref_low([](auto i, auto) { return 1 + i; });
-  wide<Type, typename T::split_type> ref_high([](auto i, auto) { return T::value / 2 + 1 + i; });
+  wide<EVE_TYPE, T>                      simd([](auto i, auto) { return 1 + i; });
+  wide<EVE_TYPE, typename T::split_type> ref_low([](auto i, auto) { return 1 + i; });
+  wide<EVE_TYPE, typename T::split_type> ref_high([](auto i, auto) { return T::value / 2 + 1 + i; });
 
   auto [ low, high ] = simd.slice();
 

@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on atanh")
 {
-  auto std_atanh = tts::vectorize<Type>( [](auto e) { return std::atanh(e); } );
+  auto std_atanh = tts::vectorize<EVE_TYPE>( [](auto e) { return std::atanh(e); } );
 
-  eve::exhaustive_producer<Type> p(-1, 1);
+  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
   TTS_RANGE_CHECK(p, std_atanh, eve::atanh); 
 }

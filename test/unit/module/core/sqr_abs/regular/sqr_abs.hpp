@@ -16,13 +16,13 @@
 
 TTS_CASE("Check eve::sqr_abs return type")
 {
-  TTS_EXPR_IS(eve::sqr_abs(Type(0)), (Type));
+  TTS_EXPR_IS(eve::sqr_abs(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::sqr_abs behavior")
 {
-  TTS_EQUAL(eve::sqr_abs(Type(1))               , (Type(1)) );
-  TTS_EQUAL(eve::sqr_abs(Type(2))               , (Type(4)) );
-  TTS_EQUAL(eve::sqr_abs(eve::Mzero<Type>())    , (Type(0)) );
-  TTS_EQUAL(eve::sqr_abs(static_cast<Type>(-2)) , (Type(4)) );
+  TTS_EQUAL(eve::sqr_abs(EVE_TYPE(1))               , (EVE_TYPE(1)) );
+  TTS_EQUAL(eve::sqr_abs(EVE_TYPE(2))               , (EVE_TYPE(4)) );
+  TTS_EQUAL(eve::sqr_abs(eve::Mzero<EVE_TYPE>())    , (EVE_TYPE(0)) );
+  TTS_EQUAL(eve::sqr_abs(static_cast<EVE_TYPE>(-2)) , (EVE_TYPE(4)) );
 }

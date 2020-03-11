@@ -14,14 +14,14 @@
 
 TTS_CASE("Check eve::fnms return type")
 {
-  TTS_EXPR_IS(eve::fnms(Type(), Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::fnms(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::fnms behavior")
 {
-  TTS_EQUAL(eve::fnms(Type(0), Type(0), Type(0)), (Type(0)));
-  TTS_EQUAL(eve::fnms(Type(0), Type(0), Type(7)), static_cast<Type>(-7));
-  TTS_EQUAL(eve::fnms(Type(2), Type(0), Type(7)), static_cast<Type>(-7));
-  TTS_EQUAL(eve::fnms(Type(0), Type(5), Type(7)), static_cast<Type>(-7));
-  TTS_EQUAL(eve::fnms(Type(2), Type(5), Type(7)), static_cast<Type>(-17));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), static_cast<EVE_TYPE>(-17));
 }

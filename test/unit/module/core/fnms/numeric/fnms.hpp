@@ -22,21 +22,21 @@
 
 TTS_CASE("Check eve::fnms return type")
 {
-  TTS_EXPR_IS(eve::numeric_(eve::fnms)(Type(), Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::numeric_(eve::fnms)(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::numeric_(eve::fnms) behavior")
 {
-  TTS_EQUAL(eve::numeric_(eve::fnms)(Type(0), Type(0), Type(0)), (Type(0)));
-  TTS_EQUAL(eve::numeric_(eve::fnms)(Type(0), Type(0), Type(7)), (Type(-7)));
-  TTS_EQUAL(eve::numeric_(eve::fnms)(Type(2), Type(0), Type(7)), (Type(-7)));
-  TTS_EQUAL(eve::numeric_(eve::fnms)(Type(0), Type(5), Type(7)), (Type(-7)));
-  TTS_EQUAL(eve::numeric_(eve::fnms)(Type(2), Type(5), Type(7)), (Type(-17)));
-  if constexpr(std::is_floating_point_v<Value>)
+  TTS_EQUAL(eve::numeric_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::numeric_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
+  TTS_EQUAL(eve::numeric_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
+  TTS_EQUAL(eve::numeric_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-7)));
+  TTS_EQUAL(eve::numeric_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-17)));
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    Type e = eve::Eps<Type>();
-    TTS_EQUAL(eve::numeric_(eve::fnms)(eve::inc(e), eve::oneminus(e), eve::Mone<Type>()), (eve::sqr(e)));
-    TTS_EQUAL(eve::numeric_(eve::fnms)(eve::Valmax<Type>(), Type(2), eve::Valmin<Type>()), -eve::Valmax<Type>());
+    EVE_TYPE e = eve::Eps<EVE_TYPE>();
+    TTS_EQUAL(eve::numeric_(eve::fnms)(eve::inc(e), eve::oneminus(e), eve::Mone<EVE_TYPE>()), (eve::sqr(e)));
+    TTS_EQUAL(eve::numeric_(eve::fnms)(eve::Valmax<EVE_TYPE>(), EVE_TYPE(2), eve::Valmin<EVE_TYPE>()), -eve::Valmax<EVE_TYPE>());
   }
   
 }

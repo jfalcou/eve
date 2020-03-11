@@ -41,28 +41,28 @@
 
 TTS_CASE("Check cosd return type")
 {
-  TTS_EXPR_IS(eve::cephes_(eve::cosd)(Type(0)),  Type);
+  TTS_EXPR_IS(eve::cephes_(eve::cosd)(EVE_TYPE(0)),  EVE_TYPE);
 }
 
 TTS_CASE("Check eve::cephes_(eve::cosd) behavior")
 {
 
 #ifndef EVE_NO_INVALIDS 
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Inf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Minf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(2*eve::Pi<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-2*eve::Pi<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pi<Type>()), eve::Mone<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pi<Type>()), eve::Mone<Type>(), 0.5);   
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pio_2<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pio_4<Type>()), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(3*eve::Pio_4<Type>()/2), Type(0.3826834323650897717284599840304), 0.5);
-  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(3*eve::Pio_2<Type>()), eve::Zero<Type>(), 1.0);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(2*eve::Pi<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-2*eve::Pi<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pio_2<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pio_4<EVE_TYPE>()), eve::Sqrt_2o_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pi<EVE_TYPE>()), eve::Mone<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(-eve::Pi<EVE_TYPE>()), eve::Mone<EVE_TYPE>(), 0.5);   
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pio_2<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Pio_4<EVE_TYPE>()), eve::Sqrt_2o_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(3*eve::Pio_4<EVE_TYPE>()/2), EVE_TYPE(0.3826834323650897717284599840304), 0.5);
+  TTS_ULP_EQUAL(eve::cephes_(eve::cosd)(3*eve::Pio_2<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 1.0);
 }
 
 

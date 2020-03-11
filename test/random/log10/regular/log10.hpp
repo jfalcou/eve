@@ -18,8 +18,8 @@
 
 TTS_CASE("wide random check on log10")
 {
-  auto std_log10 = tts::vectorize<Type>( [](auto e) { return std::log10(e); } );
+  auto std_log10 = tts::vectorize<EVE_TYPE>( [](auto e) { return std::log10(e); } );
 
-  eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_log10, eve::log10); 
 }

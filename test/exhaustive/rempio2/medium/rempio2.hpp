@@ -18,12 +18,12 @@
 
 TTS_CASE("wide random check on rempio2")
 {
-  auto std_rempio2_n = tts::vectorize<Type>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return n; } );
-  auto std_rempio2_x = tts::vectorize<Type>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return x; } );
+  auto std_rempio2_n = tts::vectorize<EVE_TYPE>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return n; } );
+  auto std_rempio2_x = tts::vectorize<EVE_TYPE>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return x; } );
   auto rempio2_n =  [](auto e) { auto [n, x, dx] = eve::medium_(eve::rempio2)(e); return n; };
   auto rempio2_x =  [](auto e) { auto [n, x, dx] = eve::medium_(eve::rempio2)(e); return x; };
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), Value()); 
-  eve::exhaustive_producer<Type> p(0, l);
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
+  eve::exhaustive_producer<EVE_TYPE> p(0, l);
   TTS_RANGE_CHECK(p, std_rempio2_n, rempio2_n);
   TTS_RANGE_CHECK(p, std_rempio2_x, rempio2_x); 
 }

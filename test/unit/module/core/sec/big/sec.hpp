@@ -26,7 +26,7 @@
 
 TTS_CASE("Check eve::big_(eve::sec) return type")
 {
-  TTS_EXPR_IS(eve::sec(Type(0)), (Type));
+  TTS_EXPR_IS(eve::sec(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::big_(eve::sec) behavior")
@@ -35,20 +35,20 @@ TTS_CASE("Check eve::big_(eve::sec) behavior")
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::big_(eve::sec)(Type(1)), Type(my_stdsec(1.0)), 1.0);
-  TTS_ULP_EQUAL(eve::big_(eve::sec)(Type(-1)),Type(my_stdsec(-1.0)), 1.0); 
-  TTS_IEEE_EQUAL(eve::big_(eve::sec)(Type(0)), (Type(my_stdsec(0.0))));
-  TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Mzero<Type>()), (Type(my_stdsec(0.0))));
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(eve::Pio_4<Type>())), (Type(my_stdsec(eve::Pio_4<Value>()))), 0.75);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(-eve::Pio_4<Type>())),(Type(my_stdsec(-eve::Pio_4<Value>()))), 0.75);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(100000.0))), Type(my_stdsec(100000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(-100000.0))),Type(my_stdsec(-100000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(100000000.0))), Type(my_stdsec(100000000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(-100000000.0))),Type(my_stdsec(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(eve::Valmax<Type>()))),Type(my_stdsec(eve::Valmax<Value>())), 1.5);
-  TTS_ULP_EQUAL((eve::big_(eve::sec)(Type(eve::Valmax<Type>()))/10),Type(my_stdsec(eve::Valmax<Value>())/10), 1.5);     
+  TTS_ULP_EQUAL(eve::big_(eve::sec)(EVE_TYPE(1)), EVE_TYPE(my_stdsec(1.0)), 1.0);
+  TTS_ULP_EQUAL(eve::big_(eve::sec)(EVE_TYPE(-1)),EVE_TYPE(my_stdsec(-1.0)), 1.0); 
+  TTS_IEEE_EQUAL(eve::big_(eve::sec)(EVE_TYPE(0)), (EVE_TYPE(my_stdsec(0.0))));
+  TTS_IEEE_EQUAL(eve::big_(eve::sec)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(my_stdsec(0.0))));
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdsec(eve::Pio_4<EVE_VALUE>()))), 0.75);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdsec(-eve::Pio_4<EVE_VALUE>()))), 0.75);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(100000.0))), EVE_TYPE(my_stdsec(100000.0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(-100000.0))),EVE_TYPE(my_stdsec(-100000.0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(100000000.0))), EVE_TYPE(my_stdsec(100000000.0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(-100000000.0))),EVE_TYPE(my_stdsec(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(my_stdsec(eve::Valmax<EVE_VALUE>())), 1.5);
+  TTS_ULP_EQUAL((eve::big_(eve::sec)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))/10),EVE_TYPE(my_stdsec(eve::Valmax<EVE_VALUE>())/10), 1.5);     
 }

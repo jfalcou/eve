@@ -17,26 +17,26 @@
 
 TTS_CASE("Check saturated_(eve::dist) return type")
 {
-  TTS_EXPR_IS(eve::saturated_(eve::dist)(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::saturated_(eve::dist)(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check saturated_(eve::dist) behavior")
 {
-  TTS_EQUAL(eve::saturated_(eve::dist)(Type(0), Type(0)), (Type(0)));
-  TTS_EQUAL(eve::saturated_(eve::dist)(Type(1), Type(5)), (Type(4)));
+  TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(1), EVE_TYPE(5)), (EVE_TYPE(4)));
 
-  if constexpr(std::is_integral_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE>)
   {
-    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::Valmax<Type>(),eve::Valmin<Type>())
-              , eve::Valmax<Type>()
+    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::Valmax<EVE_TYPE>(),eve::Valmin<EVE_TYPE>())
+              , eve::Valmax<EVE_TYPE>()
               );
 
-    if constexpr(std::is_signed_v<Value>)
+    if constexpr(std::is_signed_v<EVE_VALUE>)
     {
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<Type>(),Type(-1)), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<Type>(),Type( 0)), eve::Valmax<Type>());
-      TTS_EQUAL(eve::saturated_(eve::dist)(Type(-1), Type(1) ), (Type(2)));
-      TTS_EQUAL(eve::saturated_(eve::dist)(Type(-2), Type(-6)), (Type(4)));
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<EVE_TYPE>(),EVE_TYPE(-1)), eve::Valmax<EVE_TYPE>());
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<EVE_TYPE>(),EVE_TYPE( 0)), eve::Valmax<EVE_TYPE>());
+      TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(-1), EVE_TYPE(1) ), (EVE_TYPE(2)));
+      TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(-2), EVE_TYPE(-6)), (EVE_TYPE(4)));
     }
   }
 }

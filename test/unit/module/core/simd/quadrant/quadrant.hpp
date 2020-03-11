@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check quadrant behavior on wide",
   using eve::logical;
   using eve::wide;
 
-  wide<Type, T> lhs([](auto i, auto) { return 10*i; }),
-      ref([](auto i, auto) { return eve::quadrant(Type(10*i)); });
+  wide<EVE_TYPE, T> lhs([](auto i, auto) { return 10*i; }),
+      ref([](auto i, auto) { return eve::quadrant(EVE_TYPE(10*i)); });
   TTS_EQUAL(ref, eve::quadrant(lhs));
 }
 

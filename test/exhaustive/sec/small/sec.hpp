@@ -17,8 +17,8 @@
 
 TTS_CASE("wide random check on sec")
 {
-  auto std_sec = tts::vectorize<Type>( [](auto e) { return eve::rec(std::cos(double(e))); } );
+  auto std_sec = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::rec(std::cos(double(e))); } );
 
-  eve::exhaustive_producer<Type> p(-eve::Pio_2<Value>(), eve::Pio_2<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(-eve::Pio_2<EVE_VALUE>(), eve::Pio_2<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_sec, eve::small_(eve::sec)); 
 }

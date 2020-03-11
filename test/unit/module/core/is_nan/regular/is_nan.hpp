@@ -18,16 +18,16 @@
 
 TTS_CASE("Check eve::is_nan return type")
 {
-  TTS_EXPR_IS(eve::is_nan(Type(0)), (eve::logical<Type>));
+  TTS_EXPR_IS(eve::is_nan(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_nan behavior")
 {
-  TTS_EQUAL(eve::is_nan(Type(0)), eve::False<Type>());
-  TTS_EQUAL(eve::is_nan(Type(2)), eve::False<Type>());
+  TTS_EQUAL(eve::is_nan(EVE_TYPE(0)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_nan(EVE_TYPE(2)), eve::False<EVE_TYPE>());
 
-  if constexpr(std::is_floating_point_v<Value> && eve::platform::supports_nans)
+  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_nans)
   {
-    TTS_EQUAL(eve::is_nan(eve::Nan<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_nan(eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
   }
 }

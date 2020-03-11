@@ -21,7 +21,7 @@ using eve::logical;
 
 TTS_CASE("load behavior for scalar logical")
 {
-  logical<Type> value, ref = true, data[ 1 ] = {true};
+  logical<EVE_TYPE> value, ref = true, data[ 1 ] = {true};
 
   TTS_SUBCASE("a pointer to scalar")
   {

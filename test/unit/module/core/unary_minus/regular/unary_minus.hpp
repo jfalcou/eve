@@ -19,17 +19,17 @@
 
 TTS_CASE("Check eve::unary_minus return type")
 {
-  TTS_EXPR_IS(eve::unary_minus(Type(0)), (Type));
+  TTS_EXPR_IS(eve::unary_minus(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::unary_minus behavior")
 {
-  TTS_EQUAL(eve::unary_minus(Type( 1)) , static_cast<Type>(-1));
-  TTS_EQUAL(eve::unary_minus(Type(-1)) , static_cast<Type>( 1));
-  if (std::is_floating_point_v<Value>)
+  TTS_EQUAL(eve::unary_minus(EVE_TYPE( 1)) , static_cast<EVE_TYPE>(-1));
+  TTS_EQUAL(eve::unary_minus(EVE_TYPE(-1)) , static_cast<EVE_TYPE>( 1));
+  if (std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EXPECT(eve::all(eve::is_negative(eve::unary_minus(eve::Zero<Type>()))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::unary_minus(eve::Mzero<Type>())))); 
+    TTS_EXPECT(eve::all(eve::is_negative(eve::unary_minus(eve::Zero<EVE_TYPE>()))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::unary_minus(eve::Mzero<EVE_TYPE>())))); 
   }
   
 }

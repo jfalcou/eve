@@ -20,26 +20,26 @@
 
 TTS_CASE("Check eve::acscpi return type")
 {
-  TTS_EXPR_IS(eve::acscpi(Type(0)), (Type));
+  TTS_EXPR_IS(eve::acscpi(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::acscpi behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acscpi(Type(0))            , eve::Nan<Type>(), 1);
-    TTS_ULP_EQUAL(eve::acscpi(eve::Mzero<Type>()) , eve::Nan<Type>(), 1);
-    TTS_IEEE_EQUAL(eve::acscpi(eve::Nan<Type>())  , (eve::Nan<Type>()) );
+    TTS_ULP_EQUAL(eve::acscpi(EVE_TYPE(0))            , eve::Nan<EVE_TYPE>(), 1);
+    TTS_ULP_EQUAL(eve::acscpi(eve::Mzero<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 1);
+    TTS_IEEE_EQUAL(eve::acscpi(eve::Nan<EVE_TYPE>())  , (eve::Nan<EVE_TYPE>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::acscpi(eve::Inf<Type>()) , (Type(0)));
-    TTS_IEEE_EQUAL(eve::acscpi(eve::Minf<Type>()), (Type(0)));
+    TTS_IEEE_EQUAL(eve::acscpi(eve::Inf<EVE_TYPE>()) , (EVE_TYPE(0)));
+    TTS_IEEE_EQUAL(eve::acscpi(eve::Minf<EVE_TYPE>()), (EVE_TYPE(0)));
   }
 
-  TTS_ULP_EQUAL(eve::acscpi(Type(-2.)), Type(-1)/6, 1.  );
-  TTS_ULP_EQUAL(eve::acscpi(Type( 2.)), Type(1)/6 , 1.  );
-  TTS_ULP_EQUAL(eve::acscpi(Type(-1.)), Type(-0.5), 0.5 );
-  TTS_ULP_EQUAL(eve::acscpi(Type( 1.)), Type(0.5) , 0.5 );
+  TTS_ULP_EQUAL(eve::acscpi(EVE_TYPE(-2.)), EVE_TYPE(-1)/6, 1.  );
+  TTS_ULP_EQUAL(eve::acscpi(EVE_TYPE( 2.)), EVE_TYPE(1)/6 , 1.  );
+  TTS_ULP_EQUAL(eve::acscpi(EVE_TYPE(-1.)), EVE_TYPE(-0.5), 0.5 );
+  TTS_ULP_EQUAL(eve::acscpi(EVE_TYPE( 1.)), EVE_TYPE(0.5) , 0.5 );
 }

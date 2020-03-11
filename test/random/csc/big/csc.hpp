@@ -19,16 +19,16 @@
 
 TTS_CASE("wide random check on csc")
 {
-  auto std_csc = tts::vectorize<Type>( [](auto e) { return 1/std::sin(double(e)); } );
+  auto std_csc = tts::vectorize<EVE_TYPE>( [](auto e) { return 1/std::sin(double(e)); } );
 
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_csc, eve::big_(eve::csc)); 
   }
   else
   {
-    eve::rng_producer<Type>  p(eve::Smallestposval<Value>(), eve::Valmax<Value>()); 
+    eve::rng_producer<EVE_TYPE>  p(eve::Smallestposval<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()); 
     TTS_RANGE_CHECK(p, std_csc, eve::big_(eve::csc));
   }
 }

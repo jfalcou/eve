@@ -17,28 +17,28 @@
 
 TTS_CASE("Check eve::saturate return type")
 {
-  TTS_EXPR_IS(eve::saturate((Type()), eve::as<std::uint16_t>()), (Type));
-  TTS_EXPR_IS(eve::saturate((Type()), eve::uint16_            ), (Type));
+  TTS_EXPR_IS(eve::saturate((EVE_TYPE()), eve::as<std::uint16_t>()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturate((EVE_TYPE()), eve::uint16_            ), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::saturate behavior")
 {
-  TTS_EQUAL(eve::saturate((Type(0)), eve::uint16_          ), (Type(0))     );
-  TTS_EQUAL(eve::saturate((Type(42.69)), eve::uint16_       ), (Type(42.69)) );
+  TTS_EQUAL(eve::saturate((EVE_TYPE(0)), eve::uint16_          ), (EVE_TYPE(0))     );
+  TTS_EQUAL(eve::saturate((EVE_TYPE(42.69)), eve::uint16_       ), (EVE_TYPE(42.69)) );
   
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    if constexpr(sizeof(Value) <= sizeof(std::int16_t))
+    if constexpr(sizeof(EVE_VALUE) <= sizeof(std::int16_t))
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::uint16_), eve::Valmax<Type>() );
+      TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), eve::Valmax<EVE_TYPE>() );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::uint16_), (Type(eve::Valmax<std::uint16_t>())) );
+      TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), (EVE_TYPE(eve::Valmax<std::uint16_t>())) );
     }
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::Valmax<Type>(), eve::uint16_), (Type(eve::Valmax<std::uint16_t>())) );
+    TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), (EVE_TYPE(eve::Valmax<std::uint16_t>())) );
   }
 }

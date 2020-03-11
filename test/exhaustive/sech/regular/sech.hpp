@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on sech")
 {
-  auto std_sech = tts::vectorize<Type>( [](auto e) { return Value(1)/std::cosh(double(e)); } );
+  auto std_sech = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)/std::cosh(double(e)); } );
 
-  eve::exhaustive_producer<Type> p(eve::Minlog<Value>()+1, eve::Maxlog<Value>()-1);
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Minlog<EVE_VALUE>()+1, eve::Maxlog<EVE_VALUE>()-1);
   TTS_RANGE_CHECK(p, std_sech, eve::sech); 
 }

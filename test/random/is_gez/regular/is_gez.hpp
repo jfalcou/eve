@@ -20,8 +20,8 @@
 
 TTS_CASE("wide random check on is_gez")
 {
-  using l_t = eve::as_logical_t<Type>; 
-  auto std_is_gez = tts::vectorize<l_t>( [](auto e) { return (e >= Value(0)); } );
-  eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+  using l_t = eve::as_logical_t<EVE_TYPE>; 
+  auto std_is_gez = tts::vectorize<l_t>( [](auto e) { return (e >= EVE_VALUE(0)); } );
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_is_gez, eve::is_gez);
 }

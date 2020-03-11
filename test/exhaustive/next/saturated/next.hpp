@@ -22,16 +22,16 @@
 TTS_CASE("wide exhaustive check on next")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_next = tts::vectorize<Type>( [](auto e) { return (e ==  eve::Inf<Value>()) ?  eve::Nan<Value>() : std::nextafter(e, eve::Inf<Value>()); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_next = tts::vectorize<EVE_TYPE>( [](auto e) { return (e ==  eve::Inf<EVE_VALUE>()) ?  eve::Nan<EVE_VALUE>() : std::nextafter(e, eve::Inf<EVE_VALUE>()); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_next, eve::saturated_(eve::next));
   }
   else
   {
-    auto std_next = tts::vectorize<Type>( [](auto e) { return e == eve::Valmax<Value>() ? e : e+1; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_next = tts::vectorize<EVE_TYPE>( [](auto e) { return e == eve::Valmax<EVE_VALUE>() ? e : e+1; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_next, eve::saturated_(eve::next));
   }
   

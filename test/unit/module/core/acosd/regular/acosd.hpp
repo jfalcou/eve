@@ -20,7 +20,7 @@
 
 TTS_CASE("Check eve::acosd return type")
 {
-  TTS_EXPR_IS(eve::acosd(Type(0)), (Type));
+  TTS_EXPR_IS(eve::acosd(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::acosd behavior")
@@ -30,27 +30,27 @@ TTS_CASE("Check eve::acosd behavior")
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acosd(Type(2)) , eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::acosd(Type(-2)), eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(2)) , eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(-2)), eve::Nan<EVE_TYPE>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acosd(Type( 0.5)), Type(60)  , 0.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(-0.5)), Type(120) , 0.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(-1. )), Type(180) , 0.5);
-  TTS_ULP_EQUAL(eve::acosd(Type( 1. )), Type(0)   , 0  );
-  TTS_ULP_EQUAL(eve::acosd(Type( 0. )), Type(90)  , 0.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE( 0.5)), EVE_TYPE(60)  , 0.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(-0.5)), EVE_TYPE(120) , 0.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(-1. )), EVE_TYPE(180) , 0.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE( 1. )), EVE_TYPE(0)   , 0  );
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE( 0. )), EVE_TYPE(90)  , 0.5);
 
-  TTS_EXPECT( all(eve::is_positive(eve::acosd(Type(1.)))) );
+  TTS_EXPECT( all(eve::is_positive(eve::acosd(EVE_TYPE(1.)))) );
 
-  TTS_ULP_EQUAL(eve::acosd(Type(8.414715528e-01)), Type(indeg(std::acos(Value(8.414715528e-01)))), 1.5 );
-  TTS_ULP_EQUAL(eve::acosd(Type(9.689134359e-01)), Type(indeg(std::acos(Value(9.689134359e-01)))), 4.0 );
-  TTS_ULP_EQUAL(eve::acosd(Type(9.922192097e-01)), Type(indeg(std::acos(Value(9.922192097e-01)))), 7.5 );
-  TTS_ULP_EQUAL(eve::acosd(Type(9.995127916e-01)), Type(indeg(std::acos(Value(9.995127916e-01)))), 33.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(9.998779893e-01)), Type(indeg(std::acos(Value(9.998779893e-01)))), 44.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(9.999695420e-01)), Type(indeg(std::acos(Value(9.999695420e-01)))), 142);
-  TTS_ULP_EQUAL(eve::acosd(Type(9.999927878e-01)), Type(indeg(std::acos(Value(9.999927878e-01)))), 234 );
-  TTS_ULP_EQUAL(eve::acosd(Type(9.999984503e-01)), Type(indeg(std::acos(Value(9.999984503e-01)))), 361.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(9.999996424e-01)), Type(indeg(std::acos(Value(9.999996424e-01)))), 867.5);
-  TTS_ULP_EQUAL(eve::acosd(Type(9.999999404e-01)), Type(indeg(std::acos(Value(9.999999404e-01)))), 1643.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(8.414715528e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(8.414715528e-01)))), 1.5 );
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.689134359e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.689134359e-01)))), 4.0 );
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.922192097e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.922192097e-01)))), 7.5 );
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.995127916e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.995127916e-01)))), 33.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.998779893e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.998779893e-01)))), 44.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.999695420e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.999695420e-01)))), 142);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.999927878e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.999927878e-01)))), 234 );
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.999984503e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.999984503e-01)))), 361.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.999996424e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.999996424e-01)))), 867.5);
+  TTS_ULP_EQUAL(eve::acosd(EVE_TYPE(9.999999404e-01)), EVE_TYPE(indeg(std::acos(EVE_VALUE(9.999999404e-01)))), 1643.5);
 }
 

@@ -15,18 +15,18 @@
 
 TTS_CASE("Check firstbitset return type")
 {
-  TTS_EXPR_IS(eve::firstbitset(Type()), (Type));
+  TTS_EXPR_IS(eve::firstbitset(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::firstbitset behavior")
 {
-  TTS_EQUAL(eve::firstbitset(Type(0)), Type(0));
-  TTS_EQUAL(eve::firstbitset(Type(1)), Type(1));
-  TTS_EQUAL(eve::firstbitset(Type(2)), Type(2));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(2)), EVE_TYPE(2));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::firstbitset(Type(-1)), Type(1));
-    TTS_EQUAL(eve::firstbitset(Type(-2)), Type(2));
+    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-1)), EVE_TYPE(1));
+    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-2)), EVE_TYPE(2));
   }
 }

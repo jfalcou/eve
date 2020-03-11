@@ -17,22 +17,22 @@
 
 TTS_CASE("Check eve::sqr return type")
 {
-  TTS_EXPR_IS(eve::sqr(Type(0)), (Type));
+  TTS_EXPR_IS(eve::sqr(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::sqr behavior")
 {
-  TTS_EQUAL(eve::sqr(Type(1)), (Type(1)));
-  TTS_EQUAL(eve::sqr(Type(2)), (Type(4)));
+  TTS_EQUAL(eve::sqr(EVE_TYPE(1)), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::sqr(EVE_TYPE(2)), (EVE_TYPE(4)));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::sqr(static_cast<Type>(-2)), (Type(4)));
+    TTS_EQUAL(eve::sqr(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(4)));
   }
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::sqr(eve::Mzero<Type>()), (Type(0)));
+    TTS_EQUAL(eve::sqr(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
   }
 }
 

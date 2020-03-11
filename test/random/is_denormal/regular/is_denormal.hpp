@@ -20,17 +20,17 @@
 
 TTS_CASE("wide random check on is_denormal")
 {
-  using l_t = eve::as_logical_t<Type>; 
-  if constexpr(std::is_floating_point_v<Value>)
+  using l_t = eve::as_logical_t<EVE_TYPE>; 
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     auto std_is_denormal = tts::vectorize<l_t>( [](auto e) { return std::fpclassify(e) == FP_SUBNORMAL; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }
   else 
   {
     auto std_is_denormal = tts::vectorize<l_t>( [](auto e) { return  false; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }
 }

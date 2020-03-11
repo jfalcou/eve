@@ -19,7 +19,7 @@
 
 TTS_CASE("wide exhaustive check on bit_not")
 {
-  auto std_bit_not = tts::vectorize<Type>( [](auto e) { return  ~Value(e); } );
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto std_bit_not = tts::vectorize<EVE_TYPE>( [](auto e) { return  ~EVE_VALUE(e); } );
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_bit_not, eve::bit_not);
 }

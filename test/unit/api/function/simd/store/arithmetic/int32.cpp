@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::int32_t;
+using EVE_TYPE = std::int32_t;
 #include "store.hpp"

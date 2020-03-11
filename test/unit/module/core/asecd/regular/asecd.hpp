@@ -20,26 +20,26 @@
 
 TTS_CASE("Check eve::asecd return type")
 {
-  TTS_EXPR_IS(eve::asecd(Type(0)), (Type));
+  TTS_EXPR_IS(eve::asecd(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::asecd behavior")
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::asecd(eve::Inf<Type>()) , (Type(90)), 0.5);
-    TTS_ULP_EQUAL(eve::asecd(eve::Minf<Type>()), (Type(90)), 0.5);
+    TTS_ULP_EQUAL(eve::asecd(eve::Inf<EVE_TYPE>()) , (EVE_TYPE(90)), 0.5);
+    TTS_ULP_EQUAL(eve::asecd(eve::Minf<EVE_TYPE>()), (EVE_TYPE(90)), 0.5);
   }
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asecd(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_ULP_EQUAL(eve::asecd(Type(0))           , eve::Nan<Type>(), 1);
-    TTS_ULP_EQUAL(eve::asecd(eve::Mzero<Type>()), eve::Nan<Type>(), 1);
+    TTS_IEEE_EQUAL(eve::asecd(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_ULP_EQUAL(eve::asecd(EVE_TYPE(0))           , eve::Nan<EVE_TYPE>(), 1);
+    TTS_ULP_EQUAL(eve::asecd(eve::Mzero<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 1);
   }
 
-  TTS_ULP_EQUAL(eve::asecd(Type(-2.)), (Type(360)/3) , 1   );
-  TTS_ULP_EQUAL(eve::asecd(Type( 2.)), (Type(180)/3) , 1   );
-  TTS_ULP_EQUAL(eve::asecd(Type(-1.)), (Type(180))   , 0.5 );
-  TTS_ULP_EQUAL(eve::asecd(Type( 1.)), (Type(0))     , 0.5 );
+  TTS_ULP_EQUAL(eve::asecd(EVE_TYPE(-2.)), (EVE_TYPE(360)/3) , 1   );
+  TTS_ULP_EQUAL(eve::asecd(EVE_TYPE( 2.)), (EVE_TYPE(180)/3) , 1   );
+  TTS_ULP_EQUAL(eve::asecd(EVE_TYPE(-1.)), (EVE_TYPE(180))   , 0.5 );
+  TTS_ULP_EQUAL(eve::asecd(EVE_TYPE( 1.)), (EVE_TYPE(0))     , 0.5 );
 }

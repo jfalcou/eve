@@ -19,10 +19,10 @@
 
 TTS_CASE("wide exhaustive check on asecpi")
 {
-  auto std_asecpi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::acos(eve::rec(e)); } );
+  auto std_asecpi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::Invpi<EVE_VALUE>()*std::acos(eve::rec(e)); } );
 
-  eve::exhaustive_producer<Type> p1(eve::Valmin<Value>(), Value(-1));
+  eve::exhaustive_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
   TTS_ULP_RANGE_CHECK(p1, std_asecpi, eve::raw_(eve::asecpi), 512); 
-  eve::exhaustive_producer<Type> p2(Value(1), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
   TTS_ULP_RANGE_CHECK(p2, std_asecpi, eve::raw_(eve::asecpi), 512); 
 }

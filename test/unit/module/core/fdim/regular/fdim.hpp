@@ -22,26 +22,26 @@
 
 TTS_CASE("Check eve::fdim return type")
 {
-  TTS_EXPR_IS(eve::fdim(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::fdim(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE(" fdim behaviour")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::fdim(eve::Inf<Type>(), eve::Inf<Type>()), eve::Zero<Type>());
-    TTS_EQUAL(eve::fdim(eve::Minf<Type>(), eve::Minf<Type>()), eve::Zero<Type>());
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Zero<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::One<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<Type>(), eve::One<Type>())), eve::Nan<Type>(), 0);
+    TTS_EQUAL(eve::fdim(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
+    TTS_EQUAL(eve::fdim(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
+    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL((eve::fdim(eve::Zero<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
   }
-  TTS_EQUAL((eve::fdim(eve::Mone<Type>(), eve::Mone<Type>())), eve::Zero<Type>());
-  TTS_EQUAL((eve::fdim(eve::One<Type>(), eve::One<Type>())), eve::Zero<Type>());
-  TTS_EQUAL((eve::fdim(eve::Zero<Type>(), eve::Zero<Type>())), eve::Zero<Type>());
-  TTS_EQUAL((eve::fdim(eve::One<Type>(), eve::Zero<Type>())), eve::One<Type>());
-  TTS_EQUAL((eve::fdim(Type(2), Type(-3))), Type(5));
-  TTS_EQUAL((eve::fdim(Type(2), Type(3))), Type(0));
+  TTS_EQUAL((eve::fdim(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+  TTS_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+  TTS_EQUAL((eve::fdim(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+  TTS_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::One<EVE_TYPE>());
+  TTS_EQUAL((eve::fdim(EVE_TYPE(2), EVE_TYPE(-3))), EVE_TYPE(5));
+  TTS_EQUAL((eve::fdim(EVE_TYPE(2), EVE_TYPE(3))), EVE_TYPE(0));
 }

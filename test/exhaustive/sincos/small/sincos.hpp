@@ -18,12 +18,12 @@
 
 TTS_CASE("wide random check on sincos")
 {
-  auto std_sin = tts::vectorize<Type>( [](auto e) { return std::sin(double(e)); } );
-  auto std_cos = tts::vectorize<Type>( [](auto e) { return std::cos(double(e)); } );    
+  auto std_sin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::sin(double(e)); } );
+  auto std_cos = tts::vectorize<EVE_TYPE>( [](auto e) { return std::cos(double(e)); } );    
   auto sincos_s =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return s; };
   auto sincos_c =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return c; };
   
-  eve::exhaustive_producer<Type> p(-eve::Pio_2<Value>(), eve::Pio_2<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(-eve::Pio_2<EVE_VALUE>(), eve::Pio_2<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_sin, sincos_s);
   TTS_RANGE_CHECK(p, std_cos, sincos_c); 
 }

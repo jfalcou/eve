@@ -20,8 +20,8 @@
 
 TTS_CASE("wide exhaustive check on cbrt")
 {
-  auto std_cbrt = tts::vectorize<Type>( [](auto e) { return Value(std::cbrt(double(e))); } );
+  auto std_cbrt = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(std::cbrt(double(e))); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt); 
 }

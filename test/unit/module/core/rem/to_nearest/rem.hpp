@@ -16,31 +16,31 @@
 
 TTS_CASE("Check rem return type")
 {
-  TTS_EXPR_IS(eve::rem(Type(), Type() , eve::to_nearest_), (Type));
-  TTS_EXPR_IS(eve::rem(Type(), Value() , eve::to_nearest_), (Type));
-  TTS_EXPR_IS(eve::rem(Value(), Type() , eve::to_nearest_), (Type));
+  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_TYPE() , eve::to_nearest_), (EVE_TYPE));
+  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_VALUE() , eve::to_nearest_), (EVE_TYPE));
+  TTS_EXPR_IS(eve::rem(EVE_VALUE(), EVE_TYPE() , eve::to_nearest_), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::rem behavior")
 {
-  if constexpr(std::is_integral_v<Value> && std::is_signed_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE> && std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::rem(eve::Mone<Type>()  , Type{2} , eve::to_nearest_), Type(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<Value>() , Type{2} , eve::to_nearest_), Type(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<Type>()  , Value{2}, eve::to_nearest_), Type(-1));
-    TTS_EQUAL(eve::rem(Type(-4)  , Type{3} , eve::to_nearest_), Type(-1));
-    TTS_EQUAL(eve::rem(Value(-4) , Type{3} , eve::to_nearest_), Type(-1));
-    TTS_EQUAL(eve::rem(Type(-4)  , Value{3}, eve::to_nearest_), Type(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2} , eve::to_nearest_), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<EVE_VALUE>() , EVE_TYPE{2} , eve::to_nearest_), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}, eve::to_nearest_), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_TYPE{3} , eve::to_nearest_), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(EVE_VALUE(-4) , EVE_TYPE{3} , eve::to_nearest_), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_VALUE{3}, eve::to_nearest_), EVE_TYPE(-1));
   }
-  TTS_EQUAL(eve::rem(Type{12}, Type{4}, eve::to_nearest_), Type{0});
-  TTS_EQUAL(eve::rem(Type{1} , Type{2}, eve::to_nearest_), Type(1));
-  TTS_EQUAL(eve::rem(Type{4} , Type{3}, eve::to_nearest_), Type(1));
+  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_TYPE{4}, eve::to_nearest_), EVE_TYPE{0});
+  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_TYPE{2}, eve::to_nearest_), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_TYPE{3}, eve::to_nearest_), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::rem(Value{12}, Type{4}, eve::to_nearest_), Type{0});
-  TTS_EQUAL(eve::rem(Value{1} , Type{2}, eve::to_nearest_), Type(1));
-  TTS_EQUAL(eve::rem(Value{4} , Type{3}, eve::to_nearest_), Type(1));
+  TTS_EQUAL(eve::rem(EVE_VALUE{12}, EVE_TYPE{4}, eve::to_nearest_), EVE_TYPE{0});
+  TTS_EQUAL(eve::rem(EVE_VALUE{1} , EVE_TYPE{2}, eve::to_nearest_), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(EVE_VALUE{4} , EVE_TYPE{3}, eve::to_nearest_), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::rem(Type{12}, Value{4}, eve::to_nearest_), Type{0});
-  TTS_EQUAL(eve::rem(Type{1} , Value{2}, eve::to_nearest_), Type(1));
-  TTS_EQUAL(eve::rem(Type{4} , Value{3}, eve::to_nearest_), Type(1));
+  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_VALUE{4}, eve::to_nearest_), EVE_TYPE{0});
+  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_VALUE{2}, eve::to_nearest_), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_VALUE{3}, eve::to_nearest_), EVE_TYPE(1));
 }

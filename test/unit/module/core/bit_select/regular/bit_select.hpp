@@ -17,29 +17,29 @@
 
 TTS_CASE("Check eve::bit_select return type")
 {
-  using i_t = eve::detail::as_integer_t<Type, unsigned>;
-  TTS_EXPR_IS(eve::bit_select(Type(),Type() ,Type() ), (Type));
-  TTS_EXPR_IS(eve::bit_select(Type(),Type() ,Value()), (Type));
-  TTS_EXPR_IS(eve::bit_select(Type(),Value(),Type() ), (Type));
-  TTS_EXPR_IS(eve::bit_select( i_t(),Type() ,Type() ), (Type));
-  TTS_EXPR_IS(eve::bit_select( i_t(),Type() ,Value()), (Type));
-  TTS_EXPR_IS(eve::bit_select( i_t(),Value(),Type() ), (Type));
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select( i_t(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));
 }
 
 TTS_CASE( "Check eve::bit_select behavior")
 {
-  using i_t  = eve::detail::as_integer_t<Type, unsigned>;
-  using vi_t = eve::detail::as_integer_t<Value, unsigned>;
+  using i_t  = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using vi_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
 
   std::uint64_t base  = 0xF5555552F552F5F2ULL;
   i_t           imask = static_cast<i_t>(base & std::uint64_t(~vi_t(0)));
-  Type          mask  = eve::bit_cast(imask, eve::as(Type()));
+  EVE_TYPE          mask  = eve::bit_cast(imask, eve::as(EVE_TYPE()));
 
-  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<Type>() , eve::Zero<Type>() ), mask );
-  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<Value>(), eve::Zero<Type>() ), mask );
-  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<Type>() , eve::Zero<Value>()), mask );
+  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<EVE_TYPE>() , eve::Zero<EVE_TYPE>() ), mask );
+  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<EVE_VALUE>(), eve::Zero<EVE_TYPE>() ), mask );
+  TTS_EQUAL( eve::bit_select( imask, eve::Allbits<EVE_TYPE>() , eve::Zero<EVE_VALUE>()), mask );
 
-  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<Type>()  , eve::Zero<Type>() ), mask);
-  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<Value>() , eve::Zero<Type>() ), mask);
-  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<Type>()  , eve::Zero<Value>()), mask);
+  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<EVE_TYPE>()  , eve::Zero<EVE_TYPE>() ), mask);
+  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<EVE_VALUE>() , eve::Zero<EVE_TYPE>() ), mask);
+  TTS_EQUAL( eve::bit_select( mask, eve::Allbits<EVE_TYPE>()  , eve::Zero<EVE_VALUE>()), mask);
 }

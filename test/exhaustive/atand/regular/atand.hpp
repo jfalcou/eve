@@ -19,8 +19,8 @@
 
 TTS_CASE("wide exhaustive check on atand")
 {
-  auto std_atand = tts::vectorize<Type>( [](auto e) { return eve::indeg(std::atan(e)); } );
+  auto std_atand = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::indeg(std::atan(e)); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_atand, eve::atand); 
 }

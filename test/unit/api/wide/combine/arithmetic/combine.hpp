@@ -22,9 +22,9 @@ TTS_CASE("Check combining for arithmetic values")
 {
   using eve::wide;
 
-  wide<Type, fixed<2>> ref(13, 37);
+  wide<EVE_TYPE, fixed<2>> ref(13, 37);
 
-  TTS_EQUAL((eve::combine(Type(13), Type(37))), ref);
+  TTS_EQUAL((eve::combine(EVE_TYPE(13), EVE_TYPE(37))), ref);
 }
 
 TTS_CASE_TPL("Check combining for arithmetic wide",
@@ -38,11 +38,11 @@ TTS_CASE_TPL("Check combining for arithmetic wide",
 {
   using eve::wide;
 
-  wide<Type, T>                         low([](auto i, auto) { return 1 + i; });
-  wide<Type, T>                         high([](auto i, auto) { return T::value + 1 + i; });
-  wide<Type, typename T::combined_type> ref([](auto i, auto) { return 1 + i; });
+  wide<EVE_TYPE, T>                         low([](auto i, auto) { return 1 + i; });
+  wide<EVE_TYPE, T>                         high([](auto i, auto) { return T::value + 1 + i; });
+  wide<EVE_TYPE, typename T::combined_type> ref([](auto i, auto) { return 1 + i; });
 
-  TTS_EQUAL((wide<Type, typename T::combined_type>(low, high)), ref);
+  TTS_EQUAL((wide<EVE_TYPE, typename T::combined_type>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);
 }
 

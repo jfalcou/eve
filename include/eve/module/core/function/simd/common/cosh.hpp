@@ -49,7 +49,7 @@ namespace eve::detail
       auto t = exp(x);
       auto invt = if_else(x > T(22.0f), eve::zero_, rec(t)); 
       auto c = average(t, invt); 
-      auto test = x <  ovflimit; 
+      auto test = x <  ovflimit-Log_2<T>(); 
       if (eve::all(test)) return c;
       
       auto w = exp(x*Half<T>());

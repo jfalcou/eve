@@ -21,25 +21,25 @@
 
 TTS_CASE("Check  eve::big_(eve::sincos) return type")
 {
-  TTS_EXPR_IS(eve::big_(eve::sincos)(Type()), (std::tuple<Type,Type>));
+  TTS_EXPR_IS(eve::big_(eve::sincos)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 } 
 
 TTS_CASE("Check  eve::big_(eve::sincos) behavior")
 {
   static const int N = 16; 
-  Value x[N] = {  eve::Pi<Value>()/8, -eve::Pi<Value>()/8
-                  , eve::Pi<Value>()/4, -eve::Pi<Value>()/4
-                  , Value(1), Value(-1)
-                  , Value(10), Value(-10)
-                  , Value(1000000), Value(-1000000)
-                  , Value(1000000000), Value(-1000000000)
-                  , eve::Valmax<Value>(), eve::Valmin<Value>()    
-                  , eve::Valmax<Value>()/100000, eve::Valmin<Value>()/10000}; 
+  EVE_VALUE x[N] = {  eve::Pi<EVE_VALUE>()/8, -eve::Pi<EVE_VALUE>()/8
+                  , eve::Pi<EVE_VALUE>()/4, -eve::Pi<EVE_VALUE>()/4
+                  , EVE_VALUE(1), EVE_VALUE(-1)
+                  , EVE_VALUE(10), EVE_VALUE(-10)
+                  , EVE_VALUE(1000000), EVE_VALUE(-1000000)
+                  , EVE_VALUE(1000000000), EVE_VALUE(-1000000000)
+                  , eve::Valmax<EVE_VALUE>(), eve::Valmin<EVE_VALUE>()    
+                  , eve::Valmax<EVE_VALUE>()/100000, eve::Valmin<EVE_VALUE>()/10000}; 
   
   for(int i=0; i < N ; ++i)
   {
-    auto [p0, p1] = eve::big_(eve::sincos)(Type(x[i]));
-    TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 0.5);
+    auto [p0, p1] = eve::big_(eve::sincos)(EVE_TYPE(x[i]));
+    TTS_ULP_EQUAL(p0, EVE_TYPE(std::sin(x[i])), 0.5);
+    TTS_ULP_EQUAL(p1, EVE_TYPE(std::cos(x[i])), 0.5);
   }
 }

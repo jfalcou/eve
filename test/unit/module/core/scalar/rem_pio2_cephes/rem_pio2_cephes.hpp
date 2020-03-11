@@ -20,20 +20,20 @@
 #include <eve/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check rem_pio2_cephes return type") { TTS_EXPR_IS(eve::rem_pio2_cephes(Type(0)), Type); }
+TTS_CASE("Check rem_pio2_cephes return type") { TTS_EXPR_IS(eve::rem_pio2_cephes(EVE_TYPE(0)), EVE_TYPE); }
 
 TTS_CASE("Check eve::rem_pio2_cephes behavior")
 {
-  TTS_EQUAL(eve::rem_pio2_cephes(Type(1)), Type(1));
-  TTS_EQUAL(eve::rem_pio2_cephes(Type(2)), Type(2));     
-  TTS_EQUAL(eve::rem_pio2_cephes(Type(3)), Type(3));     
-  TTS_EQUAL(eve::rem_pio2_cephes(Type(4)), Type(0));
-  if constexpr(std::is_signed_v<Type>)
+  TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(2)), EVE_TYPE(2));     
+  TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(3)), EVE_TYPE(3));     
+  TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(4)), EVE_TYPE(0));
+  if constexpr(std::is_signed_v<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::rem_pio2_cephes(Type(-1)), Type(3));
-    TTS_EQUAL(eve::rem_pio2_cephes(Type(-2)), Type(2));     
-    TTS_EQUAL(eve::rem_pio2_cephes(Type(-3)), Type(1));     
-    TTS_EQUAL(eve::rem_pio2_cephes(Type(-4)), Type(0));     
+    TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(-1)), EVE_TYPE(3));
+    TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(-2)), EVE_TYPE(2));     
+    TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(-3)), EVE_TYPE(1));     
+    TTS_EQUAL(eve::rem_pio2_cephes(EVE_TYPE(-4)), EVE_TYPE(0));     
   }
 }
 

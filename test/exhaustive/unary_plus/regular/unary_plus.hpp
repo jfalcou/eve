@@ -19,8 +19,8 @@
 
 TTS_CASE("wide exhaustive check on unary_plus")
 {
-    auto std_unary_plus = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_unary_plus = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_unary_plus, eve::unary_plus);
 
 }

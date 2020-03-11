@@ -20,22 +20,22 @@
 TTS_CASE("wide random check on touint")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_touint = tts::vectorize<Type>( [](auto e) { return std::touint(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_touint = tts::vectorize<EVE_TYPE>( [](auto e) { return std::touint(e); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_touint = tts::vectorize<Type>( [](auto e) { return  std::touint(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_touint = tts::vectorize<EVE_TYPE>( [](auto e) { return  std::touint(e); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
   else
   {
-    auto std_touint = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_touint = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
   

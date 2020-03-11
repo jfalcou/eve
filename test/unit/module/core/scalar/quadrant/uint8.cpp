@@ -10,5 +10,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::uint8_t;
+using EVE_TYPE = std::uint8_t;
 #include "quadrant.hpp"

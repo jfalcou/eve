@@ -16,8 +16,8 @@
 
 TTS_CASE("wide exhaustive check on acos")
 {
-  auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
+  auto std_acos = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acos(e); } );
 
-  eve::exhaustive_producer<Type> p(-1,1);
+  eve::exhaustive_producer<EVE_TYPE> p(-1,1);
   TTS_RANGE_CHECK(p, std_acos, eve::acos);
 }

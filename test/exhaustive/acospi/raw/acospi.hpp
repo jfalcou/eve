@@ -17,8 +17,8 @@
 
 TTS_CASE("wide exhaustive check on acospi")
 {
-  auto std_acospi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::acos(e); } );
+  auto std_acospi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::Invpi<EVE_VALUE>()*std::acos(e); } );
 
-  eve::exhaustive_producer<Type> p(-1, 1);
+  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
   TTS_ULP_RANGE_CHECK(p, std_acospi, eve::raw_(eve::acospi), 1024); 
 }

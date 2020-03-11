@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check slicing for logical wide",
   using eve::logical;
   using eve::wide;
 
-  logical<wide<Type, T>>                      simd([](auto i, auto c) { return i < int(c) / 2; });
-  logical<wide<Type, typename T::split_type>> ref_low([](auto i, auto) { return i % 2 < 2; });
-  logical<wide<Type, typename T::split_type>> ref_high([](auto i, auto) { return i % 2 > 3; });
+  logical<wide<EVE_TYPE, T>>                      simd([](auto i, auto c) { return i < int(c) / 2; });
+  logical<wide<EVE_TYPE, typename T::split_type>> ref_low([](auto i, auto) { return i % 2 < 2; });
+  logical<wide<EVE_TYPE, typename T::split_type>> ref_high([](auto i, auto) { return i % 2 > 3; });
 
   auto [ low, high ] = simd.slice();
 

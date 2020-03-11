@@ -24,7 +24,7 @@
 
 TTS_CASE("Check eve::pedantic_(eve::exp) return type")
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::exp)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::pedantic_(eve::exp)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::pedantic_(eve::exp) behavior")
@@ -32,12 +32,12 @@ TTS_CASE("Check eve::pedantic_(eve::exp) behavior")
   
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Inf<Type>()) , (eve::Inf<Type>()) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Minf<Type>()), (eve::Zero<Type>()) ); 
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Minf<EVE_TYPE>()), (eve::Zero<EVE_TYPE>()) ); 
   }
-  TTS_ULP_EQUAL(eve::pedantic_(eve::exp)(Type(1)), Type(std::exp(Value(1))), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::exp)(Type(-1)),Type(std::exp(Value(-1))), 0.5); 
-  TTS_IEEE_EQUAL((eve::pedantic_(eve::exp)(Type(0))), (Type(1)));
-  TTS_IEEE_EQUAL((eve::pedantic_(eve::exp)(eve::Mzero<Type>())), (Type(1)));
+  TTS_ULP_EQUAL(eve::pedantic_(eve::exp)(EVE_TYPE(1)), EVE_TYPE(std::exp(EVE_VALUE(1))), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::exp)(EVE_TYPE(-1)),EVE_TYPE(std::exp(EVE_VALUE(-1))), 0.5); 
+  TTS_IEEE_EQUAL((eve::pedantic_(eve::exp)(EVE_TYPE(0))), (EVE_TYPE(1)));
+  TTS_IEEE_EQUAL((eve::pedantic_(eve::exp)(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(1)));
   }

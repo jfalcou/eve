@@ -27,22 +27,22 @@
 
 TTS_CASE("Check sincos return type")
 {
-  TTS_EXPR_IS(eve::small_(eve::sincos)(Type()), (std::tuple<Type,Type>));
+  TTS_EXPR_IS(eve::small_(eve::sincos)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 } 
 
 TTS_CASE("Check (eve::sincos behavior")
 {
   static const int N = 9; 
-  Value x[N] = {  eve::Pi<Value>()/8, -eve::Pi<Value>()/8
-                  , eve::Pi<Value>()/4, -eve::Pi<Value>()/4
-                  , 3*eve::Pi<Value>()/8, -3*eve::Pi<Value>()/8  
-                  , eve::Pio_2<Value>(), -eve::Pi<Value>()/2, Value(1.57079632679489655800e+00)
+  EVE_VALUE x[N] = {  eve::Pi<EVE_VALUE>()/8, -eve::Pi<EVE_VALUE>()/8
+                  , eve::Pi<EVE_VALUE>()/4, -eve::Pi<EVE_VALUE>()/4
+                  , 3*eve::Pi<EVE_VALUE>()/8, -3*eve::Pi<EVE_VALUE>()/8  
+                  , eve::Pio_2<EVE_VALUE>(), -eve::Pi<EVE_VALUE>()/2, EVE_VALUE(1.57079632679489655800e+00)
   }; 
   
   for(int i=0; i < N ; ++i) 
   {
-    auto [p0, p1] = eve::small_(eve::sincos)(Type(x[i]));
-    TTS_ULP_EQUAL(p0, Type(std::sin(x[i])), 3.5);
-    TTS_ULP_EQUAL(p1, Type(std::cos(x[i])), 3.5);
+    auto [p0, p1] = eve::small_(eve::sincos)(EVE_TYPE(x[i]));
+    TTS_ULP_EQUAL(p0, EVE_TYPE(std::sin(x[i])), 3.5);
+    TTS_ULP_EQUAL(p1, EVE_TYPE(std::cos(x[i])), 3.5);
   } 
 }

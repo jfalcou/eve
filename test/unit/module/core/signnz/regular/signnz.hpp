@@ -14,19 +14,19 @@
 
 TTS_CASE("Check eve::signnz return type")
 {
-  TTS_EXPR_IS(eve::signnz(Type()), (Type));
+  TTS_EXPR_IS(eve::signnz(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::signnz behavior")
 {
-  TTS_EQUAL(eve::signnz(Type{0}), Type(1));
-  TTS_EQUAL(eve::signnz(Type{2}), Type(1));
-  if constexpr(std::is_signed_v<Value>)
+  TTS_EQUAL(eve::signnz(EVE_TYPE{0}), EVE_TYPE(1));
+  TTS_EQUAL(eve::signnz(EVE_TYPE{2}), EVE_TYPE(1));
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    if constexpr(std::is_floating_point_v<Value>)
+    if constexpr(std::is_floating_point_v<EVE_VALUE>)
     {
-      TTS_EQUAL(eve::signnz(static_cast<Type>(-0.0)), (Type(-1)));
+      TTS_EQUAL(eve::signnz(static_cast<EVE_TYPE>(-0.0)), (EVE_TYPE(-1)));
     }
-    TTS_EQUAL(eve::signnz(static_cast<Type>(-2)), (Type(-1)));
+    TTS_EQUAL(eve::signnz(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(-1)));
   }
 }

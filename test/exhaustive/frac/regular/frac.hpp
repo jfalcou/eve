@@ -20,16 +20,16 @@
 TTS_CASE("wide exhaustive check on frac")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_frac = tts::vectorize<Type>( [](auto e) { return e-std::trunc(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_frac = tts::vectorize<EVE_TYPE>( [](auto e) { return e-std::trunc(e); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_frac, eve::frac);
   }
   else
   {
-    auto std_frac = tts::vectorize<Type>( [](auto e) { return Value(0); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_frac = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(0); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_frac, eve::frac);
   }
   

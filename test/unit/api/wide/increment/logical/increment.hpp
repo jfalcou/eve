@@ -18,13 +18,13 @@ using eve::fixed;
 using eve::logical;
 using eve::wide;
 
-logical<wide<Type, fixed<1>>>  x1;
-logical<wide<Type, fixed<2>>>  x2;
-logical<wide<Type, fixed<4>>>  x4;
-logical<wide<Type, fixed<8>>>  x8;
-logical<wide<Type, fixed<16>>> x16;
-logical<wide<Type, fixed<32>>> x32;
-logical<wide<Type, fixed<64>>> x64;
+logical<wide<EVE_TYPE, fixed<1>>>  x1;
+logical<wide<EVE_TYPE, fixed<2>>>  x2;
+logical<wide<EVE_TYPE, fixed<4>>>  x4;
+logical<wide<EVE_TYPE, fixed<8>>>  x8;
+logical<wide<EVE_TYPE, fixed<16>>> x16;
+logical<wide<EVE_TYPE, fixed<32>>> x32;
+logical<wide<EVE_TYPE, fixed<64>>> x64;
 
 //==================================================================================================
 // None of those should compiles

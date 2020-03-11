@@ -18,15 +18,15 @@
 
 TTS_CASE("Check eve::bit_mask return type")
 {
-  TTS_EXPR_IS(eve::bit_mask(Type()), (Type));
+  TTS_EXPR_IS(eve::bit_mask(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::bit_mask behavior")
 {
-  TTS_EQUAL(eve::bit_mask( Type(0))           , (Type)(0));
-  TTS_EQUAL(eve::bit_mask(-Type(0))           , (Type)(0));
-  TTS_EQUAL(eve::bit_mask(eve::False<Type>()) , (Type)(0));
+  TTS_EQUAL(eve::bit_mask( EVE_TYPE(0))           , (EVE_TYPE)(0));
+  TTS_EQUAL(eve::bit_mask(-EVE_TYPE(0))           , (EVE_TYPE)(0));
+  TTS_EQUAL(eve::bit_mask(eve::False<EVE_TYPE>()) , (EVE_TYPE)(0));
 
-  TTS_IEEE_EQUAL(eve::bit_mask(Type(1))           , (eve::Allbits<Type>()));
-  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<Type>()) , (eve::Allbits<Type>()));
+  TTS_IEEE_EQUAL(eve::bit_mask(EVE_TYPE(1))           , (eve::Allbits<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<EVE_TYPE>()) , (eve::Allbits<EVE_TYPE>()));
 }

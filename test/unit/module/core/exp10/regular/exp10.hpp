@@ -24,23 +24,23 @@
 
 TTS_CASE("Check eve::exp10 return type")
 {
-  TTS_EXPR_IS(eve::exp10(Type(0)), (Type));
+  TTS_EXPR_IS(eve::exp10(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::exp10 behavior")
 {
   
-  TTS_ULP_EQUAL(eve::exp10(Type(1)), Type(10), 0.5);
-  TTS_IEEE_EQUAL((eve::exp10(Type(0))), (Type(1)));
-  if constexpr(std::is_floating_point_v<Value>)
+  TTS_ULP_EQUAL(eve::exp10(EVE_TYPE(1)), EVE_TYPE(10), 0.5);
+  TTS_IEEE_EQUAL((eve::exp10(EVE_TYPE(0))), (EVE_TYPE(1)));
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::exp10(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-      TTS_IEEE_EQUAL(eve::exp10(eve::Inf<Type>()) , (eve::Inf<Type>()) );
-      TTS_IEEE_EQUAL(eve::exp10(eve::Minf<Type>()), (eve::Zero<Type>()) ); 
+      TTS_IEEE_EQUAL(eve::exp10(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+      TTS_IEEE_EQUAL(eve::exp10(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
+      TTS_IEEE_EQUAL(eve::exp10(eve::Minf<EVE_TYPE>()), (eve::Zero<EVE_TYPE>()) ); 
     }
-    TTS_ULP_EQUAL(eve::exp10(Type(-1)),Type(0.1), 0.5); 
-    TTS_IEEE_EQUAL((eve::exp10(eve::Mzero<Type>())), (Type(1)));
+    TTS_ULP_EQUAL(eve::exp10(EVE_TYPE(-1)),EVE_TYPE(0.1), 0.5); 
+    TTS_IEEE_EQUAL((eve::exp10(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(1)));
   }
 }

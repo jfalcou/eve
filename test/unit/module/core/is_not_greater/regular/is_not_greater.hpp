@@ -19,26 +19,26 @@ TTS_CASE("Check eve::is_not_greater return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_not_greater(Type() , Type() ), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_greater(Type() , Value()), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_greater(Value(), Type() ), (logical<Type>));
+  TTS_EXPR_IS(eve::is_not_greater(EVE_TYPE() , EVE_TYPE() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_greater(EVE_TYPE() , EVE_VALUE()), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_greater(EVE_VALUE(), EVE_TYPE() ), (logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_not_greater behavior")
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_not_greater(Type(1), eve::Nan<Type>()), eve::True<Type>());
-    TTS_EQUAL(eve::is_not_greater(eve::Nan<Type>(), Type(1)), eve::True<Type>());
+    TTS_EQUAL(eve::is_not_greater(EVE_TYPE(1), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_greater(eve::Nan<EVE_TYPE>(), EVE_TYPE(1)), eve::True<EVE_TYPE>());
   }
 
-  TTS_EQUAL(eve::is_not_greater(Type(1) , Type(1) ), eve::True<Type>()  );
-  TTS_EQUAL(eve::is_not_greater(Type(1) , Value(1)), eve::True<Type>()  );
-  TTS_EQUAL(eve::is_not_greater(Value(1), Type(1) ), eve::True<Type>()  );
-  TTS_EQUAL(eve::is_not_greater(Type(3) , Type(1) ), eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_greater(Type(3) , Value(1)), eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_greater(Value(3), Type(1) ), eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_greater(Type(1) , Type(3) ), eve::True<Type>()  );
-  TTS_EQUAL(eve::is_not_greater(Type(1) , Value(3)), eve::True<Type>()  );
-  TTS_EQUAL(eve::is_not_greater(Value(1), Type(3) ), eve::True<Type>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(1) , EVE_TYPE(1) ), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(1) , EVE_VALUE(1)), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_VALUE(1), EVE_TYPE(1) ), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(3) , EVE_TYPE(1) ), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(3) , EVE_VALUE(1)), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_greater(EVE_VALUE(3), EVE_TYPE(1) ), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(1) , EVE_TYPE(3) ), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_TYPE(1) , EVE_VALUE(3)), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_not_greater(EVE_VALUE(1), EVE_TYPE(3) ), eve::True<EVE_TYPE>()  );
 }

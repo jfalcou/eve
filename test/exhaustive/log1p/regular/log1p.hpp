@@ -17,8 +17,8 @@
 
 TTS_CASE("wide exhaustive check on log1p")
 {
-  auto std_log1p = tts::vectorize<Type>( [](auto e) { return std::log1p(e); } );
+  auto std_log1p = tts::vectorize<EVE_TYPE>( [](auto e) { return std::log1p(e); } );
 
-  eve::exhaustive_producer<Type> p(Value(-1), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-1), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_log1p, eve::log1p); 
 }

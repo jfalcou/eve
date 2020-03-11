@@ -22,26 +22,26 @@
 
 TTS_CASE("Check is_unordered return type")
 {
-  TTS_EXPR_IS(eve::is_unordered(Type(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_unordered(EVE_TYPE(), EVE_TYPE()), eve::as_logical_t<EVE_TYPE>);
 }
 
 TTS_CASE("Check eve::is_unordered behavior on arithmetic")
 {
-  TTS_EQUAL(eve::is_unordered(Type(1), Type(1)), eve::False<Type>());
-  TTS_EQUAL(eve::is_unordered(Type(3), Type(1)), eve::False<Type>());
-  TTS_EQUAL(eve::is_unordered(Type(1), Type(3)), eve::False<Type>());
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(1)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(3), EVE_TYPE(1)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(3)), eve::False<EVE_TYPE>());
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_unordered(eve::Nan<Type>(), Type(3)), eve::True<Type>());
-    TTS_EQUAL(eve::is_unordered(Type(3), eve::Nan<Type>()), eve::True<Type>());
-    TTS_EQUAL(eve::is_unordered(eve::Nan<Type>(), eve::Nan<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<EVE_TYPE>(), EVE_TYPE(3)), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_unordered(EVE_TYPE(3), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
   }
 }
 
 TTS_CASE("Check eve::is_unordered behavior on logical")
 {
-  TTS_EQUAL(eve::is_unordered(eve::logical<Type>(1), eve::logical<Type>(0)), eve::False<Type>());
+  TTS_EQUAL(eve::is_unordered(eve::logical<EVE_TYPE>(1), eve::logical<EVE_TYPE>(0)), eve::False<EVE_TYPE>());
 }
 
 #endif

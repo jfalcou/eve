@@ -22,37 +22,37 @@
 
 TTS_CASE("Check eve::negate return type")
 {
-  TTS_EXPR_IS(eve::negate(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::negate(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE(" negate behaviour")
 {
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
-      TTS_EQUAL(eve::negate(eve::Inf<Type>(), eve::Inf<Type>()), eve::Inf<Type>());
-      TTS_EQUAL(eve::negate(eve::Minf<Type>(), eve::Minf<Type>()), eve::Inf<Type>());
-      TTS_ULP_EQUAL((eve::negate(eve::Nan<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negate(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negate(eve::Zero<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negate(eve::Nan<Type>(), eve::Zero<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negate(eve::One<Type>(), eve::Nan<Type>())), eve::Nan<Type>(), 0);
-      TTS_ULP_EQUAL((eve::negate(eve::Nan<Type>(), eve::One<Type>())), eve::Nan<Type>(), 0);
+      TTS_EQUAL(eve::negate(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>());
+      TTS_EQUAL(eve::negate(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Inf<EVE_TYPE>());
+      TTS_ULP_EQUAL((eve::negate(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+      TTS_ULP_EQUAL((eve::negate(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+      TTS_ULP_EQUAL((eve::negate(eve::Zero<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+      TTS_ULP_EQUAL((eve::negate(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+      TTS_ULP_EQUAL((eve::negate(eve::One<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
+      TTS_ULP_EQUAL((eve::negate(eve::Nan<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
     }
-    TTS_EQUAL((eve::negate(eve::Mone<Type>(), eve::Mone<Type>())), eve::One<Type>());
-    TTS_EQUAL((eve::negate(eve::One<Type>(), eve::One<Type>())), eve::One<Type>());
-    TTS_EQUAL((eve::negate(eve::Zero<Type>(), eve::Zero<Type>())), eve::Zero<Type>());
-    TTS_EQUAL((eve::negate(eve::One<Type>(), eve::Zero<Type>())), eve::Zero<Type>());
-    TTS_EQUAL((eve::negate(Type(2), Type(-3))), Type(-2));
-    TTS_EQUAL((eve::negate(Type(2), Type(3))), Type(2));
+    TTS_EQUAL((eve::negate(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>())), eve::One<EVE_TYPE>());
+    TTS_EQUAL((eve::negate(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::One<EVE_TYPE>());
+    TTS_EQUAL((eve::negate(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+    TTS_EQUAL((eve::negate(eve::One<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+    TTS_EQUAL((eve::negate(EVE_TYPE(2), EVE_TYPE(-3))), EVE_TYPE(-2));
+    TTS_EQUAL((eve::negate(EVE_TYPE(2), EVE_TYPE(3))), EVE_TYPE(2));
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::negate(eve::Mone<Type>(), eve::Mone<Type>()), eve::One<Type>());
-    TTS_EQUAL(eve::negate(eve::Mone<Type>(), eve::One<Type>()), eve::Mone<Type>());
+    TTS_EQUAL(eve::negate(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>()), eve::One<EVE_TYPE>());
+    TTS_EQUAL(eve::negate(eve::Mone<EVE_TYPE>(), eve::One<EVE_TYPE>()), eve::Mone<EVE_TYPE>());
   }
-  TTS_EQUAL(eve::negate(eve::One<Type>(), eve::One<Type>()), eve::One<Type>());
-  TTS_EQUAL(eve::negate(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
-  TTS_EQUAL(eve::negate(eve::One<Type>(), eve::Zero<Type>()), eve::Zero<Type>());
+  TTS_EQUAL(eve::negate(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>()), eve::One<EVE_TYPE>());
+  TTS_EQUAL(eve::negate(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
+  TTS_EQUAL(eve::negate(eve::One<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
 }

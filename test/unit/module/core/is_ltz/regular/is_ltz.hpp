@@ -19,21 +19,21 @@ TTS_CASE("Check eve::is_ltz return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_ltz(Type() ), (logical<Type>));
+  TTS_EXPR_IS(eve::is_ltz(EVE_TYPE() ), (logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_ltz behavior")
 {
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_ltz(Type(-1)), eve::True<Type>());
+    TTS_EQUAL(eve::is_ltz(EVE_TYPE(-1)), eve::True<EVE_TYPE>());
   }
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_ltz(eve::Nan<Type>()), eve::False<Type>());
+    TTS_EQUAL(eve::is_ltz(eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
   }
 
-  TTS_EQUAL(eve::is_ltz(Type(0)), eve::False<Type>());
-  TTS_EQUAL(eve::is_ltz(Type(3)), eve::False<Type>());
+  TTS_EQUAL(eve::is_ltz(EVE_TYPE(0)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_ltz(EVE_TYPE(3)), eve::False<EVE_TYPE>());
 }

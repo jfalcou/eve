@@ -23,7 +23,7 @@
 
 TTS_CASE("Check eve::log return type")
 {
-  TTS_EXPR_IS(eve::log(Type(0)), (Type));
+  TTS_EXPR_IS(eve::log(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE(" log")
@@ -31,18 +31,18 @@ TTS_CASE(" log")
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::log(eve::Inf<Type>()), eve::Inf<Type>(), 0);
-    TTS_ULP_EQUAL(eve::log(eve::Nan<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::log(eve::Mone<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::log(eve::Zero<Type>()), eve::Minf<Type>(), 0);
+    TTS_ULP_EQUAL(eve::log(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::log(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::log(eve::Mone<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::log(eve::Zero<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0);
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_ULP_EQUAL(eve::log(eve::Mindenormal<Type>()), Type(std::log(eve::Mindenormal<Value>())), 0);
+    TTS_ULP_EQUAL(eve::log(eve::Mindenormal<EVE_TYPE>()), EVE_TYPE(std::log(eve::Mindenormal<EVE_VALUE>())), 0);
   }
   
-  TTS_ULP_EQUAL(eve::log(eve::One<Type>()), eve::Zero<Type>(), 0);
-  TTS_ULP_EQUAL(eve::log(Type(2)), Type(std::log(Value(2))), 0);
-  TTS_ULP_EQUAL(eve::log(Type(8)), Type(std::log(Value(8))), 0);
-  TTS_ULP_EQUAL(eve::log(Type(64)), Type(std::log(Value(64))), 0);
+  TTS_ULP_EQUAL(eve::log(eve::One<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::log(EVE_TYPE(2)), EVE_TYPE(std::log(EVE_VALUE(2))), 0);
+  TTS_ULP_EQUAL(eve::log(EVE_TYPE(8)), EVE_TYPE(std::log(EVE_VALUE(8))), 0);
+  TTS_ULP_EQUAL(eve::log(EVE_TYPE(64)), EVE_TYPE(std::log(EVE_VALUE(64))), 0);
 }

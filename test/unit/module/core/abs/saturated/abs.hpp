@@ -17,19 +17,19 @@
 
 TTS_CASE("Check abs return type")
 {
-  TTS_EXPR_IS(eve::saturated_(eve::abs)(Type()), (Type));
+  TTS_EXPR_IS(eve::saturated_(eve::abs)(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::saturated_(eve::abs) behavior")
 {
-  TTS_EQUAL(eve::saturated_(eve::abs)(Type{0}), Type(0));
-  TTS_EQUAL(eve::saturated_(eve::abs)(Type{1}), Type(1));
-  TTS_EQUAL(eve::saturated_(eve::abs)(Type{2}), Type(2));
+  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{1}), EVE_TYPE(1));
+  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{2}), EVE_TYPE(2));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<Type>(-1)), Type(1));
-    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<Type>(-2)), Type(2));
-    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<Type>()), eve::Valmax<Type>());
+    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<EVE_TYPE>(-1)), EVE_TYPE(1));
+    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<EVE_TYPE>(-2)), EVE_TYPE(2));
+    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<EVE_TYPE>()), eve::Valmax<EVE_TYPE>());
   }
 }

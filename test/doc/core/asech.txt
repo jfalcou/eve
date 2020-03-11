@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::asech(xf) =            0
 <- yf =                      -nan
--> eve::asech(yf) =            -nan
+-> eve::asech(yf) =            nan

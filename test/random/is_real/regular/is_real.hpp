@@ -18,9 +18,9 @@
 
 TTS_CASE("wide random check on is_real")
 {
-  using l_t = eve::as_logical_t<Type>; 
+  using l_t = eve::as_logical_t<EVE_TYPE>; 
   auto std_is_real = tts::vectorize<l_t>( [](auto e) { return true; } );
 
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_is_real, eve::is_real); 
 }

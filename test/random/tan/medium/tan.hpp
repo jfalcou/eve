@@ -17,9 +17,9 @@
 
 TTS_CASE("wide random check on tan")
 {
-  auto std_tan = tts::vectorize<Type>( [](auto e) { return std::tan(e); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), Value()); 
+  auto std_tan = tts::vectorize<EVE_TYPE>( [](auto e) { return std::tan(e); } );
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
 
-  eve::rng_producer<Type> p(-l, l);
+  eve::rng_producer<EVE_TYPE> p(-l, l);
   TTS_RANGE_CHECK(p, std_tan, eve::medium_(eve::tan)); 
 }

@@ -35,12 +35,12 @@ TTS_CASE_TPL("Check ctor from unaligned pointer for logical wide",
   using eve::logical;
   using eve::wide;
 
-  std::array<logical<Type>, T::value> ref;
+  std::array<logical<EVE_TYPE>, T::value> ref;
 
-  logical<Type> k = true;
+  logical<EVE_TYPE> k = true;
   for(auto &e : ref) e = (k = !k);
 
-  logical<wide<Type, T>> simd(&ref[ 0 ]);
+  logical<wide<EVE_TYPE, T>> simd(&ref[ 0 ]);
 
   TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
 }
@@ -56,14 +56,14 @@ TTS_CASE_TPL("Check ctor from aligned pointer for logical wide",
 {
   using eve::logical;
   using eve::wide;
-  constexpr auto algt = wide<Type, T>::static_alignment;
+  constexpr auto algt = wide<EVE_TYPE, T>::static_alignment;
 
-  alignas(algt) std::array<logical<Type>, T::value> ref;
+  alignas(algt) std::array<logical<EVE_TYPE>, T::value> ref;
 
-  logical<Type> k = true;
+  logical<EVE_TYPE> k = true;
   for(auto &e : ref) e = (k = !k);
 
-  logical<wide<Type, T>> simd(as_aligned<algt>(&ref[ 0 ]));
+  logical<wide<EVE_TYPE, T>> simd(as_aligned<algt>(&ref[ 0 ]));
   TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
 }
 
@@ -79,18 +79,18 @@ TTS_CASE_TPL("Check ctor from range for logical wide",
   using eve::logical;
   using eve::wide;
 
-  std::list<logical<Type>> ref(T::value);
+  std::list<logical<EVE_TYPE>> ref(T::value);
 
-  logical<Type> k = true;
+  logical<EVE_TYPE> k = true;
   for(auto &e : ref) e = (k = !k);
 
   {
-    logical<wide<Type, T>> simd(ref);
+    logical<wide<EVE_TYPE, T>> simd(ref);
     TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
   }
 
   {
-    logical<wide<Type, T>> simd(ref.begin(), ref.end());
+    logical<wide<EVE_TYPE, T>> simd(ref.begin(), ref.end());
     TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
   }
 }

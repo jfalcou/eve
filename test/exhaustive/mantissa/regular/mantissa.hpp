@@ -21,8 +21,8 @@ TTS_CASE("wide exhaustive check on mantissa")
 {
   // TODO problem with denormals
   auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp)*2;  }; 
-  auto std_mantissa = tts::vectorize<Type>( [ internal_f ](auto e) { return internal_f(e); } );
+  auto std_mantissa = tts::vectorize<EVE_TYPE>( [ internal_f ](auto e) { return internal_f(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Smallestposval<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Smallestposval<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa); 
 }

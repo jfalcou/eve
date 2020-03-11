@@ -24,7 +24,7 @@
 
 TTS_CASE("Check eve::csc return type")
 {
-  TTS_EXPR_IS(eve::csc(Type(0)), (Type));
+  TTS_EXPR_IS(eve::csc(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::csc behavior")
@@ -33,18 +33,18 @@ TTS_CASE("Check eve::csc behavior")
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::csc(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::csc(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::csc(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::csc(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::csc(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::csc(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::csc(Type(1)), Type(my_stdcsc(Value(1.0))), 0.5);
-  TTS_ULP_EQUAL(eve::csc(Type(-1.0)),Type(my_stdcsc(Value(-1.0))), 0.5);
-  TTS_IEEE_EQUAL((eve::csc(Type(0))), (Type(my_stdcsc(Value(0.0)))));
-  TTS_IEEE_EQUAL((eve::csc(eve::Mzero<Type>())), (Type(my_stdcsc(Value(-0.0)))));
-  TTS_ULP_EQUAL((eve::csc(eve::Pio_4<Type>())), (Type(my_stdcsc(eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::csc(-eve::Pio_4<Type>())),(Type(my_stdcsc(-eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL(eve::csc(Type(100000.0)), Type(my_stdcsc(100000.0)), 0.5);
-  TTS_ULP_EQUAL(eve::csc(Type(-100000.0)),Type(my_stdcsc(-100000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::csc)(Type(-100000000.0))),Type(my_stdcsc(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::csc)(Type(eve::Valmax<Type>()))),Type(my_stdcsc(eve::Valmax<Value>())), 1.5);
+  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(1)), EVE_TYPE(my_stdcsc(EVE_VALUE(1.0))), 0.5);
+  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(-1.0)),EVE_TYPE(my_stdcsc(EVE_VALUE(-1.0))), 0.5);
+  TTS_IEEE_EQUAL((eve::csc(EVE_TYPE(0))), (EVE_TYPE(my_stdcsc(EVE_VALUE(0.0)))));
+  TTS_IEEE_EQUAL((eve::csc(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(my_stdcsc(EVE_VALUE(-0.0)))));
+  TTS_ULP_EQUAL((eve::csc(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdcsc(eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::csc(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdcsc(-eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(100000.0)), EVE_TYPE(my_stdcsc(100000.0)), 0.5);
+  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(-100000.0)),EVE_TYPE(my_stdcsc(-100000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::csc)(EVE_TYPE(-100000000.0))),EVE_TYPE(my_stdcsc(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::csc)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(my_stdcsc(eve::Valmax<EVE_VALUE>())), 1.5);
 }

@@ -25,26 +25,26 @@
 
 TTS_CASE("Check eve::acsch return type")
 {
-  TTS_EXPR_IS(eve::acsch(Type(0)), (Type));
+  TTS_EXPR_IS(eve::acsch(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::acsch behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::Nan<Type>()) , eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::Inf<Type>()) , Type(0), 0);
-    TTS_ULP_EQUAL(eve::acsch(eve::Minf<Type>()) , Type(-0.0), 0);
-    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::Minf<Type>()))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::Inf<Type>()))));   
+    TTS_ULP_EQUAL(eve::acsch(eve::Inf<EVE_TYPE>()) , EVE_TYPE(0), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::Minf<EVE_TYPE>()) , EVE_TYPE(-0.0), 0);
+    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::Minf<EVE_TYPE>()))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::Inf<EVE_TYPE>()))));   
   }
 
-  TTS_ULP_EQUAL(eve::acsch(Type( 0.5)) , Type(std::asinh(Value(2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(Type(-0.5)) , Type(std::asinh(Value(-2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(Type( 1. )) , Type(std::asinh(Value(1.0)))  , 0.5   );
-  TTS_ULP_EQUAL(eve::acsch(Type( 2. )) , Type(std::asinh(Value(0.5))), 0.5  );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE(-0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(-2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 1. )) , EVE_TYPE(std::asinh(EVE_VALUE(1.0)))  , 0.5   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 2. )) , EVE_TYPE(std::asinh(EVE_VALUE(0.5))), 0.5  );
 }

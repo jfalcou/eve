@@ -20,16 +20,16 @@
 TTS_CASE("wide exhaustive check on oneminus")
 {
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return e < eve::Valmin<Value>()+2 ? eve::Valmax<Value>() : Value(1)-e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return e < eve::Valmin<EVE_VALUE>()+2 ? eve::Valmax<EVE_VALUE>() : EVE_VALUE(1)-e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::saturated_(eve::oneminus));
   }
   else
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return (e == 0) ? Value(1) : Value(0); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0) ? EVE_VALUE(1) : EVE_VALUE(0); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated_(eve::oneminus));
   }
 }

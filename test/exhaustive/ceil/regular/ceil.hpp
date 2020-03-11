@@ -20,22 +20,22 @@
 TTS_CASE("wide exhaustive check on ceil")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_ceil = tts::vectorize<Type>( [](auto e) { return std::ceil(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_ceil = tts::vectorize<EVE_TYPE>( [](auto e) { return std::ceil(e); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_ceil, eve::ceil);
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_ceil = tts::vectorize<Type>( [](auto e) { return  e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_ceil = tts::vectorize<EVE_TYPE>( [](auto e) { return  e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_ceil, eve::ceil);
   }
   else
   {
-    auto std_ceil = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_ceil = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_ceil, eve::ceil);
   }
   

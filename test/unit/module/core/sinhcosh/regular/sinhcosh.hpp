@@ -32,40 +32,40 @@
 
 TTS_CASE("Check eve::sinhcosh return type")
 {
-  TTS_EXPR_IS(eve::sinhcosh(Type(0)), (std::tuple<Type, Type>));
+  TTS_EXPR_IS(eve::sinhcosh(EVE_TYPE(0)), (std::tuple<EVE_TYPE, EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::sinhcosh behavior")
 {
   if constexpr(eve::platform::supports_infinites)
   {
-    std::array<Value, 3> a = {eve::Nan<Value>(), eve::Inf<Value>(), eve::Minf<Value>()};
+    std::array<EVE_VALUE, 3> a = {eve::Nan<EVE_VALUE>(), eve::Inf<EVE_VALUE>(), eve::Minf<EVE_VALUE>()};
     
     for(int i=0; i < 3 ; ++i)
     {
-      auto [sh, ch] = eve::sinhcosh(Type(a[i])); 
-      TTS_IEEE_EQUAL(sh, (Type(std::sinh(a[i]))));
-      TTS_IEEE_EQUAL(ch, (Type(std::cosh(a[i]))));
+      auto [sh, ch] = eve::sinhcosh(EVE_TYPE(a[i])); 
+      TTS_IEEE_EQUAL(sh, (EVE_TYPE(std::sinh(a[i]))));
+      TTS_IEEE_EQUAL(ch, (EVE_TYPE(std::cosh(a[i]))));
     }
   }
-  Value ovflimit =  eve::Ieee_constant<Value,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
-  std::array<Value, 10> a = {Value(1), Value(-1), Value(0), Value(-0.0), Value(10), Value(-10)
-                             , eve::Maxlog<Value>(), ovflimit/2, ovflimit, 2*ovflimit};
+  EVE_VALUE ovflimit =  eve::Ieee_constant<EVE_VALUE,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
+  std::array<EVE_VALUE, 10> a = {EVE_VALUE(1), EVE_VALUE(-1), EVE_VALUE(0), EVE_VALUE(-0.0), EVE_VALUE(10), EVE_VALUE(-10)
+                             , eve::Maxlog<EVE_VALUE>(), ovflimit/2, ovflimit, 2*ovflimit};
   
   for(size_t i=0; i < a.size(); ++i)
   {
-    auto [sh, ch] = eve::sinhcosh(Type(a[i]));
+    auto [sh, ch] = eve::sinhcosh(EVE_TYPE(a[i]));
     auto  sh1     = std::sinh(a[i]);
     auto  ch1     = std::cosh(a[i]);
-    TTS_ULP_EQUAL(sh, (Type(sh1)), 0.5);
-    TTS_ULP_EQUAL(ch, (Type(ch1)), 0.5);
+    TTS_ULP_EQUAL(sh, (EVE_TYPE(sh1)), 0.5);
+    TTS_ULP_EQUAL(ch, (EVE_TYPE(ch1)), 0.5);
   }
   {  
-    auto [sh, ch] = eve::sinhcosh(Type(-0.0)); 
+    auto [sh, ch] = eve::sinhcosh(EVE_TYPE(-0.0)); 
     TTS_EXPECT(eve::all(eve::is_negative(sh)));
   }
   {
-    auto [sh, ch] = eve::sinhcosh(Type(0.0)); 
+    auto [sh, ch] = eve::sinhcosh(EVE_TYPE(0.0)); 
     TTS_EXPECT(eve::all(eve::is_positive(sh)));
   }
 }

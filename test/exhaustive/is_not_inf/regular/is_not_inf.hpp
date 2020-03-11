@@ -20,17 +20,17 @@
 
 TTS_CASE("wide exhaustive check on is_not_inf")
 {
-  using l_t =  eve::as_logical_t<Type>;
-  if constexpr(std::is_floating_point_v<Value>)
+  using l_t =  eve::as_logical_t<EVE_TYPE>;
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return !std::isinf(e); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
   else
   {
     auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return true; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
   

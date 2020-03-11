@@ -18,8 +18,8 @@
 
 TTS_CASE("wide random check on rsqrt")
 {
-  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1)/std::sqrt(e); } );
+  auto std_rsqrt = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)/std::sqrt(e); } );
 
-  eve::rng_producer<Type> p(eve::Smallestposval<Value>(), Value(eve::Valmax<float>()));
+  eve::rng_producer<EVE_TYPE> p(eve::Smallestposval<EVE_VALUE>(), EVE_VALUE(eve::Valmax<float>()));
   TTS_RANGE_CHECK(p, std_rsqrt, eve::rsqrt); 
 }

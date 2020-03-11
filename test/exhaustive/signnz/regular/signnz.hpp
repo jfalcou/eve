@@ -20,16 +20,16 @@
 TTS_CASE("wide exhaustive check on signnz")
 {
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_signnz = tts::vectorize<Type>( [](auto e) {  return std::signbit(e) ? Value(-1) : Value(1); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_signnz = tts::vectorize<EVE_TYPE>( [](auto e) {  return std::signbit(e) ? EVE_VALUE(-1) : EVE_VALUE(1); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
   else
   {
-    auto std_signnz = tts::vectorize<Type>( [](auto e) { return Value(1); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_signnz = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
   

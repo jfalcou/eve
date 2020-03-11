@@ -20,7 +20,7 @@
 
 TTS_CASE("Check eve::cos return type")
 {
-  TTS_EXPR_IS(eve::cos(Type(0)), (Type));
+  TTS_EXPR_IS(eve::cos(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::cos behavior")
@@ -29,18 +29,18 @@ TTS_CASE("Check eve::cos behavior")
   
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::cos(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::cos(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::cos(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::cos(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cos(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cos(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::cos(Type(1)), Type(std_cos(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::cos(Type(-1)),Type(std_cos(-1.0)), 0.5);
-  TTS_IEEE_EQUAL((eve::cos(Type(0))), (Type(1)));
-  TTS_IEEE_EQUAL((eve::cos(eve::Mzero<Type>())), (Type(1)));
-  TTS_ULP_EQUAL((eve::restricted_(eve::cos)(eve::Pio_4<Type>())), (Type(std_cos(eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cos)(-eve::Pio_4<Type>())),(Type(std_cos(-eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL(eve::cos(Type(100000.0)), Type(std_cos(100000.0)), 0.5);
-  TTS_ULP_EQUAL(eve::cos(Type(-100000.0)),Type(std_cos(-100000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::cos)(Type(-100000000.0))),Type(std_cos(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::cos)(Type(eve::Valmax<Type>()))),Type(std_cos(eve::Valmax<Value>())), 0.5);
+  TTS_ULP_EQUAL(eve::cos(EVE_TYPE(1)), EVE_TYPE(std_cos(1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::cos(EVE_TYPE(-1)),EVE_TYPE(std_cos(-1.0)), 0.5);
+  TTS_IEEE_EQUAL((eve::cos(EVE_TYPE(0))), (EVE_TYPE(1)));
+  TTS_IEEE_EQUAL((eve::cos(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(1)));
+  TTS_ULP_EQUAL((eve::restricted_(eve::cos)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(std_cos(eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cos)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(std_cos(-eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL(eve::cos(EVE_TYPE(100000.0)), EVE_TYPE(std_cos(100000.0)), 0.5);
+  TTS_ULP_EQUAL(eve::cos(EVE_TYPE(-100000.0)),EVE_TYPE(std_cos(-100000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::cos)(EVE_TYPE(-100000000.0))),EVE_TYPE(std_cos(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::cos)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(std_cos(eve::Valmax<EVE_VALUE>())), 0.5);
 }

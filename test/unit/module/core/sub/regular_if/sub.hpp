@@ -19,17 +19,17 @@
 
 TTS_CASE("Check eve::sub[condition] return type")
 {
-  TTS_EXPR_IS( (eve::sub[ Type() ](Type(), Type())), (Type));
-  TTS_EXPR_IS( (eve::sub[ eve::logical<Type>() ](Type(), Type())), (Type));
-  TTS_EXPR_IS( (eve::sub[ true ](Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::sub[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::sub[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::sub[ true ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::sub[condition] behavior")
 {
-  Type tv{5};
-  Type fv{3};
-  auto t = eve::True<Type>();
-  auto f = eve::False<Type>();
+  EVE_TYPE tv{5};
+  EVE_TYPE fv{3};
+  auto t = eve::True<EVE_TYPE>();
+  auto f = eve::False<EVE_TYPE>();
 
   // All basic TRUE
   TTS_EQUAL(eve::sub[ 1 ](tv, fv)     , eve::sub(tv,fv));
@@ -44,7 +44,7 @@ TTS_CASE("Check eve::sub[condition] behavior")
   TTS_EQUAL(eve::sub[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<Type> m;
+  eve::as_logical_t<EVE_TYPE> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

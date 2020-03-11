@@ -19,17 +19,17 @@
 
 TTS_CASE("wide random check on oneminus")
 {
-  if constexpr(std::is_unsigned_v<Value>)
+  if constexpr(std::is_unsigned_v<EVE_VALUE>)
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return Value(1)-e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)-e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);  
     
   }
   else
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return Value(1)-e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)-e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);  
   }
 }

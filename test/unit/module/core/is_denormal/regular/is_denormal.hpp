@@ -17,20 +17,20 @@
 
 TTS_CASE("Check eve::is_denormal return type")
 {
-  TTS_EXPR_IS(eve::is_denormal(Type(0)), (eve::logical<Type>));
+  TTS_EXPR_IS(eve::is_denormal(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_denormal behavior")
 {
-  TTS_EQUAL(eve::is_denormal(Type(0)), eve::False<Type>());
-  TTS_EQUAL(eve::is_denormal(Type(2)), eve::False<Type>());
+  TTS_EQUAL(eve::is_denormal(EVE_TYPE(0)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_denormal(EVE_TYPE(2)), eve::False<EVE_TYPE>());
 
-  if constexpr(eve::platform::supports_denormals && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_denormals && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<Type>() / 2), eve::True<Type>());
+    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<EVE_TYPE>() / 2), eve::True<EVE_TYPE>());
   }
   else
   {
-    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<Type>() / 2), eve::False<Type>());
+    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<EVE_TYPE>() / 2), eve::False<EVE_TYPE>());
   }
 }

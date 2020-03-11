@@ -14,25 +14,25 @@
 
 TTS_CASE("Check eve::max return type")
 {
-  TTS_EXPR_IS(eve::max(Type(0)  , Type(0) ) , (Type));
-  TTS_EXPR_IS(eve::max(Value(0) , Type(0) ) , (Type));
-  TTS_EXPR_IS(eve::max(Type(0)  , Value(0)) , (Type));
+  TTS_EXPR_IS(eve::max(EVE_TYPE(0)  , EVE_TYPE(0) ) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::max(EVE_VALUE(0) , EVE_TYPE(0) ) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::max(EVE_TYPE(0)  , EVE_VALUE(0)) , (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::max behavior")
 {
-  TTS_EQUAL(eve::max((Type(0)), (Type(0))), (Type(0)));
-  TTS_EQUAL(eve::max((Type(0)), (Type(1))), (Type(1)));
-  TTS_EQUAL(eve::max((Type(1)), (Type(0))), (Type(1)));
-  TTS_EQUAL(eve::max((Type(1)), (Type(1))), (Type(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::max((EVE_TYPE(0)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(1)), (EVE_TYPE(0))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
 
-  TTS_EQUAL(eve::max((Value(0)), (Type(0))), (Type(0)));
-  TTS_EQUAL(eve::max((Value(0)), (Type(1))), (Type(1)));
-  TTS_EQUAL(eve::max((Value(1)), (Type(0))), (Type(1)));
-  TTS_EQUAL(eve::max((Value(1)), (Type(1))), (Type(1)));
+  TTS_EQUAL(eve::max((EVE_VALUE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::max((EVE_VALUE(0)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_VALUE(1)), (EVE_TYPE(0))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_VALUE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
 
-  TTS_EQUAL(eve::max((Type(0)), (Value(0))), (Type(0)));
-  TTS_EQUAL(eve::max((Type(0)), (Value(1))), (Type(1)));
-  TTS_EQUAL(eve::max((Type(1)), (Value(0))), (Type(1)));
-  TTS_EQUAL(eve::max((Type(1)), (Value(1))), (Type(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(0)), (EVE_VALUE(0))), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::max((EVE_TYPE(0)), (EVE_VALUE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(1)), (EVE_VALUE(0))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::max((EVE_TYPE(1)), (EVE_VALUE(1))), (EVE_TYPE(1)));
 }

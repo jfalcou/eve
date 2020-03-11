@@ -14,10 +14,10 @@
 
 TTS_CASE("Check eve::unary_plus return type")
 {
-  TTS_EXPR_IS(eve::unary_plus(Type()), (Type));
+  TTS_EXPR_IS(eve::unary_plus(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::unary_plus behavior")
 {
-  TTS_EQUAL(eve::unary_plus(Type(1)), (Type(1)));
+  TTS_EQUAL(eve::unary_plus(EVE_TYPE(1)), (EVE_TYPE(1)));
 }

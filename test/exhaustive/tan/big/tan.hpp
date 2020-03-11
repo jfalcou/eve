@@ -18,8 +18,8 @@
 
 TTS_CASE("wide random check on tan")
 {
-  auto std_tan = tts::vectorize<Type>( [](auto e) { return std::tan(e); } );
+  auto std_tan = tts::vectorize<EVE_TYPE>( [](auto e) { return std::tan(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_tan, eve::big_(eve::tan)); 
 }

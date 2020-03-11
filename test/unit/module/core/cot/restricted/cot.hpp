@@ -28,7 +28,7 @@
 
 TTS_CASE("Check eve::restricted_(eve::cot) return type")
 {
-  TTS_EXPR_IS(eve::restricted_(eve::cot)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::restricted_(eve::cot)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::restricted_(eve::cot) behavior")
@@ -37,17 +37,17 @@ TTS_CASE("Check eve::restricted_(eve::cot) behavior")
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(Type(1)), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(Type(-1)),eve::Nan<Type>(), 0.5);
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(Type(0)), (eve::Inf<Type>()));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Mzero<Type>()), (eve::Minf<Type>()));
-  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(eve::Pio_4<Type>())), (Type(my_stdcot(eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(-eve::Pio_4<Type>())),(Type(my_stdcot(-eve::Pio_4<Value>()))), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(EVE_TYPE(1)), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(EVE_TYPE(-1)),eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()));
+  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdcot(eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdcot(-eve::Pio_4<EVE_VALUE>()))), 0.5);
   
-  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(eve::Pio_4<Type>()/2)), (Type(my_stdcot(eve::Pio_4<Value>()/2))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(-eve::Pio_4<Type>()/2)),(Type(my_stdcot(-eve::Pio_4<Value>()/2))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(eve::Pio_4<EVE_TYPE>()/2)), (EVE_TYPE(my_stdcot(eve::Pio_4<EVE_VALUE>()/2))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::cot)(-eve::Pio_4<EVE_TYPE>()/2)),(EVE_TYPE(my_stdcot(-eve::Pio_4<EVE_VALUE>()/2))), 0.5);
 }

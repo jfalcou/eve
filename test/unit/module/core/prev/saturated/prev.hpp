@@ -30,98 +30,98 @@
 
 TTS_CASE("Check saturated prev return type")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using u_t = eve::detail::as_integer_t<Type, unsigned>;
-  using si_t = eve::detail::as_integer_t<Value, signed>;
-  using su_t = eve::detail::as_integer_t<Value, unsigned>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using su_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::saturated_(eve::prev)(Type()), (Type));
-  TTS_EXPR_IS((eve::saturated_(eve::prev)(Type(), i_t())), (Type));
-  TTS_EXPR_IS((eve::saturated_(eve::prev)(Type(), u_t())), (Type));  
-  TTS_EXPR_IS((eve::saturated_(eve::prev)(Type(), si_t())), (Type));
-  TTS_EXPR_IS((eve::saturated_(eve::prev)(Type(), su_t())), (Type));  
+  TTS_EXPR_IS(eve::saturated_(eve::prev)(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS((eve::saturated_(eve::prev)(EVE_TYPE(), i_t())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::saturated_(eve::prev)(EVE_TYPE(), u_t())), (EVE_TYPE));  
+  TTS_EXPR_IS((eve::saturated_(eve::prev)(EVE_TYPE(), si_t())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::saturated_(eve::prev)(EVE_TYPE(), su_t())), (EVE_TYPE));  
 }
 
 TTS_CASE("Check eve::saturated_(eve::prev) one parameter behavior")
 {
-  if constexpr(std::is_integral_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{2}), Type(1));
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{3}), Type(2));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<Type>()), eve::Valmin<Type>()); 
-    if constexpr(std::is_signed_v<Value>)
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{2}), EVE_TYPE(1));
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{3}), EVE_TYPE(2));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<EVE_TYPE>()), eve::Valmin<EVE_TYPE>()); 
+    if constexpr(std::is_signed_v<EVE_VALUE>)
     {
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-2)), Type(-3));
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-1)), Type(-2));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-2)), EVE_TYPE(-3));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-1)), EVE_TYPE(-2));
     }
   }
   else
   {
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<Type>())), (eve::Nan<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<Type>())  , eve::Minf<Type>());
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Inf<Type>())    , eve::Valmax<Type>());
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mone<Type>())    , eve::Mone<Type>()-eve::Eps<Type>());
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::One<Type>())     , eve::One<Type>()-eve::Eps<Type>()/2);
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<Type>())    , (eve::Mzero<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mzero<Type>())    , (-eve::Mindenormal<Type>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Zero<Type>())))); 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::saturated_(eve::prev)(eve::Mindenormal<Type>())))); 
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<EVE_TYPE>())), (eve::Nan<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<EVE_TYPE>())  , eve::Minf<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Inf<EVE_TYPE>())    , eve::Valmax<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mone<EVE_TYPE>())    , eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::One<EVE_TYPE>())     , eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2);
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<EVE_TYPE>())    , (eve::Mzero<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mzero<EVE_TYPE>())    , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Zero<EVE_TYPE>())))); 
+    TTS_EXPECT(eve::all(eve::is_positive(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>())))); 
   }
 }
 
 TTS_CASE("Check eve::saturated_(eve::prev) two parameters behavior")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using si_t = eve::detail::as_integer_t<Value, signed>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
 
-  if constexpr(std::is_integral_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{4}, i_t(2)), Type(2));
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{5}, i_t(2)), Type(3));
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{4}, si_t(2)),Type(2));
-    TTS_EQUAL(eve::saturated_(eve::prev)(Type{5}, si_t(2)),Type(3));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<Type>(), i_t(2)), eve::Valmin<Type>());
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{4}, i_t(2)), EVE_TYPE(2));
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{5}, i_t(2)), EVE_TYPE(3));
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{4}, si_t(2)),EVE_TYPE(2));
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE{5}, si_t(2)),EVE_TYPE(3));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<EVE_TYPE>(), i_t(2)), eve::Valmin<EVE_TYPE>());
     
-    TTS_EQUAL(eve::saturated_(eve::prev)(Value{4}, i_t(2)), Type(2));
-    TTS_EQUAL(eve::saturated_(eve::prev)(Value{5}, i_t(2)), Type(3));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<Value>(), i_t(2)), eve::Valmin<Type>());
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_VALUE{4}, i_t(2)), EVE_TYPE(2));
+    TTS_EQUAL(eve::saturated_(eve::prev)(EVE_VALUE{5}, i_t(2)), EVE_TYPE(3));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<EVE_VALUE>(), i_t(2)), eve::Valmin<EVE_TYPE>());
 
-    if constexpr(std::is_signed_v<Value>)
+    if constexpr(std::is_signed_v<EVE_VALUE>)
     {
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-1), i_t(2)), Type(-3));
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-2), i_t(2)), Type(-4));
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-1), si_t(2)),Type(-3));
-      TTS_EQUAL(eve::saturated_(eve::prev)(Type(-2), si_t(2)),Type(-4));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-1), i_t(2)), EVE_TYPE(-3));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-2), i_t(2)), EVE_TYPE(-4));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-1), si_t(2)),EVE_TYPE(-3));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_TYPE(-2), si_t(2)),EVE_TYPE(-4));
 
-      TTS_EQUAL(eve::saturated_(eve::prev)(Value(-1), i_t(2)), Type(-3));
-      TTS_EQUAL(eve::saturated_(eve::prev)(Value(-2), i_t(2)), Type(-4));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_VALUE(-1), i_t(2)), EVE_TYPE(-3));
+      TTS_EQUAL(eve::saturated_(eve::prev)(EVE_VALUE(-2), i_t(2)), EVE_TYPE(-4));
     }
   }
   else
   {
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<Type>(), i_t(2)))   , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<Type>(), i_t(2))), (eve::Nan<Type>()));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<Type>(), i_t(2)))       , (eve::Mone<Type>()-eve::Eps<Type>()*2));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<Type>(), i_t(2)))        , (eve::One<Type>()-eve::Eps<Type>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<EVE_TYPE>(), i_t(2)))   , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<EVE_TYPE>(), i_t(2))), (eve::Nan<EVE_TYPE>()));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<EVE_TYPE>(), i_t(2)))       , (eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>()*2));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<EVE_TYPE>(), i_t(2)))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()));
 
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<Type>(), si_t(2)))   , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<Type>(), si_t(2))), (eve::Nan<Type>()));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<Type>(), si_t(2)))       , (eve::Mone<Type>()-eve::Eps<Type>()*2));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<Type>(), si_t(2)))        , (eve::One<Type>()-eve::Eps<Type>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<EVE_TYPE>(), si_t(2)))   , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<EVE_TYPE>(), si_t(2))), (eve::Nan<EVE_TYPE>()));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<EVE_TYPE>(), si_t(2)))       , (eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>()*2));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<EVE_TYPE>(), si_t(2)))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()));
 
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<Value>(), i_t(2)))   , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<Value>(), i_t(2))), (eve::Nan<Type>()));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<Value>(), i_t(2)))       , (eve::Mone<Type>()-eve::Eps<Type>()*2));
-    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<Value>(), i_t(2)))        , (eve::One<Type>()-eve::Eps<Type>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Minf<EVE_VALUE>(), i_t(2)))   , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::saturated_(eve::prev)(eve::Valmin<EVE_VALUE>(), i_t(2))), (eve::Nan<EVE_TYPE>()));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::Mone<EVE_VALUE>(), i_t(2)))       , (eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>()*2));
+    TTS_EQUAL((eve::saturated_(eve::prev)(eve::One<EVE_VALUE>(), i_t(2)))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()));
 
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<Type>(), 1)             , (eve::Mzero<Type>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Zero<Type>(), 1) ))); 
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mzero<Type>(), 1)            , (-eve::Mindenormal<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<Type>(), 2)             , (-eve::Mindenormal<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<Type>(), 3)      , (-eve::Mindenormal<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<Type>(), 2)      , (eve::Zero<Type>()));
-    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<Type>(), 1)      , (eve::Mzero<Type>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Mindenormal<Type>(), 2) ))); 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::saturated_(eve::prev)(eve::Mindenormal<Type>(), 1) ))); 
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<EVE_TYPE>(), 1)             , (eve::Mzero<EVE_TYPE>()));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Zero<EVE_TYPE>(), 1) ))); 
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mzero<EVE_TYPE>(), 1)            , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Zero<EVE_TYPE>(), 2)             , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>(), 3)      , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>(), 2)      , (eve::Zero<EVE_TYPE>()));
+    TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>(), 1)      , (eve::Mzero<EVE_TYPE>()));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>(), 2) ))); 
+    TTS_EXPECT(eve::all(eve::is_positive(eve::saturated_(eve::prev)(eve::Mindenormal<EVE_TYPE>(), 1) ))); 
   }
 }

@@ -25,32 +25,32 @@
 
 TTS_CASE("Check eve::eps return type")
 {
-  TTS_EXPR_IS(eve::eps(Type(0)), (Type));
+  TTS_EXPR_IS(eve::eps(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eps behavior")
 {
   using eve::eps; 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
-      TTS_IEEE_EQUAL((eps(eve::Inf<Type>())), (eve::Nan<Type>()));
-      TTS_IEEE_EQUAL((eps(eve::Minf<Type>())), (eve::Nan<Type>()));
-      TTS_IEEE_EQUAL((eps(eve::Nan<Type>())), (eve::Nan<Type>()));
+      TTS_IEEE_EQUAL((eps(eve::Inf<EVE_TYPE>())), (eve::Nan<EVE_TYPE>()));
+      TTS_IEEE_EQUAL((eps(eve::Minf<EVE_TYPE>())), (eve::Nan<EVE_TYPE>()));
+      TTS_IEEE_EQUAL((eps(eve::Nan<EVE_TYPE>())), (eve::Nan<EVE_TYPE>()));
     }
-    TTS_EQUAL((eps(eve::Mone<Type>())), (eve::Eps<Type>()));
-    TTS_EQUAL((eps(eve::One<Type>())) , (eve::Eps<Type>()));
+    TTS_EQUAL((eps(eve::Mone<EVE_TYPE>())), (eve::Eps<EVE_TYPE>()));
+    TTS_EQUAL((eps(eve::One<EVE_TYPE>())) , (eve::Eps<EVE_TYPE>()));
     
     if constexpr(eve::platform::supports_denormals)
     {
-      TTS_EQUAL((eps(Type{0})), (eve::Mindenormal<Type>()));
+      TTS_EQUAL((eps(EVE_TYPE{0})), (eve::Mindenormal<EVE_TYPE>()));
     }
   } 
   else
   {
-    TTS_EQUAL((eps(eve::Mone<Type>())), (eve::One<Type>()));
-    TTS_EQUAL((eps(eve::One<Type>())), (eve::One<Type>()));
-    TTS_EQUAL((eps(eve::Zero<Type>())),(eve::One<Type>()));
+    TTS_EQUAL((eps(eve::Mone<EVE_TYPE>())), (eve::One<EVE_TYPE>()));
+    TTS_EQUAL((eps(eve::One<EVE_TYPE>())), (eve::One<EVE_TYPE>()));
+    TTS_EQUAL((eps(eve::Zero<EVE_TYPE>())),(eve::One<EVE_TYPE>()));
   } 
 }

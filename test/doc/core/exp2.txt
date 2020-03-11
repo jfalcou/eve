@@ -5,4 +5,4 @@
 <- xf =                      1
 -> eve::exp2(xf) =            2
 <- yf =                      -nan
--> eve::exp2(yf) =            -nan
+-> eve::exp2(yf) =            nan

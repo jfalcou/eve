@@ -26,7 +26,7 @@
 
 TTS_CASE("Check eve::atan2 return type")
 {
-  TTS_EXPR_IS(eve::atan2(Type(0), Type(0)), (Type));
+  TTS_EXPR_IS(eve::atan2(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::atan2 behavior")
@@ -35,53 +35,53 @@ TTS_CASE("Check eve::atan2 behavior")
   using eve::is_positive;
   using eve::all;
 
-  auto mzero = eve::Mzero<Type>();
+  auto mzero = eve::Mzero<EVE_TYPE>();
 
   if constexpr( eve::platform::supports_infinites )
   {
-    auto inf  = eve::Inf<Type>();
-    auto minf = eve::Minf<Type>();
+    auto inf  = eve::Inf<EVE_TYPE>();
+    auto minf = eve::Minf<EVE_TYPE>();
 
-    TTS_ULP_EQUAL(eve::atan2(inf         , (Type(1.))  ), eve::Pio_2<Type>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(inf         , (Type(-1.)) ), eve::Pio_2<Type>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(minf        , (Type(1.))  ), -eve::Pio_2<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2(minf        , (Type(-1.)) ), -eve::Pio_2<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2((Type( 1.)) , minf        ), eve::Pi<Type>()    , 0.5);
-    TTS_ULP_EQUAL(eve::atan2((Type(-1.)) , minf        ), -eve::Pi<Type>()   , 0.5);
-    TTS_ULP_EQUAL(eve::atan2((Type( 1.)) , inf         ), (Type(0.))         , 0.5);
-    TTS_ULP_EQUAL(eve::atan2((Type(-1.)) , inf         ), mzero              , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(inf         , (EVE_TYPE(1.))  ), eve::Pio_2<EVE_TYPE>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(inf         , (EVE_TYPE(-1.)) ), eve::Pio_2<EVE_TYPE>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(minf        , (EVE_TYPE(1.))  ), -eve::Pio_2<EVE_TYPE>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2(minf        , (EVE_TYPE(-1.)) ), -eve::Pio_2<EVE_TYPE>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2((EVE_TYPE( 1.)) , minf        ), eve::Pi<EVE_TYPE>()    , 0.5);
+    TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-1.)) , minf        ), -eve::Pi<EVE_TYPE>()   , 0.5);
+    TTS_ULP_EQUAL(eve::atan2((EVE_TYPE( 1.)) , inf         ), (EVE_TYPE(0.))         , 0.5);
+    TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-1.)) , inf         ), mzero              , 0.5);
 
-    TTS_EXPECT( all(is_negative(eve::atan2((Type(-1.)), inf))) );
-    TTS_EXPECT( all(is_positive(eve::atan2((Type(1.)) , inf))) );
+    TTS_EXPECT( all(is_negative(eve::atan2((EVE_TYPE(-1.)), inf))) );
+    TTS_EXPECT( all(is_positive(eve::atan2((EVE_TYPE(1.)) , inf))) );
 
-    TTS_ULP_EQUAL(eve::atan2(minf, minf      ),  eve::Nan<Type>()   , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(inf , minf      ),  eve::Nan<Type>()   , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(minf, inf       ),  eve::Nan<Type>()   , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(inf , inf       ),  eve::Nan<Type>()   , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(inf , (Type(1.))),  eve::Pio_2<Type>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2(minf, (Type(1.))), -eve::Pio_2<Type>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(minf, minf      ),  eve::Nan<EVE_TYPE>()   , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(inf , minf      ),  eve::Nan<EVE_TYPE>()   , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(minf, inf       ),  eve::Nan<EVE_TYPE>()   , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(inf , inf       ),  eve::Nan<EVE_TYPE>()   , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(inf , (EVE_TYPE(1.))),  eve::Pio_2<EVE_TYPE>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2(minf, (EVE_TYPE(1.))), -eve::Pio_2<EVE_TYPE>() , 0.5);
   }
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::atan2(eve::Nan<Type>(), eve::Nan<Type>()) , eve::Nan<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2(eve::Nan<Type>(), (Type(0.)))       , eve::Nan<Type>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2((Type(0.))      , eve::Nan<Type>()) , eve::Nan<Type>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2(eve::Nan<EVE_TYPE>(), (EVE_TYPE(0.)))       , eve::Nan<EVE_TYPE>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(0.))      , eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0.5);
   }
 
-  TTS_ULP_EQUAL(eve::atan2((Type(0.5)) , (Type(0.5)) ) ,  eve::Pio_4<Type>()   , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(-0.5)), (Type(-0.5))) , -3*eve::Pio_4<Type>() , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(-1.)) , (Type(-1.)) ) , -3*eve::Pio_4<Type>() , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(1.))  , (Type(1.))  ) ,  eve::Pio_4<Type>()   , 0.5);
-  TTS_ULP_EQUAL(eve::atan2(mzero       , (Type(-1.)) ) , -eve::Pi<Type>()      , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(0.))  , (Type(-1.)) ) ,  eve::Pi<Type>()      , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(-1.)) , mzero       ) , -eve::Pio_2<Type>()   , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(-1.)) , (Type(0.))  ) , -eve::Pio_2<Type>()   , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(1.))  , mzero       ) ,  eve::Pio_2<Type>()   , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(1.))  , (Type(0.))  ) ,  eve::Pio_2<Type>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(0.5)) , (EVE_TYPE(0.5)) ) ,  eve::Pio_4<EVE_TYPE>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-0.5)), (EVE_TYPE(-0.5))) , -3*eve::Pio_4<EVE_TYPE>() , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-1.)) , (EVE_TYPE(-1.)) ) , -3*eve::Pio_4<EVE_TYPE>() , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(1.))  , (EVE_TYPE(1.))  ) ,  eve::Pio_4<EVE_TYPE>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2(mzero       , (EVE_TYPE(-1.)) ) , -eve::Pi<EVE_TYPE>()      , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(0.))  , (EVE_TYPE(-1.)) ) ,  eve::Pi<EVE_TYPE>()      , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-1.)) , mzero       ) , -eve::Pio_2<EVE_TYPE>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(-1.)) , (EVE_TYPE(0.))  ) , -eve::Pio_2<EVE_TYPE>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(1.))  , mzero       ) ,  eve::Pio_2<EVE_TYPE>()   , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(1.))  , (EVE_TYPE(0.))  ) ,  eve::Pio_2<EVE_TYPE>()   , 0.5);
 
-  TTS_ULP_EQUAL(eve::atan2((Type(0.))  , (Type(0.))  ) ,  eve::Nan<Type>()     , 0.5);
-  TTS_ULP_EQUAL(eve::atan2(mzero       , (Type(0.))  ) ,  eve::Nan<Type>()     , 0.5);
-  TTS_ULP_EQUAL(eve::atan2(mzero       , mzero       ) ,  eve::Nan<Type>()     , 0.5);
-  TTS_ULP_EQUAL(eve::atan2((Type(0.))  , mzero       ) ,  eve::Nan<Type>()     , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(0.))  , (EVE_TYPE(0.))  ) ,  eve::Nan<EVE_TYPE>()     , 0.5);
+  TTS_ULP_EQUAL(eve::atan2(mzero       , (EVE_TYPE(0.))  ) ,  eve::Nan<EVE_TYPE>()     , 0.5);
+  TTS_ULP_EQUAL(eve::atan2(mzero       , mzero       ) ,  eve::Nan<EVE_TYPE>()     , 0.5);
+  TTS_ULP_EQUAL(eve::atan2((EVE_TYPE(0.))  , mzero       ) ,  eve::Nan<EVE_TYPE>()     , 0.5);
 }

@@ -16,14 +16,14 @@
 TTS_CASE("Check eve::bit_ornot return type")
 {
   using eve::detail::as_integer_t;
-  using ui_t = as_integer_t<Type, unsigned>;
-  using vi_t = as_integer_t<Value, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_ornot(Type(), Type()) , (Type));
-  TTS_EXPR_IS(eve::bit_ornot(Type(), Value()), (Type));
-  TTS_EXPR_IS(eve::bit_ornot(Type(), ui_t()) , (Type));
-  TTS_EXPR_IS(eve::bit_ornot(Type(), vi_t()) , (Type));
-  TTS_EXPR_IS(eve::bit_ornot(ui_t(), Type()) , ui_t  );
+  TTS_EXPR_IS(eve::bit_ornot(EVE_TYPE(), EVE_TYPE()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_ornot(EVE_TYPE(), EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_ornot(EVE_TYPE(), ui_t()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_ornot(EVE_TYPE(), vi_t()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_ornot(ui_t(), EVE_TYPE()) , ui_t  );
 }
 
 TTS_CASE( "Check eve::bit_ornot behavior")
@@ -32,8 +32,8 @@ TTS_CASE( "Check eve::bit_ornot behavior")
   using eve::bit_cast;
   using eve::as;
 
-  using ui_t = as_integer_t<Type , unsigned>;
-  using vi_t = as_integer_t<Value, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE , unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
   constexpr auto u  = 0xAAAAAAAAAAAAAAAAULL;
   constexpr auto d  = 0x6666666666666666ULL;
@@ -44,15 +44,15 @@ TTS_CASE( "Check eve::bit_ornot behavior")
   ui_t ud( static_cast<vi_t>(d) );
   ui_t um( static_cast<vi_t>(m) );
   ui_t un( static_cast<vi_t>(n) );
-  auto td = bit_cast(ud, as<Type>());
-  auto tu = bit_cast(uu, as<Type>());
-  auto tm = bit_cast(um, as<Type>());
-  auto tn = bit_cast(un, as<Type>());
+  auto td = bit_cast(ud, as<EVE_TYPE>());
+  auto tu = bit_cast(uu, as<EVE_TYPE>());
+  auto tm = bit_cast(um, as<EVE_TYPE>());
+  auto tn = bit_cast(un, as<EVE_TYPE>());
 
   vi_t su( static_cast<vi_t>(u) );
   vi_t sd( static_cast<vi_t>(d) );
-  auto vu = bit_cast(su, as<Value>());
-  auto vd = bit_cast(sd, as<Value>());
+  auto vu = bit_cast(su, as<EVE_VALUE>());
+  auto vd = bit_cast(sd, as<EVE_VALUE>());
 
   TTS_SUBCASE("wide<T> x wide<T> case")
   {

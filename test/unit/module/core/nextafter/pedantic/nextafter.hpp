@@ -24,55 +24,55 @@
 
 TTS_CASE("Check nextafter return type")
 {
-  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(Type(), Type())), (Type));
-  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(Type(), Value())), (Type));
-  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(Value(), Type())), (Type));
+  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(EVE_TYPE(), EVE_VALUE())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::pedantic_(eve::nextafter)(EVE_VALUE(), EVE_TYPE())), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::pedantic_(eve::nextafter) one parameter behavior")
 {
-  if constexpr(std::is_integral_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE>)
   {
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{1}, Type{1})), Type(1));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{1}, Type{5})), Type(2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{2}, Type(0))), Type(1));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value{1}, Type{1})), Type(1));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value{1}, Type{5})), Type(2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value{2}, Type(0))), Type(1));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{1}, Value{1})), Type(1));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{1}, Value{5})), Type(2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type{2}, Value(0))), Type(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{1}, EVE_TYPE{1})), EVE_TYPE(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{1}, EVE_TYPE{5})), EVE_TYPE(2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{2}, EVE_TYPE(0))), EVE_TYPE(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE{1}, EVE_TYPE{1})), EVE_TYPE(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE{1}, EVE_TYPE{5})), EVE_TYPE(2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE{2}, EVE_TYPE(0))), EVE_TYPE(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{1}, EVE_VALUE{1})), EVE_TYPE(1));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{1}, EVE_VALUE{5})), EVE_TYPE(2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE{2}, EVE_VALUE(0))), EVE_TYPE(1));
 
-    if constexpr(std::is_signed_v<Value>)
+    if constexpr(std::is_signed_v<EVE_VALUE>)
     {
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type(-1), Type(-1))), Type(-1));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type(-1), Type(5))), Type(0));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value(-2), Type(-4))), Type(-3));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value(-1), Type(-1))), Type(-1));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value(-1), Type(5))), Type(0));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Value(-2), Type(-4))), Type(-3));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type(-1), Value(-1))), Type(-1));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type(-1), Value(5))), Type(0));
-      TTS_EQUAL((eve::pedantic_(eve::nextafter)(Type(-2), Value(-4))), Type(-3));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(-1), EVE_TYPE(-1))), EVE_TYPE(-1));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(-1), EVE_TYPE(5))), EVE_TYPE(0));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE(-2), EVE_TYPE(-4))), EVE_TYPE(-3));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE(-1), EVE_TYPE(-1))), EVE_TYPE(-1));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE(-1), EVE_TYPE(5))), EVE_TYPE(0));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE(-2), EVE_TYPE(-4))), EVE_TYPE(-3));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(-1), EVE_VALUE(-1))), EVE_TYPE(-1));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(-1), EVE_VALUE(5))), EVE_TYPE(0));
+      TTS_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(-2), EVE_VALUE(-4))), EVE_TYPE(-3));
     }
     
   }
   else
   {
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<Type>(), Type(2)))        , (eve::Mone<Type>()+eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Type>(), Type(-1)))        , (eve::One<Type>()-eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Type>(), Type(1)))        , (eve::One<Type>()));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<Value>(), Type(2)))       , (eve::Mone<Type>()+eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Value>(), Type(-1)))       , (eve::One<Type>()-eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Value>(), Type(1)))       , (eve::One<Type>()));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<Type>(), Value(2)))       , (eve::Mone<Type>()+eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Type>(), Value(-1)))       , (eve::One<Type>()-eve::Eps<Type>()/2));
-    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<Value>(), Type(1)))       , (eve::One<Type>()));
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<Type>(), Type(1)))         , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(Type(1), eve::Nan<Type>()))         , (eve::Nan<Type>()));    
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<Value>(), Type(1)))         , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(Value(1), eve::Nan<Type>()))         , (eve::Nan<Type>()));    
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<Type>(), Value(1)))         , (eve::Nan<Type>()));
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(Type(1), eve::Nan<Value>()))         , (eve::Nan<Type>()));    
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<EVE_TYPE>(), EVE_TYPE(2)))        , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_TYPE>(), EVE_TYPE(-1)))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_TYPE>(), EVE_TYPE(1)))        , (eve::One<EVE_TYPE>()));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<EVE_VALUE>(), EVE_TYPE(2)))       , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_VALUE>(), EVE_TYPE(-1)))       , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_VALUE>(), EVE_TYPE(1)))       , (eve::One<EVE_TYPE>()));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::Mone<EVE_TYPE>(), EVE_VALUE(2)))       , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_TYPE>(), EVE_VALUE(-1)))       , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
+    TTS_EQUAL((eve::pedantic_(eve::nextafter)(eve::One<EVE_VALUE>(), EVE_TYPE(1)))       , (eve::One<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<EVE_TYPE>(), EVE_TYPE(1)))         , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(1), eve::Nan<EVE_TYPE>()))         , (eve::Nan<EVE_TYPE>()));    
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<EVE_VALUE>(), EVE_TYPE(1)))         , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(EVE_VALUE(1), eve::Nan<EVE_TYPE>()))         , (eve::Nan<EVE_TYPE>()));    
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(eve::Nan<EVE_TYPE>(), EVE_VALUE(1)))         , (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::nextafter)(EVE_TYPE(1), eve::Nan<EVE_VALUE>()))         , (eve::Nan<EVE_TYPE>()));    
   }
 }

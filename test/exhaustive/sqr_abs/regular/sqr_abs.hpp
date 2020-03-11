@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on sqr_abs")
 {
-  auto std_sqr_abs = tts::vectorize<Type>( [](auto e) { return e*e; } );
+  auto std_sqr_abs = tts::vectorize<EVE_TYPE>( [](auto e) { return e*e; } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_sqr_abs, eve::sqr_abs); 
 }

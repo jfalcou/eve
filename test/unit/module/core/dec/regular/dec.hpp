@@ -16,22 +16,22 @@
 
 TTS_CASE("Check eve::dec return type")
 {
-  TTS_EXPR_IS(eve::dec(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::dec(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::dec behavior")
 {
-  TTS_EQUAL(eve::dec(Type(0)), (Type(-1)) );
-  TTS_EQUAL(eve::dec(Type(1)), (Type( 0)) );
-  TTS_EQUAL(eve::dec(Type(2)), (Type( 1)) );
+  TTS_EQUAL(eve::dec(EVE_TYPE(0)), (EVE_TYPE(-1)) );
+  TTS_EQUAL(eve::dec(EVE_TYPE(1)), (EVE_TYPE( 0)) );
+  TTS_EQUAL(eve::dec(EVE_TYPE(2)), (EVE_TYPE( 1)) );
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::dec(Type(-2)), (Type(-3)));
+    TTS_EQUAL(eve::dec(EVE_TYPE(-2)), (EVE_TYPE(-3)));
   }
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::dec(eve::Mzero<Type>()), (Type(-1)));
+    TTS_EQUAL(eve::dec(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(-1)));
   }
 }

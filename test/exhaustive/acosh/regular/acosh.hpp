@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on acosh")
 {
-  auto std_acosh = tts::vectorize<Type>( [](auto e) { return std::acosh(e); } );
+  auto std_acosh = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acosh(e); } );
 
-  eve::exhaustive_producer<Type> p(Value(1), eve::Maxlog<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(1), eve::Maxlog<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_acosh, eve::acosh); 
 }

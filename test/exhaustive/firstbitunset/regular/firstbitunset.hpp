@@ -19,7 +19,7 @@
 
 TTS_CASE("wide random check on firstbitunset")
 {
-  auto std_firstbitunset = tts::vectorize<Type>( [](auto e) { return ~e & (e+1); } );
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  auto std_firstbitunset = tts::vectorize<EVE_TYPE>( [](auto e) { return ~e & (e+1); } );
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_firstbitunset, eve::firstbitunset);
 }

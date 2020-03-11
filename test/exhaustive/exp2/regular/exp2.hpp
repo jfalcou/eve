@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on exp2")
 {
-  auto std_exp2 = tts::vectorize<Type>( [](auto e) { return std::exp2(e); } );
+  auto std_exp2 = tts::vectorize<EVE_TYPE>( [](auto e) { return std::exp2(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Minlog2<Value>()+1, eve::Maxlog2<Value>()-1);
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Minlog2<EVE_VALUE>()+1, eve::Maxlog2<EVE_VALUE>()-1);
   TTS_RANGE_CHECK(p, std_exp2, eve::exp2); 
 }

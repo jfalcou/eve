@@ -21,19 +21,19 @@
 
 TTS_CASE("Check eve::coth return type")
 {
-  TTS_EXPR_IS(eve::coth(Type(0)), (Type));
+  TTS_EXPR_IS(eve::coth(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::coth behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::coth(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::coth(eve::Inf<Type>()) , (Type(1)) );
-    TTS_IEEE_EQUAL(eve::coth(eve::Minf<Type>()), (Type(-1)) );   
+    TTS_IEEE_EQUAL(eve::coth(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::coth(eve::Inf<EVE_TYPE>()) , (EVE_TYPE(1)) );
+    TTS_IEEE_EQUAL(eve::coth(eve::Minf<EVE_TYPE>()), (EVE_TYPE(-1)) );   
   }
-  TTS_ULP_EQUAL(eve::coth(Type(1)), Type(eve::rec(std::tanh(Value(1)))), 0.5);
-  TTS_ULP_EQUAL(eve::coth(Type(-1)),Type(eve::rec(std::tanh(Value(-1)))), 0.5); 
-  TTS_IEEE_EQUAL((eve::coth(Type(0))), (eve::Inf<Type>()));
-  TTS_IEEE_EQUAL((eve::coth(eve::Mzero<Type>())), (eve::Minf<Type>()));
+  TTS_ULP_EQUAL(eve::coth(EVE_TYPE(1)), EVE_TYPE(eve::rec(std::tanh(EVE_VALUE(1)))), 0.5);
+  TTS_ULP_EQUAL(eve::coth(EVE_TYPE(-1)),EVE_TYPE(eve::rec(std::tanh(EVE_VALUE(-1)))), 0.5); 
+  TTS_IEEE_EQUAL((eve::coth(EVE_TYPE(0))), (eve::Inf<EVE_TYPE>()));
+  TTS_IEEE_EQUAL((eve::coth(eve::Mzero<EVE_TYPE>())), (eve::Minf<EVE_TYPE>()));
 }

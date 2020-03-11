@@ -19,10 +19,10 @@
 
 TTS_CASE("wide exhaustive check on asec")
 {
-  auto std_asec = tts::vectorize<Type>( [](auto e) { return std::acos(eve::rec(e)); } );
-  double th =  std::is_same_v<Value, double> ? 4096 : 512; 
-  eve::exhaustive_producer<Type> p1(eve::Valmin<Value>(), Value(-1));
+  auto std_asec = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acos(eve::rec(e)); } );
+  double th =  std::is_same_v<EVE_VALUE, double> ? 4096 : 512; 
+  eve::exhaustive_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
   TTS_ULP_RANGE_CHECK(p1, std_asec, eve::raw_(eve::asec), th); 
-  eve::exhaustive_producer<Type> p2(Value(1), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
   TTS_ULP_RANGE_CHECK(p2, std_asec, eve::raw_(eve::asec), th);
 }

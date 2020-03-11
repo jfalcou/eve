@@ -17,9 +17,9 @@
 
 TTS_CASE("wide random check on sin")
 {
-  auto std_sin = tts::vectorize<Type>( [](auto e) { return std::sin(e); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), Value()); 
+  auto std_sin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::sin(e); } );
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
 
-  eve::exhaustive_producer<Type> p(-l, l);
+  eve::exhaustive_producer<EVE_TYPE> p(-l, l);
   TTS_RANGE_CHECK(p, std_sin, eve::medium_(eve::sin)); 
 }

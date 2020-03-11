@@ -20,17 +20,17 @@
 
 TTS_CASE("wide exhaustive check on is_flint")
 {
-  using l_t = eve::as_logical_t<Type>; 
-  if constexpr(std::is_floating_point_v<Value>)
+  using l_t = eve::as_logical_t<EVE_TYPE>; 
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return (std::remainder(e, Value(1)) == Value(0)); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return (std::remainder(e, EVE_VALUE(1)) == EVE_VALUE(0)); } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_flint, eve::is_flint);
   }
   else
   {
     auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return true; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_flint, eve::is_flint);
   }
 }

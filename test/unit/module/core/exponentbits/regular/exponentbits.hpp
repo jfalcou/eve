@@ -22,25 +22,25 @@
 #include <type_traits>
 
 TTS_CASE("Check exponentbits return type") {
-  TTS_EXPR_IS((eve::exponentbits(Type(0))), (eve::detail::as_integer_t<Type>));
+  TTS_EXPR_IS((eve::exponentbits(EVE_TYPE(0))), (eve::detail::as_integer_t<EVE_TYPE>));
 }
 
 TTS_CASE ("checking  exponentbits behaviour")
 {
-  if constexpr(std::is_same_v<Value, float>)
+  if constexpr(std::is_same_v<EVE_VALUE, float>)
   {
-    using i_t = eve::detail::as_integer_t<Type>; 
+    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
     for(int i=1, k = 0; i < 10; i*= 2, ++k)
     {
-      TTS_EQUAL(i_t(1065353216+k*8388608), eve::exponentbits(Type(i)));
+      TTS_EQUAL(i_t(1065353216+k*8388608), eve::exponentbits(EVE_TYPE(i)));
     }
   }
   else
   {
-    using i_t = eve::detail::as_integer_t<Type>; 
+    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
     for(int i=1, k = 0; i < 10; i*= 2, ++k)
     {
-      TTS_EQUAL(i_t(4607182418800017408ll+k*4503599627370496ll), eve::exponentbits(Type(i)));
+      TTS_EQUAL(i_t(4607182418800017408ll+k*4503599627370496ll), eve::exponentbits(EVE_TYPE(i)));
    }
   }
 }

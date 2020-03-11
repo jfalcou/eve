@@ -9,5 +9,5 @@
 **/
 //==================================================================================================
 
-using Type = double;
+using EVE_TYPE = double;
 #include "rem_pio2_medium_medium.hpp"

@@ -16,62 +16,62 @@
 
 #define EVE_SIMD_TESTS
 
-#define Value ${target}
-#define Base eve::wide<Value>
+#define EVE_VALUE ${target}
+#define EVE_BASE eve::wide<EVE_VALUE>
 
 #if !defined(EVE_CUSTOM_CARDINAL)
-inline constexpr auto base_cardinal   = Base::static_size;
-inline constexpr auto large_cardinal  = 2*Base::static_size;
-inline constexpr auto small_cardinal  = (Base::static_size>1) ? Base::static_size/2 : 1;
+inline constexpr auto base_cardinal   = EVE_BASE::static_size;
+inline constexpr auto large_cardinal  = 2*EVE_BASE::static_size;
+inline constexpr auto small_cardinal  = (EVE_BASE::static_size>1) ? EVE_BASE::static_size/2 : 1;
 
 // Native size test
-#define Type Base
-#define Cardinal base_cardinal
+#define EVE_TYPE EVE_BASE
+#define EVE_CARDINAL base_cardinal
 #define EVE_COUNTER N
 #include "${header}.hpp"
-#undef Cardinal
-#undef Type
+#undef EVE_CARDINAL
+#undef EVE_TYPE
 #undef EVE_COUNTER
 
-#define Type eve::wide<Value,eve::fixed<Cardinal>>
+#define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CARDINAL>>
 
-// Cardinal 1 test
-#define Cardinal 1
+// EVE_CARDINAL 1 test
+#define EVE_CARDINAL 1
 #define EVE_COUNTER 1
 #include "${header}.hpp"
-#undef Cardinal
+#undef EVE_CARDINAL
 #undef EVE_COUNTER
 
-// Cardinal 2*Base Cardinal test
-#define Cardinal large_cardinal
+// EVE_CARDINAL 2*EVE_BASE EVE_CARDINAL test
+#define EVE_CARDINAL large_cardinal
 #define EVE_COUNTER 2N
 #include "${header}.hpp"
-#undef Cardinal
+#undef EVE_CARDINAL
 #undef EVE_COUNTER
 
-// Cardinal 1/2*Base Cardinal test
-#define Cardinal small_cardinal
+// EVE_CARDINAL 1/2*EVE_BASE EVE_CARDINAL test
+#define EVE_CARDINAL small_cardinal
 #define EVE_COUNTER N2
 #include "${header}.hpp"
-#undef Cardinal
+#undef EVE_CARDINAL
 #undef EVE_COUNTER
 
-#undef Type
+#undef EVE_TYPE
 
 #else
 
 #if EVE_CUSTOM_CARDINAL > 0
-#define Type eve::wide<Value,eve::fixed<EVE_CUSTOM_CARDINAL>>
-#define Cardinal EVE_CUSTOM_CARDINAL
+#define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
+#define EVE_CARDINAL EVE_CUSTOM_CARDINAL
 #else
-#define Type eve::wide<Value>
-#define Cardinal base_cardinal
+#define EVE_TYPE eve::wide<EVE_VALUE>
+#define EVE_CARDINAL base_cardinal
 #endif
 
-// Specific  Cardinal test
+// Specific  EVE_CARDINAL test
 #define EVE_COUNTER XXX
 #include "${header}.hpp"
-#undef Cardinal
+#undef EVE_CARDINAL
 #undef EVE_COUNTER
 
 #endif

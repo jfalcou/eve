@@ -25,7 +25,7 @@
 
 TTS_CASE("Check eve::expm1 return type")
 {
-  TTS_EXPR_IS(eve::expm1(Type(0)), (Type));
+  TTS_EXPR_IS(eve::expm1(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::expm1 behavior")
@@ -33,14 +33,14 @@ TTS_CASE("Check eve::expm1 behavior")
   
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::expm1(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::expm1(eve::Inf<Type>()) , (eve::Inf<Type>()) );
-    TTS_IEEE_EQUAL(eve::expm1(eve::Minf<Type>()), (Type(-1)) ); 
+    TTS_IEEE_EQUAL(eve::expm1(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::expm1(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::expm1(eve::Minf<EVE_TYPE>()), (EVE_TYPE(-1)) ); 
   }
-  TTS_ULP_EQUAL(eve::expm1(Type(1)), Type(std::expm1(Value(1))), 0.5);
-  TTS_ULP_EQUAL(eve::expm1(Type(-1)),Type(std::expm1(Value(-1))), 0.5); 
-  TTS_IEEE_EQUAL((eve::expm1(Type(0))), (Type(0)));
-  TTS_IEEE_EQUAL((eve::expm1(eve::Mzero<Type>())), (Type(0)));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::expm1((Type(0)))))          );
-  TTS_EXPECT(eve::all(eve::is_negative(eve::expm1(eve::Mzero<Type>()))) );
+  TTS_ULP_EQUAL(eve::expm1(EVE_TYPE(1)), EVE_TYPE(std::expm1(EVE_VALUE(1))), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(EVE_TYPE(-1)),EVE_TYPE(std::expm1(EVE_VALUE(-1))), 0.5); 
+  TTS_IEEE_EQUAL((eve::expm1(EVE_TYPE(0))), (EVE_TYPE(0)));
+  TTS_IEEE_EQUAL((eve::expm1(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(0)));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::expm1((EVE_TYPE(0)))))          );
+  TTS_EXPECT(eve::all(eve::is_negative(eve::expm1(eve::Mzero<EVE_TYPE>()))) );
 }

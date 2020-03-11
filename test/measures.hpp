@@ -18,11 +18,11 @@
 
 namespace tts
 {
-  template<typename Type,typename Func> auto vectorize(Func&& f)
+  template<typename EVE_TYPE,typename Func> auto vectorize(Func&& f)
   {
     return  [func = std::forward<Func>(f)](auto const& x)
             {
-              Type that;
+              EVE_TYPE that;
               std::transform( tts::detail::begin(x),tts::detail::end(x),
                               tts::detail::begin(that),
                               func

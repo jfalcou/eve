@@ -29,8 +29,8 @@ TTS_CASE_TPL("Check splatting constructor for arithmetic wide",
 {
   using eve::wide;
 
-  Type          base = 42;
-  wide<Type, T> simd(base);
+  EVE_TYPE          base = 42;
+  wide<EVE_TYPE, T> simd(base);
 
   TTS_EXPECT(std::all_of(simd.begin(), simd.end(), [=](auto e) { return e == base; }));
 }

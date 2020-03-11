@@ -19,7 +19,7 @@
 
 TTS_CASE("wide random check on bit_mask")
 {
-  auto std_bit_mask = tts::vectorize<Type>( [](auto e) { return e ? eve::Allbits<Value>() : eve::Zero<Value>(); } );
-  eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+  auto std_bit_mask = tts::vectorize<EVE_TYPE>( [](auto e) { return e ? eve::Allbits<EVE_VALUE>() : eve::Zero<EVE_VALUE>(); } );
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_bit_mask, eve::bit_mask);
 }

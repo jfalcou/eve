@@ -16,8 +16,8 @@
 
 TTS_CASE("wide exhaustive check on asin")
 {
-  auto std_asin = tts::vectorize<Type>( [](auto e) { return std::asin(e); } );
+  auto std_asin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::asin(e); } );
 
-  eve::exhaustive_producer<Type> p(-1, 1);
+  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
   TTS_RANGE_CHECK(p, std_asin, eve::asin); 
 }

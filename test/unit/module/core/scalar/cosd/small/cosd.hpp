@@ -41,24 +41,24 @@
 
 TTS_CASE("Check cosd return type")
 {
-  TTS_EXPR_IS(eve::small_(eve::cosd)(Type(0)),  Type);
+  TTS_EXPR_IS(eve::small_(eve::cosd)(EVE_TYPE(0)),  EVE_TYPE);
 }
 
 TTS_CASE("Check eve::small_(eve::cosd) behavior")
 {
 
 #ifndef EVE_SIMD_NO_INVALIDS
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Inf<Type>()),  eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Nan<Type>()),  eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Inf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Minf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Nan<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(-180)),       eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(-45)),        eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(-90)),        eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(180)),        eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(45)),         eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cosd)(Type(90)),         eve::Zero<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(-180)),       eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(-45)),        eve::Sqrt_2o_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(-90)),        eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(180)),        eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(45)),         eve::Sqrt_2o_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cosd)(EVE_TYPE(90)),         eve::Zero<EVE_TYPE>(), 0.5);
 }
 
 #endif

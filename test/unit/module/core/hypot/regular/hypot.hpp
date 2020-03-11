@@ -21,7 +21,7 @@
 
 TTS_CASE("Check hypot return type")
 {
-  TTS_EXPR_IS(eve::hypot(Type(0), Type(0)), (Type));
+  TTS_EXPR_IS(eve::hypot(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::hypot behavior")
@@ -29,15 +29,15 @@ TTS_CASE("Check eve::hypot behavior")
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::hypot(eve::Nan<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::hypot(eve::Inf<Type>(), eve::Nan<Type>()), eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<Type>(), (Type(0)))          , eve::Inf<Type>(), 0);
-  TTS_ULP_EQUAL(eve::hypot((Type(0))          , eve::Valmax<Type>()), eve::Inf<Type>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Inf<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
 
-  TTS_ULP_EQUAL(eve::hypot((Type(-1)), (Type(-1)))                  , eve::Sqrt_2<Type>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((Type( 1)), (Type( 1)))                  , eve::Sqrt_2<Type>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((Type( 0)), (Type( 0)))                  , (Type(0))           , 0  );
-  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2)             , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))           , 0  );
+  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)             , 0.5);
 }

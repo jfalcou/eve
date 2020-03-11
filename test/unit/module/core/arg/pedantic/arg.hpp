@@ -24,24 +24,24 @@
 
 TTS_CASE("Check eve::pedantic_(eve::arg) return type")
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::arg)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::pedantic_(eve::arg)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::pedantic_(eve::arg) behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL( (eve::pedantic_(eve::arg)(eve::Nan<Type>())), (eve::Nan<Type>()) );
+    TTS_IEEE_EQUAL( (eve::pedantic_(eve::arg)(eve::Nan<EVE_TYPE>())), (eve::Nan<EVE_TYPE>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_EQUAL( (eve::arg(eve::Inf<Type>())) , (eve::Zero<Type>()) );
-    TTS_EQUAL( (eve::arg(eve::Minf<Type>())), (eve::Pi<Type>())   );
+    TTS_EQUAL( (eve::arg(eve::Inf<EVE_TYPE>())) , (eve::Zero<EVE_TYPE>()) );
+    TTS_EQUAL( (eve::arg(eve::Minf<EVE_TYPE>())), (eve::Pi<EVE_TYPE>())   );
   }
 
-  TTS_EQUAL( (eve::arg(eve::Mone<Type>()))  , (eve::Pi<Type>())   );
-  TTS_EQUAL( (eve::arg(eve::One<Type>()))   , (eve::Zero<Type>()) );
-  TTS_EQUAL( (eve::arg(eve::Zero<Type>()))  , (eve::Zero<Type>()) );
-  TTS_EQUAL( (eve::arg(eve::Mzero<Type>())) , (eve::Pi<Type>())   );
+  TTS_EQUAL( (eve::arg(eve::Mone<EVE_TYPE>()))  , (eve::Pi<EVE_TYPE>())   );
+  TTS_EQUAL( (eve::arg(eve::One<EVE_TYPE>()))   , (eve::Zero<EVE_TYPE>()) );
+  TTS_EQUAL( (eve::arg(eve::Zero<EVE_TYPE>()))  , (eve::Zero<EVE_TYPE>()) );
+  TTS_EQUAL( (eve::arg(eve::Mzero<EVE_TYPE>())) , (eve::Pi<EVE_TYPE>())   );
 }

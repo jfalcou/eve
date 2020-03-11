@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::uint32_t;
+using EVE_TYPE = std::uint32_t;
 #include "decrement.hpp"

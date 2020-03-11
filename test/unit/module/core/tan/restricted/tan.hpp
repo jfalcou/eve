@@ -26,25 +26,25 @@
 
 TTS_CASE("Check eve::restricted_(eve::tan) return type")
 {
-  TTS_EXPR_IS(eve::restricted_(eve::tan)(Type(0)), (Type));
+  TTS_EXPR_IS(eve::restricted_(eve::tan)(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::restricted_(eve::tan) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::restricted_(eve::tan)(Type(1)), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::tan)(Type(-1)),eve::Nan<Type>(), 0.5);
-  TTS_IEEE_EQUAL((eve::restricted_(eve::tan)(Type(0))), (Type(0)));
-  TTS_IEEE_EQUAL((eve::restricted_(eve::tan)(eve::Mzero<Type>())), (Type(0)));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::tan)(eve::Mzero<Type>()))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tan)(eve::Zero<Type>()))));
-  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(eve::Pio_4<Type>())), (Type(std::tan(eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<Type>())),(Type(std::tan(-eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(eve::Pio_4<Type>()/2)), (Type(std::tan(eve::Pio_4<Value>()/2))), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<Type>()/2)),(Type(std::tan(-eve::Pio_4<Value>()/2))), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::tan)(EVE_TYPE(1)), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::tan)(EVE_TYPE(-1)),eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_IEEE_EQUAL((eve::restricted_(eve::tan)(EVE_TYPE(0))), (EVE_TYPE(0)));
+  TTS_IEEE_EQUAL((eve::restricted_(eve::tan)(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(0)));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::tan)(eve::Mzero<EVE_TYPE>()))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tan)(eve::Zero<EVE_TYPE>()))));
+  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(std::tan(eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(std::tan(-eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(eve::Pio_4<EVE_TYPE>()/2)), (EVE_TYPE(std::tan(eve::Pio_4<EVE_VALUE>()/2))), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::tan)(-eve::Pio_4<EVE_TYPE>()/2)),(EVE_TYPE(std::tan(-eve::Pio_4<EVE_VALUE>()/2))), 0.5);
 }

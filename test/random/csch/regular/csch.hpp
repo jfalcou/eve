@@ -19,8 +19,8 @@
 
 TTS_CASE("wide random check on csch")
 {
-  auto std_csch = tts::vectorize<Type>( [](auto e) { return eve::rec(std::sinh(e)); } );
+  auto std_csch = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::rec(std::sinh(e)); } );
 
-  eve::rng_producer<Type> p(-eve::Maxlog<Value>()+1, eve::Maxlog<Value>()-1);
+  eve::rng_producer<EVE_TYPE> p(-eve::Maxlog<EVE_VALUE>()+1, eve::Maxlog<EVE_VALUE>()-1);
   TTS_RANGE_CHECK(p, std_csch, eve::csch); 
 }

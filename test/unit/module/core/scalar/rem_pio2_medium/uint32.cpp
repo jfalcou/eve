@@ -10,5 +10,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::uint32_t;
+using EVE_TYPE = std::uint32_t;
 #include "rem_pio2_medium_medium.hpp"

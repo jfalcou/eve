@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on rsqrt")
 {
-  auto std_rsqrt = tts::vectorize<Type>( [](auto e) { return Value(1)/std::sqrt(e); } );
+  auto std_rsqrt = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)/std::sqrt(e); } );
 
-  eve::exhaustive_producer<Type> p(Value(0), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(0), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt)); 
 }

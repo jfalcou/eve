@@ -17,22 +17,22 @@
 
 TTS_CASE("Check eve::oneminus return type")
 {
-  TTS_EXPR_IS(eve::oneminus(Type(0)), (Type));
+  TTS_EXPR_IS(eve::oneminus(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::oneminus behavior")
 {
-  TTS_EQUAL(eve::oneminus(Type(1)), (Type(0)));
+  TTS_EQUAL(eve::oneminus(EVE_TYPE(1)), (EVE_TYPE(0)));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::oneminus(Type(2))              , (Type(-1)));
-    TTS_EQUAL(eve::oneminus(static_cast<Type>(-2)), (Type( 3)));
+    TTS_EQUAL(eve::oneminus(EVE_TYPE(2))              , (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::oneminus(static_cast<EVE_TYPE>(-2)), (EVE_TYPE( 3)));
   }
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::oneminus(eve::Mzero<Type>()) , (Type(1)));
-    TTS_EQUAL(eve::oneminus((Type(0)))          , (Type(1)));
+    TTS_EQUAL(eve::oneminus(eve::Mzero<EVE_TYPE>()) , (EVE_TYPE(1)));
+    TTS_EQUAL(eve::oneminus((EVE_TYPE(0)))          , (EVE_TYPE(1)));
   }
 }

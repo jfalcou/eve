@@ -14,14 +14,14 @@
 
 TTS_CASE("Check eve::fma return type")
 {
-  TTS_EXPR_IS(eve::fma(Type(), Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::fma(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::fma behavior")
 {
-  TTS_EQUAL(eve::fma(Type(0), Type(0), Type(0)), (Type(0)));
-  TTS_EQUAL(eve::fma(Type(0), Type(0), Type(7)), (Type(7)));
-  TTS_EQUAL(eve::fma(Type(2), Type(0), Type(7)), (Type(7)));
-  TTS_EQUAL(eve::fma(Type(0), Type(5), Type(7)), (Type(7)));
-  TTS_EQUAL(eve::fma(Type(2), Type(5), Type(7)), (Type(17)));
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(7)));
+  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(7)));
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(7)));
+  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(17)));
 }

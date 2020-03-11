@@ -14,26 +14,26 @@
 
 TTS_CASE("Check extract return type")
 {
-  using i_t = eve::detail::as_integer_t<Value, signed>;
-  using u_t = eve::detail::as_integer_t<Value, unsigned>;
+  using i_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using u_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::extract(Type(), i_t()), Value);
-  TTS_EXPR_IS(eve::extract(Type(), u_t()), Value);
-  TTS_EXPR_IS(eve::extract(Type(), int()), Value);
+  TTS_EXPR_IS(eve::extract(EVE_TYPE(), i_t()), EVE_VALUE);
+  TTS_EXPR_IS(eve::extract(EVE_TYPE(), u_t()), EVE_VALUE);
+  TTS_EXPR_IS(eve::extract(EVE_TYPE(), int()), EVE_VALUE);
 }
 
 TTS_CASE("Check eve::extract behavior on arithmetic types")
 {
-  TTS_EQUAL(eve::extract(Type(42), 0), Value(42));
+  TTS_EQUAL(eve::extract(EVE_TYPE(42), 0), EVE_VALUE(42));
 
 #if defined(EVE_SIMD_TESTS)
-  Type arg;
+  EVE_TYPE arg;
 
-  for(int i=0; i< Cardinal; ++i)
-    arg[i] = static_cast<Value>(1+i);
+  for(int i=0; i< EVE_CARDINAL; ++i)
+    arg[i] = static_cast<EVE_VALUE>(1+i);
 
-  for(int i=0; i< Cardinal; ++i)
-    TTS_EQUAL(eve::extract(arg, i), static_cast<Value>(1+i));
+  for(int i=0; i< EVE_CARDINAL; ++i)
+    TTS_EQUAL(eve::extract(arg, i), static_cast<EVE_VALUE>(1+i));
 #endif
 }
 
@@ -41,16 +41,16 @@ TTS_CASE("Check eve::extract behavior on logical types")
 {
   using eve::logical;
 
-  TTS_EQUAL(eve::extract(logical<Type>(42), 0), true  );
-  TTS_EQUAL(eve::extract(logical<Type>( 0), 0), false );
+  TTS_EQUAL(eve::extract(logical<EVE_TYPE>(42), 0), true  );
+  TTS_EQUAL(eve::extract(logical<EVE_TYPE>( 0), 0), false );
 
 #if defined(EVE_SIMD_TESTS)
-  logical<Type> arg;
+  logical<EVE_TYPE> arg;
 
-  for(int i=0; i< Cardinal; ++i)
+  for(int i=0; i< EVE_CARDINAL; ++i)
     arg[i] = ((1+i) % 2) == 0;
 
-  for(int i=0; i< Cardinal; ++i)
+  for(int i=0; i< EVE_CARDINAL; ++i)
     TTS_EQUAL(eve::extract(arg, i), ((1+i) % 2) == 0);
 #endif
 

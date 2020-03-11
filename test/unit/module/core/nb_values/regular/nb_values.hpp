@@ -33,47 +33,47 @@
 
 TTS_CASE("Check eve::nb_values return type")
 {
-  using r_t = eve::detail::as_integer_t<Type, unsigned>; 
-  TTS_EXPR_IS((eve::nb_values(Type(0), Type(0))), (r_t));
+  using r_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>; 
+  TTS_EXPR_IS((eve::nb_values(EVE_TYPE(0), EVE_TYPE(0))), (r_t));
 }
 
 TTS_CASE("Check eve::nb_values  behavior")
 {
   using eve::nb_values; 
-  TTS_EXPR_IS( nb_values(Type(), Type()), (eve::detail::as_integer_t<Type, unsigned>));
-  using r_t = eve::detail::as_integer_t<Type, unsigned>; 
-  if constexpr(std::is_floating_point_v<Value>)
+  TTS_EXPR_IS( nb_values(EVE_TYPE(), EVE_TYPE()), (eve::detail::as_integer_t<EVE_TYPE, unsigned>));
+  using r_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>; 
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
-      TTS_EQUAL(nb_values(eve::Inf<Type>(), eve::Inf<Type>()), eve::Zero<r_t>());
-      TTS_EQUAL(nb_values(eve::Minf<Type>(), eve::Minf<Type>()), eve::Zero<r_t>());
-      TTS_EQUAL(nb_values(eve::Nan<Type>(), eve::Nan<Type>()), eve::Valmax<r_t>());
+      TTS_EQUAL(nb_values(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Zero<r_t>());
+      TTS_EQUAL(nb_values(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Zero<r_t>());
+      TTS_EQUAL(nb_values(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Valmax<r_t>());
     }
     
-    TTS_EQUAL( nb_values(eve::One<Type>(), eve::inc(eve::Eps<Type>()))
+    TTS_EQUAL( nb_values(eve::One<EVE_TYPE>(), eve::inc(eve::Eps<EVE_TYPE>()))
              , r_t(1)
              );
     
-    TTS_EQUAL( nb_values(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>())))
+    TTS_EQUAL( nb_values(eve::One<EVE_TYPE>(), EVE_TYPE(-eve::dec(eve::Eps<EVE_TYPE>())))
              , r_t(2)
              );
     
-    TTS_EQUAL( nb_values(eve::One<Type>(), Type(-eve::dec(eve::Eps<Type>()/2)))
+    TTS_EQUAL( nb_values(eve::One<EVE_TYPE>(), EVE_TYPE(-eve::dec(eve::Eps<EVE_TYPE>()/2)))
              , r_t(1)
              );
-    TTS_EQUAL( nb_values(eve::Mzero<Type>(), Type(eve::Zero<Type>()))
+    TTS_EQUAL( nb_values(eve::Mzero<EVE_TYPE>(), EVE_TYPE(eve::Zero<EVE_TYPE>()))
              , r_t(1)
              );
-    TTS_EXPECT(eve::all(eve::is_odd(nb_values(Type(-10), Type(10))))); 
+    TTS_EXPECT(eve::all(eve::is_odd(nb_values(EVE_TYPE(-10), EVE_TYPE(10))))); 
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EXPECT(eve::all(eve::is_even(nb_values(Type(-10), Type(10)))));
+    TTS_EXPECT(eve::all(eve::is_even(nb_values(EVE_TYPE(-10), EVE_TYPE(10)))));
   }
   else
   {
-    TTS_EQUAL((nb_values(eve::One<Type>(), Type(10))), (r_t(9)));
-    TTS_EQUAL(nb_values(eve::Zero<Type>(), eve::Zero<Type>()), eve::Zero<r_t>()); 
+    TTS_EQUAL((nb_values(eve::One<EVE_TYPE>(), EVE_TYPE(10))), (r_t(9)));
+    TTS_EQUAL(nb_values(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::Zero<r_t>()); 
   }    
 }

@@ -15,32 +15,32 @@
 
 TTS_CASE("Check eve::add return type")
 {
-  TTS_EXPR_IS(eve::add(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::add(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::add behavior")
 {
-  TTS_EQUAL(eve::add(Type{0}, Type{0}), Type(0));
-  TTS_EQUAL(eve::add(Type{1}, Type{1}), Type(2));
-  TTS_EQUAL(eve::add(Type{2}, Type{2}), Type(4));
+  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_TYPE{0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_TYPE{1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_TYPE{2}), EVE_TYPE(4));
 
-  TTS_EQUAL(eve::add(Value{0}, Type{0}), Type(0));
-  TTS_EQUAL(eve::add(Value{1}, Type{1}), Type(2));
-  TTS_EQUAL(eve::add(Value{2}, Type{2}), Type(4));
+  TTS_EQUAL(eve::add(EVE_VALUE{0}, EVE_TYPE{0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_VALUE{1}, EVE_TYPE{1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_VALUE{2}, EVE_TYPE{2}), EVE_TYPE(4));
 
-  TTS_EQUAL(eve::add(Type{0}, Value{0}), Type(0));
-  TTS_EQUAL(eve::add(Type{1}, Value{1}), Type(2));
-  TTS_EQUAL(eve::add(Type{2}, Value{2}), Type(4));
+  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_VALUE{0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_VALUE{1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_VALUE{2}), EVE_TYPE(4));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::add(Type(-1), Type(1)), Type(0));
-    TTS_EQUAL(eve::add(Type(-2), Type(-6)), Type(-8));
+    TTS_EQUAL(eve::add(EVE_TYPE(-1), EVE_TYPE(1)), EVE_TYPE(0));
+    TTS_EQUAL(eve::add(EVE_TYPE(-2), EVE_TYPE(-6)), EVE_TYPE(-8));
 
-    TTS_EQUAL(eve::add(Value(-1), Type(1)), Type(0));
-    TTS_EQUAL(eve::add(Value(-2), Type(-6)), Type(-8));
+    TTS_EQUAL(eve::add(EVE_VALUE(-1), EVE_TYPE(1)), EVE_TYPE(0));
+    TTS_EQUAL(eve::add(EVE_VALUE(-2), EVE_TYPE(-6)), EVE_TYPE(-8));
 
-    TTS_EQUAL(eve::add(Type(-1), Value(1)), Type(0));
-    TTS_EQUAL(eve::add(Type(-2), Value(-6)), Type(-8));
+    TTS_EQUAL(eve::add(EVE_TYPE(-1), EVE_VALUE(1)), EVE_TYPE(0));
+    TTS_EQUAL(eve::add(EVE_TYPE(-2), EVE_VALUE(-6)), EVE_TYPE(-8));
   }
 }

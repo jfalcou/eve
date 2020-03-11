@@ -27,29 +27,29 @@
 
 TTS_CASE("Check eve::acotd return type")
 {
-  TTS_EXPR_IS(eve::acotd(Type(0)), (Type));
+  TTS_EXPR_IS(eve::acotd(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::acotd behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acotd(eve::Inf<Type>())  , Type(0), 0);
-    TTS_ULP_EQUAL(eve::acotd(eve::Minf<Type>()) , Type(0), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::Inf<EVE_TYPE>())  , EVE_TYPE(0), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::Minf<EVE_TYPE>()) , EVE_TYPE(0), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acotd(eve::Nan<Type>()), eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acotd(Type( 0.5)), Type( 63.4349488229220) , 1   );
-  TTS_ULP_EQUAL(eve::acotd(Type(-0.5)), Type(-63.4349488229220) , 1   );
-  TTS_ULP_EQUAL(eve::acotd(Type(-1. )), Type(-45)               , 0.5 );
-  TTS_ULP_EQUAL(eve::acotd(Type( 1. )), Type( 45)               , 0.5 );
-  TTS_ULP_EQUAL(eve::acotd(Type( 0. )), Type( 90)               , 0.5 );
+  TTS_ULP_EQUAL(eve::acotd(EVE_TYPE( 0.5)), EVE_TYPE( 63.4349488229220) , 1   );
+  TTS_ULP_EQUAL(eve::acotd(EVE_TYPE(-0.5)), EVE_TYPE(-63.4349488229220) , 1   );
+  TTS_ULP_EQUAL(eve::acotd(EVE_TYPE(-1. )), EVE_TYPE(-45)               , 0.5 );
+  TTS_ULP_EQUAL(eve::acotd(EVE_TYPE( 1. )), EVE_TYPE( 45)               , 0.5 );
+  TTS_ULP_EQUAL(eve::acotd(EVE_TYPE( 0. )), EVE_TYPE( 90)               , 0.5 );
 
-  auto inv_smallest = eve::rec(eve::Smallestposval<Type>());
-  TTS_ULP_EQUAL(eve::acotd(eve::Mzero<Type>()),  Type(-90)                              , 0.5);
-  TTS_ULP_EQUAL(eve::acotd(inv_smallest)      , eve::indeg(eve::Smallestposval<Type>()) , 0.5);
+  auto inv_smallest = eve::rec(eve::Smallestposval<EVE_TYPE>());
+  TTS_ULP_EQUAL(eve::acotd(eve::Mzero<EVE_TYPE>()),  EVE_TYPE(-90)                              , 0.5);
+  TTS_ULP_EQUAL(eve::acotd(inv_smallest)      , eve::indeg(eve::Smallestposval<EVE_TYPE>()) , 0.5);
 }

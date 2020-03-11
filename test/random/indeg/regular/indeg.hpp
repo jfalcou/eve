@@ -19,8 +19,8 @@
 
 TTS_CASE("wide random check on indeg")
 {
-  auto std_indeg = tts::vectorize<Type>( [](auto e) { return e*180/eve::Pi<Value>(); } );
+  auto std_indeg = tts::vectorize<EVE_TYPE>( [](auto e) { return e*180/eve::Pi<EVE_VALUE>(); } );
 
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_indeg, eve::indeg); 
 }

@@ -16,19 +16,19 @@
 
 TTS_CASE("Check eve::touint return type")
 {
-  TTS_EXPR_IS(eve::touint(Type(0)), (eve::detail::as_integer_t<Type, unsigned>));
+  TTS_EXPR_IS(eve::touint(EVE_TYPE(0)), (eve::detail::as_integer_t<EVE_TYPE, unsigned>));
 }
 
 TTS_CASE("Check eve::touint behavior")
 {
-  using r_t = eve::detail::as_integer_t<Type, unsigned>;
+  using r_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
 
-  TTS_EQUAL(eve::touint(Type( 1.2357)), static_cast<r_t>( 1.2357));
-  TTS_EQUAL(eve::touint(Type( 1))     , static_cast<r_t>( 1));
-  TTS_EQUAL(eve::touint(Type( 0))     , static_cast<r_t>( 0));
+  TTS_EQUAL(eve::touint(EVE_TYPE( 1.2357)), static_cast<r_t>( 1.2357));
+  TTS_EQUAL(eve::touint(EVE_TYPE( 1))     , static_cast<r_t>( 1));
+  TTS_EQUAL(eve::touint(EVE_TYPE( 0))     , static_cast<r_t>( 0));
 
-  if constexpr( std::is_floating_point_v<Value> )
+  if constexpr( std::is_floating_point_v<EVE_VALUE> )
   {
-    TTS_EQUAL(eve::touint(eve::Mzero<Type>()), r_t(0));
+    TTS_EQUAL(eve::touint(eve::Mzero<EVE_TYPE>()), r_t(0));
   }
 }

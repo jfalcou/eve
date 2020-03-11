@@ -19,8 +19,8 @@
 
 TTS_CASE("wide exhaustive check on exp")
 {
-  auto std_exp = tts::vectorize<Type>( [](auto e) { return std::exp(e); } );
+  auto std_exp = tts::vectorize<EVE_TYPE>( [](auto e) { return std::exp(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::next(eve::Minlog<Value>()), eve::Maxlog<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::next(eve::Minlog<EVE_VALUE>()), eve::Maxlog<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_exp, eve::pedantic_(eve::exp)); 
 }

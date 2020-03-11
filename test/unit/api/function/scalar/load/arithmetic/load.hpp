@@ -19,7 +19,7 @@ using eve::fixed;
 
 TTS_CASE("load behavior for scalar")
 {
-  Type value, ref = 42, data[ 1 ] = {42};
+  EVE_TYPE value, ref = 42, data[ 1 ] = {42};
 
   TTS_SUBCASE("a pointer to scalar")
   {

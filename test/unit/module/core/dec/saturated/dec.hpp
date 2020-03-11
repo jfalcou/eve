@@ -19,23 +19,23 @@
 
 TTS_CASE("Check eve::saturated_(eve::dec) return type")
 {
-  TTS_EXPR_IS(eve::saturated_(eve::dec)(Type()), (Type));
+  TTS_EXPR_IS(eve::saturated_(eve::dec)(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::saturated_(eve::dec) behavior")
 {
   using eve::saturated_;
 
-  TTS_EQUAL(saturated_(eve::dec)(eve::Valmin<Type>()), eve::Valmin<Type>());
-  TTS_EQUAL(saturated_(eve::dec)(Type(1)), (Type( 0)) );
-  TTS_EQUAL(saturated_(eve::dec)(Type(2)), (Type( 1)) );
+  TTS_EQUAL(saturated_(eve::dec)(eve::Valmin<EVE_TYPE>()), eve::Valmin<EVE_TYPE>());
+  TTS_EQUAL(saturated_(eve::dec)(EVE_TYPE(1)), (EVE_TYPE( 0)) );
+  TTS_EQUAL(saturated_(eve::dec)(EVE_TYPE(2)), (EVE_TYPE( 1)) );
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(saturated_(eve::dec)(Type(0)), (Type(-1)) );
+    TTS_EQUAL(saturated_(eve::dec)(EVE_TYPE(0)), (EVE_TYPE(-1)) );
   }
   else
   {
-    TTS_EQUAL(saturated_(eve::dec)(Type(0)), (Type(0)) );
+    TTS_EQUAL(saturated_(eve::dec)(EVE_TYPE(0)), (EVE_TYPE(0)) );
   }
 }

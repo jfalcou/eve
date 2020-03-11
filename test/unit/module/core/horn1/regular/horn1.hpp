@@ -37,7 +37,7 @@ TTS_CASE("Check eve::horn1 behavior")
 {
   using eve::detail::horn1;
 
-  TTS_EQUAL((horn1<Type, coeff0<Value>()>(Type(0)))                                  , (Type(0)));
-  TTS_EQUAL((horn1<Type, coeff1<Value>(), coeff0<Value>(), coeff1<Value>()>(Type(1))), (Type(3)));
-  TTS_EQUAL((horn1<Type, coeff2<Value>(), coeff1<Value>(), coeff1<Value>()>(Type(2))), (Type(16)));
+  TTS_EQUAL((horn1<EVE_TYPE, coeff0<EVE_VALUE>()>(EVE_TYPE(0)))                                  , (EVE_TYPE(0)));
+  TTS_EQUAL((horn1<EVE_TYPE, coeff1<EVE_VALUE>(), coeff0<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(1))), (EVE_TYPE(3)));
+  TTS_EQUAL((horn1<EVE_TYPE, coeff2<EVE_VALUE>(), coeff1<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(2))), (EVE_TYPE(16)));
 }

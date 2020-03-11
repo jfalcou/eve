@@ -20,16 +20,16 @@
 TTS_CASE("wide random check on nearest")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_nearest = tts::vectorize<Type>( [](auto e) { return std::nearbyint(e); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_nearest = tts::vectorize<EVE_TYPE>( [](auto e) { return std::nearbyint(e); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
   else
   {
-    auto std_nearest = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_nearest = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
   

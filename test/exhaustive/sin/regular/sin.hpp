@@ -18,8 +18,8 @@
 
 TTS_CASE("wide random check on sin")
 {
-  auto std_sin = tts::vectorize<Type>( [](auto e) { return std::sin(e); } );
+  auto std_sin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::sin(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_sin, eve::sin); 
 }

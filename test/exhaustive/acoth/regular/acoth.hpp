@@ -19,10 +19,10 @@
 
 TTS_CASE("wide exhaustive check on acoth")
 {
-  auto std_acoth = tts::vectorize<Type>( [](auto e) { return std::atanh(eve::rec(e)); } );
+  auto std_acoth = tts::vectorize<EVE_TYPE>( [](auto e) { return std::atanh(eve::rec(e)); } );
 
-  eve::exhaustive_producer<Type> p1(Value(1), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p1(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p1, std_acoth, eve::acoth); 
-  eve::exhaustive_producer<Type> p2(eve::Valmin<Value>(), Value(-1));
+  eve::exhaustive_producer<EVE_TYPE> p2(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
   TTS_RANGE_CHECK(p2, std_acoth, eve::acoth); 
 }

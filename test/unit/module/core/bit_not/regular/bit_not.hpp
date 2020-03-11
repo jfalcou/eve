@@ -17,21 +17,21 @@
 
 TTS_CASE("Check eve::bit_not return type")
 {
-  TTS_EXPR_IS(eve::bit_not(Type()), (Type));
+  TTS_EXPR_IS(eve::bit_not(EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::bit_not behavior")
 {
-  TTS_IEEE_EQUAL(eve::bit_not(Type(0)), (eve::Allbits<Type>()));
+  TTS_IEEE_EQUAL(eve::bit_not(EVE_TYPE(0)), (eve::Allbits<EVE_TYPE>()));
 
-  if constexpr(std::is_integral_v<Value>)
+  if constexpr(std::is_integral_v<EVE_VALUE>)
   {
-    TTS_EQUAL ( eve::bit_not( static_cast<Type>(0x1234567890ABCDEFULL))
-              , static_cast<Type>(0xEDCBA9876F543210ULL)
+    TTS_EQUAL ( eve::bit_not( static_cast<EVE_TYPE>(0x1234567890ABCDEFULL))
+              , static_cast<EVE_TYPE>(0xEDCBA9876F543210ULL)
               );
 
-    TTS_EQUAL(eve::bit_not(Type( 0)), (Type(-1)));
-    TTS_EQUAL(eve::bit_not(Type(-1)), (Type( 0)));
+    TTS_EQUAL(eve::bit_not(EVE_TYPE( 0)), (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::bit_not(EVE_TYPE(-1)), (EVE_TYPE( 0)));
   }
 }
 

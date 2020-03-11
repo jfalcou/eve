@@ -20,22 +20,22 @@
 TTS_CASE("wide random check on floor2")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_floor2 = tts::vectorize<Type>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+    auto std_floor2 = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_floor2 = tts::vectorize<Type>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+    auto std_floor2 = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
   }
   else
   {
-    auto std_floor2 = tts::vectorize<Type>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_floor2 = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
   }
   

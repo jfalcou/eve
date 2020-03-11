@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check deginrad behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return i; }), 
-    ref([](auto i, auto) { return eve::deginrad(Type(i)); });  
+  wide<EVE_TYPE, T>  lhs([](auto i, auto) { return i; }), 
+    ref([](auto i, auto) { return eve::deginrad(EVE_TYPE(i)); });  
   TTS_ULP_EQUAL(ref, eve::deginrad(lhs), 0.5);
 }
 

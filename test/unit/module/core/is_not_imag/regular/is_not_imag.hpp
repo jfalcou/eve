@@ -17,11 +17,11 @@
 
 TTS_CASE("Check eve::is_not_imag return type")
 {
-  TTS_EXPR_IS(eve::is_not_imag(Type(0)), (eve::logical<Type>));
+  TTS_EXPR_IS(eve::is_not_imag(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_not_imag behavior")
 {
-  TTS_EQUAL(eve::is_not_imag(Type(0)), eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_imag(Type(2)), eve::True<Type>()  );
+  TTS_EQUAL(eve::is_not_imag(EVE_TYPE(0)), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_imag(EVE_TYPE(2)), eve::True<EVE_TYPE>()  );
 }

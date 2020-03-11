@@ -34,14 +34,14 @@ TTS_CASE_TPL("Check store behavior to unaligned pointer",
 
   auto filler = [](auto i, auto) { return 1 + i; };
 
-  wide<Type, T>                  simd(filler);
-  std::array<Type, 3 * T::value> ref;
-  std::array<Type, 3 * T::value> target;
+  wide<EVE_TYPE, T>                  simd(filler);
+  std::array<EVE_TYPE, 3 * T::value> ref;
+  std::array<EVE_TYPE, 3 * T::value> target;
 
   for(int i = 0; i < T::value; ++i)
   {
     auto v   = filler(i, T::value);
-    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<Type>(v);
+    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<EVE_TYPE>(v);
   }
 
   eve::store(simd, &target[ 0 ]);
@@ -64,16 +64,16 @@ TTS_CASE_TPL("Check store behavior to aligned pointer",
 
   auto filler = [](auto i, auto) { return 1 + i; };
 
-  constexpr auto algt = wide<Type, T>::alignment();
+  constexpr auto algt = wide<EVE_TYPE, T>::alignment();
 
-  wide<Type, T>                                simd(filler);
-  alignas(algt) std::array<Type, 3 * T::value> ref;
-  alignas(algt) std::array<Type, 3 * T::value> target;
+  wide<EVE_TYPE, T>                                simd(filler);
+  alignas(algt) std::array<EVE_TYPE, 3 * T::value> ref;
+  alignas(algt) std::array<EVE_TYPE, 3 * T::value> target;
 
   for(std::size_t i = 0; i < T::value; ++i)
   {
     auto v   = filler(i, T::value);
-    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<Type>(v);
+    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<EVE_TYPE>(v);
   }
 
   eve::store(simd, as_aligned<algt>(&target[ 0 ]));

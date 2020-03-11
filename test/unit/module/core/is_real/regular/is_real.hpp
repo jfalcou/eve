@@ -22,13 +22,13 @@
 
 TTS_CASE("Check is_real return type")
 {
-  TTS_EXPR_IS(eve::is_real(Type(0)), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_real(EVE_TYPE(0)), eve::as_logical_t<EVE_TYPE>);
 }
 
 TTS_CASE("Check eve::is_real behavior")
 {
-  TTS_EQUAL(eve::is_real(Type{0}), eve::True<Type>());
-  TTS_EQUAL(eve::is_real(Type{2}), eve::True<Type>());
+  TTS_EQUAL(eve::is_real(EVE_TYPE{0}), eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_real(EVE_TYPE{2}), eve::True<EVE_TYPE>());
 }
 
 #endif

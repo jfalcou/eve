@@ -22,19 +22,19 @@
 
 TTS_CASE("Check frexp return type")
 {
-  TTS_EXPR_IS((eve::frexp(Type())), (std::tuple<Type,Type>));
+  TTS_EXPR_IS((eve::frexp(EVE_TYPE())), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
 TTS_CASE("Check (eve::frexp behavior")
 {
   {
-    auto [p0, p1] = eve::frexp(Type(1));
-    TTS_EQUAL(p0, Type(0.5));
-    TTS_EQUAL(p1, Type(1));
+    auto [p0, p1] = eve::frexp(EVE_TYPE(1));
+    TTS_EQUAL(p0, EVE_TYPE(0.5));
+    TTS_EQUAL(p1, EVE_TYPE(1));
   }
   {
-    auto [p0, p1] = eve::frexp(Type(0));
-    TTS_EQUAL (p0 , Type(0));
-    TTS_EQUAL (p1, Type(0));
+    auto [p0, p1] = eve::frexp(EVE_TYPE(0));
+    TTS_EQUAL (p0 , EVE_TYPE(0));
+    TTS_EQUAL (p1, EVE_TYPE(0));
   }
 }

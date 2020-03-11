@@ -17,9 +17,9 @@
 
 TTS_CASE("wide random check on acospi")
 {
-  auto std_acospi = tts::vectorize<Type>( [](auto e) { return eve::Invpi<Value>()*std::acos(e); } );
-  double th = std::is_same_v<Value, double> ? 4096.0 : 512.0; 
+  auto std_acospi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::Invpi<EVE_VALUE>()*std::acos(e); } );
+  double th = std::is_same_v<EVE_VALUE, double> ? 4096.0 : 512.0; 
 
-  eve::rng_producer<Type> p(-1, 1);
+  eve::rng_producer<EVE_TYPE> p(-1, 1);
   TTS_ULP_RANGE_CHECK(p, std_acospi, eve::raw_(eve::acospi), th); 
 }

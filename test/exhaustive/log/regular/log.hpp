@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on log")
 {
-  auto std_log = tts::vectorize<Type>( [](auto e) { return std::log(e); } );
+  auto std_log = tts::vectorize<EVE_TYPE>( [](auto e) { return std::log(e); } );
 
-  eve::exhaustive_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_log, eve::log); 
 }

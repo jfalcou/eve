@@ -1,6 +1,6 @@
 ---- simd
 <- pf =                              (0, 1, 1.5, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::touint(pf) =                 (0, 1, 1, 0, 0, 4294967295, 0, 0)
+-> eve::touint(pf) =                 (0, 1, 1, 4294967294, 0, 0, 0, 0)
 ---- scalar
 <- xf =                              1
 -> eve::touint(xf) =                 1

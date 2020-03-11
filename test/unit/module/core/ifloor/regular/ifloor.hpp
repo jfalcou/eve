@@ -15,29 +15,29 @@
 
 TTS_CASE("Check ifloor return type")
 {
-  TTS_EXPR_IS(eve::ifloor(Type()), (eve::detail::as_integer_t<Type>));
+  TTS_EXPR_IS(eve::ifloor(EVE_TYPE()), (eve::detail::as_integer_t<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::ifloor behavior")
 {
-  using i_t = eve::detail::as_integer_t<Type>; 
-  TTS_EQUAL(eve::ifloor(Type(0)), i_t(0));
-  TTS_EQUAL(eve::ifloor(Type(1)), i_t(1));
-  TTS_EQUAL(eve::ifloor(Type(2)), i_t(2));
+  using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
+  TTS_EQUAL(eve::ifloor(EVE_TYPE(0)), i_t(0));
+  TTS_EQUAL(eve::ifloor(EVE_TYPE(1)), i_t(1));
+  TTS_EQUAL(eve::ifloor(EVE_TYPE(2)), i_t(2));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::ifloor(Type(-1)), i_t(-1));
-    TTS_EQUAL(eve::ifloor(Type(-2)), i_t(-2));
+    TTS_EQUAL(eve::ifloor(EVE_TYPE(-1)), i_t(-1));
+    TTS_EQUAL(eve::ifloor(EVE_TYPE(-2)), i_t(-2));
   }
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-   TTS_EQUAL(eve::ifloor(Type(-1.3)), i_t(-2));
-   TTS_EQUAL(eve::ifloor(Type(-1.5)), i_t(-2));
-   TTS_EQUAL(eve::ifloor(Type(-1.6)), i_t(-2));
-   TTS_EQUAL(eve::ifloor(Type(1.3)) , i_t(1));
-   TTS_EQUAL(eve::ifloor(Type(1.5)) , i_t(1));
-   TTS_EQUAL(eve::ifloor(Type(1.6)) , i_t(1));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(-1.3)), i_t(-2));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(-1.5)), i_t(-2));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(-1.6)), i_t(-2));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(1.3)) , i_t(1));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(1.5)) , i_t(1));
+   TTS_EQUAL(eve::ifloor(EVE_TYPE(1.6)) , i_t(1));
   }
 }

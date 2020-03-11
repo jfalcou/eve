@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::int8_t;
+using EVE_TYPE = std::int8_t;
 #include "logical.hpp"
