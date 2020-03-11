@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -27,10 +27,10 @@ TTS_CASE_TPL("load behavior for wide",
              fixed<32>,
              fixed<64>)
 {
-  using wide_t = eve::wide<Type, T>;
-  auto filler  = [](auto i, auto) { return Type(1) + i; };
+  using wide_t = eve::wide<EVE_TYPE, T>;
+  auto filler  = [](auto i, auto) { return EVE_TYPE(1) + i; };
 
-  alignas(wide_t::static_alignment) std::array<Type, T::value> data;
+  alignas(wide_t::static_alignment) std::array<EVE_TYPE, T::value> data;
   for(int i = 0; i < T::value; ++i) data[ i ] = filler(i, 0);
 
   wide_t simd, ref(filler);

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,8 +18,8 @@
 
 TTS_CASE("wide random check on exp10")
 {
-  auto std_exp10 = tts::vectorize<Type>( [](auto e) { return ::exp10l(e); } );
+  auto std_exp10 = tts::vectorize<EVE_TYPE>( [](auto e) { return ::exp10l(e); } );
 
-  eve::rng_producer<Type> p(eve::Minlog10<Value>()+1, eve::Maxlog10<Value>()-1);
+  eve::rng_producer<EVE_TYPE> p(eve::Minlog10<EVE_VALUE>()+1, eve::Maxlog10<EVE_VALUE>()-1);
   TTS_RANGE_CHECK(p, std_exp10, eve::exp10); 
 }

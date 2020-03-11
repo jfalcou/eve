@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -22,39 +22,39 @@
 
 TTS_CASE("Check manhattan return type")
 { 
-  TTS_EXPR_IS(eve::manhattan(Type(0), Type(0)), (Type));
+  TTS_EXPR_IS(eve::manhattan(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::manhattan behavior")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<Type>(), eve::Nan<Type>()), eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<Type>(), (Type(0)))          , eve::Valmax<Type>(), 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type(0))          , eve::Valmax<Type>()), eve::Valmax<Type>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Valmax<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Valmax<EVE_TYPE>(), 0);
 
-  TTS_ULP_EQUAL(eve::manhattan((Type(-1)), (Type(-1)))                  , Type(2)                     , 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type( 1)), (Type( 1)))                  , Type(2)                     , 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type( 0)), (Type( 0)))                  , (Type(0))                   , 0  );
-  TTS_ULP_EQUAL(eve::manhattan(eve::Sqrt_2<Type>(), eve::Sqrt_2<Type>()), Type(2)* eve::Sqrt_2<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , EVE_TYPE(2)                     , 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , EVE_TYPE(2)                     , 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))                   , 0  );
+  TTS_ULP_EQUAL(eve::manhattan(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)* eve::Sqrt_2<EVE_TYPE>(), 0.5);
 }
 
 TTS_CASE("Check 3 params eve::manhattan behavior")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<Type>(), eve::Inf<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0);
-    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<Type>(), eve::Nan<Type>(), eve::Inf<Type>()), eve::Nan<Type>(), 0); 
+    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0); 
   }
   
-  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<Type>(), (Type(0)),              (Type(0))), eve::Valmax<Type>(), 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type(0))          , (eve::Valmax<Type>()),  (Type(0))), eve::Valmax<Type>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)),              (EVE_TYPE(0))), eve::Valmax<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(0))          , (eve::Valmax<EVE_TYPE>()),  (EVE_TYPE(0))), eve::Valmax<EVE_TYPE>(), 0);
   
-  TTS_ULP_EQUAL(eve::manhattan((Type(-1)), (Type(-1)), Type(-1)), Type(3) , 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type( 1)), (Type( 1)), Type(-1)), Type(3) , 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type( 0)), (Type( 0)), (Type( 0))), Type(0), 0);
-  TTS_ULP_EQUAL(eve::manhattan((Type( 1)), (Type( 1)), (Type( 1))), Type(3), 0); 
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(-1)), (EVE_TYPE(-1)), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 0)), (EVE_TYPE( 0)), (EVE_TYPE( 0))), EVE_TYPE(0), 0);
+  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)), (EVE_TYPE( 1))), EVE_TYPE(3), 0); 
 }

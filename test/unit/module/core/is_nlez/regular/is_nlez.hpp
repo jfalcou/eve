@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -19,21 +19,21 @@ TTS_CASE("Check eve::is_nlez return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_nlez(Type() ), (logical<Type>));
+  TTS_EXPR_IS(eve::is_nlez(EVE_TYPE() ), (logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_nlez behavior")
 {
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_nlez(Type(-1)), eve::False<Type>());
+    TTS_EQUAL(eve::is_nlez(EVE_TYPE(-1)), eve::False<EVE_TYPE>());
   }
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_nlez(eve::Nan<Type>()), eve::True<Type>());
+    TTS_EQUAL(eve::is_nlez(eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
   }
 
-  TTS_EQUAL(eve::is_nlez(Type(0)), eve::False<Type>());
-  TTS_EQUAL(eve::is_nlez(Type(3)), eve::True<Type>());
+  TTS_EQUAL(eve::is_nlez(EVE_TYPE(0)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_nlez(EVE_TYPE(3)), eve::True<EVE_TYPE>());
 }

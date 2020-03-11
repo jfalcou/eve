@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -26,7 +26,7 @@
 
 TTS_CASE("Check eve::medium_(eve::sec) return type")
 {
-  TTS_EXPR_IS(eve::sec(Type(0)), (Type));
+  TTS_EXPR_IS(eve::sec(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::medium_(eve::sec) behavior")
@@ -35,19 +35,19 @@ TTS_CASE("Check eve::medium_(eve::sec) behavior")
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::medium_(eve::sec)(Type(1)), Type(my_stdsec(1.0)), 1.0);
-  TTS_ULP_EQUAL(eve::medium_(eve::sec)(Type(-1)),Type(my_stdsec(-1.0)), 1.0);
-  TTS_IEEE_EQUAL(eve::medium_(eve::sec)(Type(0)), (eve::One<Type>()));
-  TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Mzero<Type>()), (eve::One<Type>()));
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(eve::Pio_4<Type>())), (Type(my_stdsec(eve::Pio_4<Value>()))), 0.75);
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(-eve::Pio_4<Type>())),(Type(my_stdsec(-eve::Pio_4<Value>()))), 0.75);
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(Type(100.0))), Type(my_stdsec(Value(100.0))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(Type(-100.0))),Type(my_stdsec(Value(-100.0))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(Type(100000.0))), Type(my_stdsec(Value(100000.0))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sec)(Type(-100000.0))),Type(my_stdsec(Value(-100000.0))), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sec)(EVE_TYPE(1)), EVE_TYPE(my_stdsec(1.0)), 1.0);
+  TTS_ULP_EQUAL(eve::medium_(eve::sec)(EVE_TYPE(-1)),EVE_TYPE(my_stdsec(-1.0)), 1.0);
+  TTS_IEEE_EQUAL(eve::medium_(eve::sec)(EVE_TYPE(0)), (eve::One<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::medium_(eve::sec)(eve::Mzero<EVE_TYPE>()), (eve::One<EVE_TYPE>()));
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdsec(eve::Pio_4<EVE_VALUE>()))), 0.75);
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdsec(-eve::Pio_4<EVE_VALUE>()))), 0.75);
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(EVE_TYPE(100.0))), EVE_TYPE(my_stdsec(EVE_VALUE(100.0))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(EVE_TYPE(-100.0))),EVE_TYPE(my_stdsec(EVE_VALUE(-100.0))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(EVE_TYPE(100000.0))), EVE_TYPE(my_stdsec(EVE_VALUE(100000.0))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::sec)(EVE_TYPE(-100000.0))),EVE_TYPE(my_stdsec(EVE_VALUE(-100000.0))), 0.5);
 }
 

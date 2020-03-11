@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -114,7 +114,7 @@ namespace eve::detail
     auto x =  eve::abs(a0);
     if (all(x <= Pio_4(as(x))))                                   return restricted_(cot)(a0);
     else if(all(x <= Pio_2(as(x))))                               return small_(cot)(a0);
-    else if(all(x <= Rempio2_limit(eve::medium_type(), Value()))) return medium_(cot)(a0);
+    else if(all(x <= Rempio2_limit(eve::medium_type(), T())))     return medium_(cot)(a0);
     else                                                          return big_(cot)(a0);
   }
 }

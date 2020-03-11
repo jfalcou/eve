@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -37,7 +37,7 @@ TTS_CASE("Check eve::horn behavior")
 {
   using eve::detail::horn;
 
-  TTS_EQUAL((horn<Type, coeff0<Value>()>(Type(0)))                                  , (Type(0)));
-  TTS_EQUAL((horn<Type, coeff1<Value>(), coeff0<Value>(), coeff1<Value>()>(Type(1))), (Type(2)));
-  TTS_EQUAL((horn<Type, coeff2<Value>(), coeff1<Value>(), coeff1<Value>()>(Type(2))), (Type(8)));
+  TTS_EQUAL((horn<EVE_TYPE, coeff0<EVE_VALUE>()>(EVE_TYPE(0)))                                  , (EVE_TYPE(0)));
+  TTS_EQUAL((horn<EVE_TYPE, coeff1<EVE_VALUE>(), coeff0<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(1))), (EVE_TYPE(2)));
+  TTS_EQUAL((horn<EVE_TYPE, coeff2<EVE_VALUE>(), coeff1<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(2))), (EVE_TYPE(8)));
 }

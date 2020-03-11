@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -16,30 +16,30 @@
 
 TTS_CASE("Check eve::copysign return type")
 {
-  TTS_EXPR_IS(eve::copysign(Type(), Type()), (Type));
+  TTS_EXPR_IS(eve::copysign(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::copysign behavior")
 {
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::copysign((Type(1.)), eve::Mzero<Type>()), (Type(-1.)));
-    TTS_EQUAL(eve::copysign((Type(1.)), (Type(0.))        ), (Type(1.)));
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), eve::Mzero<EVE_TYPE>()), (EVE_TYPE(-1.)));
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))        ), (EVE_TYPE(1.)));
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(-1.)) ) , (Type(-1.)) );
-    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(1.))  ) , (Type(1.))  );
-    TTS_EQUAL(eve::copysign((Type(1.)) , (Type(1.))  ) , (Type(1.))  );
-    TTS_EQUAL(eve::copysign((Type(1.)) , (Type(-1.)) ) , (Type(-1.)) );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
 
-    TTS_EQUAL(eve::copysign((Type(0.)) , (Type(0.))) , (Type(0.))  );
-    TTS_EQUAL(eve::copysign((Type(-1.)), (Type(0.))) , (Type(1.))  );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(0.)) , (EVE_TYPE(0.))) , (EVE_TYPE(0.))  );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(0.))) , (EVE_TYPE(1.))  );
   }
   else
   {
-    TTS_EQUAL(eve::copysign((Type(1.)), (Type(1.))), (Type(1.)) );
-    TTS_EQUAL(eve::copysign((Type(1.)), (Type(0.))), (Type(1.)) );
-    TTS_EQUAL(eve::copysign((Type(0.)), (Type(0.))), (Type(0.)) );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(1.))), (EVE_TYPE(1.)) );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))), (EVE_TYPE(1.)) );
+    TTS_EQUAL(eve::copysign((EVE_TYPE(0.)), (EVE_TYPE(0.))), (EVE_TYPE(0.)) );
   }
 }

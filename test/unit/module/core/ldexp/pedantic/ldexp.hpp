@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -25,34 +25,34 @@
 
 TTS_CASE("Check pedantic ldexp return type")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using u_t = eve::detail::as_integer_t<Type, unsigned>;
-  using si_t = eve::detail::as_integer_t<Value, signed>;
-  using su_t = eve::detail::as_integer_t<Value, unsigned>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using su_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(Type(), i_t())), (Type));
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(Type(), u_t())), (Type));  
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(Type(), si_t())), (Type));
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(Type(), su_t())), (Type));  
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), i_t())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), u_t())), (EVE_TYPE));  
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), si_t())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), su_t())), (EVE_TYPE));  
 }
 
 TTS_CASE("Check eve::pedantic_(eve::ldexp) two parameters behavior")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using si_t = eve::detail::as_integer_t<Value, signed>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
 
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type{0}, i_t(2)), Type(0));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type{1}, i_t(2)), Type(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type{0}, si_t(2)),Type(0));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type{1}, si_t(2)),Type(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<Type>()/4, i_t(2)), eve::Valmax<Type>());
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <Type>(), i_t(2)), eve::Mindenormal<Type>()*4); 
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0}, i_t(2)), EVE_TYPE(0));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{1}, i_t(2)), EVE_TYPE(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0}, si_t(2)),EVE_TYPE(0));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{1}, si_t(2)),EVE_TYPE(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<EVE_TYPE>()/4, i_t(2)), eve::Valmax<EVE_TYPE>());
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <EVE_TYPE>(), i_t(2)), eve::Mindenormal<EVE_TYPE>()*4); 
 
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type(1), i_t(2)), Type(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type(-2), i_t(2)), Type(-8));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type(-1), si_t(2)),Type(-4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(Type(-2), si_t(2)),Type(-8));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<Type>()/4, si_t(2)), eve::Valmax<Type>());
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <Type>(), si_t(2)), eve::Mindenormal<Type>()*4); 
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(1), i_t(2)), EVE_TYPE(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-2), i_t(2)), EVE_TYPE(-8));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-1), si_t(2)),EVE_TYPE(-4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-2), si_t(2)),EVE_TYPE(-8));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<EVE_TYPE>()/4, si_t(2)), eve::Valmax<EVE_TYPE>());
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <EVE_TYPE>(), si_t(2)), eve::Mindenormal<EVE_TYPE>()*4); 
 
 }

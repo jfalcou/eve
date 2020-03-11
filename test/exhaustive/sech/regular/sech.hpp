@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on sech")
 {
-  auto std_sech = tts::vectorize<Type>( [](auto e) { return Value(1)/std::cosh(double(e)); } );
+  auto std_sech = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)/std::cosh(double(e)); } );
 
-  eve::exhaustive_producer<Type> p(eve::Minlog<Value>()+1, eve::Maxlog<Value>()-1);
+  eve::exhaustive_producer<EVE_TYPE> p(eve::Minlog<EVE_VALUE>()+1, eve::Maxlog<EVE_VALUE>()-1);
   TTS_RANGE_CHECK(p, std_sech, eve::sech); 
 }

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -24,7 +24,7 @@
 
 TTS_CASE("Check eve::atan return type")
 {
-  TTS_EXPR_IS(eve::atan(Type(0)), (Type));
+  TTS_EXPR_IS(eve::atan(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::eve::atan behavior")
@@ -33,21 +33,21 @@ TTS_CASE("Check eve::eve::atan behavior")
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::Nan<Type>()), (eve::Nan<Type>()) );
+    TTS_IEEE_EQUAL(eve::atan(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::Inf<Type>()) , (eve::Pio_2<Type>()) );
-    TTS_IEEE_EQUAL(eve::atan(eve::Minf<Type>()), (-eve::Pio_2<Type>()));
+    TTS_IEEE_EQUAL(eve::atan(eve::Inf<EVE_TYPE>()) , (eve::Pio_2<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::atan(eve::Minf<EVE_TYPE>()), (-eve::Pio_2<EVE_TYPE>()));
   }
 
-  TTS_ULP_EQUAL(eve::atan(Type(0.5))  , (Type(4.636476090008061e-01)) , 0.5);
-  TTS_ULP_EQUAL(eve::atan(Type(-0.5)) , (Type(-4.636476090008061e-01)), 0.5);
-  TTS_ULP_EQUAL(eve::atan(Type(-1.))  , -eve::Pio_4<Type>()           , 0.5);
-  TTS_ULP_EQUAL(eve::atan(Type(1.))   ,  eve::Pio_4<Type>()           , 0.5);
-  TTS_ULP_EQUAL(eve::atan(Type(0.))   , (Type(0))                     , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(0.5))  , (EVE_TYPE(4.636476090008061e-01)) , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(-0.5)) , (EVE_TYPE(-4.636476090008061e-01)), 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(-1.))  , -eve::Pio_4<EVE_TYPE>()           , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(1.))   ,  eve::Pio_4<EVE_TYPE>()           , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(0.))   , (EVE_TYPE(0))                     , 0.5);
 
-  TTS_EXPECT(all(eve::is_positive(eve::atan((Type(0)))))          );
-  TTS_EXPECT(all(eve::is_negative(eve::atan(eve::Mzero<Type>()))) );
+  TTS_EXPECT(all(eve::is_positive(eve::atan((EVE_TYPE(0)))))          );
+  TTS_EXPECT(all(eve::is_negative(eve::atan(eve::Mzero<EVE_TYPE>()))) );
 }

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -22,26 +22,26 @@
 
 TTS_CASE("Check is_ordered return type")
 {
-  TTS_EXPR_IS(eve::is_ordered(Type(), Type()), eve::as_logical_t<Type>);
+  TTS_EXPR_IS(eve::is_ordered(EVE_TYPE(), EVE_TYPE()), eve::as_logical_t<EVE_TYPE>);
 }
 
 TTS_CASE("Check eve::is_ordered behavior on arithmetic")
 {
-  TTS_EQUAL(eve::is_ordered(Type(1), Type(1)), eve::True<Type>());
-  TTS_EQUAL(eve::is_ordered(Type(3), Type(1)), eve::True<Type>());
-  TTS_EQUAL(eve::is_ordered(Type(1), Type(3)), eve::True<Type>());
+  TTS_EQUAL(eve::is_ordered(EVE_TYPE(1), EVE_TYPE(1)), eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_ordered(EVE_TYPE(3), EVE_TYPE(1)), eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_ordered(EVE_TYPE(1), EVE_TYPE(3)), eve::True<EVE_TYPE>());
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_ordered(eve::Nan<Type>(), Type(3)), eve::False<Type>());
-    TTS_EQUAL(eve::is_ordered(Type(3), eve::Nan<Type>()), eve::False<Type>());
-    TTS_EQUAL(eve::is_ordered(eve::Nan<Type>(), eve::Nan<Type>()), eve::False<Type>());
+    TTS_EQUAL(eve::is_ordered(eve::Nan<EVE_TYPE>(), EVE_TYPE(3)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_ordered(EVE_TYPE(3), eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_ordered(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
   }
 }
 
 TTS_CASE("Check eve::is_ordered behavior on logical")
 {
-  TTS_EQUAL(eve::is_ordered(eve::logical<Type>(1), eve::logical<Type>(0)), eve::True<Type>());
+  TTS_EQUAL(eve::is_ordered(eve::logical<EVE_TYPE>(1), eve::logical<EVE_TYPE>(0)), eve::True<EVE_TYPE>());
 }
 
 #endif

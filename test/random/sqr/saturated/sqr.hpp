@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -21,22 +21,22 @@
 TTS_CASE("wide random check on sqr")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_sqr = tts::vectorize<Type>( [](auto e) { return e*e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_sqr = tts::vectorize<EVE_TYPE>( [](auto e) { return e*e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_sqr = tts::vectorize<Type>( [](auto e) { return eve::abs(e) > eve::Sqrtvalmax<Value>() ? eve::Valmax<Value>() : e*e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_sqr = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::abs(e) > eve::Sqrtvalmax<EVE_VALUE>() ? eve::Valmax<EVE_VALUE>() : e*e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_sqr, eve::sqr);
   }
   else
   {
-    auto std_sqr = tts::vectorize<Type>( [](auto e) { return e > eve::Sqrtvalmax<Value>() ? eve::Valmax<Value>() : e*e; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_sqr = tts::vectorize<EVE_TYPE>( [](auto e) { return e > eve::Sqrtvalmax<EVE_VALUE>() ? eve::Valmax<EVE_VALUE>() : e*e; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_sqr, eve::sqr);
   }
   

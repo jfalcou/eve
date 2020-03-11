@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -13,17 +13,17 @@
 #include <tts/tests/types.hpp>
 TTS_CASE("Check eve::div[condition] return type")
 {
-  TTS_EXPR_IS( (eve::div[ Type() ](Type(), Type())), (Type));
-  TTS_EXPR_IS( (eve::div[ eve::logical<Type>() ](Type(), Type())), (Type));
-  TTS_EXPR_IS( (eve::div[ true ](Type(), Type())), (Type));
+  TTS_EXPR_IS( (eve::div[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::div[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::div[ true ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::div[condition] behavior")
 {
-  Type tv{2};
-  Type fv{3};
-  auto t = eve::True<Type>();
-  auto f = eve::False<Type>();
+  EVE_TYPE tv{2};
+  EVE_TYPE fv{3};
+  auto t = eve::True<EVE_TYPE>();
+  auto f = eve::False<EVE_TYPE>();
 
   // All basic TRUE
   TTS_EQUAL(eve::div[ 1 ](tv, fv)     , tv / fv);
@@ -38,7 +38,7 @@ TTS_CASE("Check eve::div[condition] behavior")
   TTS_EQUAL(eve::div[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<Type> m;
+  eve::as_logical_t<EVE_TYPE> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

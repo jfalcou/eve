@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -33,8 +33,8 @@ TTS_CASE_TPL("Check cosd behavior on wide",
   using eve::wide;
   using eve::logical;
 
-  wide<Type, T>  lhs([](auto i, auto) { return (i%2 ? 1:-1)*3*eve::Pio_4<Type>()/Type(i+1); }), 
-    ref([](auto i, auto) { return eve::small_(eve::cosd)( (i%2 ? 1:-1)*3*eve::Pio_4<Type>()/Type(i+1)); });  
+  wide<EVE_TYPE, T>  lhs([](auto i, auto) { return (i%2 ? 1:-1)*3*eve::Pio_4<EVE_TYPE>()/EVE_TYPE(i+1); }), 
+    ref([](auto i, auto) { return eve::small_(eve::cosd)( (i%2 ? 1:-1)*3*eve::Pio_4<EVE_TYPE>()/EVE_TYPE(i+1)); });  
   TTS_ULP_EQUAL(ref, eve::small_(eve::cosd)(lhs), 0.5);
 }
 

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -21,10 +21,10 @@
 
 TTS_CASE("wide random check on is_pow2")
 {
-  using l_t = eve::as_logical_t<Type>; 
+  using l_t = eve::as_logical_t<EVE_TYPE>; 
   auto std_is_pow2 = tts::vectorize<l_t>( [](auto e)
     { return ((e > 0) && (eve::popcount(e) == 1u)); }
   );
-  eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_is_pow2, eve::is_pow2);
 }

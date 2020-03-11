@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,11 +18,11 @@
 
 namespace tts
 {
-  template<typename Type,typename Func> auto vectorize(Func&& f)
+  template<typename EVE_TYPE,typename Func> auto vectorize(Func&& f)
   {
     return  [func = std::forward<Func>(f)](auto const& x)
             {
-              Type that;
+              EVE_TYPE that;
               std::transform( tts::detail::begin(x),tts::detail::end(x),
                               tts::detail::begin(that),
                               func

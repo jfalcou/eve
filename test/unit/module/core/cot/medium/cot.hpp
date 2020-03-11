@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -26,7 +26,7 @@
 
 TTS_CASE("Check eve::medium_(eve::cot) return type")
 {
-  TTS_EXPR_IS(eve::cot(Type(0)), (Type));
+  TTS_EXPR_IS(eve::cot(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::medium_(eve::cot) behavior")
@@ -35,19 +35,19 @@ TTS_CASE("Check eve::medium_(eve::cot) behavior")
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::medium_(eve::cot)(Type(1)), Type(my_stdcot(1.0)), 1.0);
-  TTS_ULP_EQUAL(eve::medium_(eve::cot)(Type(-1)),Type(my_stdcot(-1.0)), 1.0);
-  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(Type(0)), (eve::Inf<Type>()));
-  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Mzero<Type>()), (eve::Minf<Type>()));
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(eve::Pio_4<Type>())), (Type(my_stdcot(eve::Pio_4<Value>()))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(-eve::Pio_4<Type>())),(Type(my_stdcot(-eve::Pio_4<Value>()))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(100.0))), Type(my_stdcot(Value(100.0))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(-100.0))),Type(my_stdcot(Value(-100.0))), 1.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(100000.0))), Type(my_stdcot(Value(100000.0))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cot)(Type(-100000.0))),Type(my_stdcot(Value(-100000.0))), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cot)(EVE_TYPE(1)), EVE_TYPE(my_stdcot(1.0)), 1.0);
+  TTS_ULP_EQUAL(eve::medium_(eve::cot)(EVE_TYPE(-1)),EVE_TYPE(my_stdcot(-1.0)), 1.0);
+  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()));
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdcot(eve::Pio_4<EVE_VALUE>()))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdcot(-eve::Pio_4<EVE_VALUE>()))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(EVE_TYPE(100.0))), EVE_TYPE(my_stdcot(EVE_VALUE(100.0))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(EVE_TYPE(-100.0))),EVE_TYPE(my_stdcot(EVE_VALUE(-100.0))), 1.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(EVE_TYPE(100000.0))), EVE_TYPE(my_stdcot(EVE_VALUE(100000.0))), 0.5);
+  TTS_ULP_EQUAL((eve::medium_(eve::cot)(EVE_TYPE(-100000.0))),EVE_TYPE(my_stdcot(EVE_VALUE(-100000.0))), 0.5);
 }
 

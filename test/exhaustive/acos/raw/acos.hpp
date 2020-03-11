@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -16,8 +16,8 @@
 
 TTS_CASE("wide exhaustive check on acos")
 {
-  auto std_acos = tts::vectorize<Type>( [](auto e) { return std::acos(e); } );
+  auto std_acos = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acos(e); } );
 
-  eve::exhaustive_producer<Type> p(-1,1);
+  eve::exhaustive_producer<EVE_TYPE> p(-1,1);
   TTS_ULP_RANGE_CHECK(p, std_acos, eve::raw_(eve::acos), 1024);
 }

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -20,16 +20,16 @@
 TTS_CASE("wide random check on sign")
 {
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_sign = tts::vectorize<Type>( [](auto e) { return e > 0 ? Value(1) : ((e < 0) ? Value(-1) : Value(0)); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>()+1, eve::Valmax<Value>());
+    auto std_sign = tts::vectorize<EVE_TYPE>( [](auto e) { return e > 0 ? EVE_VALUE(1) : ((e < 0) ? EVE_VALUE(-1) : EVE_VALUE(0)); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_sign, eve::sign);
   }
   else
   {
-    auto std_sign = tts::vectorize<Type>( [](auto e) { return e > 0 ? 1 : 0; } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_sign = tts::vectorize<EVE_TYPE>( [](auto e) { return e > 0 ? 1 : 0; } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_sign, eve::sign);
   }
   

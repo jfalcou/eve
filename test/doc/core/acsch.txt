@@ -5,5 +5,4 @@
 <- xf =                      1
 -> eve::acsch(xf) =            0.881374
 <- yf =                      -nan
--> eve::acsch(yf) =            -nan
-
+-> eve::acsch(yf) =            nan

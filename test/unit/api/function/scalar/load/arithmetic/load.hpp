@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -19,7 +19,7 @@ using eve::fixed;
 
 TTS_CASE("load behavior for scalar")
 {
-  Type value, ref = 42, data[ 1 ] = {42};
+  EVE_TYPE value, ref = 42, data[ 1 ] = {42};
 
   TTS_SUBCASE("a pointer to scalar")
   {

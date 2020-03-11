@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -20,16 +20,16 @@
 TTS_CASE("wide random check on ceil2")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::rng_producer<Type> p(eve::Zero<Value>(), eve::Valmax<Value>()/4);
+    auto std_ceil2 = tts::vectorize<EVE_TYPE>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()/4);
     TTS_RANGE_CHECK(p, std_ceil2, eve::ceil2);
   }
   else
   {
-    auto std_ceil2 = tts::vectorize<Type>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::rng_producer<Type> p(eve::Valmin<Value>(), (1ul << (sizeof(Value)*8-2)));
+    auto std_ceil2 = tts::vectorize<EVE_TYPE>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), (1ul << (sizeof(EVE_VALUE)*8-2)));
     TTS_RANGE_CHECK(p, std_ceil2, eve::ceil2);
   }
   

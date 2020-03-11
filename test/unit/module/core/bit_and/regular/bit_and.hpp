@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -16,14 +16,14 @@
 TTS_CASE("Check eve::bit_and return type")
 {
   using eve::detail::as_integer_t;
-  using ui_t = as_integer_t<Type, unsigned>;
-  using vi_t = as_integer_t<Value, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_and(Type(), Type())  , (Type));
-  TTS_EXPR_IS(eve::bit_and(Type(), Value()) , (Type));
-  TTS_EXPR_IS(eve::bit_and(Type(), ui_t())  , (Type));
-  TTS_EXPR_IS(eve::bit_and(Type(), vi_t())  , (Type));
-  TTS_EXPR_IS(eve::bit_and(ui_t(), Type())  , ui_t  );
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE(), EVE_TYPE())  , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE(), EVE_VALUE()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE(), ui_t())  , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE(), vi_t())  , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_and(ui_t(), EVE_TYPE())  , ui_t  );
 }
 
 TTS_CASE( "Check eve::bit_and behavior")
@@ -32,23 +32,23 @@ TTS_CASE( "Check eve::bit_and behavior")
   using eve::bit_cast;
   using eve::as;
 
-  using ui_t = as_integer_t<Type , unsigned>;
-  using vi_t = as_integer_t<Value, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE , unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
   constexpr auto u  = 0x5555555555555555ULL;
   constexpr auto d  = 0xAAAAAAAAAAAAAAAAULL;
 
-  auto tz = Type(0);
+  auto tz = EVE_TYPE(0);
 
   ui_t uu( static_cast<vi_t>(u) );
   ui_t ud( static_cast<vi_t>(d) );
-  auto td = bit_cast(ud, as<Type>());
-  auto tu = bit_cast(uu, as<Type>());
+  auto td = bit_cast(ud, as<EVE_TYPE>());
+  auto tu = bit_cast(uu, as<EVE_TYPE>());
 
   vi_t su( static_cast<vi_t>(u) );
   vi_t sd( static_cast<vi_t>(d) );
-  auto vu = bit_cast(su, as<Value>());
-  auto vd = bit_cast(sd, as<Value>());
+  auto vu = bit_cast(su, as<EVE_VALUE>());
+  auto vd = bit_cast(sd, as<EVE_VALUE>());
 
   TTS_SUBCASE("wide<T> x wide<T> case")
   {

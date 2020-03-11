@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -19,16 +19,16 @@
 
 TTS_CASE("wide exhaustive check on oneminus")
 {
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return  Value(1)-e; });
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return  EVE_VALUE(1)-e; });
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
   }
   else
   {
-    auto std_oneminus = tts::vectorize<Type>( [](auto e) { return  static_cast<Value>(eve::One<Value>()-e);} );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return  static_cast<EVE_VALUE>(eve::One<EVE_VALUE>()-e);} );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_oneminus,  eve::oneminus);
   }  
 }

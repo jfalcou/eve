@@ -5,7 +5,6 @@
 -> eve::convert(pf, eve::as<std::int16_t>()) =                  (-1, 2, -20536, 768)
 <- pi =                                                         (-1, 2, -3, 9223372036854775807)
 -> eve::convert(pi, eve::as<double>()) =                        (-1, 2, -3, 9.22337e+18)
--> eve::pedantic_(eve::convert)(pi, eve::as<double>()) =        (-1, 2, -3, 9.22337e+18)
 ---- scalar
 <- xf =                                         -64768.4
 -> eve::convert(xf, eve::as<std::int64_t>()) =  -64768

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -30,20 +30,20 @@
 
 TTS_CASE("Check deginrad return type")
 {
-  TTS_EXPR_IS(eve::deginrad(Type(0)),  Type);
+  TTS_EXPR_IS(eve::deginrad(EVE_TYPE(0)),  EVE_TYPE);
 }
 
 TTS_CASE("Check eve::deginrad behavior")
 {
 
 #ifndef EVE_SIMD_NO_INVALIDS
-  TTS_ULP_EQUAL(eve::deginrad(eve::Inf<Type>()), eve::Inf<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::Minf<Type>()), eve::Minf<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Minf<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::deginrad(eve::Zero<Type>()), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::One<Type>()), Type(0.017453292519943295769236907684886), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(Type(10)),         Type(0.17453292519943295769236907684886), 0.5);   
+  TTS_ULP_EQUAL(eve::deginrad(eve::Zero<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::One<EVE_TYPE>()), EVE_TYPE(0.017453292519943295769236907684886), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(EVE_TYPE(10)),         EVE_TYPE(0.17453292519943295769236907684886), 0.5);   
 }
 
   

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -27,40 +27,40 @@
 
 TTS_CASE("Check cosd return type")
 {
-  TTS_EXPR_IS(eve::big_(eve::cosd)(Type(0)),  Type);
+  TTS_EXPR_IS(eve::big_(eve::cosd)(EVE_TYPE(0)),  EVE_TYPE);
 } 
 
 TTS_CASE("Check eve::big_(eve::cosd) behavior")
 {
 
 #ifndef EVE_NO_INVALIDS 
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Inf<Type>()), eve::Nan<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Minf<Type>()), eve::Nan<Type>(), 0.5); 
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Nan<Type>()), eve::Nan<Type>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Minf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5); 
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(2*Type(180)), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-2*Type(180)), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-Type(90)), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-Type(45)), eve::Sqrt_2o_2<Type>(), 0.5); 
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(Type(180)), eve::Mone<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-Type(180)), eve::Mone<Type>(), 0.5);   
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(Type(90)), eve::Zero<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(Type(45)), eve::Sqrt_2o_2<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Zero<Type>()), eve::One<Type>(), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*Type(45)/2), Type(0.3826834323650897717284599840304), 0.5);
-  if constexpr(std::is_same_v<Type, double>)
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(2*EVE_TYPE(180)), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-2*EVE_TYPE(180)), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-EVE_TYPE(90)), eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-EVE_TYPE(45)), eve::Sqrt_2o_2<EVE_TYPE>(), 0.5); 
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(EVE_TYPE(180)), eve::Mone<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(-EVE_TYPE(180)), eve::Mone<EVE_TYPE>(), 0.5);   
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(EVE_TYPE(90)), eve::Zero<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(EVE_TYPE(45)), eve::Sqrt_2o_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*EVE_TYPE(45)/2), EVE_TYPE(0.3826834323650897717284599840304), 0.5);
+  if constexpr(std::is_same_v<EVE_TYPE, double>)
   {
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*Type(90)), Type(0),  0.5);
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-3*Type(90)),Type(0),  0.5);      
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(31*Type(90)), Type(0),  0.5);
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-31*Type(90)), Type(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*EVE_TYPE(90)), EVE_TYPE(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-3*EVE_TYPE(90)),EVE_TYPE(0),  0.5);      
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(31*EVE_TYPE(90)), EVE_TYPE(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-31*EVE_TYPE(90)), EVE_TYPE(0),  0.5);
   }
   else
   {
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*Type(90)), Type(0),  0.5);
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-3*Type(90)),Type(0),  0.5);      
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(31*Type(90)), Type(0),  0.5);
-    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-31*Type(90)),Type(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(3*EVE_TYPE(90)), EVE_TYPE(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-3*EVE_TYPE(90)),EVE_TYPE(0),  0.5);      
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(31*EVE_TYPE(90)), EVE_TYPE(0),  0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cosd)(-31*EVE_TYPE(90)),EVE_TYPE(0),  0.5);
   }
 }
 

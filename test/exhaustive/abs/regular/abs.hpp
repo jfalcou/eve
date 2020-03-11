@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -20,23 +20,23 @@
 TTS_CASE("wide exhaustive check on abs")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) { return (e < 0) ? -e : e; } );
-    eve::exhaustive_producer<Type> p(-1,1);
+    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 0) ? -e : e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(-1,1);
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
-  else if constexpr(std::is_signed_v<Value>)
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) {
+    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) {
                                            return (e < 0) ? -e : e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else
   {
-    auto std_abs = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   

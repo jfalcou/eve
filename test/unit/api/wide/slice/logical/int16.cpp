@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::int16_t;
+using EVE_TYPE = std::int16_t;
 #include "slice.hpp"

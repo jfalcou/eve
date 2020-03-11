@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -22,25 +22,25 @@
 
 TTS_CASE("Check eve::tan return type")
 {
-  TTS_EXPR_IS(eve::tan(Type(0)), (Type));
+  TTS_EXPR_IS(eve::tan(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::tan behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::tan(eve::Nan<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::tan(eve::Inf<Type>()) , (eve::Nan<Type>()) );
-    TTS_IEEE_EQUAL(eve::tan(eve::Minf<Type>()), (eve::Nan<Type>()) );   
+    TTS_IEEE_EQUAL(eve::tan(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::tan(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::tan(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
   }
-  TTS_ULP_EQUAL(eve::tan(Type(1)), Type(std::tan(Value(1.0))), 0.5);
-  TTS_ULP_EQUAL(eve::tan(Type(-1.0)),Type(std::tan(Value(-1.0))), 0.5);
-  TTS_IEEE_EQUAL((eve::tan(Type(0))), (Type(0)));
-  TTS_IEEE_EQUAL((eve::tan(eve::Mzero<Type>())), (Type(0)));
-  TTS_ULP_EQUAL((eve::tan(eve::Pio_4<Type>())), (Type(std::tan(eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL((eve::tan(-eve::Pio_4<Type>())),(Type(std::tan(-eve::Pio_4<Value>()))), 0.5);
-  TTS_ULP_EQUAL(eve::tan(Type(100000.0)), Type(std::tan(100000.0)), 0.5);
-  TTS_ULP_EQUAL(eve::tan(Type(-100000.0)),Type(std::tan(-100000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::tan)(Type(-100000000.0))),Type(std::tan(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::tan)(Type(eve::Valmax<Type>()))),Type(std::tan(eve::Valmax<Value>())), 0.5);
+  TTS_ULP_EQUAL(eve::tan(EVE_TYPE(1)), EVE_TYPE(std::tan(EVE_VALUE(1.0))), 0.5);
+  TTS_ULP_EQUAL(eve::tan(EVE_TYPE(-1.0)),EVE_TYPE(std::tan(EVE_VALUE(-1.0))), 0.5);
+  TTS_IEEE_EQUAL((eve::tan(EVE_TYPE(0))), (EVE_TYPE(0)));
+  TTS_IEEE_EQUAL((eve::tan(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(0)));
+  TTS_ULP_EQUAL((eve::tan(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(std::tan(eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL((eve::tan(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(std::tan(-eve::Pio_4<EVE_VALUE>()))), 0.5);
+  TTS_ULP_EQUAL(eve::tan(EVE_TYPE(100000.0)), EVE_TYPE(std::tan(100000.0)), 0.5);
+  TTS_ULP_EQUAL(eve::tan(EVE_TYPE(-100000.0)),EVE_TYPE(std::tan(-100000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::tan)(EVE_TYPE(-100000000.0))),EVE_TYPE(std::tan(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::tan)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(std::tan(eve::Valmax<EVE_VALUE>())), 0.5);
 }

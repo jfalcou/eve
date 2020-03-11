@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -20,18 +20,18 @@
 TTS_CASE("wide exhaustive check on iceil")
 {
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    using vi_t =  eve::detail::as_integer_t<Type>; 
+    using vi_t =  eve::detail::as_integer_t<EVE_TYPE>; 
     using i_t = eve::detail::value_type_t<vi_t>; 
     auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
   }
   else
   {
-    auto std_iceil = tts::vectorize<Type>( [](auto e) { return e; } );
-    eve::exhaustive_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+    auto std_iceil = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
   }
   

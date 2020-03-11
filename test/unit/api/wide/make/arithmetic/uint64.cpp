@@ -9,5 +9,5 @@
 //==================================================================================================
 
 #include <cstdint>
-using Type = std::uint64_t;
+using EVE_TYPE = std::uint64_t;
 #include "make.hpp"

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -25,26 +25,26 @@
 
 TTS_CASE("Check eve::asinh return type")
 {
-  TTS_EXPR_IS(eve::asinh(Type(0)), (Type));
+  TTS_EXPR_IS(eve::asinh(EVE_TYPE(0)), (EVE_TYPE));
 }
 
 TTS_CASE("Check eve::asinh behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::asinh(eve::Nan<Type>()) , eve::Nan<Type>(), 0);
+    TTS_ULP_EQUAL(eve::asinh(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::asinh(eve::Inf<Type>()) , eve::Inf<Type>(), 0);
-    TTS_ULP_EQUAL(eve::asinh(eve::Minf<Type>()) , eve::Minf<Type>(), 0);    
+    TTS_ULP_EQUAL(eve::asinh(eve::Inf<EVE_TYPE>()) , eve::Inf<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::asinh(eve::Minf<EVE_TYPE>()) , eve::Minf<EVE_TYPE>(), 0);    
   }
 
-  TTS_ULP_EQUAL(eve::asinh(Type( 0.5))         ,  Type(std::asinh(Value(0.5))), 0.5  );
-  TTS_ULP_EQUAL(eve::asinh(Type(-0.5))         ,  Type(std::asinh(Value(-0.5))), 0.5  );
-  TTS_ULP_EQUAL(eve::asinh(Type( 0. ))         ,  eve::Zero<Type>() , 0   );
-  TTS_EXPECT(eve::all(eve::is_negative(eve::asinh(eve::Minf<Type>()))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::asinh(eve::Inf<Type>()))));   
-  TTS_ULP_EQUAL(eve::asinh(Type( 2. ))         ,  Type(std::asinh(Value(2))), 0.5  );
+  TTS_ULP_EQUAL(eve::asinh(EVE_TYPE( 0.5))         ,  EVE_TYPE(std::asinh(EVE_VALUE(0.5))), 0.5  );
+  TTS_ULP_EQUAL(eve::asinh(EVE_TYPE(-0.5))         ,  EVE_TYPE(std::asinh(EVE_VALUE(-0.5))), 0.5  );
+  TTS_ULP_EQUAL(eve::asinh(EVE_TYPE( 0. ))         ,  eve::Zero<EVE_TYPE>() , 0   );
+  TTS_EXPECT(eve::all(eve::is_negative(eve::asinh(eve::Minf<EVE_TYPE>()))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::asinh(eve::Inf<EVE_TYPE>()))));   
+  TTS_ULP_EQUAL(eve::asinh(EVE_TYPE( 2. ))         ,  EVE_TYPE(std::asinh(EVE_VALUE(2))), 0.5  );
 }

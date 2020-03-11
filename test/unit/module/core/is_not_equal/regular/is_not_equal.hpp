@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -19,12 +19,12 @@ TTS_CASE("Check eve::is_not_equal return type")
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_not_equal(Type()          , Type()          ), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_equal(Type()          , Value()         ), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_equal(Value()         , Type()          ), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_equal(logical<Type>() , logical<Type>() ), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_equal(logical<Type>() , logical<Value>()), (logical<Type>));
-  TTS_EXPR_IS(eve::is_not_equal(logical<Value>(), logical<Type>() ), (logical<Type>));
+  TTS_EXPR_IS(eve::is_not_equal(EVE_TYPE()          , EVE_TYPE()          ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_equal(EVE_TYPE()          , EVE_VALUE()         ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_equal(EVE_VALUE()         , EVE_TYPE()          ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_equal(logical<EVE_TYPE>() , logical<EVE_TYPE>() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_equal(logical<EVE_TYPE>() , logical<EVE_VALUE>()), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_equal(logical<EVE_VALUE>(), logical<EVE_TYPE>() ), (logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::operator!= return type")
@@ -32,48 +32,48 @@ TTS_CASE("Check eve::operator!= return type")
   using eve::logical;
 
 #if defined(EVE_SIMD_TESTS)
-  TTS_EXPR_IS((Type()   != Type() ), (logical<Type>));
-  TTS_EXPR_IS((Type()   != Value()), (logical<Type>));
-  TTS_EXPR_IS((Value()  != Type() ), (logical<Type>));
+  TTS_EXPR_IS((EVE_TYPE()   != EVE_TYPE() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((EVE_TYPE()   != EVE_VALUE()), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((EVE_VALUE()  != EVE_TYPE() ), (logical<EVE_TYPE>));
 #endif
 
-  TTS_EXPR_IS((logical<Type>()  != logical<Type>() ), (logical<Type>));
-  TTS_EXPR_IS((logical<Type>()  != logical<Value>()), (logical<Type>));
-  TTS_EXPR_IS((logical<Value>() != logical<Type>() ), (logical<Type>));
+  TTS_EXPR_IS((logical<EVE_TYPE>()  != logical<EVE_TYPE>() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((logical<EVE_TYPE>()  != logical<EVE_VALUE>()), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((logical<EVE_VALUE>() != logical<EVE_TYPE>() ), (logical<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::is_not_equal behavior")
 {
   using eve::logical;
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::is_not_equal(eve::Nan<Type>(), eve::Nan<Type>())   , eve::True<Type>());
-    TTS_EQUAL(eve::is_not_equal(eve::Nan<Type>(), Type(4))            , eve::True<Type>());
+    TTS_EQUAL(eve::is_not_equal(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())   , eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_equal(eve::Nan<EVE_TYPE>(), EVE_TYPE(4))            , eve::True<EVE_TYPE>());
   }
 
-  TTS_EQUAL(eve::is_not_equal(Type(1)           , Type(1) )           , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal(Type(1)           , Value(1))           , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal(Type(3)           , Type(1) )           , eve::True<Type>());
-  TTS_EQUAL(eve::is_not_equal(Type(3)           , Value(1))           , eve::True<Type>());
-  TTS_EQUAL(eve::is_not_equal(eve::True<Type>() , eve::True<Type>())  , eve::False<Type>() );
-  TTS_EQUAL(eve::is_not_equal(eve::True<Type>() , eve::False<Type>()) , eve::True<Type>());
+  TTS_EQUAL(eve::is_not_equal(EVE_TYPE(1)           , EVE_TYPE(1) )           , eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_equal(EVE_TYPE(1)           , EVE_VALUE(1))           , eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_equal(EVE_TYPE(3)           , EVE_TYPE(1) )           , eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_not_equal(EVE_TYPE(3)           , EVE_VALUE(1))           , eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_not_equal(eve::True<EVE_TYPE>() , eve::True<EVE_TYPE>())  , eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_equal(eve::True<EVE_TYPE>() , eve::False<EVE_TYPE>()) , eve::True<EVE_TYPE>());
 }
 
 TTS_CASE("Check eve::operator!= behavior")
 {
   using eve::logical;
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<Value>)
+  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
   {
-    TTS_EQUAL((eve::Nan<Type>() != eve::Nan<Type>())   , eve::True<Type>());
-    TTS_EQUAL((eve::Nan<Type>() != Type(4))            , eve::True<Type>());
+    TTS_EQUAL((eve::Nan<EVE_TYPE>() != eve::Nan<EVE_TYPE>())   , eve::True<EVE_TYPE>());
+    TTS_EQUAL((eve::Nan<EVE_TYPE>() != EVE_TYPE(4))            , eve::True<EVE_TYPE>());
   }
 
-  TTS_EQUAL( (Type(1)           != Type(1) )           , eve::False<Type>() );
-  TTS_EQUAL( (Type(1)           != Value(1))           , eve::False<Type>() );
-  TTS_EQUAL( (Type(3)           != Type(1) )           , eve::True<Type>());
-  TTS_EQUAL( (Type(3)           != Value(1))           , eve::True<Type>());
-  TTS_EQUAL( (eve::True<Type>() != eve::True<Type>())  , eve::False<Type>() );
-  TTS_EQUAL( (eve::True<Type>() != eve::False<Type>()) , eve::True<Type>());
+  TTS_EQUAL( (EVE_TYPE(1)           != EVE_TYPE(1) )           , eve::False<EVE_TYPE>() );
+  TTS_EQUAL( (EVE_TYPE(1)           != EVE_VALUE(1))           , eve::False<EVE_TYPE>() );
+  TTS_EQUAL( (EVE_TYPE(3)           != EVE_TYPE(1) )           , eve::True<EVE_TYPE>());
+  TTS_EQUAL( (EVE_TYPE(3)           != EVE_VALUE(1))           , eve::True<EVE_TYPE>());
+  TTS_EQUAL( (eve::True<EVE_TYPE>() != eve::True<EVE_TYPE>())  , eve::False<EVE_TYPE>() );
+  TTS_EQUAL( (eve::True<EVE_TYPE>() != eve::False<EVE_TYPE>()) , eve::True<EVE_TYPE>());
 }

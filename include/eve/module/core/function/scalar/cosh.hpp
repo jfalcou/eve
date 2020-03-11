@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -21,6 +21,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/constant/log_2.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -34,7 +35,7 @@ namespace eve::detail
     T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
     auto x = eve::abs(a0);
     if (is_eqz(a0)) return One<T>();
-    if (x >= ovflimit)
+    if (x >= ovflimit-Log_2<T>())
     {
       auto w = exp(x*Half<T>());
       auto t = Half<T>()*w;

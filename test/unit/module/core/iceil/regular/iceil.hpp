@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -15,29 +15,29 @@
 
 TTS_CASE("Check iceil return type")
 {
-  TTS_EXPR_IS(eve::iceil(Type()), (eve::detail::as_integer_t<Type>));
+  TTS_EXPR_IS(eve::iceil(EVE_TYPE()), (eve::detail::as_integer_t<EVE_TYPE>));
 }
 
 TTS_CASE("Check eve::iceil behavior")
 {
-  using i_t = eve::detail::as_integer_t<Type>; 
-  TTS_EQUAL(eve::iceil(Type(0)), i_t(0));
-  TTS_EQUAL(eve::iceil(Type(1)), i_t(1));
-  TTS_EQUAL(eve::iceil(Type(2)), i_t(2));
+  using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
+  TTS_EQUAL(eve::iceil(EVE_TYPE(0)), i_t(0));
+  TTS_EQUAL(eve::iceil(EVE_TYPE(1)), i_t(1));
+  TTS_EQUAL(eve::iceil(EVE_TYPE(2)), i_t(2));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::iceil(Type(-1)), i_t(-1));
-    TTS_EQUAL(eve::iceil(Type(-2)), i_t(-2));
+    TTS_EQUAL(eve::iceil(EVE_TYPE(-1)), i_t(-1));
+    TTS_EQUAL(eve::iceil(EVE_TYPE(-2)), i_t(-2));
   }
 
-  if constexpr(std::is_floating_point_v<Value>)
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-   TTS_EQUAL(eve::iceil(Type(-1.3)), i_t(-1));
-   TTS_EQUAL(eve::iceil(Type(-1.5)), i_t(-1));
-   TTS_EQUAL(eve::iceil(Type(-1.6)), i_t(-1));
-   TTS_EQUAL(eve::iceil(Type(1.3)) , i_t(2));
-   TTS_EQUAL(eve::iceil(Type(1.5)) , i_t(2));
-   TTS_EQUAL(eve::iceil(Type(1.6)) , i_t(2));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(-1.3)), i_t(-1));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(-1.5)), i_t(-1));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(-1.6)), i_t(-1));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(1.3)) , i_t(2));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(1.5)) , i_t(2));
+   TTS_EQUAL(eve::iceil(EVE_TYPE(1.6)) , i_t(2));
   }
 }

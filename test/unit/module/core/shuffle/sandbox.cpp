@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -60,10 +60,10 @@ TTS_CASE("shuffle sandbox")
 {
   using eve::logical;
   using eve::wide;
-  using Type = float;
+  using EVE_TYPE = float;
   using T    = eve::fixed<4>;
 
-  wide<Type, T> arg([](auto i, auto) { return 10 * (1 + i); });
+  wide<EVE_TYPE, T> arg([](auto i, auto) { return 10 * (1 + i); });
   std::cout << "arg: " << arg << "\n";
 
   std::cout << arg[ eve::identity ] << "\n";
@@ -82,7 +82,7 @@ TTS_CASE("shuffle sandbox")
   std::cout << arg[ eve::pattern<0, 0> ] << "\n";
   std::cout << arg[ eve::pattern<0, 1, 2, 3, 0, 1, 2, 3> ] << "\n\n";
 
-  logical<wide<Type, T>> larg([](auto i, auto) { return 10 * (1 + i) % 3; });
+  logical<wide<EVE_TYPE, T>> larg([](auto i, auto) { return 10 * (1 + i) % 3; });
   std::cout << "\nlarg: " << larg << "\n";
   std::cout << larg[ eve::identity ] << "\n";
   std::cout << larg[ eve::pattern<-1, -1, 0, 1> ] << "\n";

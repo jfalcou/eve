@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,33 +18,33 @@
 
 TTS_CASE("Check eve::rshl return type")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using u_t = eve::detail::as_integer_t<Type, unsigned>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
 
-  TTS_EXPR_IS(eve::rshl(Type(), Type()) , (Type));
-  TTS_EXPR_IS(eve::rshl(Type(), i_t())  , (Type));
-  TTS_EXPR_IS(eve::rshl(Type(), u_t())  , (Type));
-  TTS_EXPR_IS(eve::rshl(i_t() , Type())  , i_t);
-  TTS_EXPR_IS(eve::rshl(u_t() , Type())  , u_t);
+  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), EVE_TYPE()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), i_t())  , (EVE_TYPE));
+  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), u_t())  , (EVE_TYPE));
+  TTS_EXPR_IS(eve::rshl(i_t() , EVE_TYPE())  , i_t);
+  TTS_EXPR_IS(eve::rshl(u_t() , EVE_TYPE())  , u_t);
 }
 
 TTS_CASE("Check eve::rshl behavior")
 {
-  TTS_EQUAL(eve::rshl((Type(1)), (Type(4))  ), (Type(16)));
+  TTS_EQUAL(eve::rshl((EVE_TYPE(1)), (EVE_TYPE(4))  ), (EVE_TYPE(16)));
 
-  TTS_EQUAL(eve::rshl((Type(1)),  4         ), (Type(16)));
-  TTS_EQUAL(eve::rshl((Type(3)), -1         ), (Type( 1)));
-  TTS_EQUAL(eve::rshl((Type(0)),  3         ), (Type( 0)));
-  TTS_EQUAL(eve::rshl((Type(8)), -2         ), (Type( 2)));
+  TTS_EQUAL(eve::rshl((EVE_TYPE(1)),  4         ), (EVE_TYPE(16)));
+  TTS_EQUAL(eve::rshl((EVE_TYPE(3)), -1         ), (EVE_TYPE( 1)));
+  TTS_EQUAL(eve::rshl((EVE_TYPE(0)),  3         ), (EVE_TYPE( 0)));
+  TTS_EQUAL(eve::rshl((EVE_TYPE(8)), -2         ), (EVE_TYPE( 2)));
 
-  if constexpr(std::is_signed_v<Value>)
+  if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::rshl(eve::Allbits<Type>(), 1), Type(-2));
-    TTS_EQUAL(eve::rshl(eve::Allbits<Type>(), -1), eve::Allbits<Type>());
+    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), 1), EVE_TYPE(-2));
+    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), -1), eve::Allbits<EVE_TYPE>());
   }
   else
   {
-    TTS_EQUAL(eve::rshl(eve::Allbits<Type>(), -1), eve::Allbits<Type>()/2 );
-    TTS_EQUAL(eve::rshl(eve::Allbits<Type>(),  1), eve::Allbits<Type>() - 1 );
+    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), -1), eve::Allbits<EVE_TYPE>()/2 );
+    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(),  1), eve::Allbits<EVE_TYPE>() - 1 );
   }
 }

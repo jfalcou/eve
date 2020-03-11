@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -49,7 +49,7 @@ namespace eve::detail
       auto t = exp(x);
       auto invt = if_else(x > T(22.0f), eve::zero_, rec(t)); 
       auto c = average(t, invt); 
-      auto test = x <  ovflimit; 
+      auto test = x <  ovflimit-Log_2<T>(); 
       if (eve::all(test)) return c;
       
       auto w = exp(x*Half<T>());

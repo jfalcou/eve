@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2019 Joel FALCOU
-  Copyright 2019 Jean-Thierry LAPRESTE
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -20,11 +20,11 @@
 
 TTS_CASE("wide random check on exponent")
 {
-  using i_t = eve::detail::as_integer_t<Value>; 
+  using i_t = eve::detail::as_integer_t<EVE_VALUE>; 
   auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); }; 
-  using vi_t = eve::detail::as_integer_t<Type>; 
+  using vi_t = eve::detail::as_integer_t<EVE_TYPE>; 
   auto std_exponent = tts::vectorize<vi_t>( [ internal_f ](auto e) { return internal_f(e); } );
 
-  eve::rng_producer<Type> p(eve::Valmin<Value>(), eve::Valmax<Value>());
+  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
   TTS_RANGE_CHECK(p, std_exponent, eve::exponent); 
 }
