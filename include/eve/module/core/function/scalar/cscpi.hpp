@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/sin_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/is_not_less_equal.hpp>
@@ -65,10 +66,8 @@ namespace eve::detail
       if (is_eqz(a0)) return rec(a0); 
       if (is_flint(a0) || is_not_finite(a0)) return Nan<T>(); //Nan or Inf input
       const T x =  abs(a0);
-      T fn = nearest(x*T(2));
-      T xx = fma(fn, Mhalf<T>(), x); 
-      T xr = xx*Pi<T>();
-      return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, T(0)));
+      auto [fn, xr, dxr] =  rem2(x); 
+      return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));
     }
     else
     {

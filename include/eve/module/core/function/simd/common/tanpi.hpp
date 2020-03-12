@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/tan_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/frac.hpp>
@@ -85,10 +86,8 @@ namespace eve::detail
         auto x =  abs(a0);
         x = if_else (is_greater_equal(x, Maxflint(as(x))) || is_flint(x), eve::zero_, x);
         x = if_else (is_not_finite(a0) || (frac(x) == Half<T>()), eve::allbits_, x); 
-        auto fn = nearest(x*T(2));
-        auto xx = fma(fn, Mhalf<T>(), x); 
-        auto xr = xx*Pi<T>();
-        return if_else(is_eqz(a0), a0, tan_finalize(a0*Pi<T>(), quadrant(fn), xr, Zero(as(x))));
+        auto [fn, xr, dxr] = rem2(x); 
+        return if_else(is_eqz(a0), a0, tan_finalize(a0*Pi<T>(), quadrant(fn), xr, dxr));
       }
     }
     else
@@ -101,7 +100,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto tanpi_(EVE_SUPPORTS(cpu_)
                                      ,  wide<T, N, ABI> const &a0) noexcept
   {
-    return big_(eve::tanpi)(a0); 
+    auto x =  abs(a0);
+    if (all(x <= T(0.25)))  return restricted_(tanpi)(a0);
+    else                    return big_(tanpi)(a0);
   }
 
 

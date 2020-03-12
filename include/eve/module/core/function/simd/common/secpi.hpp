@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -84,10 +85,8 @@ namespace eve::detail
       {
         auto x = eve::abs(a0);
         x =  if_else(x > Maxflint<T>(), eve::zero_, x); 
-        auto fn = nearest(x*T(2));
-        auto xx = fma(fn, Mhalf<T>(), x); 
-        auto xr = xx*Pi<T>();
-        auto z = cos_finalize(quadrant(fn), xr, Zero(as(x)));
+        auto [fn, xr, dxr] = rem2(x); 
+        auto z = cos_finalize(quadrant(fn), xr, dxr);
         return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits_); 
       }
     }

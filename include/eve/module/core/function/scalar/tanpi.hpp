@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/tan_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/is_not_less_equal.hpp>
@@ -65,9 +66,7 @@ namespace eve::detail
       if (is_eqz(a0)) return a0; 
       if (x > Maxflint<T>()||is_flint(x)) return T(0); 
       if (frac(x) == Half<T>()) return Nan<T>();
-      T fn = nearest(x*T(2));
-      T xx = fma(fn, Mhalf<T>(), x); 
-      T xr = xx*Pi<T>();
+      auto [fn, xr, dxr] =  rem2(x); 
       return tan_finalize(a0*Pi<T>(), quadrant(fn), xr, T(0));
     }
     else
@@ -81,7 +80,9 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    return big_(eve::tanpi)(a0); 
+    auto x =  eve::abs(a0);
+    if (eve::abs(x) <= T(0.25)) return restricted_(tanpi)(a0);
+    else                        return big_(tanpi)(a0);      
   }
 
 }

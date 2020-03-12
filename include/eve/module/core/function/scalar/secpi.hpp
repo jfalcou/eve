@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/cos_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/bitofsign.hpp>
@@ -67,11 +68,9 @@ namespace eve::detail
       const T x =  abs(a0);
       if (is_not_finite(x))  return Nan<T>(); 
       if (x > Maxflint<T>()) return T(1);
-      T fn = nearest(x*T(2));
-      T xx = fma(fn, Mhalf<T>(), x); 
-      T xr = xx*Pi<T>();
-      T z = cos_finalize(quadrant(fn), xr, T(0));
-      return (z) ? rec(cos_finalize(quadrant(fn), xr, T(0))) : Nan<T>() ;
+      auto [fn, xr, dxr] =  rem2(x); 
+      T z = cos_finalize(quadrant(fn), xr, dxr);
+      return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : Nan<T>() ;
     }
     else
     {
@@ -84,7 +83,9 @@ namespace eve::detail
                                      , T const &a0) noexcept
   requires(T, vectorizable<T>)
   {
-    return big_(eve::secpi)(a0); 
+    auto x =  eve::abs(a0);
+    if (eve::abs(x) <= T(0.25)) return restricted_(secpi)(a0);
+    else                        return big_(secpi)(a0);      
   }
 
 }

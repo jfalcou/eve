@@ -28,23 +28,31 @@ TTS_CASE("Check eve::cospi return type")
 
 TTS_CASE("Check eve::eve::cospi behavior")
 {
-
-  if constexpr( eve::platform::supports_invalids )
+  if constexpr(std::is_floating_point_v<EVE_VALUE> )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
-  }
-  TTS_ULP_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(1.0)), EVE_TYPE(-1.0), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(-1.0)),EVE_TYPE(-1.0), 0.5);
-  TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(0.0)), (EVE_TYPE(1.0)));
-  TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(22.5))), (EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(-EVE_TYPE(22.5))),(EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(100000.0))), EVE_TYPE(1), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(-100000.0))),EVE_TYPE(1), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(100000000.0))), EVE_TYPE(1), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(-100000000.0))),EVE_TYPE(1), 0.5);
-
+    if constexpr( eve::platform::supports_invalids )
+    {
+      TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+      TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
+      TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    }
+    TTS_ULP_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(1.0)), EVE_TYPE(-1.0), 0.5);
+    TTS_ULP_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(-1.0)),EVE_TYPE(-1.0), 0.5);
+    TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(EVE_TYPE(0.0)), (EVE_TYPE(1.0)));
+    TTS_IEEE_EQUAL(eve::medium_(eve::cospi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(22.5))), (EVE_TYPE(0)), 0.5);
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(-EVE_TYPE(22.5))),(EVE_TYPE(0)), 0.5);
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(100000.0))), EVE_TYPE(1), 0.5);
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(-100000.0))),EVE_TYPE(1), 0.5);
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(100000000.0))), EVE_TYPE(1), 0.5);
+    TTS_ULP_EQUAL((eve::medium_(eve::cospi)(EVE_TYPE(-100000000.0))),EVE_TYPE(1), 0.5);
+ }
+  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  {
+    TTS_EQUAL((eve::cospi)(EVE_TYPE(1)), (EVE_TYPE(-1)));
+    TTS_EQUAL((eve::cospi)(EVE_TYPE(-1)),(EVE_TYPE(-1)));
+    TTS_EQUAL((eve::cospi)(EVE_TYPE(2)), (EVE_TYPE(1)));
+    TTS_EQUAL((eve::cospi)(EVE_TYPE(-2)), (EVE_TYPE(1)));
+  }    
 }
-
+  

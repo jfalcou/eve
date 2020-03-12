@@ -46,6 +46,7 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return Nan<T>(); 
       const T x =  eve::abs(a0);
+      if (x > Maxflint<T>()) return T{0}; 
       auto [fn, xr, dxr] = rem2(x);
       return sin_finalize(bitofsign(a0), fn, xr, dxr); 
     }

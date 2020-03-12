@@ -16,10 +16,13 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/sin.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/is_not_finite.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/module/core/detail/simd/sin_finalize.hpp>
 #include <eve/constant/pi.hpp>
+#include <eve/constant/maxflint.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/all.hpp>
 #include <type_traits>
@@ -44,6 +47,8 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>)
     {
       auto x = eve::abs(a0);
+      x = if_else(is_not_finite(x), eve::allbits_, x);
+      x = if_else(x > Maxflint<T>(), eve::zero_, x); 
       auto [n, xr, dxr] = rem2(x); 
       return detail::sin_finalize(bitofsign(a0), n, xr, dxr); 
     }
@@ -58,8 +63,8 @@ namespace eve::detail
                             , eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  abs(a0);
-    if (all(x <= T(0.25)))  return restricted_(sinpi)(x);
-    else                    return big_(sinpi)(x);
+    if (all(x <= T(0.25)))  return restricted_(sinpi)(a0);
+    else                    return big_(sinpi)(a0);
   }
 }
 

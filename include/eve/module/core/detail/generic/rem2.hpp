@@ -25,15 +25,17 @@
 
 namespace eve::detail
 {
-  
   template <typename T>
   EVE_FORCEINLINE auto  rem2(T const &x) noexcept
   {
     T xi = nearest(x+x);
     T x_2 = fma(xi, Mhalf<T>(), x);
-    auto [xr, dxr] = two_prod(x_2, Pi<T>());
+    auto xr = x_2*Pi<T>();
+    auto dxr =  Zero(as(xr)); 
     return std::make_tuple(quadrant(xi), xr, dxr);
   }
+
+  
 }
 
 #endif

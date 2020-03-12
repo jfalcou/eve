@@ -121,6 +121,7 @@ make_all_units(ROOT exhaustive NAME sincos            ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME sinh              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sinhcosh          ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME sinpi             ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)    
+make_all_units(ROOT exhaustive NAME sinpicospi        ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)   
 make_all_units(ROOT exhaustive NAME sqr               ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sqr_abs           ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)  
 make_all_units(ROOT exhaustive NAME sqrt              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)

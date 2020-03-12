@@ -16,6 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/simd/sin_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
@@ -83,11 +84,9 @@ namespace eve::detail
       else
       {
         auto x = eve::abs(a0);
-        x = if_else (is_nez(a0) && (is_not_finite(x)||is_flint(x)), eve::allbits_, x); 
-        auto fn = nearest(x*T(2));
-        auto xx = fma(fn, Mhalf<T>(), x); 
-        auto xr = xx*Pi<T>();
-        return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, Zero(as(x))));
+        x = if_else (is_nez(a0) && (is_not_finite(x)||is_flint(x)), eve::allbits_, x);
+        auto [fn, xr, dxr] = rem2(x); 
+        return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));
       }
     }
     else

@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr wide<T, N, ABI> cot_finalize( wide<T, N, ABI> const & a0
                                                         , wide<T, N, ABI> const & n
                                                         , wide<T, N, ABI> const & xr
-                                                        , wide<T, N, ABI> const & dxr = wide<T, N, ABI>(0)) noexcept
+                                                        , wide<T, N, ABI> const & dxr) noexcept
   {
     using t_t = wide<T, N, ABI>; 
     auto tmp = binarize( n >= t_t(2));
