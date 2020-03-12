@@ -24,8 +24,8 @@
 TTS_CASE("wide exhaustive check on cotpi")
 {
  auto my_stdcotpi =  tts::vectorize<EVE_TYPE>([](auto x){return (x == 0 || !eve::is_flint(x))
-                                               ? boost::math::cos_pi(x)/boost::math::sin_pi(x)
+                                                  ? boost::math::cos_pi(double(x))/boost::math::sin_pi(double(x))
                                                : eve::Nan<EVE_VALUE>(); });
   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::cotpi); 
+  TTS_ULP_RANGE_CHECK(p, my_stdcotpi, eve::cotpi, 4); 
 }

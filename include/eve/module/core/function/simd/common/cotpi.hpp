@@ -54,7 +54,6 @@ namespace eve::detail
       {
         auto x  = eve::abs(a0);
         auto a0pi = Pi<T>()*a0;
-        std::cout << "icitte" << std::endl; 
         return if_else(is_eqz(a0), rec(a0), if_else(is_not_less_equal(x, T(0.25)), eve::allbits_, rec(tancot_eval(a0pi))));
       }
     }
@@ -84,11 +83,8 @@ namespace eve::detail
       {
         auto x =  abs(a0);
         x = if_else (is_not_finite(a0) || is_flint(x), eve::allbits_, x);
-        x = if_else (is_flint(x-Mhalf<T>()), Half(as(a0)), x); 
-        auto fn = nearest(x*T(2));
-        auto xx = fma(fn, Mhalf<T>(), x); 
-        auto xr = xx*Pi<T>();
-        return if_else(is_eqz(a0), rec(a0), cot_finalize(a0*Pi<T>(), quadrant(fn), xr, Zero(as(x))));
+        auto [fn, xr, dxr] =  rem2(x); 
+        return cot_finalize(a0*Pi<T>(), quadrant(fn), xr, dxr);
       }
     }
     else

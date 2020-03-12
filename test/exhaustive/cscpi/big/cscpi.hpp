@@ -29,5 +29,5 @@ TTS_CASE("wide exhaustive check on cscpi")
                                                ? eve::rec(boost::math::sin_pi(x))
                                                : eve::Nan<EVE_VALUE>(); });
   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdcscpi, eve::big_(eve::cscpi)); 
+  TTS_ULP_RANGE_CHECK(p, my_stdcscpi, eve::big_(eve::cscpi), 4); 
 }

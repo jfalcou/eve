@@ -26,5 +26,5 @@ TTS_CASE("wide exhaustive check on cotpi")
                                                ? boost::math::cos_pi(x)/boost::math::sin_pi(x)
                                                : eve::Nan<EVE_VALUE>(); });
   eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::medium_(eve::cotpi)); 
+  TTS_ULP_RANGE_CHECK(p, my_stdcotpi, eve::medium_(eve::cotpi), 4); 
 }

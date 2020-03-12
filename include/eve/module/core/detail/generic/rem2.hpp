@@ -33,7 +33,7 @@ namespace eve::detail
     T x_2 = fma(xi, Mhalf<T>(), x);
     auto [xr, dxr] = two_prod(x_2, Pi<T>());
     return std::make_tuple(quadrant(xi), xr, dxr);
-  } 
+  }
 }
 
 #endif

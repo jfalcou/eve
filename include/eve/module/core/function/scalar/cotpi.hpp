@@ -15,12 +15,15 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/detail/scalar/cot_finalize.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/is_flint.hpp>
+#include <eve/function/is_not_less.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/quadrant.hpp>
 #include <eve/function/rec.hpp>
@@ -65,12 +68,8 @@ namespace eve::detail
       if (is_eqz(a0)) return rec(a0); 
       if (is_not_finite(a0)||is_flint(a0)) return Nan<T>();
       const T x =  abs(a0);
-//      if (is_not_less(x, Maxflint<T>()||is_flint(x)) return Nan<T>();
-      if (is_flint(x-Mhalf<T>())) return Zero<T>();
-      T fn = nearest(x*T(2));
-      T xx = fma(fn, Mhalf<T>(), x); 
-      T xr = xx*Pi<T>();
-      return cot_finalize(a0*Pi<T>(), quadrant(fn), xr, T(0));
+      auto [fn, xr, dxr] =  rem2(x); 
+      return cot_finalize(a0*Pi<T>(), quadrant(fn), xr, dxr); 
     }
     else
     {
