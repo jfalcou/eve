@@ -21,7 +21,7 @@ namespace eve
   struct ppc_;
 }
 
-#if defined(EVE_HW_PPC)
+#if defined(EVE_HW_POWERPC)
 namespace eve
 {
   template<typename T, typename Size> struct as_register<T, Size, eve::ppc_>

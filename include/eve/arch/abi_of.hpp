@@ -41,7 +41,8 @@ namespace eve
         }
         else if constexpr( spy::simd_instruction_set == spy::vsx_ )
         {
-          return ppc_{};
+          if constexpr(width <= 16) return ppc_{};
+          else                      return emulated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {

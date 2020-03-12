@@ -16,7 +16,7 @@
 // We successfully detected some native SIMD
 #if defined(SPY_SIMD_IS_PPC) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
-#  define EVE_HW_PPC
+#  define EVE_HW_POWERPC
 #endif
 
 #endif

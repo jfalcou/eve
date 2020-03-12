@@ -16,7 +16,7 @@
 
 //==================================================================================================
 // Register count
-#if defined(EVE_HW_PPC)
+#if defined(EVE_HW_POWERPC)
 
 namespace eve
 {
