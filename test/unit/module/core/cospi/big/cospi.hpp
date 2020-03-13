@@ -21,7 +21,6 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <mpreal.h>
 
 TTS_CASE("Check eve::cospi return type")
 {

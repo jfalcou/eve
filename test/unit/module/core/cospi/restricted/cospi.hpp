@@ -20,7 +20,6 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
-#include <mpreal.h>
 
 TTS_CASE("Check eve::restricted_(eve::cospi) return type")
 {
