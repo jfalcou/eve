@@ -11,10 +11,10 @@
 #include <eve/function/sincos.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/ponehpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/nbmantissabits.hpp>
+#include <type_traits>
 #include <utility>
 #include <cmath>
 
