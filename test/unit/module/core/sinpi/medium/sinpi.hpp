@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <boost/math/special_functions/sin_pi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/sin.hpp>    
 #include <eve/constant/mzero.hpp> 
