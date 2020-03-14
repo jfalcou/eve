@@ -27,27 +27,16 @@ namespace eve
 
   //================================================================================================
   // V*X extension tag objects
-  inline const vmx_ vmx = {};
-  inline const vsx_ vsx = {};
+  inline constexpr auto vmx = spy::vmx_;
+  inline constexpr auto vsx = spy::vsx_;
 
   //================================================================================================
   // Runtime detection of CPU support
-#if defined(EVE_ARCH_IS_PPC)
-  inline bool is_supported(vmx_ const &) noexcept
+  template<auto Version>
+  inline bool is_supported(spy::ppc_simd_info<Version> const &) noexcept
   {
     return false;
   }
-
-  // Runtime detection of CPU support
-  inline bool is_supported(vsx_ const &) noexcept
-  {
-    return true; // Fix later
-  }
-#else
-  inline bool is_supported(vmx_ const &) noexcept { return false; }
-  inline bool is_supported(vsx_ const &) noexcept { return false; }
-#endif
-
 }
 
 #endif
