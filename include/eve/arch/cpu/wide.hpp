@@ -50,7 +50,7 @@ namespace eve
   template<typename Type, typename Size, typename ABI>
   struct EVE_MAY_ALIAS wide
   {
-    using storage_type           = ::eve::ext::as_register_t<Type, Size, ABI>;
+    using storage_type           = ::eve::as_register_t<Type, Size, ABI>;
     using cardinal_type          = Size;
     using abi_type               = ABI;
     using value_type             = Type;

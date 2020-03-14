@@ -11,15 +11,20 @@
 #ifndef EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 #define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 
-#include <eve/ext/as_register.hpp>
 #include <eve/ext/as_wide.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/meta/tools.hpp>
 #include <eve/forward.hpp>
 #include <array>
 
-namespace eve::ext
+namespace eve
 {
+  template<typename Type, typename Cardinal, typename ABI>
+  struct as_register;
+
+  template<typename Type, typename Cardinal, typename ABI>
+  using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
+
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
