@@ -13,27 +13,19 @@
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/arm/predef.hpp>
-#include <eve/detail/architecture.hpp>
 
 namespace eve
 {
+  //================================================================================================
   // Tag for all ARM NEON SIMD ABI
-  struct arm_
-  {
-  };
+  struct arm_ {};
 
-  // dispatching tag for VMX SIMD implementation
-  struct neon64_ : simd_
-  {
-    using parent               = simd_;
-    static constexpr int order = EVE_NEON_VERSION;
-  };
-  struct neon128_ : simd_
-  {
-    using parent               = simd_;
-    static constexpr int order = EVE_NEON_VERSION;
-  };
+  //================================================================================================
+  // Dispatching tag for VMX SIMD implementation
+  struct neon64_  : simd_ { using parent = simd_; };
+  struct neon128_ : simd_ { using parent = simd_; };
 
+  //================================================================================================
   // Runtime detection of CPU support
   inline bool is_supported(arm_ const &) noexcept
   {
@@ -44,6 +36,7 @@ namespace eve
 #endif
   }
 
+  //================================================================================================
   // NEON extension tag object
   inline const arm_ neon = {};
 }

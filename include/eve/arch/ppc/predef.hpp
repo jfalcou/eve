@@ -11,19 +11,12 @@
 #ifndef EVE_ARCH_PPC_PREDEF_HPP_INCLUDED
 #define EVE_ARCH_PPC_PREDEF_HPP_INCLUDED
 
-// VMX/VSX version numbering
-#define EVE_VMX_VERSION 1000
-#define EVE_VSX_VERSION 1100
+#include <eve/detail/spy.hpp>
 
-// Detect current highest SSEx variant
-#undef EVE_HW_POWERPC
-
-#if !defined(EVE_HW_POWERPC) && defined(__VSX__) && !defined(EVE_NO_SIMD)
-#  define EVE_HW_POWERPC EVE_VSX_VERSION
-#endif
-
-#if !defined(EVE_HW_POWERPC) && !defined(EVE_NO_SIMD) && (defined(__ALTIVEC__) || defined(__VEC__))
-#  define EVE_HW_POWERPC EVE_VMX_VERSION
+// We successfully detected some native SIMD
+#if defined(SPY_SIMD_IS_PPC) && !defined(EVE_NO_SIMD)
+#  define EVE_SUPPORTS_NATIVE_SIMD
+#  define EVE_HW_POWERPC
 #endif
 
 #endif

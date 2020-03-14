@@ -11,12 +11,15 @@
 #ifndef EVE_DETAIL_CPUID_HPP_INCLUDED
 #define EVE_DETAIL_CPUID_HPP_INCLUDED
 
-#include <eve/detail/architecture.hpp>
-#include <eve/detail/compiler.hpp>
-#include <eve/detail/os.hpp>
+#include <eve/detail/spy.hpp>
 #include <cstdio>
 
-#if defined(EVE_ARCH_IS_X86)
+namespace eve::detail
+{
+  enum registerID { eax = 0, ebx = 1, ecx = 2, edx = 3 };
+}
+
+#if defined(SPY_ARCH_IS_AMD64)
 #  if __has_include(<cpuid.h>)
 #    include <cpuid.h>
 #    define EVE_HAS_CPUID
@@ -33,14 +36,6 @@ namespace eve::detail
 #  else
   using register_t = int;
 #  endif
-
-  enum registerID
-  {
-    eax = 0,
-    ebx = 1,
-    ecx = 2,
-    edx = 3
-  };
 
   inline void cpuid(register_t registers[ 4 ], int function) noexcept
   {
@@ -76,6 +71,12 @@ namespace eve::detail
   {
     return detect_features((1 << bit), function, register_id);
   }
+}
+#else
+namespace eve::detail
+{
+  inline bool detect_features(int, int, int) noexcept { return false; }
+  inline bool detect_feature(int, int, int) noexcept  { return false; }
 }
 #endif
 

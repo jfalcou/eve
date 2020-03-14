@@ -14,8 +14,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/power_of_2.hpp>
 #include <eve/memory/align.hpp>
-#include <eve/detail/compiler.hpp>
-#include <eve/detail/os.hpp>
+#include <eve/detail/spy.hpp>
 #include <algorithm>
 #include <cstdint>
 
@@ -28,10 +27,10 @@ namespace eve
 
     void *result = nullptr;
 
-#if defined(EVE_OS_USE_POSIX) || defined(EVE_OS_IS_MACOS)
+#if defined(SPY_SUPPORTS_POSIX) || defined(SPY_OS_IS_MACOS)
     if(::posix_memalign((void **)&result, std::max(Alignment, sizeof(void *)), nbelem))
       result = nullptr;
-#elif defined(EVE_COMP_IS_MSVC)
+#elif defined(SPY_COMPILER_IS_MSVC)
     result = ::_aligned_malloc(nbelem, Alignment);
 #else
     constexpr auto alignment = std::max(Alignment, sizeof(void *));
