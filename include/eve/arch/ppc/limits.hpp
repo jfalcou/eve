@@ -35,8 +35,8 @@ namespace eve
     using largest_real  = float;
     using smallest_real = float;
 
-    static constexpr std::size_t bits               = 128;
-    static constexpr std::size_t bytes              = 16;
+    static constexpr std::size_t bits           = 128;
+    static constexpr std::size_t bytes          = 16;
     static constexpr bool        is_bit_logical = true;
 
     template<typename Type>
@@ -67,8 +67,8 @@ namespace eve
     using largest_real  = double;
     using smallest_real = float;
 
-    static constexpr std::size_t bits               = 128;
-    static constexpr std::size_t bytes              = 16;
+    static constexpr std::size_t bits           = 128;
+    static constexpr std::size_t bytes          = 16;
     static constexpr bool        is_bit_logical = true;
 
     template<typename Type>
