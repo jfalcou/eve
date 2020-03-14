@@ -22,8 +22,8 @@ TTS_CASE("Check eve::lookup behavior")
 {
   using index_t = eve::detail::as_integer_t<EVE_TYPE>;
 
-  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t( 0) ), (EVE_TYPE(42)) );
-  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t(-1) ), (EVE_TYPE(0))  );
+  TTS_EXPECT( eve::lookup((EVE_TYPE(42)), index_t( 0) ) == (EVE_TYPE(42)) );
+  TTS_EXPECT( eve::lookup((EVE_TYPE(42)), index_t(-1) ) == (EVE_TYPE(0))  );
 
   #if defined(EVE_SIMD_TESTS)
 

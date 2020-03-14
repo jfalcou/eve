@@ -17,25 +17,37 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_mask.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/constant/zero.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename I, typename N, typename X, typename Y>
   EVE_FORCEINLINE auto lookup_(EVE_SUPPORTS(cpu_)
-                              , wide<T,N,X> const &a, wide<I,N,Y> const &idx) noexcept
+                              , wide<T,N,X> const &a, wide<I,N,Y> const &ind) noexcept
   requires( wide<T,N,X>, behave_as<integral,I> )
   {
     using type = wide<T,N,X>;
 
     if constexpr( std::is_signed_v<I> )
     {
-      return  apply<N::value>([&](auto... v) { return type{a[ idx[v]<0 ? 0 : idx[v]]...}; })
-            & bit_mask(idx>=0);
+      return  apply<N::value> ( [&](auto... v)
+                                {
+                                  auto idx = if_else(ind>=0,ind,eve::zero_);
+                                  return type(a[ idx[v] ]...);
+                                }
+                              )
+            & bit_mask(ind>=0);
     }
     else
     {
-      return  apply<N::value>([&](auto... v) { return type{a[idx[v]<N::value ? idx[v] : 0]...}; })
-            & bit_mask(idx<N::value);
+      return  apply<N::value> ( [&](auto... v)
+                                {
+                                  auto idx = if_else(ind<N::value,ind,eve::zero_);
+                                  return type(a[ idx[v] ]...);
+                                }
+                              )
+             &  bit_mask(ind<N::value);
     }
   }
 }
