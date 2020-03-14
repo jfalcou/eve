@@ -23,7 +23,6 @@ TTS_CASE("Check eve::lookup behavior")
   using index_t = eve::detail::as_integer_t<EVE_TYPE>;
 
   #if defined(EVE_SIMD_TESTS)
-
   EVE_TYPE    value{[](auto i, auto)       { return static_cast<EVE_VALUE>(1+i); } };
   EVE_TYPE    reference{[](auto i, auto c) { return static_cast<EVE_VALUE>(c-i); } };
   index_t indexes{[](auto i, auto c) { return c-i-1; } };
