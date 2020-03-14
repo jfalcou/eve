@@ -27,18 +27,15 @@ namespace eve
 
   //================================================================================================
   // Runtime detection of CPU support
-  inline bool is_supported(arm_ const &) noexcept
+  template<auto Version>
+  inline bool is_supported(spy::arm_simd_info<Version> const &) noexcept
   {
-#if defined(EVE_ARCH_IS_ARM)
-    return true; // Fix later
-#else
     return false;
-#endif
   }
 
   //================================================================================================
   // NEON extension tag object
-  inline const arm_ neon = {};
+  inline constexpr auto neon = spy::neon_;
 }
 
 #endif
