@@ -50,6 +50,7 @@ function(add_bench root)
                                   ${googlebenchmark_SOURCE_DIR}/src
                                   ${PROJECT_SOURCE_DIR}/benchmark
                                   ${PROJECT_SOURCE_DIR}/include
+                                  ${Boost_INCLUDE_DIRS}
                               )
 
     target_link_libraries(${bench} benchmark)

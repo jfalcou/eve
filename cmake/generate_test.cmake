@@ -66,6 +66,7 @@ function(generate_test root rootpath dep file)
                                 ${tts_SOURCE_DIR}/include
                                 ${PROJECT_SOURCE_DIR}/test
                                 ${PROJECT_SOURCE_DIR}/include
+                                ${Boost_INCLUDE_DIRS}
                             )
 
   # No OpenMP 3.1 on MSVC
