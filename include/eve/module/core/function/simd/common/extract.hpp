@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   extract_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v0, U const &u) noexcept
   {
-    return logical<T>(extract(v0.bits(), u));
+    return v0[ u ];
   }
 }
 
