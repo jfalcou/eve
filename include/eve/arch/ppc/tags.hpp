@@ -13,36 +13,29 @@
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/ppc/predef.hpp>
-#include <eve/detail/architecture.hpp>
 
 namespace eve
 {
+  //================================================================================================
   // Tag for all PPC SIMD ABI
-  struct ppc_
-  {
-  };
+  struct ppc_ {};
 
-  // dispatching tag for V*X SIMD implementation
-  struct vmx_ : simd_
-  {
-    using parent               = simd_;
-    static constexpr int order = EVE_VMX_VERSION;
-  };
-  struct vsx_ : vmx_
-  {
-    using parent               = vmx_;
-    static constexpr int order = EVE_VSX_VERSION;
-  };
+  //================================================================================================
+  // Dispatching tag for V*X SIMD implementation
+  struct vmx_ : simd_ { using parent  = simd_;};
+  struct vsx_ : vmx_  { using parent  = vmx_; };
 
+  //================================================================================================
   // V*X extension tag objects
   inline const vmx_ vmx = {};
   inline const vsx_ vsx = {};
 
+  //================================================================================================
   // Runtime detection of CPU support
 #if defined(EVE_ARCH_IS_PPC)
   inline bool is_supported(vmx_ const &) noexcept
   {
-    return true; // Fix later
+    return false;
   }
 
   // Runtime detection of CPU support

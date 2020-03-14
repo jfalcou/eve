@@ -14,15 +14,11 @@
 #include <eve/module/core/function/simd/common/bit_not.hpp>
 
 #if defined(EVE_HW_POWERPC)
-#  if EVE_HW_POWERPC >= EVE_VMX_VERSION
-#    include <eve/module/core/function/simd/ppc/bit_not.hpp>
-#  endif
+#  include <eve/module/core/function/simd/ppc/bit_not.hpp>
 #endif
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/bit_not.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/bit_not.hpp>
 #endif
 
 #endif

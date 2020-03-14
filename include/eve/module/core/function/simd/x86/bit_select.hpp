@@ -11,8 +11,8 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_BIT_SELECT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/compiler.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
@@ -50,7 +50,7 @@ namespace eve::detail
     }
   }
 
-#if defined(EVE_COMP_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
   template<typename U, typename T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> bit_select_(EVE_SUPPORTS(avx_),
                                                    wide<U, N, avx_> const &v0,

@@ -14,8 +14,10 @@
 #include <eve/arch/arm/predef.hpp>
 #include <cstddef>
 
+//==================================================================================================
 // Register count
 #if defined(EVE_HW_ARM)
+
 namespace eve
 {
   struct register_count
@@ -25,23 +27,22 @@ namespace eve
   };
 }
 
+//==================================================================================================
 // NEON SIMD ABI
-#  if !defined(EVE_CURRENT_ABI)
-#    if EVE_HW_ARM == EVE_NEON_VERSION
-#      define EVE_CURRENT_ABI ::eve::arm_
-#      include <arm_neon.h>
-#    endif
+# if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
+#  include <arm_neon.h>
+#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
+#   define EVE_CURRENT_ABI ::eve::arm_
+#   define EVE_CURRENT_API ::eve::neon128_
 #  endif
-#  if !defined(__aarch64__)
-#    ifndef EVE_NO_DENORMALS
-#      define EVE_NO_DENORMALS
-#    endif
-#  endif
-#endif
+# endif
 
-// NEON SIMD API
-#if !defined(EVE_CURRENT_API)
-#  define EVE_CURRENT_API ::eve::neon128_
+# if !defined(__aarch64__)
+#  ifndef EVE_NO_DENORMALS
+#   define EVE_NO_DENORMALS
+#  endif
+# endif
+
 #endif
 
 #endif

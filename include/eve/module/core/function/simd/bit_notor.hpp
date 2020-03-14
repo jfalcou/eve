@@ -15,9 +15,7 @@
 #include <eve/module/core/function/simd/common/bit_notor.hpp>
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/bit_notor.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/bit_notor.hpp>
 #endif
 
 #endif

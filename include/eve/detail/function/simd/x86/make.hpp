@@ -12,12 +12,12 @@
 #define EVE_DETAIL_FUNCTION_SIMD_X86_MAKE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/as.hpp>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
@@ -182,7 +182,7 @@ namespace eve::detail
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 
