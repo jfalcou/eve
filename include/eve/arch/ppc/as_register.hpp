@@ -12,7 +12,6 @@
 #define EVE_ARCH_PPC_AS_REGISTER_HPP_INCLUDED
 
 #include <eve/arch/ppc/predef.hpp>
-#include <eve/ext/as_register.hpp>
 #include <type_traits>
 
 namespace eve
@@ -22,134 +21,91 @@ namespace eve
   struct ppc_;
 }
 
-#if EVE_HW_POWERPC >= EVE_VMX_VERSION
-namespace eve::ext
+#if defined(EVE_HW_POWERPC)
+namespace eve
 {
-  template<typename Size>
-  struct as_register<float, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
+  template<typename T, typename Size> struct as_register<T, Size, eve::ppc_>
   {
-    using type = __vector float;
+    static constexpr bool size_check(std::size_t t, std::size_t s)
+    {
+      return (sizeof(T) == t) && (Size::value <= s);
+    }
+
+    static constexpr auto find()
+    {
+      if constexpr( std::is_same_v<T,float> && Size::value <= 4) { return (__vector float){}; }
+      else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
+      {
+        if constexpr(spy::simd_instruction_set == spy::vsx_)  { return (__vector double){}; }
+        else                                                  { return emulated_{};         }
+      }
+      else if constexpr( std::is_integral_v<T> )
+      {
+        constexpr bool signed_v = std::is_signed_v<T>;
+
+        if constexpr( signed_v && size_check(1,16)) return (__vector signed char){};
+        if constexpr( signed_v && size_check(2,8 )) return (__vector signed short){};
+        if constexpr( signed_v && size_check(4,4 )) return (__vector signed int){};
+        if constexpr(!signed_v && size_check(1,16)) return (__vector unsigned char){};
+        if constexpr(!signed_v && size_check(2,8 )) return (__vector unsigned short){};
+        if constexpr(!signed_v && size_check(4,4 )) return (__vector unsigned int){};
+
+        if constexpr(spy::simd_instruction_set == spy::vsx_)
+        {
+          if constexpr( signed_v && size_check(8,2)) return (__vector signed long){};
+          if constexpr(!signed_v && size_check(8,2)) return (__vector unsigned long){};
+        }
+        else
+        {
+          if constexpr( size_check(8,1) ) return emulated_{};
+        }
+      }
+    }
+
+    using type = decltype(find());
+    static_assert( !std::is_void_v<type>, "[eve ppc] - Type is not usable in a SIMD register");
   };
 
-  template<typename Size>
-  struct as_register<std::int32_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
+  template<typename T, typename Size> struct as_register<logical<T>, Size, eve::ppc_>
   {
-    using type = __vector signed int;
-  };
+    static constexpr bool size_check(std::size_t t, std::size_t s)
+    {
+      return (sizeof(T) == t) && (Size::value <= s);
+    }
 
-  template<typename Size>
-  struct as_register<std::int16_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 8)>>
-  {
-    using type = __vector signed short;
-  };
+    static constexpr auto find()
+    {
+      if constexpr( std::is_same_v<T,float> && Size::value <= 4) { return (__vector __bool int){}; }
+      else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
+      {
+        if constexpr(spy::simd_instruction_set == spy::vsx_)  { return (__vector __bool long){}; }
+        else                                                  { return emulated_{}; }
+      }
+      else if constexpr( std::is_integral_v<T> )
+      {
+        constexpr bool signed_v = std::is_signed_v<T>;
 
-  template<typename Size>
-  struct as_register<std::int8_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 16)>>
-  {
-    using type = __vector signed char;
-  };
+        if constexpr( signed_v && size_check(1,16) ) return (__vector __bool char){};
+        if constexpr( signed_v && size_check(2,8 ) ) return (__vector __bool short){};
+        if constexpr( signed_v && size_check(4,4 ) ) return (__vector __bool int){};
+        if constexpr(!signed_v && size_check(1,16) ) return (__vector __bool char){};
+        if constexpr(!signed_v && size_check(2,8 ) ) return (__vector __bool short){};
+        if constexpr(!signed_v && size_check(4,4 ) ) return (__vector __bool int){};
 
-  template<typename Size>
-  struct as_register<std::uint32_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
-  {
-    using type = __vector unsigned int;
-  };
+        if constexpr(spy::simd_instruction_set == spy::vsx_)
+        {
+          if constexpr( signed_v && size_check(8,2) ) return (__vector __bool long){};
+          if constexpr(!signed_v && size_check(8,2) ) return (__vector __bool long){};
+        }
+        else
+        {
+          if constexpr(size_check(8,2) ) return emulated_{};
+        }
+      }
+    }
 
-  template<typename Size>
-  struct as_register<std::uint16_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 8)>>
-  {
-    using type = __vector unsigned short;
-  };
-
-  template<typename Size>
-  struct as_register<std::uint8_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 16)>>
-  {
-    using type = __vector unsigned char;
-  };
-
-  // logical cases
-  template<typename Size>
-  struct as_register<logical<float>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
-  {
-    using type = __vector __bool int;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::int32_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
-  {
-    using type = __vector __bool int;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::int16_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 8)>>
-  {
-    using type = __vector __bool short;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::int8_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 16)>>
-  {
-    using type = __vector __bool char;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::uint32_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 4)>>
-  {
-    using type = __vector __bool int;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::uint16_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 8)>>
-  {
-    using type = __vector __bool short;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::uint8_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 16)>>
-  {
-    using type = __vector __bool char;
-  };
-}
-#endif
-
-#if EVE_HW_POWERPC >= EVE_VSX_VERSION
-namespace eve::ext
-{
-  template<typename Size>
-  struct as_register<double, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector double;
-  };
-
-  template<typename Size>
-  struct as_register<std::int64_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector signed long;
-  };
-
-  template<typename Size>
-  struct as_register<std::uint64_t, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector unsigned long;
-  };
-
-  // logical cases
-  template<typename Size>
-  struct as_register<logical<double>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector __bool long;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::int64_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector __bool long;
-  };
-
-  template<typename Size>
-  struct as_register<logical<std::uint64_t>, Size, eve::ppc_, std::enable_if_t<(Size::value <= 2)>>
-  {
-    using type = __vector __bool long;
+    using type = decltype(find());
+    static_assert( !std::is_void_v<type>, "[eve ppc] - Type is not usable in a SIMD register");
   };
 }
 #endif

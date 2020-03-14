@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
-    using type = ext::as_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
     type that  = {static_cast<T>(vs)...};
     return that;
   }
@@ -35,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto make(as_<T> const &, eve::ppc_ const &, V v) noexcept
   {
     auto impl = [&](auto... I) {
-      using type = ext::as_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
+      using type = as_register_t<T, expected_cardinal_t<T>, eve::ppc_>;
 
       auto u   = static_cast<T>(v);
       auto val = [](auto vv, auto const &) { return vv; };
@@ -51,7 +51,7 @@ namespace eve::detail
   template<typename T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
-    using type = ext::as_register_t<logical<T>, fixed<sizeof...(vs)>, eve::ppc_>;
+    using type = as_register_t<logical<T>, fixed<sizeof...(vs)>, eve::ppc_>;
     type that  = {logical<T>(vs).bits()...};
     return that;
   }
@@ -61,7 +61,7 @@ namespace eve::detail
   {
     using ltype = logical<T>;
     auto impl   = [&](auto... I) {
-      using type = ext::as_register_t<ltype, expected_cardinal_t<ltype>, eve::ppc_>;
+      using type = as_register_t<ltype, expected_cardinal_t<ltype>, eve::ppc_>;
 
       auto u   = ltype(v).bits();
       auto val = [](auto vv, auto const &) { return vv; };
