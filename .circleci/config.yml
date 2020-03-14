@@ -213,7 +213,15 @@ workflows:
           requires:
             - gcc_x86
             - clang_x86
+      - ppc64:
+          requires:
+            - gcc_x86
+            - clang_x86
       - arm_aarch64_neon:
+          requires:
+            - gcc_x86
+            - clang_x86
+      - ppc64_vsx:
           requires:
             - gcc_x86
             - clang_x86
