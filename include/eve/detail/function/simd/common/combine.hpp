@@ -45,10 +45,12 @@ namespace eve::detail
       that_t that;
 
       // Ugly type-punning for performance issues
-      // TODO(joel) - Investigate std::bless ?
-      auto tl = (typename wide<T, N, ABI>::storage_type*)(&that.storage().segments[0]);
-      *tl++ = l;
-      *tl   = h;
+      auto const *srcl = reinterpret_cast<detail::alias_t<std::byte const> *>(&l);
+      auto const *srch = reinterpret_cast<detail::alias_t<std::byte const> *>(&h);
+      auto *      dst  = reinterpret_cast<detail::alias_t<std::byte> *>(&that);
+
+      std::memcpy(dst           , srcl, sizeof(l));
+      std::memcpy(dst+sizeof(l) , srch, sizeof(h));
 
       return that;
     }
