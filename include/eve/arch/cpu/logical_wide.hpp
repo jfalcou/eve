@@ -156,7 +156,24 @@ namespace eve
     EVE_FORCEINLINE logical(logical<wide<Type, HalfSize, Other>> const &l,
                             logical<wide<Type, HalfSize, Other>> const &h,
                             std::enable_if_t<static_size == 2 * HalfSize::value> * = 0)
-        : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
+        : logical ( [&l,&h]()
+                    {
+                      if constexpr(detail::is_aggregated_v<ABI> || detail::is_emulated_v<ABI>)
+                      {
+                        return logical( detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits())
+                                      , from_bits
+                                      ).storage();
+                      }
+                      else
+                      {
+                        return (storage_type) ( detail::combine ( EVE_CURRENT_API{}
+                                                                , l.bits(), h.bits()
+                                                                )
+                                              );
+                      }
+                    }
+                    ()
+                  )
     {
     }
 
