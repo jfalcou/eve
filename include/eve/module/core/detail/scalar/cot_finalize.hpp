@@ -30,16 +30,17 @@
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto cot_finalize(T a0,  T fn, T xr, T dxr = T(0)) noexcept
+  EVE_FORCEINLINE constexpr auto cot_finalize(T a0,  T fn, T xr, T dxr) noexcept
   requires(T, vectorizable<T>)
   {
-    if (abs(a0) < Eps<T>()) return rec(a0); 
+    if (abs(a0) < Eps<T>()) return pedantic_(rec)(a0); 
     if (is_not_finite(a0)) return Nan<T>();
     T y = tancot_eval(xr);
     y =  (int(fn)&1) ? -y: rec(y);
     if (dxr) y+= dxr*fma(y, y, One<T>()); 
     return bit_xor(y, bitofsign(a0));
   }
+
 }
 
 #endif

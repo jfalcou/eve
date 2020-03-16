@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_TANPI_HPP_INCLUDED
 
 #include <eve/function/scalar/tanpi.hpp>
-//#include <eve/function/simd/tanpi.hpp>
+#include <eve/function/simd/tanpi.hpp>
 
 #endif

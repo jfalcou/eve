@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr wide<T, N, ABI> cot_finalize( wide<T, N, ABI> const & a0
                                                         , wide<T, N, ABI> const & n
                                                         , wide<T, N, ABI> const & xr
-                                                        , wide<T, N, ABI> const & dxr = wide<T, N, ABI>(0)) noexcept
+                                                        , wide<T, N, ABI> const & dxr) noexcept
   {
     using t_t = wide<T, N, ABI>; 
     auto tmp = binarize( n >= t_t(2));
@@ -47,7 +47,7 @@ namespace eve::detail
     t_t y = tancot_eval(xr);
     y = if_else(test,rec(y),-y);    
     y = fma(dxr, fma(y, y, One<T>()), y); 
-    return if_else(abs(a0) < Eps<t_t>(), rec(a0), bit_xor(y, bitofsign(a0)));
+    return if_else(abs(a0) < Eps<t_t>(), pedantic_(rec)(a0), bit_xor(y, bitofsign(a0)));
   }
 }
 

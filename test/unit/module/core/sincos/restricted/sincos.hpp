@@ -11,14 +11,10 @@
 #include <eve/function/sincos.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/nbmantissabits.hpp>
+#include <type_traits>
 #include <utility>
 #include <cmath>
 
@@ -30,8 +26,8 @@ TTS_CASE("Check sincos  return type")
 TTS_CASE("Check (eve::sincos behavior")
 {
   static const int N = 6; 
-  EVE_VALUE x[N] = {   eve::Pi<EVE_VALUE>()/8, -eve::Pi<EVE_VALUE>()/8
-                   , eve::Pi<EVE_VALUE>()/4, -eve::Pi<EVE_VALUE>()/4
+  EVE_VALUE x[N] = {   eve::One<EVE_VALUE>()/8, -eve::One<EVE_VALUE>()/8
+                   , eve::One<EVE_VALUE>()/4, -eve::One<EVE_VALUE>()/4
                    , EVE_VALUE(1), EVE_VALUE(-1)}; 
   
   for(int i=0; i < 4 ; ++i)
