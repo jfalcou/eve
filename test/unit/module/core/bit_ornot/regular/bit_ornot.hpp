@@ -54,27 +54,12 @@ TTS_CASE( "Check eve::bit_ornot behavior")
   auto vu = bit_cast(su, as<EVE_VALUE>());
   auto vd = bit_cast(sd, as<EVE_VALUE>());
 
-  TTS_SUBCASE("wide<T> x wide<T> case")
-  {
-    TTS_EQUAL(eve::bit_ornot(tu,td),tn);
-    TTS_EQUAL(eve::bit_ornot(td,tu),tm);
-  }
-
-  TTS_SUBCASE("wide<T> x T case")
-  {
-    TTS_EQUAL(eve::bit_ornot(tu,vd),tn);
-    TTS_EQUAL(eve::bit_ornot(td,vu),tm);
-  }
-
-  TTS_SUBCASE("wide<T> x wide<U> case")
-  {
-    TTS_EQUAL(eve::bit_ornot(tu,ud),tn);
-    TTS_EQUAL(eve::bit_ornot(td,uu),tm);
-  }
-
-  TTS_SUBCASE("wide<T> x U case")
-  {
-    TTS_EQUAL(eve::bit_ornot(tu,sd),tn);
-    TTS_EQUAL(eve::bit_ornot(td,su),tm);
-  }
+  TTS_EQUAL(eve::bit_ornot(tu,td),tn);
+  TTS_EQUAL(eve::bit_ornot(td,tu),tm);
+  TTS_EQUAL(eve::bit_ornot(tu,vd),tn);
+  TTS_EQUAL(eve::bit_ornot(td,vu),tm);
+  TTS_EQUAL(eve::bit_ornot(tu,ud),tn);
+  TTS_EQUAL(eve::bit_ornot(td,uu),tm);
+  TTS_EQUAL(eve::bit_ornot(tu,sd),tn);
+  TTS_EQUAL(eve::bit_ornot(td,su),tm);
 }

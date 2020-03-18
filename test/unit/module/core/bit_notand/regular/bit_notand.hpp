@@ -50,35 +50,23 @@ TTS_CASE( "Check eve::bit_notand behavior")
   auto vu = bit_cast(su, as<EVE_VALUE>());
   auto vd = bit_cast(sd, as<EVE_VALUE>());
 
-  TTS_SUBCASE("wide<T> x wide<T> case")
-  {
-    TTS_EQUAL(eve::bit_notand(tu,tu),tz);
-    TTS_EQUAL(eve::bit_notand(tu,td),td);
-    TTS_EQUAL(eve::bit_notand(td,tu),tu);
-    TTS_EQUAL(eve::bit_notand(td,td),tz);
-  }
+  TTS_EQUAL(eve::bit_notand(tu,tu),tz);
+  TTS_EQUAL(eve::bit_notand(tu,td),td);
+  TTS_EQUAL(eve::bit_notand(td,tu),tu);
+  TTS_EQUAL(eve::bit_notand(td,td),tz);
 
-  TTS_SUBCASE("wide<T> x T case")
-  {
-    TTS_EQUAL(eve::bit_notand(tu,vu),tz);
-    TTS_EQUAL(eve::bit_notand(tu,vd),td);
-    TTS_EQUAL(eve::bit_notand(td,vu),tu);
-    TTS_EQUAL(eve::bit_notand(td,vd),tz);
-  }
+  TTS_EQUAL(eve::bit_notand(tu,vu),tz);
+  TTS_EQUAL(eve::bit_notand(tu,vd),td);
+  TTS_EQUAL(eve::bit_notand(td,vu),tu);
+  TTS_EQUAL(eve::bit_notand(td,vd),tz);
 
-  TTS_SUBCASE("wide<T> x wide<U> case")
-  {
-    TTS_EQUAL(eve::bit_notand(tu,uu),tz);
-    TTS_EQUAL(eve::bit_notand(tu,ud),td);
-    TTS_EQUAL(eve::bit_notand(td,uu),tu);
-    TTS_EQUAL(eve::bit_notand(td,ud),tz);
-  }
+  TTS_EQUAL(eve::bit_notand(tu,uu),tz);
+  TTS_EQUAL(eve::bit_notand(tu,ud),td);
+  TTS_EQUAL(eve::bit_notand(td,uu),tu);
+  TTS_EQUAL(eve::bit_notand(td,ud),tz);
 
-  TTS_SUBCASE("wide<T> x U case")
-  {
-    TTS_EQUAL(eve::bit_notand(tu,su),tz);
-    TTS_EQUAL(eve::bit_notand(tu,sd),td);
-    TTS_EQUAL(eve::bit_notand(td,su),tu);
-    TTS_EQUAL(eve::bit_notand(td,sd),tz);
-  }
+  TTS_EQUAL(eve::bit_notand(tu,su),tz);
+  TTS_EQUAL(eve::bit_notand(tu,sd),td);
+  TTS_EQUAL(eve::bit_notand(td,su),tu);
+  TTS_EQUAL(eve::bit_notand(td,sd),tz);
 }

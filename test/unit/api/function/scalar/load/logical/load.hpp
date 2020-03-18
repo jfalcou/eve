@@ -21,30 +21,33 @@ using eve::logical;
 
 TTS_CASE("load behavior for scalar logical")
 {
-  logical<EVE_TYPE> value, ref = true, data[ 1 ] = {true};
-
-  TTS_SUBCASE("a pointer to scalar")
+  TTS_WHEN("A value is initialized")
   {
-    value = eve::load(&ref);
-    TTS_EQUAL(value, ref);
-  }
+    logical<EVE_TYPE> value, ref = true, data[ 1 ] = {true};
 
-  TTS_SUBCASE("an aligned pointer to scalar")
-  {
-    value = eve::load(eve::as_aligned(&ref));
-    TTS_EQUAL(value, ref);
-  }
+    TTS_AND_THEN("we load a pointer to scalar")
+    {
+      value = eve::load(&ref);
+      TTS_EQUAL(value, ref);
+    }
 
-  TTS_SUBCASE("a pointer to scalar values")
-  {
-    value = eve::load(&data[ 0 ], eve::as(value));
-    TTS_EQUAL(value, ref);
-  }
+    TTS_AND_THEN("we load an aligned pointer to scalar")
+    {
+      value = eve::load(eve::as_aligned(&ref));
+      TTS_EQUAL(value, ref);
+    }
 
-  TTS_SUBCASE("an aligned pointer to scalar values")
-  {
-    value = eve::load(eve::as_aligned(&data[ 0 ]), eve::as(value));
-    TTS_EQUAL(value, ref);
+    TTS_AND_THEN("we load a pointer to scalar values")
+    {
+      value = eve::load(&data[ 0 ], eve::as(value));
+      TTS_EQUAL(value, ref);
+    }
+
+    TTS_AND_THEN("we load an aligned pointer to scalar values")
+    {
+      value = eve::load(eve::as_aligned(&data[ 0 ]), eve::as(value));
+      TTS_EQUAL(value, ref);
+    }
   }
 }
 

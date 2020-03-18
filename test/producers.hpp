@@ -12,126 +12,75 @@
 #define TEST_PRODUCERS_HPP
 
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/nb_values.hpp>
 #include <eve/function/next.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/clamp.hpp>
-#include <eve/function/min.hpp>
-#include <eve/constant/valmax.hpp>
+#include <tts/tests/exhaustive_range.hpp>
+#include <tts/tests/random_range.hpp>
 #include <algorithm>
 #include <random>
 
 namespace eve
 {
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  template<typename T>  struct rng_producer : tts::producer<rng_producer<T>>
+  template<typename T>
+  struct rng_producer : tts::rng_producer<eve::detail::value_type_t<T>>
   {
     using base_type  = eve::detail::value_type_t<T>;
+    using parent = tts::rng_producer<eve::detail::value_type_t<T>>;
     using value_type = T;
-
-    using distribution_type = std::conditional_t< std::is_floating_point_v<base_type>
-                                                , std::uniform_real_distribution<base_type>
-                                                , std::uniform_int_distribution<base_type>
-                                                >;
-
-    T first() const noexcept  { return first_; }
-    T last()  const noexcept  { return last_;  }
-
     T next() noexcept
     {
       T that;
       std::generate ( tts::detail::begin(that),
                       tts::detail::end(that),
-                      [&](){ return distribution_(generator_); }
+                      [&](){ return this->distribution_(this->generator_); }
                     );
       return that;
     }
 
-    std::size_t size() const noexcept { return size_; }
-
-    static auto max() noexcept { return eve::Valmax<base_type>(); }
-
-    template<typename U, typename V>
-    rng_producer(U mn, V mx)
-      : distribution_(static_cast<base_type>(mn),static_cast<base_type>(mx))
-      , first_(mn)
-      , last_(mx)
-      , seed_{std::size_t(this->prng_seed()), std::size_t(0), std::size_t(1), this->count()}
-      , generator_(seed_)
-      , size_(this->count())
-    {
-    }
+    template<typename U, typename V> rng_producer(U mn, V mx) : parent(mn,mx) {}
 
     template<typename P>
     rng_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t s)
-                  : distribution_(src.self().distribution_)
-                  , seed_{std::size_t(this->prng_seed()),i0,i1,s}
-                  , generator_(seed_)
-                  , size_(src.self().size_)
+                  : parent(src,i0,i1,s)
     {}
-
-    private:
-    distribution_type distribution_;
-    T                 first_;
-    T                 last_;
-    std::seed_seq     seed_;
-    std::mt19937      generator_;
-    std::size_t       size_;
   };
 
   //////////////////////////////////////////////////////////////////////
   template<typename T>
-  struct exhaustive_producer : tts::producer<exhaustive_producer<T>>
+  struct exhaustive_producer : tts::exhaustive_producer<eve::detail::value_type_t<T>>
   {
     using base_type  = eve::detail::value_type_t<T>;
-    using bit_type   = eve::detail::as_integer_t<base_type,signed>;
+    using parent  = tts::exhaustive_producer<base_type>;
     using value_type = T;
 
-    T first() const noexcept  { return first_;  }
-    T last()  const noexcept  { return last_;   }
     T next() noexcept
     {
-      T that( current_ );
-      current_ = eve::next(current_, eve::cardinal_v<T>);
-      return eve::clamp(that, pmi_, pmx_);
+      T that( this->current_ );
+      this->current_ = eve::next(this->current_, eve::cardinal_v<T>);
+      return eve::clamp(that, this->pmi_, this->pmx_);
     }
 
-    static auto max() noexcept { return eve::Valmax<base_type>(); }
-
-    std::size_t size() const noexcept { return size_; }
-
     template<typename U, typename V>
-    exhaustive_producer(U mn, V mx)
-                : current_( T(mn) )
-                , first_(mn), last_(mx)
-                , pmi_(base_type(mn))
-                , pmx_(eve::prev(base_type(mx)))
-                , size_ ( eve::nb_values(base_type(mn),base_type(mx)) )
+    exhaustive_producer(U mn, V mx) : parent(mn,mx)
     {
-      auto p = tts::detail::begin(current_);
+      auto p = tts::detail::begin(this->current_);
 
       for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
       {
         *p = eve::next(*p,i);
-        *p = eve::clamp(*p, pmi_, pmx_);
+        *p = eve::clamp(*p, this->pmi_, this->pmx_);
         ++p;
       }
     }
 
     template<typename P>
-    exhaustive_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t)
-                  : exhaustive_producer(src.self())
+    exhaustive_producer ( P const& src, std::size_t i0, std::size_t i1, std::size_t s)
+                  : parent(src,i0,i1,s)
     {
-      current_ = eve::next(current_,i0);
-      current_ = eve::clamp(current_, pmi_, pmx_);
+      this->current_ = eve::next(this->current_,i0);
+      this->current_ = eve::clamp(this->current_, this->pmi_, this->pmx_);
     }
-
-    private:
-    T           current_;
-    T           first_, last_;
-    base_type   pmi_, pmx_;
-    std::size_t size_;
   };
 }
 

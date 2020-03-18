@@ -33,30 +33,33 @@ TTS_CASE_TPL("load behavior for wide",
   alignas(wide_t::static_alignment) std::array<EVE_TYPE, T::value> data;
   for(int i = 0; i < T::value; ++i) data[ i ] = filler(i, 0);
 
-  wide_t simd, ref(filler);
-
-  TTS_SUBCASE("a pointer to wide")
+  TTS_WHEN("We initialize some value")
   {
-    simd = eve::load(&ref);
-    TTS_EQUAL(simd, ref);
-  }
+    wide_t simd, ref(filler);
 
-  TTS_SUBCASE("an aligned pointer to wide")
-  {
-    simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&ref));
-    TTS_EQUAL(simd, ref);
-  }
+    TTS_AND_THEN("We load a pointer to wide")
+    {
+      simd = eve::load(&ref);
+      TTS_EQUAL(simd, ref);
+    }
 
-  TTS_SUBCASE("a pointer to scalar values")
-  {
-    simd = eve::load(&data[ 0 ], eve::as(simd));
-    TTS_EQUAL(simd, ref);
-  }
+    TTS_AND_THEN("We load an aligned pointer to wide")
+    {
+      simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&ref));
+      TTS_EQUAL(simd, ref);
+    }
 
-  TTS_SUBCASE("an aligned pointer to scalar values")
-  {
-    simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&data[ 0 ]), eve::as(simd));
-    TTS_EQUAL(simd, ref);
+    TTS_AND_THEN("We load a pointer to scalar values")
+    {
+      simd = eve::load(&data[ 0 ], eve::as(simd));
+      TTS_EQUAL(simd, ref);
+    }
+
+    TTS_AND_THEN("We load an aligned pointer to scalar values")
+    {
+      simd = eve::load(eve::as_aligned<wide_t::static_alignment>(&data[ 0 ]), eve::as(simd));
+      TTS_EQUAL(simd, ref);
+    }
   }
 }
 

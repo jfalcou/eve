@@ -54,27 +54,15 @@ TTS_CASE( "Check eve::bit_notor behavior")
   auto vu = bit_cast(su, as<EVE_VALUE>());
   auto vd = bit_cast(sd, as<EVE_VALUE>());
 
-  TTS_SUBCASE("wide<T> x wide<T> case")
-  {
-    TTS_EQUAL(eve::bit_notor(tu,td),tm);
-    TTS_EQUAL(eve::bit_notor(td,tu),tn);
-  }
+  TTS_EQUAL(eve::bit_notor(tu,td),tm);
+  TTS_EQUAL(eve::bit_notor(td,tu),tn);
 
-  TTS_SUBCASE("wide<T> x T case")
-  {
-    TTS_EQUAL(eve::bit_notor(tu,vd),tm);
-    TTS_EQUAL(eve::bit_notor(td,vu),tn);
-  }
+  TTS_EQUAL(eve::bit_notor(tu,vd),tm);
+  TTS_EQUAL(eve::bit_notor(td,vu),tn);
 
-  TTS_SUBCASE("wide<T> x wide<U> case")
-  {
-    TTS_EQUAL(eve::bit_notor(tu,ud),tm);
-    TTS_EQUAL(eve::bit_notor(td,uu),tn);
-  }
+  TTS_EQUAL(eve::bit_notor(tu,ud),tm);
+  TTS_EQUAL(eve::bit_notor(td,uu),tn);
 
-  TTS_SUBCASE("wide<T> x U case")
-  {
-    TTS_EQUAL(eve::bit_notor(tu,sd),tm);
-    TTS_EQUAL(eve::bit_notor(td,su),tn);
-  }
+  TTS_EQUAL(eve::bit_notor(tu,sd),tm);
+  TTS_EQUAL(eve::bit_notor(td,su),tn);
 }

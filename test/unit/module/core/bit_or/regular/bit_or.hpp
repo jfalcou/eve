@@ -47,35 +47,23 @@ TTS_CASE( "Check eve::bit_or behavior")
   vi_t su( static_cast<vi_t>(u) );
   auto vu = bit_cast(su, as<EVE_VALUE>());
 
-  TTS_SUBCASE("wide<T> x wide<T> case")
-  {
-    TTS_EQUAL(eve::bit_or(tu,tu),tu);
-    TTS_EQUAL(eve::bit_or(tu,tz),tu);
-    TTS_EQUAL(eve::bit_or(tz,tu),tu);
-    TTS_EQUAL(eve::bit_or(tz,tz),tz);
-  }
+  TTS_EQUAL(eve::bit_or(tu,tu),tu);
+  TTS_EQUAL(eve::bit_or(tu,tz),tu);
+  TTS_EQUAL(eve::bit_or(tz,tu),tu);
+  TTS_EQUAL(eve::bit_or(tz,tz),tz);
 
-  TTS_SUBCASE("wide<T> x T case")
-  {
-    TTS_EQUAL(eve::bit_or(tu,vu),tu);
-    TTS_EQUAL(eve::bit_or(tu,vz),tu);
-    TTS_EQUAL(eve::bit_or(tz,vu),tu);
-    TTS_EQUAL(eve::bit_or(tz,vz),tz);
-  }
+  TTS_EQUAL(eve::bit_or(tu,vu),tu);
+  TTS_EQUAL(eve::bit_or(tu,vz),tu);
+  TTS_EQUAL(eve::bit_or(tz,vu),tu);
+  TTS_EQUAL(eve::bit_or(tz,vz),tz);
 
-  TTS_SUBCASE("wide<T> x wide<U> case")
-  {
-    TTS_EQUAL(eve::bit_or(tu,uu),tu);
-    TTS_EQUAL(eve::bit_or(tu,uz),tu);
-    TTS_EQUAL(eve::bit_or(tz,uu),tu);
-    TTS_EQUAL(eve::bit_or(tz,uz),tz);
-  }
+  TTS_EQUAL(eve::bit_or(tu,uu),tu);
+  TTS_EQUAL(eve::bit_or(tu,uz),tu);
+  TTS_EQUAL(eve::bit_or(tz,uu),tu);
+  TTS_EQUAL(eve::bit_or(tz,uz),tz);
 
-  TTS_SUBCASE("wide<T> x U case")
-  {
-    TTS_EQUAL(eve::bit_or(tu,vu),tu);
-    TTS_EQUAL(eve::bit_or(tu,vz),tu);
-    TTS_EQUAL(eve::bit_or(tz,vu),tu);
-    TTS_EQUAL(eve::bit_or(tz,vz),tz);
-  }
+  TTS_EQUAL(eve::bit_or(tu,vu),tu);
+  TTS_EQUAL(eve::bit_or(tu,vz),tu);
+  TTS_EQUAL(eve::bit_or(tz,vu),tu);
+  TTS_EQUAL(eve::bit_or(tz,vz),tz);
 }

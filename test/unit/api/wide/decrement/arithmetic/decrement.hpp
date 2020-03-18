@@ -34,21 +34,24 @@ TTS_CASE_TPL("Check self-decrement on wide",
 {
   using eve::wide;
 
-  wide<EVE_TYPE, T> simd(baseg), next(nextg);
-  wide<EVE_TYPE, T> prev(baseg), res;
-
-  TTS_SUBCASE("support for operator--()")
+  TTS_WHEN("A value is initialized")
   {
-    res = simd--;
-    TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-    TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
-  }
+    wide<EVE_TYPE, T> simd(baseg), next(nextg);
+    wide<EVE_TYPE, T> prev(simd), res;
 
-  TTS_SUBCASE("support for operator--(int)")
-  {
-    res = --simd;
-    TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-    TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
+    TTS_AND_THEN("We call post-decrement operator on the value")
+    {
+      res = simd--;
+      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+      TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
+    }
+
+    TTS_AND_THEN("We call pre-decrement operator on the value")
+    {
+      res = --simd;
+      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
+      TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
+    }
   }
 }
 

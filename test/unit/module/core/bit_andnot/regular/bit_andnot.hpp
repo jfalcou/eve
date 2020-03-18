@@ -50,35 +50,23 @@ TTS_CASE( "Check eve::bit_andnot behavior")
   auto vu = bit_cast(su, as<EVE_VALUE>());
   auto vd = bit_cast(sd, as<EVE_VALUE>());
 
-  TTS_SUBCASE("wide<T> x wide<T> case")
-  {
-    TTS_EQUAL(eve::bit_andnot(tu,tu),tz);
-    TTS_EQUAL(eve::bit_andnot(tu,td),tu);
-    TTS_EQUAL(eve::bit_andnot(td,tu),td);
-    TTS_EQUAL(eve::bit_andnot(td,td),tz);
-  }
+  TTS_EQUAL(eve::bit_andnot(tu,tu),tz);
+  TTS_EQUAL(eve::bit_andnot(tu,td),tu);
+  TTS_EQUAL(eve::bit_andnot(td,tu),td);
+  TTS_EQUAL(eve::bit_andnot(td,td),tz);
 
-  TTS_SUBCASE("wide<T> x T case")
-  {
-    TTS_EQUAL(eve::bit_andnot(tu,vu),tz);
-    TTS_EQUAL(eve::bit_andnot(tu,vd),tu);
-    TTS_EQUAL(eve::bit_andnot(td,vu),td);
-    TTS_EQUAL(eve::bit_andnot(td,vd),tz);
-  }
+  TTS_EQUAL(eve::bit_andnot(tu,vu),tz);
+  TTS_EQUAL(eve::bit_andnot(tu,vd),tu);
+  TTS_EQUAL(eve::bit_andnot(td,vu),td);
+  TTS_EQUAL(eve::bit_andnot(td,vd),tz);
 
-  TTS_SUBCASE("wide<T> x wide<U> case")
-  {
-    TTS_EQUAL(eve::bit_andnot(tu,uu),tz);
-    TTS_EQUAL(eve::bit_andnot(tu,ud),tu);
-    TTS_EQUAL(eve::bit_andnot(td,uu),td);
-    TTS_EQUAL(eve::bit_andnot(td,ud),tz);
-  }
+  TTS_EQUAL(eve::bit_andnot(tu,uu),tz);
+  TTS_EQUAL(eve::bit_andnot(tu,ud),tu);
+  TTS_EQUAL(eve::bit_andnot(td,uu),td);
+  TTS_EQUAL(eve::bit_andnot(td,ud),tz);
 
-  TTS_SUBCASE("wide<T> x U case")
-  {
-    TTS_EQUAL(eve::bit_andnot(tu,su),tz);
-    TTS_EQUAL(eve::bit_andnot(tu,sd),tu);
-    TTS_EQUAL(eve::bit_andnot(td,su),td);
-    TTS_EQUAL(eve::bit_andnot(td,sd),tz);
-  }
+  TTS_EQUAL(eve::bit_andnot(tu,su),tz);
+  TTS_EQUAL(eve::bit_andnot(tu,sd),tu);
+  TTS_EQUAL(eve::bit_andnot(td,su),td);
+  TTS_EQUAL(eve::bit_andnot(td,sd),tz);
 }
