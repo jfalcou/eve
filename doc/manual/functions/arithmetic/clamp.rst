@@ -29,8 +29,8 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an :ref:`Value <concept-value>`.
-* All  :ref:`concept-vectorized` parameters must share the same type
+* Each parameter ``x``, ``y`` and ``z`` must be instances of a :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type.
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
 * If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
@@ -41,11 +41,11 @@ Return value
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
 
-*****
-Notes
+
+Note
 *****
 
-  - the second and third parameters (respectively ``y`` and ``z``) must satisfy ``y<z`` or the result has undefined behaviour 
+  - the second and third parameters (respectively ``y`` and ``z``) must satisfy ``y<z`` or the result has undefined behaviour. 
 
 *******
 Example

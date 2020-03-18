@@ -53,11 +53,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_eqz.cpp
+.. include:: ../../../../test/doc/core/is_eqz.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_eqz.txt
+.. include:: ../../../../test/doc/core/is_eqz.txt
   :literal:
 

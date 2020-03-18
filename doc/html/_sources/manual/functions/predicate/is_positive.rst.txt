@@ -48,11 +48,11 @@ Synopsis
 Example
 *******
 
-.. include:: ../../../../test/doc/is_positive.cpp
+.. include:: ../../../../test/doc/core/is_positive.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_positive.txt
+.. include:: ../../../../test/doc/core/is_positive.txt
   :literal:
 

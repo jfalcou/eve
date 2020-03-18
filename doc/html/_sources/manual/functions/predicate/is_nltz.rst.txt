@@ -46,11 +46,11 @@ Synopsis
 Example
 *******
 
-.. include:: ../../../../test/doc/is_nltz.cpp
+.. include:: ../../../../test/doc/core/is_nltz.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_nltz.txt
+.. include:: ../../../../test/doc/core/is_nltz.txt
   :literal:
 

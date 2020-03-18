@@ -52,11 +52,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_gtz.cpp
+.. include:: ../../../../test/doc/core/is_gtz.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_gtz.txt
+.. include:: ../../../../test/doc/core/is_gtz.txt
   :literal:
 

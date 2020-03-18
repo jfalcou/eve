@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>acos &mdash; eve  - (internal version) documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="acosd" href="acosd.html" />
+    <link rel="prev" title="Trigonometric Functions" href="../trigonometric.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> eve
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/first.html">Your First SIMD code</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../main.html">Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../features/general.html">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bit.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../conversion.html">Conversion Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exponential.html">Exponential Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../horizontal.html">Horizontal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hyperbolic.html">Hyperbolic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ieee.html">Ieee Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../trigonometric.html">Trigonometric Functions</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">acos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acosd.html">acosd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acospi.html">acospi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acot.html">acot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acotd.html">acotd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acotpi.html">acotpi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acsc.html">acsc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acscd.html">acscd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="acscpi.html">acscpi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asec.html">asec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asecd.html">asecd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asecpi.html">asecpi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asin.html">asin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asind.html">asind</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asinpi.html">asinpi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan.html">atan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan2.html">atan2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan2d.html">atan2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atan2pi.html">atan2pi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atand.html">atand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="atanpi.html">atanpi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inpi.html">inpi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants/general.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">eve</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../main.html">Reference Documentation</a> &raquo;</li>
+        
+          <li><a href="../general.html">Functions</a> &raquo;</li>
+        
+          <li><a href="../trigonometric.html">Trigonometric Functions</a> &raquo;</li>
+        
+      <li>acos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/manual/functions/trigonometric/acos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="acosd.html" class="btn btn-neutral float-right" title="acosd" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../trigonometric.html" class="btn btn-neutral float-left" title="Trigonometric Functions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="acos">
+<span id="function-acos"></span><h1>acos<a class="headerlink" href="#acos" title="Permalink to this headline">¶</a></h1>
+<p><strong>Required header</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/acos.hpp&gt;</span></code></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
+<span class="p">{</span>
+  <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">acos</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Function object computing the inverse cosine of an <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> <strong>v</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">acos(x)</span></code> returns the arc <span class="math notranslate nohighlight">\(r\)</span> in the interval   <span class="math notranslate nohighlight">\([0, \pi[\)</span> such that <span class="math notranslate nohighlight">\(\cos(r) == x\)</span>.
+If <span class="math notranslate nohighlight">\(x\)</span> is outside <span class="math notranslate nohighlight">\([-1, 1]\)</span> the result is a Nan.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span>            <span class="o">&gt;</span> <span class="k">constexpr</span>   <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>[1] Computes elementwise the mathematical value <span class="math notranslate nohighlight">\(\arccos(v)\)</span>.</li>
+<li>[2] Computes the mathematical value <span class="math notranslate nohighlight">\(\arccos(s)\)</span>.</li>
+</ul>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><strong>v</strong> : An <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> instance</li>
+</ul>
+<p class="rubric">Return value</p>
+<ul class="simple">
+<li>[1] A value of type <strong>wide&lt;T,N&gt;</strong>.</li>
+<li>[2] A value of type <strong>T</strong>.</li>
+</ul>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div>regular (no_option) and <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">raw_</span></a> are available.</div></blockquote>
+<ul class="simple">
+<li><a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">raw_</span></a> call ensures the IEEE requisites that the call returns a Nan.If <span class="math notranslate nohighlight">\(x\)</span> is outside <span class="math notranslate nohighlight">\([-1, 1]\)</span> and
+that  <code class="docutils literal notranslate"><span class="pre">acos</span></code> returns +0 if the argument is +1. It has less accuracy near 1 than the regular call, but is 2 times speedier .</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/acos.hpp&gt;</span>
+<span class="c1">#include &lt;eve/wide.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/inf.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/minf.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/nan.hpp&gt;</span>
+<span class="c1">#include &lt;eve/constant/mindenormal.hpp&gt;</span>
+<span class="c1">#include &lt;iostream&gt;</span>
+
+<span class="n">using</span> <span class="n">wide_ft</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span> <span class="o">&lt;</span><span class="nb">float</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">wide_ft</span> <span class="n">pf</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">f</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="n">f</span>
+                <span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">Mindenormal</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Inf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Minf</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">};</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- pf =                      &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::acos(pf) =            &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span> 
+
+  <span class="nb">float</span> <span class="n">xf</span> <span class="o">=</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">;</span>
+  <span class="nb">float</span> <span class="n">yf</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">Nan</span><span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span>  <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- xf =                      &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::acos(xf) =            &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">xf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;- yf =                      &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">yf</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="o">&lt;&lt;</span> <span class="s2">&quot;-&gt; eve::acos(yf) =            &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">yf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span> 
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Possible output</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
+<span class="o">&lt;-</span> <span class="n">pf</span> <span class="o">=</span>                      <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.4013e-45</span><span class="p">,</span> <span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">=</span>            <span class="p">(</span><span class="mf">1.5708</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">3.14159</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.5708</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">,</span> <span class="o">-</span><span class="n">nan</span><span class="p">)</span>
+<span class="o">----</span> <span class="n">scalar</span>
+<span class="o">&lt;-</span> <span class="n">xf</span> <span class="o">=</span>                      <span class="mi">1</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">xf</span><span class="p">)</span> <span class="o">=</span>            <span class="mi">0</span>
+<span class="o">&lt;-</span> <span class="n">yf</span> <span class="o">=</span>                      <span class="o">-</span><span class="n">nan</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">acos</span><span class="p">(</span><span class="n">yf</span><span class="p">)</span> <span class="o">=</span>            <span class="n">nan</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="acosd.html" class="btn btn-neutral float-right" title="acosd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../trigonometric.html" class="btn btn-neutral float-left" title="Trigonometric Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joel Falcou, Jean-Thierry Lapresté
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

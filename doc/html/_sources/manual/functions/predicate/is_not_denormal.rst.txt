@@ -49,11 +49,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_not_denormal.cpp
+.. include:: ../../../../test/doc/core/is_not_denormal.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_not_denormal.txt
+.. include:: ../../../../test/doc/core/is_not_denormal.txt
   :literal:
 

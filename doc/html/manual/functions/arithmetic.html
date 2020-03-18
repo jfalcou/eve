@@ -17,35 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="add" href="arithmetic/add.html" />
+    <link rel="next" title="abs" href="arithmetic/abs.html" />
     <link rel="prev" title="Functions" href="general.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -92,17 +95,80 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features/general.html">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="general.html">Functions</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Arithmetic Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/abs.html">abs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="arithmetic/add.html">add</a></li>
-<li class="toctree-l4"><a class="reference internal" href="arithmetic/log1p.html">log1p</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/arg.html">arg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/average.html">average</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/binarize.html">binarize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/binarize_c.html">binarize_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/bitofsign.html">bitofsign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/cbrt.html">cbrt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/ceil.html">ceil</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/ceil2.html">ceil2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/clamp.html">clamp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/conj.html">conj</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/copysign.html">copysign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/dec.html">dec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/dist.html">dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/div.html">div</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/firstbitset.html">firstbitset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/firstbitunset.html">firstbitunset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/floor.html">floor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/floor2.html">floor2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/fma.html">fma</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/fms.html">fms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/fnma.html">fnma</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/fnms.html">fnms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/frac.html">frac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/hypot.html">hypot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/iceil.html">iceil</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/ifloor.html">ifloor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/inc.html">inc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/indeg.html">indeg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/inearest.html">inearest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/iround.html">iround</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/itrunc.html">itrunc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/max.html">max</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/maxmag.html">maxmag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/min.html">min</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/minmag.html">minmag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/mul.html">mul</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/nearest.html">nearest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/negate.html">negate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/negatenz.html">negatenz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/oneminus.html">oneminus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/rec.html">rec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/rem.html">rem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/round.html">round</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/rshl.html">rshl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/rshr.html">rshr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/rsqrt.html">rsqrt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/shl.html">shl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/shr.html">shr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/sign.html">sign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/signnz.html">signnz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/sqr.html">sqr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/sqr_abs.html">sqr_abs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/sqrt.html">sqrt</a></li>
 <li class="toctree-l4"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/trunc.html">trunc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/unary_minus.html">unary_minus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arithmetic/unary_plus.html">unary_plus</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html">Conversion Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exponential.html">Exponential Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="horizontal.html">Horizontal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperbolic.html">Hyperbolic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ieee.html">Ieee Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logical.html">Logical Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="predicate.html">Predicate Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trigonometric.html">Trigonometric Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="operators.html">Infix Operators</a></li>
@@ -174,10 +240,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="arithmetic/add.html" class="btn btn-neutral float-right" title="add" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="arithmetic/abs.html" class="btn btn-neutral float-right" title="abs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="general.html" class="btn btn-neutral" title="Functions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="general.html" class="btn btn-neutral float-left" title="Functions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -194,9 +260,65 @@ or functions with the one restriction that both parameters must share a type unl
 otherwise. Note also that  operations are performed within the input type’s range.</p>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/abs.html">abs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arithmetic/add.html">add</a></li>
-<li class="toctree-l1"><a class="reference internal" href="arithmetic/log1p.html">log1p</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/arg.html">arg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/average.html">average</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/binarize.html">binarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/binarize_c.html">binarize_c</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/bitofsign.html">bitofsign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/cbrt.html">cbrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/ceil.html">ceil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/ceil2.html">ceil2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/clamp.html">clamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/conj.html">conj</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/copysign.html">copysign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/dec.html">dec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/dist.html">dist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/div.html">div</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/firstbitset.html">firstbitset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/firstbitunset.html">firstbitunset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/floor.html">floor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/floor2.html">floor2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/fma.html">fma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/fms.html">fms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/fnma.html">fnma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/fnms.html">fnms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/frac.html">frac</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/hypot.html">hypot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/iceil.html">iceil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/ifloor.html">ifloor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/inc.html">inc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/indeg.html">indeg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/inearest.html">inearest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/iround.html">iround</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/itrunc.html">itrunc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/max.html">max</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/maxmag.html">maxmag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/min.html">min</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/minmag.html">minmag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/mul.html">mul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/nearest.html">nearest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/negate.html">negate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/negatenz.html">negatenz</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/oneminus.html">oneminus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/rec.html">rec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/rem.html">rem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/round.html">round</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/rshl.html">rshl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/rshr.html">rshr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/rsqrt.html">rsqrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/shl.html">shl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/shr.html">shr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/sign.html">sign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/signnz.html">signnz</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/sqr.html">sqr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/sqr_abs.html">sqr_abs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/sqrt.html">sqrt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/trunc.html">trunc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/unary_minus.html">unary_minus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/unary_plus.html">unary_plus</a></li>
 </ul>
 </div>
 </div>
@@ -209,10 +331,10 @@ otherwise. Note also that  operations are performed within the input type’s ra
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="arithmetic/add.html" class="btn btn-neutral float-right" title="add" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="arithmetic/abs.html" class="btn btn-neutral float-right" title="abs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="general.html" class="btn btn-neutral" title="Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="general.html" class="btn btn-neutral float-left" title="Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -238,27 +360,16 @@ otherwise. Note also that  operations are performed within the input type’s ra
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

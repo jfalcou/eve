@@ -20,40 +20,38 @@ Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename M, typename N> wide<T,N> operator()( wide<T,N> const& v ) noexcept;
-   template<typename T, typename U> constexpr   T         operator()( T s ) noexcept;
+   template<typename T>  U operator()( T const& x) noexcept;
 
-* [1] Performs the bit COMPLEMENT of **v**.
-* [2] Performs the bit COMPLEMENT of **s**.
 
-.. rubric:: Parameters
+* Returns the bit COMPLEMENT of ``x``.
 
-* **v**, **w**: Instance of :ref:`type-wide` .
-* **s**, **t**: Scalar value.
+Parameter
+*********
 
-.. rubric:: Return value
+* Instance of a :ref:`Value <concept-value>`.
 
-* [1,2,3] A value with the same type as the parameter.
+Return value
+**************
 
-.. rubric:: Notes
+* A value with the same type as the parameter.
+
+Notes
+******
+
 
 * There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bit_not`.
-  This implies that calls to:ref:`function-bit_not` on :ref:`IEEEvalues <concept-IEEEvalue>` are possible.
+  This implies that calls to :ref:`function-bit_not` on :ref:`Ieee values <concept-IEEEvalue>` are possible.
 
-*******
-Options
-*******
 
 *******
 Example
 *******
 
-.. include:: ../../../../test/doc/bit_not.cpp
+.. include:: ../../../../test/doc/core/bit_not.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bit_not.txt
+.. include:: ../../../../test/doc/core/bit_not.txt
   :literal:

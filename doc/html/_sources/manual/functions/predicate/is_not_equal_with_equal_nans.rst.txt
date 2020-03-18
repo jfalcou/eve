@@ -55,10 +55,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_not_equal_with_equal_nans.cpp
+.. include:: ../../../../test/doc/core/is_not_equal_with_equal_nans.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/is_not_equal_with_equal_nans.txt
+.. include:: ../../../../test/doc/core/is_not_equal_with_equal_nans.txt
   :literal:

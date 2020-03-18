@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Arithmetic Functions" href="arithmetic.html" />
     <link rel="prev" title="wide" href="../types/wide.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -92,12 +95,19 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features/general.html">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="arithmetic.html">Arithmetic Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html">Conversion Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exponential.html">Exponential Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="horizontal.html">Horizontal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hyperbolic.html">Hyperbolic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ieee.html">Ieee Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logical.html">Logical Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="predicate.html">Predicate Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trigonometric.html">Trigonometric Functions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="operators.html">Infix Operators</a></li>
@@ -170,7 +180,7 @@
         <a href="arithmetic.html" class="btn btn-neutral float-right" title="Arithmetic Functions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../types/wide.html" class="btn btn-neutral" title="wide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../types/wide.html" class="btn btn-neutral float-left" title="wide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -184,9 +194,15 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitwise.html">Bitwise Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit.html">Bitwise Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conversion.html">Conversion Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exponential.html">Exponential Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="horizontal.html">Horizontal Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyperbolic.html">Hyperbolic Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ieee.html">Ieee Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logical.html">Logical Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="predicate.html">Predicate Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trigonometric.html">Trigonometric Functions</a></li>
 </ul>
 </div>
 </div>
@@ -202,7 +218,7 @@
         <a href="arithmetic.html" class="btn btn-neutral float-right" title="Arithmetic Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../types/wide.html" class="btn btn-neutral" title="wide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../types/wide.html" class="btn btn-neutral float-left" title="wide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -228,27 +244,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
