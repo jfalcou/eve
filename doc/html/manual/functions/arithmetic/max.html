@@ -276,7 +276,7 @@
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each parameter must be a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
 <li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
 its base type prior any other computation.</li>
@@ -290,19 +290,16 @@ its base type prior any other computation.</li>
 the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
 </div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="note">
+<h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><p>With <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> types, there is three ways to call <code class="docutils literal notranslate"><span class="pre">max</span></code>:</p>
+<div><p>With <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> parameters, there is three ways to call <code class="docutils literal notranslate"><span class="pre">max</span></code>:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>With a regular call,  in which case if an element of <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> is a nan, the result is system dependent as on various systems</dt>
-<dd>the existing intrinsics can act in different ways;</dd>
-</dl>
-</li>
+<li>With a regular call,  in which case if an element of <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> is a nan, the result is system dependent as on various systems
+the existing intrinsics can act in different ways;</li>
 <li>With the <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">pedantic_</span></a> decorator, in which case the call is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(x</span> <span class="pre">&lt;</span> <span class="pre">y,</span> <span class="pre">y,</span> <span class="pre">x)</span></code>;</li>
 <li>With the <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">numeric_</span></a> decorator, in which case if an element of <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> is a Nan
-the  result is always the other value.</li>
+the  result is always the other value element.</li>
 </ul>
 </div></blockquote>
 </div>

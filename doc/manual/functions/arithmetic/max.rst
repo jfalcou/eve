@@ -39,18 +39,18 @@ Return value
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
 
-Notes
+Note
 *******
 
-    With :ref:`concept-ieeevalue` types, there is three ways to call ``max``:
+     With :ref:`concept-ieeevalue` parameters, there is three ways to call ``max``:
 
-    * With a regular call,  in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems
+     * With a regular call,  in which case if an element of ``x`` or ``y`` is a nan, the result is system dependent as on various systems
        the existing intrinsics can act in different ways;
 
-    * With the :ref:`pedantic_ <feature-decorator>` decorator, in which case the call is equivalent to ``if_else(x < y, y, x)``;
+     * With the :ref:`pedantic_ <feature-decorator>` decorator, in which case the call is equivalent to ``if_else(x < y, y, x)``;
 
-    * With the :ref:`numeric_ <feature-decorator>` decorator, in which case if an element of ``x`` or ``y`` is a Nan 
-      the  result is always the other value.
+     * With the :ref:`numeric_ <feature-decorator>` decorator, in which case if an element of ``x`` or ``y`` is a Nan 
+       the  result is always the other value element.
 
 Example
 *******

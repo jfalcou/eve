@@ -42,6 +42,8 @@ Notes
 
   - the  call to ``ifloor(x)`` is equivalent to the call ``iround(x, downward_)``
 
+.. seealso::  :ref:`floor <function-floor>`,   :ref:`iround <function-iround>`
+
 Example
 *******
 

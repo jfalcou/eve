@@ -30,7 +30,7 @@ Synopsis
 Parameters
 **********
 
-* Each of the two first parameters must be an instance of :ref:`Value <concept-value>`.
+* Each of the two first parameters``x`` and ``y``  must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -49,12 +49,9 @@ Return value
 Notes
 *****
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
-    by default implements the ``to_nearest_`` version.
-
   - the  call to ``rem(x, y)`` is equivalent to the call ``rem(x, y, toward_zero_)`` (similar the standard function ``std::fmod``).
   - the  call to ``rem(x, y, tag_)`` is equivalent to the call ``a-b*div(a, b, tag_));``
-  - ``rem(x, y, to_nearest_)`` is similar the standard function ``std::remainder``
+  - the  call to ``rem(x, y, to_nearest_)`` is similar the standard function ``std::remainder``
  
   - unsigned :ref:`integral Values <concept-integralvalue>` type are only supported by the regular call or its tagged equivalent, because in the other
     cases the remainder sign is not always positive.

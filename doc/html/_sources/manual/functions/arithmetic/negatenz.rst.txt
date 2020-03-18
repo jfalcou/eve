@@ -15,7 +15,6 @@ negatenz
 
 Function object the computing the product of the first parameter with the non zero sign of the second (-1 or 1 according the sign bit).
 
-********
 Synopsis
 ********
 
@@ -29,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -41,7 +40,6 @@ Return value
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
 
-*******
 Notes
 *******
 

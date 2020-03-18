@@ -27,7 +27,7 @@ Synopsis
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+* `x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -35,7 +35,7 @@ Return value
 * A value with the same type as the parameter.
 
 
-Options
+Note
 *******
 
   - the :ref:`saturated_ <feature-decorator>` decorator acts as ``saturated_(sub)(1,x)``

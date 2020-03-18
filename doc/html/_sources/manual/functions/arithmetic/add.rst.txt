@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* ``x`` and ``y`` must be instances of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.

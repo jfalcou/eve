@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Instance of a  :ref:`Value <concept-value>`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -38,14 +38,14 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``to_nearest_`` version.
-
+ - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_TONEARESTD`` version.
+ 
   - the  call to ``nearest(x)`` is equivalent to the call ``round(x, to_nearest_)``
 
   - half-integral values are rounded to the nearest even integral
 
-.. seealso::  :ref:`iceil <function-inearest>`
+.. seealso::  :ref:`iceil <function-inearest>`, :ref:`round <function-round>`
 
 Example
 *******

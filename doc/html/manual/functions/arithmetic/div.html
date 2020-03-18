@@ -253,7 +253,7 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>with a rounding option <code class="docutils literal notranslate"><span class="pre">div[cond](x,</span> <span class="pre">y,</span> <span class="pre">TAG())</span></code> the function behaves as computing the floating division with
+<li>with a rounding option <code class="docutils literal notranslate"><span class="pre">div(x,</span> <span class="pre">y,</span> <span class="pre">tag)</span></code> the function behaves as computing the floating division with
 infinite precision then applying the rounding option to return a properly typed value.</li>
 <li>With the <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">saturated_</span></a> decorator provides  the saturated operation.</li>
 <li>Masked call is allowed: <code class="docutils literal notranslate"><span class="pre">div[cond](x,</span> <span class="pre">y)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(cond,</span> <span class="pre">div(x,</span> <span class="pre">y),</span> <span class="pre">x)</span></code></li>

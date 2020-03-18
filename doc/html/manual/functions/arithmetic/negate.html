@@ -272,10 +272,11 @@
 <ul class="simple">
 <li>Computes the element-wise product of the first parameter with the sign of the second.</li>
 </ul>
+</div>
 <div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each parameter must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
 <li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
 its base type prior any other computation.</li>
@@ -283,12 +284,11 @@ its base type prior any other computation.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
-<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>If any parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, a value of this type else a value of
 the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
-</div>
 </div>
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
@@ -298,9 +298,8 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <li>If the second parameter is 0 the result is 0 (except when the first parameter is a Nan) to avoid
 this problem you can use <a class="reference internal" href="negatenz.html#function-negatenz"><span class="std std-ref">negatenz</span></a>.</li>
 </ul>
-</div>
 <div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/negate.hpp&gt;</span>
 <span class="c1">#include &lt;eve/wide.hpp&gt;</span>
 <span class="c1">#include &lt;eve/constant/inf.hpp&gt;</span>
@@ -343,6 +342,7 @@ this problem you can use <a class="reference internal" href="negatenz.html#funct
 <span class="o">&lt;-</span> <span class="n">yf</span> <span class="o">=</span>                  <span class="o">-</span><span class="mi">1</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">negate</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yf</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

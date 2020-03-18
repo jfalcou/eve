@@ -19,7 +19,7 @@ Function object computing the least integral value greater or equal to the  valu
   :linenos:
 
    template<typename T             > constexpr T operator()( T const & x ) noexcept;
-   template<typename T,typename TAG> constexpr T operator()( T const & x, TAG const & ) noexcept;
+   template<typename T,typename TAG> constexpr T operator()( T const & x, TAG const & tag ) noexcept;
 
 * [1]  Computes the element-wise nearest integral value of the parameter.
 * [2] Computes the element-wise rounding according ``TAG`` direction.
@@ -28,8 +28,9 @@ Function object computing the least integral value greater or equal to the  valu
 Parameters
 **********
 
-* **x**: Instance of a  :ref:`Value <concept-value>`.
-* TAG parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
+
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
+* ``tag`` parameter (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
   rounding mode. It defaults to ``to_nearest_``.
 
 Return value
@@ -47,8 +48,9 @@ Notes
   - ``round(x, upward_ )`` is equivalent to the call ``ceil(x)``
   - ``round(x, downward_)`` is equivalent to the call ``floor(x)``
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``. This function object
-    by default implements the ``to_nearest_`` version.
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    **EVE** proposes four corresponding parameter values of different types:  ``upward_``, ``downward_``,
+    ``toward_zero_`` and ``to_nearest_``. 
 
   - the  call to ``round(x)`` is equivalent to the call ``nearest(x)``
 

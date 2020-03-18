@@ -48,7 +48,7 @@ Return value
 Notes
 *******
   
-  - with a rounding option ``div[cond](x, y, TAG())`` the function behaves as computing the floating division with
+  - with a rounding option ``div(x, y, tag)`` the function behaves as computing the floating division with
     infinite precision then applying the rounding option to return a properly typed value.
 
   - With the :ref:`saturated_ <feature-decorator>` decorator provides  the saturated operation.

@@ -276,7 +276,7 @@
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each of the two first parameters must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>Each of the two first parameters``x`` and <code class="docutils literal notranslate"><span class="pre">y</span></code>  must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
 <li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
 its base type prior any other computation.</li>
@@ -296,14 +296,11 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul>
-<li><p class="first">the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>. This function object
-by default implements the <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code> version.</p>
-</li>
 <li><p class="first">the  call to <code class="docutils literal notranslate"><span class="pre">rem(x,</span> <span class="pre">y)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">rem(x,</span> <span class="pre">y,</span> <span class="pre">toward_zero_)</span></code> (similar the standard function <code class="docutils literal notranslate"><span class="pre">std::fmod</span></code>).</p>
 </li>
 <li><p class="first">the  call to <code class="docutils literal notranslate"><span class="pre">rem(x,</span> <span class="pre">y,</span> <span class="pre">tag_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">a-b*div(a,</span> <span class="pre">b,</span> <span class="pre">tag_));</span></code></p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">rem(x,</span> <span class="pre">y,</span> <span class="pre">to_nearest_)</span></code> is similar the standard function <code class="docutils literal notranslate"><span class="pre">std::remainder</span></code></p>
+<li><p class="first">the  call to <code class="docutils literal notranslate"><span class="pre">rem(x,</span> <span class="pre">y,</span> <span class="pre">to_nearest_)</span></code> is similar the standard function <code class="docutils literal notranslate"><span class="pre">std::remainder</span></code></p>
 </li>
 <li><p class="first">unsigned <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">integral Values</span></a> type are only supported by the regular call or its tagged equivalent, because in the other
 cases the remainder sign is not always positive.</p>

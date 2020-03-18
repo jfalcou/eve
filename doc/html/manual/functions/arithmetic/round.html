@@ -266,7 +266,7 @@
 <p>Function object computing the least integral value greater or equal to the  value of a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</p>
 <div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span>             <span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">tag</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
@@ -276,8 +276,8 @@
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>x</strong>: Instance of a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
-<li>TAG parameter type (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code> parameter (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
 rounding mode. It defaults to <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>.</li>
 </ul>
 </div>
@@ -296,8 +296,9 @@ rounding mode. It defaults to <code class="docutils literal notranslate"><span c
 <li><code class="docutils literal notranslate"><span class="pre">round(x,</span> <span class="pre">toward_zero_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">trunc(x)</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">round(x,</span> <span class="pre">upward_</span> <span class="pre">)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">ceil(x)</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">round(x,</span> <span class="pre">downward_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">floor(x)</span></code></li>
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>. This function object
-by default implements the <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code> version.</li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+<strong>EVE</strong> proposes four corresponding parameter values of different types:  <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>,
+<code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>.</li>
 <li>the  call to <code class="docutils literal notranslate"><span class="pre">round(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">nearest(x)</span></code></li>
 </ul>
 </div></blockquote>
