@@ -99,8 +99,8 @@ jobs:
           name: Setup dependencies
           command: . .circleci/prepare.sh
       - run:
-          name: Install clang-8
-          command: 'apt-get update && sudo apt-get install -y clang-8'
+          name: Install clang-9
+          command: 'apt-get update && sudo apt-get install -y clang-9 && sudo apt-get install -y libstdc++-9-dev'
       - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
