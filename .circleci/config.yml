@@ -18,9 +18,10 @@ docker_gcc: &docker_gcc
         COMPILER: g++
 docker_clang: &docker_clang
   docker:
-    - image: ubuntu:disco
+    - image: ubuntu:rolling
       environment:
-        COMPILER: clang++-8
+        REQUIRES_CLANG: ON
+        COMPILER: clang++-9
 docker_ppc64: &docker_ppc64
   docker:
     - image: ubuntu:disco
