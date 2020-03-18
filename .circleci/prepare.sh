@@ -9,14 +9,14 @@
 #!/usr/bin/env bash
 
 apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
-sudo apt-get install -y cmake
-sudo apt-get install -y ninja-build
-sudo apt-get install -y libboost-math-dev
+apt-get update && sudo apt-get install -y cmake
+apt-get update && sudo apt-get install -y ninja-build
+apt-get update && sudo apt-get install -y libboost-math-dev
 
 if [[ -v REQUIRES_CLANG ]]
 then
-  sudo apt-get install -y clang-9
-  sudo apt-get install -y libstdc++-9-dev
+  apt-get update && sudo apt-get install -y clang-9
+  apt-get update && sudo apt-get install -y libstdc++-9-dev
 fi
 
 if hash "git" 2>/dev/null; then
