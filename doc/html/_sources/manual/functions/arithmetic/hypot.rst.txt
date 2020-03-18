@@ -16,7 +16,7 @@ hypot
 Function object the :math:`l_2`-norm  of two or three :ref:`Ieee Values <concept-ieeevalue>` i.e. 
  :math:`\sqrt{x^2+y^2}` or :math:`\sqrt{x^2+y^2+z^2}`.
 
-********
+
 Synopsis
 ********
 
@@ -33,7 +33,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an :ref:`Ieee Value <concept-ieeevalue>`.
+* Each parameter ``x``, ``y`` (and ``z``) must be an instance of an :ref:`Ieee Value <concept-ieeevalue>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -50,8 +50,8 @@ Return value
 Notes
 *****
 
-* With no decorator the call uses the naive formula
-* With the :ref:`pedantic_ <feature-decorator>` decorator the result is more accurate and less prone to overflows.
+  - With no decorator the call uses the naive formula
+  - With the :ref:`pedantic_ <feature-decorator>` decorator the result is more accurate and less prone to overflows.
 
 *******
 Example

@@ -278,10 +278,11 @@
 <li>[1] Computes the element-wise hypot of the two entries.</li>
 <li>[2] Computes the element-wise hypot of the three entries.</li>
 </ul>
+</div>
 <div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each parameter must be an <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">Ieee Value</span></a>.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> (and <code class="docutils literal notranslate"><span class="pre">z</span></code>) must be an instance of an <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">Ieee Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
 <li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
 its base type prior any other computation.</li>
@@ -289,22 +290,22 @@ its base type prior any other computation.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
-<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>If any parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, a value of this type else a value of
 the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
-</div>
-</div>
 <div class="section" id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
 <li>With no decorator the call uses the naive formula</li>
 <li>With the <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">pedantic_</span></a> decorator the result is more accurate and less prone to overflows.</li>
 </ul>
+</div></blockquote>
 </div>
 <div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/hypot.hpp&gt;</span>
 <span class="c1">#include &lt;eve/wide.hpp&gt;</span>
 
@@ -341,6 +342,7 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <span class="o">&lt;-</span> <span class="n">yf</span> <span class="o">=</span>                            <span class="mi">2</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">hypot</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yf</span><span class="p">)</span> <span class="o">=</span>            <span class="mi">32768</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

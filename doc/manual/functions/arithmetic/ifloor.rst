@@ -24,10 +24,10 @@ Synopsis
 
 *  Computes the element-wise least integral value greater or equal to the value of the parameter.
 
-Parameters
+Parameter
 **********
 
-* Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
+* ``x``: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 Return value
 **************
@@ -37,13 +37,12 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``downward_`` version.
+   - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+     This function object implements the ``FE_DOWNWARD``` version.
 
   - the  call to ``ifloor(x)`` is equivalent to the call ``iround(x, downward_)``
 
-Options
-*******
+.. seealso::  :ref:`floor <function-floor>`,   :ref:`iround <function-iround>`
 
 Example
 *******

@@ -25,9 +25,10 @@ Synopsis
 
 *  Computes the element-wise first bit not set (beginning with the least significant bit) of the :ref:`Value <concept-value>`.
 
-.. rubric:: Parameter
+Parameter
+**********
 
-* Instance of a :ref:`Integral Value <concept-integralvalue>`.
+* ``x``: Instance of a :ref:`Integral Value <concept-integralvalue>`.
 
 Return value
 **************

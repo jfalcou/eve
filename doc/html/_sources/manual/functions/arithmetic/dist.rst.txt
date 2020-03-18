@@ -15,7 +15,6 @@ dist
 
 Function object the distance of  two :ref:`Values <concept-value>`.
 
-********
 Synopsis
 ********
 
@@ -29,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of a :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -41,7 +40,7 @@ Return value
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
 
-Options
+Notes
 *******
 
   - if the expected result is not representable in the parameter return type the result is undefined.

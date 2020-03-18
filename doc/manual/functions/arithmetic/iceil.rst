@@ -24,10 +24,10 @@ Synopsis
 
 *  Computes the element-wise least integral value greater or equal to the value of the parameter.
 
-Parameters
+Parameter
 **********
 
-* Instance of a  :ref:`Value <concept-value>`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -37,12 +37,13 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``upward_`` version.
+
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_UPWARD`` version.
 
   - the call to ``iceil(a)`` is equivalent to the call ``iround(a, upward_)``
 
-.. seealso::  :ref:`ceil <function-ceil>`
+.. seealso::  :ref:`ceil <function-ceil>`,   :ref:`iround <function-iround>`
 
 Example
 *******

@@ -104,7 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
@@ -224,7 +224,7 @@
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>               <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
-<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">toward_zero_</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>[1] * Computes the element-wise division of two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.
@@ -233,13 +233,13 @@
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each of the two first parameters must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>Each of the two first parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
 <li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
 its base type prior any other computation.</li>
 <li>If all parameters are  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> they must share the same <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> type.</li>
-<li>The third parameter type (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
-rounding mode. For <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">Integral Values</span></a> the parameter rounding default to <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code>.</li>
+<li>The third parameter <code class="docutils literal notranslate"><span class="pre">tag</span></code> (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
+rounding mode. For <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">Integral Values</span></a> the parameter  default to <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code>.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
@@ -249,8 +249,8 @@ rounding mode. For <a class="reference internal" href="../../concepts/integralva
 the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
 </div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li>with a rounding option <code class="docutils literal notranslate"><span class="pre">div[cond](x,</span> <span class="pre">y,</span> <span class="pre">TAG())</span></code> the function behaves as computing the floating division with

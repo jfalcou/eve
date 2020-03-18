@@ -289,15 +289,15 @@
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest</span></code>. This function object
-implements the <code class="docutils literal notranslate"><span class="pre">upward_</span></code> version.</li>
-<li>the call to <code class="docutils literal notranslate"><span class="pre">ceil(a)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">round(a,upward_)</span></code></li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+This function object implements the <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code> version.</li>
+<li>the call to <code class="docutils literal notranslate"><span class="pre">ceil(a)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">round(a,</span> <span class="pre">upward_)</span></code></li>
 <li>On <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">Integral Value</span></a> parameter it returns the input unchanged.</li>
 </ul>
 </div></blockquote>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="iceil.html#function-iceil"><span class="std std-ref">iceil</span></a></p>
+<p class="last"><a class="reference internal" href="iceil.html#function-iceil"><span class="std std-ref">iceil</span></a>, <a class="reference internal" href="round.html#function-round"><span class="std std-ref">round</span></a></p>
 </div>
 </div>
 <div class="section" id="example">

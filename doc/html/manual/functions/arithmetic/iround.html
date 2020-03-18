@@ -267,19 +267,19 @@
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span>             <span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+ <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span><span class="k">typename</span> <span class="n">TAG</span><span class="o">&gt;</span> <span class="k">constexpr</span> <span class="n">T</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">TAG</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">to_nearest_</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
 <li>[1]  Computes the element-wise nearest integral value of the parameter.</li>
-<li>[2] Computes the element-wise rounding according <code class="docutils literal notranslate"><span class="pre">TAG</span></code> direction.</li>
+<li>[2]  Computes the element-wise rounding according <code class="docutils literal notranslate"><span class="pre">TAG</span></code> rounding mode.</li>
 </ul>
 </div>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>x</strong>: Instance of a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
-<li>TAG parameter type (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of a  <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">tag</span></code> parameter (if present) can be <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>, fixing the
 rounding mode. It defaults to <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>.</li>
 </ul>
 </div>
@@ -293,13 +293,14 @@ rounding mode. It defaults to <code class="docutils literal notranslate"><span c
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>This object function can be called with an optional tag parameter that changes its meaning:</li>
-<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">to_nearest_</span> <span class="pre">)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">inearest(x)</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">toward_zero_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">itrunc(x)</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">upward_</span> <span class="pre">)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iceil(x)</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">downward_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">ifloor(x)</span></code></li>
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>.</li>
-<li>the  call to <code class="docutils literal notranslate"><span class="pre">iround(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">to_nearest_)</span></code></li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+<strong>EVE</strong> proposes four corresponding parameter values of different types:  <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>,
+<code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">to_nearest_</span> <span class="pre">)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">inearest(x)</span></code> and implements standard <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">toward_zero_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">itrunc(x)</span></code> and implements standard <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">upward_</span> <span class="pre">)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iceil(x)</span></code> and implements standard <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">downward_)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">ifloor(x)</span></code> and implements standard <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>.</li>
+<li>the  call to <code class="docutils literal notranslate"><span class="pre">iround(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">to_nearest_)</span></code>.</li>
 </ul>
 </div></blockquote>
 </div>

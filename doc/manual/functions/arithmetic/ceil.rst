@@ -37,14 +37,14 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``upward_`` version.
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_UPWARD`` version.
 
-  - the call to ``ceil(a)`` is equivalent to the call ``round(a,upward_)``
+  - the call to ``ceil(a)`` is equivalent to the call ``round(a, upward_)``
 
   - On :ref:`Integral Value <concept-integralvalue>` parameter it returns the input unchanged.
 
-.. seealso::  :ref:`iceil <function-iceil>`
+.. seealso::  :ref:`iceil <function-iceil>`, :ref:`round <function-round>`
 
 Example
 *******

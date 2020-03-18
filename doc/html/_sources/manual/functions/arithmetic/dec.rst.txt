@@ -24,16 +24,18 @@ Synopsis
 
 *  Computes the element-wise  :ref:`Value <concept-value>` minus 1.
 
-.. rubric:: Parameter
+Parameter
+**********
 
-* Instance of a :ref:`Value <concept-value>`.
+
+* ``x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
 * A value with the same type as the parameter.
 
-Options
+Notes
 *******
 
   - With the :ref:`saturated_ <feature-decorator>`, provides (no surprise) the saturated operation.

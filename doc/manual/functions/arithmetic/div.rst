@@ -21,7 +21,7 @@ Synopsis
 .. code-block:: c++
 
    template<typename T,typename U>               auto operator()( T const& x, U const& y ) noexcept;
-   template<typename T,typename U, typename TAG> auto operator()( T const& x, U const& y, TAG const & ) noexcept;  
+   template<typename T,typename U, typename TAG> auto operator()( T const& x, U const& y, TAG const & tag = toward_zero_) noexcept;  
 
 [1] * Computes the element-wise division of two :ref:`Values <concept-value>`.
 [2] * Computes the element-wise division of two :ref:`Values <concept-value>` with rounding.
@@ -30,13 +30,13 @@ Synopsis
 Parameters
 **********
 
-* Each of the two first parameters must be an instance of :ref:`Value <concept-value>`.
+* Each of the two first parameters ``x`` and ``y`` must be an instance of a :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
 * If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
-* The third parameter type (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
-  rounding mode. For :ref:`Integral Values <concept-integralvalue>` the parameter rounding default to ``toward_zero_``.
+* The third parameter ``tag`` (if present) can be ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest_``, fixing the 
+  rounding mode. For :ref:`Integral Values <concept-integralvalue>` the parameter  default to ``toward_zero_``.
 
 Return value
 **************
@@ -45,7 +45,7 @@ Return value
   the common type of the  :ref:`concept-vectorizable` parameters.
 
 
-Options
+Notes
 *******
   
   - with a rounding option ``div[cond](x, y, TAG())`` the function behaves as computing the floating division with

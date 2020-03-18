@@ -27,7 +27,7 @@ Synopsis
 Parameters
 **********
 
-* Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
+*  ``x``: Instance of a  :ref:`IEEEValue <concept-ieeevalue>`.
 
 Return value
 **************
@@ -37,20 +37,14 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``upward_`` version.
 
-  - the call to ``iceil(x)`` is equivalent to the call ``iround(x, upward_ )``
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_TOWARDZERO``` version.
+
+
+  - the call to ``itrunc(x)`` is equivalent to the call ``iround(x, toward_zero_ )``
 
 .. seealso::  :ref:`trunc <function-trunc>`
-
-Notes
-******
-
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``toward_zero_`` version.
-
-  - the  call to ``itrunc(a)`` is equivalent to the call ``iround(a, toward_zero_)``
 
 Example
 *******

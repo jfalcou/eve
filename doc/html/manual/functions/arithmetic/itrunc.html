@@ -276,7 +276,7 @@
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
@@ -289,25 +289,15 @@
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest</span></code>. This function object
-implements the <code class="docutils literal notranslate"><span class="pre">upward_</span></code> version.</li>
-<li>the call to <code class="docutils literal notranslate"><span class="pre">iceil(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">upward_</span> <span class="pre">)</span></code></li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+This function object implements the <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO`</span></code> version.</li>
+<li>the call to <code class="docutils literal notranslate"><span class="pre">itrunc(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">toward_zero_</span> <span class="pre">)</span></code></li>
 </ul>
 </div></blockquote>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="trunc.html#function-trunc"><span class="std std-ref">trunc</span></a></p>
 </div>
-</div>
-<div class="section" id="id1">
-<h2>Notes<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest</span></code>. This function object
-implements the <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> version.</li>
-<li>the  call to <code class="docutils literal notranslate"><span class="pre">itrunc(a)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(a,</span> <span class="pre">toward_zero_)</span></code></li>
-</ul>
-</div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>

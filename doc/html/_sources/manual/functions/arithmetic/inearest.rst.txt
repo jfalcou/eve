@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Instance of a  :ref:`Value <concept-ieeevalue>`.
+* ``x``: Instance of a  :ref:`Value <concept-ieeevalue>`.
 
 Return value
 **************
@@ -39,8 +39,8 @@ Return value
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``to_nearest_`` version.
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_TONEAREST``` version.
 
   - the  call to ``inearest(x)`` is equivalent to the call ``iround(x, to_nearest_)``
 

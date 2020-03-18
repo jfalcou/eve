@@ -277,7 +277,7 @@ If a value is an half-integer it is rounded to the nearest even value.</p>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">Value</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">Value</span></a>.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
@@ -290,8 +290,8 @@ If a value is an half-integer it is rounded to the nearest even value.</p>
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest</span></code>. This function object
-implements the <code class="docutils literal notranslate"><span class="pre">to_nearest_</span></code> version.</li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+This function object implements the <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST`</span></code> version.</li>
 <li>the  call to <code class="docutils literal notranslate"><span class="pre">inearest(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">to_nearest_)</span></code></li>
 <li>half-integral values are rounded to the nearest even integral</li>
 </ul>

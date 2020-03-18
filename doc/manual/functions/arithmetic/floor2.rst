@@ -25,7 +25,7 @@ Synopsis
 
 *  Computes the element-wise greatest power of two values less or equal to the value of the parameter`.
 
-Parameters
+Parameter
 **********
 
 * Instance of a  :ref:`Value <concept-value>`.
@@ -33,9 +33,9 @@ Parameters
 Return value
 **************
 
-* A value with the same type as the parameter.
+* ``x``: A value with the same type as the parameter.
 
-Notes
+Note
 ******
 
   - if the expected result does not exists (input less than one) or is not representable in the parameter type 

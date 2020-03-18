@@ -27,7 +27,7 @@ Synopsis
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+* x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************

@@ -273,10 +273,10 @@
 <li>Computes the element-wise least integral value greater or equal to the value of the parameter.</li>
 </ul>
 </div>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="parameter">
+<h2>Parameter<a class="headerlink" href="#parameter" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of a  <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
@@ -288,15 +288,16 @@
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <blockquote>
+<div><blockquote>
 <div><ul class="simple">
-<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">upward_</span></code>, <code class="docutils literal notranslate"><span class="pre">downward_</span></code>, <code class="docutils literal notranslate"><span class="pre">toward_zero_</span></code> and <code class="docutils literal notranslate"><span class="pre">to_nearest</span></code>. This function object
-implements the <code class="docutils literal notranslate"><span class="pre">downward_</span></code> version.</li>
+<li>the standard proposes 4 rounding modes namely: <code class="docutils literal notranslate"><span class="pre">FE_TONEAREST</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_UPWARD</span></code>, <code class="docutils literal notranslate"><span class="pre">FE_TOWARDZERO</span></code>.
+This function object implements the <code class="docutils literal notranslate"><span class="pre">FE_DOWNWARD`</span></code> version.</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
 <li>the  call to <code class="docutils literal notranslate"><span class="pre">ifloor(x)</span></code> is equivalent to the call <code class="docutils literal notranslate"><span class="pre">iround(x,</span> <span class="pre">downward_)</span></code></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
