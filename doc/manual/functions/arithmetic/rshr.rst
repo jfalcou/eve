@@ -23,7 +23,7 @@ Synopsis
 
 .. code-block:: c++
 
-   template<typename I, typename J> auto operator()( I const& x, J const& y ) noexcept;
+   template<typename V, typename Shift> auto operator()( V const& x, Shift const& y ) noexcept;
 
 * Computes a bitwise right or left shift of each element of ``x`` by each element of ``y``.
 

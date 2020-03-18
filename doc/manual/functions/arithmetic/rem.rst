@@ -30,7 +30,7 @@ Synopsis
 Parameters
 **********
 
-* Each of the two first parameters``x`` and ``y``  must be an instance of :ref:`Value <concept-value>`.
+* Each of the two first parameters ``x`` and ``y``  must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -64,10 +64,9 @@ Notes
        - if ``y`` is :math:`\pm0`, a  Nan is returned;
        - if either argument is NaN, Nan is returned.
 
-Option
-*******
 
-  this object function can be called with :ref:`pedantic_ <feature-decorator>` decorator in which case (pedantic_(div) is used internally instead of div.
+  - This object function can be called with :ref:`pedantic_ <feature-decorator>` decorator in which case pedantic_(div) is
+   used internally instead of div.
 
 
 Example
