@@ -217,22 +217,23 @@
 <p>Function object computing the natural logarithm of an <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> <strong>v</strong></p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span>            <span class="o">&gt;</span> <span class="k">constexpr</span>   <span class="n">T</span>         <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">constexpr</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">x</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>[1,2] Computes the mathematical value <span class="math notranslate nohighlight">\(\log(v)\)</span>.</li>
+<li>Computes the mathematical value <span class="math notranslate nohighlight">\(\log(v)\)</span>.</li>
 </ul>
-<p class="rubric">Parameters</p>
+</div>
+<div class="section" id="parameter">
+<h2>Parameter<a class="headerlink" href="#parameter" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>v</strong> : An <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> instance</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: Instance of an <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
 </ul>
-<p class="rubric">Return value</p>
+</div>
+<div class="section" id="return-value">
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>[1] A value of type <strong>wide&lt;T,N&gt;</strong>.</li>
-<li>[2] A value of type <strong>T</strong>.</li>
+<li>A value with the same type as the parameter.</li>
 </ul>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>

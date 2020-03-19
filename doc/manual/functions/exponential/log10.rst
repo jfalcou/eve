@@ -13,28 +13,27 @@ log10
      constexpr /* implementation defined */ log10 = {};
    }
 
-Function object computing the base 2 logarithm of an :ref:`IEEEValue <concept-ieeevalue>` **v**
+Function object computing the base 2 logarithm of an :ref:`IEEEValue <concept-ieeevalue>`
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
-   template<typename T            > constexpr   T         operator()( T s ) noexcept;
+   template<typename T> constexpr auto operator()( T x ) noexcept;
 
-* [1,2] Computes the mathematical value :math:`\log(v)/\log(10)`.
+*  Computes the mathematical value :math:`\log(v)/\log(10)`.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v** : An :ref:`concept-IEEEValue` instance
+* ``x``: Instance of an :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+*************
 
-* [1] A value of type **wide<T,N>**.
-* [2] A value of type **T**.
+*  A value with the same type as the parameter. 
 
 .. seealso:: :ref:`log <function-log>`, :ref:`log2 <function-log2>`, :ref:`log1p <function-log1p>`, :ref:`exp <function-exp>`, :ref:`exp2 <function-exp2>`,  :ref:`exp10 <function-exp10>`,  :ref:`expm1 <function-expm1>`
 

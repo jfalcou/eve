@@ -22,20 +22,19 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpm1r    T         operator()( T s ) noexcept;
+   template<typename T> constexpr auto operator()( T x ) noexcept;
 
-* [1] Computes the element-wise exponential minus one of the :ref:`wide <type-wide>`.
-* [2] Computes the base 10  exponential of the scalar.
+* Computes the element-wise exponential minus one of the :ref:`IEEEValue <ieeeconcept-value>`.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v**: Instance of :ref:`IEEEValue <concept-ieeevalue>`.
-* **s**: Scalar value.
+* ``x``: Instance of an :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+*************
 
-* [1,10] A value with the same type as the parameter. 
+*  A value with the same type as the parameter. 
 
 .. seealso::  :ref:`exp <function-exp>`,  :ref:`expm1 <function-expm1>`,  :ref:`exp10 <function-exp10>`,
   :ref:`log <function-log>`, :ref:`log <function-log>`, :ref:`log10 <function-log10>`, :ref:`log1p <function-log1p>`, 

@@ -21,31 +21,26 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>  wide<T,N> operator()( wide<T,N> const& v) noexcept;
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
+   template<typename T> constexpr auto operator()( T x ) noexcept;
 
-* [1] Converts element-wise  the :ref:`wide <type-wide>` to the associated signed integral type.
-* [2] Converts the scalar to the associated signed integral type.
+*  Converts the parameter to the associated signed integral type.
 
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar value.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
 
-* [1,2]  A value of the signed integral type associated to the parameter. 
+Return value
+*************
 
-Notes
+* A value of the signed integral type associated to the parameter. 
+
+Note
 *****
 
-  - if ``sizeof(T)`` is less than 8 the associated base type is ``int32_t`` else ``int64_t``
-
-Options
-*******
-
-  - :ref:`saturated_ <feature-decorator>` decorator saturate the conversion.
+  - :ref:`saturated_ <feature-decorator>` decorator saturates the conversion.
 
 .. seealso::  :ref:`convert <function-convert>`,  :ref:`tofloat <function-tofloat>`,  :ref:`touint <function-touint>`
 

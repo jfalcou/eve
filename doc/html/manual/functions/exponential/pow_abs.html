@@ -214,32 +214,31 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Function object computing <span class="math notranslate nohighlight">\(x^y\)</span>.</p>
+<p>Function object computing <span class="math notranslate nohighlight">\(|x|^y\)</span>.</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="o">&gt;</span>             <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">w</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">U</span> <span class="n">x</span>                <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">U</span>         <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">wide</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">w</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
- <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>             <span class="k">constexpr</span> <span class="n">T</span>           <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="n">s</span><span class="p">,</span> <span class="n">T</span> <span class="n">t</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">y</span><span class="o">&gt;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <ul class="simple">
-<li>[1-3] Computes  element-wise the absolute value of the first parameter raised to the power  of the second.</li>
-<li>[4]   Computes the  absolute value of the first parameter raised to the power  of the second.</li>
+<li>Computes  element-wise absolute value of the first parameter raised to the power of the second.</li>
 </ul>
-<p class="rubric">Parameters</p>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>v</strong>, <strong>w</strong>: Instances of <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
-<li><strong>x</strong> : Scalar floating point value.</li>
-<li><strong>s</strong>, <strong>t</strong>: Scalar floating point values of same type.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
+<li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
+its base type prior any other computation.</li>
+<li>If all parameters are  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> they must share the same <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> type.</li>
 </ul>
-<p class="rubric">Return value</p>
+</div>
+<div class="section" id="return-value">
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>[1-3] A value with the same type as wide parameter.</li>
-<li>[4] A value of type <strong>T</strong>.</li>
+<li>If any parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, a value of this type else a value of
+the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
 </div>
 <div class="section" id="notes">
@@ -258,26 +257,20 @@
 <li>pow_abs(pm1, exp) returns 1 for any exp, even when exp is NaN</li>
 <li>pow_abs(base, <span class="math notranslate nohighlight">\(\pm0\)</span>) returns 1 for any base, even when base is NaN</li>
 <li>pow_abs(base, exp) returns NaN if base is finite and negative and exp is finite and non-integer.</li>
-<li>pow_abs(base, <span class="math notranslate nohighlight">\(-\infty\)</span>) returns <span class="math notranslate nohighlight">\(+\infty\)</span> for any <a href="#id1"><span class="problematic" id="id2">|</span></a>base|&lt;1</li>
-<li>pow_abs(base, <span class="math notranslate nohighlight">\(-\infty\)</span>) returns <span class="math notranslate nohighlight">\(+0\)</span> for any <a href="#id7"><span class="problematic" id="id8">|base|</span></a>&gt;1</li>
-<li>pow_abs(base, <span class="math notranslate nohighlight">\(+\infty\)</span>) returns <span class="math notranslate nohighlight">\(+0\)</span> for any <a href="#id3"><span class="problematic" id="id4">|</span></a>base|&lt;1</li>
-<li>pow_abs(base, <span class="math notranslate nohighlight">\(+\infty\)</span>) returns <span class="math notranslate nohighlight">\(+\infty\)</span> for any <a href="#id9"><span class="problematic" id="id10">|base|</span></a>&gt;1</li>
+<li>pow_abs(base, <span class="math notranslate nohighlight">\(-\infty\)</span>) returns <span class="math notranslate nohighlight">\(+\infty\)</span> for any <span class="math notranslate nohighlight">\(|\)</span> base <span class="math notranslate nohighlight">\(|&lt;1\)</span></li>
+<li>pow_abs(base, <span class="math notranslate nohighlight">\(-\infty\)</span>) returns <span class="math notranslate nohighlight">\(+0\)</span> for any <span class="math notranslate nohighlight">\(|\)</span> base <span class="math notranslate nohighlight">\(|&gt;1\)</span></li>
+<li>pow_abs(base, <span class="math notranslate nohighlight">\(+\infty\)</span>) returns <span class="math notranslate nohighlight">\(+0\)</span> for any <span class="math notranslate nohighlight">\(|\)</span> base <span class="math notranslate nohighlight">\(|&lt;1\)</span></li>
+<li>pow_abs(base, <span class="math notranslate nohighlight">\(+\infty\)</span>) returns <span class="math notranslate nohighlight">\(+\infty\)</span> for any <span class="math notranslate nohighlight">\(|\)</span> base <span class="math notranslate nohighlight">\(|&gt;1\)</span></li>
 <li>pow_abs(<span class="math notranslate nohighlight">\(\pm\infty\)</span>, exp) returns <span class="math notranslate nohighlight">\(+0\)</span> for any negative exp</li>
 <li>pow_abs(<span class="math notranslate nohighlight">\(\pm\infty\)</span>, exp) returns <span class="math notranslate nohighlight">\(+\infty\)</span> for any positive exp</li>
+<li>except where specified above, if any argument is NaN, NaN is returned</li>
 </ul>
-<p>except where specified above, if any argument is NaN, NaN is returned</p>
 </div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>With <a href="#id13"><span class="problematic" id="id14">raw_</span></a> decorator  uses the naive formula :math:<a href="#id5"><span class="problematic" id="id6">`</span></a>e^{ylog <a href="#id11"><span class="problematic" id="id12">|x|</span></a>}’</dt>
-<dd><p class="first last">and so does not care for limits and leads to lower accuracy. In particular it returns NaN for negative base</p>
-</dd>
-</dl>
+<li><p class="first">With:ref:<cite>raw_ &lt;feature-decorator&gt;</cite> decorator  uses the naive formula <span class="math notranslate nohighlight">\(e^{y\log |x|}\)</span>
+and so does not care for limits and leads to lower accuracy.</p>
 </li>
 </ul>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>

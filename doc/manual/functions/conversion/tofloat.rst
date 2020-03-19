@@ -26,11 +26,13 @@ Synopsis
 * Converts element-wise  :ref:`Value <concept-value>` to the associated  :ref:`Ieee Value <concept-ieeevalue>` type.
 
 
-.. rubric:: Parameters
+Parameter
+*********
 
-*  `x``:  Instance of a :ref:`type-wide`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
-.. rubric:: Return value
+Return value
+*************
 
 * A value of the floating type associated to the parameter. 
 
@@ -39,11 +41,7 @@ Notes
 
   - if ``sizeof(T)`` is less than 8 the associated base type is ``float`` else ``double``
 
-
-Options
-*******
-
-  - :ref:`saturated_ <feature-decorator>` decorator saturate the conversion.
+  - :ref:`saturated_ <feature-decorator>` decorator saturates the conversion.
 
 
 .. seealso::  :ref:`convert <function-convert>`,  :ref:`toint <function-toint>`,  :ref:`touint <function-touint>`

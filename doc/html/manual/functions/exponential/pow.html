@@ -217,23 +217,28 @@
 <p>Function object computing <span class="math notranslate nohighlight">\(x^y\)</span>.</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">y</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>[1-3] Computes  element-wise the first parameter raised to the power  of the second.</li>
-<li>[4]   Computes the first parameter raised to the power  of the second.</li>
+<li>Computes  element-wise the first parameter raised to the power  of the second.</li>
 </ul>
-<p class="rubric">Parameters</p>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>v</strong>, <strong>w</strong>: Instances of <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>.</li>
-<li><strong>x</strong> : Scalar floating point value.</li>
-<li><strong>s</strong>, <strong>t</strong>: Scalar floating point values of same type.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
+<li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
+its base type prior any other computation.</li>
+<li>If all parameters are  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> they must share the same <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> type.</li>
 </ul>
-<p class="rubric">Return value</p>
+</div>
+<div class="section" id="return-value">
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>[1-3] A value with the same type as wide parameter.</li>
-<li>[4] A value of type <strong>T</strong>.</li>
+<li>If any parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, a value of this type else a value of
+the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
 </ul>
 </div>
 <div class="section" id="notes">
@@ -273,9 +278,8 @@
 not care for limits and leads to lower accuracy. In particular it returns NaN for negative base</p>
 </li>
 </ul>
-</div>
 <div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/pow.hpp&gt;</span>
 <span class="c1">#include &lt;eve/wide.hpp&gt;</span>
 <span class="c1">#include &lt;eve/constant/inf.hpp&gt;</span>
@@ -319,6 +323,7 @@ not care for limits and leads to lower accuracy. In particular it returns NaN fo
 <span class="o">&lt;-</span> <span class="n">yf</span> <span class="o">=</span>                  <span class="mi">10</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="nb">pow</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yf</span><span class="p">)</span> <span class="o">=</span>    <span class="mi">1024</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

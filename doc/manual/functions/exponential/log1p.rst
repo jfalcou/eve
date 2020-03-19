@@ -15,31 +15,25 @@ log1p
 
 Function object performing :math:`\log(1+v)` over an :ref:`IEEEValue <concept-ieeevalue>` **v**
 
-********
 Synopsis
-********
+*******
 
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v ) noexcept;
-   template<typename T            > constexpr   T         operator()( T s ) noexcept;
+   template<typename T> constexpr auto operator()( T x ) noexcept;
 
-* [1,2] Computes the mathematical value :math:`\log(1+v)` with good accuracy even for small values of **v**.
+* Computes the mathematical value :math:`\log(1+x)` with good accuracy even for small values of ``x``.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v** : An :ref:`concept-IEEEValue` instance
+* ``x``: Instance of an :ref:`IEEEValue <concept-ieeevalue>`.
 
-.. rubric:: Return value
+Return value
+*************
 
-* [1] A value of type **wide<T,N>**.
-* [2] A value of type **T**.
-
-
-*******
-Options
-*******
+*  A value with the same type as the parameter. 
 
 *******
 Example
