@@ -16,7 +16,6 @@ bit_shr
 Function object performing a bit shift  to the right of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>` with the same number of elements and same element size.
 
-********
 Synopsis
 ********
 
@@ -28,7 +27,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-integralvalue>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-integralvalue>`.
 * All  :ref:`concept-vectorized` parameters must share the same cardinal
 * If the first parameter is  :ref:`concept-vectorizable`, so must be the second
 

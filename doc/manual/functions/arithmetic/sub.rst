@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All  :ref:`concept-vectorized` parameters must share the same type
 * If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
   its base type prior any other computation.
@@ -40,8 +40,7 @@ Return value
 * If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
   the common type of the  :ref:`concept-vectorizable` parameters.
 
-*******
-Options
+Notes
 *******
 
   - With the :ref:`saturated_ <feature-decorator>` the  operation is saturated for :ref:`Integral Values <concept-integralvalue>` entries.
@@ -50,7 +49,7 @@ Options
     but can be subject to optimization.
 
   - apart the preceding case infix notation can be used with operator ``-``. But be aware that if  the two parameters 
-    are standard scalar integers,for scalars ``-`` is the C++ operator and its result is subject to automatic promotions.
+    are standard scalar integers,for scalars ``-`` is the **C++** operator and its result is subject to automatic promotions.
     This **IS NOT** the case for  :ref:`concept-vectorized` entries.
 
 

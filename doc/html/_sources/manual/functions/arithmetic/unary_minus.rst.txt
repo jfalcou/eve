@@ -28,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Instance of a  :ref:`Value <concept-value>`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -40,7 +40,7 @@ Notes
 
   - unary_minus on floating point types only changes the bit of sign.
 
-  - take care that the infix notation on standard scalar can imply C++ promotion as it is the original C++ operator.
+  - take care that the infix notation on standard scalar can imply **C++** promotion as it is the original **C++** operator.
 
   - :ref:`masked call <feature-maskable>` is allowed: ``unary_minus[cond](x)`` is equivalent to ``if_else(cond, unary_minus(x), x)``, 
     but can be subject to optimization.

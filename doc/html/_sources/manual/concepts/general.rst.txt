@@ -33,3 +33,4 @@ SIMD-compatible logical values.
    value
    logical
    logicalvalue
+   targeted

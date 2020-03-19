@@ -24,7 +24,7 @@ Function object computing the signnz (-1 or 1) of a :ref:`Value <concept-value>`
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+*  ``x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -32,15 +32,12 @@ Return value
 * A value with the same type as the parameter.
 
 
-Options
+Notes
 *******
 
   - With the regular call the ``signnz`` of Nan is undefined
   - With the :ref:`pedantic_ <feature-decorator>` decorator the ``signnz`` of a Nan is a Nan
   - With a :ref:`Value <concept-ieeevalue>` the ``signnz`` of negative zero is ``-1``
-
-Options
-*******
 
 Example
 *******

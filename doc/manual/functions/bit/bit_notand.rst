@@ -16,7 +16,6 @@ bit_notand
 Function object performing a bit AND between the COMPLEMENT of a :ref:`Value <concept-value>` and
 another :ref:`Value <concept-value>` of the same bit size.
 
-********
 Synopsis
 ********
 
@@ -24,12 +23,12 @@ Synopsis
   
  template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* Performs a bit AND between the bitwise COMPLEMENT of ``x`` and ``y`` .
+* Performs a bit AND between the bitwise COMPLEMENT of ``x`` and ``y``.
 
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All parameters must share the same global size.
 
 Return value
@@ -50,8 +49,6 @@ Notes
   on :ref:`concept-vectorized` values of different cardinals are allowed as long as their total size
   in bits are equal.
 
-
-*******
 Example
 *******
 

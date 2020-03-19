@@ -227,21 +227,22 @@
 <ul class="simple">
 <li>Performs a bit XOR between both <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.</li>
 </ul>
+</div>
 <div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each parameter must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
 <li>All parameters must share the same global size.</li>
 </ul>
 </div>
 <div class="section" id="return-value">
-<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>A value with the same type as the first parameter.</li>
 </ul>
 </div>
 <div class="section" id="notes">
-<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>There is no type restriction between operands of <a class="reference internal" href="#function-bit-xor"><span class="std std-ref">bit_xor</span></a> as long as the number
 of bits between them are equals. This implies that calls to <a class="reference internal" href="#function-bit-xor"><span class="std std-ref">bit_xor</span></a> on
@@ -252,7 +253,6 @@ as long as the number of bits between them are equals.  This implies that calls 
 on <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> values of different cardinals are allowed as long as their total size
 in bits are equal.</li>
 </ul>
-</div>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>

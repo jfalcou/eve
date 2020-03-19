@@ -27,7 +27,7 @@ Synopsis
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+* ``x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -37,10 +37,7 @@ Return value
 Notes
 *******
 
- For postive Integral typed entries the return is the truncation of the real result
-
-Options
-*******
+  - For postive Integral typed entries the return is the truncation of the real result.
 
   - With the :ref:`raw_ <feature-decorator>` decorator: if any fast and dirty intrinsic exists it will be returned by the  call
     with generally good speed but very poor accuracy.

@@ -15,13 +15,12 @@ bit_cast
 
 Function reinterpreting the bit pattern of a value to a possibly different type of same size.
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
 
-   template<typename T, typename U>  U operator()( T const& x, as_<U> const &) noexcept;
+   template<typename T, typename U>  U operator()( T const& x, as_<U> const & target) noexcept;
 
 
 * Reinterpret a :ref:`Value <concept-value>` of type ``T`` as a :ref:`Value <concept-value>` of type ``U``.
@@ -30,6 +29,8 @@ Parameters
 **********
 
 * ``T`` and ``U`` must be simultaneously  :ref:`concept-vectorized` or  :ref:`concept-vectorizable` and of the same global size.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
+* ``target``: Instance of a :ref:` targeted value <concept-targetvalue>`.
 
 Return value
 ************
@@ -43,7 +44,6 @@ Notes
   :ref:`concept-vectorizable` types as, for performance reasons, such instances are stored as native SIMD registers and
   consequently do not have the proper size to be reinterpreted.
 
-*******
 Example
 *******
 

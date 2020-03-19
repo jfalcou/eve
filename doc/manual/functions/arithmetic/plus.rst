@@ -25,10 +25,10 @@ Synopsis
 
 *  Returns the unchanged input value.
 
-Parameters
+Parameter
 **********
 
-* Instance of a  :ref:`Value <concept-value>`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************

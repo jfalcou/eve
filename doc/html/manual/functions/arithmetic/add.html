@@ -256,7 +256,7 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <li><a class="reference internal" href="../../features/maskable.html#feature-maskable"><span class="std std-ref">masked call</span></a> is allowed: <code class="docutils literal notranslate"><span class="pre">add[cond](x,</span> <span class="pre">y)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(cond,</span> <span class="pre">add(x,</span> <span class="pre">y),</span> <span class="pre">x)</span></code>,
 but can be subject to optimization.</li>
 <li>apart the preceding conditional case, infix notation can be used with operator <code class="docutils literal notranslate"><span class="pre">+</span></code>. But be aware that if the two parameters
-are standard scalar integers, <code class="docutils literal notranslate"><span class="pre">+</span></code> is the C++ operator and its result is subject to automatic promotions.
+are standard scalar integers, <code class="docutils literal notranslate"><span class="pre">+</span></code> is the <strong>C++</strong> operator and its result is subject to automatic promotions.
 This <strong>IS NOT</strong> the case for  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> entries.</li>
 </ul>
 </div></blockquote>

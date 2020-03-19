@@ -104,6 +104,9 @@
 <li class="toctree-l3"><a class="reference internal" href="mul.html">mul</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">shl</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#return-value">Return value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
@@ -221,28 +224,29 @@
 another <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">IntegralValue</span></a>  with the same number of elements and same element size.</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">I</span><span class="p">,</span> <span class="k">typename</span> <span class="n">J</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">I</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">J</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Shift</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">V</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">Shift</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>Computes an element-wise  left shift of each element of <code class="docutils literal notranslate"><span class="pre">x</span></code> by each element of <code class="docutils literal notranslate"><span class="pre">y</span></code>.</li>
 </ul>
+</div>
 <div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Each parameter must be an instance of <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">Value</span></a>.</li>
+<li>Each parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be an instance of <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">Value</span></a>.</li>
 <li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same cardinal</li>
 <li>If the first parameter is  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a>, so must be the second</li>
 </ul>
 </div>
 <div class="section" id="return-value">
-<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>a value of the type of the first parameter.</li>
 </ul>
 </div>
 <div class="section" id="notes">
-<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">shl</span></code> is a shift that multiplies the input value elements by 2 to the shift element.</li>
 <li>All shift are to be greater or equal to zero and not greater or equal to the size in bit of the element shifted or an assert is issued.</li>
@@ -250,7 +254,6 @@ another <a class="reference internal" href="../../concepts/value.html#concept-va
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="shr.html#function-shr"><span class="std std-ref">shr</span></a></p>
-</div>
 </div>
 </div>
 <div class="section" id="example">

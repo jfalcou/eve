@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="nearest" href="nearest.html" />
-    <link rel="prev" title="minmag" href="minmag.html" /> 
+    <link rel="prev" title="modf" href="modf.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -202,7 +202,7 @@
         <a href="nearest.html" class="btn btn-neutral float-right" title="nearest" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="minmag.html" class="btn btn-neutral float-left" title="minmag" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="modf.html" class="btn btn-neutral float-left" title="modf" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -255,7 +255,7 @@ the common type of the  <a class="reference internal" href="../../concepts/vecto
 <li><a class="reference internal" href="../../features/maskable.html#feature-maskable"><span class="std std-ref">masked call</span></a> is allowed: <code class="docutils literal notranslate"><span class="pre">mul[cond](x,</span> <span class="pre">y)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(cond,</span> <span class="pre">mul(x,</span> <span class="pre">y),</span> <span class="pre">x)</span></code>,
 but can be subject to optimization.</li>
 <li>apart the preceding conditional case, infix notation can be used with operator <code class="docutils literal notranslate"><span class="pre">*</span></code>. But be aware that if the two parameters
-are standard scalar integers, <cite>*`</cite> is the C++ operator and its result is subject to automatic promotions.
+are standard scalar integers, <cite>*`</cite> is the <strong>C++</strong> operator and its result is subject to automatic promotions.
 This <strong>IS NOT</strong> the case for  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> entries.</li>
 </ul>
 </div></blockquote>
@@ -279,7 +279,7 @@ This <strong>IS NOT</strong> the case for  <a class="reference internal" href=".
 </div>
 <p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mul</span><span class="p">(</span><span class="mf">3.</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.5</span><span class="n">f</span><span class="p">)</span> <span class="o">=</span> <span class="mf">16.5</span>
-<span class="mf">3.</span><span class="n">_wf</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mf">3.</span><span class="n">_wf</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">w</span>      <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">mul</span><span class="p">(</span><span class="mf">3.</span><span class="n">_wf</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </pre></div>
@@ -298,7 +298,7 @@ This <strong>IS NOT</strong> the case for  <a class="reference internal" href=".
         <a href="nearest.html" class="btn btn-neutral float-right" title="nearest" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="minmag.html" class="btn btn-neutral float-left" title="minmag" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="modf.html" class="btn btn-neutral float-left" title="modf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

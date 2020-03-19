@@ -15,7 +15,6 @@ bit_and
 
 Function object performing a bit AND between two :ref:`Values <concept-value>` of same size.
 
-********
 Synopsis
 ********
 
@@ -29,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All parameters must share the same global size.
 
 Return value
@@ -51,7 +50,6 @@ Notes
   in bits are equal.
 
 
-*******
 Example
 *******
 

@@ -50,7 +50,7 @@ Notes
     but can be subject to optimization.
 
   - apart the preceding conditional case, infix notation can be used with operator ``+``. But be aware that if the two parameters 
-    are standard scalar integers, ``+`` is the C++ operator and its result is subject to automatic promotions. 
+    are standard scalar integers, ``+`` is the **C++** operator and its result is subject to automatic promotions. 
     This **IS NOT** the case for  :ref:`concept-vectorized` entries.
 
 Example

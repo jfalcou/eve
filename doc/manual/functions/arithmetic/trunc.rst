@@ -24,31 +24,28 @@ Synopsis
 
 *  Computes the element-wise integral value greater or equal to of the parameter`.
 
-Parameters
+Parameter
 **********
 
-* Instance of a  :ref:`Value <concept-value>`.
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
 
 Return value
 **************
 
 * A value with the same type as the parameter.
-   template<typename T> constexpr    T         operator()( T s ) noexcept;
 
 Notes
 ******
 
-  - the standard proposes 4 rounding modes namely: ``upward_``, ``downward_``, ``toward_zero_`` and ``to_nearest``. This function object
-    implements the ``toward_zero_`` version.
+  - the standard proposes 4 rounding modes namely: ``FE_TONEAREST``, ``FE_DOWNWARD``, ``FE_UPWARD``, ``FE_TOWARDZERO``.
+    This function object implements the ``FE_TOWARDZERO`` version.
 
   - the  call to ``trunc(x)`` is equivalent to the call ``round(x,toward_zero_)``
 
  - On :ref:`Integral Value <concept-integralvalue>` parameter it returns the input unchanged.
 
-.. seealso::  :ref:`itrunc <function-itrunc>`
+.. seealso::  :ref:`itrunc <function-itrunc>`, :ref:`round <function-round>`
 
-Options
-*******
 
 Example
 *******

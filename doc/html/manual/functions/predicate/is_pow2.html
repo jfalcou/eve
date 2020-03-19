@@ -304,7 +304,14 @@
 </pre></div>
 </div>
 <p>Possible output</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
+<span class="o">&lt;-</span> <span class="n">pf</span> <span class="o">=</span>                  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">65536</span><span class="p">,</span> <span class="mi">65537</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_pow2</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">false</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">false</span><span class="p">)</span>
+<span class="o">----</span> <span class="n">scalar</span>
+<span class="o">&lt;-</span> <span class="n">xi</span> <span class="o">=</span>                  <span class="mi">1</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_pow2</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">=</span> <span class="n">true</span>
+<span class="o">&lt;-</span> <span class="n">yi</span> <span class="o">=</span>                  <span class="mi">3</span>
+<span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">is_pow2</span><span class="p">(</span><span class="n">yi</span><span class="p">)</span> <span class="o">=</span> <span class="n">false</span>
 </pre></div>
 </div>
 </div>

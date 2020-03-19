@@ -16,7 +16,6 @@ bit_mask
 Function object computing a mask of bits for each input element. This mask has all its bit set if the input element
 is not equal to zero and all its bits unset otherwise.
 
-********
 Synopsis
 ********
 
@@ -37,8 +36,7 @@ Parameter
 Return value
 ************
 
-* A value with the same type as the parameter.
-
+* ``x``: A value with the same type as the parameter.
 
 *******
 Example

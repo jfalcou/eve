@@ -27,14 +27,14 @@ Synopsis
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+* ``x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
 
 * A value with the same type as the parameter.
 
-Options
+Notes
 *******
 
   - With the :ref:`saturated_ <feature-decorator>` decorator for  an :ref:`Integral Value <concept-integralvalue>` entry ``x`` 

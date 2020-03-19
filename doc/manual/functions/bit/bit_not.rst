@@ -15,7 +15,6 @@ bit_not
 
 Function object performing a bit COMPLEMENT of a :ref:`Value <concept-value>`.
 
-********
 Synopsis
 ********
 
@@ -29,7 +28,7 @@ Synopsis
 Parameter
 *********
 
-* Instance of a :ref:`Value <concept-value>`.
+* ``x``: Instance of a :ref:`Value <concept-value>`.
 
 Return value
 **************
@@ -43,8 +42,6 @@ Notes
 * There is no type restriction on the parameter  :ref:`Value <concept-value>` type of :ref:`function-bit_not`.
   This implies that calls to :ref:`function-bit_not` on :ref:`Ieee values <concept-IEEEvalue>` are possible.
 
-
-*******
 Example
 *******
 

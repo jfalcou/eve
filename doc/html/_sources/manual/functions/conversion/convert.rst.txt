@@ -21,20 +21,20 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename U, typename N>  wide<U,N> operator()( wide<T,N> const& v, as_<U> const &) noexcept;
-   template<typename T> constexpr                U         operator()( T s, as_<U> ) noexcept;
+   template<typename T> constexpr U  operator()( T const &x, as_<U> const & target) noexcept;
 
-* [1] Converts element-wise  the first parameter to the second one.
-* [2] Converts the first parameter to the type second one.
+*  Converts the first parameter to the targeted type of the second one.
 
-.. rubric:: Parameters
+Parameter
+*********
 
-* **v**: Instance of :ref:`type-wide`.
-* **s**: Scalar of type **T**.
+* ``x``: Instance of :ref:`Value <concept-value>`.
+* ``target`` must be an instance of of a scalar :ref:` targeted value <concept-targetvalue>`.
 
-.. rubric:: Return value
+Return value
+************
 
-* [1,2] A value of the type defined by **U** and the wideness of the first parameter. 
+* A value of the type defined by **U** and the wideness of the first parameter. 
 
 Notes
 *****

@@ -16,8 +16,6 @@ bit_ornot
 Function object performing a bit OR between a :ref:`Value <concept-value>` and the COMPLEMENT of
 another :ref:`Value <concept-value>` of the same bit size.
 
-
-********
 Synopsis
 ********
 
@@ -30,7 +28,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
 * All parameters must share the same global size.
 
 Return value
@@ -51,8 +49,6 @@ Notes
   on :ref:`concept-vectorized` values of different cardinals are allowed as long as their total size
   in bits are equal.
 
-
-*******
 Example
 *******
 

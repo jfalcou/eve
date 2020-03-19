@@ -16,13 +16,12 @@ shr
 Function object performing an arithmetic  shift to the right of an :ref:`IntegralValue <concept-integralvalue>`  by
 another :ref:`IntegralValue <concept-value>`  with the same number of elements and same element size.
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
 
-   template<typename I, typename J> auto operator()( I const& x, J const& y ) noexcept;
+   template<typename V, typename Shift> auto operator()( V const& x, Shift const& y ) noexcept;
 
 * Computes an element-wise arithmetic left shift of each element of ``x`` by each element of ``y``.
 
@@ -30,7 +29,7 @@ Synopsis
 Parameters
 **********
 
-* Each parameter must be an instance of :ref:`Value <concept-integralvalue>`.
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-integralvalue>`.
 * All  :ref:`concept-vectorized` parameters must share the same cardinal
 * If the first parameter is  :ref:`concept-vectorizable`, so must be the second
 
@@ -49,7 +48,7 @@ Notes
 
 .. seealso::  :ref:`shl <function-shl>`
 
-*******
+
 Example
 *******
 

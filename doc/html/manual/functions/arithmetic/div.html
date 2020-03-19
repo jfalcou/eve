@@ -258,7 +258,7 @@ infinite precision then applying the rounding option to return a properly typed 
 <li>With the <a class="reference internal" href="../../features/decorators.html#feature-decorator"><span class="std std-ref">saturated_</span></a> decorator provides  the saturated operation.</li>
 <li>Masked call is allowed: <code class="docutils literal notranslate"><span class="pre">div[cond](x,</span> <span class="pre">y)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(cond,</span> <span class="pre">div(x,</span> <span class="pre">y),</span> <span class="pre">x)</span></code></li>
 <li>apart the above cases, infix notation can be used with operator <code class="docutils literal notranslate"><span class="pre">/</span></code>. But be aware that for scalars <cite>/`</cite>
-is the C++ operator and it result is subject to automatic promotions.</li>
+is the <strong>C++</strong> operator and it result is subject to automatic promotions.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -281,9 +281,9 @@ is the C++ operator and it result is subject to automatic promotions.</li>
 </div>
 <p>Possible output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">div</span><span class="p">(</span><span class="mf">3.</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.5</span><span class="n">f</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.545455</span>
-<span class="mf">3.</span><span class="n">_wf</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="mf">3.</span><span class="n">_wf</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">w</span>      <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">div</span><span class="p">(</span><span class="mf">3.</span><span class="n">_wf</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+<span class="n">div</span><span class="p">(</span><span class="mf">3.</span><span class="n">_wf</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

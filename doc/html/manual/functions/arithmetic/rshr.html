@@ -136,6 +136,7 @@
 <li class="toctree-l4"><a class="reference internal" href="maxmag.html">maxmag</a></li>
 <li class="toctree-l4"><a class="reference internal" href="min.html">min</a></li>
 <li class="toctree-l4"><a class="reference internal" href="minmag.html">minmag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modf.html">modf</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mul.html">mul</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nearest.html">nearest</a></li>
 <li class="toctree-l4"><a class="reference internal" href="negate.html">negate</a></li>
@@ -268,7 +269,7 @@ another <a class="reference internal" href="../../concepts/value.html#concept-va
 (resp. right) if the shift is positive (resp. negative)</p>
 <div class="section" id="synopsis">
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">I</span><span class="p">,</span> <span class="k">typename</span> <span class="n">J</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">I</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">J</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Shift</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">V</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">Shift</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 </pre></div>
 </div>
 <ul class="simple">

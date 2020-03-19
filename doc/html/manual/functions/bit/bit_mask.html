@@ -230,20 +230,19 @@ is not equal to zero and all its bits unset otherwise.</p>
 is not equal to zero and all its bits unset otherwise.
 The computation is equivalent to <code class="docutils literal notranslate"><span class="pre">if_else(is_nez(v),Allbits(as(v)),Zero(as(v))</span></code>,but optimized.</li>
 </ul>
+</div>
 <div class="section" id="parameter">
-<h3>Parameter<a class="headerlink" href="#parameter" title="Permalink to this headline">¶</a></h3>
+<h2>Parameter<a class="headerlink" href="#parameter" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div>Instance of a <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</div></blockquote>
 </div>
 <div class="section" id="return-value">
-<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>A value with the same type as the parameter.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code>: A value with the same type as the parameter.</li>
 </ul>
-</div>
-</div>
 <div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/bit.hpp&gt;</span>
 <span class="c1">#include &lt;eve/wide.hpp&gt;</span>
 <span class="c1">#include &lt;iostream&gt;</span>
@@ -281,6 +280,7 @@ The computation is equivalent to <code class="docutils literal notranslate"><spa
 <span class="o">&lt;-</span> <span class="n">xi</span> <span class="o">=</span>                  <span class="mi">2</span>
 <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">bit_mask</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4294967295</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

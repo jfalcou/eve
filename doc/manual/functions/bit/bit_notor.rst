@@ -16,7 +16,6 @@ bit_notor
 Function object performing a bit OR between the COMPLEMENT of a :ref:`Value <concept-value>` and
 another :ref:`Value <concept-value>` of the same bit size.
 
-********
 Synopsis
 ********
 
@@ -24,7 +23,7 @@ Synopsis
   
  template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* Performs a bit AND between the bitwise COMPLEMENT of ``x`` and ``y`` .
+* ``x``: Performs a bit AND between the bitwise COMPLEMENT of ``x`` and ``y`` .
 
 Parameters
 **********
@@ -50,8 +49,6 @@ Notes
   on :ref:`concept-vectorized` values of different cardinals are allowed as long as their total size
   in bits are equal.
 
-
-*******
 Example
 *******
 

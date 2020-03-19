@@ -56,7 +56,7 @@ Notes
   - Masked call is allowed: ``div[cond](x, y)`` is equivalent to ``if_else(cond, div(x, y), x)``
 
   - apart the above cases, infix notation can be used with operator ``/``. But be aware that for scalars `/`` 
-    is the C++ operator and it result is subject to automatic promotions.
+    is the **C++** operator and it result is subject to automatic promotions.
 
 Example
 *******

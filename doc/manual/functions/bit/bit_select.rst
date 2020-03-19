@@ -31,7 +31,7 @@ Synopsis
 Parameters
 ***********
 
-* Each parameter must be an instance of :ref:`Value <concept-value>`.
+* Each parameter  ``x``, ``y`` and ``z`` must be an instance of :ref:`Value <concept-value>`.
 * All parameters must share the same global size.
 
 
