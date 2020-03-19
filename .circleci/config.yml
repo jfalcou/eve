@@ -166,15 +166,12 @@ jobs:
   ## SIMD tests
   ##================================================================================================
   x86_emulation:
-    <<: *config_clang_x86
+    <<: *config_gcc_x86
     steps:
       - checkout
       - run:
           name: Setup dependencies
           command: . .circleci/prepare.sh
-      - run:
-          name: Install clang-8
-          command: 'apt-get update && sudo apt-get install -y clang-8'
       - run:
           name: Running SIMD Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
