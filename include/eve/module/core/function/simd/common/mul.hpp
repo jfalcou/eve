@@ -66,7 +66,11 @@ namespace eve::detail
     }
     else if constexpr( is_aggregated_v<t_abi> || is_aggregated_v<u_abi> )
     {
-      return aggregate( eve::saturated_(eve::mul), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b) );
+      auto that = aggregate ( eve::saturated_(eve::mul)
+                            , abi_cast<value_type_t<U>>(a)
+                            , abi_cast<value_type_t<T>>(b)
+                            );
+      return that;
     }
     else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
     {
@@ -74,7 +78,8 @@ namespace eve::detail
       {
         using vt_t = value_type_t<T>;
         if constexpr(std::is_floating_point_v<vt_t>)
-        {return mul(a, b);
+        {
+          return mul(a, b);
         }
         else if constexpr(sizeof(vt_t) <= 4)
         {
@@ -85,7 +90,8 @@ namespace eve::detail
         }
         else
         {
-          return map( eve::saturated_(eve::mul), a, b);
+          auto that = map( eve::saturated_(eve::mul), a, b);
+          return that;
         }
       }
       else
