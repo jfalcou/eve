@@ -20,7 +20,6 @@ docker_clang: &docker_clang
   docker:
     - image: ubuntu:rolling
       environment:
-        REQUIRES_CLANG: ON
         COMPILER: clang++-9
 docker_ppc64: &docker_ppc64
   docker:
@@ -282,33 +281,33 @@ workflows:
             - clang_x86
       - x86_sse2:
           requires:
-            - arm_aarch64
-            - arm_aarch64_neon
+            - gcc_x86
+            - clang_x86
       - x86_sse4:
           requires:
-            - arm_aarch64
-            - arm_aarch64_neon
+            - gcc_x86
+            - clang_x86
       - x86_avx:
           requires:
-            - x86_sse2
-            - x86_sse4
+            - gcc_x86
+            - clang_x86
       - x86_avx2:
           requires:
-            - x86_sse2
-            - x86_sse4
+            - gcc_x86
+            - clang_x86
       - x86_fma:
           requires:
-            - x86_avx
-            - x86_avx2
+            - gcc_x86
+            - clang_x86
       - x86_emulation:
           requires:
-            - x86_avx
-            - x86_avx2
+            - gcc_x86
+            - clang_x86
       # - ppc64:
       #     requires:
-      #       - x86_emulation
-      #       - x86_fma
+      #       - gcc_x86
+      #       - clang_x86
       # - ppc64_vsx:
       #     requires:
-      #       - x86_emulation
-      #       - x86_fma
+      #       - gcc_x86
+      #       - clang_x86
