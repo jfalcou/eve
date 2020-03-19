@@ -23,20 +23,20 @@ docker_clang: &docker_clang
         COMPILER: clang++-9
 docker_ppc64: &docker_ppc64
   docker:
-    - image: ubuntu:disco
+    - image: ubuntu:rolling
       environment:
-        COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
-        COMPILER: powerpc64-linux-gnu-g++-8
+        COMPILER_PACKAGE: g++-9-powerpc64-linux-gnu
+        COMPILER: powerpc64-linux-gnu-g++-9
         RUN_COMMAND: qemu-ppc64
         EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
         EXTRA_LIB: lib64
         EXTRA_NAME: ld64.so.1
 docker_aarch64: &docker_aarch64
   docker:
-    - image: ubuntu:disco
+    - image: ubuntu:rolling
       environment:
-        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
-        COMPILER: aarch64-linux-gnu-g++-8
+        COMPILER_PACKAGE: g++-9-aarch64-linux-gnu
+        COMPILER: aarch64-linux-gnu-g++-9
         RUN_COMMAND: qemu-aarch64
         EXTRA_PATH: /usr/aarch64-linux-gnu/lib/
         EXTRA_LIB: lib
