@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/sinpicospi.hpp>
+#include <eve/function/sinpi.hpp>
+#include <eve/function/cospi.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
