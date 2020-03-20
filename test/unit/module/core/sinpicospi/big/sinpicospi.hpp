@@ -8,16 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/one.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/function/trigo_tags.hpp>
 #include <utility>
 
 TTS_CASE("Check  eve::big_(eve::sinpicospi) return type")

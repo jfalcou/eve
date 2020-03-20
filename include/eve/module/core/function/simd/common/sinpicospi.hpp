@@ -42,10 +42,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto internal_sinpicospi(D const &, eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x = eve::abs(a0);
-    x = if_else(is_not_finite(x)    , eve::allbits_ , x);
-    x = if_else(x > Maxflint(as(x)) , eve::zero_    , x);
-    auto [n, xr, dxr] = rem2(x);
+    auto y = if_else(is_not_finite(x), eve::allbits_ , x);
+    auto z = bit_mask(y <= Maxflint(as(y))) & y;
 
+    auto [n, xr, dxr] = eve::detail::rem2(z);
     return sincos_finalize(a0, n, xr, dxr);
   }
 
@@ -56,7 +56,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto tsc = tag(sinpicospi);
+      [[maybe_unused]] auto tsc = tag(sinpicospi);
 
       if constexpr(is_emulated_v<ABI> )
       {
@@ -71,7 +71,6 @@ namespace eve::detail
       }
       else
       {
-        ignore(tsc);
         return internal_sinpicospi(tag, a0);
       }
     }
