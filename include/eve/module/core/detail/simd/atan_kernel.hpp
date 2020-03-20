@@ -30,7 +30,7 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/pio_2.hpp>

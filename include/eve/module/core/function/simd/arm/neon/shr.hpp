@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

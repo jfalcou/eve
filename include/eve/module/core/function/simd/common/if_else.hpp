@@ -139,7 +139,7 @@ namespace eve::detail
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
-    { return unary_minus(bit_ornot(unary_minus(t), bit_mask(cond))); }
+    { return minus(bit_ornot(minus(t), bit_mask(cond))); }
     else
     {
       return if_else(cond, t, eve::One<U>());
@@ -157,7 +157,7 @@ namespace eve::detail
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
-    { return unary_minus(bit_or(unary_minus(t), bit_mask(cond))); }
+    { return minus(bit_or(minus(t), bit_mask(cond))); }
     else
     {
       return if_else(cond, eve::One<U>(), t);

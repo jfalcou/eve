@@ -28,7 +28,7 @@
 #include <eve/function/is_even.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/nb_values.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <type_traits>
 
 TTS_CASE("Check eve::nb_values return type")
