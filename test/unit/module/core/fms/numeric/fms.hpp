@@ -36,9 +36,7 @@ TTS_CASE("Check eve::numeric_(eve::fms) behavior")
   {
     EVE_TYPE e = eve::Eps<EVE_TYPE>();
     TTS_EQUAL(eve::numeric_(eve::fms)(eve::inc(e), eve::oneminus(e), eve::One<EVE_TYPE>()), (-eve::sqr(e)));
-    TTS_EQUAL(                        (eve::inc(e)* eve::oneminus(e)- eve::One<EVE_TYPE>()) , eve::Zero<EVE_TYPE>());
     TTS_EQUAL(eve::numeric_(eve::fms)(eve::Valmax<EVE_TYPE>(), EVE_TYPE(2), eve::Valmax<EVE_TYPE>()), eve::Valmax<EVE_TYPE>());
-    TTS_EQUAL(                       (eve::Valmax<EVE_TYPE>()* EVE_TYPE(2)+ eve::Valmax<EVE_TYPE>()), eve::Inf<EVE_TYPE>()); 
   }
-  
+
 }
