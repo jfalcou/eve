@@ -26,17 +26,7 @@ else
 fi
 
 ##==================================================================================================
-## PATH Infos
-##==================================================================================================
-if [[ -v EXTRA_PATH ]]
-then
-  echo "Updating path for $EXTRA_PATH/$EXTRA_NAME ..."
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EXTRA_PATH
-  export LD_LIBRARY_PATH
-  ln -sf $EXTRA_PATH/$EXTRA_NAME /$EXTRA_LIB/$EXTRA_NAME
-fi
-
-##==================================================================================================
 ## Run Scalar tests
 ##==================================================================================================
-ninja core.scalar.unit  -j 8 && ctest -R ^core.*.scalar.*.unit  -j 8
+ninja core.scalar.unit -k 0 -j 8
+ctest -R ^core.*.scalar.*.unit  -j 8

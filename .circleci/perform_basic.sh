@@ -26,20 +26,16 @@ else
 fi
 
 ##==================================================================================================
-## PATH Infos
+## Compile every test for SIMD
+## We keep compiling even with errors as we want the most test being run
 ##==================================================================================================
-if [[ -v EXTRA_PATH ]]
-then
-  echo "Updating path for $EXTRA_PATH/$EXTRA_NAME ..."
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$EXTRA_PATH
-  export LD_LIBRARY_PATH
-  ln -sf $EXTRA_PATH/$EXTRA_NAME /$EXTRA_LIB/$EXTRA_NAME
-fi
+ninja arch.unit  -k 0 -j 8
+ninja meta.unit  -k 0 -j 8
+ninja doc.unit   -k 0 -j 8
+ninja api.unit   -k 0 -j 8
 
 ##==================================================================================================
-## Run every test up to SIMD
+## Run every tests for SIMD
 ##==================================================================================================
-ninja arch.unit         -j 8 && ctest -R ^arch.*.unit           -j 8 && \
-ninja meta.unit         -j 8 && ctest -R ^meta.*.unit           -j 8 && \
-ninja doc.unit          -j 8 && ctest -R ^doc.*.unit            -j 8 && \
-ninja api.unit          -j 8 && ctest -R ^api.*.unit            -j 8
+ctest -R ^arch.*.unit -j 8 && ctest -R ^meta.*.unit -j 8 && \
+ctest -R ^doc.*.unit  -j 8 && ctest -R ^api.*.unit  -j 8

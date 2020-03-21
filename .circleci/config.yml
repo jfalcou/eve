@@ -13,34 +13,26 @@ version: 2.1
 ##==================================================================================================
 docker_gcc: &docker_gcc
   docker:
-    - image: gcc:latest
+    - image: compilaction/gcc-dev:latest
       environment:
-        COMPILER: g++
+        COMPILER: g++-9
 docker_clang: &docker_clang
   docker:
-    - image: ubuntu:rolling
+    - image: compilaction/clang-dev:latest
       environment:
         COMPILER: clang++-9
 docker_ppc64: &docker_ppc64
   docker:
-    - image: ubuntu:disco
+    - image: compilaction/gcc-dev:latest
       environment:
-        COMPILER_PACKAGE: g++-8-powerpc64-linux-gnu
-        COMPILER: powerpc64-linux-gnu-g++-8
         RUN_COMMAND: qemu-ppc64
-        EXTRA_PATH: /usr/powerpc64-linux-gnu/lib/
-        EXTRA_LIB: lib64
-        EXTRA_NAME: ld64.so.1
+        COMPILER: powerpc64-linux-gnu-g++-9
 docker_aarch64: &docker_aarch64
   docker:
-    - image: ubuntu:disco
+    - image: compilaction/gcc-dev:latest
       environment:
-        COMPILER_PACKAGE: g++-8-aarch64-linux-gnu
-        COMPILER: aarch64-linux-gnu-g++-8
         RUN_COMMAND: qemu-aarch64
-        EXTRA_PATH: /usr/aarch64-linux-gnu/lib/
-        EXTRA_LIB: lib
-        EXTRA_NAME: ld-linux-aarch64.so.1
+        COMPILER: aarch64-linux-gnu-g++-9
 
 ##==================================================================================================
 ## Build configurations
@@ -65,9 +57,6 @@ jobs:
     <<: *config_gcc_x86
     steps:
       - checkout
-      - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
       - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
@@ -95,12 +84,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Install clang-9
-          command: 'apt-get update && sudo apt-get install -y clang-9 && sudo apt-get install -y libstdc++-9-dev'
-      - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
       - run:
@@ -127,12 +110,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Setup AARCH64
-          command: . .circleci/prepare_cc.sh
-      - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi" . .circleci/perform_basic.sh
       - run:
@@ -147,12 +124,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Setup PowerPC64
-          command: . .circleci/prepare_cc.sh
-      - run:
           name: Running Basic Tests - Emulation
           command: VARIANT="vsx" OPTIONS="-DEVE_NO_SIMD -O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
       - run:
@@ -166,15 +137,9 @@ jobs:
   ## SIMD tests
   ##================================================================================================
   x86_emulation:
-    <<: *config_clang_x86
+    <<: *config_gcc_x86
     steps:
       - checkout
-      - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Install clang-8
-          command: 'apt-get update && sudo apt-get install -y clang-8'
       - run:
           name: Running SIMD Tests - Emulation
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
@@ -184,9 +149,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
           name: Running SIMD Tests - SSE2
           command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
 
@@ -194,9 +156,6 @@ jobs:
     <<: *config_gcc_x86
     steps:
       - checkout
-      - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
       - run:
           name: Running SIMD Tests - SSE4
           command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
@@ -206,9 +165,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
           name: Running SIMD Tests - AVX
           command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
 
@@ -216,9 +172,6 @@ jobs:
     <<: *config_gcc_x86
     steps:
       - checkout
-      - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
       - run:
           name: Running SIMD Tests - FMA
           command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh
@@ -228,9 +181,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
           name: Running SIMD Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
 
@@ -239,12 +189,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Setup AARCH64
-          command: . .circleci/prepare_cc.sh
-      - run:
           name: Running SIMD Tests - AARCH64 NEON
           command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
 
@@ -252,12 +196,6 @@ jobs:
     <<: *config_gcc_ppc64
     steps:
       - checkout
-      - run:
-          name: Setup dependencies
-          command: . .circleci/prepare.sh
-      - run:
-          name: Setup PowerPC64
-          command: . .circleci/prepare_cc.sh
       - run:
           name: Running Basic Tests - PPC64 VSX
           command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh

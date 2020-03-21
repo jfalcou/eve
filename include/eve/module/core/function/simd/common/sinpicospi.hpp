@@ -30,56 +30,63 @@
 namespace eve::detail
 {
   template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto internal_sinpicospi(restricted_type const &     
+  EVE_FORCEINLINE auto internal_sinpicospi(restricted_type const &
                                       , eve::wide<T,N,ABI> const &a0) noexcept
   {
-    return restricted_(sincos)(a0*Pi<T>()); 
+    return restricted_(sincos)(a0*Pi<T>());
   }
-  
+
   //////////////////////////////////////////////////////////////////////////////
   /// big, medium, small
   template<typename D, typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto internal_sinpicospi(D const &       
-                                          , eve::wide<T,N,ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto internal_sinpicospi(D const &, eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x = eve::abs(a0);
-    x = if_else(is_not_finite(x), eve::allbits_, x);
-    x = if_else(x > Maxflint(as(x)), eve::zero_, x); 
-    auto [n, xr, dxr] = rem2(x);
-    return sincos_finalize(a0, n, xr, dxr); 
-  }   
- 
+    auto y = if_else(is_not_finite(x), eve::allbits_ , x);
+    auto z = bit_mask(y <= Maxflint(as(y))) & y;
+
+    auto [n, xr, dxr] = eve::detail::rem2(z);
+    return sincos_finalize(a0, n, xr, dxr);
+  }
+
   template<typename T,  typename N,  typename ABI, typename TAG>
-  EVE_FORCEINLINE auto sinpicospi_(EVE_SUPPORTS(cpu_)
-                              , TAG const & tag       
-                              , eve::wide<T,N,ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto sinpicospi_( EVE_SUPPORTS(cpu_), TAG const & tag
+                                  , eve::wide<T,N,ABI> const &a0
+                                  ) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(is_emulated_v<ABI> ) return map(TAG()(sinpicospi), a0); 
+      [[maybe_unused]] auto tsc = tag(sinpicospi);
+
+      if constexpr(is_emulated_v<ABI> )
+      {
+        return map(tsc, a0);
+      }
       else if constexpr(is_aggregated_v<ABI> )
       {
-        auto  [lo, hi] = a0.slice();
-        auto  [xhi, ehi]   = TAG()(sinpicospi)(hi);
-        auto  [xlo, elo]   = TAG()(sinpicospi)(lo);
-        return std::make_tuple(eve::combine( xlo, xhi), eve::combine( elo, ehi)); 
+        auto  [lo, hi]    = a0.slice();
+        auto  [xhi, ehi]  = tsc(hi);
+        auto  [xlo, elo]  = tsc(lo);
+        return std::make_tuple(eve::combine( xlo, xhi), eve::combine( elo, ehi));
       }
-      else return internal_sinpicospi(tag, a0);
+      else
+      {
+        return internal_sinpicospi(tag, a0);
+      }
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::sinpicospi simd ] - type is not an IEEEValue"); 
-    }   
+      static_assert(std::is_floating_point_v<T>, "[eve::sinpicospi simd ] - type is not an IEEEValue");
+    }
   }
-  
+
   template<typename T,  typename N,  typename ABI>
-  EVE_FORCEINLINE auto sinpicospi_(EVE_SUPPORTS(cpu_)
-                              , eve::wide<T,N,ABI> const &a0) noexcept
+  EVE_FORCEINLINE auto sinpicospi_(EVE_SUPPORTS(cpu_), eve::wide<T,N,ABI> const &a0) noexcept
   {
     auto x =  eve::abs(a0);
     if (all(eve::abs(x) <= T(0.25))) return restricted_(sinpicospi)(a0);
-    else                             return big_(sinpicospi)(a0);      
-  } 
+    else                             return big_(sinpicospi)(a0);
+  }
 }
 
 #endif
