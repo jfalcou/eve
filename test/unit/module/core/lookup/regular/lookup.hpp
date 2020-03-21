@@ -22,9 +22,6 @@ TTS_CASE("Check eve::lookup behavior")
 {
   using index_t = eve::detail::as_integer_t<EVE_TYPE>;
 
-  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t( 0) ), (EVE_TYPE(42)) );
-  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t(-1) ), (EVE_TYPE(0))  );
-
   #if defined(EVE_SIMD_TESTS)
 
   EVE_TYPE    value{[](auto i, auto)       { return static_cast<EVE_VALUE>(1+i); } };
@@ -33,6 +30,10 @@ TTS_CASE("Check eve::lookup behavior")
 
   TTS_EQUAL(eve::lookup(value, indexes) , reference );
   TTS_EQUAL(value[indexes]              , reference );
+  #else
+
+  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t( 0) ), (EVE_TYPE(42)) );
+  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t(-1) ), (EVE_TYPE(0))  );
 
   #endif
 }
