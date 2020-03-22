@@ -21,3 +21,14 @@ TTS_CASE("Check eve::plus behavior")
 {
   TTS_EQUAL(eve::plus(EVE_TYPE(1)), (EVE_TYPE(1)));
 }
+
+TTS_CASE("Check eve::plus with 2 parameters behavior")
+{
+  TTS_EQUAL(eve::plus(EVE_TYPE(1), EVE_TYPE(1)), (EVE_TYPE(2)));
+}
+
+TTS_CASE("Check eve::plus with 3 parameter sbehavior")
+{
+  TTS_EQUAL(eve::plus(EVE_TYPE(1) > EVE_TYPE(2), EVE_TYPE(1), EVE_TYPE(1)), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::plus(EVE_TYPE(1) < EVE_TYPE(2), EVE_TYPE(1), EVE_TYPE(1)), (EVE_TYPE(2)));
+}

@@ -62,8 +62,7 @@ namespace eve::detail
       return cond ? minus(v) : v;
     else
       return if_else(cond, minus(v), v); 
-  }
-
+  } 
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -75,6 +74,7 @@ namespace eve
   {
     return minus(v);
   }
+
 }
 
 #endif

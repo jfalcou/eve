@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/add.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -25,6 +26,20 @@ namespace eve::detail
   {
     return a;
   }
+  
+  template<typename T, typename U>
+  EVE_FORCEINLINE constexpr auto plus_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  -> decltype( eve::sub(a,b) )
+  {
+    return eve::add(a, b); 
+  }
+
+  template<typename C, typename T, typename U>
+  EVE_FORCEINLINE constexpr auto plus_(EVE_SUPPORTS(cpu_), C const & cond, T const &a, U const &b) noexcept
+  -> decltype( eve::add[cond](a,b) )
+  {
+    return eve::add[cond](a, b); 
+  }  
 }
 
 #endif

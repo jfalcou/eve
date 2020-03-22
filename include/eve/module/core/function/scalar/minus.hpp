@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/function/sub.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -27,7 +28,7 @@ namespace eve::detail
   }
   
   // -----------------------------------------------------------------------------------------------
-  // conditinnal  case
+  // conditionnal  case
   template<typename T,  typename U>
   EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_)
                                           , U const &cond 
@@ -35,6 +36,7 @@ namespace eve::detail
   {
     return cond ? -a : a;
   }
+
 }
 
 #endif
