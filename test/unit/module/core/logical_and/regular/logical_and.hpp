@@ -44,7 +44,7 @@ TTS_CASE("Check eve::operator&& return type")
   TTS_EXPR_IS((logical<EVE_VALUE>() && EVE_TYPE()         ), (logical<EVE_TYPE>));
 }
 
-TTS_CASE("Check eve::logical_and behavior on scalars")
+TTS_CASE("Check eve::logical_and behavior on numbers")
 {
   TTS_EQUAL(eve::logical_and((EVE_TYPE(0)), (EVE_TYPE(0))), eve::False<EVE_TYPE>());
   TTS_EQUAL(eve::logical_and((EVE_TYPE(0)), (EVE_TYPE(1))), eve::False<EVE_TYPE>());
@@ -60,7 +60,22 @@ TTS_CASE("Check eve::logical_and behavior on scalars")
   TTS_EQUAL(eve::logical_and((EVE_TYPE(0)), EVE_VALUE(1)), eve::False<EVE_TYPE>());
   TTS_EQUAL(eve::logical_and((EVE_TYPE(2)), EVE_VALUE(1)), eve::True<EVE_TYPE>() );
   TTS_EQUAL(eve::logical_and((EVE_TYPE(1)), EVE_VALUE(0)), eve::False<EVE_TYPE>());
+
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  {
+    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
+    TTS_EQUAL(eve::logical_and((i_t(0)), (EVE_TYPE(0))), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_and((i_t(0)), (EVE_TYPE(1))), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_and((i_t(2)), (EVE_TYPE(1))), eve::True<i_t>() );
+    TTS_EQUAL(eve::logical_and((i_t(1)), (EVE_TYPE(0))), eve::False<i_t>());
+    
+    TTS_EQUAL(eve::logical_and((EVE_TYPE(0)), i_t(0)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::logical_and((EVE_TYPE(0)), i_t(1)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::logical_and((EVE_TYPE(2)), i_t(1)), eve::True<EVE_TYPE>() );
+    TTS_EQUAL(eve::logical_and((EVE_TYPE(1)), i_t(0)), eve::False<EVE_TYPE>());
+  }
 }
+
 
 TTS_CASE("Check eve::logical_and behavior on logicals")
 {
