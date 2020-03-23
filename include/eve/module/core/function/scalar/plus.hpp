@@ -29,7 +29,7 @@ namespace eve::detail
   
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto plus_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  -> decltype( eve::sub(a,b) )
+  -> decltype( eve::add(a,b) )
   {
     return eve::add(a, b); 
   }
