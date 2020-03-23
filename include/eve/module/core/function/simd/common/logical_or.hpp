@@ -37,7 +37,8 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(std::is_same_v<T, U>)
+      if constexpr(sizeof(T) == sizeof(U)
+                   && sizeof(value_type_t<T>)== sizeof(value_type_t<U>))
       {
         if constexpr(is_aggregated_v<typename T::abi_type>)
         { return aggregate(eve::logical_or, a, b); }

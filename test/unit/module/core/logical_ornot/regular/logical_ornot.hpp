@@ -49,6 +49,19 @@ TTS_CASE("Check eve::logical_ornot behavior on scalars")
   TTS_EQUAL(eve::logical_ornot((EVE_TYPE(0)), EVE_VALUE(1)), eve::False<EVE_TYPE>());
   TTS_EQUAL(eve::logical_ornot((EVE_TYPE(2)), EVE_VALUE(1)), eve::True<EVE_TYPE>() );
   TTS_EQUAL(eve::logical_ornot((EVE_TYPE(1)), EVE_VALUE(0)), eve::True<EVE_TYPE>() );
+  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  {
+    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
+    TTS_EQUAL(eve::logical_ornot((i_t(0)), (EVE_TYPE(0))), eve::True<i_t>());
+    TTS_EQUAL(eve::logical_ornot((i_t(0)), (EVE_TYPE(1))), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_ornot((i_t(2)), (EVE_TYPE(1))), eve::True<i_t>() );
+    TTS_EQUAL(eve::logical_ornot((i_t(1)), (EVE_TYPE(0))), eve::True<i_t>());
+    
+    TTS_EQUAL(eve::logical_ornot((EVE_TYPE(0)), i_t(0)), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::logical_ornot((EVE_TYPE(0)), i_t(1)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::logical_ornot((EVE_TYPE(2)), i_t(1)), eve::True<EVE_TYPE>() );
+    TTS_EQUAL(eve::logical_ornot((EVE_TYPE(1)), i_t(0)), eve::True<EVE_TYPE>());
+  }
 }
 
 TTS_CASE("Check eve::logical_ornot behavior on logicals")
