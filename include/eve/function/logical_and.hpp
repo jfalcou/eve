@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 #define EVE_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 
-#include <eve/function/scalar/logical_and.hpp>
-#include <eve/function/simd/logical_and.hpp>
+#include <eve/function/definition/logical_and.hpp>
+#include <eve/module/core/function/scalar/logical_and.hpp>
+#include <eve/module/core/function/simd/logical_and.hpp>
 
 #endif

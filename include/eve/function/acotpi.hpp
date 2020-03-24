@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ACOTPI_HPP_INCLUDED
 #define EVE_FUNCTION_ACOTPI_HPP_INCLUDED
 
-#include <eve/function/scalar/acotpi.hpp>
-#include <eve/function/simd/acotpi.hpp>
+#include <eve/function/definition/acotpi.hpp>
+#include <eve/module/core/function/generic/acotpi.hpp>
 
 #endif

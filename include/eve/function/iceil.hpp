@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ICEIL_HPP_INCLUDED
 #define EVE_FUNCTION_ICEIL_HPP_INCLUDED
 
-#include <eve/function/scalar/iceil.hpp>
-//#include <eve/function/simd/iceil.hpp>
+#include <eve/function/definition/iceil.hpp>
+#include <eve/module/core/function/generic/iceil.hpp>
 
 #endif

@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #ifndef EVE_FUNCTION_SATURATED_HPP_INCLUDED
-#define EVE_FUNCTION_SATURATED_HPP_INCLUDED
+#define EVE_FUNCTION_SATURATED_HPP_INCLUDED 
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>

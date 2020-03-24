@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_STORE_HPP_INCLUDED
 #define EVE_FUNCTION_STORE_HPP_INCLUDED
 
-#include <eve/function/scalar/store.hpp>
-#include <eve/function/simd/store.hpp>
+#include <eve/function/definition/store.hpp>
+#include <eve/module/core/function/scalar/store.hpp>
+#include <eve/module/core/function/simd/store.hpp>
 
 #endif

@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COT_HPP_INCLUDED
 #define EVE_FUNCTION_COT_HPP_INCLUDED
 
-#include <eve/function/scalar/cot.hpp>
-#include <eve/function/simd/cot.hpp>
+#include <eve/function/definition/cot.hpp>
+#include <eve/module/core/function/scalar/cot.hpp>
+#include <eve/module/core/function/simd/cot.hpp>
 
 #endif

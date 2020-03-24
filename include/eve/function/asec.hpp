@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ASEC_HPP_INCLUDED
 #define EVE_FUNCTION_ASEC_HPP_INCLUDED
 
-#include <eve/function/scalar/asec.hpp>
-#include <eve/function/simd/asec.hpp>
+#include <eve/function/definition/asec.hpp>
+#include <eve/module/core/function/generic/asec.hpp>
 
 #endif

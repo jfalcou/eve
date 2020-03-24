@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_TRIGONOMETRIC_HPP_INCLUDED
 
 // helper file to include all trigonometric functions
+#include <eve/function/definition/trigonometric.hpp>
 
 
 #endif

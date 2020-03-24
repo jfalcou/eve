@@ -11,6 +11,7 @@
 #ifndef EVE_FUNCTION_GATHER_HPP_INCLUDED
 #define EVE_FUNCTION_GATHER_HPP_INCLUDED
 
-#include <eve/function/simd/gather.hpp>
+#include <eve/function/definition/gather.hpp>
+#include <eve/module/core/function/simd/gather.hpp>
 
 #endif

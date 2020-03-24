@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_ALL_HPP_INCLUDED
 #define EVE_FUNCTION_ALL_HPP_INCLUDED
 
-#include <eve/function/scalar/all.hpp>
-#include <eve/function/simd/all.hpp>
+#include <eve/function/definition/all.hpp>
+#include <eve/module/core/function/scalar/all.hpp>
+#include <eve/module/core/function/simd/all.hpp>
 
 #endif

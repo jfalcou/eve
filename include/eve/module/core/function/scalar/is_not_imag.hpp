@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/is_nez.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/as_logical.hpp>
 
 namespace eve::detail

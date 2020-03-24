@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_TOINT_HPP_INCLUDED 
 #define EVE_FUNCTION_TOINT_HPP_INCLUDED
 
-#include <eve/function/scalar/toint.hpp>
-#include <eve/function/simd/toint.hpp>
+#include <eve/function/definition/toint.hpp>
+#include <eve/module/core/function/generic/toint.hpp>
 
 #endif

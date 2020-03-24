@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COS_HPP_INCLUDED
 #define EVE_FUNCTION_COS_HPP_INCLUDED
 
-#include <eve/function/scalar/cos.hpp>
-#include <eve/function/simd/cos.hpp>
+#include <eve/function/definition/cos.hpp>
+#include <eve/module/core/function/scalar/cos.hpp>
+#include <eve/module/core/function/simd/cos.hpp>
 
 #endif

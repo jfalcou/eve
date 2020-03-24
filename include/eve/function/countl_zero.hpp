@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COUNTL_ZERO_HPP_INCLUDED
 #define EVE_FUNCTION_COUNTL_ZERO_HPP_INCLUDED
 
-#include <eve/function/scalar/countl_zero.hpp>
-#include <eve/function/simd/countl_zero.hpp>
+#include <eve/function/definition/countl_zero.hpp>
+#include <eve/module/core/function/scalar/countl_zero.hpp>
+#include <eve/module/core/function/simd/countl_zero.hpp>
 
 #endif

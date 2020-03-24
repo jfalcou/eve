@@ -14,10 +14,10 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
-#include <eve/function/scalar/abs.hpp>
-#include <eve/function/scalar/is_ltz.hpp>
-#include <eve/function/scalar/max.hpp>
-#include <eve/function/scalar/min.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/function/max.hpp>
+#include <eve/function/min.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/concept/vectorizable.hpp>

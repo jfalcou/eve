@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_BIT_AND_HPP_INCLUDED
 #define EVE_FUNCTION_BIT_AND_HPP_INCLUDED
 
-#include <eve/function/scalar/bit_and.hpp>
-#include <eve/function/simd/bit_and.hpp>
+#include <eve/function/definition/bit_and.hpp>
+#include <eve/module/core/function/scalar/bit_and.hpp>
+#include <eve/module/core/function/simd/bit_and.hpp>
 
 #endif

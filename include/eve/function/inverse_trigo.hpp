@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_INVERSE_TRIGO_HPP_INCLUDED
 
 // helper file to include all inverse trigonometric functions
+#include <eve/function/definition/inverse_trigo.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/acot.hpp>
 #include <eve/function/asec.hpp>

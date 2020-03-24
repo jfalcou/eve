@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_ATAN2PI_HPP_INCLUDED
 #define EVE_FUNCTION_ATAN2PI_HPP_INCLUDED
 
-#include <eve/function/scalar/atan2pi.hpp>
-#include <eve/function/simd/atan2pi.hpp>
+#include <eve/function/definition/atan2pi.hpp>
+#include <eve/module/core/function/scalar/atan2pi.hpp>
+#include <eve/module/core/function/simd/atan2pi.hpp>
 
 #endif

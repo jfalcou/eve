@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COTPI_HPP_INCLUDED
 #define EVE_FUNCTION_COTPI_HPP_INCLUDED
 
-#include <eve/function/scalar/cotpi.hpp>
-#include <eve/function/simd/cotpi.hpp>
+#include <eve/function/definition/cotpi.hpp>
+#include <eve/module/core/function/scalar/cotpi.hpp>
+#include <eve/module/core/function/simd/cotpi.hpp>
 
 #endif

@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_DIV_HPP_INCLUDED
 #define EVE_FUNCTION_DIV_HPP_INCLUDED
 
-#include <eve/function/scalar/div.hpp>
-#include <eve/function/simd/div.hpp>
+#include <eve/function/definition/div.hpp>
+#include <eve/module/core/function/scalar/div.hpp>
+#include <eve/module/core/function/simd/div.hpp>
 
 #endif

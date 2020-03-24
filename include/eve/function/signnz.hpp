@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SIGNNZ_HPP_INCLUDED
 #define EVE_FUNCTION_SIGNNZ_HPP_INCLUDED
 
-#include <eve/function/scalar/signnz.hpp>
-#include <eve/function/simd/signnz.hpp>
+#include <eve/function/definition/signnz.hpp>
+#include <eve/module/core/function/scalar/signnz.hpp>
+#include <eve/module/core/function/simd/signnz.hpp>
 
 #endif

@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_FLOOR2_HPP_INCLUDED
 #define EVE_FUNCTION_FLOOR2_HPP_INCLUDED
 
-#include <eve/function/scalar/floor2.hpp>
-#include <eve/function/simd/floor2.hpp>
+#include <eve/function/definition/floor2.hpp>
+#include <eve/module/core/function/scalar/floor2.hpp>
+#include <eve/module/core/function/simd/floor2.hpp>
 
 #endif

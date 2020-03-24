@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_INVERSE_HYPERBOLIC_HPP_INCLUDED
 
 // helper file to include all inverse hyperbolic functions
+#include <eve/function/definition/hyperbolic.hpp>
 #include <eve/function/cosh.hpp>
 #include <eve/function/coth.hpp>
 #include <eve/function/sech.hpp>

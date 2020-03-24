@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_CEIL_HPP_INCLUDED
 #define EVE_FUNCTION_CEIL_HPP_INCLUDED
 
-#include <eve/function/scalar/ceil.hpp>
-#include <eve/function/simd/ceil.hpp>
+#include <eve/function/definition/ceil.hpp>
+#include <eve/module/core/function/scalar/ceil.hpp>
+#include <eve/module/core/function/simd/ceil.hpp>
 
 #endif

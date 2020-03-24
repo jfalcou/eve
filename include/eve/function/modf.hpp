@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_MODF_HPP_INCLUDED
 #define EVE_FUNCTION_MODF_HPP_INCLUDED
 
-#include <eve/function/scalar/modf.hpp>
-#include <eve/function/simd/modf.hpp>
+#include <eve/function/definition/modf.hpp>
+#include <eve/module/core/function/scalar/modf.hpp>
+#include <eve/module/core/function/simd/modf.hpp>
 
 #endif

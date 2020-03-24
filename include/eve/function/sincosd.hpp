@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SINCOSD_HPP_INCLUDED
 #define EVE_FUNCTION_SINCOSD_HPP_INCLUDED
 
-#include <eve/function/scalar/sincosd.hpp>
-//#include <eve/function/simd/sincosd.hpp>
+#include <eve/function/definition/sincosd.hpp>
+#include <eve/module/core/function/scalar/sincosd.hpp>
+//#include <eve/module/core/function/simd/sincosd.hpp>
 
 #endif

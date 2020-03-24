@@ -11,6 +11,7 @@
 #ifndef EVE_FUNCTION_IROUND_HPP_INCLUDED
 #define EVE_FUNCTION_IROUND_HPP_INCLUDED
 
-#include <eve/function/scalar/iround.hpp>
+#include <eve/function/definition/iround.hpp>
+#include <eve/module/core/function/scalar/iround.hpp>
 
 #endif

@@ -14,9 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
-#include <eve/function/scalar/is_nan.hpp>
-#include <eve/function/scalar/is_nez.hpp>
-#include <eve/function/scalar/is_gtz.hpp>
+#include <eve/function/is_nan.hpp>
+#include <eve/function/is_nez.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/constant/false.hpp>
 #include <type_traits>
 

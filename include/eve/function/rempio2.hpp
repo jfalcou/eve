@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_REMPIO2_HPP_INCLUDED
 #define EVE_FUNCTION_REMPIO2_HPP_INCLUDED
 
-#include <eve/function/scalar/rempio2.hpp>
-#include <eve/function/simd/rempio2.hpp>
+#include <eve/function/definition/rempio2.hpp>
+#include <eve/module/core/function/scalar/rempio2.hpp>
+#include <eve/module/core/function/simd/rempio2.hpp>
 
 #endif

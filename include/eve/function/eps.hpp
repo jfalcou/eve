@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_EPS_HPP_INCLUDED
 #define EVE_FUNCTION_EPS_HPP_INCLUDED
 
-#include <eve/function/scalar/eps.hpp>
-#include <eve/function/simd/eps.hpp>
+#include <eve/function/definition/eps.hpp>
+#include <eve/module/core/function/generic/eps.hpp>
 
 #endif

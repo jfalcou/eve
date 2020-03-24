@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ATAND_HPP_INCLUDED
 #define EVE_FUNCTION_ATAND_HPP_INCLUDED
 
-#include <eve/function/scalar/atand.hpp>
-#include <eve/function/simd/atand.hpp>
+#include <eve/function/definition/atand.hpp>
+#include <eve/module/core/function/generic/atand.hpp>
 
 #endif

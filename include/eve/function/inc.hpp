@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_INC_HPP_INCLUDED
 #define EVE_FUNCTION_INC_HPP_INCLUDED
 
-#include <eve/function/scalar/inc.hpp>
-#include <eve/function/simd/inc.hpp>
+#include <eve/function/definition/inc.hpp>
+#include <eve/module/core/function/scalar/inc.hpp>
+#include <eve/module/core/function/simd/inc.hpp>
 
 #endif
