@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SLICE_HIGH_HPP_INCLUDED
 #define EVE_FUNCTION_SLICE_HIGH_HPP_INCLUDED
 
-#include <eve/function/scalar/slice_high.hpp>
-//#include <eve/function/simd/slice_high.hpp>
+#include <eve/function/definition/slice_high.hpp>
+#include <eve/module/core/function/scalar/slice_high.hpp>
+//#include <eve/module/core/function/simd/slice_high.hpp>
 
 #endif

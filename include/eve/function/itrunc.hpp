@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ITRUNC_HPP_INCLUDED
 #define EVE_FUNCTION_ITRUNC_HPP_INCLUDED
 
-#include <eve/function/scalar/itrunc.hpp>
-//#include <eve/function/simd/itrunc.hpp>
+#include <eve/function/definition/itrunc.hpp>
+#include <eve/module/core/function/generic/itrunc.hpp>
 
 #endif

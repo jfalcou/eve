@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SLICE_LOW_HPP_INCLUDED
 #define EVE_FUNCTION_SLICE_LOW_HPP_INCLUDED
 
-#include <eve/function/scalar/slice_low.hpp>
-//#include <eve/function/simd/slice_low.hpp>
+#include <eve/function/definition/slice_low.hpp>
+#include <eve/module/core/function/scalar/slice_low.hpp>
+//#include <eve/module/core/function/simd/slice_low.hpp>
 
 #endif

@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_INPI_HPP_INCLUDED
 #define EVE_FUNCTION_INPI_HPP_INCLUDED
 
-#include <eve/function/scalar/inpi.hpp>
-#include <eve/function/simd/inpi.hpp>
+#include <eve/function/definition/inpi.hpp>
+#include <eve/module/core/function/generic/inpi.hpp>
 
 #endif

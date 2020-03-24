@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_NONE_HPP_INCLUDED
 #define EVE_FUNCTION_NONE_HPP_INCLUDED
 
-#include <eve/function/scalar/none.hpp>
-#include <eve/function/simd/none.hpp>
+#include <eve/function/definition/none.hpp>
+#include <eve/module/core/function/scalar/none.hpp>
+#include <eve/module/core/function/simd/none.hpp>
 
 #endif

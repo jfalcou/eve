@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SUM_HPP_INCLUDED
 #define EVE_FUNCTION_SUM_HPP_INCLUDED
 
-#include <eve/function/scalar/sum.hpp>
-//#include <eve/function/simd/sum.hpp>
+#include <eve/function/definition/sum.hpp>
+#include <eve/module/core/function/scalar/sum.hpp>
+//#include <eve/module/core/function/simd/sum.hpp>
 
 #endif

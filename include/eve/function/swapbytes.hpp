@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SWAPBYTES_HPP_INCLUDED
 #define EVE_FUNCTION_SWAPBYTES_HPP_INCLUDED
 
-#include <eve/function/scalar/swapbytes.hpp>
-//#include <eve/function/simd/swapbytes.hpp>
+#include <eve/function/definition/swapbytes.hpp>
+#include <eve/module/core/function/scalar/swapbytes.hpp>
+//#include <eve/module/core/function/simd/swapbytes.hpp>
 
 #endif

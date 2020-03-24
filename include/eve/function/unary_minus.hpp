@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 #define EVE_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 
-#include <eve/function/scalar/unary_minus.hpp>
-#include <eve/function/simd/unary_minus.hpp>
+#include <eve/function/definition/unary_minus.hpp>
+#include <eve/module/core/function/scalar/unary_minus.hpp>
+#include <eve/module/core/function/simd/unary_minus.hpp>
 
 #endif

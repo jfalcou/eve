@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_NEAREST_HPP_INCLUDED
 #define EVE_FUNCTION_NEAREST_HPP_INCLUDED
 
-#include <eve/function/scalar/nearest.hpp>
-#include <eve/function/simd/nearest.hpp>
+#include <eve/function/definition/nearest.hpp>
+#include <eve/module/core/function/scalar/nearest.hpp>
+#include <eve/module/core/function/simd/nearest.hpp>
 
 #endif

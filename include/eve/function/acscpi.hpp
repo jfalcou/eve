@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ACSCPI_HPP_INCLUDED
 #define EVE_FUNCTION_ACSCPI_HPP_INCLUDED
 
-#include <eve/function/scalar/acscpi.hpp>
-#include <eve/function/simd/acscpi.hpp>
+#include <eve/function/definition/acscpi.hpp>
+#include <eve/module/core/function/generic/acscpi.hpp>
 
 #endif

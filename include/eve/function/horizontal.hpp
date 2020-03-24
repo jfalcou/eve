@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_HORIZONTAL_HPP_INCLUDED
 
 // helper file to include all horizontal functions
+#include <eve/function/definition/horizontal.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/none.hpp>

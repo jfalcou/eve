@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_RELDIST_HPP_INCLUDED
 #define EVE_FUNCTION_RELDIST_HPP_INCLUDED
 
-#include <eve/function/scalar/reldist.hpp>
-//#include <eve/function/simd/reldist.hpp>
+#include <eve/function/definition/reldist.hpp>
+#include <eve/module/core/function/scalar/reldist.hpp>
+//#include <eve/module/core/function/simd/reldist.hpp>
 
 #endif

@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_ACSCH_HPP_INCLUDED
 #define EVE_FUNCTION_ACSCH_HPP_INCLUDED
 
-#include <eve/function/scalar/acsch.hpp>
-#include <eve/function/simd/acsch.hpp>
+#include <eve/function/definition/acsch.hpp>
+#include <eve/module/core/function/scalar/acsch.hpp>
+#include <eve/module/core/function/simd/acsch.hpp>
 
 #endif

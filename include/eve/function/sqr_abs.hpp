@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_SQR_ABS_HPP_INCLUDED
 #define EVE_FUNCTION_SQR_ABS_HPP_INCLUDED
 
-#include <eve/function/scalar/sqr_abs.hpp>
-#include <eve/function/simd/sqr_abs.hpp>
+#include <eve/function/definition/sqr_abs.hpp>
+#include <eve/module/core/function/generic/sqr_abs.hpp>
 
 #endif

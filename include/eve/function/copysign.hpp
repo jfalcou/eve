@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COPYSIGN_HPP_INCLUDED
 #define EVE_FUNCTION_COPYSIGN_HPP_INCLUDED
 
-#include <eve/function/scalar/copysign.hpp>
-#include <eve/function/simd/copysign.hpp>
+#include <eve/function/definition/copysign.hpp>
+#include <eve/module/core/function/scalar/copysign.hpp>
+#include <eve/module/core/function/simd/copysign.hpp>
 
 #endif

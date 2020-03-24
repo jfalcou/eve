@@ -14,8 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/smallestposval.hpp>
-#include <eve/function/scalar/abs.hpp>
-#include <eve/function/scalar/is_nez.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/platform.hpp>

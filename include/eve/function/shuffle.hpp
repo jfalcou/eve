@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SHUFFLE_HPP_INCLUDED
 #define EVE_FUNCTION_SHUFFLE_HPP_INCLUDED
 
-#include <eve/function/scalar/shuffle.hpp>
-//#include <eve/function/simd/shuffle.hpp>
+#include <eve/function/definition/shuffle.hpp>
+#include <eve/module/core/function/scalar/shuffle.hpp>
+//#include <eve/module/core/function/simd/shuffle.hpp>
 
 #endif

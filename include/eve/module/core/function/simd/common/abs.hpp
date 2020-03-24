@@ -20,6 +20,7 @@
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/unary_minus.hpp>
 #include <eve/function/max.hpp>
+#include <eve/function/saturated.hpp>
 #include <type_traits>
 
 namespace eve::detail

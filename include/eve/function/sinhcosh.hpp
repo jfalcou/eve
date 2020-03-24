@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SINHCOSH_HPP_INCLUDED
 #define EVE_FUNCTION_SINHCOSH_HPP_INCLUDED
 
-#include <eve/function/scalar/sinhcosh.hpp>
-#include <eve/function/simd/sinhcosh.hpp>
+#include <eve/function/definition/sinhcosh.hpp>
+#include <eve/module/core/function/scalar/sinhcosh.hpp>
+#include <eve/module/core/function/simd/sinhcosh.hpp>
 
 #endif

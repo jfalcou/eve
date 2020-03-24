@@ -16,7 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/function/scalar/fma.hpp>
+#include <eve/function/fma.hpp>
 #include <type_traits>
 
 namespace eve::detail

@@ -13,7 +13,7 @@
 #include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/function/scalar/exponentbits.hpp>
+#include <eve/function/exponentbits.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

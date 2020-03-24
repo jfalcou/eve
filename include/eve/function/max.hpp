@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_MAX_HPP_INCLUDED
 #define EVE_FUNCTION_MAX_HPP_INCLUDED
 
-#include <eve/function/scalar/max.hpp>
-#include <eve/function/simd/max.hpp>
+#include <eve/function/definition/max.hpp>
+#include <eve/module/core/function/scalar/max.hpp>
+#include <eve/module/core/function/simd/max.hpp>
 
 #endif

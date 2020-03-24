@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COMBINE_HPP_INCLUDED
 #define EVE_FUNCTION_COMBINE_HPP_INCLUDED
 
-#include <eve/function/scalar/combine.hpp>
-#include <eve/function/simd/combine.hpp>
+#include <eve/function/definition/combine.hpp>
+#include <eve/module/core/function/scalar/combine.hpp>
+#include <eve/module/core/function/simd/combine.hpp>
 
 #endif

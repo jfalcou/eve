@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_NB_VALUES_HPP_INCLUDED
 #define EVE_FUNCTION_NB_VALUES_HPP_INCLUDED
 
-#include <eve/function/scalar/nb_values.hpp>
-#include <eve/function/simd/nb_values.hpp>
+#include <eve/function/definition/nb_values.hpp>
+#include <eve/module/core/function/generic/nb_values.hpp>
 
 #endif

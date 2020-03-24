@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_PROD_HPP_INCLUDED
 #define EVE_FUNCTION_PROD_HPP_INCLUDED
 
-#include <eve/function/scalar/prod.hpp>
-//#include <eve/function/simd/prod.hpp>
+#include <eve/function/definition/prod.hpp>
+#include <eve/module/core/function/scalar/prod.hpp>
+//#include <eve/module/core/function/simd/prod.hpp>
 
 #endif

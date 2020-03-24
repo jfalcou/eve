@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_ATAN_HPP_INCLUDED
 #define EVE_FUNCTION_ATAN_HPP_INCLUDED
 
-#include <eve/function/scalar/atan.hpp>
-#include <eve/function/simd/atan.hpp>
+#include <eve/function/definition/atan.hpp>
+#include <eve/module/core/function/scalar/atan.hpp>
+#include <eve/module/core/function/simd/atan.hpp>
 
 #endif

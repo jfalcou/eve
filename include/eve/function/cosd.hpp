@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_COSD_HPP_INCLUDED
 #define EVE_FUNCTION_COSD_HPP_INCLUDED
 
-#include <eve/function/scalar/cosd.hpp>
-#include <eve/function/simd/cosd.hpp>
+#include <eve/function/definition/cosd.hpp>
+#include <eve/module/core/function/scalar/cosd.hpp>
+#include <eve/module/core/function/simd/cosd.hpp>
 
 #endif

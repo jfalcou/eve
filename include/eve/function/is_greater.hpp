@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_IS_GREATER_HPP_INCLUDED
 #define EVE_FUNCTION_IS_GREATER_HPP_INCLUDED
 
-#include <eve/function/scalar/is_greater.hpp>
-#include <eve/function/simd/is_greater.hpp>
+#include <eve/function/definition/is_greater.hpp>
+#include <eve/module/core/function/scalar/is_greater.hpp>
+#include <eve/module/core/function/simd/is_greater.hpp>
 
 #endif

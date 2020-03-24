@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_CONJ_HPP_INCLUDED
 #define EVE_FUNCTION_CONJ_HPP_INCLUDED
 
-#include <eve/function/scalar/conj.hpp>
-#include <eve/function/simd/conj.hpp>
+#include <eve/function/definition/conj.hpp>
+#include <eve/module/core/function/generic/conj.hpp>
 
 #endif

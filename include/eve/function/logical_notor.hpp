@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
 #define EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
 
-#include <eve/function/scalar/logical_notor.hpp>
-#include <eve/function/simd/logical_notor.hpp>
+#include <eve/function/definition/logical_notor.hpp>
+#include <eve/module/core/function/scalar/logical_notor.hpp>
+#include <eve/module/core/function/simd/logical_notor.hpp>
 
 #endif

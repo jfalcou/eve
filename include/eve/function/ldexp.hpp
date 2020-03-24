@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_LDEXP_HPP_INCLUDED
 #define EVE_FUNCTION_LDEXP_HPP_INCLUDED
 
-#include <eve/function/scalar/ldexp.hpp>
-#include <eve/function/simd/ldexp.hpp>
+#include <eve/function/definition/ldexp.hpp>
+#include <eve/module/core/function/scalar/ldexp.hpp>
+#include <eve/module/core/function/simd/ldexp.hpp>
 
 #endif

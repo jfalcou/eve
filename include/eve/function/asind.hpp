@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_ASIND_HPP_INCLUDED
 #define EVE_FUNCTION_ASIND_HPP_INCLUDED
 
-#include <eve/function/scalar/asind.hpp>
-#include <eve/function/simd/asind.hpp>
+#include <eve/function/definition/asind.hpp>
+#include <eve/module/core/function/generic/asind.hpp>
 
 #endif

@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/function/scalar/bit_cast.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <type_traits>
 
 namespace eve::detail

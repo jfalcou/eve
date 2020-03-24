@@ -11,6 +11,8 @@
 #ifndef EVE_FUNCTION_CONVERT_HPP_INCLUDED
 #define EVE_FUNCTION_CONVERT_HPP_INCLUDED
 
-#include <eve/function/simd/convert.hpp>
+#include <eve/function/definition/convert.hpp>
+#include <eve/module/core/function/scalar/convert.hpp>
+#include <eve/module/core/function/simd/convert.hpp>
 
 #endif

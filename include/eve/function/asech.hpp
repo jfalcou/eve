@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_ASECH_HPP_INCLUDED
 #define EVE_FUNCTION_ASECH_HPP_INCLUDED
 
-#include <eve/function/scalar/asech.hpp>
-#include <eve/function/simd/asech.hpp>
+#include <eve/function/definition/asech.hpp>
+#include <eve/module/core/function/scalar/asech.hpp>
+#include <eve/module/core/function/simd/asech.hpp>
 
 #endif

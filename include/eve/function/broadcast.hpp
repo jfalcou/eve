@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_BROADCAST_HPP_INCLUDED
 #define EVE_FUNCTION_BROADCAST_HPP_INCLUDED
 
-#include <eve/function/scalar/broadcast.hpp>
-//#include <eve/function/simd/broadcast.hpp>
+#include <eve/function/definition/broadcast.hpp>
+#include <eve/module/core/function/scalar/broadcast.hpp>
+//#include <eve/module/core/function/simd/broadcast.hpp>
 
 #endif

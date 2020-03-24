@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 #define EVE_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 
-#include <eve/function/scalar/rem_pio2_medium.hpp>
-#include <eve/function/simd/rem_pio2_medium.hpp>
+#include <eve/function/definition/rem_pio2_medium.hpp>
+#include <eve/module/core/function/scalar/rem_pio2_medium.hpp>
+#include <eve/module/core/function/simd/rem_pio2_medium.hpp>
 
 #endif

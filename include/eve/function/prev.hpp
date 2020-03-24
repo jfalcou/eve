@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_PREV_HPP_INCLUDED
 #define EVE_FUNCTION_PREV_HPP_INCLUDED
 
-#include <eve/function/scalar/prev.hpp>
-#include <eve/function/simd/prev.hpp>
+#include <eve/function/definition/prev.hpp>
+#include <eve/module/core/function/generic/prev.hpp>
 
 #endif

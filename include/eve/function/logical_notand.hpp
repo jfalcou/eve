@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_LOGICAL_NOTAND_HPP_INCLUDED
 #define EVE_FUNCTION_LOGICAL_NOTAND_HPP_INCLUDED
 
-#include <eve/function/scalar/logical_notand.hpp>
-#include <eve/function/simd/logical_notand.hpp>
+#include <eve/function/definition/logical_notand.hpp>
+#include <eve/module/core/function/scalar/logical_notand.hpp>
+#include <eve/module/core/function/simd/logical_notand.hpp>
 
 #endif

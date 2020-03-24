@@ -14,9 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/function/scalar/is_nan.hpp>
-#include <eve/function/scalar/is_ltz.hpp>
-#include <eve/function/scalar/is_gtz.hpp>
+#include <eve/function/is_nan.hpp>
+#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_gtz.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
