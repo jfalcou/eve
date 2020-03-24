@@ -28,7 +28,7 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/pow_abs.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/platform.hpp>
@@ -60,7 +60,7 @@ namespace eve::detail
       {
         auto nega = is_negative(a);
         T z = pow_abs(a, b);
-        z =  unary_minus[logical_and(is_odd(b), nega)](z); 
+        z =  minus[logical_and(is_odd(b), nega)](z); 
         auto invalid =  logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
         return if_else(invalid, eve::allbits_, z);
       }
@@ -119,7 +119,7 @@ namespace eve::detail
     {
       using u_t =  as_integer_t<U, unsigned>;
       T tmp = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-      return unary_minus[a0 < 0 && is_odd(a1)](tmp); 
+      return minus[a0 < 0 && is_odd(a1)](tmp); 
     }
   }
     

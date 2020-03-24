@@ -24,7 +24,7 @@
 #include <eve/function/is_ltz.hpp>  
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/ldexp.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/module/core/detail/generic/cbrt_kernel.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <type_traits>
@@ -61,7 +61,7 @@ namespace eve::detail
      auto [xm, xe] = raw_(ifrexp)(ax);
      T u = cbrt_kernel(xm); 
      u *= gather(&factor[0], 2 + xe-(xe/3)*3);
-     u = unary_minus[is_ltz(x)](u);
+     u = minus[is_ltz(x)](u);
      auto exp = add[test](xe/3, -18);
      return if_else(is_eqz(x) || is_not_finite(x), x, eve::ldexp(u, exp)); 
    }

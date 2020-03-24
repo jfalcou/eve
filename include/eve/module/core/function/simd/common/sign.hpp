@@ -23,7 +23,7 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

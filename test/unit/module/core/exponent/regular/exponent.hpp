@@ -23,7 +23,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/exponent.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <type_traits>
 
 TTS_CASE("Check eve::exponent return type")

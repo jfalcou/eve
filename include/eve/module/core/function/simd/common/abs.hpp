@@ -18,7 +18,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/function/bit_notand.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/max.hpp>
 #include <type_traits>
 

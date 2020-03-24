@@ -24,7 +24,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/nb_values.hpp>
-#include <eve/function/unary_minus.hpp>
+#include <eve/function/minus.hpp>
 #include <type_traits>
 
 TTS_CASE("Check eve::ulpdist return type")
