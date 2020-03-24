@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_REFINE_REC_HPP_INCLUDED
 
 #include <eve/function/definition/refine_rec.hpp>
-#include <eve/module/core/function/scalar/refine_rec.hpp>
 #include <eve/module/core/function/simd/refine_rec.hpp>
 
 #endif
