@@ -21,35 +21,35 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/cardinal.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE auto bit_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
-            bit_compatible<T,U>,
-            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>
-          )
+  EVE_FORCEINLINE auto bit_and_(EVE_SUPPORTS(cpu_)
+                               , T const &a
+                               , U const &b) noexcept
+  requires bit_compatible<T,U> && (vectorized<T> || vectorized<U>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<T>;
     using vu_t  = value_type_t<U>;
 
-    if constexpr(is_Vectorizable_v<T> && !is_Vectorizable_v<U>)
+    if constexpr(vectorizable<T> && !vectorizable<U>)
     {
       return eve::bit_and(U(bit_cast(a,as<vu_t>())), b);
     }
-    else if constexpr(is_Vectorizable_v<U> && !is_Vectorizable_v<T>)
+    else if constexpr(vectorizable<U> && !vectorizable<T>)
     {
       return eve::bit_and(a, T(bit_cast(b,as<vt_t>())));
     }
-    else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    else if constexpr(emulated<t_abi> || emulated<u_abi>)
     {
       return map(eve::bit_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
     }
-    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    else if constexpr(aggregated<t_abi> || aggregated<u_abi>)
     {
       return aggregate(eve::bit_and, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
     }

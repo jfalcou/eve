@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   bit_notand_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires(T, Vectorizable<T>, Vectorizable<U>, bit_compatible<T,U>)
+  Requires(T, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
   {
     return bit_and(bit_not(a), b);
   }

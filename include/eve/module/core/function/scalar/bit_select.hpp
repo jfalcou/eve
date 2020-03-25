@@ -26,7 +26,7 @@ namespace eve::detail
                   T const &a0,
                   U const &a1,
                   U const &a2) noexcept
-  Requires(U, Vectorizable<T>, Vectorizable<U>, bit_compatible<T,U>)
+  Requires(U, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
   {
     return eve::bit_or(eve::bit_and(a1, a0), eve::bit_andnot(a2, a0));
   }

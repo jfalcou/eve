@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   bit_select_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept 
   Requires( std::conditional_t<is_Vectorized_v<V>, V, U>,
-            bit_compatible<T,U>,bit_compatible<T,V>,
+            Bit_compatible<T,U>,Bit_compatible<T,V>,
             detail::either<is_Vectorized_v<V>, is_Vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;

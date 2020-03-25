@@ -16,22 +16,25 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto bit_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires(T, Vectorizable<T>, Vectorizable<U>, bit_compatible<T,U>)
+  EVE_FORCEINLINE constexpr T bit_and_(EVE_SUPPORTS(cpu_)
+                                         , T const &a
+                                         , U const &b) noexcept
+  requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::floating_point<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
       return bit_cast( b_t(bit_cast(a,as<b_t>()) & bit_cast(b,as<b_t>())), as(a) );
     }
     else
     {
-      if constexpr(std::is_same_v<T, U>)
+      if constexpr(std::same_as<T, U>)
       {
         return a & b;
       }

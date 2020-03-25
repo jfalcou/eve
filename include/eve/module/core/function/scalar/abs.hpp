@@ -20,16 +20,21 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <type_traits>
+#include <eve/concept/stdconcepts.hpp>
+//#include <concepts>
 
 namespace eve::detail
 {
   template<typename T>
-  EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_),
-                                      T const &a) noexcept Requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_)
+                                  , T const &a) noexcept
+  requires vectorizable<T>
   {
-    if constexpr(std::is_floating_point_v<T>) { return bit_andnot(a, Mzero(as(a))); }
-    else if constexpr(std::is_unsigned_v<T>)
+    if constexpr(std::floating_point<T>)
+    {
+      return bit_andnot(a, Mzero(as(a)));
+    }
+    else if constexpr(std::unsigned_integral<T>)
     {
       return a;
     }
@@ -40,14 +45,23 @@ namespace eve::detail
   }
 
   template<typename T>
-  EVE_FORCEINLINE constexpr auto
-  abs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept Requires(T, Vectorizable<T>)
+  EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_)
+                                  , saturated_type const &
+                                  , T const &a) noexcept
+  requires vectorizable<T>
   {
-    if constexpr(std::is_floating_point_v<T>) return a < T(0) ? -a : a;
-    if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) return a;
-
-    if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
-      return (a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a);
+    if constexpr(std::floating_point<T>)
+    {
+      return a < T(0) ? -a : a;
+    }
+    else if constexpr(std::unsigned_integral<T>)
+    {
+      return a;
+    }
+    else
+    {
+      return ((a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a));
+    }
   }
 }
 

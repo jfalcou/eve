@@ -26,19 +26,33 @@ namespace eve
 namespace eve::detail
 {
   template<typename T, typename U>
-  using bits_convertible_with = std::void_t<decltype( bit_cast(std::declval<T>(), as<U>()) )>;
+  using Bits_convertible_with = std::void_t<decltype( bit_cast(std::declval<T>(), as<U>()) )>;
 
     // Concept based on bit_cast support
   template<typename T, typename U>
-  using mixed_bit_compatible = std::void_t< Vectorizable<T>,
-                                                bits_convertible_with<T, value_type_t<U>>
+  using Mixed_bit_compatible = std::void_t< Vectorizable<T>,
+                                                Bits_convertible_with<T, value_type_t<U>>
                                               >;
 
   template<typename T, typename U>
-  using bit_compatible = either < as_trait< bits_convertible_with, T, U>::value
-                                    , as_trait< mixed_bit_compatible, T, U>::value
-                                    , as_trait< mixed_bit_compatible, U, T>::value
+  using Bit_compatible = either < as_trait< Bits_convertible_with, T, U>::value
+                                    , as_trait< Mixed_bit_compatible, T, U>::value
+                                    , as_trait< Mixed_bit_compatible, U, T>::value
                                     >;
+
+  template<typename T, typename U>
+  concept bits_convertible_with = requires (T a) { bit_cast(a, as<U>()); }; 
+  
+
+  template<typename T, typename U>
+  concept mixed_bit_compatible =  vectorizable<T> && bits_convertible_with<T, value_type_t<U>>; 
+
+  template<typename T, typename U>
+  concept bit_compatible = bits_convertible_with<T, U>
+                        || bits_convertible_with<U, T>
+                        || mixed_bit_compatible<T, U>
+                        || mixed_bit_compatible<U, T>; 
+                                                  
 }
 
 #endif

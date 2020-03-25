@@ -60,4 +60,12 @@ namespace eve::detail
   using is_emulated_t = typename is_emulated<T>::type;
 }
 
+namespace eve
+{
+  // concepts related to above traits
+  template<typename T> concept emulated   = detail::is_emulated_v<T>;
+  template<typename T> concept aggregated = detail::is_aggregated_v<T>;
+  template<typename T> concept native_c     = detail::is_native_v<T>; 
+}
+
 #endif
