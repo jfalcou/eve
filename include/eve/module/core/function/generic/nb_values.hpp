@@ -34,13 +34,13 @@ namespace eve::detail
   EVE_FORCEINLINE auto nb_values_(EVE_SUPPORTS(cpu_)
                                  , T const &a
                                  , U const &b) noexcept
-  requires(as_integer_t<std::conditional_t<is_vectorized_v<T>, T, U>, unsigned>
+  Requires(as_integer_t<std::conditional_t<is_Vectorized_v<T>, T, U>, unsigned>
           , either<std::is_same_v<U, T>
           , std::is_same_v<value_type_t<U>, T>
           , std::is_same_v<value_type_t<T>, U>>)
   {
     using v_t =  value_type_t<T>; 
-    using ui_t = as_integer_t<std::conditional_t<is_vectorized_v<T>, T, U>, unsigned>; 
+    using ui_t = as_integer_t<std::conditional_t<is_Vectorized_v<T>, T, U>, unsigned>; 
     if constexpr(std::is_floating_point_v<v_t>)
     {
       auto aa = eve::detail::bitinteger(a);

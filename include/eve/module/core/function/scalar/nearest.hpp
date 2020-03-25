@@ -28,7 +28,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_),
-                                          T const &a0) noexcept requires(T, vectorizable<T>)
+                                          T const &a0) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

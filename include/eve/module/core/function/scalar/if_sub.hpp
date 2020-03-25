@@ -24,8 +24,8 @@ namespace eve::detail
   // Masked case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  sub_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept requires(U,
-                                                                                    vectorizable<T>)
+  sub_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept Requires(U,
+                                                                                    Vectorizable<T>)
   {
     return is_nez(cond) ? t - f : t;
   }
@@ -37,7 +37,7 @@ namespace eve::detail
                                      , T const &cond
                                      , saturated_type const &
                                      , U const &t, U const &f) noexcept
-  requires(U, vectorizable<T>)
+  Requires(U, Vectorizable<T>)
   {
     return cond ? saturated_(sub)(t, f) : t;
   }

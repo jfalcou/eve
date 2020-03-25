@@ -23,8 +23,8 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto negatenz_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             same_as<value_type_t<T>, value_type_t<U>>
           )
   {
@@ -38,14 +38,14 @@ namespace eve::detail
     {
       return aggregate(eve::negatenz, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> & is_Vectorized_v<U>)
     {
       if constexpr(std::is_signed_v<value_type_t<T>>)
         return a*signnz(b);
       else if constexpr(std::is_unsigned_v<value_type_t<T>>)
         return a;
     }
-    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::negatenz(abi_cast<U>(a), abi_cast<T>(b));
     }
@@ -55,8 +55,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto negatenz_(EVE_SUPPORTS(cpu_)
                                 ,  pedantic_type const &
                                 , T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             same_as<value_type_t<T>, value_type_t<U>>
           )
   {
@@ -70,7 +70,7 @@ namespace eve::detail
     {
       return aggregate(eve::pedantic_(eve::negatenz), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> & is_Vectorized_v<U>)
     {
       if constexpr(std::is_signed_v<value_type_t<T>>)
       {
@@ -79,7 +79,7 @@ namespace eve::detail
       else if constexpr(std::is_unsigned_v<value_type_t<T>>)
         return a;
     }
-    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::pedantic_(eve::negatenz)(abi_cast<U>(a), abi_cast<T>(b));
     }

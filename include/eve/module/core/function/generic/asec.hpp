@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, floating_point<value_type_t<T>>)
+  Requires(T, floating_point<value_type_t<T>>)
   {
     return acos(rec(a0)); 
   }
@@ -34,7 +34,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
                                   , raw_type const &     
                                   , T const &a0) noexcept
-  requires(T, floating_point<value_type_t<T>>)
+  Requires(T, floating_point<value_type_t<T>>)
   {
     return raw_(acos)(rec(a0)); 
   }

@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto acosh_(EVE_SUPPORTS(cpu_)
                             , const T &x) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     T t = dec(x);
     auto test = is_greater(t,Oneotwoeps<T>());

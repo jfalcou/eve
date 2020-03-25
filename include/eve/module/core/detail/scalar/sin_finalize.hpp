@@ -30,7 +30,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto sin_finalize(T sbit,  T fn, T xr, T dxr = T(0)) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     using i_t =  detail::as_integer_t<T, signed>; 
     if (is_not_finite(xr)) return Nan<T>();

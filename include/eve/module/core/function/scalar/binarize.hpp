@@ -28,7 +28,7 @@ namespace eve::detail
   template<typename U>
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond) noexcept 
-  requires(U, vectorizable<U>)
+  Requires(U, Vectorizable<U>)
   {
     return  bit_and(U(1), cond.bits());
   }
@@ -37,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_),
                                            logical<U> const & cond,
                                            T const &a0) noexcept
-  requires(U, vectorizable<T>,  vectorizable<U>)
+  Requires(U, Vectorizable<T>,  Vectorizable<U>)
   {
     return bit_and(U(a0), cond.bits());
   }
@@ -46,7 +46,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
                                           , eve::callable_allbits_ const & ) noexcept
-  requires(U, vectorizable<U>)
+  Requires(U, Vectorizable<U>)
   {
     return  bit_cast(cond.bits(), as_<U>());
   }
@@ -55,7 +55,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto binarize_(EVE_SUPPORTS(cpu_)
                                           , logical<U> const & cond
                                           , eve::callable_mone_ const & ) noexcept
-  requires(U, vectorizable<U>)
+  Requires(U, Vectorizable<U>)
   {
     if constexpr(std::is_integral_v<U>)
       return bit_cast(cond.bits(), as_<U>());

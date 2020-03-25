@@ -30,7 +30,7 @@ namespace eve::detail
   saturate_(EVE_SUPPORTS(cpu_)
            , U const &a0
            , as_<Target> const &) noexcept
-  requires(U, vectorizable<Target>, vectorizable<U>)
+  Requires(U, Vectorizable<Target>, Vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<Target>) // saturating to floating point
     {

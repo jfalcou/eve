@@ -42,17 +42,17 @@ namespace eve::detail
                                         , T const &a0
                                         , U const &a1
                                         ) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>,T,U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point,T>,
             floating_point<value_type_t<U>>
           )
   {
-    if constexpr( !is_vectorized_v<U> )
+    if constexpr( !is_Vectorized_v<U> )
     {
       return atan2(a0, T{a1});
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr( !is_Vectorized_v<T> )
     {
       return atan2(U{a0},a1);
     }
@@ -84,16 +84,16 @@ namespace eve::detail
                              , T const &a0
                              , U const &a1
                              ) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>,T,U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point,T>,
             floating_point<value_type_t<U>>)
   {
-    if constexpr( !is_vectorized_v<U> )
+    if constexpr( !is_Vectorized_v<U> )
     {
       return atan2(a0, T{a1});
     }
-    else if constexpr( !is_vectorized_v<T> )
+    else if constexpr( !is_Vectorized_v<T> )
     {
       return atan2(U{a0},a1);
     }

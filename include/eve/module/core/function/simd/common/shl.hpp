@@ -19,8 +19,8 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto
-  shl_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(T,
-                                                                     vectorized<T>,
+  shl_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept Requires(T,
+                                                                     Vectorized<T>,
                                                                      integral<value_type_t<U>>,
                                                                      integral<value_type_t<T>>)
   {

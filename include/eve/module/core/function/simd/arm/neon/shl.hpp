@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon64_> const &v0,
-                            wide<I, N, neon64_> const &v1) noexcept requires(wide<T, N, neon64_>,
+                            wide<I, N, neon64_> const &v1) noexcept Requires(wide<T, N, neon64_>,
                                                                              integral<I>,
                                                                              integral<T>)
   {
@@ -33,7 +33,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon64_> const &v0,
-                            I v1) noexcept requires(wide<T, N, neon64_>, integral<I>, integral<T>)
+                            I v1) noexcept Requires(wide<T, N, neon64_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::shl(v0, i_t(v1));
@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon128_> const &v0,
-                            wide<I, N, neon128_> const &v1) noexcept requires(wide<T, N, neon128_>,
+                            wide<I, N, neon128_> const &v1) noexcept Requires(wide<T, N, neon128_>,
                                                                               integral<I>,
                                                                               integral<T>)
   {
@@ -52,7 +52,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(neon128_),
                             wide<T, N, neon128_> const &v0,
-                            I v1) noexcept requires(wide<T, N, neon128_>, integral<I>, integral<T>)
+                            I v1) noexcept Requires(wide<T, N, neon128_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
     return eve::shl(v0, i_t(v1));

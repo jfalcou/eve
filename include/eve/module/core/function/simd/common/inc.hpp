@@ -44,7 +44,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   inc_(EVE_SUPPORTS(cpu_), U const &cond, wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return cond ? inc(v) : v;
     }
@@ -76,7 +76,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   inc_(EVE_SUPPORTS(cpu_), U const &cond, saturated_type const &, wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       if constexpr(std::is_floating_point_v<T>)
         return cond ? inc(a) : a;

@@ -24,8 +24,8 @@ namespace eve::detail
 {
   template<typename T, typename I, typename N, typename X, typename Y>
   EVE_FORCEINLINE auto lookup_(EVE_SUPPORTS(cpu_)
-                              , wide<T,N,X> const &a, wide<I,N,Y> const &ind) noexcept
-  requires( wide<T,N,X>, behave_as<integral,I> )
+                              , wide<T,N,X> const &a, wide<I,N,Y> const &idx) noexcept
+  Requires( wide<T,N,X>, behave_as<integral,I> )
   {
     using type = wide<T,N,X>;
 

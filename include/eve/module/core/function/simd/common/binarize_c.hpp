@@ -45,7 +45,7 @@ namespace eve::detail
                            , U const & val 
                            ) noexcept
   {
-    if constexpr(is_vectorizable_v<U>)
+    if constexpr(is_Vectorizable_v<U>)
     {
       using t_t = wide<T, N, ABI>; 
       return  bit_andnot(t_t(val),cond.bits());

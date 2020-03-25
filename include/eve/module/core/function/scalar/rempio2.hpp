@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto  rempio2_(EVE_SUPPORTS(cpu_)
                                 , D const & deco
                                 , T const &xx) noexcept
-  requires(std::tuple<T, T, T>, vectorizable<T>)
+  Requires(std::tuple<T, T, T>, Vectorizable<T>)
   {
     if constexpr(std::is_same_v<D, eve::small_type>)
     {
@@ -57,7 +57,7 @@ namespace eve::detail
   template < typename T>
   EVE_FORCEINLINE auto  rempio2_(EVE_SUPPORTS(cpu_)
                                 , T const &x) noexcept
-  requires(std::tuple<T, T, T>, vectorizable<T>)
+  Requires(std::tuple<T, T, T>, Vectorizable<T>)
   {
     if (x < Rempio2_limit(restricted_type(), T()))  return  std::make_tuple(T(0), x, T(0)); 
     else if (x <= Rempio2_limit(small_type(), T()))  return small_(rempio2)(x); 

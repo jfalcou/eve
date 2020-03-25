@@ -27,7 +27,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  min_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept requires(T, vectorizable<T>)
+  min_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept Requires(T, Vectorizable<T>)
   {
     return (a1 < a0) ? a1 : a0;
   }
@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto min_(EVE_SUPPORTS(cpu_),
                                       pedantic_type const &,
                                       T const &a0,
-                                      T const &a1) noexcept requires(T, vectorizable<T>)
+                                      T const &a1) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -53,7 +53,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto min_(EVE_SUPPORTS(cpu_),
                                       numeric_type const &,
                                       T const &a0,
-                                      T const &a1) noexcept requires(T, vectorizable<T>)
+                                      T const &a1) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

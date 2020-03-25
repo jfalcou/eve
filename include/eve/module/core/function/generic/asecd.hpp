@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(asec(a0));
   }
@@ -34,7 +34,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
                                   , raw_type const &      
                                   , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(raw_(asec)(a0));
   }

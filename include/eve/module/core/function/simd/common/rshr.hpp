@@ -32,8 +32,8 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto
-  rshr_(EVE_SUPPORTS(cpu_), T const &v0, U const &v1) noexcept requires(T,
-                                                                        vectorized<T>,
+  rshr_(EVE_SUPPORTS(cpu_), T const &v0, U const &v1) noexcept Requires(T,
+                                                                        Vectorized<T>,
                                                                         integral<value_type_t<U>>,
                                                                         integral<value_type_t<T>>)
   {

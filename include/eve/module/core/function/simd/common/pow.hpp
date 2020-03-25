@@ -41,16 +41,16 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_)
                                , T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point,T>,
             behave_as<floating_point,U>)
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return pow(a, T{b});
     }
-    else if constexpr(!is_vectorized_v<T>)
+    else if constexpr(!is_Vectorized_v<T>)
     {
       return pow(U{a}, b);
     }
@@ -71,7 +71,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T const &a0, U const &a1) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>, integral<U>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>, integral<U>)
   {
     if constexpr(std::is_unsigned_v<U>)
     {
@@ -99,7 +99,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T const &a0, U const &a1) noexcept
-  requires(T, vectorized<T>, vectorized<U>, behave_as<integral, U>)
+  Requires(T, Vectorized<T>, Vectorized<U>, behave_as<integral, U>)
   {
     if constexpr(std::is_unsigned_v<U>)
     {
@@ -127,7 +127,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T a0, U a1) noexcept
-  requires(T, vectorized<T>, behave_as<integral, T>, integral<U>)
+  Requires(T, Vectorized<T>, behave_as<integral, T>, integral<U>)
   {
     if (a1 >= U(sizeof(T)*8-1-(std::is_signed_v<T>)) || a1 < 0) return T(0); 
      constexpr uint8_t highest_bit_set[] = {
@@ -174,17 +174,17 @@ namespace eve::detail
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_)
                                , raw_type const &
                                , T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>
            )
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>> || std::is_floating_point_v<value_type_t<U>>)
     {
-      if constexpr(!is_vectorized_v<U>)
+      if constexpr(!is_Vectorized_v<U>)
       {
         return pow_abs(a, T{b});
       }
-      else if constexpr(!is_vectorized_v<T>)
+      else if constexpr(!is_Vectorized_v<T>)
       {
         return pow_abs(U{a}, b);
       }

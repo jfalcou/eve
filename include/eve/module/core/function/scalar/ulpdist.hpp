@@ -27,7 +27,7 @@ namespace eve::detail
   ulpdist_(EVE_SUPPORTS(cpu_)
           , T const &a
           , T const &b ) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if (numeric_(is_equal)(a, b)) return T(0);
     if (is_unordered(a, b)) return Nan<T>(); 

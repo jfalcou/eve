@@ -25,9 +25,9 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto
-  is_lessgreater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
-      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+  is_lessgreater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept Requires(
+      as_logical_t<std::conditional_t<is_Vectorized_v<T>, T, U>>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -41,7 +41,7 @@ namespace eve::detail
       return aggregate(
           eve::is_lessgreater, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> & is_Vectorized_v<U>)
     {
       if constexpr(std::is_same_v<T, U>)
       {
@@ -57,7 +57,7 @@ namespace eve::detail
         return {};
       }
     }
-    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::is_lessgreater(abi_cast<U>(a), abi_cast<T>(b));
     }
@@ -66,9 +66,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto is_lessgreater_(EVE_SUPPORTS(cpu_),
                                        logical<T> const &v0,
-                                       logical<U> const &v1) noexcept requires(logical<T>,
-                                                                               vectorized<T>,
-                                                                               vectorized<U>,
+                                       logical<U> const &v1) noexcept Requires(logical<T>,
+                                                                               Vectorized<T>,
+                                                                               Vectorized<U>,
                                                                                equal_cardinal<T, U>)
   {
     return is_not_equal(v0, v1);

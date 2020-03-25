@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
                                           , T const &a) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return static_cast<T>(One<T>()-a);
   }
@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_)
                                 , saturated_type const &
                                 , T const &v) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) return oneminus(v);
     else if constexpr(std::is_signed_v<T>)
@@ -59,7 +59,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_)
                                           , U const & cond
                                           , T const &a) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return cond ? oneminus(a) : a;
   }
@@ -71,7 +71,7 @@ namespace eve::detail
                                           , U const & cond
                                           , saturated_type const &
                                           , T const &v) noexcept
-  requires(T, vectorizable<T>, vectorizable<U>)
+  Requires(T, Vectorizable<T>, Vectorizable<U>)
   {
     return cond ? saturated_(oneminus)(v) : v;
   }

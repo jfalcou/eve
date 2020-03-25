@@ -65,7 +65,7 @@ namespace eve::detail
                                           , U const & cond
                                           , wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
       return cond ? oneminus(v) : v;
     else
       return if_else(cond, One(as(v))-v, v);
@@ -79,7 +79,7 @@ namespace eve::detail
                                           , saturated_type const &
                                           , wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
       return cond ? saturated_(oneminus)(v) : v;
     else
       return if_else(cond, saturated_(oneminus)(v), v);

@@ -25,16 +25,16 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto hypot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point,T>,
             floating_point<value_type_t<U>>)
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return hypot(a, T{b});
     }
-    else if constexpr(!is_vectorized_v<T>)
+    else if constexpr(!is_Vectorized_v<T>)
     {
       return hypot(U{a}, b);
     }

@@ -22,14 +22,14 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  sqrt_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0) noexcept requires(T, vectorizable<T>)
+  sqrt_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0) noexcept Requires(T, Vectorizable<T>)
   {
     return eve::sqrt(a0);
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto sqrt_(EVE_SUPPORTS(cpu_),
-                                       T const &a0) noexcept requires(T, vectorizable<T>)
+                                       T const &a0) noexcept Requires(T, Vectorizable<T>)
   {
     if(std::is_integral_v<T>)
     {

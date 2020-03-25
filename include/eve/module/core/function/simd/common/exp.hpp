@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto exp_(EVE_SUPPORTS(cpu_)
                                      , const T &xx) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
    using t_abi = abi_type_t<T>;
    if constexpr(is_emulated_v<t_abi> ) return map(eve::exp, xx); 
@@ -98,7 +98,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto exp_(EVE_SUPPORTS(cpu_)
                                      , pedantic_type const & 
                                      , const T &xx) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
    using t_abi = abi_type_t<T>;
    if constexpr(is_emulated_v<t_abi> ) return map(eve::exp, xx); 

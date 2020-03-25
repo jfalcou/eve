@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   copysign_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return bit_or(bitofsign(a1), bit_notand(Signmask(as(a0)), a0));

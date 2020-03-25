@@ -38,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cscpi_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -59,7 +59,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cscpi_(EVE_SUPPORTS(cpu_)
                                      , TAG const & tag
                                      , T const &a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(eve::is_trigonometric_tag_v<TAG>)
     {
@@ -78,7 +78,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cscpi_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return big_(eve::cscpi)(a0); 
   }

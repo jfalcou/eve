@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto is_pow2_(EVE_SUPPORTS(cpu_)
                                , wide<T, N, ABI> const &x) noexcept
-  requires(logical<wide<T, N, ABI>>, integral<T>)
+  Requires(logical<wide<T, N, ABI>>, integral<T>)
   {
     return is_gtz(x) && is_eqz(bit_and(x, dec(x)));
   }

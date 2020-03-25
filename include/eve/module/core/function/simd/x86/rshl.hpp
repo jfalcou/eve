@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   rshl_(EVE_SUPPORTS(avx_),
         wide<T, N, sse_> const &a0,
-        wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, integral<T>, integral<I>)
+        wide<I, N, sse_> const &a1) noexcept Requires(wide<T, N, sse_>, integral<T>, integral<I>)
   {
     if constexpr(supports_xop)
     {

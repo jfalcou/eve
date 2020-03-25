@@ -26,7 +26,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return a + b;
   }
@@ -38,7 +38,7 @@ namespace eve::detail
                      , saturated_type const&
                      , T const& a
                      , T const& b) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr( std::is_floating_point_v<T> )
     {

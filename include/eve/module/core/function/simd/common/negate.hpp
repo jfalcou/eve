@@ -23,8 +23,8 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto negate_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             same_as<value_type_t<T>, value_type_t<U>>
           )
   {
@@ -38,14 +38,14 @@ namespace eve::detail
     {
       return aggregate(eve::negate, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> & is_Vectorized_v<U>)
     {
       if constexpr(std::is_signed_v<value_type_t<T>>)
         return a*sign(b);
       else if constexpr(std::is_unsigned_v<value_type_t<T>>)
         return if_else(is_nez(b), a, eve::zero_);
     }
-    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::negate(abi_cast<U>(a), abi_cast<T>(b));
     }

@@ -27,15 +27,15 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto
-  logical_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
-      as_logical_t<std::conditional_t<is_vectorized_v<T>, T, U>>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+  logical_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept Requires(
+      as_logical_t<std::conditional_t<is_Vectorized_v<T>, T, U>>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return logical_andnot(a, T{b});
     }
-    else if constexpr(!is_vectorized_v<T>)
+    else if constexpr(!is_Vectorized_v<T>)
     {
       return logical_andnot(U{a}, b);
     }
@@ -68,9 +68,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_),
                                        logical<T> const &a,
-                                       logical<U> const &b) noexcept requires(logical<T>,
-                                                                              vectorized<T>,
-                                                                              vectorized<U>,
+                                       logical<U> const &b) noexcept Requires(logical<T>,
+                                                                              Vectorized<T>,
+                                                                              Vectorized<U>,
                                                                               equal_cardinal<T, U>)
   {
     return bit_cast(bit_andnot(a.bits(), b.bits()), as(a));
@@ -79,9 +79,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_),
                                        logical<T> const &a,
-                                       U const &         b) noexcept requires(logical<T>,
-                                                                     vectorized<T>,
-                                                                     vectorized<U>,
+                                       U const &         b) noexcept Requires(logical<T>,
+                                                                     Vectorized<T>,
+                                                                     Vectorized<U>,
                                                                      equal_cardinal<T, U>)
   {
     return bit_cast(bit_andnot(a.bits(), bit_mask(b)), as(a));
@@ -90,9 +90,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_),
                                        T const &         a,
-                                       logical<U> const &b) noexcept requires(logical<U>,
-                                                                              vectorized<T>,
-                                                                              vectorized<U>,
+                                       logical<U> const &b) noexcept Requires(logical<U>,
+                                                                              Vectorized<T>,
+                                                                              Vectorized<U>,
                                                                               equal_cardinal<T, U>)
   {
     return bit_cast(bit_andnot(bit_mask(a), b.bits()), as(b));

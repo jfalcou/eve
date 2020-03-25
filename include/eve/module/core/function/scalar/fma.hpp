@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   fma_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return a * b + c;
   }
@@ -39,7 +39,7 @@ namespace eve::detail
   fma_(EVE_SUPPORTS(cpu_)
       , D const & 
       , T const &a0, T const &a1, T const &a2) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_same_v<T, float>)
     {

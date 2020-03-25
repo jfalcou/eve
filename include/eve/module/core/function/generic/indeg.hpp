@@ -22,7 +22,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto indeg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  requires(T, behave_as<floating_point,T>)
+  Requires(T, behave_as<floating_point,T>)
  {
     auto radindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
     auto radindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();

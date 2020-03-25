@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename U, typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(cpu_), U const &cond, wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return cond ? dec(v) : v;
     }
@@ -78,7 +78,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   dec_(EVE_SUPPORTS(cpu_), U const &cond, saturated_type const &, wide<T, N, ABI> const &a) noexcept
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       if constexpr(std::is_floating_point_v<T>)
       {

@@ -33,7 +33,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_ ( EVE_SUPPORTS(cpu_),
                                     IN const & v0, as_<IN> const&
                                   ) noexcept
-  requires(IN, vectorizable<IN>)
+  Requires(IN, Vectorizable<IN>)
   {
     return v0;
   }
@@ -42,7 +42,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_),
                                  IN const & v0, as_<OUT> const& tgt
                                ) noexcept
-  requires(OUT, vectorizable<IN>, vectorizable<OUT>)
+  Requires(OUT, Vectorizable<IN>, Vectorizable<OUT>)
   {
     return static_cast<OUT>(v0);
   }
@@ -55,7 +55,7 @@ namespace eve::detail
                                  , saturated_type const &
                                  , IN const & v0, as_<OUT> const& tgt
                                  ) noexcept
-  requires(OUT, vectorizable<IN>, vectorizable<OUT>)
+  Requires(OUT, Vectorizable<IN>, Vectorizable<OUT>)
   {
     return convert(saturate(v0, tgt), tgt); 
   }

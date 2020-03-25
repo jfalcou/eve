@@ -23,7 +23,7 @@ namespace eve
 
   template<typename T>
   constexpr EVE_FORCEINLINE auto Invlog10_2(as_<T> const & = {}) noexcept
-  requires(T, detail::behave_as<detail::floating_point, T>)
+  Requires(T, detail::behave_as<detail::floating_point, T>)
   {
     using t_t = detail::value_type_t<T>;
 

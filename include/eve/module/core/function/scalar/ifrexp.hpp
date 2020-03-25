@@ -46,7 +46,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
                                         , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
+  Requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
   {
     using t_t = value_type_t<T>;
     auto r1   = bit_and(Expobits_mask<T>(), a0);
@@ -60,7 +60,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
+  Requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if(!a0) return {T(0),i_t(0)};
@@ -73,7 +73,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , T a0) noexcept
-  requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
+  Requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
   {
     using i_t = as_integer_t<T, signed>;
     if (a0 == 0 || is_not_finite(a0))

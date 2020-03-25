@@ -24,7 +24,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto firstbitunset_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
-  requires(T, integral<T>)
+  Requires(T, integral<T>)
   {
     return ~a0 & (a0+One(as(a0)));
   }

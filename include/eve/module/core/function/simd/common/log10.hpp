@@ -49,7 +49,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
                             , const T &xx) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     return musl_(log10)(xx);
   }
@@ -58,7 +58,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
                             , musl_type const &  
                             , const T &a0) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     using t_abi = abi_type_t<T>;
     if constexpr(is_emulated_v<t_abi> ) return map(eve::log10, a0); 
@@ -211,7 +211,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
                             , plain_type const &  
                             , const T &a0) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     using t_abi = abi_type_t<T>;
     if constexpr(is_emulated_v<t_abi> ) return map(eve::log10, a0); 

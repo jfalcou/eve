@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto sinh_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
     auto x = eve::abs(a0);

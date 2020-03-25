@@ -66,7 +66,7 @@ namespace eve::detail
   template < typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto  rempio2_(EVE_SUPPORTS(cpu_)
                                 , wide<T, N, ABI> const &x) noexcept
-  requires(std::tuple<wide<T, N, ABI>, wide<T, N, ABI>, wide<T, N, ABI>>, vectorizable<T>)
+  Requires(std::tuple<wide<T, N, ABI>, wide<T, N, ABI>, wide<T, N, ABI>>, Vectorizable<T>)
   {
 //    EVE_ASSERT(all(is_nltz(x)), "attempted rempio2 with negative argument"); 
     using t_t = wide < T, N, ABI>; 

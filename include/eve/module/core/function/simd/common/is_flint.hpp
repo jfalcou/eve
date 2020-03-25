@@ -26,7 +26,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  is_flint_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorized<T>)
+  is_flint_(EVE_SUPPORTS(cpu_), T const &a) noexcept Requires(as_logical_t<T>, Vectorized<T>)
   {
     if constexpr(std::is_floating_point_v<typename T::value_type>)
       return is_eqz(frac(a));

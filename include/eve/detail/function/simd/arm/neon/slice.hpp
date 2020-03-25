@@ -60,7 +60,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a,
-                             Slice const &) noexcept requires(wide<T, typename N::split_type>,
+                             Slice const &) noexcept Requires(wide<T, typename N::split_type>,
                                                               if_<(N::value > 1)>)
   {
     using type = wide<T, typename N::split_type>;

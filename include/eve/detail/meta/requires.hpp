@@ -32,6 +32,6 @@ namespace eve::detail
 }
 
 // Pseudo require macro
-#define requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type
+#define Requires(...)->typename ::eve::detail::require_check < __VA_ARGS__> ::type
 
 #endif

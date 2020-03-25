@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
                                      as_<Target> const &) noexcept
-  requires(Target, if_<!is_vectorized_v<T>>, if_<(sizeof(T) == sizeof(Target))>)
+  Requires(Target, if_<!is_Vectorized_v<T>>, if_<(sizeof(T) == sizeof(Target))>)
   {
     if constexpr(std::is_same_v<T, Target>)
     {

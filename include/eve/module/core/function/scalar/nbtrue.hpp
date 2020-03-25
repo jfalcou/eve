@@ -22,7 +22,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto nbtrue_(EVE_SUPPORTS(cpu_),
                                       T const &a) noexcept
-  requires(size_t, vectorizable<T>)
+  Requires(size_t, Vectorizable<T>)
   {
     return a!= 0;
   }
@@ -30,7 +30,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto nbtrue_(EVE_SUPPORTS(cpu_),
                                       logical<T> const &a) noexcept
-  requires(size_t, vectorizable<T>)
+  Requires(size_t, Vectorizable<T>)
   {
     return a!= 0;
   }

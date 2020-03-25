@@ -21,7 +21,7 @@ namespace eve::detail
   template <typename T>
   EVE_FORCEINLINE constexpr auto is_pow2_(EVE_SUPPORTS(cpu_)
                                         , const T &x) noexcept
-  requires(logical<T>, integral<T>)
+  Requires(logical<T>, integral<T>)
   {
     return x != 0 && (x & (x - 1)) == 0;
   }

@@ -24,7 +24,7 @@ namespace eve::detail
   // 128 bits implementation
   template<typename T, typename I, typename N>
   EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0, I const & a1) noexcept
-  requires(wide<T, N, sse_>, integral<T>, integral<I>)
+  Requires(wide<T, N, sse_>, integral<T>, integral<I>)
   {
     using t_t = wide<T, N, sse_>;
 
@@ -63,7 +63,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   shr_(EVE_SUPPORTS(avx_),
        wide<T, N, sse_> const &a0,
-       wide<I, N, sse_> const &a1) noexcept requires(wide<T, N, sse_>, integral<T>, integral<I>)
+       wide<I, N, sse_> const &a1) noexcept Requires(wide<T, N, sse_>, integral<T>, integral<I>)
   {
     if constexpr(supports_xop)
     {
@@ -100,7 +100,7 @@ namespace eve::detail
   // 256 bits implementation
   template<typename T, typename I, typename N>
   EVE_FORCEINLINE auto shr_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0,I const & a1) noexcept
-  requires(wide<T, N, avx_>, integral<T>, integral<I>)
+  Requires(wide<T, N, avx_>, integral<T>, integral<I>)
   {
     if constexpr(current_api >= avx2)
     {
@@ -133,7 +133,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   shr_(EVE_SUPPORTS(avx_),
        wide<T, N, avx_> const &a0,
-       wide<I, N, avx_> const &a1) noexcept requires(wide<T, N, avx_>, integral<T>, integral<I>)
+       wide<I, N, avx_> const &a1) noexcept Requires(wide<T, N, avx_>, integral<T>, integral<I>)
   {
     auto ifxop_choice = [](const auto &a0, const auto &a1) {
       if constexpr(supports_xop)

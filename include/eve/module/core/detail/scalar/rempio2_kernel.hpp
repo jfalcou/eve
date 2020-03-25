@@ -198,7 +198,7 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
-  requires(std::tuple<T, T, T>, vectorizable<T>)
+  Requires(std::tuple<T, T, T>, Vectorizable<T>)
   {
     if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
     else if (xx < Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));

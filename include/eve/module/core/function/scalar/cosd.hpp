@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cosd_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -59,7 +59,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cosd_(EVE_SUPPORTS(cpu_)
                            , small_type const &       
                            , T const &a0) noexcept
-   requires(T, vectorizable<T>)
+   Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

@@ -25,7 +25,7 @@ namespace eve::detail
                                        , T const &a0
                                        , T const &a1
                                        ) noexcept
-  requires(T,  floating_point<T>)
+  Requires(T,  floating_point<T>)
   {
     return indeg(atan2(a0, a1));
   }
@@ -36,7 +36,7 @@ namespace eve::detail
                                        , T a0
                                        , T a1
                                        ) noexcept
-  requires(T,  floating_point<T>)
+  Requires(T,  floating_point<T>)
   {
     return indeg(pedantic_(atan2)(a0, a1));
   }

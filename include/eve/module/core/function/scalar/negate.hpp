@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   negate_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_signed_v<T>)
       return a0*sign(a1);

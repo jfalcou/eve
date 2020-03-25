@@ -39,7 +39,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                            ,  raw_type const & 
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, floating_point<T>)
+  Requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {
@@ -62,7 +62,7 @@ namespace eve::detail
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a0) noexcept
-  requires( eve::wide<T,N,ABI>, floating_point<T>)
+  Requires( eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> )
     {

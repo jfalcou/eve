@@ -40,7 +40,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE  auto sinhcosh_(EVE_SUPPORTS(cpu_)
                                      , const T &a0) noexcept
-  requires(std::tuple<T, T>, vectorized<T>, behave_as<floating_point, T>)
+  Requires(std::tuple<T, T>, Vectorized<T>, behave_as<floating_point, T>)
   {
     using t_abi = abi_type_t<T>;
     if constexpr(is_emulated_v<t_abi> ) return map(eve::sinhcosh, a0); 

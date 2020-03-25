@@ -31,11 +31,11 @@ namespace eve::detail
       , T const &cond
       , U const &a
       , V const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<U>,U,V>,
+            detail::either<is_Vectorized_v<V>, is_Vectorized_v<U>>
           )
   {
-    if constexpr(is_vectorized_v<T>)  return div(a, if_else(cond, b, eve::one_));
+    if constexpr(is_Vectorized_v<T>)  return div(a, if_else(cond, b, eve::one_));
     else  return cond ? div(a, b) : a;
   }
 
@@ -47,11 +47,11 @@ namespace eve::detail
                             , saturated_type const &
                             , U const &a
                             , V const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<U>,U,V>,
+            detail::either<is_Vectorized_v<V>, is_Vectorized_v<U>>
           )
   {
-    if constexpr(is_vectorized_v<T>) return if_else(cond, saturated_(div)(a, b), a);
+    if constexpr(is_Vectorized_v<T>) return if_else(cond, saturated_(div)(a, b), a);
     else return cond ? saturated_(div)(a, b) : a;
   }
 }

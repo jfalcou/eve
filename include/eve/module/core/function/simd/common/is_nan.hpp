@@ -24,7 +24,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  is_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept requires(as_logical_t<T>, vectorized<T>)
+  is_nan_(EVE_SUPPORTS(cpu_), T const &a) noexcept Requires(as_logical_t<T>, Vectorized<T>)
   {
     return is_unordered(a, a);
   }

@@ -17,32 +17,32 @@
 namespace eve::detail
 {
   template<typename Type>
-  struct is_vectorizable : std::is_arithmetic<Type>
+  struct is_Vectorizable : std::is_arithmetic<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorizable<Type &> : is_vectorizable<Type>
+  struct is_Vectorizable<Type &> : is_Vectorizable<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorizable<Type const> : is_vectorizable<Type>
+  struct is_Vectorizable<Type const> : is_Vectorizable<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorizable<Type const &> : is_vectorizable<Type>
+  struct is_Vectorizable<Type const &> : is_Vectorizable<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorizable<Type &&> : is_vectorizable<Type>
+  struct is_Vectorizable<Type &&> : is_Vectorizable<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorizable<logical<Type>> : is_vectorizable<Type>
+  struct is_Vectorizable<logical<Type>> : is_Vectorizable<Type>
   {
   };
 }
@@ -50,18 +50,21 @@ namespace eve::detail
 namespace eve
 {
   template<typename Type>
-  struct is_vectorizable : detail::is_vectorizable<Type>
+  struct is_Vectorizable : detail::is_Vectorizable<Type>
   {
   };
 
   template<typename Type>
-  using is_vectorizable_t = typename is_vectorizable<Type>::type;
+  using is_Vectorizable_t = typename is_Vectorizable<Type>::type;
 
   template<typename Type>
-  inline constexpr bool is_vectorizable_v = is_vectorizable_t<Type>::value;
+  inline constexpr bool is_Vectorizable_v = is_Vectorizable_t<Type>::value;
 
   template<typename Type>
-  using vectorizable = std::enable_if_t<is_vectorizable_v<Type>>;
+  using Vectorizable = std::enable_if_t<is_Vectorizable_v<Type>>;
+
+  template<typename Type> concept vectorizable = is_Vectorizable_v<Type>; 
+  
 }
 
 #endif

@@ -28,7 +28,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto atanh_(EVE_SUPPORTS(cpu_)
                                        , T x) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
       T absx = eve::abs(x);
       T t =  absx+absx;

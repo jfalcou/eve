@@ -30,8 +30,8 @@ namespace eve::detail
                  , numeric_type const & nt
                  , T const &a
                  , U const &b) noexcept
-  requires( as_logical_t<std::conditional_t<is_vectorized_v<T>,T,U>>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  Requires( as_logical_t<std::conditional_t<is_Vectorized_v<T>,T,U>>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -49,7 +49,7 @@ namespace eve::detail
                        abi_cast<value_type_t<U>>(a),
                        abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> & is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> & is_Vectorized_v<U>)
     {
       if constexpr(std::is_floating_point_v<value_type_t<T>>)
       { return is_not_equal(a, b) && (is_not_nan(a) || is_not_nan(b)); }
@@ -58,7 +58,7 @@ namespace eve::detail
         return is_not_equal(a, b);
       }
     }
-    else // if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::is_not_equal(nt, abi_cast<U>(a), abi_cast<T>(b));
     }
@@ -70,8 +70,8 @@ namespace eve::detail
                  , numeric_type const &
                  , logical<T> const &a, logical<U> const &b
                 ) noexcept
-  requires( logical<T>,
-            vectorized<T>, vectorized<U>,
+  Requires( logical<T>,
+            Vectorized<T>, Vectorized<U>,
             equal_cardinal<T,U>
           )
   {

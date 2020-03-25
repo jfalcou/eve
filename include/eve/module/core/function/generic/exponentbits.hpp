@@ -27,7 +27,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE  auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  requires(as_integer_t<T>, behave_as<floating_point,T>)
+  Requires(as_integer_t<T>, behave_as<floating_point,T>)
   {
     return bit_and(Expobits_mask<T>(), a); 
   }

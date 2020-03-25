@@ -34,8 +34,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_)
                                  , T const &x
                                  , U const &y) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>
-          , either<is_vectorized_v<T>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>
+          , either<is_Vectorized_v<T>, is_Vectorized_v<U>>
           , behave_as<totally_ordered, T>)
   {
     using t_abi = abi_type_t<T>;
@@ -49,11 +49,11 @@ namespace eve::detail
     {
       return aggregate(eve::nextafter, abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
     }
-    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> && is_Vectorized_v<U>)
     {
       return if_else(x < y,  next(x), if_else(y < x, prev(x), x)); 
     }
-    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> || is_Vectorized_v<U> )
     {
       return eve::pedantic_(eve::nextafter)(abi_cast<U>(x), abi_cast<T>(y));
     }  
@@ -64,8 +64,8 @@ namespace eve::detail
                                  , pedantic_type const &   
                                  , T const &x
                                  , U const &y) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>
-          , either<is_vectorized_v<T>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>
+          , either<is_Vectorized_v<T>, is_Vectorized_v<U>>
           , behave_as<totally_ordered, T>)
   {
     using t_abi = abi_type_t<T>;
@@ -79,14 +79,14 @@ namespace eve::detail
     {
       return aggregate(eve::pedantic_(eve::nextafter), abi_cast<value_type_t<U>>(x), abi_cast<value_type_t<T>>(y));
     }
-    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> && is_Vectorized_v<U>)
     {
       if constexpr(std::is_floating_point_v<value_type_t<T>>)
         return if_else(is_unordered(x, y), eve::allbits_, nextafter(x, y));
       else
         return nextafter(x, y); 
     }
-    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> || is_Vectorized_v<U> )
     {
       return eve::pedantic_(eve::nextafter)(abi_cast<U>(x), abi_cast<T>(y));
     } 

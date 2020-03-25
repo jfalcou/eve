@@ -31,7 +31,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
           , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     auto ltza0 = is_ltz(a0);
     auto isinfa1 = is_infinite(a1);
@@ -46,7 +46,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T const &a0, U const &a1) noexcept
-  requires(T, floating_point<T>, integral<U>)
+  Requires(T, floating_point<T>, integral<U>)
   {
     if constexpr(std::is_unsigned_v<U>)
     {
@@ -74,7 +74,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T a0, U a1) noexcept
-  requires(T, integral<T>, integral<U>)
+  Requires(T, integral<T>, integral<U>)
   {
     if (a0 == 1) return 1;  
     if ((a1 >= U((sizeof(T)*8-1-std::is_signed_v<T>))) || a1 < 0) return 0; 
@@ -122,7 +122,7 @@ namespace eve::detail
   pow_(EVE_SUPPORTS(cpu_)
       , raw_type const &
       , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     return exp(a1*log(a0)); 
   }
@@ -132,7 +132,7 @@ namespace eve::detail
   pow_(EVE_SUPPORTS(cpu_)
       , raw_type const &
       , T const &a0, U const &a1) noexcept
-  requires(T, vectorizable<T>, integral<U>)
+  Requires(T, Vectorizable<T>, integral<U>)
   {
     return pow(a0, a1); 
   }

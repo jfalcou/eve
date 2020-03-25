@@ -26,8 +26,8 @@ namespace eve::detail
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE constexpr auto
   mul_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
-  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<U>,U,V>,
+            detail::either<is_Vectorized_v<V>, is_Vectorized_v<U>>
           )
   {
     return t * if_else(cond, abi_cast<U>(f), eve::one_);
@@ -41,11 +41,11 @@ namespace eve::detail
                             , saturated_type const &
                             , U const &a
                             , V const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<U>,U,V>,
-            detail::either<is_vectorized_v<V>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<U>,U,V>,
+            detail::either<is_Vectorized_v<V>, is_Vectorized_v<U>>
           )
   {
-    if constexpr(is_vectorized_v<T>) return if_else(cond, saturated_(mul)(a, b), a);
+    if constexpr(is_Vectorized_v<T>) return if_else(cond, saturated_(mul)(a, b), a);
     else return cond ? saturated_(mul)(a, b) : a;
   }
 }

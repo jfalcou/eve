@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   fdim_(EVE_SUPPORTS(cpu_), T const &x, T const &y) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if constexpr(eve::platform::supports_invalids)
       if (is_unordered(x, y)) return Nan(as(x)); 

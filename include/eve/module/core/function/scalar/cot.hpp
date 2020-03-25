@@ -45,7 +45,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -62,7 +62,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
                                       , small_type const &       
                                       , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -99,7 +99,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
                                      , D const &       
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -118,7 +118,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cot_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     auto x =  abs(a0);
     if (x <= Pio_4(as(x)))                           return restricted_(cot)(a0);

@@ -34,7 +34,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto asinh_(EVE_SUPPORTS(cpu_)
                              , const T &a0) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     T x =  eve::abs(a0);
     if constexpr(std::is_same_v<value_type_t<T>, double>)

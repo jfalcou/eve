@@ -27,16 +27,16 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto manhattan_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point, T>,
             behave_as<floating_point, U>)
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return manhattan(a, T{b});
     }
-    else if constexpr(!is_vectorized_v<T>)
+    else if constexpr(!is_Vectorized_v<T>)
     {
       return manhattan(U{a}, b);
     }
@@ -62,16 +62,16 @@ namespace eve::detail
                              , pedantic_type const &
                              , T const &a
                              , U const &b) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>, T, U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>,
+  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
             behave_as<floating_point,T>,
             behave_as<floating_point,U>)
   {
-    if constexpr(!is_vectorized_v<U>)
+    if constexpr(!is_Vectorized_v<U>)
     {
       return pedantic_(manhattan)(a, T{b});
     }
-    else if constexpr(!is_vectorized_v<T>)
+    else if constexpr(!is_Vectorized_v<T>)
     {
       return pedantic_(manhattan)(U{a}, b);
     }
@@ -103,16 +103,16 @@ namespace eve::detail
 
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto
-  manhattan_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
-      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>, 
+  manhattan_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept Requires(
+      std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>, 
       behave_as<floating_point, T>,
       behave_as<floating_point, U>, 
       behave_as<floating_point, V>)
   {
-    static constexpr auto vT = is_vectorized_v<T>;
-    static constexpr auto vU = is_vectorized_v<U>;
-    static constexpr auto vV = is_vectorized_v<V>;
+    static constexpr auto vT = is_Vectorized_v<T>;
+    static constexpr auto vU = is_Vectorized_v<U>;
+    static constexpr auto vV = is_Vectorized_v<V>;
 
     if constexpr(vT && !vU && !vV)
       return manhattan(a, T{b}, T{c});
@@ -148,16 +148,16 @@ namespace eve::detail
         , pedantic_type const &
         , T const &a
         , U const &b
-        , V const &c) noexcept requires(
-    std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-    detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>, 
+        , V const &c) noexcept Requires(
+    std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+    detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>, 
     behave_as<floating_point, T>,
     behave_as<floating_point, U>, 
     behave_as<floating_point, V>)
   {
-    static constexpr auto vT = is_vectorized_v<T>;
-    static constexpr auto vU = is_vectorized_v<U>;
-    static constexpr auto vV = is_vectorized_v<V>;
+    static constexpr auto vT = is_Vectorized_v<T>;
+    static constexpr auto vU = is_Vectorized_v<U>;
+    static constexpr auto vV = is_Vectorized_v<V>;
     
     if constexpr(vT && !vU && !vV)
       return pedantic_(manhattan)(a, T{b}, T{c});

@@ -58,7 +58,7 @@ namespace eve::detail
                                                U const & cond, 
                                                wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(is_vectorizable_v<U>)
+    if constexpr(is_Vectorizable_v<U>)
       return cond ? minus(v) : v;
     else
       return if_else(cond, minus(v), v); 

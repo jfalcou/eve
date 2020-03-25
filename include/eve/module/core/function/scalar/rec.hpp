@@ -29,7 +29,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto rec_(EVE_SUPPORTS(cpu_),
-                                      T const &a) noexcept requires(T, vectorizable<T>)
+                                      T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) { return T{1} / a; }
     else if(std::is_integral_v<T>)
@@ -53,14 +53,14 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  rec_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a) noexcept requires(T, vectorizable<T>)
+  rec_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     return eve::rec(a);
   }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  rec_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a) noexcept requires(T, vectorizable<T>)
+  rec_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     return eve::rec(a);
   }

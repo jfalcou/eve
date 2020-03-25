@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto csc_(EVE_SUPPORTS(cpu_)
                            , Tag const &
                            , T a0) noexcept
-  requires(T,  vectorizable<T>)
+  Requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto csc_(EVE_SUPPORTS(cpu_)
                            , T const &a0) noexcept
-  requires(T,  vectorizable<T>)
+  Requires(T,  Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {

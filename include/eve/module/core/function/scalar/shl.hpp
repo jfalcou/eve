@@ -20,7 +20,7 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto shl_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
-  requires(T, integral<U>, integral<T>)
+  Requires(T, integral<U>, integral<T>)
   {
     return T(a0 << a1);
   }

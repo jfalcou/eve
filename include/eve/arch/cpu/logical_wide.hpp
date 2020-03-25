@@ -94,7 +94,7 @@ namespace eve
     template<typename Range>
     EVE_FORCEINLINE explicit logical(
         Range &&r,
-        std::enable_if_t<detail::is_range_v<Range> && !is_vectorized_v<Range> &&
+        std::enable_if_t<detail::is_range_v<Range> && !is_Vectorized_v<Range> &&
                          !std::is_same_v<storage_type, Range>> * = 0) noexcept
         : logical(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
     {

@@ -28,7 +28,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto modf_(EVE_SUPPORTS(cpu_),
                                        T const &a0) noexcept
-  requires(std::tuple<T, T>, vectorizable<T>)
+  Requires(std::tuple<T, T>, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

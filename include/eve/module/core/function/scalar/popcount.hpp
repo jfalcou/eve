@@ -25,7 +25,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto popcount_(EVE_SUPPORTS(cpu_), T a0) noexcept
-  requires(as_integer_t<T, unsigned>, integral<T>)
+  Requires(as_integer_t<T, unsigned>, integral<T>)
   {
     if constexpr(sizeof(T) == 1)
     {

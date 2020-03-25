@@ -70,8 +70,8 @@ namespace eve::detail
 
   template<typename T, typename U>
   using compatible = either < as_trait<same_card, T, U>::value 
-                              , is_vectorizable<T>::value 
-                              , is_vectorizable<U>::value 
+                              , is_Vectorizable<T>::value 
+                              , is_Vectorizable<U>::value 
   >;
   
 }

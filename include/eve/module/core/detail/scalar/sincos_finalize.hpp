@@ -31,7 +31,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto sincos_finalize( T a0, T fn, T xr, T dxr = T(0)) noexcept
-  requires(std::tuple<T, T>, vectorizable<T>)
+  Requires(std::tuple<T, T>, Vectorizable<T>)
   {
     T z = sqr(xr);
     T  se0 = sin_eval(z, xr);

@@ -25,9 +25,9 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto
-  fnms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
-      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+  fnms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept Requires(
+      std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>)
   {
     return fms(-a, b, c);
   }
@@ -37,9 +37,9 @@ namespace eve::detail
   fnms_(EVE_SUPPORTS(cpu_)
        , D const &
        , T const &a, U const &b, V const &c) noexcept
-  requires(
-    std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-    detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+  Requires(
+    std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+    detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>)
   {
     return D()(fms)(-a, b, c);
   } 

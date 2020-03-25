@@ -25,13 +25,13 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto
-  fms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept requires(
-      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+  fms_(EVE_SUPPORTS(cpu_), T const &a, U const &b, V const &c) noexcept Requires(
+      std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>)
   {
-    static constexpr auto vT = is_vectorized_v<T>;
-    static constexpr auto vU = is_vectorized_v<U>;
-    static constexpr auto vV = is_vectorized_v<V>;
+    static constexpr auto vT = is_Vectorized_v<T>;
+    static constexpr auto vU = is_Vectorized_v<U>;
+    static constexpr auto vV = is_Vectorized_v<V>;
 
     if constexpr(vT && !vU && !vV)
       return fms(a, T{b}, T{c});
@@ -65,9 +65,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   fms_(EVE_SUPPORTS(cpu_)
      ,  D const & deco
-      , T const &a, U const &b, V const &c) noexcept requires(
-      std::conditional_t<!is_vectorized_v<T>, std::conditional_t<is_vectorized_v<U>, U, V>, T>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>, is_vectorized_v<V>>)
+      , T const &a, U const &b, V const &c) noexcept Requires(
+      std::conditional_t<!is_Vectorized_v<T>, std::conditional_t<is_Vectorized_v<U>, U, V>, T>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>, is_Vectorized_v<V>>)
   {
     return deco(fma)(a, b, -c); 
   }

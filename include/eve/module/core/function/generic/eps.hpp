@@ -34,7 +34,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  Requires(T, behave_as<floating_point,T>)
   {
     using t_abi = abi_type_t<T>;
     if constexpr(is_aggregated_v<t_abi>)
@@ -61,7 +61,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_)
                                      , T const &a) noexcept
-  requires(T, behave_as<integral,T>)
+  Requires(T, behave_as<integral,T>)
   {
     return T(1); 
   }

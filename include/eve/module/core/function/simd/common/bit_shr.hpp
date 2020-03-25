@@ -24,7 +24,7 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  requires(T, vectorized<T>, integral<value_type_t<U>>, integral<value_type_t<T>>)
+  Requires(T, Vectorized<T>, integral<value_type_t<U>>, integral<value_type_t<T>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -39,7 +39,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(is_vectorizable_v<U>)
+      if constexpr(is_Vectorizable_v<U>)
       {
         using u_t = wide<as_integer_t<value_type_t<T>, unsigned>
                                , typename T::cardinal_type, t_abi>;

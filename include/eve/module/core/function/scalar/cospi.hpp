@@ -35,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T x) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -57,7 +57,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_)
                                      , D  const &      
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -81,7 +81,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {

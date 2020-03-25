@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acsch_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     return asinh(rec(a0));
   }

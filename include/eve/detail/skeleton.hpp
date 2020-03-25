@@ -37,7 +37,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
+    if constexpr(is_Vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), upper_);
     else
       return std::forward<T>(t);
@@ -47,7 +47,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
+    if constexpr(is_Vectorized_v<T>)
       return eve::detail::slice(std::forward<T>(t), lower_);
     else
       return std::forward<T>(t);
@@ -56,7 +56,7 @@ namespace eve::detail
   template<typename T, typename I>
   EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
+    if constexpr(is_Vectorized_v<T>)
     {
       return std::forward<T>(t).storage().segments[idx];
     }
@@ -118,7 +118,7 @@ namespace eve::detail
     {
       static constexpr auto sz = count_v<w_t>;
 
-      if constexpr( (sz != 0) && !is_vectorized_v<w_t> )
+      if constexpr( (sz != 0) && !is_Vectorized_v<w_t> )
       {
         return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
       }

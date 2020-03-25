@@ -37,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto div_(EVE_SUPPORTS(cpu_)
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return a/b;
   }
@@ -49,7 +49,7 @@ namespace eve::detail
                                      , saturated_type const &
                                      , T const &a0
                                      , T const &a1) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) return a0/a1;
     else if constexpr(std::is_signed_v<T>)

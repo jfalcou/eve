@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto tanh_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     auto x = eve::abs(a0+a0);
     auto test =  x > 0.5493*2;

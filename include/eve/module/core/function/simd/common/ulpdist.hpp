@@ -32,9 +32,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto ulpdist_(EVE_SUPPORTS(cpu_)
                                , T const &a
                                , U const &b) noexcept
-  requires(
-      std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+  Requires(
+      std::conditional_t<is_Vectorized_v<T>, T, U>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
   {
     using vt_t =  value_type_t<T>; 
     if constexpr(std::is_floating_point_v<value_type_t<T>>)

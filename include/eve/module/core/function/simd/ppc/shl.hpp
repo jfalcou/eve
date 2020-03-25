@@ -24,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   shl_(EVE_SUPPORTS(vmx_),
        wide<T, N, ppc_> const &v0,
-       wide<I, N, ppc_> const &v1) noexcept requires(wide<T, N, ppc_>, integral<I>, integral<T>)
+       wide<I, N, ppc_> const &v1) noexcept Requires(wide<T, N, ppc_>, integral<I>, integral<T>)
   {
     using t_t = wide<T, N, ppc_>;
     using i_t = wide<as_integer_t<T, unsigned>, N>;
@@ -34,7 +34,7 @@ namespace eve::detail
   template<typename T, typename N, typename I>
   EVE_FORCEINLINE auto shl_(EVE_SUPPORTS(vmx_),
                             wide<T, N, ppc_> const &v0,
-                            I v1) noexcept requires(wide<T, N, ppc_>, integral<I>, integral<T>)
+                            I v1) noexcept Requires(wide<T, N, ppc_>, integral<I>, integral<T>)
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
     return eve::shl(v0, i_t(v1));

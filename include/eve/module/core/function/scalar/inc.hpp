@@ -28,7 +28,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto inc_(EVE_SUPPORTS(cpu_),
-                                      T const &a) noexcept requires(T, vectorizable<T>)
+                                      T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     return static_cast<T>(a + One<T>());
   }
@@ -37,9 +37,9 @@ namespace eve::detail
   // Masked case
   template<typename U, typename T>
   EVE_FORCEINLINE constexpr auto
-  inc_(EVE_SUPPORTS(cpu_), U const &cond, T const &a) noexcept requires(T,
-                                                                        vectorizable<U>,
-                                                                        vectorizable<T>)
+  inc_(EVE_SUPPORTS(cpu_), U const &cond, T const &a) noexcept Requires(T,
+                                                                        Vectorizable<U>,
+                                                                        Vectorizable<T>)
   {
     if(std::is_integral_v<T>)
       return static_cast<T>(a - bit_mask(T(cond)));
@@ -51,7 +51,7 @@ namespace eve::detail
   // Saturated case
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  inc_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept requires(T, vectorizable<T>)
+  inc_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return inc(a);
@@ -66,7 +66,7 @@ namespace eve::detail
   inc_(EVE_SUPPORTS(cpu_),
        U const &cond,
        saturated_type const &,
-       T const &a) noexcept requires(T, vectorizable<T>, vectorizable<U>)
+       T const &a) noexcept Requires(T, Vectorizable<T>, Vectorizable<U>)
   {
     if constexpr(std::is_floating_point_v<T>)
       return cond ? inc(a) : a;

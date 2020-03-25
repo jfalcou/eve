@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto atanh_(EVE_SUPPORTS(cpu_)
                             , const T &x) noexcept
-  requires(T, vectorized<T>, behave_as<floating_point, T>)
+  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
     T absx = eve::abs(x);
     T t =  absx+absx;

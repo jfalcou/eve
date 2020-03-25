@@ -44,7 +44,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_abs_(EVE_SUPPORTS(cpu_)
           , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     const T Oneo_16 = T(0.0625); 
     using i_t = as_integer_t<T>;
@@ -116,7 +116,7 @@ namespace eve::detail
   pow_abs_(EVE_SUPPORTS(cpu_)
           , raw_type const &
           , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     return exp(a1*log(eve::abs(a0)));
   }

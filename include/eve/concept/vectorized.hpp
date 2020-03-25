@@ -17,37 +17,37 @@
 namespace eve::detail
 {
   template<typename Type>
-  struct is_vectorized : std::false_type
+  struct is_Vectorized : std::false_type
   {
   };
 
   template<typename Type>
-  struct is_vectorized<Type &> : is_vectorized<Type>
+  struct is_Vectorized<Type &> : is_Vectorized<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorized<Type const> : is_vectorized<Type>
+  struct is_Vectorized<Type const> : is_Vectorized<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorized<Type const &> : is_vectorized<Type>
+  struct is_Vectorized<Type const &> : is_Vectorized<Type>
   {
   };
 
   template<typename Type>
-  struct is_vectorized<Type &&> : is_vectorized<Type>
+  struct is_Vectorized<Type &&> : is_Vectorized<Type>
   {
   };
 
   template<typename Type, typename Size, typename ABI>
-  struct is_vectorized<wide<Type, Size, ABI>> : std::true_type
+  struct is_Vectorized<wide<Type, Size, ABI>> : std::true_type
   {
   };
 
   template<typename Type>
-  struct is_vectorized<logical<Type>> : is_vectorized<Type>
+  struct is_Vectorized<logical<Type>> : is_Vectorized<Type>
   {
   };
 }
@@ -55,18 +55,18 @@ namespace eve::detail
 namespace eve
 {
   template<typename Type>
-  struct is_vectorized : detail::is_vectorized<Type>
+  struct is_Vectorized : detail::is_Vectorized<Type>
   {
   };
 
   template<typename Type>
-  using is_vectorized_t = typename is_vectorized<Type>::type;
+  using is_Vectorized_t = typename is_Vectorized<Type>::type;
 
   template<typename Type>
-  inline constexpr bool is_vectorized_v = is_vectorized_t<Type>::value;
+  inline constexpr bool is_Vectorized_v = is_Vectorized_t<Type>::value;
 
   template<typename Type>
-  using vectorized = std::enable_if_t<is_vectorized_v<Type>>;
+  using Vectorized = std::enable_if_t<is_Vectorized_v<Type>>;
 
   template<typename T, typename U>
   using equal_cardinal = std::enable_if_t<cardinal_v<T> == cardinal_v<U>>;
@@ -74,6 +74,9 @@ namespace eve
   template<typename N, typename... Us>
   using has_compatible_cardinal =
       std::enable_if_t<(((cardinal_v<Us> == N::value) || (cardinal_v<Us> == 1)) && ...)>;
+
+  template<typename Type> concept vectorized = is_Vectorized_v<Type>;
+
 }
 
 #endif

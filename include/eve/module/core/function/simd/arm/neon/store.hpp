@@ -24,7 +24,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, N, neon64_> const &value,
-                              T *ptr) noexcept requires(void, vectorizable<T>)
+                              T *ptr) noexcept Requires(void, Vectorizable<T>)
   {
     if constexpr(N::value * sizeof(T) == limits<neon64_>::bytes)
     {
@@ -66,7 +66,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, N, neon128_> const &value,
-                              T *ptr) noexcept requires(void, vectorizable<T>)
+                              T *ptr) noexcept Requires(void, Vectorizable<T>)
   {
     if constexpr(std::is_same_v<T, float>) vst1q_f32(ptr, value);
 #if defined(__aarch64__)
@@ -104,7 +104,7 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, S, neon64_> const &value,
-                              aligned_ptr<T, N> ptr) noexcept requires(void, vectorizable<T>)
+                              aligned_ptr<T, N> ptr) noexcept Requires(void, Vectorizable<T>)
   {
     if constexpr(N >= limits<neon64_>::bytes)
     {
@@ -146,7 +146,7 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, S, neon128_> const &value,
-                              aligned_ptr<T, N> ptr) noexcept requires(void, vectorizable<T>)
+                              aligned_ptr<T, N> ptr) noexcept Requires(void, Vectorizable<T>)
   {
     if constexpr(N >= limits<neon128_>::bytes)
     {
@@ -188,7 +188,7 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, S, neon64_> const &value,
-                              aligned_ptr<T, N> ptr) noexcept requires(void, vectorizable<T>)
+                              aligned_ptr<T, N> ptr) noexcept Requires(void, Vectorizable<T>)
   {
     store(value, ptr.get());
   }
@@ -196,7 +196,7 @@ namespace eve::detail
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(neon128_),
                               wide<T, S, neon128_> const &value,
-                              aligned_ptr<T, N> ptr) noexcept requires(void, vectorizable<T>)
+                              aligned_ptr<T, N> ptr) noexcept Requires(void, Vectorizable<T>)
   {
     store(value, ptr.get());
   }

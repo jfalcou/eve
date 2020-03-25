@@ -22,7 +22,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE auto
-  store_(EVE_SUPPORTS(cpu_), T value, T *ptr) noexcept requires(void, vectorizable<T>)
+  store_(EVE_SUPPORTS(cpu_), T value, T *ptr) noexcept Requires(void, Vectorizable<T>)
   {
     *ptr = value;
   }
@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename T, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_),
                               T                 value,
-                              aligned_ptr<T, N> ptr) noexcept requires(void, vectorizable<T>)
+                              aligned_ptr<T, N> ptr) noexcept Requires(void, Vectorizable<T>)
   {
     *ptr = value;
   }

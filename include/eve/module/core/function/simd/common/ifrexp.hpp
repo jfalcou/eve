@@ -53,7 +53,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
                                         , wide<T, N, ABI> const & a0) noexcept
-  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
+  Requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(raw_(eve::ifrexp), a0); 
     else if constexpr(is_aggregated_v<ABI> )
@@ -77,7 +77,7 @@ namespace eve::detail
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , wide<T, N, ABI>  a0) noexcept
-  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
+  Requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(eve::ifrexp, a0); 
     else if constexpr(is_aggregated_v<ABI> ) 
@@ -101,7 +101,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                     , pedantic_type const & 
                                     , wide<T, N, ABI> const & a0) noexcept
-  requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
+  Requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>) 
   {
     if constexpr(is_emulated_v<ABI> ) return map(pedantic_(eve::ifrexp), a0); 
     else if constexpr(is_aggregated_v<ABI> ) 

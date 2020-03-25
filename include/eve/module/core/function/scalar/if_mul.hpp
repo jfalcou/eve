@@ -23,8 +23,8 @@ namespace eve::detail
   // Masked case
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  mul_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept requires(U,
-                                                                                    vectorizable<T>)
+  mul_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, U const &f) noexcept Requires(U,
+                                                                                    Vectorizable<T>)
   {
     return cond ? t * f : t;
   }
@@ -36,7 +36,7 @@ namespace eve::detail
                                       , saturated_type const &
                                       , U const &a
                                       , U const &b) noexcept
-  requires( U, vectorizable<T> )
+  Requires( U, Vectorizable<T> )
   {
     if constexpr(std::is_floating_point_v<U>) return  cond ? a*b : a;
     else return cond ? saturated_(mul)(a, b) : a;

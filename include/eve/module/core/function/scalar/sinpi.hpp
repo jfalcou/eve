@@ -29,7 +29,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto sinpi_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T x) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return eve::restricted_(sin)(x*Pi<T>()); 
   }
@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto sinpi_(EVE_SUPPORTS(cpu_)
                                      , D  const &      
                                      , T a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>)
     {
@@ -60,7 +60,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto sinpi_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     auto x =  eve::abs(a0);
     if (eve::abs(x) <= T(0.25)) return restricted_(sinpi)(a0);

@@ -39,9 +39,9 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            U const &t,
-           V const &f) noexcept requires(std::conditional_t<is_vectorized_v<U>, U, V>,
-                                         vectorized<T>,
-                                         detail::either<is_vectorized_v<U>, is_vectorized_v<V>>,
+           V const &f) noexcept Requires(std::conditional_t<is_Vectorized_v<U>, U, V>,
+                                         Vectorized<T>,
+                                         detail::either<is_Vectorized_v<U>, is_Vectorized_v<V>>,
                                          has_compatible_cardinal<typename T::cardinal_type, U, V>
                                         )
   {
@@ -57,12 +57,12 @@ namespace eve::detail
            T const &         cond,
            logical<U> const &t,
            logical<V> const
-               &f) noexcept requires(std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>,
-                                     vectorized<T>,
-                                     detail::either<is_vectorized_v<U>, is_vectorized_v<V>>,
+               &f) noexcept Requires(std::conditional_t<is_Vectorized_v<U>, logical<U>, logical<V>>,
+                                     Vectorized<T>,
+                                     detail::either<is_Vectorized_v<U>, is_Vectorized_v<V>>,
                                      has_compatible_cardinal<typename T::cardinal_type, U, V>)
   {
-    using t_t      = std::conditional_t<is_vectorized_v<U>, logical<U>, logical<V>>;
+    using t_t      = std::conditional_t<is_Vectorized_v<U>, logical<U>, logical<V>>;
     auto cond_mask = bit_mask(cond);
     return bit_cast(bit_select(cond_mask, t.mask(), f.mask()), as_<t_t>());
   }
@@ -75,9 +75,9 @@ namespace eve::detail
            T const &cond,
            U const &t,
            eve::callable_zero_ const
-               &) noexcept requires(U,
-                                    vectorized<T>,
-                                    vectorized<U>,
+               &) noexcept Requires(U,
+                                    Vectorized<T>,
+                                    Vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bit_and(t, bit_mask(cond));
@@ -88,9 +88,9 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_zero_ const &,
-           U const &t) noexcept requires(U,
-                                         vectorized<T>,
-                                         vectorized<U>,
+           U const &t) noexcept Requires(U,
+                                         Vectorized<T>,
+                                         Vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bit_andnot(t, bit_mask(cond));
@@ -104,9 +104,9 @@ namespace eve::detail
            T const &cond,
            U const &t,
            eve::callable_allbits_ const
-               &) noexcept requires(U,
-                                    vectorized<T>,
-                                    vectorized<U>,
+               &) noexcept Requires(U,
+                                    Vectorized<T>,
+                                    Vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bit_ornot(t, bit_mask(cond));
@@ -117,9 +117,9 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_allbits_ const &,
-           U const &t) noexcept requires(U,
-                                         vectorized<T>,
-                                         vectorized<U>,
+           U const &t) noexcept Requires(U,
+                                         Vectorized<T>,
+                                         Vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     return bit_or(t, bit_mask(cond));
@@ -133,9 +133,9 @@ namespace eve::detail
            T const &cond,
            U const &t,
            eve::callable_one_ const
-               &) noexcept requires(U,
-                                    vectorized<T>,
-                                    vectorized<U>,
+               &) noexcept Requires(U,
+                                    Vectorized<T>,
+                                    Vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
@@ -151,9 +151,9 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_one_ const &,
-           U const &t) noexcept requires(U,
-                                         vectorized<T>,
-                                         vectorized<U>,
+           U const &t) noexcept Requires(U,
+                                         Vectorized<T>,
+                                         Vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>)
@@ -172,9 +172,9 @@ namespace eve::detail
            T const &cond,
            U const &t,
            eve::callable_mone_ const
-               &) noexcept requires(U,
-                                    vectorized<T>,
-                                    vectorized<U>,
+               &) noexcept Requires(U,
+                                    Vectorized<T>,
+                                    Vectorized<U>,
                                     has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>) { return bit_ornot(t, bit_mask(cond)); }
@@ -189,9 +189,9 @@ namespace eve::detail
   if_else_(EVE_SUPPORTS(cpu_),
            T const &cond,
            eve::callable_mone_ const &,
-           U const &t) noexcept requires(U,
-                                         vectorized<T>,
-                                         vectorized<U>,
+           U const &t) noexcept Requires(U,
+                                         Vectorized<T>,
+                                         Vectorized<U>,
                                          has_compatible_cardinal<typename T::cardinal_type, U>)
   {
     if constexpr(std::is_integral_v<U>) { return bit_or(t, bit_mask(cond)); }

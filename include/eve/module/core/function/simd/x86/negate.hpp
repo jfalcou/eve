@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto negate_(EVE_SUPPORTS(ssse3_)
                               , wide<T, N, sse_> const &a0, wide<T, N, sse_> const &a1) noexcept
-  requires(wide<T, N, sse_>, integral<T>)
+  Requires(wide<T, N, sse_>, integral<T>)
   {
     if constexpr(std::is_signed_v<T>)
     {

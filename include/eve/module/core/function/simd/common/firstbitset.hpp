@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto firstbitset_(EVE_SUPPORTS(cpu_)
                                    , wide<T, N, ABI> const &a0) noexcept
-  requires(wide<T, N, ABI>, integral<T>)
+  Requires(wide<T, N, ABI>, integral<T>)
   {
     return a0 & (~a0+One(as(a0)));
   }

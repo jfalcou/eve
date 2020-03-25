@@ -22,7 +22,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto bitofsign_(EVE_SUPPORTS(cpu_),
-                                            T const &a) noexcept requires(T, vectorizable<T>)
+                                            T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     return bit_and(a, Signmask(as(a)));
   }

@@ -24,7 +24,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   fnms_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &c) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return -a * b - c;
   }
@@ -34,7 +34,7 @@ namespace eve::detail
   fnms_(EVE_SUPPORTS(cpu_)
       , D const & 
       , T const &a, T const &b, T const &c) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return -D()(fma)(a, b, c);
   }

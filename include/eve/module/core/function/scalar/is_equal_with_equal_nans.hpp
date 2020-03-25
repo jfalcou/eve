@@ -27,7 +27,7 @@ namespace eve::detail
                  , numeric_type const &
                  , T const &a
                  , U const &b) noexcept
-  requires( as_logical_t<T>, vectorizable<T>, vectorizable<U> )
+  Requires( as_logical_t<T>, Vectorizable<T>, Vectorizable<U> )
   {
     if constexpr(std::is_floating_point_v<T>)
     {

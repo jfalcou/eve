@@ -23,9 +23,9 @@ namespace eve::detail
 {
   template<typename T, typename U, typename V>
   EVE_FORCEINLINE auto clamp_(EVE_SUPPORTS(cpu_), T const &x, U const &lo, V const &hi) noexcept
-  requires( T, vectorized<T> )
+  Requires( T, Vectorized<T> )
   {
-    if constexpr( !is_vectorized_v<U> || !is_vectorized_v<V>)
+    if constexpr( !is_Vectorized_v<U> || !is_Vectorized_v<V>)
     {
       return clamp(x, abi_cast<T>(lo), abi_cast<T>(hi));
     }

@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   manhattan_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     return eve::abs(a0)+eve::abs(a1);
   }
@@ -33,7 +33,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   manhattan_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1, T const &a2) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     return eve::abs(a0)+eve::abs(a1)+ eve::abs(a2);
   }
@@ -44,7 +44,7 @@ namespace eve::detail
             ,  pedantic_type const &
             , T const &a0
             , T const &a1) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
@@ -60,7 +60,7 @@ namespace eve::detail
             , T const &a0
             , T const &a1
             , T const &a2 ) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if constexpr(eve::platform::supports_invalids)
     {

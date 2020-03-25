@@ -41,7 +41,7 @@ namespace eve::detail
                                      , T const &a1
                                      , upward_type const &
                                      ) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) return ceil(a0/a1);
     else if constexpr(std::is_signed_v<T>)

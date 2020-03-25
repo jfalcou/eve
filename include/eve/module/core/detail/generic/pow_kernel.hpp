@@ -86,7 +86,7 @@ namespace eve::detail
 
   template < typename I>
   EVE_FORCEINLINE auto twomio16(const I& i) noexcept
-  requires(as_floating_point_t<I>, behave_as<integral,I>)
+  Requires(as_floating_point_t<I>, behave_as<integral,I>)
   {
     /* 2^(-i/16)
      * The decimal values are rounded to 24-bit precision
@@ -113,7 +113,7 @@ namespace eve::detail
         v_t(5.22136867046356201171875E-1),
         v_t(5.00000000000000000000E-1)
       }; 
-      if constexpr(is_vectorizable_v<I>)
+      if constexpr(is_Vectorizable_v<I>)
         return A[i];
       else
         return gather(&A[0], i);
@@ -139,7 +139,7 @@ namespace eve::detail
         v_t(5.22136891213706877402E-1),
         v_t(5.00000000000000000000E-1)
       };
-      if constexpr(is_vectorizable_v<I>)
+      if constexpr(is_Vectorizable_v<I>)
         return A[i];
       else
         return gather(&A[0], i);
@@ -148,7 +148,7 @@ namespace eve::detail
 
   template < typename I>
   EVE_FORCEINLINE auto continuation(const I& i) noexcept
-  requires(as_floating_point_t<I>, behave_as<integral,I>)
+  Requires(as_floating_point_t<I>, behave_as<integral,I>)
   {
     /* continuation, for even i only
      * 2^(i/16)  =  A[i] + B[i/2]
@@ -167,7 +167,7 @@ namespace eve::detail
         v_t(-6.53877009617774467211965E-9),
         v_t( 0.00000000000000000000E0)
       };
-      if constexpr(is_vectorizable_v<I>)
+      if constexpr(is_Vectorizable_v<I>)
         return B[i];
       else
         return gather(&B[0], i);
@@ -185,7 +185,7 @@ namespace eve::detail
         v_t(-1.52339103990623557348E-17),
         v_t( 0.00000000000000000000E0)
       };
-      if constexpr(is_vectorizable_v<I>)
+      if constexpr(is_Vectorizable_v<I>)
         return B[i];
       else
         return gather(&B[0], i);
@@ -194,7 +194,7 @@ namespace eve::detail
 
   template < typename T>
   EVE_FORCEINLINE auto kernel_select(const T& xx) noexcept
-  requires(std::tuple<T, as_integer_t<T>>, behave_as<floating_point,T>)
+  Requires(std::tuple<T, as_integer_t<T>>, behave_as<floating_point,T>)
   {
     using i_t = as_integer_t<T>; 
     // find significand in antilog table A[]

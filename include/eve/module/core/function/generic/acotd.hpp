@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acotd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(acot(a0));
   }

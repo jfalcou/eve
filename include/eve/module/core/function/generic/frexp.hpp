@@ -28,10 +28,10 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
                                         , TAG const & tag_
                                         , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating_point, T>)
+  Requires(std::tuple<T, T>, behave_as<floating_point, T>)
   {
     auto [m, e] = ifrexp(tag_, a0);
-    if constexpr(is_vectorizable_v<T>)
+    if constexpr(is_Vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
       return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));
@@ -42,10 +42,10 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
                                         , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating_point, T>)
+  Requires(std::tuple<T, T>, behave_as<floating_point, T>)
   {
     auto [m, e] = ifrexp(a0); 
-    if constexpr(is_vectorizable_v<T>)
+    if constexpr(is_Vectorizable_v<T>)
       return  std::tuple<T, T>{m, static_cast<T>(e)};
     else
       return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));

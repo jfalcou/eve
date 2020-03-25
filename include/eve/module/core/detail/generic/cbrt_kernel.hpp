@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto cbrt_kernel(T xm) noexcept
-  requires(T, behave_as<floating_point, T>)
+  Requires(T, behave_as<floating_point, T>)
   {
     using vt_t =  value_type_t<T>;
     T u; 

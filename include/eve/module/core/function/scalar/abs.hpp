@@ -26,7 +26,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_),
-                                      T const &a) noexcept requires(T, vectorizable<T>)
+                                      T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) { return bit_andnot(a, Mzero(as(a))); }
     else if constexpr(std::is_unsigned_v<T>)
@@ -41,7 +41,7 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto
-  abs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept requires(T, vectorizable<T>)
+  abs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept Requires(T, Vectorizable<T>)
   {
     if constexpr(std::is_floating_point_v<T>) return a < T(0) ? -a : a;
     if constexpr(std::is_integral_v<T> && std::is_unsigned_v<T>) return a;

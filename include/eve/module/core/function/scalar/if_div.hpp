@@ -28,7 +28,7 @@ namespace eve::detail
             , U const &cond
             , T const &a
             , T const &b) noexcept
-  requires( T, vectorizable<T>, vectorizable<U> )
+  Requires( T, Vectorizable<T>, Vectorizable<U> )
   {
     return is_nez(cond) ? a/b : a;
   }
@@ -41,7 +41,7 @@ namespace eve::detail
                                      , saturated_type const &
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, vectorizable<T>, vectorizable<U>)
+  Requires(T, Vectorizable<T>, Vectorizable<U>)
   {
     auto tst = is_nez(cond);
     if constexpr(std::is_floating_point_v<T>) return  tst ? a/b : a;

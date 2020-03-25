@@ -42,7 +42,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto exp2_(EVE_SUPPORTS(cpu_)
                             , const T &xx) noexcept
-  requires(T, vectorized<T>)
+  Requires(T, Vectorized<T>)
   {
    using t_abi = abi_type_t<T>;
    if constexpr(is_emulated_v<t_abi> ) return map(eve::exp2, xx); 
@@ -99,7 +99,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto exp2_(EVE_SUPPORTS(cpu_)
                             ,pedantic_type const & 
                             , const T &xx) noexcept
-  requires(T, vectorized<T>)
+  Requires(T, Vectorized<T>)
   {
    using t_abi = abi_type_t<T>;
    if constexpr(is_emulated_v<t_abi> ) return map(eve::exp2, xx); 

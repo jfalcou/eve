@@ -31,7 +31,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto tan_finalize(T a0,  T fn, T xr, T dxr = T(0)) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if (eve::abs(a0) < Eps<T>()) return a0; 
     if (is_not_finite(xr)) return Nan<T>();

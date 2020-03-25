@@ -25,7 +25,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto countl_zero_(EVE_SUPPORTS(cpu_), T const &a0)  noexcept
-  requires(as_integer_t<T, unsigned>, vectorizable<T>
+  Requires(as_integer_t<T, unsigned>, Vectorizable<T>
   {
     using i_t = as_integer_t<v_t, unsigned>; 
     if (is_eqz(a0)) return Zero<i_t>(); 

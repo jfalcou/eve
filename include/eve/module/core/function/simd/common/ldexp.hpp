@@ -49,11 +49,11 @@ namespace eve::detail
   EVE_FORCEINLINE  auto ldexp_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires( T, vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
+  Requires( T, Vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
   {
     using t_abi = abi_type_t<T>;
 
-    if constexpr( is_vectorizable_v<U>) // U is scalar
+    if constexpr( is_Vectorizable_v<U>) // U is scalar
     {
       if constexpr( is_emulated_v<t_abi>) 
       {
@@ -81,7 +81,7 @@ namespace eve::detail
         }
       }
     }
-    else // constexpr( is_vectorized_v<U>)
+    else // constexpr( is_Vectorized_v<U>)
     {
       using u_abi = abi_type_t<U>;
       if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )
@@ -119,11 +119,11 @@ namespace eve::detail
                             , pedantic_type const & pdt 
                             , T const &a
                             , U const &b) noexcept
-  requires( T, vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
+  Requires( T, Vectorized<T>, behave_as<floating_point, T>, compatible<T, U>)
   {
     using t_abi = abi_type_t<T>;
 
-    if constexpr( is_vectorizable_v<U>) // U is scalar
+    if constexpr( is_Vectorizable_v<U>) // U is scalar
     {
       if constexpr( is_emulated_v<t_abi>)
       {
@@ -161,7 +161,7 @@ namespace eve::detail
         }
       }
     }
-    else // constexpr( is_vectorized_v<U>)
+    else // constexpr( is_Vectorized_v<U>)
     {
       using u_abi = abi_type_t<U>;
       if constexpr( is_emulated_v<t_abi> || is_emulated_v<u_abi> )

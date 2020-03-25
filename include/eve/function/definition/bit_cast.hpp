@@ -30,7 +30,7 @@ namespace eve::detail
 
     // Concept based on bit_cast support
   template<typename T, typename U>
-  using mixed_bit_compatible = std::void_t< vectorizable<T>,
+  using mixed_bit_compatible = std::void_t< Vectorizable<T>,
                                                 bits_convertible_with<T, value_type_t<U>>
                                               >;
 

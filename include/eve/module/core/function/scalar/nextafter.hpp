@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto
   nextafter_(EVE_SUPPORTS(cpu_), T const &x, T const &y) noexcept
-  requires(T, vectorizable<T>, behave_as<totally_ordered, T>)
+  Requires(T, Vectorizable<T>, behave_as<totally_ordered, T>)
   {
     return (x < y) ? next(x) : ((y < x) ? prev(x) : x); 
   }
@@ -37,7 +37,7 @@ namespace eve::detail
   nextafter_(EVE_SUPPORTS(cpu_)
             ,  pedantic_type const &
             , T const &x, T const &y) noexcept
-  requires(T, vectorizable<T>, behave_as<totally_ordered, T>)
+  Requires(T, Vectorizable<T>, behave_as<totally_ordered, T>)
   {
     return  is_unordered(x, y) ? Nan<T>() : nextafter(x, y); 
   }

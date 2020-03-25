@@ -41,7 +41,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                   , raw_type const &     
                                   , T const &a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if(a0 == One(as(a0))) return Zero(as(a0));
     return Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
@@ -50,7 +50,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acos_(EVE_SUPPORTS(cpu_)
                                       , T const &a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if constexpr(std::is_same_v<T, float>)
     {

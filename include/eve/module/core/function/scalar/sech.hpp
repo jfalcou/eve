@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto sech_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     T x = eve::abs(a0);
     auto test1 = (x > Maxlog<T>()-Log_2<T>());

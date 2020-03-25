@@ -26,7 +26,7 @@ namespace eve
     template<typename T,  typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::binarize_c_), T const&,  U const &)
     {
-      static_assert ( is_vectorizable_v<U> || std::is_same_v<U, eve::callable_mone_> || std::is_same_v<U, eve::callable_allbits_>,
+      static_assert ( is_Vectorizable_v<U> || std::is_same_v<U, eve::callable_mone_> || std::is_same_v<U, eve::callable_allbits_>,
                       "[eve::binarize_c] - second parameter must be scalar or eve::mone_ or eve::allbits_"
                     );
     }

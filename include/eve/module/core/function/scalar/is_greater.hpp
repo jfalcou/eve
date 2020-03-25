@@ -22,9 +22,9 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  is_greater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(as_logical_t<T>,
-                                                                            vectorizable<T>,
-                                                                            vectorizable<U>)
+  is_greater_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept Requires(as_logical_t<T>,
+                                                                            Vectorizable<T>,
+                                                                            Vectorizable<U>)
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
     { return static_cast<bool>(a) > static_cast<bool>(b); }

@@ -31,7 +31,7 @@ namespace eve::detail
 {
   template<typename T>
   EVE_FORCEINLINE constexpr auto cot_finalize(T a0,  T fn, T xr, T dxr) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     if (abs(a0) < Eps<T>()) return pedantic_(rec)(a0); 
     if (is_not_finite(a0)) return Nan<T>();

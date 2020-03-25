@@ -28,9 +28,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Basic
   template<typename T, typename U>
-  EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires(
-      std::conditional_t<is_vectorized_v<T>, T, U>,
-      detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+  EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept Requires(
+      std::conditional_t<is_Vectorized_v<T>, T, U>,
+      detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -41,11 +41,11 @@ namespace eve::detail
     {
       return aggregate(eve::dist, abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> && is_Vectorized_v<U>)
     {
       return eve::max(a, b) - eve::min(a, b);
     }
-    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> || is_Vectorized_v<U> )
     {
       return eve::dist(abi_cast<U>(a), abi_cast<T>(b));
     }
@@ -58,8 +58,8 @@ namespace eve::detail
   dist_(EVE_SUPPORTS(cpu_),
         saturated_type const &,
         T const &a,
-        U const &b) noexcept requires(std::conditional_t<is_vectorized_v<T>, T, U>,
-                                       detail::either<is_vectorized_v<T>, is_vectorized_v<U>>)
+        U const &b) noexcept Requires(std::conditional_t<is_Vectorized_v<T>, T, U>,
+                                       detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -69,7 +69,7 @@ namespace eve::detail
     {
       return aggregate(eve::saturated_(eve::dist), abi_cast<value_type_t<U>>(a), abi_cast<value_type_t<T>>(b));
     }
-    else if constexpr(is_vectorized_v<T> && is_vectorized_v<U>)
+    else if constexpr(is_Vectorized_v<T> && is_Vectorized_v<U>)
     {
       auto d = dist(a, b);
       if constexpr(std::is_integral_v<value_type_t<T>> && std::is_signed_v<value_type_t<T>>)
@@ -81,7 +81,7 @@ namespace eve::detail
         return d;
       }
     }
-    else // if constexpr( is_vectorized_v<T> || is_vectorized_v<U> )
+    else // if constexpr( is_Vectorized_v<T> || is_Vectorized_v<U> )
     {
       return eve::saturated_(eve::dist)(abi_cast<U>(a), abi_cast<T>(b));
     } 

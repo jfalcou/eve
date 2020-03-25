@@ -34,7 +34,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto floor2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  requires(T, floating_point<T>)
+  Requires(T, floating_point<T>)
   {
     if (is_less(v, One(as(v)))) return Zero(as(v)); 
     auto [m, e] = ifrexp(v);
@@ -45,7 +45,7 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto floor2_(EVE_SUPPORTS(cpu_), T v) noexcept
-  requires(T, unsigned_type<T>)
+  Requires(T, unsigned_type<T>)
   {
     if (v == 0) return v;
     v |= v >> 1;

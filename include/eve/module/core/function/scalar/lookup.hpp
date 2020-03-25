@@ -20,7 +20,7 @@ namespace eve::detail
 {
   template<typename T, typename I>
   EVE_FORCEINLINE constexpr auto lookup_(EVE_SUPPORTS(cpu_), T const &a, I const& i)
-  noexcept requires(T, vectorizable<T>, vectorizable<I>, integral<I>)
+  noexcept Requires(T, Vectorizable<T>, Vectorizable<I>, integral<I>)
   {
     return (i == static_cast<I>(-1)) ? 0 : a;
   }

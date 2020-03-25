@@ -49,8 +49,8 @@ namespace eve::detail
                             , U const &b
                             , to_nearest_type const & tnt_
                             ) noexcept
-  requires( std::conditional_t<is_vectorized_v<T>,T,U>,
-            detail::either<is_vectorized_v<T>, is_vectorized_v<U>>
+  Requires( std::conditional_t<is_Vectorized_v<T>,T,U>,
+            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>
           )
   {
     using t_abi = abi_type_t<T>;
@@ -64,11 +64,11 @@ namespace eve::detail
       return aggregate( eve::div, abi_cast<value_type_t<U>>(a)
                       , abi_cast<value_type_t<T>>(b), tnt_ );
     }
-    else if constexpr( is_vectorized_v<T> ^ is_vectorized_v<U> )
+    else if constexpr( is_Vectorized_v<T> ^ is_Vectorized_v<U> )
     {
       return eve::div(abi_cast<U>(a), abi_cast<T>(b), tnt_ );
     }
-    else if constexpr( is_vectorized_v<T> && is_vectorized_v<U> )
+    else if constexpr( is_Vectorized_v<T> && is_Vectorized_v<U> )
     {
       if constexpr(std::is_same_v<T, U>)
       {

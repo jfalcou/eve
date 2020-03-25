@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acoth_(EVE_SUPPORTS(cpu_)
                                        , T x) noexcept
-  requires(T, floating_point<value_type_t<T>>)
+  Requires(T, floating_point<value_type_t<T>>)
   {
     return eve::atanh(rec(x));
   }

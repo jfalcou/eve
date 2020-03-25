@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto rem_(EVE_SUPPORTS(cpu_)
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return rem(a, b, toward_zero_);
   }
@@ -39,7 +39,7 @@ namespace eve::detail
                                      , pedantic_type const & pdt_
                                      , T const &a
                                      , T const &b) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return pedantic_(rem)(a, b, toward_zero_);
   }
@@ -51,7 +51,7 @@ namespace eve::detail
                                      , T const &a0
                                      , T const &a1
                                      , Tag const & tag_) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return  fnma(a1, div(a0, a1, tag_), a0);
   }
@@ -65,7 +65,7 @@ namespace eve::detail
                                      , T const &a1
                                      , Tag const & tag_
  ) noexcept
-  requires(T, vectorizable<T>)
+  Requires(T, Vectorizable<T>)
   {
     return if_else(is_nez(a1), fnma(a1, div(a0, a1, tag_), a0), a0); 
   }

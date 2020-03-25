@@ -22,7 +22,7 @@ namespace eve::detail
   // 256 bits implementation for avx
   template<typename T, typename N>
   EVE_FORCEINLINE auto log2_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
-  requires(wide<T, N, avx_>, floating_point<T>)
+  Requires(wide<T, N, avx_>, floating_point<T>)
   {
     if constexpr(current_api < avx2)
     {
