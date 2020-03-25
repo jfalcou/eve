@@ -43,8 +43,8 @@ TTS_CASE("Check ldexp return type")
 
 TTS_CASE("Check eve::ldexp behavior")
 {
-  using i_t = eve::detail::as_integer_t<Type, signed>;
-  using si_t = eve::detail::as_integer_t<Value, signed>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
 
   TTS_EQUAL(eve::ldexp(EVE_TYPE{0.0}, i_t(0)), EVE_TYPE(0));
   TTS_EQUAL(eve::ldexp(EVE_TYPE{-0.0}, i_t(0)), EVE_TYPE(0));

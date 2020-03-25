@@ -53,8 +53,8 @@ TTS_CASE("Check eve::pedantic_(eve::ldexp) two parameters behavior")
 
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0.0}, i_t(0)), EVE_TYPE(0));
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{-0.0}, i_t(0)), EVE_TYPE(0));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::ldexp)(Type(-0.0), i_t(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::ldexp)(Type( 0.0), i_t(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::ldexp)(EVE_TYPE(-0.0), i_t(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::ldexp)(EVE_TYPE( 0.0), i_t(0)))));
 
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(1), i_t(2)), EVE_TYPE(4));
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-2), i_t(2)), EVE_TYPE(-8));
