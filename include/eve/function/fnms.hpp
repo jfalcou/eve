@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_FNMS_HPP_INCLUDED
 #define EVE_FUNCTION_FNMS_HPP_INCLUDED
 
-#include <eve/function/scalar/fnms.hpp>
-#include <eve/function/simd/fnms.hpp>
+#include <eve/function/definition/fnms.hpp>
+#include <eve/module/core/function/scalar/fnms.hpp>
+#include <eve/module/core/function/simd/fnms.hpp>
 
 #endif

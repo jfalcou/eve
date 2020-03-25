@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_IS_NOT_LESS_HPP_INCLUDED
 #define EVE_FUNCTION_IS_NOT_LESS_HPP_INCLUDED
 
-#include <eve/function/scalar/is_not_less.hpp>
-#include <eve/function/simd/is_not_less.hpp>
+#include <eve/function/definition/is_not_less.hpp>
+#include <eve/module/core/function/scalar/is_not_less.hpp>
+#include <eve/module/core/function/simd/is_not_less.hpp>
 
 #endif

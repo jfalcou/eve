@@ -13,9 +13,9 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/abs.hpp>
-#include <eve/function/scalar/is_eqz.hpp>
-#include <eve/function/scalar/is_not_less.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/is_not_less.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/is_logical.hpp>

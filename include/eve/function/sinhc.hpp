@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SINHC_HPP_INCLUDED
 #define EVE_FUNCTION_SINHC_HPP_INCLUDED
 
-#include <eve/function/scalar/sinhc.hpp>
-//#include <eve/function/simd/sinhc.hpp>
+#include <eve/function/definition/sinhc.hpp>
+#include <eve/module/core/function/scalar/sinhc.hpp>
+//#include <eve/module/core/function/simd/sinhc.hpp>
 
 #endif

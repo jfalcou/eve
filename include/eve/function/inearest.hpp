@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_INEAREST_HPP_INCLUDED
 #define EVE_FUNCTION_INEAREST_HPP_INCLUDED
 
-#include <eve/function/scalar/inearest.hpp>
-//#include <eve/function/simd/inearest.hpp>
+#include <eve/function/definition/inearest.hpp>
+#include <eve/module/core/function/generic/inearest.hpp>
 
 #endif

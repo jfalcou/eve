@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/function/scalar/abs.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/as_logical.hpp>
 #include <type_traits>
 

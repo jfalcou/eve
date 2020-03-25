@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_IFLOOR_HPP_INCLUDED
 #define EVE_FUNCTION_IFLOOR_HPP_INCLUDED
 
-#include <eve/function/scalar/ifloor.hpp>
-//#include <eve/function/simd/ifloor.hpp>
+#include <eve/function/definition/ifloor.hpp>
+#include <eve/module/core/function/generic/ifloor.hpp>
 
 #endif

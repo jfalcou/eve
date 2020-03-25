@@ -15,6 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/function/saturated.hpp>
 
 namespace eve::detail
 {

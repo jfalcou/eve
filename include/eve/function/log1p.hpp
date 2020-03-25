@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_LOG1P_HPP_INCLUDED
 #define EVE_FUNCTION_LOG1P_HPP_INCLUDED
 
-#include <eve/function/scalar/log1p.hpp>
-#include <eve/function/simd/log1p.hpp>
+#include <eve/function/definition/log1p.hpp>
+#include <eve/module/core/function/scalar/log1p.hpp>
+#include <eve/module/core/function/simd/log1p.hpp>
 
 #endif

@@ -11,7 +11,6 @@
 #ifndef EVE_FUNCTION_BIT_SHL_HPP_INCLUDED
 #define EVE_FUNCTION_BIT_SHL_HPP_INCLUDED
 
-#include <eve/function/scalar/bit_shl.hpp>
-#include <eve/function/simd/bit_shl.hpp>
+#include <eve/function/definition/bit_shl.hpp>
 
 #endif

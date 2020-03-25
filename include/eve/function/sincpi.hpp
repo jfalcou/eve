@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SINCPI_HPP_INCLUDED
 #define EVE_FUNCTION_SINCPI_HPP_INCLUDED
 
-#include <eve/function/scalar/sincpi.hpp>
-//#include <eve/function/simd/sincpi.hpp>
+#include <eve/function/definition/sincpi.hpp>
+#include <eve/module/core/function/scalar/sincpi.hpp>
+//#include <eve/module/core/function/simd/sincpi.hpp>
 
 #endif

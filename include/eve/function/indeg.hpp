@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_INDEG_HPP_INCLUDED
 #define EVE_FUNCTION_INDEG_HPP_INCLUDED
 
-#include <eve/function/scalar/indeg.hpp>
-#include <eve/function/simd/indeg.hpp>
+#include <eve/function/definition/indeg.hpp>
+#include <eve/module/core/function/generic/indeg.hpp>
 
 #endif

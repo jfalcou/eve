@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_FDIM_HPP_INCLUDED
 #define EVE_FUNCTION_FDIM_HPP_INCLUDED
 
-#include <eve/function/scalar/fdim.hpp>
-#include <eve/function/simd/fdim.hpp>
+#include <eve/function/definition/fdim.hpp>
+#include <eve/module/core/function/scalar/fdim.hpp>
+#include <eve/module/core/function/simd/fdim.hpp>
 
 #endif

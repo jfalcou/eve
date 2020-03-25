@@ -11,6 +11,7 @@
 #ifndef EVE_FUNCTION_ROUND_HPP_INCLUDED
 #define EVE_FUNCTION_ROUND_HPP_INCLUDED
 
-#include <eve/function/scalar/round.hpp>
+#include <eve/function/definition/round.hpp>
+#include <eve/module/core/function/scalar/round.hpp>
 
 #endif

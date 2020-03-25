@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_RSQRT_HPP_INCLUDED
 #define EVE_FUNCTION_RSQRT_HPP_INCLUDED
 
-#include <eve/function/scalar/rsqrt.hpp>
-#include <eve/function/simd/rsqrt.hpp>
+#include <eve/function/definition/rsqrt.hpp>
+#include <eve/module/core/function/scalar/rsqrt.hpp>
+#include <eve/module/core/function/simd/rsqrt.hpp>
 
 #endif

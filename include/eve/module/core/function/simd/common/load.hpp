@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIMD_LOAD_HPP_INCLUDED
-#define EVE_FUNCTION_SIMD_LOAD_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMONLOAD_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMONLOAD_HPP_INCLUDED
 
 #include <eve/function/scalar/load.hpp>
 #include <eve/detail/overload.hpp>

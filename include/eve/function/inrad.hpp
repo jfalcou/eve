@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_INRAD_HPP_INCLUDED
 #define EVE_FUNCTION_INRAD_HPP_INCLUDED
 
-#include <eve/function/scalar/inrad.hpp>
-//#include <eve/function/simd/inrad.hpp>
+#include <eve/function/definition/inrad.hpp>
+#include <eve/module/core/function/scalar/inrad.hpp>
+//#include <eve/module/core/function/simd/inrad.hpp>
 
 #endif

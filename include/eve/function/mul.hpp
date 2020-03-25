@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_MUL_HPP_INCLUDED
 #define EVE_FUNCTION_MUL_HPP_INCLUDED
 
-#include <eve/function/scalar/mul.hpp>
-#include <eve/function/simd/mul.hpp>
+#include <eve/function/definition/mul.hpp>
+#include <eve/module/core/function/scalar/mul.hpp>
+#include <eve/module/core/function/simd/mul.hpp>
 
 #endif

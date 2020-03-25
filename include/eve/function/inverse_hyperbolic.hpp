@@ -11,6 +11,7 @@
 #define EVE_FUNCTION_INVERSE_HYPERBOLIC_HPP_INCLUDED
 
 // helper file to include all inverse hyperbolic functions
+#include <eve/function/definition/inverse_hyperbolic.hpp>
 #include <eve/function/acosh.hpp>
 #include <eve/function/acoth.hpp>
 //#include <eve/function/asech.hpp> TODO

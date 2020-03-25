@@ -14,9 +14,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/fma.hpp>
-#include <eve/function/scalar/sqr.hpp>
-#include <eve/function/scalar/sqrt.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/sqrt.hpp>
 #include <type_traits>
 
 namespace eve::detail

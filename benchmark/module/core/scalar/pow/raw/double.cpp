@@ -14,4 +14,5 @@
 #define FUNCTION()    eve::raw_(eve::pow)
 #define SAMPLES(N)    random<T>(N,0.,100.),random<T>(N,-100.,100.)
 
+
 #include "bench.hpp"

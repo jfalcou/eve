@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
 
-#include <eve/function/scalar/if_else.hpp>
-#include <eve/function/simd/if_else.hpp>
+#include <eve/function/definition/if_else.hpp>
+#include <eve/module/core/function/scalar/if_else.hpp>
+#include <eve/module/core/function/simd/if_else.hpp>
 
 #endif

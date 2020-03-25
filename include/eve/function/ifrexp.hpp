@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_IFREXP_HPP_INCLUDED
 #define EVE_FUNCTION_IFREXP_HPP_INCLUDED
 
-#include <eve/function/scalar/ifrexp.hpp>
-#include <eve/function/simd/ifrexp.hpp>
+#include <eve/function/definition/ifrexp.hpp>
+#include <eve/module/core/function/scalar/ifrexp.hpp>
+#include <eve/module/core/function/simd/ifrexp.hpp>
 
 #endif

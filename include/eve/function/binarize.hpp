@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_BINARIZE_HPP_INCLUDED
 #define EVE_FUNCTION_BINARIZE_HPP_INCLUDED
 
-#include <eve/function/scalar/binarize.hpp>
-#include <eve/function/simd/binarize.hpp>
+#include <eve/function/definition/binarize.hpp>
+#include <eve/module/core/function/scalar/binarize.hpp>
+#include <eve/module/core/function/simd/binarize.hpp>
 
 #endif 

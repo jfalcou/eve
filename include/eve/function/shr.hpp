@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_SHR_HPP_INCLUDED
 #define EVE_FUNCTION_SHR_HPP_INCLUDED
 
-#include <eve/function/scalar/shr.hpp>
-#include <eve/function/simd/shr.hpp>
+#include <eve/function/definition/shr.hpp>
+#include <eve/module/core/function/scalar/shr.hpp>
+#include <eve/module/core/function/simd/shr.hpp>
 
 #endif

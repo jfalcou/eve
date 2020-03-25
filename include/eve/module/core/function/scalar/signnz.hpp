@@ -13,9 +13,9 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/bitofsign.hpp>
-#include <eve/function/scalar/bit_or.hpp>
-#include <eve/function/scalar/is_nan.hpp>
+#include <eve/function/bitofsign.hpp>
+#include <eve/function/bit_or.hpp>
+#include <eve/function/is_nan.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mone.hpp>

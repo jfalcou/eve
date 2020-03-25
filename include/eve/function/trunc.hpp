@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_TRUNC_HPP_INCLUDED
 #define EVE_FUNCTION_TRUNC_HPP_INCLUDED
 
-#include <eve/function/scalar/trunc.hpp>
-#include <eve/function/simd/trunc.hpp>
+#include <eve/function/definition/trunc.hpp>
+#include <eve/module/core/function/scalar/trunc.hpp>
+#include <eve/module/core/function/simd/trunc.hpp>
 
 #endif

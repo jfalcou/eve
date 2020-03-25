@@ -15,10 +15,10 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/constant/smallestposval.hpp>
-#include <eve/function/scalar/is_greater_equal.hpp>
-#include <eve/function/scalar/is_finite.hpp>
-#include <eve/function/scalar/is_nez.hpp>
-#include <eve/function/scalar/abs.hpp>
+#include <eve/function/is_greater_equal.hpp>
+#include <eve/function/is_finite.hpp>
+#include <eve/function/is_nez.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/is_logical.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/platform.hpp>

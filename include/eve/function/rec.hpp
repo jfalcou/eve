@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_REC_HPP_INCLUDED
 #define EVE_FUNCTION_REC_HPP_INCLUDED
 
-#include <eve/function/scalar/rec.hpp>
-#include <eve/function/simd/rec.hpp>
+#include <eve/function/definition/rec.hpp>
+#include <eve/module/core/function/scalar/rec.hpp>
+#include <eve/module/core/function/simd/rec.hpp>
 
 #endif

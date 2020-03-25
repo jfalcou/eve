@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_FREXP_HPP_INCLUDED
 #define EVE_FUNCTION_FREXP_HPP_INCLUDED
 
-#include <eve/function/scalar/frexp.hpp>
-#include <eve/function/simd/frexp.hpp>
+#include <eve/function/definition/frexp.hpp>
+#include <eve/module/core/function/generic/frexp.hpp>
 
 #endif

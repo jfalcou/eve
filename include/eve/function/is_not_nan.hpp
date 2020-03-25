@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
 #define EVE_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
 
-#include <eve/function/scalar/is_not_nan.hpp>
-#include <eve/function/simd/is_not_nan.hpp>
+#include <eve/function/definition/is_not_nan.hpp>
+#include <eve/module/core/function/scalar/is_not_nan.hpp>
+#include <eve/module/core/function/simd/is_not_nan.hpp>
 
 #endif

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_INF_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_NOT_INF_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INF_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INF_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>

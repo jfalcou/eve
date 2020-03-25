@@ -13,8 +13,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/scalar/bit_and.hpp>
-#include <eve/function/scalar/bit_not.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/function/bit_not.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 

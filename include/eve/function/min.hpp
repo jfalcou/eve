@@ -11,7 +11,8 @@
 #ifndef EVE_FUNCTION_MIN_HPP_INCLUDED
 #define EVE_FUNCTION_MIN_HPP_INCLUDED
 
-#include <eve/function/scalar/min.hpp>
-#include <eve/function/simd/min.hpp>
+#include <eve/function/definition/min.hpp>
+#include <eve/module/core/function/scalar/min.hpp>
+#include <eve/module/core/function/simd/min.hpp>
 
 #endif

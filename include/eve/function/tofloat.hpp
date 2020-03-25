@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_TOFLOAT_HPP_INCLUDED 
 #define EVE_FUNCTION_TOFLOAT_HPP_INCLUDED
 
-#include <eve/function/scalar/tofloat.hpp>
-#include <eve/function/simd/tofloat.hpp>
+#include <eve/function/definition/tofloat.hpp>
+#include <eve/module/core/function/generic/tofloat.hpp>
 
 #endif
