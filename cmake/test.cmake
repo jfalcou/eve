@@ -14,11 +14,16 @@ include(add_parent_target)
 ##==================================================================================================
 set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
 set(_TestSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
-if( MSVC )
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  set( _TestOptions -std=c++2a -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set( _TestOptions -std=c++2a -fconcepts -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set( _TestOptions /std:c++latest -W3 -EHsc)
-else()
-  set( _TestOptions -std=c++17 -Wall -Wno-missing-braces )
 endif()
+
+message( STATUS "[eve] Compiler base options: ${_TestOptions}")
 
 ##==================================================================================================
 ## Basic type roots
