@@ -121,9 +121,9 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a single value
-    template<typename T, typename = std::enable_if_t<std::is_convertible_v<T, Type>>>
-    EVE_FORCEINLINE explicit wide(T const &v) noexcept
-        : data_(detail::make(as_<target_type>{}, abi_type{}, v))
+    template<typename T>
+    EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( std::convertible_to<T, Type> )
+                            : data_(detail::make(as_<target_type>{}, abi_type{}, v))
     {
     }
 
@@ -152,10 +152,11 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pair of sub-wide
     template<typename HalfSize>
-    EVE_FORCEINLINE wide(wide<Type, HalfSize> const &l,
-                         wide<Type, HalfSize> const &h,
-                         std::enable_if_t<Size::value == 2 * HalfSize::value> * = 0)
-        : data_(detail::combine(EVE_CURRENT_API{}, l, h))
+    EVE_FORCEINLINE wide( wide<Type, HalfSize> const &l
+                        , wide<Type, HalfSize> const &h
+                        ) noexcept
+                    requires( static_size == 2 * HalfSize::value )
+                  : data_(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
 

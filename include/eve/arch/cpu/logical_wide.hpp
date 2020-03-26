@@ -114,9 +114,10 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a single value
-    template<typename T, typename = std::enable_if_t<std::is_convertible_v<T, logical<Type>>>>
+    template<typename T>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
-        : data_(detail::make(as_<target_type>{}, abi_type{}, v))
+                    requires( std::convertible_to<T, logical<Type>> )
+                  : data_(detail::make(as_<target_type>{}, abi_type{}, v))
     {
     }
 
@@ -151,10 +152,11 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pair of sub-wide
     template<typename HalfSize, typename Other>
-    EVE_FORCEINLINE logical(logical<wide<Type, HalfSize, Other>> const &l,
-                            logical<wide<Type, HalfSize, Other>> const &h,
-                            std::enable_if_t<static_size == 2 * HalfSize::value> * = 0)
-        : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
+    EVE_FORCEINLINE logical ( logical<wide<Type, HalfSize, Other>> const &l
+                            , logical<wide<Type, HalfSize, Other>> const &h
+                            ) noexcept
+                    requires( static_size == 2 * HalfSize::value )
+                  : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
     {
     }
 
