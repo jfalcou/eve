@@ -22,22 +22,21 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, aggregated_> bit_not_(EVE_SUPPORTS(cpu_),
-                                                       wide<T, N, aggregated_> const &v) noexcept
-  {
-    return aggregate(eve::bit_not, v);
-  }
 
-  // -----------------------------------------------------------------------------------------------
-  // Emulation with auto-splat inside map for performance purpose
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_), wide<T, N, emulated_> const &v0) noexcept
+  template<typename T, typename N,  typename ABI>
+  EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_)
+                               , wide<T, N, ABI> const &v) noexcept
   {
-    return map(eve::bit_not, v0);
-  }
+    if constexpr( is_aggregated_v<ABI> )
+    {
+      return aggregate(bit_not, v);
+    }
+    else if constexpr( is_emulated_v<ABI>   )
+    {
+      return map(bit_not, v);
+    }
+    else return eve::bit_xor(v, Allbits(as(v)));
+  }  
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -47,7 +46,7 @@ namespace eve
   template<typename T, typename N, typename ABI>
   EVE_FORCEINLINE auto operator~(wide<T, N, ABI> const &v) noexcept
   {
-    return eve::bit_xor(v, Allbits(as(v)));
+    return bit_not(v); 
   }
 }
 

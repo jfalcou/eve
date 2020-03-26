@@ -25,8 +25,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
-       logical<T> const*ptr) noexcept Requires(typename logical<wide<T, N, ABI>>::storage_type,
-                                          native<ABI>)
+       logical<T> const*ptr)  noexcept
+  requires native<ABI>
+
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, (T *)ptr));
@@ -37,7 +38,7 @@ namespace eve::detail
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
        aligned_ptr<logical<T> const, Align>
-           ptr) noexcept Requires(typename logical<wide<T, N, ABI>>::storage_type, native<ABI>)
+           ptr) noexcept requires native<ABI>
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));
@@ -48,7 +49,7 @@ namespace eve::detail
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
        aligned_ptr<logical<T>, Align>
-           ptr) noexcept Requires(typename logical<wide<T, N, ABI>>::storage_type, native<ABI>)
+           ptr) noexcept requires native<ABI>
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
     return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));

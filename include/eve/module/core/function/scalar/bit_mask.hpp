@@ -22,19 +22,21 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T bit_mask_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
+  EVE_FORCEINLINE constexpr T bit_mask_(EVE_SUPPORTS(cpu_)
+                                       , T const &a0) noexcept
   {
     return is_nez(a0).mask();
   }
-
+  
   // -----------------------------------------------------------------------------------------------
   // logical case
   template<typename T>
-  EVE_FORCEINLINE constexpr T bit_mask_(EVE_SUPPORTS(cpu_), logical<T> const &a0) noexcept
+  EVE_FORCEINLINE constexpr T bit_mask_(EVE_SUPPORTS(cpu_)
+                                       , logical<T> const &a0) noexcept
   {
     return a0.mask();
   }
-
+  
   // -----------------------------------------------------------------------------------------------
   // bool case is forbidden as we can't go back to a properly sized mask
   EVE_FORCEINLINE constexpr bool bit_mask_(EVE_SUPPORTS(cpu_), bool a0) noexcept = delete;

@@ -33,7 +33,7 @@ namespace eve::detail
   {
     if constexpr(aggregated<ABI>)                    return aggregate(eve::abs, v);
     else if constexpr(emulated<ABI>)                 return map(eve::abs, v);
-    else if constexpr(native_c<ABI>)
+    else if constexpr(native<ABI>)
     {
       if constexpr(std::unsigned_integral<T>)        return v;
       else if constexpr(std::floating_point<T>)      return bit_notand(Mzero(as(v)), v);
@@ -52,7 +52,7 @@ namespace eve::detail
     {
       if constexpr(aggregated<ABI>)                return aggregate(saturated_(eve::abs), a);
       else if constexpr(emulated<ABI>)             return map(saturated_(eve::abs), a);
-      else /* if constexpr(is_native_v<ABI>)*/     return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
+      else /* if native_v<ABI>*/     return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
     }
   }
 }

@@ -23,8 +23,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
-  bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept 
+  EVE_FORCEINLINE constexpr T
+  bit_xor_(EVE_SUPPORTS(cpu_)
+          , T const &a
+          , U const &b) noexcept 
   requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
     if constexpr(std::floating_point<T>)
@@ -42,7 +44,7 @@ namespace eve::detail
       }
       else
       {
-        return static_cast<T>(a ^ bit_cast(b, as(a)));
+        return a ^ bit_cast(b, as(a));
       }
     }
   }

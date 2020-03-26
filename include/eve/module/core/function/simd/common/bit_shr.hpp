@@ -23,26 +23,28 @@
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires(T, Vectorized<T>, integral<value_type_t<U>>, integral<value_type_t<T>>)
+  EVE_FORCEINLINE T bit_shr_(EVE_SUPPORTS(cpu_)
+                               , T const &a
+                               , U const &b) noexcept
+  requires vectorized<T> && std::integral<value_type_t<U>> && std::integral<value_type_t<T>>
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
 
-    if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
+    if constexpr(emulated<t_abi> || emulated<u_abi>)
     {
       return map(eve::bit_shr, a, b);
     }
-    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    else if constexpr(aggregated<t_abi> || aggregated<u_abi>)
     {
       return aggregate(eve::bit_shr, a, b);
     }
     else
     {
-      if constexpr(is_Vectorizable_v<U>)
+      if constexpr(vectorizable<U>)
       {
         using u_t = wide<as_integer_t<value_type_t<T>, unsigned>
-                               , typename T::cardinal_type, t_abi>;
+                        , typename T::cardinal_type, t_abi>;
         return bit_cast(eve::shr(bit_cast(a,as_<u_t>()), int(b)),as(a));
       }
       else

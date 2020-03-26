@@ -22,7 +22,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
-  EVE_FORCEINLINE constexpr T bit_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  EVE_FORCEINLINE constexpr T bit_not_(EVE_SUPPORTS(cpu_)
+                                      , T const &a) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {

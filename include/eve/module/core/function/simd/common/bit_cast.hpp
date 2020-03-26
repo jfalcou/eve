@@ -23,12 +23,13 @@ namespace eve::detail
           , typename U, typename M, typename X2
           >
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
-                                     wide<T, N, X1> const &     v0,
-                                     as_<wide<U, M, X2>> const &tgt) noexcept
-  Requires( wide<U, M, X2>
-          , either<!is_native<X1>::value,!is_native<X2>::value>
-          , if_<sizeof(wide<T, N, X1>) == sizeof(wide<U, M, X2>)>
-          )
+                                 wide<T, N, X1> const &     v0,
+                                 as_<wide<U, M, X2>> const &tgt) noexcept
+  requires (!native<X1> || !native<X2>) && (sizeof(wide<T, N, X1>) == sizeof(wide<U, M, X2>))
+//   Requires( wide<U, M, X2>
+//           , either<!is_native<X1>::value,!is_native<X2>::value>
+//           , if_<sizeof(wide<T, N, X1>) == sizeof(wide<U, M, X2>)>
+//           )
   {
     wide<U, M, X2> that;
 
@@ -47,10 +48,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
                                      logical<wide<T, N, X1>> const &v0,
                                      as_<wide<U, M, X2>> const &    tgt) noexcept
-  Requires( wide<U, M, X2>
-          , either<!is_native<X1>::value,!is_native<X2>::value>
-          , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(wide<U, M, X2>)>
-          )
+  requires (!native<X1> || !native<X2>) && (sizeof(logical<wide<T, N, X1>>) == sizeof(wide<U, M, X2>))
+//   Requires( wide<U, M, X2>
+//           , either<!is_native<X1>::value,!is_native<X2>::value>
+//           , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(wide<U, M, X2>)>
+//           )
   {
     wide<U, M, X2> that;
 
@@ -69,32 +71,34 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
                                      wide<T, N, X1> const &              v0,
                                      as_<logical<wide<U, M, X2>>> const &tgt) noexcept
-  Requires( logical<wide<U, M, X2>>
-          , either<!is_native<X1>::value,!is_native<X2>::value>
-          , if_<sizeof(wide<T, N, X1>) == sizeof(logical<wide<U, M, X2>>)>
-          )
+  requires (!native<X1> || !native<X2>) && (sizeof(wide<T, N, X1>) == sizeof(logical<wide<U, M, X2>>))
+  //   Requires( logical<wide<U, M, X2>>
+  //           , either<!is_native<X1>::value,!is_native<X2>::value>
+  //           , if_<sizeof(wide<T, N, X1>) == sizeof(logical<wide<U, M, X2>>)>
+  //           )
   {
     logical<wide<U, M, X2>> that;
-
+    
     constexpr auto sz = std::min(sizeof(v0), sizeof(that));
-
+    
     void const *src = reinterpret_cast<detail::alias_t<void const> *>(&v0);
     void *      dst = reinterpret_cast<detail::alias_t<void> *>(&that);
     std::memcpy(dst, src, sz);
-
+    
     return that;
   }
 
   template< typename T, typename N, typename X1
-          , typename U, typename M, typename X2
-          >
+            , typename U, typename M, typename X2
+            >
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
-                                     logical<wide<T, N, X1>> const &     v0,
-                                     as_<logical<wide<U, M, X2>>> const &tgt) noexcept
-  Requires( logical<wide<U, M, X2>>
-          , either<!is_native<X1>::value,!is_native<X2>::value>
-          , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(logical<wide<U, M, X2>>)>
-          )
+                                 logical<wide<T, N, X1>> const &     v0,
+                                 as_<logical<wide<U, M, X2>>> const &tgt) noexcept
+  requires (!native<X1> || !native<X2>) && (sizeof(logical<wide<T, N, X1>>) == sizeof(logical<wide<U, M, X2>>))
+//   Requires( logical<wide<U, M, X2>>
+//           , either<!is_native<X1>::value,!is_native<X2>::value>
+//           , if_<sizeof(logical<wide<T, N, X1>>) == sizeof(logical<wide<U, M, X2>>)>
+//           )
   {
     logical<wide<U, M, X2>> that;
 

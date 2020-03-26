@@ -26,10 +26,7 @@ namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE auto bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
-            Bit_compatible<T,U>,
-            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>
-          )
+  requires bit_compatible<T,U> && (vectorized<T> || vectorized<U>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;
@@ -37,7 +34,7 @@ namespace eve::detail
     using vu_t  = value_type_t<U>;
 
 
-    if constexpr(is_Vectorizable_v<T> && !is_Vectorizable_v<U>)
+    if constexpr(vectorizable<T> && !vectorizable<U>)
     {
       if constexpr(sizeof(T) == sizeof(vu_t))
       // this will ensure that no scalar conversion will take place in aggregated
@@ -47,7 +44,7 @@ namespace eve::detail
       }
       else return U();
     }
-    else if constexpr(is_Vectorizable_v<U> && !is_Vectorizable_v<T>)
+    else if constexpr(vectorizable<U> && !vectorizable<T>)
     {
       if constexpr(sizeof(U) == sizeof(vt_t))
       // this will ensure that no scalar conversion will take place in aggregated
@@ -56,19 +53,20 @@ namespace eve::detail
         return eve::bit_xor(a, T(bit_cast(b,as_<vt_t>())));
       }
       else return T();
-    }    else if constexpr(is_emulated_v<t_abi> || is_emulated_v<u_abi>)
-    {
-      return map(eve::bit_xor, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
     }
-    else if constexpr(is_aggregated_v<t_abi> || is_aggregated_v<u_abi>)
+    else if constexpr(emulated<t_abi> || emulated<u_abi>)
     {
-      return aggregate(eve::bit_xor, abi_cast<value_type_t<U>>(a), abi_cast<vt_t>(b));
+      return map(eve::bit_xor, abi_cast<vu_t>(a), abi_cast<vt_t>(b));
     }
-    else if constexpr(is_Vectorized_v<T> && !is_Vectorized_v<U>)
+    else if constexpr(aggregated<t_abi> || aggregated<u_abi>)
+    {
+      return aggregate(eve::bit_xor, abi_cast<vu_t>(a), abi_cast<vt_t>(b));
+    }
+    else if constexpr(vectorized<T> && !vectorized<U>)
     {
       return eve::bit_xor(a, T{b});
     }
-    else if constexpr(is_Vectorized_v<T> && is_Vectorized_v<U>)
+    else if constexpr(vectorized<T> && vectorized<U>)
     {
       return eve::bit_xor(a, bit_cast(b,as(a)));
     }

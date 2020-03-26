@@ -23,7 +23,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
+  EVE_FORCEINLINE constexpr T
   bit_ornot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {

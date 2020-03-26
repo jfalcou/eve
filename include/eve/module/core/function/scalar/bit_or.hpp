@@ -16,6 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -23,7 +24,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
+  EVE_FORCEINLINE constexpr T
   bit_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
@@ -36,7 +37,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(std::is_same_v<T, U>) { return a | b; }
+      if constexpr(std::same_as<T, U>) { return a | b; }
       else
       {
         return a | bit_cast(b,as(a));

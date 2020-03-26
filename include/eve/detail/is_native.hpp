@@ -32,10 +32,6 @@ namespace eve::detail
   template<typename T>
   using is_native_t = typename is_native<T>::type;
 
-  // Associated Concept-like entity
-  template<typename T>
-  using native = std::enable_if_t<is_native_v<T>>;
-
   // Check aggregated/emulated status of ABI
   template<typename X>
   struct is_aggregated : std::is_same<X, aggregated_>
@@ -65,7 +61,7 @@ namespace eve
   // concepts related to above traits
   template<typename T> concept emulated   = detail::is_emulated_v<T>;
   template<typename T> concept aggregated = detail::is_aggregated_v<T>;
-  template<typename T> concept native_c     = detail::is_native_v<T>; 
+  template<typename T> concept native     = detail::is_native_v<T>; 
 }
 
 #endif
