@@ -7,6 +7,7 @@ Reference Documentation
    :maxdepth: 1
 
    concepts/general
+   features/general
    types/general
    functions/general
    functions/operators

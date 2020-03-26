@@ -44,12 +44,10 @@ Synopsis
 
 .. rubric:: Notes
 
+* with decorator `:ref:`numeric_ <feature-decorator>` two scalar Nans are considered equal.
+
 * The return type is not ``bool`` as predicates applied on :ref:`concept-vectorized` types need to store
   multiple values.
-
-*******
-Options
-*******
 
 *******
 Example

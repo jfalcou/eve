@@ -1,0 +1,49 @@
+.. _function-unary_plus:
+
+##########
+unary_plus
+##########
+
+**Required header:** ``#include <eve/function/unary_plus.hpp>``
+
+.. code-block:: c++
+
+   namespace eve
+   {
+      constexpr /* implementation defined */ unary_plus = {};
+   }
+
+Function object returning the input value :ref:`Value <concept-value>`.
+Infix notation: `+` can be used.
+
+Synopsis
+********
+
+.. code-block:: c++
+
+   template<typename T> constexpr T operator()( T const & x ) noexcept;
+
+*  Returns the unchanged input value.
+
+Parameter
+**********
+
+* ``x``: Instance of a  :ref:`Value <concept-value>`.
+
+Return value
+**************
+
+* A value with the sampe type as the parameter.
+
+.. seealso::  :ref:`unary_minus <function-unary_minus>`
+
+Example
+*******
+
+.. include:: ../../../../test/doc/core/unary_plus.cpp
+  :literal:
+
+Possible output:
+
+.. include:: ../../../../test/doc/core/unary_plus.txt
+  :literal:

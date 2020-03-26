@@ -38,6 +38,10 @@ Synopsis
 * [1] A value of type **as_logical_t<wide<T,N>>**.
 * [2] A value of type **as_logical_t<T>**.
 
+Note
+*******
+
+* for a :ref:`concept-ieeevalue` value ``x`` to be even means that both ``x`` and ``x/2`` are flint.
 
 Options
 *******
@@ -45,11 +49,11 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_even.cpp
+.. include:: ../../../../test/doc/core/is_even.cpp
   :literal:
 
 Possible output
 
-.. include:: ../../../../test/doc/is_even.txt
+.. include:: ../../../../test/doc/core/is_even.txt
   :literal:
 

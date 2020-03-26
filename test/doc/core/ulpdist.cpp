@@ -16,7 +16,6 @@ int main()
             << "<- pf =                          " << pf << '\n'
             << "<- qf =                          " << qf << '\n'
             << "-> eve::ulpdist(pf, qf) =            " << eve::ulpdist(pf, qf) << '\n'
-            << "-> eve::saturated_(eve::ulpdist)(pf, qf) = " << eve::saturated_(eve::ulpdist)(pf, qf)
             << '\n';
 
   int16_t xf = -eve::Valmax<int16_t>();
@@ -26,7 +25,6 @@ int main()
             << "<- xf =                          " << xf << '\n'
             << "<- yf =                          " << yf << '\n'
             << "-> eve::ulpdist(xf, yf) =            " << eve::ulpdist(xf, yf) << '\n'
-            << "-> eve::saturated_(eve::ulpdist)(xf, yf) = " << eve::saturated_(eve::ulpdist)(xf, yf)
             << '\n';
   return 0;
 }

@@ -17,35 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Constants" href="../constants/general.html" />
-    <link rel="prev" title="is_unordered" href="predicate/is_unordered.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
+    <link rel="prev" title="inpi" href="trigonometric/inpi.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -92,16 +95,31 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../main.html">Reference Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features/general.html">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="general.html">Functions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Infix Operators</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="arithmetic/add.html">add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arithmetic/div.html">div</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arithmetic/mul.html">mul</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arithmetic/shl.html">shl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arithmetic/shr.html">shr</a></li>
 <li class="toctree-l3"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
 <li class="toctree-l3"><a class="reference internal" href="predicate/is_equal.html">is_equal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise/bitwise_and.html">bitwise_and</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise/bitwise_not.html">bitwise_not</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise/bitwise_or.html">bitwise_or</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bitwise/bitwise_xor.html">bitwise_xor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="predicate/is_greater.html">is_greater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="predicate/is_greater_equal.html">is_greater_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="predicate/is_less.html">is_less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="predicate/is_less_equal.html">is_less_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="predicate/is_not_equal.html">is_not_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logical/logical_and.html">logical_and</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logical/logical_not.html">logical_not</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logical/logical_or.html">logical_or</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_and.html">bit_and</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_not.html">bit_not</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_or.html">bit_or</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_shl.html">bit_shl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_shr.html">bit_shr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bit/bit_xor.html">bit_xor</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/general.html">Constants</a></li>
@@ -173,7 +191,7 @@
         <a href="../constants/general.html" class="btn btn-neutral float-right" title="Constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="predicate/is_unordered.html" class="btn btn-neutral" title="is_unordered" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="trigonometric/inpi.html" class="btn btn-neutral float-left" title="inpi" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -184,40 +202,62 @@
             
   <div class="section" id="infix-operators">
 <span id="function-infix"></span><h1>Infix Operators<a class="headerlink" href="#infix-operators" title="Permalink to this headline">¶</a></h1>
-<p>These functions provide scalar and SIMD version of the native C and C++ operators as functional
+<p>These functions provide scalar and SIMD version of the native C and <strong>C++</strong> operators as functional
 interface.</p>
 <p class="rubric">Arithmetic Operators</p>
 <p>For most of those operators, their semantic are the same than for regular language operator
 with the one restriction that both parameters must share a type. Note also that operations are
 performed within the input type’s range.</p>
+<p>This implies that the use of these infix notations on integral scalars (standard <strong>C++</strong> call)
+will NOT necessarily lead to the same result as the function object call.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="arithmetic/add.html">add</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/div.html">div</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/mul.html">mul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/shl.html">shl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic/shr.html">shr</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arithmetic/sub.html">sub</a></li>
 </ul>
 </div>
 <p class="rubric">Comparison Operators</p>
+<p>The header <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/predicate.hpp&gt;</span></code> allows the inclusion of all specific predicate
+required headers in one shot.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="predicate/is_equal.html">is_equal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_greater.html">is_greater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_greater_equal.html">is_greater_equal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_less.html">is_less</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_less_equal.html">is_less_equal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predicate/is_not_equal.html">is_not_equal</a></li>
 </ul>
 </div>
 <p class="rubric">Logical Operators</p>
 <p>As usual for overloaded operators, beware that those operators lose their short-cut behavior
 when called on <a class="reference internal" href="../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> types.</p>
+<p>The header <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/logical.hpp&gt;</span></code> allows the inclusion of all specific logical
+required headers in one shot.</p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logical/logical_and.html">logical_and</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logical/logical_not.html">logical_not</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logical/logical_or.html">logical_or</a></li>
+</ul>
 </div>
 <p class="rubric">Bitwise Operators</p>
-<p>Bitwise operations are extended to work on any floating-point types by considering the masking
+<p>Bitwise operations are extended to work on any <a class="reference internal" href="../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> types by considering the masking
 operations to apply on the value bit patterns while retaining its original types.</p>
 <p>The header <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/bitwise.hpp&gt;</span></code> allows the inclusion of all specific bitwise
 required headers in one shot.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_and.html">bitwise_and</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_not.html">bitwise_not</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_or.html">bitwise_or</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitwise/bitwise_xor.html">bitwise_xor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_and.html">bit_and</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_not.html">bit_not</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_or.html">bit_or</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_shl.html">bit_shl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_shr.html">bit_shr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bit/bit_xor.html">bit_xor</a></li>
 </ul>
 </div>
 </div>
@@ -233,7 +273,7 @@ required headers in one shot.</p>
         <a href="../constants/general.html" class="btn btn-neutral float-right" title="Constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="predicate/is_unordered.html" class="btn btn-neutral" title="is_unordered" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="trigonometric/inpi.html" class="btn btn-neutral float-left" title="inpi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -259,27 +299,16 @@ required headers in one shot.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -1,0 +1,79 @@
+.. _function-pow_abs:
+
+###########
+pow_abs
+###########
+
+**Required header:** ``#include <eve/function/pow_abs.hpp>``
+
+.. code-block:: c++
+
+   namespace eve
+   {
+      constexpr /* implementation defined */ pow_abs = {};
+   }
+
+Function object computing :math:`|x|^y`.
+
+Synopsis
+********
+
+.. code-block:: c++
+
+   template<typename T, typename U> auto operator()( T const& x, U const & y>
+
+*  Computes  element-wise absolute value of the first parameter raised to the power of the second.
+
+
+Parameters
+**********
+
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
+
+Return value
+**************
+
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
+
+Notes
+*******
+
+* Using `pow_abs(x, y)` for :ref:`concept-ieeevalue` entries is similar to :math:`|x|^y`.
+
+* The implementation is conform to the IEEE requirements, but no exeception is ever raised.
+
+    - pow_abs(:math:`\pm0`, exp), where exp is a negative odd integer, returns :math:`+\infty` 
+    - pow_abs(:math:`\pm0`, exp), where exp is negative, finite, and is an even integer or a non-integer, returns :math:`+\infty`
+    - pow_abs(:math:`\pm0`, :math:`-\infty`) returns :math:`+\infty`
+    - pow_abs(:math:`\pm0`, exp), where exp is a positive odd integer, returns :math:`+0`
+    - pow_abs(:math:`\pm0`, exp), where exp is positive non-integer or a positive even integer, returns :math:`+0`
+    - pow_abs(\pm1, exp) returns 1 for any exp, even when exp is NaN
+    - pow_abs(base, :math:`\pm0`) returns 1 for any base, even when base is NaN
+    - pow_abs(base, exp) returns NaN if base is finite and negative and exp is finite and non-integer.
+    - pow_abs(base, :math:`-\infty`) returns :math:`+\infty` for any :math:`|` base :math:`|<1`
+    - pow_abs(base, :math:`-\infty`) returns :math:`+0` for any :math:`|` base :math:`|>1`
+    - pow_abs(base, :math:`+\infty`) returns :math:`+0` for any :math:`|` base :math:`|<1`
+    - pow_abs(base, :math:`+\infty`) returns :math:`+\infty` for any :math:`|` base :math:`|>1`
+    - pow_abs(:math:`\pm\infty`, exp) returns :math:`+0` for any negative exp
+    - pow_abs(:math:`\pm\infty`, exp) returns :math:`+\infty` for any positive exp
+    - except where specified above, if any argument is NaN, NaN is returned 
+
+* With:ref:`raw_ <feature-decorator>` decorator  uses the naive formula :math:`e^{y\log |x|}`
+  and so does not care for limits and leads to lower accuracy.
+ 
+
+Example
+*******
+
+.. include:: ../../../../test/doc/core/pow_abs.cpp
+  :literal:
+
+Possible output:
+
+.. include:: ../../../../test/doc/core/pow_abs.txt
+  :literal:

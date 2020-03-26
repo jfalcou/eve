@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>average &mdash; eve  - (internal version) documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="binarize" href="binarize.html" />
+    <link rel="prev" title="arg" href="arg.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> eve
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../start/first.html">Your First SIMD code</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../main.html">Reference Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/general.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../features/general.html">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../types/general.html">Types</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../general.html">Functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../arithmetic.html">Arithmetic Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="abs.html">abs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="add.html">add</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arg.html">arg</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">average</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binarize.html">binarize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="binarize_c.html">binarize_c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitofsign.html">bitofsign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cbrt.html">cbrt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ceil.html">ceil</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ceil2.html">ceil2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="clamp.html">clamp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conj.html">conj</a></li>
+<li class="toctree-l4"><a class="reference internal" href="copysign.html">copysign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec.html">dec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dist.html">dist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="div.html">div</a></li>
+<li class="toctree-l4"><a class="reference internal" href="firstbitset.html">firstbitset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="firstbitunset.html">firstbitunset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="floor.html">floor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="floor2.html">floor2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fma.html">fma</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fms.html">fms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fnma.html">fnma</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fnms.html">fnms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="frac.html">frac</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hypot.html">hypot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iceil.html">iceil</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ifloor.html">ifloor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inc.html">inc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="indeg.html">indeg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inearest.html">inearest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="iround.html">iround</a></li>
+<li class="toctree-l4"><a class="reference internal" href="itrunc.html">itrunc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="max.html">max</a></li>
+<li class="toctree-l4"><a class="reference internal" href="maxmag.html">maxmag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="min.html">min</a></li>
+<li class="toctree-l4"><a class="reference internal" href="minmag.html">minmag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="modf.html">modf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mul.html">mul</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nearest.html">nearest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="negate.html">negate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="negatenz.html">negatenz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="oneminus.html">oneminus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rec.html">rec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rem.html">rem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="round.html">round</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rshl.html">rshl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rshr.html">rshr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rsqrt.html">rsqrt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shl.html">shl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shr.html">shr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sign.html">sign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="signnz.html">signnz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqr.html">sqr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqr_abs.html">sqr_abs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sqrt.html">sqrt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sub.html">sub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trunc.html">trunc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_minus.html">unary_minus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unary_plus.html">unary_plus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../bit.html">Bitwise Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../conversion.html">Conversion Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exponential.html">Exponential Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../horizontal.html">Horizontal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hyperbolic.html">Hyperbolic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ieee.html">Ieee Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logical.html">Logical Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../predicate.html">Predicate Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trigonometric.html">Trigonometric Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../operators.html">Infix Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../constants/general.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">eve</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../main.html">Reference Documentation</a> &raquo;</li>
+        
+          <li><a href="../general.html">Functions</a> &raquo;</li>
+        
+          <li><a href="../arithmetic.html">Arithmetic Functions</a> &raquo;</li>
+        
+      <li>average</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/manual/functions/arithmetic/average.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="binarize.html" class="btn btn-neutral float-right" title="binarize" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="arg.html" class="btn btn-neutral float-left" title="arg" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="average">
+<span id="function-average"></span><h1>average<a class="headerlink" href="#average" title="Permalink to this headline">¶</a></h1>
+<p><strong>Required header:</strong> <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;eve/function/average.hpp&gt;</span></code></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">eve</span>
+<span class="p">{</span>
+   <span class="k">constexpr</span> <span class="cm">/* implementation defined */</span> <span class="n">average</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Function object the average of  two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.</p>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">auto</span> <span class="k">operator</span><span class="p">()(</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">y</span> <span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Computes the element-wise average of two <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Values</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must be instances of <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a>.</li>
+<li>All  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> parameters must share the same type</li>
+<li>If at least one parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, all  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> ones will be converted to
+its base type prior any other computation.</li>
+<li>If all parameters are  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> they must share the same <a class="reference internal" href="../../concepts/value.html#concept-value"><span class="std std-ref">Value</span></a> type.</li>
+</ul>
+</div>
+<div class="section" id="return-value">
+<h2>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If any parameter is  <a class="reference internal" href="../../concepts/vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>, a value of this type else a value of
+the common type of the  <a class="reference internal" href="../../concepts/vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> parameters.</li>
+</ul>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>This function does not overflow.</li>
+<li>Using <cite>average(x, y)</cite> for <a class="reference internal" href="../../concepts/ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> entries is similar to  <cite>(x+y)/2</cite></li>
+<li>For <a class="reference internal" href="../../concepts/integralvalue.html#concept-integralvalue"><span class="std std-ref">IntegralValue</span></a> types, it returns a rounded value at a distance guaranteed
+to be less than or equal to 0.5 of the average floating value, but may differ
+by unity from the truncation given by <cite>(x+y)/2</cite>. Moreover, as some architectures provide
+simd intrinsics, it is possible that the scalar results may differ by one unit from
+simd ones.</li>
+</ul>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;eve/function/average.hpp&gt;</span>
+<span class="c1">#include &lt;eve/literals.hpp&gt;</span>
+<span class="c1">#include &lt;eve/wide.hpp&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">using</span> <span class="n">w_t</span> <span class="o">=</span> <span class="n">eve</span><span class="p">::</span><span class="n">wide</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">uint32_t</span><span class="p">,</span> <span class="n">eve</span><span class="p">::</span><span class="n">fixed</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+  <span class="n">w_t</span> <span class="n">pi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="n">qi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">~</span><span class="mi">0</span><span class="p">};</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- simd&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;- pi =                      &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;- qi =                      &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">qi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; -&gt; eve::average(pi, qi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">average</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">qi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">uint32_t</span> <span class="n">xi</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">yi</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;---- scalar&quot;</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; xi =                         &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">xi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; yi =                         &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">yi</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="o">&lt;&lt;</span> <span class="s2">&quot; -&gt; eve::average(xi, yi) = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">average</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Possible output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">simd</span>
+ <span class="o">&lt;-</span> <span class="n">pi</span> <span class="o">=</span>                      <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+ <span class="o">&lt;-</span> <span class="n">qi</span> <span class="o">=</span>                      <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4294967295</span><span class="p">)</span>
+ <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">average</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">qi</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2147483649</span><span class="p">)</span>
+<span class="o">----</span> <span class="n">scalar</span>
+ <span class="n">xi</span> <span class="o">=</span>                         <span class="mi">3</span>
+ <span class="n">yi</span> <span class="o">=</span>                         <span class="mi">5</span>
+ <span class="o">-&gt;</span> <span class="n">eve</span><span class="p">::</span><span class="n">average</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="binarize.html" class="btn btn-neutral float-right" title="binarize" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="arg.html" class="btn btn-neutral float-left" title="arg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Joel Falcou, Jean-Thierry Lapresté
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

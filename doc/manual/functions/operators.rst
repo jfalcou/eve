@@ -4,7 +4,7 @@
 Infix Operators
 ###############
 
-These functions provide scalar and SIMD version of the native C and C++ operators as functional
+These functions provide scalar and SIMD version of the native C and **C++** operators as functional
 interface.
 
 .. rubric:: Arithmetic Operators
@@ -13,7 +13,7 @@ For most of those operators, their semantic are the same than for regular langua
 with the one restriction that both parameters must share a type. Note also that operations are
 performed within the input type's range.
 
-This implies that the use of these infix notations on integral scalars (standard C++ call) 
+This implies that the use of these infix notations on integral scalars (standard **C++** call) 
 will NOT necessarily lead to the same result as the function object call.
 
 .. toctree::

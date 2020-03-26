@@ -16,56 +16,46 @@ bit_notand
 Function object performing a bit AND between the COMPLEMENT of a :ref:`Value <concept-value>` and
 another :ref:`Value <concept-value>` of the same bit size.
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
+  
+ template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-   template<typename T, typename M, typename U, typename N> wide<T,N> operator()( wide<T,N> const& v, wide<U,M> const& w ) noexcept;
-   template<typename T, typename N, typename U>             wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename U> constexpr               T         operator()( T s, U t ) noexcept;
+* Performs a bit AND between the bitwise COMPLEMENT of ``x`` and ``y``.
 
-* [1] Performs a bit AND between the COMPLEMENT of **v** and **w**.
-* [2] Performs a bit AND between each elements of the COMPLEMENT of **v** and **s**.
-* [3] Performs a bit AND between the COMPLEMENT of **s** and **t**.
+Parameters
+**********
 
-.. rubric:: Parameters
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
+* All parameters must share the same global size.
 
-* **v**, **w**: Instances of :ref:`type-wide` satisfying ``sizeof(v) == sizeof(w)``.
-* **s**, **t**: Scalar values of type **U** satisfying ``sizeof(T) == sizeof(U)``.
+Return value
+************
 
-.. rubric:: Return value
+*  A value with the same type as the first parameter.
 
-* [1,2] A value with the same type as the first parameter.
-* [3] A value of type **T**.
-
-.. rubric:: Notes
+Notes
+*****
 
 * There is no type restriction between operands of :ref:`function-bit_notand` as long as the number
-  of bits between them are equals. This implies that calls to:ref:`function-bit_notand` on
-  :ref:`floating points values <concept-IEEEvalue>` are possible as long as they are performed with a
+  of bits between them are equals. This implies that calls to :ref:`function-bit_notand` on
+  :ref:`Ieee Values <concept-ieeevalue>` are possible as long as they are performed with a
   second parameters of proper size.
 
 * There is no cardinal restriction on the :ref:`concept-vectorized` operands of :ref:`function-bit_notand`
-  as long as the number of bits between them are equals.  This implies that calls to:ref:`function-bit_notand`
-  on :ref:`concept-vectorized` values of different cardinals are allowed as long at their total size
+  as long as the number of bits between them are equals.  This implies that calls to :ref:`function-bit_notand`
+  on :ref:`concept-vectorized` values of different cardinals are allowed as long as their total size
   in bits are equal.
 
-
-*******
-Options
-*******
-
-*******
 Example
 *******
 
-.. include:: ../../../../test/doc/bit_notand.cpp
+.. include:: ../../../../test/doc/core/bit_notand.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/bit_notand.txt
+.. include:: ../../../../test/doc/core/bit_notand.txt
   :literal:

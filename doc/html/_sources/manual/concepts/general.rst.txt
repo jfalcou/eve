@@ -7,9 +7,10 @@ The main Concepts defined by **EVE** are the :ref:`concept-vectorizable` and :re
 one. Those two Concepts are used to define which type can be turned into a SIMD compatible type
 and what expressions and operations are valid for such a SIMD compatible type.
 
-From those two Concepts, we define the :ref:`concept-value` -related Concepts that describes the types
-usable as arguments of **EVE** 's functions. They are the :ref:`concept-ieeevalue` and the
-:ref:`concept-integralvalue` Concepts which represent types which can be either :ref:`concept-vectorizable`
+From those two Concepts, we define the :ref:`concept-value`-related Concepts that describes the types
+usable as arguments of **EVE**'s functions. They are the :ref:`concept-ieeevalue`, the
+:ref:`concept-integralvalue` and the :ref:`concept-logicalvalue` Concepts which represent 
+types which can be either :ref:`concept-vectorizable`
 or :ref:`concept-vectorized` and supports a subset of numerical properties.
 
 This ambivalence around the SIMD or scalar status of types modeling these Concepts is what
@@ -32,3 +33,4 @@ SIMD-compatible logical values.
    value
    logical
    logicalvalue
+   targeted

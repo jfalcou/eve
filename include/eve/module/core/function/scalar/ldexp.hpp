@@ -86,7 +86,7 @@ namespace eve::detail
       T f = One<T>();
       if constexpr(eve::platform::supports_denormals)
       {
-        if (e < Minexponent<T>())   //(BOOST_UNLIKELY
+        if (e < Minexponent<T>())  
         {
           e -= Minexponent<T>();
           f = Smallestposval<T>();

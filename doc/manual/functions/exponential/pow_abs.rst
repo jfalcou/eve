@@ -13,36 +13,33 @@ pow_abs
       constexpr /* implementation defined */ pow_abs = {};
    }
 
-Function object computing :math:`x^y`.
+Function object computing :math:`|x|^y`.
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U x                ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( U         const& x, wide<T,N> const& w ) noexcept;
-   template<typename T>             constexpr T           operator()( T s, T t ) noexcept;
+   template<typename T, typename U> auto operator()( T const& x, U const & y>
 
-* [1-3] Computes  element-wise the absolute value of the first parameter raised to the power  of the second.
-* [4]   Computes the  absolute value of the first parameter raised to the power  of the second.   
-
-.. rubric:: Parameters
-
-* **v**, **w**: Instances of :ref:`IEEEValue <concept-ieeevalue>`.
-* **x** : Scalar floating point value. 
-* **s**, **t**: Scalar floating point values of same type.
-
-.. rubric:: Return value
-
-* [1-3] A value with the same type as wide parameter.
-* [4] A value of type **T**.
+*  Computes  element-wise absolute value of the first parameter raised to the power of the second.
 
 
-*******
+Parameters
+**********
+
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
+
+Return value
+**************
+
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
+
 Notes
 *******
 
@@ -58,23 +55,18 @@ Notes
     - pow_abs(\pm1, exp) returns 1 for any exp, even when exp is NaN
     - pow_abs(base, :math:`\pm0`) returns 1 for any base, even when base is NaN
     - pow_abs(base, exp) returns NaN if base is finite and negative and exp is finite and non-integer.
-    - pow_abs(base, :math:`-\infty`) returns :math:`+\infty` for any |base|<1
-    - pow_abs(base, :math:`-\infty`) returns :math:`+0` for any |base|>1
-    - pow_abs(base, :math:`+\infty`) returns :math:`+0` for any |base|<1
-    - pow_abs(base, :math:`+\infty`) returns :math:`+\infty` for any |base|>1
+    - pow_abs(base, :math:`-\infty`) returns :math:`+\infty` for any :math:`|` base :math:`|<1`
+    - pow_abs(base, :math:`-\infty`) returns :math:`+0` for any :math:`|` base :math:`|>1`
+    - pow_abs(base, :math:`+\infty`) returns :math:`+0` for any :math:`|` base :math:`|<1`
+    - pow_abs(base, :math:`+\infty`) returns :math:`+\infty` for any :math:`|` base :math:`|>1`
     - pow_abs(:math:`\pm\infty`, exp) returns :math:`+0` for any negative exp
     - pow_abs(:math:`\pm\infty`, exp) returns :math:`+\infty` for any positive exp
-    except where specified above, if any argument is NaN, NaN is returned 
+    - except where specified above, if any argument is NaN, NaN is returned 
 
-* With raw_ decorator  uses the naive formula :math:`e^{y\log |x|}'
-         and so does not care for limits and leads to lower accuracy. In particular it returns NaN for negative base
+* With :ref:`raw_ <feature-decorator>` decorator  uses the naive formula :math:`e^{y\log |x|}`
+  and so does not care for limits and leads to lower accuracy.
  
 
-*******
-Options
-*******
-
-*******
 Example
 *******
 

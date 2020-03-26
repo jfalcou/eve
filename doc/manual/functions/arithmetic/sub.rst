@@ -15,42 +15,43 @@ sub
 
 Function object computing the difference of two :ref:`Values <concept-value>`.
 
-********
 Synopsis
 ********
 
 .. code-block:: c++
-  :linenos:
 
-   template<typename T, typename N>             wide<T,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( wide<T,N> const& v, U s ) noexcept;
-   template<typename T, typename N, typename U> wide<T,N> operator()( U s, wide<T,N> const& v ) noexcept;
-   template<typename T> constexpr               T         operator()( T s, T t ) noexcept;
+   template<typename T, typename U> auto operator()( T const& x, U const& y ) noexcept;
 
-* [1] Computes the element-wise difference of every elements of both :ref:`type-wide`.
-* [2,3] Computes the difference of the scalar with each element of the wide instance.
-* [4] Computes the difference of both scalars.
+* Computes the element-wise difference of two :ref:`Values <concept-value>`.
 
-.. rubric:: Parameters
 
-* **v**, **w**: Instances of :ref:`type-wide`.
-* **s**, **t**: Scalar values of type **U** convertible to **T**.
+Parameters
+**********
 
-.. rubric:: Return value
+* Each parameter ``x`` and ``y`` must be an instance of :ref:`Value <concept-value>`.
+* All  :ref:`concept-vectorized` parameters must share the same type
+* If at least one parameter is  :ref:`concept-vectorized`, all  :ref:`concept-vectorizable` ones will be converted to 
+  its base type prior any other computation.
+* If all parameters are  :ref:`concept-vectorizable` they must share the same :ref:`Value <concept-value>` type.
 
-* [1-3] A value with the same type as the :ref:`type-wide` parameter.
-* [4] A value of type **T**.
+Return value
+**************
 
+* If any parameter is  :ref:`concept-vectorized`, a value of this type else a value of  
+  the common type of the  :ref:`concept-vectorizable` parameters.
+
+Notes
 *******
-Options
-*******
 
-  - :ref:`:ref:`saturated_ <feature-decorator>` <feature-decorator>` decorator provides the saturated operation.
+  - With the :ref:`saturated_ <feature-decorator>` the  operation is saturated for :ref:`Integral Values <concept-integralvalue>` entries.
   
-  - conditional call is allowed: ``sub[cond](a,b)`` is equivalent (but optimized) to ``if_else(cond, sub(a, b), a)``
+  - :ref:`masked call <feature-maskable>` is allowed: ``sub[cond](x, y)`` is equivalent to ``if_else(cond, sub(x, y), x)``, 
+    but can be subject to optimization.
 
-  - apart the preceding case infix notation can be used with operator ``-``. But be aware that for scalars `-`` 
-    is the C++ operator and it result is subject to automatic promotions.
+  - apart the preceding case infix notation can be used with operator ``-``. But be aware that if  the two parameters 
+    are standard scalar integers,for scalars ``-`` is the **C++** operator and its result is subject to automatic promotions.
+    This **IS NOT** the case for  :ref:`concept-vectorized` entries.
+
 
 *******
 Example

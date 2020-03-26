@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Vectorizable" href="vectorizable.html" />
     <link rel="prev" title="Reference Documentation" href="../main.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -99,8 +102,10 @@
 <li class="toctree-l3"><a class="reference internal" href="value.html">Value</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logical.html">Logical</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logicalvalue.html">LogicalValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="targeted.html">Targeted</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../features/general.html">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../types/general.html">Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../functions/general.html">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../functions/operators.html">Infix Operators</a></li>
@@ -173,7 +178,7 @@
         <a href="vectorizable.html" class="btn btn-neutral float-right" title="Vectorizable" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../main.html" class="btn btn-neutral" title="Reference Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../main.html" class="btn btn-neutral float-left" title="Reference Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -187,9 +192,10 @@
 <p>The main Concepts defined by <strong>EVE</strong> are the <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a> and <a class="reference internal" href="vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a>
 one. Those two Concepts are used to define which type can be turned into a SIMD compatible type
 and what expressions and operations are valid for such a SIMD compatible type.</p>
-<p>From those two Concepts, we define the <a class="reference internal" href="value.html#concept-value"><span class="std std-ref">Value</span></a> -related Concepts that describes the types
-usable as arguments of <strong>EVE</strong> ‘s functions. They are the <a class="reference internal" href="ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a> and the
-<a class="reference internal" href="integralvalue.html#concept-integralvalue"><span class="std std-ref">IntegralValue</span></a> Concepts which represent types which can be either <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a>
+<p>From those two Concepts, we define the <a class="reference internal" href="value.html#concept-value"><span class="std std-ref">Value</span></a>-related Concepts that describes the types
+usable as arguments of <strong>EVE</strong>’s functions. They are the <a class="reference internal" href="ieeevalue.html#concept-ieeevalue"><span class="std std-ref">IEEEValue</span></a>, the
+<a class="reference internal" href="integralvalue.html#concept-integralvalue"><span class="std std-ref">IntegralValue</span></a> and the <a class="reference internal" href="logicalvalue.html#concept-logicalvalue"><span class="std std-ref">LogicalValue</span></a> Concepts which represent
+types which can be either <a class="reference internal" href="vectorizable.html#concept-vectorizable"><span class="std std-ref">Vectorizable</span></a>
 or <a class="reference internal" href="vectorized.html#concept-vectorized"><span class="std std-ref">Vectorized</span></a> and supports a subset of numerical properties.</p>
 <p>This ambivalence around the SIMD or scalar status of types modeling these Concepts is what
 make <strong>EVE</strong> ‘s functions usable with both regular scalar type (e.g. calling <code class="docutils literal notranslate"><span class="pre">eve::cos(4.f)</span></code>)
@@ -208,6 +214,7 @@ SIMD-compatible logical values.</p>
 <li class="toctree-l1"><a class="reference internal" href="value.html">Value</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logical.html">Logical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logicalvalue.html">LogicalValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="targeted.html">Targeted</a></li>
 </ul>
 </div>
 </div>
@@ -223,7 +230,7 @@ SIMD-compatible logical values.</p>
         <a href="vectorizable.html" class="btn btn-neutral float-right" title="Vectorizable" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../main.html" class="btn btn-neutral" title="Reference Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../main.html" class="btn btn-neutral float-left" title="Reference Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -249,27 +256,16 @@ SIMD-compatible logical values.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

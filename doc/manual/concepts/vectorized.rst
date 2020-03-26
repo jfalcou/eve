@@ -74,7 +74,7 @@ Example
 -------
 
   - ``eve::wide<short>``
-  - ``eve::wide<eve::logical<float>>``
+  - ``eve::logical<eve::wide<float>>``
 
 .. _Destructible: https://en.cppreference.com/w/cpp/named_req/Destructible
 .. _DefaultConstructible: https://en.cppreference.com/w/cpp/named_req/DefaultConstructible

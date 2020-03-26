@@ -22,8 +22,8 @@ Synopsis
 .. code-block:: c++
   :linenos:
 
-   template<typename T, typename N>              wide<logical<T>,N> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
-   template<typename T, typename N, typename U>  wide<logical<T>,N> operator()( wide<T,N> const& v, U s ) noexcept;
+   template<typename T, typename N>              logical<wide<T,N>> operator()( wide<T,N> const& v, wide<T,N> const& w ) noexcept;
+   template<typename T, typename N, typename U>  logical<wide<T,N>> operator()( wide<T,N> const& v, U s ) noexcept;
    template<typename T, typename U> constexpr    as_logical_t<T>    operator()( T s, U t ) noexcept;
 
 * [1] Performs a logical XOR between each elements of both :ref:`wide <type-wide>`  instances.
@@ -52,10 +52,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/logical_xor.cpp
+.. include:: ../../../../test/doc/core/logical_xor.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/logical_xor.txt
+.. include:: ../../../../test/doc/core/logical_xor.txt
   :literal:

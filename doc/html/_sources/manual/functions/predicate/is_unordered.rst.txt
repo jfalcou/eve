@@ -57,10 +57,10 @@ Options
 Example
 *******
 
-.. include:: ../../../../test/doc/is_unordered.cpp
+.. include:: ../../../../test/doc/core/is_unordered.cpp
   :literal:
 
 Possible output:
 
-.. include:: ../../../../test/doc/is_unordered.txt
+.. include:: ../../../../test/doc/core/is_unordered.txt
   :literal:

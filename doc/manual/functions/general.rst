@@ -8,7 +8,7 @@ Functions
    :maxdepth: 1
 
    arithmetic.rst
-   bitwise.rst
+   bit.rst
    conversion.rst
    exponential.rst
    horizontal.rst
