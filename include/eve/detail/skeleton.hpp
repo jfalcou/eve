@@ -11,7 +11,7 @@
 #ifndef EVE_DETAIL_SKELETON_HPP_INCLUDED
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
-#include <eve/detail/is_range.hpp>
+#include <eve/concept/range.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/ext/has_abi.hpp>
 #include <eve/ext/as_wide.hpp>
@@ -24,13 +24,16 @@
 namespace eve::detail
 {
   // Value extraction from RandomAccessRange
-  template<typename T>
-  EVE_FORCEINLINE constexpr decltype(auto) at(T &&t, std::size_t i) noexcept
+  template<typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(random_access_range<T>)
   {
-    if constexpr(is_random_access_range_v<T>)
-      return std::forward<T>(t)[ i ];
-    else
-      return std::forward<T>(t);
+    return std::forward<T>(t)[ i ];
+  }
+
+  template<typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(!random_access_range<T>)
+  {
+    return std::forward<T>(t);
   }
 
   // Subparts extraction

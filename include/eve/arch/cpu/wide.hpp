@@ -21,7 +21,7 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/is_range.hpp>
+#include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
@@ -33,6 +33,7 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/concept/stdconcepts.hpp>
+#include <eve/concept/range.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -92,10 +93,8 @@ namespace eve
     }
 
     template<typename Range>
-    EVE_FORCEINLINE explicit wide(
-        Range &&r,
-        std::enable_if_t<detail::is_range_v<Range> && !is_Vectorized_v<Range> &&
-                         !std::is_same_v<storage_type, Range>> * = 0) noexcept
+    EVE_FORCEINLINE explicit wide(Range &&r) noexcept
+          requires( detail::range<Range> && !is_Vectorized_v<Range> && !std::same_as<storage_type, Range>)
         : wide(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
     {
     }
