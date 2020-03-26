@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto mantissa_(EVE_SUPPORTS(cpu_),
                                            T const &a) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     if(!a) return a;
     if constexpr(eve::platform::supports_invalids)

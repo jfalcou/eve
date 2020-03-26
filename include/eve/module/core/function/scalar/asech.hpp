@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asech_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     return acosh(rec(a0));
   }

@@ -34,7 +34,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto floor2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     if (is_less(v, One(as(v)))) return Zero(as(v)); 
     auto [m, e] = ifrexp(v);

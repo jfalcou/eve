@@ -38,10 +38,10 @@
 namespace eve::detail
 {
   // Regular case
-  template<typename T>
+  template<std::floating_point T>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  Requires(T, floating_point<T>)
+  //  requires std::floating_point<T>
   {
     return musl_(log)(x); 
   }
@@ -52,7 +52,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , musl_type const &  
                                       , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T,   signed>;
@@ -89,7 +89,7 @@ namespace eve::detail
         return x;
       }
       else if (ix == 0x3f800000)
-        return 0;
+        return Zero(as(x));
       
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
@@ -165,7 +165,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     return musl_(log)(x); //the "plain" version of the algorithm is never speedier than the "musl" version.
     // the call is here to allow a scalar fallback to simd calls

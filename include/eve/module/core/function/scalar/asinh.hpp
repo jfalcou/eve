@@ -37,7 +37,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asinh_(EVE_SUPPORTS(cpu_)
                                        , T a0) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     T x = eve::abs(a0);
     if (is_eqz(a0)) return a0; 

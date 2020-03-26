@@ -48,7 +48,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto expm1_(EVE_SUPPORTS(cpu_)
                                        , T xx) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     using i_t = as_integer_t<T>;
     if (is_eqz(xx)) return xx; 

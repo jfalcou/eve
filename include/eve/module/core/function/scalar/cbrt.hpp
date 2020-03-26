@@ -32,7 +32,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto cbrt_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     
     constexpr double cbtr2 = 1.2599210498948731648;   /* 2^(1/3) */

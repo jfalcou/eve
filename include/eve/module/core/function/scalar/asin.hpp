@@ -37,7 +37,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto asin_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     T x = eve::abs(a0);
     T sgn = eve::bitofsign(a0);

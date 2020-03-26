@@ -31,7 +31,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
           , T const &a0, T const &a1) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     auto ltza0 = is_ltz(a0);
     auto isinfa1 = is_infinite(a1);
@@ -122,7 +122,7 @@ namespace eve::detail
   pow_(EVE_SUPPORTS(cpu_)
       , raw_type const &
       , T const &a0, T const &a1) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     return exp(a1*log(a0)); 
   }

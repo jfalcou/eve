@@ -43,7 +43,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto exp_(EVE_SUPPORTS(cpu_)
                                      , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     using vt_t =  value_type_t<T>;
     using it_t =  as_integer_t<T>; 
@@ -94,7 +94,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto exp_(EVE_SUPPORTS(cpu_)
                                      , pedantic_type const & 
                                      , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     using vt_t =  value_type_t<T>;
     using it_t =  as_integer_t<T>; 

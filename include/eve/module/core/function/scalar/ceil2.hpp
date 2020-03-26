@@ -27,7 +27,7 @@ namespace eve::detail
   // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto ceil2_(EVE_SUPPORTS(cpu_), T const &v) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     if (v <= One(as(v))) return One(as(v)); 
     if (is_less(v, One(as(v)))) return Zero(as(v)); 

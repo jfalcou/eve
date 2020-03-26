@@ -27,7 +27,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     T x  = eve::abs(a);
     return bit_xor(atan_kernel(rec(x), x), bitofsign(a));

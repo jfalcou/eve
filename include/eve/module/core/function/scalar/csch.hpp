@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto csch_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     using t_abi = abi_type_t<T>;
     if constexpr(is_emulated_v<t_abi> ) return map(eve::csch, a0); 

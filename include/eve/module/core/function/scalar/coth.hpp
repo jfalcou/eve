@@ -26,7 +26,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto coth_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     auto x = eve::abs(a0+a0);
     auto t = rec(expm1(x));

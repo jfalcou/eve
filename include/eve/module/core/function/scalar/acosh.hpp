@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto acosh_(EVE_SUPPORTS(cpu_)
                                        , T x) noexcept
-  Requires(T, floating_point<T>)
+  requires std::floating_point<T>
   {
     T t = dec(x);
     if(t <= Oneotwoeps<T>())
