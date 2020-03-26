@@ -13,6 +13,7 @@
 
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <functional>
 
 namespace std
 {
