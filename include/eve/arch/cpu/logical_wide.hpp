@@ -137,10 +137,9 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide with a generator function
     template<typename Generator>
-    EVE_FORCEINLINE
-    logical(Generator &&g,
-            std::enable_if_t<std::is_invocable_v<Generator, size_type, size_type>> * = 0) noexcept
-    : data_ ( detail::fill( as_<logical>{}, abi_type{},
+    EVE_FORCEINLINE logical(Generator &&g) noexcept
+                    requires( std::invocable<Generator,size_type,size_type>)
+                  : data_ ( detail::fill( as_<logical>{}, abi_type{},
                             [&](int i, int c)
                             {
                               return static_cast<logical<Type>>(std::forward<Generator>(g)(i,c));
