@@ -13,11 +13,13 @@ include(add_parent_target)
 ## Centralize all required setup for unit benchs
 ##==================================================================================================
 function(add_bench root)
-  if( MSVC )
-    set( options /std:c++latest -W3 -EHsc)
-  else()
-    set( options -std=c++17 -Wall -Wno-missing-braces )
-  endif()
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  set( _BenchOptions -std=c++2a -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set( _BenchOptions -std=c++2a -fconcepts -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  set( _BenchOptions /std:c++latest -W3 -EHsc)
+endif()
 
   foreach(file ${ARGN})
     string(REPLACE ".cpp" ".bench" base ${file})
@@ -26,7 +28,7 @@ function(add_bench root)
     set(bench "${root}.${base}")
 
     add_executable( ${bench}  ${file})
-    target_compile_options  ( ${bench} PUBLIC ${options} )
+    target_compile_options  ( ${bench} PUBLIC ${_BenchOptions} )
 
     set_property( TARGET ${bench}
                   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
