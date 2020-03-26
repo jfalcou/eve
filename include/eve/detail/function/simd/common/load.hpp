@@ -20,8 +20,8 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Emulation
-  template<typename Pack, typename Pointer>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::emulated_ const &, Pointer ptr) noexcept
+  template<typename Pack, typename Iterator>
+  EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::emulated_ const &, Iterator ptr) noexcept
   {
     auto impl = [&](auto... I) {
       auto deref = [&](auto p, auto const &i) {

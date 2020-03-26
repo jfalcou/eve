@@ -21,7 +21,6 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/is_iterator.hpp>
 #include <eve/detail/is_range.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/spy.hpp>
@@ -33,6 +32,7 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -85,9 +85,8 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a Range
     template<typename Iterator>
-    EVE_FORCEINLINE explicit wide(Iterator b,
-                                  Iterator e,
-                                  std::enable_if_t<detail::is_iterator_v<Iterator>> * = 0) noexcept
+    EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
+                    requires( std::input_iterator<Iterator> )
         : data_(detail::load(as_<wide>{}, abi_type{}, b, e))
     {
     }

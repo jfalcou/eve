@@ -17,6 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/arch/cpu/logical.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 #include <iostream>
 #include <cstring>
@@ -83,11 +84,9 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a Range
     template<typename Iterator>
-    EVE_FORCEINLINE explicit logical(
-        Iterator b,
-        Iterator e,
-        std::enable_if_t<detail::is_iterator_v<Iterator>> * = 0) noexcept
-        : data_(detail::load(as_<logical>{}, abi_type{}, b, e))
+    EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
+                    requires( std::input_iterator<Iterator> )
+                  : data_(detail::load(as_<logical>{}, abi_type{}, b, e))
     {
     }
 
