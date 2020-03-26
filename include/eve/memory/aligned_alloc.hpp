@@ -12,40 +12,19 @@
 #define EVE_MEMORY_ALIGNED_ALLOC_HPP_INCLUDED
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/memory/power_of_2.hpp>
-#include <eve/memory/align.hpp>
-#include <eve/detail/spy.hpp>
-#include <algorithm>
-#include <cstdint>
+#include <eve/assert.hpp>
+#include <cstddef>
+#include <iostream>
 
 namespace eve
 {
   template<std::size_t Alignment>
   aligned_ptr<void, Alignment> aligned_alloc(std::size_t nbelem)
   {
-    static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
-
-    void *result = nullptr;
-
-#if defined(SPY_SUPPORTS_POSIX) || defined(SPY_OS_IS_MACOS)
-    if(::posix_memalign((void **)&result, std::max(Alignment, sizeof(void *)), nbelem))
-      result = nullptr;
-#elif defined(SPY_COMPILER_IS_MSVC)
-    result = ::_aligned_malloc(nbelem, Alignment);
-#else
     constexpr auto alignment = std::max(Alignment, sizeof(void *));
-    std::size_t    n         = nbelem + alignment - sizeof(void *);
+    EVE_ASSERT( (nbelem % alignment == 0), "[eve] Size is not a multiple of selected alignement");
 
-    void *p = std::malloc(sizeof(void *) + n);
-
-    if(p)
-    {
-      void *r                        = static_cast<char *>(p) + sizeof(void *);
-      r                              = align(r, over{alignment});
-      *(static_cast<void **>(r) - 1) = p;
-      result                         = r;
-    }
-#endif
+    void *result = std::aligned_alloc(alignment, nbelem);
 
     return {result};
   }
