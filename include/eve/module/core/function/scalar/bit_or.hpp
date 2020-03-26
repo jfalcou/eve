@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   bit_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires(T, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
+  requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
     if constexpr(std::is_floating_point_v<T>)
     {

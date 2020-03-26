@@ -14,16 +14,17 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <type_traits>
+#include <eve/concept/stdconcepts.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
-  bit_shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept Requires(T, integral<U>, integral<T>)
+  bit_shr_(EVE_SUPPORTS(cpu_), T const &a0, U a1) noexcept
+  requires std::integral<U> && std::integral<T>
   {
     using u_t = eve::detail::as_integer_t<T, unsigned>;
-    return T(u_t(a0) >> a1);
+    return static_cast<T>(u_t(a0) >> a1);
   }
 }
 

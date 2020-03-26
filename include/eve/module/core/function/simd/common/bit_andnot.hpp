@@ -20,15 +20,16 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename U>
-  EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires( std::conditional_t<is_Vectorized_v<T>, T, U>,
-            Bit_compatible<T,U>,
-            detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
+  EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_)
+                                  , T const &a
+                                  , U const &b) noexcept
+  requires bit_compatible<T,U> && (vectorized<T> || vectorized<U>)
   {
     using t_abi = abi_type_t<T>;
     using u_abi = abi_type_t<U>;

@@ -16,7 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <type_traits>
+#include <eve/concept/stdconcepts.hpp>
 
 namespace eve::detail
 {
@@ -25,9 +25,9 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept 
-  Requires(T, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
+  requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr(std::floating_point<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
       auto const tgt = as_<b_t>{};
@@ -36,10 +36,13 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(std::is_same_v<T, U>) { return a ^ b; }
+      if constexpr(std::same_as<T, U>)
+      {
+        return a ^ b;
+      }
       else
       {
-        return a ^ bit_cast(b, as(a));
+        return static_cast<T>(a ^ bit_cast(b, as(a)));
       }
     }
   }

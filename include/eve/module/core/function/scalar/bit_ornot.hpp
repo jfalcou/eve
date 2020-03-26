@@ -16,7 +16,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_not.hpp>
-#include <type_traits>
+#include <eve/concept/stdconcepts.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto
   bit_ornot_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-  Requires(T, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
+  requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
     return eve::bit_or(a, eve::bit_not(b));
   }

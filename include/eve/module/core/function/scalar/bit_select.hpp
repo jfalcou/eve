@@ -17,6 +17,7 @@
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/concept/stdconcepts.hpp>
 
 namespace eve::detail
 {
@@ -26,7 +27,7 @@ namespace eve::detail
                   T const &a0,
                   U const &a1,
                   U const &a2) noexcept
-  Requires(U, Vectorizable<T>, Vectorizable<U>, Bit_compatible<T,U>)
+  requires vectorizable<T> && vectorizable<U> && bit_compatible<T,U>
   {
     return eve::bit_or(eve::bit_and(a1, a0), eve::bit_andnot(a2, a0));
   }
