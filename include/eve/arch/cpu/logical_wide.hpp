@@ -106,9 +106,10 @@ namespace eve
     {
     }
 
-    template<std::size_t Alignment, typename = std::enable_if_t<(Alignment >= static_alignment)>>
+    template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
-        : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+                    requires(Alignment >= static_alignment)
+                  : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
     {
     }
 
@@ -123,14 +124,12 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a sequence of values
-    template<typename T0,
-             typename T1,
-             typename... Ts,
-             bool                  Converts = std::is_convertible_v<T0, logical<Type>>
-                                 &&std::is_convertible_v<T1, logical<Type>> &&
-                             (... && std::is_convertible_v<Ts, logical<Type>>),
-             typename = std::enable_if_t<(static_size == 2 + sizeof...(Ts)) && Converts>>
+    template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
+          requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
+                    &&  (... && std::convertible_to<Ts,logical<Type>>)
+                    &&  (static_size == 2 + sizeof...(Ts))
+                  )
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {
     }

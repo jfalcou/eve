@@ -107,15 +107,17 @@ namespace eve
     {
     }
 
-    template<std::size_t Alignment, typename = std::enable_if_t<(Alignment >= static_alignment)>>
+    template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type const, Alignment> ptr) noexcept
-        : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+                    requires(Alignment >= static_alignment)
+                  : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
     {
     }
 
-    template<std::size_t Alignment, typename = std::enable_if_t<(Alignment >= static_alignment)>>
-    EVE_FORCEINLINE explicit wide(aligned_ptr<Type , Alignment> ptr) noexcept
-        : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+    template<std::size_t Alignment>
+    EVE_FORCEINLINE explicit wide(aligned_ptr<Type, Alignment> ptr) noexcept
+                    requires(Alignment >= static_alignment)
+                  : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
     {
     }
 
@@ -129,13 +131,12 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a sequence of values
-    template<typename T0,
-             typename T1,
-             typename... Ts,
-             bool Converts = std::is_convertible_v<T0, Type> &&std::is_convertible_v<T1, Type> &&
-                             (... && std::is_convertible_v<Ts, Type>),
-             typename = std::enable_if_t<(static_size == 2 + sizeof...(Ts)) && Converts>>
+    template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE wide(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
+          requires(     std::convertible_to<T0,Type> && std::convertible_to<T0,Type>
+                    &&  (... && std::convertible_to<Ts,Type>)
+                    &&  (static_size == 2 + sizeof...(Ts))
+                  )
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {
     }
@@ -143,10 +144,9 @@ namespace eve
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide with a generator function
     template<typename Generator>
-    EVE_FORCEINLINE
-    wide(Generator &&g,
-         std::enable_if_t<std::is_invocable_v<Generator, size_type, size_type>> * = 0) noexcept
-      : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
+    EVE_FORCEINLINE wide(Generator &&g) noexcept
+                    requires( std::invocable<Generator,size_type,size_type>)
+                  : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
     {}
 
     // ---------------------------------------------------------------------------------------------
