@@ -12,3 +12,7 @@ make_unit( "meta" as_floating_point.cpp )
 make_unit( "meta" as_integer.cpp )
 make_unit( "meta" as_wide.cpp )
 make_unit( "meta" sign_of.cpp )
+
+##==================================================================================================
+## Traits tests
+make_unit( "meta" has_abi.cpp )
