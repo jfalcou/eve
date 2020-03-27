@@ -14,27 +14,25 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/abs.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/raw.hpp>
-#include <type_traits>
+#include <eve/function/rec.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
 
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  Requires(T, floating_point<value_type_t<T>>)
   {
     return acos(rec(a0)); 
   }
   
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
                                   , raw_type const &     
                                   , T const &a0) noexcept
-  Requires(T, floating_point<value_type_t<T>>)
   {
     return raw_(acos)(rec(a0)); 
   }

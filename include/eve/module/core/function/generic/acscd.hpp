@@ -17,15 +17,14 @@
 #include <eve/function/acsc.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/tags.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
 
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acscd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(acsc(a0));
   }

@@ -32,6 +32,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {

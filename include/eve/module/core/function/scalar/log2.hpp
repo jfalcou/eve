@@ -86,7 +86,7 @@ namespace eve::detail
         return x;
       }
       else if (ix == 0x3f800000)
-        return 0;
+        return Zero(as(x));
       
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;

@@ -16,21 +16,21 @@
 #include <eve/function/raw.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/function/acos.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
-  Requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
+                                       , T const &a0) noexcept
   {
     return indeg(eve::acos(a0));
   }
 
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acosd_ ( EVE_SUPPORTS(cpu_)
                                         , raw_type const &, T const &a0
                                         ) noexcept
-  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(eve::raw_(eve::acos)(a0));
   }

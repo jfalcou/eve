@@ -22,22 +22,23 @@
 #include <eve/platform.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  Requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_)
+                                     , T const &a) noexcept
   {
     return if_else(is_negative(a), Pi(as(a)), eve::zero_);
   }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const &a) noexcept
-  Requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_)
+                                     , pedantic_type const&
+                                     , T const &a) noexcept
   {
     auto r = arg(a);
-
     if constexpr( platform::supports_nans )
     {
       return if_else(is_nan(a), eve::allbits_, r);

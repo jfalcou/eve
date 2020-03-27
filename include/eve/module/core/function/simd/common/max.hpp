@@ -24,6 +24,7 @@
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/forward.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <type_traits>
 
 namespace eve::detail

@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/has_abi.hpp>
 
 namespace eve::detail
 {
@@ -21,9 +21,8 @@ namespace eve::detail
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v)
   {
-    using t_abi = abi_type_t<T>;
-         if constexpr(aggregated<t_abi>) return aggregate(f, v);
-    else if constexpr(emulated<t_abi>)   return map(f, v);
+         if constexpr(has_aggregated_abi_v<T>) return aggregate(f, v);
+    else if constexpr(has_emulated_abi_v<T>)   return map(f, v);
   }
 }
 

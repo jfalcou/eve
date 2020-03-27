@@ -19,6 +19,7 @@
 #include <eve/function/shr.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/detail/has_abi.hpp>
 
 namespace eve::detail
 {
@@ -28,14 +29,11 @@ namespace eve::detail
                                , U const &b) noexcept
   requires vectorized<T> && std::integral<value_type_t<U>> && std::integral<value_type_t<T>>
   {
-    using t_abi = abi_type_t<T>;
-    using u_abi = abi_type_t<U>;
-
-    if constexpr(emulated<t_abi> || emulated<u_abi>)
+    if constexpr(has_emulated_abi_v<T> || has_emulated_abi_v<U>)
     {
       return map(eve::bit_shr, a, b);
     }
-    else if constexpr(aggregated<t_abi> || aggregated<u_abi>)
+    else if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)
     {
       return aggregate(eve::bit_shr, a, b);
     }
@@ -43,6 +41,7 @@ namespace eve::detail
     {
       if constexpr(vectorizable<U>)
       {
+        using t_abi =  abi_type_t<T>; 
         using u_t = wide<as_integer_t<value_type_t<T>, unsigned>
                         , typename T::cardinal_type, t_abi>;
         return bit_cast(eve::shr(bit_cast(a,as_<u_t>()), int(b)),as(a));

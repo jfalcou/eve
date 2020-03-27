@@ -22,6 +22,7 @@
 #include <eve/function/sub.hpp>
 #include <eve/function/exponentbits.hpp>
 #include <eve/constant/maxexponent.hpp>
+#include <eve/constant/nbmantissabits.hpp>
 #include <eve/detail/meta.hpp>
 #include <type_traits>
 

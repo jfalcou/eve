@@ -16,16 +16,14 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/acot.hpp>
 #include <eve/function/indeg.hpp>
-#include <eve/tags.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
 
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acotd_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  Requires(T, behave_as<floating_point,T>)
   {
     return indeg(acot(a0));
   }

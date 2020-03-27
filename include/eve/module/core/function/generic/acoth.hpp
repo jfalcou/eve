@@ -16,14 +16,13 @@
 #include <eve/detail/meta.hpp>
 #include <eve/function/atanh.hpp>
 #include <eve/function/rec.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acoth_(EVE_SUPPORTS(cpu_)
                                        , T x) noexcept
-  Requires(T, floating_point<value_type_t<T>>)
   {
     return eve::atanh(rec(x));
   }

@@ -18,6 +18,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/max.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/valmin.hpp>

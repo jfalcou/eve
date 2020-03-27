@@ -19,34 +19,36 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/expm1.hpp>
+#include <eve/function/exp.hpp>
 #include <eve/function/div.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/concept/value.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T>
+  template<floating_scalar_value T>
   EVE_FORCEINLINE constexpr auto sinh_(EVE_SUPPORTS(cpu_)
                                      , T a0) noexcept
-  requires std::floating_point<T>
   {
     T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
-    auto x = eve::abs(a0);
+    T x = eve::abs(a0);
     if (is_eqz(a0)) return a0;
-    auto h = (a0 > T(0)) ? T(1) : T(-1);
+    T h = (a0 > T(0)) ? T(1) : T(-1);
     if (x >= ovflimit)
     {
-      auto w = exp(x*Half<T>());
-      auto t = Half<T>()*w;
+      T w = exp(x*Half<T>());
+      T t = Half<T>()*w;
       t *= w;
       return t*h; 
     }
     h*= Half<T>(); 
-    auto t = expm1(x);
-    auto inct = inc(t); 
-    auto u = t/inct;
-    auto s = h*(fnma(t, u, t)+t);
+    T t = expm1(x);
+    T inct = inc(t); 
+    T u = t/inct;
+    T s = h*(fnma(t, u, t)+t);
     return s; 
   }
 }

@@ -13,21 +13,16 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/expobits_mask.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/platform.hpp>
-#include <eve/function/pedantic.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/bit_and.hpp>
+#include <eve/constant/expobits_mask.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE  auto exponentbits_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  Requires(as_integer_t<T>, behave_as<floating_point,T>)
+  template<floating_real_value  T>
+  EVE_FORCEINLINE  auto exponentbits_(EVE_SUPPORTS(cpu_)
+                                     , T const &a) noexcept
   {
     return bit_and(Expobits_mask<T>(), a); 
   }

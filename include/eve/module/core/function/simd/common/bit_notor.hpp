@@ -21,6 +21,7 @@
 #include <eve/function/bit_not.hpp>
 #include <eve/function/bit_or.hpp>
 #include <type_traits>
+#include <eve/detail/has_abi.hpp>
 
 namespace eve::detail
 {
@@ -30,8 +31,6 @@ namespace eve::detail
                                  , U const &b) noexcept
   requires bit_compatible<T,U> && (vectorized<T> || vectorized<U>)
   {
-    using t_abi = abi_type_t<T>;
-    using u_abi = abi_type_t<U>;
     using vt_t  = value_type_t<T>;
     using vu_t  = value_type_t<U>;
 
@@ -55,11 +54,11 @@ namespace eve::detail
       }
       else return T();
     }
-    else if constexpr(emulated<t_abi> || emulated<u_abi>)
+    else if constexpr(has_emulated_abi_v<T> || has_emulated_abi_v<U>)
     {
       return map(bit_notor, abi_cast<vu_t>(a), abi_cast<vt_t>(b));
     }
-    else if constexpr(aggregated<t_abi> || aggregated<u_abi>)
+    else if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)
     {
       return aggregate(bit_notor, abi_cast<vu_t>(a), abi_cast<vt_t>(b));
     }
