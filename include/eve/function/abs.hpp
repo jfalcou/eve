@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ABS_HPP_INCLUDED
 
 #include <eve/function/definition/abs.hpp>
-#include <eve/module/core/function/simd/abs.hpp>
+#include <eve/module/core/function/generic/abs.hpp>
 
 #endif 

@@ -25,7 +25,8 @@ namespace eve
   template<typename T> concept unsigned_value                 = value<T> && std::unsigned_integral<detail::value_type_t<T>>;
   template<typename T> concept signed_integral_value          = value<T> && std::signed_integral<detail::value_type_t<T>>; 
   template<typename T> concept floating_value                 = value<T> && std::floating_point<detail::value_type_t<T>>;
-  template<typename T> concept real_value                     = simd_real_value<T> || scalar_real_value<T>; 
+  template<typename T> concept real_value                     = simd_real_value<T> || scalar_real_value<T>;
+  template<typename T> concept floating_real_value            = real_value<T> && std::floating_point<detail::value_type_t<T>>;
   
 }
 
