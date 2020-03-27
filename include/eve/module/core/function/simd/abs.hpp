@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ABS_HPP_INCLUDED
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/abs.hpp>
+#include <eve/module/core/function/generic/abs.hpp>
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/abs.hpp>

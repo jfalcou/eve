@@ -13,6 +13,7 @@
 
 #include <eve/arch/tags.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -61,7 +62,8 @@ namespace eve
   // concepts related to above traits
   template<typename T> concept emulated   = detail::is_emulated_v<T>;
   template<typename T> concept aggregated = detail::is_aggregated_v<T>;
-  template<typename T> concept native     = detail::is_native_v<T>; 
+  template<typename T> concept native     = detail::is_native_v<T>;
+  
 }
 
 #endif
