@@ -17,6 +17,7 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/extract.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/binarize.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>
 
@@ -28,18 +29,15 @@ namespace eve::detail
   {
     if constexpr(is_aggregated_v<ABI>)
     {
-     
-      auto [ sl, sh] = v.slice(); 
+      auto [ sl, sh] = v.slice();
       return nbtrue(sl) + nbtrue(sh);
     }
-    else 
+    else
     {
-      size_t r = 0; 
-      for(int i=0; i < N::value ; ++i)
-      {
-        if (extract(v, i)) ++r; 
-      }
-      return r; 
+      auto iv = binarize(v);
+      std::size_t r = 0;
+      for(int i=0; i < N::value; ++i) r += iv[i];
+      return r;
     }
   }
 
@@ -47,7 +45,7 @@ namespace eve::detail
   EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(cpu_)
                            , wide<T, N, ABI> const &v) noexcept
   {
-    return nbtrue(is_nez(v)); 
+    return nbtrue(is_nez(v));
   }
 }
 

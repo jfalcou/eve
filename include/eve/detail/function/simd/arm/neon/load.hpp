@@ -11,13 +11,14 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOAD_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOAD_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/as.hpp>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wignored-attributes"
 #  pragma GCC diagnostic ignored "-Wdeprecated"
@@ -87,7 +88,7 @@ namespace eve::detail
     }
   }
 
-#if defined(EVE_COMP_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
@@ -200,7 +201,7 @@ namespace eve::detail
 #endif
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 

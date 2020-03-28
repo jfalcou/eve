@@ -13,11 +13,12 @@
 
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <cstring>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #  pragma GCC diagnostic ignored "-Wuninitialized"
@@ -44,17 +45,19 @@ namespace eve::detail
       that_t that;
 
       // Ugly type-punning for performance issues
-      // TODO(joel) - Investigate std::bless ?
-      auto tl = (typename wide<T, N, ABI>::storage_type*)(&that.storage().segments[0]);
-      *tl++ = l;
-      *tl   = h;
+      auto const *srcl = reinterpret_cast<detail::alias_t<std::byte const> *>(&l);
+      auto const *srch = reinterpret_cast<detail::alias_t<std::byte const> *>(&h);
+      auto *      dst  = reinterpret_cast<detail::alias_t<std::byte> *>(&that);
+
+      std::memcpy(dst           , srcl, sizeof(l));
+      std::memcpy(dst+sizeof(l) , srch, sizeof(h));
 
       return that;
     }
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 

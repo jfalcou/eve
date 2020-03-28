@@ -13,8 +13,8 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/as_register.hpp>
 #include <eve/ext/base_wide.hpp>
-#include <eve/ext/as_register.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -23,8 +23,8 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/is_iterator.hpp>
 #include <eve/detail/is_range.hpp>
-#include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
+#include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/add.hpp>
@@ -37,7 +37,7 @@
 #include <iterator>
 #include <iostream>
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wignored-attributes"
 #  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
@@ -50,7 +50,7 @@ namespace eve
   template<typename Type, typename Size, typename ABI>
   struct EVE_MAY_ALIAS wide
   {
-    using storage_type           = ::eve::ext::as_register_t<Type, Size, ABI>;
+    using storage_type           = ::eve::as_register_t<Type, Size, ABI>;
     using cardinal_type          = Size;
     using abi_type               = ABI;
     using value_type             = Type;
@@ -360,7 +360,7 @@ namespace eve
   }
 }
 
-#if defined(EVE_COMP_IS_GNUC)
+#if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop
 #endif
 

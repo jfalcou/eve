@@ -15,9 +15,7 @@
 #include <eve/module/core/function/simd/common/bit_ornot.hpp>
 
 #if defined(EVE_HW_ARM)
-#  if EVE_HW_ARM >= EVE_NEON_VERSION
-#    include <eve/module/core/function/simd/arm/neon/bit_ornot.hpp>
-#  endif
+#  include <eve/module/core/function/simd/arm/neon/bit_ornot.hpp>
 #endif
 
 #endif

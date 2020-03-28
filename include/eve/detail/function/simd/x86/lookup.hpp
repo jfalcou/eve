@@ -45,29 +45,6 @@ namespace eve::detail
       return bit_cast( blocks, as(a));
     }
   }
-
-  template<typename T, typename I, typename N>
-  EVE_FORCEINLINE wide<T,N,avx_> lookup_( EVE_SUPPORTS(avx_),
-                                          wide<T,N,avx_> a, wide<I,N,avx_> idx
-                                        ) noexcept
-  {
-    puts("XXXXX");
-    // TODO: Find a way to benchmark this as we generate quite a bunch of operations
-    // Is it better than the scalar unrolling ?
-    auto[hx,lx] = a.slice();
-    auto[hi,li] = idx.slice();
-
-    constexpr auto sz = N::value/2;
-    auto ch = hi<sz;
-    auto cl = li<sz;
-
-    auto hu = lookup(hx,if_else(ch , hi           , eve::allbits_ ));
-    auto hv = lookup(lx,if_else(ch , eve::allbits_, hi-sz         ));
-    auto lu = lookup(hx,if_else(cl , li           , eve::allbits_ ));
-    auto lv = lookup(lx,if_else(cl , eve::allbits_, li-sz         ));
-
-    return wide<T,N,avx_>(hu|hv,lu|lv);
-  }
 }
 
 #endif
