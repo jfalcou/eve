@@ -27,6 +27,7 @@ namespace eve
   template<typename T> concept floating_value                 = value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept real_value                     = simd_real_value<T> || scalar_real_value<T>;
   template<typename T> concept floating_real_value            = real_value<T> && std::floating_point<detail::value_type_t<T>>;
+  template<typename T> concept integral_real_value            = real_value<T> && std::integral<detail::value_type_t<T>>;
   
 }
 

@@ -74,7 +74,8 @@ namespace eve
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
   template<typename T> concept scalar_real_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
-
+  template<typename T> concept scalar_floating_real_value     = scalar_real_value<T> && std::floating_point<detail::value_type_t<T>>;
+  template<typename T> concept scalar_integral_real_value     = scalar_real_value<T> && std::integral<detail::value_type_t<T>>;
 
 }
 

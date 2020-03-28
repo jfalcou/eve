@@ -76,11 +76,14 @@ TTS_CASE("Check eve::next two parameters behavior")
 
   if constexpr(std::is_integral_v<EVE_VALUE>)
   {
+    TTS_EQUAL(eve::next(EVE_TYPE{0}, i_t(0)), EVE_TYPE(0));          
     TTS_EQUAL(eve::next(EVE_TYPE{0}, i_t(2)), EVE_TYPE(2));
     TTS_EQUAL(eve::next(EVE_TYPE{1}, i_t(2)), EVE_TYPE(3));
+    TTS_EQUAL(eve::next(EVE_TYPE{0}, si_t(0)),EVE_TYPE(0));          
     TTS_EQUAL(eve::next(EVE_TYPE{0}, si_t(2)),EVE_TYPE(2));
     TTS_EQUAL(eve::next(EVE_TYPE{1}, si_t(2)),EVE_TYPE(3));
     
+    TTS_EQUAL(eve::next(EVE_VALUE{0}, i_t(0)), EVE_TYPE(0));
     TTS_EQUAL(eve::next(EVE_VALUE{0}, i_t(2)), EVE_TYPE(2));
     TTS_EQUAL(eve::next(EVE_VALUE{1}, i_t(2)), EVE_TYPE(3));
 
@@ -120,6 +123,12 @@ TTS_CASE("Check eve::next two parameters behavior")
     TTS_EQUAL(eve::next(-eve::Mindenormal<EVE_TYPE>(), 2)     , (eve::Zero<EVE_TYPE>()));
     TTS_EQUAL(eve::next(-eve::Mindenormal<EVE_TYPE>(), 1)     , (eve::Mzero<EVE_TYPE>()));
     TTS_EXPECT(eve::all(eve::is_negative(eve::next(-eve::Mindenormal<EVE_TYPE>(), 1) ))); 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::next(-eve::Mindenormal<EVE_TYPE>(), 2) ))); 
+    TTS_EXPECT(eve::all(eve::is_positive(eve::next(-eve::Mindenormal<EVE_TYPE>(), 2) )));
+
+    TTS_EQUAL(eve::next(eve::Zero<EVE_TYPE>(), 0)             , (eve::Zero<EVE_TYPE>()));
+    TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>(), 0)            , (eve::Mzero<EVE_TYPE>()));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::next(eve::Zero<EVE_TYPE>(), 0) )));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::next(eve::Mzero<EVE_TYPE>(), 0) )));    
+    
   }
 }
