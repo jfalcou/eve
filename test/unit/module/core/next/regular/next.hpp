@@ -61,11 +61,9 @@ TTS_CASE("Check eve::next one parameter behavior")
     TTS_EQUAL(eve::next(eve::Minf<EVE_TYPE>())    , (eve::Valmin<EVE_TYPE>()));
     TTS_EQUAL(eve::next(eve::Mone<EVE_TYPE>())    , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
     TTS_EQUAL(eve::next(eve::One<EVE_TYPE>())     , (eve::One<EVE_TYPE>()+eve::Eps<EVE_TYPE>()));
-    TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>())   , (eve::Zero<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::next(eve::Mzero<EVE_TYPE>())))); 
     TTS_EQUAL(eve::next(-eve::Mindenormal<EVE_TYPE>())   , (eve::Mzero<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::next(-eve::Mindenormal<EVE_TYPE>())))); 
     TTS_EQUAL(eve::next(eve::Zero<EVE_TYPE>())    , (eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>())   , (eve::Mindenormal<EVE_TYPE>()));
   }
 }
 
@@ -127,8 +125,5 @@ TTS_CASE("Check eve::next two parameters behavior")
 
     TTS_EQUAL(eve::next(eve::Zero<EVE_TYPE>(), 0)             , (eve::Zero<EVE_TYPE>()));
     TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>(), 0)            , (eve::Mzero<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::next(eve::Zero<EVE_TYPE>(), 0) )));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::next(eve::Mzero<EVE_TYPE>(), 0) )));    
-    
   }
 }

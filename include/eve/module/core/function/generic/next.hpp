@@ -31,6 +31,8 @@
 #include <eve/function/add.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/mzero.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/value.hpp>
 
@@ -41,6 +43,23 @@ namespace eve::detail
   // regular call
   template<real_value T>
   EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
+                                      , T const &a) noexcept
+  {
+    if constexpr(floating_value<T>)
+    {
+      return bitfloating(inc(bitinteger(a))); 
+    }
+    else if constexpr(integral_value<T>)
+    {
+      return inc(a); 
+    }
+  }
+  
+  //////////////////////////////////////////////////////////////
+  // pedantic call
+  template<real_value T>
+  EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
+                                      , pedantic_type const & 
                                       , T const &a) noexcept
   {
     if constexpr(floating_value<T>)
@@ -59,12 +78,53 @@ namespace eve::detail
     }
     else if constexpr(integral_value<T>)
     {
-      return inc(a); 
+      return saturated_(inc)(a); 
     }
   }
   
+  ////////////////////////////////////////////////
+  // saturated_ call
+  template< real_value T>
+  EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
+                                      , saturated_type const & 
+                                      , T const &a) noexcept
+  {
+    if constexpr(floating_value<T>)
+    {
+      auto z =  next(a); 
+      if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits_, z);
+      else                                       return z;
+    }
+    else if constexpr(integral_value<T>)
+    {
+      return saturated_(inc)(a);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////
+  // two parameters
+  //////////////////////////////////////////////////////////////
+  // regular call
   template<real_value T, integral_real_value U>
   EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
+                                      , T const &a
+                                      , U const &n) noexcept
+  {
+    if constexpr(floating_value<T>)
+    {
+      using i_t = as_integer_t<value_type_t<T>>; 
+      return bitfloating(bitinteger(a)+  convert(n, as<i_t>()));
+    }
+    else if constexpr(integral_value<T>)
+    {
+      return add(a, convert(n, as<value_type_t<T>>()));
+    }
+  }
+  //////////////////////////////////////////////////////////////
+  // pedantic_ call
+  template<real_value T, integral_real_value U>
+  EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
+                                     ,  pedantic_type const & 
                                       , T const &a
                                       , U const &n) noexcept
   {
@@ -85,29 +145,11 @@ namespace eve::detail
     }
     else if constexpr(integral_value<T>)
     {
-      return add(a, convert(n, as<value_type_t<T>>()));
+      return saturated_(add)(a, convert(n, as<value_type_t<T>>()));
     }
   }
 
-  ////////////////////////////////////////////////
-  // saturated_ call
-  template< real_value T>
-  EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
-                                      , saturated_type const & 
-                                      , T const &a) noexcept
-  {
-    if constexpr(floating_value<T>)
-    {
-      auto z =  next(a); 
-      if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits_, z);
-      else                                       return z;
-    }
-    else if constexpr(integral_value<T>)
-    {
-      return saturated_(inc)(a);
-    }
-  }
-  
+
   template<real_value T, integral_value U>
   EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
                                       , saturated_type const & 
