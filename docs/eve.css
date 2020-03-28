@@ -1,0 +1,53 @@
+/*
+  EVE -  Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+    -webkit-font-smoothing: unset;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 170%;
+    max-width: 960px;
+    text-align: justify;
+}
+
+/* green links */
+.md a:link,
+.md a:visited {
+ color:#38761d;
+ text-decoration:none
+}
+
+/* insert logo */
+.md div.title {
+    background-image: url('logo.png');
+    background-position: 75%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: #000;
+    font-size: 45px;
+    font-weight: 900;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-top: 20px;
+    position: absolute;
+    left:-200px;
+    right: 0px;
+    top: -14px;
+    z-index: 10;
+}
+
+.md div.afterTitles {
+    height: 75px;
+}
+
+/* no numbering of headings */
+.md h1:before, .md h2:before, .md h3:before, .md h4:before, .md h5:before, .md h6:before { content: none; }
+.md .tocNumber { display: none; }
