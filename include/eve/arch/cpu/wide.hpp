@@ -21,7 +21,6 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/function/fill.hpp>
-#include <eve/detail/compiler.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>

@@ -13,7 +13,7 @@
 
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/concept/stdconcepts.hpp>
-#include <eve/ext/abi_of.hpp>
+#include <eve/arch/abi_of.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -22,9 +22,9 @@ namespace eve::detail
   template<typename Type, typename Size>
   inline constexpr bool require_aggregation =     (Size::value > expected_cardinal_v<Type>)
                                               && !std::is_same_v
-                                                        < ext::abi_of_t < Type
-                                                                        , expected_cardinal_v<Type>
-                                                                        >
+                                                        < abi_of_t< Type
+                                                                  , expected_cardinal_v<Type>
+                                                                  >
                                                         , eve::emulated_
                                                         >;
 }
@@ -43,7 +43,7 @@ namespace eve
 
   template<typename Type, typename Size>
   requires( std::arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct expected_abi<Type, Size> : ext::abi_of<Type, Size::value>
+  struct expected_abi<Type, Size> : abi_of<Type, Size::value>
   {};
 
   // Wrapper for SIMD registers holding logical type
@@ -56,7 +56,7 @@ namespace eve
 
   template<typename Type, typename Size>
   requires( std::arithmetic<Type> && !detail::require_aggregation<Type, Size> )
-  struct expected_abi<logical<Type>, Size> : ext::abi_of<logical<Type>, Size::value>
+  struct expected_abi<logical<Type>, Size> : abi_of<logical<Type>, Size::value>
   {};
 
   // Type short-cut
