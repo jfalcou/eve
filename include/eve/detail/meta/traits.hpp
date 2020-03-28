@@ -32,22 +32,20 @@ namespace eve::detail
   };
 
   // Extract value_type from type
-  template<typename T, typename Enable = void>
-  struct value_type
+  template<typename T> struct value_type
   {
     using type = T;
   };
 
   template<typename T>
-  struct value_type<T, std::void_t<typename T::value_type>>
+  requires requires { typename T::value_type; }
+  struct value_type<T>
   {
     using type = typename T::value_type;
   };
 
   template<typename T>
   using value_type_t    = typename value_type<T>::type;
-  template<typename T>
-  using element_type_t = value_type_t<T>; 
 
   // Extract abi_type from type
   template<typename T, typename Enable = void>

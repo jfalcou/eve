@@ -12,8 +12,9 @@
 #define EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
-#include <type_traits>
 #include <eve/concept/stdconcepts.hpp>
+#include <eve/element_type.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -65,16 +66,16 @@ namespace eve
   using Vectorizable = std::enable_if_t<is_Vectorizable_v<Type>>;
 
   template<typename Type> concept vectorizable = is_Vectorizable_v<Type>;
-  
-  template<typename T> concept scalar_value                   = is_Vectorizable_v<T>; 
+
+  template<typename T> concept scalar_value                   = is_Vectorizable_v<T>;
   template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
   template<typename T> concept signed_scalar_value            = scalar_value<T> && std::signed_type<T>;
   template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
-  template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>; 
-  template<typename T> concept scalar_real_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, detail::element_type_t<T>>; 
+  template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
+  template<typename T> concept scalar_real_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
 
-   
+
 }
 
 #endif

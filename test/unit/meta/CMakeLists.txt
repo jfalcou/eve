@@ -16,3 +16,4 @@ make_unit( "meta" sign_of.cpp )
 ##==================================================================================================
 ## Traits tests
 make_unit( "meta" has_abi.cpp )
+make_unit( "meta" element_type.cpp )
