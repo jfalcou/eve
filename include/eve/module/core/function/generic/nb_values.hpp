@@ -24,24 +24,20 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/tags.hpp>
-#include <cmath>
+#include <eve/concept/stdconcepts.hpp>
+#include <eve/concept/value.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename U>
+  template<real_value T, real_value U>  //perhaps totally ordered concept must be on ?
   EVE_FORCEINLINE auto nb_values_(EVE_SUPPORTS(cpu_)
                                  , T const &a
                                  , U const &b) noexcept
-  Requires(as_integer_t<std::conditional_t<is_Vectorized_v<T>, T, U>, unsigned>
-          , either<std::is_same_v<U, T>
-          , std::is_same_v<value_type_t<U>, T>
-          , std::is_same_v<value_type_t<T>, U>>)
+  requires std::same_as<value_type_t<U>, value_type_t<T>>
   {
-    using v_t =  value_type_t<T>; 
     using ui_t = as_integer_t<std::conditional_t<is_Vectorized_v<T>, T, U>, unsigned>; 
-    if constexpr(std::is_floating_point_v<v_t>)
+    if constexpr(floating_value<T>)
     {
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);

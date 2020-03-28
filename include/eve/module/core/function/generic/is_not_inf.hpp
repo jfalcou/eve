@@ -20,8 +20,9 @@
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_inf_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  template<value T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_inf_(EVE_SUPPORTS(cpu_)
+                                                       , T const &a) noexcept
   {
     return !eve::is_infinite(a);
   }

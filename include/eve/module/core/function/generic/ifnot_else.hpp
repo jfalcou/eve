@@ -14,13 +14,16 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename U, typename V>
+  template<real_value T, value U, value V>
   EVE_FORCEINLINE constexpr auto
-  ifnot_else_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
-      -> decltype(if_else(cond, f, t))
+  ifnot_else_(EVE_SUPPORTS(cpu_)
+             , T const &cond
+             , U const &t
+             , V const &f) noexcept
   {
     return if_else(cond, f, t);
   }

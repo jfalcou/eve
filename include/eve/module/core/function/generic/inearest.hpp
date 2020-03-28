@@ -16,25 +16,16 @@
 #include <eve/detail/abi.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/toint.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  ////////////////////////////////////////////////
-  // saturated_
-  template<typename T>
+  template<real_value T>
   EVE_FORCEINLINE constexpr auto inearest_(EVE_SUPPORTS(cpu_)
-                                      , T const &a) noexcept
+                                          , T const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<value_type_t<T>>)
-    {
-      return saturated_(toint)(eve::nearest(a));
-
-    }
-    else // if constexpr(std::is_integral_v<value_type_t<T>>)
-    {
-      return a; 
-    }
+         if constexpr(floating_value<T>)  return saturated_(toint)(eve::nearest(a));
+    else if constexpr(integral_value<T>)  return a; 
   }
 }
 

@@ -15,12 +15,13 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/invpi.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  template<floating_real_value  T>
+  EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_)
+                                      , T const &a) noexcept
   Requires(T, behave_as<floating_point,T>)
   {
     return Invpi(as(a))*a;
