@@ -13,7 +13,6 @@
 #include <eve/wide.hpp>
 #include <eve/literals.hpp>
 #include <eve/constant/constant.hpp>
-#include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/nan.hpp>
 
 using eve::fixed;
@@ -23,40 +22,19 @@ TTS_CASE("Constant generation for scalar")
   using namespace eve::literal;
 
   TTS_ULP_EQUAL((eve::Constant<float, 0x3F8E38E3>()), 1.111111f, 0.5);
-  TTS_ULP_EQUAL((eve::constant_v<float, 0x3F8E38E3>), 1.111111f, 0.5);
-
   TTS_IEEE_EQUAL((eve::Constant<float, 0xFFFFFFFF>()), eve::Nan<float>());
-  TTS_IEEE_EQUAL((eve::constant_v<float, 0xFFFFFFFF>), eve::Nan<float>());
 
   TTS_ULP_EQUAL((eve::Constant<double, 0x3FF1C71C71C71C72ULL>()), 1.111111111111111111, 0.5);
-  TTS_ULP_EQUAL((eve::constant_v<double, 0x3FF1C71C71C71C72ULL> ), 1.111111111111111111, 0.5);
-
   TTS_IEEE_EQUAL((eve::Constant<double, 0xFFFFFFFFFFFFFFFFULL>()), eve::Nan<double>());
-  TTS_IEEE_EQUAL((eve::constant_v<double, 0xFFFFFFFFFFFFFFFFULL>), eve::Nan<double>());
 
   TTS_EQUAL((eve::Constant<std::uint8_t, 0xE5>()), 0xE5);
-  TTS_EQUAL((eve::constant_v<std::uint8_t, 0xE5>), 0xE5);
-
   TTS_EQUAL((eve::Constant<std::int8_t, 0x55>()), 0x55);
-  TTS_EQUAL((eve::constant_v<std::int8_t, 0x55>), 0x55);
-
   TTS_EQUAL((eve::Constant<std::uint16_t, 0xD455>()), 0xD455);
-  TTS_EQUAL((eve::constant_v<std::uint16_t, 0xD455>), 0xD455);
-
   TTS_EQUAL((eve::Constant<std::int16_t, 0x4455>()), 0x4455);
-  TTS_EQUAL((eve::constant_v<std::int16_t, 0x4455>), 0x4455);
-
   TTS_EQUAL((eve::Constant<std::uint32_t, 0xC1334455>()), 0xC1334455);
-  TTS_EQUAL((eve::constant_v<std::uint32_t, 0xC1334455>), 0xC1334455);
-
   TTS_EQUAL((eve::Constant<std::int32_t, 0x11334455>()), 0x11334455);
-  TTS_EQUAL((eve::constant_v<std::int32_t, 0x11334455>), 0x11334455);
-
   TTS_EQUAL((eve::Constant<std::uint64_t, 0xB122334455667788ULL>()), 0xB122334455667788ULL);
-  TTS_EQUAL((eve::constant_v<std::uint64_t, 0xB122334455667788ULL>), 0xB122334455667788ULL);
-
   TTS_EQUAL((eve::Constant<std::int64_t, 0x1122334455667788LL>()), 0x1122334455667788LL);
-  TTS_EQUAL((eve::constant_v<std::int64_t, 0x1122334455667788LL>), 0x1122334455667788LL);
 }
 
 TTS_CASE_TPL("Constant generation for wide",
@@ -72,10 +50,6 @@ TTS_CASE_TPL("Constant generation for wide",
 
   TTS_ULP_EQUAL(
       (eve::Constant<eve::wide<float, T>, 0x3F8E38E3>()), (eve::wide<float, T>(1.111111f)), 0.5);
-
-  TTS_ULP_EQUAL(
-      (eve::constant_v<eve::wide<float, T>, 0x3F8E38E3>), (eve::wide<float, T>(1.111111f)), 0.5);
-
   TTS_IEEE_EQUAL((eve::Constant<eve::wide<float, T>, 0xFFFFFFFF>()),
                  (eve::Nan<eve::wide<float, T>>()));
 
