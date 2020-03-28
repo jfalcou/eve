@@ -52,20 +52,16 @@ namespace eve::detail
   // Aligned case
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_),
-         wide<T, S, emulated_> const &value,
-         aligned_ptr<T, N>            ptr,
-         std::enable_if_t<(wide<T, S, emulated_>::static_alignment <= N)> * = 0) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, S, emulated_> const &value, aligned_ptr<T, N> ptr) noexcept
+  requires(wide<T, S, emulated_>::static_alignment <= N)
   {
     store(value, ptr.get());
   }
 
   template<typename T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_),
-         wide<T, S, aggregated_> const &value,
-         aligned_ptr<T, N>              ptr,
-         std::enable_if_t<(wide<T, S, aggregated_>::static_alignment <= N)> * = 0) noexcept
+  store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
+  requires(wide<T, S, aggregated_>::static_alignment <= N)
   {
     using str_t = typename wide<T, S, aggregated_>::storage_type;
     value.storage().apply ( [&](auto&... v)
@@ -78,10 +74,9 @@ namespace eve::detail
 
   template<typename T, typename S, std::size_t N, typename ABI>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(cpu_),
-         logical<wide<T, S, ABI>> const &value,
-         aligned_ptr<logical<T>, N>      ptr,
-         std::enable_if_t<(logical<wide<T, S, ABI>>::static_alignment <= N)> * = 0) noexcept
+  store_( EVE_SUPPORTS(cpu_),
+          logical<wide<T, S, ABI>> const &value, aligned_ptr<logical<T>, N> ptr
+        ) noexcept requires(logical<wide<T, S, ABI>>::static_alignment <= N)
   {
     store(value, ptr.get());
   }
