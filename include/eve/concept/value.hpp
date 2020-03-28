@@ -14,6 +14,7 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/stdconcepts.hpp>
+#include <eve/is_logical.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
 
@@ -25,10 +26,10 @@ namespace eve
   template<typename T> concept unsigned_value                 = value<T> && std::unsigned_integral<detail::value_type_t<T>>;
   template<typename T> concept signed_integral_value          = value<T> && std::signed_integral<detail::value_type_t<T>>; 
   template<typename T> concept floating_value                 = value<T> && std::floating_point<detail::value_type_t<T>>;
-  template<typename T> concept real_value                     = simd_real_value<T> || scalar_real_value<T>;
+  template<typename T> concept real_value                     = real_simd_value<T> || real_scalar_value<T>;
   template<typename T> concept floating_real_value            = real_value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept integral_real_value            = real_value<T> && std::integral<detail::value_type_t<T>>;
-  
+  template<typename T> concept logical_value                  = value<T> && is_logical_v<T>; 
 }
 
 #endif

@@ -31,8 +31,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(native<t_abi> || scalar_value<T>)
+    if constexpr(native<T>)
     {
            if constexpr(floating_value<T>              ) return bit_andnot(a, Mzero(as(a)));
       else if constexpr(unsigned_value<T>              ) return a;

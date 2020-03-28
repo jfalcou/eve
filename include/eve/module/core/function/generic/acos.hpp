@@ -12,7 +12,6 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ACOS_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/abs.hpp>
@@ -41,8 +40,7 @@ namespace eve::detail
                            ,  raw_type const & 
                             , T const &a0) noexcept
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(native<t_abi> || scalar_value<T>)
+    if constexpr(native<T>)
     {
       auto tmp = Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
       return if_else(a0 == One(as(a0)), eve::zero_, tmp);
