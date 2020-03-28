@@ -11,20 +11,17 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_NOT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_NOT_HPP_INCLUDED
 
+#include <eve/concept/vectorizable.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_not.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/logical.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_)
-                                   , T const &a) noexcept
+  EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(native<T>)
     {
@@ -32,7 +29,7 @@ namespace eve::detail
       else if constexpr(logical_scalar_value<T>) return T(a.not_value());
       else                                       return is_eqz(a);
     }
-    else                                         return apply_over(logical_not, a);  
+    else                                         return apply_over(logical_not, a);
   }
 }
 
