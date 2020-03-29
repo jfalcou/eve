@@ -51,3 +51,23 @@ body {
 /* no numbering of headings */
 .md h1:before, .md h2:before, .md h3:before, .md h4:before, .md h5:before, .md h6:before { content: none; }
 .md .tocNumber { display: none; }
+
+/* Tables margin in definitions*/
+.md dl>table {
+    margin: 0px 0 0px;
+}
+/* Variable size br*/
+.skip {
+    display: block;
+    margin-bottom: 0em;
+}
+
+.mediumskip {
+    display: block;
+    margin-bottom: -.2em;
+}
+
+.smallskip {
+    display: block;
+    margin-bottom: -.4em;
+}
