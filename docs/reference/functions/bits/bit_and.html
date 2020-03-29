@@ -14,7 +14,9 @@ bit_and
 
 **Required header:**
 
-`#include &lt;eve/function/bit_and.hpp>`
+<script type="preformatted">
+`#include <eve/function/bit_and.hpp>`
+</script>
 
 **Synopsis:**
 <script type="preformatted">
@@ -30,10 +32,10 @@ Function object representing the bitwise AND operation.
 **Members function:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T, value U> auto operator()( T const& x, U const& y ) noexcept;
+template<value T, value U> auto operator()( T const& x, U const& y ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs a bitwise AND between both parameters.
+Performs the element-wise bitwise AND operation between both parameters.
 
 **Parameters:**
 `x`, `y`
