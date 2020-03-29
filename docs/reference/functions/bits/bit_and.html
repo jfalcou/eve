@@ -40,52 +40,12 @@ Performs a bitwise AND between both parameters.
 :   values of :ref:`value <concept-value>` types with same size in bytes.
 
 **Return value:**
-
+<span class="smallskip"></span>
 A value with the same type as `x` containing the bitwise AND of both parameters' bits is returned.
 
-**Example:**
+  (insert ../../../../test/doc/core/bit_and.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/bit.hpp>
-#include <eve/literals.hpp>
-#include <eve/wide.hpp>
-
-int main()
-{
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};
-
-  std::cout << "---- simd" << '\n'
-            << " <- pi =                      " << pi << '\n'
-            << " <- qi =                      " << qi << '\n'
-            << " -> eve::bit_and(pi, qi) =    " << eve::bit_and(pi, qi) << '\n';
-
-  std::uint32_t xi = 3, yi = 5;
-
-  std::cout << "---- scalar" << '\n'
-            << " xi =                         " << xi << '\n'
-            << " yi =                         " << yi << '\n'
-            << " -> eve::bit_and(xi, yi) =    " << eve::bit_and(xi, yi) << '\n';
-  return 0;
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-**Possible output**
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
----- simd
- <- pi =                      (3, 2, 3, 3)
- <- qi =                      (4, 1, 1, 4294967295)
- -> eve::bit_and(pi, qi) =    (0, 0, 1, 3)
----- scalar
- xi =                         3
- yi =                         5
- -> eve::bit_and(xi, yi) =    1
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
+  (insert ../../../../test/doc/core/bit_and.out.html here)
 
 <!-- End of Document -->
 <!-- Markdeep: -->
