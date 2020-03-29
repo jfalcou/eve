@@ -1,8 +1,0 @@
----- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::exp(pf) =            (1, 2.71828, 0.367879, 0.135335, 1, inf, 0, -nan)
----- scalar
-<- xf =                      1
--> eve::exp(xf) =            2.71828
-<- yf =                      -nan
--> eve::exp(yf) =            nan

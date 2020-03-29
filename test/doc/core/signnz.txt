@@ -1,8 +1,0 @@
----- simd
-<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::signnz(pf) = (1, 1, -1, -1, 1, 1, -1, -1)
----- scalar
-<- xf =                  1
--> eve::signnz(xf) = 1
-<- yf =                  1.4013e-45
--> eve::signnz(yf) = 1

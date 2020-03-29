@@ -1,0 +1,40 @@
+<meta charset="utf-8">
+**Example:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+#include <eve/function/bit.hpp>
+#include <eve/constant/allbits.hpp>
+#include <eve/wide.hpp>
+#include <iostream>
+
+using iT      = std::uint32_t;
+using wide_it = eve::wide<iT, eve::fixed<4>>;
+
+int main()
+{
+  wide_it pi = {3, -2, -10, 0};
+  wide_it qi = {4, -1, 0, 5};
+  wide_it si = {2, eve::Allbits<iT>(), 0, 4};
+
+  std::cout << "---- simd" << '\n'
+            << " <- si =                              " << si << '\n'
+            << " <- pi =                              " << pi << '\n'
+            << " <- qi =                              " << qi << '\n'
+            << " -> eve::bit_select(si, pi, qi) =  " << eve::bit_select(si, pi, qi) << '\n';
+
+  iT ssi = 3, xi = 3, yi = 4;
+
+  std::cout << "---- scalar" << '\n'
+            << " ssi =                                " << ssi << '\n'
+            << " xi =                                 " << xi << '\n'
+            << " yi =                                 " << yi << '\n'
+            << " -> eve::bit_select(ssi, xi, yi) = " << eve::bit_select(ssi, xi, yi)
+            << '\n';
+  return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+

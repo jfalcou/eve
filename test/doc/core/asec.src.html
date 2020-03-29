@@ -1,0 +1,41 @@
+<meta charset="utf-8">
+**Example:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+#include <eve/function/asec.hpp>
+#include <eve/wide.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/mindenormal.hpp>
+#include <iostream>
+
+using wide_ft = eve::wide <float, eve::fixed<8>>;
+
+int main()
+{
+  wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
+                , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
+
+  std::cout
+    << "---- simd" << '\n'
+    << "<- pf =                      " << pf << '\n'
+    << "-> eve::asec(pf) =            " << eve::asec(pf) << '\n'; 
+
+  float xf = 1.0f;
+  float yf = eve::Nan<float>();
+
+  std::cout
+    << "---- scalar"  << '\n'
+    << "<- xf =                      " << xf << '\n'
+    << "-> eve::asec(xf) =            " << eve::asec(xf) << '\n'
+    << "<- yf =                      " << yf << '\n'
+    << "-> eve::asec(yf) =            " << eve::asec(yf) << '\n'; 
+  return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+

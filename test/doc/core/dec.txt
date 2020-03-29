@@ -1,8 +1,0 @@
----- simd
-<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::dec(pf) = (-1, 0, -2, -3, -1, inf, -inf, -nan)
----- scalar
-<- xf =                  1
--> eve::dec(xf) = 0
-<- yf =                  1.4013e-45
--> eve::dec(yf) = -1

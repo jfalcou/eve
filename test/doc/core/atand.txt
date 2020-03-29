@@ -1,8 +1,0 @@
----- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::atand(pf) =          (0, 45, -45, -63.435, 7.9874e-44, 90, -90, nan)
----- scalar
-<- xf =                      1
--> eve::atand(xf) =            45
-<- yf =                      0
--> eve::atand(yf) =            0
