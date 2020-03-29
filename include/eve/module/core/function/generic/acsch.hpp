@@ -8,26 +8,26 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_ACSC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_ACSC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ACSCH_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_ACSCH_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/asin.hpp>
-#include <type_traits>
+#include <eve/function/asinh.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/constant/ieee_constant.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto acsch_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
-  requires std::floating_point<T>
   {
-      return eve::asin(rec(a0));
+    if constexpr(native<T>) return asinh(rec(a0));
+    else                    return apply_over(acsch, x);
   }
-
+  
 }
 
 #endif

@@ -8,34 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_SPLIT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_SPLIT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ACOT_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_ACOT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/mul.hpp> 
-#include <eve/constant/ieee_constant.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/bitofsign.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/module/core/detail/generic/atan_kernel.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <tuple>
 
 namespace eve::detail
 {
+
   template<real_value T>
-  EVE_FORCEINLINE auto two_split_(EVE_SUPPORTS(cpu_)
-                                 , const T& a) noexcept
+  EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
+                                  , T const &a) noexcept
+  requires std::floating_point<T>
   {
     if constexpr(native<T>)
     {
-      T const c = Ieee_constant<T, 0x46000000U, 0x41a0000000000000ULL>()*a;
-      T const c1 = c-a;
-      T r0 = c-c1;
-      return std::make_tuple(r0, a-r0); 
+      T x  = eve::abs(a);
+      return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
     }
-    else return apply_over2(two_split, a); 
-  }
+    }
+    else return apply_over(acot, a);
 }
 
 #endif

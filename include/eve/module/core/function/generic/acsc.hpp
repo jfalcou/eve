@@ -8,30 +8,27 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_ACOT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_ACOT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ACSC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_ACSC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/module/core/detail/scalar/atan_kernel.hpp>
+#include <eve/function/asin.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
-                                  , T const &a) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
+                                  , T const &a0) noexcept
   requires std::floating_point<T>
   {
-    T x  = eve::abs(a);
-    return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
+    if constexpr(native<T>)  return eve::asin(rec(a0));
+    else                     return apply_over(acsc, x);
   }
+
 }
 
 #endif

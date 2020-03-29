@@ -14,7 +14,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
@@ -23,6 +22,7 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail

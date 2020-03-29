@@ -14,10 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/sqr.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
+  template<real_value T>
   EVE_FORCEINLINE constexpr auto sqr_abs_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   Requires(T, behave_as<floating_point,T>)
   {
