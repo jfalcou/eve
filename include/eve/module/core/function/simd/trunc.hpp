@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_TRUNC_HPP_INCLUDED
 
 #include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/trunc.hpp>
+#include <eve/module/core/function/generic/trunc.hpp>
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/trunc.hpp>

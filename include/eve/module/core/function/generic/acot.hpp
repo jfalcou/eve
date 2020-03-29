@@ -17,7 +17,8 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/core/detail/generic/atan_kernel.hpp>
+#include <eve/module/core/detail/scalar/atan_kernel.hpp>
+#include <eve/module/core/detail/simd/atan_kernel.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -33,7 +34,6 @@ namespace eve::detail
     {
       T x  = eve::abs(a);
       return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
-    }
     }
     else return apply_over(acot, a);
 }

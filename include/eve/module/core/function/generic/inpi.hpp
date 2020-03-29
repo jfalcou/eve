@@ -22,7 +22,6 @@ namespace eve::detail
   template<floating_real_value  T>
   EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
-  Requires(T, behave_as<floating_point,T>)
   {
     return Invpi(as(a))*a;
   }

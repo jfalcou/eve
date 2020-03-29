@@ -26,7 +26,7 @@ namespace eve::detail
   requires std::floating_point<T>
   {
     if constexpr(native<T>)  return eve::asin(rec(a0));
-    else                     return apply_over(acsc, x);
+    else                     return apply_over(acsc, a0);
   }
 
 }
