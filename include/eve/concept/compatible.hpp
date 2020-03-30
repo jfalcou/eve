@@ -11,7 +11,6 @@
 #ifndef EVE_CONCEPT_COMPATIBLE_HPP_INCLUDED
 #define EVE_CONCEPT_COMPATIBLE_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/element_type.hpp>
 #include <eve/forward.hpp>

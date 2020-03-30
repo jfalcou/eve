@@ -44,22 +44,23 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arith_call(add, a, b); 
+    return arithmetic_call(add, a, b); 
   }
   
-  template<real_value T>
+  template<real_scalar_value T>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , T const &b) noexcept
   {
-    if constexpr(real_scalar_value<T>)
-    {
-      return static_cast<T>(a+b);
-    }
-    else if constexpr(real_simd_value<T>)
-    {
-      return apply_over(add, a, b);
-    }    
+    return static_cast<T>(a+b);
+  }
+
+  template<real_simd_value T>
+  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
+                            , T const &a
+                            , T const &b) noexcept
+  {
+    return apply_over(add, a, b);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -72,7 +73,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arith_call(saturated_(add), a, b); 
+    return arithmetic_call(saturated_(add), a, b); 
   }
 
   template<real_scalar_value T>
@@ -207,7 +208,7 @@ namespace eve::detail
   requires compatible_values<U, V>
   {
     using r_t = decltype(add(t, f)); 
-    if constexpr(scalar_value<T>)      return  cond.value ? r_t(t) : add(t, f);
+         if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : add(t, f);
     else if constexpr(simd_value<T>)   return  add(t, if_else(cond.value, eve::zero_, f));
   }
   
@@ -220,8 +221,8 @@ namespace eve::detail
   requires compatible_values<U, V>
   {
     using r_t = decltype(add(t, f)); 
-    if constexpr(scalar_value<T>)    return cond.value ? r_t(t) : saturated_(add)(t, f);
-    else if constexpr(simd_value<T>) return saturated_(add)(t, if_else(cond.value, eve::zero_, f));
+         if constexpr(scalar_value<T>) return cond.value ? r_t(t) : saturated_(add)(t, f);
+    else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond.value, eve::zero_, f));
     
   }
 }

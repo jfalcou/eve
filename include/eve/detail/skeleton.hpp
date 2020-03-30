@@ -182,31 +182,25 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // binary arithmetic operators scheme
   template<typename Obj, real_value T, real_value U>
-  EVE_FORCEINLINE  auto arith_call(Obj op
-                                  , T const &a
-                                  , U const &b) noexcept
+  EVE_FORCEINLINE  auto arithmetic_call(Obj op
+                                       , T const &a
+                                       , U const &b) noexcept
   requires compatible_values<T, U>
   {
     if constexpr(scalar_value<T> && scalar_value<U>)    //both are scalar so of the same type
     {
       return op(a, b); 
     }
-    else if constexpr(scalar_value<T> ^ scalar_value<U>) //  one is scalar and one simd
-    {
+    else if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
+    {                                                     // no one is_native to avoid an early splat 
            if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b); 
       else if constexpr(scalar_value<T>)           return op(U(a), b);
       else if constexpr(scalar_value<U>)           return op(a, T(b)); 
     }
     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same type
     {
-      if constexpr(native<T> && native<U>)
-      {
-        return op(a, b); // generally to be taken  by arch specific intrisicss
-      }
-      else
-      {
-        return apply_over(op, a, b); 
-      }                                             
+      if constexpr(native<T> && native<U>) return op(a, b); // generally already taken by arch specific intrisicss
+      else                                 return apply_over(op, a, b); 
     }
   } 
 }

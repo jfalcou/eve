@@ -12,7 +12,6 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
-#include <eve/concept/compatible.hpp>
 
 TTS_CASE("Check eve::add return type")
 {

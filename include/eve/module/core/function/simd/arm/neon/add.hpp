@@ -15,7 +15,6 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/concept/stdconcepts.hpp>
 #include <type_trait>
 
 namespace eve::detail
@@ -25,7 +24,7 @@ namespace eve::detail
                                           , wide<T, N, neon64_> const &v0
                                           , wide<T, N, neon64_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, float>) return vadd_f32(v0, v1);
+         if constexpr(std::is_same_v<T, float>)  return vadd_f32(v0, v1);
 #if defined(__aarch64__)
     else if constexpr(std::is_same_v<T, double>) return vadd_f64(v0, v1);
 #endif
@@ -43,7 +42,6 @@ namespace eve::detail
       else if constexpr(sizeof(T) == 2) return vadd_u16(v0, v1);
       else if constexpr(sizeof(T) == 1) return vadd_u8(v0, v1);
     }
-         
   }
 
   template<typename T, typename N>
@@ -51,7 +49,7 @@ namespace eve::detail
                                            , wide<T, N, neon128_> const &v0
                                            , wide<T, N, neon128_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, float>) return vaddq_f32(v0, v1);
+         if constexpr(std::is_same_v<T, float>)  return vaddq_f32(v0, v1);
 #if defined(__aarch64__)
     else if constexpr(std::is_same_v<T, double>) return vaddq_f64(v0, v1);
 #endif
