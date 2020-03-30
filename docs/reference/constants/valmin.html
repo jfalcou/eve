@@ -9,7 +9,7 @@
 
 <meta charset="utf-8">
 
-Valmin
+eve::valmin
 ====================================================================================================
 
 **Required header:**
@@ -23,26 +23,32 @@ Valmin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template<typename T> inline T Valmin( as_<T> const& t = {});
+  inline constexpr /*unspecified*/ valmin = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function evaluating the lowest finite value representable by type `T`.
+
+Function object evaluating the lowest finite value representable by a given type.
+
+**Member functions:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template<value T> auto operator()( as_<T> const& t ) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Generate a constant equals to the lowest finite value representable by the type `T`.
 
 **Parameters:**
 `t`
-:   type wrapper instance representing the chosen return type. **[optional]**
+:   [Type wrapper](../types/as.html#as_) instance representing the chosen return type. **[optional]**
 
 **Return value:**
 <span class="smallskip"></span>
 A value of type `T` lowest finite value representable by type `T`.
 
-**Example:**
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  (insert ../src/valmin.src.html here)
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+  (insert ../out/valmin.out.html here)
 
 <!-- End of Document -->
 <!-- Markdeep: -->

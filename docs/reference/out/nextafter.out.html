@@ -1,0 +1,18 @@
+<meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+ <- pf =                      (3, 2, 3, 3)
+ <- qf =                      (4, 1, 1, 10)
+ -> eve::nextafter(pf, qf) =  (3.00000023842, 1.99999988079, 2.99999976158, 3.00000023842)
+---- scalar
+ xf =                         3.20000004768
+ yf =                         -1.5
+ -> eve::nextafter(xf, yf) =  3.19999980927
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+

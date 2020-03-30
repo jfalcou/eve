@@ -53,11 +53,11 @@ function(generate_test root rootpath dep file)
 
     add_test( NAME ${test}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND sh -c "{ echo -e \"${MKHEADER}\"; $<TARGET_FILE:${test}>; echo -e \"${MKFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/test/${doc_path}/${doc_output}"
+              COMMAND sh -c "{ echo -e \"${MKHEADER}\"; $<TARGET_FILE:${test}>; echo -e \"${MKFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
             )
     add_test( NAME "${test}.src"
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND sh -c "{ echo -e \"${MKCPPHEADER}\"; cat ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file}; echo -e \"${MKCPPFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/test/${doc_path}/${doc_source}"
+              COMMAND sh -c "{ echo -e \"${MKCPPHEADER}\"; cat ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file}; echo -e \"${MKCPPFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
             )
     else()
     add_test( NAME ${test}

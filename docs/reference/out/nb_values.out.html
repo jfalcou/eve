@@ -1,0 +1,20 @@
+<meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf =                          (0, 1, -1, -32767)
+<- qf =                          (1, -1, 0, 32767)
+-> eve::nb_values(pf, qf) =      (1065353216, 2130706433, 1065353217, 2382363649)
+
+---- scalar
+<- xf =                          -32767
+<- yf =                          32767
+-> eve::nb_values(xf, yf) =      65534
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+
