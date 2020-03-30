@@ -14,12 +14,12 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), logical<wide<T,N,neon64_>> const &v0) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_)
+                           , logical<wide<T,N,neon64_>> const &v0) noexcept
   {
     auto m = v0.bits();
 
@@ -48,7 +48,8 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_), logical<wide<T,N,neon128_>> const &v0) noexcept
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(neon128_)
+                           , logical<wide<T,N,neon128_>> const &v0) noexcept
   {
     auto[l,h] = v0.mask().slice();
     return all(l) && all(h);
