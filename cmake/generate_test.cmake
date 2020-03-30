@@ -48,7 +48,7 @@ function(generate_test root rootpath dep file)
     set( MKHEADER "<meta charset=\\\"utf-8\\\">\\n**Possible Output:**\\n\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash")
     set( MKFOOTER "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\n\\n<\!-- Markdeep: -->\\n<script src=\\\"../../markdeep.min.js\\\"></script>\\n<script src=\\\"https://casual-effects.com/markdeep/latest/markdeep.min.js?\\\"></script>\\n")
 
-    set( MKCPPHEADER "<meta charset=\\\"utf-8\\\">\\n**Example:**\\n<script type=\\\"preformatted\\\">\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash")
+    set( MKCPPHEADER "<meta charset=\\\"utf-8\\\">\\n**Example:**\\n<script type=\\\"preformatted\\\">\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++")
     set( MKCPPFOOTER "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\n</script>\\n<\!-- Markdeep: -->\\n<script src=\\\"../../markdeep.min.js\\\"></script>\\n<script src=\\\"https://casual-effects.com/markdeep/latest/markdeep.min.js?\\\"></script>\\n")
 
     add_test( NAME ${test}
