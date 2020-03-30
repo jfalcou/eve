@@ -29,7 +29,7 @@ namespace eve
 </script>
 Function object representing the computation of the absolute value
 
-**Members function:**
+**Member functions:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 template<value T> auto operator()( T const& x ) const noexcept;
@@ -52,10 +52,16 @@ not representable and the result is undefined.
    may be called instead of the **EVE** version. To avoid this, use the `eve::abs` notation.
 
 **Supported Decorators:**
-[`saturated`](../../decorators.html#saturated)
+[`saturated_`](../../decorators.html#saturated_)
 :   The expression `saturated_(abs)(x)` computes a saturated absolute value of `x`. This guarantees
-    that the result is equal or greater than 0. More specifically, for any signed integer-like type
-    `iT`, the expression `saturated_(abs)(Valmin(as<iT>()))` returns `eve::Valmax( as<iT>() )`.
+    that the result is greater or equal than 0. More specifically, for any signed integer value
+    `x`, the expression:
+
+    `saturated_(abs)(Valmin(as(x)))`
+
+    evaluates to:
+
+    `eve::Valmax(as(x))`.
 
   (insert ../../../../test/doc/core/abs.src.html here)
 
@@ -63,5 +69,5 @@ not representable and the result is undefined.
 
 <!-- End of Document -->
 <!-- Markdeep: -->
-<script src="../../markdeep.min.js"></script>
+<script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
