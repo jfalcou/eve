@@ -71,3 +71,23 @@ body {
     display: block;
     margin-bottom: -.4em;
 }
+
+/* TOC/Crumbs are fixed while scrolling */
+.md .mediumTOC {
+    margin: 0px 0px 0px 0px;
+    position: fixed;
+    left: 80%;
+    top: 20%;
+}
+
+.md div.crumbs {
+    margin: 0px 0px 0px 0px;
+    position: fixed;
+    left: 16%;
+    top: 20%;
+    float: right;
+    font-size: 12px;
+    line-height: 15px;
+    border-left: 1px solid #CCC;
+    padding-left: 15px;
+}
