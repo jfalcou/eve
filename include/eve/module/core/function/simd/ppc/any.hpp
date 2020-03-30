@@ -19,7 +19,8 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const &v0) noexcept
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(vmx_)
+                           , logical<wide<T, N, ppc_>> const &v0) noexcept
   {
     auto m = v0.bits();
 

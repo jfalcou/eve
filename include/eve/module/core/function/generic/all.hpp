@@ -16,6 +16,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/extract.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
