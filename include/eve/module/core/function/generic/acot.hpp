@@ -25,10 +25,9 @@
 namespace eve::detail
 {
 
-  template<real_value T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
-  requires std::floating_point<T>
   {
     if constexpr(native<T>)
     {
@@ -36,6 +35,7 @@ namespace eve::detail
       return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
     }
     else return apply_over(acot, a);
+  }
 }
 
 #endif

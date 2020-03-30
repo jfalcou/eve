@@ -42,9 +42,9 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N,  typename ABI>
+  template<floating_real_scalar_value T, typename N,  typename ABI>
   EVE_FORCEINLINE
-  auto atan_kernelw( wide<T, N, ABI> x,  wide<T, N, ABI> recx ) noexcept
+  auto atan_kernel( wide<T, N, ABI> x,  wide<T, N, ABI> recx ) noexcept
   Requires(wide<T, N, ABI>, floating_point<T>)
   {
     // here T is float or double and x positive

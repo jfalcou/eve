@@ -61,11 +61,9 @@ TTS_CASE("Check eve::prev one parameter behavior")
     TTS_IEEE_EQUAL(eve::prev(eve::Minf<EVE_TYPE>())    , (eve::Nan<EVE_TYPE>()));
     TTS_EQUAL(eve::prev(eve::Mone<EVE_TYPE>())    , (eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>()));
     TTS_EQUAL(eve::prev(eve::One<EVE_TYPE>())     , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL(eve::prev(eve::Zero<EVE_TYPE>())    , (eve::Mzero<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::prev(eve::Zero<EVE_TYPE>())))); 
+    TTS_EQUAL(eve::prev(eve::Zero<EVE_TYPE>())    , (-eve::Mindenormal<EVE_TYPE>()));
     TTS_EQUAL(eve::prev(eve::Mzero<EVE_TYPE>())    , (-eve::Mindenormal<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::prev(eve::Mindenormal<EVE_TYPE>())))); 
-    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>())    , (eve::Zero<EVE_TYPE>()));
+    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>()), (eve::Zero<EVE_TYPE>()));
   }
 }
 
@@ -112,14 +110,10 @@ TTS_CASE("Check eve::prev two parameters behavior")
     TTS_EQUAL(eve::prev(eve::Mone<EVE_VALUE>(), i_t(2))       , (eve::Mone<EVE_TYPE>()-eve::Eps<EVE_TYPE>()*2));
     TTS_EQUAL(eve::prev(eve::One<EVE_VALUE>(), i_t(2))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()));
 
-    TTS_EQUAL(eve::prev(eve::Zero<EVE_TYPE>(), 1)             , (eve::Mzero<EVE_TYPE>()));
     TTS_EXPECT(eve::all(eve::is_negative(eve::prev(eve::Zero<EVE_TYPE>(), 1) ))); 
     TTS_EQUAL(eve::prev(eve::Mzero<EVE_TYPE>(), 1)            , (-eve::Mindenormal<EVE_TYPE>()));
-    TTS_EQUAL(eve::prev(eve::Zero<EVE_TYPE>(), 2)             , (-eve::Mindenormal<EVE_TYPE>()));
-    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>(), 3)      , (-eve::Mindenormal<EVE_TYPE>()));
-    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>(), 2)      , (eve::Zero<EVE_TYPE>()));
-    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>(), 1)      , (eve::Mzero<EVE_TYPE>()));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::prev(eve::Mindenormal<EVE_TYPE>(), 2) ))); 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::prev(eve::Mindenormal<EVE_TYPE>(), 1) ))); 
+    TTS_EQUAL(eve::prev(eve::Zero<EVE_TYPE>(), 1)             , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>(), 2)      , (-eve::Mindenormal<EVE_TYPE>()));
+    TTS_EQUAL(eve::prev(eve::Mindenormal<EVE_TYPE>(), 1)      , (eve::Zero<EVE_TYPE>()));
   }
 }

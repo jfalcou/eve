@@ -36,10 +36,9 @@
 
 namespace eve::detail
 {
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr
   auto atan_kernel( T  x,  T recx ) noexcept
-  Requires(T, floating_point<T>)
   {
     // here T is float or double and x positive
     static_assert(std::is_same_v<T, float> || std::is_same_v<T, double>

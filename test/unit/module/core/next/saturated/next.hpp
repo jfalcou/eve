@@ -57,7 +57,7 @@ TTS_CASE("Check eve::saturated_(eve::next) one parameter behavior")
     TTS_EQUAL(eve::saturated_(eve::next)(eve::Minf<EVE_TYPE>())    , eve::Valmin<EVE_TYPE>());
     TTS_EQUAL(eve::saturated_(eve::next)(eve::Mone<EVE_TYPE>())    , eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2);
     TTS_EQUAL(eve::saturated_(eve::next)(eve::One<EVE_TYPE>())     , eve::One<EVE_TYPE>()+eve::Eps<EVE_TYPE>());
-    TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>())   , (eve::Zero<EVE_TYPE>()));
+    TTS_EQUAL(eve::next(eve::Mzero<EVE_TYPE>())   , (eve::Mindenormal<EVE_TYPE>()));
     TTS_EQUAL(eve::next(eve::Zero<EVE_TYPE>())    , (eve::Mindenormal<EVE_TYPE>()));
   }
 }
