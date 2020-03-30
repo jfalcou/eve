@@ -12,10 +12,12 @@
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
 #include <eve/concept/range.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/ext/has_abi.hpp>
 #include <eve/ext/as_wide.hpp>
-#include <eve/concept/vectorized.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/concept/compatible.hpp>
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>
@@ -176,6 +178,37 @@ namespace eve::detail
                     std::forward<Func>(f)(upper(std::forward<Ts>(ts))...)};
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // binary arithmetic operators scheme
+  template<typename Obj, real_value T, real_value U>
+  EVE_FORCEINLINE  auto arith_call(Obj op
+                                  , T const &a
+                                  , U const &b) noexcept
+  requires compatible_values<T, U>
+  {
+    if constexpr(scalar_value<T> && scalar_value<U>)    //both are scalar so of the same type
+    {
+      return op(a, b); 
+    }
+    else if constexpr(scalar_value<T> ^ scalar_value<U>) //  one is scalar and one simd
+    {
+           if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b); 
+      else if constexpr(scalar_value<T>)           return op(U(a), b);
+      else if constexpr(scalar_value<U>)           return op(a, T(b)); 
+    }
+    else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same type
+    {
+      if constexpr(native<T> && native<U>)
+      {
+        return op(a, b); // generally to be taken  by arch specific intrisicss
+      }
+      else
+      {
+        return apply_over(op, a, b); 
+      }                                             
+    }
+  } 
 }
 
 #endif

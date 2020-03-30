@@ -14,21 +14,21 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-  add_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &v0, wide<T, N, sse_> const &v1) noexcept
+  template<typename T, typename N>  EVE_FORCEINLINE wide<T, N, sse_>
+  add_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &v0
+                          , wide<T, N, sse_> const &v1) noexcept
   {
-    if constexpr( std::is_same_v<T,double>  ) return _mm_add_pd(v0, v1);
-    else if constexpr( std::is_same_v<T,float>   ) return _mm_add_ps(v0, v1);
-    else if constexpr( std::is_integral_v<T>     )
+    if constexpr( std::same_as<T,double>)    return _mm_add_pd(v0, v1);
+    else if constexpr( std::same_as<T,float>) return _mm_add_ps(v0, v1);
+    else if constexpr(integral_value<T> )
     {
-      if constexpr(sizeof(T) == 1)       return _mm_add_epi8(v0, v1);
+           if constexpr(sizeof(T) == 1)  return _mm_add_epi8(v0, v1);
       else if constexpr(sizeof(T) == 2)  return _mm_add_epi16(v0, v1);
       else if constexpr(sizeof(T) == 4)  return _mm_add_epi32(v0, v1);
       else if constexpr(sizeof(T) == 8)  return _mm_add_epi64(v0, v1);
@@ -41,9 +41,9 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, avx_>
   add_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v0, wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(std::is_same_v<T, float>)  return _mm256_add_ps(v0, v1);
-    else if constexpr(std::is_same_v<T, double>) return _mm256_add_pd(v0, v1);
-    else // if constexpr(std::is_integral_v<T>)
+    if constexpr(std::same_as<T, float>)       return _mm256_add_ps(v0, v1);
+    else if constexpr(std::same_as<T, double>) return _mm256_add_pd(v0, v1);
+    else if constexpr(integral_value<T>)
     {
       if constexpr(current_api >= avx2)
       {
@@ -67,20 +67,20 @@ namespace eve::detail
                                        , wide<T, N, sse_> const &v0
                                        , wide<T, N, sse_> const &v1) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)  return add(v0, v1); 
+    if constexpr(floating_value<T>)  return add(v0, v1); 
     else if constexpr(current_api >= avx2)
     {
-      if constexpr(std::is_signed_v<T>)
+      if constexpr(signed_integral_value<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm_adds_epi8(v0, v1);
+             if constexpr(sizeof(T) == 1) return _mm_adds_epi8(v0, v1);
         else if constexpr(sizeof(T) == 2) return _mm_adds_epi16(v0, v1);
-        else  return  add_(EVE_RETARGET(cpu_),  st, v0, v1); 
+        else                              return  add_(EVE_RETARGET(cpu_),  st, v0, v1); 
       }
-      else // if constexpr(std::is_unsigned_v<T>)
+      else if constexpr(unsigned_value<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm_adds_epu8(v0, v1);
+             if constexpr(sizeof(T) == 1) return _mm_adds_epu8(v0, v1);
         else if constexpr(sizeof(T) == 2) return _mm_adds_epu16(v0, v1);
-        else return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
+        else                              return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
       }
     }
     else return add_(EVE_RETARGET(cpu_),  st, v0, v1);
@@ -94,23 +94,23 @@ namespace eve::detail
                                        , wide<T, N, avx_> const &v0
                                        , wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)  return add(v0, v1); 
+         if constexpr(floating_value<T>)  return add(v0, v1); 
     else if constexpr(current_api >= avx2)
     {
-      if constexpr(std::is_signed_v<T>)
+      if constexpr(signed_integral_value<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm256_adds_epi8(v0, v1);
+             if constexpr(sizeof(T) == 1) return _mm256_adds_epi8(v0, v1);
         else if constexpr(sizeof(T) == 2) return _mm256_adds_epi16(v0, v1);
-        else return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
+        else                              return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
       }
-      else // if constexpr(std::is_unsigned_v<T>)
+      else if constexpr(unsigned_value<T>)
       {
-        if constexpr(sizeof(T) == 1) return _mm256_adds_epu8(v0, v1);
+             if constexpr(sizeof(T) == 1) return _mm256_adds_epu8(v0, v1);
         else if constexpr(sizeof(T) == 2) return _mm256_adds_epu16(v0, v1);
-        else return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
+        else                              return add_(EVE_RETARGET(cpu_),  st, v0, v1); 
       }
     } 
-      else return add_(EVE_RETARGET(cpu_),  st, v0, v1);
+    else                                  return add_(EVE_RETARGET(cpu_),  st, v0, v1);
   }
 }
 
