@@ -8,18 +8,15 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
+                           Bits related Functions
+<br>
+These functions provide scalar and SIMD version of bit operations. Bitwise operations are extended to work on any [value](../concepts.html#value) types by considering the masking operations to apply on the value bit patterns while retaining its original types.
 
-These functions provide scalar and SIMD version of bit operations. Bitwise operations are extended
-to work on any :ref:`concept-value` (including :ref:`concept-ieeevalue`) types by considering the
-masking operations to apply on the value bit patterns while retaining its original types.
+There is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [ieee_value](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
 
-There is no type nor cardinal restrictions between operands of bitwise function as long as their
-size in bytes are equal. This implies calls of such function on :ref:`Ieee Values <concept-ieeevalue>`
-are possible as long as they are performed with a second parameters of proper size.
+The header `eve/function/bit.hpp` allows the inclusion of all bits related functions.
 
-The header `eve/function/bit.hpp` allows the inclusion of all specific bit functions.
-
-  (insert ../functions.html here)
+  (insert ../../crumbs.html here)
 
   (insert bits/bit_and.html here)
 

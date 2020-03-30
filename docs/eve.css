@@ -44,6 +44,20 @@ body {
     z-index: 10;
 }
 
+.md div.subtitle {
+    color: #000;
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-top: 20px;
+    position: absolute;
+    left:-200px;
+    right: 0px;
+    top: 56px;
+    z-index: 10;
+}
+
 .md div.afterTitles {
     height: 75px;
 }
@@ -56,6 +70,11 @@ body {
 .md dl>table {
     margin: 0px 0 0px;
 }
+
+.md table.table {
+    margin: inherit;
+}
+
 /* Variable size br*/
 .skip {
     display: block;
@@ -77,14 +96,14 @@ body {
     margin: 0px 0px 0px 0px;
     position: fixed;
     left: 80%;
-    top: 20%;
+    top: 12%;
 }
 
 .md div.crumbs {
     margin: 0px 0px 0px 0px;
     position: fixed;
-    left: 16%;
-    top: 20%;
+    left: 14%;
+    top: 12%;
     float: right;
     font-size: 12px;
     line-height: 15px;
