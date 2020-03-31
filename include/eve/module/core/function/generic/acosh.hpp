@@ -40,8 +40,8 @@ namespace eve::detail
       }
       else if constexpr(scalar_value<T>)
       {   
-        if(test) return eve::log1p(t+eve::sqrt(t+t+sqr(t)));
-        else     return eve::log(t)+Log_2<T>();
+        if(test) return eve::log(t)+Log_2<T>();
+        else     return eve::log1p(t+eve::sqrt(t+t+sqr(t)));
       }
     }
     else return apply_over(acosh, x);

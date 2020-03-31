@@ -23,6 +23,7 @@ make_all_units(ROOT exhaustive NAME acscpi            ARCH scalar simd TYPES ${r
 make_all_units(ROOT exhaustive NAME arg               ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)    
 make_all_units(ROOT exhaustive NAME asec              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)
 make_all_units(ROOT exhaustive NAME asecd             ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)
+make_all_units(ROOT exhaustive NAME asech             ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)    
 make_all_units(ROOT exhaustive NAME asecpi            ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)
 make_all_units(ROOT exhaustive NAME asin              ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)
 make_all_units(ROOT exhaustive NAME asind             ARCH scalar simd TYPES ${real_types_32}      CARDINAL -1)

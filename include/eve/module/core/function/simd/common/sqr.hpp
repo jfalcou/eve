@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/skeleton.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
