@@ -27,23 +27,43 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object converting a value to another type.
 
 **Member functions:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template<value T, scalar_value Target> auto operator()( T const& x, as_<Target> const& t) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Converts a value to a given type.
 
 **Parameters:**
-`name`
-:   Description
+`x`
+:   [value](../concepts.html#value) to convert.
+
+`t`
+:   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
 
 **Return value:**
 <span class="smallskip"></span>
-Description here
+For a [value](../concepts.html#value) `x` of cardinal $N$, and any type `Target` the expression:
+
+<center>
+<script type="preformatted">
+`auto r = convert(x, as_<Target>{});`
+</script>
+</center>
+
+is semantically equivalent to:
+
+   $$ \forall i \in [0, N[, r[i] = \mathtt{static\_cast< Target >(x[}i\mathtt{])} $$
+
+**Supported Decorators:**
+[`saturated_`](../../decorators.html#saturated_)
+:   The expression `saturated_(convert)(x,t)` computes a saturated conversion of `x` to the type
+    wrapped by `t`.
+
+**See Also:** [eve::tofloat](#eve::tofloat), [eve::toint](#eve::toint), [eve::touint](#eve::touint)
 
   (insert ../../src/convert.src.html here)
 
