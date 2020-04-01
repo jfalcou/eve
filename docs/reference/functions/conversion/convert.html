@@ -32,7 +32,8 @@ Function object converting a value to another type.
 **Member functions:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T, scalar_value Target> auto operator()( T const& x, as_<Target> const& t) const noexcept;
+template<value T, scalar_value Target>
+auto operator()( T const& x, as_<Target> const& t) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Converts a value to a given type.
@@ -57,30 +58,32 @@ auto r = convert(x, as_<Target>{});
 
 is semantically equivalent to:
 
-- If `x` is a [scalar_value](../concepts.html#scalar_value):
-  <script type="preformatted">
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+Target r;
+
+if constexpr( scalar_value<decltype(x)> )
+{
   r = static_cast<Target>(x);
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  </script>
-- If `x` is a [simd_value](../concepts.html#simd_value):
-  <script type="preformatted">
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+}
+else if constexpr( simd_value<decltype(x)> )
+{
   for(std::size_t i=;i<x.size();++i)
     r[i] = static_cast<Target>(x[i]);
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  </script>
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
 
 **Supported Decorators:**
 [`saturated_`](../../decorators.html#saturated_)
 :   The expression `saturated_(convert)(x,t)` computes a saturated conversion of `x` to the type
     wrapped by `t`.
 
-**See Also:** [eve::tofloat](#eve::tofloat), [eve::toint](#eve::toint), [eve::touint](#eve::touint)
-
   (insert ../../src/convert.src.html here)
 
   (insert ../../out/convert.out.html here)
+
+**See Also:** [eve::tofloat](#eve::tofloat), [eve::toint](#eve::toint), [eve::touint](#eve::touint)
 
 <!-- End of Document -->
 <!-- Markdeep: -->
