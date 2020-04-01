@@ -45,7 +45,7 @@ namespace eve::detail
     {
       if  (x < eve::Sqrteps<T>())
       {
-        return x;
+        return a0;
       }
       else
       {

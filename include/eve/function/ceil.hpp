@@ -12,7 +12,19 @@
 #define EVE_FUNCTION_CEIL_HPP_INCLUDED
 
 #include <eve/function/definition/ceil.hpp>
-#include <eve/module/core/function/scalar/ceil.hpp>
-#include <eve/module/core/function/simd/ceil.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/ceil.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/ceil.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/ceil.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/ceil.hpp>
+#endif
 
 #endif

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_ATAN_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_ATAN_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -18,20 +18,22 @@
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/core/detail/scalar/atan_kernel.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <type_traits>
+#include <eve/module/core/detail/generic/atan_kernel.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
-{
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto atan_(EVE_SUPPORTS(cpu_)
-                                      , T const &a) noexcept
-  Requires(T,  floating_point<T>)
+{  
+  template<floating_value T>
+  EVE_FORCEINLINE auto atan_(EVE_SUPPORTS(cpu_)
+                            , T const &a) noexcept
   {
-    T x  = eve::abs(a);
-    return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
+    if constexpr(native<T>)
+    {
+      T x  = eve::abs(a);
+      return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
+    }
+    else return apply_over(atan, a);
   }
 }
 

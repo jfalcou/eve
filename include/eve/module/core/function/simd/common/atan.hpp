@@ -20,22 +20,22 @@
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/module/core/detail/simd/atan_kernel.hpp>
+#include <eve/module/core/detail/scalar/atan_kernel.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
 
-  template<typename T,  typename N,  typename ABI>
+  template<floating_scalar_value T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto atan_(EVE_SUPPORTS(cpu_)
                             , eve::wide<T,N,ABI> const &a) noexcept
-  Requires(eve::wide<T,N,ABI>, floating_point<T>)
   {
     if constexpr( is_aggregated_v<ABI> ) return aggregate(eve::atan, a);
     else if constexpr( is_emulated_v<ABI> ) return map(eve::atan, a);
     else
     {
       eve::wide<T,N,ABI> x  = eve::abs(a);
-      return bit_xor(atan_kernelw(x, rec(x)), bitofsign(a));
+      return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
     }
   }
 }

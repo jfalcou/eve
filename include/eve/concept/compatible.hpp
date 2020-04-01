@@ -27,6 +27,17 @@ namespace eve
                            || element_compatible_to<U, T> 
                            || std::same_as<T,U>; 
     
+  template<typename T, typename U>
+  concept element_bit_compatible_to = scalar_value<T>
+                                   && simd_value<U>
+                                   && (sizeof(T) == sizeof(element_type_t<U>)); 
+
+  template<typename T, typename U>
+  concept bit_compatible_values = (sizeof(T) == sizeof(U))
+                               || element_bit_compatible_to<T, U>
+                               || element_bit_compatible_to<U, T>; 
+                                                  
+
 }
 
 #endif

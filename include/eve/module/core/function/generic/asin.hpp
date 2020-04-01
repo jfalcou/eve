@@ -13,6 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/branch.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/div.hpp>
@@ -24,9 +25,11 @@
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/oneminus.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/half.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/nan.hpp>
@@ -72,6 +75,11 @@ namespace eve::detail
           if (small) return a0;
           if ((x >  One<T>())) return Nan<T>();
         }
+        else if constexpr(simd_value<T>) //simd preparation 
+        {
+          x = if_else(x > One<T>(), eve::allbits_, x); 
+        }
+        
         auto case_1 = [](const T & x){ // x < 0.625
           T zz1 = eve::oneminus(x);
           const T vp = zz1*horn<T,
@@ -115,17 +123,23 @@ namespace eve::detail
           return zz2;
         }; 
         auto ct1 = Constant<T, 0x3fe4000000000000ll>(); //0.625;
-        auto xgtct1 =  x > ct1; 
-        if constexpr(scalar_value<T>)
+        auto xgtct1 =  x > ct1;
+        auto res = branch<scalar_value<T>>(xgtct1, case_1, case_2)(x); 
+        if constexpr(simd_value<T>)
         {
-          return  bit_xor(sgn, xgtct1 ? case_1(x) : case_2(x));
+          res = if_else(small, x, res);
         }
-        else if constexpr(simd_value<T>)
-        {
-          auto res = if_else(small, x, if_else(xgtct1, case_1(x), case_2(x)));
-          res = bit_xor(eve::if_else( small,x, res), sgn); 
-          return if_else(x > One<T>(), eve::allbits_, res); 
-        }
+        return  bit_xor(res, sgn);
+//         if constexpr(scalar_value<T>)
+//         {
+//           return  bit_xor(sgn, xgtct1 ? case_1(x) : case_2(x));
+//         }
+//         else if constexpr(simd_value<T>)
+//         {
+//           auto res = if_else(small, x, if_else(xgtct1, case_1(x), case_2(x)));
+//           res = bit_xor(eve::if_else( small,x, res), sgn); 
+//           return if_else(x > One<T>(), eve::allbits_, res); 
+//         }
       }
     }
   }

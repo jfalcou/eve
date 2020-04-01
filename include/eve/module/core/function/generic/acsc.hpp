@@ -15,15 +15,13 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/asin.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
-  requires std::floating_point<T>
+                                      , T const &a0) noexcept
   {
     if constexpr(native<T>)  return eve::asin(rec(a0));
     else                     return apply_over(acsc, a0);

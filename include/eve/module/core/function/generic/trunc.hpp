@@ -17,6 +17,7 @@
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/is_not_less_equal.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -29,14 +30,12 @@ namespace eve::detail
   {
     if constexpr(native<T>)
     {
-      if constexpr(integral_value<T>)
-        return a0;
+           if constexpr(integral_value<T>) return a0;
       else if constexpr(floating_value<T>)
       {
-        if constexpr(scalar_value<T>)
-          return eve::abs(a0) < Maxflint<T>() ? raw_(trunc)(a0) : a0;
-        else if constexpr(simd_value<T>)
-          return  if_else(eve::abs(a0) < Maxflint(as(a0)), eve::raw_(trunc)(a0),  a0);
+        auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>()); 
+             if constexpr(scalar_value<T>) return already_integral ? a0 :raw_(trunc)(a0);
+        else if constexpr(simd_value<T>)   return if_else(already_integral, a0, eve::raw_(trunc)(a0));
       }
     }
     else return apply_over(trunc, a0); 

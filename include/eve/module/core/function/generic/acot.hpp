@@ -24,10 +24,9 @@
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acot_(EVE_SUPPORTS(cpu_)
-                                  , T const &a) noexcept
+                                      , T const &a) noexcept
   {
     if constexpr(native<T>)
     {

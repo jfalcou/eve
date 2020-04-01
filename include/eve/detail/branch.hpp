@@ -8,10 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ATAN_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_ATAN_HPP_INCLUDED
+#ifndef EVE_DETAIL_BRANCH_HPP_INCLUDED
+#define EVE_DETAIL_BRANCH_HPP_INCLUDED
 
-#include <eve/arch.hpp>
-#include <eve/module/core/function/simd/common/atan.hpp>
+namespace eve::detail
+{
+  template<bool Check, typename Cond, typename TC, typename TF>
+  EVE_FORCEINLINE auto branch( Cond const & c, TC t, TF f)
+  {
+    if constexpr(Check) return [&c, t, f](auto&&... x) { return c ? t(x...) : f(x...); };
+    else                return [&c, t, f](auto&&... x) { return if_else(c,t(x...),f(x...)); };
+  }
+}
 
 #endif

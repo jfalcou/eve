@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_mask.hpp>
-#include <eve/function/iceil.hpp>
+#include <eve/function/ceil.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/valmax.hpp>
@@ -63,7 +63,7 @@ namespace eve::detail
       {
         if(a1)
         {
-          return saturated_(convert)(iceil(static_cast<double>(a0)/static_cast<double>(a1)), as<T>());
+          return saturated_(convert)(ceil(static_cast<double>(a0)/static_cast<double>(a1)), as<T>());
         }
         else
           return (a0) ? ((a0>0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();        

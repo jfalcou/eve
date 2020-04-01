@@ -25,6 +25,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/saturate.hpp>
+#include <eve/function/saturated.hpp>   
 #include <eve/function/shr.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/constant/valmax.hpp>
@@ -184,7 +185,7 @@ namespace eve::detail
   {
     using r_t = decltype(add(t, f)); 
          if constexpr(scalar_value<T>) return  cond ? add(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return  add(t, if_else(cond, f, eve::zero_));
+         else if constexpr(simd_value<T>)   return  add(t, if_else(cond, r_t(f), eve::zero_));
   }
   
   template<value T, real_value U, real_value V>
@@ -197,7 +198,7 @@ namespace eve::detail
   {
     using r_t = decltype(add(t, f)); 
          if constexpr(scalar_value<T>) return cond ? saturated_(add)(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond, f, eve::zero_));
+         else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond, r_t(f), eve::zero_));
 
   }
   
@@ -210,7 +211,7 @@ namespace eve::detail
   {
     using r_t = decltype(add(t, f)); 
          if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : add(t, f);
-    else if constexpr(simd_value<T>)   return  add(t, if_else(cond.value, eve::zero_, f));
+         else if constexpr(simd_value<T>)   return  add(t, if_else(cond.value, eve::zero_, r_t(f)));
   }
   
   template<value T, real_value U, real_value V>
@@ -223,7 +224,7 @@ namespace eve::detail
   {
     using r_t = decltype(add(t, f)); 
          if constexpr(scalar_value<T>) return cond.value ? r_t(t) : saturated_(add)(t, f);
-    else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond.value, eve::zero_, f));
+         else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond.value, eve::zero_, r_t(f)));
     
   }
 }

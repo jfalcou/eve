@@ -14,6 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/function/raw.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
@@ -35,7 +36,15 @@ namespace eve::detail
     else if constexpr(floating_value<T>) return map(trunc, v0);
 #endif
 }
-
+  
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon64_> trunc_(EVE_SUPPORTS(neon128_),
+                                             raw_type const &
+                                             wide<T, N, neon64_> const &v0) noexcept
+  {
+    return trunc(v0); 
+  }
+  
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> trunc_(EVE_SUPPORTS(neon128_),
                                               wide<T, N, neon128_> const &v0) noexcept
@@ -53,6 +62,15 @@ namespace eve::detail
    else if constexpr(floating_value<T>) return map(trunc, v0);
 #endif
   }
+
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, neon128_> trunc_(EVE_SUPPORTS(neon128_),
+                                             raw_type const &
+                                             wide<T, N, neon128_> const &v0) noexcept
+  {
+    return trunc(v0); 
+  }
+  
 }
 
 #endif
