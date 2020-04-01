@@ -13,13 +13,13 @@
 
   (insert ../crumbs.html here)
 
-[niebloid]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1678r0.pdf
+[cpo]: http://eel.is/c++draft/customization.point.object#1
 [func_obj]: https://en.cppreference.com/w/cpp/named_req/FunctionObject
 
 Function Objects as API
 ====================================================================================================
-The majority of **EVE** features are accessible as a [Function Object][func_obj]. Internally, **EVE**'s implementation uses a simplified [Niebloid][niebloid] design to achieve such goals. This choice is
-driven by multiple reasons:
+The majority of **EVE** features are accessible as a [Function Object][func_obj]. Internally, **EVE**'s implementation uses a simplified [Customization Point Object][cpo] design to achieve such goals.
+This choice is driven by multiple reasons:
 
  - It makes all **EVE** "functions" directly usable as an argument to another function. Contrary to
    template functions, function objects cna be easily passed as parameters to algorithms or other
