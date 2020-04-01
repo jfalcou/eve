@@ -14,6 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/if_else.hpp>
@@ -91,7 +93,7 @@ namespace eve::detail
     }
     
     T q = eve::abs(a00/a10);
-    T z = atan_kernelw(q, rec(q));
+    T z = atan_kernel(q, rec(q));
     T sgn = signnz(a0);
     if constexpr(scalar_value<T>)
     {

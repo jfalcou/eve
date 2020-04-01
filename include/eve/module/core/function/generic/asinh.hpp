@@ -33,8 +33,6 @@
 #include <eve/constant/sqrteps.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <tuple>
-
 
 namespace eve::detail
 {
@@ -46,8 +44,7 @@ namespace eve::detail
     {
       using vt_t = value_type_t<T>; 
       T x =  eve::abs(a0);
-      auto x_lt_sqrteps = x < Sqrteps<T>();
-      if constexpr(scalar_value<T>) if (x_lt_sqrteps) return a0; // scalar early return
+      if constexpr(scalar_value<T>) if (x < Sqrteps<T>()) return a0; // scalar early return
       auto x_gt_oneosqrteps = x > Oneosqrteps<T>();
       auto  bts =  bitofsign(a0); 
       if constexpr(std::is_same_v<vt_t, double>)

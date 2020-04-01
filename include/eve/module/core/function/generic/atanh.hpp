@@ -8,10 +8,9 @@
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_ATANH_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_ATANH_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATANH_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_ATANH_HPP_INCLUDED
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/add.hpp>
@@ -23,23 +22,32 @@
 #include <eve/function/log1p.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/constant/half.hpp>
-#include <type_traits>
-#include <tuple>
-
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE auto atanh_(EVE_SUPPORTS(cpu_)
                             , const T &x) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
-    T absx = eve::abs(x);
-    T t =  absx+absx;
-    T z1 = oneminus(absx);
-    auto test =  is_less(absx, Half<T>());
-    T tmp = if_else(test, absx, t)/z1;
-    return bit_xor(bitofsign(x), Half<T>()*log1p(if_else(test, fma(t,tmp,t), tmp)));
+    if constexpr(native<T>)
+    {
+      auto absx = eve::abs(x);
+      auto t =  absx+absx;
+      auto z1 = oneminus(absx);
+      auto test =  absx < Half<T>();
+      auto tmp = if_else(test, absx, t)/z1; 
+      if   constexpr(scalar_value<T>) tmp = test ? fma(t, tmp, t) : tmp; 
+      else                            tmp = if_else(test, fma(t,tmp,t), tmp); 
+      return bit_xor(bitofsign(x), Half<T>()*log1p(tmp));
+    }
+    else
+    {
+      return apply_over(atanh, x); 
+    }
+    
+      
   }
 }
 
