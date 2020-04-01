@@ -177,13 +177,13 @@ body
   {
     position: fixed;
     left: 80%;
-    top: 20%;
+    top: 14%;
   }
 
   .md div.crumbs
   {
-    position: fixed;
+    position: absolute;
     left: 10%;
-    top: 20%;
+    top: 14%;
   }
 }
