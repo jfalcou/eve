@@ -46,7 +46,8 @@ Converts a value to a given type.
 
 **Return value:**
 <span class="smallskip"></span>
-For a [value](../concepts.html#value) `x` of cardinal $N$, and any type `Target` the expression:
+
+For a [value](../concepts.html#value) `x` and any type `Target` the expression:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
@@ -56,12 +57,19 @@ auto r = convert(x, as_<Target>{});
 
 is semantically equivalent to:
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-for(std::size_t i=;i<x.size();++i)
-  r[i] = static_cast<Target>(x[i]);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+- If `x` is a [scalar_value](../concepts.html#scalar_value):
+  <script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  r = static_cast<Target>(x);
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  </script>
+- If `x` is a [simd_value](../concepts.html#simd_value):
+  <script type="preformatted">
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  for(std::size_t i=;i<x.size();++i)
+    r[i] = static_cast<Target>(x[i]);
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  </script>
 
 **Supported Decorators:**
 [`saturated_`](../../decorators.html#saturated_)
