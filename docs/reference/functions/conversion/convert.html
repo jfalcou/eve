@@ -40,15 +40,14 @@ Converts a value to a given type.
 
 **Parameters:**
 `x`
-:   [value](../concepts.html#value) to convert.
+:   [value](../../concepts.html#value) to convert.
 
 `t`
 :   [Type wrapper](../types/as.html#as_) instance embedding the type to convert `x` to.
 
 **Return value:**
 <span class="smallskip"></span>
-
-For a [value](../concepts.html#value) `x` and any type `Target` the expression:
+For a [value](../../concepts.html#value) `x` and any type `Target` the expression:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
@@ -73,6 +72,9 @@ else if constexpr( simd_value<T> )
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
+
+!!! WARNING Note
+   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
 
 **Supported Decorators:**
 [`saturated_`](../../decorators.html#saturated_)

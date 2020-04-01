@@ -27,23 +27,59 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object converting a value to the corresponding floating-point type.
 
 **Member functions:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template<value T> auto operator()( T const& x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Converts a value to the corresponding floating-point type which is defined as a type of the same
+[family](../../../glossary.html#typefamily) ([scalar](../../concepts.html#scalar_value) or
+[SIMD](../../concepts.html#simd_value)) and which [value type](../../../glossary.html#valuetype)
+is `float` if `sizeof(T) < 4`and `double` otherwise.
 
 **Parameters:**
-`name`
-:   Description
+`x`
+:   [value](../../concepts.html#value) to convert.
 
 **Return value:**
 <span class="smallskip"></span>
-Description here
+For a [value](../../concepts.html#value) `x`:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+auto r = tofloat(x);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+is semantically equivalent to:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+using type = std::conditional_t<sizeof(T)==8,double,float>;
+type r;
+
+if constexpr( scalar_value<T> )
+{
+  r = static_cast<type>(x);
+}
+else if constexpr( simd_value<T> )
+{
+  for(std::size_t i=;i<x.size();++i)
+    r[i] = static_cast<type>(x[i]);
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+!!! WARNING Note
+   Conversion operated by [eve::tofloat](#eve::tofloat) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
+
+**Supported Decorators:**
+[`saturated_`](../../decorators.html#saturated_)
+:   The expression `saturated_(tofloat)(x)` computes a saturated conversion of `x` to the
+    corresponding floating-point type.
 
   (insert ../../src/tofloat.src.html here)
 
