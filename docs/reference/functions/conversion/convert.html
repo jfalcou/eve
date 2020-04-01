@@ -48,15 +48,20 @@ Converts a value to a given type.
 <span class="smallskip"></span>
 For a [value](../concepts.html#value) `x` of cardinal $N$, and any type `Target` the expression:
 
-<center>
 <script type="preformatted">
-`auto r = convert(x, as_<Target>{});`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+auto r = convert(x, as_<Target>{});
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-</center>
 
 is semantically equivalent to:
 
-   $$ \forall i \in [0, N[, r[i] = \mathtt{static\_cast< Target >(x[}i\mathtt{])} $$
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+for(std::size_t i=;i<x.size();++i)
+  r[i] = static_cast<Target>(x[i]);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
 
 **Supported Decorators:**
 [`saturated_`](../../decorators.html#saturated_)
