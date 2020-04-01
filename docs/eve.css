@@ -8,27 +8,28 @@
 */
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
-body {
-    -webkit-font-smoothing: unset;
-    font-family: Roboto,Arial,sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 170%;
-    max-width: 960px;
-    text-align: justify;
+body
+{
+  -webkit-font-smoothing: unset;
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 170%;
+  text-align: justify;
 }
 
-/* green links */
-.md a:link,
-.md a:visited {
- color:#38761d;
- text-decoration:none
+body::before
+{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  text-align: center;
 }
 
-/* insert logo */
-.md div.title {
+.md div.title
+{
     background-image: url('logo.png');
-    background-position: 75%;
     background-repeat: no-repeat;
     background-size: contain;
     color: #000;
@@ -37,29 +38,53 @@ body {
     padding-bottom: 20px;
     padding-left: 10px;
     padding-top: 20px;
-    position: absolute;
-    left:-200px;
-    right: 0px;
-    top: -14px;
+    position:absolute;
     z-index: 10;
+    left: 0;
+    right: 0;
+    top: 0;
+    text-align: center;
 }
 
-.md div.subtitle {
+.md div.subtitle
+{
     color: #000;
     font-size: 30px;
     font-weight: 700;
     padding-bottom: 20px;
     padding-left: 10px;
     padding-top: 20px;
-    position: absolute;
-    left:-200px;
-    right: 0px;
-    top: 56px;
+    position:absolute;
     z-index: 10;
+    left: 0;
+    right: 0;
+    top: 65;
+    text-align: center;
 }
 
-.md div.afterTitles {
-    height: 75px;
+.md div.afterTitles { height: 75px; }
+
+/* TOCs base style */
+.md .mediumTOC
+{
+  margin: 0px 0px 0px 0px;
+}
+
+.md div.crumbs
+{
+    margin: 0px 0px 0px 0px;
+    float: right;
+    font-size: 12px;
+    line-height: 15px;
+    border-left: 1px solid #CCC;
+    padding-left: 15px;
+}
+
+/* green links */
+.md a:link, .md a:visited
+{
+ color:#38761d;
+ text-decoration:none
 }
 
 /* no numbering of headings */
@@ -67,46 +92,108 @@ body {
 .md .tocNumber { display: none; }
 
 /* Tables margin in definitions*/
-.md dl>table {
-    margin: 0px 0 0px;
-}
-
-.md table.table {
-    margin: inherit;
-}
+.md dl>table { margin: 0px 0 0px; }
+.md table.table { margin: inherit; }
 
 /* Variable size br*/
-.skip {
-    display: block;
-    margin-bottom: 0em;
+.skip
+{
+  display: block;
+  margin-bottom: 0em;
 }
 
-.mediumskip {
-    display: block;
-    margin-bottom: -.2em;
+.mediumskip
+{
+  display: block;
+  margin-bottom: -.2em;
 }
 
-.smallskip {
-    display: block;
-    margin-bottom: -.4em;
+.smallskip
+{
+  display: block;
+  margin-bottom: -.4em;
 }
 
-/* TOC/Crumbs are fixed while scrolling */
-.md .mediumTOC {
-    margin: 0px 0px 0px 0px;
-    position: fixed;
+/* Resolution specific placement */
+@media screen and (min-device-width: 1024px)
+{
+  body { max-width: 512px; }
+  .md div.title { background-position: 95%; }
+
+  .md .mediumTOC
+  {
+    position: absolute;
     left: 80%;
-    top: 12%;
+    top: 22%;
+  }
+
+  .md div.crumbs
+  {
+    position: absolute;
+    left: 5%;
+    top: 22%;
+  }
 }
 
-.md div.crumbs {
-    margin: 0px 0px 0px 0px;
-    position: fixed;
-    left: 14%;
-    top: 12%;
-    float: right;
-    font-size: 12px;
-    line-height: 15px;
-    border-left: 1px solid #CCC;
-    padding-left: 15px;
+@media screen and (min-device-width: 1366px)
+{
+  body { max-width: 668px; }
+  .md div.title { background-position: 85 %; }
+
+  .md .mediumTOC
+  {
+    position: absolute;
+    left: 80%;
+    top: 22%;
+  }
+
+  .md div.crumbs
+  {
+    position: absolute;
+    left: 10%;
+    top: 22%;
+  }
+}
+
+@media screen and (min-device-width: 1440px)
+{
+  body { max-width: 720px; }
+
+  .md div.title { background-position: 75 %; }
+
+  .md .mediumTOC
+  {
+    position: absolute;
+    left: 80%;
+    top: 20%;
+  }
+
+  .md div.crumbs
+  {
+    position: absolute;
+    left: 10%;
+    top: 20%;
+  }
+}
+@media screen and (min-device-width: 1920px)
+{
+  body { max-width: 960px; }
+  body::before {
+    content: "1920px or higher";
+  }
+  .md div.title { background-position: 75 %; }
+
+  .md .mediumTOC
+  {
+    position: absolute;
+    left: 80%;
+    top: 20%;
+  }
+
+  .md div.crumbs
+  {
+    position: absolute;
+    left: 10%;
+    top: 20%;
+  }
 }
