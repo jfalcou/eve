@@ -62,11 +62,11 @@ is semantically equivalent to:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 Target r;
 
-if constexpr( scalar_value<decltype(x)> )
+if constexpr( scalar_value<T> )
 {
   r = static_cast<Target>(x);
 }
-else if constexpr( simd_value<decltype(x)> )
+else if constexpr( simd_value<T> )
 {
   for(std::size_t i=;i<x.size();++i)
     r[i] = static_cast<Target>(x[i]);
