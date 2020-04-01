@@ -53,6 +53,11 @@ body
     text-align: center;
 }
 
+.md code, .md pre {
+    font-family: Consolas,monospace;
+    font-size: 100%;
+}
+
 .md div.afterTitles { height: 75px; }
 
 /* TOCs base style */
