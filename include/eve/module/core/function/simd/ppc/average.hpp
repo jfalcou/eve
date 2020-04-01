@@ -17,24 +17,19 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/forward.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
-                  average_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, ppc_> average_(EVE_SUPPORTS(vmx_)
+                                           , wide<T, N, ppc_> const &v0
+                                           , wide<T, N, ppc_> const &v1) noexcept
   {
-    if constexpr(std::is_integral_v<T> && sizeof(T) < 8)
-    { return vec_avg(v0.storage(), v1.storage()); }
-    else if constexpr(std::is_floating_point_v<T>)
-    {
-      auto h = Half(as(v0));
-      return fma(v0, h, v1 * h);
-    }
-    else
-    {
-      return map(average, v0, v1);
-    }
+    if constexpr(integral_value<T> && sizeof(T) < 8) return vec_avg(v0.storage(), v1.storage());}
+    else if constexpr(floating_value<T>)             return fma(v0,  Half(as(v0)), v1 *  Half(as(v0)));
+    else                                             return map(average, v0, v1);
   }
 }
 
