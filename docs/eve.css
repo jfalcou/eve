@@ -18,15 +18,6 @@ body
   text-align: justify;
 }
 
-body::before
-{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  text-align: center;
-}
-
 .md div.title
 {
     background-image: url('logo.png');
@@ -137,7 +128,7 @@ body::before
 
 @media screen and (min-device-width: 1366px)
 {
-  body { max-width: 668px; }
+  body { max-width: 683px; }
   .md div.title { background-position: 85 %; }
 
   .md .mediumTOC
@@ -163,7 +154,7 @@ body::before
 
   .md .mediumTOC
   {
-    position: absolute;
+    position: fixed;
     left: 80%;
     top: 20%;
   }
@@ -175,24 +166,23 @@ body::before
     top: 20%;
   }
 }
+
 @media screen and (min-device-width: 1920px)
 {
   body { max-width: 960px; }
-  body::before {
-    content: "1920px or higher";
-  }
+
   .md div.title { background-position: 75 %; }
 
   .md .mediumTOC
   {
-    position: absolute;
+    position: fixed;
     left: 80%;
     top: 20%;
   }
 
   .md div.crumbs
   {
-    position: absolute;
+    position: fixed;
     left: 10%;
     top: 20%;
   }
