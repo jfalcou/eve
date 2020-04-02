@@ -13,7 +13,7 @@
 
 int a,b,x;
 eve::wide<int> va,vb,vx;
-eve::wide<char> ca
+eve::wide<char> ca; 
 eve::logical<int> t; 
 //==================================================================================================
 // None of those should compiles

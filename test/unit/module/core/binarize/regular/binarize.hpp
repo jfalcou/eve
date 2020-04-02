@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/binarize.hpp>
-#include <eve/function/is_greater.hpp>
+#include <eve/function/is_equal.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/logical.hpp>
@@ -28,20 +28,22 @@ TTS_CASE("Check binarize return type")
 TTS_CASE("Check eve::binarize on logicals behavior")
 {
   using eve::binarize;
-  using eve::is_greater;
-  TTS_EQUAL(binarize(is_greater(EVE_TYPE{1} , EVE_TYPE(2))), EVE_TYPE(0));
-  TTS_EQUAL(binarize(is_greater(EVE_TYPE{2} , EVE_TYPE(1))), EVE_TYPE(1));
+  using eve::is_equal;
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE{1} , EVE_TYPE(2))), EVE_TYPE(0));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE{2} , EVE_TYPE(2))), EVE_TYPE(1));
 
   if constexpr(std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(binarize(is_greater(EVE_TYPE{2}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(-2));
-    TTS_EQUAL(binarize(is_greater(EVE_TYPE{0}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(0));
-    TTS_EQUAL(binarize(is_greater(EVE_TYPE{1}, EVE_TYPE(2)), eve::mone_), EVE_TYPE(0));
-    TTS_EQUAL(binarize(is_greater(EVE_TYPE{2}, EVE_TYPE(1)), eve::mone_), EVE_TYPE(-1));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE{1}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(-2));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE{0}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(0));
+    std::cout << tts::type_id(eve::mone_) <<  std::endl;
+    std::cout << tts::type_id(is_equal(EVE_TYPE{1}, EVE_TYPE(2))) <<  std::endl;
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE{1}, EVE_TYPE(2)), eve::mone_), EVE_TYPE(0));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE{2}, EVE_TYPE(2)), eve::mone_), EVE_TYPE(-1));
   }
 
-  TTS_EQUAL(binarize(is_greater(EVE_TYPE{2}, EVE_TYPE(1)), EVE_VALUE(2)), EVE_TYPE(2));
-  TTS_EQUAL(binarize(is_greater(EVE_TYPE{0}, EVE_TYPE(1)), EVE_VALUE(2)), EVE_TYPE(0));
-  TTS_EQUAL(binarize(is_greater(EVE_TYPE{0}, EVE_TYPE(1)), eve::allbits_), EVE_TYPE(0));
-  TTS_IEEE_EQUAL(binarize(is_greater(EVE_TYPE{2}, EVE_TYPE(1)), eve::allbits_), (eve::Allbits<EVE_TYPE>()));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE{1}, EVE_TYPE(1)), EVE_VALUE(2)), EVE_TYPE(2));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE{0}, EVE_TYPE(1)), EVE_VALUE(2)), EVE_TYPE(0));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE{0}, EVE_TYPE(1)), eve::allbits_), EVE_TYPE(0));
+  TTS_IEEE_EQUAL(binarize(is_equal(EVE_TYPE{2}, EVE_TYPE(2)), eve::allbits_), (eve::Allbits<EVE_TYPE>()));
 }

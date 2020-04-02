@@ -50,11 +50,11 @@ namespace eve::detail
       using t_t = wide<T, N, ABI>; 
       return  bit_andnot(t_t(val),cond.bits());
     }
-    else if constexpr(std::is_same_v<U, eve::callable_allbits_>)
+    else if constexpr(std::is_same_v<U, eve::detail::callable_object<eve::tag::allbits_, void, void>)
     {
       return bit_not(cond.mask());
     }
-    else if constexpr(std::is_same_v<U, eve::callable_mone_>)
+    else if constexpr(std::is_same_v<U, eve::detail::callable_object<eve::tag::mone_, void, void>)
     {
       if constexpr(std::is_integral_v<T>) return  bit_not(cond.mask());
       else return  binarize_c(cond,eve::Mone<T>());
