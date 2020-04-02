@@ -1,8 +1,0 @@
----- simd
- <- pf =                      (3, -0, -3, 10)
- <- qf =                      (4, -1, -3, 0)
- -> eve::logical_notand(pf, qf) = (false, true, false, false)
----- scalar
- xf =                         3
- yf =                         4
- -> eve::logical_notand(xf, yf) = false

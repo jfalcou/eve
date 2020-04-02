@@ -1,8 +1,0 @@
----- simd
-<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::inc(pf) = (1, 2, 0, -1, 1, inf, -inf, -nan)
----- scalar
-<- xf =                  1
--> eve::inc(xf) = 2
-<- yf =                  1.4013e-45
--> eve::inc(yf) = 1

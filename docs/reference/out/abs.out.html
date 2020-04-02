@@ -1,0 +1,22 @@
+<meta charset="utf-8">
+**Possible Output:**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+---- simd
+<- pf =                            (-1, 2, -3, -32768)
+-> eve::abs(pf) =                  (1, 2, 3, 32768)
+<- pi =                            (-1, 2, -3, -32768)
+-> eve::saturated_(eve::abs)(pi) = (1, 2, 3, 32767)
+-> eve::abs(pi) =                  (1, 2, 3, -32768)
+---- scalar
+<- xf =                            -32768
+-> eve::abs(xf) =                  32768
+<- xi =                            -32768
+-> eve:saturated_(eve::abs)(xi)    32767
+-> eve::abs(xi) =                  -32768
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+

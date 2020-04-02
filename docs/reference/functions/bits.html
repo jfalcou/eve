@@ -1,0 +1,52 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+                           Bits related Functions
+<br>
+These functions provide scalar and SIMD version of bit operations. Bitwise operations are extended to work on any [value](../concepts.html#value) types by considering the masking operations to apply on the value bit patterns while retaining its original types.
+
+There is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [ieee_value](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
+
+The header `eve/function/bit.hpp` allows the inclusion of all bits related functions.
+
+  (insert ../../crumbs.html here)
+
+  (insert bits/bit_and.html       here)
+  (insert bits/bit_andnot.html    here)
+  (insert bits/ceil2.html         here)
+  (insert bits/bit_cast.html      here)
+  (insert bits/firstbitset.html   here)
+  (insert bits/firstbitunset.html here)
+  (insert bits/floor2.html        here)
+  (insert bits/is_pow2.html       here)
+  (insert bits/bit_mask.html      here)
+  (insert bits/bit_not.html       here)
+  (insert bits/bit_notand.html    here)
+  (insert bits/bit_notor.html     here)
+  (insert bits/bit_or.html        here)
+  (insert bits/bit_ornot.html     here)
+  (insert bits/bit_select.html    here)
+  (insert bits/bit_shl.html       here)
+  (insert bits/bit_shr.html       here)
+  (insert bits/bit_xor.html       here)
+  (insert bits/countl_zero.html   here)
+  (insert bits/popcount.html      here)
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

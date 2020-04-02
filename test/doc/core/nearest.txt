@@ -1,6 +1,0 @@
----- simd
-<- pf =                            (-1.2, 2.5, 3.5, 1.6)
--> eve::nearest(pf) =              (-1, 2, 4, 2)
----- scalar
-<- xf =                            -1.3
--> eve::nearest(xf) =              -1

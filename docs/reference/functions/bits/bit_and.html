@@ -1,0 +1,55 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+
+<meta charset="utf-8">
+
+eve::bit_and
+====================================================================================================
+
+**Required header:**
+
+<script type="preformatted">
+`#include <eve/function/bit_and.hpp>`
+</script>
+
+**Synopsis:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /* implementation defined */ bit_and = {};
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the bitwise AND operation.
+
+**Member functions:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template<value T, value U> auto operator()( T const& x, U const& y ) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs the element-wise bitwise AND operation between both parameters.
+
+**Parameters:**
+`x`, `y`
+:   values of :ref:`value <concept-value>` types with same size in bytes.
+
+**Return value:**
+<span class="smallskip"></span>
+A value with the same type as `x` containing the bitwise AND of both parameters' bits is returned.
+
+  (insert ../../src/bit_and.src.html here)
+
+  (insert ../../out/bit_and.out.html here)
+
+<!-- End of Document -->
+<!-- Markdeep: -->
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

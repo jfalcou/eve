@@ -1,0 +1,47 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                      **Expressive Vector Engine**
+                        Glossary
+
+  (insert crumbs.html here)
+
+Cardinal
+====================================================================================================
+The cardinal of a [value](reference/concepts.html#value) is the number of elements inside the corresponding
+register. For any [scalar types](reference/concepts.html#scalar_value), the cardinal is always equal
+to 1. For [SIMD types](reference/concepts.html#simd_value), it's equal to the number of lanes in the
+register.
+
+**EVE** provides the [cardinal](reference/types/traits.html#cardinal) traits to access the cardinal
+of any type.
+
+Type family
+====================================================================================================
+The type family is based on the value concept a type satisfies. One say a type is from a scalar
+family if it satisfies the [scalar_value](reference/concepts.html#scalar_value) and from a SIMD
+family if it satisfies the [scalar_value](reference/concepts.html#simd_value).
+
+Value type
+====================================================================================================
+For any [value type](reference/concepts.html#value), **EVE** defines its underlying value type as
+the basic type used to represent its value. For any [scalar types](reference/concepts.html#scalar_value),
+its type is its own value type. For [SIMD types](reference/concepts.html#simd_value), it's defined
+as the type of scalar value stored in the SIMD register.
+
+**EVE** provides the [value_type](reference/types/traits.html#value_type) traits to access the
+value type of any type.
+----------------------------------------------------------------------------------------------------
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<link rel="stylesheet" href="eve.css">
+<!-- Markdeep: -->
+<script src="markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

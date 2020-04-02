@@ -1,0 +1,84 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+
+eve::cardinal
+====================================================================================================
+
+**Required header:**
+
+<script type="preformatted">
+`#include <eve/cardinal.hpp>`
+</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  template<typename T> struct cardinal;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+Determines the [cardinal](../../../glossary.html#cardinal) of `T`.
+
+**Member Constants:**
+
+`value`
+:
+   The [cardinal](../../../glossary.html#cardinal) of `T`
+
+**Helper Variable Template:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  template<typename T>
+  inline constexpr bool value_type_v = value_type<T>::value;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+**Example:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <eve/cardinal.hpp>
+#include <eve/wide.hpp>
+#include <iostream>
+
+int main()
+{
+  std::cout << eve::cardinal_v<double> << "\n";
+  std::cout << eve::cardinal_v<eve::wide<int, eve::fixed<16>>> << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+
+**Possible Output:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+1
+16
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

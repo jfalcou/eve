@@ -1,0 +1,91 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+
+<meta charset="utf-8">
+
+eve::tofloat
+====================================================================================================
+
+**Required header:**
+
+<script type="preformatted">
+`#include <eve/function/tofloat.hpp>`
+</script>
+
+**Synopsis:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ tofloat = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object converting a value to the corresponding floating-point type.
+
+**Member functions:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template<value T> auto operator()( T const& x) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Converts a value to the corresponding floating-point type which is defined as a type of the same
+[family](../../../glossary.html#typefamily) and which
+[element type](../../../reference/traits.html#element_type) is `float` if `sizeof(T) <= 4` and
+`double` otherwise.
+
+**Parameters:**
+`x`
+:   [value](../../concepts.html#value) to convert.
+
+**Return value:**
+<span class="smallskip"></span>
+For a [value](../../concepts.html#value) `x`:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+auto r = tofloat(x);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+is semantically equivalent to:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+using type = std::conditional_t<sizeof(T)==8,double,float>;
+type r;
+
+if constexpr( scalar_value<T> )
+{
+  r = static_cast<type>(x);
+}
+else if constexpr( simd_value<T> )
+{
+  for(std::size_t i=;i<x.size();++i)
+    r[i] = static_cast<type>(x[i]);
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+!!! WARNING Note
+   Conversion operated by [eve::tofloat](#eve::tofloat) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
+
+**Supported Decorators:**
+[`saturated_`](../../decorators.html#saturated_)
+:   The expression `saturated_(tofloat)(x)` computes a saturated conversion of `x` to the
+    corresponding floating-point type.
+
+  (insert ../../src/tofloat.src.html here)
+
+  (insert ../../out/tofloat.out.html here)
+
+<!-- End of Document -->
+<!-- Markdeep: -->
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

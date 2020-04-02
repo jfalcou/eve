@@ -1,8 +1,0 @@
----- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::atanpi(pf) =          (0, 0.25, -0.25, -0.352416, 0, 0.5, -0.5, nan)
----- scalar
-<- xf =                      1
--> eve::atanpi(xf) =            0.25
-<- yf =                      0
--> eve::atanpi(yf) =            0

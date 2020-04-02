@@ -1,8 +1,0 @@
----- simd
- <- pi =                      (3, 2, 10, 1)
- <- qi =                      (4, 1, 2, 5)
- -> eve::bit_xor(pi, qi) = (7, 3, 8, 4)
----- scalar
- xi =                         3
- yi =                         7
- -> eve::bit_xor(xi, yi) = 4
