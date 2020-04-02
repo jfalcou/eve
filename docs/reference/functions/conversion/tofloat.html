@@ -36,9 +36,9 @@ template<value T> auto operator()( T const& x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Converts a value to the corresponding floating-point type which is defined as a type of the same
-[family](../../../glossary.html#typefamily) ([scalar](../../concepts.html#scalar_value) or
-[SIMD](../../concepts.html#simd_value)) and which [value type](../../../glossary.html#valuetype)
-is `float` if `sizeof(T) < 4`and `double` otherwise.
+[family](../../../glossary.html#typefamily) and which
+[element type](../../../reference/traits.html#element_type) is `float` if `sizeof(T) <= 4` and
+`double` otherwise.
 
 **Parameters:**
 `x`

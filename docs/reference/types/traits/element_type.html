@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
 
-eve::value_type
+eve::element_type
 ====================================================================================================
 
 **Required header:**
 
 <script type="preformatted">
-`#include <eve/value_type.hpp>`
+`#include <eve/element_type.hpp>`
 </script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template<typename T> struct value_type;
+  template<typename T> struct element_type;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -40,7 +40,7 @@ Member type  | Definition
 namespace eve
 {
   template<typename T>
-  using value_type_t = typename value_type<T>::type;
+  using element_type_t = typename element_type<T>::type;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -49,14 +49,14 @@ namespace eve
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/value_type.hpp>
+#include <eve/element_type.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
 template<typename T>
 constexpr bool behave_as_float(T const&) noexcept
 {
-  return std::is_floating_point_v< eve::value_type_t<T> >;
+  return std::is_floating_point_v< eve::element_type_t<T> >;
 }
 
 int main()
