@@ -11,6 +11,7 @@
 #ifndef EVE_DETAIL_APPLY_OVER_HPP_INCLUDED
 #define EVE_DETAIL_APPLY_OVER_HPP_INCLUDED
 
+#include <eve/forward.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/has_abi.hpp>

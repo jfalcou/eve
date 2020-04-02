@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/wide.hpp>
-#include <eve/function/is_equal.hpp>
+#include <eve/function/bit_andnot.hpp>
 
 int a,b,x;
 eve::wide<int> va,vb,vx;
@@ -18,7 +18,7 @@ eve::logical<int> t;
 //==================================================================================================
 // None of those should compiles
 //==================================================================================================
-auto is_eqs  = eve::is_equal[  x < 0 ]( a,  b);
-auto is_eqv  = eve::is_equal[ vx < 0 ](va, vb);
-auto is_eqci = eve::is_equal(va, ca);
-auto is_eql  = eve::is_equal(va, t); 
+auto ban_s  = eve::bit_andnot[  x < 0 ]( a,  b);
+auto ban_v  = eve::bit_andnot[ vx < 0 ](va, vb);
+auto ban_ci = eve::bit_andnot(va, ca);
+auto ban_l  = eve::bit_andnot(va, t); 

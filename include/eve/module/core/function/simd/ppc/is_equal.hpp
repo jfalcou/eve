@@ -15,12 +15,14 @@
 #include <eve/detail/abi.hpp>
 #include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  is_equal_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto is_equal_(EVE_SUPPORTS(vmx_)
+                                , wide<T, N, ppc_> const &v0
+                                , wide<T, N, ppc_> const &v1) noexcept
   {
     using t_t = wide<T, N, ppc_>;
     return as_logical_t<t_t>(vec_cmpeq(v0.storage(), v1.storage()));

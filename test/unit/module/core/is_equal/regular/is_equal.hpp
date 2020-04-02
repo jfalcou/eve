@@ -14,11 +14,13 @@
 #include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/logical.hpp>
 
 TTS_CASE("Check eve::is_equal return type")
 {
   using eve::logical;
-
+  
   TTS_EXPR_IS(eve::is_equal(EVE_TYPE()          , EVE_TYPE()          ), (logical<EVE_TYPE>));
   TTS_EXPR_IS(eve::is_equal(EVE_TYPE()          , EVE_VALUE()         ), (logical<EVE_TYPE>));
   TTS_EXPR_IS(eve::is_equal(EVE_VALUE()         , EVE_TYPE()          ), (logical<EVE_TYPE>));
@@ -58,7 +60,12 @@ TTS_CASE("Check eve::is_equal behavior")
   TTS_EQUAL(eve::is_equal(EVE_TYPE(3)           , EVE_VALUE(1))           , eve::False<EVE_TYPE>());
   TTS_EQUAL(eve::is_equal(eve::True<EVE_TYPE>() , eve::True<EVE_TYPE>())  , eve::True<EVE_TYPE>() );
   TTS_EQUAL(eve::is_equal(eve::True<EVE_TYPE>() , eve::False<EVE_TYPE>()) , eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_equal(eve::True<EVE_TYPE>() , eve::True<EVE_VALUE>())  , eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_equal(eve::True<EVE_TYPE>() , eve::False<EVE_VALUE>()) , eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_equal(eve::True<EVE_VALUE>() , eve::True<EVE_TYPE>())  , eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_equal(eve::True<EVE_VALUE>() , eve::False<EVE_TYPE>()) , eve::False<EVE_TYPE>());
 }
+
 TTS_CASE("Check eve::operator== behavior")
 {
   using eve::logical;
