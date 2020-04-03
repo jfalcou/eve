@@ -14,7 +14,7 @@
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/ext/as_wide.hpp>
+#include <eve/as_wide.hpp>
 #include <eve/platform.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

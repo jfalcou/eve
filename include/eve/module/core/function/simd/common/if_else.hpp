@@ -25,8 +25,6 @@
 #include <eve/constant/zero.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/ext/as_wide.hpp>
-#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_EXT_AS_WIDE_HPP_INCLUDED
-#define EVE_EXT_AS_WIDE_HPP_INCLUDED
+#ifndef EVE_AS_WIDE_HPP_INCLUDED
+#define EVE_AS_WIDE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
 

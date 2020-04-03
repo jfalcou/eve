@@ -15,7 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/ext/has_abi.hpp>
-#include <eve/ext/as_wide.hpp>
+#include <eve/as_wide.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/cardinal.hpp>

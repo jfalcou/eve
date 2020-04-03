@@ -19,8 +19,6 @@
 //#include "if_zero_else.hpp"
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
-#include <eve/ext/as_wide.hpp>
-#include <eve/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
