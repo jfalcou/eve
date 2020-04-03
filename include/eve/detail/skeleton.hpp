@@ -74,9 +74,7 @@ namespace eve::detail
   template<typename F, typename... Ts>
   struct wide_result
   {
-    template<typename T>
-    using card_t                        = eve::cardinal<std::decay_t<T>>;
-    static constexpr std::size_t card_v = std::max({card_t<Ts>::value...});
+    static constexpr std::size_t card_v = std::max({eve::cardinal_v<std::decay_t<Ts>>...});
     using value_t                       = decltype(std::declval<F>()(at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
     using type                          = as_wide_t<value_t, fixed_t>;

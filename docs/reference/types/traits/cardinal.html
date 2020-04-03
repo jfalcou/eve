@@ -32,7 +32,14 @@ Determines the [cardinal](../../../glossary.html#cardinal) of `T`.
 
 `value`
 :
-   The [cardinal](../../../glossary.html#cardinal) of `T`
+   The numerical value of the [cardinal](../../../glossary.html#cardinal) of `T`
+
+**Member Types:**
+
+`type`
+:
+   The [cardinal](../../../glossary.html#cardinal) type of `T`. This type is an implementation-defined
+   type that behaves as an [Integral Constant](https://en.cppreference.com/w/cpp/types/integral_constant).
 
 **Helper Variable Template:**
 <script type="preformatted">
@@ -41,6 +48,17 @@ namespace eve
 {
   template<typename T>
   inline constexpr bool cardinal_v = cardinal<T>::value;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+**Helper Types:**
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  template<typename T>
+  using cardinal_t = typename cardinal<T>::type;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -56,7 +74,13 @@ namespace eve
 int main()
 {
   std::cout << eve::cardinal_v<double> << "\n";
-  std::cout << eve::cardinal_v<eve::wide<int, eve::fixed<16>>> << "\n";
+
+  // Retrieve the cardinal type
+  using c_t = eve::cardinal_t<eve::wide<int, eve::fixed<16>>>;
+  std::cout << c_t::value << "\n";
+
+  // Retrieve the cardinal value
+  std::cout << eve::cardinal_v<eve::wide<double, c_t>> << "\n";
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -67,6 +91,7 @@ int main()
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 1
+16
 16
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>

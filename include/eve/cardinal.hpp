@@ -16,13 +16,15 @@
 
 namespace eve
 {
+  template<std::ptrdiff_t Cardinal> struct fixed;
+
   template<typename Type>
-  struct cardinal : std::integral_constant<std::size_t, 1>
+  struct cardinal : fixed<1>
   {
   };
 
   template<typename Type, typename Size, typename ABI>
-  struct cardinal<wide<Type, Size, ABI>> : std::integral_constant<std::size_t, Size::value>
+  struct cardinal<wide<Type, Size, ABI>> : Size
   {
   };
 
@@ -37,8 +39,10 @@ namespace eve
   };
 
   template<typename Type>
-  inline constexpr auto cardinal_v = cardinal<Type>::value;
+  using cardinal_t = typename cardinal<Type>::type;
 
+  template<typename Type>
+  inline constexpr auto cardinal_v = cardinal<Type>::value;
 }
 
 #endif
