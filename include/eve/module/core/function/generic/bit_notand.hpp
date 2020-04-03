@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_ANDNOT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_ANDNOT_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTAND_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTAND_HPP_INCLUDED
 
 #include <eve/forward.hpp>
 #include <eve/detail/overload.hpp>
@@ -26,33 +26,33 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , U const &b) noexcept
   requires bit_compatible_values<T,U>
   {
-    return bit_call(bit_andnot, a, b); 
+    return bit_call(bit_notand, a, b); 
   }
 
   template<real_scalar_value T>
-  EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b) noexcept
   {
     if constexpr(floating_value<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      return bit_cast( b_t(bit_cast(a,as<b_t>()) & ~bit_cast(b,as<b_t>())), as(a) );
+      return bit_cast( b_t(~bit_cast(a,as<b_t>()) & bit_cast(b,as<b_t>())), as(a) );
     }
-    else return T(a & ~b);
+    else return T(~a & b);
   }
   
   template<real_simd_value T>
-  EVE_FORCEINLINE auto bit_andnot_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b) noexcept
   {
-    return apply_over(bit_andnot, a, b); // fallback never taken if proper intrinsics are at hand
+    return apply_over(bit_notand, a, b); // fallback never taken if proper intrinsics are at hand
   }
   
 }
