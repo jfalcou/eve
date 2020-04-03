@@ -15,16 +15,10 @@
 
 namespace eve
 {
-  template<typename Type, typename Size, typename EnableIf = void>
+  template<typename Type, typename Size>
   struct as_wide
   {
     using type = eve::wide<Type, Size>;
-  };
-
-  template<typename Type, typename Size>
-  struct as_wide<logical<Type>, Size>
-  {
-    using type = logical<typename as_wide<Type, Size>::type>;
   };
 
   template<typename Type, typename N, typename Size>
