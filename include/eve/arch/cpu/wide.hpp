@@ -14,7 +14,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/as_register.hpp>
-#include <eve/ext/base_wide.hpp>
+#include <eve/detail/base_wide.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
