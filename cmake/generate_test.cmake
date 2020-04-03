@@ -53,14 +53,14 @@ function(generate_test root rootpath dep file)
 
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND sh -c "{ echo -e \"${MKHEADER}\"; $<TARGET_FILE:${test}>; echo -e \"${MKFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
+                COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
               )
 
       set(src_test "src.${test}")
 
       add_test( NAME ${src_test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND sh -c "{ echo -e \"${MKCPPHEADER}\"; cat ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file}; echo -e \"${MKCPPFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
+                COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
               )
     else()
     add_test( NAME ${test}
