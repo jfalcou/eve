@@ -11,7 +11,6 @@
 #ifndef EVE_CONCEPT_STDCONCEPTS_HPP_INCLUDED
 #define EVE_CONCEPT_STDCONCEPTS_HPP_INCLUDED
 
-#include <eve/forward.hpp>
 #include <type_traits>
 #include <functional>
 
