@@ -10,8 +10,9 @@
 //==================================================================================================
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_equal.hpp>
+#include <eve/function/is_not_equal.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/constant/zero.hpp> 
 #include <eve/logical.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
@@ -36,8 +37,6 @@ TTS_CASE("Check eve::binarize on logicals behavior")
   {
     TTS_EQUAL(binarize(is_equal(EVE_TYPE{1}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(-2));
     TTS_EQUAL(binarize(is_equal(EVE_TYPE{0}, EVE_TYPE(1)), EVE_VALUE(-2)), EVE_TYPE(0));
-    std::cout << tts::type_id(eve::mone_) <<  std::endl;
-    std::cout << tts::type_id(is_equal(EVE_TYPE{1}, EVE_TYPE(2))) <<  std::endl;
     TTS_EQUAL(binarize(is_equal(EVE_TYPE{1}, EVE_TYPE(2)), eve::mone_), EVE_TYPE(0));
     TTS_EQUAL(binarize(is_equal(EVE_TYPE{2}, EVE_TYPE(2)), eve::mone_), EVE_TYPE(-1));
   }
@@ -47,3 +46,4 @@ TTS_CASE("Check eve::binarize on logicals behavior")
   TTS_EQUAL(binarize(is_equal(EVE_TYPE{0}, EVE_TYPE(1)), eve::allbits_), EVE_TYPE(0));
   TTS_IEEE_EQUAL(binarize(is_equal(EVE_TYPE{2}, EVE_TYPE(2)), eve::allbits_), (eve::Allbits<EVE_TYPE>()));
 }
+

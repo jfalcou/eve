@@ -50,7 +50,7 @@ make_all_units(ROOT core NAME atan2d                ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME atan2pi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME average               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME binarize              ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME binarize_c            ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME binarize_not          ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME bitofsign             ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME bit_and               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME bit_andnot            ARCH scalar simd TYPES ${all_types}     )

@@ -8,10 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BINARIZE_C_HPP_INCLUDED
-#define EVE_FUNCTION_BINARIZE_C_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_BINARIZE_NOT_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_BINARIZE_NOT_HPP_INCLUDED
 
-#include <eve/function/definition/binarize_c.hpp>
-#include <eve/module/core/function/generic/binarize_c.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/concept/vectorizable.hpp>
+#include <type_traits>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/allbits.hpp>
 
-#endif 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
+}
+
+#endif
+ 

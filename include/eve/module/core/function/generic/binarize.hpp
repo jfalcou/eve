@@ -59,7 +59,6 @@ namespace eve::detail
     if constexpr(integral_value<T>) return  cond.mask();
     else                            return  eve::binarize(cond,Mone<value_type_t<T>>());
   }
-
 }
 
 #endif
