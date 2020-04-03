@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BINARIZE_C_HPP_INCLUDED
 
 #include <eve/function/definition/binarize_c.hpp>
-#include <eve/module/core/function/scalar/binarize_c.hpp>
-#include <eve/module/core/function/simd/binarize_c.hpp>
+#include <eve/module/core/function/generic/binarize_c.hpp>
 
 #endif 
