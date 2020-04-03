@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTAND_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTAND_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTOR_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTOR_HPP_INCLUDED
 
 #include <eve/forward.hpp>
 #include <eve/detail/overload.hpp>
@@ -26,59 +26,59 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , U const &b) noexcept
   requires bit_compatible_values<T,U>
   {
-    return bit_call(bit_notand, a, b); 
+    return bit_call(bit_notor, a, b); 
   }
 
   template<real_scalar_value T>
-  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b) noexcept
   {
     if constexpr(floating_value<T>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      return bit_cast( b_t(~bit_cast(a,as<b_t>()) & bit_cast(b,as<b_t>())), as(a) );
+      return bit_cast( b_t(~bit_cast(a,as<b_t>()) | bit_cast(b,as<b_t>())), as(a) );
     }
-    else return T(~a & b);
+    else return T(~a | b);
   }
   
   template<real_simd_value T>
-  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b) noexcept
   {
-    return apply_over(bit_notand, a, b); // fallback never taken if proper intrinsics are at hand
+    return bit_or(bit_not(a), b); 
   }
   
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                            , T const & cond
                            , U const & t
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_notand(t, f)); 
-         if constexpr(scalar_value<T>) return  cond ? bit_notand(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return  if_else(cond,bit_notand(t, f), t);
+    using r_t = decltype(bit_notor(t, f)); 
+         if constexpr(scalar_value<T>) return  cond ? bit_notor(t, f) : r_t(t);
+    else if constexpr(simd_value<T>)   return  if_else(cond,bit_notor(t, f), t);
   }
  
   template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_notand_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                            , not_t<T> const & cond
                            , U const & t
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_notand(t, f)); 
-         if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : bit_notand(t, f);
-    else if constexpr(simd_value<T>)    return if_else(cond.value,t, bit_notand(t, f));
+    using r_t = decltype(bit_notor(t, f)); 
+         if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : bit_notor(t, f);
+    else if constexpr(simd_value<T>)   return  if_else(cond.value,t, bit_notor(t, f));
   }
 }
 

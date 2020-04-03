@@ -70,3 +70,5 @@ TTS_CASE( "Check eve::bit_and behavior")
   TTS_EQUAL(eve::bit_and(td,su),tz);
   TTS_EQUAL(eve::bit_and(td,sd),td);
 }
+
+

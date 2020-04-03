@@ -12,7 +12,12 @@
 #define EVE_FUNCTION_BIT_ORNOT_HPP_INCLUDED
 
 #include <eve/function/definition/bit_ornot.hpp>
-#include <eve/module/core/function/scalar/bit_ornot.hpp>
-#include <eve/module/core/function/simd/bit_ornot.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/bit_ornot.hpp>
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/bit_ornot.hpp>
+#endif
+
 
 #endif

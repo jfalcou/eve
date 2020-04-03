@@ -12,7 +12,19 @@
 #define EVE_FUNCTION_BIT_XOR_HPP_INCLUDED
 
 #include <eve/function/definition/bit_xor.hpp>
-#include <eve/module/core/function/scalar/bit_xor.hpp>
-#include <eve/module/core/function/simd/bit_xor.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/bit_xor.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/bit_xor.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/bit_xor.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/bit_xor.hpp>
+#endif
 
 #endif
