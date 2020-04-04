@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BIT_MASK_HPP_INCLUDED
 
 #include <eve/function/definition/bit_mask.hpp>
-#include <eve/module/core/function/scalar/bit_mask.hpp>
-#include <eve/module/core/function/simd/bit_mask.hpp>
+#include <eve/module/core/function/generic/bit_mask.hpp>
 
 #endif

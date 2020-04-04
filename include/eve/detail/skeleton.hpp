@@ -16,7 +16,6 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/as_wide.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
 #include <eve/cardinal.hpp>
 #include <algorithm>
 #include <utility>

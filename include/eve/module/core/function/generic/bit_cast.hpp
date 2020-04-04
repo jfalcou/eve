@@ -8,30 +8,28 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_BIT_CAST_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_BIT_CAST_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CAST_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CAST_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <eve/concept/vectorized.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/concept/compatible.hpp>
 #include <eve/as.hpp>
 #include <cstring>
 
 namespace eve::detail
 {
-  template<typename T, typename Target>
+
+  template<typename T, typename Target>  
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
                                      as_<Target> const &) noexcept
-  requires (!vectorized<T>) && (sizeof(T) == sizeof(Target))
+  requires (sizeof(T) == sizeof(Target))
   {
-    if constexpr(std::is_same_v<T, Target>)
-    {
-      return a;
-    }
+    if constexpr(std::is_same_v<T, Target>) return a;
     else
     {
       Target that;
