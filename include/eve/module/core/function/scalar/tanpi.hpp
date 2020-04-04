@@ -28,6 +28,7 @@
 #include <eve/constant/maxflint.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/constant/nan.hpp>
 #include <type_traits>
 
 namespace eve::detail

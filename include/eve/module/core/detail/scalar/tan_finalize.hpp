@@ -24,6 +24,7 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/eps.hpp>
+#include <eve/constant/nan.hpp>
 #include <type_traits>
 
 
