@@ -36,6 +36,14 @@ namespace eve::detail
     else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w);
   }
 
+  template<typename Obj, value T, value U, value V>
+  EVE_FORCEINLINE auto apply_over(Obj f, T const & v, U const & w, V const & x )
+    requires (simd_value<T> || simd_value<U> || simd_value<V>)  
+  {
+         if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(f, v, w, x);
+    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w, x);
+  }
+
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over2(Obj f, T const & v)
   {
