@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BITOFSIGN_HPP_INCLUDED
 
 #include <eve/function/definition/bitofsign.hpp>
-#include <eve/module/core/function/scalar/bitofsign.hpp>
-#include <eve/module/core/function/simd/bitofsign.hpp>
+#include <eve/module/core/function/generic/bitofsign.hpp>
 
 #endif
