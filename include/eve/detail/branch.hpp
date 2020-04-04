@@ -17,8 +17,17 @@ namespace eve::detail
   EVE_FORCEINLINE auto branch( Cond const & c, TC t, TF f)
   {
     if constexpr(Check) return [&c, t, f](auto&&... x) { return c ? t(x...) : f(x...); };
-    else                return [&c, t, f](auto&&... x) { return if_else(c,t(x...),f(x...)); };
+    else                return [&c, t, f](auto&&... x) { return if_else(c, t(x...), f(x...)); };
   }
+
+  template<bool Check, typename Cond, typename TC>
+  EVE_FORCEINLINE auto branch( Cond const & c, TC t)
+  {
+    if constexpr(Check) return [&c, t](auto&& x0, auto&&... x) { return c ? t(x0, x...) : x0; };
+    else                return [&c, t](auto&& x0, auto&&... x) { return if_else(c, t(x0, x...), x0); };
+  }
+
+  
 }
 
 #endif
