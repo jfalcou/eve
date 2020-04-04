@@ -13,9 +13,7 @@
 
 #include <eve/function/definition/bit_select.hpp>
 #include <eve/arch.hpp>
-//#include <eve/module/core/function/generic/bit_select.hpp>
-#include <eve/module/core/function/scalar/bit_select.hpp>
-#include <eve/module/core/function/simd/bit_select.hpp>   
+#include <eve/module/core/function/generic/bit_select.hpp>
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/bit_select.hpp>

@@ -14,18 +14,15 @@
 #include <eve/constant/zero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/as_wide.hpp>
+#include <eve/cardinal.hpp>
 
 TTS_CASE("Check eve::bit_select return type")
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
-  std::cout << tts::type_id < EVE_TYPE>() <<  std::endl;
-  std::cout << tts::type_id < i_t >()     <<  std::endl;
-  std::cout << sizeof(i_t) << "   " << sizeof(EVE_TYPE) << std::endl; 
+   using i_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
   TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select(EVE_TYPE(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));
-  std::cout << (tts::type_id <eve::wide<EVE_VALUE, eve::cardinal_t<EVE_TYPE>>>() ) << std::endl;
-  std::cout << (tts::type_id <eve::wide< EVE_VALUE,eve::fixed<4>>>())  << std::endl;
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));

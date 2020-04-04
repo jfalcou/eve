@@ -87,7 +87,7 @@ namespace eve::detail
                                , V const &c) noexcept
   requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>
   {
-    using vt_u = value_type_t<U>;
+    using vt_u = element_type_t<U>;
     if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same bit size
     {
       if constexpr(native<T> && native<U> && native<V>) return op(bit_cast(a, as(b)), b, bit_cast(c, as(b))); // generally already taken by arch specific intrisicss
@@ -97,55 +97,61 @@ namespace eve::detail
     {
       return op(bit_cast(a, as(b)), b, bit_cast(c, as(b)));
     }
-    else if constexpr( (scalar_value<T> && scalar_value<U>))  //T, U are scalar so of the same bit size, V is simd
+    else if constexpr(scalar_value<T> && scalar_value<U> && simd_value<V>)  //T, U are scalar so of the same bit size, V is simd
     {
-      using r_t = wide<U, cardinal_t<V>>;
+      using r_t = as_wide_t<U, cardinal_t<V>>;
       auto  aa = r_t(bit_cast(a, as_<vt_u>()));
       auto  bb = r_t(bit_cast(b, as_<vt_u>()));
       auto  cc =   bit_cast(c, as_<r_t>()); 
       return op(aa, bb, cc); 
     }
-    else if constexpr(scalar_value<T> && scalar_value<V>)  //T, V are scalar so of the same bit size, U is simd
+    else if constexpr(scalar_value<T> && scalar_value<V>&& simd_value<U>)  //T, V are scalar so of the same bit size, U is simd
     {
       using r_t = U;
       auto  aa = r_t(bit_cast(a, as_<vt_u>()));
       auto  cc = r_t(bit_cast(c, as_<vt_u>()));
       return op(aa, b, cc); 
     }
-    else if constexpr(scalar_value<U> && scalar_value<V>) //U, V are scalar so of the same bit size, T is simd
+    else if constexpr(scalar_value<U> && scalar_value<V> && simd_value<T>) //U, V are scalar so of the same bit size, T is simd
     {
-      using r_t = wide<U, cardinal_t<T>>;
+      using r_t = as_wide_t<U, cardinal_t<T>>;
       auto  aa = bit_cast(a, as_<r_t>());
       auto  bb = r_t(bit_cast(b, as_<vt_u>()));
       auto  cc = r_t(bit_cast(b, as_<vt_u>()));
       return op(aa, bb, cc); 
     }
-    else if constexpr(simd_value<U> && simd_value<V>) //U, V are simd so of the same bit size, T is scalar
+    else if constexpr(simd_value<U> && simd_value<V> && scalar_value<T>) //U, V are simd so of the same bit size, T is scalar
     {
       using r_t = U; 
       auto  aa = r_t(bit_cast(a, as_<vt_u>()));
       auto  cc = bit_cast(c, as_<r_t>());  
       return op(aa, b, cc); 
     }
-    else if constexpr(simd_value<T> && simd_value<U>) //U, T are simd so of the same bit size, V is scalar
+    else if constexpr(simd_value<T> && simd_value<U> && scalar_value<V>) //U, T are simd so of the same bit size, V is scalar
     {
       using r_t = U; 
       auto  aa = bit_cast(a, as_<r_t>());
       auto  cc = r_t(bit_cast(c, as_<vt_u>()));  
       return op(aa, b, cc); 
     }
-    else if constexpr(simd_value<T> && simd_value<V>) //T, V are simd so of the same bit size, U is scalar
+    else if constexpr(simd_value<T> && simd_value<V> && scalar_value<U>) //T, V are simd so of the same bit size, U is scalar
     {
-        using r_t = wide<U, cardinal_t<V>>;
+      using r_t = as_wide_t<U, cardinal_t<V>>;
       auto  aa = bit_cast(a, as_<r_t>());
       auto  bb = r_t(b);
       auto  cc = bit_cast(c, as_<r_t>());  
       return op(aa, bb, cc); 
     }
-    else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same bit size
+    else if constexpr(simd_value<T> && simd_value<U> && simd_value<V>) // both are simd so of the same bit size
     {
-      if constexpr(native<T> && native<U>) return op(a, bit_cast(b, as<T>())); // generally already taken by arch specific intrisicss
-      else                                 return apply_over(op, a, b);
+      if constexpr(native<T> && native<U> && native<V>)
+      {
+        using r_t = U;
+        auto  aa = bit_cast(a, as_<r_t>());
+        auto  cc = bit_cast(c, as_<r_t>()); 
+        return op(aa, b, cc); // generally already taken by arch specific intrisics
+      }
+      else return apply_over(op, a, b, c);
     }
   }
 
