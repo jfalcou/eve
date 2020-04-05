@@ -22,6 +22,8 @@
 #include <eve/function/bit_not.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

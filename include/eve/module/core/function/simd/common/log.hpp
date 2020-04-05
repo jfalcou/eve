@@ -42,6 +42,8 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <tuple>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Two implementations are given "musl_" and "plain_"
@@ -54,31 +56,20 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 namespace eve::detail
-{
-  template<typename T>
-  EVE_FORCEINLINE auto log_(EVE_SUPPORTS(cpu_)
-                            , const T &xx) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
-  {
-    return musl_(log)(xx);
-  }
-  
-  template<typename T>
+{ 
+  template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log_(EVE_SUPPORTS(cpu_)
                             , musl_type const &  
                             , const T &a0) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(musl_(eve::log), a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(musl_(eve::log), a0);
-    else
+    if constexpr(native<T>) 
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T,   signed>;
-      if constexpr(std::is_same_v<value_type_t<T>, float>)
+      using elt_t =  element_type_t<T>; 
+      if constexpr(std::is_same_v<elt_t, float>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
         /*
@@ -132,7 +123,7 @@ namespace eve::detail
         }
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else //if constexpr(std::is_same_v<value_type_t<T>, double>)
+      else //if constexpr(std::is_same_v<elt_t, double>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
         /*
@@ -146,7 +137,7 @@ namespace eve::detail
          * ====================================================
          */
         using uiT = as_integer_t<T, unsigned>;
-        using iT = as_integer_t<T,   signed>;
+        using iT  = as_integer_t<T,   signed>;
         T x =  a0;
         iT k(0);
         auto isnez = is_nez(a0);
@@ -164,8 +155,8 @@ namespace eve::detail
         uiT hx = bit_cast(x, as<uiT>()) >> 32;
         hx += 0x3ff00000 - 0x3fe6a09e;
         k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
-        hx = (bit_and(0x000fffffull, hx)) + 0x3fe6a09e;
-        x = bit_cast(hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()) )), as<T>());
+        hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
+        x = bit_cast(hx<<32 | (bit_and(bit_cast(x, as<uiT>()),0xffffffffull)), as<T>());
         
         T f = dec(x);
         T s = f/(2.0f + f);
@@ -191,22 +182,20 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
+    else return apply_over(musl_(log), a0); 
   }
   
-  template<typename T>
+  template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log_(EVE_SUPPORTS(cpu_)
-                            , plain_type const &  
-                            , const T &a0) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
+                           , plain_type const &  
+                           , const T &a0) noexcept
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(plain_(eve::log), a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(plain_(eve::log), a0);
-    else
+    if constexpr(native<T>) 
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-      if constexpr(std::is_same_v<value_type_t<T>, float>)
+      using elt_t =  element_type_t<T>; 
+      if constexpr(std::is_same_v<elt_t, float>)
       {
         T xx =  a0;
         T dk = Zero<T>();
@@ -246,7 +235,7 @@ namespace eve::detail
         }
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else if constexpr(std::is_same_v<value_type_t<T>, double>)
+      else if constexpr(std::is_same_v<elt_t, double>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
         /*
@@ -299,6 +288,7 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
+    else return apply_over(musl_(log), a0); 
   }
 }
 

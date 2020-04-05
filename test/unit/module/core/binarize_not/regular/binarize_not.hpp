@@ -18,14 +18,14 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_notASE("Check binarize_not return type")
+TTS_CASE("Check binarize_not return type")
 {
   using eve::binarize_not;
   TTS_EXPR_IS(binarize_not(eve::logical<EVE_TYPE>()), (EVE_TYPE));
   TTS_EXPR_IS(binarize_not(eve::logical<EVE_TYPE>(), int()), (EVE_TYPE));
 }
 
-TTS_notASE("Check eve::binarize_not on logicals behavior")
+TTS_CASE("Check eve::binarize_not on logicals behavior")
 {
   using eve::binarize_not;
   using eve::is_less;

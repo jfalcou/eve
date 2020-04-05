@@ -37,22 +37,17 @@
 
 namespace eve::detail
 {
-  // Regular case
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto log1p_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log1p)(x); 
   }
   
-  
-  // Regular case
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log1p_(EVE_SUPPORTS(cpu_)
-                                      , musl_type const &  
-                                      , T x) noexcept
-  requires std::floating_point<T>
+                                       , musl_type const &  
+                                       , T x) noexcept
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T,   signed>;
@@ -119,8 +114,7 @@ namespace eve::detail
       T dk = k;
       return  fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f));
     }
-
-    else //double
+    else if constexpr(std::is_same_v<T, double>)
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_log1p.c */
       /*
@@ -168,7 +162,7 @@ namespace eve::detail
           c /= uf;
         }
         hu =  (hu&0x000fffff) + 0x3fe6a09e;
-        f = bit_cast( bit_cast(hu<<32, as<uiT>()) | (bit_and(0xffffffffull, bit_cast(uf, as<uiT>()))), as<T>());
+        f = bit_cast( bit_cast(hu<<32, as<uiT>()) | (bit_and( bit_cast(uf, as<uiT>()), 0xffffffffull)), as<T>());
         f = dec(f);
       }
 
@@ -184,12 +178,10 @@ namespace eve::detail
     } 
   }
   
-  // Regular case
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log1p_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log1p)(x); //the "plain" scalar version of the algorithm is never speedier than the "musl" version.
     // the call is here to allow a scalar fallback to simd calls

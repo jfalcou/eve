@@ -34,25 +34,22 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  // Regular case
-  template<std::floating_point T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  //  requires std::floating_point<T>
   {
     return musl_(log)(x); 
   }
   
-  
-  // Regular case
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , musl_type const &  
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T,   signed>;
@@ -107,7 +104,7 @@ namespace eve::detail
       T dk = tofloat(k);
       return  fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
     }
-    else //double
+    else if constexpr(std::is_same_v<T, double>)
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_log.c */
       /*
@@ -160,12 +157,10 @@ namespace eve::detail
     }
   }
   
-  // Regular case
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log)(x); //the "plain" version of the algorithm is never speedier than the "musl" version.
     // the call is here to allow a scalar fallback to simd calls

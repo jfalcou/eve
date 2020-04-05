@@ -67,7 +67,7 @@ make_all_units(ROOT core NAME bit_shr               ARCH scalar simd TYPES ${int
 make_all_units(ROOT core NAME bit_xor               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME cbrt                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME ceil                  ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME ceil2                 ARCH scalar simd TYPES ${uint_or_real_types})
+make_all_units(ROOT core NAME bit_ceil              ARCH scalar simd TYPES ${uint_or_real_types})
 make_all_units(ROOT core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME conj                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     )

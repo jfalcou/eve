@@ -12,7 +12,6 @@
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
 #include <eve/concept/range.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/as_wide.hpp>
 #include <eve/concept/value.hpp>
