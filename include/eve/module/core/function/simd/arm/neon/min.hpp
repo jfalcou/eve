@@ -17,10 +17,12 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
+#include <type_yraits>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> min_(EVE_SUPPORTS(neon128_),
                                            wide<T, N, neon64_> const &v0,
                                            wide<T, N, neon64_> const &v1) noexcept
@@ -28,21 +30,21 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
+         if constexpr(std::is_same_v<T, float>)         return vmin_f32(v0, v1);
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vmin_f64(v0, v1);
+    else if constexpr(std::is_same_v<T, double>)        return vmin_f64(v0, v1);
 #endif
-    if constexpr(std::is_same_v<T, float>) return vmin_f32(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::min, v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 4) return vmin_s32(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 2) return vmin_s16(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 1) return vmin_s8(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::min, v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 4) return vmin_u32(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 2) return vmin_u16(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 1) return vmin_u8(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 8)   return map(eve::min, v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 4)   return vmin_s32(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 2)   return vmin_s16(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 1)   return vmin_s8(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::min, v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 4) return vmin_u32(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 2) return vmin_u16(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 1) return vmin_u8(v0, v1);
   }
 
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> min_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon128_> const &v0,
                                             wide<T, N, neon128_> const &v1) noexcept
@@ -50,47 +52,19 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
+    if constexpr(std::is_same_v<T, float>)               return vminq_f32(v0, v1);
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) return vminq_f64(v0, v1);
+    else if constexpr(std::is_same_v<T, double>)         return vminq_f64(v0, v1);
 #endif
-    if constexpr(std::is_same_v<T, float>) return vminq_f32(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 8) return map(eve::min, v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 4) return vminq_s32(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 2) return vminq_s16(v0, v1);
-    if constexpr(is_signed_int && sizeof(T) == 1) return vminq_s8(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::min, v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 4) return vminq_u32(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 2) return vminq_u16(v0, v1);
-    if constexpr(is_unsigned_int && sizeof(T) == 1) return vminq_u8(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 8)   return map(eve::min, v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 4)   return vminq_s32(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 2)   return vminq_s16(v0, v1);
+    else if constexpr(is_signed_int && sizeof(T) == 1)   return vminq_s8(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 8) return map(eve::min, v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 4) return vminq_u32(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 2) return vminq_u16(v0, v1);
+    else if constexpr(is_unsigned_int && sizeof(T) == 1) return vminq_u8(v0, v1);
   }
-
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> min_(EVE_SUPPORTS(neon128_),
-                                           pedantic_type const &,
-                                           wide<T, N, neon64_> const &a0,
-                                           wide<T, N, neon64_> const &a1) noexcept
-  {
-#if !defined(EVE_SIMD_NO_NANS)
-    auto tmp = if_else(is_nan(a1), a0, eve::min(a0, a1));
-#else
-    auto tmp = eve::min(a0, a1);
-#endif
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_xor(a0, a1), tmp); 
-  }
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> min_(EVE_SUPPORTS(neon128_),
-                                            pedantic_type const &,
-                                            wide<T, N, neon128_> const &a0,
-                                            wide<T, N, neon128_> const &a1) noexcept
-  {
-#if !defined(EVE_SIMD_NO_NANS)
-    auto tmp = if_else(is_nan(a1), a0, eve::min(a0, a1));
-#else
-    auto tmp = eve::min(a0, a1);
-#endif
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_xor(a0, a1), tmp); 
-  }
-
 }
 
 #endif
