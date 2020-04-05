@@ -42,36 +42,27 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 #include <tuple>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
-                            , const T &xx) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
-  {
-    return musl_(log10)(xx);
-  }
-  
-  template<typename T>
+  template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
                             , musl_type const &  
                             , const T &a0) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(eve::log10, a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log10, a0);
-    else
+    if constexpr(native<T>) 
     {
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T,   signed>;
+      using elt_t =  element_type_t<T>; 
       T Invlog_10hi =  Ieee_constant<T, 0x3ede6000U, 0x3fdbcb7b15200000ULL>();
       T Invlog_10lo =  Ieee_constant<T, 0xb804ead9U, 0x3dbb9438ca9aadd5ULL>();
       T Log10_2hi   =  Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
       T Log10_2lo   =  Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>(); 
-      if constexpr(std::is_same_v<value_type_t<T>, float>)
+      if constexpr(std::is_same_v<elt_t, float>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log10f.c */
         /*
@@ -132,7 +123,7 @@ namespace eve::detail
         }
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else //if constexpr(std::is_same_v<value_type_t<T>, double>)
+      else if constexpr(std::is_same_v<elt_t, double>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log10f.c */
         /*
@@ -162,8 +153,8 @@ namespace eve::detail
         uiT hx = bit_cast(x, as<uiT>()) >> 32;
         hx += 0x3ff00000 - 0x3fe6a09e;
         k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
-        hx = (bit_and(0x000fffffull, hx)) + 0x3fe6a09e;
-        x = bit_cast(hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()) )), as<T>());
+        hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
+        x = bit_cast(hx<<32 | (bit_and( bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
         
         T f = dec(x);
         T s = f/(2.0f + f);
@@ -205,24 +196,22 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
+    else return apply_over(musl_(log10), a0); 
   }
   
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_)
                             , plain_type const &  
                             , const T &a0) noexcept
-  Requires(T, Vectorized<T>, behave_as<floating_point, T>)
   {
-    using t_abi = abi_type_t<T>;
-    if constexpr(is_emulated_v<t_abi> ) return map(eve::log10, a0); 
-    else if constexpr(is_aggregated_v<t_abi> ) return aggregate(eve::log10, a0);
-    else
+    if constexpr(native<T>) 
     {
       T Invlog_10hi =  Ieee_constant<T, 0x3ede6000U, 0x3fdbcb7b15200000ULL>();
       T Invlog_10lo =  Ieee_constant<T, 0xb804ead9U, 0x3dbb9438ca9aadd5ULL>();
       T Log10_2hi   =  Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
       T Log10_2lo   =  Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>(); 
-      if constexpr(std::is_same_v<value_type_t<T>, float>)
+      using elt_t =  element_type_t<T>; 
+      if constexpr(std::is_same_v<elt_t, float>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log10f.c */
         /*
@@ -281,7 +270,7 @@ namespace eve::detail
         }
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
-      else // if constexpr(std::is_same_v<value_type_t<T>, double)
+      else if constexpr(std::is_same_v<elt_t, double>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log10.c */
         /*
@@ -351,6 +340,7 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
+    else return apply_over(musl_(log10), a0); 
   }
 }
 

@@ -34,6 +34,8 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

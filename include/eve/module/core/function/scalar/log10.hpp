@@ -33,20 +33,18 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  // Regular case
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto log10_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log10)(x); 
   }
   
-  
-  // Regular case
   template<typename T>
   EVE_FORCEINLINE constexpr auto log10_(EVE_SUPPORTS(cpu_)
                                       , musl_type const &  
@@ -119,7 +117,7 @@ namespace eve::detail
                 );
       
     }
-    else //if constexpr(std::is_same_v<T, double>)
+    else if constexpr(std::is_same_v<T, double>)
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_log10.c */
       /*
@@ -186,8 +184,7 @@ namespace eve::detail
     }
   }
   
-  // Regular case
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log10_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept

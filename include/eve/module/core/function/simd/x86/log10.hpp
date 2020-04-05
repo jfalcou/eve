@@ -15,23 +15,17 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation for avx
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
-  Requires(wide<T, N, avx_>, floating_point<T>)
   {
-    if constexpr(current_api < avx2)
-    {
-      return plain_(log10)(v);
-    }
-    else
-    {
-      return musl_(log10)(v);
-    }
+    if constexpr(current_api < avx2) return plain_(log10)(v);
+    else                             return musl_(log10)(v);
   }
 }
 

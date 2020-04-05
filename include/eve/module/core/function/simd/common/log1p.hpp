@@ -105,7 +105,7 @@ namespace eve::detail
       }
       return if_else(is_ngez(uf), eve::allbits_, zz);
     }
-    else return apply_over(musl_(log), a0); 
+    else return apply_over(plain_(log1p), a0); 
   }
   
   template<floating_real_simd_value T>
@@ -197,7 +197,7 @@ namespace eve::detail
         return if_else(is_ngez(uf), eve::allbits_, zz);
       }
     }
-    else return apply_over(musl_(log), a0); 
+    else return apply_over(musl_(log1p), a0); 
   }
 }
 

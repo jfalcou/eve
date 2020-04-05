@@ -30,8 +30,8 @@
 #include <eve/function/div.hpp>
 #include <eve/function/fma.hpp> 
 #include <eve/function/sqr.hpp>
-#include <eve/concept/vectorized.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <type_traits>
 #include <tuple>
 

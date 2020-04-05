@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_CLAMP_HPP_INCLUDED
 
 #include <eve/function/definition/clamp.hpp>
-#include <eve/module/core/function/scalar/clamp.hpp>
-#include <eve/module/core/function/simd/clamp.hpp>
+#include <eve/module/core/function/generic/clamp.hpp>
 
 #endif

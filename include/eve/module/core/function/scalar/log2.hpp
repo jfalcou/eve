@@ -36,22 +36,17 @@
 
 namespace eve::detail
 {
-  // Regular case
-  template<typename T>
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto log2_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log2)(x); 
   }
-  
-  
-  // Regular case
-  template<typename T>
+
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log2_(EVE_SUPPORTS(cpu_)
                                       , musl_type const &  
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T,   signed>;
@@ -112,7 +107,7 @@ namespace eve::detail
       //       T  lo = fma(s, hfsq+R, f - hi - hfsq);
       //       return fma((lo+hi), Invlog_2lo<T>(), lo*Invlog_2hi<T>() + hi*Invlog_2hi<T>() + k);
     }
-    else //double
+    else if constexpr(std::is_same_v<T, double>)
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_log2.c */
       /*
@@ -150,7 +145,7 @@ namespace eve::detail
       hx += 0x3ff00000 - 0x3fe6a09e;
       k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
       hx = (hx&0x000fffff) + 0x3fe6a09e;
-      x = bit_cast( (uint64_t)hx<<32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()))), as<T>());
+      x = bit_cast( (uint64_t)hx<<32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
       T f = dec(x);
       T hfsq = 0.5*sqr(f);
       T s = f/(2.0f + f);
@@ -214,11 +209,10 @@ namespace eve::detail
   }
   
   // Regular case
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log2_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept
-  requires std::floating_point<T>
   {
     return musl_(log2)(x); //the "plain" version of the algorithm is never speedier than the "musl" version.
     // the call is here to allow a scalar fallback to simd calls

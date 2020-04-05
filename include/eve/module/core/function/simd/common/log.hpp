@@ -288,7 +288,7 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
-    else return apply_over(musl_(log), a0); 
+    else return apply_over(plain_(log), a0); 
   }
 }
 

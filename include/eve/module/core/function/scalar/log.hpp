@@ -157,7 +157,7 @@ namespace eve::detail
     }
   }
   
-  template<floating_real_value T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_)
                                       , plain_type const &  
                                       , T x) noexcept
