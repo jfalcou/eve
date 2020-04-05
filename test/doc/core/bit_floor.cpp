@@ -1,4 +1,4 @@
-#include <eve/function/floor2.hpp>
+#include <eve/function/bit_floor.hpp>
 #include <eve/wide.hpp>
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
@@ -9,12 +9,12 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi =                   " << pi << '\n'
-            << "-> eve::floor2(pi) =       " << eve::floor2(pi) << '\n';
+            << "-> eve::bit_floor(pi) =       " << eve::bit_floor(pi) << '\n';
 
   std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                   " << xf << '\n'
-            << "-> eve::floor2(xf) =       " << eve::floor2(xf) << '\n';
+            << "-> eve::bit_floor(xf) =       " << eve::bit_floor(xf) << '\n';
   return 0;
 }

@@ -48,14 +48,14 @@ namespace eve::detail
       }
       else 
       {
-        auto a0 = v;         
-        a0 |= a0 >> 1;
-        a0 |= a0 >> 2;
-        a0 |= a0 >> 4;
-        if constexpr( sizeof(T) >= 2 )  a0 |= a0 >>  8;
-        if constexpr( sizeof(T) >= 4 )  a0 |= a0 >> 16;
-        if constexpr( sizeof(T) >= 8 )  a0 |= a0 >> 32;
-        return a0-(a0>> 1); 
+        auto a = v;         
+        a |= a >> 1;
+        a |= a >> 2;
+        a |= a >> 4;
+        if constexpr( sizeof(T) >= 2 )  a |= a >>  8;
+        if constexpr( sizeof(T) >= 4 )  a |= a >> 16;
+        if constexpr( sizeof(T) >= 8 )  a |= a >> 32;
+        return a-(a>> 1); 
       }
     }
   }

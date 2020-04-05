@@ -8,36 +8,36 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/floor2.hpp>
+#include <eve/function/bit_floor.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmax.hpp>
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("Check floor2 return type")
+TTS_CASE("Check bit_floor return type")
 {
-  TTS_EXPR_IS(eve::floor2(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_floor(EVE_TYPE()), (EVE_TYPE));
 }
 
-TTS_CASE("Check eve::floor2 behavior")
+TTS_CASE("Check eve::bit_floor behavior")
 {
   if constexpr(!std::is_floating_point_v<EVE_VALUE>)
   {
     for(EVE_VALUE z = 2; z < eve::Valmax<EVE_VALUE>()/2; z*=2)
     {
-      TTS_EQUAL(eve::floor2(EVE_TYPE(z)), EVE_TYPE(z));
-      TTS_EQUAL(eve::floor2(EVE_TYPE(z+1)), EVE_TYPE(z));
-      TTS_EQUAL(eve::floor2(EVE_TYPE(3*(z/2))), EVE_TYPE(z));
+      TTS_EQUAL(eve::bit_floor(EVE_TYPE(z)), EVE_TYPE(z));
+      TTS_EQUAL(eve::bit_floor(EVE_TYPE(z+1)), EVE_TYPE(z));
+      TTS_EQUAL(eve::bit_floor(EVE_TYPE(3*(z/2))), EVE_TYPE(z));
     }
   }
   else  
   {
-    TTS_EQUAL(eve::floor2(EVE_TYPE(0))   , EVE_TYPE(0)); 
-    TTS_EQUAL(eve::floor2(EVE_TYPE(1.3)) , EVE_TYPE(1));
-    TTS_EQUAL(eve::floor2(EVE_TYPE(1.5)) , EVE_TYPE(1));
-    TTS_EQUAL(eve::floor2(EVE_TYPE(1.6)) , EVE_TYPE(1));
-    TTS_EQUAL(eve::floor2(EVE_TYPE(2.9)) , EVE_TYPE(2));
+    TTS_EQUAL(eve::bit_floor(EVE_TYPE(0))   , EVE_TYPE(0)); 
+    TTS_EQUAL(eve::bit_floor(EVE_TYPE(1.3)) , EVE_TYPE(1));
+    TTS_EQUAL(eve::bit_floor(EVE_TYPE(1.5)) , EVE_TYPE(1));
+    TTS_EQUAL(eve::bit_floor(EVE_TYPE(1.6)) , EVE_TYPE(1));
+    TTS_EQUAL(eve::bit_floor(EVE_TYPE(2.9)) , EVE_TYPE(2));
   }
 }
   

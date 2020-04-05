@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/floor2.hpp>
+#include <eve/function/bit_floor.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -17,20 +17,20 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on floor2")
+TTS_CASE("wide random check on bit_floor")
 {
 
   if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
-    auto std_floor2 = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );
+    auto std_bit_floor = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );
     eve::exhaustive_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-    TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
+    TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
   else
   {
-    auto std_floor2 = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );
+    auto std_bit_floor = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 1) ? 0 : std::exp2l(std::floor(std::log2l(e))); } );
     eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-    TTS_RANGE_CHECK(p, std_floor2, eve::floor2);
+    TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
   
   
