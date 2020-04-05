@@ -1,4 +1,4 @@
-#include <eve/function/ceil2.hpp>
+#include <eve/function/bit_ceil.hpp>
 #include <eve/wide.hpp>
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
@@ -9,12 +9,12 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi =                   " << pi << '\n'
-            << "-> eve::ceil2(pi) =       " << eve::ceil2(pi) << '\n';
+            << "-> eve::bit_ceil(pi) =       " << eve::bit_ceil(pi) << '\n';
 
   std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                   " << xf << '\n'
-            << "-> eve::ceil2(xf) =       " << eve::ceil2(xf) << '\n';
+            << "-> eve::bit_ceil(xf) =       " << eve::bit_ceil(xf) << '\n';
   return 0;
 }
