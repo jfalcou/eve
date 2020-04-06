@@ -71,7 +71,7 @@ make_all_units(ROOT core NAME bit_ceil              ARCH scalar simd TYPES ${uin
 make_all_units(ROOT core NAME clamp                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME conj                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME convert               ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME copysign              ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME copysign              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME cos                   ARCH scalar simd TYPES ${real_types}    ) 
 make_all_units(ROOT core NAME cospi                 ARCH scalar simd TYPES ${signed_types}  )   
 make_all_units(ROOT core NAME cosh                  ARCH scalar simd TYPES ${real_types}    )
