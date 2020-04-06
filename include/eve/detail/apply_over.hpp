@@ -69,7 +69,23 @@ namespace eve::detail
       auto  [xlo, elo] = f(lov, low);
       return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
     }
-  } 
+  }
+
+  template<typename Obj, simd_value T>
+  EVE_FORCEINLINE auto apply_over3(Obj f, T const & v)
+  {
+    if constexpr(has_emulated_abi_v<T> ) return map(f, v); 
+    else if constexpr(has_aggregated_abi_v<T>)
+    {
+      auto  [lo, hi] = v.slice();
+      auto  [nhi, xhi, dxhi] = f(hi);
+      auto  [nlo, xlo, dxlo] = f(lo);
+      return std::make_tuple(eve::combine( nlo, nhi)
+                            , eve::combine( xlo, xhi)
+                            , eve::combine( dxlo, dxhi));
+    }
+  }
+  
 }
 
 #endif
