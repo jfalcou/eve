@@ -24,7 +24,7 @@
 #include <eve/function/add.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/smallestposval.hpp>
@@ -42,20 +42,20 @@ namespace eve::detail
       if constexpr(native<T>)
       {
         using i_t = as_integer_t<T>;
-        using v_t = value_type_t<T>; 
+        using v_t = value_type_t<T>;
         auto a = eve::abs(a0);
         auto e1 = exponent(a)-Nbmantissabits<T>();
         auto e = bit_cast(bit_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())), as<T>());
-        e =  add[is_not_finite(a)](e, Nan<T>()); 
+        e =  add[is_not_finite(a)](e, Nan<T>());
         if constexpr(eve::platform::supports_denormals)
         {
-          return  if_else(is_less(a, Smallestposval<T>()), Mindenormal<T>(), e); 
+          return  if_else(is_less(a, Smallestposval<T>()), Mindenormal<T>(), e);
         }
         else return e;
       }
       else
       {
-        return  apply_over(raw_(acos), a0); 
+        return  apply_over(raw_(acos), a0);
       }
     }
     else if constexpr(integral_value<T>) return T(1);
