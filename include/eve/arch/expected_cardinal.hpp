@@ -46,6 +46,12 @@ namespace eve
     static constexpr bool is_default = false;
     using combined_type              = fixed<2>;
   };
+
+  struct scalar_cardinal : std::integral_constant<std::ptrdiff_t, 1ULL>
+  {
+    static constexpr bool is_default = false;
+    using combined_type              = fixed<2>;
+  };
 }
 
 #endif

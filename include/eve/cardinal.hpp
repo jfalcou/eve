@@ -17,17 +17,18 @@
 namespace eve
 {
   template<std::ptrdiff_t Cardinal> struct fixed;
+  struct  scalar_cardinal;
 
   template<typename Type>
-  struct cardinal :   fixed<1>
+  struct cardinal : scalar_cardinal
   {
-    using type =  fixed<1>; 
+    using type = scalar_cardinal;
   };
 
   template<typename Type, typename Size, typename ABI>
   struct cardinal<wide<Type, Size, ABI>> : Size
   {
-     using type =  Size; 
+     using type = Size;
   };
 
   template<typename Type>
