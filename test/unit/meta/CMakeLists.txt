@@ -16,6 +16,7 @@ make_unit( "meta" sign_of.cpp )
 ##==================================================================================================
 ## Concepts tests
 make_unit( "meta.concept" rebindable.cpp )
+make_unit( "meta.concept" value.cpp )
 
 ##==================================================================================================
 ## Traits tests
