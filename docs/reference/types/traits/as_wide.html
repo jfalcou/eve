@@ -14,20 +14,21 @@ eve::as_wide
 **Required header:**
 
 <script type="preformatted">
-`#include <eve/element_type.hpp>`
+`#include <eve/as_wide.hpp>`
 </script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  template<typename Type, typename Size> struct as_wide;
+  template<typename Type, typename Size = /* see below */>
+  struct as_wide;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
 Build a [SIMD type](../../../concept.html#simd_value) from a given [element type](traits.html#element_type)
-`Type` and [cardinal](traits.html#cardinal) `Size`.
+`Type` and an optional [cardinal](traits.html#cardinal) `Size`.
 
  - If `Type` satisfies [scalar_value](../../../concept.html#scalar_value), `eve::as_wide&lt;Type,Cardinal>::type`
    evaluates to `wide&lt;Type,Cardinal>`.
@@ -35,8 +36,11 @@ Build a [SIMD type](../../../concept.html#simd_value) from a given [element type
  - If `Type` satisfies [simd_value](../../../concept.html#simd_value), `eve::as_wide&lt;Type,Cardinal>::type`
    evaluates to `wide&lt;eve::element_t&lt;Type>,Cardinal>`, i.e it overwrites the initial type's cardinal.
 
- - If `Type` is a template type defined as `Type&lt;Ts...>`, `eve::as_wide&lt;Type,Cardinal>::type`
-   evaluates to `Type&lt;eve::as_wide_t&lt;Ts>...>`.
+ - If `Type` is a template type satisfies Rebindable, `eve::as_wide&lt;Type,Cardinal>::type`
+   evaluates to `std::tuple&lt;eve::as_wide_t&lt;Ts>...>`.
+
+ - If `Type` is an instance of `std::pair` or `std::array`, evaluates and instance of the
+   same type but with its parameters replaced by the proper evaluation of `eve::as_wide_t`.
 
 **Member types:**
 
@@ -75,14 +79,21 @@ int main()
   std::cout << std::boolalpha << std::is_same_v < wide<float,c_t>
                                                 , as_wide_t<float,c_t>
                                                 > << "\n";
+
   std::cout << std::boolalpha << std::is_same_v < wide<int,c_t>
                                                 , as_wide_t<wide<int,fixed<2>>,c_t>
                                                 > << "\n";
+
   std::cout << std::boolalpha << std::is_same_v < logical<wide<char,c_t>>
                                                 , as_wide_t<logical<char>,c_t>
                                                 > << "\n";
-  std::cout << std::boolalpha << std::is_same_v < std::vector<wide<double,c_t>>
-                                                , as_wide_t<std::vector<double>,c_t>
+
+  std::cout << std::boolalpha << std::is_same_v < std::array<wide<double,c_t>,7>
+                                                , as_wide_t<std::array<double,7>,c_t>
+                                                > << "\n";
+
+  std::cout << std::boolalpha << std::is_same_v < std::pair<wide<double,c_t>,pair<wide<float,c_t>>
+                                                , as_wide_t<std::pair<double,float>,c_t>
                                                 > << "\n";
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,6 +103,7 @@ int main()
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+true
 true
 true
 true

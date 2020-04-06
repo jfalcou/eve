@@ -12,24 +12,13 @@
 #define EVE_AS_WIDE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
+#include <eve/concept/rebindable.hpp>
 #include <utility>
 #include <array>
 #include <tuple>
 
 namespace eve
 {
-  template<std::size_t I, typename T>
-  void get(T&&);
-
-  template<typename T>
-  concept restructurable = requires(T a)
-  {
-    { std::tuple_size<T>::value  };
-    { get<0>(a) };
-    // TODO: Reinstate when g++ and clang are happy with them
-    // { typename std::tuple_element<0,T>::type  };
-  };
-
   template<typename Type>
   struct is_wide : std::false_type
   {};
@@ -39,7 +28,7 @@ namespace eve
   {};
 
   template<typename Type>
-  requires( restructurable<Type> )
+  requires( rebindable<Type> )
   struct is_wide<Type>
   {
     template<typename Idx>      struct eval_n;
@@ -82,7 +71,7 @@ namespace eve
   //================================================================================================
   // as_wide on type supporting structured_binding builds a new tuple of wide
   //================================================================================================
-  template<typename T, typename Size> requires( restructurable<T> && !is_wide<T>::value )
+  template<typename T, typename Size> requires( rebindable<T> && !is_wide<T>::value )
   struct as_wide<T,Size>
   {
     template<typename Idx>      struct rebuild;

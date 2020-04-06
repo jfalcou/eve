@@ -15,13 +15,11 @@
 
 namespace eve
 {
-  template<std::size_t I, typename T> void get(T&&);
-
   template<typename T> concept rebindable = requires(T a)
   {
     { std::tuple_size<T>::value  };
-    { std::tuple_element_t<0,T>() };
-    { get<0>(a) };
+    { ::std::tuple_element_t<0,T>() };
+    //{ get<0>(a) };
   };
 }
 
