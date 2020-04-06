@@ -28,7 +28,7 @@ namespace eve::detail
     {
       return static_cast<bool>(m[0]);
     }
-    else if constexpr( N::value == expected_cardinal<T,ppc_>::value )
+    else if constexpr( N::value == expected_cardinal_v<T,ppc_> )
     {
       return vec_any_eq( m.storage(), True(as(v0)).storage() );
     }

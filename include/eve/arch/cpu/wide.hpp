@@ -70,7 +70,7 @@ namespace eve
 
     using iterator_facade = detail::wide_iterator<Type, storage_type, abi_type>;
 
-    template<typename T, typename N = fixed<expected_cardinal_v<T>>>
+    template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = wide<T,N>;
 
     // ---------------------------------------------------------------------------------------------

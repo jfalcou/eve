@@ -39,7 +39,7 @@ namespace eve
       static constexpr auto small_size  = expected_cardinal_v<Type>;
       static constexpr auto replication = Cardinal::value/small_size;
 
-      using value_type    = as_wide_t<Type, fixed<expected_cardinal_v<Type>>>;
+      using value_type    = as_wide_t<Type, expected_cardinal_t<Type>>;
       using segment_type  = std::array<value_type,replication>;
       segment_type        segments;
 
