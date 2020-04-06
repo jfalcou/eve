@@ -76,7 +76,7 @@ namespace eve::detail
           else if constexpr(sizeof(T) == 4)  return _mm256_min_epu32(v0, v1);
         }
       }
-      else return map(min, v0, v1); 
+      else return aggregate(min, v0, v1); 
     }
   }
 }
