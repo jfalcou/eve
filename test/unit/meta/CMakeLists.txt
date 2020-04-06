@@ -14,6 +14,10 @@ make_unit( "meta" as_wide.cpp )
 make_unit( "meta" sign_of.cpp )
 
 ##==================================================================================================
+## Concepts tests
+make_unit( "meta.concept" rebindable.cpp )
+
+##==================================================================================================
 ## Traits tests
 make_unit( "meta" cardinal.cpp )
 make_unit( "meta" has_abi.cpp )
