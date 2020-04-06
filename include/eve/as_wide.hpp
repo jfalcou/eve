@@ -13,34 +13,13 @@
 
 #include <eve/forward.hpp>
 #include <eve/concept/rebindable.hpp>
+#include <eve/detail/is_wide.hpp>
 #include <utility>
 #include <array>
 #include <tuple>
 
 namespace eve
 {
-  template<typename Type>
-  struct is_wide : std::false_type
-  {};
-
-  template<typename Type, typename N>
-  struct is_wide<eve::wide<Type,N>> : std::true_type
-  {};
-
-  template<typename Type>
-  requires( rebindable<Type> )
-  struct is_wide<Type>
-  {
-    template<typename Idx>      struct eval_n;
-    template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
-    {
-      static constexpr bool value = (is_wide<std::tuple_element_t<N,Type>>::value || ...);
-    };
-
-    using size = std::tuple_size<Type>;
-    static constexpr bool value = eval_n<std::make_index_sequence<size::value>>::value;
-  };
-
   template<typename Type, typename Size = expected_cardinal_t<Type>>
   struct as_wide;
 
@@ -71,7 +50,7 @@ namespace eve
   //================================================================================================
   // as_wide on type supporting structured_binding builds a new tuple of wide
   //================================================================================================
-  template<typename T, typename Size> requires( rebindable<T> && !is_wide<T>::value )
+  template<typename T, typename Size> requires( rebindable<T> && !detail::is_wide<T>::value )
   struct as_wide<T,Size>
   {
     template<typename Idx>      struct rebuild;
@@ -89,7 +68,7 @@ namespace eve
   // Special case :std::pair gives std::pair
   //================================================================================================
   template<typename T, typename U, typename Size>
-  requires( !is_wide<std::pair<T,U>>::value )
+  requires( !detail::is_wide<std::pair<T,U>>::value )
   struct as_wide<std::pair<T,U>,Size>
   {
     using type = std::pair<typename as_wide<T,Size>::type, typename as_wide<U,Size>::type>;
@@ -99,7 +78,7 @@ namespace eve
   // Special case :std::array gives std::array
   //================================================================================================
   template<typename T, std::size_t N, typename Size>
-  requires( !is_wide<std::array<T,N>>::value )
+  requires( !detail::is_wide<std::array<T,N>>::value )
   struct as_wide<std::array<T,N>,Size>
   {
     using type = std::array<typename as_wide<T,Size>::type, N>;
