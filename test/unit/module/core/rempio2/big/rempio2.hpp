@@ -20,18 +20,14 @@
 
 TTS_CASE("wide random check on rempio2")
 {
-  auto std_rempio2_n = tts::vectorize<EVE_TYPE>( [](EVE_VALUE e) { auto [n, x, dx] = eve::rem_pio2(e); return n; } );
-  auto std_rempio2_x = tts::vectorize<EVE_TYPE>( [](EVE_VALUE e) { auto [n, x, dx] = eve::rem_pio2(e); return x; } );
-//   auto rempio2_n =  [](EVE_TYPE e) { auto [n, x, dx] = eve::big_(eve::rempio2)(e); return n; };
-//   auto rempio2_x =  [](EVE_TYPE e) { auto [n, x, dx] = eve::big_(eve::rempio2)(e); return x; };
 
   EVE_VALUE z = EVE_VALUE( 0.05); 
  for(int i=0; i <10 ; ++i)
  {
-   EVE_TYPE n, x, dx; 
-   std::tie(n, x, dx) = eve::big_(eve::rempio2)(EVE_TYPE(z));
-   TTS_ULP_EQUAL(x , std_rempio2_x(z)   , 0.5 );
-   TTS_ULP_EQUAL(n , std_rempio2_n(z)   , 0.5 );     
+   auto [n, x, dx] = eve::big_(eve::rempio2)(EVE_TYPE(z));
+   auto [nn, xx, dxx] = eve::rem_pio2(z); 
+   TTS_ULP_EQUAL(x ,  EVE_TYPE(xx)   , 0.5 );
+   TTS_ULP_EQUAL(n ,  EVE_TYPE(nn)   , 0.5 );     
    z*= EVE_VALUE(10); 
  }
 }
