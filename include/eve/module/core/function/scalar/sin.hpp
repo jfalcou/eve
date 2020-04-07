@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/detail/scalar/sin_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>

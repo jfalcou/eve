@@ -113,7 +113,7 @@ namespace eve::detail
       {
         using t_t = wide<float, N, ABI>; 
         t_t n1; 
-        std::tie(n1, fa, dfa) = small_(rempio2)(fa);
+        std::tie(n1, fa, dfa) = rempio2_small(fa);
         n =quadrant(n+n1); 
         return std::make_tuple(n, fa, dfa); 
       }      

@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/module/core/detail/simd/sin_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp> 
 #include <eve/function/binarize.hpp>
 #include <eve/function/bit_xor.hpp>
