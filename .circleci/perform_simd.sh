@@ -26,7 +26,7 @@ else
 fi
 
 ##==================================================================================================
-## Run every test up to SIMD
+## Run every native SIMD test
 ##==================================================================================================
-ninja core.simd.unit -k 0 -j 3
-ctest -R ^core.*.simd.*.unit -j 8
+ninja core.$1.unit -k 0 -j 3
+ctest -R ^core.*.$1.*.unit -j 8

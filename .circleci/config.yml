@@ -141,16 +141,22 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Running Native Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh native
+      - run:
           name: Running SIMD Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh simd
 
   x86_sse2:
     <<: *config_gcc_x86
     steps:
       - checkout
       - run:
+          name: Running NAtive Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh native
+      - run:
           name: Running SIMD Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh simd
 
   x86_sse4:
     <<: *config_gcc_x86
@@ -158,7 +164,10 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh native
+      - run:
+          name: Running SIMD Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh simd
 
   x86_avx:
     <<: *config_gcc_x86
@@ -166,7 +175,10 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AVX
-          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh native
+      - run:
+          name: Running SIMD Tests - AVX
+          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh simd
 
   x86_fma:
     <<: *config_gcc_x86
@@ -174,7 +186,10 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh native
+      - run:
+          name: Running SIMD Tests - FMA
+          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh simd
 
   x86_avx2:
     <<: *config_gcc_x86
@@ -182,7 +197,10 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh native
+      - run:
+          name: Running SIMD Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh simd
 
   arm_aarch64_neon:
     <<: *config_aarch64
@@ -190,7 +208,10 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh native
+      - run:
+          name: Running SIMD Tests - AARCH64 NEON
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh simd
 
   ppc64_vsx:
     <<: *config_gcc_ppc64
@@ -198,7 +219,10 @@ jobs:
       - checkout
       - run:
           name: Running Basic Tests - PPC64 VSX
-          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh
+          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh native
+      - run:
+          name: Running Basic Tests - PPC64 VSX
+          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh simd
 
 workflows:
   version: 2
