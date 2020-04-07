@@ -22,7 +22,7 @@
 #include <eve/function/is_flint.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/bit_and.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

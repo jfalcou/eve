@@ -19,14 +19,14 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
+#include <eve/constant/minf.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/sqrt_2.hpp>
-#include <eve/constant/sqrt_2o_2.hpp>  
+#include <eve/constant/sqrt_2o_2.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp> 
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pio_2.hpp>
@@ -36,7 +36,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <type_traits>
 
 TTS_CASE("Check cosd return type")

@@ -11,7 +11,7 @@
 #ifndef EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 #define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
 
-#include <eve/as_wide.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/meta/tools.hpp>
 #include <eve/forward.hpp>

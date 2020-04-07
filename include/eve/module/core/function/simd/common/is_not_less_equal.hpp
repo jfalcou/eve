@@ -18,7 +18,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/function/is_greater.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

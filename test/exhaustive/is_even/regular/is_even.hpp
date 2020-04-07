@@ -13,7 +13,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -22,7 +22,7 @@
 
 TTS_CASE("wide exhaustive check on is_even")
 {
-   using l_t = eve::as_logical_t<EVE_TYPE>; 
+   using l_t = eve::as_logical_t<EVE_TYPE>;
   if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == trunc(e/2)*2; } );

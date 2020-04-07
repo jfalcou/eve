@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <type_traits>

@@ -17,12 +17,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
-#include <eve/constant/sqrt_2o_2.hpp>  
-#include <eve/constant/one.hpp> 
+#include <eve/constant/minf.hpp>
+#include <eve/constant/sqrt_2o_2.hpp>
+#include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <type_traits>
 
 TTS_CASE("Check cosd return type")
@@ -32,7 +32,7 @@ TTS_CASE("Check cosd return type")
 
 TTS_CASE("Check eve::restricted_(eve::cosd) behavior")
 {
-  using eve::cosd; 
+  using eve::cosd;
 
 #ifndef EVE_SIMD_NO_INVALIDS
   TTS_ULP_EQUAL(eve::restricted_(cosd)(eve::Inf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0.5);

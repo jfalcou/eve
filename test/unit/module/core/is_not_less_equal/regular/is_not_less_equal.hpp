@@ -18,7 +18,7 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 

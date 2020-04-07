@@ -11,7 +11,7 @@
 #include <eve/function/is_not_inf.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -33,6 +33,6 @@ TTS_CASE("wide exhaustive check on is_not_inf")
     eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
-  
-  
+
+
 }

@@ -19,8 +19,8 @@
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/is_logical.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/is_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 

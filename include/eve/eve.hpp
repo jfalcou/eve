@@ -15,7 +15,7 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 #include <eve/version.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <eve/module/core.hpp>
 
 #endif

@@ -16,7 +16,7 @@
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_gtz.hpp>

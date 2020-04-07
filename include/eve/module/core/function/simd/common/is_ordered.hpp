@@ -21,7 +21,7 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

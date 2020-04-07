@@ -18,7 +18,7 @@
 #include <eve/function/bit_mask.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/function/saturated.hpp>
 #include <type_traits>
 

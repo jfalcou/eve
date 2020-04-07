@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/function/is_ordered.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/logical_and.hpp>

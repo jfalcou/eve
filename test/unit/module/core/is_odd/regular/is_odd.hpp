@@ -19,7 +19,7 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/mzero.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <type_traits>
 
 TTS_CASE("Check is_odd return type")

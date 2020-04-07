@@ -22,7 +22,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <eve/function/saturated.hpp>
@@ -37,9 +37,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_),
                                  wide<T, N, ABI> const &v) noexcept
   {
-    return One(as(v))-v; 
+    return One(as(v))-v;
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Saturated
   template<typename T, typename N,  typename ABI>
@@ -47,17 +47,17 @@ namespace eve::detail
                                 , saturated_type const &
                                 , wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) return oneminus(v); 
+    if constexpr(std::is_floating_point_v<T>) return oneminus(v);
     else if constexpr(std::is_signed_v<T>)
     {
       return if_else(v < Valmin(as(v))+2, Valmax(as(v)), oneminus(v));
-    }                                
+    }
     else // if constexpr(std::is_unsigned_v<T>)
     {
-      return if_else(v > One(as(v)), eve::zero_, oneminus(v)); 
+      return if_else(v > One(as(v)), eve::zero_, oneminus(v));
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<typename U, typename T, typename N,  typename ABI>
@@ -70,7 +70,7 @@ namespace eve::detail
     else
       return if_else(cond, One(as(v))-v, v);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked Saturated case
   template<typename U, typename T, typename N,  typename ABI>

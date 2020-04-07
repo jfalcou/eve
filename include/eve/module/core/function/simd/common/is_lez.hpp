@@ -17,7 +17,7 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

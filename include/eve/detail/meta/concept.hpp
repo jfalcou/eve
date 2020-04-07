@@ -12,7 +12,7 @@
 #define EVE_DETAIL_META_CONCEPT_HPP_INCLUDED
 
 #include <eve/detail/meta/traits.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 
@@ -69,11 +69,11 @@ namespace eve::detail
   using totally_ordered= totally_ordered_with<T,T>;
 
   template<typename T, typename U>
-  using compatible = either < as_trait<same_card, T, U>::value 
-                              , is_Vectorizable<T>::value 
-                              , is_Vectorizable<U>::value 
+  using compatible = either < as_trait<same_card, T, U>::value
+                              , is_Vectorizable<T>::value
+                              , is_Vectorizable<U>::value
   >;
-  
+
 }
 
 #endif

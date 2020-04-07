@@ -14,8 +14,8 @@
 #include <eve/constant/zero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/as_wide.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/as_wide.hpp>
+#include <eve/traits/cardinal.hpp>
 
 TTS_CASE("Check eve::bit_select return type")
 {

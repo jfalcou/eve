@@ -13,8 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 

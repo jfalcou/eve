@@ -20,7 +20,7 @@
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/constant/false.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

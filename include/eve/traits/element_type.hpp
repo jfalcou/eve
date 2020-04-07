@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ELEMENT_TYPE_HPP_INCLUDED
-#define EVE_ELEMENT_TYPE_HPP_INCLUDED
+#ifndef EVE_TRAITS_ELEMENT_TYPE_HPP_INCLUDED
+#define EVE_TRAITS_ELEMENT_TYPE_HPP_INCLUDED
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/forward.hpp>

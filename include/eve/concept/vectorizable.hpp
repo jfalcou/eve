@@ -15,8 +15,8 @@
 #include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
-#include <eve/element_type.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/element_type.hpp>
+#include <eve/traits/is_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail

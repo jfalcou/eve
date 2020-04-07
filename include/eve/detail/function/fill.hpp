@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 
 namespace eve::detail
 {

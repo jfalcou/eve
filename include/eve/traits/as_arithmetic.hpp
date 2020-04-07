@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_AS_LOGICAL_HPP_INCLUDED
-#define EVE_AS_LOGICAL_HPP_INCLUDED
+#ifndef EVE_TRAITS_AS_ARITHMETIC_HPP_INCLUDED
+#define EVE_TRAITS_AS_ARITHMETIC_HPP_INCLUDED
 
 #include <eve/forward.hpp>
 #include <eve/logical.hpp>
@@ -17,25 +17,25 @@
 namespace eve
 {
   template<typename T>
-  struct as_logical
+  struct as_arithmetic
   {
-    using type = logical<T>;
+    using type = T;
   };
 
   template<>
-  struct as_logical<bool>
+  struct as_arithmetic<bool>
   {
     using type = bool;
   };
 
   template<typename T>
-  struct as_logical<logical<T>>
+  struct as_arithmetic<logical<T>>
   {
-    using type = logical<T>;
+    using type = T;
   };
 
   template<typename T>
-  using as_logical_t = typename as_logical<T>::type;
+  using as_arithmetic_t = typename as_arithmetic<T>::type;
 }
 
 #endif

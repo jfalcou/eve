@@ -22,7 +22,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/add.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

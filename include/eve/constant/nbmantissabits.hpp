@@ -12,20 +12,19 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp> 
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
-namespace eve 
+namespace eve
 {
   EVE_MAKE_CALLABLE(nbmantissabits_, nbmantissabits_);
 
   template<typename T>
   EVE_FORCEINLINE auto Nbmantissabits(as_<T> const & = {})
   {
-    using t_t = detail::value_type_t<T>; 
+    using t_t = detail::value_type_t<T>;
     using i_t = detail::as_integer_t<T>;
     if  constexpr(std::is_floating_point_v<t_t>)
     {
@@ -33,7 +32,7 @@ namespace eve
       if constexpr(std::is_same_v<t_t, double >) return i_t(52);
     }
     else
-      return i_t(0); 
+      return i_t(0);
   }
 
   EVE_MAKE_NAMED_CONSTANT(nbmantissabits_, Nbmantissabits);

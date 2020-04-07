@@ -14,8 +14,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/traits/is_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -27,7 +27,9 @@ namespace eve::detail
                                                                                Vectorizable<U>)
   {
     if constexpr(is_logical_v<T> || is_logical_v<U>)
-    { return static_cast<bool>(a) || !static_cast<bool>(b); }
+    {
+      return static_cast<bool>(a) || !static_cast<bool>(b);
+    }
     else
     {
       return a || !b;

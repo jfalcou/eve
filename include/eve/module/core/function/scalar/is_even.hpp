@@ -20,7 +20,7 @@
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -39,7 +39,7 @@ namespace eve::detail
         else
           return abs(a) != Smallestposval<T>();
       }
-      else return false; 
+      else return false;
     }
     else
       return (!(a & One(as(a))));

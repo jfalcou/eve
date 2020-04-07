@@ -11,7 +11,7 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -20,7 +20,7 @@
 
 TTS_CASE("wide exhaustive check on is_nan")
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>; 
+  using l_t = eve::as_logical_t<EVE_TYPE>;
   if constexpr(std::is_floating_point_v<EVE_VALUE>)
   {
     auto std_is_nan = tts::vectorize<l_t>( [](auto e) { return e!=e; } );
@@ -33,6 +33,6 @@ TTS_CASE("wide exhaustive check on is_nan")
     eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
     TTS_RANGE_CHECK(p, std_is_nan, eve::is_nan);
   }
-  
-  
+
+
 }

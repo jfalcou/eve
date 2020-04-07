@@ -20,7 +20,7 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/is_logical.hpp>
 
 namespace eve::detail
 {
@@ -34,7 +34,7 @@ namespace eve::detail
       if constexpr(is_logical_v<T>) return v.mask();
       else                          return is_nez(v).mask();
     }
-    else                            return apply_over(bit_mask, v); 
+    else                            return apply_over(bit_mask, v);
   }
 
 }

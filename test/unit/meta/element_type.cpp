@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/element_type.hpp>
+#include <eve/traits/element_type.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <tts/tests/types.hpp>

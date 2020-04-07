@@ -13,9 +13,9 @@
 
 #include <eve/concept/range.hpp>
 #include <eve/detail/function/slice.hpp>
-#include <eve/as_wide.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <algorithm>
 #include <utility>
 #include <tuple>

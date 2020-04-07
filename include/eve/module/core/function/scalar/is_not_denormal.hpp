@@ -18,10 +18,10 @@
 #include <eve/function/is_not_less.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/is_logical.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 

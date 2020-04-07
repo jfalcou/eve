@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CARDINAL_HPP_INCLUDED
-#define EVE_CARDINAL_HPP_INCLUDED
+#ifndef EVE_TRAITS_CARDINAL_HPP_INCLUDED
+#define EVE_TRAITS_CARDINAL_HPP_INCLUDED
 
 #include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>

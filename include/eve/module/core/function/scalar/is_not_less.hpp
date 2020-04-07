@@ -17,7 +17,7 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/function/is_less.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <type_traits>
 
 namespace eve::detail

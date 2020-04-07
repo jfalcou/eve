@@ -17,8 +17,7 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_xor.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

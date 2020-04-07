@@ -17,7 +17,7 @@
 #include <eve/function/is_even.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
@@ -29,7 +29,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      auto da = dec(a);     
+      auto da = dec(a);
       return (a!= da) && is_even(da);
     }
     else

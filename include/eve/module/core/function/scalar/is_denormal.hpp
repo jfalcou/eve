@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 

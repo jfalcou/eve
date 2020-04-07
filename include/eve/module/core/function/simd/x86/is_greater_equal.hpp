@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/function/is_less.hpp>
 #include <type_traits>
