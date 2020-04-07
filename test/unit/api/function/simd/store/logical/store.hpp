@@ -17,7 +17,6 @@
 #include <eve/function/store.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <algorithm>
 
 using eve::as_aligned;
 using eve::fixed;
@@ -50,7 +49,7 @@ TTS_CASE_TPL("Check store behavior to unaligned logical pointer",
   eve::store(simd, &target[ T::value ]);
   eve::store(simd, &target[ 2 * T::value ]);
 
-  TTS_EXPECT(std::equal(target.begin(), target.end(), ref.begin()));
+  TTS_EQUAL(ref, target);
 }
 
 TTS_CASE_TPL("Check store behavior to aligned pointer of logical",
@@ -83,7 +82,7 @@ TTS_CASE_TPL("Check store behavior to aligned pointer of logical",
   eve::store(simd, as_aligned<algt>(&target[ T::value ]));
   eve::store(simd, as_aligned<algt>(&target[ 2 * T::value ]));
 
-  TTS_EXPECT(std::equal(target.begin(), target.end(), ref.begin()));
+  TTS_EQUAL(ref, target);
 }
 
 #endif
