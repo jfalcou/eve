@@ -11,6 +11,8 @@
 #ifndef EVE_CARDINAL_HPP_INCLUDED
 #define EVE_CARDINAL_HPP_INCLUDED
 
+#include <eve/concept/rebindable.hpp>
+#include <eve/detail/is_wide.hpp>
 #include <eve/forward.hpp>
 #include <cstddef>
 
@@ -36,8 +38,9 @@ namespace eve
   {
   };
 
-  template<template<class...> class Type, typename T0, typename... Ts>
-  struct cardinal< Type<T0,Ts...>> : cardinal<T0>
+  template<typename Type>
+  requires( rebindable<Type> )
+  struct cardinal<Type> : cardinal<std::tuple_element_t<0,Type>>
   {
   };
 

@@ -7,15 +7,6 @@
   SPDX-License-Identifier: MIT
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
-                      **Expressive Vector Engine**
-                        Type wrapping utilities
-
-  (insert ../../crumbs.html here)
-
-<br>
-Various **EVE** functions requires to be configured by a type. This type argument is used for selecting or configuring the output type of the functions (i.e the various [conversions] functions).
-
-Instead of requiring users to pass unwieldy template parameters that may clash with the [function objects paradigm](../rationale.html#functionobjectsasapi) **EVE** uses, those types can be passed as regular parameters via a type wrapper.
 
 eve::as_
 ====================================================================================================
@@ -39,7 +30,13 @@ namespace eve
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-Type wrapping structure. Instances of [`eve::as`](#as) can be passed as objects and the type they wrap can be retrieved later via their member type.
+Type wrapping structure. Various **EVE** functions requires to be configured by a type. This type
+argument is used for selecting or configuring the output type of the functions (i.e the various
+[conversions] functions).
+
+Instead of requiring users to pass unwieldy template parameters that may clash with the [function objects
+paradigm](../rationale.html#functionobjectsasapi) **EVE** uses, Instances of [`eve::as`](#as) can be passed
+as objects and the type they wrap can be retrieved later via their member type.
 
 **Member types:**
 
@@ -171,14 +168,8 @@ int main()
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-----------------------------------------------------------------------------------------------------
-<!-- Shortcuts -->
-
-<!-- Footnotes -->
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
-<link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
-<script src="../../markdeep.min.js"></script>
+<script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
