@@ -25,13 +25,14 @@
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/copysign.hpp>
+//#include <eve/function/copysign.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_greater_equal.hpp>
+//#include <eve/function/is_lez.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/logical_ornot.hpp>
@@ -90,7 +91,7 @@ namespace eve::detail
                         , inc[logical_ornot(rx2 != bb, is_even(q))](q)
                         , q); 
             return if_else(is_nez(b)
-                          , eve::copysign(q, a^b) 
+                          , if_else(is_gez(a^b), q, -q) //eve::copysign(q, a^b) 
                           , if_else(is_eqz(a)
                                    , eve::zero_
                                    , if_else(is_gtz(a)

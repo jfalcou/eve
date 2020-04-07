@@ -59,7 +59,7 @@ namespace eve::detail
           ui_t aa0 = saturated_(eve::abs)(a0);
           ui_t aa1 = saturated_(eve::abs)(a1);
           T q = div(aa0, aa1, to_nearest_type());
-          return eve::copysign(q, a0^a1);
+          return  if_else(is_gez(a0^a1), q, -q); //eve::copysign(q, a0^a1);
         }
         else
           return ((a0>0) ? Valmax<T>() : Valmin<T>());
