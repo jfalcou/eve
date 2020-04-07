@@ -82,7 +82,7 @@ namespace eve
 
   template<typename T> concept simd_value                 = is_Vectorized_v<T>;
   template<typename T> concept integral_simd_value        = simd_value<T> && std::integral<detail::value_type_t<T>>;
-  template<typename T> concept signed_simd_value          = simd_value<T> && std::signed_type<detail::value_type_t<T>>;
+  template<typename T> concept signed_simd_value          = simd_value<T> && std::is_signed_v<detail::value_type_t<T>>;
   template<typename T> concept unsigned_simd_value        = simd_value<T> && std::unsigned_integral<detail::value_type_t<T>>;
   template<typename T> concept signed_integral_simd_value = simd_value<T> && std::signed_integral<detail::value_type_t<T>>;
   template<typename T> concept floating_simd_value        = simd_value<T> && std::floating_point<detail::value_type_t<T>>;

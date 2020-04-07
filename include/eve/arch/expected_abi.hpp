@@ -35,27 +35,27 @@ namespace eve
   template<typename Type, typename Size> struct expected_abi {};
 
   template<typename Type, typename Size>
-  requires( std::arithmetic<Type> && detail::require_aggregation<Type, Size> )
+  requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
   struct expected_abi<Type, Size>
   {
     using type = eve::aggregated_;
   };
 
   template<typename Type, typename Size>
-  requires( std::arithmetic<Type> && !detail::require_aggregation<Type, Size> )
+  requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
   struct expected_abi<Type, Size> : abi_of<Type, Size::value>
   {};
 
   // Wrapper for SIMD registers holding logical type
   template<typename Type, typename Size>
-  requires( std::arithmetic<Type> && detail::require_aggregation<Type, Size> )
+  requires( arithmetic<Type> && detail::require_aggregation<Type, Size> )
   struct expected_abi<logical<Type>, Size>
   {
     using type = eve::aggregated_;
   };
 
   template<typename Type, typename Size>
-  requires( std::arithmetic<Type> && !detail::require_aggregation<Type, Size> )
+  requires( arithmetic<Type> && !detail::require_aggregation<Type, Size> )
   struct expected_abi<logical<Type>, Size> : abi_of<logical<Type>, Size::value>
   {};
 

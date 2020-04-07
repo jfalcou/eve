@@ -14,16 +14,28 @@
 #include <type_traits>
 #include <functional>
 
+
+#if __has_include(<concepts>)
+
+#include <concepts>
+
+// namespace std
+// {
+//   template<typename T> concept arithmetic              = std::is_arithmetic_v<T>;
+//   template<typename T> concept signed_type             = std::is_signed_v<T>;
+// }
+
+#else
 namespace std
 {
+//  template<typename T> concept arithmetic              = std::is_arithmetic_v<T>;
+//  template<typename T> concept signed_type             = std::is_signed_v<T>;
   template<typename T> concept floating_point          = std::is_floating_point_v<T>;
-  template<typename T> concept arithmetic              = std::is_arithmetic_v<T>;
   template<typename T> concept integral                = std::is_integral_v<T>;
-  template<typename T> concept signed_type             = std::is_signed_v<T>;
   template<typename T> concept unsigned_integral       = std::is_unsigned_v<T>;
   template<typename T> concept signed_integral         = std::is_signed_v<T> && std::is_integral_v<T>;
   template<typename T, typename U> concept same_as     = std::is_same_v<T, U> && std::is_same_v<U, T>;
-
+  
   template<typename F, typename... Ts>
   concept invocable = requires(F&& f, Ts&&...ts)
                       { std::invoke(std::forward<F>(f), std::forward<Ts>(ts)...); };
@@ -101,6 +113,13 @@ namespace std
     //                                 , typename std::indirectly_readable_traits<I>::value_type&
     //                                 >;
   };
+}
+#endif
+
+namespace eve
+{
+  template<typename T> concept arithmetic              = std::is_arithmetic_v<T>;
+//  template<typename T> concept signed_type             = std::is_signed_v<T>;
 }
 
 #endif

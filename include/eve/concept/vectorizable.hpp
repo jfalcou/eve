@@ -70,7 +70,7 @@ namespace eve
 
   template<typename T> concept scalar_value                   = is_Vectorizable_v<T>;
   template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
-  template<typename T> concept signed_scalar_value            = scalar_value<T> && std::signed_type<T>;
+  template<typename T> concept signed_scalar_value            = scalar_value<T> && std::is_signed_v<T>;
   template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
   template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
