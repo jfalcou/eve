@@ -1,0 +1,19 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+
+#define EVE_SIMD_TESTS
+
+using EVE_VALUE = ${target};
+using EVE_TYPE  =  eve::wide<EVE_VALUE>;
+inline constexpr auto EVE_CARDINAL  = eve::wide<EVE_VALUE>::static_size;
+
+#include "${header}.hpp"
