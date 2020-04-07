@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_COS_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SIN_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_SIN_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -39,66 +39,64 @@
 namespace eve::detail
 { 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
                                      , T a0) noexcept
   {
     if constexpr(native<T>)
     {
       auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
-      auto x2 = sqr(a0);
-      auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16); 
-      if constexpr(scalar_value<T>)
-        return (x2nlepi2_16) ? Nan<T>() : cos_eval(x2);
-      else
-        return if_else(x2nlepi2_16, eve::allbits_, cos_eval(x2)); 
+      auto x2 = sqr(a0); 
+      if constexpr(scalar_value<T>) if (is_not_less_equal(x2, pi2_16)) return Nan<T>(); 
+      auto x  = eve::abs(a0); 
+      auto r = bit_xor(detail::sin_eval(x2, x), bitofsign(a0));
+      if constexpr(scalar_value<T>) return r;      
+      else                          return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r); 
     }
     else return apply_over(restricted_(cos), a0); 
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                       , small_type const &       
                                       , T a0) noexcept
   {
     if constexpr(native<T>)
     {
-      T x = eve::abs(a0);
-      auto xnlepio2 = is_not_less_equal(x, Pio_2<T>()); 
-      if constexpr(scalar_value<T>) if (xnlepio2) return Nan<T>();
-      auto reduce = [](auto x){
-          auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
-          auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
-          auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
-          auto xr = x-pio2_1;
-          xr -= pio2_2;
-          xr -= pio2_3;
-          return xr; 
-      }; 
+      auto reduce =  [](x){
+        auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
+        auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
+        auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
+        T xr = x-pio2_1;
+        xr -= pio2_2;
+        xr -= pio2_3;
+        return xr;
+      }
       if constexpr(scalar_value<T>)
-      {
-        using i_t =  as_integer_t<T, signed>; 
-        i_t n = x > Pio_4<T>();
-        if (n) 
+      {      
+        using i_t = as_integer_t<T, signed>; 
+        T x = eve::abs(a0);
+        if (is_less_equal(x, Eps<T>())) return a0; 
+        if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>();
+        i_t n = x > Pio_4<T>(); 
+        if (n)
         {
           auto xr =  reduce(x);
-          return bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1)); 
+          return  bit_xor(bitofsign(a0), cos_eval(sqr(xr)));
         }
-        else return cos_eval(sqr(x));
+        else  return sin_eval(sqr(x), a0); 
       }
       else
       {
-        using elt_t = element_type_t<T>; 
-        auto n = binarize(is_not_less_equal(x, Pio_4(as(x)))); 
-        auto sign_bit = binarize(is_nez(n), Signmask<elt_t>());
+        auto n = is_not_less_equal(x, Pio_4<t_t>()); 
         auto xr =  reduce(x);
         xr = if_else(n, xr, x); 
-        auto z = sqr(xr);
-        auto se = bit_xor(sin_eval(z, xr), sign_bit);
-        auto ce = cos_eval(z);
-        auto z1 = if_else(n, se, ce);
-        return if_else(xnlepio2, eve::allbits_, z1); 
-      }      
+        const t_t z = sqr(xr);
+        const t_t se = sin_eval(z, xr);
+        const t_t ce = cos_eval(z);
+        const t_t z1 = bit_xor(bitofsign(a0), if_else(n, ce, se));
+        return if_else(is_not_less_equal(x, Pio_2<t_t>()), Nan<t_t>(), z1); 
+      }
     }
     else return apply_over(small_(cos), a0); 
   }
@@ -106,7 +104,7 @@ namespace eve::detail
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // medium,  big
   template<typename D, floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , D  const &      
                                      , T a0) noexcept
   {
@@ -115,20 +113,20 @@ namespace eve::detail
       if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>(); 
       auto x =  abs(a0);
       auto [fn, xr, dxr] = D()(rempio2)(x); 
-      return cos_finalize(fn, xr, dxr); 
+      return sin_finalize(bitofsign(a0), fn, xr, dxr); 
     }
-    else return apply_over(D()(cos), a0); 
+    else return apply_over(D()(sin), a0); 
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
   {
     auto x =  abs(a0);
-         if (all(x <= Pio_4(as(x))))                     return restricted_(cos)(a0);
-    else if(all(x <= Pio_2(as(x))))                      return small_(cos)(a0);
-    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(cos)(a0);
-    else                                                 return big_(cos)(a0);
+         if (all(x <= Pio_4(as(x))))                      return restricted_(sin)(a0);
+    else if (all(x <= Pio_2(as(x))))                      return small_(sin)(a0);
+    else if (all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sin)(a0);
+    else                                                  return big_(sin)(a0);
   }
   
 }

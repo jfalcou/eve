@@ -113,11 +113,11 @@ namespace eve::detail
       if (is_not_finite(xr)) return Nan<T>();
       i_t n = toint(fn);
       i_t swap_bit = n&One<i_t>();
-      T  sign_bit = bit_xor(sbit, shl(n&i_t(2), sizeof(i_t)*8-2));
-      T z = sqr(xr);
-      T  se = sin_eval(z, xr);
-      T  ce = cos_eval(z);
-      xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
+      auto  sign_bit = bit_xor(sbit, shl(n&i_t(2), sizeof(i_t)*8-2));
+      auto z = sqr(xr);
+      auto se = sin_eval(z, xr);
+      auto ce = cos_eval(z);
+      auto xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
       return bit_xor(xr,sign_bit);
     }
     else
@@ -125,11 +125,11 @@ namespace eve::detail
       auto tmp =  binarize(fn >= T(2));     
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto sign_bit = bit_xor(sbit, if_else(tmp, Signmask<T>(), eve::zero_));
-      T z = sqr(xr);
-      T se = sin_eval(z, xr);
-      T ce = cos_eval(z);
-      T z1 = if_else(swap_bit, fnma(se, dxr, ce), fma(dxr, ce, se));
-      return bit_xor(z1, sign_bit); 
+      auto z = sqr(xr);
+      auto se = sin_eval(z, xr);
+      auto ce = cos_eval(z);
+      z = if_else(swap_bit, fnma(se, dxr, ce), fma(dxr, ce, se));
+      return bit_xor(z, sign_bit); 
     }
   }
 
