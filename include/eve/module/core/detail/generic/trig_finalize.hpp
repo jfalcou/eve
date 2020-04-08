@@ -102,7 +102,40 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sin_finalize(  const T & sbit
+  EVE_FORCEINLINE constexpr auto sincos_finalize( T a0, T fn, T xr, T dxr = T(0)) noexcept
+  {
+    auto z = sqr(xr);
+    auto  se0 = sin_eval(z, xr);
+    auto  ce0 = cos_eval(z);
+    if constexpr(scalar_value<T>)
+    {
+      using i_t =  detail::as_integer_t<T, signed>; 
+      i_t n = toint(fn);
+      i_t swap_bit = n&One<i_t>();
+      auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
+      i_t cos_sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
+      auto ce = fnma(se0, dxr, ce0);
+      auto se = fma(dxr, ce0, se0);
+      if (swap_bit) std::swap(ce, se); 
+      se = bit_xor(se,sin_sign_bit);   
+      ce = bit_xor(ce,cos_sign_bit);
+      return std::make_tuple(se, ce); 
+    }
+    else
+    {
+      using elt_t =  element_type_t<T>; 
+      auto tmp =  binarize(fn >= T(2));
+      auto swap_bit = (fma(T(-2), tmp, fn)); 
+      auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<elt_t>());
+      auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, Signmask<T>(), eve::zero_));
+      auto test = is_nez(swap_bit);
+      return std::make_tuple( bit_xor(if_else(test, ce0, se0), sin_sign_bit)
+                            , bit_xor(if_else(test, se0, ce0), cos_sign_bit) );
+    }
+  }
+  
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto sin_finalize(  const T & a0
                                              ,  const T & fn
                                              ,  const T & xr
                                              ,  const T & dxr = T(0)) noexcept
@@ -113,7 +146,7 @@ namespace eve::detail
       if (is_not_finite(xr)) return Nan<T>();
       i_t n = toint(fn);
       i_t swap_bit = n&One<i_t>();
-      auto  sign_bit = bit_xor(sbit, shl(n&i_t(2), sizeof(i_t)*8-2));
+      auto  sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
       auto ce = cos_eval(z);
@@ -124,7 +157,7 @@ namespace eve::detail
     {
       auto tmp =  binarize(fn >= T(2));     
       auto swap_bit = (fma(T(-2), tmp, fn));
-      auto sign_bit = bit_xor(sbit, if_else(tmp, Signmask<T>(), eve::zero_));
+      auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, Signmask<T>(), eve::zero_));
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
       auto ce = cos_eval(z);
