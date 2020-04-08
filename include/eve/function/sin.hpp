@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SIN_HPP_INCLUDED
 
 #include <eve/function/definition/sin.hpp>
-#include <eve/module/core/function/scalar/sin.hpp>
-#include <eve/module/core/function/simd/sin.hpp>
+#include <eve/module/core/function/generic/sin.hpp>
 
 #endif

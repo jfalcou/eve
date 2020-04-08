@@ -28,16 +28,16 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/ieee_constant.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <eve/constant/twoopi.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
-{ 
+{
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , restricted_type const &
@@ -46,24 +46,24 @@ namespace eve::detail
     if constexpr(native<T>)
     {
       auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
-      auto x2 = sqr(a0); 
-      if constexpr(scalar_value<T>) if (is_not_less_equal(x2, pi2_16)) return Nan<T>(); 
-      auto x  = eve::abs(a0); 
+      auto x2 = sqr(a0);
+      if constexpr(scalar_value<T>) if (is_not_less_equal(x2, pi2_16)) return Nan<T>();
+      auto x  = eve::abs(a0);
       auto r = bit_xor(detail::sin_eval(x2, x), bitofsign(a0));
-      if constexpr(scalar_value<T>) return r;      
-      else                          return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r); 
+      if constexpr(scalar_value<T>) return r;
+      else                          return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r);
     }
-    else return apply_over(restricted_(cos), a0); 
+    else return apply_over(restricted_(cos), a0);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
-                                      , small_type const &       
+                                      , small_type const &
                                       , T a0) noexcept
   {
     if constexpr(native<T>)
     {
-      auto reduce =  [](x){
+      auto reduce =  [](auto x){
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
         auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
         auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
@@ -71,51 +71,51 @@ namespace eve::detail
         xr -= pio2_2;
         xr -= pio2_3;
         return xr;
-      }
+      };
+      T x = eve::abs(a0);
       if constexpr(scalar_value<T>)
-      {      
-        using i_t = as_integer_t<T, signed>; 
-        T x = eve::abs(a0);
-        if (is_less_equal(x, Eps<T>())) return a0; 
+      {
+        using i_t = as_integer_t<T, signed>;
+        if (is_less_equal(x, Eps<T>())) return a0;
         if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>();
-        i_t n = x > Pio_4<T>(); 
+        i_t n = x > Pio_4<T>();
         if (n)
         {
           auto xr =  reduce(x);
           return  bit_xor(bitofsign(a0), cos_eval(sqr(xr)));
         }
-        else  return sin_eval(sqr(x), a0); 
+        else  return sin_eval(sqr(x), a0);
       }
       else
       {
-        auto n = is_not_less_equal(x, Pio_4<t_t>()); 
+        auto n = is_not_less_equal(x, Pio_4<T>());
         auto xr =  reduce(x);
-        xr = if_else(n, xr, x); 
-        const t_t z = sqr(xr);
-        const t_t se = sin_eval(z, xr);
-        const t_t ce = cos_eval(z);
-        const t_t z1 = bit_xor(bitofsign(a0), if_else(n, ce, se));
-        return if_else(is_not_less_equal(x, Pio_2<t_t>()), Nan<t_t>(), z1); 
+        xr = if_else(n, xr, x);
+        const T z = sqr(xr);
+        const T se = sin_eval(z, xr);
+        const T ce = cos_eval(z);
+        const T z1 = bit_xor(bitofsign(a0), if_else(n, ce, se));
+        return if_else(is_not_less_equal(x, Pio_2<T>()), Nan<T>(), z1);
       }
     }
-    else return apply_over(small_(cos), a0); 
+    else return apply_over(small_(cos), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // medium,  big
   template<typename D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
-                                     , D  const &      
+                                     , D  const &
                                      , T a0) noexcept
   {
     if constexpr(native<T>)
     {
-      if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>(); 
+      if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>();
       auto x =  abs(a0);
-      auto [fn, xr, dxr] = D()(rempio2)(x); 
-      return sin_finalize(bitofsign(a0), fn, xr, dxr); 
+      auto [fn, xr, dxr] = D()(rempio2)(x);
+      return sin_finalize(bitofsign(a0), fn, xr, dxr);
     }
-    else return apply_over(D()(sin), a0); 
+    else return apply_over(D()(sin), a0);
   }
 
   template<floating_real_value T>
@@ -128,7 +128,7 @@ namespace eve::detail
     else if (all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sin)(a0);
     else                                                  return big_(sin)(a0);
   }
-  
+
 }
 
 #endif

@@ -37,7 +37,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_eval( T const &  z) noexcept
   {
-    using elt_t = element_type_t<T>; 
+    using elt_t = element_type_t<T>;
     if constexpr(std::is_same_v<elt_t, float>)
     {
       T y = horn<T, 0x3d2aaaa5 , 0xbab60619 , 0x37ccf5ce> (z);
@@ -50,13 +50,13 @@ namespace eve::detail
       return oneminus(y*z);
     }
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sin_eval( const T & z
                                          , const T & x) noexcept
   {
     // here T is float or double and x positive
-    using elt_t = element_type_t<T>; 
+    using elt_t = element_type_t<T>;
    if constexpr(std::is_same_v<elt_t, float>)
     {
       T  y1 = horn<T, 0xbe2aaaa2 , 0x3c08839d , 0xb94ca1f9> (z);
@@ -66,10 +66,10 @@ namespace eve::detail
     {
       T y1 = horn<T, 0xbfc5555555555548ll, 0x3f8111111110f7d0ll, 0xbf2a01a019bfdf03ll,
         0x3ec71de3567d4896ll, 0xbe5ae5e5a9291691ll, 0x3de5d8fd1fcf0ec1ll> (z);
-      return fma(y1*z,x,x);  
+      return fma(y1*z,x,x);
     }
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_finalize(  const T & fn
                                              ,  const T & xr
@@ -77,27 +77,27 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>; 
+      using i_t =  detail::as_integer_t<T, signed>;
       i_t n = i_t(fn);
       i_t swap_bit = n&i_t(1);
       i_t sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
       T z = sqr(xr);
       T  se = sin_eval(z, xr);
       T  ce = cos_eval(z);
-      z =  swap_bit ?  fma(dxr, ce, se) : fnma(se, dxr, ce); 
-      return bit_xor(z,sign_bit); 
+      z =  swap_bit ?  fma(dxr, ce, se) : fnma(se, dxr, ce);
+      return bit_xor(z,sign_bit);
     }
     else
     {
-      using elt_t =  element_type_t<T>; 
+      using elt_t =  element_type_t<T>;
       auto tmp =  binarize(fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
-      auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<elt_t>()); 
+      auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<elt_t>());
       T z = sqr(xr);
       T se = sin_eval(z, xr);
       T ce = cos_eval(z);
       z = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
-      return bit_xor(z, sign_bit); 
+      return bit_xor(z, sign_bit);
     }
   }
 
@@ -109,23 +109,23 @@ namespace eve::detail
     auto  ce0 = cos_eval(z);
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>; 
+      using i_t =  detail::as_integer_t<T, signed>;
       i_t n = toint(fn);
       i_t swap_bit = n&One<i_t>();
       auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       i_t cos_sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
       auto ce = fnma(se0, dxr, ce0);
       auto se = fma(dxr, ce0, se0);
-      if (swap_bit) std::swap(ce, se); 
-      se = bit_xor(se,sin_sign_bit);   
+      if (swap_bit) std::swap(ce, se);
+      se = bit_xor(se,sin_sign_bit);
       ce = bit_xor(ce,cos_sign_bit);
-      return std::make_tuple(se, ce); 
+      return std::make_tuple(se, ce);
     }
     else
     {
-      using elt_t =  element_type_t<T>; 
+      using elt_t =  element_type_t<T>;
       auto tmp =  binarize(fn >= T(2));
-      auto swap_bit = (fma(T(-2), tmp, fn)); 
+      auto swap_bit = (fma(T(-2), tmp, fn));
       auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<elt_t>());
       auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, Signmask<T>(), eve::zero_));
       auto test = is_nez(swap_bit);
@@ -133,7 +133,7 @@ namespace eve::detail
                             , bit_xor(if_else(test, se0, ce0), cos_sign_bit) );
     }
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sin_finalize(  const T & a0
                                              ,  const T & fn
@@ -142,7 +142,7 @@ namespace eve::detail
   {
     if constexpr(scalar_value<T>)
     {
-      using i_t =  detail::as_integer_t<T, signed>; 
+      using i_t =  detail::as_integer_t<T, signed>;
       if (is_not_finite(xr)) return Nan<T>();
       i_t n = toint(fn);
       i_t swap_bit = n&One<i_t>();
@@ -155,18 +155,18 @@ namespace eve::detail
     }
     else
     {
-      auto tmp =  binarize(fn >= T(2));     
+      auto tmp =  binarize(fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, Signmask<T>(), eve::zero_));
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
       auto ce = cos_eval(z);
       z = if_else(swap_bit, fnma(se, dxr, ce), fma(dxr, ce, se));
-      return bit_xor(z, sign_bit); 
+      return bit_xor(z, sign_bit);
     }
   }
 
-  
+
 }
 
 #endif
