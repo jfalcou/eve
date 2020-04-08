@@ -124,11 +124,15 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
   {
-    auto x =  abs(a0);
-         if (all(x <= Pio_4(as(x))))                     return restricted_(cos)(a0);
-    else if(all(x <= Pio_2(as(x))))                      return small_(cos)(a0);
-    else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(cos)(a0);
-    else                                                 return big_(cos)(a0);
+    if constexpr(native<T>)
+    {
+      auto x =  abs(a0);
+      if (all(x <= Pio_4(as(x))))                     return restricted_(cos)(a0);
+      else if(all(x <= Pio_2(as(x))))                      return small_(cos)(a0);
+      else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(cos)(a0);
+      else                                                 return big_(cos)(a0);
+    }
+    else return apply_over(D()(cos), a0);
   }
 
 }

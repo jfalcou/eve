@@ -71,6 +71,23 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto tancot_eval( const T & z) noexcept
+  {
+    // here T is float or double and z positive
+    T zz = eve::sqr(z);
+    if constexpr(std::is_same_v<value_type_t<T>, float>)
+    {
+      return fma(horn<T, 0x3eaaaa6fu, 0x3e0896ddu, 0x3d5ac5c9u, 0x3cc821b5u
+                , 0x3b4c779cu, 0x3c19c53bu>(zz), zz*z, z);
+    }
+    else if constexpr(std::is_same_v<value_type_t<T>, double>)
+    {
+      T num = horn<T,0xc1711fead3299176ull, 0x413199eca5fc9dddull, 0xc0c992d8d24f3f38ull >(zz);
+      T den = horn1<T, 0xc189afe03cbe5a31ull, 0x4177d98fc2ead8efull, 0xc13427bc582abc96ull, 0x40cab8a5eeb36572ull>(zz);
+      return fma(z, (zz*(num/den)), z);
+    }
+
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_finalize(  const T & fn
                                              ,  const T & xr
                                              ,  const T & dxr = T(0)) noexcept
@@ -166,7 +183,59 @@ namespace eve::detail
     }
   }
 
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto tan_finalize(T a0
+                                             , T fn
+                                             , T xr
+                                             , T dxr = T(0)) noexcept
+  {
+    auto aa0lteps = eve::abs(a0) < Eps<T>();
+    T y = tancot_eval(xr);
+    if constexpr(scalar_value<T>)
+    {
+      if (aa0lteps) return a0;
+      if (is_not_finite(xr)) return Nan<T>();
+      y =  (int(fn)&1) ? -rec(y): y;
+      if (dxr) y+= dxr*fma(y, y, One<T>());
+      return bit_xor(y, bitofsign(a0));
+    }
+    else
+    {
+      auto tmp = binarize( fn >= T(2));
+      auto swap_bit = (fma(T(-2), tmp, fn));
+      auto test = is_eqz(swap_bit);
+      y = if_else(test, y, -rec(y));
+      y = fma(dxr, fma(y, y, One<T>()), y);
+      return if_else(aa0lteps, a0, bit_xor(y, bitofsign(a0)));
+    }
+  }
 
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto cot_finalize(T a0
+                                             , T fn
+                                             , T xr
+                                             , T dxr = T(0)) noexcept
+  {
+    auto aa0lteps = eve::abs(a0) < Eps<T>();
+    T y = tancot_eval(xr);
+    if constexpr(scalar_value<T>)
+    {
+      if (aa0lteps) return pedantic_(rec)(a0);
+      if (is_not_finite(a0)) return Nan<T>();
+      y =  (int(fn)&1) ? -y: rec(y);
+      if (dxr) y+= dxr*fma(y, y, One<T>());
+      return bit_xor(y, bitofsign(a0));
+    }
+    else
+    {
+      auto tmp = binarize( fn >= t_t(2));
+      auto swap_bit = (fma(t_t(-2), tmp, fn));
+      auto test = is_eqz(swap_bit);
+      y = if_else(test,rec(y),-y);
+      y = fma(dxr, fma(y, y, One<T>()), y);
+      return if_else(aa0lteps, pedantic_(rec)(a0), bit_xor(y, bitofsign(a0)));
+    }
+  }
 }
 
 #endif
