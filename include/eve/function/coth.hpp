@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_COTH_HPP_INCLUDED
 
 #include <eve/function/definition/coth.hpp>
-#include <eve/module/core/function/scalar/coth.hpp>
-#include <eve/module/core/function/simd/coth.hpp>
+#include <eve/module/core/function/generic/coth.hpp>
 
 #endif

@@ -15,8 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
-// #include <eve/module/core/detail/generic/sin_kernel.hpp>
-// #include <eve/module/core/detail/generic/cos_kernel.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
@@ -27,6 +26,7 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/signmask.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
@@ -77,8 +77,7 @@ namespace eve::detail
     T zz = eve::sqr(z);
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
-      return fma(horn<T, 0x3eaaaa6fu, 0x3e0896ddu, 0x3d5ac5c9u, 0x3cc821b5u
-                , 0x3b4c779cu, 0x3c19c53bu>(zz), zz*z, z);
+      return fma(horn<T, 0x3eaaaa6fu, 0x3e0896ddu, 0x3d5ac5c9u, 0x3cc821b5u, 0x3b4c779cu, 0x3c19c53bu>(zz), zz*z, z);
     }
     else if constexpr(std::is_same_v<value_type_t<T>, double>)
     {
@@ -86,6 +85,7 @@ namespace eve::detail
       T den = horn1<T, 0xc189afe03cbe5a31ull, 0x4177d98fc2ead8efull, 0xc13427bc582abc96ull, 0x40cab8a5eeb36572ull>(zz);
       return fma(z, (zz*(num/den)), z);
     }
+  }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_finalize(  const T & fn
@@ -228,8 +228,8 @@ namespace eve::detail
     }
     else
     {
-      auto tmp = binarize( fn >= t_t(2));
-      auto swap_bit = (fma(t_t(-2), tmp, fn));
+      auto tmp = binarize( fn >= T(2));
+      auto swap_bit = (fma(T(-2), tmp, fn));
       auto test = is_eqz(swap_bit);
       y = if_else(test,rec(y),-y);
       y = fma(dxr, fma(y, y, One<T>()), y);

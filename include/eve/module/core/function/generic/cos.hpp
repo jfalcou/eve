@@ -127,12 +127,12 @@ namespace eve::detail
     if constexpr(native<T>)
     {
       auto x =  abs(a0);
-      if (all(x <= Pio_4(as(x))))                     return restricted_(cos)(a0);
+      if (all(x <= Pio_4(as(x))))                          return restricted_(cos)(a0);
       else if(all(x <= Pio_2(as(x))))                      return small_(cos)(a0);
       else if(all(x <= Rempio2_limit(medium_type(), T()))) return medium_(cos)(a0);
       else                                                 return big_(cos)(a0);
     }
-    else return apply_over(D()(cos), a0);
+    else return apply_over(cos, a0);
   }
 
 }

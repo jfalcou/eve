@@ -8,30 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_COTH_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_COTH_HPP_INCLUDED
-
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COTH_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_COTH_HPP_INCLUDED
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/rec.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  // Regular case
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto coth_(EVE_SUPPORTS(cpu_)
-                                     , T a0) noexcept
-  requires std::floating_point<T>
+  template<floating_real_value T>
+  EVE_FORCEINLINE  auto coth_(EVE_SUPPORTS(cpu_)
+                             , const T &a0) noexcept
   {
-    auto x = eve::abs(a0+a0);
-    auto t = rec(expm1(x));
-    auto r = fma(T(2), t, T(1)); 
-    return copysign(r, a0); 
+    if constexpr(native<T>)
+    {
+      auto x = eve::abs(a0+a0);
+      auto t = rec(expm1(x));
+      auto r = fma(T(2), t, T(1));
+      return copysign(r, a0);
+    }
+    else return apply_over(coth, a0);
   }
 }
 
