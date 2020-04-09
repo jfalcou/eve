@@ -8,42 +8,37 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_CSC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_CSC_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CSC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_CSC_HPP_INCLUDED
+
+
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/sin.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/wide.hpp>
-#include <type_traits>
+#include <eve/detail/apply_over.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-
-  template<typename T,  typename N,  typename ABI, typename Tag>
+  template<floating_real_value T, typename D>
   EVE_FORCEINLINE auto csc_(EVE_SUPPORTS(cpu_)
-                           , Tag const &  tgt   
-                           , eve::wide<T,N,ABI> const &a0) noexcept
+                           ,  D const &
+                            , T const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      return rec(eve::sin(tgt, a0)); 
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::csc simd ] - type is not an IEEEValue"); 
-    }   
+    if constexpr(native<T>) return rec(D()(sin)(a0));
+    else                    return apply_over(raw_(csc), a0);
   }
 
- 
-
-  template<typename T,  typename N,  typename ABI>
+  template<floating_real_value T>
   EVE_FORCEINLINE auto csc_(EVE_SUPPORTS(cpu_)
-                            , eve::wide<T,N,ABI> const &a0) noexcept
+                            , T const &a0) noexcept
   {
-    return rec(eve::sin(a0));
+    if constexpr(native<T>) return rec(sin(a0));
+    else                    return apply_over(csc, a0);
+
   }
 }
 
