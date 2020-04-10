@@ -14,7 +14,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/tags.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
@@ -53,7 +52,7 @@ namespace eve::detail
     T xx =   eve::if_else(flag1, x, -recx);
     xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx);
     T z = eve::sqr(xx);
-    using vt_t =  value_type_t<T>; 
+    using vt_t =  value_type_t<T>;
     if constexpr(std::is_same_v<vt_t, float>)
     {
        z = z*horn<T

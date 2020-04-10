@@ -15,7 +15,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/tags.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/bit_cast.hpp>

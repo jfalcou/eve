@@ -14,18 +14,17 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/tags.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/bit_and.hpp>
-#include <eve/function/bit_andnot.hpp>   
+#include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/constant/limitexponent.hpp>
-#include <eve/constant/maxexponent.hpp> 
+#include <eve/constant/maxexponent.hpp>
 #include <eve/constant/maxexponentm1.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/expobits_mask.hpp>
@@ -54,7 +53,7 @@ namespace eve::detail
     return  std::make_tuple( bit_or(Half<T>(), x),
                              bit_shr(r1,Nbmantissabits<t_t>()) - Maxexponentm1<t_t>());
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Regular case
   template<typename T>
@@ -64,14 +63,14 @@ namespace eve::detail
   {
     using i_t = as_integer_t<T, signed>;
     if(!a0) return {T(0),i_t(0)};
-    else    return raw_(ifrexp)(a0); 
+    else    return raw_(ifrexp)(a0);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Pedantic case
   template<typename T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
-                                    , pedantic_type const & 
+                                    , pedantic_type const &
                                     , T a0) noexcept
   Requires(std::tuple<T, as_integer_t<T, signed>>, floating_point<T>)
   {
@@ -92,10 +91,10 @@ namespace eve::detail
           a0 *= Twotonmb<T>();
           r1  = bit_and(Expobits_mask<T>(), a0);  // extract exp. again
           t   = nmb;
-        }        
+        }
         T x  = bit_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
         r1 = bit_shr(r1,nmb)- Maxexponentm1<T>();         // compute exp.
-        if (r1 > Limitexponent<T>()) return {a0, i_t(0)};       
+        if (r1 > Limitexponent<T>()) return {a0, i_t(0)};
         r1 -= t;
         return std::make_tuple(bit_or(x,Half<T>()), r1);
       }

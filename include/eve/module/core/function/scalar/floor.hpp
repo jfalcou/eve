@@ -17,7 +17,6 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail

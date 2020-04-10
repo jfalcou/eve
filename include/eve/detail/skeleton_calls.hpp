@@ -20,6 +20,12 @@
 
 namespace eve::detail
 {
+  //------------------------------------------------------------------------------------------------
+  // These schemes reduce the burden for implementing an object function of two or three parameters
+  // to the two cases scalar/simd where all the parameters are of the same type if the function
+  // present an  arithmetic or bitwise scheme that allows to reduce the calls to the two simple
+  // ones.
+
   // -----------------------------------------------------------------------------------------------
   // binary arithmetic operators scheme
   template<typename Obj, value T, value U>
@@ -32,9 +38,10 @@ namespace eve::detail
     {
       return op(a, b);
     }
-    else if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
+    else
+    if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
     {
-      if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);   // no one is_native to avoid an early splat
+           if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);   // no one is_native aggregate to avoid an early splat
       else if constexpr(scalar_value<T>)           return op(U(a), b);
       else if constexpr(scalar_value<U>)           return op(a, T(b));
     }
@@ -58,7 +65,8 @@ namespace eve::detail
     {
       return op(a, b, c);
     }
-    else if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same bit size
+    else
+    if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same type
     {
       if constexpr(native<T> && native<U> && native<V>) return op(a, b, c); // generally already taken by arch specific intrisicss
       else                                              return apply_over(op, a, b, c);
@@ -74,46 +82,14 @@ namespace eve::detail
       return op(a, T(b), T(c));
     }
   }
-//   // -----------------------------------------------------------------------------------------------
-//   // binary bit operators scheme
-//   template<typename Obj, real_value T, real_value U>
-//   EVE_FORCEINLINE auto bit_call(Obj op
-//                                , T const &a
-//                                , U const &b) noexcept
-//   requires bit_compatible_values<T, U>
-//   {
-//     using vt_t = value_type_t<T>;
-//     using vt_u = value_type_t<U>;
-//     if constexpr(scalar_value<T> && scalar_value<U>)    //both are scalar so of the same bit size
-//     {
-//       return op(a, bit_cast(b, as(a)));
-//     }
-//     else if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd with same bit size elements
-//     {
-//       if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);   //  no one is_native to avoid an early bit_cast
-//       else if constexpr(scalar_value<T>)
-//       {
-//         using r_t = as_wide<T, cardinal_t<U>>;
-//         return r_t(bit_cast(op(U(bit_cast(a,as_<vt_u>())), b), as<vt_t>()), as<r_t>());
-//       }
-//       else if constexpr(scalar_value<U>)
-//       {
-//         return op(a, T(bit_cast(b,as_<vt_t>())));
-//       }
-//     }
-//     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same bit size
-//     {
-//       if constexpr(native<T> && native<U>) return op(a, bit_cast(b, as<T>())); // generally already taken by arch specific intrisicss
-//       else                                 return apply_over(op, a, b);
-//     }
-//   }
+
   // -----------------------------------------------------------------------------------------------
   // binary bit operators scheme
   template<typename Obj, real_value T, real_value U>
   EVE_FORCEINLINE auto bit_call(Obj op
                                , T const &a
                                , U const &b) noexcept
-  requires bit_compatible_values<T, U>
+  requires bit_compatible_values<T, U>  && (!std::same_as<U,T>)
   {
     using vt_t = value_type_t<T>;
     using vt_u = value_type_t<U>;
@@ -147,7 +123,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b
                                , V const &c) noexcept
-  requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>
+  requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>  && (!(std::same_as<U,T> && std::same_as<T,V>))
   {
     using vt_u = element_type_t<U>;
     if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same bit size

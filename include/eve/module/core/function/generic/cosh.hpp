@@ -44,7 +44,6 @@ namespace eve::detail
     if constexpr(native<T>)
     {
       auto ovflimitmln2 =  Ieee_constant<T,0X42AF5DC0U, 0X408628B76E3A7B61LL >(); //87.68310404,  709.08956571282405469058276787854
-      std::cout << std::setprecision(20) << ovflimit-Log_2<T>() << std::endl;
       auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {

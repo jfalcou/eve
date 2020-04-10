@@ -17,7 +17,7 @@
 #include <eve/function/ifloor.hpp>
 #include <eve/function/itrunc.hpp>
 #include <eve/function/inearest.hpp>
-#include <eve/tags.hpp>
+#include <eve/function/roundings.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -41,7 +41,7 @@ namespace eve::detail
       return eve::inearest(a);
     else
     {
-      return as_integer_t<T>(); 
+      return as_integer_t<T>();
     }
   }
 }

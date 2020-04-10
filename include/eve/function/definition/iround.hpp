@@ -12,13 +12,13 @@
 #define EVE_FUNCTION_DEFINITION_IROUND_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/tags.hpp>
 #include <type_traits>
+#include <eve/function/roundings.hpp>
 
 namespace eve
 {
    namespace tag { struct iround_; }
-  
+
   namespace detail
   {
     template<typename T, typename U>

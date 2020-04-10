@@ -32,7 +32,7 @@ namespace eve::detail
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-    
+
     // Convert to double
     if constexpr( std::is_same_v<Out, double> )
     {
@@ -84,7 +84,7 @@ namespace eve::detail
         else
         {
           return convert_(EVE_RETARGET(simd_), v0, tgt);
-        }         
+        }
       }
       // SSE 4+ has more integral conversion
       else if constexpr(current_api >= sse4_1)
@@ -92,7 +92,7 @@ namespace eve::detail
         if constexpr( std::is_integral_v<In> && (sizeof(In) == 2) && (N::value<=4) )
         {
           if constexpr( std::is_signed_v<In>)  return _mm_cvtepi16_epi32(v0);
-          else                                 return _mm_cvtepu16_epi32(v0);  
+          else                                 return _mm_cvtepu16_epi32(v0);
         }
         else if constexpr( std::is_integral_v<In> && (sizeof(In) == 1) && (N::value<=4) )
         {
@@ -145,7 +145,7 @@ namespace eve::detail
         }
         else
         {
-          return convert_(EVE_RETARGET(simd_), v0, tgt);
+          return convert_(EVE_RETARGET(cpu_), v0, tgt);
         }
       }
       else
@@ -155,10 +155,10 @@ namespace eve::detail
     }
     else
     {
-     return convert_(EVE_RETARGET(simd_), v0, tgt);
+     return convert_(EVE_RETARGET(cpu_), v0, tgt);
     }
   }
-  
+
   //================================================================================================
   // 256 bits <-> 256 bits
   template<typename In, typename N, typename Out>
@@ -219,7 +219,7 @@ namespace eve::detail
         else
         {
           return convert_(EVE_RETARGET(simd_), v0, tgt);
-        }                
+        }
       }
       else
       {
@@ -231,7 +231,7 @@ namespace eve::detail
      return convert_(EVE_RETARGET(sse4_2_), v0, tgt);
     }
   }
-  
+
   //================================================================================================
   // 256 bits <-> 128 bits
   template<typename In, typename N, typename Out>
@@ -241,7 +241,7 @@ namespace eve::detail
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-    
+
     // Convert to double
     if constexpr( std::is_same_v<Out, double> )
     {
@@ -324,7 +324,7 @@ namespace eve::detail
       return convert_(EVE_RETARGET(sse2_), v0, tgt);
     }
   }
-  
+
   /////////////////////////////////////////////////////////////////////////////////////
   // saturated conversions
   //////////////////////////////////////////////////////////////////////////////////////
@@ -338,7 +338,7 @@ namespace eve::detail
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-    
+
     if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<Out,int8_t> && (N::value <= 16))
     {
       if constexpr(N::value == 16)
@@ -350,7 +350,7 @@ namespace eve::detail
       {
         wide<Out, fixed<2*N::value>> tmp = _mm_packs_epi16(v0, v0);
         auto [low, hi] = tmp.slice();
-        return low; 
+        return low;
       }
       else if constexpr(N::value <= 8)
       {
@@ -368,12 +368,12 @@ namespace eve::detail
       {
         wide<Out, fixed<2*N::value>> tmp = _mm_packs_epi16(v0, v0);
         auto [low, hi] = tmp.slice();
-        return low; 
+        return low;
       }
       else if constexpr(N::value <= 4)
       {
         return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
-      }       
+      }
     }
     else if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<Out,uint8_t> && (N::value <= 16))
     {
@@ -386,7 +386,7 @@ namespace eve::detail
       {
         wide<Out, fixed<2*N::value>> tmp = _mm_packus_epi16(v0, v0);
         auto [low, hi] = tmp.slice();
-        return low; 
+        return low;
       }
       else if constexpr(N::value <= 8)
       {
@@ -398,7 +398,7 @@ namespace eve::detail
       return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
     }
   }
-  
+
   //================================================================================================
   // 256 bits <-> 256 bits
   template<typename In, typename N, typename Out>
@@ -409,7 +409,7 @@ namespace eve::detail
   {
     // Idempotent call
     if constexpr(std::is_same_v<In, Out>) return v0;
-    
+
     if constexpr( std::is_same_v<In,int16_t> && std::is_same_v<In,int8_t> && (N::value <= 32))
     {
       if constexpr(N::value == 32)
@@ -433,7 +433,7 @@ namespace eve::detail
       {
         wide<Out, fixed<2*N::value>> tmp = _mm256_packs_epi32(v0, v0);
         auto [low, hi] = tmp.slice();
-        return low; 
+        return low;
       }
       else if constexpr(N::value <= 8)
       {
@@ -451,7 +451,7 @@ namespace eve::detail
       {
         wide<Out, fixed<2*N::value>> tmp = _mm256_packus_epi16(v0, v0);
         auto [low, hi] = tmp.slice();
-        return low; 
+        return low;
       }
       else if constexpr(N::value <= 16)
       {
@@ -480,7 +480,7 @@ namespace eve::detail
     {
       return convert_(EVE_RETARGET(cpu_), sat_, v0, tgt);
     }
-  }  
+  }
 }
 
 #endif

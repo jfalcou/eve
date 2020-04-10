@@ -15,7 +15,6 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/constant/one.hpp>
-#include <eve/tags.hpp>
 #include <type_traits>
 
 namespace eve::detail

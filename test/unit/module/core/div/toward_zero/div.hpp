@@ -16,29 +16,28 @@
 
 TTS_CASE("Check div return type")
 {
-  TTS_EXPR_IS(eve::div(EVE_TYPE(), EVE_TYPE() , eve::toward_zero_), (EVE_TYPE));
-  TTS_EXPR_IS(eve::div(EVE_TYPE(), EVE_VALUE() , eve::toward_zero_), (EVE_TYPE));
-  TTS_EXPR_IS(eve::div(EVE_VALUE(), EVE_TYPE() , eve::toward_zero_), (EVE_TYPE));
+  TTS_EXPR_IS(eve::toward_zero_(eve::div)(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::toward_zero_(eve::div)(EVE_TYPE(), EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::toward_zero_(eve::div)(EVE_VALUE(), EVE_TYPE()), (EVE_TYPE));
 }
 
-TTS_CASE("Check eve::div behavior")
+TTS_CASE("Check eve::toward_zero_(eve::div) behavior")
 {
   if constexpr(std::is_integral_v<EVE_VALUE> && std::is_signed_v<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::div(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2} , eve::toward_zero_), EVE_TYPE(0));
-    TTS_EQUAL(eve::div(eve::Mone<EVE_VALUE>() , EVE_TYPE{2} , eve::toward_zero_), EVE_TYPE(0));
-    TTS_EQUAL(eve::div(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}, eve::toward_zero_), EVE_TYPE(0));
+    TTS_EQUAL(eve::toward_zero_(eve::div)(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2} ), EVE_TYPE(0));
+    TTS_EQUAL(eve::toward_zero_(eve::div)(eve::Mone<EVE_VALUE>() , EVE_TYPE{2} ), EVE_TYPE(0));
+    TTS_EQUAL(eve::toward_zero_(eve::div)(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}), EVE_TYPE(0));
   }
-  TTS_EQUAL(eve::div(EVE_TYPE{12}, EVE_TYPE{4}, eve::toward_zero_), EVE_TYPE{3});
-  TTS_EQUAL(eve::div(EVE_TYPE{1} , EVE_TYPE{2}, eve::toward_zero_), EVE_TYPE(0));
-  TTS_EQUAL(eve::div(EVE_TYPE{4} , EVE_TYPE{3}, eve::toward_zero_), EVE_TYPE(1));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{12}, EVE_TYPE{4}), EVE_TYPE{3});
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{1} , EVE_TYPE{2}), EVE_TYPE(0));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{4} , EVE_TYPE{3}), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::div(EVE_VALUE{12}, EVE_TYPE{4}, eve::toward_zero_), EVE_TYPE{3});
-  TTS_EQUAL(eve::div(EVE_VALUE{1} , EVE_TYPE{2}, eve::toward_zero_), EVE_TYPE(0));
-  TTS_EQUAL(eve::div(EVE_VALUE{4} , EVE_TYPE{3}, eve::toward_zero_), EVE_TYPE(1));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_VALUE{12}, EVE_TYPE{4}), EVE_TYPE{3});
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_VALUE{1} , EVE_TYPE{2}), EVE_TYPE(0));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_VALUE{4} , EVE_TYPE{3}), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::div(EVE_TYPE{12}, EVE_VALUE{4}, eve::toward_zero_), EVE_TYPE{3});
-  TTS_EQUAL(eve::div(EVE_TYPE{1} , EVE_VALUE{2}, eve::toward_zero_), EVE_TYPE(0));
-  TTS_EQUAL(eve::div(EVE_TYPE{4} , EVE_VALUE{3}, eve::toward_zero_), EVE_TYPE(1));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{12}, EVE_VALUE{4}), EVE_TYPE{3});
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{1} , EVE_VALUE{2}), EVE_TYPE(0));
+  TTS_EQUAL(eve::toward_zero_(eve::div)(EVE_TYPE{4} , EVE_VALUE{3}), EVE_TYPE(1));
 }
-

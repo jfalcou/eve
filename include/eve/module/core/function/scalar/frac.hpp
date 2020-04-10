@@ -14,7 +14,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/tags.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/concept/vectorizable.hpp>

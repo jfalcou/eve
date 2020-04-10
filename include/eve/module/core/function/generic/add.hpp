@@ -25,7 +25,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/saturate.hpp>
-#include <eve/function/saturated.hpp>   
+#include <eve/function/saturated.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/constant/valmax.hpp>
@@ -46,9 +46,9 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(add, a, b); 
+    return arithmetic_call(add, a, b);
   }
-  
+
   template<real_scalar_value T>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
                             , T const &a
@@ -70,17 +70,17 @@ namespace eve::detail
 
   template<real_value T, real_value U>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , saturated_type const & 
+                            , saturated_type const &
                             , T const &a
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_(add), a, b); 
+    return arithmetic_call(saturated_(add), a, b);
   }
 
   template<real_scalar_value T>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , saturated_type const & 
+                            , saturated_type const &
                             , T const &a
                             , T const &b) noexcept
   {
@@ -128,10 +128,10 @@ namespace eve::detail
       }
     }
   }
-  
+
   template<real_simd_value T>
   EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , saturated_type const & 
+                            , saturated_type const &
                             , T const &a
                             , T const &b) noexcept
   {
@@ -143,7 +143,7 @@ namespace eve::detail
     {
       if constexpr(signed_integral_value<T>)
       {
-        using vt_t = value_type_t<T>; 
+        using vt_t = value_type_t<T>;
         if constexpr( sizeof(vt_t) >= 4)
         {
           using su_t = std::conditional_t<sizeof(vt_t) == 4, uint32_t, uint64_t>;
@@ -151,7 +151,7 @@ namespace eve::detail
           auto ux = bit_cast(a,as_<u_t>());
           auto uy = bit_cast(b,as(ux));
           u_t  res = ux + uy;
-          
+
           ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
           return  bit_cast( if_else ( is_gez( bit_cast( bit_ornot ( bit_xor(ux,uy)
                                                                   , bit_xor(uy,res)
@@ -183,11 +183,11 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    using r_t = decltype(add(t, f)); 
+    using r_t = decltype(add(t, f));
          if constexpr(scalar_value<T>) return  cond ? add(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return  add(t, if_else(cond, r_t(f), eve::zero_));
+    else if constexpr(simd_value<T>)   return  add(r_t(t), if_else(cond, r_t(f), eve::zero_));
   }
-  
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_)
                            , T const & cond
@@ -196,12 +196,12 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    using r_t = decltype(add(t, f)); 
+    using r_t = decltype(add(t, f));
          if constexpr(scalar_value<T>) return cond ? saturated_(add)(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond, r_t(f), eve::zero_));
+    else if constexpr(simd_value<T>)   return saturated_(add)(r_t(t), if_else(cond, r_t(f), eve::zero_));
 
   }
-  
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_)
                            , not_t<T> const & cond
@@ -209,11 +209,11 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    using r_t = decltype(add(t, f)); 
+    using r_t = decltype(add(t, f));
          if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : add(t, f);
-    else if constexpr(simd_value<T>)   return  add(t, if_else(cond.value, eve::zero_, r_t(f)));
+    else if constexpr(simd_value<T>)   return  add(r_t(t), if_else(cond.value, eve::zero_, r_t(f)));
   }
-  
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_)
                            ,  not_t<T> const & cond
@@ -222,10 +222,10 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    using r_t = decltype(add(t, f)); 
+    using r_t = decltype(add(t, f));
          if constexpr(scalar_value<T>) return cond.value ? r_t(t) : saturated_(add)(t, f);
-    else if constexpr(simd_value<T>)   return saturated_(add)(t, if_else(cond.value, eve::zero_, r_t(f)));
-    
+    else if constexpr(simd_value<T>)   return saturated_(add)(r_t(t), if_else(cond.value, eve::zero_, r_t(f)));
+
   }
 }
 
@@ -241,4 +241,3 @@ namespace eve
 }
 
 #endif
-
