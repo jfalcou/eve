@@ -28,6 +28,10 @@ function(generate_test root rootpath dep file)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})
   endif()
 
+  if(EVE_BUILD_NATIVE_TEST_ONLY)
+    target_compile_definitions( ${test} PUBLIC "EVE_BUILD_NATIVE_TEST_ONLY")
+  endif()
+
   target_compile_options  ( ${test} PUBLIC ${_TestOptions} )
 
   set_property( TARGET ${test}
