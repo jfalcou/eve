@@ -8,25 +8,30 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_FIRSTBITSET_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_FIRSTBITSET_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FIRSTBITSET_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_FIRSTBITSET_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_not.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto firstbitset_(EVE_SUPPORTS(cpu_)
-                                   , wide<T, N, ABI> const &a0) noexcept
-  Requires(wide<T, N, ABI>, integral<T>)
+
+  template<integral_real_value T>
+  EVE_FORCEINLINE constexpr T firstbitset_(EVE_SUPPORTS(cpu_)
+                                  , T const &a0) noexcept
   {
-    return a0 & (~a0+One(as(a0)));
+    if constexpr(native<T>) return a0 & (inc(~a0));
+    else                    return apply_over(firstbitset, a0);
   }
+
 }
 
 #endif

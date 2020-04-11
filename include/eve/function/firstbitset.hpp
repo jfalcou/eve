@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_FIRSTBITSET_HPP_INCLUDED
 
 #include <eve/function/definition/firstbitset.hpp>
-#include <eve/module/core/function/scalar/firstbitset.hpp>
-#include <eve/module/core/function/simd/firstbitset.hpp>
+#include <eve/module/core/function/generic/firstbitset.hpp>
 
 #endif
