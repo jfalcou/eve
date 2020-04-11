@@ -17,15 +17,17 @@
 #include <eve/function/acsc.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acscd_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                  , T const &a) noexcept
   {
-    return indeg(acsc(a0));
+    if constexpr(native<T>) return indeg(acsc(a));
+    else                    return apply_over(acscd, a);
   }
 
 }

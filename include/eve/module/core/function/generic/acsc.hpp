@@ -18,7 +18,6 @@
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acsc_(EVE_SUPPORTS(cpu_)
                                       , T const &a0) noexcept
@@ -26,7 +25,6 @@ namespace eve::detail
     if constexpr(native<T>)  return eve::asin(rec(a0));
     else                     return apply_over(acsc, a0);
   }
-
 }
 
 #endif

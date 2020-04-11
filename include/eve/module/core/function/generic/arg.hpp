@@ -21,32 +21,35 @@
 #include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/function/regular.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_)
+                                     , D const &
                                      , T const &a) noexcept
+  requires std::same_as<D, regular_type> || std::same_as<D, pedantic_type>
   {
-    return if_else(is_negative(a), Pi(as(a)), eve::zero_);
+    if constexpr(native<T>)
+    {
+      auto z =  if_else(is_negative(a), Pi(as(a)), eve::zero_);
+      if constexpr( platform::supports_nans && std::same_as<D, pedantic_type> )
+      {
+           return if_else(is_nan(a), eve::allbits_, z);
+      }
+      else return z:
+    }
+    else   return apply_over(D()(arg), a);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_)
-                                     , pedantic_type const&
                                      , T const &a) noexcept
   {
-    auto r = arg(a);
-    if constexpr( platform::supports_nans )
-    {
-      return if_else(is_nan(a), eve::allbits_, r);
-    }
-    else
-    {
-      return r;
-    }
+    return arg(regular_type, a);
   }
 }
 

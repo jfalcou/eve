@@ -39,7 +39,7 @@ namespace eve::detail
       else if constexpr(signed_integral_scalar_value<T>) return a < T(0) ? -a : a;
       else if constexpr(signed_integral_simd_value<T>  ) return eve::max(a, -a);
     }
-    else                                                 return apply_over(abs, a); 
+    else                                                 return apply_over(abs, a);
   }
 
   template<real_value T>
@@ -47,22 +47,23 @@ namespace eve::detail
                                   , saturated_type const &
                                   , T const &a) noexcept
   {
-    if constexpr(signed_integral_scalar_value<T>)
+    if constexpr(native<T>)
     {
-      return ((a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a));
+      if constexpr(signed_integral_scalar_value<T>)
+      {
+        return ((a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a));
+      }
+      else if constexpr(signed_integral_simd_value<T>)
+      {
+        return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
+      }
+      else if constexpr(floating_value<T> || unsigned_value<T>)
+      {
+        return eve::abs(a);
+      }
     }
-    else if constexpr(signed_integral_simd_value<T>)
-    {
-      using t_abi = abi_type_t<T>;
-      if constexpr(native<t_abi>) return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
-      else                        return apply_over(saturated_(abs), a); 
-    }
-    else if constexpr(floating_value<T> || unsigned_value<T>)
-    {
-      return eve::abs(a);
-    }
+    else return apply_over(saturated_(abs), a);
   }
 }
 
 #endif
-

@@ -17,17 +17,17 @@
 #include <eve/function/acot.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
-  template<floating_real_value T>
+  template<floating_real_value >
   EVE_FORCEINLINE constexpr auto acotd_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                      , T const &a) noexcept
   {
-    return indeg(acot(a0));
+    if constexpr(native<T>) return indeg(acot(a));
+    else                    return apply_over(acotd, a);
   }
-
 }
 
 #endif

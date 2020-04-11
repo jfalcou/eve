@@ -3,7 +3,7 @@
    EVE - Expressive Vector Engine
    Copyright 2020 Joel FALCOU
    Copyright 2020 Jean-Thierry LAPRESTE
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
@@ -17,6 +17,7 @@
 #include <eve/function/atanh.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -24,7 +25,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto acoth_(EVE_SUPPORTS(cpu_)
                                        , T x) noexcept
   {
-    return eve::atanh(rec(x));
+    if constexpr(native<T>) return eve::atanh(rec(x));
+    else                    return apply_over(acoth, x);
   }
 }
 

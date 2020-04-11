@@ -29,7 +29,7 @@ namespace eve::detail
   {
     if constexpr(native<T>)
     {
-      T x  = eve::abs(a);
+      auto x  = eve::abs(a);
       return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
     }
     else return apply_over(acot, a);

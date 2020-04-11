@@ -17,22 +17,26 @@
 #include <eve/function/indeg.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto acosd_(EVE_SUPPORTS(cpu_)
-                                       , T const &a0) noexcept
+                                       , D const &
+                                       , T const &a) noexcept
+  requires std::same_as<D,  regular_type> || std::same_as<D,  raw_type>
   {
-    return indeg(eve::acos(a0));
+    if constexpr(native<T>) return indeg(D()(acos)(a));
+    else                    return apply_over(D()(acosd), a);
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acosd_ ( EVE_SUPPORTS(cpu_)
-                                        , raw_type const &, T const &a0
+                                        , T const &a
                                         ) noexcept
   {
-    return indeg(eve::raw_(eve::acos)(a0));
+    return acosd(regular_type(), a);
   }
 }
 

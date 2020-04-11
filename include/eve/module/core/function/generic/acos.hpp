@@ -27,7 +27,7 @@
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>    
+#include <eve/constant/pio_2.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -37,7 +37,7 @@ namespace eve::detail
 {
   template<floating_real_value T>
   EVE_FORCEINLINE auto acos_(EVE_SUPPORTS(cpu_)
-                           ,  raw_type const & 
+                           ,  raw_type const &
                             , T const &a0) noexcept
   {
     if constexpr(native<T>)
@@ -45,8 +45,7 @@ namespace eve::detail
       auto tmp = Pio_2(as(a0)) +  (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>()-asin(a0));
       return if_else(a0 == One(as(a0)), eve::zero_, tmp);
     }
-    else
-      return apply_over(raw_(acos), a0); 
+    else return apply_over(raw_(acos), a0);
   }
 
   template<floating_real_value T>
@@ -65,8 +64,7 @@ namespace eve::detail
         x  = eve::if_else(is_less(a0, eve::Mhalf(as(a0))), eve::Pi(as(a0))-x, x);
         return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0))-x);
       }
-      else
-        return apply_over(acos, a0); 
+      else return apply_over(acos, a0);
     }
     else if constexpr( scalar_value<T>)
     {
