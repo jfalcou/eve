@@ -40,7 +40,7 @@ namespace eve::detail
       {
            return if_else(is_nan(a), eve::allbits_, z);
       }
-      else return z:
+      else return z;
     }
     else   return apply_over(D()(arg), a);
   }
@@ -49,7 +49,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_)
                                      , T const &a) noexcept
   {
-    return arg(regular_type, a);
+    return arg(regular_type(), a);
   }
 }
 

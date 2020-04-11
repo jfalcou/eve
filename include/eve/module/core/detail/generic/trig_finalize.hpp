@@ -26,6 +26,7 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/signmask.hpp>
+#include <eve/function/toint.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <type_traits>
@@ -239,4 +240,3 @@ namespace eve::detail
 }
 
 #endif
-

@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto acscpi_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    if constexpr(native<T>) return indeg(acsc(a));
+    if constexpr(native<T>) return inpi(acsc(a));
     else                    return apply_over(acscpi, a);
   }
 

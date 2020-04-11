@@ -44,7 +44,6 @@ namespace eve::detail
     if constexpr(native<T>)
     {
       using elt_t =  element_type_t<T>;
-      using it_t =  as_integer_t<T>;
       const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       const T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2=  Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();

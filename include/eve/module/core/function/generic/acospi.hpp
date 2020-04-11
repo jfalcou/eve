@@ -35,7 +35,7 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_)
-                                        , T const &a0
+                                        , T const &a
                                         ) noexcept
   {
     return acospi(regular_type(), a);

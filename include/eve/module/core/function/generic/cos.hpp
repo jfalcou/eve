@@ -55,11 +55,11 @@ namespace eve::detail
     }
     else return apply_over(restricted_(cos), a0);
   }
-
+  
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
-                                      , small_type const &
-                                      , T a0) noexcept
+                                     , small_type const &
+                                     , T a0) noexcept
   {
     if constexpr(native<T>)
     {
@@ -67,13 +67,13 @@ namespace eve::detail
       auto xnlepio2 = is_not_less_equal(x, Pio_2<T>());
       if constexpr(scalar_value<T>) if (xnlepio2) return Nan<T>();
       auto reduce = [](auto x){
-          auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
-          auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
-          auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
-          auto xr = x-pio2_1;
-          xr -= pio2_2;
-          xr -= pio2_3;
-          return xr;
+        auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
+        auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
+        auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
+        auto xr = x-pio2_1;
+        xr -= pio2_2;
+        xr -= pio2_3;
+        return xr;
       };
       if constexpr(scalar_value<T>)
       {
@@ -102,10 +102,10 @@ namespace eve::detail
     }
     else return apply_over(small_(cos), a0);
   }
-
+  
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // medium,  big
-  template<typename D, floating_real_value T>
+  template<decorator D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , D  const &
                                      , T a0) noexcept
@@ -119,7 +119,7 @@ namespace eve::detail
     }
     else return apply_over(D()(cos), a0);
   }
-
+  
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept

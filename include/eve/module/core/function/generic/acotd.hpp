@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value >
+  template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto acotd_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
   {
