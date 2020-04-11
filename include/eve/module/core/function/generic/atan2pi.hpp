@@ -19,6 +19,8 @@
 #include <eve/function/inpi.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/pedantic.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 
 namespace eve::detail
@@ -48,7 +50,8 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    return inpi(atan2(a, b));
+    if constexpr(native<T>) return inpi(atan2(a, b));
+    else                    return apply_over(atan2pi, a, b);
   }
 
   template<floating_real_value T>
@@ -58,9 +61,9 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    return inpi(pedantic_(atan2)(a, b));
+    if constexpr(native<T>) return inpi(pedantic_(atan2)(a, b));
+    else                    return apply_over(pedantic_(atan2pi), a, b);
   }
-
 }
 
 #endif

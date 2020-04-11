@@ -124,7 +124,7 @@ namespace eve::detail
       if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>();
       const T x =  abs(a0);
       if constexpr(scalar_value<T>) if (x < Eps<T>()) return rec(a0);
-      auto [fn, xr, dxr] = D()(rempio2)(a0);
+      auto [fn, xr, dxr] = D()(rempio2)(x);
       return cot_finalize(a0, fn, xr, dxr);
     }
    else return apply_over(D()(cot), a0);

@@ -55,7 +55,7 @@ namespace eve::detail
     }
     else return apply_over(restricted_(cos), a0);
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , small_type const &
@@ -102,10 +102,10 @@ namespace eve::detail
     }
     else return apply_over(small_(cos), a0);
   }
-  
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // medium,  big
-  template<decorator D, floating_real_value T>
+  template<typename D, floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , D  const &
                                      , T a0) noexcept
@@ -119,7 +119,7 @@ namespace eve::detail
     }
     else return apply_over(D()(cos), a0);
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept

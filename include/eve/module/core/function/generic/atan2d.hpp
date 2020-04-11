@@ -19,7 +19,7 @@
 #include <eve/function/indeg.hpp>
 #include <eve/function/atan2.hpp>
 #include <eve/function/pedantic.hpp>
-
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -48,7 +48,8 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    return indeg(atan2(a, b));
+    if constexpr(native<T>) return indeg(atan2(a, b));
+    else                    return apply_over(atan2d, a, b);
   }
 
   template<floating_real_value T>
@@ -58,7 +59,8 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    return indeg(pedantic_(atan2)(a, b));
+    if constexpr(native<T>) return indeg(pedantic_(atan2)(a, b));
+    else                    return apply_over(pedantic_(atan2d), a, b);
   }
 
 }

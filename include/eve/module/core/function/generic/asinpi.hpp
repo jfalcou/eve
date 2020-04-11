@@ -23,9 +23,10 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto asinpi_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                  , T const &a) noexcept
   {
-    return inpi(asin(a0));
+    if constexpr(native<T>) return inpi(asin(a));
+    else                    return apply_over(asinpi, a);
   }
 
 }

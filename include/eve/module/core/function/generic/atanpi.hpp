@@ -17,17 +17,17 @@
 #include <eve/function/atan.hpp>
 #include <eve/function/inpi.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto atanpi_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                  , T const &a) noexcept
   {
-    return inpi(atan(a0));
+    if constexpr(native<T>) return inpi(atan(a));
+    else                    return apply_over(atanpi, a);
   }
-
 }
 
 #endif

@@ -21,22 +21,23 @@
 
 namespace eve::detail
 {
-
-  template<floating_real_value T>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                       , D const &
+                                       , T const &a) noexcept
+  requires std::same_as<D,  regular_type> || std::same_as<D,  raw_type>
   {
-    return acos(rec(a0)); 
-  }
-  
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &     
-                                  , T const &a0) noexcept
-  {
-    return raw_(acos)(rec(a0)); 
+    if constexpr(native<T>) return D()(acos)(rec(a));
+    else                    return apply_over(D()(asec), a);
   }
 
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto asec_ ( EVE_SUPPORTS(cpu_)
+                                        , T const &a
+                                        ) noexcept
+  {
+    return asec(regular_type(), a);
+  }
 }
 
 #endif

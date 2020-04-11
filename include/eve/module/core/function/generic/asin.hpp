@@ -37,6 +37,7 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -48,26 +49,20 @@ namespace eve::detail
   {
     if constexpr( native<T> )
     {
-      using v_t = value_type_t<T>;
+      using elt_t = element_type_t<T>;
       auto x = eve::abs(a0);
       auto sgn = eve::bitofsign(a0);
-      if constexpr(std::is_same_v<v_t, float>)
+      if constexpr(std::is_same_v<elt_t, float>)
       {
         const auto x_larger_05 = x > Half<T>();
         T z = if_else(x_larger_05, Half<T>()*oneminus(x), eve::sqr(x));
         x = if_else(x_larger_05, sqrt(z), x);
-        T z1 = horn<T,
-          0x3e2aaae4,
-          0x3d9980f6,
-          0x3d3a3ec7,
-          0x3cc617e3,
-          0x3d2cb352
-          > (z);
+        T z1 = horn<T, 0x3e2aaae4, 0x3d9980f6, 0x3d3a3ec7, 0x3cc617e3, 0x3d2cb352>(z);
         z1 = fma(z1, z*x, x);
         z = if_else(x_larger_05, Pio_2<T>()-(z1+z1), z1);
         return eve::bit_xor(z, sgn);
       }
-      else if constexpr(std::is_same_v<v_t, double>)
+      else if constexpr(std::is_same_v<elt_t, double>)
       {
         auto small = x < Sqrteps<T>();
         if constexpr(scalar_value<T>) //early scalar return
@@ -75,73 +70,44 @@ namespace eve::detail
           if (small) return a0;
           if ((x >  One<T>())) return Nan<T>();
         }
-        else if constexpr(simd_value<T>) //simd preparation 
+        else if constexpr(simd_value<T>) //simd preparation
         {
-          x = if_else(x > One<T>(), eve::allbits_, x); 
+          x = if_else(x > One<T>(), eve::allbits_, x);
         }
-        
         auto case_1 = [](const T & x){ // x < 0.625
-          T zz1 = eve::oneminus(x);
-          const T vp = zz1*horn<T,
-              0x403c896240f3081dll,
-              0xc03991aaac01ab68ll,
-              0x401bdff5baf33e6all,
-              0xbfe2079259f9290fll,
-              0x3f684fc3988e9f08ll
-              >(zz1)/
-              horn1<T,
-              0x40756709b0b644bell,
-              0xc077fe08959063eell,
-              0x40626219af6a7f42ll,
-              0xc035f2a2b6bf5d8cll
-          >(zz1);
+          auto zz1 = eve::oneminus(x);
+          auto num = zz1*horn<T, 0x403c896240f3081dll, 0xc03991aaac01ab68ll, 0x401bdff5baf33e6all,
+              0xbfe2079259f9290fll, 0x3f684fc3988e9f08ll >(zz1);
+          auto den = horn1<T, 0x40756709b0b644bell, 0xc077fe08959063eell, 0x40626219af6a7f42ll, 0xc035f2a2b6bf5d8cll>(zz1);
+          auto vp =  num/den;
           zz1 =  sqrt(zz1+zz1);
-          T z = Pio_4<T>()-zz1;
+          auto z = Pio_4<T>()-zz1;
           zz1 = fms(zz1, vp,  Constant<T, 0X3C91A62633145C07ULL>());//pio_2lo
           z =  z-zz1;
           zz1 = z+Pio_4<T>();
           return zz1;
-        }; 
+        };
         auto case_2 =  [](const T & x){ // x >=  0.625
           T zz2 = sqr(x);
-          T z = zz2*horn<T,
-            0xc020656c06ceafd5ll,
-            0x40339007da779259ll,
-            0xc0304331de27907bll,
-            0x4015c74b178a2dd9ll,
-            0xbfe34341333e5c16ll,
-            0x3f716b9b0bd48ad3ll
-            >(zz2)/
-          horn1<T,
-            0xc04898220a3607acll,
-            0x4061705684ffbf9dll,
-            0xc06265bb6d3576d7ll,
-            0x40519fc025fe9054ll,
-            0xc02d7b590b5e0eabll
-          >(zz2);
+          auto num = zz2*horn<T,  0xc020656c06ceafd5ll, 0x40339007da779259ll, 0xc0304331de27907bll, 0x4015c74b178a2dd9ll,
+            0xbfe34341333e5c16ll, 0x3f716b9b0bd48ad3ll >(zz2);
+          auto den = horn1<T, 0xc04898220a3607acll, 0x4061705684ffbf9dll, 0xc06265bb6d3576d7ll,
+            0x40519fc025fe9054ll, 0xc02d7b590b5e0eabll >(zz2);
+          auto z =  num/den;
           zz2 = fma(x, z, x);
           return zz2;
-        }; 
+        };
         auto ct1 = Constant<T, 0x3fe4000000000000ll>(); //0.625;
         auto xgtct1 =  x > ct1;
-        auto res = branch<scalar_value<T>>(xgtct1, case_1, case_2)(x); 
+        auto res = branch<scalar_value<T>>(xgtct1, case_1, case_2)(x);
         if constexpr(simd_value<T>)
         {
           res = if_else(small, x, res);
         }
         return  bit_xor(res, sgn);
-//         if constexpr(scalar_value<T>)
-//         {
-//           return  bit_xor(sgn, xgtct1 ? case_1(x) : case_2(x));
-//         }
-//         else if constexpr(simd_value<T>)
-//         {
-//           auto res = if_else(small, x, if_else(xgtct1, case_1(x), case_2(x)));
-//           res = bit_xor(eve::if_else( small,x, res), sgn); 
-//           return if_else(x > One<T>(), eve::allbits_, res); 
-//         }
       }
     }
+    else return apply_over(asin, a0);
   }
 }
 

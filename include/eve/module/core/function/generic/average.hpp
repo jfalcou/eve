@@ -45,9 +45,12 @@ namespace eve::detail
                             , T const &b) noexcept
   requires native<T>
   {
-
-    if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
-    else                            return fma(a, Half(as(a)), mul(b, Half(as(a))));
+    if constexpr(native<T>)
+    {
+      if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
+      else                            return fma(a, Half(as(a)), mul(b, Half(as(a))));
+   }
+    else return  apply_over(average, a, b);
   }
 }
 

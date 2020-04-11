@@ -18,25 +18,27 @@
 #include <eve/function/indeg.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
-  template<floating_real_value T>
+ template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                       , D const &
+                                       , T const &a) noexcept
+  requires std::same_as<D,  regular_type> || std::same_as<D,  raw_type>
   {
-    return indeg(asec(a0));
-  }
-  
-  template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &      
-                                  , T const &a0) noexcept
-  {
-    return indeg(raw_(asec)(a0));
+    if constexpr(native<T>) return indeg(D()(asec)(a));
+    else                    return apply_over(D()(asecd), a);
   }
 
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto asecd_ ( EVE_SUPPORTS(cpu_)
+                                        , T const &a
+                                        ) noexcept
+  {
+    return asecd(regular_type(), a);
+  }
 }
 
 #endif

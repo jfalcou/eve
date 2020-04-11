@@ -217,11 +217,9 @@ namespace eve::detail
                                              , T xr
                                              , T dxr = T(0)) noexcept
   {
-    auto aa0lteps = eve::abs(a0) < Eps<T>();
     T y = tancot_eval(xr);
     if constexpr(scalar_value<T>)
     {
-      if (aa0lteps) return pedantic_(rec)(a0);
       if (is_not_finite(a0)) return Nan<T>();
       y =  (int(fn)&1) ? -y: rec(y);
       if (dxr) y+= dxr*fma(y, y, One<T>());
@@ -229,6 +227,7 @@ namespace eve::detail
     }
     else
     {
+      auto aa0lteps = eve::abs(a0) < Eps<T>();
       auto tmp = binarize( fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto test = is_eqz(swap_bit);

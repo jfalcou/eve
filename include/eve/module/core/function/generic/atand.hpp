@@ -17,17 +17,17 @@
 #include <eve/function/atan.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto atand_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
+                                  , T const &a) noexcept
   {
-    return indeg(atan(a0));
+    if constexpr(native<T>) return indeg(atan(a));
+    else                    return apply_over(atan, a);
   }
-
 }
 
 #endif
