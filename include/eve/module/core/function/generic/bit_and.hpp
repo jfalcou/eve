@@ -32,7 +32,7 @@ namespace eve::detail
                                   , U const &b) noexcept
   requires bit_compatible_values<T,U>
   {
-    return bit_call(bit_and, a, b); 
+    return bit_call(bit_and, a, b);
   }
 
   template<real_scalar_value T>
@@ -47,7 +47,7 @@ namespace eve::detail
     }
     else return T(a & b);
   }
-  
+
   template<real_simd_value T>
   EVE_FORCEINLINE auto bit_and_(EVE_SUPPORTS(cpu_)
                                   , T const &a
@@ -65,11 +65,11 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_and(t, f)); 
+    using r_t = decltype(bit_and(t, f));
          if constexpr(scalar_value<T>) return cond ? bit_and(t, f) : r_t(t);
     else if constexpr(simd_value<T>)   return if_else(cond,bit_and(t, f), t);
   }
- 
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto bit_and_(EVE_SUPPORTS(cpu_)
                            , not_t<T> const & cond
@@ -77,7 +77,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_and(t, f)); 
+    using r_t = decltype(bit_and(t, f));
          if constexpr(scalar_value<T>) return cond.value ? r_t(t) : bit_and(t, f);
     else if constexpr(simd_value<T>)   return if_else(cond.value,t, bit_and(t, f));
   }

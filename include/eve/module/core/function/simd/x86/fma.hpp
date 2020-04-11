@@ -16,10 +16,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> fma_(EVE_SUPPORTS(avx2_),
                                         wide<T, N, sse_> const &a,
                                         wide<T, N, sse_> const &b,
@@ -29,38 +30,29 @@ namespace eve::detail
     {
       if constexpr(supports_fma3)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm_fmadd_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm_fmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm_fmadd_ps(a, b, c);
       }
       else if constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm_macc_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm_macc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm_macc_ps(a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), a, b, c);
     }
-    else // if constexpr(std::is_integralt_v<T>)
+    else if constexpr(std::is_integral_v<T>)
     {
       if constexpr(supports_xop)
       {
-        if constexpr(sizeof(T) == 2)
-          return _mm_macc_epi16(a, b, c);
-        else if constexpr(sizeof(T) == 4)
-          return _mm_macc_epi32(a, b, c);
-        else
-          fma_(EVE_RETARGET(cpu_), a, b, c);
+        if constexpr(sizeof(T) == 2)                return _mm_macc_epi16(a, b, c);
+        else if constexpr(sizeof(T) == 4)           return _mm_macc_epi32(a, b, c);
+        else                                        return fma_(EVE_RETARGET(cpu_), a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), a, b, c);
     }
   }
 
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fma_(EVE_SUPPORTS(avx2_),
                             wide<T, N, avx_> const &a,
                             wide<T, N, avx_> const &b,
@@ -70,30 +62,24 @@ namespace eve::detail
     {
       if constexpr(supports_fma3)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm256_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm256_fmadd_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm256_fmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm256_fmadd_ps(a, b, c);
       }
       else if constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm256_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm256_macc_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm256_macc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm256_macc_ps(a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), a, b, c);
     }
-    else
-      return fma_(EVE_RETARGET(cpu_), a, b, c);
+    else                                            return fma_(EVE_RETARGET(cpu_), a, b, c);
   }
 
   /////////////////////////////////////////////////////////////////////////////////
   /// pedantic_ numeric_
-  template<typename D, typename T, typename N>
+  template<typename D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> fma_(EVE_SUPPORTS(avx2_),
-                                        D const &, 
+                                        D const &,
                                         wide<T, N, sse_> const &a,
                                         wide<T, N, sse_> const &b,
                                         wide<T, N, sse_> const &c) noexcept
@@ -102,40 +88,31 @@ namespace eve::detail
     {
       if constexpr(supports_fma3)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm_fmadd_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm_fmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm_fmadd_ps(a, b, c);
       }
       else if constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm_macc_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm_macc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm_macc_ps(a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
     }
-    else // if constexpr(std::is_integralt_v<T>)
+    else if constexpr(std::is_integral_v<T>)
     {
       if constexpr(supports_xop)
       {
-        if constexpr(sizeof(T) == 2)
-          return _mm_macc_epi16(a, b, c);
-        else if constexpr(sizeof(T) == 4)
-          return _mm_macc_epi32(a, b, c);
-        else
-          fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+        if constexpr(sizeof(T) == 2)                return _mm_macc_epi16(a, b, c);
+        else if constexpr(sizeof(T) == 4)           return _mm_macc_epi32(a, b, c);
+        else                                        return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
     }
   }
 
-  template<typename D, typename T, typename N>
+  template<typename D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fma_(EVE_SUPPORTS(avx2_),
-                                        D const &, 
+                                        D const &,
                                         wide<T, N, avx_> const &a,
                                         wide<T, N, avx_> const &b,
                                         wide<T, N, avx_> const &c) noexcept
@@ -144,24 +121,18 @@ namespace eve::detail
     {
       if constexpr(supports_fma3)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm256_fmadd_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm256_fmadd_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm256_fmadd_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm256_fmadd_ps(a, b, c);
       }
       else if constexpr(supports_fma4)
       {
-        if constexpr(std::is_same_v<T, double>)
-          return _mm256_macc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>)
-          return _mm256_macc_ps(a, b, c);
+        if constexpr(std::is_same_v<T, double>)     return _mm256_macc_pd(a, b, c);
+        else if constexpr(std::is_same_v<T, float>) return _mm256_macc_ps(a, b, c);
       }
-      else
-        return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+      else                                          return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
     }
-    else
-      return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
-  }  
+    else                                            return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+  }
 }
 
 #endif
