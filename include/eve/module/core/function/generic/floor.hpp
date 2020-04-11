@@ -22,7 +22,7 @@
 
 namespace eve::detail
 {
-  template<integral_real_value T>
+  template<real_value T>
   EVE_FORCEINLINE constexpr T floor_(EVE_SUPPORTS(cpu_)
                                     , T const &a0) noexcept
   {
