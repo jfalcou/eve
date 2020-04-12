@@ -34,6 +34,10 @@ namespace std
                           &&  requires(std::add_rvalue_reference_t<From> (&f)())
                               { static_cast<To>(f()); };
 
+  template< class Derived, class Base >
+  concept derived_from  = std::is_base_of_v<Base, Derived> &&
+                          std::is_convertible_v<const volatile Derived*, const volatile Base*>;
+
   // -----------------------------------------------------------------------------------------------
   // Plumbing for input_iterator concept
   template<typename I> struct indirectly_readable_traits { };
