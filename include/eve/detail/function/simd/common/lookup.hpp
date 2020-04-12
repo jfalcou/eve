@@ -15,10 +15,6 @@
 #include <eve/detail/meta/concept.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/constant/zero.hpp>
 
 namespace eve::detail
 {
@@ -29,26 +25,20 @@ namespace eve::detail
   {
     using type = wide<T,N,X>;
 
-    if constexpr( std::is_signed_v<I> )
-    {
-      return  apply<N::value> ( [&](auto... v)
-                                {
-                                  auto idx = if_else(ind>=0,ind,eve::zero_);
-                                  return type(a[ idx[v] ]...);
-                                }
-                              )
-            & bit_mask(ind>=0);
-    }
-    else
-    {
-      return  apply<N::value> ( [&](auto... v)
-                                {
-                                  auto idx = if_else(ind<N::value,ind,eve::zero_);
-                                  return type(a[ idx[v] ]...);
-                                }
-                              )
-             &  bit_mask(ind<N::value);
-    }
+    auto lkup = [](auto const& c, auto const& i, auto const& w)
+                {
+                  return  apply<N::value> ( [&](auto... v)
+                                            {
+                                              auto idx = c.bits();
+                                              idx &= i;
+                                              return type(w[ idx[v] ]...);
+                                            }
+                                          )
+                        & c.mask();
+                };
+
+    if constexpr( std::is_signed_v<I> ) return  lkup(ind>=0       , ind , a);
+    else                                return  lkup(ind<N::value , ind , a);
   }
 }
 

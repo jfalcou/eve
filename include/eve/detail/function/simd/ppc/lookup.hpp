@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/detail/function/simd/lookup.hpp>
+#include <eve/detail/function/simd/lookup_helpers.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
