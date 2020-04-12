@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> fnms_(EVE_SUPPORTS(neon128_),
                                            wide<T, N, neon64_> const &v0,
                                            wide<T, N, neon64_> const &v1,
@@ -27,7 +27,7 @@ namespace eve::detail
     return -fma(v0,v1,v2);
   }
 
-  template<typename D, typename T, typename N>
+  template<typename D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> fnms_(EVE_SUPPORTS(neon128_),
                                            D const &,
                                            wide<T, N, neon64_> const &v0,
@@ -37,7 +37,7 @@ namespace eve::detail
     return -fma(v0,v1,v2);
   }
 
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> fnms_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon128_> const &v0,
                                             wide<T, N, neon128_> const &v1,
@@ -46,7 +46,7 @@ namespace eve::detail
     return -fma(v0,v1,v2);
   }
 
-  template<typename D, typename T, typename N>
+  template<typename D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> fnms_(EVE_SUPPORTS(neon128_),
                                             D const &,
                                             wide<T, N, neon128_> const &v0,
