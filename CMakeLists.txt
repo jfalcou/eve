@@ -11,7 +11,10 @@ cmake_minimum_required(VERSION 3.2)
 ## =================================================================================================
 project(eve LANGUAGES CXX)
 set(PROJECT_VERSION 1.20.5.0)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake )
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+                      ${PROJECT_SOURCE_DIR}/cmake
+                      ${PROJECT_SOURCE_DIR}/test/unit/module/core
+   )
 
 ## =================================================================================================
 ## No in-source build
