@@ -74,7 +74,7 @@ namespace eve::detail
     else if constexpr(scalar_value<T>) //  T is scalar and one simd
     {
       using c_t = std::conditional_t<simd_value<U>, cardinal_t<U>, cardinal_t<V>>;
-      using r_t = as_wide<T, c_t>;
+      using r_t = as_wide_t<T, c_t>;
       return op(r_t(a), r_t(b), r_t(c));
     }
     else
