@@ -12,6 +12,7 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/logical.hpp>
+#include <eve/function/if_else.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -49,5 +50,5 @@ TTS_CASE("Check eve::add[condition] behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::add[ m ](tv, fv) , eve::if_else(m,tv + fv, tv) );
+  TTS_EQUAL(eve::add[ m ](tv, fv) , eve::if_else(m, eve::add(tv, fv), tv) );
 }

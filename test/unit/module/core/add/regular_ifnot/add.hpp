@@ -49,5 +49,5 @@ TTS_CASE("Check eve::add.not_[condition] behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::add.not_[ m ](tv, fv) , eve::if_else(m,tv, tv + fv) );
+  TTS_EQUAL(eve::add.not_[ m ](tv, fv) , eve::if_else(m,tv, eve::add(tv, fv)) );
 }

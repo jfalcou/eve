@@ -88,5 +88,5 @@ TTS_CASE("Check eve::dec[condition] behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::dec[ m ](tv) , eve::if_else(m,tv - 1, tv) );
+  TTS_EQUAL(eve::dec[ m ](tv) , eve::if_else(m,eve::dec(tv), tv) );
 }

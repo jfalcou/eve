@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> if_else_(EVE_SUPPORTS(vmx_),
                                             logical<wide<T, N, ppc_>> const &m,
                                             wide<T, N, ppc_> const &         v0,
