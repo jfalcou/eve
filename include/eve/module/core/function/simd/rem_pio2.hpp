@@ -16,7 +16,7 @@
 #include <eve/function/load.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/wide.hpp>
+#include <eve/arch/wide.hpp>
 #include <type_traits>
 #include <tuple>
 #include <array>
@@ -30,9 +30,9 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<value_type_t<T>>)
     {
-      using t_t  =  wide<T, N, ABI>; 
+      using t_t  =  wide<T, N, ABI>;
       using r_t = std::tuple<t_t, t_t, t_t>;
-      
+
       static constexpr uint32_t size = N::value;
       alignas(t_t::static_alignment) std::array<T, size> tmp;
       alignas(t_t::static_alignment) std::array<T, size> txr;
@@ -48,7 +48,7 @@ namespace eve::detail
     else
     {
       static_assert(std::is_floating_point_v<value_type_t<T>>, "rem_pio2 parameteris not IEEEValue");
-      return {T{}, T{}, T{}}; 
+      return {T{}, T{}, T{}};
     }
   }
 }

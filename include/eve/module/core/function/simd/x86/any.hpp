@@ -17,7 +17,7 @@
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/forward.hpp>
-#include <eve/wide.hpp>
+#include <eve/arch/wide.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
@@ -31,19 +31,19 @@ namespace eve::detail
                            , logical<wide<T, N, sse_>> const &v) noexcept
   {
     static constexpr int Bytes = limits<eve::sse2_>::bytes;
-    
+
     if constexpr(std::is_same_v<T, float>)
     {
       using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
-      
+
       if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
       {
         using t_t  = wide<float, fixed<Card>, sse_>;
         static constexpr int sv = SH*sizeof(T);
         i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
-        
+
         return _mm_movemask_ps(bit_cast(z,as_<t_t>()));
       }
       else
@@ -56,13 +56,13 @@ namespace eve::detail
       using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
-      
+
       if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
       {
         using t_t  = wide<double, fixed <Card>, sse_>;
         static constexpr int sv = SH*sizeof(T);
         i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
-        
+
         return _mm_movemask_pd(bit_cast(z,as_<t_t>()));
       }
       else
@@ -80,7 +80,7 @@ namespace eve::detail
         {
           static constexpr int sv = SH;
           auto z = _mm_bslli_si128(v.mask(), sv);
-          
+
           return _mm_movemask_epi8(z);
         }
         else
@@ -104,7 +104,7 @@ namespace eve::detail
       }
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename N>

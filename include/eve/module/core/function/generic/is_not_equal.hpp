@@ -16,7 +16,6 @@
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/abi_cast.hpp>
-#include <eve/function/bit_cast.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/is_not_nan.hpp>

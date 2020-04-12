@@ -18,7 +18,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/popcount.hpp>
 #include <eve/forward.hpp>
-#include <eve/wide.hpp>
+#include <eve/arch/wide.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
 

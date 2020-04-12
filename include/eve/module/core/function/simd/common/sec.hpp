@@ -16,7 +16,7 @@
 #include <eve/function/cos.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/trigo_tags.hpp>
-#include <eve/wide.hpp>
+#include <eve/arch/wide.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,20 +24,20 @@ namespace eve::detail
 
   template<typename T,  typename N,  typename ABI, typename Tag>
   EVE_FORCEINLINE auto sec_(EVE_SUPPORTS(cpu_)
-                           , Tag const &  
+                           , Tag const &
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      return rec(Tag()(eve::cos)(a0)); 
+      return rec(Tag()(eve::cos)(a0));
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::sec simd ] - type is not an IEEEValue"); 
-    }   
+      static_assert(std::is_floating_point_v<T>, "[eve::sec simd ] - type is not an IEEEValue");
+    }
   }
 
- 
+
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sec_(EVE_SUPPORTS(cpu_)
