@@ -44,9 +44,9 @@ namespace eve::detail
                                   , T const &a
                                   , T const &b
                                   , T const &c) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>) return a*b-c;
-    else                    return apply_over(fms, a, b, c);
+    return a*b-c;
   }
 
   template<real_value T, typename D>
@@ -55,9 +55,9 @@ namespace eve::detail
                                   , T const &a
                                   , T const &b
                                   , T const &c) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>) return D()(fma)(a, b, T(-c));
-    else                    return apply_over(D()(fms), a, b, c);
+    return D()(fma)(a, b, T(-c));
   }
 }
 

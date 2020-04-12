@@ -86,6 +86,7 @@ namespace eve::detail
                                   , T const &a
                                   , T const &b
                                   , T const &c) noexcept
+  requires native<T>
   {
     using elt_t =  element_type_t<T>;
     if constexpr(std::is_same_v<elt_t, float>)

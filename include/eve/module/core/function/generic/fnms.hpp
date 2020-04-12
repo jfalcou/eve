@@ -32,33 +32,33 @@ namespace eve::detail
 {
   template<real_value T, real_value U, real_value V>
   EVE_FORCEINLINE auto fnms_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , U const &b
-                                  , V const &c) noexcept
+                            , T const &a
+                            , U const &b
+                            , V const &c) noexcept
   requires compatible_values<T,U> && compatible_values<T,V>
   {
     return arithmetic_call(fnms, a, b, c);
   }
-
+  
   template<real_value T>
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , T const &b
-                                  , T const &c) noexcept
+                         , T const &a
+                         , T const &b
+                         , T const &c) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>) return -a*b-c;
-    else                    return apply_over(fnms, a, b, c);
+    return -a*b-c;
   }
-
+  
   template<real_value T, typename D>
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_)
-                                  , D const &
-                                  , T const &a
-                                  , T const &b
-                                  , T const &c) noexcept
+                         , D const &
+                         , T const &a
+                         , T const &b
+                         , T const &c) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>) return -D()(fma)(a, b, c);
-    else                    return apply_over(D()(fnms), a, b, c);
+    return -D()(fma)(a, b, c);
   }
 }
 

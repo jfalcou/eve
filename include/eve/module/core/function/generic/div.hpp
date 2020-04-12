@@ -65,29 +65,26 @@ namespace eve::detail
   EVE_FORCEINLINE T div_(EVE_SUPPORTS(cpu_)
                         , T const &a
                         , T const &b) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>)
+    if constexpr(scalar_value<T>) return a/b;
+    else
     {
-      if constexpr(scalar_value<T>) return a/b;
+      if constexpr(floating_real_value<T>) return mul(a, rec(b));
       else
       {
-        if constexpr(floating_real_value<T>) return mul(a, rec(b));
-        else
+        using elt_t =  element_type_t<T>;
+        constexpr int sz = sizeof(elt_t);
+        if constexpr(sz == 8) return map( eve::div, a, b);
+        else if constexpr(sz == 4)
         {
-          using elt_t =  element_type_t<T>;
-          constexpr int sz = sizeof(elt_t);
-               if constexpr(sz == 8) return map( eve::div, a, b);
-          else if constexpr(sz == 4)
-          {
-            return map(convert, div(convert(a, double_), convert(b, double_)), as<elt_t>());
-            //       return convert(div(convert(a, double_), convert(b, double_)), as<elt_t>());
-            // this has a bug TODO
-          }
-          else if constexpr(sz <  4) return convert(div(convert(a, single_), convert(b, single_)), as<elt_t>());
+          return map(convert, div(convert(a, double_), convert(b, double_)), as<elt_t>());
+          //       return convert(div(convert(a, double_), convert(b, double_)), as<elt_t>());
+          // this has a bug TODO
         }
+        else if constexpr(sz <  4) return convert(div(convert(a, single_), convert(b, single_)), as<elt_t>());
       }
     }
-    else return apply_over(div, a, b);
   }
 
   //////////////////////////////////////////////////////////////////////
@@ -127,50 +124,47 @@ namespace eve::detail
                             , saturated_type const &
                             , T const &a
                             , T const &b) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>)
+    if constexpr(floating_real_value<T>) return div(a, b);
+    else if constexpr( signed_integral_value<T> )
     {
-      if constexpr(floating_real_value<T>) return div(a, b);
-      else if constexpr( signed_integral_value<T> )
+      if constexpr(scalar_value<T>)
       {
-        if constexpr(scalar_value<T>)
-        {
-          using ui_t = as_integer_t<T, unsigned>;
-          auto aa = a + !((b + One(as(a))) | ((ui_t)a + Valmin(as(a))));
-          if (b) return aa/b;
-          else if (a) return Valmax(as(a)) + ((ui_t)a >> (sizeof(T)*8-1));
-          else        return Zero(as(a));
-        }
-        else if constexpr( simd_value<T>)
-        {
-          constexpr int shft = sizeof(element_type_t<T>)*8-1;
-          auto iseqzb = is_eqz(b);
-          // replace valmin/-1 by (valmin+1)/-1
-          auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
-          // negative -> valmin
-          // positive -> valmax
-          auto x2 = bit_xor(Valmax<T>(), shr(x, shft));
-          x = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
-          auto y = if_else(iseqzb, One<T>(), b);
-          return div(x, y);
-        }
+        using ui_t = as_integer_t<T, unsigned>;
+        auto aa = a + !((b + One(as(a))) | ((ui_t)a + Valmin(as(a))));
+        if (b) return aa/b;
+        else if (a) return Valmax(as(a)) + ((ui_t)a >> (sizeof(T)*8-1));
+        else        return Zero(as(a));
       }
-      else if constexpr(unsigned_value<T>)
+      else if constexpr( simd_value<T>)
       {
-        if constexpr(scalar_value<T>)
-        {
-          return b ? a/b : bit_mask(a);
-        }
-        else if constexpr( simd_value<T>)
-        {
-          auto iseqzb = is_eqz(b);
-          auto bb = if_else(iseqzb, One(as(a)), b);
-          auto aa = if_else(iseqzb, bit_mask(a), a);
-          return div(aa, bb);
-        }
+        constexpr int shft = sizeof(element_type_t<T>)*8-1;
+        auto iseqzb = is_eqz(b);
+        // replace valmin/-1 by (valmin+1)/-1
+        auto x = inc[logical_not(inc(b) | (a + Valmin<T>()))](a);
+        // negative -> valmin
+        // positive -> valmax
+        auto x2 = bit_xor(Valmax<T>(), shr(x, shft));
+        x = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
+        auto y = if_else(iseqzb, One<T>(), b);
+        return div(x, y);
       }
     }
-    else return apply_over(saturated_(div), a, b);
+    else if constexpr(unsigned_value<T>)
+    {
+      if constexpr(scalar_value<T>)
+      {
+        return b ? a/b : bit_mask(a);
+      }
+      else if constexpr( simd_value<T>)
+      {
+        auto iseqzb = is_eqz(b);
+        auto bb = if_else(iseqzb, One(as(a)), b);
+        auto aa = if_else(iseqzb, bit_mask(a), a);
+        return div(aa, bb);
+      }
+    }
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -241,9 +235,6 @@ namespace eve::detail
     }
     else return apply_over(saturated_(div), cond, t, f);
   }
-
-
-
 }
 
 namespace eve

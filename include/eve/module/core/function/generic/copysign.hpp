@@ -41,20 +41,17 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U> && signed_value<T>
   {
-    return arithmetic_call(copysign, a, b); 
+    return arithmetic_call(copysign, a, b);
   }
-  
+
   template<floating_real_value T>
   EVE_FORCEINLINE  T copysign_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , T const &b) noexcept
+                              , T const &a
+                              , T const &b) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>)
-    {
-      return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
-    }
-    else return apply_over(copysign, a, b);
-  }  
+    return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
+  }
 }
 
 #endif

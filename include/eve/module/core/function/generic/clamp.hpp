@@ -32,29 +32,17 @@ namespace eve::detail
                                   , V const &c) noexcept
   requires compatible_values<T,U> && compatible_values<T,V>
   {
-    return arithmetic_call(clamp, a, b, c); 
+    return arithmetic_call(clamp, a, b, c);
   }
 
-  template<real_scalar_value T>
+  template<real_value T>
   EVE_FORCEINLINE auto clamp_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b
                                   , T const &c) noexcept
+  requires native<T>
   {
-    return  eve::min(eve::max(a, b), c);
-  }
-  
-  template<real_simd_value T>
-  EVE_FORCEINLINE auto clamp_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , T const &b
-                                  , T const &c) noexcept
-  {
-    if constexpr(native<T>)
-    {
-      return  eve::min(eve::max(a, b), c);
-    }
-    else return apply_over(clamp, a, b, c); 
+    return eve::min(eve::max(a, b), c);
   }
 }
 

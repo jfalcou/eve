@@ -26,7 +26,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_)
                                  , T const &a) noexcept
   {
-    return bit_and(a, Signmask(as(a)));
+        if constexpr(native<T>) return bit_and(a, Signmask(as(a)));
+        else                    return apply_over(bitofsign, a);
   }
 }
 

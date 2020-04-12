@@ -41,9 +41,9 @@ namespace eve::detail
   EVE_FORCEINLINE T dist_(EVE_SUPPORTS(cpu_)
                          , T const &a
                          , T const &b) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>) return eve::max(a, b) - eve::min(a, b);
-    else                    return apply_over(dist, a, b);
+    return eve::max(a, b) - eve::min(a, b);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -63,14 +63,11 @@ namespace eve::detail
                          , saturated_type const &
                          , T const &a
                          , T const &b) noexcept
+  requires native<T>
   {
-    if constexpr(native<T>)
-    {
       auto d = dist(a, b);
       if constexpr(signed_integral_value<T>) return if_else(is_ltz(d), Valmax(as(a)), d);
       else                                   return d;
-    }
-    else                                     return apply_over(saturated_(dist), a, b);
   }
 }
 
