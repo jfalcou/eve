@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_FRAC_HPP_INCLUDED
 
 #include <eve/function/definition/frac.hpp>
-#include <eve/module/core/function/scalar/frac.hpp>
-#include <eve/module/core/function/simd/frac.hpp>
+#include <eve/module/core/function/generic/frac.hpp>
 
 #endif

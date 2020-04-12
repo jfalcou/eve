@@ -8,41 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FDIM_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_FDIM_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FRAC_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_FRAC_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/trunc.hpp>
 #include <eve/function/sub.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // regular case
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE  auto fdim_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(fdim, a, b);
-  }
-
   template<real_value T>
-  EVE_FORCEINLINE  T fdim_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , T const &b) noexcept
-  requires native<T>
+  EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(cpu_)
+                            , T const &a) noexcept
   {
-    return if_else(is_not_less_equal(a, b),  a-b, eve::zero_);
+    if constexpr(native<T>)
+    {
+      if constexpr(floating_value<T>) return a - trunc(a);
+      else return Zero(as(a));
+    }
+    else return apply_over(frac, a);
   }
 }
 
