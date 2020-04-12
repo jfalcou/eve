@@ -260,23 +260,6 @@ namespace eve
       return bit_cast(self(), as_<mask_type>{});
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // Not supported operators
-    void operator++() const    = delete;
-    void operator++(int) const = delete;
-    void operator--() const    = delete;
-    void operator--(int) const = delete;
-    template<typename Other>
-    void operator+=(Other const &other) = delete;
-    template<typename Other>
-    void operator-=(Other const &other) = delete;
-    template<typename Other>
-    void operator&=(Other const &other) = delete;
-    template<typename Other>
-    void operator|=(Other const &other) = delete;
-    template<typename Other>
-    void operator^=(Other const &other) = delete;
-
   private:
     wide<logical<Type>, N> data_;
   };
