@@ -12,9 +12,9 @@
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
 #include <eve/concept/range.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
 #include <utility>
@@ -39,33 +39,26 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
-    if constexpr(is_Vectorized_v<T>)
-      return eve::detail::slice(std::forward<T>(t), upper_);
-    else
-      return std::forward<T>(t);
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), upper_);
+    else                          return std::forward<T>(t);
   }
 
   // Lower values extraction
   template<typename T>
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
-    if constexpr(is_Vectorized_v<T>)
-      return eve::detail::slice(std::forward<T>(t), lower_);
-    else
-      return std::forward<T>(t);
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), lower_);
+    else                          return std::forward<T>(t);
   }
 
   template<typename T, typename I>
   EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
   {
-    if constexpr(is_Vectorized_v<T>)
-    {
-      return std::forward<T>(t).storage().segments[idx];
-    }
-    else
-    {
-      return std::forward<T>(t);
-    }
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).storage().segments[idx];
+    else                          return std::forward<T>(t);
   }
 
   // Compute a transformed wide type
