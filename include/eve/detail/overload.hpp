@@ -51,7 +51,7 @@
         }                                                                                          \
                                                                                                    \
         return TAG(delay_t{},EVE_CURRENT_API{},std::forward<Arg>(d),std::forward<Args>(args)...);  \
-      };                                                                                           \
+      }                                                                                            \
     };                                                                                             \
                                                                                                    \
     template<typename Condition, typename Dummy>                                                   \
@@ -82,7 +82,7 @@
         return TAG( delay_t{},EVE_CURRENT_API{}, state_,                                           \
                     std::forward<Arg>(d),std::forward<Args>(args)...                               \
                   );                                                                               \
-      };                                                                                           \
+      }                                                                                            \
     };                                                                                             \
   }                                                                                                \
   /**/

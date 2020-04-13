@@ -106,7 +106,7 @@ namespace eve::detail
     EVE_FORCEINLINE auto operator()(Func &&fn, Idx const &i, Ts &&... vs) const noexcept
     {
       return std::forward<Func>(fn)(at(std::forward<Ts>(vs), i)...);
-    };
+    }
   };
 
   template<typename Fn, typename... Ts>

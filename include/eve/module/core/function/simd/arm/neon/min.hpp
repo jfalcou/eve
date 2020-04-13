@@ -19,7 +19,7 @@
 #include <eve/forward.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/value.hpp>
-#include <type_yraits>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -75,7 +75,7 @@ namespace eve::detail
   {
     auto tmp = eve::min(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
   }
 
   template<real_scalar_value T, typename N>
@@ -86,10 +86,10 @@ namespace eve::detail
   {
     auto tmp = eve::min(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
-    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp); 
+    return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
   }
 
-  
+
 }
 
 #endif
