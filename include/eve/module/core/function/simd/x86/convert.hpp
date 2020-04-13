@@ -203,12 +203,9 @@ namespace eve::detail
     // Convert to 32 bits integer
     else if constexpr( std::is_integral_v<Out> && (sizeof(Out) == 4)  && (N::value==4))
     {
-     if constexpr( std::is_same_v<In,double>)
+      if constexpr( std::is_same_v<In,double>)
       {
-       if (std::is_signed_v<Out>)
-         return  _mm256_cvttpd_epi32(v0);
-       else
-         return  _mm256_cvttpd_epi32(v0);  //max(v0, Zero<Out>()));
+        return  _mm256_cvttpd_epi32(v0);
       }
       else if constexpr( std::is_same_v<In,float> && (N::value==8) )
       {

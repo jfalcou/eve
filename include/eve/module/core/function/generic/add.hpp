@@ -39,33 +39,6 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(add, a, b);
-  }
-
-  template<real_scalar_value T>
-  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , T const &b) noexcept
-  {
-    return static_cast<T>(a+b);
-  }
-
-  template<real_simd_value T>
-  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , T const &b) noexcept
-  {
-    return apply_over(add, a, b);
-  }
-
-  // -----------------------------------------------------------------------------------------------
   // saturated case
 
   template<real_value T, real_value U>
@@ -152,7 +125,7 @@ namespace eve::detail
           auto ux = bit_cast(a,as_<u_t>());
           auto uy = bit_cast(b,as(ux));
           u_t  res = ux + uy;
-          
+
           ux = shr(ux, sizeof(vt_t)*8-1) +  u_t(Valmax<vt_t>());
           return  bit_cast( if_else ( is_gez( bit_cast( bit_ornot ( bit_xor(ux,uy)
                                                                   , bit_xor(uy,res)
@@ -227,17 +200,6 @@ namespace eve::detail
          if constexpr(scalar_value<T>) return cond.value ? r_t(t) : saturated_(add)(t, f);
     else if constexpr(simd_value<T>)   return saturated_(add)(r_t(t), if_else(cond.value, eve::zero_, r_t(f)));
 
-  }
-}
-
-namespace eve
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator+( T const &a
-                                , U const &b) noexcept
-  -> decltype( eve::add(a,b) )
-  {
-    return eve::add(a, b);
   }
 }
 

@@ -26,15 +26,6 @@
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto
-  mul_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept Requires(T, Vectorizable<T>)
-  {
-    return a * b;
-  }
-
-  // -----------------------------------------------------------------------------------------------
   // Saturated case
   template<typename T>
   EVE_FORCEINLINE constexpr auto mul_(EVE_SUPPORTS(cpu_)

@@ -36,11 +36,14 @@ namespace eve::detail
       }
       else
       {
-        for(int i=0; i < cardinal_v<T> ; ++i)
+        bool r = true;
+
+        [&]<std::size_t... I>( std::index_sequence<I...> const& )
         {
-          if (!extract(v, i)) return false;
-        }
-        return true;
+          r = (r && ... && get<I>(v));
+        }( std::make_index_sequence<cardinal_v<T>>{});
+
+        return r;
       }
     }
     else

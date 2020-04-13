@@ -18,12 +18,11 @@
 
 namespace eve::detail
 {
-  template<<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>  bit_and_(EVE_SUPPORTS(vmx_)
-                                            , wide<T, N, ppc_> const &v0
-                                            , wide<T, N, ppc_> const &v1) noexcept
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, ppc_>
+  bit_and_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> v0, wide<T, N, ppc_> const &v1) noexcept
   {
-    return vec_and(v0.storage(), v1.storage());
+    return v0 &= v1;
   }
 }
 

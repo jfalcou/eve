@@ -14,7 +14,10 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/as_register.hpp>
+#include <eve/concept/stdconcepts.hpp>
+#include <eve/concept/range.hpp>
 #include <eve/detail/base_wide.hpp>
+#include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/slice.hpp>
@@ -24,15 +27,6 @@
 #include <eve/detail/alias.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/concept/stdconcepts.hpp>
-#include <eve/concept/range.hpp>
 #include <type_traits>
 #include <iterator>
 #include <iostream>
@@ -46,7 +40,9 @@
 
 namespace eve
 {
+  //================================================================================================
   // Wrapper for SIMD registers holding arithmetic types with compile-time size
+  //================================================================================================
   template<typename Type, typename Size, typename ABI>
   struct EVE_MAY_ALIAS wide
   {
@@ -73,8 +69,9 @@ namespace eve
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = wide<T,N>;
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Ctor
+    //==============================================================================================
     EVE_FORCEINLINE wide() noexcept {}
 
     EVE_FORCEINLINE wide(storage_type const &r) noexcept
@@ -82,8 +79,9 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide from a Range
+    //==============================================================================================
     template<typename Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
                     requires( std::input_iterator<Iterator> )
@@ -98,9 +96,15 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide from a pointer
+    //==============================================================================================
     EVE_FORCEINLINE explicit wide(Type const *ptr) noexcept
+        : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+    {
+    }
+
+    EVE_FORCEINLINE explicit wide(Type *ptr) noexcept
         : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
     {
     }
@@ -119,7 +123,7 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide from a single value
     template<typename T>
     EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( std::convertible_to<T, Type> )
@@ -127,7 +131,7 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide from a sequence of values
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE wide(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
@@ -139,7 +143,7 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide with a generator function
     template<typename Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
@@ -147,7 +151,7 @@ namespace eve
                   : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
     {}
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Constructs a wide from a pair of sub-wide
     template<typename HalfSize>
     EVE_FORCEINLINE wide( wide<Type, HalfSize> const &l
@@ -158,7 +162,7 @@ namespace eve
     {
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Assign a single value to a wide
     EVE_FORCEINLINE wide &operator=(Type v) noexcept
     {
@@ -166,24 +170,24 @@ namespace eve
       return *this;
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Raw storage access
     EVE_FORCEINLINE storage_type storage() const noexcept { return data_; }
     EVE_FORCEINLINE storage_type &storage() noexcept { return data_; }
 
     EVE_FORCEINLINE operator storage_type() const noexcept { return data_; }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // array-like interface
     static EVE_FORCEINLINE constexpr size_type size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr bool      empty() noexcept { return false; }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // alignment interface
     static EVE_FORCEINLINE constexpr size_type alignment() noexcept { return static_alignment; }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // slice interface
     EVE_FORCEINLINE auto slice() const { return detail::slice(*this); }
 
@@ -193,7 +197,7 @@ namespace eve
       return detail::slice(*this, s);
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // swap
     EVE_FORCEINLINE void swap(wide &rhs) noexcept
     {
@@ -204,7 +208,7 @@ namespace eve
     wide &      self() { return *this; }
     wide const &self() const { return *this; }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // begin() variants
     EVE_FORCEINLINE iterator begin() noexcept { return iterator_facade::begin(data_); }
     EVE_FORCEINLINE const_iterator begin() const noexcept { return iterator_facade::begin(data_); }
@@ -224,7 +228,7 @@ namespace eve
       return const_reverse_iterator(cend());
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // end() variants
     EVE_FORCEINLINE iterator end() noexcept { return begin() + size(); }
     EVE_FORCEINLINE const_iterator end() const noexcept { return begin() + size(); }
@@ -240,7 +244,7 @@ namespace eve
       return const_reverse_iterator(cbegin());
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // Dynamic index lookup
     template<typename Index>
     EVE_FORCEINLINE wide operator[](wide<Index,Size> const& idx) noexcept
@@ -248,7 +252,7 @@ namespace eve
       return lookup(*this,idx);
     }
 
-    // ---------------------------------------------------------------------------------------------
+    //==============================================================================================
     // elementwise access
     EVE_FORCEINLINE reference operator[](std::size_t i) noexcept { return begin()[ i ]; }
     EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept
@@ -262,12 +266,11 @@ namespace eve
     EVE_FORCEINLINE reference front() noexcept { return *begin(); }
     EVE_FORCEINLINE const_reference front() const noexcept { return *begin(); }
 
-    // ---------------------------------------------------------------------------------------------
+    //===============================================================================================
     // Self-increment/decrement operators
     EVE_FORCEINLINE wide &operator++() noexcept
     {
-      *this += Type{1};
-      return *this;
+      return detail::self_add(*this, Type{1});
     }
 
     EVE_FORCEINLINE wide operator++(int) noexcept
@@ -279,7 +282,7 @@ namespace eve
 
     EVE_FORCEINLINE wide &operator--() noexcept
     {
-      *this -= Type{1};
+      return detail::self_sub(*this, Type{1});
       return *this;
     }
 
@@ -290,58 +293,62 @@ namespace eve
       return that;
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // Self-assignment operators
+    //==============================================================================================
+    // Compound operators
+    //==============================================================================================
     template<typename Other>
-    EVE_FORCEINLINE wide &operator+=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator+=(Other const &other) noexcept
+                  ->  decltype(detail::self_add(*this, other))
     {
-      *this = eve::add(*this, other);
-      return *this;
+      return detail::self_add(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator-=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator-=(Other const &other) noexcept
+                  ->  decltype(detail::self_sub(*this, other))
     {
-      *this = eve::sub(*this, other);
-      return *this;
+      return detail::self_sub(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator*=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator*=(Other const &other) noexcept
+                  ->  decltype(detail::self_mul(*this, other))
     {
-      *this = eve::mul(*this, other);
-      return *this;
+      return detail::self_mul(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator/=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator/=(Other const &other) noexcept
+                  ->  decltype(detail::self_div(*this, other))
     {
-      *this = eve::div(*this, other);
-      return *this;
+      return detail::self_div(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator&=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator&=(Other const &other) noexcept
+                  ->  decltype(detail::self_bitand(*this, other))
     {
-      *this = eve::bit_and(*this, other);
-      return *this;
+      return detail::self_bitand(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator|=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator|=(Other const &other) noexcept
+                  ->  decltype(detail::self_bitor(*this, other))
     {
-      *this = eve::bit_or(*this, other);
-      return *this;
+      return detail::self_bitor(*this, other);
     }
 
     template<typename Other>
-    EVE_FORCEINLINE wide &operator^=(Other const &other) noexcept
+    EVE_FORCEINLINE   auto operator^=(Other const &other) noexcept
+                  ->  decltype(detail::self_bitxor(*this, other))
     {
-      *this = eve::bit_xor(*this, other);
-      return *this;
+      return detail::self_bitxor(*this, other);
     }
 
-  private:
+    //==============================================================================================
+    // SIMD register storage
+    //==============================================================================================
+    private:
     storage_type data_;
   };
 
@@ -363,6 +370,9 @@ namespace eve
     return os << ')';
   }
 }
+
+// + - * / & ^ | + infix version made from compounds versions ?
+//#include <eve/detail/function/operators.hpp>
 
 #if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop

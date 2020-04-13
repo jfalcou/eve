@@ -50,43 +50,6 @@
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular case
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE  auto div_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(div, a, b);
-  }
-
-  template<real_value T>
-  EVE_FORCEINLINE T div_(EVE_SUPPORTS(cpu_)
-                        , T const &a
-                        , T const &b) noexcept
-  requires native<T>
-  {
-    if constexpr(scalar_value<T>) return a/b;
-    else
-    {
-      if constexpr(floating_real_value<T>) return mul(a, rec(b));
-      else
-      {
-        using elt_t =  element_type_t<T>;
-        constexpr int sz = sizeof(elt_t);
-        if constexpr(sz == 8) return map( eve::div, a, b);
-        else if constexpr(sz == 4)
-        {
-          return map(convert, div(convert(a, double_), convert(b, double_)), as<elt_t>());
-          //       return convert(div(convert(a, double_), convert(b, double_)), as<elt_t>());
-          // this has a bug TODO
-        }
-        else if constexpr(sz <  4) return convert(div(convert(a, single_), convert(b, single_)), as<elt_t>());
-      }
-    }
-  }
-
   //////////////////////////////////////////////////////////////////////
   // general decorated
   template<real_value T, real_value U, typename D>
@@ -234,17 +197,6 @@ namespace eve::detail
       else if constexpr(simd_value<T>)   return saturated_(div)(t, if_else(cond.value, eve::one_, r_t(f)));
     }
     else return apply_over(saturated_(div), cond, t, f);
-  }
-}
-
-namespace eve
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator/( T const &a
-                                , U const &b) noexcept
-  -> decltype( eve::div(a,b) )
-  {
-    return eve::div(a, b);
   }
 }
 

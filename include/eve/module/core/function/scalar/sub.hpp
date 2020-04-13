@@ -21,13 +21,6 @@
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto
-  sub_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept Requires(T, Vectorizable<T>)
-  {
-    return a - b;
-  }
-
   // -----------------------------------------------------------------------------------------------
   // Saturated case
   template<typename T> EVE_FORCEINLINE

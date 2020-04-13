@@ -14,58 +14,21 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/concept/value.hpp>
-#include <type_trait>
 
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> add_(EVE_SUPPORTS(neon128_)
-                                          , wide<T, N, neon64_> const &v0
-                                          , wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, neon64_>
+  add_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> v0, wide<T, N, neon64_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, float>)  return vadd_f32(v0, v1);
-#if defined(__aarch64__)
-    else if constexpr(std::is_same_v<T, double>) return vadd_f64(v0, v1);
-#endif
-    else if constexpr(signed_integral_value<T>)
-    {
-           if constexpr(sizeof(T) == 8) return vadd_s64(v0, v1);
-      else if constexpr(sizeof(T) == 4) return vadd_s32(v0, v1);
-      else if constexpr(sizeof(T) == 2) return vadd_s16(v0, v1);
-      else if constexpr(sizeof(T) == 1) return vadd_s8(v0, v1);
-    }
-    else if constexpr(unsigned_value<T>)
-    {
-           if constexpr(sizeof(T) == 8) return vadd_u64(v0, v1);
-      else if constexpr(sizeof(T) == 4) return vadd_u32(v0, v1);
-      else if constexpr(sizeof(T) == 2) return vadd_u16(v0, v1);
-      else if constexpr(sizeof(T) == 1) return vadd_u8(v0, v1);
-    }
+    return v0 += v1;
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> add_(EVE_SUPPORTS(neon128_)
-                                           , wide<T, N, neon128_> const &v0
-                                           , wide<T, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, neon128_>
+  add_(EVE_SUPPORTS(neon128_), wide<T, N, neon128_> v0, wide<T, N, neon128_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, float>)  return vaddq_f32(v0, v1);
-#if defined(__aarch64__)
-    else if constexpr(std::is_same_v<T, double>) return vaddq_f64(v0, v1);
-#endif
-    else if constexpr(signed_integral_value<T>)
-    {
-         if constexpr(sizeof(T) == 8) return vaddq_s64(v0, v1);
-    else if constexpr(sizeof(T) == 4) return vaddq_s32(v0, v1);
-    else if constexpr(sizeof(T) == 2) return vaddq_s16(v0, v1);
-    else if constexpr(sizeof(T) == 1) return vaddq_s8(v0, v1);
-    }
-    else if constexpr(unsigned_value<T>)
-    {
-         if constexpr(sizeof(T) == 8) return vaddq_u64(v0, v1);
-    else if constexpr(sizeof(T) == 4) return vaddq_u32(v0, v1);
-    else if constexpr(sizeof(T) == 2) return vaddq_u16(v0, v1);
-    else if constexpr(sizeof(T) == 1) return vaddq_u8(v0, v1);
+    return v0 += v1;
   }
 }
 

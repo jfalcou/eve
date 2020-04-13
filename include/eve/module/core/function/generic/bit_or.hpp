@@ -26,36 +26,6 @@
 
 namespace eve::detail
 {
-  template<real_value T, real_value U>
-  EVE_FORCEINLINE auto bit_or_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , U const &b) noexcept
-  requires bit_compatible_values<T,U>
-  {
-    return bit_call(bit_or, a, b); 
-  }
-
-  template<real_scalar_value T>
-  EVE_FORCEINLINE auto bit_or_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , T const &b) noexcept
-  {
-    if constexpr(floating_value<T>)
-    {
-      using b_t = as_integer_t<T, unsigned>;
-      return bit_cast( b_t(bit_cast(a,as<b_t>()) | bit_cast(b,as<b_t>())), as(a) );
-    }
-    else return T(a | b);
-  }
-  
-  template<real_simd_value T>
-  EVE_FORCEINLINE auto bit_or_(EVE_SUPPORTS(cpu_)
-                                  , T const &a
-                                  , T const &b) noexcept
-  {
-    return apply_over(bit_or, a, b); // fallback never taken if proper intrinsics are at hand
-  }
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<value T, real_value U, real_value V>
@@ -65,11 +35,11 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_or(t, f)); 
+    using r_t = decltype(bit_or(t, f));
          if constexpr(scalar_value<T>) return cond ? bit_or(t, f) : r_t(t);
     else if constexpr(simd_value<T>)   return if_else(cond,bit_or(t, f), t);
   }
- 
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto bit_or_(EVE_SUPPORTS(cpu_)
                            , not_t<T> const & cond
@@ -77,20 +47,9 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_or(t, f)); 
+    using r_t = decltype(bit_or(t, f));
          if constexpr(scalar_value<T>) return cond.value ? r_t(t) : bit_or(t, f);
     else if constexpr(simd_value<T>)   return if_else(cond.value,t, bit_or(t, f));
-  }
-}
-
-namespace eve
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator|( T const &a
-                                , U const &b) noexcept
-  -> decltype( eve::bit_or(a,b) )
-  {
-    return eve::bit_or(a, b);
   }
 }
 

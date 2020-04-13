@@ -19,9 +19,9 @@ namespace eve::detail
 {
   template<typename T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-                  bit_xor_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
+  bit_xor_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> v0, wide<T, N, ppc_> const &v1) noexcept
   {
-    return vec_xor(v0.storage(), v1.storage());
+    return v0 ^= v1;
   }
 }
 
