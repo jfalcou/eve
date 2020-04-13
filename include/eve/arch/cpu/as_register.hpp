@@ -43,6 +43,12 @@ namespace eve
       using segment_type  = std::array<value_type,replication>;
       segment_type        segments;
 
+      template<typename Func>
+      static auto for_each(Func const& f) noexcept
+      {
+        return detail::apply<replication>( [&](auto const&... I) { return f(I...); } );
+      }
+
       template<typename Func> auto apply(Func const& f) noexcept
       {
         return detail::apply<replication>( [&](auto const&... I) { return f(segments[I]...); } );
