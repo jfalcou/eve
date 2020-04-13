@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_EQZ_HPP_INCLUDED
 
 #include <eve/function/definition/is_eqz.hpp>
-#include <eve/module/core/function/scalar/is_eqz.hpp>
-#include <eve/module/core/function/simd/is_eqz.hpp>
+#include <eve/module/core/function/generic/is_eqz.hpp>
 
 #endif

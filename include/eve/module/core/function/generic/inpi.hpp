@@ -16,6 +16,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/constant/invpi.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +24,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
   {
-    return Invpi(as(a))*a;
+    if constexpr(native<T>) return Invpi(as(a))*a;
+    else                    return apply_over(inpi, a);
   }
 }
 

@@ -17,6 +17,7 @@
 #include <eve/function/nearest.hpp>
 #include <eve/function/toint.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -24,8 +25,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto inearest_(EVE_SUPPORTS(cpu_)
                                           , T const &a) noexcept
   {
-         if constexpr(floating_value<T>)  return saturated_(toint)(eve::nearest(a));
-    else if constexpr(integral_value<T>)  return a; 
+    if constexpr(integral_value<T>)  return a;
+    else if constexpr(native<T>)     return saturated_(toint)(eve::nearest(a));
+    else                             return apply_over(inearest, a);
   }
 }
 

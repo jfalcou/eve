@@ -17,6 +17,7 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -24,10 +25,15 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto indeg_(EVE_SUPPORTS(cpu_)
                                        , T const &a) noexcept
  {
-    auto radindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
-    auto radindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();
-    return fma(a, radindegr, a*radindeg);
-  }
+   if constexpr(native<T>)
+   {
+     auto radindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
+     auto radindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();
+     return fma(a, radindegr, a*radindeg);
+   }
+   else return apply_over(indeg, a);
+ }
+
 }
 
 #endif
