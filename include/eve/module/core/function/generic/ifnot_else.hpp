@@ -23,9 +23,9 @@ namespace eve::detail
              , T const &cond
              , U const &t
              , V const &f) noexcept
+  requires compatible_values<U, V>
   {
-    if constexpr(logical_value < T >)  return if_else(cond, f, t);
-    else                               return if_else(is_nez(cond), f, t);
+    return if_else(cond, f, t);
   }
 }
 

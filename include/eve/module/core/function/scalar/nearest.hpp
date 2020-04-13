@@ -32,7 +32,8 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      const T v   = eve::abs(a0);
+//      const T v   = eve::abs(a0); TODO
+      const T v   = bit_andnot(a0, Signmask<T>());
       const T t2n = Twotonmb<T>();
       T       d0  = (v + t2n);
 

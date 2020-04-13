@@ -18,15 +18,18 @@
 #include <eve/function/toint.hpp>
 #include <eve/concept/value.hpp>
 
-
 namespace eve::detail
 {
   template<real_value T>
   EVE_FORCEINLINE constexpr auto ifloor_(EVE_SUPPORTS(cpu_)
                                        , T const &a) noexcept
   {
-         if constexpr(floating_value<T>)  return saturated_(toint)(eve::floor(a));
-    else if constexpr(integral_value<T>)  return a; 
+    if constexpr(native<T>)
+    {
+              if constexpr(floating_value<T>)  return saturated_(toint)(eve::floor(a));
+         else if constexpr(integral_value<T>)  return a;
+    }
+    else                                       return apply_over(ifloor, a);
   }
 }
 

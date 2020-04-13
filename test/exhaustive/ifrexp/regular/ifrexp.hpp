@@ -18,8 +18,8 @@
 
 TTS_CASE("wide exhaustive check on ifrexp")
 {
-  auto std_ifrexp = tts::vectorize<EVE_TYPE>( [](auto e) { return std::ifrexp(e); } );
+  auto std_ifrexp = tts::vectorize<EVE_TYPE>( [](auto e) { int i; auto z = std::frexp(e, &i); return std::make_tuple(z, eve::detail::as_integer_t<EVE_VALUE>(i)); } );
 
   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_ifrexp, eve::ifrexp); 
+  TTS_RANGE_CHECK(p, std_ifrexp, eve::ifrexp);
 }
