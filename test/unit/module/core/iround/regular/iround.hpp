@@ -17,22 +17,22 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::iround return type")
+TTS_CASE("Check eve::upward_(eve::iround) return type")
 {
-  TTS_EXPR_IS(eve::iround(EVE_TYPE(0)), (eve::detail::as_integer_t<EVE_TYPE>));
+  TTS_EXPR_IS(eve::upward_(eve::iround)(EVE_TYPE(0)), (eve::detail::as_integer_t<EVE_TYPE>));
 }
 
-TTS_CASE("Check eve::iround behavior")
+TTS_CASE("Check eve::upward_(eve::iround) behavior")
 {
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.7)), eve::upward_      ), eve::iceil   ((EVE_TYPE(1.7))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.7)), eve::downward_    ), eve::ifloor  ((EVE_TYPE(1.7))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.7)), eve::toward_zero_ ), eve::itrunc  ((EVE_TYPE(1.7))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.7)), eve::to_nearest_  ), eve::inearest((EVE_TYPE(1.7))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.7))                    ), eve::inearest((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::upward_(eve::iround)((EVE_TYPE(1.7))), eve::iceil   ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::downward_(eve::iround)((EVE_TYPE(1.7))), eve::ifloor  ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::toward_zero_(eve::iround)((EVE_TYPE(1.7))), eve::itrunc  ((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::to_nearest_(eve::iround)((EVE_TYPE(1.7))), eve::inearest((EVE_TYPE(1.7))) );
+  TTS_EQUAL(eve::iround((EVE_TYPE(1.7))), eve::inearest((EVE_TYPE(1.7))) );
 
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.3)), eve::upward_      ), eve::iceil   ((EVE_TYPE(1.3))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.3)), eve::downward_    ), eve::ifloor  ((EVE_TYPE(1.3))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.3)), eve::toward_zero_ ), eve::itrunc  ((EVE_TYPE(1.3))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.3)), eve::to_nearest_  ), eve::inearest((EVE_TYPE(1.3))) );
-  TTS_EQUAL(eve::iround((EVE_TYPE(1.3))                    ), eve::inearest((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::upward_(eve::iround)((EVE_TYPE(1.3))), eve::iceil   ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::downward_(eve::iround)((EVE_TYPE(1.3))), eve::ifloor  ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::toward_zero_(eve::iround)((EVE_TYPE(1.3))), eve::itrunc  ((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::to_nearest_(eve::iround)((EVE_TYPE(1.3))), eve::inearest((EVE_TYPE(1.3))) );
+  TTS_EQUAL(eve::iround((EVE_TYPE(1.3))), eve::inearest((EVE_TYPE(1.3))) );
 }

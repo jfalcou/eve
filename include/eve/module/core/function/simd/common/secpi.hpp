@@ -15,7 +15,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/module/core/detail/simd/cos_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/if_else.hpp>
@@ -55,17 +55,17 @@ namespace eve::detail
       else
       {
         auto x  = eve::abs(a0);
-        auto x2 = sqr( Pi<T>()*a0); 
+        auto x2 = sqr( Pi<T>()*a0);
         return rec(if_else(is_not_less_equal(x, T(0.25)), eve::allbits_, cos_eval(x2)));
       }
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::secpi simd ] - type is not an IEEEValue"); 
-    }   
+      static_assert(std::is_floating_point_v<T>, "[eve::secpi simd ] - type is not an IEEEValue");
+    }
   }
-  
-  
+
+
   template<typename T, typename N,  typename ABI, typename TAG>
   EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_)
                                        , TAG const & tag
@@ -84,26 +84,26 @@ namespace eve::detail
       else
       {
         auto x = eve::abs(a0);
-        x =  if_else(x > Maxflint<T>(), eve::zero_, x); 
-        auto [fn, xr, dxr] = rem2(x); 
+        x =  if_else(x > Maxflint<T>(), eve::zero_, x);
+        auto [fn, xr, dxr] = rem2(x);
         auto z = cos_finalize(quadrant(fn), xr, dxr);
-        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits_); 
+        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits_);
       }
     }
     else
     {
-      static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged secpi ]: Used tag is unsupported"); 
+      static_assert(eve::is_trigonometric_tag_v<TAG>, "[tagged secpi ]: Used tag is unsupported");
     }
   }
-  
+
   template<typename T, typename N,  typename ABI>
   EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_)
                                        ,  wide<T, N, ABI> const &a0) noexcept
   {
-    return big_(eve::secpi)(a0); 
+    return big_(eve::secpi)(a0);
   }
-  
-  
+
+
 }
 
 #endif

@@ -20,7 +20,7 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
-#include <eve/module/core/detail/simd/sin_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/function/trigo_tags.hpp>
@@ -28,35 +28,35 @@
 #include <type_traits>
 
 namespace eve::detail
-{ 
+{
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sinpi_(EVE_SUPPORTS(cpu_)
-                           , restricted_type const &     
+                           , restricted_type const &
                            , eve::wide<T,N,ABI> const &x) noexcept
   {
-    return eve::restricted_(sin)(x*Pi<T>()); 
+    return eve::restricted_(sin)(x*Pi<T>());
   }
 
   ///////////////////////////////////////////////////////////////////////////
   // big_,  medium_,  small_
   template<typename D, typename T, typename N,  typename ABI>
   EVE_FORCEINLINE auto sinpi_(EVE_SUPPORTS(cpu_)
-                           , D const &       
+                           , D const &
                            , eve::wide<T,N,ABI> const &a0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
     {
       auto x = eve::abs(a0);
       x = if_else(is_not_finite(x), eve::allbits_, x);
-      x = if_else(x > Maxflint<T>(), eve::zero_, x); 
-      auto [n, xr, dxr] = rem2(x); 
-      return detail::sin_finalize(bitofsign(a0), n, xr, dxr); 
+      x = if_else(x > Maxflint<T>(), eve::zero_, x);
+      auto [n, xr, dxr] = rem2(x);
+      return detail::sin_finalize(bitofsign(a0), n, xr, dxr);
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::sinpi simd ] - type is not an IEEEValue"); 
-    }   
-  }   
+      static_assert(std::is_floating_point_v<T>, "[eve::sinpi simd ] - type is not an IEEEValue");
+    }
+  }
 
   template<typename T,  typename N,  typename ABI>
   EVE_FORCEINLINE auto sinpi_(EVE_SUPPORTS(cpu_)

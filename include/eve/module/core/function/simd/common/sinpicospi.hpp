@@ -17,7 +17,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_not_finite.hpp>
-#include <eve/module/core/detail/simd/sincos_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/trigo_tags.hpp>

@@ -89,7 +89,7 @@ namespace eve::detail
 
   //////////////////////////////////////////////////////////////////////
   // general decorated
-  template<real_value T, real_value U, decorator D>
+  template<real_value T, real_value U, typename D>
   EVE_FORCEINLINE  auto div_(EVE_SUPPORTS(cpu_)
                             , D  const &
                             , T const &a

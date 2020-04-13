@@ -14,7 +14,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/detail/scalar/sincos_finalize.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 #include <eve/module/core/detail/generic/rem2.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/is_not_less_equal.hpp>
@@ -27,7 +27,7 @@
 
 namespace eve::detail
 {
-  
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto sinpicospi_(EVE_SUPPORTS(cpu_)
                                         , restricted_type const &
@@ -37,12 +37,12 @@ namespace eve::detail
     return eve::restricted_(sincos)(a0*Pi<T>());
   }
 
-  
+
   //////////////////////////////////////////////////////////////////////////////
   /// big, medium, small
   template<typename D, typename T>
   EVE_FORCEINLINE constexpr auto sinpicospi_(EVE_SUPPORTS(cpu_)
-                                        , D const &       
+                                        , D const &
                                         , T a0) noexcept
   Requires(std::tuple<T, T>, Vectorizable<T>)
   {
@@ -50,17 +50,17 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return {Nan<T>(), Nan<T>()};
       const T x =  abs(a0);
-      if (x > Maxflint<T>()) return {T{0}, T(1)}; 
+      if (x > Maxflint<T>()) return {T{0}, T(1)};
       auto [fn, xr, dxr] = rem2(x);
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);
     }
     else
     {
-      static_assert(std::is_floating_point_v<T>, "[eve::sinpicospi scalar ] - type is not an IEEEValue"); 
-      return T(); 
-    }   
-  }  
-   
+      static_assert(std::is_floating_point_v<T>, "[eve::sinpicospi scalar ] - type is not an IEEEValue");
+      return T();
+    }
+  }
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto sinpicospi_(EVE_SUPPORTS(cpu_)
                                         , T const &a0) noexcept
@@ -68,9 +68,9 @@ namespace eve::detail
   {
     auto x =  eve::abs(a0);
     if (eve::abs(x) <= T(0.25)) return restricted_(sinpicospi)(a0);
-    else                        return big_(sinpicospi)(a0);      
+    else                        return big_(sinpicospi)(a0);
   }
-  
+
 }
 
 #endif

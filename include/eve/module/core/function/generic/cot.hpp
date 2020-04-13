@@ -113,7 +113,7 @@ namespace eve::detail
 
   //////////////////////////////////////////////////////////////////
   /// medium,  big
-  // why the hell the typename can not be decorator as in cos ?
+  // why the hell the typename can not be typename as in cos ?
   template<typename D, floating_real_value T>
   EVE_FORCEINLINE constexpr T cot_(EVE_SUPPORTS(cpu_)
                                   , D const &

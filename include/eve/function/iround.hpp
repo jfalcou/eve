@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_IROUND_HPP_INCLUDED
 
 #include <eve/function/definition/iround.hpp>
-#include <eve/module/core/function/scalar/iround.hpp>
+#include <eve/module/core/function/generic/iround.hpp>
 
 #endif

@@ -17,20 +17,6 @@
 
 namespace eve
 {
-   namespace tag { struct round_; }
-
-  namespace detail
-  {
-    template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::round_), T const&,  U const &)
-    {
-      static_assert ( std::is_same_v<U, eve::upward_type> || std::is_same_v<U, eve::downward_type>
-                      || std::is_same_v<U, eve::toward_zero_type> || std::is_same_v<U, eve::to_nearest_type>,
-                      "[eve::round] - second parameter must be one of the following:  eve::upward_ or  eve::downward_ or eve::toward_zero_ or _eve::to_nearest_"
-                    );
-    }
-  }
-
   EVE_MAKE_CALLABLE(round_, round);
 }
 
