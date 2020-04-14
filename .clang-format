@@ -52,7 +52,7 @@ IncludeCategories:
   - Regex:           '<[[:alnum:].]+>'
     Priority:        4
     SortPriority:    0
-IndentCaseBlocks: true
+#IndentCaseBlocks: true
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
 IndentWidth: 2

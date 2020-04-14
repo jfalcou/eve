@@ -11,10 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IFREXP_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IFREXP_HPP_INCLUDED
 
-
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_notand.hpp>
@@ -23,98 +20,20 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/logical_notand.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/constant/half.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/maxexponentm1.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/expobits_mask.hpp>
-/// #include <eve/function/bit_cast.hpp>
-// #include <eve/function/bit_shr.hpp>
-// #include <eve/function/bit_and.hpp>
-// #include <eve/function/bit_andnot.hpp>
-// #include <eve/function/bit_cast.hpp>
-// #include <eve/function/bit_notand.hpp>
-// #include <eve/function/bit_or.hpp>
-// #include <eve/function/combine.hpp>
-// #include <eve/function/if_else.hpp>
-// #include <eve/function/is_eqz.hpp>
-// #include <eve/function/is_denormal.hpp>
-// #include <eve/function/is_not_finite.hpp>
-// #include <eve/function/logical_notand.hpp>
-// #include <eve/constant/limitexponent.hpp>
-// #include <eve/constant/maxexponent.hpp>
-// #include <eve/constant/maxexponentm1.hpp>
-// #include <eve/constant/nbmantissabits.hpp>
-// #include <eve/constant/expobits_mask.hpp>
-// #include <eve/constant/half.hpp>
-// #include <eve/constant/twotonmb.hpp>
-// #include <eve/function/pedantic.hpp>
-// #include <eve/function/regular.hpp>
-// #include <eve/function/raw.hpp>
-// #include <eve/detail/meta.hpp>
-// #include <eve/platform.hpp>
-// #include <type_traits>
+#include <eve/constant/twotonmb.hpp>
 #include <tuple>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-//   template<floating_real_value T,  typename D>
-//   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
-//                                         , D const &
-//                                         , T a0) noexcept
-//   //  Requires( std::tuple<wide<T, N>, as_integer_t<wide<T, N>, signed>>, floating_point<T>)
-//   {
-//     if constexpr(native<T>)
-//     {
-//       using elt_t =  element_type_t<T>;
-//       using i_t = as_integer_t<T, signed>;
-//       i_t r1   = bit_and(Expobits_mask<T>(), a0);//extract exp.
-//       auto x    = bit_notand(Expobits_mask<T>(), a0);
-//       auto m =  bit_or(Half<T>(), x);
-//       auto e =  bit_shr(r1,Nbmantissabits<elt_t>()) - Maxexponentm1<elt_t>();
-//       if constexpr(std::is_same_v<D, raw_type>)
-//       {
-//         return std::make_tuple(m, e);
-//       }
-//       auto test0 = is_nez(a0);
-//       i_t t(0);
-//       if constexpr(std::is_same_v<D, regular_type>)
-//       {
-//         if constexpr(scalar_value<T>)
-//         {
-//           if (test0) return std::make_tuple(T(0),t);
-//         }
-//         else return std::make_tuple(if_else(test0, m, eve::zero_), if_else(test0, e, eve::zero_));
-//       }
-//       if constexpr(std::is_same_v<D, pedantic_type>)
-//       {
-//         if constexpr(scalar_value<T>)
-//         {
-//           if (a0 == 0 || is_not_finite(a0)) return std::make_tuple(a0, t);
-//         }
-
-//         if constexpr(eve::platform::supports_denormals)
-//         {
-//           auto test = is_eqz(e);  //denormal
-//           t = if_else(test,Nbmantissabits<elt_t>(), eve::zero_);
-//           a0 = if_else(test, Twotonmb<elt_t>()*a0, a0);
-//         }
-//         auto test0 = is_nez(a0);
-//         auto test1 = is_greater(e,Limitexponent<T>());
-//         if constexpr(scalar_value<T>)
-//         {
-//           if (!test1 && test0) e = Zero(as(e));
-//         }
-//         else e = if_else(logical_notand(test1, test0), e, eve::zero_);
-//         if constexpr(eve::platform::supports_denormals) e -= t;
-//         return std::make_tuple( if_else(test0, add[test1](m, a0), eve::zero_), e);
-//       }
-//     }
-//     else return apply_over2(D()(ifrexp), a0);
-//   }
-
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , raw_type const &
