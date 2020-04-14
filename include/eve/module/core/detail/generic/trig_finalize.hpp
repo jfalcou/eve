@@ -20,6 +20,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/oneminus.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>

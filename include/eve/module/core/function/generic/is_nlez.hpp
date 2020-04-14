@@ -11,8 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NLEZ_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NLEZ_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_nan.hpp>

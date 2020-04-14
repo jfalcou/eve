@@ -20,6 +20,7 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/regular.hpp>

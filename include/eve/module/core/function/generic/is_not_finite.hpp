@@ -11,12 +11,9 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_FINITE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_FINITE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/is_nan.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

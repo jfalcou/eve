@@ -20,6 +20,7 @@
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/regular.hpp>
@@ -27,6 +28,7 @@
 #include <eve/function/toint.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/logeps.hpp>
+#include <eve/constant/half.hpp>
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/zero.hpp>
