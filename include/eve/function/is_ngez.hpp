@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_NGEZ_HPP_INCLUDED
 
 #include <eve/function/definition/is_ngez.hpp>
-#include <eve/module/core/function/scalar/is_ngez.hpp>
-#include <eve/module/core/function/simd/is_ngez.hpp>
+#include <eve/module/core/function/generic/is_ngez.hpp>
 
 #endif

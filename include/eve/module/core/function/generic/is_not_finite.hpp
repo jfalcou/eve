@@ -8,29 +8,31 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NEZ_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NEZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_FINITE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_FINITE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_equal.hpp>
-#include <eve/function/is_not_equal.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/is_nan.hpp>
+#include <eve/function/sub.hpp>
+#include <eve/constant/true.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<value T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_nez_(EVE_SUPPORTS(cpu_)
-                                                   , T const &a) noexcept
+  template<real_value T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_finite_(EVE_SUPPORTS(cpu_)
+                                                       , T const &a) noexcept
   {
     if constexpr(native<T>)
     {
-      if constexpr(is_logical_v<T>) return a;
-      else                          return is_not_equal(a, Zero(as(a)));
+      if constexpr(integral_value<T> ) return False(as(a));
+      else                             return is_nan(a-a);
     }
-    else                            return apply_over(is_nez, a);
+    else                               return apply_over(is_not_finite, a);
   }
 }
 

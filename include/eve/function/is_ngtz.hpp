@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_NGTZ_HPP_INCLUDED
 
 #include <eve/function/definition/is_ngtz.hpp>
-#include <eve/module/core/function/scalar/is_ngtz.hpp>
-#include <eve/module/core/function/simd/is_ngtz.hpp>
+#include <eve/module/core/function/generic/is_ngtz.hpp>
 
 #endif
