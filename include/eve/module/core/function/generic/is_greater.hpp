@@ -11,14 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_GREATER_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_GREATER_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/abi_cast.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 

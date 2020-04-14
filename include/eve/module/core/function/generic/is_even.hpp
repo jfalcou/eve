@@ -11,12 +11,12 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_EVEN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_EVEN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_not_equal.hpp>
+#include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/smallestposval.hpp>
