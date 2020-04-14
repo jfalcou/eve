@@ -12,23 +12,19 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IF_ELSE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/constant/half.hpp>
-#include <eve/function/add.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/allbits.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_ornot.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/bit_select.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/logical.hpp>
+#include <eve/function/minus.hpp>
 
 namespace eve::detail
 {
@@ -66,7 +62,7 @@ namespace eve::detail
     }
   }
 
-  
+
   //------------------------------------------------------------------------------------------------
   // Optimizes if_else(c,{t,zero},{zero,t})
   template<value T, value U>
