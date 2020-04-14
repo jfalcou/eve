@@ -37,9 +37,10 @@ namespace eve::detail
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-           if constexpr(std::same_as<T, float>)  self = _mm_and_ps(self, other);
-      else if constexpr(std::same_as<T, double>) self = _mm_and_pd(self, other);
-      else if constexpr(std::integral<T>)        self = _mm_and_si128(self, other);
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<type>{});
+           if constexpr(std::same_as<T, float>)  self = _mm_and_ps(self, bit_other);
+      else if constexpr(std::same_as<T, double>) self = _mm_and_pd(self, bit_other);
+      else if constexpr(std::integral<T>)        self = _mm_and_si128(self, bit_other);
 
       return self;
     }
@@ -58,13 +59,14 @@ namespace eve::detail
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-           if constexpr(std::same_as<T, float>)  self = _mm256_and_ps(self, other);
-      else if constexpr(std::same_as<T, double>) self = _mm256_and_pd(self, other);
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<type>{});
+           if constexpr(std::same_as<T, float>)  self = _mm256_and_ps(self, bit_other);
+      else if constexpr(std::same_as<T, double>) self = _mm256_and_pd(self, bit_other);
       else if constexpr( integral_value<T> )
       {
-        if constexpr(current_api >= avx2) self = _mm256_and_si256(self, other);
+        if constexpr(current_api >= avx2) self = _mm256_and_si256(self, bit_other);
         else  self = _mm256_castps_si256(_mm256_and_ps( _mm256_castsi256_ps(self)
-                                                      , _mm256_castsi256_ps(other)
+                                                      , _mm256_castsi256_ps(bit_other)
                                                       )
                                         );
       }
@@ -144,9 +146,10 @@ namespace eve::detail
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-           if constexpr(std::same_as<T, float>)  self = _mm_xor_ps(self, other);
-      else if constexpr(std::same_as<T, double>) self = _mm_xor_pd(self, other);
-      else if constexpr(std::integral<T>)        self = _mm_xor_si128(self, other);
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<type>{});
+           if constexpr(std::same_as<T, float>)  self = _mm_xor_ps(self, bit_other);
+      else if constexpr(std::same_as<T, double>) self = _mm_xor_pd(self, bit_other);
+      else if constexpr(std::integral<T>)        self = _mm_xor_si128(self, bit_other);
 
       return self;
     }
@@ -165,13 +168,14 @@ namespace eve::detail
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-           if constexpr(std::same_as<T, float>)  self = _mm256_xor_ps(self, other);
-      else if constexpr(std::same_as<T, double>) self = _mm256_xor_pd(self, other);
+      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as_<type>{});
+           if constexpr(std::same_as<T, float>)  self = _mm256_xor_ps(self, bit_other);
+      else if constexpr(std::same_as<T, double>) self = _mm256_xor_pd(self, bit_other);
       else if constexpr( integral_value<T> )
       {
-        if constexpr(current_api >= avx2) self = _mm256_xor_si256(self, other);
+        if constexpr(current_api >= avx2) self = _mm256_xor_si256(self, bit_other);
         else  self = _mm256_castps_si256(_mm256_xor_ps( _mm256_castsi256_ps(self)
-                                                      , _mm256_castsi256_ps(other)
+                                                      , _mm256_castsi256_ps(bit_other)
                                                       )
                                         );
       }

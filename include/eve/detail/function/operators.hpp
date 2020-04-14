@@ -14,6 +14,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
@@ -45,7 +46,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator*( T a, U b) noexcept requires compatible_values<T, U>
   {
-    if constexpr( scalar_value<T> ) return U{b} *= a;
+    if constexpr( scalar_value<T> ) return b *= a;
     else                            return a *= b;
   }
 
@@ -65,7 +66,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator&( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return b &= a;
+    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) &= a;
     else                            return a &= b;
   }
 
@@ -75,7 +76,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator|( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return b |= a;
+    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) |= a;
     else                            return a |= b;
   }
 
@@ -85,7 +86,7 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator^( T a, U b) noexcept requires bit_compatible_values<T,U>
   {
-    if constexpr( scalar_value<T> ) return b ^= a;
+    if constexpr( scalar_value<T> ) return bit_cast(b, as<as_wide_t<T, cardinal_t<U>>>()) ^= a;
     else                            return a ^= b;
   }
 }
@@ -166,9 +167,9 @@ namespace eve::detail
     if constexpr(floating_value<T> || floating_value<U>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      auto ba = detail::bit_cast_(EVE_RETARGET(cpu_), a, as<b_t>());
-      auto bb = detail::bit_cast_(EVE_RETARGET(cpu_), b, as<b_t>());
-      return detail::bit_cast_(EVE_RETARGET(cpu_),  b_t(ba & bb), as(a) );
+      auto ba = bit_cast( a           , as<b_t>() );
+      auto bb = bit_cast( b           , as<b_t>() );
+      return    bit_cast( b_t(ba & bb), as(a)     );
     }
     else
     {
@@ -193,9 +194,9 @@ namespace eve::detail
     if constexpr(floating_value<T> || floating_value<U>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      auto ba = detail::bit_cast_(EVE_RETARGET(cpu_), a, as<b_t>());
-      auto bb = detail::bit_cast_(EVE_RETARGET(cpu_), b, as<b_t>());
-      return detail::bit_cast_(EVE_RETARGET(cpu_),  b_t(ba | bb), as(a) );
+      auto ba = bit_cast( a           , as<b_t>() );
+      auto bb = bit_cast( b           , as<b_t>() );
+      return    bit_cast( b_t(ba | bb), as(a)     );
     }
     else
     {
@@ -220,9 +221,9 @@ namespace eve::detail
     if constexpr(floating_value<T> || floating_value<U>)
     {
       using b_t = as_integer_t<T, unsigned>;
-      auto ba = detail::bit_cast_(EVE_RETARGET(cpu_), a, as<b_t>());
-      auto bb = detail::bit_cast_(EVE_RETARGET(cpu_), b, as<b_t>());
-      return detail::bit_cast_(EVE_RETARGET(cpu_),  b_t(ba ^ bb), as(a) );
+      auto ba = bit_cast( a           , as<b_t>() );
+      auto bb = bit_cast( b           , as<b_t>() );
+      return    bit_cast( b_t(ba ^ bb), as(a)     );
     }
     else
     {

@@ -16,17 +16,16 @@
 TTS_CASE("Check eve::bit_xor return type")
 {
   using eve::detail::as_integer_t;
+  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(), EVE_TYPE())  , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(), EVE_VALUE()) , (EVE_TYPE));
-
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(),(as_integer_t<EVE_TYPE, unsigned>())) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(),(as_integer_t<EVE_VALUE, unsigned>())), (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(),(as_integer_t<EVE_TYPE, signed>()))   , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE(),(as_integer_t<EVE_VALUE, signed>()))  , (EVE_TYPE));
-
-  TTS_EXPR_IS(eve::bit_xor((as_integer_t<EVE_TYPE, unsigned>()) , EVE_TYPE()), (as_integer_t<EVE_TYPE, unsigned>));
-  TTS_EXPR_IS(eve::bit_xor((as_integer_t<EVE_TYPE, signed>())   , EVE_TYPE()), (as_integer_t<EVE_TYPE, signed>));
+  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , EVE_TYPE()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_xor(EVE_VALUE() , EVE_TYPE()) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , ui_t())     , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , vi_t())     , (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_xor(ui_t()      , EVE_TYPE()) , ui_t      );
+  TTS_EXPR_IS(eve::bit_xor(vi_t()      , EVE_TYPE()) , ui_t      );
 }
 
 TTS_CASE( "Check bit_xor behavior")
