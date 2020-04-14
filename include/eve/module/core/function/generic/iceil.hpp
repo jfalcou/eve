@@ -11,12 +11,10 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ICEIL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ICEIL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/ceil.hpp>
 #include <eve/function/toint.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +23,7 @@ namespace eve::detail
                                        , T const &a) noexcept
   {
          if constexpr(floating_value<T>)  return saturated_(toint)(eve::ceil(a));
-    else if constexpr(integral_value<T>)  return a; 
+    else if constexpr(integral_value<T>)  return a;
   }
 }
 

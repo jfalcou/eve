@@ -11,13 +11,12 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IF_ELSE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IF_ELSE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
+#include <eve/concept/compatible.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_mask.hpp>
