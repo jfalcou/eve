@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_FLINT_HPP_INCLUDED
 
 #include <eve/function/definition/is_flint.hpp>
-#include <eve/module/core/function/scalar/is_flint.hpp>
-#include <eve/module/core/function/simd/is_flint.hpp>
+#include <eve/module/core/function/generic/is_flint.hpp>
 
 #endif

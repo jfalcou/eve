@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_GEZ_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_GEZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_INFINITE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_INFINITE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/is_equal.hpp>
+#include <eve/constant/inf.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -23,15 +23,12 @@
 namespace eve::detail
 {
   template<real_value T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_gez_(EVE_SUPPORTS(cpu_)
-                                                   , T const &a) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_infinite_(EVE_SUPPORTS(cpu_)
+                                                        , T const &a) noexcept
   {
-    if constexpr(native<T>)
-    {
-      if constexpr(unsigned_value<T>) return True(as(a));
-      else                            return a >= Zero(as(a));
-    }
-    else                              return apply_over(is_gez, a);
+    if constexpr(integral_value<T>) return False(as(a));
+    else if constexpr(native<T>)    return is_equal(eve::abs(a), Inf(as(a)));
+    else                            return apply_over(is_infinite, a);
   }
 }
 

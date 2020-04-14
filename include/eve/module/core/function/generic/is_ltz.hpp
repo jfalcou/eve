@@ -8,34 +8,30 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_LTZ_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_LTZ_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_LTZ_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_LTZ_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/is_less.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_ltz_(EVE_SUPPORTS(cpu_), wide<T, N, ABI> const &v) noexcept
+  template<real_value T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_ltz_(EVE_SUPPORTS(cpu_)
+                                                   , T const &a) noexcept
   {
-    if constexpr(std::is_unsigned_v<T>) { return False(as(v)); }
-    else
+    if constexpr(native<T>)
     {
-      return is_less(v, Zero(as(v)));
+      if constexpr(unsigned_value<T>) return False(as(a));
+      else                            return a < Zero(as(a));
     }
-  }
-
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto is_ltz_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &v) noexcept
-  {
-    return False(as(v));
+    else                              return apply_over(is_ltz, a);
   }
 }
 

@@ -8,20 +8,26 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_IMAG_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_IMAG_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_IMAG_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_IMAG_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_imag_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_imag_(EVE_SUPPORTS(cpu_)
+                                                   , T const &a) noexcept
   {
-    return eve::is_eqz(a);
+    if constexpr(native<T>) return is_eqz(a);
+    else                    return apply_over(is_imag, a);
   }
 }
 
