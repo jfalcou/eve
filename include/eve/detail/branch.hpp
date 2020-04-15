@@ -11,6 +11,8 @@
 #ifndef EVE_DETAIL_BRANCH_HPP_INCLUDED
 #define EVE_DETAIL_BRANCH_HPP_INCLUDED
 
+#include <eve/function/if_else.hpp>
+
 namespace eve::detail
 {
   template<bool Check, typename Cond, typename TC, typename TF>
@@ -27,7 +29,7 @@ namespace eve::detail
     else                return [&c, t](auto&& x0, auto&&... x) { return if_else(c, t(x0, x...), x0); };
   }
 
-  
+
 }
 
 #endif
