@@ -30,7 +30,7 @@ namespace eve::detail
     if constexpr(native<T>)
     {
       if constexpr(floating_real_scalar_value<T>) return std::isunordered(a, b);
-      if constexpr(integral_value<T>) return True(as(a));
+      if constexpr(integral_value<T>) return False(as(a));
       else                            return (a != a) || (b != b);
     }
     else                              return apply_over(is_unordered, a);

@@ -12,8 +12,10 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_ODD_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/bit_and.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/is_even.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/constant/one.hpp>
@@ -34,7 +36,8 @@ namespace eve::detail
         auto da = dec(a);
         return (a!= da) && is_even(da);
       }
-      else  return (!(a & One(as(a))));
+      else if constexpr(scalar_value<T>) return (a & One(as(a)));
+      else                               return is_nez((a & One(as(a))));
     }
     else return apply_over(is_odd, a);
   }

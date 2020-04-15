@@ -26,7 +26,7 @@ namespace eve::detail
   {
     if constexpr(native<T>)
     {
-      if constexpr(integral_value<T>) return False(as(a));
+      if constexpr(integral_value<T>) return True(as(a));
       else                            return a == a;
     }
     else                              return apply_over(is_not_nan, a);
