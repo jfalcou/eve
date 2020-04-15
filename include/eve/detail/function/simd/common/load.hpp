@@ -11,15 +11,17 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/memory/aligned_ptr.hpp>
 #include <eve/as.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/memory/aligned_ptr.hpp>
+
+#include <iterator>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Emulation
+  //================================================================================================
   template<typename Pack, typename Iterator>
   EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::emulated_ const &, Iterator ptr) noexcept
   {
@@ -53,24 +55,23 @@ namespace eve::detail
   template<typename Iterator, typename ABI, typename Pack>
   EVE_FORCEINLINE Pack load(as_<Pack> const &tgt, ABI const &, Iterator b, Iterator) noexcept
   {
-    return load(tgt, eve::emulated_{}, b);
+    return load(tgt, eve::emulated_ {}, b);
   }
 
-  //------------------------------------------------------------------------------------------------
+  //==================================================================================================
   // Aggregation
+  //==================================================================================================
   template<typename Pack, typename Pointer>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &tgt, eve::aggregated_ const &, Pointer ptr) noexcept
+  EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::aggregated_ const &, Pointer ptr) noexcept
   {
     using str_t = typename Pack::storage_type;
     using sub_t = typename str_t::value_type;
     Pack that;
 
-    that.storage().apply( [&](auto&... v)
-                          {
-                            int offset = 0;
-                            ( (( v = sub_t(ptr + offset), offset+=str_t::small_size),...) );
-                          }
-                        );
+    that.storage().apply([&](auto &... v) {
+      int offset = 0;
+      (((v = sub_t(ptr + offset), offset += str_t::small_size), ...));
+    });
     return that.storage();
   }
 }

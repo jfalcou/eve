@@ -11,34 +11,39 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta/concept.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/concept/stdconcepts.hpp>
+#include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename I, typename N, typename X, typename Y>
-  EVE_FORCEINLINE auto lookup_(EVE_SUPPORTS(cpu_)
-                              , wide<T,N,X> const &a, wide<I,N,Y> const &ind) noexcept
-  Requires( wide<T,N,X>, behave_as<integral,I> )
+  template<scalar_value T, integral_scalar_value I, typename N, typename X, typename Y>
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, Y> const &ind) noexcept
   {
-    using type = wide<T,N,X>;
+    using type = wide<T, N, X>;
 
-    auto lkup = [](auto const& c, auto const& i, auto const& w)
-                {
-                  return  apply<N::value> ( [&](auto... v)
-                                            {
-                                              auto idx = c.bits();
-                                              idx &= i;
-                                              return type(w[ idx[v] ]...);
-                                            }
-                                          )
-                        & c.mask();
-                };
-
-    if constexpr( std::is_signed_v<I> ) return  lkup(ind>=0       , ind , a);
-    else                                return  lkup(ind<N::value , ind , a);
+    if constexpr( std::is_signed_v<I> )
+    {
+      auto cond = ind >= 0;
+      return apply<N::value>([&](auto... v) {
+               auto idx = cond.bits();
+               idx &= ind;
+               return type(a[idx[v]]...);
+             })
+             & cond.mask();
+    }
+    else
+    {
+      auto cond = ind < N::value;
+      return apply<N::value>([&](auto... v) {
+               auto idx = cond.bits();
+               idx &= ind;
+               return type(a[idx[v]]...);
+             })
+             & cond.mask();
+    }
   }
 }
 
