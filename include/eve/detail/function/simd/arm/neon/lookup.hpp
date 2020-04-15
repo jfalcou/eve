@@ -11,74 +11,66 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOOKUP_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOOKUP_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/bit_cast.hpp>
 #include <eve/detail/function/simd/lookup_helpers.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/bit_cast.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE wide<T,N,neon64_> lookup_ ( EVE_SUPPORTS(neon128_),
-                                              wide<T,N,neon64_> a, wide<I,N,neon64_> idx
-                                            ) noexcept
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> a, wide<I, N, neon64_> idx) noexcept
   {
     if constexpr( std::is_signed_v<I> )
     {
-      using utype = wide<make_integer_t<sizeof(I),unsigned>,N>;
-      return lookup(a, bit_cast(idx,as<utype>()));
+      using utype = wide<make_integer_t<sizeof(I), unsigned>, N>;
+      return lookup(a, bit_cast(idx, as<utype>()));
     }
     else
     {
-      using t8_t = typename wide<T,N,neon64_>::template rebind<std::uint8_t, fixed<8>>;
+      using t8_t = typename wide<T, N, neon64_>::template rebind<std::uint8_t, fixed<8>>;
 
-      if constexpr(sizeof(I) == 1)
+      if constexpr( sizeof(I) == 1 )
       {
-        return bit_cast( t8_t(vtbl1_u8(bit_cast(a, as<t8_t>()),idx)), as(a));
+        return bit_cast(t8_t(vtbl1_u8(bit_cast(a, as<t8_t>()), idx)), as(a));
       }
       else
       {
-        t8_t  i1 = lookup(bit_cast(idx<<shift<I>, as(i1)), t8_t{repeater<I>});
-              i1 = bit_cast(bit_cast(i1,as<wide<I,N,neon64_>>())+offset<I>,as<t8_t>());
-        return bit_cast( lookup(bit_cast(a, as<t8_t>()),i1), as(a));
+        t8_t i1 = lookup(bit_cast(idx << shift<I>, as(i1)), t8_t {repeater<I>});
+        i1      = bit_cast(bit_cast(i1, as<wide<I, N, neon64_>>()) + offset<I>, as<t8_t>());
+        return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
     }
   }
 
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE wide<T,N,neon128_> lookup_( EVE_SUPPORTS(neon128_),
-                                              wide<T,N,neon128_> a, wide<I,N,neon128_> idx
-                                            ) noexcept
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(neon128_), wide<T, N, neon128_> a, wide<I, N, neon128_> idx) noexcept
   {
     if constexpr( std::is_signed_v<I> )
     {
-      using utype = wide<make_integer_t<sizeof(I),unsigned>,N>;
-      return lookup(a, bit_cast(idx,as<utype>()));
+      using utype = wide<make_integer_t<sizeof(I), unsigned>, N>;
+      return lookup(a, bit_cast(idx, as<utype>()));
     }
     else
     {
-      using t8_t  = typename wide<T,N,neon128_>::template rebind<std::uint8_t, fixed<16>>;
+      using t8_t = typename wide<T, N, neon128_>::template rebind<std::uint8_t, fixed<16>>;
 
-      if constexpr(sizeof(I) == 1)
+      if constexpr( sizeof(I) == 1 )
       {
-        using t8h_t = typename wide<T,N,neon128_>::template rebind<std::uint8_t, fixed<8>>;
+        using t8h_t = typename wide<T, N, neon128_>::template rebind<std::uint8_t, fixed<8>>;
 
-        auto pieces     = bit_cast(a,as<t8_t>());
-        uint8x8x2_t tbl = {{ pieces.slice(lower_), pieces.slice(upper_) }};
-        auto idxs       = idx.slice();
+        auto        pieces = bit_cast(a, as<t8_t>());
+        uint8x8x2_t tbl    = {{pieces.slice(lower_), pieces.slice(upper_)}};
+        auto        idxs   = idx.slice();
 
-        return bit_cast ( t8_t( t8h_t(vtbl2_u8(tbl, idxs[0] ))
-                                  , t8h_t(vtbl2_u8(tbl, idxs[1]))
-                                  )
-                            , as(a)
-                            );
+        return bit_cast(t8_t(t8h_t(vtbl2_u8(tbl, idxs[0])), t8h_t(vtbl2_u8(tbl, idxs[1]))), as(a));
       }
       else
       {
-        t8_t  i1 = lookup(bit_cast(idx<<shift<I>, as(i1)), t8_t{repeater<I>});
-              i1 = bit_cast(bit_cast(i1,as<wide<I,N,neon128_>>())+offset<I>,as<t8_t>());
-        return bit_cast( lookup(bit_cast(a, as<t8_t>()),i1), as(a));
+        t8_t i1 = lookup(bit_cast(idx << shift<I>, as(i1)), t8_t {repeater<I>});
+        i1      = bit_cast(bit_cast(i1, as<wide<I, N, neon128_>>()) + offset<I>, as<t8_t>());
+        return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
     }
   }
