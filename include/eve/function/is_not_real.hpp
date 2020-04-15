@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_NOT_REAL_HPP_INCLUDED
 
 #include <eve/function/definition/is_not_real.hpp>
-#include <eve/module/core/function/scalar/is_not_real.hpp>
-#include <eve/module/core/function/simd/is_not_real.hpp>
+#include <eve/module/core/function/generic/is_not_real.hpp>
 
 #endif

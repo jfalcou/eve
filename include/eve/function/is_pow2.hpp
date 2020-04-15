@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_POW2_HPP_INCLUDED
 
 #include <eve/function/definition/is_pow2.hpp>
-#include <eve/module/core/function/scalar/is_pow2.hpp>
-#include <eve/module/core/function/simd/is_pow2.hpp>
+#include <eve/module/core/function/generic/is_pow2.hpp>
 
 #endif

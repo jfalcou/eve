@@ -8,20 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SCALAR_IS_REAL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_REAL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_REAL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_real_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_real_(EVE_SUPPORTS(cpu_)
+                                                        , T const &a) noexcept
   {
-    return True<T>();
+    return False(as(a));
   }
 }
 

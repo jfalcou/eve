@@ -39,10 +39,4 @@ TTS_CASE("Check eve::is_unordered behavior on arithmetic")
   }
 }
 
-TTS_CASE("Check eve::is_unordered behavior on logical")
-{
-  TTS_EQUAL(eve::is_unordered(eve::logical<EVE_TYPE>(1), eve::logical<EVE_TYPE>(0)), eve::False<EVE_TYPE>());
-}
-
 #endif
-
