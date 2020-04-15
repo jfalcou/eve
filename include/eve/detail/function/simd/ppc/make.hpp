@@ -11,18 +11,16 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_MAKE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_MAKE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/alias.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/arch/as_register.hpp>
 #include <eve/as.hpp>
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wignored-attributes"
-#endif
+#include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
+  //================================================================================================
+  // arithmetic cases
+  //================================================================================================
   template<typename T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
@@ -40,14 +38,15 @@ namespace eve::detail
       auto u   = static_cast<T>(v);
       auto val = [](auto vv, auto const &) { return vv; };
 
-      return type{val(u, I)...};
+      return type {val(u, I)...};
     };
 
     return apply<expected_cardinal_v<T>>(impl);
   }
 
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // logical cases
+  //================================================================================================
   template<typename T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
@@ -66,15 +65,11 @@ namespace eve::detail
       auto u   = ltype(v).bits();
       auto val = [](auto vv, auto const &) { return vv; };
 
-      return type{val(u, I)...};
+      return type {val(u, I)...};
     };
 
     return apply<expected_cardinal_v<T>>(impl);
   }
 }
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic pop
-#endif
 
 #endif

@@ -54,6 +54,7 @@ namespace eve
 
     template<std::size_t A>
     aligned_ptr &operator=(aligned_ptr<void, A> p) noexcept  requires(A >= Alignment)
+    {
       pointer_ = static_cast<pointer>(p.get());
       return *this;
     }

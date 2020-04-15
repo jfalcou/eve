@@ -11,8 +11,8 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_ARITHMETIC_COMPOUNDS_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_ARITHMETIC_COMPOUNDS_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 
