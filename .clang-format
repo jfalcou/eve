@@ -40,18 +40,10 @@ ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: false
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:            '^<eve/detail/implementation'
-    Priority:        1
-    SortPriority:    0
-  - Regex:            '^<eve/detail/'
-    Priority:        2
-    SortPriority:    0
   - Regex:           '^<eve/'
-    Priority:        3
-    SortPriority:    0
+    Priority:        0
   - Regex:           '<[[:alnum:].]+>'
-    Priority:        4
-    SortPriority:    0
+    Priority:        1
 #IndentCaseBlocks: true
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
