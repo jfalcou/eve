@@ -14,6 +14,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/meta/traits.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/indeg.hpp>
