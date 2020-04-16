@@ -11,14 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ANY_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ANY_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/extract.hpp>
-#include <eve/function/is_nez.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/function/is_nez.hpp>
 
 namespace eve::detail
 {
@@ -32,18 +29,18 @@ namespace eve::detail
     }
     else if constexpr(logical_simd_value<T>)
     {
-      if constexpr(has_aggregated_abi_v<T>)
+      if constexpr( has_aggregated_abi_v<T> )
       {
-        auto [ sl, sh] = v.slice(); 
-        return any(sl) || any(sh);
+        return v.storage().apply([](auto const &... e) { return eve::any((e.bits() | ...)); });
       }
       else
       {
-        for(int i=0; i < cardinal_v<T> ; ++i)
-        {
-          if (extract(v, i)) return true; 
-        }
-        return false;
+        bool r = false;
+
+        [&]<std::size_t... I>(std::index_sequence<I...> const &) { r = (r || ... || get<I>(v)); }
+        (std::make_index_sequence<cardinal_v<T>> {});
+
+        return r;
       }
     }
     else
