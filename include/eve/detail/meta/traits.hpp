@@ -24,6 +24,18 @@ namespace eve::detail
   {
   };
 
+  // Check if a type is contained in a types list
+  template<typename T, typename... Ts>
+  constexpr bool contains(types<Ts...> const&) noexcept
+  {
+    bool found[] = { std::is_same_v<T,Ts>... };
+
+    return [&]<std::size_t... I>( std::index_sequence<I...> const&)
+    {
+      return (false || ... || found[I]);
+    }( std::make_index_sequence<sizeof...(Ts)>{} );
+  }
+
   // Type identity
   template<typename T>
   struct always

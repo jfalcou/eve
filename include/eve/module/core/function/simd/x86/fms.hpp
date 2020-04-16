@@ -72,7 +72,7 @@ namespace eve::detail
         if constexpr(std::is_same_v<T, double>)     return _mm256_msub_pd(a, b, c);
         else if constexpr(std::is_same_v<T, float>) return _mm256_msub_ps(a, b, c);
       }
-      else                                          return fm(a, b, -c);
+      else                                          return fma(a, b, -c);
     }
     else                                            return fma(a, b, -c);
   }
