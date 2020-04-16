@@ -40,13 +40,13 @@ namespace eve::detail
 
   template<typename IN, typename OUT>
   EVE_FORCEINLINE auto convert_( EVE_SUPPORTS(cpu_),
-                                 IN const & v0, as_<OUT> const& tgt
+                                 IN const & v0, as_<OUT> const&
                                ) noexcept
   Requires(OUT, Vectorizable<IN>, Vectorizable<OUT>)
   {
     return static_cast<OUT>(v0);
   }
-    
+
   //////////////////////////////////////////////////////////////////////////////////////
   // saturated case
   //////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ namespace eve::detail
                                  ) noexcept
   Requires(OUT, Vectorizable<IN>, Vectorizable<OUT>)
   {
-    return convert(saturate(v0, tgt), tgt); 
+    return convert(saturate(v0, tgt), tgt);
   }
 }
 

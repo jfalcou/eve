@@ -20,7 +20,6 @@
 
 namespace eve::detail
 {
-
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v)
   {
@@ -86,7 +85,6 @@ namespace eve::detail
     }
     else return std::make_tuple(T(), T(), T());
   }
-
 }
 
 #endif

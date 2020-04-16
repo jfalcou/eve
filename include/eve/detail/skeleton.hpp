@@ -30,7 +30,7 @@ namespace eve::detail
   }
 
   template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(!random_access_range<T>)
+  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!random_access_range<T>)
   {
     return std::forward<T>(t);
   }
