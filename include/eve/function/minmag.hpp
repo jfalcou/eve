@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_MINMAG_HPP_INCLUDED
 
 #include <eve/function/definition/minmag.hpp>
-#include <eve/module/core/function/scalar/minmag.hpp>
-#include <eve/module/core/function/simd/minmag.hpp>
+#include <eve/module/core/function/generic/minmag.hpp>
 
 #endif
