@@ -19,6 +19,10 @@
 #  include <eve/module/core/function/simd/x86/is_not_equal.hpp>
 #endif
 
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/is_not_equal.hpp>
+#endif
+
 #if defined(EVE_HW_POWERPC)
 #  include <eve/module/core/function/simd/ppc/is_not_equal.hpp>
 #endif
