@@ -11,22 +11,14 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_ADD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_ADD_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_>
-  add_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> v0, wide<T, N, neon64_> const &v1) noexcept
-  {
-    return v0 += v1;
-  }
-
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_>
-  add_(EVE_SUPPORTS(neon128_), wide<T, N, neon128_> v0, wide<T, N, neon128_> const &v1) noexcept
+  template<real_scalar_value T, typename N, arm_abi ABI>
+  EVE_FORCEINLINE auto
+  add_(EVE_SUPPORTS(neon128_), wide<T, N, ABI> v0, wide<T, N, ABI> const &v1) noexcept
   {
     return v0 += v1;
   }

@@ -11,14 +11,13 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ADD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ADD_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, ppc_>
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto
   add_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> v0, wide<T, N, ppc_> const &v1) noexcept
   {
     return v0 += v1;
