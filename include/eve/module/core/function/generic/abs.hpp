@@ -11,58 +11,71 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ABS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ABS_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/stdconcepts.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/max.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/function/minus.hpp> // A METTRE DANS WIDE
+#include <eve/function/saturated.hpp>
 
 namespace eve::detail
 {
-  template<real_value T>
-  EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_)
-                                  , T const &a) noexcept
+  template<real_value T> EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr( has_native_abi_v<T> )
     {
-           if constexpr(floating_value<T>              ) return bit_andnot(a, Mzero(as(a)));
-      else if constexpr(unsigned_value<T>              ) return a;
-      else if constexpr(signed_integral_scalar_value<T>) return a < T(0) ? -a : a;
-      else if constexpr(signed_integral_simd_value<T>  ) return eve::max(a, -a);
+      if constexpr( floating_value<T> )
+      {
+        return bit_andnot(a, Mzero(as(a)));
+      }
+      else if constexpr( unsigned_value<T> )
+      {
+        return a;
+      }
+      else if constexpr( signed_integral_scalar_value<T> )
+      {
+        return a < T(0) ? -a : a;
+      }
+      else if constexpr( signed_integral_simd_value<T> )
+      {
+        return eve::max(a, -a);
+      }
     }
-    else                                                 return apply_over(abs, a);
+    else
+    {
+      return apply_over(eve::abs, a);
+    }
   }
 
   template<real_value T>
-  EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_)
-                                  , saturated_type const &
-                                  , T const &a) noexcept
+  EVE_FORCEINLINE constexpr T abs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr( has_native_abi_v<T> )
     {
-      if constexpr(signed_integral_scalar_value<T>)
+      if constexpr( signed_integral_scalar_value<T> )
       {
         return ((a == Valmin(as(a))) ? Valmax(as(a)) : eve::abs(a));
       }
-      else if constexpr(signed_integral_simd_value<T>)
+      else if constexpr( signed_integral_simd_value<T> )
       {
         return if_else(a == Valmin(as(a)), Valmax(as(a)), eve::abs(a));
       }
-      else if constexpr(floating_value<T> || unsigned_value<T>)
+      else if constexpr( floating_value<T> || unsigned_value<T> )
       {
         return eve::abs(a);
       }
     }
-    else return apply_over(saturated_(abs), a);
+    else
+    {
+      return apply_over(saturated_(abs), a);
+    }
   }
 }
 
