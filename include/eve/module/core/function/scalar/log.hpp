@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SCALAR_LOG_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SCALAR_LOG_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/dec.hpp>

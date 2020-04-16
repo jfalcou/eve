@@ -3,17 +3,15 @@
    EVE - Expressive Vector Engine
    Copyright 2020 Joel FALCOU
    Copyright 2020 Jean-Thierry LAPRESTE
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG1P_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG1P_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
@@ -47,13 +45,13 @@
 
 
 namespace eve::detail
-{ 
+{
   template<floating_real_value T>
   EVE_FORCEINLINE auto log1p_(EVE_SUPPORTS(cpu_)
-                             , plain_type const &  
+                             , plain_type const &
                              , const T &a0) noexcept
   {
-    if constexpr(native<T>) 
+    if constexpr(native<T>)
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_log1p(f).c */
       /*
@@ -81,7 +79,7 @@ namespace eve::detail
       T s = f/(2.0f + f);
       T z = sqr(s);
       T w = sqr(z);
-      T t1, t2; 
+      T t1, t2;
       if constexpr(std::is_same_v<value_type_t<T>, float>)
       {
         t1= w*horn<T, 0x3eccce13, 0x3e789e26>(w);
@@ -94,7 +92,7 @@ namespace eve::detail
       }
       T R = t2 + t1;
       T r = fma(k, Log_2hi, ((fma(s, (hfsq+R), k*Log_2lo+c) - hfsq) + f));
-      T zz; 
+      T zz;
       if constexpr(eve::platform::supports_infinites)
       {
         zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -105,17 +103,17 @@ namespace eve::detail
       }
       return if_else(is_ngez(uf), eve::allbits_, zz);
     }
-    else return apply_over(plain_(log1p), a0); 
+    else return apply_over(plain_(log1p), a0);
   }
-  
+
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log1p_(EVE_SUPPORTS(cpu_)
-                            , musl_type const &  
+                            , musl_type const &
                             , const T &a0) noexcept
   {
-    if constexpr(native<T>) 
+    if constexpr(native<T>)
     {
-      using elt_t =  value_type_t<T>; 
+      using elt_t =  value_type_t<T>;
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T,   signed>;
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
@@ -141,7 +139,7 @@ namespace eve::detail
         T dk = tofloat(k);
         T  c = if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f));
-        T zz; 
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -149,7 +147,7 @@ namespace eve::detail
         else
         {
           zz = if_else(isnez, r, Minf<T>());
-        } 
+        }
         return if_else(is_ngez(uf), eve::allbits_, zz);
       }
       else if constexpr(std::is_same_v<elt_t, double>)
@@ -174,7 +172,7 @@ namespace eve::detail
         hu =  (hu&0x000fffffull) + 0x3fe6a09e;
         T f = bit_cast( bit_cast(hu<<32, as<uiT>()) | (bit_and( bit_cast(uf, as<uiT>()),0xffffffffull)), as<T>());
         f = dec(f);
-        
+
         T hfsq = Half<T>()*sqr(f);
         T s = f/(2.0 + f);
         T z = sqr(s);
@@ -184,8 +182,8 @@ namespace eve::detail
           , 0x3fc7466496cb03dell, 0x3fc2f112df3e5244ll> (w);
         T R = t2 + t1;
         T dk = tofloat(k);
-        T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f)); 
-        T zz; 
+        T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo+c) - hfsq) + f));
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -193,13 +191,12 @@ namespace eve::detail
         else
         {
           zz = if_else(isnez, r, Minf<T>());
-        } 
+        }
         return if_else(is_ngez(uf), eve::allbits_, zz);
       }
     }
-    else return apply_over(musl_(log1p), a0); 
+    else return apply_over(musl_(log1p), a0);
   }
 }
 
 #endif
-

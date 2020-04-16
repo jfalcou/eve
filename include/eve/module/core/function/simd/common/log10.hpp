@@ -10,10 +10,8 @@
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG10_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG10_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>

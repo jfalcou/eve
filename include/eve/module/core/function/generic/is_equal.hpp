@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_EQUAL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_EQUAL_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_EQUAL_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_EQUAL_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>

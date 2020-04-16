@@ -3,17 +3,15 @@
    EVE - Expressive Vector Engine
    Copyright 2020 Joel FALCOU
    Copyright 2020 Jean-Thierry LAPRESTE
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_COMMON_SIMD_LOG_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/bit_and.hpp>
@@ -41,7 +39,6 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-#include <tuple>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -56,19 +53,19 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 namespace eve::detail
-{ 
+{
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log_(EVE_SUPPORTS(cpu_)
-                            , musl_type const &  
+                            , musl_type const &
                             , const T &a0) noexcept
   {
-    if constexpr(native<T>) 
+    if constexpr(native<T>)
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T,   signed>;
-      using elt_t =  element_type_t<T>; 
+      using elt_t =  element_type_t<T>;
       if constexpr(std::is_same_v<elt_t, float>)
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
@@ -85,7 +82,7 @@ namespace eve::detail
         T x =  a0;
         iT k(0);
         auto isnez = is_nez(a0);
-        logical<T> test; 
+        logical<T> test;
         if constexpr(eve::platform::supports_denormals)
         {
           test = is_less(a0, Smallestposval<T>())&&isnez;
@@ -109,10 +106,10 @@ namespace eve::detail
         T t2= z*horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
-        
+
         T dk = tofloat(k);
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
-        T zz; 
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -141,7 +138,7 @@ namespace eve::detail
         T x =  a0;
         iT k(0);
         auto isnez = is_nez(a0);
-        logical<T> test; 
+        logical<T> test;
         if constexpr(eve::platform::supports_denormals)
         {
           test = is_less(a0, Smallestposval<T>())&&isnez;
@@ -157,7 +154,7 @@ namespace eve::detail
         k += bit_cast(hx>>20, as<iT>()) - 0x3ff;
         hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
         x = bit_cast(hx<<32 | (bit_and(bit_cast(x, as<uiT>()),0xffffffffull)), as<T>());
-        
+
         T f = dec(x);
         T s = f/(2.0f + f);
         T z = sqr(s);
@@ -167,10 +164,10 @@ namespace eve::detail
           , 0x3fc7466496cb03deull, 0x3fc2f112df3e5244ull> (w);
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
-        
+
         T dk = tofloat(k);
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
-        T zz; 
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -182,25 +179,25 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
-    else return apply_over(musl_(log), a0); 
+    else return apply_over(musl_(log), a0);
   }
-  
+
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto log_(EVE_SUPPORTS(cpu_)
-                           , plain_type const &  
+                           , plain_type const &
                            , const T &a0) noexcept
   {
-    if constexpr(native<T>) 
+    if constexpr(native<T>)
     {
       T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       T Log_2lo =  Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
-      using elt_t =  element_type_t<T>; 
+      using elt_t =  element_type_t<T>;
       if constexpr(std::is_same_v<elt_t, float>)
       {
         T xx =  a0;
         T dk = Zero<T>();
         auto isnez = is_nez(a0);
-        logical<T> test;   
+        logical<T> test;
         if constexpr(eve::platform::supports_denormals)
         {
           auto test = is_less(a0, Smallestposval<T>())&&isnez;
@@ -211,7 +208,7 @@ namespace eve::detail
           }
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        
+
         auto [x, kk] = frexp(xx);
         auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
         dk += dec[x_lt_sqrthf](kk);
@@ -224,7 +221,7 @@ namespace eve::detail
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
-        T zz; 
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
@@ -252,7 +249,7 @@ namespace eve::detail
         T xx =  a0;
         T dk = Zero<T>();
         auto isnez = is_nez(a0);
-        
+
         logical<T>  test = is_less(a0, Smallestposval<T>())&&isnez;
         if constexpr(eve::platform::supports_denormals)
         {
@@ -276,11 +273,11 @@ namespace eve::detail
         T R = t2 + t1;
         T hfsq = Half<T>()*sqr(f);
         T r = fma(dk, Log_2hi, ((fma(s, (hfsq+R), dk*Log_2lo) - hfsq) + f));
-        T zz; 
+        T zz;
         if constexpr(eve::platform::supports_infinites)
         {
           zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
-        }        
+        }
         else
         {
           zz = if_else(isnez, r, Minf<T>());
@@ -288,9 +285,8 @@ namespace eve::detail
         return if_else(is_ngez(a0), eve::allbits_, zz);
       }
     }
-    else return apply_over(plain_(log), a0); 
+    else return apply_over(plain_(log), a0);
   }
 }
 
 #endif
-
