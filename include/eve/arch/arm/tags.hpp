@@ -11,31 +11,42 @@
 #ifndef EVE_ARCH_ARM_TAGS_HPP_INCLUDED
 #define EVE_ARCH_ARM_TAGS_HPP_INCLUDED
 
-#include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/arm/predef.hpp>
+#include <eve/arch/cpu/tags.hpp>
+#include <eve/detail/meta/traits.hpp>
 
 namespace eve
 {
+  // clang-format off
   //================================================================================================
   // Tag for all ARM NEON SIMD ABI
+  //================================================================================================
   struct arm_ {};
 
   //================================================================================================
   // Dispatching tag for VMX SIMD implementation
+  //================================================================================================
   struct neon64_  : simd_ { using parent = simd_; };
   struct neon128_ : simd_ { using parent = simd_; };
 
   //================================================================================================
+  // NEON extension tag object
+  //================================================================================================
+  inline constexpr auto neon = spy::neon_;
+
+  // clang-format on
+  //================================================================================================
   // Runtime detection of CPU support
-  template<auto Version>
-  inline bool is_supported(spy::arm_simd_info<Version> const &) noexcept
+  //================================================================================================
+  template<auto Version> inline bool is_supported(spy::arm_simd_info<Version> const &) noexcept
   {
     return false;
   }
 
   //================================================================================================
-  // NEON extension tag object
-  inline constexpr auto neon = spy::neon_;
+  // ARM ABI concept
+  //================================================================================================
+  template<typename T> concept arm_abi = detail::contains<T>(detail::types<neon128_, neon64_> {});
 }
 
 #endif
