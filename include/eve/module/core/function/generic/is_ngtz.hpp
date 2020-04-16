@@ -28,7 +28,7 @@ namespace eve::detail
                                                    , T const &a) noexcept
   {
     if constexpr(unsigned_value<T>)           return is_eqz(a);
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {

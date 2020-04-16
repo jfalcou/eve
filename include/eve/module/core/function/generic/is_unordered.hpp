@@ -27,13 +27,13 @@ namespace eve::detail
                                                          , T const &a
                                                          , T const &b) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(floating_real_scalar_value<T>) return std::isunordered(a, b);
       if constexpr(integral_value<T>) return False(as(a));
       else                            return (a != a) || (b != b);
     }
-    else                              return apply_over(is_unordered, a);
+    else                              return apply_over(is_unordered, a, b);
   }
 }
 

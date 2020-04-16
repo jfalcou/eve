@@ -24,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_finite_(EVE_SUPPORTS(cpu_)
                                                    , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(is_logical_v<T>)       return True(as(a));
       else if constexpr(scalar_value<T>)  return is_eqz(T(a-a));

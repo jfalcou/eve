@@ -29,7 +29,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_odd_(EVE_SUPPORTS(cpu_)
                                                    , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(floating_value<T>)
       {

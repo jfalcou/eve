@@ -29,7 +29,7 @@ namespace eve::detail
                                                    , T const &a) noexcept
   requires integral_value<T>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
        return  is_gtz(a) && is_eqz(a & dec(a));
     }

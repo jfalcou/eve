@@ -23,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_imag_(EVE_SUPPORTS(cpu_)
                                                    , T const &a) noexcept
   {
-    if constexpr(native<T>) return is_eqz(a);
+    if constexpr(has_native_abi_v<T>) return is_eqz(a);
     else                    return apply_over(is_imag, a);
   }
 }

@@ -39,7 +39,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    if constexpr(native<T> && native<U>)
+    if constexpr(has_native_abi_v<T> && native<U>)
     {
       using elt_t = element_type_t<T>;
       if constexpr(integral_value<U>)
@@ -57,7 +57,7 @@ namespace eve::detail
         return ldexp(a, itrunc(b));
       }
     }
-    else  return apply_over(abs, a, b);
+    else  return apply_over(ldexp, a, b);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    if constexpr(native<T> && native<U>)
+    if constexpr(has_native_abi_v<T> && native<U>)
     {
       using elt_t = element_type_t<T>;
       using i_t = as_integer_t<elt_t, signed>;
@@ -97,7 +97,7 @@ namespace eve::detail
         return pedantic_(ldexp)(a, itrunc(b));
       }
     }
-    else  return apply_over(abs, a, b);
+    else  return apply_over(ldexp, a, b);
   }
 
 

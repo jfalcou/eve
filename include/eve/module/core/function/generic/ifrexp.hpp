@@ -40,7 +40,7 @@ namespace eve::detail
                                         , T a0) noexcept
 
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
       auto r1   = bit_and(Expobits_mask<T>(), a0);
@@ -55,7 +55,7 @@ namespace eve::detail
                                         , T a0) noexcept
 
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto [m, e] =  raw_(ifrexp)(a0);
       auto a0eqz = is_eqz(a0);
@@ -67,7 +67,7 @@ namespace eve::detail
       return std::make_tuple(if_else(a0eqz, eve::zero_, m)
                             , if_else(a0eqz, eve::zero_, e));
     }
-    else  return apply_over2(raw_(ifrexp), a0);
+    else  return apply_over2(ifrexp, a0);
   }
 
   template<floating_real_value T>
@@ -76,7 +76,7 @@ namespace eve::detail
                                         , T a0) noexcept
 
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
        using i_t = as_integer_t<T, signed>;
       if constexpr(simd_value<T>)
@@ -139,7 +139,7 @@ namespace eve::detail
         }
       }
     }
-    else  return apply_over2(raw_(ifrexp), a0);
+    else  return apply_over2(pedantic_(ifrexp), a0);
   }
 
 

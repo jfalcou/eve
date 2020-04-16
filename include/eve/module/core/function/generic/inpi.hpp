@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto inpi_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
   {
-    if constexpr(native<T>) return Invpi(as(a))*a;
+    if constexpr(has_native_abi_v<T>) return Invpi(as(a))*a;
     else                    return apply_over(inpi, a);
   }
 }

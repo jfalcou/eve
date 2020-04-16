@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_MANHATTAN_HPP_INCLUDED
 
 #include <eve/function/definition/manhattan.hpp>
-#include <eve/module/core/function/scalar/manhattan.hpp>
-#include <eve/module/core/function/simd/manhattan.hpp>
+#include <eve/module/core/function/generic/manhattan.hpp>
 
 #endif

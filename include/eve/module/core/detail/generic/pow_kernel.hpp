@@ -91,7 +91,7 @@ namespace eve::detail
     /* 2^(-i/16)
      * The decimal values are rounded to 24-bit precision
      */
-    using v_t = as_floating_point_t<value_type_t<I>>; 
+    using v_t = as_floating_point_t<value_type_t<I>>;
     if constexpr(std::is_same_v<v_t, float>)
     {
       const v_t A[17] =  {
@@ -112,7 +112,7 @@ namespace eve::detail
         v_t(5.45253872871398925781250E-1),
         v_t(5.22136867046356201171875E-1),
         v_t(5.00000000000000000000E-1)
-      }; 
+      };
       if constexpr(is_Vectorizable_v<I>)
         return A[i];
       else
@@ -189,17 +189,17 @@ namespace eve::detail
         return B[i];
       else
         return gather(&B[0], i);
-    }    
+    }
   }
 
   template < typename T>
   EVE_FORCEINLINE auto kernel_select(const T& xx) noexcept
   Requires(std::tuple<T, as_integer_t<T>>, behave_as<floating_point,T>)
   {
-    using i_t = as_integer_t<T>; 
+    using i_t = as_integer_t<T>;
     // find significand in antilog table A[]
     i_t i = One<i_t>();
-    i = if_else(is_less_equal(xx, twomio16(9)), i_t(9), i);
+    i = if_else(is_less_equal(xx, twomio16(i_t(9))), i_t(9), i);
     i = add[is_less_equal(xx, twomio16(i+4))](i, i_t(4));
     i = add[is_less_equal(xx, twomio16(i+2))](i, i_t(2) );
     i = if_else(is_greater_equal(xx, twomio16(One<i_t>())), i_t(-1), i);
@@ -210,7 +210,7 @@ namespace eve::detail
     x /= tmp;
     return std::make_tuple(x, i);
   }
- 
+
 }
 
 #endif

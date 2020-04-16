@@ -70,7 +70,7 @@ namespace eve::detail
                                           U const &t,
                                           eve::callable_zero_ const
                                           &) noexcept
-  //requires native<T> && bit_compatible_values<T, U>
+  //requires has_native_abi_v<T> && bit_compatible_values<T, U>
   {
     if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : U(0);
     else                                  return bit_and(t, bit_mask(cond));
@@ -81,7 +81,7 @@ namespace eve::detail
                                           T const &cond,
                                           eve::callable_zero_ const &,
                                           U const &t) noexcept
-  // requires native<T> && bit_compatible_values<T, U>
+  // requires has_native_abi_v<T> && bit_compatible_values<T, U>
   {
      if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? U(0) : t;
      else                          return bit_andnot(t, bit_mask(cond));

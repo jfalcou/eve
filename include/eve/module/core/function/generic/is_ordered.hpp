@@ -26,12 +26,12 @@ namespace eve::detail
                                                        , T const &a
                                                        , T const &b) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(integral_value<T>) return True(as(a));
       else                            return (a == a) && (b == b);
     }
-    else                              return apply_over(is_ordered, a);
+    else                              return apply_over(is_ordered, a, b);
   }
 }
 

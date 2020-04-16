@@ -14,6 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/is_ordered.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -27,7 +28,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto is_lessgreater_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires compatible_values<T, U>
+  //  requires compatible_values<T, U>
   {
     return arithmetic_call(is_lessgreater, a, b);
   }
@@ -36,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto is_lessgreater_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , T const &b) noexcept
-  requires native<T>
+  //  requires has_native_abi_v<T>
   {
     return  (is_not_equal(a, b) && is_ordered(a, b));
   }

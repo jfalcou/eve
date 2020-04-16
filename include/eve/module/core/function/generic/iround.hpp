@@ -27,7 +27,7 @@ namespace eve::detail
                                         , D const &
                                         , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
            if constexpr(std::is_same_v<D, eve::upward_type>)      return eve::iceil(a);
       else if constexpr(std::is_same_v<D, eve::downward_type>)    return eve::ifloor(a);

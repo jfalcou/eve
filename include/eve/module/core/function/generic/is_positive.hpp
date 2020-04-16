@@ -27,7 +27,7 @@ namespace eve::detail
                                              , T const &v) noexcept
   {
     if constexpr(unsigned_value<T>)        return True(as(v));
-    else if constexpr(native<T>)
+    else if constexpr(has_native_abi_v<T>)
     {
      if constexpr(signed_integral_value<T>) return is_gez(v);
       else if constexpr(simd_value<T>)

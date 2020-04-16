@@ -24,7 +24,7 @@ namespace eve::detail
                                           , T const &a) noexcept
   {
     if constexpr(integral_value<T>)  return a;
-    else if constexpr(native<T>)     return saturated_(toint)(eve::nearest(a));
+    else if constexpr(has_native_abi_v<T>)     return saturated_(toint)(eve::nearest(a));
     else                             return apply_over(inearest, a);
   }
 }

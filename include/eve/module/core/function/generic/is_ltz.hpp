@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_ltz_(EVE_SUPPORTS(cpu_)
                                                    , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(unsigned_value<T>) return False(as(a));
       else                            return a < Zero(as(a));

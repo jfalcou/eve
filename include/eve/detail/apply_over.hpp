@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-  
+
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v)
   {
@@ -30,7 +30,7 @@ namespace eve::detail
 
   template<typename Obj, value T, value U>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v, U const & w)
-  requires simd_value<T> || simd_value<U>  
+  requires simd_value<T> || simd_value<U>
   {
          if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(f, v, w);
     else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w);
@@ -38,7 +38,7 @@ namespace eve::detail
 
   template<typename Obj, value T, value U, value V>
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v, U const & w, V const & x )
-    requires (simd_value<T> || simd_value<U> || simd_value<V>)  
+    requires (simd_value<T> || simd_value<U> || simd_value<V>)
   {
          if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(f, v, w, x);
     else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w, x);
@@ -47,34 +47,34 @@ namespace eve::detail
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over2(Obj f, T const & v)
   {
-    if constexpr(has_emulated_abi_v<T> ) return map(f, v); 
+    if constexpr(has_emulated_abi_v<T> ) return map(f, v);
     else if constexpr(has_aggregated_abi_v<T>)
     {
       auto  [lov, hiv] = v.slice();
       auto  [xhi, ehi] = f(hiv);
       auto  [xlo, elo] = f(lov);
-      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
+      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
   }
-  
+
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over2(Obj f, T const & v, T const & w)
   {
-    if constexpr(has_emulated_abi_v<T> ) return map(f, v, w); 
+    if constexpr(has_emulated_abi_v<T> ) return map(f, v, w);
     else if constexpr(has_aggregated_abi_v<T>)
     {
       auto  [lov, hiv] = v.slice();
       auto  [low, hiw] = w.slice();
       auto  [xhi, ehi] = f(hiv, hiw);
       auto  [xlo, elo] = f(lov, low);
-      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi)); 
+      return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
   }
 
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over3(Obj f, T const & v)
   {
-    if constexpr(has_emulated_abi_v<T> ) return map(f, v); 
+    if constexpr(has_emulated_abi_v<T> ) return map(f, v);
     else if constexpr(has_aggregated_abi_v<T>)
     {
       auto  [lo, hi] = v.slice();
@@ -84,9 +84,9 @@ namespace eve::detail
                             , eve::combine( xlo, xhi)
                             , eve::combine( dxlo, dxhi));
     }
-    else return std::make_tuple(T(), T(), T()); 
+    else return std::make_tuple(T(), T(), T());
   }
-  
+
 }
 
 #endif

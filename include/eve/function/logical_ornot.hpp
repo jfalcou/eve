@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
 
 #include <eve/function/definition/logical_ornot.hpp>
-#include <eve/module/core/function/scalar/logical_ornot.hpp>
-#include <eve/module/core/function/simd/logical_ornot.hpp>
+#include <eve/module/core/function/generic/logical_ornot.hpp>
 
 #endif

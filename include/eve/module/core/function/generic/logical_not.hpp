@@ -22,7 +22,7 @@ namespace eve::detail
   template<value T>
   EVE_FORCEINLINE auto logical_not_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
            if constexpr(logical_simd_value<T>)   return eve::bit_cast(eve::bit_not(a.bits()),as(a));
       else if constexpr(logical_scalar_value<T>) return T(a.not_value());

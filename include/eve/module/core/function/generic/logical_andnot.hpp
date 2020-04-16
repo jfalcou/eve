@@ -8,13 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_XOR_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_XOR_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_ANDNOT_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOGICAL_ANDNOT_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
@@ -25,73 +23,71 @@
 namespace eve::detail
 {
   template<value T, value U>
-  EVE_FORCEINLINE  auto logical_xor_(EVE_SUPPORTS(cpu_)
-                                    , T const &a
-                                    , U const &b) noexcept
+  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
+                                       , T const &a
+                                       , U const &b) noexcept
   {
-    return apply_over(logical_xor, a, b);
+    return apply_over(logical_andnot, a, b);
   }
 
   template<scalar_value T, scalar_value U>
-  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
   requires (has_native_abi_v<T> && has_native_abi_v<U>)
   {
     if constexpr(is_logical_v<T>) {
-      return logical_xor(a.value(), b);
+      return logical_andnot(a.value(), b);
     }
     else if  constexpr(is_logical_v<U>) {
-      return logical_xor(a, b.value());
+      return logical_andnot(a, b.value());
     }
     else
     {
-      using i_t = as_integer_t<T>;
-      return as_logical_t<T>(bit_xor(bit_mask(i_t(a)), bit_mask(i_t(b))));
+      return as_logical_t<T>(a && !b);
     }
-    //return as_logical_t<T>(as_logical_t<T>(a).value() ^ as_logical_t<T>( b).value());
   }
 
   template<simd_value T, simd_value U>
-  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
-    if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_xor(bit_mask(a), bit_mask(b)), as_<as_logical_t<T>>());}
-    else                                 { return apply_over(logical_xor, a, b); }
+    if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_andnot(bit_mask(a), bit_mask(b)), as_<as_logical_t<T>>());}
+    else                                 { return apply_over(logical_andnot, a, b); }
   }
 
   template<simd_value T, scalar_value U>
-  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
   requires (has_native_abi_v<T> && has_native_abi_v<U>)
   {
-    return logical_xor(is_nez(a), is_nez(b));
+    return logical_andnot(is_nez(a), is_nez(b));
   }
 
   template<scalar_value T, simd_value U>
-  EVE_FORCEINLINE  auto logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  auto logical_andnot_(EVE_SUPPORTS(cpu_)
                                     , T const &a
                                     , U const &b) noexcept
   requires (has_native_abi_v<T> && has_native_abi_v<U>)
   {
-    return logical_xor(is_nez(a), is_nez(b));
+    return logical_andnot(is_nez(a), is_nez(b));
   }
 
   template<simd_value T, simd_value U>
-  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
                                                , logical<T> const &a
                                                , logical<U> const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U> && (cardinal_v<T> == cardinal_v<U>)
   {
-    if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_xor(a.bits(), b.bits()), as_<as_logical_t<T>>());}
-    else                                 { return apply_over(logical_xor, a, b); }
+    if constexpr(sizeof(T) == sizeof(U)) { return bit_cast(bit_andnot(a.bits(), b.bits()), as_<as_logical_t<T>>());}
+    else                                 { return apply_over(logical_andnot, a, b); }
   }
 
   template<simd_value T, scalar_value U>
-  EVE_FORCEINLINE  as_logical_t<T> logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE  as_logical_t<T> logical_andnot_(EVE_SUPPORTS(cpu_)
                                                , logical<T> const &a
                                                , logical<U> const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U>
@@ -101,13 +97,13 @@ namespace eve::detail
     {
       auto bb = is_nez(T(bit_cast(b, as<logical<elt_t>>())));
 
-      return bit_cast(bit_xor(a.bits(), bb.bits()), as_<as_logical_t<T>>());
+      return bit_cast(bit_andnot(a.bits(), bb.bits()), as_<as_logical_t<T>>());
     }
-    else           { return apply_over(logical_xor, a, b); }
+    else           { return apply_over(logical_andnot, a, b); }
   }
 
   template<scalar_value T, simd_value U>
-  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto logical_andnot_(EVE_SUPPORTS(cpu_)
                                    , logical<T> const &a
                                    , logical<U> const &b) noexcept
   requires has_native_abi_v<T> && has_native_abi_v<U>
@@ -118,21 +114,10 @@ namespace eve::detail
     {
       auto aa = r_t(a);
 
-      return bit_cast(bit_xor(aa.bits(), b.bits()), as<r_t>());
+      return bit_cast(bit_andnot(aa.bits(), b.bits()), as<r_t>());
     }
-    else        { return apply_over(logical_xor, a, b); }
+    else        { return apply_over(logical_andnot, a, b); }
   }
 }
-
-namespace eve
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator ^(T const &v0, U const &v1) noexcept
-  -> decltype( eve::logical_xor(v0,v1) )
-  {
-    return eve::logical_xor(v0, v1);
-  }
-}
-
 
 #endif

@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifloor_(EVE_SUPPORTS(cpu_)
                                        , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
               if constexpr(floating_value<T>)  return saturated_(toint)(eve::floor(a));
          else if constexpr(integral_value<T>)  return a;

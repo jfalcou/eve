@@ -14,4 +14,8 @@
 #include <eve/function/definition/is_lessgreater.hpp>
 #include <eve/module/core/function/generic/is_lessgreater.hpp>
 
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/is_lessgreater.hpp>
+#endif
+
 #endif

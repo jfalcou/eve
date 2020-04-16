@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 
 #include <eve/function/definition/logical_and.hpp>
-#include <eve/module/core/function/scalar/logical_and.hpp>
-#include <eve/module/core/function/simd/logical_and.hpp>
+#include <eve/module/core/function/generic/logical_and.hpp>
 
 #endif

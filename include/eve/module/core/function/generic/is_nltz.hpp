@@ -29,7 +29,7 @@ namespace eve::detail
                                                    , T const &a) noexcept
   {
     if constexpr(unsigned_value<T>)          return True(as(a));
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
