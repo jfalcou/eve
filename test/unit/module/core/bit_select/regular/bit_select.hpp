@@ -26,6 +26,11 @@ TTS_CASE("Check eve::bit_select return type")
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
   TTS_EXPR_IS(eve::bit_select( i_t(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));
+
+  TTS_EXPR_IS(eve::bit_select(eve::logical<EVE_TYPE>(),EVE_TYPE() ,EVE_TYPE() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select(eve::logical<EVE_TYPE>(),EVE_TYPE() ,EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_select(eve::logical<EVE_TYPE>(),EVE_VALUE(),EVE_TYPE() ), (EVE_TYPE));
+
 }
 
 TTS_CASE( "Check eve::bit_select behavior")

@@ -11,22 +11,20 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_NBTRUE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_NBTRUE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/popcount.hpp>
-#include <eve/forward.hpp>
-#include <eve/arch/wide.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
-  template<typename T, typename N>
+  template<real_value T, typename N>
   EVE_FORCEINLINE size_t  nbtrue_(EVE_SUPPORTS(sse2_)
                             , logical<wide<T, N, sse_>> const &v) noexcept
   {
@@ -107,7 +105,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
-  template<typename T, typename N>
+  template<real_value T, typename N>
   EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(avx_)
                            , logical<wide<T, N, avx_>> const &v) noexcept
   {

@@ -12,7 +12,11 @@
 #define EVE_FUNCTION_NBTRUE_HPP_INCLUDED
 
 #include <eve/function/definition/nbtrue.hpp>
-#include <eve/module/core/function/scalar/nbtrue.hpp>
-#include <eve/module/core/function/simd/nbtrue.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/nbtrue.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/nbtrue.hpp>
+#endif
 
 #endif

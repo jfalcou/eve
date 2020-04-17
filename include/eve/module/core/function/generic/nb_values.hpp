@@ -11,8 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_NB_VALUES_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_NB_VALUES_HPP_INCLUDED
 
-#include <eve/detail/meta.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/generic/next_kernel.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_unordered.hpp>
@@ -22,32 +21,43 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/concept/vectorized.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<real_value T, real_value U>  //perhaps totally ordered concept must be on ?
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE  auto nb_values_(EVE_SUPPORTS(cpu_)
+                            , T const &a
+                            , U const &b) noexcept
+  requires std::same_as<element_type_t<U>, element_type_t<T>>
+  {
+
+    return arithmetic_call(nb_values, a, b);
+  }
+
+  template<value T>
   EVE_FORCEINLINE auto nb_values_(EVE_SUPPORTS(cpu_)
                                  , T const &a
-                                 , U const &b) noexcept
-  requires std::same_as<value_type_t<U>, value_type_t<T>>
+                                 , T const &b) noexcept
+  requires has_native_abi_v<T>
   {
-    using ui_t = as_integer_t<std::conditional_t<is_Vectorized_v<T>, T, U>, unsigned>; 
+    using ui_t = as_integer_t<T, unsigned>;
     if constexpr(floating_value<T>)
     {
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);
       auto z = if_else (is_unordered(a, b)
-                     , eve::Valmax<ui_t>()
-                     , bit_cast(dist(bb, aa), as<ui_t>())
-                     );
-      return inc[is_ltz(signnz(a)*signnz(b))](z); 
+                       , eve::Valmax<ui_t>()
+                       , bit_cast(dist(bb, aa), as<ui_t>())
+                       );
+      return inc[is_ltz(signnz(a)*signnz(b))](z);
     }
-    else
-      return bit_cast(dist(a, b), as<ui_t>()); 
+    else if constexpr(integral_value<T>)
+    {
+      return bit_cast(dist(a, b), as<ui_t>());
+    }
   }
 }
 
