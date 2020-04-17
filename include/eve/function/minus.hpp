@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_MINUS_HPP_INCLUDED
 
 #include <eve/function/definition/minus.hpp>
-#include <eve/module/core/function/scalar/minus.hpp>
-#include <eve/module/core/function/simd/minus.hpp>
+#include <eve/module/core/function/generic/minus.hpp>
 
 #endif
