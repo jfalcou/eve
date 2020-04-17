@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_TRUNC_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_TRUNC_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
@@ -28,13 +26,13 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto trunc_(EVE_SUPPORTS(cpu_)
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
            if constexpr(integral_value<T>) return a0;
       else if constexpr(floating_value<T>)
       {
-        //       auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>()); //TODO
-        auto already_integral = is_not_less_equal(bit_andnot(a0, Signmask<T>()), Maxflint<T>());
+        auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>()); //TODO
+        //       auto already_integral = is_not_less_equal(bit_andnot(a0, Signmask<T>()), Maxflint<T>());
              if constexpr(scalar_value<T>) return already_integral ? a0 :raw_(trunc)(a0);
         else if constexpr(simd_value<T>)   return if_else(already_integral, a0, eve::raw_(trunc)(a0));
       }
@@ -49,7 +47,7 @@ namespace eve::detail
                                        , raw_type const &
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using vt_t = value_type_t<T>;
       using it_t = as_integer_t<vt_t>;

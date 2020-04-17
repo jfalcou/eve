@@ -11,14 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_NEAREST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_NEAREST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<floating_real_value, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> nearest_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, float>) { return vec_round(v0.storage()); }
@@ -26,10 +23,6 @@ namespace eve::detail
     {
       // TODO(joel) : Test on proper VSX HW
       return map(eve::nearest, v0);
-    }
-    else
-    {
-      return v0;
     }
   }
 }

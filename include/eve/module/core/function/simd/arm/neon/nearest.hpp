@@ -11,18 +11,15 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_NEAREST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_NEAREST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<floating_real_value, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> nearest_(EVE_SUPPORTS(neon128_),
                                                wide<T, N, neon64_> const &v0) noexcept
   {
-    if constexpr(std::is_integral_v<T>) return v0;
 #if __ARM_ARCH >= 8
     if constexpr(std::is_same_v<T, double>)
 #  if defined(__aarch64__)
@@ -36,12 +33,10 @@ namespace eve::detail
 #endif
   }
 
-  template<typename T, typename N>
+  template<floating_real_value, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> nearest_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon128_> const &v0) noexcept
   {
-    if constexpr(std::is_integral_v<T>) return v0;
-
 #if __ARM_ARCH >= 8
     if constexpr(std::is_same_v<T, double>)
 #  if defined(__aarch64__)
