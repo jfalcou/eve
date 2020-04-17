@@ -19,7 +19,7 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
-  template<floating_real_value T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> nearest_(EVE_SUPPORTS(sse4_1_),
                                             wide<T, N, sse_> const &a0) noexcept
   {
@@ -31,7 +31,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
-  template<floating_real_value T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> nearest_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, double>)
