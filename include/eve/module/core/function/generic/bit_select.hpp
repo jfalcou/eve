@@ -30,7 +30,7 @@
 
 namespace eve::detail
 {
-  template<real_value T, real_value U, real_value V>
+  template<value T, value U, value V>
   EVE_FORCEINLINE auto bit_select_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , U const &b
@@ -58,13 +58,22 @@ namespace eve::detail
     return  bit_or(bit_and(b, a), bit_andnot(c, a)); // fallback never taken if proper intrinsics are at hand
   }
 
-   template<real_simd_value T>
+  template<real_simd_value T>
   EVE_FORCEINLINE logical<T> bit_select_(EVE_SUPPORTS(cpu_)
                                   , logical<T> const &a
                                   , logical<T> const &b
                                   , logical<T> const &c) noexcept
   {
     return bit_cast(bit_or(bit_and(b.bits(), a.bits()), bit_andnot(c.bits(), a.bits())), as(logical<T>()));
+  }
+
+  template<real_simd_value T>
+  EVE_FORCEINLINE logical<T> bit_select_(EVE_SUPPORTS(cpu_)
+                                  , T const &a
+                                  , logical<T> const &b
+                                  , logical<T> const &c) noexcept
+  {
+    return bit_cast(bit_or(bit_and(b.bits(), a), bit_andnot(c.bits(), a)), as(logical<T>()));
   }
 
 }
