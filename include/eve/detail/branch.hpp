@@ -28,8 +28,12 @@ namespace eve::detail
     if constexpr(Check) return [&c, t](auto&& x0, auto&&... x) { return c ? t(x0, x...) : x0; };
     else                return [&c, t](auto&& x0, auto&&... x) { return if_else(c, t(x0, x...), x0); };
   }
-
-
+  template<bool Check, typename TC, typename TF>
+  EVE_FORCEINLINE auto choose(TC t, TF f)
+  {
+    if constexpr(Check) return [t, f](auto&&... x) { return t(x...);  };
+    else                return [t, f](auto&&... x) { return f(x...); };
+  }
 }
 
 #endif
