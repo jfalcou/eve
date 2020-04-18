@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_PLUS_HPP_INCLUDED
 
 #include <eve/function/definition/plus.hpp>
-#include <eve/module/core/function/scalar/plus.hpp>
-#include <eve/module/core/function/simd/plus.hpp>
+#include <eve/module/core/function/generic/plus.hpp>
 
 #endif
