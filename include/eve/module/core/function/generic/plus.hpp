@@ -12,7 +12,9 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_PLUS_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/add.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
@@ -20,15 +22,14 @@ namespace eve::detail
   template<value T>
   EVE_FORCEINLINE  auto plus_(EVE_SUPPORTS(cpu_)
                             , T const &a) noexcept
-  requires compatible_values<T, U>
   {
     return a;
   }
 
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_),
-                            T const &v0,
-                            U const &v1) noexcept
+                            T const &a,
+                            U const &b) noexcept
   requires compatible_values<T, U>
   {
     return add(a, b);
@@ -37,8 +38,8 @@ namespace eve::detail
   template<real_value T, real_value U, value COND>
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_),
                             COND const & cond,
-                            T const &v0,
-                            U const &v1) noexcept
+                            T const &a,
+                            U const &b) noexcept
   requires compatible_values<T, U>
   {
     return add[cond](a, b);
@@ -47,9 +48,9 @@ namespace eve::detail
   template<real_value T, real_value U, value COND,  typename D>
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_),
                             COND const & cond,
-                            D const &
-                            T const &v0,
-                            U const &v1) noexcept
+                            D const &,
+                            T const &a,
+                            U const &b) noexcept
   requires compatible_values<T, U>
   {
     return D()(add[cond])(a, b);
@@ -65,4 +66,6 @@ namespace eve
   {
     return v;
   }
+}
+
 #endif
