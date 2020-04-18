@@ -118,7 +118,7 @@ namespace eve::detail
   }
 
 
-  template<typename Obj, real_value T, real_value U, real_value V>
+  template<typename Obj, value T, value U, value V>
   EVE_FORCEINLINE auto bit_call(Obj op
                                , T const &a
                                , U const &b
