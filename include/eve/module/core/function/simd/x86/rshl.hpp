@@ -21,11 +21,10 @@
 
 namespace eve::detail
 {
-  template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto
-  rshl_(EVE_SUPPORTS(avx_),
-        wide<T, N, sse_> const &a0,
-        wide<I, N, sse_> const &a1) noexcept Requires(wide<T, N, sse_>, integral<T>, integral<I>)
+  template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
+  EVE_FORCEINLINE auto  rshl_(EVE_SUPPORTS(avx_),
+                              wide<T, N, sse_> const &a0,
+                              wide<I, N, sse_> const &a1)
   {
     if constexpr(supports_xop)
     {
@@ -70,7 +69,7 @@ namespace eve::detail
     }
     else
     {
-      return map(eve::rshl, a0, a1);
+      return map(eve::rshl, a0, a1); //TODO pas génial
     }
   }
 }
