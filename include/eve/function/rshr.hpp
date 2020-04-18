@@ -12,7 +12,15 @@
 #define EVE_FUNCTION_RSHR_HPP_INCLUDED
 
 #include <eve/function/definition/rshr.hpp>
-#include <eve/module/core/function/scalar/rshr.hpp>
-#include <eve/module/core/function/simd/rshr.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/rshr.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/rshr.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/rshr.hpp>
+#endif
 
 #endif

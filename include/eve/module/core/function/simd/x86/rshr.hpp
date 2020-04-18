@@ -11,21 +11,16 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSHR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSHR_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <type_traits>
-#include <eve/function/abs.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename I, typename N>
-  EVE_FORCEINLINE auto
-  rshr_(EVE_SUPPORTS(avx_),
-        wide<T, N, sse_> const &a0,
-        wide<I, N, sse_> const &a1) noexcept Requires(wide<T, N, sse_>, integral<T>, integral<I>)
+  template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
+  EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(avx_),
+                             wide<T, N, sse_> const &a0,
+                             wide<I, N, sse_> const &a1) noexcept
   {
     if constexpr(supports_xop)
     {
@@ -73,7 +68,7 @@ namespace eve::detail
     }
     else
     {
-      return map(eve::rshr, a0, a1);
+      return map(eve::rshr, a0, a1);//TODO pas génial
     }
   }
 }
