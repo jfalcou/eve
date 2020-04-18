@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_POPCOUNT_HPP_INCLUDED
 
 #include <eve/function/definition/popcount.hpp>
-#include <eve/module/core/function/scalar/popcount.hpp>
-#include <eve/module/core/function/simd/popcount.hpp>
+#include <eve/module/core/function/generic/popcount.hpp>
 
 #endif
