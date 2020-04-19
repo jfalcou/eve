@@ -12,7 +12,19 @@
 #define EVE_FUNCTION_RSQRT_HPP_INCLUDED
 
 #include <eve/function/definition/rsqrt.hpp>
-#include <eve/module/core/function/scalar/rsqrt.hpp>
-#include <eve/module/core/function/simd/rsqrt.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/rsqrt.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/rsqrt.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/rsqrt.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/rsqrt.hpp>
+#endif
 
 #endif

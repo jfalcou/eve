@@ -25,7 +25,6 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/sqr.hpp>
-#include <eve/function/mul.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/fnma.hpp>
@@ -34,6 +33,7 @@
 #include <eve/constant/one.hpp>
 #include <eve/constant/half.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -65,78 +65,63 @@ namespace eve::detail
 
     return if_else(is_eqz(x), Inf(as(x)), a0);
   }
-  
+
   template<typename Pack>
   EVE_FORCEINLINE Pack rsqrt_x86_pedantic(Pack const &x) noexcept
   {
-    using v_t =  typename Pack::value_type; 
+    using v_t =  typename Pack::value_type;
     if(any(is_denormal(x)) || (std::is_same_v<v_t, double> && any(eve::abs(x) < Smallestposval<float>() || eve::abs(x) > Valmax<float>())))
-      // this is necessary because of the poor initialisation by float intrinsic  
+      // this is necessary because of the poor initialisation by float intrinsic
     {
       auto [a00, nn] =  pedantic_(ifrexp)(x);
       auto tst = is_odd(nn);
-      nn  = dec[tst](nn); 
+      nn  = dec[tst](nn);
       a00 = mul[tst](a00,2);
-      auto a0 = rsqrt_x86(a00); 
+      auto a0 = rsqrt_x86(a00);
       return if_else(is_eqz(x), Inf(as(x)), pedantic_(ldexp)(a0, -nn/2));
     }
-    else return rsqrt_x86(x); 
+    else return rsqrt_x86(x);
   }
 
   //------------------------------------------------------------------------------------------------
   // Regular 128 bits rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) { return rsqrt_x86(a0); }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
-    }
+    return rsqrt_x86(a0);
   }
-  
+
   //------------------------------------------------------------------------------------------------
   // Pedantic 128 bits rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_)
                              , pedantic_type const &
                              , wide<T, N, sse_> const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) { return rsqrt_x86_pedantic(a0); }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
-    }
+     return rsqrt_x86_pedantic(a0);
   }
 
   //------------------------------------------------------------------------------------------------
   // Regular 256 bits rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) { return rsqrt_x86(a0); }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
-    }
+    return rsqrt_x86(a0);
   }
 
   //------------------------------------------------------------------------------------------------
   // Pedantic 256 bits rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_)
                              , pedantic_type const &
                              , wide<T, N, avx_> const &a0) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) { return rsqrt_x86_pedantic(a0); }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
-    }
+    return rsqrt_x86_pedantic(a0);
   }
-  //------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------------
   // 128 bits raw rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_>
                   rsqrt_(EVE_SUPPORTS(sse2_), raw_type const &, wide<T, N, sse_> const &a0) noexcept
   {
@@ -149,15 +134,11 @@ namespace eve::detail
     {
       return _mm_rsqrt_ps(a0);
     }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
-    }
   }
 
   //------------------------------------------------------------------------------------------------
   // 256 bits raw rsqrt
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_>
                   rsqrt_(EVE_SUPPORTS(avx_), raw_type const &, wide<T, N, avx_> const &a0) noexcept
   {
@@ -169,10 +150,6 @@ namespace eve::detail
     else if constexpr(std::is_same_v<T, float>)
     {
       return _mm256_rsqrt_ps(a0);
-    }
-    else
-    {
-      static_assert(std::is_floating_point_v<T>, "[eve::rsqrt] - Unsupported integral parameters");
     }
   }
 }

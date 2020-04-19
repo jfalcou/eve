@@ -11,22 +11,21 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSQRT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSQRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/ldexp.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/ldexp.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Raw version
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_>
                   rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon64_> const &v0) noexcept
   {
@@ -43,7 +42,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_>
                   rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon128_> const &v0) noexcept
   {
@@ -62,12 +61,12 @@ namespace eve::detail
 
   //------------------------------------------------------------------------------------------------
   // Basic version
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> rsqrt_(EVE_SUPPORTS(neon128_),
                                              wide<T, N, neon64_> const &v0) noexcept
   {
     using that_t = wide<T, N, neon64_>;
- 
+
     if constexpr(std::is_same_v<T, double> && supports_aarch64)
     {
       that_t inv  = vrsqrte_f64(v0);
@@ -87,7 +86,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
                                              wide<T, N, neon128_> const &v0) noexcept
   {
@@ -112,16 +111,16 @@ namespace eve::detail
     }
   }
 
- 
+
   //------------------------------------------------------------------------------------------------
   // Pedantic version
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             pedantic_type const &, 
+                                             pedantic_type const &,
                                              wide<T, N, neon64_> const &v00) noexcept
   {
     if (any(is_denormal(v00)))
-    {              
+    {
       using that_t = wide<T, N, neon64_>;
       auto[v0, nn] =  pedantic_(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
@@ -132,15 +131,15 @@ namespace eve::detail
     }
     else return rsqrt(v00);
   }
-  
-    
-  template<typename T, typename N>
+
+
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             pedantic_type const &, 
+                                             pedantic_type const &,
                                              wide<T, N, neon128_> const &v00) noexcept
   {
     if (any(is_denormal(v00)))
-    {              
+    {
       using that_t = wide<T, N, neon128_>;
       auto[v0, nn] =  pedantic_(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
@@ -150,7 +149,7 @@ namespace eve::detail
       return that_t(pedantic_(eve::ldexp)(inv, -nn/2));
     }
     else return rsqrt(v00);
-  } 
+  }
 }
 
 #endif
