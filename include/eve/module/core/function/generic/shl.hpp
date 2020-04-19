@@ -41,4 +41,13 @@ namespace eve::detail
   }
 }
 
+namespace eve
+{
+  template<typename T, typename U>
+  EVE_FORCEINLINE auto operator<<(T const &v0, U const &v1) noexcept -> decltype(eve::shl(v0, v1))
+  {
+    return eve::shl(v0, v1);
+  }
+}
+
 #endif
