@@ -31,7 +31,7 @@ namespace eve::detail
   {
     if constexpr(unsigned_value<U>)
     {
-      return shl(a0, a1);
+      return shr(a0, a1);
     }
     else if constexpr(scalar_value<U>)
     {
