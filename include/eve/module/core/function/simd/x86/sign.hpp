@@ -11,27 +11,18 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_SIGN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_SIGN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/forward.hpp>
-#include <eve/as.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/binarize.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto sign_(EVE_SUPPORTS(ssse3_), wide<T, N, sse_> const &a) noexcept
+  template<integral_real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, sse_> sign_(EVE_SUPPORTS(ssse3_)
+                                        , wide<T, N, sse_> const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) { return sign_(EVE_RETARGET(cpu_), a); }
-    else if constexpr(std::is_signed_v<T>)
+    if constexpr(std::is_signed_v<T>)
     {
       using t_t = wide<T, N, sse_>;
       if constexpr(sizeof(T) == 1)
@@ -44,7 +35,7 @@ namespace eve::detail
         return map(sign, a);
     }
     else
-      return if_else(a, One(as(a)), eve::zero_);
+      return binarize(is_nez(a));
   }
 }
 
