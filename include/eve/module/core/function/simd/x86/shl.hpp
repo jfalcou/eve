@@ -23,10 +23,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-  shl_(EVE_SUPPORTS(sse2_),
-       wide<T, N, sse_> const &a0,
-       I const &               a1) noexcept
+  EVE_FORCEINLINE wide<T, N, sse_> shl_(EVE_SUPPORTS(sse2_),
+                                        wide<T, N, sse_> const &a0,
+                                        I const &               a1) noexcept
   {
     using t_t = wide<T, N, sse_>;
 
@@ -80,10 +79,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_>
-  shl_(EVE_SUPPORTS(avx_),
-       wide<T, N, avx_> const &a0,
-       I const &               a1) noexcept
+  EVE_FORCEINLINE wide<T, N, avx_>  shl_(EVE_SUPPORTS(avx_),
+                                         wide<T, N, avx_> const &a0,
+                                         I const &               a1) noexcept
   {
     if constexpr(current_api >= avx2)
     {
