@@ -13,13 +13,11 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-//#include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-//  template<integral_value T, integral_value U>
-  template<typename T,  typename U>
+  template<integral_value T, integral_value U>
   EVE_FORCEINLINE  auto shl_(EVE_SUPPORTS(cpu_)
                             , T const &a0
                             , U const &a1) noexcept
