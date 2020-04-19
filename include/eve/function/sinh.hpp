@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SINH_HPP_INCLUDED
 
 #include <eve/function/definition/sinh.hpp>
-#include <eve/module/core/function/scalar/sinh.hpp>
-#include <eve/module/core/function/simd/sinh.hpp>
+#include <eve/module/core/function/generic/sinh.hpp>
 
 #endif
