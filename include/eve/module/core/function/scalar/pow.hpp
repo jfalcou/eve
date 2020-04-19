@@ -15,7 +15,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/is_flint.hpp>
-#include <eve/function/is_infinite.hpp>  
+#include <eve/function/is_infinite.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_odd.hpp>
@@ -24,14 +24,14 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
           , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
   {
     auto ltza0 = is_ltz(a0);
     auto isinfa1 = is_infinite(a1);
@@ -41,19 +41,18 @@ namespace eve::detail
     if (isinfa1) return z;
     return (is_negative(a0) && is_odd(a1)) ? -z : z;
   }
-  
-  template<typename T, typename U>
+
+  template<floating_real_scalar_value T, integral_real_scalar_value U>
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , T const &a0, U const &a1) noexcept
-  requires(T, floating_point<T>, integral<U>)
   {
     if constexpr(std::is_unsigned_v<U>)
     {
       T base = a0;
       U expo = a1;
-      
-      T result(1); 
+
+      T result(1);
       while(expo)
       {
         if(is_odd(expo)) result *= base;
@@ -62,22 +61,21 @@ namespace eve::detail
       }
       return result;
     }
-    else 
+    else
     {
       using u_t =  as_integer_t<U, unsigned>;
       T tmp = pow(a0, u_t(eve::abs(a1)));
-      return if_else (a1 < 0,  rec(tmp),  tmp); 
+      return if_else (a1 < 0,  rec(tmp),  tmp);
     }
   }
-  
-  template<typename T, typename U>
-  EVE_FORCEINLINE constexpr auto
+
+  template<integral_real_scalar_value T, integral_real_scalar_value U>
+  EVE_FORCEINLINE constexpr T
   pow_(EVE_SUPPORTS(cpu_)
       , T a0, U a1) noexcept
-  requires(T, integral<T>, integral<U>)
   {
-    if (a0 == 1) return 1;  
-    if ((a1 >= U((sizeof(T)*8-1-std::is_signed_v<T>))) || a1 < 0) return 0; 
+    if (a0 == 1) return 1;
+    if ((a1 >= U((sizeof(T)*8-1-std::is_signed_v<T>))) || a1 < 0) return 0;
     constexpr uint8_t highest_bit_set[] = {
       0, 1, 2, 2, 3, 3, 3, 3,
       4, 4, 4, 4, 4, 4, 4, 4,
@@ -116,25 +114,23 @@ namespace eve::detail
         return result;
     }
   }
-  
-  template<typename T>
+
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , raw_type const &
       , T const &a0, T const &a1) noexcept
-  requires(T, floating_point<T>)
   {
-    return exp(a1*log(a0)); 
+    return exp(a1*log(a0));
   }
 
-  template<typename T, typename U>
+  template<real_scalar_value T, integral_scalar_value U>
   EVE_FORCEINLINE constexpr auto
   pow_(EVE_SUPPORTS(cpu_)
       , raw_type const &
       , T const &a0, U const &a1) noexcept
-  requires(T, vectorizable<T>, integral<U>)
   {
-    return pow(a0, a1); 
+    return pow(a0, a1);
   }
 
 }
