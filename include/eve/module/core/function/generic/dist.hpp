@@ -11,11 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_DIST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_DIST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/max.hpp>
@@ -41,7 +37,7 @@ namespace eve::detail
   EVE_FORCEINLINE T dist_(EVE_SUPPORTS(cpu_)
                          , T const &a
                          , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     return eve::max(a, b) - eve::min(a, b);
   }
@@ -63,7 +59,7 @@ namespace eve::detail
                          , saturated_type const &
                          , T const &a
                          , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
       auto d = dist(a, b);
       if constexpr(signed_integral_value<T>) return if_else(is_ltz(d), Valmax(as(a)), d);
