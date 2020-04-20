@@ -39,7 +39,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    if constexpr(has_native_abi_v<T> && native<U>)
+    if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
     {
       using elt_t = element_type_t<T>;
       if constexpr(integral_value<U>)
@@ -68,7 +68,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    if constexpr(has_native_abi_v<T> && native<U>)
+    if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
     {
       using elt_t = element_type_t<T>;
       using i_t = as_integer_t<elt_t, signed>;

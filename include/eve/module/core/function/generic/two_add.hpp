@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_ADD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_ADD_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/sub.hpp>
 #include <eve/function/is_infinite.hpp>
@@ -26,7 +26,7 @@ namespace eve::detail
                                  , const T& a
                                  , const T& b) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       T r0 = a + b;
       T z = r0 - a;
@@ -35,7 +35,7 @@ namespace eve::detail
         r1 = if_else(is_infinite(r0), eve::zero_, r1);
       return std::make_tuple(r0, r1);
     }
-    else return apply_over2(two_add, a, b); 
+    else return apply_over2(two_add, a, b);
   }
 }
 

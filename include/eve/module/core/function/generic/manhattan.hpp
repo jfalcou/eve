@@ -38,8 +38,7 @@ namespace eve::detail
                              ) noexcept
 
   {
-    if constexpr(native<T>) return eve::abs(a)+eve::abs(b);
-    else                    return  apply_over(manhattan, a, b);
+    return eve::abs(a)+eve::abs(b);
   }
 
   template<floating_value T, floating_value U, floating_value V>
@@ -60,8 +59,7 @@ namespace eve::detail
                              ) noexcept
 
   {
-    if constexpr(native<T>) return  eve::abs(a)+eve::abs(b)+eve::abs(c);
-    else                    return  apply_over(manhattan, a, b);
+    return  eve::abs(a)+eve::abs(b)+eve::abs(c);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -81,7 +79,7 @@ namespace eve::detail
                              , T const &a
                              , T const &b
                              ) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     const auto inf = Inf(as(a));
     auto aa = eve::abs(a);
@@ -103,7 +101,7 @@ namespace eve::detail
                               , V const &c) noexcept
   requires compatible_values<T, U> &&  compatible_values<T, V>
   {
-    return arithmetic_call(manhattan, a, b, c);
+    return arithmetic_call(pedantic_(manhattan), a, b, c);
   }
 
   template<floating_value T>
@@ -113,10 +111,10 @@ namespace eve::detail
                              , T const &b
                              , T const &c
                              ) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     const auto inf = Inf(as(a));
-     auto aa = eve::abs(a);
+    auto aa = eve::abs(a);
     auto infa = aa == inf;
     if constexpr(scalar_value<T>) { if (infa) return inf;}
     auto bb = eve::abs(b);

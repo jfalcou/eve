@@ -11,15 +11,13 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ROUND_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ROUND_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/ceil.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/roundings.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -28,14 +26,10 @@ namespace eve::detail
                                     , D const &
                                     , T const &a) noexcept
   {
-    if constexpr(native<T>)
-    {
-      if constexpr(std::is_same_v<D, eve::upward_type>)      return eve::ceil(a);
-      else if constexpr(std::is_same_v<D, eve::downward_type>)    return eve::floor(a);
-      else if constexpr(std::is_same_v<D, eve::toward_zero_type>) return eve::trunc(a);
-      else if constexpr(std::is_same_v<D, eve::to_nearest_type>)  return eve::nearest(a);
-    }
-    else                                                            return apply_over(D()(round), a);
+    if constexpr(std::is_same_v<D, eve::upward_type>)           return eve::ceil(a);
+    else if constexpr(std::is_same_v<D, eve::downward_type>)    return eve::floor(a);
+    else if constexpr(std::is_same_v<D, eve::toward_zero_type>) return eve::trunc(a);
+    else if constexpr(std::is_same_v<D, eve::to_nearest_type>)  return eve::nearest(a);
   }
 
   template<real_value T>

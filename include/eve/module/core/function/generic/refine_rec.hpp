@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_REFINE_REC_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_REFINE_REC_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>

@@ -11,11 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_SPLIT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_TWO_SPLIT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/function/mul.hpp> 
+#include <eve/function/mul.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -27,14 +27,14 @@ namespace eve::detail
   EVE_FORCEINLINE auto two_split_(EVE_SUPPORTS(cpu_)
                                  , const T& a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       T const c = Ieee_constant<T, 0x46000000U, 0x41a0000000000000ULL>()*a;
       T const c1 = c-a;
       T r0 = c-c1;
-      return std::make_tuple(r0, a-r0); 
+      return std::make_tuple(r0, a-r0);
     }
-    else return apply_over2(two_split, a); 
+    else return apply_over2(two_split, a);
   }
 }
 

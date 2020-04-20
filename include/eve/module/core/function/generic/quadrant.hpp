@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_QUADRANT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_QUADRANT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/floor.hpp>
@@ -23,9 +23,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T quadrant_(EVE_SUPPORTS(cpu_)
                                        , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(floating_value<T>) 
+      if constexpr(floating_value<T>)
       {
         T b = a*T(0.25);
         return (b-floor(b))*T(4);
@@ -34,7 +34,7 @@ namespace eve::detail
         return bit_and(a, T(3));
     }
     else
-      return apply_over(quadrant, a); 
+      return apply_over(quadrant, a);
   }
 }
 
