@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_TANH_HPP_INCLUDED
 
 #include <eve/function/definition/tanh.hpp>
-#include <eve/module/core/function/scalar/tanh.hpp>
-#include <eve/module/core/function/simd/tanh.hpp>
+#include <eve/module/core/function/generic/tanh.hpp>
 
 #endif
