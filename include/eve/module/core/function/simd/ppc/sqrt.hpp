@@ -11,15 +11,16 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_SQRT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_SQRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/rsqrt.hpp>
-#include <eve/forward.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/constant/inf.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> sqrt_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
@@ -38,13 +39,9 @@ namespace eve::detail
         return vec_sqrt(v0.storage());
       }
     }
-    else
-    {
-      return map(raw_(sqrt), v0);
-    }
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
                   sqrt_(EVE_SUPPORTS(vmx_), raw_type const &, wide<T, N, ppc_> const &v0) noexcept
   {
@@ -55,10 +52,6 @@ namespace eve::detail
       {
         return vec_sqrt(v0.storage());
       }
-    }
-    else
-    {
-      return map(raw_(sqrt), v0);
     }
   }
 }

@@ -11,33 +11,28 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_SQRT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_SQRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> sqrt_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, float>)
       return _mm_sqrt_ps(a0);
     else if constexpr(std::is_same_v<T, double>)
       return _mm_sqrt_pd(a0);
-    else
-      return sqrt_(EVE_RETARGET(cpu_), a0);
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> sqrt_(EVE_SUPPORTS(avx2_), wide<T, N, avx_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, float>)
       return _mm256_sqrt_ps(a0);
     else if constexpr(std::is_same_v<T, double>)
       return _mm256_sqrt_pd(a0);
-    else
-      return sqrt_(EVE_RETARGET(cpu_), a0);
   }
 
 }

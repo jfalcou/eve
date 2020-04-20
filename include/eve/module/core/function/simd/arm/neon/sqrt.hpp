@@ -11,18 +11,17 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SQRT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SQRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/is_not_finite.hpp>
 #include <eve/function/raw.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Raw version
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_>
                   sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon64_> const &v0) noexcept
   {
@@ -35,13 +34,9 @@ namespace eve::detail
         return if_else(v0, v0 * raw_(rsqrt)(v0), v0);
       }
     }
-    else
-    {
-      return map(eve::sqrt, v0);
-    }
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_>
                   sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon128_> const &v0) noexcept
   {
@@ -54,15 +49,11 @@ namespace eve::detail
         return if_else(v0, v0 * raw_(rsqrt)(v0), v0);
       }
     }
-    else
-    {
-      return map(eve::sqrt, v0);
-    }
   }
 
   //------------------------------------------------------------------------------------------------
   // Basic version
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> sqrt_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon64_> const &v0) noexcept
   {
@@ -80,13 +71,9 @@ namespace eve::detail
         }
       }
     }
-    else
-    {
-      return map(eve::sqrt, v0);
-    }
   }
 
-  template<typename T, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> sqrt_(EVE_SUPPORTS(neon128_),
                                              wide<T, N, neon128_> const &v0) noexcept
   {
@@ -103,10 +90,6 @@ namespace eve::detail
           return that;
         }
       }
-    }
-    else
-    {
-      return map(eve::sqrt, v0);
     }
   }
 }
