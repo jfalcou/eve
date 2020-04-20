@@ -11,9 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SQR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_SQR_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/constant/sqrtvalmax.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -22,6 +24,32 @@ namespace eve::detail
                                   , T const &a) noexcept
   {
     return a * a;
+  }
+
+  template<real_value T>
+  EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(cpu_)
+                                  , saturated_type const &
+                                  , T const &a0) noexcept
+  {
+    if constexpr(has_native_abi_v<T>)
+    {
+      if constexpr(floating_value<T>)
+      {
+        return sqr(a0);
+      }
+      else if constexpr(scalar_value<T>)
+      {
+        return (eve::saturated_(eve::abs)(a0) > Sqrtvalmax(as(a0))) ? Valmax(as(a0)) : sqr(a0);
+      }
+      else
+      {
+        return if_else((a0 > Sqrtvalmax(as(a0))), Valmax(as(a0)), sqr(a0));
+      }
+    }
+    else
+    {
+      return apply_over(saturated_(sqr), a0);
+    }
   }
 }
 
