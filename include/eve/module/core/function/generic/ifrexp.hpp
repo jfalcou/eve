@@ -74,7 +74,6 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_SUPPORTS(cpu_)
                                         , pedantic_type const &
                                         , T a0) noexcept
-
   {
     if constexpr(has_native_abi_v<T>)
     {

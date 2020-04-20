@@ -11,12 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FMA_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_FMA_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/concept/vectorized.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/two_add.hpp>
@@ -69,7 +64,7 @@ namespace eve::detail
 
   ////////////////////////////////////////////////////////////////////////////
   // pedantic/numeric
-  template<real_scalar_value T, real_value U, real_value V,  typename D>
+  template<real_value T, real_value U, real_value V,  typename D>
   EVE_FORCEINLINE auto fma_(EVE_SUPPORTS(cpu_)
                                  ,  D const &
                                   , T const &a
@@ -86,7 +81,7 @@ namespace eve::detail
                                   , T const &a
                                   , T const &b
                                   , T const &c) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     using elt_t =  element_type_t<T>;
     if constexpr(std::is_same_v<elt_t, float>)

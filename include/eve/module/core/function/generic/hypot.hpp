@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_HYPOT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_HYPOT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/exponent.hpp>
@@ -54,7 +52,7 @@ namespace eve::detail
                              ) noexcept
 
   {
-    if constexpr(native<T>) return eve::sqrt(fma(a, a, sqr(b)));
+    if constexpr(has_native_abi_v<T>) return eve::sqrt(fma(a, a, sqr(b)));
     else                    return  apply_over(hypot, a, b);
   }
 
@@ -76,8 +74,8 @@ namespace eve::detail
                              ) noexcept
 
   {
-    if constexpr(native<T>) return eve::sqrt(fma(a, a, fma(b, b, sqr(c))));
-    else                    return  apply_over(hypot, a, b);
+    if constexpr(has_native_abi_v<T>) return eve::sqrt(fma(a, a, fma(b, b, sqr(c))));
+    else                    return  apply_over(hypot, a, b, c);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -98,7 +96,7 @@ namespace eve::detail
                              , T const &a
                              , T const &b
                              ) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     using elt_t =  element_type_t<T>;
     if constexpr(eve::platform::supports_invalids && scalar_value<T>)
@@ -141,7 +139,7 @@ namespace eve::detail
                              , T const &b
                              , T const &c
                              ) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     if constexpr(scalar_value<T>)
       if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return Inf(as(a));

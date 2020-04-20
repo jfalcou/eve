@@ -11,11 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FNMS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_FNMS_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/fma.hpp>
@@ -39,24 +35,35 @@ namespace eve::detail
   {
     return arithmetic_call(fnms, a, b, c);
   }
-  
+
   template<real_value T>
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_)
                          , T const &a
                          , T const &b
                          , T const &c) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
-    return -a*b-c;
+    return  -fma(a, b, c);
   }
-  
+
+  template<real_value T, real_value U, real_value V,  typename D>
+  EVE_FORCEINLINE auto fnms_(EVE_SUPPORTS(cpu_)
+                          , D const &
+                            , T const &a
+                            , U const &b
+                            , V const &c) noexcept
+  requires compatible_values<T,U> && compatible_values<T,V>
+  {
+    return arithmetic_call(D()(fnms), a, b, c);
+  }
+
   template<real_value T, typename D>
   EVE_FORCEINLINE T fnms_(EVE_SUPPORTS(cpu_)
                          , D const &
                          , T const &a
                          , T const &b
                          , T const &c) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     return -D()(fma)(a, b, c);
   }
