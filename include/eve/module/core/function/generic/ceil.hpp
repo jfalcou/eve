@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CEIL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_CEIL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/concept/value.hpp>
@@ -26,7 +24,7 @@ namespace eve::detail
                                    , T const &a0) noexcept
   {
     if constexpr(integral_real_value<T>) return a0;
-    else if constexpr(native<T>)
+    else if constexpr(has_native_abi_v<T>)
     {
       T z = eve::trunc(a0);
       return inc[ z < a0 ](z);

@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COSH_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COSH_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/exp.hpp>
@@ -41,13 +39,16 @@ namespace eve::detail
     // *  in the second     cosh is (e/2)*e (avoiding undue overflow)
     // Threshold is Maxlog - Log_2
     //////////////////////////////////////////////////////////////////////////////
-    if constexpr(native<T>)
+    if constexpr(scalar_value<T>)
+    {
+      if (is_eqz(a0)) return One(as(a0));
+    }
+    if constexpr(has_native_abi_v<T>)
     {
       auto ovflimitmln2 =  Ieee_constant<T,0X42AF5DC0U, 0X408628B76E3A7B61LL >(); //87.68310404,  709.08956571282405469058276787854
       auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {
-        if (is_eqz(a0)) return One<T>();
         if (x >= ovflimitmln2)
         {
           auto w = exp(x*Half<T>());
@@ -73,7 +74,7 @@ namespace eve::detail
         return c;
       }
     }
-    else apply_over(cosh, a0);
+    else return apply_over(cosh, a0);
   }
 }
 

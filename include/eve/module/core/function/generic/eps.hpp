@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_EPS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_EPS_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/exponent.hpp>
@@ -39,7 +37,7 @@ namespace eve::detail
   {
     if constexpr(floating_value<T>)
     {
-      if constexpr(native<T>)
+      if constexpr(has_native_abi_v<T>)
       {
         auto a = eve::abs(a0);
         auto altspv = is_less(a, Smallestposval<T>());

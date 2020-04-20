@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COS_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <eve/module/core/detail/scalar/rempio2_kernel.hpp>
 #include <eve/module/core/detail/simd/rempio2_kernel.hpp>
@@ -43,7 +41,7 @@ namespace eve::detail
                                      , restricted_type const &
                                      , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
       auto x2 = sqr(a0);
@@ -61,7 +59,7 @@ namespace eve::detail
                                      , small_type const &
                                      , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       T x = eve::abs(a0);
       auto xnlepio2 = is_not_less_equal(x, Pio_2<T>());
@@ -110,7 +108,7 @@ namespace eve::detail
                                      , D  const &
                                      , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>();
       auto x =  abs(a0);
@@ -124,7 +122,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cos_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto x =  abs(a0);
       if (all(x <= Pio_4(as(x))))                          return restricted_(cos)(a0);

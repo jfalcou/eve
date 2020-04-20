@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COTPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COTPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/cos.hpp>
@@ -40,7 +38,7 @@ namespace eve::detail
                                        , restricted_type const &
                                        , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
@@ -67,7 +65,7 @@ namespace eve::detail
                                        , D  const &
                                        , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
@@ -89,7 +87,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cotpi_(EVE_SUPPORTS(cpu_)
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto x =  abs(a0);
       if (all(eve::abs(x) <= T(0.25))) return restricted_(cotpi)(a0);

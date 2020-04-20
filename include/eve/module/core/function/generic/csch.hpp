@@ -12,9 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_CSCH_HPP_INCLUDED
 
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/sinh.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -27,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto csch_(EVE_SUPPORTS(cpu_)
                             , T const &a0) noexcept
   {
-    if constexpr(native<T>) return rec(sinh(a0));
+    if constexpr(has_native_abi_v<T>) return rec(sinh(a0));
     else                    return apply_over(csch, a0);
   }
 }

@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COSPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COSPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/cos.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -37,7 +35,7 @@ namespace eve::detail
                                        , restricted_type const &
                                        , T x) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       return eve::restricted_(cos)(x*Pi<T>());
     }
@@ -51,7 +49,7 @@ namespace eve::detail
                                        , D  const &
                                        , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>();
       auto x =  eve::abs(a0);
@@ -76,7 +74,7 @@ namespace eve::detail
                                        , D  const &
                                        , T a0) noexcept
   {
-    if constexpr(native<T>)  return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
+    if constexpr(has_native_abi_v<T>)  return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
     else                     return apply_over(D()(cospi), a0);
 
   }
@@ -85,7 +83,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_)
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto x =  abs(a0);
       if (all(eve::abs(x) <= T(0.25))) return restricted_(cospi)(x);
@@ -98,7 +96,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_)
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>) return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
+    if constexpr(has_native_abi_v<T>) return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
     else                    return apply_over(cospi, a0);
   }
 }

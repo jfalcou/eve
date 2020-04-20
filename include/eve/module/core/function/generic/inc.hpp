@@ -99,7 +99,7 @@ namespace eve::detail
 
       }
 //     }
-//     else                                       return apply_over(inc, saturated_type(), cond, v);
+//     else  return apply_over(inc, saturated_type(), cond, v);
   }
 }
 

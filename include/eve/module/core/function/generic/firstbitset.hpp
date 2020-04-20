@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T firstbitset_(EVE_SUPPORTS(cpu_)
                                   , T const &a0) noexcept
   {
-   if constexpr(native<T>)
+   if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {

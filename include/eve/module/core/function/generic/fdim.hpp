@@ -11,11 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FDIM_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_FDIM_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/sub.hpp>
@@ -40,7 +36,7 @@ namespace eve::detail
   EVE_FORCEINLINE  T fdim_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     return if_else(is_not_less_equal(a, b),  a-b, eve::zero_);
   }

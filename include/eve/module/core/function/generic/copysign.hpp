@@ -11,21 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COPYSIGN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COPYSIGN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/signmask.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/function/abs.hpp>
 #include <eve/function/bit_notand.hpp>
+#include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/signnz.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/compatible.hpp>
@@ -39,7 +29,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto copysign_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  requires compatible_values<T, U> && signed_value<T>
+  requires compatible_values<T, U>
   {
     return arithmetic_call(copysign, a, b);
   }
@@ -48,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE  T copysign_(EVE_SUPPORTS(cpu_)
                               , T const &a
                               , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
   }

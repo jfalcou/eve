@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_EXP_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_EXP_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/function/fma.hpp>
@@ -32,6 +32,7 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
@@ -40,9 +41,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_)
                                      , D const &
                                      , T x) noexcept
-  requires std::same_as<D,pedantic_type> || std::same_as<D,regular_type>
+  requires(contains<D>(types<regular_type, pedantic_type> {}))
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using elt_t =  element_type_t<T>;
       const T Log_2hi =  Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();

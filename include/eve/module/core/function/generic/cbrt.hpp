@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CBRT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_CBRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/abs.hpp>
@@ -40,7 +38,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cbrt_(EVE_SUPPORTS(cpu_)
                                       , T x) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using vt_t =  element_type_t<T>;
       auto test0 = is_eqz(x) || is_not_finite(x);

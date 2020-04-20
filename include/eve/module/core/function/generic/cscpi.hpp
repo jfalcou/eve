@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CSCPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_CSCPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/csc.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -38,7 +36,7 @@ namespace eve::detail
                                        , restricted_type const &
                                        , T const & a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       return restricted_(csc)(a0* Pi<T>());
     }
@@ -52,7 +50,7 @@ namespace eve::detail
                                        , D  const &
                                        , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>)
       {
@@ -75,7 +73,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cscpi_(EVE_SUPPORTS(cpu_)
                                        , T const &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if (all(eve::abs(a0) <= T(0.25))) return restricted_(cscpi)(a0);
       else                             return big_(cscpi)(a0);

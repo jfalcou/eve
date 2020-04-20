@@ -10,15 +10,13 @@
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_COTH_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_COTH_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/rec.hpp>
-#include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -28,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto coth_(EVE_SUPPORTS(cpu_)
                              , const T &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto x = eve::abs(a0+a0);
       auto t = rec(expm1(x));
