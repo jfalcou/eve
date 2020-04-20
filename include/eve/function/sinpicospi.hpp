@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SINPICOSPI_HPP_INCLUDED
 
 #include <eve/function/definition/sinpicospi.hpp>
-#include <eve/module/core/function/scalar/sinpicospi.hpp>
-#include <eve/module/core/function/simd/sinpicospi.hpp>
+#include <eve/module/core/function/generic/sinpicospi.hpp>
 
 #endif
