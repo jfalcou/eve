@@ -33,7 +33,8 @@
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/two_split.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>  
+#include <eve/constant/pio_4.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/constant/twoopi.hpp>
 #include <eve/module/core/detail/generic/workaround.hpp>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp>
@@ -42,7 +43,7 @@
 
 namespace eve::detail
 {
-  
+
  // up to 255*pi/4 ~200
   template <typename T>
   EVE_FORCEINLINE auto  rempio2_small(T const &xx) noexcept
@@ -53,9 +54,9 @@ namespace eve::detail
       double r = xx * pi_inv;
       int32_t  n = ((int32_t)r + 0x800000) >> 24;
       double xr = xx - n * Pio_2<double>();
-      float dxr = xr-float(xr); 
-      float fn =  n&3; 
-      return std::make_tuple(fn, float(xr), dxr); 
+      float dxr = xr-float(xr);
+      float fn =  n&3;
+      return std::make_tuple(fn, float(xr), dxr);
     }
     else if constexpr(std::is_same_v<T,  double>)
     {
@@ -64,12 +65,12 @@ namespace eve::detail
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
       auto xn =  nearest(xx*Twoopi<double>());
-      auto y  =  fma(xn, mp2, fma(xn, mp1, xx)); 
-      auto n = quadrant(xn); 
+      auto y  =  fma(xn, mp2, fma(xn, mp1, xx));
+      auto n = quadrant(xn);
       auto da = xn * mp3;
       auto a = y - da;
-      da = (y - a) - da;        
-      return std::make_tuple(n, a, da);         
+      da = (y - a) - da;
+      return std::make_tuple(n, a, da);
     }
   }
 
@@ -84,19 +85,19 @@ namespace eve::detail
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
-      
+
       auto xn =  nearest(xx*Twoopi<double>());
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
-      auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx)))); 
-      auto n = quadrant(xn); 
+      auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
+      auto n = quadrant(xn);
       auto da = xn1 * pp3;
       auto t = y - da;
       da = (y - t) - da;
       da = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a = t + da;
-      da = (t - a) + da;   
-      return std::make_tuple(n, a, da); 
+      da = (t - a) + da;
+      return std::make_tuple(n, a, da);
     }
     else if constexpr(std::is_same_v<T,  float>)
     {
@@ -104,11 +105,11 @@ namespace eve::detail
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
-      auto x  = convert(xx, double_); 
+      auto x  = convert(xx, double_);
       auto xn =  nearest(x*Twoopi<double>());
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
-      auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x)))); 
+      auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
       auto n = convert(quadrant(xn), single_);
       auto da = xn1 * pp3;
       auto t = y - da;
@@ -120,12 +121,12 @@ namespace eve::detail
       auto dfa = convert((a-convert(fa, double_))+da, single_);
       if (fa >= Pio_4<float>() || fa < - Pio_4<float>())
       {
-        T n1; 
+        T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);
-        n =quadrant(n+n1); 
-        return std::make_tuple(n, fa, dfa); 
+        n =quadrant(n+n1);
+        return std::make_tuple(n, fa, dfa);
       }
-      return std::make_tuple(n, fa, dfa); 
+      return std::make_tuple(n, fa, dfa);
     }
   }
 
@@ -149,35 +150,35 @@ namespace eve::detail
       5075751.0,  3212806.0,  1398474.0,  7579849.0,  6349435.0,
       12618859.0,  4703257.0, 12806093.0, 14477321.0,  2786137.0,
       12875403.0,  9837734.0, 14528324.0, 13719321.0,   343717.0 };
-    uint64_t  t576 = 0x63f0000000000000ULL;                      /* 2 ^ 576  */              
-    double    tm24 = Constant<double, 0x3e70000000000000ULL>();  /* 2 ^- 24  */              
+    uint64_t  t576 = 0x63f0000000000000ULL;                      /* 2 ^ 576  */
+    double    tm24 = Constant<double, 0x3e70000000000000ULL>();  /* 2 ^- 24  */
     double     big = Constant<double, 0x4338000000000000ULL>();  /*  6755399441055744      */
     double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
     double sum(0);
     ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-    auto z = bit_and(zero_lo, x1); 
+    auto z = bit_and(zero_lo, x1);
     i32_t k;
     k.hi = int32_t(z >> 32);
     k.lo = int32_t(z & 0x00000000FFFFFFFFULL);
     k.hi =  bit_shr(k.hi, 20) & 2047;
     k.hi = eve::max((k.hi-450)/24, 0);
-    
+
     i32_t tmp;
     tmp.hi = int32_t(t576 >> 32);
     tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
-    tmp.hi -= shl(k.hi*24, 20); 
-    
+    tmp.hi -= shl(k.hi*24, 20);
+
     double gor = bit_cast(tmp, double_);
     double r[6];
-    auto inds = shr(bit_cast(k, as<ui64_t>()), 32); 
+    auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
     for (int i=0;i<6;++i)
     {
       auto values = toverp[inds];
-      inds = inc(inds); 
+      inds = inc(inds);
       r[i] = x1*values*gor;
       gor *= tm24;
     }
-    double s; 
+    double s;
     for (int i=0;i<3;++i) {
       s=(r[i]+big)-big;
       sum+=s;
@@ -193,8 +194,8 @@ namespace eve::detail
     bb=(t-b)+bb;
     s=(sum+big1)-big1;
     sum-=s;
-    return std::make_tuple(sum, b, bb); 
-  }; 
+    return std::make_tuple(sum, b, bb);
+  };
 
   template<typename T>
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
@@ -204,9 +205,9 @@ namespace eve::detail
     else if (xx < Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {
-      if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx); 
+      if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx);
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
-      //   only 8 new bits are added per entry, making the table 4 times larger.  
+      //   only 8 new bits are added per entry, making the table 4 times larger.
       constexpr const uint32_t inv_pio4[24] =
         {
           0xa2,       0xa2f9,   0xa2f983,   0xa2f9836e,
@@ -217,20 +218,20 @@ namespace eve::detail
           0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041
         };
       constexpr const double pi63 = 0x1.921FB54442D18p-62;/* 2PI * 2^-64.  */
-      auto xi =  bit_cast(xx, as_<uint32_t>()); 
+      auto xi =  bit_cast(xx, as_<uint32_t>());
       const uint32_t *arr = &inv_pio4[(xi >> 26) & 15];
       int shift = (xi >> 23) & 7;
       uint64_t n, res0, res1, res2;
-      
+
       xi = (xi & 0xffffff) | 0x800000;
       xi <<= shift;
-      
+
       res0 = xi * arr[0];
       res1 = (uint64_t)xi * arr[4];
       res2 = (uint64_t)xi * arr[8];
       res0 = (res2 >> 32) | (res0 << 32);
       res0 += res1;
-      
+
       n = (res0 + (1ULL << 61)) >> 62;
       res0 -= n << 62;
       double xxx = (int64_t)res0;
@@ -240,10 +241,10 @@ namespace eve::detail
     {
       // for x less than 9.23297861778572e-128 (smallestposval*2^600)
       //   and greater than 2.20131364292740010161e-134  the following routine is incorrect
-      //   because  of the denormality of x*2^600 
+      //   because  of the denormality of x*2^600
       //   it should return x inchanged in second output and  0 in third one */
-      double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */              
-      double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */   
+      double  tm600 = Constant<double, 0x1a70000000000000ULL>();  /* 2 ^- 600 */
+      double  split = Constant<double, 0x41a0000002000000ULL>();  /* 2^27 + 1 */
       double    hp0 = Constant<double, 0x3FF921FB54442D18ULL>();  /* 1.5707963267948966     */
       double    hp1 = Constant<double, 0x3C91A62633145C07ULL>();  /* 6.123233995736766e-17  */
       double    mp1 = Constant<double, 0x3FF921FB58000000ULL>();  /* 1.5707963407039642     */
@@ -252,7 +253,7 @@ namespace eve::detail
       auto [x1, x2] =  two_split(x);
       auto [sum1, b1, bb1] = rempio2_pass(x1);
       auto [sum2, b2, bb2] = rempio2_pass(x2);
-      double sum =  sum1+sum2; 
+      double sum =  sum1+sum2;
       double b=b1+b2;
       double bb = (eve::abs(b1)>eve::abs(b2))? (b1-b)+b2 : (b2-b)+b1;
       if (b > 0.5)
@@ -275,12 +276,12 @@ namespace eve::detail
         auto z1 = t1*mp1;
         auto z2 = t1*mp2;
         auto z3 = t2*mp1;
-        auto z4 = t2*mp2; 
+        auto z4 = t2*mp2;
         auto z5 = s*hp1;
         auto z6 = t*hp0;
-        bb = (((z1-b)+z2)+z3)+(z4+z5+z6); 
+        bb = (((z1-b)+z2)+z3)+(z4+z5+z6);
       }
-      
+
       s=b+bb;
       t=(b-s)+bb;
       return std::make_tuple(static_cast<double>((int) sum&3), s, t);

@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SIN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_SIN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <eve/module/core/detail/scalar/rempio2_kernel.hpp>
 #include <eve/module/core/detail/simd/rempio2_kernel.hpp>
@@ -43,7 +41,7 @@ namespace eve::detail
                                      , restricted_type const &
                                      , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); //0.61685027506808491367715568749226 but rounded upward
       auto x2 = sqr(a0);
@@ -53,7 +51,7 @@ namespace eve::detail
       if constexpr(scalar_value<T>) return r;
       else                          return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r);
     }
-    else return apply_over(restricted_(cos), a0);
+    else return apply_over(restricted_(sin), a0);
   }
 
   template<floating_real_value T>
@@ -61,7 +59,7 @@ namespace eve::detail
                                       , small_type const &
                                       , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto reduce =  [](auto x){
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
@@ -98,7 +96,7 @@ namespace eve::detail
         return if_else(is_not_less_equal(x, Pio_2<T>()), Nan<T>(), z1);
       }
     }
-    else return apply_over(small_(cos), a0);
+    else return apply_over(small_(sin), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +106,7 @@ namespace eve::detail
                                      , D  const &
                                      , T a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T>) if (is_not_finite(a0)) return Nan<T>();
       auto x =  abs(a0);
@@ -122,11 +120,15 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto sin_(EVE_SUPPORTS(cpu_)
                                      , T const &a0) noexcept
   {
-    auto x =  abs(a0);
-         if (all(x <= Pio_4(as(x))))                      return restricted_(sin)(a0);
-    else if (all(x <= Pio_2(as(x))))                      return small_(sin)(a0);
-    else if (all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sin)(a0);
-    else                                                  return big_(sin)(a0);
+    if constexpr(has_native_abi_v<T>)
+    {
+      auto x =  abs(a0);
+      if (all(x <= Pio_4(as(x))))                      return restricted_(sin)(a0);
+      else if (all(x <= Pio_2(as(x))))                      return small_(sin)(a0);
+      else if (all(x <= Rempio2_limit(medium_type(), T()))) return medium_(sin)(a0);
+      else                                                  return big_(sin)(a0);
+     }
+    else return apply_over(sin, a0);
   }
 
 }
