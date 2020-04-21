@@ -103,8 +103,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, avx_> const &a) noexcept
-      Requires(std::array<wide<T, typename N::split_type>, 2>, if_<(N::value > 1)>)
+  EVE_FORCEINLINE auto slice(wide<T, N, avx_> const &a) noexcept requires(N::value > 1)
   {
     std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
