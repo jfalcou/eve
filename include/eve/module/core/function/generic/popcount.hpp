@@ -16,6 +16,7 @@
 #include <eve/concept/value.hpp>
 #include <type_traits>
 #include <eve/traits.hpp>
+#include <eve/detail/has_abi.hpp>
 
 #if defined(SPY_COMPILER_IS_MSVC)
 #  include <intrin.h>
