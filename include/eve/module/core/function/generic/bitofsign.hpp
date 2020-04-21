@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BITOFSIGN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BITOFSIGN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/forward.hpp>
@@ -26,8 +24,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_)
                                  , T const &a) noexcept
   {
-        if constexpr(native<T>) return bit_and(a, Signmask(as(a)));
-        else                    return apply_over(bitofsign, a);
+    if constexpr(has_native_abi_v<T>) return bit_and(a, Signmask(as(a)));
+    else                              return apply_over(bitofsign, a);
   }
 }
 
