@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+<- qf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::is_less(pf, qf) = (true, true, false, false, false, false, true, false)
+---- scalar
+<- xf =                  1
+<- yf =                  -nan
+-> eve::is_less(xf, yf) = false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

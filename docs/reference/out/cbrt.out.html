@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::cbrt(pf) =           (0, 1, -1, -1.25992, 1.11903e-15, inf, -inf, -nan)
+---- scalar
+<- xf =                      1
+-> eve::cbrt(xf) =           1
+<- yf =                      -nan
+-> eve::cbrt(yf) =           -nan
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

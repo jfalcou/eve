@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::asech(pf) =            (inf, 0, -nan, -nan, inf, -nan, -nan, -nan)
+---- scalar
+<- xf =                      1
+-> eve::asech(xf) =            0
+<- yf =                      -nan
+-> eve::asech(yf) =            nan
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

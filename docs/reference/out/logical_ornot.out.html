@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+ <- pf =                      (3, -0, -3, -41)
+ <- qf =                      (4, -1, -3, 0)
+ -> eve::logical_ornot(pf, qf) = (true, false, true, true)
+---- scalar
+ xf =                         3
+ yf =                         4
+ -> eve::logical_ornot(xf, yf) = true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

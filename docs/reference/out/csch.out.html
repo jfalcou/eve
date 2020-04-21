@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::csch(pf) =            (inf, 0.850918, -0.850918, -0.275721, inf, 0, -0, nan)
+---- scalar
+<- xf =                      1
+-> eve::csch(xf) =            0.850918
+<- yf =                      -1
+-> eve::csch(yf) =            -0.850918
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

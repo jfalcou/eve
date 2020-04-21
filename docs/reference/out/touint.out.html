@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+<- pf =                              (0, 1, 1.5, -2, 1.4013e-45, inf, -inf, -nan)
+-> eve::touint(pf) =                 (0, 1, 1, 4294967294, 0, 0, 0, 0)
+---- scalar
+<- xf =                              1
+-> eve::touint(xf) =                 1
+<- yf =                              36.5
+-> eve::touint(yf) =                 36
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

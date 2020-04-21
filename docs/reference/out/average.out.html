@@ -1,8 +1,16 @@
- <meta charset="utf-8">
+<meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---- simd
+ <- pi =                      (3, 2, 3, 3)
+ <- qi =                      (4, 1, 1, 4294967295)
+ -> eve::average(pi, qi) = (3, 1, 2, 2147483649)
+---- scalar
+ xi =                         3
+ yi =                         5
+ -> eve::average(xi, yi) = 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
