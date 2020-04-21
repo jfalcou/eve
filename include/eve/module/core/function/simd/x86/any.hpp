@@ -30,7 +30,7 @@ namespace eve::detail
 
     if constexpr( std::is_same_v<T, float> )
     {
-      using i8_t                = wide<int8_t, fixed<Bytes>, sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
       static constexpr int Card = Bytes / sizeof(T);
       static constexpr int SH   = (Card - N::value);
 
@@ -49,7 +49,7 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<T, double> )
     {
-      using i8_t                = wide<int8_t, fixed<Bytes>, sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
       static constexpr int Card = Bytes / sizeof(T);
       static constexpr int SH   = (Card - N::value);
 
@@ -84,7 +84,7 @@ namespace eve::detail
       }
       else
       {
-        using i8_t = wide<int8_t, fixed<Bytes>, sse_>;
+        using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
         if constexpr( N::value * sizeof(T) != Bytes ) // "small" wide types
         {
           constexpr int sv = (Bytes - sizeof(T) * N::value);
@@ -124,7 +124,7 @@ namespace eve::detail
         }
         else
         {
-          using i8_t = wide<int8_t, fixed<32>, avx_>;
+          using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<32>>;
           return _mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t>()));
         }
       }
