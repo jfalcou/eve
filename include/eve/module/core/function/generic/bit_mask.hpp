@@ -11,14 +11,9 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_MASK_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_MASK_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/detail/branch.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/is_logical.hpp>
 
@@ -29,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_mask_(EVE_SUPPORTS(cpu_)
                                , T const &v) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(is_logical_v<T>) return v.mask();
       else                          return is_nez(v).mask();

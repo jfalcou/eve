@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATANPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATANPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/atan.hpp>
 #include <eve/function/inpi.hpp>
 #include <eve/concept/value.hpp>
@@ -25,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto atanpi_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    if constexpr(native<T>) return inpi(atan(a));
+    if constexpr(has_native_abi_v<T>) return inpi(atan(a));
     else                    return apply_over(atanpi, a);
   }
 }

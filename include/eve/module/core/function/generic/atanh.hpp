@@ -10,10 +10,8 @@
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATANH_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATANH_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/add.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/div.hpp>
@@ -31,7 +29,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto atanh_(EVE_SUPPORTS(cpu_)
                             , const T &x) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto absx = eve::abs(x);
       auto t =  absx+absx;

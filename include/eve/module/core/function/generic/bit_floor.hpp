@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_FLOOR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_FLOOR_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/function/bit_shr.hpp>
@@ -24,6 +22,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -31,22 +30,22 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_floor_(EVE_SUPPORTS(cpu_)
                                  , T const &v) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
-      auto vlt1 = v < One(as(v)); 
+      auto vlt1 = v < One(as(v));
       if constexpr(scalar_value<T>) if (vlt1) return Zero(as(v));
       if constexpr(floating_real_value<T>)
       {
         auto [m, e] = ifrexp(v);
         e = dec(e);
         auto r = ldexp(One(as(v)), e);
-        if constexpr(scalar_value<T>) return r; 
-        else                          return if_else(vlt1, eve::zero_, r); 
+        if constexpr(scalar_value<T>) return r;
+        else                          return if_else(vlt1, eve::zero_, r);
       }
-      else 
+      else
       {
-        using elt_t =  element_type_t<T>; 
-        auto a = v;         
+        using elt_t =  element_type_t<T>;
+        auto a = v;
         a |= bit_shr(a, 1);
         a |= bit_shr(a, 2);
         a |= bit_shr(a, 4);
@@ -54,11 +53,11 @@ namespace eve::detail
         if constexpr( sizeof(elt_t) >= 4 )  a |= bit_shr(a, 16);
         if constexpr( sizeof(elt_t) >= 8 )  a |= bit_shr(a, 32);
         a -= (a >> 1);
-        if constexpr(scalar_value<T>) return a; 
-        else                          return if_else(vlt1, eve::zero_, a); 
+        if constexpr(scalar_value<T>) return a;
+        else                          return if_else(vlt1, eve::zero_, a);
       }
     }
-    else return apply_over(bit_floor, v); 
+    else return apply_over(bit_floor, v);
   }
 }
 

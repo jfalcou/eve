@@ -11,12 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTOR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_NOTOR_HPP_INCLUDED
 
-#include <eve/forward.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi_cast.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
@@ -31,7 +26,7 @@ namespace eve::detail
                                   , U const &b) noexcept
   requires bit_compatible_values<T,U>
   {
-    return bit_call(bit_notor, a, b); 
+    return bit_call(bit_notor, a, b);
   }
 
   template<real_scalar_value T>
@@ -46,15 +41,15 @@ namespace eve::detail
     }
     else return T(~a | b);
   }
-  
+
   template<real_simd_value T>
   EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                                   , T const &a
                                   , T const &b) noexcept
   {
-    return bit_or(bit_not(a), b); 
+    return bit_or(bit_not(a), b);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<value T, real_value U, real_value V>
@@ -64,11 +59,11 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_notor(t, f)); 
+    using r_t = decltype(bit_notor(t, f));
          if constexpr(scalar_value<T>) return  cond ? bit_notor(t, f) : r_t(t);
     else if constexpr(simd_value<T>)   return  if_else(cond,bit_notor(t, f), t);
   }
- 
+
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
                            , not_t<T> const & cond
@@ -76,7 +71,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_notor(t, f)); 
+    using r_t = decltype(bit_notor(t, f));
          if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : bit_notor(t, f);
     else if constexpr(simd_value<T>)   return  if_else(cond.value,t, bit_notor(t, f));
   }

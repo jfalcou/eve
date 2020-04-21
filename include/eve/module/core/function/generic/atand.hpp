@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATAND_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATAND_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/atan.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/concept/value.hpp>
@@ -25,8 +23,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto atand_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    if constexpr(native<T>) return indeg(atan(a));
-    else                    return apply_over(atan, a);
+    if constexpr(has_native_abi_v<T>) return indeg(atan(a));
+    else                    return apply_over(atand, a);
   }
 }
 

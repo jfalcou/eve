@@ -11,15 +11,12 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BINARIZE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BINARIZE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/logical.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/bit_and.hpp>
-#include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -31,7 +28,7 @@ namespace eve::detail
                            , logical<T> const &cond
                            ) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       return  bit_and(One<T>(),cond.bits());
     }
@@ -44,7 +41,7 @@ namespace eve::detail
                            , U const & val
                            ) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       return  bit_and(T(val),cond.bits());
     }
@@ -66,12 +63,12 @@ namespace eve::detail
                            , callable_object<eve::tag::mone_, void, void> const &
                            ) noexcept
   {
-    if constexpr(native<T>)
-    {
+//     if constexpr(has_native_abi_v<T>)
+//     {
       if constexpr(integral_value<T>) return  cond.mask();
       else                            return  eve::binarize(cond,Mone<value_type_t<T>>());
-    }
-    else return  apply_over(binarize, cond, eve::mone_);
+//     }
+//     else return  apply_over(binarize, cond, eve::mone_);
   }
 }
 

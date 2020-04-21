@@ -3,18 +3,17 @@
    EVE - Expressive Vector Engine
    Copyright 2020 Joel FALCOU
    Copyright 2020 Jean-Thierry LAPRESTE
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ASINH_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ASINH_HPP_INCLUDED
-#include <eve/detail/overload.hpp>
+
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/detail/branch.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/function/average.hpp>
@@ -40,13 +39,13 @@ namespace eve::detail
   EVE_FORCEINLINE auto asinh_(EVE_SUPPORTS(cpu_)
                              , const T &a0) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
-      using vt_t = value_type_t<T>; 
+      using vt_t = value_type_t<T>;
       T x =  eve::abs(a0);
       if constexpr(scalar_value<T>) if (x < Sqrteps<T>()) return a0; // scalar early return
       auto x_gt_oneosqrteps = x > Oneosqrteps<T>();
-      auto  bts =  bitofsign(a0); 
+      auto  bts =  bitofsign(a0);
       if constexpr(std::is_same_v<vt_t, double>)
       {
         if constexpr(scalar_value<T>) // faster for great or small values
@@ -73,19 +72,18 @@ namespace eve::detail
           if(nb >= cardinal_v<T>) return  bit_xor(z, bts);
         }
         auto case_1 = [](T const & x){return x; };                              // great x
-        auto case_2 = [](T const & x){return average(x, hypot(One<T>(), x)); }; // lesser x 
-        auto tmp =  branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x); 
-        auto z1 = bit_xor(if_else(x_lt_half, z, log(tmp)+Log_2<T>()), bts); 
-        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits_, z1); 
+        auto case_2 = [](T const & x){return average(x, hypot(One<T>(), x)); }; // lesser x
+        auto tmp =  branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x);
+        auto z1 = bit_xor(if_else(x_lt_half, z, log(tmp)+Log_2<T>()), bts);
+        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits_, z1);
         else                                           return z1;
       }
-    }    
+    }
     else
     {
-      return apply_over(asinh, a0); 
+      return apply_over(asinh, a0);
     }
   }
 }
 
 #endif
-

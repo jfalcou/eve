@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_OR_HPP_INCLUDED
 
 #include <eve/forward.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/abi_cast.hpp>
 #include <eve/detail/meta.hpp>

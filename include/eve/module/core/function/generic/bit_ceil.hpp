@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CEIL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CEIL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_floor.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/ifrexp.hpp>
@@ -33,16 +31,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto bit_ceil_(EVE_SUPPORTS(cpu_)
                                 , T const &v) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
-      auto vle1 = v <= One(as(v)); 
+      auto vle1 = v <= One(as(v));
       if constexpr(scalar_value<T>) if (vle1) return One(as(v));
       if constexpr(floating_real_value<T>)
       {
         auto [m, e] = ifrexp(v);
-        e = dec(e); 
+        e = dec(e);
         auto tmp = ldexp(One(as(v)), e);
-        auto tmpltv = tmp < v; 
+        auto tmpltv = tmp < v;
         if constexpr(scalar_value<T>)
         {
           return tmpltv ? tmp*2 : tmp;
@@ -55,13 +53,13 @@ namespace eve::detail
       else
       {
         auto tmp =  bit_floor(v);
-        auto tmpltv = tmp < v; 
+        auto tmpltv = tmp < v;
         if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2 :  tmp);
         else return if_else(vle1, One(as(v)) //TODO Optimize with one_ ?
-                           , if_else(tmpltv, tmp*2,  tmp)); 
+                           , if_else(tmpltv, tmp*2,  tmp));
       }
     }
-    else return apply_over(bit_ceil, v); 
+    else return apply_over(bit_ceil, v);
   }
 }
 

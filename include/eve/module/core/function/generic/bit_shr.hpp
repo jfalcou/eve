@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_SHR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_SHR_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/shr.hpp>
@@ -28,7 +26,7 @@ namespace eve::detail
                                , T const &a
                                , U const &b) noexcept
   {
-    if constexpr(native<T> && native<U>)
+    if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
     {
       using u_t = eve::detail::as_integer_t<T, unsigned>;
       if constexpr(scalar_value<U>)
@@ -37,8 +35,8 @@ namespace eve::detail
         else if constexpr(simd_value<T>)   return bit_cast(shr(bit_cast(a,as_<u_t>()),int(b)),as(a));
       }
       else                                 return bit_cast(map(bit_shr, a, b), as(a));
-    }      
-    else                                   return apply_over(abs, a, b); 
+    }
+    else                                   return apply_over(abs, a, b);
   }
 }
 

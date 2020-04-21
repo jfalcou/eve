@@ -100,7 +100,7 @@ namespace eve::detail
   template<real_simd_value T>
   EVE_FORCEINLINE auto
   add_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, T const &b) noexcept
-      requires native<T>
+      requires has_native_abi_v<T>
   {
     if constexpr( floating_value<T> )
     {

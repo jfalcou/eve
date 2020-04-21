@@ -11,11 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi_cast.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_xor.hpp>
@@ -72,7 +68,7 @@ namespace eve::detail
                             , T const &b
                             ) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(floating_real_value<T>) return trunc(div(a, b));
       else                                 return       div(a, b);
@@ -87,7 +83,7 @@ namespace eve::detail
                             , saturated_type const &
                             , T const &a
                             , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     if constexpr(floating_real_value<T>) return div(a, b);
     else if constexpr( signed_integral_value<T> )
@@ -139,7 +135,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using r_t = decltype(div(t, f));
            if constexpr(scalar_value<T>) return  cond ? div(t, f) : r_t(t);
@@ -156,7 +152,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using r_t = decltype(div(t, f));
            if constexpr(scalar_value<T>) return cond ? saturated_(div)(t, f) : r_t(t);
@@ -173,7 +169,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using r_t = decltype(div(t, f));
            if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : div(t, f);
@@ -190,7 +186,7 @@ namespace eve::detail
                            , V const & f) noexcept
   requires compatible_values<U, V>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       using r_t = decltype(div(t, f));
            if constexpr(scalar_value<T>) return cond.value ? r_t(t) : saturated_(div)(t, f);

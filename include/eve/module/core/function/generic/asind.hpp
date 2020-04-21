@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ASIND_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ASIND_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/asin.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/concept/value.hpp>
@@ -26,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto asind_(EVE_SUPPORTS(cpu_)
                                   , T const &a) noexcept
   {
-    if constexpr(native<T>) return indeg(asin(a));
+    if constexpr(has_native_abi_v<T>) return indeg(asin(a));
     else                    return apply_over(asind, a);
   }
 

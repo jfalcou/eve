@@ -11,11 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_AVERAGE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_AVERAGE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
@@ -25,6 +21,7 @@
 #include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -43,9 +40,9 @@ namespace eve::detail
   EVE_FORCEINLINE  T average_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
       else                            return fma(a, Half(as(a)), mul(b, Half(as(a))));

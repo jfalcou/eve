@@ -11,12 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_UPWARD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_UPWARD_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/concept/vectorized.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/bit_mask.hpp>
@@ -37,6 +32,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/saturated.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -51,7 +47,7 @@ namespace eve::detail
                            , upward_type const &
                            , T const &a
                            , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     using elt_t = element_type_t<T>;
     if   constexpr(floating_real_value<T>)

@@ -11,10 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN2_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN2_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/zero.hpp>
@@ -58,7 +55,7 @@ namespace eve::detail
                              ) noexcept
 
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       auto q = eve::abs(a0/a1);
       auto z = detail::atan_kernel(q, eve::rec(q));
@@ -86,7 +83,7 @@ namespace eve::detail
                              , T const &a1
                              ) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T> && platform::supports_nans)
       {

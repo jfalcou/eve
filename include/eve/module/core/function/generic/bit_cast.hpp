@@ -11,10 +11,9 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CAST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_CAST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/as.hpp>
@@ -23,7 +22,7 @@
 namespace eve::detail
 {
 
-  template<typename T, typename Target>  
+  template<typename T, typename Target>
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_),
                                      T const &a,
                                      as_<Target> const &) noexcept

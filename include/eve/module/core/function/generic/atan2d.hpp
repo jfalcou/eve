@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN2D_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN2D_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/indeg.hpp>
@@ -48,7 +46,7 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    if constexpr(native<T>) return indeg(atan2(a, b));
+    if constexpr(has_native_abi_v<T>) return indeg(atan2(a, b));
     else                    return apply_over(atan2d, a, b);
   }
 
@@ -59,7 +57,7 @@ namespace eve::detail
                               , T const &b
                               ) noexcept
   {
-    if constexpr(native<T>) return indeg(pedantic_(atan2)(a, b));
+    if constexpr(has_native_abi_v<T>) return indeg(pedantic_(atan2)(a, b));
     else                    return apply_over(pedantic_(atan2d), a, b);
   }
 

@@ -12,18 +12,11 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_TONEAREST_HPP_INCLUDED
 
 #include <eve/concept/compatible.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/is_native.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_xor.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>
@@ -36,7 +29,6 @@
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_ornot.hpp>
 #include <eve/function/mul.hpp>
-#include <eve/function/nearest.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/roundings.hpp>
@@ -53,7 +45,7 @@ namespace eve::detail
                            , to_nearest_type const &
                            , T const &a
                            , T const &b) noexcept
-  requires native<T>
+  requires has_native_abi_v<T>
   {
     using elt_t = element_type_t<T>;
     if   constexpr(floating_real_value<T>)

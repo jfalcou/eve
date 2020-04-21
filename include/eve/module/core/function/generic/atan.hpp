@@ -11,9 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ATAN_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_xor.hpp>
@@ -23,12 +21,12 @@
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
-{  
+{
   template<floating_value T>
   EVE_FORCEINLINE auto atan_(EVE_SUPPORTS(cpu_)
                             , T const &a) noexcept
   {
-    if constexpr(native<T>)
+    if constexpr(has_native_abi_v<T>)
     {
       T x  = eve::abs(a);
       return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
