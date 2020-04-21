@@ -11,37 +11,39 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_TONEAREST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_DIV_TONEAREST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
+#include <eve/concept/compatible.hpp>
+#include <eve/concept/vectorized.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/detail/skeleton.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/function/nearest.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_even.hpp>
-#include <eve/function/is_nez.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/bit_xor.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_ornot.hpp>
+#include <eve/function/mul.hpp>
+#include <eve/function/nearest.hpp>
+#include <eve/function/nearest.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/function/roundings.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/shr.hpp>
+
 #include <type_traits>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
 
 namespace eve::detail
 {
@@ -79,7 +81,8 @@ namespace eve::detail
           }
           else
           {
-            if (b) return saturated_(convert)(nearest(static_cast<double>(a)/static_cast<double>(b)), as<T>());
+            using f_t = as_floating_point_t<elt_t>;
+            if (b) return saturated_(convert)(nearest(static_cast<f_t>(a)/static_cast<f_t>(b)), as<T>());
             else   return (a) ? ((a>0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();
           }
         }

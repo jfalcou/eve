@@ -14,25 +14,27 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/function/is_eqz.hpp>
+#include <eve/function/abs.hpp>
 
 namespace eve::detail
 {
-
   template<real_value T,  typename D>
-  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_)
-                                  , D const &
-                                  , T a0) noexcept
+  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     return rec(a0);
   }
 
   template<real_value T>
-  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_)
-                                  , T a) noexcept
+  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_), T a) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(floating_real_value<T>) { return T{1} / a; }
+      if constexpr(floating_real_value<T>)
+      {
+        return T{1} / a;
+      }
       else if(integral_value<T>)
       {
         if constexpr(scalar_value<T>)

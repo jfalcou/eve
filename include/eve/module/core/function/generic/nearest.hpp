@@ -15,6 +15,7 @@
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/bitofsign.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/constant/twotonmb.hpp>
 #include <eve/concept/value.hpp>
@@ -22,13 +23,15 @@
 
 namespace eve::detail
 {
-  template<real_value T>
-  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_)
-                                       , T const &a0) noexcept
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto nearest_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-           if constexpr(integral_value<T>) return a0;
+      if constexpr(integral_value<T>)
+      {
+        return a0;
+      }
       else if constexpr(floating_value<T>)
       {
         auto s   = bitofsign(a0);
@@ -46,7 +49,10 @@ namespace eve::detail
         }
       }
     }
-    else return apply_over(nearest, a0);
+    else
+    {
+      return apply_over(nearest, a0);
+    }
   }
 
 }

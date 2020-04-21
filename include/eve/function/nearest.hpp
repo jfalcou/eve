@@ -11,9 +11,9 @@
 #ifndef EVE_FUNCTION_NEAREST_HPP_INCLUDED
 #define EVE_FUNCTION_NEAREST_HPP_INCLUDED
 
+#include <eve/arch.hpp>
 #include <eve/function/definition/nearest.hpp>
-#  include <eve/arch.hpp>
-#  include <eve/module/core/function/generic/nearest.hpp>
+#include <eve/module/core/function/generic/nearest.hpp>
 
 #  if defined(EVE_HW_X86)
 #    include <eve/module/core/function/simd/x86/nearest.hpp>

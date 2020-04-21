@@ -11,6 +11,8 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_DETAIL_BIT_CAST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_DETAIL_BIT_CAST_HPP_INCLUDED
 
+#include <eve/as.hpp>
+#include <eve/function/definition/bit_cast.hpp>
 #include <type_traits>
 
 namespace eve::detail

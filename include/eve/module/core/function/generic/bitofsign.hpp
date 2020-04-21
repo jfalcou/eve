@@ -11,18 +11,17 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BITOFSIGN_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BITOFSIGN_HPP_INCLUDED
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/forward.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/signmask.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/bit_and.hpp>
 
 namespace eve::detail
 {
-  template<real_value T>
-  EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_)
-                                 , T const &a) noexcept
+  template<typename T>
+  EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr(has_native_abi_v<T>) return bit_and(a, Signmask(as(a)));
     else                              return apply_over(bitofsign, a);
