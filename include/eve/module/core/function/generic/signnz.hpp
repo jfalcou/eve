@@ -39,7 +39,7 @@ namespace eve::detail
       }
       else if constexpr(floating_value<T>)
       {
-        T r = bit_or(One(as(a)), bitofsign(a));
+        auto r = bit_or(One(as(a)), bitofsign(a));
         if constexpr(eve::platform::supports_nans && std::is_same_v<D, pedantic_type>)
         {
           if constexpr(scalar_value<T>)

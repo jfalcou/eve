@@ -13,6 +13,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/mul.hpp>
+#include <eve/function/is_greater.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/value.hpp>
@@ -27,7 +28,7 @@ namespace eve::detail
   }
 
   template<real_value T>
-  EVE_FORCEINLINE constexpr T sqr_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr auto sqr_(EVE_SUPPORTS(cpu_)
                                   , saturated_type const &
                                   , T const &a0) noexcept
   {

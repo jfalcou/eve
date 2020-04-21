@@ -11,12 +11,13 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_REC_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_REC_HPP_INCLUDED
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/zero.hpp>
-#include <eve/function/is_eqz.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 
 namespace eve::detail
 {
