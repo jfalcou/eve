@@ -17,6 +17,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/zero.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_mask.hpp>
