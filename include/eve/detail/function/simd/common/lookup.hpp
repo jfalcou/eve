@@ -29,22 +29,7 @@ namespace eve::detail
       auto idx  = cond.bits();
       idx &= ind;
 
-      if( is_aggregated_v<X> )
-      {
-        auto [la, ha] = a.slice();
-        auto [lx, hx] = idx.slice();
-
-        using htype = std::remove_cvref_t<decltype(la)>;
-
-        la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
-        ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
-
-        return type {la, ha} & cond.mask();
-      }
-      else
-      {
-        return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
-      }
+      return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
     }
     else
     {
@@ -52,22 +37,45 @@ namespace eve::detail
       auto idx  = cond.bits();
       idx &= ind;
 
-      if( is_aggregated_v<X> )
-      {
-        auto [la, ha] = a.slice();
-        auto [lx, hx] = idx.slice();
+      return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
+    }
+  }
 
-        using htype = std::remove_cvref_t<decltype(la)>;
+  template<scalar_value T, integral_scalar_value I, typename N, typename X>
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, aggregated_> const &ind) noexcept
+  {
+    using type = wide<T, N, X>;
 
-        la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
-        ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+    if constexpr( std::is_signed_v<I> )
+    {
+      auto cond = ind >= 0;
+      auto idx  = cond.bits();
+      idx &= ind;
 
-        return type {la, ha} & cond.mask();
-      }
-      else
-      {
-        return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
-      }
+      auto [lx, hx] = idx.slice();
+
+      using htype = wide<T, typename N::split_type>;
+
+      auto la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
+      auto ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+
+      return type {la, ha} & cond.mask();
+    }
+    else
+    {
+      auto cond = ind < N::value;
+      auto idx  = cond.bits();
+      idx &= ind;
+
+      auto [lx, hx] = idx.slice();
+
+      using htype = wide<T, typename N::split_type>;
+
+      auto la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
+      auto ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+
+      return type {la, ha} & cond.mask();
     }
   }
 }
