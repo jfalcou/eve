@@ -13,8 +13,7 @@
 
 #include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
@@ -27,22 +26,48 @@ namespace eve::detail
     if constexpr( std::is_signed_v<I> )
     {
       auto cond = ind >= 0;
-      return apply<N::value>([&](auto... v) {
-               auto idx = cond.bits();
-               idx &= ind;
-               return type(a[idx[v]]...);
-             })
-             & cond.mask();
+      auto idx  = cond.bits();
+      idx &= ind;
+
+      if( is_aggregated_v<X> )
+      {
+        auto [la, ha] = a.slice();
+        auto [lx, hx] = idx.slice();
+
+        using htype = std::remove_cvref_t<decltype(la)>;
+
+        la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
+        ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+
+        return type {la, ha} & cond.mask();
+      }
+      else
+      {
+        return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
+      }
     }
     else
     {
       auto cond = ind < N::value;
-      return apply<N::value>([&](auto... v) {
-               auto idx = cond.bits();
-               idx &= ind;
-               return type(a[idx[v]]...);
-             })
-             & cond.mask();
+      auto idx  = cond.bits();
+      idx &= ind;
+
+      if( is_aggregated_v<X> )
+      {
+        auto [la, ha] = a.slice();
+        auto [lx, hx] = idx.slice();
+
+        using htype = std::remove_cvref_t<decltype(la)>;
+
+        la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
+        ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+
+        return type {la, ha} & cond.mask();
+      }
+      else
+      {
+        return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
+      }
     }
   }
 }

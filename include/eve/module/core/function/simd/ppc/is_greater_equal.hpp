@@ -11,12 +11,11 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_EQUAL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_EQUAL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/is_less.hpp>
+#include <eve/function/logical_not.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +26,7 @@ namespace eve::detail
   {
     using t_t = wide<T, N, ppc_>;
     if constexpr(std::is_floating_point_v<T>) return as_logical_t<t_t>(vec_cmpge(v0.storage(), v1.storage()));
-    else                                      return !eve::is_less(v0, v1);
+    else                                      return eve::logical_not(eve::is_less(v0, v1));
   }
 }
 
