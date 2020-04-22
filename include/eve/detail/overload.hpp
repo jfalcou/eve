@@ -120,7 +120,7 @@ namespace eve
   // decorator mark-up and detection
   struct decorator_ {};
   template<typename ID> struct is_decorator : std::is_base_of<decorator_,ID> {};
-//  template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
+  template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
 
   namespace detail
   {
