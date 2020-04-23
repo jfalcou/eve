@@ -11,8 +11,12 @@
 #ifndef EVE_FUNCTION_LOG_HPP_INCLUDED
 #define EVE_FUNCTION_LOG_HPP_INCLUDED
 
+#include <eve/arch.hpp>
 #include <eve/function/definition/log.hpp>
-#include <eve/module/core/function/scalar/log.hpp>
-#include <eve/module/core/function/simd/log.hpp>
+#include <eve/module/core/function/generic/log.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/log.hpp>
+#endif
 
 #endif
