@@ -103,7 +103,7 @@ namespace eve::detail
         auto xr = if_else(fn, reduce(x), x);
         auto y = tancot_eval(xr);
         y = if_else(is_not_finite(a0), eve::allbits_, if_else(xnlepio4, -y, rec(y)));
-        return if_else(abs(a0) <= Eps<T>(), rec(a0), bit_xor(bitofsign(a0), y));
+        return if_else(xleeps, rec(a0), bit_xor(bitofsign(a0), y));
       }
     }
     else return apply_over(small_(cot), a0);

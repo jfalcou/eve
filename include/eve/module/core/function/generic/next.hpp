@@ -16,6 +16,7 @@
 #include <eve/function/saturated.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/add.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/if_else.hpp>

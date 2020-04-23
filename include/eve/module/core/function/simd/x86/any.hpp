@@ -124,7 +124,7 @@ namespace eve::detail
         }
         else
         {
-          using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<32>>;
+          using i8_t = typename wide<T, N, avx_>::template rebind<int8_t, fixed<32>>;
           return _mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t>()));
         }
       }

@@ -43,5 +43,5 @@ TTS_CASE("Check eve::mul[condition] behavior")
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::mul[ m ](tv, fv) , eve::if_else(m,tv * fv, tv) );
+  TTS_EQUAL(eve::mul[ m ](tv, fv) , eve::if_else(m,eve::mul(tv, fv), tv) );
 }
