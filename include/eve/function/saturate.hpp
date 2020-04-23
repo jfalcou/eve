@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SATURATE_HPP_INCLUDED
 
 #include <eve/function/definition/saturate.hpp>
-#include <eve/module/core/function/scalar/saturate.hpp>
-#include <eve/module/core/function/simd/saturate.hpp>
+#include <eve/module/core/function/generic/saturate.hpp>
 
 #endif
