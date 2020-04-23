@@ -11,21 +11,21 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_CONVERT_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_CONVERT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
 #include <eve/as.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename U>
-  EVE_FORCEINLINE wide<U,N> convert_( EVE_SUPPORTS(vmx_),
-                                        wide<T, N, ppc_> const & v0, as_<U> const& tgt
-                                      ) noexcept
+  template<real_scalar_value T, typename N, real_scalar_value U>
+  EVE_FORCEINLINE wide<U, N>
+                  convert_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, as_<U> const &tgt) noexcept
   {
     // Idempotent call
-    if constexpr(std::is_same_v<T, U>) return v0;
+    if constexpr( std::is_same_v<T, U> )
+      return v0;
 
     constexpr auto sz = sizeof(U) == sizeof(T);
 
@@ -33,8 +33,10 @@ namespace eve::detail
     {
       if constexpr( std::is_integral_v<U> && sz )
       {
-        if constexpr( std::is_signed_v<U>)  return vec_cts(v0.storage(),0);
-        else                                return vec_ctu(v0.storage(),0);
+        if constexpr( std::is_signed_v<U> )
+          return vec_cts(v0.storage(), 0);
+        else
+          return vec_ctu(v0.storage(), 0);
       }
       else
       {
@@ -43,8 +45,10 @@ namespace eve::detail
     }
     else if constexpr( std::is_integral_v<T> )
     {
-      if constexpr(std::is_floating_point_v<U> && sz) return vec_ctf(v0.storage(),0);
-      else                                            return convert_(EVE_RETARGET(simd_),v0,tgt);
+      if constexpr( std::is_floating_point_v<U> && sz )
+        return vec_ctf(v0.storage(), 0);
+      else
+        return convert_(EVE_RETARGET(simd_), v0, tgt);
     }
     else
     {
