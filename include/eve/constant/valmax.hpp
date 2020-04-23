@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Jean-Thierry LAPRESTE
   Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -11,11 +11,9 @@
 #ifndef EVE_CONSTANT_VALMAX_HPP_INCLUDED
 #define EVE_CONSTANT_VALMAX_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/as.hpp>
-#include <type_traits>
 #include <limits>
 
 namespace eve

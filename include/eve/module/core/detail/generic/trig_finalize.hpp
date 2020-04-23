@@ -30,9 +30,9 @@
 #include <eve/function/toint.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
+#include <eve/constant/nan.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-
 
 namespace eve::detail
 {

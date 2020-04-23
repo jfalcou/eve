@@ -11,16 +11,18 @@
 #ifndef EVE_CONSTANT_ONE_HPP_INCLUDED
 #define EVE_CONSTANT_ONE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/constant/constant.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/as.hpp>
+#include <type_traits>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(one_, one_);
 
   template<typename T>
-  EVE_FORCEINLINE auto One(as_<T> const & = {})
+  EVE_FORCEINLINE auto One(as_<T> const & = {}) noexcept
   {
     return T(1);
   }

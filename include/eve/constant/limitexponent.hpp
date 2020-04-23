@@ -10,11 +10,10 @@
 #ifndef EVE_CONSTANT_LIMITEXPONENT_HPP_INCLUDED
 #define EVE_CONSTANT_LIMITEXPONENT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/constant.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
@@ -27,13 +26,9 @@ namespace eve
   {
     using t_t = detail::value_type_t<T>;
     using i_t = detail::as_integer_t<t_t>;
-    if  constexpr(std::is_floating_point_v<t_t>)
-    {
-      if constexpr(std::is_same_v<t_t, float>) return i_t(128);
-      if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
-    }
-    else
-      return i_t(0);
+
+    if constexpr(std::is_same_v<t_t, float>) return i_t(128);
+    else if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
   }
 
   EVE_MAKE_NAMED_CONSTANT(limitexponent_, Limitexponent);

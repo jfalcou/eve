@@ -11,23 +11,29 @@
 #ifndef EVE_CONSTANT_TWOPI_HPP_INCLUDED
 #define EVE_CONSTANT_TWOPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/as.hpp>
+#include <type_traits>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(twopi_, twopi_);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Twopi(as_<T> const & = {})
+  template<floating_value T>
+  EVE_FORCEINLINE auto Twopi(as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 
-    if constexpr(std::is_integral_v<t_t>) return T(6);
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X40C90FDBU>();
-    if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X401921FB54442D18ULL>();
+    if constexpr(std::is_same_v<t_t, float>)
+    {
+      return Constant<T, 0X40C90FDBU>();
+    }
+    else if constexpr(std::is_same_v<t_t, double>)
+    {
+      return Constant<T, 0X401921FB54442D18ULL>();
+    }
   }
 
   EVE_MAKE_NAMED_CONSTANT(twopi_, Twopi);
