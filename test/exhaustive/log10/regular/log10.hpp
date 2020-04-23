@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on log10")
+TTS_CASE_TPL("wide exhaustive check on log10", EVE_TYPE)
 {
-  auto std_log10 = tts::vectorize<EVE_TYPE>( [](auto e) { return std::log10(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_log10 = tts::vectorize<T>( [](auto e) { return std::log10(e); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_log10, eve::log10); 
+  eve::exhaustive_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_log10, eve::log10);
 }

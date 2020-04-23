@@ -17,9 +17,14 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cotpi")
+TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
 {
-  auto my_stdcotpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::cos_pi(x)/boost::math::sin_pi(x); }); 
-  eve::rng_producer<EVE_TYPE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::restricted_(eve::cotpi)); 
+  auto my_stdcotpi =  tts::vectorize<T> ( [](auto x)
+                                          {
+                                            return boost::math::cos_pi(x)/boost::math::sin_pi(x);
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(-0.25, 0.25);
+  TTS_RANGE_CHECK(p, my_stdcotpi, eve::restricted_(eve::cotpi));
 }

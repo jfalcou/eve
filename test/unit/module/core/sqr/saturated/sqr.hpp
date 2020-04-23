@@ -11,34 +11,33 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/saturated.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::saturated_(eve::sqr) return type")
+TTS_CASE_TPL("Check eve::saturated_(eve::sqr) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::sqr)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturated_(eve::sqr)(T(0)), T);
 }
 
-TTS_CASE("Check eve::sqr behavior")
+TTS_CASE_TPL("Check eve::sqr behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::sqr)(EVE_TYPE(1)), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::saturated_(eve::sqr)(EVE_TYPE(2)), (EVE_TYPE(4)));
+  TTS_EQUAL(eve::saturated_(eve::sqr)(T(1)), T(1));
+  TTS_EQUAL(eve::saturated_(eve::sqr)(T(2)), T(4));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(4)));
+    TTS_EQUAL(eve::saturated_(eve::sqr)(static_cast<T>(-2)), T(4));
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
+    TTS_EQUAL(eve::saturated_(eve::sqr)(T(-0.)), T(0));
   }
 
-  if constexpr(std::is_integral_v<EVE_VALUE>)
+  if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<EVE_TYPE>())), eve::Valmax<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<T>())), eve::Valmax<T>());
   }
 }

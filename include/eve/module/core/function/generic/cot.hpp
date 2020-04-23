@@ -78,11 +78,9 @@ namespace eve::detail
       };
       if constexpr( scalar_value<T> )
       {
-        using i_t = as_integer_t<T, signed>;
-        if( xleeps )
-          return rec(a0);
-        if( is_not_less_equal(x, Pio_2<T>()) )
-          return Nan<T>();
+        using i_t =  as_integer_t<T, signed>;
+        if (xleeps) return rec(a0);
+        if (is_not_less_equal(x, Pio_2<T>())) return Nan<T>();
         i_t n = x > Pio_4<T>();
         if( n )
         {

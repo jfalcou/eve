@@ -17,12 +17,15 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on asec")
+TTS_CASE_TPL("wide exhaustive check on asec", EVE_TYPE)
 {
-  auto std_asec = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acos(eve::rec(e)); } );
-  double th =  std::is_same_v<EVE_VALUE, double> ? 4096 : 512; 
-  eve::exhaustive_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
-  TTS_ULP_RANGE_CHECK(p1, std_asec, eve::raw_(eve::asec), th); 
-  eve::exhaustive_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
+  using v_t = eve::element_type_t<T>;
+  auto std_asec = tts::vectorize<T>( [](auto e) { return std::acos(eve::rec(e)); } );
+  double th =  std::is_same_v<v_t, double> ? 4096 : 512;
+
+  eve::exhaustive_producer<T> p1(eve::Valmin<v_t>(), v_t(-1));
+  TTS_ULP_RANGE_CHECK(p1, std_asec, eve::raw_(eve::asec), th);
+
+  eve::exhaustive_producer<T> p2(v_t(1), eve::Valmax<v_t>());
   TTS_ULP_RANGE_CHECK(p2, std_asec, eve::raw_(eve::asec), th);
 }

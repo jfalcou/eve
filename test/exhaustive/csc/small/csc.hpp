@@ -15,10 +15,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on csc")
+TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
 {
-  auto std_csc = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::rec(std::sin(double(e))); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_csc = tts::vectorize<T>( [](auto e) { return eve::rec(std::sin(double(e))); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-eve::Pio_2<EVE_VALUE>(), eve::Pio_2<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_csc, eve::small_(eve::csc)); 
+  eve::exhaustive_producer<T> p(-eve::Pio_2<v_t>(), eve::Pio_2<v_t>());
+  TTS_RANGE_CHECK(p, std_csc, eve::small_(eve::csc));
 }

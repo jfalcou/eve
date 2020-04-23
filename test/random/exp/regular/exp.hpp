@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exp")
+TTS_CASE_TPL("wide random check on exp", EVE_TYPE)
 {
-  auto std_exp = tts::vectorize<EVE_TYPE>( [](auto e) { return std::exp(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_exp = tts::vectorize<T>( [](auto e) { return std::exp(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Minlog<EVE_VALUE>()+1, eve::Maxlog<EVE_VALUE>()-1);
-  TTS_RANGE_CHECK(p, std_exp, eve::exp); 
+  eve::rng_producer<T> p(eve::Minlog<v_t>()+1, eve::Maxlog<v_t>()-1);
+  TTS_RANGE_CHECK(p, std_exp, eve::exp);
 }

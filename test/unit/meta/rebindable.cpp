@@ -16,7 +16,7 @@
 #include <tuple>
 #include <array>
 
-TTS_CASE("Checck that non-rebindable types don't satisfy rebindbale" )
+TTS_CASE("Check that non-rebindable types don't satisfy rebindable" )
 {
   TTS_EXPECT_NOT( eve::rebindable<int>   );
   TTS_EXPECT_NOT( eve::rebindable<char>  );
@@ -27,13 +27,13 @@ TTS_CASE("Checck that non-rebindable types don't satisfy rebindbale" )
   TTS_EXPECT_NOT( eve::rebindable<eve::logical<float>>);
 }
 
-TTS_CASE("Checck that wide satisfies rebindbale" )
+TTS_CASE("Check that wide satisfies rebindable" )
 {
   TTS_EXPECT( eve::rebindable<eve::wide<int>>   );
   TTS_EXPECT( eve::rebindable<eve::logical<eve::wide<float>>>);
 }
 
-TTS_CASE("Checck that tuple-like types satisfy rebindbale" )
+TTS_CASE("Check that tuple-like types satisfy rebindable" )
 {
   TTS_EXPECT( (eve::rebindable<std::pair<int,float>>)             );
   TTS_EXPECT( (eve::rebindable<std::array<double,7>>)             );

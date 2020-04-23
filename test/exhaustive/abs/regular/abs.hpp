@@ -17,28 +17,29 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on abs")
+TTS_CASE_TPL("wide exhaustive check on abs", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) { return (e < 0) ? -e : e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(-1,1);
+    auto std_abs = tts::vectorize<T>( [](auto e) { return (e < 0) ? -e : e; } );
+    eve::exhaustive_producer<T> p(-1,1);
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  else if constexpr(eve::signed_value<T>)
   {
-    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) {
+    auto std_abs = tts::vectorize<T>( [](auto e) {
                                            return (e < 0) ? -e : e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else
   {
-    auto std_abs = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_abs = tts::vectorize<T>( [](auto e) { return e; } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
-  
-  
+
+
 }

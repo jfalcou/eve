@@ -18,10 +18,11 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide exhaustive check on atand")
+TTS_CASE_TPL("wide exhaustive check on atand", EVE_TYPE)
 {
-  auto std_atand = tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::atan(e)); });
+  using v_t = eve::element_type_t<T>;
+  auto std_atand = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::atan(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_atand, eve::atand);
 }

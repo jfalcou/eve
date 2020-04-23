@@ -16,10 +16,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on atanh")
+TTS_CASE_TPL("wide exhaustive check on atanh", EVE_TYPE)
 {
-  auto std_atanh = tts::vectorize<EVE_TYPE>( [](auto e) { return std::atanh(e); } );
+  auto std_atanh = tts::vectorize<T>( [](auto e) { return std::atanh(e); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
-  TTS_RANGE_CHECK(p, std_atanh, eve::atanh); 
+  eve::exhaustive_producer<T> p(-1, 1);
+  TTS_RANGE_CHECK(p, std_atanh, eve::atanh);
 }

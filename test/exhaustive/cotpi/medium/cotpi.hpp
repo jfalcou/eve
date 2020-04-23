@@ -20,11 +20,13 @@
 #include <cmath>
 #include <type_traits>
 
-TTS_CASE("wide exhaustive check on cotpi")
+TTS_CASE_TPL("wide exhaustive check on cotpi", EVE_TYPE)
 {
-  auto my_stdcotpi =  tts::vectorize<EVE_TYPE>([](auto x){return (x == 0 || !eve::is_flint(x))
+  using v_t = eve::element_type_t<T>;
+  auto my_stdcotpi =  tts::vectorize<T>([](auto x){return (x == 0 || !eve::is_flint(x))
                                                ? boost::math::cos_pi(x)/boost::math::sin_pi(x)
-                                               : eve::Nan<EVE_VALUE>(); });
-  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
-  TTS_ULP_RANGE_CHECK(p, my_stdcotpi, eve::medium_(eve::cotpi), 4); 
+                                               : eve::Nan<v_t>(); });
+
+  eve::exhaustive_producer<T> p(v_t(-100000.0), v_t(100000.0));
+  TTS_ULP_RANGE_CHECK(p, my_stdcotpi, eve::medium_(eve::cotpi), 4);
 }

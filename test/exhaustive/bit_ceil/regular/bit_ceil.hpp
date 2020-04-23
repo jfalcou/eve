@@ -17,21 +17,19 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on bit_ceil")
+TTS_CASE_TPL("wide random check on bit_ceil", EVE_TYPE)
 {
-
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_bit_ceil = tts::vectorize<EVE_TYPE>( [](auto e) { return  ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()/4);
+    auto std_bit_ceil = tts::vectorize<T>( [](auto e) { return  ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::exhaustive_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>()/4);
     TTS_RANGE_CHECK(p, std_bit_ceil, eve::bit_ceil);
   }
   else
   {
-    auto std_bit_ceil = tts::vectorize<EVE_TYPE>( [](auto e) { return  ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), (1ul << (sizeof(EVE_VALUE)*8-2)));
+    auto std_bit_ceil = tts::vectorize<T>( [](auto e) { return  ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), (1ul << (sizeof(v_t)*8-2)));
     TTS_RANGE_CHECK(p, std_bit_ceil, eve::bit_ceil);
   }
-  
-  
 }

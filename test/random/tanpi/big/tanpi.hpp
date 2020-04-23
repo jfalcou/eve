@@ -20,16 +20,17 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
-#include <cmath>
 
-
-
-TTS_CASE("wide random check on tanpi") 
+TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
 {
-  auto my_stdtanpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((x < eve::Maxflint<EVE_VALUE>()) && eve::is_odd(x*2))
-                                               ?  eve::Nan<EVE_VALUE>()
-                                               : boost::math::sin_pi(x)/boost::math::cos_pi(x); });
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdtanpi, eve::big_(eve::tanpi)); 
+  using v_t = eve::element_type_t<T>;
+  auto my_stdtanpi =  tts::vectorize<T> ( [](auto x)
+                                          {
+                                            return  ((x < eve::Maxflint<v_t>()) && eve::is_odd(x*2))
+                                                  ? eve::Nan<v_t>()
+                                                  : boost::math::sin_pi(x)/boost::math::cos_pi(x);
+                                          }
+                                        );
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdtanpi, eve::big_(eve::tanpi));
 }

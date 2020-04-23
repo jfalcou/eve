@@ -16,18 +16,19 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on cot")
+TTS_CASE_TPL("wide exhaustive check on cot", EVE_TYPE)
 {
-  auto std_cot = tts::vectorize<EVE_TYPE>( [](auto e) { return 1/std::tan(double(e)); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_cot = tts::vectorize<T>( [](auto e) { return 1/std::tan(double(e)); } );
 
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::exhaustive_producer<EVE_TYPE> p(-eve::Pio_4<EVE_VALUE>(), eve::Pio_4<EVE_VALUE>());
-    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot)); 
+    eve::exhaustive_producer<T> p(-eve::Pio_4<v_t>(), eve::Pio_4<v_t>());
+    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot));
   }
   else
   {
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Smallestposval<EVE_VALUE>(), eve::Pio_4<EVE_VALUE>());
-    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot)); 
+    eve::exhaustive_producer<T> p(eve::Smallestposval<v_t>(), eve::Pio_4<v_t>());
+    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot));
   }
 }

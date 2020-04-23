@@ -17,23 +17,24 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on iceil")
+TTS_CASE_TPL("wide exhaustive check on iceil", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    using vi_t =  eve::detail::as_integer_t<EVE_TYPE>; 
-    using i_t = eve::detail::value_type_t<vi_t>; 
+    using vi_t =  eve::detail::as_integer_t<T>;
+    using i_t = eve::detail::value_type_t<vi_t>;
     auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
+
+    eve::exhaustive_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
   }
   else
   {
-    auto std_iceil = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_iceil = tts::vectorize<T>( [](auto e) { return e; } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
   }
-  
-  
 }

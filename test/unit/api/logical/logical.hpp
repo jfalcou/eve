@@ -17,13 +17,13 @@
 #include <eve/logical.hpp>
 #include <eve/constant/allbits.hpp>
 
-TTS_CASE("logical constructors")
+TTS_CASE_TPL("logical constructors", EVE_TYPE)
 {
-  eve::logical<EVE_TYPE> empty;
-  eve::logical<EVE_TYPE> from_bool_t = true;
-  eve::logical<EVE_TYPE> from_bool_f = false;
-  eve::logical<EVE_TYPE> from_value_t(EVE_TYPE{123});
-  eve::logical<EVE_TYPE> from_value_f(EVE_TYPE{0});
+  eve::logical<T> empty;
+  eve::logical<T> from_bool_t = true;
+  eve::logical<T> from_bool_f = false;
+  eve::logical<T> from_value_t(T{123});
+  eve::logical<T> from_value_f(T{0});
 
   TTS_EXPECT((bool(empty) == false || bool(empty) == true));
 
@@ -34,10 +34,10 @@ TTS_CASE("logical constructors")
   TTS_EXPECT_NOT(from_bool_f);
 }
 
-TTS_CASE("logical assignments")
+TTS_CASE_TPL("logical assignments", EVE_TYPE)
 {
-  eve::logical<EVE_TYPE> empty_t;
-  eve::logical<EVE_TYPE> empty_f;
+  eve::logical<T> empty_t;
+  eve::logical<T> empty_f;
 
   empty_t = true;
   TTS_EXPECT(empty_t);
@@ -46,10 +46,10 @@ TTS_CASE("logical assignments")
   TTS_EXPECT_NOT(empty_f);
 }
 
-TTS_CASE("logical->bool conversion")
+TTS_CASE_TPL("logical->bool conversion", EVE_TYPE)
 {
-  eve::logical<EVE_TYPE> bool_t = true;
-  eve::logical<EVE_TYPE> bool_f = false;
+  eve::logical<T> bool_t = true;
+  eve::logical<T> bool_f = false;
 
   TTS_EXPECT(bool(bool_t));
   TTS_EXPECT(bool_t.value());
@@ -57,20 +57,20 @@ TTS_CASE("logical->bool conversion")
   TTS_EXPECT_NOT(bool_f.value());
 }
 
-TTS_CASE("logical mask conversion")
+TTS_CASE_TPL("logical mask conversion", EVE_TYPE)
 {
-  eve::logical<EVE_TYPE> bool_t = true;
-  eve::logical<EVE_TYPE> bool_f = false;
+  eve::logical<T> bool_t = true;
+  eve::logical<T> bool_f = false;
 
-  TTS_IEEE_EQUAL(bool_t.mask(), eve::Allbits<EVE_TYPE>());
-  TTS_IEEE_EQUAL(bool_f.mask(), EVE_TYPE(0));
+  TTS_IEEE_EQUAL(bool_t.mask(), eve::Allbits<T>());
+  TTS_IEEE_EQUAL(bool_f.mask(), T(0));
 }
 
-TTS_CASE("logical bits conversion")
+TTS_CASE_TPL("logical bits conversion", EVE_TYPE)
 {
-  eve::logical<EVE_TYPE> bool_t = true;
-  eve::logical<EVE_TYPE> bool_f = false;
-  using bits_t              = eve::logical<EVE_TYPE>::bits_type;
+  eve::logical<T> bool_t = true;
+  eve::logical<T> bool_f = false;
+  using bits_t              = eve::logical<T>::bits_type;
 
   TTS_IEEE_EQUAL(bool_t.bits(), eve::Allbits<bits_t>());
   TTS_IEEE_EQUAL(bool_f.bits(), bits_t(0));

@@ -19,31 +19,31 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::any return type")
+TTS_CASE_TPL("Check eve::any return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::any(eve::logical<EVE_TYPE>())) , bool);
-  TTS_EXPR_IS( (eve::any(EVE_TYPE()))               , bool);
+  TTS_EXPR_IS( (eve::any(eve::logical<T>())) , bool);
+  TTS_EXPR_IS( (eve::any(T()))               , bool);
 }
 
-TTS_CASE("Check eve::any behavior on arithmetic")
+TTS_CASE_TPL("Check eve::any behavior on arithmetic", EVE_TYPE)
 {
-  TTS_EXPECT    ( (eve::any(EVE_TYPE{1})) );
-  TTS_EXPECT_NOT( (eve::any(EVE_TYPE{0})) );
+  TTS_EXPECT    ( (eve::any(T{1})) );
+  TTS_EXPECT_NOT( (eve::any(T{0})) );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EXPECT(eve::any(eve::Nan<EVE_TYPE>()));
+      TTS_EXPECT(eve::any(eve::Nan<T>()));
     }
 
-    TTS_EXPECT_NOT(eve::any(eve::Mzero<EVE_TYPE>()));
+    TTS_EXPECT_NOT(eve::any(T(-0.)));
   }
 
 #if defined(EVE_SIMD_TESTS)
   for(int j=0; j < EVE_CARDINAL; ++j)
   {
-    EVE_TYPE rhs1,rhs2, rhs3, rhs4;
+    T rhs1,rhs2, rhs3, rhs4;
 
     for(int i=0; i< EVE_CARDINAL; ++i)
     {
@@ -64,8 +64,8 @@ TTS_CASE("Check eve::any behavior on arithmetic")
 #endif
 }
 
-TTS_CASE("Check eve::any behavior on logical")
+TTS_CASE_TPL("Check eve::any behavior on logical", EVE_TYPE)
 {
-  TTS_EXPECT    (eve::any(eve::True<EVE_TYPE>()));
-  TTS_EXPECT_NOT(eve::any(eve::False<EVE_TYPE>()));
+  TTS_EXPECT    (eve::any(eve::True<T>()));
+  TTS_EXPECT_NOT(eve::any(eve::False<T>()));
 }

@@ -17,10 +17,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on radindeg")
+TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)
 {
-  auto std_radindeg = tts::vectorize<EVE_TYPE>( [](auto e) { return e*180/eve::Pi<EVE_VALUE>(); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_indeg = tts::vectorize<T>( [](auto e) { return e*180/eve::Pi<v_t>(); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_radindeg, eve::radindeg); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_indeg, eve::radindeg);
 }

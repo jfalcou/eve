@@ -8,20 +8,21 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/function/radinpi.hpp>
 #include <eve/constant/invpi.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/function/radinpi.hpp>
 
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide random check on radinpi")
+TTS_CASE_TPL("wide random check on inpi", EVE_TYPE)
 {
-  auto std_radinpi = tts::vectorize<EVE_TYPE>([](auto e) { return eve::Invpi<EVE_VALUE>() * e; });
+  using v_t = eve::element_type_t<T>;
+  auto std_inpi = tts::vectorize<T>( [](auto e) { return eve::Invpi<v_t>()*e; } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_radinpi, eve::radinpi);
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_inpi, eve::radinpi);
 }

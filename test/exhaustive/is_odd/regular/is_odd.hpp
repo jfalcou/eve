@@ -20,23 +20,21 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on is_odd")
+TTS_CASE_TPL("wide exhaustive check on is_odd", EVE_TYPE)
 {
-
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using l_t = eve::as_logical_t<T>;
+  using v_t = eve::element_type_t<T>;
+  if constexpr(eve::floating_value<T>)
   {
-    using l_t = eve::as_logical_t<EVE_TYPE>;
     auto std_is_odd = tts::vectorize<l_t>( [](auto e) {  auto da = eve::dec(e);
                                               return (e!= da) && eve::is_even(da); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_odd, eve::is_odd);
   }
   else
   {
-    using l_t = eve::as_logical_t<EVE_TYPE>;
     auto std_is_odd = tts::vectorize<l_t>( [](auto e) { return  (e/2)*2!= e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_odd, eve::is_odd);
   }
-
 }

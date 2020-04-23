@@ -10,24 +10,22 @@
 //==================================================================================================
 #include <eve/function/tofloat.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::tofloat return type")
+TTS_CASE_TPL("Check eve::tofloat return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::tofloat(EVE_TYPE())), (eve::detail::as_floating_point_t<EVE_TYPE>));
+  TTS_EXPR_IS( eve::tofloat(T()), (eve::detail::as_floating_point_t<T>));
 }
 
-TTS_CASE("Check eve::tofloat behavior")
+TTS_CASE_TPL("Check eve::tofloat behavior", EVE_TYPE)
 {
-  using r_t = eve::detail::as_floating_point_t<EVE_TYPE>;
+  using r_t = eve::detail::as_floating_point_t<T>;
 
-  if constexpr( std::is_signed_v<EVE_VALUE> )
+  if constexpr( eve::signed_value<T> )
   {
-    TTS_EQUAL(eve::tofloat(EVE_TYPE(-2)), r_t(-2));
+    TTS_EQUAL(eve::tofloat(T(-2)), r_t(-2));
   }
 
-  TTS_EQUAL(eve::tofloat(EVE_TYPE( 0)), r_t( 0));
-  TTS_EQUAL(eve::tofloat(EVE_TYPE( 2)), r_t( 2));
+  TTS_EQUAL(eve::tofloat(T(0)), r_t( 0));
+  TTS_EQUAL(eve::tofloat(T(2)), r_t( 2));
 }

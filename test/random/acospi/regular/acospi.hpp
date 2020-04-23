@@ -15,10 +15,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on acospi")
+TTS_CASE_TPL("wide random check on acospi", EVE_TYPE)
 {
-  auto std_acospi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::Invpi<EVE_VALUE>()*std::acos(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_acospi = tts::vectorize<T>( [](auto e) { return eve::Invpi<v_t>()*std::acos(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(-1, 1);
-  TTS_RANGE_CHECK(p, std_acospi, eve::acospi); 
+  eve::rng_producer<T> p(-1, 1);
+  TTS_RANGE_CHECK(p, std_acospi, eve::acospi);
 }

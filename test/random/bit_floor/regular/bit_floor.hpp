@@ -14,30 +14,28 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on bit_floor")
+TTS_CASE_TPL("wide random check on bit_floor", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_bit_floor = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_bit_floor = tts::vectorize<T>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<T> p(v_t(0), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  else if constexpr(eve::signed_value<T>)
   {
-    auto std_bit_floor = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_bit_floor = tts::vectorize<T>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<T> p(v_t(0), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
   else
   {
-    auto std_bit_floor = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_bit_floor = tts::vectorize<T>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }
-  
-  
 }

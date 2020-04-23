@@ -19,13 +19,14 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide random check on acscd")
+TTS_CASE_TPL("wide random check on acscd", EVE_TYPE)
 {
-  auto std_acscd =
-      tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::asin(eve::rec(e))); });
+  using v_t = eve::element_type_t<T>;
+  auto std_acscd = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::asin(eve::rec(e))); } );
 
-  eve::rng_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
+  eve::rng_producer<T> p1(eve::Valmin<v_t>(), v_t(-1));
   TTS_RANGE_CHECK(p1, std_acscd, eve::acscd);
-  eve::rng_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
+
+  eve::rng_producer<T> p2(v_t(1), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p2, std_acscd, eve::acscd);
 }

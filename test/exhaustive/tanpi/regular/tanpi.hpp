@@ -13,7 +13,7 @@
 #include <eve/function/tanpi.hpp>
 #include <eve/constant/invpi.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>    
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
@@ -23,11 +23,13 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on tanpi")
+TTS_CASE_TPL("wide exhaustive check on tanpi", EVE_TYPE)
 {
-  auto my_stdtanpi =  tts::vectorize<EVE_TYPE>([](auto x){return (eve::frac(std::abs(x)) == EVE_VALUE(0.5))
-                                               ?  eve::Nan<EVE_VALUE>()
+  using v_t = eve::element_type_t<T>;
+  auto my_stdtanpi =  tts::vectorize<T>([](auto x){return (eve::frac(std::abs(x)) == v_t(0.5))
+                                               ?  eve::Nan<v_t>()
                                                : boost::math::sin_pi(x)/boost::math::cos_pi(x); });
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdtanpi, eve::tanpi); 
+
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdtanpi, eve::tanpi);
 }

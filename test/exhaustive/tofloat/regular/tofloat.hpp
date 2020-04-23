@@ -17,27 +17,26 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on tofloat")
+TTS_CASE_TPL("wide exhaustive check on tofloat", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_tofloat = tts::vectorize<EVE_TYPE>( [](auto e) { return std::tofloat(e); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    auto std_tofloat = tts::vectorize<T>( [](auto e) { return std::tofloat(e); } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_tofloat, eve::tofloat);
   }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  else if constexpr(eve::signed_value<T>)
   {
-    auto std_tofloat = tts::vectorize<EVE_TYPE>( [](auto e) { return  std::tofloat(e); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    auto std_tofloat = tts::vectorize<T>( [](auto e) { return  std::tofloat(e); } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_tofloat, eve::tofloat);
   }
   else
   {
-    auto std_tofloat = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_tofloat = tts::vectorize<T>( [](auto e) { return e; } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_tofloat, eve::tofloat);
   }
-  
-  
 }

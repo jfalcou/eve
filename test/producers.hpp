@@ -47,10 +47,18 @@ namespace eve
 
     T next() noexcept
     {
+<<<<<<< HEAD
       T that(0);
       std::generate(tts::detail::begin(that), tts::detail::end(that), [&]() {
         return distribution_(generator_);
       });
+=======
+      T that{};
+      std::generate ( tts::detail::begin(that),
+                      tts::detail::end(that),
+                      [&](){ return distribution_(generator_); }
+                    );
+>>>>>>> 4e3087f65... WIP: Adapt tests for proper dependant type checking for constants
       return that;
     }
 

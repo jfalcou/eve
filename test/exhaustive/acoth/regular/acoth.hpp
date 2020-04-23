@@ -17,12 +17,13 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on acoth")
+TTS_CASE_TPL("wide exhaustive check on acoth", EVE_TYPE)
 {
-  auto std_acoth = tts::vectorize<EVE_TYPE>( [](auto e) { return std::atanh(eve::rec(e)); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_acoth = tts::vectorize<T>( [](auto e) { return std::atanh(eve::rec(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p1(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p1, std_acoth, eve::acoth); 
-  eve::exhaustive_producer<EVE_TYPE> p2(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
-  TTS_RANGE_CHECK(p2, std_acoth, eve::acoth); 
+  eve::exhaustive_producer<T> p1(v_t(1), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p1, std_acoth, eve::acoth);
+  eve::exhaustive_producer<T> p2(eve::Valmin<v_t>(), v_t(-1));
+  TTS_RANGE_CHECK(p2, std_acoth, eve::acoth);
 }

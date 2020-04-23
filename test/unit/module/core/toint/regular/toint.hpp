@@ -9,26 +9,24 @@
 **/
 //==================================================================================================
 #include <eve/function/toint.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/valmax.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::toint return type")
+TTS_CASE_TPL("Check eve::toint return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::toint(EVE_TYPE(0)), (eve::detail::as_integer_t<EVE_TYPE>));
+  TTS_EXPR_IS(eve::toint(T(0)), (eve::detail::as_integer_t<T>));
 }
 
-TTS_CASE("Check eve::toint behavior")
+TTS_CASE_TPL("Check eve::toint behavior", EVE_TYPE)
 {
-  using r_t = eve::detail::as_integer_t<EVE_TYPE>;
+  using r_t = eve::detail::as_integer_t<T>;
 
-  TTS_EQUAL(eve::toint(EVE_TYPE(1.2357)), static_cast<r_t>(1.2357));
-  TTS_EQUAL(eve::toint(EVE_TYPE(1))     , r_t(1));
-  TTS_EQUAL(eve::toint(EVE_TYPE(0))     , r_t(0));
+  TTS_EQUAL(eve::toint(T(1.2357)), static_cast<r_t>(1.2357));
+  TTS_EQUAL(eve::toint(T(1))     , r_t(1));
+  TTS_EQUAL(eve::toint(T(0))     , r_t(0));
 
-  if constexpr( std::is_floating_point_v<EVE_VALUE> )
+  if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::toint(eve::Mzero<EVE_TYPE>()), r_t(0));
+    TTS_EQUAL(eve::toint(T(-0.)), r_t(0));
   }
 }

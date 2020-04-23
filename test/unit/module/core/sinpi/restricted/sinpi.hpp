@@ -9,14 +9,9 @@
 **/
 //==================================================================================================
 #include <eve/function/sinpi.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/is_negative.hpp>
@@ -24,26 +19,29 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <cmath>
 
-TTS_CASE("Check eve::restricted_(eve::sinpi) return type")
+TTS_CASE_TPL("Check eve::restricted_(eve::sinpi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::sinpi)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::restricted_(eve::sinpi)(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::sinpi behavior")
+TTS_CASE_TPL("Check eve::eve::sinpi behavior", EVE_TYPE)
 {
- 
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Inf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Minf<T>()), eve::Nan<T>() );
   }
-  TTS_EXPECT(eve::all(eve::is_positive(eve::restricted_(eve::sinpi)(eve::Zero<EVE_TYPE>()))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::restricted_(eve::sinpi)(eve::Mzero<EVE_TYPE>()))));    
-  TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
-  TTS_ULP_EQUAL((eve::restricted_(eve::sinpi)(EVE_TYPE(0.125))), (EVE_TYPE(0.38268343236508977172845998403039886676134456248563)), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::sinpi)(-EVE_TYPE(0.125))),(EVE_TYPE(-0.38268343236508977172845998403039886676134456248563)), 0.5);
+
+  TTS_EXPECT(eve::all(eve::is_positive(eve::restricted_(eve::sinpi)(T( 0 )))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::restricted_(eve::sinpi)(T(-0.)))));
+
+  TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(T(0))   , T(0) );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(T(-0.)) , T(0) );
+
+  TTS_ULP_EQUAL((eve::restricted_(eve::sinpi)(T(0.125)))  , T(0.38268343236508977172845998403039886676134456248563) , 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::sinpi)(-T(0.125))) , T(-0.38268343236508977172845998403039886676134456248563), 0.5);
 }

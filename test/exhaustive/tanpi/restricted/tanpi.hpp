@@ -17,9 +17,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on tanpi")
+TTS_CASE_TPL("wide exhaustive check on tanpi", EVE_TYPE)
 {
-  auto my_stdtanpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::sin_pi(x)/boost::math::cos_pi(x); }); 
-  eve::exhaustive_producer<EVE_TYPE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdtanpi, eve::restricted_(eve::tanpi)); 
+  using v_t = eve::element_type_t<T>;
+  auto my_stdtanpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x)/boost::math::cos_pi(x); });
+
+  eve::exhaustive_producer<T> p(-0.25, 0.25);
+  TTS_RANGE_CHECK(p, my_stdtanpi, eve::restricted_(eve::tanpi));
 }

@@ -19,7 +19,6 @@
 #include <eve/function/roundings.hpp>
 #include <eve/function/saturated.hpp>
 
-
 TTS_CASE("Checck that non-decorator types don't satisfy decorator" )
 {
   TTS_EXPECT_NOT( eve::decorator<int>   );

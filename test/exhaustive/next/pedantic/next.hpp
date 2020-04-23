@@ -21,21 +21,24 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on next")
+TTS_CASE_TPL("wide exhaustive check on next", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_next = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0) && eve::is_negative(e) ? eve::Zero<EVE_VALUE>()
-                                                  :  ((e ==  eve::Inf<EVE_VALUE>()) ?  eve::Nan<EVE_VALUE>()
-                                                      : std::nextafter(e, eve::Inf<EVE_VALUE>())); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_next = tts::vectorize<T>( [](auto e) { return (e == 0) && eve::is_negative(e) ? eve::Zero<v_t>()
+                                                  :  ((e ==  eve::Inf<v_t>()) ?  eve::Nan<v_t>()
+                                                      : std::nextafter(e, eve::Inf<v_t>())); } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic_(eve::next), 0);
   }
   else
   {
-    auto std_next = tts::vectorize<EVE_TYPE>( [](auto e) { return e == eve::Valmax<EVE_VALUE>() ? e : e+1; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_next = tts::vectorize<T>( [](auto e) { return e == eve::Valmax<v_t>() ? e : e+1; } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic_(eve::next), 0);
-  }  
+  }
 }

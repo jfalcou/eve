@@ -17,11 +17,11 @@
 
 using eve::fixed;
 
-TTS_CASE("load behavior for scalar")
+TTS_CASE_TPL("load behavior for scalar", EVE_TYPE)
 {
   TTS_WHEN("A value is initialized")
   {
-    EVE_TYPE value, ref = 42, data[ 1 ] = {42};
+    T value, ref = 42, data[ 1 ] = {42};
 
     TTS_AND_THEN("we load a pointer to scalar")
     {

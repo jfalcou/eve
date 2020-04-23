@@ -10,9 +10,10 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include <eve/traits/cardinal.hpp>
+#include <eve/traits/element_type.hpp>
 
 using EVE_TYPE  = ${target};
-using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
 inline constexpr auto EVE_CARDINAL = 1;
 
 #include "${header}.hpp"

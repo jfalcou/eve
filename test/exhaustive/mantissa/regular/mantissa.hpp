@@ -17,12 +17,14 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on mantissa")
+TTS_CASE_TPL("wide exhaustive check on mantissa", EVE_TYPE)
 {
-  // TODO problem with denormals
-  auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp)*2;  }; 
-  auto std_mantissa = tts::vectorize<EVE_TYPE>( [ internal_f ](auto e) { return internal_f(e); } );
+  using v_t = eve::element_type_t<T>;
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Smallestposval<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa); 
+  // TODO problem with denormals
+  auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp)*2;  };
+  auto std_mantissa = tts::vectorize<T>( [ internal_f ](auto e) { return internal_f(e); } );
+
+  eve::exhaustive_producer<T> p(eve::Smallestposval<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa);
 }

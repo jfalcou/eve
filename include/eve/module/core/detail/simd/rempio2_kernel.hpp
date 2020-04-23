@@ -42,14 +42,14 @@
 
 namespace eve::detail
 {
-  // up to 255*pi/4 ~200
+ // up to 255*pi/4 ~200
   template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
   {
-    using elt_t = element_type_t<T>;
-    if constexpr( std::is_same_v<elt_t, float> )
+    using elt_t             = element_type_t<T>;
+    if constexpr(std::is_same_v<elt_t,  float>)
     {
-      auto x   = convert(xx, double_);
-      auto n   = nearest(x * Twoopi<double>());
+      auto x =  convert(xx, double_);
+      auto n =  nearest(x*Twoopi<double>());
       auto dxr = fma(n, -Pio_2<double>(), x);
       return std::make_tuple(quadrant(convert(n, single_)), convert(dxr, single_), T(0.0f));
     }
@@ -65,6 +65,7 @@ namespace eve::detail
       auto                da  = xn * mp3;
       auto                a   = y - da;
       da                      = (y - a) - da;
+
       return std::make_tuple(n, a, da);
     }
   }
@@ -91,6 +92,7 @@ namespace eve::detail
       da       = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a   = t + da;
       da       = (t - a) + da;
+
       return std::make_tuple(n, a, da);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
@@ -114,56 +116,16 @@ namespace eve::detail
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);
         n                     = quadrant(n + n1);
+
         return std::make_tuple(n, fa, dfa);
       }
       return std::make_tuple(n, fa, dfa);
     }
   }
 
-  //     auto treat = [](T const & x){
-  //       static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
-  //       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
-  //       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
-  //       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
-  //       auto xn =  nearest(x*Twoopi<double>());
-  //       auto xn1 = (xn + 8.0e22) - 8.0e22;
-  //       auto xn2 = xn - xn1;
-  //       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-  //       auto n = quadrant(xn);
-  //       auto da = xn1 * pp3;
-  //       auto t = y - da;
-  //       da = (y - t) - da;
-  //       da = fma(xn, pp4, fnma(xn2, pp3, da));
-  //       auto a = t + da;
-  //       da = (t - a) + da;
-  //       return std::make_tuple(n, a, da);
-  //     };
-
-  //     if constexpr(std::is_same_v<elt_t,  double>)
-  //     {
-  //       return treat(xx);
-  //     }
-  //     else if constexpr(std::is_same_v<elt_t,  float>)
-  //     {
-  //       wide<double, N> x  = convert(xx, double_);
-  //       auto [n, a, da] = treat(x);
-  //       auto fn = convert(n, single_);
-  //       auto fa = convert(a, single_);
-  //       auto dfa = convert((a-convert(fa, double_))+da, single_);
-  // //       if (any(eve::abs(fa) > Pio_4<float>()) )
-  // //       {
-  // //         auto [n1, fa1, dfa1] = small_(rempio2)(fa);
-  // //         fn =quadrant(fn+n1);
-  // //         return std::make_tuple(n, fa1, dfa1);
-  // //       }
-  //       return std::make_tuple(fn, fa, dfa);
-  //     }
-  //  }
-
-  template<floating_real_simd_value T>
-  EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept requires has_native_abi_v<T>
+  template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
-    using elt_t = element_type_t<T>;
+    using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
     {
       using ui64_t                             = as_wide_t<uint64_t, cardinal_t<T>>;
@@ -194,7 +156,7 @@ namespace eve::detail
       T      x2    = x - x1;
       T      sum(0);
 
-      auto pass = [toverp](T x1, T &b1, T &bb1) {
+      auto pass = [&toverp](T x1, T &b1, T &bb1) {
         uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
         double   tm24 = Constant<double, 0x3e70000000000000ULL>(); /* 2 ^- 24  */
         double   big  = Constant<double, 0x4338000000000000ULL>(); /*  6755399441055744      */
@@ -211,7 +173,7 @@ namespace eve::detail
         T    r[6];
         auto inds =
             shr(bit_cast(k, as<ui64_t>()),
-                32); // TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+                32); // TODO un shuffle ï¿½ la place du shr sur les 32bits pour inverser low et hi
         for( int i = 0; i < 6; ++i )
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
@@ -262,11 +224,12 @@ namespace eve::detail
       s = b + bb;
       t = (b - s) + bb;
       s = if_else(is_not_finite(x), eve::allbits_, s);
+
       return std::make_tuple(quadrant(sum), s, t);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto xlerfl = (xx <= Rempio2_limit(small_type(), float())); // 200.277f;
+      auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>())); // 200.277f;
       if( all(xlerfl) )
       {
         return rempio2_small(xx);
@@ -274,6 +237,7 @@ namespace eve::detail
       else
       {
         using ui_t         = as_wide_t<uint32_t, cardinal_t<T>>;
+        using  i_t         = as_wide_t< int64_t, cardinal_t<T>>;
         constexpr auto alg = ui_t::static_alignment;
         // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
         //   only 8 new bits are added per entry, making the table 4 times larger.
@@ -305,12 +269,12 @@ namespace eve::detail
 
         auto n = shr((res0 + (1ULL << 61)), 62);
         res0   = res0 - (n << 62); // -= n << 62;
-
-        auto xx1  = convert(convert(res0, as<int64_t>()), as<double>());
+        auto tmp =  bit_cast(res0, as<i_t>());
+        auto xx1  = convert(tmp, as<double>());
         auto bn   = if_else(xlerfl, sn, convert(n, single_));
         auto z    = xx1 * pi63;
         auto sr1  = convert(z, single_);
-        auto dsr1 = convert(z - convert(sr1, double_), single_);
+        auto dsr1 = convert(z - convert(sr1 , double_), single_);
         auto br   = if_else(xlerfl, sr, sr1);
         auto dbr  = if_else(xlerfl, dsr, dsr1);
         br        = if_else(is_not_finite(xx), eve::allbits_, br);

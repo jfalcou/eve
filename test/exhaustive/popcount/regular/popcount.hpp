@@ -17,19 +17,23 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on popcount")
+TTS_CASE_TPL("wide exhaustive check on popcount", EVE_TYPE)
 {
-  using u_t =  eve::detail::as_integer_t<EVE_TYPE, unsigned>; 
-  auto std_popcount = tts::vectorize<u_t>(
-    [](auto e) { unsigned int j = 0;
-      for(int i = 0; i < sizeof(EVE_VALUE)*8; ++i)
-      {
-        if (e&EVE_VALUE(1)) ++j;
-        e = eve::bit_shr(e, 1);
-      }
-      return j; }
-  );
+  using v_t = eve::element_type_t<T>;
+  using u_t = eve::detail::as_integer_t<T, unsigned>;
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_popcount, eve::popcount); 
+  auto std_popcount = tts::vectorize<u_t>(  [](auto e)
+                                            {
+                                              unsigned int j = 0;
+                                              for(std::size_t i = 0; i < sizeof(v_t)*8; ++i)
+                                              {
+                                                if (e&v_t(1)) ++j;
+                                                e = eve::bit_shr(e, 1);
+                                              }
+                                              return j;
+                                            }
+                                        );
+
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_popcount, eve::popcount);
 }

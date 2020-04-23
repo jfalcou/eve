@@ -17,21 +17,19 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on signnz")
+TTS_CASE_TPL("wide exhaustive check on signnz", EVE_TYPE)
 {
-
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  if constexpr(eve::signed_value<T>)
   {
-    auto std_signnz = tts::vectorize<EVE_TYPE>( [](auto e) {  return std::signbit(e) ? EVE_VALUE(-1) : EVE_VALUE(1); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    auto std_signnz = tts::vectorize<T>( [](auto e) {  return std::signbit(e) ? v_t(-1) : v_t(1); } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
   else
   {
-    auto std_signnz = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_signnz = tts::vectorize<T>( [](auto e) { return v_t(1); } );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
-  
-  
 }

@@ -17,21 +17,21 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on trunc")
+TTS_CASE_TPL("wide random check on touint", EVE_TYPE)
 {
-
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_trunc = tts::vectorize<EVE_TYPE>( [](auto e) { return std::trunc(e); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    auto std_trunc = tts::vectorize<T>( [](auto e) { return std::trunc(e); } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_trunc, eve::trunc);
   }
   else
   {
-    auto std_trunc = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_trunc = tts::vectorize<T>( [](auto e) { return e; } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_trunc, eve::trunc);
   }
-  
-  
+
+
 }

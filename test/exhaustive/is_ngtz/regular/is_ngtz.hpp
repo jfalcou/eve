@@ -18,10 +18,13 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on is_ngtz")
+TTS_CASE_TPL("wide exhaustive check on is_ngtz", EVE_TYPE)
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>;
+  using l_t = eve::as_logical_t<T>;
+  using v_t = eve::element_type_t<T>;
+
   auto std_is_ngtz = tts::vectorize<l_t>( [](auto e) { return !(e > 0); } );
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_is_ngtz, eve::is_ngtz);
 }

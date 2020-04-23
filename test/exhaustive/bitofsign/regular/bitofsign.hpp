@@ -20,22 +20,27 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on bitofsign")
+TTS_CASE_TPL("wide exhaustive check on bitofsign", EVE_TYPE)
 {
-
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_bitofsign = tts::vectorize<EVE_TYPE>( [](auto e) { return std::copysign(eve::One<EVE_VALUE>(), e); } );
-    auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), eve::One<EVE_VALUE>()); }; 
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_bitofsign = tts::vectorize<T>( [](auto e) { return std::copysign(eve::One<v_t>(), e); } );
+    auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), eve::One<v_t>()); };
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve_bitofsign);
   }
-  else 
+  else
   {
-    auto std_bitofsign = tts::vectorize<EVE_TYPE>( [](auto e) {
-                                                 using i_t = eve::detail::as_integer_t<EVE_VALUE>; 
-                                                 return  EVE_VALUE(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_bitofsign =  tts::vectorize<T>(  [](auto e)
+                                              {
+                                                using i_t = eve::detail::as_integer_t<v_t>;
+                                                return v_t(i_t(std::signbit(e)) << (sizeof(e)*8-1));
+                                              }
+                                            );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }
 }

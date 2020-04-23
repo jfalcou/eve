@@ -18,13 +18,13 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide exhaustive check on acscpi")
+TTS_CASE_TPL("wide exhaustive check on acscpi", EVE_TYPE)
 {
-  auto std_acscpi = tts::vectorize<EVE_TYPE>(
-      [](auto e) { return eve::Invpi<EVE_VALUE>() * std::asin(eve::rec(e)); });
+  using v_t = eve::element_type_t<T>;
+  auto std_acscpi = tts::vectorize<T>( [](auto e) { return eve::Invpi<v_t>()*std::asin(eve::rec(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
+  eve::exhaustive_producer<T> p1(eve::Valmin<v_t>(), v_t(-1));
   TTS_RANGE_CHECK(p1, std_acscpi, eve::acscpi);
-  eve::exhaustive_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
+  eve::exhaustive_producer<T> p2(v_t(1), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p2, std_acscpi, eve::acscpi);
 }

@@ -17,21 +17,22 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on nearest")
+TTS_CASE_TPL("wide exhaustive check on nearest", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_nearest = tts::vectorize<EVE_TYPE>( [](auto e) { return std::nearbyint(e); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_nearest = tts::vectorize<T>( [](auto e) { return std::nearbyint(e); } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
   else
   {
-    auto std_nearest = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_nearest = tts::vectorize<T>( [](auto e) { return e; } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
-  
-  
 }

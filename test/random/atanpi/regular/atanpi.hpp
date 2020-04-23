@@ -17,10 +17,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on atanpi")
+TTS_CASE_TPL("wide random check on atanpi", EVE_TYPE)
 {
-  auto std_atanpi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::Invpi<EVE_VALUE>()*std::atan(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_atanpi = tts::vectorize<T>( [](auto e) { return eve::Invpi<v_t>()*std::atan(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_atanpi, eve::atanpi); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_atanpi, eve::atanpi);
 }

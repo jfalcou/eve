@@ -17,10 +17,11 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on sqr")
+TTS_CASE_TPL("wide exhaustive check on sqr", EVE_TYPE)
 {
-  auto std_sqr = tts::vectorize<EVE_TYPE>( [](auto e) { return e*e; } );
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+  using v_t = eve::element_type_t<T>;
+
+  auto std_sqr = tts::vectorize<T>( [](auto e) { return e*e; } );
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_sqr, eve::sqr);
-  
 }

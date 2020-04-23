@@ -28,30 +28,32 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::tanpi return type")
+TTS_CASE_TPL("Check eve::tanpi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::tanpi(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::tanpi(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::tanpi behavior")
+TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
 {
- 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) ); 
-    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Inf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Minf<T>()), eve::Nan<T>() );
   }
-  TTS_ULP_EQUAL(eve::big_(eve::tanpi)(EVE_TYPE(1)), EVE_TYPE(0), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::tanpi)(EVE_TYPE(-1)),EVE_TYPE(0), 0.5);
-  TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::big_(eve::tanpi)(eve::Zero<EVE_TYPE>()))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::big_(eve::tanpi)(eve::Mzero<EVE_TYPE>()))));    
-  TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(EVE_TYPE(22.5))), (eve::Nan<EVE_TYPE>()), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(-EVE_TYPE(22.5))),(eve::Nan<EVE_TYPE>()), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(EVE_TYPE(100000.0))), EVE_TYPE(0), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(EVE_TYPE(-100000.0))),EVE_TYPE(0), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(EVE_TYPE(100000000.0))), EVE_TYPE(0), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tanpi)(EVE_TYPE(-100000000.0))),EVE_TYPE(0), 0.5);
+
+  TTS_EXPECT( eve::all(eve::is_positive(eve::big_(eve::tanpi)(T( 0 )))) );
+  TTS_EXPECT( eve::all(eve::is_negative(eve::big_(eve::tanpi)(T(-0.)))) );
+
+  TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(T( 0 )), T(0) );
+  TTS_IEEE_EQUAL(eve::big_(eve::tanpi)(T(-0.)), T(0) );
+
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(1)           ), T(0)         , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(-1)          ), T(0)         , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(22.5)        ), eve::Nan<T>(), 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)(-T(22.5)        ), eve::Nan<T>(), 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(100000.0)    ), T(0)         , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(-100000.0)   ), T(0)         , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(100000000.0) ), T(0)         , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(-100000000.0)), T(0)         , 0.5 );
 }

@@ -15,10 +15,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sin")
+TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
 {
-  auto std_sin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::sin(double(e)); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(double(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-eve::Pio_2<EVE_VALUE>(), eve::Pio_2<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_sin, eve::small_(eve::sin)); 
+  eve::exhaustive_producer<T> p(-eve::Pio_2<v_t>(), eve::Pio_2<v_t>());
+  TTS_RANGE_CHECK(p, std_sin, eve::small_(eve::sin));
 }

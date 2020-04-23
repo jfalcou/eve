@@ -16,10 +16,10 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide random check on asind")
+TTS_CASE_TPL("wide random check on asind", EVE_TYPE)
 {
-  auto std_asind = tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::asin(e)); });
+  auto std_asind = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::asin(e)); } );
 
-  eve::rng_producer<EVE_TYPE> p(-1, 1);
+  eve::rng_producer<T> p(-1, 1);
   TTS_RANGE_CHECK(p, std_asind, eve::asind);
 }

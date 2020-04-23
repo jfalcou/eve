@@ -17,19 +17,20 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on csc")
+TTS_CASE_TPL("wide exhaustive check on csc", EVE_TYPE)
 {
-  auto std_csc = tts::vectorize<EVE_TYPE>( [](auto e) { return 1/std::sin(double(e)); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
- 
+  using v_t = eve::element_type_t<T>;
+  auto std_csc = tts::vectorize<T>( [](auto e) { return 1/std::sin(double(e)); } );
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), v_t());
+
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::exhaustive_producer<EVE_TYPE>  p(-l, l);
+    eve::exhaustive_producer<T>  p(-l, l);
     TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
   }
   else
   {
-    eve::exhaustive_producer<EVE_TYPE>  p(eve::Smallestposval<EVE_VALUE>(), l);
+    eve::exhaustive_producer<T>  p(eve::Smallestposval<v_t>(), l);
     TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
   }
 }

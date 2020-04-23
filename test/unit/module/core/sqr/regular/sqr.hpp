@@ -15,24 +15,24 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::sqr return type")
+TTS_CASE_TPL("Check eve::sqr return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sqr(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::sqr(T(0)), T);
 }
 
-TTS_CASE("Check eve::sqr behavior")
+TTS_CASE_TPL("Check eve::sqr behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::sqr(EVE_TYPE(1)), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::sqr(EVE_TYPE(2)), (EVE_TYPE(4)));
+  TTS_EQUAL(eve::sqr(T(1)), T(1) );
+  TTS_EQUAL(eve::sqr(T(2)), T(4) );
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::sqr(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(4)));
+    TTS_EQUAL(eve::sqr(static_cast<T>(-2)), T(4));
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::sqr(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
+    TTS_EQUAL(eve::sqr(T(-0.)), T(0));
   }
 }
 

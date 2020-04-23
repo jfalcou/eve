@@ -18,21 +18,21 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on is_not_inf")
+TTS_CASE_TPL("wide exhaustive check on is_not_inf", EVE_TYPE)
 {
-  using l_t =  eve::as_logical_t<EVE_TYPE>;
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  using l_t =  eve::as_logical_t<T>;
+
+  if constexpr(eve::floating_value<T>)
   {
     auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return !std::isinf(e); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
   else
   {
     auto std_is_not_inf = tts::vectorize<l_t>( [](auto e) { return true; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_not_inf, eve::is_not_inf);
   }
-
-
 }

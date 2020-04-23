@@ -20,20 +20,21 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on is_even")
+TTS_CASE_TPL("wide exhaustive check on is_even", EVE_TYPE)
 {
-   using l_t = eve::as_logical_t<EVE_TYPE>;
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using l_t = eve::as_logical_t<T>;
+  using v_t = eve::element_type_t<T>;
+
+  if constexpr(eve::floating_value<T>)
   {
     auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == trunc(e/2)*2; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_even, eve::is_even);
   }
   else
   {
     auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == (e/2)*2; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_even, eve::is_even);
   }
-
 }

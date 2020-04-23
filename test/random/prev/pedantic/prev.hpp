@@ -12,28 +12,27 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/constant/nan.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide rng check on prev")
+TTS_CASE_TPL("wide rng check on prev", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_prev = tts::vectorize<EVE_TYPE>( [](auto e) { return (e == 0) && eve::is_positive(e) ? eve::Mzero<EVE_VALUE>()
-                                                  : (e ==  eve::Minf<EVE_VALUE>()) ?  eve::Nan<EVE_VALUE>() : std::nextafter(e, eve::Minf<EVE_VALUE>()); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_prev = tts::vectorize<T>( [](auto e) { return (e == 0) && eve::is_positive(e) ? v_t(-0.)
+                                                  : (e ==  eve::Minf<v_t>()) ?  eve::Nan<v_t>() : std::nextafter(e, eve::Minf<v_t>()); } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_prev, eve::pedantic_(eve::prev));
   }
   else
   {
-    auto std_prev = tts::vectorize<EVE_TYPE>( [](auto e) { return e == eve::Valmin<EVE_VALUE>() ? e : e-1; } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_prev = tts::vectorize<T>( [](auto e) { return e == eve::Valmin<v_t>() ? e : e-1; } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_prev, eve::pedantic_(eve::prev));
   }
-    
 }

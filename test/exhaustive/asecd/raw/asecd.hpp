@@ -19,13 +19,14 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide exhaustive check on asecd")
+TTS_CASE_TPL("wide exhaustive check on asecd", EVE_TYPE)
 {
-  auto std_asecd =
-      tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::acos(eve::rec(e))); });
+  using v_t = eve::element_type_t<T>;
+  auto std_asecd = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::acos(eve::rec(e))); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p1(eve::Valmin<EVE_VALUE>(), EVE_VALUE(-1));
+  eve::exhaustive_producer<T> p1(eve::Valmin<v_t>(), v_t(-1));
   TTS_ULP_RANGE_CHECK(p1, std_asecd, eve::raw_(eve::asecd), 512);
-  eve::exhaustive_producer<EVE_TYPE> p2(EVE_VALUE(1), eve::Valmax<EVE_VALUE>());
+
+  eve::exhaustive_producer<T> p2(v_t(1), eve::Valmax<v_t>());
   TTS_ULP_RANGE_CHECK(p2, std_asecd, eve::raw_(eve::asecd), 512);
 }

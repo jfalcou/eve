@@ -13,65 +13,60 @@
 #define TTS_REGISTRATION  TTS_UNIQUE(TTS_CAT(tts_registration, EVE_COUNTER))
 
 #include "test.hpp"
+#include <eve/traits/cardinal.hpp>
+#include <eve/traits/element_type.hpp>
 
 #define EVE_SIMD_TESTS
 
 #define EVE_VALUE ${target}
-#define EVE_BASE eve::wide<EVE_VALUE>
+#define EVE_BASE eve::wide<${target}>
 
 #if !defined(EVE_CUSTOM_CARDINAL)
 inline constexpr auto base_cardinal   = EVE_BASE::static_size;
-inline constexpr auto large_cardinal  = 2*EVE_BASE::static_size;
-inline constexpr auto small_cardinal  = (EVE_BASE::static_size>1) ? EVE_BASE::static_size/2 : 1;
+inline constexpr auto large_cardinal  = 2*base_cardinal;
+inline constexpr auto small_cardinal  = (base_cardinal>1) ? base_cardinal/2 : 1;
+
+#define EVE_CARDINAL ::eve::cardinal_v<T>
 
 // Native size test
-#define EVE_TYPE EVE_BASE
-#define EVE_CARDINAL base_cardinal
+#define EVE_TYPE eve::wide<${target}>
 #define EVE_COUNTER N
 #include "${header}.hpp"
-#undef EVE_CARDINAL
 #undef EVE_TYPE
 #undef EVE_COUNTER
 
-#define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CARDINAL>>
-
 // EVE_CARDINAL 1 test
-#define EVE_CARDINAL 1
+#define EVE_TYPE eve::wide<${target},eve::fixed<1>>
 #define EVE_COUNTER 1
 #include "${header}.hpp"
-#undef EVE_CARDINAL
 #undef EVE_COUNTER
+#undef EVE_TYPE
 
 // EVE_CARDINAL 2*EVE_BASE EVE_CARDINAL test
-#define EVE_CARDINAL large_cardinal
+#define EVE_TYPE eve::wide<${target},eve::fixed<large_cardinal>>
 #define EVE_COUNTER 2N
 #include "${header}.hpp"
-#undef EVE_CARDINAL
 #undef EVE_COUNTER
+#undef EVE_TYPE
 
 // EVE_CARDINAL 1/2*EVE_BASE EVE_CARDINAL test
-#define EVE_CARDINAL small_cardinal
+#define EVE_TYPE eve::wide<${target},eve::fixed<small_cardinal>>
 #define EVE_COUNTER N2
 #include "${header}.hpp"
-#undef EVE_CARDINAL
 #undef EVE_COUNTER
-
 #undef EVE_TYPE
 
 #else
 
 #if EVE_CUSTOM_CARDINAL > 0
 #define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
-#define EVE_CARDINAL EVE_CUSTOM_CARDINAL
 #else
 #define EVE_TYPE eve::wide<EVE_VALUE>
-#define EVE_CARDINAL base_cardinal
 #endif
 
 // Specific  EVE_CARDINAL test
 #define EVE_COUNTER XXX
 #include "${header}.hpp"
-#undef EVE_CARDINAL
 #undef EVE_COUNTER
 
 #endif

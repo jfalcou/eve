@@ -17,9 +17,11 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on firstbitset")
+TTS_CASE_TPL("wide random check on firstbitset", EVE_TYPE)
 {
-  auto std_firstbitset = tts::vectorize<EVE_TYPE>( [](auto e) { return e & (~e+1); } );
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+  using v_t = eve::element_type_t<T>;
+  auto std_firstbitset = tts::vectorize<T>( [](auto e) { return e & (~e+1); } );
+
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_firstbitset, eve::firstbitset);
 }

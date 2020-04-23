@@ -19,11 +19,11 @@
 using eve::fixed;
 using eve::logical;
 
-TTS_CASE("load behavior for scalar logical")
+TTS_CASE_TPL("load behavior for scalar logical", EVE_TYPE)
 {
   TTS_WHEN("A value is initialized")
   {
-    logical<EVE_TYPE> value, ref = true, data[ 1 ] = {true};
+    logical<T> value, ref = true, data[ 1 ] = {true};
 
     TTS_AND_THEN("we load a pointer to scalar")
     {

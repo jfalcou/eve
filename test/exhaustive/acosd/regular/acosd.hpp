@@ -18,10 +18,10 @@
 #include <cmath>
 #include <tts/tests/range.hpp>
 
-TTS_CASE("wide exhaustive check on acosd")
+TTS_CASE_TPL("wide exhaustive check on acosd", EVE_TYPE)
 {
-  auto std_acosd = tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::acos(e)); });
+  auto std_acosd = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::acos(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
+  eve::exhaustive_producer<T> p(-1, 1);
   TTS_RANGE_CHECK(p, std_acosd, eve::acosd);
 }
