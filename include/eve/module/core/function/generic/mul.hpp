@@ -74,7 +74,9 @@ namespace eve::detail
         using un_t = std::make_unsigned_t<T>;
         if( b == 0 || a == 0 )
           return Zero<T>();
-        T    sgn = bit_xor(bitofsign(a), bitofsign(b));
+        T sgn = bit_xor(bitofsign(a), bitofsign(b));
+        if( b == Valmin<T>() || a == Valmin<T>() )
+          return sgn ? Valmin<T>() : Valmax<T>();
         un_t aa  = eve::abs(a);
         un_t bb  = eve::abs(b);
         auto aux = [sgn](const T &mini, const T &maxi, const un_t &amini, const un_t &amaxi) {
@@ -132,7 +134,7 @@ namespace eve::detail
       }
       else
       {
-        auto that = map(eve::saturated_(eve::mul), a, b);
+        auto that = map(saturated_(eve::mul), a, b);
         return that;
       }
     }

@@ -8,7 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/constant/sqrtvalmax.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/function/mul.hpp>
+
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -20,27 +23,26 @@ TTS_CASE("Check eve::mul return type")
 
 TTS_CASE("Check eve::mul behavior")
 {
-  TTS_EQUAL(eve::mul(EVE_TYPE( 0), EVE_TYPE(1)), (EVE_TYPE(0  )));
-  TTS_EQUAL(eve::mul(EVE_TYPE( 1), EVE_TYPE(1)), (EVE_TYPE(1  )));
-  TTS_EQUAL(eve::mul(EVE_TYPE(12), EVE_TYPE(4)), (EVE_TYPE(48 )));
+  TTS_EQUAL(eve::mul(EVE_TYPE(0), EVE_TYPE(1)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::mul(EVE_TYPE(1), EVE_TYPE(1)), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::mul(EVE_TYPE(12), EVE_TYPE(4)), (EVE_TYPE(48)));
 
-  TTS_EQUAL(eve::mul(EVE_VALUE( 0), EVE_TYPE(1)), (EVE_TYPE(0  )));
-  TTS_EQUAL(eve::mul(EVE_VALUE( 1), EVE_TYPE(1)), (EVE_TYPE(1  )));
-  TTS_EQUAL(eve::mul(EVE_VALUE(12), EVE_TYPE(4)), (EVE_TYPE(48 )));
+  TTS_EQUAL(eve::mul(EVE_VALUE(0), EVE_TYPE(1)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::mul(EVE_VALUE(1), EVE_TYPE(1)), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::mul(EVE_VALUE(12), EVE_TYPE(4)), (EVE_TYPE(48)));
 
-  TTS_EQUAL(eve::mul(EVE_TYPE( 0), EVE_VALUE(1)), (EVE_TYPE(0  )));
-  TTS_EQUAL(eve::mul(EVE_TYPE( 1), EVE_VALUE(1)), (EVE_TYPE(1  )));
-  TTS_EQUAL(eve::mul(EVE_TYPE(12), EVE_VALUE(4)), (EVE_TYPE(48 )));
-
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  TTS_EQUAL(eve::mul(EVE_TYPE(0), EVE_VALUE(1)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::mul(EVE_TYPE(1), EVE_VALUE(1)), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::mul(EVE_TYPE(12), EVE_VALUE(4)), (EVE_TYPE(48)));
+  if constexpr( std::is_signed_v<EVE_VALUE> )
   {
-    TTS_EQUAL(eve::mul(EVE_TYPE(-1), EVE_TYPE(1)) , (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::mul(EVE_TYPE(-1), EVE_TYPE(1)), (EVE_TYPE(-1)));
     TTS_EQUAL(eve::mul(EVE_TYPE(-6), EVE_TYPE(-2)), (EVE_TYPE(12)));
 
-    TTS_EQUAL(eve::mul(EVE_VALUE(-1), EVE_TYPE(1)) , (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::mul(EVE_VALUE(-1), EVE_TYPE(1)), (EVE_TYPE(-1)));
     TTS_EQUAL(eve::mul(EVE_VALUE(-6), EVE_TYPE(-2)), (EVE_TYPE(12)));
 
-    TTS_EQUAL(eve::mul(EVE_TYPE(-1), EVE_VALUE(1)) , (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::mul(EVE_TYPE(-1), EVE_VALUE(1)), (EVE_TYPE(-1)));
     TTS_EQUAL(eve::mul(EVE_TYPE(-6), EVE_VALUE(-2)), (EVE_TYPE(12)));
   }
 }

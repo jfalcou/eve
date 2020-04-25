@@ -53,7 +53,6 @@ namespace eve::detail
       }
     }
     else      {
-      std::cout << "satrated apply_over" << std::endl;
         return apply_over(saturated_(inc), a);
     }
   }

@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/add.hpp>
+
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -20,19 +21,19 @@ TTS_CASE("Check eve::add return type")
 
 TTS_CASE("Check eve::add behavior")
 {
-  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_TYPE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_TYPE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_TYPE{2}), EVE_TYPE(4));
+  TTS_EQUAL(eve::add(EVE_TYPE {0}, EVE_TYPE {0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_TYPE {1}, EVE_TYPE {1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_TYPE {2}, EVE_TYPE {2}), EVE_TYPE(4));
 
-  TTS_EQUAL(eve::add(EVE_VALUE{0}, EVE_TYPE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_VALUE{1}, EVE_TYPE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_VALUE{2}, EVE_TYPE{2}), EVE_TYPE(4));
+  TTS_EQUAL(eve::add(EVE_VALUE {0}, EVE_TYPE {0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_VALUE {1}, EVE_TYPE {1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_VALUE {2}, EVE_TYPE {2}), EVE_TYPE(4));
 
-  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_VALUE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_VALUE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_VALUE{2}), EVE_TYPE(4));
+  TTS_EQUAL(eve::add(EVE_TYPE {0}, EVE_VALUE {0}), EVE_TYPE(0));
+  TTS_EQUAL(eve::add(EVE_TYPE {1}, EVE_VALUE {1}), EVE_TYPE(2));
+  TTS_EQUAL(eve::add(EVE_TYPE {2}, EVE_VALUE {2}), EVE_TYPE(4));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr( std::is_signed_v<EVE_VALUE> )
   {
     TTS_EQUAL(eve::add(EVE_TYPE(-1), EVE_TYPE(1)), EVE_TYPE(0));
     TTS_EQUAL(eve::add(EVE_TYPE(-2), EVE_TYPE(-6)), EVE_TYPE(-8));
