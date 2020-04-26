@@ -11,11 +11,12 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_FMA_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_FMA_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/forward.hpp>
+
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -25,19 +26,23 @@ namespace eve::detail
                                         wide<T, N, ppc_> const &v1,
                                         wide<T, N, ppc_> const &v2) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) return vec_madd(v0.storage(), v1.storage(), v2.storage());
-    else                                      return v0.storage() * v1.storage() + v2.storage();
+    if constexpr( std::is_floating_point_v<T> )
+      return vec_madd(v0.storage(), v1.storage(), v2.storage());
+    else
+      return v0.storage() * v1.storage() + v2.storage();
   }
 
-  template<typename D, typename real_scalar_value, typename N>
+  template<decorator D, typename real_scalar_value, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> fma_(EVE_SUPPORTS(vmx_),
                                         D const &,
                                         wide<T, N, ppc_> const &v0,
                                         wide<T, N, ppc_> const &v1,
                                         wide<T, N, ppc_> const &v2) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>) return vec_madd(v0.storage(), v1.storage(), v2.storage());
-    else                                      return v0.storage() * v1.storage() + v2.storage();
+    if constexpr( std::is_floating_point_v<T> )
+      return vec_madd(v0.storage(), v1.storage(), v2.storage());
+    else
+      return v0.storage() * v1.storage() + v2.storage();
   }
 }
 

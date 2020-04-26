@@ -11,13 +11,14 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_FNMS_HPP_INCLUDED
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 #include <eve/function/fms.hpp>
+
 #include <type_traits>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -27,24 +28,31 @@ namespace eve::detail
                                          wide<T, N, sse_> const &b,
                                          wide<T, N, sse_> const &c) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( std::is_floating_point_v<T> )
     {
-      if constexpr(supports_fma4)
+      if constexpr( supports_fma4 )
       {
-        if constexpr(std::is_same_v<T, double>)     return _mm_nmacc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>) return _mm_nmacc_ps(a, b, c);
+        if constexpr( std::is_same_v<T, double> )
+          return _mm_nmacc_pd(a, b, c);
+        else if constexpr( std::is_same_v<T, float> )
+          return _mm_nmacc_ps(a, b, c);
       }
-      else                                          return fms(-a, b, c);
+      else
+        return fms(-a, b, c);
     }
     else
     {
-      if constexpr(supports_xop)
+      if constexpr( supports_xop )
       {
-        if constexpr(std::is_integral_v<T> && sizeof(T) == 2)      return _mm_nmacc_epi16(a, b, c);
-        else if constexpr(std::is_integral_v<T> && sizeof(T) == 4) return _mm_nmacc_epi32(a, b, c);
-        else                                                       return fms(-a, b, c);
+        if constexpr( std::is_integral_v<T> && sizeof(T) == 2 )
+          return _mm_nmacc_epi16(a, b, c);
+        else if constexpr( std::is_integral_v<T> && sizeof(T) == 4 )
+          return _mm_nmacc_epi32(a, b, c);
+        else
+          return fms(-a, b, c);
       }
-      else                                                         return fms(-a, b, c);
+      else
+        return fms(-a, b, c);
     }
   }
 
@@ -54,65 +62,80 @@ namespace eve::detail
                                          wide<T, N, avx_> const &b,
                                          wide<T, N, avx_> const &c) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( std::is_floating_point_v<T> )
     {
-      if constexpr(supports_fma4)
+      if constexpr( supports_fma4 )
       {
-        if constexpr(std::is_same_v<T, double>)     return _mm256_nmacc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>) return _mm256_nmacc_ps(a, b, c);
+        if constexpr( std::is_same_v<T, double> )
+          return _mm256_nmacc_pd(a, b, c);
+        else if constexpr( std::is_same_v<T, float> )
+          return _mm256_nmacc_ps(a, b, c);
       }
-        else                                        return fms(-a, b, c);
+      else
+        return fms(-a, b, c);
     }
-      else                                          return fms(-a, b, c);
+    else
+      return fms(-a, b, c);
   }
 
   /////////////////////////////////////////////////////////////////////////////////
   /// pedantic_ numeric_
-  template<typename D, real_scalar_value T, typename N>
+  template<decorator D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> fnms_(EVE_SUPPORTS(avx2_),
                                          D const &,
                                          wide<T, N, sse_> const &a,
                                          wide<T, N, sse_> const &b,
                                          wide<T, N, sse_> const &c) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( std::is_floating_point_v<T> )
     {
-      if constexpr(supports_fma4)
+      if constexpr( supports_fma4 )
       {
-        if constexpr(std::is_same_v<T, double>)     return _mm_nmacc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>) return _mm_nmacc_ps(a, b, c);
+        if constexpr( std::is_same_v<T, double> )
+          return _mm_nmacc_pd(a, b, c);
+        else if constexpr( std::is_same_v<T, float> )
+          return _mm_nmacc_ps(a, b, c);
       }
-      else                                          return D()(fms)(-a, b, c);
+      else
+        return D()(fms)(-a, b, c);
     }
     else
     {
-      if constexpr(supports_xop)
+      if constexpr( supports_xop )
       {
-        if constexpr(std::is_integral_v<T> && sizeof(T) == 2)      return _mm_nmacc_epi16(a, b, c);
-        else if constexpr(std::is_integral_v<T> && sizeof(T) == 4) return _mm_nmacc_epi32(a, b, c);
-        else                                                       return D()(fms)(-a, b, c);
+        if constexpr( std::is_integral_v<T> && sizeof(T) == 2 )
+          return _mm_nmacc_epi16(a, b, c);
+        else if constexpr( std::is_integral_v<T> && sizeof(T) == 4 )
+          return _mm_nmacc_epi32(a, b, c);
+        else
+          return D()(fms)(-a, b, c);
       }
-      else                                                         return D()(fms)(-a, b, c);
+      else
+        return D()(fms)(-a, b, c);
     }
   }
 
-  template<typename D, real_scalar_value T, typename N>
+  template<decorator D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fnms_(EVE_SUPPORTS(avx2_),
-                                        D const & deco,
+                                         D const &               deco,
                                          wide<T, N, avx_> const &a,
                                          wide<T, N, avx_> const &b,
                                          wide<T, N, avx_> const &c) noexcept
   {
-    if constexpr(std::is_floating_point_v<T>)
+    if constexpr( std::is_floating_point_v<T> )
     {
-      if constexpr(supports_fma4)
+      if constexpr( supports_fma4 )
       {
-        if constexpr(std::is_same_v<T, double>)     return _mm256_nmacc_pd(a, b, c);
-        else if constexpr(std::is_same_v<T, float>) return _mm256_nmacc_ps(a, b, c);
+        if constexpr( std::is_same_v<T, double> )
+          return _mm256_nmacc_pd(a, b, c);
+        else if constexpr( std::is_same_v<T, float> )
+          return _mm256_nmacc_ps(a, b, c);
       }
-      else                                          return D()(fms)(-a, b, c);
+      else
+        return D()(fms)(-a, b, c);
     }
-    else                                            return D()(fms)(-a, b, c);
+    else
+      return D()(fms)(-a, b, c);
   }
 
 }

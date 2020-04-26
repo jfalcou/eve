@@ -27,7 +27,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, typename D>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto arg_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
       requires(contains<D>(types<regular_type, pedantic_type> {}))
   {

@@ -11,36 +11,35 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SECPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_SECPI_HPP_INCLUDED
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/module/core/detail/generic/trig_finalize.hpp>
-#include <eve/module/core/detail/generic/rem2.hpp>
-#include <eve/function/trigo_tags.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/quadrant.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_finite.hpp>
+#include <eve/function/is_not_finite.hpp>
+#include <eve/function/is_not_less_equal.hpp>
+#include <eve/function/quadrant.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sqr.hpp>
+#include <eve/function/trigo_tags.hpp>
+#include <eve/module/core/detail/generic/rem2.hpp>
+#include <eve/module/core/detail/generic/trig_finalize.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_)
-                                      , restricted_type const &
-                                      , T a0) noexcept
+  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_), restricted_type const &, T a0) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
-      auto x = abs(a0);
+      auto x    = abs(a0);
       auto test = is_not_less_equal(x, T(0.25));
-      if constexpr(scalar_value<T>)
+      if constexpr( scalar_value<T> )
       {
-        if (test) return Nan<T>();
+        if( test )
+          return Nan<T>();
       }
       else
       {
@@ -57,25 +56,25 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_value T,  typename D>
-  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_)
-                                      , D const &
-                                      , T a0) noexcept
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
-      const T x =  abs(a0);
-      if constexpr(scalar_value<T>)
+      const T x = abs(a0);
+      if constexpr( scalar_value<T> )
       {
-        if (is_not_finite(x))  return Nan<T>();
-        if (x > Maxflint<T>()) return T(1);
+        if( is_not_finite(x) )
+          return Nan<T>();
+        if( x > Maxflint<T>() )
+          return T(1);
       }
 
-      auto [fn, xr, dxr] =  rem2(x);
-      T z = cos_finalize(quadrant(fn), xr, dxr);
-      if constexpr(scalar_value<T>)
+      auto [fn, xr, dxr] = rem2(x);
+      T z                = cos_finalize(quadrant(fn), xr, dxr);
+      if constexpr( scalar_value<T> )
       {
-        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : Nan<T>() ;
+        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : Nan<T>();
       }
       else
       {
@@ -89,10 +88,9 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_)
-                                     , T a0) noexcept
+  EVE_FORCEINLINE constexpr auto secpi_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
       return big_(secpi)(a0);
     }
@@ -101,7 +99,6 @@ namespace eve::detail
       return apply_over(secpi, a0);
     }
   }
-
 
 }
 

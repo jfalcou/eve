@@ -11,21 +11,18 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_SEC_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_SEC_HPP_INCLUDED
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/cos.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-
-  template<floating_real_value T,  typename D>
-  EVE_FORCEINLINE constexpr auto sec_(EVE_SUPPORTS(cpu_)
-                                      , D const &
-                                      , T a0) noexcept
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto sec_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
       return rec(D()(eve::cos)(a0));
     }
@@ -36,10 +33,9 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sec_(EVE_SUPPORTS(cpu_)
-                                     , T a0) noexcept
+  EVE_FORCEINLINE constexpr auto sec_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
       return rec(eve::cos(a0));
     }
@@ -48,7 +44,6 @@ namespace eve::detail
       return apply_over(sec, a0);
     }
   }
-
 
 }
 

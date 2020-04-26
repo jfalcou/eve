@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, typename D>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto cotd_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )

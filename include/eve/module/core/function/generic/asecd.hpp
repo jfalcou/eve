@@ -18,12 +18,12 @@
 #include <eve/function/asec.hpp>
 #include <eve/function/indeg.hpp>
 #include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, typename D>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
-      requires(contains<D>(types<regular_type(), raw_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {

@@ -21,27 +21,26 @@
 
 namespace eve::detail
 {
-  template<real_value T,  typename D>
+  template<real_value T, decorator D>
   EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     return rec(a0);
   }
 
-  template<real_value T>
-  EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_), T a) noexcept
+  template<real_value T> EVE_FORCEINLINE constexpr T rec_(EVE_SUPPORTS(cpu_), T a) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( has_native_abi_v<T> )
     {
-      if constexpr(floating_real_value<T>)
+      if constexpr( floating_real_value<T> )
       {
-        return T{1} / a;
+        return T {1} / a;
       }
-      else if(integral_value<T>)
+      else if( integral_value<T> )
       {
-        if constexpr(scalar_value<T>)
+        if constexpr( scalar_value<T> )
         {
           // Generates a branch-less rec by triggering the use of conditional moves
-          if(std::is_unsigned_v<T>)
+          if( std::is_unsigned_v<T> )
           {
             auto b = a > 1 ? 0 : 1;
             return (a ? 1 : Valmax(as(a))) * b;
@@ -57,10 +56,10 @@ namespace eve::detail
         }
         else
         {
-          if(std::is_unsigned_v<T>)
+          if( std::is_unsigned_v<T> )
           {
-            return if_else(is_eqz(a), Valmax(as(a)),
-                           if_else(eve::abs(a) == One(as(a)), a, eve::zero_));
+            return if_else(
+                is_eqz(a), Valmax(as(a)), if_else(eve::abs(a) == One(as(a)), a, eve::zero_));
           }
           else
           {
@@ -74,7 +73,6 @@ namespace eve::detail
       return apply_over(rec, a);
     }
   }
-
 
 }
 

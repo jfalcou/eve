@@ -13,8 +13,8 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/meta/traits.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/inpi.hpp>
@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, typename D>
+  template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto
   acospi_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
       requires(contains<D>(types<regular_type, raw_type> {}))
