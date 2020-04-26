@@ -21,10 +21,16 @@ namespace eve::detail
   template<floating_real_value T, typename D>
   EVE_FORCEINLINE constexpr auto tand_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
+    using elt_t         = element_type_t<T>;
+    const double inv180 = 5.5555555555555555555555555555555555555555555555555e-3;
+    if constexpr( std::is_same_v<elt_t, double> )
     {
-      const T inv180 = T(5.5555555555555555555555555555555555555555555555555e-3);
       return D()(tanpi)(a0 * inv180);
+    }
+    else if constexpr( std::is_same_v<elt_t, float> )
+    {
+      auto tmp = convert(convert(a0, double_) * inv180, single_);
+      return D()(tanpi)(tmp);
     }
     else
       return apply_over(D()(tand), a0);

@@ -14,7 +14,10 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/convert.hpp>
 #include <eve/function/sinpicospi.hpp>
+
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -23,8 +26,17 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      const T inv180 = T(5.5555555555555555555555555555555555555555555555555e-3);
-      return D()(sinpicospi)(a0 * inv180);
+      using elt_t         = element_type_t<T>;
+      const double inv180 = 5.5555555555555555555555555555555555555555555555555e-3;
+      if constexpr( std::is_same_v<elt_t, double> )
+      {
+        return D()(sinpicospi)(a0 * inv180);
+      }
+      else if constexpr( std::is_same_v<elt_t, float> )
+      {
+        auto tmp = convert(convert(a0, double_) * inv180, single_);
+        return D()(sinpicospi)(tmp);
+      }
     }
     else
       return apply_over2(D()(sindcosd), a0);

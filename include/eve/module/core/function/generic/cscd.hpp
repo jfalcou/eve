@@ -14,7 +14,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/cscpi.hpp>
+#include <eve/function/rec.hpp>
+#include <eve/function/sind.hpp>
 
 namespace eve::detail
 {
@@ -23,8 +24,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      const T inv180 = T(5.5555555555555555555555555555555555555555555555555e-3);
-      return D()(cscpi)(a0 * inv180);
+      return rec(D()(sind)(a0));
     }
     else
       return apply_over(D()(cscd), a0);
