@@ -27,8 +27,6 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sinpi) return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::eve::sinpi behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::sinpi)(eve::Nan<T>()) , eve::Nan<T>() );

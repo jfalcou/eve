@@ -16,7 +16,7 @@
 #include <tts/tests/types.hpp>
 #include <cstddef>
 
-TTS_CASE("Check nan return type")
+TTS_CASE_TPL("Check nan return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::Nan<float>(), float);
   TTS_EXPR_IS(eve::Nan<double>(), double);
@@ -32,7 +32,7 @@ TTS_CASE("Check nan return type")
   TTS_EXPR_IS(eve::Nan<std::uint64_t>(), std::uint64_t);
 }
 
-TTS_CASE("Check nan behavior")
+TTS_CASE_TPL("Check nan behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::Nan<std::uint8_t>(), std::uint8_t(0));
   TTS_EQUAL(eve::Nan<std::uint16_t>(), std::uint16_t(0));

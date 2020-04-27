@@ -22,22 +22,22 @@
 #include <eve/function/is_negative.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::exp return type")
+TTS_CASE_TPL("Check eve::exp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::exp(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::exp(T(0)), T);
 }
 
-TTS_CASE("Check eve::exp behavior")
+TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
 {
-  
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::exp(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::exp(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::exp(eve::Minf<EVE_TYPE>()), (eve::Zero<EVE_TYPE>()) ); 
+    TTS_IEEE_EQUAL(eve::exp(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::exp(eve::Inf<T>()) , (eve::Inf<T>()) );
+    TTS_IEEE_EQUAL(eve::exp(eve::Minf<T>()), (T( 0 )) );
   }
-  TTS_ULP_EQUAL(eve::exp(EVE_TYPE(1)), EVE_TYPE(std::exp(EVE_VALUE(1))), 0.5);
-  TTS_ULP_EQUAL(eve::exp(EVE_TYPE(-1)),EVE_TYPE(std::exp(EVE_VALUE(-1))), 0.5); 
-  TTS_IEEE_EQUAL((eve::exp(EVE_TYPE(0))), (EVE_TYPE(1)));
-  TTS_IEEE_EQUAL((eve::exp(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(1)));
+  TTS_ULP_EQUAL(eve::exp(T(1)), T(std::exp(v_t(1))), 0.5);
+  TTS_ULP_EQUAL(eve::exp(T(-1)),T(std::exp(v_t(-1))), 0.5);
+  TTS_IEEE_EQUAL((eve::exp(T(0))), (T(1)));
+  TTS_IEEE_EQUAL((eve::exp(T(-0.))), (T(1)));
   }

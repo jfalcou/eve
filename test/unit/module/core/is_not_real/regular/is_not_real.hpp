@@ -20,15 +20,15 @@
 #include <eve/traits/as_logical.hpp>
 #include <type_traits>
 
-TTS_CASE("Check is_not_real return type")
+TTS_CASE_TPL("Check is_not_real return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_not_real(EVE_TYPE(0)), eve::as_logical_t<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_not_real(T(0)), eve::as_logical_t<T>);
 }
 
-TTS_CASE("Check eve::is_not_real behavior")
+TTS_CASE_TPL("Check eve::is_not_real behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_not_real(EVE_TYPE{0}), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_real(EVE_TYPE{2}), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_not_real(T{0}), eve::False<T>());
+  TTS_EQUAL(eve::is_not_real(T{2}), eve::False<T>());
 }
 
 #endif

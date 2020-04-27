@@ -14,7 +14,7 @@
 #include <tts/tests/types.hpp>
 #include <cstddef>
 
-TTS_CASE("Check inf return type")
+TTS_CASE_TPL("Check inf return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::Inf<float>(), float);
   TTS_EXPR_IS(eve::Inf<double>(), double);
@@ -30,7 +30,7 @@ TTS_CASE("Check inf return type")
   TTS_EXPR_IS(eve::Inf<std::uint64_t>(), std::uint64_t);
 }
 
-TTS_CASE("Check inf behavior")
+TTS_CASE_TPL("Check inf behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::Inf<std::uint8_t>(), std::uint8_t(0xFF));
   TTS_EQUAL(eve::Inf<std::uint16_t>(), std::uint16_t(0xFFFF));

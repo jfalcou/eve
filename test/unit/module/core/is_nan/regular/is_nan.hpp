@@ -16,18 +16,18 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::is_nan return type")
+TTS_CASE_TPL("Check eve::is_nan return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_nan(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_nan(T(0)), (eve::logical<T>));
 }
 
-TTS_CASE("Check eve::is_nan behavior")
+TTS_CASE_TPL("Check eve::is_nan behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_nan(EVE_TYPE(0)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_nan(EVE_TYPE(2)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_nan(T(0)), eve::False<T>());
+  TTS_EQUAL(eve::is_nan(T(2)), eve::False<T>());
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_nans)
+  if constexpr(eve::floating_value<T> && eve::platform::supports_nans)
   {
-    TTS_EQUAL(eve::is_nan(eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_nan(eve::Nan<T>()), eve::True<T>());
   }
 }

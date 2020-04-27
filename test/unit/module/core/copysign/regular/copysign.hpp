@@ -15,24 +15,24 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 
-TTS_CASE("Check eve::copysign return type")
+TTS_CASE_TPL("Check eve::copysign return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::copysign(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::copysign(EVE_TYPE(), EVE_VALUE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::copysign(T(), T()), T);
+  TTS_EXPR_IS(eve::copysign(T(), v_t()), T);
 }
 
-TTS_CASE("Check eve::copysign behavior")
+TTS_CASE_TPL("Check eve::copysign behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), eve::Mzero<EVE_TYPE>()), (EVE_TYPE(-1.)));
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))        ), (EVE_TYPE(1.)));
-  TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
-  
-  TTS_EQUAL(eve::copysign((EVE_TYPE(0.)) , (EVE_TYPE(0.))) , (EVE_TYPE(0.))  );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(0.))) , (EVE_TYPE(1.))  );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(1.))), (EVE_TYPE(1.)) );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))), (EVE_TYPE(1.)) );
-  TTS_EQUAL(eve::copysign((EVE_TYPE(0.)), (EVE_TYPE(0.))), (EVE_TYPE(0.)) );
+  TTS_EQUAL(eve::copysign((T(1.)), T(-0.)), (T(-1.)));
+  TTS_EQUAL(eve::copysign((T(1.)), (T(0.))        ), (T(1.)));
+  TTS_EQUAL(eve::copysign((T(-1.)), (T(-1.)) ) , (T(-1.)) );
+  TTS_EQUAL(eve::copysign((T(-1.)), (T(1.))  ) , (T(1.))  );
+  TTS_EQUAL(eve::copysign((T(1.)) , (T(1.))  ) , (T(1.))  );
+  TTS_EQUAL(eve::copysign((T(1.)) , (T(-1.)) ) , (T(-1.)) );
+
+  TTS_EQUAL(eve::copysign((T(0.)) , (T(0.))) , (T(0.))  );
+  TTS_EQUAL(eve::copysign((T(-1.)), (T(0.))) , (T(1.))  );
+  TTS_EQUAL(eve::copysign((T(1.)), (T(1.))), (T(1.)) );
+  TTS_EQUAL(eve::copysign((T(1.)), (T(0.))), (T(1.)) );
+  TTS_EQUAL(eve::copysign((T(0.)), (T(0.))), (T(0.)) );
 }

@@ -15,24 +15,24 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::oneminus return type")
+TTS_CASE_TPL("Check eve::oneminus return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::oneminus(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::oneminus(T(0)), T);
 }
 
-TTS_CASE("Check eve::oneminus behavior")
+TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::oneminus(EVE_TYPE(1)), (EVE_TYPE(0)));
+  TTS_EQUAL(eve::oneminus(T(1)), (T(0)));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::oneminus(EVE_TYPE(2))              , (EVE_TYPE(-1)));
-    TTS_EQUAL(eve::oneminus(static_cast<EVE_TYPE>(-2)), (EVE_TYPE( 3)));
+    TTS_EQUAL(eve::oneminus(T(2))              , (T(-1)));
+    TTS_EQUAL(eve::oneminus(static_cast<T>(-2)), (T( 3)));
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::oneminus(eve::Mzero<EVE_TYPE>()) , (EVE_TYPE(1)));
-    TTS_EQUAL(eve::oneminus((EVE_TYPE(0)))          , (EVE_TYPE(1)));
+    TTS_EQUAL(eve::oneminus(T(-0.)) , (T(1)));
+    TTS_EQUAL(eve::oneminus((T(0)))          , (T(1)));
   }
 }

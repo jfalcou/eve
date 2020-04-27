@@ -15,62 +15,62 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::is_greater return type")
+TTS_CASE_TPL("Check eve::is_greater return type", EVE_TYPE)
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_greater(EVE_TYPE() , EVE_TYPE() ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS(eve::is_greater(EVE_TYPE() , EVE_VALUE()), (logical<EVE_TYPE>));
-  TTS_EXPR_IS(eve::is_greater(EVE_VALUE(), EVE_TYPE() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_greater(T() , T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_greater(T() , v_t()), (logical<T>));
+  TTS_EXPR_IS(eve::is_greater(v_t(), T() ), (logical<T>));
 }
 
 #if defined(EVE_SIMD_TESTS)
-TTS_CASE("Check eve::operator> return type")
+TTS_CASE_TPL("Check eve::operator> return type", EVE_TYPE)
 {
   using eve::logical;
 
-  TTS_EXPR_IS((EVE_TYPE()   > EVE_TYPE() ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((EVE_TYPE()   > EVE_VALUE()), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((EVE_VALUE()  > EVE_TYPE() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((T()   > T() ), (logical<T>));
+  TTS_EXPR_IS((T()   > v_t()), (logical<T>));
+  TTS_EXPR_IS((v_t()  > T() ), (logical<T>));
 }
 #endif
 
-TTS_CASE("Check eve::operator> behavior")
+TTS_CASE_TPL("Check eve::operator> behavior", EVE_TYPE)
 {
   using eve::logical;
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL((eve::Nan<EVE_TYPE>() > eve::Nan<EVE_TYPE>()) , eve::False<EVE_TYPE>());
-    TTS_EQUAL((eve::Nan<EVE_TYPE>() > EVE_TYPE(4))          , eve::False<EVE_TYPE>());
+    TTS_EQUAL((eve::Nan<T>() > eve::Nan<T>()) , eve::False<T>());
+    TTS_EQUAL((eve::Nan<T>() > T(4))          , eve::False<T>());
   }
 
-  TTS_EQUAL( (EVE_TYPE(1)   > EVE_TYPE(1) ) , eve::False<EVE_TYPE>());
-  TTS_EQUAL( (EVE_VALUE(1)  > EVE_TYPE(1) ) , eve::False<EVE_TYPE>());
-  TTS_EQUAL( (EVE_TYPE(1)   > EVE_VALUE(1)) , eve::False<EVE_TYPE>());
-  TTS_EQUAL( (EVE_TYPE(3)   > EVE_TYPE(1) ) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL( (EVE_VALUE(3)  > EVE_TYPE(1) ) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL( (EVE_TYPE(3)   > EVE_VALUE(1)) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL( (EVE_TYPE(1)   > EVE_TYPE(3) ) , eve::False<EVE_TYPE>());
-  TTS_EQUAL( (EVE_VALUE(1)  > EVE_TYPE(3) ) , eve::False<EVE_TYPE>());
-  TTS_EQUAL( (EVE_TYPE(1)   > EVE_VALUE(3)) , eve::False<EVE_TYPE>());
+  TTS_EQUAL( (T(1)   > T(1) ) , eve::False<T>());
+  TTS_EQUAL( (v_t(1)  > T(1) ) , eve::False<T>());
+  TTS_EQUAL( (T(1)   > v_t(1)) , eve::False<T>());
+  TTS_EQUAL( (T(3)   > T(1) ) , eve::True<T>() );
+  TTS_EQUAL( (v_t(3)  > T(1) ) , eve::True<T>() );
+  TTS_EQUAL( (T(3)   > v_t(1)) , eve::True<T>() );
+  TTS_EQUAL( (T(1)   > T(3) ) , eve::False<T>());
+  TTS_EQUAL( (v_t(1)  > T(3) ) , eve::False<T>());
+  TTS_EQUAL( (T(1)   > v_t(3)) , eve::False<T>());
 }
 
-TTS_CASE("Check eve::is_greater behavior")
+TTS_CASE_TPL("Check eve::is_greater behavior", EVE_TYPE)
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_greater(EVE_TYPE(1), eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_greater(eve::Nan<EVE_TYPE>(), EVE_TYPE(1)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_greater(T(1), eve::Nan<T>()), eve::False<T>());
+    TTS_EQUAL(eve::is_greater(eve::Nan<T>(), T(1)), eve::False<T>());
   }
 
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(1) , EVE_TYPE(1) ), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(1) , EVE_VALUE(1)), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_greater(EVE_VALUE(1), EVE_TYPE(1) ), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(3) , EVE_TYPE(1) ), eve::True<EVE_TYPE>()  );
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(3) , EVE_VALUE(1)), eve::True<EVE_TYPE>()  );
-  TTS_EQUAL(eve::is_greater(EVE_VALUE(3), EVE_TYPE(1) ), eve::True<EVE_TYPE>()  );
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(1) , EVE_TYPE(3) ), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_greater(EVE_TYPE(1) , EVE_VALUE(3)), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_greater(EVE_VALUE(1), EVE_TYPE(3) ), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_greater(T(1) , T(1) ), eve::False<T>() );
+  TTS_EQUAL(eve::is_greater(T(1) , v_t(1)), eve::False<T>() );
+  TTS_EQUAL(eve::is_greater(v_t(1), T(1) ), eve::False<T>() );
+  TTS_EQUAL(eve::is_greater(T(3) , T(1) ), eve::True<T>()  );
+  TTS_EQUAL(eve::is_greater(T(3) , v_t(1)), eve::True<T>()  );
+  TTS_EQUAL(eve::is_greater(v_t(3), T(1) ), eve::True<T>()  );
+  TTS_EQUAL(eve::is_greater(T(1) , T(3) ), eve::False<T>() );
+  TTS_EQUAL(eve::is_greater(T(1) , v_t(3)), eve::False<T>() );
+  TTS_EQUAL(eve::is_greater(v_t(1), T(3) ), eve::False<T>() );
 }

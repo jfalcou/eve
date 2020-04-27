@@ -14,33 +14,33 @@
 #include <eve/constant/mone.hpp>
 #include <type_traits>
 
-TTS_CASE("Check rem return type")
+TTS_CASE_TPL("Check rem return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_TYPE() ), (EVE_TYPE));
-  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_VALUE() ), (EVE_TYPE));
-  TTS_EXPR_IS(eve::rem(EVE_VALUE(), EVE_TYPE() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::rem(T(), T() ), T);
+  TTS_EXPR_IS(eve::rem(T(), v_t() ), T);
+  TTS_EXPR_IS(eve::rem(v_t(), T() ), T);
 }
 
-TTS_CASE("Check eve::rem behavior")
+TTS_CASE_TPL("Check eve::rem behavior", EVE_TYPE)
 {
-  if constexpr(std::is_integral_v<EVE_VALUE> && std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::integral_value<T> && eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_VALUE>() , EVE_TYPE{2} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_TYPE{3} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_VALUE(-4) , EVE_TYPE{3} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_VALUE{3}), EVE_TYPE(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<T>()  , T{2} ), T(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<v_t>() , T{2} ), T(-1));
+    TTS_EQUAL(eve::rem(eve::Mone<T>()  , v_t{2}), T(-1));
+    TTS_EQUAL(eve::rem(T(-4)  , T{3} ), T(-1));
+    TTS_EQUAL(eve::rem(v_t(-4) , T{3} ), T(-1));
+    TTS_EQUAL(eve::rem(T(-4)  , v_t{3}), T(-1));
   }
-  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_TYPE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_TYPE{3}), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(T{12}, T{4}), T{0});
+  TTS_EQUAL(eve::rem(T{1} , T{2}), T(1));
+  TTS_EQUAL(eve::rem(T{4} , T{3}), T(1));
 
-  TTS_EQUAL(eve::rem(EVE_VALUE{12}, EVE_TYPE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_VALUE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_VALUE{4} , EVE_TYPE{3}), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(v_t{12}, T{4}), T{0});
+  TTS_EQUAL(eve::rem(v_t{1} , T{2}), T(1));
+  TTS_EQUAL(eve::rem(v_t{4} , T{3}), T(1));
 
-  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_VALUE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_VALUE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_VALUE{3}), EVE_TYPE(1));
+  TTS_EQUAL(eve::rem(T{12}, v_t{4}), T{0});
+  TTS_EQUAL(eve::rem(T{1} , v_t{2}), T(1));
+  TTS_EQUAL(eve::rem(T{4} , v_t{3}), T(1));
 }

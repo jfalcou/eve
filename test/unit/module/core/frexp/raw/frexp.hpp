@@ -13,16 +13,16 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check frexp return type")
+TTS_CASE_TPL("Check frexp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::raw_(eve::frexp)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
+  TTS_EXPR_IS(eve::raw_(eve::frexp)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE("Check eve::raw_(eve::frexp) behavior")
+TTS_CASE_TPL("Check eve::raw_(eve::frexp) behavior", EVE_TYPE)
 {
-  auto [p0, p1] = eve::raw_(eve::frexp)(EVE_TYPE(1));
-  TTS_EQUAL(p0, EVE_TYPE(0.5));
-  TTS_EQUAL(p1, EVE_TYPE(1));
+  auto [p0, p1] = eve::raw_(eve::frexp)(T(1));
+  TTS_EQUAL(p0, T(0.5));
+  TTS_EQUAL(p1, T(1));
 
 
 }

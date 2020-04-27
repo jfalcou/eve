@@ -21,28 +21,31 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::acotpi return type") { TTS_EXPR_IS(eve::acotpi(EVE_TYPE(0)), (EVE_TYPE)); }
+TTS_CASE_TPL("Check eve::acotpi return type", EVE_TYPE)
+{
+  TTS_EXPR_IS(eve::acotpi(T(0)), T);
+}
 
-TTS_CASE("Check eve::acotpi behavior")
+TTS_CASE_TPL("Check eve::acotpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acotpi(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::acotpi(eve::Nan<T>()), eve::Nan<T>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acotpi(eve::Inf<EVE_TYPE>()), EVE_TYPE(0), 0);
-    TTS_ULP_EQUAL(eve::acotpi(eve::Minf<EVE_TYPE>()), EVE_TYPE(0), 0);
+    TTS_ULP_EQUAL(eve::acotpi(eve::Inf<T>()),  T(0), 0);
+    TTS_ULP_EQUAL(eve::acotpi(eve::Minf<T>()), T(0), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acotpi(EVE_TYPE(0.5)), eve::radinpi(EVE_TYPE(1.107148717794090e+00)), 1.5);
-  TTS_ULP_EQUAL(eve::acotpi(EVE_TYPE(-0.5)), eve::radinpi(EVE_TYPE(-1.107148717794090e+00)), 1.5);
-  TTS_ULP_EQUAL(eve::acotpi(EVE_TYPE(-1.)), EVE_TYPE(-0.25), 0.5);
-  TTS_ULP_EQUAL(eve::acotpi(EVE_TYPE(1.)), EVE_TYPE(0.25), 0.5);
-  TTS_ULP_EQUAL(eve::acotpi(EVE_TYPE(0.)), EVE_TYPE(0.5), 0.5);
+  TTS_ULP_EQUAL(eve::acotpi(T( 0.5)) , eve::inpi(T(1.107148717794090e+00))  , 1.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T(-0.5)) , eve::inpi(T(-1.107148717794090e+00)) , 1.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T(-1. )) , T(-0.25)                             , 0.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T( 1. )) , T( 0.25)                             , 0.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T( 0. )) , T( 0.5 )                             , 0.5 );
 
-  auto inv_smallest = eve::rec(eve::Smallestposval<EVE_TYPE>());
-  TTS_ULP_EQUAL(eve::acotpi(eve::Mzero<EVE_TYPE>()), EVE_TYPE(-0.5), 0.5);
-  TTS_ULP_EQUAL(eve::acotpi(inv_smallest), eve::radinpi(eve::Smallestposval<EVE_TYPE>()), 0.5);
+  auto inv_smallest = eve::rec(eve::Smallestposval<T>());
+  TTS_ULP_EQUAL(eve::acotpi(T(-0.)) ,  T(-0.5)                           , 0.5);
+  TTS_ULP_EQUAL(eve::acotpi(inv_smallest)       , eve::inpi(eve::Smallestposval<T>()), 0.5);
 }

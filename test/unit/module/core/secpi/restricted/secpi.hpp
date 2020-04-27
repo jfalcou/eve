@@ -25,21 +25,21 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::restricted_(eve::secpi) return type")
+TTS_CASE_TPL("Check eve::restricted_(eve::secpi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::secpi)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::restricted_(eve::secpi)(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::secpi behavior")
+TTS_CASE_TPL("Check eve::eve::secpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Inf<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(EVE_TYPE(0)), (EVE_TYPE(1)));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-  TTS_ULP_EQUAL((eve::restricted_(eve::secpi)(EVE_TYPE(0.125))), (EVE_TYPE(1.08239220029239396879944641073277884012214412675604)), 0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::secpi)(-EVE_TYPE(0.125))),(EVE_TYPE(1.08239220029239396879944641073277884012214412675604)), 0.5);
+  TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(T(0)), (T(1)));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(T(-0.)), (T(1)));
+  TTS_ULP_EQUAL((eve::restricted_(eve::secpi)(T(0.125))), (T(1.08239220029239396879944641073277884012214412675604)), 0.5);
+  TTS_ULP_EQUAL((eve::restricted_(eve::secpi)(-T(0.125))),(T(1.08239220029239396879944641073277884012214412675604)), 0.5);
 }

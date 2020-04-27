@@ -20,43 +20,43 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check hypot return type")
+TTS_CASE_TPL("Check hypot return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::hypot(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::hypot(T(0), T(0)), T);
 }
 
-TTS_CASE("Check eve::hypot behavior")
+TTS_CASE_TPL("Check eve::hypot behavior", EVE_TYPE)
 {
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::hypot(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::hypot(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>()), eve::Nan<T>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<T>(), (T(0)))          , eve::Inf<T>(), 0);
+  TTS_ULP_EQUAL(eve::hypot((T(0))          , eve::Valmax<T>()), eve::Inf<T>(), 0);
 
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))           , 0  );
-  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)             , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T(-1)), (T(-1)))                  , eve::Sqrt_2<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T( 1)), (T( 1)))                  , eve::Sqrt_2<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T( 0)), (T( 0)))                  , (T(0))           , 0  );
+  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<T>(), eve::Sqrt_2<T>()), T(2)             , 0.5);
 }
 
-TTS_CASE("Check 3 params eve::hypot behavior")
+TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
 {
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::hypot(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::hypot(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)),            (EVE_TYPE(0)))          , eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(0))          , (eve::Valmax<EVE_TYPE>()),  (EVE_TYPE(0))),        eve::Inf<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<T>(), (T(0)),            (T(0)))          , eve::Inf<T>(), 0);
+  TTS_ULP_EQUAL(eve::hypot((T(0))          , (eve::Valmax<T>()),  (T(0))),        eve::Inf<T>(), 0);
 
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(-1)), (EVE_TYPE(-1)), (eve::Sqrt_2<EVE_TYPE>()))                   , EVE_TYPE(2) , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)), (eve::Sqrt_2<EVE_TYPE>()))                   , EVE_TYPE(2) , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 0)), (EVE_TYPE( 0)), (EVE_TYPE( 0)))                             , (EVE_TYPE(0)), 0  );
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)), (EVE_TYPE( 1)))                             , EVE_TYPE(std::sqrt(EVE_VALUE(3))), 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T(-1)), (T(-1)), (eve::Sqrt_2<T>()))                   , T(2) , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T( 1)), (T( 1)), (eve::Sqrt_2<T>()))                   , T(2) , 0.5);
+  TTS_ULP_EQUAL(eve::hypot((T( 0)), (T( 0)), (T( 0)))                             , (T(0)), 0  );
+  TTS_ULP_EQUAL(eve::hypot((T( 1)), (T( 1)), (T( 1)))                             , T(std::sqrt(v_t(3))), 0.5);
 }

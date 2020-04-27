@@ -66,31 +66,37 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr auto sincos_(EVE_SUPPORTS(cpu_), small_type const &, T a0) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
+    if constexpr(has_native_abi_v<T>)
     {
-      auto reduce = [](auto x) {
+      auto reduce =  [](auto x)
+      {
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
         auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
         auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
-        T    xr     = x - pio2_1;
+
+        T xr = x-pio2_1;
         xr -= pio2_2;
         xr -= pio2_3;
+
         return xr;
       };
+
       T x = eve::abs(a0);
-      if constexpr( scalar_value<T> )
+
+      if constexpr(scalar_value<T>)
       {
-        using i_t = as_integer_t<T, signed>;
-        if( is_less_equal(x, Eps<T>()) )
-          return std::make_tuple(a0, One<T>());
-        if( is_not_less_equal(x, Pio_2<T>()) )
-          return std::make_tuple(Nan<T>(), Nan<T>());
+        using i_t =  as_integer_t<T, signed>;
+
+        if (is_less_equal(x, Eps<T>()))       return std::make_tuple(a0, One<T>());
+        if (is_not_less_equal(x, Pio_2<T>())) return std::make_tuple(Nan<T>(), Nan<T>());
+
         i_t n = x > Pio_4<T>();
-        if( n )
+
+        if (n)
         {
-          auto xr = reduce(x);
-          return std::make_tuple(bit_xor(bitofsign(a0), cos_eval(sqr(xr))),
-                                 bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T) * 8 - 1)));
+          auto xr =  reduce(x);
+          return std::make_tuple(bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
+                                , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T)*8-1)));
         }
         else
         {
@@ -99,15 +105,17 @@ namespace eve::detail
       }
       else
       {
-        x         = if_else(is_not_less_equal(x, Pio_2<T>()), eve::allbits_, x);
+        x = if_else(is_not_less_equal(x, Pio_2<T>()), eve::allbits_, x);
         auto test = is_not_less_equal(x, Pio_4<T>());
-        auto n    = binarize(test);
-        auto xr   = if_else(test, reduce(x), x);
-        return sincos_finalize(a0, n, xr, T(0));
+        auto n = binarize(test);
+        auto xr =  if_else(test, reduce(x), x);
+        return  sincos_finalize(a0, n, xr, T(0));
       }
     }
     else
+    {
       return apply_over2(small_(sincos), a0);
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -125,7 +133,9 @@ namespace eve::detail
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);
     }
     else
+    {
       return apply_over2(D()(sincos), a0);
+    }
   }
 
   template<typename T>
@@ -144,7 +154,9 @@ namespace eve::detail
         return big_(sincos)(a0);
     }
     else
+    {
       return apply_over2(sincos, a0);
+    }
   }
 }
 

@@ -14,30 +14,30 @@
 #include <eve/constant/allbits.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::shl return type")
+TTS_CASE_TPL("Check eve::shl return type", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
-  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using i_t = eve::detail::as_integer_t<T, signed>;
+  using u_t = eve::detail::as_integer_t<T, unsigned>;
 
-  TTS_EXPR_IS(eve::shl(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::shl(EVE_TYPE(), i_t() ), (EVE_TYPE));
-  TTS_EXPR_IS(eve::shl(EVE_TYPE(), u_t() ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::shl(T(), T()), T);
+  TTS_EXPR_IS(eve::shl(T(), i_t() ), T);
+  TTS_EXPR_IS(eve::shl(T(), u_t() ), T);
 }
 
-TTS_CASE("Check eve::shl behavior")
+TTS_CASE_TPL("Check eve::shl behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::shl(EVE_TYPE(0), 7), (EVE_TYPE( 0)));
-  TTS_EQUAL(eve::shl(EVE_TYPE(1), 4), (EVE_TYPE(16)));
-  TTS_EQUAL(eve::shl(EVE_TYPE(3), 2), (EVE_TYPE(12)));
+  TTS_EQUAL(eve::shl(T(0), 7), (T( 0)));
+  TTS_EQUAL(eve::shl(T(1), 4), (T(16)));
+  TTS_EQUAL(eve::shl(T(3), 2), (T(12)));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::shl(EVE_TYPE(-1), 4), (EVE_TYPE(-16)));
-    TTS_EQUAL(eve::shl(EVE_TYPE(-3), 2), (EVE_TYPE(-12)));
-    TTS_EQUAL(eve::shl(eve::Allbits<EVE_TYPE>(), 1), EVE_TYPE(-2));
+    TTS_EQUAL(eve::shl(T(-1), 4), (T(-16)));
+    TTS_EQUAL(eve::shl(T(-3), 2), (T(-12)));
+    TTS_EQUAL(eve::shl(eve::Allbits<T>(), 1), T(-2));
   }
   else
   {
-    TTS_EQUAL(eve::shl(eve::Allbits<EVE_TYPE>(), 1), eve::Allbits<EVE_TYPE>() - 1 );
+    TTS_EQUAL(eve::shl(eve::Allbits<T>(), 1), eve::Allbits<T>() - 1 );
   }
 }

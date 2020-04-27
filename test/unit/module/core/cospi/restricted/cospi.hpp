@@ -21,31 +21,31 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::restricted_(eve::cospi) return type")
+TTS_CASE_TPL("Check eve::restricted_(eve::cospi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::cospi)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::restricted_(eve::cospi)(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::cospi behavior")
+TTS_CASE_TPL("Check eve::eve::cospi behavior", EVE_TYPE)
 {
-  if constexpr(std::is_floating_point_v<EVE_VALUE> )
+  if constexpr(eve::floating_value<T> )
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Nan<T>()) , (eve::Nan<T>()) );
+      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Inf<T>()) , (eve::Nan<T>()) );
+      TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Minf<T>()), (eve::Nan<T>()) );
     }
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(EVE_TYPE(0)), (EVE_TYPE(1)));
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-    TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(EVE_TYPE(0.0625))), (EVE_TYPE(0.98078528040323044912618223613423903697393373089333)), 0.5);
-    TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(-EVE_TYPE(0.0625))),(EVE_TYPE(0.98078528040323044912618223613423903697393373089333)), 0.5);
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(T(0)), (T(1)));
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cospi)(T(-0.)), (T(1)));
+    TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(T(0.0625))), (T(0.98078528040323044912618223613423903697393373089333)), 0.5);
+    TTS_ULP_EQUAL((eve::restricted_(eve::cospi)(-T(0.0625))),(T(0.98078528040323044912618223613423903697393373089333)), 0.5);
   }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  else if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(1)), (EVE_TYPE(-1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(-1)),(EVE_TYPE(-1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(2)), (EVE_TYPE(1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(-2)), (EVE_TYPE(1)));
-  }    
+    TTS_EQUAL((eve::cospi)(T(1)), (T(-1)));
+    TTS_EQUAL((eve::cospi)(T(-1)),(T(-1)));
+    TTS_EQUAL((eve::cospi)(T(2)), (T(1)));
+    TTS_EQUAL((eve::cospi)(T(-2)), (T(1)));
+  }
 }

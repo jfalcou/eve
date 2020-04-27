@@ -10,7 +10,6 @@
 //==================================================================================================
 #include <eve/function/asind.hpp>
 #include <eve/function/all.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
@@ -18,12 +17,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::asind return type")
+TTS_CASE_TPL("Check eve::asind return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::asind(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::asind(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::asind behavior")
+TTS_CASE_TPL("Check eve::eve::asind behavior", EVE_TYPE)
 {
   using eve::all;
   using eve::is_negative;
@@ -31,19 +30,19 @@ TTS_CASE("Check eve::eve::asind behavior")
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asind(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::asind(EVE_TYPE(2))          , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::asind(EVE_TYPE(-2))         , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asind(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asind(T(2))          , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asind(T(-2))         , eve::Nan<T>() );
   }
 
-  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 0.5)) ,  (EVE_TYPE(30))  , 0.5);
-  TTS_ULP_EQUAL(eve::asind(EVE_TYPE(-0.5)) ,  (EVE_TYPE(-30)) , 0.5);
-  TTS_ULP_EQUAL(eve::asind(EVE_TYPE(-1. )) ,  (EVE_TYPE(-90)) , 0.5);
-  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 1. )) ,  (EVE_TYPE(90))  , 0.5);
-  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 0. )) ,  (EVE_TYPE(0))   , 0.5);
+  TTS_ULP_EQUAL(eve::asind(T( 0.5)) , T(30) , 0.5);
+  TTS_ULP_EQUAL(eve::asind(T(-0.5)) , T(-30), 0.5);
+  TTS_ULP_EQUAL(eve::asind(T(-1. )) , T(-90), 0.5);
+  TTS_ULP_EQUAL(eve::asind(T( 1. )) , T(90) , 0.5);
+  TTS_ULP_EQUAL(eve::asind(T( 0. )) , T(0)  , 0.5);
 
-  TTS_ULP_EQUAL(eve::asind(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)), 0.5);
+  TTS_ULP_EQUAL(eve::asind(T(-0.)), T(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asind(eve::Mzero<EVE_TYPE>()))) );
-  TTS_EXPECT( all(is_positive(eve::asind(EVE_TYPE(0))))            );;
+  TTS_EXPECT( all(is_negative(eve::asind(T(-0.)))) );
+  TTS_EXPECT( all(is_positive(eve::asind(T(0))))   );
 }

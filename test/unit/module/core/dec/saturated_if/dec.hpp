@@ -14,25 +14,25 @@
 // #include <tts/tests/types.hpp>
 // #include <type_traits>
 
-// TTS_CASE("Check conditional eve::dec return type")
+// TTS_CASE_TPL("Check conditional eve::dec return type", EVE_TYPE)
 // {
-//   TTS_EXPR_IS(eve::dec(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+//   TTS_EXPR_IS(eve::dec(T(), T()), T);
 // }
 
-// TTS_CASE("Check conditionaleve::dec behavior")
+// TTS_CASE_TPL("Check conditionaleve::dec behavior", EVE_TYPE)
 // {
-//   TTS_EQUAL(saturated_(eve::dec[ EVE_TYPE(1) > EVE_TYPE(0) ](EVE_TYPE(1)), EVE_TYPE(0));
-//   TTS_EQUAL(saturated_(eve::dec[ EVE_TYPE(1) > EVE_TYPE(2) ](eve::Zero<EVE_TYPE>()), EVE_TYPE(0));
+//   TTS_EQUAL(saturated_(eve::dec[ T(1) > T(0) ](T(1)), T(0));
+//   TTS_EQUAL(saturated_(eve::dec[ T(1) > T(2) ](T( 0 )), T(0));
 
-//   if constexpr(std::is_signed_v<EVE_VALUE>)
+//   if constexpr(eve::signed_value<T>)
 //   {
-//     TTS_EQUAL(saturated_(eve::dec[-EVE_TYPE(1) > EVE_TYPE(0) ](eve::Zero<EVE_TYPE>()), EVE_TYPE(0));
+//     TTS_EQUAL(saturated_(eve::dec[-T(1) > T(0) ](T( 0 )), T(0));
 //   }
 
-//   if constexpr(std::is_floating_point_v<EVE_VALUE>)
+//   if constexpr(eve::floating_value<T>)
 //   {
-//     TTS_EQUAL(eve::dec(eve::Mzero<EVE_TYPE>()), EVE_TYPE(-1));
-//     TTS_EQUAL(eve::dec(eve::Zero<EVE_TYPE>()), EVE_TYPE(-1));
+//     TTS_EQUAL(eve::dec(T(-0.)), T(-1));
+//     TTS_EQUAL(eve::dec(T( 0 )), T(-1));
 //   }
 // }
 
@@ -57,22 +57,22 @@
 #include <type_traits>
 #include <algorithm>
 
-TTS_CASE("Check saturated_(eve::dec[condition] return type")
+TTS_CASE_TPL("Check saturated_(eve::dec[condition] return type", EVE_TYPE)
 {
   using eve::saturated_;
 
-  TTS_EXPR_IS( (saturated_(eve::dec[ EVE_TYPE() ])(EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (saturated_(eve::dec[ eve::logical<EVE_TYPE>() ])(EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (saturated_(eve::dec[ true ])(EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (saturated_(eve::dec[ T() ])(T())), T);
+  TTS_EXPR_IS( (saturated_(eve::dec[ eve::logical<T>() ])(T())), T);
+  TTS_EXPR_IS( (saturated_(eve::dec[ true ])(T())), T);
 }
 
-TTS_CASE("Check saturated_(eve::dec[condition] behavior")
+TTS_CASE_TPL("Check saturated_(eve::dec[condition] behavior", EVE_TYPE)
 {
   using eve::saturated_;
 
-  EVE_TYPE tv{2};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv{2};
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   // All basic TRUE
   TTS_EQUAL(saturated_(eve::dec[ 1 ])(tv)     , tv - 1);
@@ -87,7 +87,7 @@ TTS_CASE("Check saturated_(eve::dec[condition] behavior")
   TTS_EQUAL(saturated_(eve::dec[ f ])(tv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

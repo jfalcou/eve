@@ -18,16 +18,17 @@
 #include <tts/tests/types.hpp>
 #include <utility>
 
-TTS_CASE("wide random check on rempio2")
+TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
 {
-  std::cout << "EVE_TYPE " << tts::type_id<EVE_TYPE>() << std::endl;
-  EVE_VALUE z = EVE_VALUE(0.05);
-  for( int i = 0; i < 10; ++i )
+  using v_t = eve::element_type_t<T>;
+
+  v_t z = v_t( 0.05);
+  for(int i=0; i <10 ; ++i)
   {
-    auto [n, x, dx]    = eve::big_(eve::rempio2)(EVE_TYPE(z));
+    auto [n, x, dx] = eve::big_(eve::rempio2)(T(z));
     auto [nn, xx, dxx] = eve::rem_pio2(z);
-    TTS_ULP_EQUAL(x, EVE_TYPE(xx), 0.5);
-    TTS_ULP_EQUAL(n, EVE_TYPE(nn), 0.5);
-    z *= EVE_VALUE(10);
+    TTS_ULP_EQUAL(x ,  T(xx)   , 0.5 );
+    TTS_ULP_EQUAL(n ,  T(nn)   , 0.5 );
+    z*= v_t(10);
   }
 }

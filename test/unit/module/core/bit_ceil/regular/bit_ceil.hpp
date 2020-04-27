@@ -12,32 +12,33 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmax.hpp>
-#include <type_traits>
-#include <cmath>
 
-TTS_CASE("Check bit_ceil return type")
+TTS_CASE_TPL("Check bit_ceil return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::bit_ceil(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_ceil(T()), T);
 }
 
-TTS_CASE("Check eve::bit_ceil behavior")
+TTS_CASE_TPL("Check eve::bit_ceil behavior", EVE_TYPE)
 {
-  if constexpr(!std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+
+  if constexpr(!eve::floating_value<T>)
   {
-    for(EVE_VALUE z = 4; z < eve::Valmax<EVE_VALUE>()/4; z*=2)
+    for(v_t z = 4; z < eve::Valmax<v_t>()/4; z*=2)
     {
-      TTS_EQUAL(eve::bit_ceil(EVE_TYPE(z))    , EVE_TYPE(z));
-      TTS_EQUAL(eve::bit_ceil(EVE_TYPE(z-1))  , EVE_TYPE(z));
-      TTS_EQUAL(eve::bit_ceil(EVE_TYPE(z/2+1)), EVE_TYPE(z));
+      runtime.stream() << "  -- bitceil with z= " << +z << std::endl;
+      TTS_EQUAL(eve::bit_ceil(T(z))    , T(z));
+      TTS_EQUAL(eve::bit_ceil(T(z-1))  , T(z));
+      TTS_EQUAL(eve::bit_ceil(T(z/2+1)), T(z));
     }
   }
-  else  
+  else
   {
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(0))  , EVE_TYPE(1));
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(1))  , EVE_TYPE(1));
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(1.3)), EVE_TYPE(2));
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(1.5)), EVE_TYPE(2));
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(1.6)), EVE_TYPE(2));
-    TTS_EQUAL(eve::bit_ceil(EVE_TYPE(2.9)), EVE_TYPE(4));
+    TTS_EQUAL(eve::bit_ceil(T(0))  , T(1));
+    TTS_EQUAL(eve::bit_ceil(T(1))  , T(1));
+    TTS_EQUAL(eve::bit_ceil(T(1.3)), T(2));
+    TTS_EQUAL(eve::bit_ceil(T(1.5)), T(2));
+    TTS_EQUAL(eve::bit_ceil(T(1.6)), T(2));
+    TTS_EQUAL(eve::bit_ceil(T(2.9)), T(4));
   }
 }

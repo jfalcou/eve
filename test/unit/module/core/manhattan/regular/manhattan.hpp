@@ -20,41 +20,41 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check manhattan return type")
-{ 
-  TTS_EXPR_IS(eve::manhattan(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+TTS_CASE_TPL("Check manhattan return type", EVE_TYPE)
+{
+  TTS_EXPR_IS(eve::manhattan(T(0), T(0)), T);
 }
 
-TTS_CASE("Check eve::manhattan behavior")
+TTS_CASE_TPL("Check eve::manhattan behavior", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<T>(), eve::Nan<T>()), eve::Nan<T>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Valmax<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Valmax<EVE_TYPE>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<T>(), (T(0)))          , eve::Valmax<T>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan((T(0))          , eve::Valmax<T>()), eve::Valmax<T>(), 0);
 
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , EVE_TYPE(2)                     , 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , EVE_TYPE(2)                     , 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))                   , 0  );
-  TTS_ULP_EQUAL(eve::manhattan(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)* eve::Sqrt_2<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::manhattan((T(-1)), (T(-1)))                  , T(2)                     , 0);
+  TTS_ULP_EQUAL(eve::manhattan((T( 1)), (T( 1)))                  , T(2)                     , 0);
+  TTS_ULP_EQUAL(eve::manhattan((T( 0)), (T( 0)))                  , (T(0))                   , 0  );
+  TTS_ULP_EQUAL(eve::manhattan(eve::Sqrt_2<T>(), eve::Sqrt_2<T>()), T(2)* eve::Sqrt_2<T>(), 0.5);
 }
 
-TTS_CASE("Check 3 params eve::manhattan behavior")
+TTS_CASE_TPL("Check 3 params eve::manhattan behavior", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0); 
+    TTS_ULP_EQUAL(eve::manhattan(eve::Nan<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::manhattan(eve::Inf<T>(), eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>(), 0);
   }
-  
-  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)),              (EVE_TYPE(0))), eve::Valmax<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(0))          , (eve::Valmax<EVE_TYPE>()),  (EVE_TYPE(0))), eve::Valmax<EVE_TYPE>(), 0);
-  
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE(-1)), (EVE_TYPE(-1)), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 0)), (EVE_TYPE( 0)), (EVE_TYPE( 0))), EVE_TYPE(0), 0);
-  TTS_ULP_EQUAL(eve::manhattan((EVE_TYPE( 1)), (EVE_TYPE( 1)), (EVE_TYPE( 1))), EVE_TYPE(3), 0); 
+
+  TTS_ULP_EQUAL(eve::manhattan(eve::Valmax<T>(), (T(0)),              (T(0))), eve::Valmax<T>(), 0);
+  TTS_ULP_EQUAL(eve::manhattan((T(0))          , (eve::Valmax<T>()),  (T(0))), eve::Valmax<T>(), 0);
+
+  TTS_ULP_EQUAL(eve::manhattan((T(-1)), (T(-1)), T(-1)), T(3) , 0);
+  TTS_ULP_EQUAL(eve::manhattan((T( 1)), (T( 1)), T(-1)), T(3) , 0);
+  TTS_ULP_EQUAL(eve::manhattan((T( 0)), (T( 0)), (T( 0))), T(0), 0);
+  TTS_ULP_EQUAL(eve::manhattan((T( 1)), (T( 1)), (T( 1))), T(3), 0);
 }

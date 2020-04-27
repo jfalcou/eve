@@ -15,25 +15,25 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::is_gtz return type")
+TTS_CASE_TPL("Check eve::is_gtz return type", EVE_TYPE)
 {
   using eve::logical;
 
-  TTS_EXPR_IS(eve::is_gtz(EVE_TYPE() ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_gtz(T() ), (logical<T>));
 }
 
-TTS_CASE("Check eve::is_gtz behavior")
+TTS_CASE_TPL("Check eve::is_gtz behavior", EVE_TYPE)
 {
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::is_gtz(EVE_TYPE(-1)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_gtz(T(-1)), eve::False<T>());
   }
 
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_gtz(eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_gtz(eve::Nan<T>()), eve::False<T>());
   }
 
-  TTS_EQUAL(eve::is_gtz(EVE_TYPE(0)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_gtz(EVE_TYPE(3)), eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::is_gtz(T(0)), eve::False<T>());
+  TTS_EQUAL(eve::is_gtz(T(3)), eve::True<T>());
 }

@@ -20,7 +20,7 @@
 #  pragma warning(disable : 4723) // 1/0 is OK for this test
 #endif
 
-TTS_CASE("Check mzero return type")
+TTS_CASE_TPL("Check mzero return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::Mzero<float>(), float);
   TTS_EXPR_IS(eve::Mzero<double>(), double);
@@ -36,7 +36,7 @@ TTS_CASE("Check mzero return type")
   TTS_EXPR_IS(eve::Mzero<std::uint64_t>(), std::uint64_t);
 }
 
-TTS_CASE("Check mzero behavior")
+TTS_CASE_TPL("Check mzero behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::Mzero<std::uint8_t>(), std::uint8_t(0));
   TTS_EQUAL(eve::Mzero<std::uint16_t>(), std::uint16_t(0));

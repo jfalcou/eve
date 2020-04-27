@@ -28,22 +28,22 @@
 #include <type_traits>
 #include <eve/constant/ieee_constant.hpp>
 
-TTS_CASE("Check deginrad return type")
+TTS_CASE_TPL("Check deginrad return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::deginrad(EVE_TYPE(0)),  EVE_TYPE);
+  TTS_EXPR_IS(eve::deginrad(T(0)),  T);
 }
 
-TTS_CASE("Check eve::deginrad behavior")
+TTS_CASE_TPL("Check eve::deginrad behavior", EVE_TYPE)
 {
 
 #ifndef EVE_SIMD_NO_INVALIDS
-  TTS_ULP_EQUAL(eve::deginrad(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::Minf<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Inf<T>()), eve::Inf<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Minf<T>()), eve::Minf<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::Nan<T>()), eve::Nan<T>(), 0.5);
 #endif
-  TTS_ULP_EQUAL(eve::deginrad(eve::Zero<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(eve::One<EVE_TYPE>()), EVE_TYPE(0.017453292519943295769236907684886), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(EVE_TYPE(10)),         EVE_TYPE(0.17453292519943295769236907684886), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(T( 0 )), T( 0 ), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(eve::One<T>()), T(0.017453292519943295769236907684886), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(T(10)),         T(0.17453292519943295769236907684886), 0.5);
 }
 
 

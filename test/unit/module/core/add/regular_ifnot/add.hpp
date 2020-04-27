@@ -17,19 +17,19 @@
 #include <type_traits>
 #include <algorithm>
 
-TTS_CASE("Check eve::add.not_[condition] return type")
+TTS_CASE_TPL("Check eve::add.not_[condition] return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::add.not_[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::add.not_[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::add.not_[ true ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::add.not_[ T() ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add.not_[ eve::logical<T>() ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add.not_[ true ](T(), T())), T);
 }
 
-TTS_CASE("Check eve::add.not_[condition] behavior")
+TTS_CASE_TPL("Check eve::add.not_[condition] behavior", EVE_TYPE)
 {
-  EVE_TYPE tv{2};
-  EVE_TYPE fv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv{2};
+  T fv{3};
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   // All basic TRUE
   TTS_EQUAL(eve::add.not_[ 1 ](tv, fv)     , tv);
@@ -44,7 +44,7 @@ TTS_CASE("Check eve::add.not_[condition] behavior")
   TTS_EQUAL(eve::add.not_[ f ](tv, fv)     , tv + fv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

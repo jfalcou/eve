@@ -16,19 +16,19 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::is_even return type")
+TTS_CASE_TPL("Check eve::is_even return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_even(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_even(T(0)), (eve::logical<T>));
 }
 
-TTS_CASE("Check eve::is_even behavior")
+TTS_CASE_TPL("Check eve::is_even behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_even(EVE_TYPE(1)), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_even(EVE_TYPE(2)), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_even(T(1)), eve::False<T>() );
+  TTS_EQUAL(eve::is_even(T(2)), eve::True<T>()  );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_even(EVE_TYPE(0.5))         , eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_even(eve::Mzero<EVE_TYPE>()), eve::True<EVE_TYPE>() );
+    TTS_EQUAL(eve::is_even(T(0.5))         , eve::False<T>());
+    TTS_EQUAL(eve::is_even(T(-0.)), eve::True<T>() );
   }
 }

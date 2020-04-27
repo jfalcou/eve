@@ -16,17 +16,17 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::bit_mask return type")
+TTS_CASE_TPL("Check eve::bit_mask return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::bit_mask(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_mask(T()), T);
 }
 
-TTS_CASE("Check eve::bit_mask behavior")
+TTS_CASE_TPL("Check eve::bit_mask behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::bit_mask( EVE_TYPE(0))           , (EVE_TYPE)(0));
-  TTS_EQUAL(eve::bit_mask(-EVE_TYPE(0))           , (EVE_TYPE)(0));
-  TTS_EQUAL(eve::bit_mask(eve::False<EVE_TYPE>()) , (EVE_TYPE)(0));
+  TTS_EQUAL(eve::bit_mask( T(0))           , T(0));
+  TTS_EQUAL(eve::bit_mask(-T(0))           , T(0));
+  TTS_EQUAL(eve::bit_mask(eve::False<T>()) , T(0));
 
-  TTS_IEEE_EQUAL(eve::bit_mask(EVE_TYPE(1))           , (eve::Allbits<EVE_TYPE>()));
-  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<EVE_TYPE>()) , (eve::Allbits<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::bit_mask(T(1))           , (eve::Allbits<T>()));
+  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<T>()) , (eve::Allbits<T>()));
 }

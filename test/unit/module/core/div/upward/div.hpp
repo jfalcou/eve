@@ -14,30 +14,30 @@
 #include <eve/constant/mone.hpp>
 #include <type_traits>
 
-TTS_CASE("Check div return type")
+TTS_CASE_TPL("Check div return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::upward_(eve::div)(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::upward_(eve::div)(EVE_TYPE(), EVE_VALUE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::upward_(eve::div)(EVE_VALUE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::upward_(eve::div)(T(), T()), T);
+  TTS_EXPR_IS(eve::upward_(eve::div)(T(), v_t()), T);
+  TTS_EXPR_IS(eve::upward_(eve::div)(v_t(), T()), T);
 }
 
-TTS_CASE("Check eve::div behavior")
+TTS_CASE_TPL("Check eve::div behavior", EVE_TYPE)
 {
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2}), EVE_TYPE(0));
-    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<EVE_VALUE>() , EVE_TYPE{2}), EVE_TYPE(0));
-    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}), EVE_TYPE(0));
+    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<T>()  , T{2}), T(0));
+    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<v_t>() , T{2}), T(0));
+    TTS_EQUAL(eve::upward_(eve::div)(eve::Mone<T>()  , v_t{2}), T(0));
   }
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{12}, EVE_TYPE{4}), EVE_TYPE{3});
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{4} , EVE_TYPE{3}), EVE_TYPE(2));
+  TTS_EQUAL(eve::upward_(eve::div)(T{12}, T{4}), T{3});
+  TTS_EQUAL(eve::upward_(eve::div)(T{1} , T{2}), T(1));
+  TTS_EQUAL(eve::upward_(eve::div)(T{4} , T{3}), T(2));
 
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_VALUE{12}, EVE_TYPE{4}), EVE_TYPE{3});
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_VALUE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_VALUE{4} , EVE_TYPE{3}), EVE_TYPE(2));
+  TTS_EQUAL(eve::upward_(eve::div)(v_t{12}, T{4}), T{3});
+  TTS_EQUAL(eve::upward_(eve::div)(v_t{1} , T{2}), T(1));
+  TTS_EQUAL(eve::upward_(eve::div)(v_t{4} , T{3}), T(2));
 
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{12}, EVE_VALUE{4}), EVE_TYPE{3});
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{1} , EVE_VALUE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::upward_(eve::div)(EVE_TYPE{4} , EVE_VALUE{3}), EVE_TYPE(2));
+  TTS_EQUAL(eve::upward_(eve::div)(T{12}, v_t{4}), T{3});
+  TTS_EQUAL(eve::upward_(eve::div)(T{1} , v_t{2}), T(1));
+  TTS_EQUAL(eve::upward_(eve::div)(T{4} , v_t{3}), T(2));
 }

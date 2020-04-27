@@ -13,76 +13,78 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::bit_notand return type")
+TTS_CASE_TPL("Check eve::bit_notand return type", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
-  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using ui_t = as_integer_t<T, unsigned>;
+  using vi_t = as_integer_t<v_t, unsigned>;
 
-  TTS_EXPR_IS((eve::bit_notand[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ EVE_TYPE() ](EVE_TYPE(), EVE_VALUE())) , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ EVE_TYPE() ](EVE_TYPE(), ui_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ EVE_TYPE() ](EVE_TYPE(), vi_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ EVE_TYPE() ](ui_t(), EVE_TYPE()))  , ui_t  );
-              
-  TTS_EXPR_IS((eve::bit_notand[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_VALUE())) , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), ui_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), vi_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ eve::logical<EVE_TYPE>() ](ui_t(), EVE_TYPE()))  , ui_t  );
-              
-  TTS_EXPR_IS((eve::bit_notand[ true  ](EVE_TYPE(), EVE_TYPE()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ true  ](EVE_TYPE(), EVE_VALUE())) , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ true  ](EVE_TYPE(), ui_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ true  ](EVE_TYPE(), vi_t()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::bit_notand[ true  ](ui_t(), EVE_TYPE()))  , ui_t  );
+  TTS_EXPR_IS((eve::bit_notand[ T() ](T(), T()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ T() ](T(), v_t())) , T);
+  TTS_EXPR_IS((eve::bit_notand[ T() ](T(), ui_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ T() ](T(), vi_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ T() ](ui_t(), T()))  , ui_t  );
+
+  TTS_EXPR_IS((eve::bit_notand[ eve::logical<T>() ](T(), T()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ eve::logical<T>() ](T(), v_t())) , T);
+  TTS_EXPR_IS((eve::bit_notand[ eve::logical<T>() ](T(), ui_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ eve::logical<T>() ](T(), vi_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ eve::logical<T>() ](ui_t(), T()))  , ui_t  );
+
+  TTS_EXPR_IS((eve::bit_notand[ true  ](T(), T()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ true  ](T(), v_t())) , T);
+  TTS_EXPR_IS((eve::bit_notand[ true  ](T(), ui_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ true  ](T(), vi_t()))  , T);
+  TTS_EXPR_IS((eve::bit_notand[ true  ](ui_t(), T()))  , ui_t  );
 }
 
-TTS_CASE( "Check eve::bit_notand behavior")
+TTS_CASE_TPL( "Check eve::bit_notand behavior", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
   using eve::bit_cast;
   using eve::as;
 
-  using ui_t = as_integer_t<EVE_TYPE , unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using ui_t = as_integer_t<T , unsigned>;
+  using vi_t = as_integer_t<v_t, unsigned>;
 
   constexpr auto u  = 0x5555555555555555ULL;
   constexpr auto d  = 0xAAAAAAAAAAAAAAAAULL;
 
-  auto tz = EVE_TYPE(0);
+  auto tz = T(0);
 
   ui_t uu( static_cast<vi_t>(u) );
   ui_t ud( static_cast<vi_t>(d) );
-  auto td = bit_cast(ud, as<EVE_TYPE>());
-  auto tu = bit_cast(uu, as<EVE_TYPE>());
+  auto td = bit_cast(ud, as<T>());
+  auto tu = bit_cast(uu, as<T>());
 
   vi_t su( static_cast<vi_t>(u) );
   vi_t sd( static_cast<vi_t>(d) );
-  auto vu = bit_cast(su, as<EVE_VALUE>());
-  auto vd = bit_cast(sd, as<EVE_VALUE>());
+  auto vu = bit_cast(su, as<v_t>());
+  auto vd = bit_cast(sd, as<v_t>());
 
   TTS_EQUAL(eve::bit_notand[ true  ](tu,tu),tz);
   TTS_EQUAL(eve::bit_notand[ true  ](tu,td),td);
   TTS_EQUAL(eve::bit_notand[ true  ](td,tu),tu);
   TTS_EQUAL(eve::bit_notand[ true  ](td,td),tz);
-                                                
+
   TTS_EQUAL(eve::bit_notand[ true  ](tu,vu),tz);
   TTS_EQUAL(eve::bit_notand[ true  ](tu,vd),td);
   TTS_EQUAL(eve::bit_notand[ true  ](td,vu),tu);
   TTS_EQUAL(eve::bit_notand[ true  ](td,vd),tz);
-                                                
+
   TTS_EQUAL(eve::bit_notand[ true  ](tu,uu),tz);
   TTS_EQUAL(eve::bit_notand[ true  ](tu,ud),td);
   TTS_EQUAL(eve::bit_notand[ true  ](td,uu),tu);
   TTS_EQUAL(eve::bit_notand[ true  ](td,ud),tz);
-                                                
+
   TTS_EQUAL(eve::bit_notand[ true  ](tu,su),tz);
   TTS_EQUAL(eve::bit_notand[ true  ](tu,sd),td);
   TTS_EQUAL(eve::bit_notand[ true  ](td,su),tu);
   TTS_EQUAL(eve::bit_notand[ true  ](td,sd),tz);
 
- 
+
   TTS_EQUAL(eve::bit_notand[ false  ](tu,tu),tu);
   TTS_EQUAL(eve::bit_notand[ false  ](tu,td),tu);
   TTS_EQUAL(eve::bit_notand[ false  ](td,tu),td);
@@ -101,7 +103,7 @@ TTS_CASE( "Check eve::bit_notand behavior")
   TTS_EQUAL(eve::bit_notand[ false  ](tu,su),tu);
   TTS_EQUAL(eve::bit_notand[ false  ](tu,sd),tu);
   TTS_EQUAL(eve::bit_notand[ false  ](td,su),td);
-  TTS_EQUAL(eve::bit_notand[ false  ](td,sd),td); 
+  TTS_EQUAL(eve::bit_notand[ false  ](td,sd),td);
 }
 
 

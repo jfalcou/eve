@@ -13,21 +13,21 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::dist return type")
+TTS_CASE_TPL("Check eve::dist return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::dist(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::dist(T(), T()), T);
 }
 
-TTS_CASE("Check eve::dist behavior")
+TTS_CASE_TPL("Check eve::dist behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::dist(EVE_TYPE{0}, EVE_TYPE{0}), EVE_TYPE{0});
-  TTS_EQUAL(eve::dist(EVE_TYPE{0}, EVE_TYPE{1}), EVE_TYPE{1});
-  TTS_EQUAL(eve::dist(EVE_TYPE{1}, EVE_TYPE{0}), EVE_TYPE{1});
-  TTS_EQUAL(eve::dist(EVE_TYPE{1}, EVE_TYPE{1}), EVE_TYPE{0});
+  TTS_EQUAL(eve::dist(T{0}, T{0}), T{0});
+  TTS_EQUAL(eve::dist(T{0}, T{1}), T{1});
+  TTS_EQUAL(eve::dist(T{1}, T{0}), T{1});
+  TTS_EQUAL(eve::dist(T{1}, T{1}), T{0});
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::dist(EVE_TYPE(-1), EVE_TYPE(1)), EVE_TYPE(2));
-    TTS_EQUAL(eve::dist(EVE_TYPE(-2), EVE_TYPE(-6)), EVE_TYPE(4));
+    TTS_EQUAL(eve::dist(T(-1), T(1)), T(2));
+    TTS_EQUAL(eve::dist(T(-2), T(-6)), T(4));
   }
 }

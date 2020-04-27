@@ -15,30 +15,30 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::saturate return type")
+TTS_CASE_TPL("Check eve::saturate return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturate((EVE_TYPE()), eve::as<std::uint16_t>()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::saturate((EVE_TYPE()), eve::uint16_            ), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturate((T()), eve::as<std::uint16_t>()), T);
+  TTS_EXPR_IS(eve::saturate((T()), eve::uint16_            ), T);
 }
 
-TTS_CASE("Check eve::saturate behavior")
+TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturate((EVE_TYPE(0)), eve::uint16_          ), (EVE_TYPE(0))     );
-  TTS_EQUAL(eve::saturate((EVE_TYPE(42.69)), eve::uint16_       ), (EVE_TYPE(42.69)) );
-  
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  TTS_EQUAL(eve::saturate((T(0)), eve::uint16_          ), (T(0))     );
+  TTS_EQUAL(eve::saturate((T(42.69)), eve::uint16_       ), (T(42.69)) );
+
+  if constexpr(eve::signed_value<T>)
   {
-    if constexpr(sizeof(EVE_VALUE) <= sizeof(std::int16_t))
+    if constexpr(sizeof(v_t) <= sizeof(std::int16_t))
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), eve::Valmax<EVE_TYPE>() );
+      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::uint16_), eve::Valmax<T>() );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), (EVE_TYPE(eve::Valmax<std::uint16_t>())) );
+      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::uint16_), (T(eve::Valmax<std::uint16_t>())) );
     }
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::Valmax<EVE_TYPE>(), eve::uint16_), (EVE_TYPE(eve::Valmax<std::uint16_t>())) );
+    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::uint16_), (T(eve::Valmax<std::uint16_t>())) );
   }
 }

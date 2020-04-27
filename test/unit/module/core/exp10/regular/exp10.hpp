@@ -22,25 +22,25 @@
 #include <eve/function/is_negative.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::exp10 return type")
+TTS_CASE_TPL("Check eve::exp10 return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::exp10(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::exp10(T(0)), T);
 }
 
-TTS_CASE("Check eve::exp10 behavior")
+TTS_CASE_TPL("Check eve::exp10 behavior", EVE_TYPE)
 {
-  
-  TTS_ULP_EQUAL(eve::exp10(EVE_TYPE(1)), EVE_TYPE(10), 0.5);
-  TTS_IEEE_EQUAL((eve::exp10(EVE_TYPE(0))), (EVE_TYPE(1)));
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+
+  TTS_ULP_EQUAL(eve::exp10(T(1)), T(10), 0.5);
+  TTS_IEEE_EQUAL((eve::exp10(T(0))), (T(1)));
+  if constexpr(eve::floating_value<T>)
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::exp10(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::exp10(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::exp10(eve::Minf<EVE_TYPE>()), (eve::Zero<EVE_TYPE>()) ); 
+      TTS_IEEE_EQUAL(eve::exp10(eve::Nan<T>()) , (eve::Nan<T>()) );
+      TTS_IEEE_EQUAL(eve::exp10(eve::Inf<T>()) , (eve::Inf<T>()) );
+      TTS_IEEE_EQUAL(eve::exp10(eve::Minf<T>()), (T( 0 )) );
     }
-    TTS_ULP_EQUAL(eve::exp10(EVE_TYPE(-1)),EVE_TYPE(0.1), 0.5); 
-    TTS_IEEE_EQUAL((eve::exp10(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(1)));
+    TTS_ULP_EQUAL(eve::exp10(T(-1)),T(0.1), 0.5);
+    TTS_IEEE_EQUAL((eve::exp10(T(-0.))), (T(1)));
   }
 }

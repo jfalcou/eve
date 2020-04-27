@@ -33,11 +33,11 @@ template<typename T> constexpr auto coeff2()
 }
 #endif
 
-TTS_CASE("Check eve::horn1 behavior")
+TTS_CASE_TPL("Check eve::horn1 behavior", EVE_TYPE)
 {
   using eve::detail::horn1;
 
-  TTS_EQUAL((horn1<EVE_TYPE, coeff0<EVE_VALUE>()>(EVE_TYPE(0)))                                  , (EVE_TYPE(0)));
-  TTS_EQUAL((horn1<EVE_TYPE, coeff1<EVE_VALUE>(), coeff0<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(1))), (EVE_TYPE(3)));
-  TTS_EQUAL((horn1<EVE_TYPE, coeff2<EVE_VALUE>(), coeff1<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(2))), (EVE_TYPE(16)));
+  TTS_EQUAL((horn1<T, coeff0<v_t>()>(T(0)))                                  , (T(0)));
+  TTS_EQUAL((horn1<T, coeff1<v_t>(), coeff0<v_t>(), coeff1<v_t>()>(T(1))), (T(3)));
+  TTS_EQUAL((horn1<T, coeff2<v_t>(), coeff1<v_t>(), coeff1<v_t>()>(T(2))), (T(16)));
 }

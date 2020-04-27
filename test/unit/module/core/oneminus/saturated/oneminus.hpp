@@ -17,29 +17,29 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::saturated_(eve::oneminus) behavior")
+TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::oneminus)(EVE_TYPE{1}), EVE_TYPE(0));
+  TTS_EQUAL(eve::saturated_(eve::oneminus)(T{1}), T(0));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(EVE_TYPE{2}), EVE_TYPE(-1));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(static_cast<EVE_TYPE>(-2)), EVE_TYPE(3));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Valmin<EVE_TYPE>()), eve::Valmax<EVE_TYPE>());
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::Valmin<EVE_TYPE>())), eve::Valmax<EVE_TYPE>());
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::inc(eve::Valmin<EVE_TYPE>()))), eve::Valmax<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{2}), T(-1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(static_cast<T>(-2)), T(3));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Valmin<T>()), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::Valmin<T>())), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::inc(eve::Valmin<T>()))), eve::Valmax<T>());
   }
 
-  if constexpr(std::is_unsigned_v<EVE_VALUE>)
+  if constexpr(std::is_unsigned_v<v_t>)
   {
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(EVE_TYPE{2}), EVE_TYPE(0));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(EVE_TYPE{1}), EVE_TYPE(0));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(EVE_TYPE{0}), EVE_TYPE(1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{2}), T(0));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{1}), T(0));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{0}), T(1));
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Mzero<EVE_TYPE>()), EVE_TYPE(1));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Zero<EVE_TYPE>()),  EVE_TYPE(1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T(-0.)), T(1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T( 0 )),  T(1));
   }
 }

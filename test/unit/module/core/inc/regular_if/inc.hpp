@@ -14,20 +14,20 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check conditional eve::inc return type")
+TTS_CASE_TPL("Check conditional eve::inc return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::inc[EVE_TYPE()](EVE_TYPE()))                , (EVE_TYPE));
-  TTS_EXPR_IS((eve::inc[EVE_VALUE()](EVE_TYPE()))               , (EVE_TYPE));
-  TTS_EXPR_IS((eve::inc[true](EVE_TYPE()))                  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::inc[eve::logical<EVE_TYPE>()](EVE_TYPE()))  , (EVE_TYPE));
-  TTS_EXPR_IS((eve::inc[eve::logical<EVE_VALUE>()](EVE_TYPE())) , (EVE_TYPE));
+  TTS_EXPR_IS((eve::inc[T()](T()))                , T);
+  TTS_EXPR_IS((eve::inc[v_t()](T()))               , T);
+  TTS_EXPR_IS((eve::inc[true](T()))                  , T);
+  TTS_EXPR_IS((eve::inc[eve::logical<T>()](T()))  , T);
+  TTS_EXPR_IS((eve::inc[eve::logical<v_t>()](T())) , T);
 }
 
-TTS_CASE("Check conditional eve::inc behavior")
+TTS_CASE_TPL("Check conditional eve::inc behavior", EVE_TYPE)
 {
-  EVE_TYPE tv(2);
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv(2);
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   // All basic TRUE
   TTS_EQUAL(eve::inc[ 1 ](tv)     , eve::inc(tv));
@@ -42,7 +42,7 @@ TTS_CASE("Check conditional eve::inc behavior")
   TTS_EQUAL(eve::inc[ f ](tv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

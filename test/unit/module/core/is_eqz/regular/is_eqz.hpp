@@ -16,18 +16,18 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::is_eqz return type")
+TTS_CASE_TPL("Check eve::is_eqz return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_eqz(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_eqz(T(0)), (eve::logical<T>));
 }
 
-TTS_CASE("Check eve::is_eqz behavior")
+TTS_CASE_TPL("Check eve::is_eqz behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_eqz(EVE_TYPE(0)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_eqz(EVE_TYPE(2)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_eqz(T(0)), eve::True<T>() );
+  TTS_EQUAL(eve::is_eqz(T(2)), eve::False<T>());
 
-  if constexpr( std::is_floating_point_v<EVE_VALUE> )
+  if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::is_eqz(eve::Mzero<EVE_TYPE>()), eve::True<EVE_TYPE>() );
+    TTS_EQUAL(eve::is_eqz(T(-0.)), eve::True<T>() );
   }
 }

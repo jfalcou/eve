@@ -18,28 +18,28 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::sin return type")
+TTS_CASE_TPL("Check eve::sin return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sin(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::sin(T(0)), T);
 }
 
-TTS_CASE("Check eve::sin behavior")
+TTS_CASE_TPL("Check eve::sin behavior", EVE_TYPE)
 {
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::sin(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::sin(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::sin(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::sin(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::sin(eve::Inf<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::sin(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_ULP_EQUAL(eve::sin(EVE_TYPE(1)), EVE_TYPE(std::sin(EVE_VALUE(1.0))), 0.5);
-  TTS_ULP_EQUAL(eve::sin(EVE_TYPE(-1.0)),EVE_TYPE(std::sin(EVE_VALUE(-1.0))), 0.5);
-  TTS_IEEE_EQUAL((eve::sin(EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_IEEE_EQUAL((eve::sin(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(0)));
-  TTS_ULP_EQUAL((eve::sin(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(std::sin(eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL((eve::sin(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(std::sin(-eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL(eve::sin(EVE_TYPE(100000.0)), EVE_TYPE(std::sin(100000.0)), 0.5);
-  TTS_ULP_EQUAL(eve::sin(EVE_TYPE(-100000.0)),EVE_TYPE(std::sin(-100000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::sin)(EVE_TYPE(-100000000.0))),EVE_TYPE(std::sin(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::sin)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(std::sin(eve::Valmax<EVE_VALUE>())), 0.5);
+  TTS_ULP_EQUAL(eve::sin(T(1)), T(std::sin(v_t(1.0))), 0.5);
+  TTS_ULP_EQUAL(eve::sin(T(-1.0)),T(std::sin(v_t(-1.0))), 0.5);
+  TTS_IEEE_EQUAL((eve::sin(T(0))), (T(0)));
+  TTS_IEEE_EQUAL((eve::sin(T(-0.))), (T(0)));
+  TTS_ULP_EQUAL((eve::sin(eve::Pio_4<T>())), (T(std::sin(eve::Pio_4<v_t>()))), 0.5);
+  TTS_ULP_EQUAL((eve::sin(-eve::Pio_4<T>())),(T(std::sin(-eve::Pio_4<v_t>()))), 0.5);
+  TTS_ULP_EQUAL(eve::sin(T(100000.0)), T(std::sin(100000.0)), 0.5);
+  TTS_ULP_EQUAL(eve::sin(T(-100000.0)),T(std::sin(-100000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::sin)(T(-100000000.0))),T(std::sin(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::sin)(T(eve::Valmax<T>()))),T(std::sin(eve::Valmax<v_t>())), 0.5);
 }

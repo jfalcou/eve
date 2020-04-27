@@ -12,16 +12,16 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::fma return type")
+TTS_CASE_TPL("Check eve::fma return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::fma(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::fma(T(), T(), T()), T);
 }
 
-TTS_CASE("Check eve::fma behavior")
+TTS_CASE_TPL("Check eve::fma behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(7)));
-  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(7)));
-  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(7)));
-  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(17)));
+  TTS_EQUAL(eve::fma(T(0), T(0), T(0)), (T(0)));
+  TTS_EQUAL(eve::fma(T(0), T(0), T(7)), (T(7)));
+  TTS_EQUAL(eve::fma(T(2), T(0), T(7)), (T(7)));
+  TTS_EQUAL(eve::fma(T(0), T(5), T(7)), (T(7)));
+  TTS_EQUAL(eve::fma(T(2), T(5), T(7)), (T(17)));
 }

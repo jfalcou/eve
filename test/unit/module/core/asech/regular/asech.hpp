@@ -13,33 +13,34 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::asech return type")
+TTS_CASE_TPL("Check eve::asech return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::asech(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::asech(T(0)), T);
 }
 
-TTS_CASE("Check eve::asech behavior")
+TTS_CASE_TPL("Check eve::asech behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::asech(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::Nan<T>()) , eve::Nan<T>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::asech(eve::Inf<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::asech(eve::Minf<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);   
+    TTS_ULP_EQUAL(eve::asech(eve::Inf<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::Minf<T>()) , eve::Nan<T>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::asech(EVE_TYPE( 2))         ,  eve::Nan<EVE_TYPE>()  , 0   );
-  TTS_ULP_EQUAL(eve::asech(EVE_TYPE(-2))         ,  eve::Nan<EVE_TYPE>()  , 0   );
-  TTS_ULP_EQUAL(eve::asech(EVE_TYPE( 1. ))       ,  eve::Zero<EVE_TYPE>() , 0   );
-  TTS_ULP_EQUAL(eve::asech(EVE_TYPE( 0.5 ))     ,  EVE_TYPE(std::acosh(EVE_VALUE(2))), 0.5  );
+  TTS_ULP_EQUAL(eve::asech(T( 2))   ,  eve::Nan<T>()        , 0   );
+  TTS_ULP_EQUAL(eve::asech(T(-2))   ,  eve::Nan<T>()        , 0   );
+  TTS_ULP_EQUAL(eve::asech(T( 1. )) ,  T( 0 )               , 0   );
+  TTS_ULP_EQUAL(eve::asech(T( 0.5 )),  T(std::acosh(v_t(2))), 0.5 );
 }

@@ -14,71 +14,71 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::logical_notor return type")
+TTS_CASE_TPL("Check eve::logical_notor return type", EVE_TYPE)
 {
   using eve::logical;
 
-  TTS_EXPR_IS((eve::logical_notor(EVE_TYPE()         , EVE_TYPE())         ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_TYPE>(), EVE_TYPE())         ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_TYPE>(), logical<EVE_TYPE>())), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(EVE_TYPE()         , logical<EVE_TYPE>())), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((eve::logical_notor(T()         , T())         ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<T>(), T())         ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<T>(), logical<T>())), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(T()         , logical<T>())), (logical<T>));
 
-  TTS_EXPR_IS((eve::logical_notor(EVE_VALUE()         , EVE_TYPE())           ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(EVE_TYPE()          , EVE_VALUE())          ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_TYPE>() , EVE_VALUE())          ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_VALUE>(), EVE_TYPE())           ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_VALUE>(), logical<EVE_TYPE>())  ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(logical<EVE_TYPE>() , logical<EVE_VALUE>()) ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(EVE_VALUE()         , logical<EVE_TYPE>())  ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_notor(EVE_TYPE()          , logical<EVE_VALUE>()) ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS((eve::logical_notor(v_t()         , T())           ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(T()          , v_t())          ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<T>() , v_t())          ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<v_t>(), T())           ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<v_t>(), logical<T>())  ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(logical<T>() , logical<v_t>()) ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(v_t()         , logical<T>())  ), (logical<T>));
+  TTS_EXPR_IS((eve::logical_notor(T()          , logical<v_t>()) ), (logical<T>));
 }
 
-TTS_CASE("Check eve::logical_notor behavior on scalars")
+TTS_CASE_TPL("Check eve::logical_notor behavior on scalars", EVE_TYPE)
 {
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), (EVE_TYPE(0))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), (EVE_TYPE(1))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(2)), (EVE_TYPE(1))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(1)), (EVE_TYPE(0))), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor((T(0)), (T(0))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(0)), (T(1))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(2)), (T(1))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(1)), (T(0))), eve::False<T>());
 
-  TTS_EQUAL(eve::logical_notor(EVE_VALUE(0), (EVE_TYPE(0))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(EVE_VALUE(0), (EVE_TYPE(1))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(EVE_VALUE(2), (EVE_TYPE(1))), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(EVE_VALUE(1), (EVE_TYPE(0))), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor(v_t(0), (T(0))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(v_t(0), (T(1))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(v_t(2), (T(1))), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(v_t(1), (T(0))), eve::False<T>());
 
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), EVE_VALUE(0)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), EVE_VALUE(1)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(2)), EVE_VALUE(1)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor((EVE_TYPE(1)), EVE_VALUE(0)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor((T(0)), v_t(0)), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(0)), v_t(1)), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(2)), v_t(1)), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor((T(1)), v_t(0)), eve::False<T>());
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
-    TTS_EQUAL(eve::logical_notor((i_t(0)), (EVE_TYPE(0))), eve::True<i_t>());
-    TTS_EQUAL(eve::logical_notor((i_t(0)), (EVE_TYPE(1))), eve::True<i_t>());
-    TTS_EQUAL(eve::logical_notor((i_t(2)), (EVE_TYPE(1))), eve::True<i_t>() );
-    TTS_EQUAL(eve::logical_notor((i_t(1)), (EVE_TYPE(0))), eve::False<i_t>());
-    
-    TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), i_t(0)), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::logical_notor((EVE_TYPE(0)), i_t(1)), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::logical_notor((EVE_TYPE(2)), i_t(1)), eve::True<EVE_TYPE>() );
-    TTS_EQUAL(eve::logical_notor((EVE_TYPE(1)), i_t(0)), eve::False<EVE_TYPE>());
+    using i_t = eve::detail::as_integer_t<T>;
+    TTS_EQUAL(eve::logical_notor((i_t(0)), (T(0))), eve::True<i_t>());
+    TTS_EQUAL(eve::logical_notor((i_t(0)), (T(1))), eve::True<i_t>());
+    TTS_EQUAL(eve::logical_notor((i_t(2)), (T(1))), eve::True<i_t>() );
+    TTS_EQUAL(eve::logical_notor((i_t(1)), (T(0))), eve::False<i_t>());
+
+    TTS_EQUAL(eve::logical_notor((T(0)), i_t(0)), eve::True<T>());
+    TTS_EQUAL(eve::logical_notor((T(0)), i_t(1)), eve::True<T>());
+    TTS_EQUAL(eve::logical_notor((T(2)), i_t(1)), eve::True<T>() );
+    TTS_EQUAL(eve::logical_notor((T(1)), i_t(0)), eve::False<T>());
   }
 }
 
-TTS_CASE("Check eve::logical_notor behavior on logicals")
+TTS_CASE_TPL("Check eve::logical_notor behavior on logicals", EVE_TYPE)
 {
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_TYPE>() , eve::False<EVE_TYPE>()) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_TYPE>() , eve::True<EVE_TYPE>() ) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_TYPE>()  , eve::True<EVE_TYPE>() ) , eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_TYPE>()  , eve::False<EVE_TYPE>()) , eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor(eve::False<T>() , eve::False<T>()) , eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::False<T>() , eve::True<T>() ) , eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<T>()  , eve::True<T>() ) , eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<T>()  , eve::False<T>()) , eve::False<T>());
 
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_VALUE>(), eve::False<EVE_TYPE>()), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_VALUE>(), eve::True<EVE_TYPE>() ), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_VALUE>() , eve::True<EVE_TYPE>() ), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_VALUE>() , eve::False<EVE_TYPE>()), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor(eve::False<v_t>(), eve::False<T>()), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::False<v_t>(), eve::True<T>() ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<v_t>() , eve::True<T>() ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<v_t>() , eve::False<T>()), eve::False<T>());
 
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_TYPE>() , eve::False<EVE_VALUE>() ), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::False<EVE_TYPE>() , eve::True<EVE_VALUE>()  ), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_TYPE>()  , eve::True<EVE_VALUE>()  ), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_notor(eve::True<EVE_TYPE>()  , eve::False<EVE_VALUE>() ), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::logical_notor(eve::False<T>() , eve::False<v_t>() ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::False<T>() , eve::True<v_t>()  ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<T>()  , eve::True<v_t>()  ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_notor(eve::True<T>()  , eve::False<v_t>() ), eve::False<T>());
 }

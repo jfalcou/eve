@@ -22,21 +22,21 @@
 #include <eve/platform.hpp>
 #include <type_traits>
 
-TTS_CASE("Check is_not_less_equal return type")
+TTS_CASE_TPL("Check is_not_less_equal return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_not_less_equal(EVE_TYPE(), EVE_TYPE()), eve::as_logical_t<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_not_less_equal(T(), T()), eve::as_logical_t<T>);
 }
 
-TTS_CASE("Check eve::is_not_less_equal behavior")
+TTS_CASE_TPL("Check eve::is_not_less_equal behavior", EVE_TYPE)
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_not_less_equal(EVE_TYPE(1), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::is_not_less_equal(eve::Nan<EVE_TYPE>(), EVE_TYPE(1)), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_less_equal(T(1), eve::Nan<T>()), eve::True<T>());
+    TTS_EQUAL(eve::is_not_less_equal(eve::Nan<T>(), T(1)), eve::True<T>());
   }
-  TTS_EQUAL(eve::is_not_less_equal(EVE_TYPE(1), EVE_TYPE(1)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less_equal(EVE_TYPE(3), EVE_TYPE(1)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less_equal(EVE_TYPE(1), EVE_TYPE(3)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_not_less_equal(T(1), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_not_less_equal(T(3), T(1)), eve::True<T>());
+  TTS_EQUAL(eve::is_not_less_equal(T(1), T(3)), eve::False<T>());
 }
 
 #endif

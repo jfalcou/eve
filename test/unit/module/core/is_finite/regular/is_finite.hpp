@@ -18,20 +18,20 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::is_finite return type")
+TTS_CASE_TPL("Check eve::is_finite return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_finite(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_finite(T(0)), (eve::logical<T>));
 }
 
-TTS_CASE("Check eve::is_finite behavior")
+TTS_CASE_TPL("Check eve::is_finite behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_finite(EVE_TYPE(1)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_finite(EVE_TYPE(2)), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_finite(T(1)), eve::True<T>() );
+  TTS_EQUAL(eve::is_finite(T(2)), eve::True<T>()  );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_finite(eve::Inf<EVE_TYPE>()), eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_finite(eve::Minf<EVE_TYPE>()), eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_finite(eve::Nan<EVE_TYPE>()), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_finite(eve::Inf<T>()), eve::False<T>());
+    TTS_EQUAL(eve::is_finite(eve::Minf<T>()), eve::False<T>());
+    TTS_EQUAL(eve::is_finite(eve::Nan<T>()), eve::False<T>());
   }
 }

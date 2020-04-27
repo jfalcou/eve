@@ -14,31 +14,33 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::bit_shr return type")
+TTS_CASE_TPL("Check eve::bit_shr return type", EVE_TYPE)
 {
-  using ui_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
-  using si_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using ui_t = eve::detail::as_integer_t<T, unsigned>;
+  using si_t = eve::detail::as_integer_t<T, signed>;
 
-  TTS_EXPR_IS(eve::bit_shr(EVE_TYPE(), int()),  (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_shr(EVE_TYPE(), ui_t()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_shr(EVE_TYPE(), si_t()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::bit_shr(T(), int()),  T);
+  TTS_EXPR_IS(eve::bit_shr(T(), ui_t()), T);
+  TTS_EXPR_IS(eve::bit_shr(T(), si_t()), T);
 }
 
-TTS_CASE( "Check eve::bit_shr behavior")
+TTS_CASE_TPL( "Check eve::bit_shr behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::bit_shr((EVE_TYPE(4)), 1), (EVE_TYPE(2)) );
-  TTS_EQUAL(eve::bit_shr((EVE_TYPE(2)), 1), (EVE_TYPE(1)) );
-  TTS_EQUAL(eve::bit_shr((EVE_TYPE(1)), 1), (EVE_TYPE(0)) );
-  TTS_EQUAL(eve::bit_shr((EVE_TYPE(0)), 1), (EVE_TYPE(0)) );
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  TTS_EQUAL(eve::bit_shr(T(4), 1), T(2) );
+  TTS_EQUAL(eve::bit_shr(T(2), 1), T(1) );
+  TTS_EQUAL(eve::bit_shr(T(1), 1), T(0) );
+  TTS_EQUAL(eve::bit_shr(T(0), 1), T(0) );
+
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::bit_shr((EVE_TYPE(-1)),(sizeof(EVE_VALUE)*8-1)), (EVE_TYPE(1)));
-    TTS_EQUAL(eve::bit_shr((EVE_TYPE(-1)),(sizeof(EVE_VALUE)*8-2)), (EVE_TYPE(3)));
+    TTS_EQUAL(eve::bit_shr( T(-1), (sizeof(v_t)*8-1)), T(1) );
+    TTS_EQUAL(eve::bit_shr( T(-1), (sizeof(v_t)*8-2)), T(3) );
   }
   else
   {
-    TTS_EQUAL(eve::bit_shr(eve::Valmax<EVE_TYPE>(),(sizeof(EVE_VALUE)*8-1)), (EVE_TYPE(1)));
-    TTS_EQUAL(eve::bit_shr(eve::Valmax<EVE_TYPE>(),(sizeof(EVE_VALUE)*8-2)), (EVE_TYPE(3)));
+    TTS_EQUAL(eve::bit_shr(eve::Valmax<T>(),(sizeof(v_t)*8-1)), T(1) );
+    TTS_EQUAL(eve::bit_shr(eve::Valmax<T>(),(sizeof(v_t)*8-2)), T(3) );
   }
 }

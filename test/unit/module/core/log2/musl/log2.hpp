@@ -21,28 +21,28 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::musl_(eve::log2) return type")
+TTS_CASE_TPL("Check eve::musl_(eve::log2) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::musl_(eve::log2)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::musl_(eve::log2)(T(0)), T);
 }
 
-TTS_CASE(" log2")
+TTS_CASE_TPL(" log2", EVE_TYPE)
 {
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Mone<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Zero<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Nan<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Mone<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::musl_(eve::log2)(T( 0 )), eve::Minf<T>(), 0);
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Mindenormal<EVE_TYPE>()), EVE_TYPE(std::log2(eve::Mindenormal<EVE_VALUE>())), 0);
+    TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::Mindenormal<T>()), T(std::log2(eve::Mindenormal<v_t>())), 0);
   }
-  
-  TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::One<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::musl_(eve::log2)(EVE_TYPE(2)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(eve::musl_(eve::log2)(EVE_TYPE(8)), EVE_TYPE(3), 0);
-  TTS_ULP_EQUAL(eve::musl_(eve::log2)(EVE_TYPE(64)), EVE_TYPE(6), 0);
+
+  TTS_ULP_EQUAL(eve::musl_(eve::log2)(eve::One<T>()), T( 0 ), 0);
+  TTS_ULP_EQUAL(eve::musl_(eve::log2)(T(2)), T(1), 0);
+  TTS_ULP_EQUAL(eve::musl_(eve::log2)(T(8)), T(3), 0);
+  TTS_ULP_EQUAL(eve::musl_(eve::log2)(T(64)), T(6), 0);
 }

@@ -14,53 +14,53 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::pedantic_(eve::maxmag) return type")
+TTS_CASE_TPL("Check eve::pedantic_(eve::maxmag) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(EVE_TYPE(0)  , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(EVE_VALUE(0) , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(EVE_TYPE(0)  , EVE_VALUE(0)) , (EVE_TYPE));
+  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(T(0)  , T(0) ) , T);
+  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(v_t(0) , T(0) ) , T);
+  TTS_EXPR_IS(eve::pedantic_(eve::maxmag)(T(0)  , v_t(0)) , T);
 }
 
-TTS_CASE("Check eve::pedantic_(eve::maxmag) behavior")
+TTS_CASE_TPL("Check eve::pedantic_(eve::maxmag) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(0)), (EVE_TYPE(1))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)), (EVE_TYPE(0))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(0)), (T(0))), (T(0)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(0)), (T(1))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(1)), (T(0))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(1)), (T(1))), (T(1)));
 
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_VALUE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_VALUE(0)), (EVE_TYPE(1))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_VALUE(1)), (EVE_TYPE(0))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_VALUE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((v_t(0)), (T(0))), (T(0)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((v_t(0)), (T(1))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((v_t(1)), (T(0))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((v_t(1)), (T(1))), (T(1)));
 
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(0)), (EVE_VALUE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(0)), (EVE_VALUE(1))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)), (EVE_VALUE(0))), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)), (EVE_VALUE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(0)), (v_t(0))), (T(0)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(0)), (v_t(1))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(1)), (v_t(0))), (T(1)));
+  TTS_EQUAL(eve::pedantic_(eve::maxmag)((T(1)), (v_t(1))), (T(1)));
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<EVE_TYPE>() ), (EVE_TYPE(1))) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<EVE_VALUE>()), (EVE_TYPE(1))) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<EVE_TYPE>() ), (EVE_VALUE(1))), (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<T>() ), (T(1))) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<v_t>()), (T(1))) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((eve::Nan<T>() ), (v_t(1))), (eve::Nan<T>()) );
 
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)) , (eve::Nan<EVE_TYPE>())  ), (EVE_TYPE(1)) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((EVE_VALUE(1)), (eve::Nan<EVE_TYPE>())  ), (EVE_TYPE(1)) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((EVE_TYPE(1)) , (eve::Nan<EVE_VALUE>()) ), (EVE_TYPE(1)) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((T(1)) , (eve::Nan<T>())  ), (T(1)) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((v_t(1)), (eve::Nan<T>())  ), (T(1)) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)((T(1)) , (eve::Nan<v_t>()) ), (T(1)) );
   }
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-2), (EVE_TYPE(1))), static_cast<EVE_TYPE>(-2));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), (EVE_TYPE(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-1), (T(2))), (T(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-2), (T(1))), static_cast<T>(-2));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-2), (T(2))), (T(2)));
 
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-1), (EVE_VALUE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-2), (EVE_VALUE(1))), static_cast<EVE_TYPE>(-2));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_TYPE>(-2), (EVE_VALUE(2))), (EVE_TYPE(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-1), (v_t(2))), (T(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-2), (v_t(1))), static_cast<T>(-2));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<T>(-2), (v_t(2))), (T(2)));
 
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_VALUE>(-1), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_VALUE>(-2), (EVE_TYPE(1))), static_cast<EVE_TYPE>(-2));
-    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<EVE_VALUE>(-2), (EVE_TYPE(2))), (EVE_TYPE(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<v_t>(-1), (T(2))), (T(2)));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<v_t>(-2), (T(1))), static_cast<T>(-2));
+    TTS_EQUAL(eve::pedantic_(eve::maxmag)(static_cast<v_t>(-2), (T(2))), (T(2)));
   }
 }

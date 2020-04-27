@@ -15,7 +15,7 @@
 #include <cstddef>
 #include <limits>
 
-TTS_CASE("Check minf return type")
+TTS_CASE_TPL("Check minf return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::Minf<float>(), float);
   TTS_EXPR_IS(eve::Minf<double>(), double);
@@ -31,7 +31,7 @@ TTS_CASE("Check minf return type")
   TTS_EXPR_IS(eve::Minf<std::uint64_t>(), std::uint64_t);
 }
 
-TTS_CASE("Check minf behavior")
+TTS_CASE_TPL("Check minf behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::Minf<std::uint8_t>(), std::uint8_t(0));
   TTS_EQUAL(eve::Minf<std::uint16_t>(), std::uint16_t(0));

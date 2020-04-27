@@ -18,24 +18,24 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::is_not_inf return type")
+TTS_CASE_TPL("Check eve::is_not_inf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_not_inf(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_inf(T(0)), (eve::logical<T>));
 }
 
-TTS_CASE("Check eve::is_not_inf behavior")
+TTS_CASE_TPL("Check eve::is_not_inf behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_not_inf(EVE_TYPE(0)), eve::True<EVE_TYPE>()  );
-  TTS_EQUAL(eve::is_not_inf(EVE_TYPE(2)), eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_inf(T(0)), eve::True<T>()  );
+  TTS_EQUAL(eve::is_not_inf(T(2)), eve::True<T>() );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_infinites)
+  if constexpr(eve::floating_value<T> && eve::platform::supports_infinites)
   {
-    TTS_EQUAL(eve::is_not_inf(eve::Inf<EVE_TYPE>())  , eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_not_inf(eve::Minf<EVE_TYPE>()) , eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_inf(eve::Inf<T>())  , eve::False<T>());
+    TTS_EQUAL(eve::is_not_inf(eve::Minf<T>()) , eve::False<T>());
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_nans)
+  if constexpr(eve::floating_value<T> && eve::platform::supports_nans)
   {
-    TTS_EQUAL(eve::is_not_inf(eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_inf(eve::Nan<T>()), eve::True<T>());
   }
 }

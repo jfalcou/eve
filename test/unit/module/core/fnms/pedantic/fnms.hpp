@@ -18,22 +18,22 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/zero.hpp>
 
-TTS_CASE("Check eve::fnms return type")
+TTS_CASE_TPL("Check eve::fnms return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::fnms)(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::pedantic_(eve::fnms)(T(), T(), T()), T);
 }
 
-TTS_CASE("Check eve::pedantic_(eve::fnms) behavior")
+TTS_CASE_TPL("Check eve::pedantic_(eve::fnms) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-17)));
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  TTS_EQUAL(eve::pedantic_(eve::fnms)(T(0), T(0), T(0)), (T(0)));
+  TTS_EQUAL(eve::pedantic_(eve::fnms)(T(0), T(0), T(7)), (T(-7)));
+  TTS_EQUAL(eve::pedantic_(eve::fnms)(T(2), T(0), T(7)), (T(-7)));
+  TTS_EQUAL(eve::pedantic_(eve::fnms)(T(0), T(5), T(7)), (T(-7)));
+  TTS_EQUAL(eve::pedantic_(eve::fnms)(T(2), T(5), T(7)), (T(-17)));
+  if constexpr(eve::floating_value<T>)
   {
-    EVE_TYPE e = eve::Eps<EVE_TYPE>();
-    TTS_EQUAL(eve::pedantic_(eve::fnms)(eve::inc(e), eve::dec(e), eve::One<EVE_TYPE>()), -(eve::sqr(e)));
+    T e = eve::Eps<T>();
+    TTS_EQUAL(eve::pedantic_(eve::fnms)(eve::inc(e), eve::dec(e), eve::One<T>()), -(eve::sqr(e)));
   }
-  
+
 }

@@ -13,54 +13,57 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::bit_xor return type")
+TTS_CASE_TPL("Check eve::bit_xor return type", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
-  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using ui_t = as_integer_t<T, unsigned>;
+  using vi_t = as_integer_t<v_t, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , EVE_TYPE()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , EVE_VALUE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_VALUE() , EVE_TYPE()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , ui_t())     , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(EVE_TYPE()  , vi_t())     , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_xor(ui_t()      , EVE_TYPE()) , ui_t      );
-  TTS_EXPR_IS(eve::bit_xor(vi_t()      , EVE_TYPE()) , ui_t      );
+  TTS_EXPR_IS(eve::bit_xor(T()  , T()) , T);
+  TTS_EXPR_IS(eve::bit_xor(T()  , v_t()), T);
+  TTS_EXPR_IS(eve::bit_xor(v_t() , T()) , T);
+  TTS_EXPR_IS(eve::bit_xor(T()  , ui_t())     , T);
+  TTS_EXPR_IS(eve::bit_xor(T()  , vi_t())     , T);
+  TTS_EXPR_IS(eve::bit_xor(ui_t()      , T()) , ui_t      );
+  TTS_EXPR_IS(eve::bit_xor(vi_t()      , T()) , ui_t      );
 }
 
-TTS_CASE( "Check bit_xor behavior")
+TTS_CASE_TPL( "Check bit_xor behavior", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
   using eve::bit_cast;
   using eve::as;
 
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), (EVE_TYPE(0)))  , (EVE_TYPE(0)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), (EVE_VALUE(0))) , (EVE_TYPE(0)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), (EVE_TYPE(1)))  , (EVE_TYPE(1)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), (EVE_VALUE(1))) , (EVE_TYPE(1)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(1)), (EVE_TYPE(1)))  , (EVE_TYPE(0)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(1)), (EVE_VALUE(1))) , (EVE_TYPE(0)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(1)), (EVE_TYPE(0)))  , (EVE_TYPE(1)));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(1)), (EVE_VALUE(0))) , (EVE_TYPE(1)));
+  using v_t = eve::element_type_t<T>;
 
-  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
-  using si_t = as_integer_t<EVE_TYPE, signed>;
-  using wi_t = as_integer_t<EVE_VALUE, signed>;
+  TTS_EQUAL(eve::bit_xor((T(0)), (T(0)))  , (T(0)));
+  TTS_EQUAL(eve::bit_xor((T(0)), (v_t(0))) , (T(0)));
+  TTS_EQUAL(eve::bit_xor((T(0)), (T(1)))  , (T(1)));
+  TTS_EQUAL(eve::bit_xor((T(0)), (v_t(1))) , (T(1)));
+  TTS_EQUAL(eve::bit_xor((T(1)), (T(1)))  , (T(0)));
+  TTS_EQUAL(eve::bit_xor((T(1)), (v_t(1))) , (T(0)));
+  TTS_EQUAL(eve::bit_xor((T(1)), (T(0)))  , (T(1)));
+  TTS_EQUAL(eve::bit_xor((T(1)), (v_t(0))) , (T(1)));
 
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), ui_t(1)), bit_cast(ui_t(1),as<EVE_TYPE>()));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), vi_t(1)), bit_cast(ui_t(1),as<EVE_TYPE>()));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), si_t(1)), bit_cast(si_t(1),as<EVE_TYPE>()));
-  TTS_EQUAL(eve::bit_xor((EVE_TYPE(0)), wi_t(1)), bit_cast(si_t(1),as<EVE_TYPE>()));
+  using ui_t = as_integer_t<T, unsigned>;
+  using vi_t = as_integer_t<v_t, unsigned>;
+  using si_t = as_integer_t<T, signed>;
+  using wi_t = as_integer_t<v_t, signed>;
 
-  TTS_EQUAL(eve::bit_xor(ui_t(0), (EVE_TYPE(1))), bit_cast(EVE_TYPE(1),as<ui_t>()));
-  TTS_EQUAL(eve::bit_xor(si_t(0), (EVE_TYPE(1))), bit_cast(EVE_TYPE(1),as<si_t>()));
+  TTS_EQUAL(eve::bit_xor((T(0)), ui_t(1)), bit_cast(ui_t(1),as<T>()));
+  TTS_EQUAL(eve::bit_xor((T(0)), vi_t(1)), bit_cast(ui_t(1),as<T>()));
+  TTS_EQUAL(eve::bit_xor((T(0)), si_t(1)), bit_cast(si_t(1),as<T>()));
+  TTS_EQUAL(eve::bit_xor((T(0)), wi_t(1)), bit_cast(si_t(1),as<T>()));
 
-  if constexpr(std::is_integral_v<EVE_VALUE>)
+  TTS_EQUAL(eve::bit_xor(ui_t(0), (T(1))), bit_cast(T(1),as<ui_t>()));
+  TTS_EQUAL(eve::bit_xor(si_t(0), (T(1))), bit_cast(T(1),as<si_t>()));
+
+  if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::bit_xor(EVE_TYPE(3), EVE_TYPE(2) ) , EVE_TYPE(1));
-    TTS_EQUAL(eve::bit_xor(EVE_TYPE(3), EVE_VALUE(2)) , EVE_TYPE(1));
-    TTS_EQUAL(eve::bit_xor(EVE_TYPE(3), EVE_TYPE(1) ) , EVE_TYPE(2));
-    TTS_EQUAL(eve::bit_xor(EVE_TYPE(3), EVE_VALUE(1)) , EVE_TYPE(2));
+    TTS_EQUAL(eve::bit_xor(T(3), T(2) ) , T(1));
+    TTS_EQUAL(eve::bit_xor(T(3), v_t(2)) , T(1));
+    TTS_EQUAL(eve::bit_xor(T(3), T(1) ) , T(2));
+    TTS_EQUAL(eve::bit_xor(T(3), v_t(1)) , T(2));
   }
 }

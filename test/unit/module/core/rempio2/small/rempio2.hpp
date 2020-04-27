@@ -15,16 +15,16 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("wide random check on rempio2")
+TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
 {
 
-  EVE_VALUE z = EVE_VALUE(1);
+  v_t z = v_t(1);
  for(int i=1; i <10 ; ++i)
  {
-   auto [n, x, dx] = eve::small_(eve::rempio2)(EVE_TYPE(z));
+   auto [n, x, dx] = eve::small_(eve::rempio2)(T(z));
    auto [nn, xx, dxx] = eve::rem_pio2(z);
-   TTS_ULP_EQUAL(x ,  EVE_TYPE(xx)   , 0.5 );
-   TTS_ULP_EQUAL(n ,  EVE_TYPE(nn)   , 0.5 );
-   z/= EVE_VALUE(10);
+   TTS_ULP_EQUAL(x ,  T(xx)   , 0.5 );
+   TTS_ULP_EQUAL(n ,  T(nn)   , 0.5 );
+   z/= v_t(10);
  }
 }

@@ -13,16 +13,16 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check ifrexp return type")
+TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::raw_(eve::ifrexp)(EVE_TYPE()), (std::tuple<EVE_TYPE,eve::detail::as_integer_t<EVE_TYPE,signed>>));
+  TTS_EXPR_IS(eve::raw_(eve::ifrexp)(T()), (std::tuple<T,eve::detail::as_integer_t<T,signed>>));
 }
 
-TTS_CASE("Check eve::raw_(eve::ifrexp) behavior")
+TTS_CASE_TPL("Check eve::raw_(eve::ifrexp) behavior", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE,signed>; 
-  auto [p0, p1] = eve::raw_(eve::ifrexp)(EVE_TYPE(1));
-  TTS_EQUAL(p0, EVE_TYPE(0.5));
+  using i_t = eve::detail::as_integer_t<T,signed>;
+  auto [p0, p1] = eve::raw_(eve::ifrexp)(T(1));
+  TTS_EQUAL(p0, T(0.5));
   TTS_EQUAL(p1, i_t(1));
 
 

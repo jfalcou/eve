@@ -23,29 +23,32 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::atand return type") { TTS_EXPR_IS(eve::atand(EVE_TYPE(0)), (EVE_TYPE)); }
+TTS_CASE_TPL("Check eve::atand return type", EVE_TYPE)
+{
+  TTS_EXPR_IS(eve::atand(T(0)), T);
+}
 
-TTS_CASE("Check eve::eve::atand behavior")
+TTS_CASE_TPL("Check eve::eve::atand behavior", EVE_TYPE)
 {
   using eve::all;
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atand(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::atand(eve::Nan<T>()), (eve::Nan<T>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atand(eve::Inf<EVE_TYPE>()), (EVE_TYPE(90.)), 0.5);
-    TTS_ULP_EQUAL(eve::atand(eve::Minf<EVE_TYPE>()), (EVE_TYPE(-90.)), 0.5);
+    TTS_ULP_EQUAL(eve::atand(eve::Inf<T>()) , (T( 90.)), 0.5);
+    TTS_ULP_EQUAL(eve::atand(eve::Minf<T>()), (T(-90.)), 0.5);
   }
 
-  TTS_ULP_EQUAL(eve::atand(EVE_TYPE(0.5)), (eve::radindeg(EVE_TYPE(4.636476090008061e-01))), 0.5);
-  TTS_ULP_EQUAL(eve::atand(EVE_TYPE(-0.5)), (eve::radindeg(EVE_TYPE(-4.636476090008061e-01))), 0.5);
-  TTS_ULP_EQUAL(eve::atand(EVE_TYPE(-1.)), (EVE_TYPE(-45)), 0.5);
-  TTS_ULP_EQUAL(eve::atand(EVE_TYPE(1.)), (EVE_TYPE(45)), 0.5);
-  TTS_ULP_EQUAL(eve::atand(EVE_TYPE(0.)), (EVE_TYPE(0)), 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(0.5))  , (eve::indeg(T(4.636476090008061e-01)))  , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(-0.5)) , (eve::indeg(T(-4.636476090008061e-01))) , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(-1.))  , (T(-45))                                , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(1.))   , (T(45))                                 , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(0.))   , (T(0))                                  , 0.5);
 
-  TTS_EXPECT(all(eve::is_positive(eve::atand((EVE_TYPE(0))))));
-  TTS_EXPECT(all(eve::is_negative(eve::atand(eve::Mzero<EVE_TYPE>()))));
+  TTS_EXPECT(all(eve::is_positive(eve::atand((T(0)))))          );
+  TTS_EXPECT(all(eve::is_negative(eve::atand(T(-0.)))) );
 }

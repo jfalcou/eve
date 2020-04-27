@@ -17,25 +17,25 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::oneminus return type")
+TTS_CASE_TPL("Check eve::oneminus return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::oneminus[ EVE_VALUE(0)  ](EVE_TYPE(0))              , (EVE_TYPE));
-  TTS_EXPR_IS(eve::oneminus[ (EVE_TYPE(0)) ](EVE_TYPE(0))              , (EVE_TYPE));
-  TTS_EXPR_IS(eve::oneminus[ (eve::logical<EVE_TYPE>(0))](EVE_TYPE(0)) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::oneminus[ eve::logical<EVE_VALUE>(0) ](EVE_TYPE(0)) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::oneminus[ true ](EVE_TYPE(0))                   , (EVE_TYPE));
+  TTS_EXPR_IS(eve::oneminus[ v_t(0)  ](T(0))              , T);
+  TTS_EXPR_IS(eve::oneminus[ (T(0)) ](T(0))              , T);
+  TTS_EXPR_IS(eve::oneminus[ (eve::logical<T>(0))](T(0)) , T);
+  TTS_EXPR_IS(eve::oneminus[ eve::logical<v_t>(0) ](T(0)) , T);
+  TTS_EXPR_IS(eve::oneminus[ true ](T(0))                   , T);
 }
 
-TTS_CASE("Check eve::oneminus behavior")
+TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)
 {
-  EVE_TYPE tv(2);
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv(2);
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
-  TTS_EQUAL(eve::oneminus[ 1 ](tv)   , (EVE_TYPE(-1)));
-  TTS_EQUAL(eve::oneminus[ 1.0 ](tv) , (EVE_TYPE(-1)));
-  TTS_EQUAL(eve::oneminus[ true ](tv), (EVE_TYPE(-1)));
-  TTS_EQUAL(eve::oneminus[ t ](tv)   , (EVE_TYPE(-1)));
+  TTS_EQUAL(eve::oneminus[ 1 ](tv)   , (T(-1)));
+  TTS_EQUAL(eve::oneminus[ 1.0 ](tv) , (T(-1)));
+  TTS_EQUAL(eve::oneminus[ true ](tv), (T(-1)));
+  TTS_EQUAL(eve::oneminus[ t ](tv)   , (T(-1)));
 
   TTS_EQUAL(eve::oneminus[ 0 ](tv)     , tv);
   TTS_EQUAL(eve::oneminus[ 0.0 ](tv)   , tv);
@@ -43,10 +43,10 @@ TTS_CASE("Check eve::oneminus behavior")
   TTS_EQUAL(eve::oneminus[ f ](tv)     , tv);
 
     // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::oneminus[ m ](tv), eve::if_else(m, (EVE_TYPE(-1)), tv) );
+  TTS_EQUAL(eve::oneminus[ m ](tv), eve::if_else(m, (T(-1)), tv) );
 }

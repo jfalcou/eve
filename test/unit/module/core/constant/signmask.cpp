@@ -15,7 +15,7 @@
 #include <tts/tests/types.hpp>
 #include <cstddef>
 
-TTS_CASE("Check signmask return type")
+TTS_CASE_TPL("Check signmask return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::Signmask<float>(), float);
   TTS_EXPR_IS(eve::Signmask<double>(), double);
@@ -31,7 +31,7 @@ TTS_CASE("Check signmask return type")
   TTS_EXPR_IS(eve::Signmask<std::uint64_t>(), std::uint64_t);
 }
 
-TTS_CASE("Check signmask behavior")
+TTS_CASE_TPL("Check signmask behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::Signmask<std::uint8_t>(), std::uint8_t(0x80U));
   TTS_EQUAL(eve::Signmask<std::uint16_t>(), std::uint16_t(0x8000U));

@@ -24,28 +24,28 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::cotpi return type")
+TTS_CASE_TPL("Check eve::cotpi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::cotpi(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::cotpi(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::cotpi behavior")
+TTS_CASE_TPL("Check eve::eve::cotpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::cotpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::cotpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::cotpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL((eve::cotpi)(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL((eve::cotpi)(eve::Inf<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL((eve::cotpi)(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_ULP_EQUAL((eve::cotpi)(EVE_TYPE(1)), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL((eve::cotpi)(EVE_TYPE(-1)),eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_IEEE_EQUAL((eve::cotpi)(EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()));
-  TTS_IEEE_EQUAL((eve::cotpi)(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()));
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(22.5))), (EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(-EVE_TYPE(22.5))),(EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(100000.0))), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(-100000.0))),eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(100000000.0))), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cotpi)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))/10),eve::Nan<EVE_TYPE>(), 0.5); 
+  TTS_ULP_EQUAL((eve::cotpi)(T(1)), eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL((eve::cotpi)(T(-1)),eve::Nan<T>(), 0.5);
+  TTS_IEEE_EQUAL((eve::cotpi)(T(0)), (eve::Inf<T>()));
+  TTS_IEEE_EQUAL((eve::cotpi)(T(-0.)), (eve::Minf<T>()));
+  TTS_ULP_EQUAL(((eve::cotpi)(T(22.5))), (T(0)), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(-T(22.5))),(T(0)), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(T(100000.0))), eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(T(-100000.0))),eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(T(100000000.0))), eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(T(eve::Valmax<T>()))),eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cotpi)(T(eve::Valmax<T>()))/10),eve::Nan<T>(), 0.5);
 }

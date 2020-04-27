@@ -9,39 +9,33 @@
 **/
 //==================================================================================================
 #include <eve/function/sincos.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/cos.hpp>    
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check sincos return type")
+TTS_CASE_TPL("Check sincos return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::medium_(eve::sincos)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
-} 
+  TTS_EXPR_IS( eve::medium_(eve::sincos)(T()), (std::tuple<T,T>));
+}
 
-TTS_CASE("Check (eve::sincos behavior")
+TTS_CASE_TPL("Check (eve::sincos behavior", EVE_TYPE)
 {
-  static const int N = 10; 
-  EVE_VALUE x[N] = {  eve::Pi<EVE_VALUE>()/8, -eve::Pi<EVE_VALUE>()/8
-                  , eve::Pi<EVE_VALUE>()/4, -eve::Pi<EVE_VALUE>()/4
-                  , EVE_VALUE(1), EVE_VALUE(-1)
-                  , EVE_VALUE(10), EVE_VALUE(-10)
-                  , EVE_VALUE(1000000), EVE_VALUE(-1000000)}; 
-  
-  for(int i=0; i < N ; ++i)
+  using v_t = eve::element_type_t<T>;
+
+  auto pi_v = eve::Pi<v_t>();
+
+  v_t x[]  = {  pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, v_t(1), v_t(-1)
+              , v_t(10), v_t(-10), v_t(1000000), v_t(-1000000)
+              };
+
+  for(auto v : x)
   {
-    auto [p0, p1] = eve::medium_(eve::sincos)(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, EVE_TYPE(std::sin(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, EVE_TYPE(std::cos(x[i])), 0.5);
+    auto [p0, p1] = eve::medium_(eve::sincos)(T(v));
+    TTS_ULP_EQUAL(p0, T(std::sin(v)), 0.5);
+    TTS_ULP_EQUAL(p1, T(std::cos(v)), 0.5);
   }
 }

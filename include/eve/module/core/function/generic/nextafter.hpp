@@ -14,6 +14,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/if_else.hpp>
@@ -21,7 +22,6 @@
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/regular.hpp>
-
 #include <type_traits>
 
 namespace eve::detail

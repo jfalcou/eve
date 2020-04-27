@@ -22,29 +22,29 @@
 #include <cmath>
 
 
-TTS_CASE("Check eve::csc return type")
+TTS_CASE_TPL("Check eve::csc return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::csc(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::csc(T(0)), T);
 }
 
-TTS_CASE("Check eve::csc behavior")
+TTS_CASE_TPL("Check eve::csc behavior", EVE_TYPE)
 {
-  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(double(x)));}; 
+  auto my_stdcsc =  [](auto x){return eve::rec(std::sin(double(x)));};
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::csc(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::csc(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::csc(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::csc(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::csc(eve::Inf<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::csc(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(1)), EVE_TYPE(my_stdcsc(EVE_VALUE(1.0))), 0.5);
-  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(-1.0)),EVE_TYPE(my_stdcsc(EVE_VALUE(-1.0))), 0.5);
-  TTS_IEEE_EQUAL((eve::csc(EVE_TYPE(0))), (EVE_TYPE(my_stdcsc(EVE_VALUE(0.0)))));
-  TTS_IEEE_EQUAL((eve::csc(eve::Mzero<EVE_TYPE>())), (EVE_TYPE(my_stdcsc(EVE_VALUE(-0.0)))));
-  TTS_ULP_EQUAL((eve::csc(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(my_stdcsc(eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL((eve::csc(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(my_stdcsc(-eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(100000.0)), EVE_TYPE(my_stdcsc(100000.0)), 0.5);
-  TTS_ULP_EQUAL(eve::csc(EVE_TYPE(-100000.0)),EVE_TYPE(my_stdcsc(-100000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::csc)(EVE_TYPE(-100000000.0))),EVE_TYPE(my_stdcsc(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL(((eve::csc)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(my_stdcsc(eve::Valmax<EVE_VALUE>())), 1.5);
+  TTS_ULP_EQUAL(eve::csc(T(1)), T(my_stdcsc(v_t(1.0))), 0.5);
+  TTS_ULP_EQUAL(eve::csc(T(-1.0)),T(my_stdcsc(v_t(-1.0))), 0.5);
+  TTS_IEEE_EQUAL((eve::csc(T(0))), (T(my_stdcsc(v_t(0.0)))));
+  TTS_IEEE_EQUAL((eve::csc(T(-0.))), (T(my_stdcsc(v_t(-0.0)))));
+  TTS_ULP_EQUAL((eve::csc(eve::Pio_4<T>())), (T(my_stdcsc(eve::Pio_4<v_t>()))), 0.5);
+  TTS_ULP_EQUAL((eve::csc(-eve::Pio_4<T>())),(T(my_stdcsc(-eve::Pio_4<v_t>()))), 0.5);
+  TTS_ULP_EQUAL(eve::csc(T(100000.0)), T(my_stdcsc(100000.0)), 0.5);
+  TTS_ULP_EQUAL(eve::csc(T(-100000.0)),T(my_stdcsc(-100000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::csc)(T(-100000000.0))),T(my_stdcsc(-100000000.0)), 0.5);
+  TTS_ULP_EQUAL(((eve::csc)(T(eve::Valmax<T>()))),T(my_stdcsc(eve::Valmax<v_t>())), 1.5);
 }

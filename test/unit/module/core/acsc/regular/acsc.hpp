@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/acsc.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
@@ -19,25 +18,25 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::acsc return type")
+TTS_CASE_TPL("Check eve::acsc return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::acsc(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::acsc(T(0)), T);
 }
 
-TTS_CASE("Check eve::acsc behavior")
+TTS_CASE_TPL("Check eve::acsc behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acsc(EVE_TYPE(0)           ) , eve::Nan<EVE_TYPE>(), 1);
-    TTS_ULP_EQUAL(eve::acsc(eve::Mzero<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 1);
-    TTS_IEEE_EQUAL(eve::acsc(eve::Nan<EVE_TYPE>() ) , (eve::Nan<EVE_TYPE>()) );
+    TTS_ULP_EQUAL(eve::acsc(T(0))   , eve::Nan<T>(), 1);
+    TTS_ULP_EQUAL(eve::acsc(T(-0.)) , eve::Nan<T>(), 1);
+    TTS_IEEE_EQUAL(eve::acsc(eve::Nan<T>() ) , (eve::Nan<T>()) );
   }
 
-  TTS_ULP_EQUAL(eve::acsc(EVE_TYPE(-2.)), -eve::Pio_2<EVE_TYPE>()/3 , 1   );
-  TTS_ULP_EQUAL(eve::acsc(EVE_TYPE( 2.)),  eve::Pio_2<EVE_TYPE>()/3 , 1   );
-  TTS_ULP_EQUAL(eve::acsc(EVE_TYPE(-1.)), -eve::Pio_2<EVE_TYPE>()   , 0.5 );
-  TTS_ULP_EQUAL(eve::acsc(EVE_TYPE( 1.)),  eve::Pio_2<EVE_TYPE>()   , 0.5 );
+  TTS_ULP_EQUAL(eve::acsc(T(-2.)), -eve::Pio_2<T>()/3 , 1   );
+  TTS_ULP_EQUAL(eve::acsc(T( 2.)),  eve::Pio_2<T>()/3 , 1   );
+  TTS_ULP_EQUAL(eve::acsc(T(-1.)), -eve::Pio_2<T>()   , 0.5 );
+  TTS_ULP_EQUAL(eve::acsc(T( 1.)),  eve::Pio_2<T>()   , 0.5 );
 
-  TTS_IEEE_EQUAL(eve::acsc(eve::Inf<EVE_TYPE>()) , (EVE_TYPE(0)));
-  TTS_IEEE_EQUAL(eve::acsc(eve::Minf<EVE_TYPE>()), (EVE_TYPE(0)));
+  TTS_IEEE_EQUAL(eve::acsc(eve::Inf<T>()) , (T(0)));
+  TTS_IEEE_EQUAL(eve::acsc(eve::Minf<T>()), (T(0)));
 }

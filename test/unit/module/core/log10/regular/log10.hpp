@@ -21,28 +21,28 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::log10 return type")
+TTS_CASE_TPL("Check eve::log10 return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::log10(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::log10(T(0)), T);
 }
 
-TTS_CASE(" log10")
+TTS_CASE_TPL(" log10", EVE_TYPE)
 {
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::log10(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Mone<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Zero<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::log10(eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::log10(eve::Nan<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::log10(eve::Mone<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::log10(T( 0 )), eve::Minf<T>(), 0);
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_ULP_EQUAL(eve::log10(eve::Mindenormal<EVE_TYPE>()), EVE_TYPE(std::log10(eve::Mindenormal<EVE_VALUE>())), 0);
+    TTS_ULP_EQUAL(eve::log10(eve::Mindenormal<T>()), T(std::log10(eve::Mindenormal<v_t>())), 0);
   }
-  
-  TTS_ULP_EQUAL(eve::log10(eve::One<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(10)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(1000)), EVE_TYPE(3), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(1000000)), EVE_TYPE(6), 0);
+
+  TTS_ULP_EQUAL(eve::log10(eve::One<T>()), T( 0 ), 0);
+  TTS_ULP_EQUAL(eve::log10(T(10)), T(1), 0);
+  TTS_ULP_EQUAL(eve::log10(T(1000)), T(3), 0);
+  TTS_ULP_EQUAL(eve::log10(T(1000000)), T(6), 0);
 }

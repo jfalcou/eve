@@ -20,31 +20,31 @@
 #include <eve/constant/nbmantissabits.hpp>
 #include <utility>
 
-TTS_CASE("Check modf return type")
+TTS_CASE_TPL("Check modf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::modf(EVE_TYPE())), (std::tuple<EVE_TYPE,EVE_TYPE>));
+  TTS_EXPR_IS((eve::modf(T())), (std::tuple<T,T>));
 }
 
-TTS_CASE("Check (eve::modf behavior")
+TTS_CASE_TPL("Check (eve::modf behavior", EVE_TYPE)
 {
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
     {
-      auto [p0, p1] = eve::modf(EVE_TYPE(1.5));
-      TTS_EQUAL(p0, EVE_TYPE(0.5));
-      TTS_EQUAL(p1, EVE_TYPE(1));
+      auto [p0, p1] = eve::modf(T(1.5));
+      TTS_EQUAL(p0, T(0.5));
+      TTS_EQUAL(p1, T(1));
     }
-    if constexpr(std::is_signed_v<EVE_VALUE>)
+    if constexpr(eve::signed_value<T>)
     {
-      auto [p0, p1] = eve::modf(EVE_TYPE(-1.6));
-      TTS_ULP_EQUAL (p0 , EVE_TYPE(-0.6), 0.5);
-      TTS_EQUAL (p1, EVE_TYPE(-1));
+      auto [p0, p1] = eve::modf(T(-1.6));
+      TTS_ULP_EQUAL (p0 , T(-0.6), 0.5);
+      TTS_EQUAL (p1, T(-1));
     }
   }
   else
   {
-     auto [p0, p1] = eve::modf(EVE_TYPE(1));
-      TTS_EQUAL (p0 , EVE_TYPE(0));
-      TTS_EQUAL (p1, EVE_TYPE(1));
+     auto [p0, p1] = eve::modf(T(1));
+      TTS_EQUAL (p0 , T(0));
+      TTS_EQUAL (p1, T(1));
   }
 }

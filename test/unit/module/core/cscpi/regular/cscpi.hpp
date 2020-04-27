@@ -22,28 +22,28 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::cscpi return type")
+TTS_CASE_TPL("Check eve::cscpi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::cscpi(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::cscpi(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::cscpi behavior")
+TTS_CASE_TPL("Check eve::eve::cscpi behavior", EVE_TYPE)
 {
- 
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::cscpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::cscpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::cscpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL((eve::cscpi)(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL((eve::cscpi)(eve::Inf<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL((eve::cscpi)(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_ULP_EQUAL((eve::cscpi)(EVE_TYPE(1)), (eve::Nan<EVE_TYPE>()), 0.5);
-  TTS_ULP_EQUAL((eve::cscpi)(EVE_TYPE(-1)),(eve::Nan<EVE_TYPE>()), 0.5);
-  TTS_IEEE_EQUAL((eve::cscpi)(EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()));
-  TTS_IEEE_EQUAL((eve::cscpi)(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()));
-  TTS_ULP_EQUAL(((eve::cscpi)(EVE_TYPE(22.5))), (EVE_TYPE(1)), 0.5);
-  TTS_ULP_EQUAL(((eve::cscpi)(-EVE_TYPE(22.5))),(EVE_TYPE(-1)), 0.5);
-  TTS_ULP_EQUAL(((eve::cscpi)(EVE_TYPE(100000.0))), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cscpi)(EVE_TYPE(-100000.0))),eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cscpi)(EVE_TYPE(100000000.0))), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(((eve::cscpi)(EVE_TYPE(-100000000.0))),eve::Nan<EVE_TYPE>(), 0.5);
+  TTS_ULP_EQUAL((eve::cscpi)(T(1)), (eve::Nan<T>()), 0.5);
+  TTS_ULP_EQUAL((eve::cscpi)(T(-1)),(eve::Nan<T>()), 0.5);
+  TTS_IEEE_EQUAL((eve::cscpi)(T(0)), (eve::Inf<T>()));
+  TTS_IEEE_EQUAL((eve::cscpi)(T(-0.)), (eve::Minf<T>()));
+  TTS_ULP_EQUAL(((eve::cscpi)(T(22.5))), (T(1)), 0.5);
+  TTS_ULP_EQUAL(((eve::cscpi)(-T(22.5))),(T(-1)), 0.5);
+  TTS_ULP_EQUAL(((eve::cscpi)(T(100000.0))), eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cscpi)(T(-100000.0))),eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cscpi)(T(100000000.0))), eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(((eve::cscpi)(T(-100000000.0))),eve::Nan<T>(), 0.5);
 }

@@ -26,41 +26,41 @@
 #include <eve/function/is_positive.hpp>
 #include <type_traits>
 
-TTS_CASE("Check pedantic ldexp return type")
+TTS_CASE_TPL("Check pedantic ldexp return type", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
-  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
-  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
-  using su_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  using i_t = eve::detail::as_integer_t<T, signed>;
+  using u_t = eve::detail::as_integer_t<T, unsigned>;
+  using si_t = eve::detail::as_integer_t<v_t, signed>;
+  using su_t = eve::detail::as_integer_t<v_t, unsigned>;
 
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), i_t())), (EVE_TYPE));
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), u_t())), (EVE_TYPE));
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), si_t())), (EVE_TYPE));
-  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(EVE_TYPE(), su_t())), (EVE_TYPE));
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(T(), i_t())), T);
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(T(), u_t())), T);
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(T(), si_t())), T);
+  TTS_EXPR_IS((eve::pedantic_(eve::ldexp)(T(), su_t())), T);
 }
 
-TTS_CASE("Check eve::pedantic_(eve::ldexp) two parameters behavior")
+TTS_CASE_TPL("Check eve::pedantic_(eve::ldexp) two parameters behavior", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
-  using si_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using i_t = eve::detail::as_integer_t<T, signed>;
+  using si_t = eve::detail::as_integer_t<v_t, signed>;
 
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0}, i_t(2)), EVE_TYPE(0));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{1}, i_t(2)), EVE_TYPE(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0}, si_t(2)),EVE_TYPE(0));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{1}, si_t(2)),EVE_TYPE(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<EVE_TYPE>()/4, i_t(2)), eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <EVE_TYPE>(), i_t(2)), eve::Mindenormal<EVE_TYPE>()*4);
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{0}, i_t(2)), T(0));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{1}, i_t(2)), T(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{0}, si_t(2)),T(0));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{1}, si_t(2)),T(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<T>()/4, i_t(2)), eve::Valmax<T>());
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <T>(), i_t(2)), eve::Mindenormal<T>()*4);
 
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{0.0}, i_t(0)), EVE_TYPE(0));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE{-0.0}, i_t(0)), EVE_TYPE(0));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::ldexp)(EVE_TYPE(-0.0), i_t(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::ldexp)(EVE_TYPE( 0.0), i_t(0)))));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{0.0}, i_t(0)), T(0));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T{-0.0}, i_t(0)), T(0));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::ldexp)(T(-0.0), i_t(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::ldexp)(T( 0.0), i_t(0)))));
 
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(1), i_t(2)), EVE_TYPE(4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-2), i_t(2)), EVE_TYPE(-8));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-1), si_t(2)),EVE_TYPE(-4));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(EVE_TYPE(-2), si_t(2)),EVE_TYPE(-8));
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<EVE_TYPE>()/4, si_t(2)), eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <EVE_TYPE>(), si_t(2)), eve::Mindenormal<EVE_TYPE>()*4);
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T(1), i_t(2)), T(4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T(-2), i_t(2)), T(-8));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T(-1), si_t(2)),T(-4));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(T(-2), si_t(2)),T(-8));
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<T>()/4, si_t(2)), eve::Valmax<T>());
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <T>(), si_t(2)), eve::Mindenormal<T>()*4);
 
 }
