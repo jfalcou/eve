@@ -14,10 +14,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
 #include <eve/function/rotl.hpp>
 
 namespace eve::detail
@@ -26,9 +22,8 @@ namespace eve::detail
   EVE_FORCEINLINE  auto rotr_(EVE_SUPPORTS(cpu_)
                             , T const &a0
                             , U const &n) noexcept
-  requires (is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
-    return D()(rotl)(a0, U(-n));
+    return rotl(a0, U(-n));
   }
 
 }
