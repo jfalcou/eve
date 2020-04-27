@@ -53,12 +53,10 @@ namespace eve::detail
       auto idx  = cond.bits();
       idx &= ind;
 
-      auto [lx, hx] = idx.slice();
-
       using htype = wide<T, typename N::split_type>;
 
-      auto la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
-      auto ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+      auto la = apply<N::value / 2>([&, lx = idx.slice(lower_)](auto... v) { return htype(a[lx[v]]...); });
+      auto ha = apply<N::value / 2>([&, hx = idx.slice(upper_)](auto... v) { return htype(a[hx[v]]...); });
 
       return type {la, ha} & cond.mask();
     }
@@ -68,12 +66,10 @@ namespace eve::detail
       auto idx  = cond.bits();
       idx &= ind;
 
-      auto [lx, hx] = idx.slice();
-
       using htype = wide<T, typename N::split_type>;
 
-      auto la = apply<N::value / 2>([&](auto... v) { return htype(a[lx[v]]...); });
-      auto ha = apply<N::value / 2>([&](auto... v) { return htype(a[hx[v]]...); });
+      auto la = apply<N::value / 2>([&, lx = idx.slice(lower_)](auto... v) { return htype(a[lx[v]]...); });
+      auto ha = apply<N::value / 2>([&, hx = idx.slice(upper_)](auto... v) { return htype(a[hx[v]]...); });
 
       return type {la, ha} & cond.mask();
     }
