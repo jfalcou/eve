@@ -131,7 +131,7 @@ namespace eve
   // x86 ABI concept
   //================================================================================================
   template<typename T>
-  concept x86_abi = detail::contains<T>(detail::types<sse_, avx_> {});
+  concept x86_abi = detail::is_one_of<T>(detail::types<sse_, avx_> {});
 }
 
 #endif

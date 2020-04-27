@@ -39,7 +39,7 @@ namespace eve::detail
 {
   template<floating_real_value T, decorator D>
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(contains<D>(types<regular_type, pedantic_type> {}))
+      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {

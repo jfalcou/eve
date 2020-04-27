@@ -171,7 +171,7 @@ namespace eve::detail
 
   template<floating_real_scalar_value T, decorator D>
   EVE_FORCEINLINE constexpr auto log_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(contains<D>(types<regular_type, pedantic_type> {}))
+      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T, signed>;

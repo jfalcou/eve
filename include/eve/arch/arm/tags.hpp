@@ -46,7 +46,7 @@ namespace eve
   //================================================================================================
   // ARM ABI concept
   //================================================================================================
-  template<typename T> concept arm_abi = detail::contains<T>(detail::types<neon128_, neon64_> {});
+  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<neon128_, neon64_> {});
 }
 
 #endif

@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto rotr_(EVE_SUPPORTS(cpu_)
                             , T const &a0
                             , U const &n) noexcept
-  requires (contains<D>(types<regular_type, pedantic_type> {}))
+  requires (is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
     return D()(rotl)(a0, U(-n));
   }

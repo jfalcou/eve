@@ -47,7 +47,7 @@ namespace eve
   //================================================================================================
   // PPC ABI concept
   //================================================================================================
-  template<typename T> concept ppc_abi = detail::contains<T>(detail::types<ppc_> {});
+  template<typename T> concept ppc_abi = detail::is_one_of<T>(detail::types<ppc_> {});
 }
 
 #endif

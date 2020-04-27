@@ -26,7 +26,7 @@ namespace eve::detail
 
   // Check if a type is contained in a types list
   template<typename T, typename... Ts>
-  constexpr bool contains(types<Ts...> const&) noexcept
+  constexpr bool is_one_of(types<Ts...> const&) noexcept
   {
     bool found[] = { std::is_same_v<T,Ts>... };
 
