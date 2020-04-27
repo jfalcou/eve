@@ -12,9 +12,10 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_FDIM_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/function/shr.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
@@ -38,7 +39,14 @@ namespace eve::detail
                             , T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    return if_else(is_not_less_equal(a, b),  a-b, eve::zero_);
+    if constexpr(integral_value<T>)
+    {
+      using elt_t = element_type_t<T>;
+      auto tmp = a-b;
+      return bit_andnot(tmp, tmp >> (sizeof(elt_t)*8-1));
+    }
+    else
+      return if_else(is_not_less_equal(a, b),  a-b, eve::zero_);
   }
 }
 
