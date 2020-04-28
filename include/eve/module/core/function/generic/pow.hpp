@@ -38,37 +38,65 @@
 
 namespace eve::detail
 {
-  template<typename T, typename U>
+  /////////////////////////////////////////////////////////////////////////////
+  // floating parameters
+  /////////////////////////////////////////////////////////////////////////////
+  template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      Requires(std::conditional_t<is_Vectorized_v<T>, T, U>,
-               detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>,
-               behave_as<floating_point, T>,
-               behave_as<floating_point, U>)
+  requires compatible_values<T, U>
   {
-    if constexpr( !is_Vectorized_v<U> )
+    return arithmetic_call(pow, a, b);
+  }
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  {
+    if constexpr(scalar_value<T>)
     {
-      return pow(a, T {b});
+      auto ltza   = is_ltz(a);
+      auto isinfb = is_infinite(b);
+      if( a == Mone<T>() && isinfb )                return One<T>();
+      if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
+      auto z = pow_abs(a, b);
+      if( isinfb )                                  return z;
+      return (is_negative(a) && is_odd(b)) ? -z : z;
     }
-    else if constexpr( !is_Vectorized_v<T> )
+    else  if constexpr(has_native_abi_v<T> )
     {
-      return pow(U {a}, b);
+      auto nega    = is_negative(a);
+      T    z       = pow_abs(a, b);
+      z            = minus[logical_and(is_odd(b), nega)](z);
+      auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
+      return if_else(invalid, eve::allbits_, z);
+    }
+    else return apply_over(pow, a, b);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+  // raw
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
+  {
+    if constexpr( floating_value<U> )
+    {
+      if constexpr( scalar_value<U> )  return pow(a, T {b});
+      else if constexpr(  scalar_value<T> ) return pow(U {a}, b);
+      else
+      {
+        if constexpr( std::is_same_v<T, U> )
+        {
+           return exp(b * log(a));
+        }
+      }
     }
     else
     {
-      if constexpr( std::is_same_v<T, U> )
-      {
-        auto nega    = is_negative(a);
-        T    z       = pow_abs(a, b);
-        z            = minus[logical_and(is_odd(b), nega)](z);
-        auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
-        return if_else(invalid, eve::allbits_, z);
-      }
+      return pow(a, b);
     }
   }
 
-  template<typename T, typename U>
+  template<floating_value T, integral_real_scalar_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
-      Requires(T, Vectorized<T>, behave_as<floating_point, T>, integral<U>)
   {
     if constexpr( std::is_unsigned_v<U> )
     {
@@ -93,11 +121,10 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename U>
+  template<real_simd_value T, integral_real_simd_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
-      Requires(T, Vectorized<T>, Vectorized<U>, behave_as<integral, U>)
   {
-    if constexpr( std::is_unsigned_v<U> )
+    if constexpr(unsigned_value<U> )
     {
       T base = a0;
       U expo = a1;
@@ -106,7 +133,7 @@ namespace eve::detail
       while( any(expo) )
       {
         result *= if_else(is_odd(expo), base, T(1));
-        expo >>= 1;
+        expo = shr(expo, 1);
         base = sqr(base);
       }
       return result;
@@ -119,9 +146,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename U>
+  template<integral_real_value T, integral_real_scalar_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
-      Requires(T, Vectorized<T>, behave_as<integral, T>, integral<U>)
   {
     if( a1 >= U(sizeof(T) * 8 - 1 - (std::is_signed_v<T>)) || a1 < 0 )
       return T(0);
@@ -167,52 +193,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename U>
-  EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
-      Requires(std::conditional_t<is_Vectorized_v<T>, T, U>,
-               detail::either<is_Vectorized_v<T>, is_Vectorized_v<U>>)
-  {
-    if constexpr( std::is_floating_point_v<
-                      value_type_t<T>> || std::is_floating_point_v<value_type_t<U>> )
-    {
-      if constexpr( !is_Vectorized_v<U> )
-      {
-        return pow_abs(a, T {b});
-      }
-      else if constexpr( !is_Vectorized_v<T> )
-      {
-        return pow_abs(U {a}, b);
-      }
-      else
-      {
-        if constexpr( std::is_same_v<T, U> )
-        {
-          return exp(b * log(a));
-        }
-      }
-    }
-    else
-    {
-      return pow(a, b);
-    }
-  }
 
-  ////////////////////////////////////////
-  // scalar
-  template<floating_real_scalar_value T>
-  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, T const &a1) noexcept
-  {
-    auto ltza0   = is_ltz(a0);
-    auto isinfa1 = is_infinite(a1);
-    if( a0 == Mone<T>() && isinfa1 )
-      return One<T>();
-    if( ltza0 && !is_flint(a1) && !is_infinite(a1) )
-      return Nan<T>();
-    auto z = pow_abs(a0, a1);
-    if( isinfa1 )
-      return z;
-    return (is_negative(a0) && is_odd(a1)) ? -z : z;
-  }
 
   template<floating_real_scalar_value T, integral_real_scalar_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T const &a0, U const &a1) noexcept
@@ -288,21 +269,6 @@ namespace eve::detail
     default: return result;
     }
   }
-
-  template<floating_real_scalar_value T>
-  EVE_FORCEINLINE constexpr auto
-  pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0, T const &a1) noexcept
-  {
-    return exp(a1 * log(a0));
-  }
-
-  template<real_scalar_value T, integral_scalar_value U>
-  EVE_FORCEINLINE constexpr auto
-  pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a0, U const &a1) noexcept
-  {
-    return pow(a0, a1);
-  }
-
 }
 
 #endif
