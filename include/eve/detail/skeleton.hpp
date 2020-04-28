@@ -111,7 +111,7 @@ namespace eve::detail
     {
       static constexpr auto sz = count_v<w_t>;
 
-      if constexpr( (sz != 0) && !is_Vectorized_v<w_t> )
+      if constexpr( (sz != 0) && scalar_value<w_t> )
       {
         return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
       }
