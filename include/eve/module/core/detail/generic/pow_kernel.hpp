@@ -11,27 +11,23 @@
 #ifndef EVE_MODULE_CORE_DETAIL_GENERIC_POW_KERNEL_HPP_INCLUDED
 #define EVE_MODULE_CORE_DETAIL_GENERIC_POW_KERNEL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/meta/concept.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
-#include <eve/function/add.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/shr.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
 #include <type_traits>
 #include <tuple>
 
 namespace eve::detail
 {
-  template < typename T>
+  template <floating_real_value T>
   EVE_FORCEINLINE T kernel_pow1(const T& x, const T& z) noexcept
   {
-    if constexpr(std::is_same_v<value_type_t<T>, float>)
+    if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
       return  z*x*horn<T,
         0x3eaaaaa3, //  +0.3333331095506474f
@@ -40,7 +36,7 @@ namespace eve::detail
         0xbe2a61b2  //  -0.1663883081054895f
         >(x);
     }
-    else if constexpr(std::is_same_v<value_type_t<T>, double>)
+    else if constexpr(std::is_same_v<element_type_t<T>, double>)
     {
       return  x*(z*horn<T,
                  0x4012aa83b65c9b74ll,//  4.66651806774358464979E0
@@ -58,10 +54,10 @@ namespace eve::detail
      }
   }
 
-  template < typename T>
+  template <floating_real_value T>
   EVE_FORCEINLINE T  kernel_pow2(const T& x) noexcept
   {
-    if constexpr(std::is_same_v<value_type_t<T>, float>)
+    if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
       return horn<T,
         0x3f317218, // 6.931471791490764E-001f
@@ -70,7 +66,7 @@ namespace eve::detail
         0x3c1a49bc  // 9.416993633606397E-003f
         >(x);
     }
-    else if constexpr(std::is_same_v<value_type_t<T>, double>)
+    else if constexpr(std::is_same_v<element_type_t<T>, double>)
     {
       return horn<T,
         0x3fe62e42fefa39efll,//  6.93147180559945308821E-1
@@ -84,106 +80,104 @@ namespace eve::detail
     }
   }
 
-  template < typename I>
-  EVE_FORCEINLINE auto twomio16(const I& i) noexcept
-  Requires(as_floating_point_t<I>, behave_as<integral,I>)
+  template <integral_value I>
+  EVE_FORCEINLINE as_floating_point_t<I> twomio16(const I& i) noexcept
   {
     /* 2^(-i/16)
      * The decimal values are rounded to 24-bit precision
      */
-    using v_t = as_floating_point_t<value_type_t<I>>;
-    if constexpr(std::is_same_v<v_t, float>)
+    using elt_t = as_floating_point_t<element_type_t<I>>;
+    if constexpr(std::is_same_v<elt_t, float>)
     {
-      const v_t A[17] =  {
-        v_t(1.00000000000000000000E0),
-        v_t(9.57603275775909423828125E-1),
-        v_t(9.17004048824310302734375E-1),
-        v_t(8.78126084804534912109375E-1),
-        v_t(8.40896427631378173828125E-1),
-        v_t(8.05245161056518554687500E-1),
-        v_t(7.71105408668518066406250E-1),
-        v_t(7.38413095474243164062500E-1),
-        v_t(7.07106769084930419921875E-1),
-        v_t(6.77127778530120849609375E-1),
-        v_t(6.48419797420501708984375E-1),
-        v_t(6.20928883552551269531250E-1),
-        v_t(5.94603538513183593750000E-1),
-        v_t(5.69394290447235107421875E-1),
-        v_t(5.45253872871398925781250E-1),
-        v_t(5.22136867046356201171875E-1),
-        v_t(5.00000000000000000000E-1)
+      const elt_t A[17] =  {
+        elt_t(1.00000000000000000000E0),
+        elt_t(9.57603275775909423828125E-1),
+        elt_t(9.17004048824310302734375E-1),
+        elt_t(8.78126084804534912109375E-1),
+        elt_t(8.40896427631378173828125E-1),
+        elt_t(8.05245161056518554687500E-1),
+        elt_t(7.71105408668518066406250E-1),
+        elt_t(7.38413095474243164062500E-1),
+        elt_t(7.07106769084930419921875E-1),
+        elt_t(6.77127778530120849609375E-1),
+        elt_t(6.48419797420501708984375E-1),
+        elt_t(6.20928883552551269531250E-1),
+        elt_t(5.94603538513183593750000E-1),
+        elt_t(5.69394290447235107421875E-1),
+        elt_t(5.45253872871398925781250E-1),
+        elt_t(5.22136867046356201171875E-1),
+        elt_t(5.00000000000000000000E-1)
       };
       if constexpr(is_Vectorizable_v<I>)
         return A[i];
       else
         return gather(&A[0], i);
     }
-    else if constexpr(std::is_same_v<v_t, double>)
+    else if constexpr(std::is_same_v<elt_t, double>)
     {
-      const v_t A[17] =  {
-        v_t(1.00000000000000000000E0),
-        v_t(9.57603280698573700036E-1),
-        v_t(9.17004043204671215328E-1),
-        v_t(8.78126080186649726755E-1),
-        v_t(8.40896415253714502036E-1),
-        v_t(8.05245165974627141736E-1),
-        v_t(7.71105412703970372057E-1),
-        v_t(7.38413072969749673113E-1),
-        v_t(7.07106781186547572737E-1),
-        v_t(6.77127773468446325644E-1),
-        v_t(6.48419777325504820276E-1),
-        v_t(6.20928906036742001007E-1),
-        v_t(5.94603557501360513449E-1),
-        v_t(5.69394317378345782288E-1),
-        v_t(5.45253866332628844837E-1),
-        v_t(5.22136891213706877402E-1),
-        v_t(5.00000000000000000000E-1)
+      const elt_t A[17] =  {
+        elt_t(1.00000000000000000000E0),
+        elt_t(9.57603280698573700036E-1),
+        elt_t(9.17004043204671215328E-1),
+        elt_t(8.78126080186649726755E-1),
+        elt_t(8.40896415253714502036E-1),
+        elt_t(8.05245165974627141736E-1),
+        elt_t(7.71105412703970372057E-1),
+        elt_t(7.38413072969749673113E-1),
+        elt_t(7.07106781186547572737E-1),
+        elt_t(6.77127773468446325644E-1),
+        elt_t(6.48419777325504820276E-1),
+        elt_t(6.20928906036742001007E-1),
+        elt_t(5.94603557501360513449E-1),
+        elt_t(5.69394317378345782288E-1),
+        elt_t(5.45253866332628844837E-1),
+        elt_t(5.22136891213706877402E-1),
+        elt_t(5.00000000000000000000E-1)
       };
-      if constexpr(is_Vectorizable_v<I>)
+      if constexpr(scalar_value<I>)
         return A[i];
       else
         return gather(&A[0], i);
     }
   }
 
-  template < typename I>
+  template <integral_value I>
   EVE_FORCEINLINE auto continuation(const I& i) noexcept
-  Requires(as_floating_point_t<I>, behave_as<integral,I>)
   {
     /* continuation, for even i only
      * 2^(i/16)  =  A[i] + B[i/2]
      */
-    using v_t = as_floating_point_t<value_type_t<I>>;
-    if constexpr(std::is_same_v<v_t, float>)
+    using elt_t = as_floating_point_t<element_type_t<I>>;
+    if constexpr(std::is_same_v<elt_t, float>)
     {
-      const v_t B[9] =  {
-        v_t( 0.00000000000000000000E0),
-        v_t(-5.61963907099083340520586E-9),
-        v_t(-1.23776636307969995237668E-8),
-        v_t( 4.03545234539989593104537E-9),
-        v_t( 1.21016171044789693621048E-8),
-        v_t(-2.00949968760174979411038E-8),
-        v_t( 1.89881769396087499852802E-8),
-        v_t(-6.53877009617774467211965E-9),
-        v_t( 0.00000000000000000000E0)
+      const elt_t B[9] =  {
+        elt_t( 0.00000000000000000000E0),
+        elt_t(-5.61963907099083340520586E-9),
+        elt_t(-1.23776636307969995237668E-8),
+        elt_t( 4.03545234539989593104537E-9),
+        elt_t( 1.21016171044789693621048E-8),
+        elt_t(-2.00949968760174979411038E-8),
+        elt_t( 1.89881769396087499852802E-8),
+        elt_t(-6.53877009617774467211965E-9),
+        elt_t( 0.00000000000000000000E0)
       };
       if constexpr(is_Vectorizable_v<I>)
         return B[i];
       else
         return gather(&B[0], i);
     }
-    else if constexpr(std::is_same_v<v_t, double>)
+    else if constexpr(std::is_same_v<elt_t, double>)
     {
-      const v_t B[9] =  {
-        v_t( 0.00000000000000000000E0),
-        v_t( 1.64155361212281360176E-17),
-        v_t( 4.09950501029074826006E-17),
-        v_t( 3.97491740484881042808E-17),
-        v_t(-4.83364665672645672553E-17),
-        v_t( 1.26912513974441574796E-17),
-        v_t( 1.99100761573282305549E-17),
-        v_t(-1.52339103990623557348E-17),
-        v_t( 0.00000000000000000000E0)
+      const elt_t B[9] =  {
+        elt_t( 0.00000000000000000000E0),
+        elt_t( 1.64155361212281360176E-17),
+        elt_t( 4.09950501029074826006E-17),
+        elt_t( 3.97491740484881042808E-17),
+        elt_t(-4.83364665672645672553E-17),
+        elt_t( 1.26912513974441574796E-17),
+        elt_t( 1.99100761573282305549E-17),
+        elt_t(-1.52339103990623557348E-17),
+        elt_t( 0.00000000000000000000E0)
       };
       if constexpr(is_Vectorizable_v<I>)
         return B[i];
@@ -192,9 +186,8 @@ namespace eve::detail
     }
   }
 
-  template < typename T>
+  template <floating_real_value T>
   EVE_FORCEINLINE auto kernel_select(const T& xx) noexcept
-  Requires(std::tuple<T, as_integer_t<T>>, behave_as<floating_point,T>)
   {
     using i_t = as_integer_t<T>;
     // find significand in antilog table A[]
