@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_REM_PIO2_HPP_INCLUDED
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/inf.hppq >
+#include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/twoopi.hpp>
 #include <eve/constant/zero.hpp>

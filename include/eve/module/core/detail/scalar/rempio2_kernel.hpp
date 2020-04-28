@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_DETAIL_SCALAR_REMPIO2_KERNEL_HPP_INCLUDED
 #define EVE_MODULE_CORE_DETAIL_SCALAR_REMPIO2_KERNEL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/bit_and.hpp>
@@ -197,12 +197,11 @@ namespace eve::detail
     return std::make_tuple(sum, b, bb);
   };
 
-  template<typename T>
+  template<floating_real_scalar_value T>
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
-  Requires(std::tuple<T, T, T>, Vectorizable<T>)
   {
     if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
-    else if (xx < Rempio2_limit(restricted_type(), T())) return std::tuple(T(0), xx, T(0));
+    else if (xx < Rempio2_limit(restricted_type(), T())) return std::make_tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {
       if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx);
