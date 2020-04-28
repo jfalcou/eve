@@ -108,7 +108,7 @@ namespace eve::detail
         elt_t(5.22136867046356201171875E-1),
         elt_t(5.00000000000000000000E-1)
       };
-      if constexpr(is_Vectorizable_v<I>)
+      if constexpr(scalar_value<I>)
         return A[i];
       else
         return gather(&A[0], i);
@@ -161,7 +161,7 @@ namespace eve::detail
         elt_t(-6.53877009617774467211965E-9),
         elt_t( 0.00000000000000000000E0)
       };
-      if constexpr(is_Vectorizable_v<I>)
+      if constexpr(scalar_value<I>)
         return B[i];
       else
         return gather(&B[0], i);
@@ -179,7 +179,7 @@ namespace eve::detail
         elt_t(-1.52339103990623557348E-17),
         elt_t( 0.00000000000000000000E0)
       };
-      if constexpr(is_Vectorizable_v<I>)
+      if constexpr(scalar_value<I>)
         return B[i];
       else
         return gather(&B[0], i);
