@@ -30,7 +30,6 @@ namespace eve::detail
   // scalar Aligned case
   template<real_scalar_value T, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, N> ptr) noexcept
-      Requires(void, Vectorizable<T>)
   {
     *ptr = value;
   }
