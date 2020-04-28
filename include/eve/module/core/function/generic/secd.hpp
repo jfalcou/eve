@@ -15,6 +15,8 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/cosd.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_flint.hpp>
 #include <eve/function/rec.hpp>
 
 namespace eve::detail
@@ -24,7 +26,25 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return rec(D()(cosd)(a0));
+      if constexpr( std::is_same_v<D, restricted_type> )
+      {
+        return rec(D()(cosd)(a0));
+      }
+      else
+      {
+        auto test = is_flint((a0 - T(90)) / T(180));
+        if constexpr( scalar_value<T> )
+        {
+          if( test )
+            return Nan<T>();
+          return rec(D()(cosd)(a0));
+        }
+        else
+        {
+          auto tmp = rec(D()(cosd)(a0));
+          return if_else(test, eve::allbits_, tmp);
+        }
+      }
     }
     else
       return apply_over(D()(secd), a0);

@@ -14,6 +14,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/is_flint.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sind.hpp>
 
@@ -24,7 +26,25 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return rec(D()(sind)(a0));
+      if constexpr( std::is_same_v<D, restricted_type> )
+      {
+        return rec(D()(sind)(a0));
+      }
+      else
+      {
+        auto test = is_nez(a0) && is_flint(a0 / T(180));
+        if constexpr( scalar_value<T> )
+        {
+          if( test )
+            return Nan<T>();
+          return rec(D()(sind)(a0));
+        }
+        else
+        {
+          auto tmp = rec(D()(sind)(a0));
+          return if_else(test, eve::allbits_, tmp);
+        }
+      }
     }
     else
       return apply_over(D()(cscd), a0);

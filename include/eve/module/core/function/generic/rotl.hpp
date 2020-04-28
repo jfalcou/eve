@@ -26,7 +26,7 @@
 namespace eve::detail
 {
   template<unsigned_value T, integral_value U>
-  EVE_FORCEINLINE auto rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
+  [[nodiscard]] EVE_FORCEINLINE auto rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
   {
     if constexpr( has_native_abi_v<T> && scalar_value<U> )
     {

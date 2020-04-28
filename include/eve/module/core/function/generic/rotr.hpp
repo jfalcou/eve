@@ -11,17 +11,15 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ROTR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ROTR_HPP_INCLUDED
 
-#include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/rotl.hpp>
 
 namespace eve::detail
 {
   template<integral_value T, integral_value U>
-  EVE_FORCEINLINE  auto rotr_(EVE_SUPPORTS(cpu_)
-                            , T const &a0
-                            , U const &n) noexcept
+  [[nodiscard]] EVE_FORCEINLINE auto rotr_(EVE_SUPPORTS(cpu_), T const &a0, U const &n) noexcept
   {
     return rotl(a0, U(-n));
   }
