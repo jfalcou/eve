@@ -24,7 +24,7 @@
 #include <eve/function/exp.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/fms.hpp>
-#include <eve/function/ifrexp.hpp>
+#include <eve/function/frexp.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_negative.hpp>
@@ -56,7 +56,7 @@ namespace eve::detail
     const T Oneo_16 = T(0.0625);
     //        using i_t = as_integer_t<T>;
     T ax             = eve::abs(a);
-    auto [xm, e]     = pedantic_(ifrexp)(ax);
+    auto [xm, ee]    = pedantic_(frexp)(ax);
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
@@ -65,7 +65,7 @@ namespace eve::detail
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
     z += x;
-    w          = fnma(tofloat(i), Oneo_16, tofloat(e));
+    w          = fnma(tofloat(i), Oneo_16, ee);
     auto reduc = [](T x) {
       // Find a multiple of 1/16 that is within 1/16 of x.
       return T(0.0625) * floor(T(16) * x);
@@ -86,14 +86,14 @@ namespace eve::detail
     const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
     auto    inf_ret     = is_greater(w, Powlargelim);
     auto    zer_ret     = is_less(w, Powlowlim);
-    e                   = toint(w);
+    auto    e           = toint(w);
     Wb                  = W - Wb;
     auto test           = is_gtz(Wb);
     e                   = inc[test](e);
     Wb                  = sub[test](Wb, Oneo_16);
     z                   = detail::kernel_pow2(Wb) * Wb;
-    i                   = inc[is_gtz(e)](e / 16); // is_gtz ?
-    e                   = i * 16 - e;
+    i                   = inc[is_gtz(e)](e / 16);
+    e                   = fms(i, 16, e);
     w                   = detail::twomio16(e);
     z                   = fma(w, z, w);
     z                   = pedantic_(ldexp)(z, i);

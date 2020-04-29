@@ -34,7 +34,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE T lerp_(EVE_SUPPORTS(cpu_), T const &a, T const &b, T const &t) noexcept
   {
-    return fma(t, b - a, a);
+    return fma(t, b, fnma(t, a, a));
   }
 
   ////////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,8 @@ namespace eve::detail
   lerp_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, T const &b, T const &t) noexcept
       requires has_native_abi_v<T>
   {
-    return fma(t, b - a, a);
+    return fma(t, b, fnma(t, a, a));
+    ;
   }
 
   template<floating_real_value T, decorator D>
@@ -60,7 +61,8 @@ namespace eve::detail
   lerp_(EVE_SUPPORTS(cpu_), D const &, T const &a, T const &b, T const &t) noexcept
       requires has_native_abi_v<T>
   {
-    return D()(fma)(t, b - a, a);
+    return D()(fma)(t, b, D()(fnma)(t, a, a));
+    ;
   }
 }
 
