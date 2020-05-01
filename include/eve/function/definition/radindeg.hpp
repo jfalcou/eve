@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_INPI_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_INPI_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_RADINDEG_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_RADINDEG_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(inpi_, inpi);
+  EVE_MAKE_CALLABLE(radindeg_, radindeg);
 }
 
 #endif

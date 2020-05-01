@@ -16,7 +16,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/acot.hpp>
-#include <eve/function/inpi.hpp>
+#include <eve/function/radinpi.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return inpi(acot(a));
+      return radinpi(acot(a));
     }
     else
     {

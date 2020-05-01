@@ -8,19 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atand.hpp>
-#include <eve/function/indeg.hpp>
-#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/function/atand.hpp>
+#include <eve/function/radindeg.hpp>
+
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
+#include <tts/tests/range.hpp>
 
 TTS_CASE("wide exhaustive check on atand")
 {
-  auto std_atand = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::indeg(std::atan(e)); } );
+  auto std_atand = tts::vectorize<EVE_TYPE>([](auto e) { return eve::radindeg(std::atan(e)); });
 
   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_atand, eve::atand); 
+  TTS_RANGE_CHECK(p, std_atand, eve::atand);
 }

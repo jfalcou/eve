@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/wide.hpp>
-#include <eve/function/indeg.hpp>
+#include <eve/function/radindeg.hpp>
 
 int a;
 eve::wide<int> va;
@@ -17,6 +17,5 @@ eve::wide<int> va;
 //==================================================================================================
 // None of those should compiles
 //==================================================================================================
-auto r1  = eve::indeg(a);
-auto r2  = eve::indeg(va);
-
+auto r1  = eve::radindeg(a);
+auto r2  = eve::radindeg(va);

@@ -17,7 +17,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta/traits.hpp>
 #include <eve/function/acos.hpp>
-#include <eve/function/indeg.hpp>
+#include <eve/function/radindeg.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/regular.hpp>
 
@@ -28,7 +28,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return indeg(decorator(acos)(a));
+      return radindeg(decorator(acos)(a));
     }
     else
     {

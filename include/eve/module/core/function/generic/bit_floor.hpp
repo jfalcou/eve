@@ -18,8 +18,10 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/ifrexp.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/ldexp.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
@@ -39,7 +41,7 @@ namespace eve::detail
         auto [m, e] = ifrexp(v);
         e = dec(e);
         auto r = ldexp(One(as(v)), e);
-        if constexpr(scalar_value<T>) return r;
+        if constexpr(scalar_value<T>) return T(r);
         else                          return if_else(vlt1, eve::zero_, r);
       }
       else

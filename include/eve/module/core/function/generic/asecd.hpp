@@ -16,7 +16,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/asec.hpp>
-#include <eve/function/indeg.hpp>
+#include <eve/function/radindeg.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/regular.hpp>
 
@@ -27,7 +27,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return indeg(decorator(asec)(a));
+      return radindeg(decorator(asec)(a));
     }
     else
     {

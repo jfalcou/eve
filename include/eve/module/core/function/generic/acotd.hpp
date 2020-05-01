@@ -16,7 +16,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/acot.hpp>
-#include <eve/function/indeg.hpp>
+#include <eve/function/radindeg.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return indeg(acot(a));
+      return radindeg(acot(a));
     }
     else
     {

@@ -8,14 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_INDEG_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_INDEG_HPP_INCLUDED
+#include <eve/wide.hpp>
+#include <eve/function/radinpi.hpp>
 
-#include <eve/detail/overload.hpp>
+int a;
+eve::wide<int> va;
 
-namespace eve
-{
-  EVE_MAKE_CALLABLE(indeg_, indeg);
-}
-
-#endif
+//==================================================================================================
+// None of those should compiles
+//==================================================================================================
+auto r1  = eve::radinpi(a);
+auto r2  = eve::radinpi(va);

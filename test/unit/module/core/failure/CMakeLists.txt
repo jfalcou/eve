@@ -10,6 +10,8 @@
 ##==================================================================================================
 ## Expected failures tests
 ##==================================================================================================
+check_failure( core.failure is_equal.cpp      )
+check_failure( core.failure is_not_equal.cpp  )
 check_failure( core.failure acos.cpp          )
 check_failure( core.failure asin.cpp          )
 check_failure( core.failure acot.cpp          )
@@ -31,12 +33,9 @@ check_failure( core.failure acotpi.cpp        )
 check_failure( core.failure asecpi.cpp        )
 check_failure( core.failure acscpi.cpp        )
 check_failure( core.failure atanpi.cpp        )
-check_failure( core.failure bit_andnot        ) 
 check_failure( core.failure bit_cast.cpp      )
 check_failure( core.failure bit_and.cpp       )
-check_failure( core.failure indeg.cpp         )
-check_failure( core.failure inpi.cpp          )
-check_failure( core.failure is_equal.cpp      )
-check_failure( core.failure is_not_equal.cpp  )
+check_failure( core.failure radindeg.cpp      )
+check_failure( core.failure radinpi.cpp       )
 check_failure( core.failure sqr_abs.cpp       )
 check_failure( core.failure arg.cpp           )

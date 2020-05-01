@@ -16,7 +16,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/asec.hpp>
-#include <eve/function/inpi.hpp>
+#include <eve/function/radinpi.hpp>
 #include <eve/function/raw.hpp>
 
 namespace eve::detail
@@ -28,7 +28,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return inpi(decorator(asec)(a));
+      return radinpi(decorator(asec)(a));
     }
     else
     {

@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/indeg.hpp>
+#include <eve/function/radindeg.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/pi.hpp>
@@ -17,10 +17,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on indeg")
+TTS_CASE("wide random check on radindeg")
 {
-  auto std_indeg = tts::vectorize<EVE_TYPE>( [](auto e) { return e*180/eve::Pi<EVE_VALUE>(); } );
+  auto std_radindeg = tts::vectorize<EVE_TYPE>( [](auto e) { return e*180/eve::Pi<EVE_VALUE>(); } );
 
   eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_indeg, eve::indeg); 
+  TTS_RANGE_CHECK(p, std_radindeg, eve::radindeg); 
 }

@@ -17,7 +17,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta/traits.hpp>
 #include <eve/function/acos.hpp>
-#include <eve/function/inpi.hpp>
+#include <eve/function/radinpi.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/regular.hpp>
 
@@ -30,7 +30,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return inpi(decorator(acos)(a));
+      return radinpi(decorator(acos)(a));
     }
     else
     {
