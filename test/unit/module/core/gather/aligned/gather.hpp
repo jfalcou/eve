@@ -14,6 +14,8 @@
 
 TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   constexpr auto alg = T::static_alignment;
   alignas(alg) v_t data[EVE_CARDINAL];
 
@@ -29,6 +31,8 @@ TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::gather behavior with 64 bits indexes", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   constexpr auto alg = T::static_alignment;
   alignas(alg) v_t data[EVE_CARDINAL];
 
