@@ -11,20 +11,10 @@
 #include <eve/function/rsqrt.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/ulpdist.hpp>
-#include <eve/function/extract.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/prev.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
-#include <tts/tests/sequence.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::rsqrt return type", EVE_TYPE)
@@ -34,12 +24,12 @@ TTS_CASE_TPL("Check eve::rsqrt return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::rsqrt behavior", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::rsqrt(T(1)), (T(1  )), 0.5);
-  TTS_ULP_EQUAL(eve::rsqrt(T(4)), (T(0.5)), 0.5);
+  TTS_ULP_EQUAL(eve::rsqrt(T(1)), T(1  ), 0.5);
+  TTS_ULP_EQUAL(eve::rsqrt(T(4)), T(0.5), 0.5);
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL((eve::rsqrt(eve::Nan<T>())) , (eve::Nan<T>()));
-    TTS_EQUAL((eve::rsqrt((T(0))))             , (eve::Inf<T>()));
+    TTS_IEEE_EQUAL(eve::rsqrt(eve::Nan<T>()) , eve::Nan<T>());
+    TTS_EQUAL(eve::rsqrt((T(0)))             , eve::Inf<T>());
   }
 }
