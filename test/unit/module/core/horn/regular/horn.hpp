@@ -12,8 +12,6 @@
 #include <tts/tests/relation.hpp>
 #include <type_traits>
 
-#ifndef HORN_INCLUDED
-#define HORN_INCLUDED
 template<typename T> constexpr auto coeff0()
 {
   if constexpr( std::is_same_v<T, float> )  return 0x00000000U;
@@ -31,13 +29,13 @@ template<typename T> constexpr auto coeff2()
   if constexpr( std::is_same_v<T, float> )  return 0x40000000U;
   else                                      return 0x4000000000000000ULL;
 }
-#endif
 
 TTS_CASE_TPL("Check eve::horn behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
   using eve::detail::horn;
 
-  TTS_EQUAL((horn<T, coeff0<v_t>()>(T(0)))                                  , (T(0)));
-  TTS_EQUAL((horn<T, coeff1<v_t>(), coeff0<v_t>(), coeff1<v_t>()>(T(1))), (T(2)));
-  TTS_EQUAL((horn<T, coeff2<v_t>(), coeff1<v_t>(), coeff1<v_t>()>(T(2))), (T(8)));
+  TTS_EQUAL((horn<T, coeff0<v_t>()>(T(0)))                              , T(0) );
+  TTS_EQUAL((horn<T, coeff1<v_t>(), coeff0<v_t>(), coeff1<v_t>()>(T(1))), T(2) );
+  TTS_EQUAL((horn<T, coeff2<v_t>(), coeff1<v_t>(), coeff1<v_t>()>(T(2))), T(8) );
 }
