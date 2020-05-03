@@ -17,7 +17,7 @@
 
 TTS_CASE_TPL("Check eve::is_denormal return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_denormal(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_denormal(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_denormal behavior", EVE_TYPE)
