@@ -10,7 +10,7 @@
 
 
 if [ "$#" -ne 1 ]; then
-  MKHEADER="<meta charset=\"utf-8\">\n**Example:**\n<script type=\"preformatted\">\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++"
+  MKHEADER="<meta charset=\"utf-8\">\nExample\n====================================================================================================\n<script type=\"preformatted\">\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++"
   MKFOOTER="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n</script>\n<!-- Markdeep: -->\n<script src=\"../../markdeep.min.js\"></script>\n<script src=\"https://casual-effects.com/markdeep/latest/markdeep.min.js?\"></script>\n"
   echo -e ${MKHEADER} | sed 's/^-e//'
   cat $2

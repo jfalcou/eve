@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::tofloat`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::tofloat
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/tofloat.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/tofloat.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -29,7 +27,8 @@ namespace eve
 </script>
 Function object converting a value to the corresponding floating-point type.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 template<value T> auto operator()( T const& x) const noexcept;
@@ -40,11 +39,13 @@ Converts a value to the corresponding floating-point type which is defined as a 
 [element type](../../../reference/traits.html#element_type) is `float` if `sizeof(T) <= 4` and
 `double` otherwise.
 
-**Parameters:**
+Parameters:
+----------------------------------------------------------------------------------------------------
 `x`
 :   [value](../../concepts.html#value) to convert.
 
-**Return value:**
+Return value:
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
 For a [value](../../concepts.html#value) `x`:
 
@@ -76,7 +77,8 @@ else if constexpr( simd_value<T> )
 !!! WARNING Note
    Conversion operated by [eve::tofloat](#eve::tofloat) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
 
-**Supported Decorators:**
+Supported Decorators
+====================================================================================================
 [`saturated_`](../../decorators.html#saturated_)
 :   The expression `saturated_(tofloat)(x)` computes a saturated conversion of `x` to the
     corresponding floating-point type.
@@ -86,6 +88,8 @@ else if constexpr( simd_value<T> )
   (insert ../../out/tofloat.out.html here)
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
-<script src="../../../markdeep.min.js"></script>
+<script>markdeepOptions={tocStyle:'medium'};</script>
+<script src="../../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
