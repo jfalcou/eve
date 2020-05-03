@@ -9,16 +9,15 @@
 **/
 //==================================================================================================
 #include <eve/function/ifrexp.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
+#include <tuple>
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
 {
