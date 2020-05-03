@@ -10,20 +10,19 @@
 //==================================================================================================
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/mzero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check conditional saturated_(eve::inc) return type", EVE_TYPE)
 {
   using eve::saturated_;
+  using v_t = eve::element_type_t<T>;
 
   TTS_EXPR_IS((saturated_(eve::inc[T()])(T()))                , T);
-  TTS_EXPR_IS((saturated_(eve::inc[v_t()])(T()))               , T);
-  TTS_EXPR_IS((saturated_(eve::inc[true])(T()))                  , T);
+  TTS_EXPR_IS((saturated_(eve::inc[v_t()])(T()))              , T);
+  TTS_EXPR_IS((saturated_(eve::inc[true])(T()))               , T);
   TTS_EXPR_IS((saturated_(eve::inc[eve::logical<T>()])(T()))  , T);
-  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<v_t>()])(T())) , T);
+  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<v_t>()])(T())), T);
 }
 
 TTS_CASE_TPL("Check conditional saturated_(eve::inc) behavior", EVE_TYPE)
