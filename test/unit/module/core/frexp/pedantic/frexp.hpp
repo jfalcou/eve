@@ -9,16 +9,15 @@
 **/
 //==================================================================================================
 #include <eve/function/frexp.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
+#include <tuple>
 
 TTS_CASE_TPL("Check frexp return type", EVE_TYPE)
 {
@@ -57,6 +56,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::frexp) behavior", EVE_TYPE)
   }
   if constexpr(eve::platform::supports_denormals)
   {
+    using v_t = eve::element_type_t<T>;
     auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::Mindenormal<T>());
 
     TTS_ULP_EQUAL (r0, T(0.5), 1);
