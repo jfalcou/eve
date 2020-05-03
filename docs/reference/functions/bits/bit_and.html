@@ -6,50 +6,85 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::bit_and`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::bit_and
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/bit_and.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/bit_and.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /* implementation defined */ bit_and = {};
+  inline constexpr /*unspecified*/ bit_and = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the bitwise AND operation.
+Function object representing **TODO: FILL THIS BLANK**.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T, value U> auto operator()( T const& x, U const& y ) const noexcept;
+template<**TODO: FILL THIS BLANK**>
+auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the element-wise bitwise AND operation between both parameters.
+**TODO: FILL THIS BLANK**
 
-**Parameters:**
-`x`, `y`
-:   values of :ref:`value <concept-value>` types with same size in bytes.
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   **TODO: FILL THIS BLANK**
 
-**Return value:**
+OTHER PARAMETERS
+:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-A value with the same type as `x` containing the bitwise AND of both parameters' bits is returned.
+For **TODO: FILL THIS BLANK**:
 
-  (insert ../../src/bit_and.src.html here)
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+auto r = bit_and(**TODO: FILL THIS BLANK**);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
 
-  (insert ../../out/bit_and.out.html here)
+is semantically equivalent to:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+Target r;
+
+if constexpr( scalar_value<T> )
+{
+  **TODO: FILL THIS BLANK**
+}
+else if constexpr( simd_value<T> )
+{
+  **TODO: FILL THIS BLANK**
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+  <!--(insert ../../src/bit_and.src.html here)-->
+
+  <!--(insert ../../out/bit_and.out.html here)-->
+
+See Also
+====================================================================================================
+
+**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
