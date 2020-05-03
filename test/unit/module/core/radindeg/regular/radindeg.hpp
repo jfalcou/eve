@@ -12,19 +12,21 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/function/radindeg.hpp>
-
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::radindeg return type") { TTS_EXPR_IS(eve::radindeg(EVE_TYPE(0)), (EVE_TYPE)); }
-
-TTS_CASE("Check eve::radindeg behavior")
+TTS_CASE_TPL("Check eve::radindeg return type", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::radindeg(-eve::Pi<EVE_TYPE>()), (EVE_TYPE(-180)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg(-eve::Pio_2<EVE_TYPE>()), (EVE_TYPE(-90)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg(-eve::Pio_4<EVE_TYPE>()), (EVE_TYPE(-45)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg((EVE_TYPE(0))), (EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg(eve::Pio_4<EVE_TYPE>()), (EVE_TYPE(45)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg(eve::Pio_2<EVE_TYPE>()), (EVE_TYPE(90)), 0.5);
-  TTS_ULP_EQUAL(eve::radindeg(eve::Pi<EVE_TYPE>()), (EVE_TYPE(180)), 0.5);
+  TTS_EXPR_IS(eve::radindeg(T(0)), T);
+}
+
+TTS_CASE_TPL("Check eve::radindeg behavior", EVE_TYPE)
+{
+  TTS_ULP_EQUAL(eve::radindeg(-eve::Pi<T>()   ), (T(-180)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg(-eve::Pio_2<T>()), (T( -90)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg(-eve::Pio_4<T>()), (T( -45)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg( (T(0))         ), (T(   0)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg( eve::Pio_4<T>()), (T(  45)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg( eve::Pio_2<T>()), (T(  90)), 0.5);
+  TTS_ULP_EQUAL(eve::radindeg( eve::Pi<T>()   ), (T( 180)), 0.5);
 }
