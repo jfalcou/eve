@@ -11,7 +11,6 @@
 #include <eve/function/firstbitunset.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check firstbitunset return type", EVE_TYPE)
 {
