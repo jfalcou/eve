@@ -17,9 +17,7 @@
 
 TTS_CASE_TPL("Check eve::is_ngez return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS(eve::is_ngez(T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_ngez(T() ), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_ngez behavior", EVE_TYPE)

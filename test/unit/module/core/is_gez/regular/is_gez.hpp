@@ -18,8 +18,7 @@
 TTS_CASE_TPL("Check eve::is_gez return type", EVE_TYPE)
 {
   using eve::logical;
-
-  TTS_EXPR_IS(eve::is_gez(T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_gez(T() ), logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_gez behavior", EVE_TYPE)

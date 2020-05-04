@@ -17,9 +17,7 @@
 
 TTS_CASE_TPL("Check eve::is_lez return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS(eve::is_lez(T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_lez(T() ), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_lez behavior", EVE_TYPE)

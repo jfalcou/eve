@@ -17,9 +17,7 @@
 
 TTS_CASE_TPL("Check eve::is_gtz return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS(eve::is_gtz(T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_gtz(T() ), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_gtz behavior", EVE_TYPE)
@@ -35,5 +33,5 @@ TTS_CASE_TPL("Check eve::is_gtz behavior", EVE_TYPE)
   }
 
   TTS_EQUAL(eve::is_gtz(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_gtz(T(3)), eve::True<T>());
+  TTS_EQUAL(eve::is_gtz(T(3)), eve::True<T>() );
 }

@@ -13,11 +13,10 @@
 #include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::is_not_imag return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_not_imag(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_not_imag(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_not_imag behavior", EVE_TYPE)

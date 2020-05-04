@@ -17,9 +17,7 @@
 
 TTS_CASE_TPL("Check eve::is_nltz return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS(eve::is_nltz(T() ), (logical<T>));
+  TTS_EXPR_IS(eve::is_nltz(T() ), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_nltz behavior", EVE_TYPE)

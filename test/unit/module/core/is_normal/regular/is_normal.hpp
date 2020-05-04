@@ -14,11 +14,10 @@
 #include <eve/constant/smallestposval.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::is_normal return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_normal(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_normal(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_normal behavior", EVE_TYPE)

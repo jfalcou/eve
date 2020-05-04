@@ -14,17 +14,16 @@
 #include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::is_nez return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_nez(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_nez(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_nez behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_nez(T(0)), eve::False<T>() );
-  TTS_EQUAL(eve::is_nez(T(2)), eve::True<T>());
+  TTS_EQUAL(eve::is_nez(T(0)), eve::False<T>());
+  TTS_EQUAL(eve::is_nez(T(2)), eve::True<T>() );
 
   if constexpr( eve::floating_value<T> )
   {

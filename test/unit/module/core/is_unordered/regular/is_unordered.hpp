@@ -8,21 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_UNORDERED_HPP
-#define IS_UNORDERED_HPP
-
-#include "test.hpp"
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <type_traits>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check is_unordered return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_unordered(T(), T()), eve::as_logical_t<T>);
+  TTS_EXPR_IS(eve::is_unordered(T(), T()), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
@@ -33,10 +28,8 @@ TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_unordered(eve::Nan<T>(), T(3)), eve::True<T>());
-    TTS_EQUAL(eve::is_unordered(T(3), eve::Nan<T>()), eve::True<T>());
-    TTS_EQUAL(eve::is_unordered(eve::Nan<T>(), eve::Nan<T>()), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , T(3)          ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(T(3)          , eve::Nan<T>() ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , eve::Nan<T>() ), eve::True<T>());
   }
 }
-
-#endif

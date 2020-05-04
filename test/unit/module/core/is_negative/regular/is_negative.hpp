@@ -14,11 +14,10 @@
 #include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::is_negative return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_negative(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_negative(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
@@ -32,12 +31,12 @@ TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
   }
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_negative(T( 0 )) , eve::False<T>());
-    TTS_EQUAL(eve::is_negative(T(-0.)), eve::True<T>());
+    TTS_EQUAL(eve::is_negative(T( 0 )), eve::False<T>() );
+    TTS_EQUAL(eve::is_negative(T(-0.)), eve::True<T>()  );
 
     if constexpr(eve::platform::supports_nans)
     {
-      TTS_EQUAL(eve::is_negative( eve::Nan<T>()), eve::True<T>());
+      TTS_EQUAL(eve::is_negative(eve::Nan<T>()), eve::True<T>());
     }
   }
 }

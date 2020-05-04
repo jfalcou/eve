@@ -14,11 +14,10 @@
 #include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::is_even return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_even(T(0)), (eve::logical<T>));
+  TTS_EXPR_IS(eve::is_even(T(0)), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_even behavior", EVE_TYPE)
@@ -28,7 +27,7 @@ TTS_CASE_TPL("Check eve::is_even behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_even(T(0.5))         , eve::False<T>());
+    TTS_EQUAL(eve::is_even(T(0.5)), eve::False<T>());
     TTS_EQUAL(eve::is_even(T(-0.)), eve::True<T>() );
   }
 }

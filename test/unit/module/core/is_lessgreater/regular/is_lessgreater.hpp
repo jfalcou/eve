@@ -17,30 +17,32 @@
 
 TTS_CASE_TPL("Check eve::is_lessgreater return type", EVE_TYPE)
 {
-  using eve::logical;
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::is_lessgreater(T(),T() ), (logical<T>));
-  TTS_EXPR_IS(eve::is_lessgreater(T(),v_t()), (logical<T>));
-  TTS_EXPR_IS(eve::is_lessgreater(v_t(),T()), (logical<T>));
+  TTS_EXPR_IS(eve::is_lessgreater(  T() ,   T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_lessgreater(  T() , v_t()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_lessgreater(v_t() ,   T()), eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::is_lessgreater behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
     TTS_EQUAL(eve::is_lessgreater(T(1)         , eve::Nan<T>()), eve::False<T>());
     TTS_EQUAL(eve::is_lessgreater(eve::Nan<T>(), T(1)         ), eve::False<T>());
   }
 
-  TTS_EQUAL(eve::is_lessgreater(T(1) , T(1) ), eve::False<T>());
-  TTS_EQUAL(eve::is_lessgreater(T(1) , v_t(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_lessgreater(v_t(1), T(1) ), eve::False<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(1),   T(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(1), v_t(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_lessgreater(v_t(1),   T(1)), eve::False<T>());
 
-  TTS_EQUAL(eve::is_lessgreater(T(3) , T(1) ), eve::True<T>());
-  TTS_EQUAL(eve::is_lessgreater(T(3) , v_t(1)), eve::True<T>());
-  TTS_EQUAL(eve::is_lessgreater(v_t(3), T(1) ), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(3),   T(1)), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(3), v_t(1)), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(v_t(3),   T(1)), eve::True<T>());
 
-  TTS_EQUAL(eve::is_lessgreater(T(1) , T(3) ), eve::True<T>());
-  TTS_EQUAL(eve::is_lessgreater(T(1) , v_t(3)), eve::True<T>());
-  TTS_EQUAL(eve::is_lessgreater(v_t(1), T(3) ), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(1),   T(3)), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(1), v_t(3)), eve::True<T>());
+  TTS_EQUAL(eve::is_lessgreater(v_t(1),   T(3)), eve::True<T>());
 }
