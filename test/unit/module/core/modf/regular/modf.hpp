@@ -11,18 +11,11 @@
 #include <eve/function/modf.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <tuple>
 
 TTS_CASE_TPL("Check modf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::modf(T())), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::modf(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::modf behavior", EVE_TYPE)
