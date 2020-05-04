@@ -18,7 +18,7 @@ TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::if_else(T()               , T(), T()), T);
   TTS_EXPR_IS(eve::if_else(eve::logical<T>() , T(), T()), T);
-  TTS_EXPR_IS(eve::if_else(true                 , T(), T()), T);
+  TTS_EXPR_IS(eve::if_else(true              , T(), T()), T);
 }
 
 TTS_CASE_TPL("Check eve::if_else behavior with arithmetic alternatives", EVE_TYPE)
