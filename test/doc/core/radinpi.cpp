@@ -1,10 +1,10 @@
-#include <eve/function/inpi.hpp>
+#include <eve/function/radinpi.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp> 
+#include <eve/constant/pio_2.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<8>>;

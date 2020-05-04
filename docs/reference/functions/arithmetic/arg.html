@@ -25,62 +25,49 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the computation of the phase angle (in radians).
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template<real_floating_value T>
+auto operator()(T x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+The  phase angle of `x` in radians.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [floating real value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = arg(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ * The phase angle  with the same type as the parameter.  For real input values the result elements are always $0$ or $\pi$
+   (complex values are not supported yet).
+ * The  [`regular_`](../../decorators.html#regular_) call  returns the value zero if the bit of sign of the entry element is not set
+   and the value $\pi$ if it is set.
 
-is semantically equivalent to:
+Supported Decorators
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+[`pedantic_`](../../decorators.html#pedantic_)
+:   With this decorator the function returns a Nan element for each corresponding Nan entry element.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+  (insert ../../src/arg.src.html here)
 
-  <!--(insert ../../src/arg.src.html here)-->
-
-  <!--(insert ../../out/arg.out.html here)-->
+  (insert ../../out/arg.out.html here)
 
 See Also
 ====================================================================================================
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::conj](./conj.html#eve::conj), [eve::sqr_abs](./conj.html#eve::sqr_abs)
+
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

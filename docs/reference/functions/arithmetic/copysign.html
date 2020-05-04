@@ -25,34 +25,37 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing sign copying operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< real_floating_value T, real_floating_value U >
+auto operator()( T x, U y ) const noexcept
+requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Composes a floating point value with the magnitude of x and the sign of y.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:    [real floating value](../../concepts.html#value)
+`y`
+:    [real floating value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+
+   * The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+   * it contains the [element-wise](../../../glossary.html#regular_) composition of a value with the magnitude of x
+     and the sign of y.
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = copysign(**TODO: FILL THIS BLANK**);
+auto r = copysign(x,y);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
@@ -60,27 +63,19 @@ is semantically equivalent to:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+auto r = abs(x)*signnz(y);
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-  <!--(insert ../../src/copysign.src.html here)-->
+  (insert ../../src/copysign.src.html here)
 
-  <!--(insert ../../out/copysign.out.html here)-->
+  (insert ../../out/copysign.out.html here)
 
 See Also
 ====================================================================================================
+[eve::abs](./conj.html#eve::abs), [eve::signnz](./conj.html#eve::signnz)
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

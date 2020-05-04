@@ -3,7 +3,7 @@ Example
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-#include <eve/function/dist.hpp>
+#include <eve/function/fdim.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
@@ -18,20 +18,18 @@ int main()
   wide_it qf = {1, -1, 0, eve::Valmax<int16_t>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                       " << pf << '\n'
-            << "<- qf =                       " << qf << '\n'
-            << "-> dist(pf, qf) =             " << eve::dist(pf, qf) << '\n'
-            << "-> saturated_(dist)(pf, qf) = " << eve::saturated_(eve::dist)(pf, qf)
+            << "<- pf =               " << pf << '\n'
+            << "<- qf =               " << qf << '\n'
+            << "-> fdim(pf, qf) =     " << eve::fdim(pf, qf) << '\n'
             << '\n';
 
   int16_t xf = -eve::Valmax<int16_t>();
   int16_t yf = eve::Valmax<int16_t>();
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                       " << xf << '\n'
-            << "<- yf =                       " << yf << '\n'
-            << "-> dist(xf, yf) =             " << eve::dist(xf, yf) << '\n'
-            << "-> saturated_(dist)(xf, yf) = " << eve::saturated_(eve::dist)(xf, yf)
+            << "<- xf =               " << xf << '\n'
+            << "<- yf =               " << yf << '\n'
+            << "-> fdim(xf, yf) =     " << eve::fdim(xf, yf) << '\n'
             << '\n';
   return 0;
 }

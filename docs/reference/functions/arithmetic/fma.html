@@ -25,62 +25,69 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the fdim operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U, value V >
+auto operator()( T x, U y, V z ) const noexcept;
+requires compatible< T,U> && compatible< T, V >;
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the fma operator on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value)
+`y`
+:   [value](../../concepts.html#value)
+`z`
+:   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = fma(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ - The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
-is semantically equivalent to:
+ - The call ``fma(x, y, z)`` is similar to ``x*y+z``
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+   But really conformant fused-multiply-add also implies
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+       - only one rounding
 
-  <!--(insert ../../src/fma.src.html here)-->
+       - no "intermediate" overflow
 
-  <!--(insert ../../out/fma.out.html here)-->
+   Our ``fma`` provides this for all [integral value](../../concepts.html#value) types and also each time it is reasonable
+   in terms of performance for [real floating value](../../concepts.html#value) ones (i.e. if the system has the hard
+   wired capability).
+
+   If you need conformant fma capabilities in all circumstances in your own
+   code you can use the [pedantic_](../../decorators.html#pedantic_) or [numeric_](../../decorators.html#numeric_)
+   decorators (although this can be very expensive).
+
+Supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#pedantic_)
+:   The call `pedantic_(fma)(x,y,z)` ensures the one rounding property.
+[`numeric_`](../decorators.html#numeric_)
+:   The call `pedantic_(fma)(x,y,z)` ensures the whole fma conformant properties.
+
+   (insert ../../src/fma.src.html here)
+
+   (insert ../../out/fma.out.html here)
 
 See Also
 ====================================================================================================
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::fms](./conj.html#eve::fms), [eve::sqr_abs](./conj.html#eve::sqr_abs)
+
+
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

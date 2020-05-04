@@ -26,7 +26,7 @@ Type family
 ====================================================================================================
 The type family is based on the value concept a type satisfies. One say a type is from a scalar
 family if it satisfies the [scalar_value](reference/concepts.html#scalar_value) and from a SIMD
-family if it satisfies the [scalar_value](reference/concepts.html#simd_value).
+family if it satisfies the [simd_value](reference/concepts.html#simd_value).
 
 Value type
 ====================================================================================================
@@ -34,6 +34,15 @@ For any [value type](reference/concepts.html#value), **EVE** defines its underly
 the basic type used to represent its value. For any [scalar types](reference/concepts.html#scalar_value),
 its type is its own value type. For [SIMD types](reference/concepts.html#simd_value), it's defined
 as the type of scalar value stored in the SIMD register.
+
+**EVE** provides the [value_type](reference/types/traits.html#value_type) traits to access the
+value type of any type.
+
+Element
+====================================================================================================
+
+Element-wise operation
+====================================================================================================
 
 **EVE** provides the [value_type](reference/types/traits.html#value_type) traits to access the
 value type of any type.
