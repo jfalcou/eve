@@ -45,8 +45,9 @@ namespace eve::detail
       if constexpr( std::is_same_v<D, pedantic_type> )
       {
         if( is_unordered(a, b) )
-          return Nan(as(a));
+          return Allbits(as(a));
       }
+
       return (a < b) ? next(a) : ((b < a) ? prev(a) : a);
     }
     else if constexpr( simd_value<T> )
