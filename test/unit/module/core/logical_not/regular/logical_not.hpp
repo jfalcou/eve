@@ -17,10 +17,8 @@
 
 TTS_CASE_TPL("Check logical_not return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS((eve::logical_not(T())          ), (logical<T>));
-  TTS_EXPR_IS((eve::logical_not(logical<T>()) ), (logical<T>));
+  TTS_EXPR_IS(eve::logical_not(T())               , eve::logical<T>);
+  TTS_EXPR_IS(eve::logical_not(eve::logical<T>()) , eve::logical<T>);
 }
 
 TTS_CASE_TPL("Check eve::logical_not behavior", EVE_TYPE)
