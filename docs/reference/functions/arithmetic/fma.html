@@ -25,7 +25,7 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the fdim operation.
+Function object representing the fused multiply-add operation.
 
 Member functions
 ====================================================================================================
@@ -37,7 +37,7 @@ requires compatible< T,U> && compatible< T, V >;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the fma operator on its parameter.
+Performs the fused multiply-add operator on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ Return value
 
  - The call ``fma(x, y, z)`` is similar to ``x*y+z``
 
-   But really conformant fused-multiply-add also implies
+   But really conformant fused multiply-add also implies
 
        - only one rounding
 
@@ -84,8 +84,7 @@ Supported Decorators
 See Also
 ====================================================================================================
 
-[eve::fms](./conj.html#eve::fms), [eve::sqr_abs](./conj.html#eve::sqr_abs)
-
+[eve::fms](./conj.html#eve::fms), [eve::sqr_fnma](./conj.html#eve::fnma), [eve::sqr_fnms](./conj.html#eve::fnms)
 
 
 
