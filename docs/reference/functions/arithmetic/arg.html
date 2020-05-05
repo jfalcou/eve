@@ -35,7 +35,7 @@ template<real_floating_value T>
 auto operator()(T x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-The  phase angle of `x` in radians.
+Performs The phase angle operator on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,11 +45,10 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
+ Returns on an [`element-wise`](../../../glossary.html#element-wise) basis the phase angle of the input:
 
- * The phase angle  with the same type as the parameter.  For real input values the result elements are always $0$ or $\pi$
-   (complex values are not supported yet).
- * The  [`regular_`](../../decorators.html#regular_) call  returns the value zero if the bit of sign of the entry element is not set
-   and the value $\pi$ if it is set.
+  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, $0$ is returned.
+  *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, $\pi$ is returned.
 
 Supported Decorators
 ----------------------------------------------------------------------------------------------------

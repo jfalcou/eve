@@ -36,7 +36,7 @@ auto operator()( T x, U y ) const noexcept
 requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Composes a floating point value with the magnitude of x and the sign of y.
+Composes a floating point value with the magnitude of `x` and the sign of `y`.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,25 +48,8 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-
-   * The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
-   * it contains the [element-wise](../../../glossary.html#regular_) composition of a value with the magnitude of x
-     and the sign of y.
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = copysign(x,y);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = abs(x)*signnz(y);
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+Returns the [element-wise](../../../glossary.html#regular_) composition of a value with the magnitude of `x`
+and the bit of sign of `y`.
 
   (insert ../../src/copysign.src.html here)
 

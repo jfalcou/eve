@@ -30,7 +30,7 @@ Function object representing the hypot operation.
 Member functions
 ====================================================================================================
 <script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
 template< value T, value U >
 auto operator()( T x, U y ) const noexcept;
 requires compatible< T,U>;
@@ -40,32 +40,26 @@ auto operator()( T x, U y, V z ) const noexcept;
 requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the hypot  operator on its parameters.
+Performs the hypot operator on its parameters.
 
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   [value](../../concepts.html#value)
-`y`
-:   [value](../../concepts.html#value)
-`z`
+`x`, `y`, `z`
 :   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-
-*  The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
-*  On an  [element-wise](../../../glossary.html#elment-wise) basis the function computes:
-  - With two parameters: $\sqrt{x^2+y^2}$
-  - With three parameters: $\sqrt{x^2+y^2+z^2}$
-*  The [`regular_`](../decorators.html#regular_) call uses the naive formula that may easily overflow.
+On an  [element-wise](../../../glossary.html#elment-wise) basis:
+ - With two parameters: $\sqrt{x^2+y^2}$ is returned.
+ - With three parameters: $\sqrt{x^2+y^2+z^2}$ is returned.
+The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
 supported Decorators
 ====================================================================================================
 [`pedantic_`](../decorators.html#pedantic_)
 :   The call `pedantic_(hypot)(x,y)`  or `pedantic_(hypot)(x,y,z)` computes the square root of the sum of the
-     squares of x and y, (and z) without undue overflow or underflow at intermediate stages of the computation
+     squares of `x` and `y`, (and `z`) without undue overflow or underflow at intermediate stages of the computation
     and can be more accurate than the [`regular_`](../decorators.html#regular_) call.
 
 </script>
@@ -76,7 +70,7 @@ supported Decorators
 
 See Also
 ====================================================================================================
-[eve::abs](./abs.html#eve::conj)
+[eve::abs](./abs.html#eve::abs)
 
 
 <!-- End of Document -->

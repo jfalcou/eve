@@ -31,50 +31,35 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<real_value T, real_value U, real_value V>
-auto operator()(T x, U lo, V hi) const noexcept
-requires compatible< T,U> && compatible< T, V >;
+template< real_value T, real_value U, real_value V>
+auto operator()( T x, U lo, V hi ) noexcept
+requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs the clamp operator on its parameter.
 
+Each element of `lo` must be less or equal to the corresponding element of  `hi` or the behavior is undefined.
+
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:    [value](../../concepts.html#value) to clamp
+:    [value](../../concepts.html#value) to clamp.
 
 `lo`, `hi`
-:    [value](../../concepts.html#value) the boundaries to clamp x to
+:    the boundary [values](../../concepts.html#value) to clamp `x` to.
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-
- * The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
- * lo and hi must satisfy all(lo<=hi) or the result is undefined.
- * the function  [element-wise](../../../glossary.html#regular_) returns:
-   -  lo if x is less than lo,
-   -  hi if hi is less than x
+The function  on an [element-wise](../../../glossary.html#regular_) basis returns:
+   -  lo if x is less than lo.
+   -  hi if hi is less than x.
    -  otherwise x.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = clamp(x,y,z);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r= min(max(x, lo), hi);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-Note
-----------------------------------------------------------------------------------------------------
-<span class="smallskip"></span>
-Contrary to the standard implementation eve::clamp does not return a reference.
+!!! WARNING
+    Contrary to the standard implementation `clamp` does not return a reference.
 
 
   (insert ../../src/clamp.src.html here)

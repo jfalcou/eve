@@ -31,12 +31,12 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
+template< real_value T, real_value U>
 auto operator()( T x, U y ) const noexcept
 requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Returns the positive difference of the two [values](../../concepts.html#value).
+Performs  the [element-wise](../../../glossary.html#elment-wise) positive difference of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,11 +48,10 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-
-  * The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
-  * Returns the  [element-wise](../../../glossary.html#value) positive difference between x and y,
-    that is, if x>y, returns x-y, otherwise (if x<=y), returns +0.
-  * Returns a Nan for each corresponding Nan entry element.
+Returns the  [element-wise](../../../glossary.html#value) positive difference between `x` and `y`:
+ * if `x>y`,   x-y is returned
+ * if `x<=y`,  +0 is returned
+ * otherwise a `Nan` is returned
 
   (insert ../../src/fdim.src.html here)
 

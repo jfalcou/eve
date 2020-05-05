@@ -31,11 +31,11 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<real_floating_value T>
-auto operator()(T x) const noexcept;
+template< real_floating_value T>
+auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-The [element-wise](../../../glossary.html#regular_) conjugate value of `x`.
+Performs The [element-wise](../../../glossary.html#element-wise) conjugate of `x`.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,9 +45,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-
- * The [element-wise](../../../glossary.html#value) conjugate of x  with the same type as the parameter.
- *  For real input this function always returns x (complex values are not supported yet).
+This function always returns `x`.
 
 </script>
 

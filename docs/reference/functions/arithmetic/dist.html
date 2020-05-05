@@ -50,9 +50,6 @@ Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
 
-   * The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
-   * if the expected result is not representable in the parameter return type the result is undefined.
-
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 auto r = dist(x,y);
@@ -66,12 +63,16 @@ is semantically equivalent to:
 auto r = abs(x-y);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
+   If an  [element](../../../glossary.html#element_) of the expected result is not representable in
+   the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
+
+   The result type is the [compatibility result](../../../glossary.html#compatibility) of the two parameters.
 
 Supported Decorators
 ====================================================================================================
 [`saturated_`](../decorators.html#saturated_)
 :   The expression `saturated_(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
-    that the result is always defined. if $|x-y|$ is no representable
+    that the result is always defined. If $|x-y|$ is not representable
     [the greatest representable positive value](../../constants.html#valmax) is returned
 
   (insert ../../src/dist.src.html here)

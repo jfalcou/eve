@@ -41,41 +41,30 @@ Performs the fused negate-multiply-add operator on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   [value](../../concepts.html#value)
-`y`
-:   [value](../../concepts.html#value)
-`z`
-:   [value](../../concepts.html#value)
+`x`, `y`, `z`
+:   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
+The call `fnma(x, y, z)` is similar to `-x*y+z` as if calculated to infinite precision and rounded once
+to fit the result as much as supported by the hardware.
 
- - The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
- - The call ``fnma(x, y, z)`` is similar to ``-x*y+z``
 
-   But really conformant fused negate-multiply-add also implies
-
-       - only one rounding
-
-       - no "intermediate" overflow
-
-   Our ``fnma`` provides this for all [integral value](../../concepts.html#value) types and also each time it is reasonable
-   in terms of performance for [real floating value](../../concepts.html#value) ones (i.e. if the system has the hard
-   wired capability).
-
-   If you need conformant fnma capabilities in all circumstances in your own
-   code you can use the [pedantic_](../../decorators.html#pedantic_) or [numeric_](../../decorators.html#numeric_)
-   decorators (although this can be very expensive).
+!!! WARNING Note
+    This `fnma` implementation provides those properties for all [real integral values](../../concepts.html#integral_value)
+     and when possible for [real floating values](../../concepts.html#value).
 
 Supported Decorators
 ====================================================================================================
 [`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(fnma)(x,y,z)` ensures the one rounding property.
+:   The call `pedantic_(fnma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+    system has no hardware capability.
 [`numeric_`](../decorators.html#numeric_)
-:   The call `pedantic_(fnma)(x,y,z)` ensures the whole fnma conformant properties.
+:   The call `numeric_(fnma)(x,y,z)` ensures the full compliance to fnma properties. This can be very expensive if the
+    system has no hardware capability.
 
    (insert ../../src/fnma.src.html here)
 
@@ -83,8 +72,7 @@ Supported Decorators
 
 See Also
 ====================================================================================================
-
-[eve::fms](./conj.html#eve::fms), [eve::sqr_fma](./conj.html#eve::fma), [eve::sqr_fnms](./conj.html#eve::fnms)
+[eve::fms](./fms.html), [eve::fma](./fma.html), [eve::fnms](./fnms.html)
 
 
 
