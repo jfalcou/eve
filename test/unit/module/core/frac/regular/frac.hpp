@@ -9,9 +9,13 @@
 **/
 //==================================================================================================
 #include <eve/function/frac.hpp>
+#include <eve/function/all.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <type_traits>
 
 TTS_CASE_TPL("Check eve::frac return type", EVE_TYPE)
 {
@@ -36,5 +40,7 @@ TTS_CASE_TPL("Check eve::frac behavior", EVE_TYPE)
 
     TTS_ULP_EQUAL(eve::frac(T( 4/3.)), T( 1/3.), 0.5);
     TTS_ULP_EQUAL(eve::frac(T(-4/3.)), T(-1/3.), 0.5);
+    TTS_EXPECT(eve::all(eve::is_negative(eve::frac(T(-0.0)))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::frac(T(0.0)))));
   }
 }

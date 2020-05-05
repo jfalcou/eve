@@ -25,62 +25,59 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the hypot operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U >
+auto operator()( T x, U y ) const noexcept;
+requires compatible< T,U>;
+
+template< value T, value U, value V >
+auto operator()( T x, U y, V z ) const noexcept;
+requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the hypot  operator on its parameters.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value)
+`y`
+:   [value](../../concepts.html#value)
+`z`
+:   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-<span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = hypot(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*  The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
+*  On an  [element-wise](../../../glossary.html#elment-wise) basis the function computes:
+  - With two parameters: $\sqrt{x^2+y^2}$
+  - With three parameters: $\sqrt{x^2+y^2+z^2}$
+*  The [`regular_`](../decorators.html#regular_) call uses the naive formula that may easily overflow.
+
+supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#pedantic_)
+:   The call `pedantic_(hypot)(x,y)`  or `pedantic_(hypot)(x,y,z)` computes the square root of the sum of the
+     squares of x and y, (and z) without undue overflow or underflow at intermediate stages of the computation
+    and can be more accurate than the [`regular_`](../decorators.html#regular_) call.
+
 </script>
 
-is semantically equivalent to:
+  (insert ../../src/hypot.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/hypot.src.html here)-->
-
-  <!--(insert ../../out/hypot.out.html here)-->
+  (insert ../../out/hypot.out.html here)
 
 See Also
 ====================================================================================================
+[eve::abs](./abs.html#eve::conj)
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
