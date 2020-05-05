@@ -19,16 +19,16 @@ TTS_CASE_TPL("Check eve::plus return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::plus behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::plus(T(1)), (T(1)));
+  TTS_EQUAL(eve::plus(T(1)), T(1));
 }
 
 TTS_CASE_TPL("Check eve::plus with 2 parameters behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::plus(T(1), T(1)), (T(2)));
+  TTS_EQUAL(eve::plus(T(1), T(1)), T(2));
 }
 
-TTS_CASE_TPL("Check eve::plus with 3 parameter sbehavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::plus with 3 parameters behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::plus(T(1) > T(2), T(1), T(1)), (T(1)));
-  TTS_EQUAL(eve::plus(T(1) < T(2), T(1), T(1)), (T(2)));
+  TTS_EQUAL(eve::plus[T(1) > T(2)](T(1), T(1)), T(1));
+  TTS_EQUAL(eve::plus[T(1) < T(2)](T(1), T(1)), T(2));
 }
