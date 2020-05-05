@@ -9,37 +9,33 @@
 **/
 //==================================================================================================
 #include <eve/function/oneminus.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/function/inc.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
 TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::oneminus)(T{1}), T(0));
+  TTS_EQUAL(eve::saturated_(eve::oneminus)(T(1)), T(0));
 
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{2}), T(-1));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(static_cast<T>(-2)), T(3));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Valmin<T>()), eve::Valmax<T>());
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::Valmin<T>())), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T(2)               ) , T(-1)           );
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(static_cast<T>(-2) ) , T(3)            );
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Valmin<T>()   ) , eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::Valmin<T>()))          , eve::Valmax<T>());
     TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::inc(eve::Valmin<T>()))), eve::Valmax<T>());
   }
 
-  if constexpr(std::is_unsigned_v<v_t>)
+  if constexpr(eve::unsigned_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{2}), T(0));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{1}), T(0));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(T{0}), T(1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T(2)), T(0));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T(1)), T(0));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T(0)), T(1));
   }
 
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::saturated_(eve::oneminus)(T(-0.)), T(1));
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(T( 0 )),  T(1));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(T( 0 )), T(1));
   }
 }

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/oneminus.hpp>
-#include <eve/constant/mzero.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
@@ -22,17 +20,17 @@ TTS_CASE_TPL("Check eve::oneminus return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::oneminus(T(1)), (T(0)));
+  TTS_EQUAL(eve::oneminus(T(1)), T(0));
 
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::oneminus(T(2))              , (T(-1)));
-    TTS_EQUAL(eve::oneminus(static_cast<T>(-2)), (T( 3)));
+    TTS_EQUAL(eve::oneminus(T(2))              , T(-1));
+    TTS_EQUAL(eve::oneminus(static_cast<T>(-2)), T( 3));
   }
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::oneminus(T(-0.)) , (T(1)));
-    TTS_EQUAL(eve::oneminus((T(0)))          , (T(1)));
+    TTS_EQUAL(eve::oneminus(T(-0.)) , T(1));
+    TTS_EQUAL(eve::oneminus((T(0))) , T(1));
   }
 }

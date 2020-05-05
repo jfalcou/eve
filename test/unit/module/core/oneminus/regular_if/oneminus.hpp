@@ -12,18 +12,18 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::oneminus return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::oneminus[ v_t(0)  ](T(0))              , T);
-  TTS_EXPR_IS(eve::oneminus[ (T(0)) ](T(0))              , T);
-  TTS_EXPR_IS(eve::oneminus[ (eve::logical<T>(0))](T(0)) , T);
-  TTS_EXPR_IS(eve::oneminus[ eve::logical<v_t>(0) ](T(0)) , T);
-  TTS_EXPR_IS(eve::oneminus[ true ](T(0))                   , T);
+  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::oneminus[ v_t(0)               ](T(0)), T);
+  TTS_EXPR_IS(eve::oneminus[ T(0)                 ](T(0)), T);
+  TTS_EXPR_IS(eve::oneminus[ eve::logical<T>(0)   ](T(0)), T);
+  TTS_EXPR_IS(eve::oneminus[ eve::logical<v_t>(0) ](T(0)), T);
+  TTS_EXPR_IS(eve::oneminus[ true                 ](T(0)), T);
 }
 
 TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)

@@ -9,24 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/oneminus.hpp>
-#include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/constant/nan.hpp>
-#include <type_traits>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check oneminus return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ v_t(0)  ])(T(0))              , T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ (T(0)) ])(T(0))              , T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ (eve::logical<T>(0))])(T(0)) , T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ eve::logical<v_t>(0) ])(T(0)) , T);
-  //TTS_EXPR_IS(eve::saturated_(eve::oneminus[ true ](T(0)))                   , T);
+  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ v_t(0)               ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ T(0)                 ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ eve::logical<T>(0)   ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ eve::logical<v_t>(0) ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ true                 ])(T(0)), T);
 }
 
 TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
