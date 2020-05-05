@@ -15,9 +15,8 @@
 #include <eve/platform.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE_TPL("Check eve::raw_(eve::raw_(eve::rec)) return type", EVE_TYPE)
+TTS_CASE_TPL("Checkeve::raw_(eve::rec) return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::raw_(eve::rec)(T(0)), T);
 }
@@ -26,20 +25,20 @@ TTS_CASE_TPL("Check eve::raw_(eve::rec) behavior", EVE_TYPE)
 {
   if constexpr(eve::floating_value<T>)
   {
-    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( T(1)) , (T(1))     , 0.2);
-    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( T(47)), (T(1./47.)), 0.2);
+    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)(T(1)) , T(1)     , 0.2);
+    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)(T(47)), T(1./47.), 0.2);
   }
   else
   {
     if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL(eve::raw_(eve::rec)(T(- 1)), (T(-1)));
-      TTS_EQUAL(eve::raw_(eve::rec)(T(-47)), (T( 0)));
+      TTS_EQUAL(eve::raw_(eve::rec)(T(- 1)), T(-1));
+      TTS_EQUAL(eve::raw_(eve::rec)(T(-47)), T( 0));
     }
     else
     {
-      TTS_EQUAL(eve::raw_(eve::rec)(T(1)) , (T(1)));
-      TTS_EQUAL(eve::raw_(eve::rec)(T(47)), (T(0)));
+      TTS_EQUAL(eve::raw_(eve::rec)(T(1)) , T(1));
+      TTS_EQUAL(eve::raw_(eve::rec)(T(47)), T(0));
     }
   }
 }
