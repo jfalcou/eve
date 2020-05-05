@@ -13,7 +13,8 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/value.hpp>
@@ -28,7 +29,18 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(floating_value<T>) return a - trunc(a);
+      if constexpr(floating_value<T>)
+      {
+        if constexpr(scalar_value<T>)
+        {
+          if (!a) return a;
+          else return a - trunc(a);
+        }
+        else
+        {
+          return if_else(is_eqz(a), a, a - trunc(a));
+        }
+      }
       else return Zero(as(a));
     }
     else return apply_over(frac, a);
