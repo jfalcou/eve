@@ -31,13 +31,12 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U, value V >
-auto operator()( T x, U y, V z ) const noexcept;
+template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept;
 requires compatible< T,U> && compatible< T, V >;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the fused multiply-substract operator on its parameters.
+Performs the [element-wise](../../../glossary.html#regular_) fused multiply-substract operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------

@@ -13,8 +13,9 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/binarize.hpp>
-#include <eve/function/is_ltz.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_gtz.hpp>
+#include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/platform.hpp>
@@ -32,6 +33,7 @@ namespace eve::detail
     {
       if constexpr(scalar_value<T>)
       {
+        if (is_eqz(a)) return a;
         if constexpr(signed_value<T>)
         {
           T r = bool(is_gtz(a)) - bool(is_ltz(a));
@@ -53,7 +55,7 @@ namespace eve::detail
       {
         if constexpr(signed_value<T>)
         {
-          T r = binarize(is_gtz(a))-binarize(is_ltz(a));
+          T r = if_else(is_eqz(a), a, binarize(is_gtz(a))-binarize(is_ltz(a)));
           if constexpr(eve::platform::supports_nans && floating_value<T>)
           {
             return if_else(is_nan(a), eve::allbits_, r);

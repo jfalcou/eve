@@ -31,13 +31,11 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-template< value T, value U >
-auto operator()( T x, U y ) const noexcept;
-requires compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the max operator on its parameters.
+Performs the [element-wise](../../../glossary.html#regular_) max operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -46,7 +44,7 @@ Parameters
 
 Return value
 ----------------------------------------------------------------------------------------------------
-On an  [element-wise](../../../glossary.html#elment-wise) basis, the  greater of `x` and `y`.
+For each pair of corresponding [`elements`](../../../glossary.html#element-wise), the greater is returned.
 
 The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
@@ -62,7 +60,7 @@ supported Decorators
 
 [`numeric_`](../decorators.html#numeric_)
 :   The call `numeric_(max)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
-    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins).
+    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins)
 
 </script>
 
@@ -72,7 +70,7 @@ supported Decorators
 
 See Also
 ====================================================================================================
-[eve::min](./abs.html#eve::min), [eve::maxmag](./abs.html#eve::maxmag), [eve::minmag](./abs.html#eve::minmag).
+[eve::min](./min.html), [eve::maxmag](./maxmag.html), [eve::minmag](./minmag.html).
 
 
 <!-- End of Document -->

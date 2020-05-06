@@ -31,8 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< real_value T, real_value U>
-auto operator()( T x, U y ) const noexcept
+template< real_value T, real_value U> auto operator()( T x, U y ) const noexcept
 requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -40,10 +39,8 @@ Performs  the [element-wise](../../../glossary.html#elment-wise) positive differ
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:    [value](../../concepts.html#value) of type T
-`y`
-:    [value](../../concepts.html#value) of type U
+`x`, `y`
+:    [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------

@@ -6,26 +6,25 @@
 #include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide <float, eve::fixed<8>>;
+using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
-                , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
+  wide_it pi = { 0, 1, 2, 3, -1, -32766, -32767, -32768};
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =                  " << pf << '\n'
-    << "-> eve::oneminus(pf) = " << eve::oneminus(pf) << '\n';
+    << "<- pi                       = " << pi << '\n'
+    << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
+    << "-> saturated_(oneminus(pi)) = " << eve::saturated_(eve::oneminus)(pi) << '\n';
 
-  float xf = 1.0f;
-  float yf = eve::Mindenormal<float>();
+
+  float xf = 2.0f;
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =                  " << xf << '\n'
-    << "-> eve::oneminus(xf) = " << eve::oneminus(xf) << '\n'
-    << "<- yf =                  " << yf << '\n'
-    << "-> eve::oneminus(yf) = " << eve::oneminus(yf) << '\n';
+    << "<- xf                       = " << xf << '\n'
+    << "-> oneminus(xf)             = " << eve::oneminus(xf) << '\n';
+
   return 0;
 }

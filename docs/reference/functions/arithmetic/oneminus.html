@@ -25,62 +25,40 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the oneminus operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise) oneminus operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type of `x`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = oneminus(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+!!! WARNING
+    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
+    the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/oneminus.src.html here)-->
-
-  <!--(insert ../../out/oneminus.out.html here)-->
-
-See Also
+Supported Decorators
 ====================================================================================================
+[`saturated_`](../decorators.html#saturated_)
+:   The call `saturated_(oneminus)(x)` is semantically equivalent to `saturated_(sub)(One(as(x)), x)`
+    and is never undefined.
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+  (insert ../../src/oneminus.src.html here)
+
+  (insert ../../out/oneminus.out.html here)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

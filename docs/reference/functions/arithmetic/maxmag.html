@@ -31,13 +31,11 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-template< value T, value U >
-auto operator()( T x, U y ) const noexcept;
-requires compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the maxmag operator on its parameters.
+Performs the [element-wise](../../../glossary.html#regular_) maxmag operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -46,12 +44,10 @@ Parameters
 
 Return value
 ----------------------------------------------------------------------------------------------------
-On an  [element-wise](../../../glossary.html#elment-wise) basis:
-
+For each pair of corresponding [`elements`](../../../glossary.html#element-wise):
   * If `|x| >  |y|`,  `x` is returned.
   * If `|x| <  |y|`,  `y` is returned.
   * Otherwise `max(x, y)` is returned.
-
 The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
 !!! WARNING
@@ -69,7 +65,7 @@ supported Decorators
 
 [`numeric_`](../decorators.html#numeric_)
 :   The call `numeric_(maxmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
-    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins).
+    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins):
 
   * If `|x| >  |y|`,  `x` is returned.
   * If `|x| <  |y|`,  `y` is returned.
@@ -83,7 +79,7 @@ supported Decorators
 
 See Also
 ====================================================================================================
-[eve::min](./abs.html#eve::min), [eve::max](./abs.html#eve::max), [eve::minmag](./abs.html#eve::minmag).
+[eve::min](./min.html), [eve::max](./max.html), [eve::minmag](./minmag.html).
 
 
 <!-- End of Document -->

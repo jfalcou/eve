@@ -31,20 +31,15 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U >
-auto operator()( T x, U y ) const noexcept
-requires compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the distance computation of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   [value](../../concepts.html#value) of type T
-
-`y`
-:   [value](../../concepts.html#value) of type U
+`x`, `y`
+:   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
@@ -71,7 +66,7 @@ auto r = abs(x-y);
 Supported Decorators
 ====================================================================================================
 [`saturated_`](../decorators.html#saturated_)
-:   The expression `saturated_(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
+:   The call `saturated_(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
     that the result is always defined. If $|x-y|$ is not representable
     [the greatest representable positive value](../../constants.html#valmax) is returned
 
@@ -81,8 +76,8 @@ Supported Decorators
 
 See Also
 ====================================================================================================
+[eve::abs](./abs.html), [eve::manhattan](./manhattan.html), [eve::hypot](./hypot.html), [eve::ulpdist](../ieee754/ulpdist.html).
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

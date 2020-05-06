@@ -31,11 +31,10 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T>
-auto operator()( T x ) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the frac operator on its parameter.
+Performs the[element-wise](../../../glossary.html#regular_) frac operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,11 +44,11 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns value with the same type as `x`  containing the [element-wise](../../../glossary.html#value) fractional part of `x` with the same sign as `x`,
+Returns a value with the same type as `x`  containing the [element-wise](../../../glossary.html#value) fractional part of `x` with the same sign as `x`.
 
- If an [element-wise](../../../glossary.html#value) of `x` is $\pm0$,  $\pm0$ is returned in the corresponding result element.
-
- If an [element-wise](../../../glossary.html#value) of `x` is $\pm\infty$ or `Nan`, a `Nan` is returned in the corresponding result element.
+In particular:
+ * If an [element](../../../glossary.html#value) of `x` is $\pm0$,  $\pm0$ is returned.
+ * If an [element](../../../glossary.html#value) of `x` is $\pm\infty$ or `Nan`, a `Nan` is returned.
 
   (insert ../../src/frac.src.html here)
 

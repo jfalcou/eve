@@ -31,8 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< real_floating_value T>
-auto operator()( T x ) const noexcept;
+template< real_floating_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs The [element-wise](../../../glossary.html#element-wise) conjugate of `x`.
@@ -40,7 +39,7 @@ Performs The [element-wise](../../../glossary.html#element-wise) conjugate of `x
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:  the value to conjugate
+:  the [value](../../concepts.html#value) to conjugate
 
 Return value
 ----------------------------------------------------------------------------------------------------
@@ -56,7 +55,7 @@ This function always returns `x`.
 See Also
 ====================================================================================================
 
-[eve::arg](./conj.html#eve::arg), [eve::sqr_abs](./conj.html#eve::sqr_abs)
+[eve::arg](./arg.html), [eve::sqr_abs](./sqr_abs.html)
 
 
 <!-- End of Document -->

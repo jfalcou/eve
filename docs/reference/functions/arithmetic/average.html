@@ -31,19 +31,15 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept
-requires compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the arithmetic average of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic average of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   [value](../../concepts.html#value) of type T
-
-`y`
-:   [value](../../concepts.html#value) of type U
+`x`, `y`
+:   [values](../../concepts.html#value).
 
 
 Return value
@@ -54,11 +50,11 @@ Half the sum of `x` and `y`. No overflow occurs.
  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
 !!! WARNING
-    If `x` and `y` are [integral values](../../concepts.html#value) type and the sum is odd, the result is a rounded value at a distance guaranteed
+    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
     to be less than or equal to 0.5 of the average floating value, but may differ
     by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
     simd intrinsics to perform the operation, the scalar results may differ by one unit from
-    simd ones..
+    simd ones and is system dependent.
 
   (insert ../../src/average.src.html here)
 

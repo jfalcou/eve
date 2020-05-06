@@ -31,16 +31,14 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
-template< value T, value U >
-auto operator()( T x, U y ) const noexcept;
+1. template< value T, value U > auto operator()( T x, U y ) const noexcept
 requires compatible< T,U>;
 
-template< value T, value U, value V >
-auto operator()( T x, U y, V z ) const noexcept;
+2. template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept;
 requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the hypot operator on its parameters.
+Performs the [element-wise](../../../glossary.html#regular_) hypot operation on its parameters.
 
 The value computed is the $l_2$ euclidian norm in $\mathbb{R}^2$ or $\mathbb{R}^3$ respectively.
 
@@ -51,9 +49,9 @@ Parameters
 
 Return value
 ----------------------------------------------------------------------------------------------------
-On an  [element-wise](../../../glossary.html#elment-wise) basis:
- - With two parameters: $\sqrt{x^2+y^2}$ is returned.
- - With three parameters: $\sqrt{x^2+y^2+z^2}$ is returned.
+For each  [`element`](../../../glossary.html#element-wise) of the input:
+ 1. $\sqrt{x^2+y^2}$ is returned.
+ 2. $\sqrt{x^2+y^2+z^2}$ is returned.
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
 

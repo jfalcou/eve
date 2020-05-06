@@ -31,11 +31,10 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<real_floating_value T>
-auto operator()(T x) const noexcept;
+template<real_floating_value T> auto operator()(T x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs The phase angle operator on its parameter.
+Performs the [element-wise](../../../glossary.html#element-wise_) phase angle operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,7 +44,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
- Returns on an [`element-wise`](../../../glossary.html#element-wise) basis the phase angle of the input:
+For each  [`element`](../../../glossary.html#element-wise) of the input the phase angle is returned:
 
   *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is not set, $0$ is returned.
   *  if the bit of sign of the entry [element](../../../glossary.html#elment-wise) is set, $\pi$ is returned.
@@ -64,7 +63,7 @@ Supported Decorators
 See Also
 ====================================================================================================
 
-[eve::conj](./conj.html#eve::conj), [eve::sqr_abs](./conj.html#eve::sqr_abs)
+[eve::conj](./conj.html), [eve::sqr_abs](./sqr_abs.html)
 
 
 

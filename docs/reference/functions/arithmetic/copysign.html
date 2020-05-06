@@ -31,8 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< real_floating_value T, real_floating_value U >
-auto operator()( T x, U y ) const noexcept
+template< real_floating_value T, real_floating_value U > auto operator()( T x, U y ) const noexcept
 requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -40,10 +39,8 @@ Composes a floating point value with the magnitude of `x` and the sign of `y`.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:    [real floating value](../../concepts.html#value)
-`y`
-:    [real floating value](../../concepts.html#value)
+`x`, `y`
+:    [real floating values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
@@ -57,7 +54,7 @@ and the bit of sign of `y`.
 
 See Also
 ====================================================================================================
-[eve::abs](./conj.html#eve::abs), [eve::signnz](./conj.html#eve::signnz)
+[eve::abs](./abs.html), [eve::signnz](./signnz.html)
 
 
 <!-- End of Document -->

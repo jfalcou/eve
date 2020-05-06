@@ -31,12 +31,11 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< real_value T, real_value U, real_value V>
-auto operator()( T x, U lo, V hi ) noexcept
+template< real_value T, real_value U, real_value V > auto operator()( T x, U lo, V hi ) const noexcept
 requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the clamp operator on its parameter.
+Performs the [element-wise](../../../glossary.html#element-wise_)  clamp operation on its parameters.
 
 Each element of `lo` must be less or equal to the corresponding element of  `hi` or the behavior is undefined.
 
@@ -51,10 +50,10 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-The function  on an [element-wise](../../../glossary.html#regular_) basis returns:
-   -  lo if x is less than lo.
-   -  hi if hi is less than x.
-   -  otherwise x.
+Each [element](../../../glossary.html#regular_)  of the result contains:
+   -  `lo`, if `x` is less than `lo`.
+   -  `hi`, if `hi` is less than `x`.
+   -  otherwise `x`.
 
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 

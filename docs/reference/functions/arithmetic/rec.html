@@ -25,62 +25,42 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the rec operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise) rec operation on its parameter.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  [element-wise](../../../glossary.html#elment-wise) the inverse of `x`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = rec(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+For [real integral value](../../concepts.html#value) `x` is semantically equivalent to:
+  * If x==1 or x==-1, x is returned.
+  * If x==0,  [the greatest representable positive value](../../constants.html#valmax) is returned.
+  * Otherwise 0 is returned.
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/rec.src.html here)-->
-
-  <!--(insert ../../out/rec.out.html here)-->
-
-See Also
+Supported Decorators
 ====================================================================================================
+[`raw_`](../decorators.html#raw_)
+:   The call `raw_(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
+    Otherwise it uses the [`regular`](../decorators.html#regular_) call.
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+  (insert ../../src/rec.src.html here)
+
+  (insert ../../out/rec.out.html here)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
