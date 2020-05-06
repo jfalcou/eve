@@ -25,62 +25,55 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the max operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
+template< value T, value U >
+auto operator()( T x, U y ) const noexcept;
+requires compatible< T, U >;
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the max operator on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`x`, `y`
+:   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-<span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+On an  [element-wise](../../../glossary.html#elment-wise) basis, the  greater of `x` and `y`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = max(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+
+!!! WARNING
+   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+
+supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#pedantic_)
+:   The call `pedantic_(max)(x,y)`  ensures the conformity to the standard behaviour, that is
+    (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
+    `(x < y) ? y : x`.
+
+[`numeric_`](../decorators.html#numeric_)
+:   The call `numeric_(max)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
+    output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins).
+
 </script>
 
-is semantically equivalent to:
+  (insert ../../src/max.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/max.src.html here)-->
-
-  <!--(insert ../../out/max.out.html here)-->
+  (insert ../../out/max.out.html here)
 
 See Also
 ====================================================================================================
+[eve::min](./abs.html#eve::min), [eve::maxmag](./abs.html#eve::maxmag), [eve::minmag](./abs.html#eve::minmag).
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

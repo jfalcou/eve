@@ -5,26 +5,26 @@
 #include <eve/tags.hpp>
 #include <iostream>
 
-using wide_it = eve::wide<int16_t, eve::fixed<4>>;
+using wide_it = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pf = {0, 1, -1, -eve::Valmax<int16_t>()};
-  wide_it qf = {1, -1, 0, eve::Valmax<int16_t>()};
+  wide_it pf = {0, 1, -1, -eve::Valmax<float>()};
+  wide_it qf = {1, -1, 0, eve::Valmax<float>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =               " << pf << '\n'
-            << "<- qf =               " << qf << '\n'
-            << "-> fdim(pf, qf) =     " << eve::fdim(pf, qf) << '\n'
+            << "<- pf           = " << pf << '\n'
+            << "<- qf           = " << qf << '\n'
+            << "-> fdim(pf, qf) = " << eve::fdim(pf, qf) << '\n'
             << '\n';
 
-  int16_t xf = -eve::Valmax<int16_t>();
-  int16_t yf = eve::Valmax<int16_t>();
+  float xf = -eve::Valmax<float>();
+  float yf = eve::Valmax<float>();
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =               " << xf << '\n'
-            << "<- yf =               " << yf << '\n'
-            << "-> fdim(xf, yf) =     " << eve::fdim(xf, yf) << '\n'
+            << "<- xf           = " << xf << '\n'
+            << "<- yf           = " << yf << '\n'
+            << "-> fdim(xf, yf) = " << eve::fdim(xf, yf) << '\n'
             << '\n';
   return 0;
 }

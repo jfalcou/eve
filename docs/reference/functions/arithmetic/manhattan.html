@@ -25,62 +25,55 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the manhattan operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  c++
+template< value T, value U >
+auto operator()( T x, U y ) const noexcept;
+requires compatible< T,U>;
+
+template< value T, value U, value V >
+auto operator()( T x, U y, V z ) const noexcept;
+requires compatible< T, U > && compatible< T, V >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the manhattan operator on its parameters.
+
+The value computed is the $l_1$ norm in $\mathbb{R}^2$ or $\mathbb{R}^3$ respectively.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`x`, `y`, `z`
+:   [value](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
-<span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+On an  [element-wise](../../../glossary.html#elment-wise) basis:
+ - With two parameters: $|x|+|y|$ is returned.
+ - With three parameters: $|x|+|y||+z|$ is returned.
+The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = manhattan(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#pedantic_)
+:   The call `pedantic_(manhattan)(x,y)`  or `pedantic_(manhattan)(x,y,z)` computes the sum of the absolute values of its parameters
+    returning $\infty$ as soon as one of its parameter is infinite, regardless of possble `Nan` values.
+
+
 </script>
 
-is semantically equivalent to:
+  (insert ../../src/manhattan.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/manhattan.src.html here)-->
-
-  <!--(insert ../../out/manhattan.out.html here)-->
+  (insert ../../out/manhattan.out.html here)
 
 See Also
 ====================================================================================================
+[eve::abs](./abs.html#eve::abs)
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

@@ -42,6 +42,7 @@ requires compatible< T, U > && compatible< T, V >;
 </script>
 Performs the hypot operator on its parameters.
 
+The value computed is the $l_2$ euclidian norm in $\mathbb{R}^2$ or $\mathbb{R}^3$ respectively.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -55,12 +56,15 @@ On an  [element-wise](../../../glossary.html#elment-wise) basis:
  - With three parameters: $\sqrt{x^2+y^2+z^2}$ is returned.
 The result type is the [compatibility result](../../concept.html#compatibility) of the three parameters.
 
+
 supported Decorators
 ====================================================================================================
 [`pedantic_`](../decorators.html#pedantic_)
 :   The call `pedantic_(hypot)(x,y)`  or `pedantic_(hypot)(x,y,z)` computes the square root of the sum of the
      squares of `x` and `y`, (and `z`) without undue overflow or underflow at intermediate stages of the computation
-    and can be more accurate than the [`regular_`](../decorators.html#regular_) call.
+    and can be more accurate than the [`regular`](../decorators.html#regular_) call.
+
+    Morever it returns $\infty$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
 
 </script>
 

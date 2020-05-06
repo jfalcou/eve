@@ -1,16 +1,22 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =               (-0, 1.3, -1.3, inf, -inf, -nan, 0.678, 0)
--> eve::modf(pf) =   [(-0, 0.3, -0.3, -nan, -nan, -nan, 0.678, 0), 
-                      (0, 1, -1, inf, -inf, -nan, 0, 0)] 
+<- pf                  = (-0, 1.3, -1.3, inf, 0, -nan, 0.678, -0.678)
+-> modf(pf)            = [
+                          (0, 0.3, -0.3, -nan, 0, -nan, 0.678, -0.678), 
+                          (-0, 1, -1, inf, 0, -nan, 0, -0)
+                         ]
+-> pedantic_(modf)(pf) = [
+                          (0, 0.3, -0.3, 0, 0, -nan, 0.678, -0.678), 
+                          (-0, 1, -1, inf, 0, -nan, 0, -0)
+                         ]
 ---- scalar
-<- xf  =            2.3
--> eve::modf(xf) = [0.3, 2]
+<- xf       =  2.3
+-> modf(xf) = [0.3, 2]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
