@@ -25,62 +25,58 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the iround operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise) iround operation on its parameter.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  [element-wise](../../../glossary.html#elment-wise) the integer nearest to `x`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = iround(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+If `x` is an exact half-integer the rouding is made to the nearest even integer.
 
-is semantically equivalent to:
+The call to `iround(a)` is equivalent to the call `inearest(a)`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+!!! WARNING
+   If the result is not representable in the return type, it is undefined.
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+Supported Decorators
+====================================================================================================
+[`downward_`](../decorators.html#downward_)
+:   The expression `downward_(iround)(x)` is equivalent to `ifloor(x)`.
 
-  <!--(insert ../../src/iround.src.html here)-->
+[`upward_`](../decorators.html#upward_)
+:   The expression `upward_(iround)(x)` is equivalent to `iceil(x)`.
 
-  <!--(insert ../../out/iround.out.html here)-->
+[`to_nearest_`](../decorators.html#to_nearest_)
+:   The expression `to_nearest_(iround)(x)` is equivalent to `inearest(x)`.
+
+[`toward_zero_`](../decorators.html#toward_zero_)
+:   The expression `toward_zero_(iround)(x)` is equivalent to `itrunc(x)`.
+
+  (insert ../../src/iround.src.html here)
+
+  (insert ../../out/iround.out.html here)
 
 See Also
 ====================================================================================================
+[eve::ceil](./ceil.html), [eve::nearest](./nearest.html),
+[eve::floor](./floor.html), [eve::trunc](./trunc.html).
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
