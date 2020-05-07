@@ -17,12 +17,12 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check sincos return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium_(eve::sincos) return type", EVE_TYPE)
 {
   TTS_EXPR_IS( eve::medium_(eve::sincos)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE_TPL("Check (eve::sincos behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium_(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
