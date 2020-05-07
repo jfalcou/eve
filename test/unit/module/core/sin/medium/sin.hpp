@@ -25,11 +25,12 @@
 
 TTS_CASE_TPL("Check eve::medium_(eve::sin) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::medium_(eve::sin)(T(0)), T);
+  TTS_EXPR_IS(eve::medium_(eve::sin)(T()), T);
 }
 
 TTS_CASE_TPL("Check eve::medium_(eve::sin) behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -37,17 +38,19 @@ TTS_CASE_TPL("Check eve::medium_(eve::sin) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Inf<T>()) , (eve::Nan<T>()) );
     TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Minf<T>()), (eve::Nan<T>()) );
   }
-  TTS_ULP_EQUAL(eve::medium_(eve::sin)(T(1)), T(std::sin(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::sin)(T(-1)),T(std::sin(-1.0)), 0.5);
-  TTS_IEEE_EQUAL((eve::medium_(eve::sin)(T(0))), (T(0)));
-  TTS_IEEE_EQUAL((eve::medium_(eve::sin)(T(-0.))), (T(0)));
+
   TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::sin)(T(-0.)))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::sin)(T( 0 )))));
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(eve::Pio_4<T>())), (T(std::sin(eve::Pio_4<v_t>()))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(-eve::Pio_4<T>())),(T(std::sin(-eve::Pio_4<v_t>()))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(T(100.0))), T(std::sin(v_t(100.0))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(T(-100.0))),T(std::sin(v_t(-100.0))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(T(100000.0))), T(std::sin(v_t(100000.0))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::sin)(T(-100000.0))),T(std::sin(v_t(-100000.0))), 0.5);
-}
 
+  TTS_IEEE_EQUAL(eve::medium_(eve::sin)(T( 0 )), T(0));
+  TTS_IEEE_EQUAL(eve::medium_(eve::sin)(T(-0.)), T(0));
+
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(eve::Pio_4<T>()) , T(std::sin(eve::Pio_4<v_t>()))  , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-eve::Pio_4<T>()), T(std::sin(-eve::Pio_4<v_t>())) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)( T( 1))          , T(std::sin(1.0))                , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-T( 1))          , T(std::sin(-1.0))               , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)( T(100.0))       , T(std::sin(v_t(100.0)))         , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-T(100.0))       , T(std::sin(v_t(-100.0)))        , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)( T(100000.0))    , T(std::sin(v_t(100000.0)))      , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-T(100000.0))    , T(std::sin(v_t(-100000.0)))     , 0.5);
+}
