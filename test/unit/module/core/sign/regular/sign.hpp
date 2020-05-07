@@ -24,6 +24,6 @@ TTS_CASE_TPL("Check eve::sign behavior", EVE_TYPE)
     TTS_EQUAL(eve::sign(static_cast<T>(-2)), (T(-1)));
   }
 
-  TTS_EQUAL(eve::sign(T(0)), (T(0)));
-  TTS_EQUAL(eve::sign(T(2)), (T(1)));
+  TTS_EQUAL(eve::sign(T(0)), T(0));
+  TTS_EQUAL(eve::sign(T(2)), T(1));
 }
