@@ -17,11 +17,13 @@
 
 TTS_CASE_TPL("Check conditional eve::minus return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::minus[ v_t(0)  ](T(0))              , T);
-  TTS_EXPR_IS(eve::minus[ (T(0)) ](T(0))              , T);
-  TTS_EXPR_IS(eve::minus[ (eve::logical<T>(0))](T(0)) , T);
-  TTS_EXPR_IS(eve::minus[ eve::logical<v_t>(0) ](T(0)) , T);
-  TTS_EXPR_IS(eve::minus[ true ](T(0))                   , T);
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EXPR_IS(eve::minus[ v_t(0)  ](T(0))             , T);
+  TTS_EXPR_IS(eve::minus[ T(0)    ](T(0))             , T);
+  TTS_EXPR_IS(eve::minus[ eve::logical<T>(0)  ](T(0)) , T);
+  TTS_EXPR_IS(eve::minus[ eve::logical<v_t>(0)](T(0)) , T);
+  TTS_EXPR_IS(eve::minus[ true ](T(0))                , T);
 }
 
 TTS_CASE_TPL("Check conditional eve::minus behavior", EVE_TYPE)
@@ -30,17 +32,17 @@ TTS_CASE_TPL("Check conditional eve::minus behavior", EVE_TYPE)
   auto t = eve::True<T>();
   auto f = eve::False<T>();
 
-  TTS_EQUAL(eve::minus[ 1 ](tv)   , (T(-tv)));
-  TTS_EQUAL(eve::minus[ 1.0 ](tv) , (T(-tv)));
-  TTS_EQUAL(eve::minus[ true ](tv), (T(-tv)));
-  TTS_EQUAL(eve::minus[ t ](tv)   , (T(-tv)));
+  TTS_EQUAL(eve::minus[ 1     ](tv) , T(-tv) );
+  TTS_EQUAL(eve::minus[ 1.0   ](tv) , T(-tv) );
+  TTS_EQUAL(eve::minus[ true  ](tv) , T(-tv) );
+  TTS_EQUAL(eve::minus[ t     ](tv) , T(-tv) );
 
-  TTS_EQUAL(eve::minus[ 0 ](tv)     , tv);
-  TTS_EQUAL(eve::minus[ 0.0 ](tv)   , tv);
+  TTS_EQUAL(eve::minus[ 0     ](tv) , tv);
+  TTS_EQUAL(eve::minus[ 0.0   ](tv) , tv);
   TTS_EQUAL(eve::minus[ false ](tv) , tv);
-  TTS_EQUAL(eve::minus[ f ](tv)     , tv);
+  TTS_EQUAL(eve::minus[ f     ](tv) , tv);
 
-    // Mixed case
+  // Mixed case
   eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
