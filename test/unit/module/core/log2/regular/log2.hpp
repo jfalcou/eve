@@ -9,12 +9,10 @@
 **/
 //==================================================================================================
 #include <eve/function/log2.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/mindenormal.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -26,23 +24,24 @@ TTS_CASE_TPL("Check eve::log2 return type", EVE_TYPE)
   TTS_EXPR_IS(eve::log2(T(0)), T);
 }
 
-TTS_CASE_TPL(" log2", EVE_TYPE)
+TTS_CASE_TPL("Check eve::log2 behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::log2(eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::log2(eve::Nan<T>()), eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::log2(eve::Mone<T>()), eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::log2(T( 0 )), eve::Minf<T>(), 0);
+    TTS_IEEE_EQUAL(eve::log2(eve::Inf<T>())  , eve::Inf<T>()  );
+    TTS_IEEE_EQUAL(eve::log2(eve::Nan<T>())  , eve::Nan<T>()  );
+    TTS_IEEE_EQUAL(eve::log2(eve::Mone<T>()) , eve::Nan<T>()  );
+    TTS_IEEE_EQUAL(eve::log2(T( 0 ))         , eve::Minf<T>() );
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_ULP_EQUAL(eve::log2(eve::Mindenormal<T>()), T(std::log2(eve::Mindenormal<v_t>())), 0);
+    TTS_IEEE_EQUAL(eve::log2(eve::Mindenormal<T>()), T(std::log2(eve::Mindenormal<v_t>())));
   }
 
-  TTS_ULP_EQUAL(eve::log2(eve::One<T>()), T( 0 ), 0);
-  TTS_ULP_EQUAL(eve::log2(T(2)), T(1), 0);
-  TTS_ULP_EQUAL(eve::log2(T(8)), T(3), 0);
-  TTS_ULP_EQUAL(eve::log2(T(64)), T(6), 0);
+  TTS_IEEE_EQUAL(eve::log2(T( 1)), T(0) );
+  TTS_IEEE_EQUAL(eve::log2(T( 2)), T(1) );
+  TTS_IEEE_EQUAL(eve::log2(T( 8)), T(3) );
+  TTS_IEEE_EQUAL(eve::log2(T(64)), T(6) );
 }

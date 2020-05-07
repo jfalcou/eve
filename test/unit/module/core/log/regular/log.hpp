@@ -9,12 +9,10 @@
 **/
 //==================================================================================================
 #include <eve/function/log.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/mindenormal.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -23,26 +21,28 @@
 
 TTS_CASE_TPL("Check eve::log return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::log(T(0)), T);
+  TTS_EXPR_IS(eve::log(T()), T);
 }
 
-TTS_CASE_TPL(" log", EVE_TYPE)
+TTS_CASE_TPL("Check eve::log behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::log(eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::log(eve::Nan<T>()), eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::log(eve::Mone<T>()), eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::log(T( 0 )), eve::Minf<T>(), 0);
-  }
-  if constexpr(eve::platform::supports_denormals)
-  {
-    TTS_ULP_EQUAL(eve::log(eve::Mindenormal<T>()), T(std::log(eve::Mindenormal<v_t>())), 0);
+    TTS_IEEE_EQUAL(eve::log(eve::Inf<T>())  , eve::Inf<T>() );
+    TTS_IEEE_EQUAL(eve::log(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log(eve::Mone<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log(T( 0 ))         , eve::Minf<T>());
   }
 
-  TTS_ULP_EQUAL(eve::log(eve::One<T>()), T( 0 ), 0);
-  TTS_ULP_EQUAL(eve::log(T(2)), T(std::log(v_t(2))), 0);
-  TTS_ULP_EQUAL(eve::log(T(8)), T(std::log(v_t(8))), 0);
-  TTS_ULP_EQUAL(eve::log(T(64)), T(std::log(v_t(64))), 0);
+  if constexpr(eve::platform::supports_denormals)
+  {
+    TTS_IEEE_EQUAL(eve::log(eve::Mindenormal<T>()), T(std::log(eve::Mindenormal<v_t>())));
+  }
+
+  TTS_IEEE_EQUAL(eve::log(T( 1)), T( 0 )               );
+  TTS_IEEE_EQUAL(eve::log(T( 2)), T(std::log(v_t( 2))) );
+  TTS_IEEE_EQUAL(eve::log(T( 8)), T(std::log(v_t( 8))) );
+  TTS_IEEE_EQUAL(eve::log(T(64)), T(std::log(v_t(64))) );
 }
