@@ -12,12 +12,11 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-
 TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 {
   TTS_EXPR_IS( (eve::saturated_(eve::mul[ T()              ])(T(), T())), T);
   TTS_EXPR_IS( (eve::saturated_(eve::mul[ eve::logical<T>()])(T(), T())), T);
-  TTS_EXPR_IS( (eve::saturated_(eve::mul[ true                ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::mul[ true             ])(T(), T())), T);
 }
 
 TTS_CASE_TPL("Check conditional saturated(eve::mul) behavior", EVE_TYPE)

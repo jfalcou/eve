@@ -18,11 +18,17 @@
 
 TTS_CASE_TPL("Check eve::mul return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::mul(T(), T()), T);
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EXPR_IS(eve::mul(T()  , T()   ), T);
+  TTS_EXPR_IS(eve::mul(v_t(), T()   ), T);
+  TTS_EXPR_IS(eve::mul(T()  , v_t() ), T);
 }
 
 TTS_CASE_TPL("Check eve::mul behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   TTS_EQUAL(eve::mul(T( 0), T(1)), (T(0  )));
   TTS_EQUAL(eve::mul(T( 1), T(1)), (T(1  )));
   TTS_EQUAL(eve::mul(T(12), T(4)), (T(48 )));
