@@ -17,7 +17,7 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                  " << pf << '\n'
-    << "-> eve::inpi(pf) =      " << eve::inpi(pf) << '\n';
+    << "-> eve::radinpi(pf) =      " << eve::radinpi(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Pi<float>();
@@ -25,8 +25,8 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                  " << xf << '\n'
-    << "-> eve::inpi(xf) =      " << eve::inpi(xf) << '\n'
+    << "-> eve::radinpi(xf) =      " << eve::radinpi(xf) << '\n'
     << "<- yf =                  " << yf << '\n'
-    << "-> eve::inpi(yf) =      " << eve::inpi(yf) << '\n';
+    << "-> eve::radinpi(yf) =      " << eve::radinpi(yf) << '\n';
   return 0;
 }
