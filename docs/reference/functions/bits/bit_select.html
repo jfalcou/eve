@@ -25,62 +25,62 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the bit_select operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U > auto operator()( T m, U x, U y ) const noexcept
+requires compatible< T,U> && compatible< T, V >;
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the [element-wise](../../../glossary.html#regular_) bit_select operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-
+`mx`
+:   mask [value](../../concepts.html#value)
+`y`, `z`
+:   selection [values](../../concepts.html#value)
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+
+The types T and U must be  bit_compatible and the call
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = bit_select(**TODO: FILL THIS BLANK**);
+r==bit_select(m,x,y)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-is semantically equivalent to:
+is semantically equivalent to
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
+r = bit_or(bit_and(x, m), bit_andnot(y, m))
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-  <!--(insert ../../src/bit_select.src.html here)-->
+In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is
+composed of the bits of `x` for which the corresponding bit of `m` is set
+and the bits of  `y` for which the corresponding bit of `m` is unset.
 
-  <!--(insert ../../out/bit_select.out.html here)-->
+If `T` or `M` is an [simd value](../../concepts.html#value), the type of the result has the element type
+ of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
+
+
+   (insert ../../src/bit_select.src.html here)
+
+   (insert ../../out/bit_select.out.html here)
 
 See Also
 ====================================================================================================
+[eve::fms](./fms.html), [eve::fnma](./fnma.html), [eve::fnms](./fnms.html)
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
