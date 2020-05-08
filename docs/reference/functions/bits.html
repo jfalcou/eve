@@ -12,7 +12,7 @@
 <br>
 These functions provide scalar and SIMD version of bit operations. Bitwise operations are extended to work on any [value](../concepts.html#value) types by considering the masking operations to apply on the value bit patterns while retaining its original types.
 
-There is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [ieee_value](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
+There is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [real floating values](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
 
 The header `eve/function/bit.hpp` allows the inclusion of all bits related functions.
 
@@ -25,7 +25,7 @@ The header `eve/function/bit.hpp` allows the inclusion of all bits related funct
 <span class="mediumskip"></span>
   [`eve::bit_andnot`](bits/bit_andnot.html)
 <span class="mediumskip"></span>
-  [`eve::ceil2`](bits/ceil2.html)
+  [`eve::bit_ceil`](bits/bit_ceil.html)
 <span class="mediumskip"></span>
   [`eve::bit_cast`](bits/bit_cast.html)
 <span class="mediumskip"></span>
@@ -33,7 +33,7 @@ The header `eve/function/bit.hpp` allows the inclusion of all bits related funct
 <span class="mediumskip"></span>
   [`eve::firstbitunset`](bits/firstbitunset.html)
 <span class="mediumskip"></span>
-  [`eve::floor2`](bits/floor2.html)
+  [`eve::bit_floor`](bits/bit_floor.html)
 <span class="mediumskip"></span>
   [`eve::is_pow2`](bits/is_pow2.html)
 <span class="mediumskip"></span>
@@ -51,13 +51,21 @@ The header `eve/function/bit.hpp` allows the inclusion of all bits related funct
 <span class="mediumskip"></span>
   [`eve::bit_select`](bits/bit_select.html)
 <span class="mediumskip"></span>
+  [`eve::bit_width`](bits/bit_width.html)
+<span class="mediumskip"></span>
   [`eve::bit_shl`](bits/bit_shl.html)
 <span class="mediumskip"></span>
   [`eve::bit_shr`](bits/bit_shr.html)
 <span class="mediumskip"></span>
   [`eve::bit_xor`](bits/bit_xor.html)
 <span class="mediumskip"></span>
+  [`eve::countl_one`](bits/countl_one.html)
+<span class="mediumskip"></span>
+  [`eve::countr_one`](bits/countr_one.html)
+<span class="mediumskip"></span>
   [`eve::countl_zero`](bits/countl_zero.html)
+<span class="mediumskip"></span>
+  [`eve::countr_zero`](bits/countr_zero.html)
 <span class="mediumskip"></span>
   [`eve::popcount`](bits/popcount.html)
 

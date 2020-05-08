@@ -25,62 +25,35 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the computation of the number of consecutive 1 bits left.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the [element-wise](../../../glossary.html#element-wise_) countl_zero operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [unsigned value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Returns the number of consecutive 0 ("zero") bits in the value of `x`, starting from the most significant bit ("left").
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = countl_zero(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+  (insert ../../src/countl_zero.src.html here)
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/countl_zero.src.html here)-->
-
-  <!--(insert ../../out/countl_zero.out.html here)-->
+  (insert ../../out/countl_zero.out.html here)
 
 See Also
 ====================================================================================================
+[eve::countl_zero](./countl_zero.html), [eve::countl_one](./countl_one.html), [eve::countl_one](./countl_one.html),
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

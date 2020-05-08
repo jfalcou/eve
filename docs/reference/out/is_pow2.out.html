@@ -1,17 +1,15 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                  (0, 1, -1, 3, 27, 4, 65536, 65537)
--> eve::is_pow2(pf) = (false, true, false, false, false, true, true, false)
+<- pi          = (14, 1, 3, 0, 16, 23000, 0, 27)
+-> is_pow2(pi) = (false, true, false, false, true, false, false, false)
 ---- scalar
-<- xi =                  1
--> eve::is_pow2(xi) = true
-<- yi =                  3
--> eve::is_pow2(yi) = false
+<- xf          = 48
+-> is_pow2(xf) = false
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

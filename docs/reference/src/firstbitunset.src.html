@@ -1,29 +1,30 @@
-<meta charset="utf-8">
-**Example:**
+ <meta charset="utf-8">
+Example
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/firstbitunset.hpp>
 #include <eve/wide.hpp>
 
-using wide_it = eve::wide<std::int32_t, eve::fixed<8>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_it pi = {-1, -2, -3, 27, 2, 3, 4, 0};
+  wide_it pi = {14, 1, 3, 7, 20, 23000, 0, 27};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi =                     " << pi << '\n'
-            << "-> eve::firstbitunset(pi) = " << eve::firstbitunset(pi) << '\n';
+            << "<- pi                = " << pi << '\n'
+            << "-> firstbitunset(pi) = " << eve::firstbitunset(pi) << '\n';
 
-  std::int32_t xi = 31;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi =                          " << xi << '\n'
-            << "-> eve::firstbitunset(xi) =      " << eve::firstbitunset(xi) << '\n';
+            << "<- xf                = " << xf << '\n'
+            << "-> firstbitunset(xf) = " << eve::firstbitunset(xf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ </script>
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

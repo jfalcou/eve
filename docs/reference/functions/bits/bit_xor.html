@@ -25,62 +25,47 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the bitwise XOR operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) bitwise XOR of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  bitwise XOR of the two parameters following the [bitwise operations semantic](../../../glossary.html#Bitwise).
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = bit_xor(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+the call `bit_xor(x, y)` is equivalent to `x ^ y`
+if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
-is semantically equivalent to:
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+!!! WARNING
+   Although the infix notation with `^` is supported for all  [simd values](../../concepts.html#value), the `^` operator on
+   standard scalar type is the original one and so can not be overloaded on standard floating parameters
+   due to **C++** limitations.
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
 
-  <!--(insert ../../src/bit_xor.src.html here)-->
+  (insert ../../src/bit_xor.src.html here)
 
-  <!--(insert ../../out/bit_xor.out.html here)-->
+  (insert ../../out/bit_xor.out.html here)
 
 See Also
 ====================================================================================================
+[eve::bit_ornot](./bit_ornot.html), [eve::bit_notor](./bit_notor.html), [eve::bit_or](./bit_or),
+[eve::bit_andnot](./bit_andnot.html), [eve::bit_notand](./bit_notand.html), [eve::bit_and](./bit_and),
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

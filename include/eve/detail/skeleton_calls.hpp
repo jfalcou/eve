@@ -103,7 +103,9 @@ namespace eve::detail
       else if constexpr(scalar_value<T>)
       {
         using r_t = wide<T, cardinal_t<U>>;
-        return r_t(bit_cast(op(U(bit_cast(a,as_<vt_u>())), b), as<vt_t>()), as<r_t>());
+        auto tmp1 = bit_cast(a, as_<vt_u>());
+        U tmp2(tmp1);
+        return bit_cast(op(tmp2, b), as<r_t>());
       }
       else if constexpr(scalar_value<U>)
       {

@@ -22,7 +22,7 @@
 namespace eve::detail
 {
   template<integral_value T, integral_value U>
-  EVE_FORCEINLINE T bit_shr_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   {
     if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
     {
@@ -35,7 +35,18 @@ namespace eve::detail
           return bit_cast(shr(bit_cast(a, as_<u_t>()), int(b)), as(a));
       }
       else
-        return bit_cast(map(bit_shr, a, b), as(a));
+      {
+        if constexpr( scalar_value<T> )
+        {
+          using elt_u = element_type_t<U>;
+          U aa( static_cast<elt_u>(a));
+          return map(bit_shr, aa, b);
+        }
+        else if constexpr( simd_value<T> )
+        {
+          return bit_cast(map(bit_shr, a, b), as(a));
+        }
+      }
     }
     else
       return apply_over(bit_shr, a, b);

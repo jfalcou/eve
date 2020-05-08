@@ -1,26 +1,26 @@
-#include <eve/function/bit.hpp>
+#include <eve/function/bit_shl.hpp>
+#include <eve/literals.hpp>
 #include <eve/wide.hpp>
-
-using iT      = std::int32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pi = {100, 200, -2, 3};
-  wide_it qi = {1, 2, 3, 2};
-
+  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+  w_t pi = {3, 2, 3, 4}, qi = {4, 1, 2, 0};
+  std::uint32_t z = 5;
   std::cout << "---- simd" << '\n'
-            << "<- pi =              " << pi << '\n'
-            << "<- qi =              " << qi << '\n'
-            << "-> eve::bit_shl(pi, qi) = " << eve::bit_shl(pi, qi) << '\n';
+            << " <- pi              = " << pi << '\n'
+            << " <- qi              = " << qi << '\n'
+            << " <- z               = " << z  << '\n'
+            << " -> bit_shl(pi, qi) = " << eve::bit_shl(pi, qi) << '\n'
+            << " -> bit_shl(z,  qi) = " << eve::bit_shl(z,  qi) << '\n'
+            << " -> bit_shl(pi, z ) = " << eve::bit_shl(pi, z) << '\n';
 
-  iT xi = 2, mxi = -2, yi = 3;
+  std::uint32_t a = 1;
+  std::uint32_t n = 4;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi  =                      " << xi << '\n'
-            << "<- mxi =                      " << mxi << '\n'
-            << "<- yi  =                      " << yi << '\n'
-            << "-> eve::bit_shl(xi, yi) = " << eve::bit_shl(xi, yi) << '\n'
-            << "-> eve::bit_shl(mxi, yi)= " << eve::bit_shl(mxi, yi) << '\n';
+            << " <- a             = " << a << '\n'
+            << " <- n             = " << n << '\n'
+            << " -> bit_shl(a, n) = " << eve::bit_shl(a, n) << '\n';
   return 0;
 }
