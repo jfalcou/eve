@@ -1,35 +1,20 @@
 #include <eve/function/bitofsign.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f,
-                1.0f,
-                -1.0f,
-                -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+  wide_ft pf = {-1.0f, 0.0f, 3.0f, -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                  " << pf << '\n'
-            << "-> eve::bitofsign(pf) = " << eve::bitofsign(pf) << '\n';
+            << "<- pf            = " << pf << '\n'
+            << "-> bitofsign(pf) = " << eve::bitofsign(pf) << '\n';
 
-  float xf = 1.0f;
-  float yf = eve::Mindenormal<float>();
+  float        xf = -32768.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                  " << xf << '\n'
-            << "-> eve::bitofsign(xf) = " << eve::bitofsign(xf) << '\n'
-            << "<- yf =                  " << yf << '\n'
-            << "-> eve::bitofsign(yf) = " << eve::bitofsign(yf) << '\n';
+            << "<- xf            = " << xf << '\n'
+            << "-> bitofsign(xf) = " << eve::bitofsign(xf) << '\n';
   return 0;
 }

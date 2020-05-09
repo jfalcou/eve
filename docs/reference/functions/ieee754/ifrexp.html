@@ -25,62 +25,45 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the computation of the ifrexp pair of values.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise_) ifrexp operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [floating_real_value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+    Computes the [element-wise](../../../glossary.html#element-wise_) ieee ifrexp of the floating value,
+    returning a pair `{m,e}`  of values `m` being of the same type as `x` and `e` of the asscociated integral type,
+    which are related by
+    $x =  m\times 2^e$, with  $|m| \in [0.5, 1.5[$.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = ifrexp(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+    However, the cases $x = \pm\infty$ or is a Nan or a denormal are undefined.
 
-is semantically equivalent to:
+Supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#pedantic_)
+:   The call `pedantic_(abs)(x)` takes also properly care of the cases where $x = \pm0, \pm\infty$ or is a Nan,
+    where $m=x$ and $e=0$ and of the denormal cases.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+  (insert ../../src/ifrexp.src.html here)
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/ifrexp.src.html here)-->
-
-  <!--(insert ../../out/ifrexp.out.html here)-->
+  (insert ../../out/ifrexp.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::exponent](./exponent.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

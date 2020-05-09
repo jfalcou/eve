@@ -34,18 +34,18 @@ Synopsis
 
 .. rubric:: Return value
 
-* [1,2] A value with the same integral type associated to the parameter. 
+* [1,2] A value with the same integral type associated to the parameter.
 
 Notes
 *****
 
     The exponent :math:`e` and mantissa :math:`m` of a floating point entry :math:`x` are related by
     :math:`x =  m\times 2^e`, with  :math:`|m| \in [1, 2[` (except for :math:`x = 0`,
-    where :math:`m=0` and :math:`e=0` ).
+    where :math:`m=\pm0` and :math:`e=0` ).
 
 
 
-.. seealso::  :ref:`mantissa <function-mantissa>`,  :ref:`ifrexp <function-ifrexp>`,  :ref:`frexp <function-frexp>`, 
+.. seealso::  :ref:`mantissa <function-mantissa>`,  :ref:`ifrexp <function-ifrexp>`,  :ref:`frexp <function-frexp>`,
  :ref:`ldexp <function-ldexp>`
 
 Example

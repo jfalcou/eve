@@ -25,62 +25,38 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the computation of the exponent value.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise_) exponent operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [floating_real_value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+    Computes the [element-wise](../../../glossary.html#element-wise_) ieee exponent of the floating value.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = exponent(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+    The exponent $e$ and mantissa $m$ of a floating point entry $x$ are related by
+    $x =  m\times 2^e$, with  $|m| \in [1, 2[$ (except for $x = \pm0, \pm\infty$ or is a Nan,
+    where $m=x$ and $e=0$ ).
 
-is semantically equivalent to:
+  (insert ../../src/exponent.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/exponent.src.html here)-->
-
-  <!--(insert ../../out/exponent.out.html here)-->
+  (insert ../../out/exponent.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::mantissa](./mantissa.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
