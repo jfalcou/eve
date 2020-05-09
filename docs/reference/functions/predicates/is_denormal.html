@@ -49,16 +49,16 @@ The call:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-logical< T > r = is_denormal(x);
+logical<T> r = is_denormal(x);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
 computation is semantically  equivalent to:
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-logical< T > r;
-if   constexpr(floating_real_value< T >) r = (abs(x) < Smallestposval(as(x))) && is_nez(x);
-else constexpr(integral_real_value< T >) r = False< T >());
+logical<T> r;
+if   constexpr(floating_real_value<T>) r = (abs(x) < Smallestposval(as(x))) && is_nez(x);
+else constexpr(integral_real_value<T>) r = False<T>());
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 

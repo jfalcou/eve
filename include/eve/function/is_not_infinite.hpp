@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_INF_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_INF_HPP_INCLUDED
+#ifndef EVE_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
+#define EVE_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 
-#include <eve/function/definition/is_not_inf.hpp>
-#include <eve/module/core/function/generic/is_not_inf.hpp>
+#include <eve/function/definition/is_not_infinite.hpp>
+#include <eve/module/core/function/generic/is_not_infinite.hpp>
 
 #endif

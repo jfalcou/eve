@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INF_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INF_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INFINITE_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_NOT_INFINITE_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_infinite.hpp>
@@ -20,7 +20,7 @@
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_inf_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE constexpr as_logical_t<T> is_not_infinite_(EVE_SUPPORTS(cpu_)
                                                        , T const &a) noexcept
   {
     return !eve::is_infinite(a);

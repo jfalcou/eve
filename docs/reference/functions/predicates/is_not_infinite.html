@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::is_infinite`
+                           `eve::is_not_infinite`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/is_infinite.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/is_not_infinite.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ is_infinite = /*unspecified*/;
+  inline constexpr /*unspecified*/ is_not_infinite = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the computation of the is_infinite logical value.
+Function object representing the computation of the is_not_infinite logical value.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the  [element-wise](../../../glossary.html#element-wise_) is_infinite operation on its parameter.
+Performs the  [element-wise](../../../glossary.html#element-wise_) is_not_infinite operation on its parameter.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ The call:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-logical<T> r = is_infinite(x);
+logical<T> r = is_not_infinite(x);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
@@ -57,19 +57,19 @@ computation is semantically  equivalent to:
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 logical<T> r;
-if   constexpr(floating_real_value<T>) r = is_equal(abs(x), Inf<T>());
+if   constexpr(floating_real_value<T>) r = is_not_equal(abs(x), Inf<T>());
 else constexpr(integral_real_value<T>) r = False<T>());
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 </script>
 
-  (insert ../../src/is_infinite.src.html here)
+  (insert ../../src/is_not_infinite.src.html here)
 
-  (insert ../../out/is_infinite.out.html here)
+  (insert ../../out/is_not_infinite.out.html here)
 
 See Also
 ====================================================================================================
-[eve::abs](./abs.html), [eve::is_equal](./is_equal.html).
+[eve::abs](./abs.html), [eve::is_not_equal](./is_not_equal.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

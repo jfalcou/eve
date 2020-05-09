@@ -8,20 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_IS_NOT_INF_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_IS_NOT_INF_HPP_INCLUDED
+#ifndef EVE_FUNCTION_DEFINITION_IS_NOT_INFINITE_HPP_INCLUDED
+#define EVE_FUNCTION_DEFINITION_IS_NOT_INFINITE_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  namespace tag { struct is_not_inf_; }
+  namespace tag { struct is_not_infinite_; }
 
   template<>
-  struct supports_conditionnal<tag::is_not_inf_> : std::false_type
+  struct supports_conditionnal<tag::is_not_infinite_> : std::false_type
   {};
 
-  EVE_MAKE_CALLABLE(is_not_inf_, is_not_inf);
+  EVE_MAKE_CALLABLE(is_not_infinite_, is_not_infinite);
 }
 
 #endif
