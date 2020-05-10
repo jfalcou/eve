@@ -37,8 +37,6 @@ TTS_CASE_TPL("Check pedantic next return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::pedantic_(eve::next) one parameter behavior", EVE_TYPE)
 {
-  using v_t   = eve::element_type_t<T>;
-
   if constexpr(eve::integral_value<T>)
   {
     TTS_EQUAL(eve::pedantic_(eve::next)(T(0)), T(1));

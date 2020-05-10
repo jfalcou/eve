@@ -19,21 +19,24 @@
 
 TTS_CASE_TPL("Check eve::bit_select return type", EVE_TYPE)
 {
-   using i_t = eve::detail::as_integer_t<T, unsigned>;
-  TTS_EXPR_IS(eve::bit_select(T(),T() ,T() ), T);
-  TTS_EXPR_IS(eve::bit_select(T(),T() ,v_t()), T);
-  TTS_EXPR_IS(eve::bit_select(T(),v_t(),T() ), T);
-  TTS_EXPR_IS(eve::bit_select( i_t(),T() ,T() ), T);
-  TTS_EXPR_IS(eve::bit_select( i_t(),T() ,v_t()), T);
-  TTS_EXPR_IS(eve::bit_select( i_t(),v_t(),T() ), T);
+  using v_t = eve::element_type_t<T>;
+  using i_t = eve::detail::as_integer_t<T, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),T() ,T() ), T);
-  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),T() ,v_t()), T);
-  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),v_t(),T() ), T);
+  TTS_EXPR_IS(eve::bit_select(  T() ,   T() ,   T() ), T);
+  TTS_EXPR_IS(eve::bit_select(  T() ,   T() , v_t() ), T);
+  TTS_EXPR_IS(eve::bit_select(  T() , v_t() ,   T() ), T);
+  TTS_EXPR_IS(eve::bit_select(i_t() ,   T() ,   T() ), T);
+  TTS_EXPR_IS(eve::bit_select(i_t() ,   T() , v_t() ), T);
+  TTS_EXPR_IS(eve::bit_select(i_t() , v_t() ,   T() ), T);
+
+  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),  T() ,   T() ), T);
+  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),  T() , v_t() ), T);
+  TTS_EXPR_IS(eve::bit_select(eve::logical<T>(),v_t() ,   T() ), T);
 }
 
 TTS_CASE_TPL( "Check eve::bit_select behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
   using i_t  = eve::detail::as_integer_t<T, unsigned>;
   using vi_t = eve::detail::as_integer_t<v_t, unsigned>;
   using v_t =  eve::element_type_t<T>;
