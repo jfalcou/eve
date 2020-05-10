@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::nextafter`
+                           `eve::average`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/nextafter.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/average.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ nextafter = /*unspecified*/;
+  inline constexpr /*unspecified*/ average = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the nextaftert operation.
+Function object representing the mid-point operation.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) nextafter `x` in direction of `y` .
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic average of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,11 +45,20 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-computes [`element-wise`](../../../glossary.html#element-wise), representable value next to `x` in the direction of `y`.
+Half the sum of `x` and `y`. No overflow occurs.
 
-  (insert ../../src/nextafter.src.html here)
+ The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
-  (insert ../../out/nextafter.out.html here)
+!!! WARNING
+    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
+    to be less than or equal to 0.5 of the average floating value, but may differ
+    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
+    simd intrinsics to perform the operation, the scalar results may differ by one unit from
+    simd ones and is system dependent.
+
+  (insert ../../src/average.src.html here)
+
+  (insert ../../out/average.out.html here)
 
 
 <!-- End of Document -->

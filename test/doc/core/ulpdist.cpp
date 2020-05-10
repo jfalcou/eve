@@ -1,30 +1,26 @@
 #include <eve/function/ulpdist.hpp>
+#include <eve/constant/eps.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/tags.hpp>
-#include <iostream>
-
-using wide_it = eve::wide<int16_t, eve::fixed<4>>;
+#include <iomanip>
 
 int main()
 {
-  wide_it pf = {0, 1, -1, -eve::Valmax<int16_t>()};
-  wide_it qf = {1, -1, 0, eve::Valmax<int16_t>()};
+  using w_t = eve::wide<float, eve::fixed<4>>;
+  w_t pi = {0.0f,                         1.0f, 1.0f-eve::Eps<float>()/2, 1.0f              };
+  w_t qi = {eve::Smallestposval<float>(), 2.0f, 1.0f,                     eve::Inf<float>() };
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf =                          " << pf << '\n'
-            << "<- qf =                          " << qf << '\n'
-            << "-> eve::ulpdist(pf, qf) =            " << eve::ulpdist(pf, qf) << '\n'
-            << '\n';
+  std::cout << "---- simd" << std::setprecision(9) << '\n'
+            << " <- pi              = " << pi << '\n'
+            << " <- qi              = " << qi << '\n'
+            << " -> ulpdist(pi, qi) = " << eve::ulpdist(pi, qi) << '\n';
 
-  int16_t xf = -eve::Valmax<int16_t>();
-  int16_t yf = eve::Valmax<int16_t>();
+  std::uint32_t xi = 3, yi = 7;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                          " << xf << '\n'
-            << "<- yf =                          " << yf << '\n'
-            << "-> eve::ulpdist(xf, yf) =            " << eve::ulpdist(xf, yf) << '\n'
-            << '\n';
+            << " xi                 = " << xi << '\n'
+            << " yi                 = " << yi << '\n'
+            << " -> ulpdist(xi, yi) = " << eve::ulpdist(xi, yi) << '\n';
   return 0;
 }
