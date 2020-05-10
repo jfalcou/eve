@@ -8,38 +8,41 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/function/gamma.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::gamma return type") { TTS_EXPR_IS(eve::gamma(EVE_TYPE(0)), (EVE_TYPE)); }
-
-TTS_CASE("Check eve::gamma behavior")
+TTS_CASE_TPL("Check eve::gamma return type", EVE_TYPE)
 {
-  using eve::gamma;
+  TTS_EXPR_IS(eve::gamma(T(0)), T);
+}
+
+TTS_CASE_TPL("Check eve::gamma behavior", EVE_TYPE)
+{
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(gamma(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(gamma(eve::Inf<EVE_TYPE>()), (eve::Inf<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(gamma(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::gamma(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::gamma(eve::Inf<T>())  , eve::Inf<T>() );
+    TTS_IEEE_EQUAL(eve::gamma(eve::Minf<T>()) , eve::Nan<T>() );
   }
-  TTS_ULP_EQUAL(gamma(eve::Zero<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(gamma(eve::Mzero<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(gamma(eve::Half<EVE_TYPE>()), EVE_TYPE(std::tgamma(eve::Half<EVE_VALUE>())), 0.5);
-  TTS_ULP_EQUAL(gamma(EVE_TYPE(-35)), EVE_TYPE(std::tgamma(EVE_VALUE(-35))), 0.5);
-  TTS_ULP_EQUAL(gamma(EVE_TYPE(1)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(gamma(EVE_TYPE(2)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(gamma(EVE_TYPE(3)), EVE_TYPE(2), 0);
-  TTS_ULP_EQUAL(gamma(EVE_TYPE(5)), EVE_TYPE(24), 0);
+
+  TTS_ULP_EQUAL(eve::gamma(T(0.5)), T(std::tgamma(v_t(0.5))), 0.5);
+  TTS_ULP_EQUAL(eve::gamma(T(-35)), T(std::tgamma(v_t(-35))), 0.5);
+
+  TTS_IEEE_EQUAL(eve::gamma(T( 0 )), eve::Inf<T>()  );
+  TTS_IEEE_EQUAL(eve::gamma(T(-0.)), eve::Minf<T>() );
+  TTS_IEEE_EQUAL(eve::gamma(T( 1 )), T(1)           );
+  TTS_IEEE_EQUAL(eve::gamma(T( 2 )), T(1)           );
+  TTS_IEEE_EQUAL(eve::gamma(T( 3 )), T(2)           );
+  TTS_IEEE_EQUAL(eve::gamma(T( 5 )), T(24)          );
 }
