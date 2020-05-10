@@ -9,18 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/countl_zero.hpp>
-
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check countl_zero return type") { TTS_EXPR_IS(eve::countl_zero(EVE_TYPE()), (EVE_TYPE)); }
-
-TTS_CASE("Check eve::countl_zero behavior")
+TTS_CASE_TPL("Check countl_zero return type", EVE_TYPE)
 {
-  TTS_EQUAL(eve::countl_zero(EVE_TYPE(0)), EVE_TYPE(sizeof(EVE_VALUE) * 8));
-  TTS_EQUAL(eve::countl_zero(EVE_TYPE(3)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 2));
-  TTS_EQUAL(eve::countl_zero(EVE_TYPE(5)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 3));
-  TTS_EQUAL(eve::countl_zero(EVE_TYPE(6)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 3));
-  TTS_EQUAL(eve::countl_zero(EVE_TYPE(9)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 4));
+  TTS_EXPR_IS(eve::countl_zero(T()), T);
+}
+
+TTS_CASE_TPL("Check eve::countl_zero behavior", EVE_TYPE)
+{
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EQUAL(eve::countl_zero(T(0)), T(sizeof(v_t) * 8     ));
+  TTS_EQUAL(eve::countl_zero(T(3)), T(sizeof(v_t) * 8 - 2 ));
+  TTS_EQUAL(eve::countl_zero(T(5)), T(sizeof(v_t) * 8 - 3 ));
+  TTS_EQUAL(eve::countl_zero(T(6)), T(sizeof(v_t) * 8 - 3 ));
+  TTS_EQUAL(eve::countl_zero(T(9)), T(sizeof(v_t) * 8 - 4 ));
 }

@@ -9,18 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/countr_one.hpp>
-
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check countr_one return type") { TTS_EXPR_IS(eve::countr_one(EVE_TYPE()), (EVE_TYPE)); }
-
-TTS_CASE("Check eve::countr_one behavior")
+TTS_CASE_TPL("Check countr_one return type", EVE_TYPE)
 {
-  TTS_EQUAL(eve::countr_one(EVE_TYPE(0)), EVE_TYPE(0));
-  TTS_EQUAL(eve::countr_one(EVE_TYPE(3)), EVE_TYPE(2));
-  TTS_EQUAL(eve::countr_one(EVE_TYPE(8)), EVE_TYPE(0));
-  TTS_EQUAL(eve::countr_one(EVE_TYPE(127)), EVE_TYPE(7));
-  TTS_EQUAL(eve::countr_one(EVE_TYPE(9)), EVE_TYPE(1));
+  TTS_EXPR_IS(eve::countr_one(T()), T);
+}
+
+TTS_CASE_TPL("Check eve::countr_one behavior", EVE_TYPE)
+{
+  TTS_EQUAL(eve::countr_one(T(0))   , T(0));
+  TTS_EQUAL(eve::countr_one(T(3))   , T(2));
+  TTS_EQUAL(eve::countr_one(T(8))   , T(0));
+  TTS_EQUAL(eve::countr_one(T(127)) , T(7));
+  TTS_EQUAL(eve::countr_one(T(9))   , T(1));
 }
