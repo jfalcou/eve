@@ -139,7 +139,7 @@ namespace eve::detail
         return restricted_(cot)(a0);
       else if( all(x <= Pio_2(as(x))) )
         return small_(cot)(a0);
-      else if( all(x <= Rempio2_limit(eve::medium_type(), T())) )
+      else if( all(x <= Rempio2_limit(eve::medium_type(), as(a0))) )
         return medium_(cot)(a0);
       else
         return big_(cot)(a0);

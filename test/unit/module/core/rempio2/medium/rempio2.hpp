@@ -10,21 +10,53 @@
 //==================================================================================================
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <cmath>
-#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 
-TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium_(eve::rempio2) behavior", EVE_TYPE)
 {
+  {
+    auto z = -eve::detail::Rempio2_limit(eve::medium_type(), eve::as<T>());
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::medium_(eve::rempio2)(z);
 
-  v_t z = v_t( 0.05);
- for(int i=0; i <10 ; ++i)
- {
-   auto [n, x, dx] = eve::medium_(eve::rempio2)(T(z));
-   auto [nn, xx, dxx] = eve::rem_pio2(z);
-   TTS_ULP_EQUAL(x ,  T(xx)   , 0.5 );
-   TTS_ULP_EQUAL(n ,  T(nn)   , 0.5 );
-   z*= v_t(10);
- }
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto z = -eve::detail::Rempio2_limit(eve::medium_type(), eve::as<T>())/2;
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::medium_(eve::rempio2)(z);
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto [rn, rx, rdx]  = eve::rem_pio2(T(0));
+    auto [ n,  x,  dx]  = eve::medium_(eve::rempio2)(T(0));
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto z = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<T>())/2;
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::medium_(eve::rempio2)(z);
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto z = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<T>());
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::medium_(eve::rempio2)(z);
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
 }

@@ -17,6 +17,7 @@
 #include <eve/constant/twoopi.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/load.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/module/core/detail/scalar/ieee_754_rem_pio2.hpp>
 
@@ -39,9 +40,9 @@ namespace eve::detail
     alignas(T::static_alignment) std::array<elt_t, size> tyr;
     for( uint32_t i = 0; i != size; ++i )
     { std::tie(tmp[i], txr[i], tyr[i]) = eve::rem_pio2(a0[i]); }
-    return std::make_tuple(load(eve::as_aligned<T::static_alignment>(&tmp[0]), eve::as_<T>()),
-                           load(eve::as_aligned<T::static_alignment>(&txr[0]), eve::as_<T>()),
-                           load(eve::as_aligned<T::static_alignment>(&tyr[0]), eve::as_<T>()));
+    return std::make_tuple(eve::load(eve::as_aligned<T::static_alignment>(&tmp[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<T::static_alignment>(&txr[0]), eve::as_<T>()),
+                           eve::load(eve::as_aligned<T::static_alignment>(&tyr[0]), eve::as_<T>()));
   }
 
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), double const &a0) noexcept

@@ -213,6 +213,7 @@ make_all_units(ROOT core NAME reduce_fast           ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME reduce_large          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME reduce_medium         ARCH scalar simd TYPES ${real_types}    )
 #make_all_units(ROOT core NAME rem                   ARCH scalar simd TYPES ${signed_types}  )
+make_all_units(ROOT core NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME rotl                  ARCH scalar simd TYPES ${uint_types}    )
 make_all_units(ROOT core NAME rotr                  ARCH scalar simd TYPES ${uint_types}    )
 make_all_units(ROOT core NAME round                 ARCH scalar simd TYPES ${all_types}     )

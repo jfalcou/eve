@@ -8,27 +8,57 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/function/rem_pio2.hpp>
 #include <eve/function/rempio2.hpp>
-
-#include <cmath>
+#include <eve/function/rem_pio2.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <utility>
 
-TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
+TTS_CASE_TPL("Check eve::big_(eve::rempio2) behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
+  // TODO: INVESTIGATE
+  // {
+  //   auto z = -eve::detail::Rempio2_limit(eve::big_type(), eve::as<T>());
+  //   auto [rn, rx, rdx]  = eve::rem_pio2(z);
+  //   auto [ n,  x,  dx]  = eve::big_(eve::rempio2)(z);
 
-  v_t z = v_t( 0.05);
-  for(int i=0; i <10 ; ++i)
+  //   TTS_ULP_EQUAL(x, rx, 0.5 );
+  //   TTS_ULP_EQUAL(n, rn, 0.5 );
+  // }
+
+  // TODO: INVESTIGATE
+  // {
+  //   auto z = -eve::detail::Rempio2_limit(eve::big_type(), eve::as<T>())/2;
+  //   auto [rn, rx, rdx]  = eve::rem_pio2(z);
+  //   auto [ n,  x,  dx]  = eve::big_(eve::rempio2)(z);
+
+  //   TTS_ULP_EQUAL(x, rx, 0.5 );
+  //   TTS_ULP_EQUAL(n, rn, 0.5 );
+  // }
+
   {
-    auto [n, x, dx] = eve::big_(eve::rempio2)(T(z));
-    auto [nn, xx, dxx] = eve::rem_pio2(z);
-    TTS_ULP_EQUAL(x ,  T(xx)   , 0.5 );
-    TTS_ULP_EQUAL(n ,  T(nn)   , 0.5 );
-    z*= v_t(10);
+    auto [rn, rx, rdx]  = eve::rem_pio2(T(0));
+    auto [ n,  x,  dx]  = eve::big_(eve::rempio2)(T(0));
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto z = eve::detail::Rempio2_limit(eve::big_type(), eve::as<T>())/2;
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::big_(eve::rempio2)(z);
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
+  }
+
+  {
+    auto z = eve::detail::Rempio2_limit(eve::big_type(), eve::as<T>());
+    auto [rn, rx, rdx]  = eve::rem_pio2(z);
+    auto [ n,  x,  dx]  = eve::big_(eve::rempio2)(z);
+
+    TTS_ULP_EQUAL(x, rx, 0.5 );
+    TTS_ULP_EQUAL(n, rn, 0.5 );
   }
 }

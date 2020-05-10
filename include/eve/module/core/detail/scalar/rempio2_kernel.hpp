@@ -201,10 +201,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
     if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
-    else if (xx < Rempio2_limit(restricted_type(), T())) return std::make_tuple(T(0), xx, T(0));
+    else if (xx < Rempio2_limit(restricted_type(), as(xx))) return std::make_tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {
-      if (xx <= 2000.0f/*Rempio2_limit(medium_type(), T())/1.0e10*/) return rempio2_medium(xx);
+      if (xx <= 2000.0f/*Rempio2_limit(medium_type(), as(xx))/1.0e10*/) return rempio2_medium(xx);
       // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
       //   only 8 new bits are added per entry, making the table 4 times larger.
       constexpr const uint32_t inv_pio4[24] =
