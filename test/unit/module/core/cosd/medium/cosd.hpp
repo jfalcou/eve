@@ -8,44 +8,40 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/function/cosd.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/cosd.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/is_eqz.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::medium_(eve::cosd) return type")
+TTS_CASE_TPL("Check eve::medium_(eve::cosd) return type",EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::medium_(eve::cosd)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::medium_(eve::cosd)(T(0)), T);
 }
 
-TTS_CASE("Check eve::medium_(eve::cosd) behavior")
+TTS_CASE_TPL("Check eve::medium_(eve::cosd) behavior",EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Inf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Inf<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Minf<T>()) , eve::Nan<T>() );
   }
-  auto std_cosd = [](auto e) { return eve::cospi(double(e) / 180); };
 
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(EVE_TYPE(1)), EVE_TYPE(std_cosd(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(EVE_TYPE(-1)), EVE_TYPE(std_cosd(-1.0)), 0.5);
-  TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(EVE_TYPE(0)), (EVE_TYPE(1)));
-  TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-  TTS_ULP_EQUAL(
-      (eve::medium_(eve::cosd)(EVE_TYPE(45.0))), (EVE_TYPE(std_cosd(EVE_VALUE(45.0)))), 0.5);
-  TTS_ULP_EQUAL(
-      (eve::medium_(eve::cosd)(-EVE_TYPE(45.0))), (EVE_TYPE(std_cosd(-EVE_VALUE(45.0)))), 0.5);
-  TTS_ULP_EQUAL((eve::medium_(eve::cosd)(EVE_TYPE(500.0))), EVE_TYPE(std_cosd(500.0)), 2);
-  TTS_ULP_EQUAL((eve::medium_(eve::cosd)(EVE_TYPE(-500.0))), EVE_TYPE(std_cosd(-500.0)), 2);
+  using v_t = eve::element_type_t<T>;
+  auto ref_cosd = [](auto e) { return eve::cospi(double(e) / 180.); };
+
+  TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(T(0   )), T(1));
+  TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(T(-0. )), T(1));
+
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(T(1))      , T(ref_cosd(1.0))        , 0.5 );
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(T(-1))     , T(ref_cosd(-1.0))       , 0.5 );
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(T(45.0))   , T(ref_cosd(v_t(45.0)))  , 0.5 );
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(-T(45.0))  , T(ref_cosd(-v_t(45.0))) , 0.5 );
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(T(500.0))  , T(ref_cosd(500.0))      , 2   );
+  TTS_ULP_EQUAL(eve::medium_(eve::cosd)(T(-500.0)) , T(ref_cosd(-500.0))     , 2   );
 }
