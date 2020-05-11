@@ -8,44 +8,41 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/function/tand.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/tand.hpp>
-#include <eve/function/tanpi.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::medium_(eve::tand) return type")
+TTS_CASE_TPL("Check eve::medium_(eve::tand) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::medium_(eve::tand)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::medium_(eve::tand)(T()), (T));
 }
 
-TTS_CASE("Check eve::medium_(eve::tand) behavior")
+TTS_CASE_TPL("Check eve::medium_(eve::tand) behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Inf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Inf<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Minf<T>()) , eve::Nan<T>() );
   }
-  auto std_tand = [](auto e) { return eve::tanpi(double(e) / 180); };
 
-  TTS_ULP_EQUAL(eve::medium_(eve::tand)(EVE_TYPE(1)), EVE_TYPE(std_tand(1.0)), 3.0);
-  TTS_ULP_EQUAL(eve::medium_(eve::tand)(EVE_TYPE(-1)), EVE_TYPE(std_tand(-1.0)), 3.0);
-  TTS_IEEE_EQUAL(eve::medium_(eve::tand)(EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_IEEE_EQUAL(eve::medium_(eve::tand)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
-  TTS_ULP_EQUAL(
-      (eve::medium_(eve::tand)(EVE_TYPE(45.0))), (EVE_TYPE(std_tand(EVE_VALUE(45.0)))), 3.0);
-  TTS_ULP_EQUAL(
-      (eve::medium_(eve::tand)(-EVE_TYPE(45.0))), (EVE_TYPE(std_tand(-EVE_VALUE(45.0)))), 3.0);
-  TTS_ULP_EQUAL((eve::medium_(eve::tand)(EVE_TYPE(500.0))), EVE_TYPE(std_tand(500.0)), 6.0);
-  TTS_ULP_EQUAL((eve::medium_(eve::tand)(EVE_TYPE(-500.0))), EVE_TYPE(std_tand(-500.0)), 6.0);
+  auto ref_tand = [](auto e) { return eve::tanpi(double(e) / 180); };
+
+  TTS_IEEE_EQUAL(eve::medium_(eve::tand)(T( 0 )) , T(0) );
+  TTS_IEEE_EQUAL(eve::medium_(eve::tand)(T(-0.)) , T(0) );
+
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)( T(  1)) , T(ref_tand(1.0))        , 3 );
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)(-T(  1)) , T(ref_tand(-1.0))       , 3 );
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)( T( 45)) , T(ref_tand(v_t(45.0)))  , 3 );
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)(-T( 45)) , T(ref_tand(-v_t(45.0))) , 3 );
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)( T(500)) , T(ref_tand(500.0))      , 6 );
+  TTS_ULP_EQUAL(eve::medium_(eve::tand)(-T(500)) , T(ref_tand(-500.0))     , 6 );
 }
