@@ -1,31 +1,23 @@
 #include <eve/function/acsch.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide <float, eve::fixed<8>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = { 0.0f, 1.0f, -1.0f, -2.0f
-                , eve::Mindenormal<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
+  wide_ft pf = {1.0f, 2.0f, eve::Inf<float>(), 0.5f)};
 
-  std::cout
-    << "---- simd" << '\n'
-    << "<- pf =                      " << pf << '\n'
-    << "-> eve::acsch(pf) =            " << eve::acsch(pf) << '\n'; 
+  std::cout << "---- simd" << '\n'
+            << "<- pf        = " << pf << '\n'
+            << "-> acsch(pf) = " << eve::acsch(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Nan<float>();
 
-  std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf =                      " << xf << '\n'
-    << "-> eve::acsch(xf) =            " << eve::acsch(xf) << '\n'
-    << "<- yf =                      " << yf << '\n'
-    << "-> eve::acsch(yf) =            " << eve::acsch(yf) << '\n'; 
+  std::cout << "---- scalar" << '\n'
+            << "<- xf        = " << xf << '\n'
+            << "-> acsch(xf) = " << eve::acsch(xf) << '\n';
   return 0;
 }

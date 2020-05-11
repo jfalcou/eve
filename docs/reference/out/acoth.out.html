@@ -1,17 +1,15 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::acoth(pf) =            (nan, inf, -inf, -0.549306, nan, 0, -0, -nan)
+<- pf        = (1, 2, inf, -nan)
+-> acosh(pf) = (0, 1.31696, inf, -nan)
 ---- scalar
-<- xf =                      1
--> eve::acoth(xf) =            inf
-<- yf =                      -nan
--> eve::acoth(yf) =            nan
+<- xf        = 1
+-> acosh(xf) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
