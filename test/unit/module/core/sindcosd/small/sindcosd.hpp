@@ -8,46 +8,34 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/function/sindcosd.hpp>
 #include <eve/function/cosd.hpp>
 #include <eve/function/sind.hpp>
-#include <eve/function/sindcosd.hpp>
-
-#include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/pi.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <utility>
+#include <tuple>
 
-TTS_CASE("Check sindcosd return type")
+TTS_CASE_TPL("Check eve::small_(eve::sindcosd) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::small_(eve::sindcosd)(EVE_TYPE()), (std::tuple<EVE_TYPE, EVE_TYPE>));
+  TTS_EXPR_IS(eve::small_(eve::sindcosd)(T()), (std::tuple<T, T>));
 }
 
-TTS_CASE("Check (eve::sindcosd behavior")
+TTS_CASE_TPL("Check eve::small_(eve::sindcosd) behavior", EVE_TYPE)
 {
-  static const int N    = 9;
-  EVE_VALUE        x[N] = {eve::Pi<EVE_VALUE>() / 8,
-                    -eve::Pi<EVE_VALUE>() / 8,
-                    eve::Pi<EVE_VALUE>() / 4,
-                    -eve::Pi<EVE_VALUE>() / 4,
-                    3 * eve::Pi<EVE_VALUE>() / 8,
-                    -3 * eve::Pi<EVE_VALUE>() / 8,
-                    eve::Pio_2<EVE_VALUE>(),
-                    -eve::Pi<EVE_VALUE>() / 2,
-                    EVE_VALUE(1.57079632679489655800e+00)};
+  using v_t = eve::element_type_t<T>;
 
-  for( int i = 0; i < N; ++i )
+  auto base = v_t(180);
+
+  v_t x[] = { base/8, -base/8, base/4, -base/4, base/2, -base/2};
+
+  for(auto v : x)
   {
-    auto [p0, p1] = eve::small_(eve::sindcosd)(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, EVE_TYPE(eve::sind(x[i])), 3.5);
-    TTS_ULP_EQUAL(p1, EVE_TYPE(eve::cosd(x[i])), 3.5);
+    auto [sin_, cos_] = eve::small_(eve::sindcosd)(T(v));
+    TTS_ULP_EQUAL(sin_, eve::sind(T(v)), 0.5);
+    TTS_ULP_EQUAL(cos_, eve::cosd(T(v)), 0.5);
   }
+
 }

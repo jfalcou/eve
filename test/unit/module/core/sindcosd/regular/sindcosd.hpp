@@ -8,54 +8,39 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/function/sindcosd.hpp>
 #include <eve/function/cosd.hpp>
 #include <eve/function/sind.hpp>
-#include <eve/function/sindcosd.hpp>
-
-#include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/pi.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <utility>
+#include <tuple>
 
-TTS_CASE("Check sindcosd return type")
+TTS_CASE_TPL("Check eve::sindcosd return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::sindcosd(EVE_TYPE())), (std::tuple<EVE_TYPE, EVE_TYPE>));
+  TTS_EXPR_IS(eve::sindcosd(T()), (std::tuple<T, T>));
 }
 
-TTS_CASE("Check (eve::sindcosd behavior")
+TTS_CASE_TPL("Check eve::sindcosd behavior", EVE_TYPE)
 {
-  static const int N    = 16;
-  EVE_VALUE        x[N] = {eve::Pi<EVE_VALUE>() / 8,
-                    -eve::Pi<EVE_VALUE>() / 8,
-                    eve::Pi<EVE_VALUE>() / 4,
-                    -eve::Pi<EVE_VALUE>() / 4,
-                    EVE_VALUE(1),
-                    EVE_VALUE(-1),
-                    EVE_VALUE(10),
-                    EVE_VALUE(-10),
-                    EVE_VALUE(1000000),
-                    EVE_VALUE(-1000000),
-                    EVE_VALUE(1000000000),
-                    EVE_VALUE(-1000000000),
-                    eve::Valmax<EVE_VALUE>(),
-                    eve::Valmin<EVE_VALUE>(),
-                    eve::Valmax<EVE_VALUE>() / 100000,
-                    eve::Valmin<EVE_VALUE>() / 100000};
+  using v_t = eve::element_type_t<T>;
 
-  for( int i = 0; i < N; ++i )
+  auto base = v_t(180);
+  auto vmax = eve::Valmax<v_t>();
+  auto vmin = eve::Valmin<v_t>();
+
+  v_t x[] = { base/8, -base/8, base/4, -base/4
+            , base, -base, 10*base, -10*base
+            , v_t(1000000), v_t(-1000000), v_t(1000000000), v_t(-1000000000)
+            , vmax, vmin, vmax/10000, vmin/10000
+            };
+
+  for(auto v : x)
   {
-    auto [p0, p1] = eve::sindcosd(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, EVE_TYPE(eve::sind(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, EVE_TYPE(eve::cosd(x[i])), 0.5);
-    TTS_ULP_EQUAL(p0, EVE_TYPE(eve::sind(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, EVE_TYPE(eve::cosd(x[i])), 0.5);
+    auto [sin_, cos_] = eve::sindcosd(T(v));
+    TTS_ULP_EQUAL(sin_, eve::sind(T(v)), 0.5);
+    TTS_ULP_EQUAL(cos_, eve::cosd(T(v)), 0.5);
   }
 }

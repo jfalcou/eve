@@ -8,40 +8,44 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/nan.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/function/sindcosd.hpp>
 #include <eve/function/cosd.hpp>
 #include <eve/function/sind.hpp>
-#include <eve/function/sindcosd.hpp>
-
-#include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/pi.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <utility>
+#include <tuple>
 
-TTS_CASE("Check sindcosd  return type")
+TTS_CASE_TPL("Check eve::restricted_(eve::sindcosd) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::restricted_(eve::sindcosd)(EVE_TYPE())), (std::tuple<EVE_TYPE, EVE_TYPE>));
+  TTS_EXPR_IS(eve::restricted_(eve::sindcosd)(T()), (std::tuple<T, T>));
 }
 
-TTS_CASE("Check (eve::sindcosd behavior")
+TTS_CASE_TPL("Check eve::restricted_(eve::sindcosd) behavior", EVE_TYPE)
 {
-  static const int N    = 6;
-  const EVE_VALUE  _180 = EVE_VALUE(180);
-  EVE_VALUE        x[N] = {_180 / 8, -_180 / 8, _180 / 4, -_180 / 4, _180, -_180};
+  using v_t = eve::element_type_t<T>;
 
-  for( int i = 0; i < 4; ++i )
+  auto base = v_t(180);
+
+  v_t x[] = { base/8, -base/8, base/4, -base/4};
+
+  for(auto v : x)
   {
-    auto [p0, p1] = eve::restricted_(eve::sindcosd)(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, EVE_TYPE(eve::restricted_(eve::sind)(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, EVE_TYPE(eve::restricted_(eve::cosd)(x[i])), 0.5);
+    auto [sin_, cos_] = eve::restricted_(eve::sindcosd)(T(v));
+    TTS_ULP_EQUAL(sin_, eve::sind(T(v)), 0.5);
+    TTS_ULP_EQUAL(cos_, eve::cosd(T(v)), 0.5);
   }
-  for( int i = 4; i < 6; ++i )
   {
-    auto [p0, p1] = eve::restricted_(eve::sindcosd)(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, eve::Nan<EVE_TYPE>(), 0.5);
-    TTS_ULP_EQUAL(p1, eve::Nan<EVE_TYPE>(), 0.5);
+    auto [sin_, cos_] = eve::restricted_(eve::sindcosd)(T(base));
+    TTS_IEEE_EQUAL(sin_, eve::Nan<T>());
+    TTS_IEEE_EQUAL(cos_, eve::Nan<T>());
+  }
+
+  {
+    auto [sin_, cos_] = eve::restricted_(eve::sindcosd)(T(-base));
+    TTS_IEEE_EQUAL(sin_, eve::Nan<T>());
+    TTS_IEEE_EQUAL(cos_, eve::Nan<T>());
   }
 }
