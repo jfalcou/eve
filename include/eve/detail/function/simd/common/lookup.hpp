@@ -14,6 +14,7 @@
 #include <eve/concept/stdconcepts.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/slice.hpp>
 
 namespace eve::detail
 {

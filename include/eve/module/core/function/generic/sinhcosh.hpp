@@ -79,7 +79,10 @@ namespace eve::detail
         return std::make_tuple(s, c);
       }
     }
-    else return apply_over2(sinhcosh, a0);
+    else
+    {
+      return apply_over2(sinhcosh, a0);
+    }
   }
 }
 

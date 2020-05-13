@@ -58,7 +58,8 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), logical<wide<T, N, ABI>> const &value, logical<T> *ptr) noexcept
   {
-    store(bit_cast(value, as_<wide<T, N, ABI>> {}), (T *)(ptr));
+    auto raw_data = bit_cast(value, as_<wide<T, N, ABI>> {});
+    store(raw_data, (T *)(ptr));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -89,7 +90,8 @@ namespace eve::detail
                               aligned_ptr<logical<T>, N>      ptr) noexcept
       requires(logical<wide<T, S, ABI>>::static_alignment <= N)
   {
-    store(value, ptr.get());
+    auto raw_data = bit_cast(value, as_<wide<T, S, ABI>> {});
+    store(raw_data, (T *)(ptr.get()));
   }
 }
 

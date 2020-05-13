@@ -18,6 +18,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/logical_and.hpp>
 #include <eve/function/regular.hpp>
 #include <eve/function/saturated.hpp>

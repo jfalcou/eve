@@ -22,6 +22,7 @@
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/logical_and.hpp>
+#include <eve/function/saturate.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/trunc.hpp>
 

@@ -14,6 +14,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
+#include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
@@ -109,9 +110,9 @@ namespace eve::detail
 
     auto impl = [&](auto... I)
     {
-      static constexpr auto sz = count_v<w_t>;
+      static constexpr auto sz = count_v<element_type_t<w_t>>;
 
-      if constexpr( (sz != 0) && scalar_value<w_t> )
+      if constexpr( sz != 0 )
       {
         return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
       }

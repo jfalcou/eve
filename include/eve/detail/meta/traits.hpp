@@ -11,6 +11,7 @@
 #ifndef EVE_DETAIL_META_TRAITS_HPP_INCLUDED
 #define EVE_DETAIL_META_TRAITS_HPP_INCLUDED
 
+#include <eve/concept/rebindable.hpp>
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -263,8 +264,8 @@ namespace eve::detail
   struct count : std::integral_constant<std::size_t,0>
   {};
 
-  template<template<class...> class W, typename... T>
-  struct count<W<T...>> : std::integral_constant<std::size_t,sizeof...(T)>
+  template<typename T> requires( rebindable<T> )
+  struct count<T> : std::tuple_size<T>
   {};
 
   template<typename T>
