@@ -8,40 +8,38 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/function/cscd.hpp>
+#include <eve/function/cscpi.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/csc.hpp>
-#include <eve/function/cscd.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::restricted_(eve::cscd) return type")
+TTS_CASE_TPL("Check eve::restricted_(eve::cscd) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::cscd)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::restricted_(eve::cscd)(T()), T);
 }
 
-TTS_CASE("Check eve::eve::restricted_(eve::cscd) behavior")
+TTS_CASE_TPL("Check eve::restricted_(eve::cscd) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Inf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Inf<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Minf<T>()) , eve::Nan<T>() );
   }
-  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(EVE_TYPE(90)), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(EVE_TYPE(-90)), eve::Nan<EVE_TYPE>(), 0.5);
-  TTS_IEEE_EQUAL((eve::restricted_(eve::cscd)(EVE_TYPE(0))), (eve::Inf<EVE_TYPE>()));
-  TTS_IEEE_EQUAL((eve::restricted_(eve::cscd)(eve::Mzero<EVE_TYPE>())), (eve::Minf<EVE_TYPE>()));
-  TTS_ULP_EQUAL((eve::restricted_(eve::cscd)(EVE_TYPE(45))),
-                (EVE_TYPE(eve::csc(eve::Pio_4<EVE_VALUE>()))),
-                0.5);
-  TTS_ULP_EQUAL((eve::restricted_(eve::cscd)(-EVE_TYPE(45))),
-                (EVE_TYPE(eve::csc(-eve::Pio_4<EVE_VALUE>()))),
-                0.5);
+
+  auto ref_cscd = [](auto e) { return eve::cscpi(double(e) / 180); };
+
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(  0 )) , eve::Inf<T>() );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(- 0.)) , eve::Minf<T>());
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)( T(90) ) , eve::Nan<T>() );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(-T(90) ) , eve::Nan<T>() );
+
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)( T(1)  ) , T(ref_cscd(1.0))        , 3);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(-T(1)  ) , T(ref_cscd(-1.0))       , 3);
 }
