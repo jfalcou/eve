@@ -8,40 +8,42 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/exp2.hpp>
-#include <eve/function/frexp.hpp>
-#include <eve/function/is_eqz.hpp>
 #include <eve/function/secd.hpp>
 #include <eve/function/secpi.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check _(eve::secd) behavior")
+TTS_CASE_TPL("Check eve::secd return type", EVE_TYPE)
 {
+  TTS_EXPR_IS(eve::secd(T()), T);
+}
+
+TTS_CASE_TPL("Check eve::secd behavior", EVE_TYPE)
+{
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::secd)(eve::Nan<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL((eve::secd)(eve::Inf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
-    TTS_IEEE_EQUAL((eve::secd)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::secd(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::secd(eve::Inf<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::secd(eve::Minf<T>()) , eve::Nan<T>() );
   }
-  auto std_secd = [](auto e) { return eve::secpi(double(e) / 180); };
 
-  TTS_ULP_EQUAL((eve::secd)(EVE_TYPE(1)), EVE_TYPE(std_secd(1.0)), 3);
-  TTS_ULP_EQUAL((eve::secd)(EVE_TYPE(-1)), EVE_TYPE(std_secd(-1.0)), 3);
-  TTS_IEEE_EQUAL((eve::secd)(EVE_TYPE(0)), (EVE_TYPE(1)));
-  TTS_IEEE_EQUAL((eve::secd)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-  TTS_ULP_EQUAL(((eve::secd)(EVE_TYPE(45.0))), (EVE_TYPE(std_secd(EVE_VALUE(45.0)))), 3);
-  TTS_ULP_EQUAL(((eve::secd)(-EVE_TYPE(45.0))), (EVE_TYPE(std_secd(-EVE_VALUE(45.0)))), 3);
-  TTS_ULP_EQUAL(((eve::secd)(EVE_TYPE(500.0))), EVE_TYPE(std_secd(500.0)), 3);
-  TTS_ULP_EQUAL(((eve::secd)(EVE_TYPE(-500.0))), EVE_TYPE(std_secd(-500.0)), 3);
+  auto ref_secd = [](auto e) { return eve::secpi(double(e) / 180); };
+
+  TTS_IEEE_EQUAL(eve::secd(T( 0  )) , T(1));
+  TTS_IEEE_EQUAL(eve::secd(T(-0.0)) , T(1));
+
+  TTS_ULP_EQUAL(eve::secd( T(  1)  ) , T(ref_secd(1.0))        , 3);
+  TTS_ULP_EQUAL(eve::secd(-T(  1)  ) , T(ref_secd(-1.0))       , 3);
+  TTS_ULP_EQUAL(eve::secd( T( 45.0)) , T(ref_secd(v_t(45.0)))  , 3);
+  TTS_ULP_EQUAL(eve::secd(-T( 45.0)) , T(ref_secd(-v_t(45.0))) , 3);
+  TTS_ULP_EQUAL(eve::secd( T(500.0)) , T(ref_secd(500.0))      , 3);
+  TTS_ULP_EQUAL(eve::secd(-T(500.0)) , T(ref_secd(-500.0))     , 3);
 }
