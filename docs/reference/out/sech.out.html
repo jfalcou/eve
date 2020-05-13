@@ -1,17 +1,15 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                      (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::sech(pf) =            (1, 0.648054, 0.648054, 0.265802, 1, 0, 0, -nan)
+<- pf       = (1, 0, inf, -nan)
+-> sech(pf) = (0.648054, 1, 0, nan)
 ---- scalar
-<- xf =                      1
--> eve::sech(xf) =            0.648054
-<- yf =                      -1
--> eve::sech(yf) =            0.648054
+<- xf       = 3
+-> sech(xf) = 0.0993279
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

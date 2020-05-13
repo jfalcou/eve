@@ -1,35 +1,23 @@
 #include <eve/function/tanh.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f,
-                1.0f,
-                -1.0f,
-                -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+  wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), eve::Nan<float>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                      " << pf << '\n'
-            << "-> eve::tanh(pf) =            " << eve::tanh(pf) << '\n'; 
+            << "<- pf       = " << pf << '\n'
+            << "-> tanh(pf) = " << eve::tanh(pf) << '\n';
 
-  float xf = 1.0f;
-  float yf = -1.0f;
+  float xf = 3.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                      " << xf << '\n'
-            << "-> eve::tanh(xf) =            " << eve::tanh(xf) << '\n'
-            << "<- yf =                      " << yf << '\n'
-            << "-> eve::tanh(yf) =            " << eve::tanh(yf) << '\n'; 
+            << "<- xf       = " << xf << '\n'
+            << "-> tanh(xf) = " << eve::tanh(xf) << '\n';
   return 0;
 }
