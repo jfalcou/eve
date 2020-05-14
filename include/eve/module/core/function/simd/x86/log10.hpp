@@ -28,6 +28,7 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/frexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nez.hpp>
@@ -80,7 +81,7 @@ namespace eve::detail
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
 
-        auto [x, kk]     = frexp(xx);
+        auto [x, kk]     = eve::frexp(xx);
         auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
         dk += dec[x_lt_sqrthf](kk);
         T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
@@ -137,7 +138,7 @@ namespace eve::detail
           }
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
-        auto [x, kk]     = frexp(xx);
+        auto [x, kk]     = eve::frexp(xx);
         auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
         dk += dec[x_lt_sqrthf](kk);
         T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
