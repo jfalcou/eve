@@ -19,8 +19,13 @@ TTS_CASE( "Check for detection of native ABI")
   TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::wide<double, eve::fixed<32>>>              ));
   TTS_EXPECT_NOT(( eve::has_native_abi_v<eve::logical<eve::wide<double, eve::fixed<32>>>>));
 
+#if defined(EVE_NO_SIMD)
+  TTS_EXPECT_NOT( eve::has_native_abi_v<eve::wide<double>>                );
+  TTS_EXPECT_NOT( eve::has_native_abi_v<eve::logical<eve::wide<double>>>  );
+#else
   TTS_EXPECT( eve::has_native_abi_v<eve::wide<double>>                );
   TTS_EXPECT( eve::has_native_abi_v<eve::logical<eve::wide<double>>>  );
+#endif
 
   TTS_EXPECT( eve::has_native_abi_v<double>                           );
   TTS_EXPECT( eve::has_native_abi_v<eve::logical<double>>             );
@@ -28,8 +33,13 @@ TTS_CASE( "Check for detection of native ABI")
 
 TTS_CASE( "Check for detection of aggregated ABI")
 {
+#if defined(EVE_NO_SIMD)
+  TTS_EXPECT_NOT(( eve::has_aggregated_abi_v<eve::wide<double, eve::fixed<32>>>              ));
+  TTS_EXPECT_NOT(( eve::has_aggregated_abi_v<eve::logical<eve::wide<double, eve::fixed<32>>>>));
+#else
   TTS_EXPECT(( eve::has_aggregated_abi_v<eve::wide<double, eve::fixed<32>>>              ));
   TTS_EXPECT(( eve::has_aggregated_abi_v<eve::logical<eve::wide<double, eve::fixed<32>>>>));
+#endif
 
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::wide<double>>                );
   TTS_EXPECT_NOT( eve::has_aggregated_abi_v<eve::logical<eve::wide<double>>>  );
