@@ -156,7 +156,8 @@ namespace eve::detail
     double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
     double sum(0);
     ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-    auto z = bit_and(zero_lo, x1);
+//    auto z = bit_and(zero_lo, bit_cast(x1, as<ui64_t>())); //TODO why this line  does not compile in the doc test for cos
+    auto z =         zero_lo &bit_cast(x1, as<ui64_t>());
     i32_t k;
     k.hi = int32_t(z >> 32);
     k.lo = int32_t(z & 0x00000000FFFFFFFFULL);

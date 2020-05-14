@@ -1,0 +1,2 @@
+ wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
+               eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>()};

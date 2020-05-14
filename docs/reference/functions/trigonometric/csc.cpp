@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::cospi`
+                           `eve::cot`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/cospi.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/cot.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ cospi = /*unspecified*/;
+  inline constexpr /*unspecified*/ cot = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the  computation of cospi.
+Function object representing the  computation of cot.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs cosine computation with argument in $\pi$ multiples.
+Performs cotine computation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -44,28 +44,27 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in $\pi$ multiples.
+Returns the [element-wise](../../../glossary.html#elment-wise) cotangent of the input.
 
-The call `cospi(x)` is semantically equivalent to $cos(\pi x)$.
 In particular:
 
-   * If the element is $\pm0$, 1 is returned.
+   * If the element is $\pm0$, $\pm\infty$ is returned.
    * If the element is $\pm\infty$, Nan is returned.
    * If the element is a `NaN`, `NaN` is returned.
 
 
 Supported Decorators
 ====================================================================================================
-As all direct trigonometric functions, `cospi` supports the restricted_, small_, medium_ and big_ decorators. Click
+As all direct trigonometric functions, `cot` supports the restricted_, small_, medium_ and big_ decorators. Click
 to see the [properties and rationale](../trigonometric.html)
 
-  (insert ../../src/cospi.src.html here)
+  (insert ../../src/cot.src.html here)
 
-  (insert ../../out/cospi.out.html here)
+  (insert ../../out/cot.out.html here)
 
 See Also
 ====================================================================================================
-[eve::sinpi](sinpi.html), [eve::sincospi](sinpicospi.html), [eve::tanpi](tanpi.html), [eve::cotpi](cotpi.html),.
+[sin](sin.html), [sincot](sincos.html), [tan](tan.html), [cos](cos.html),.
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

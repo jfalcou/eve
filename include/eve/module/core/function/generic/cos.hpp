@@ -97,6 +97,7 @@ namespace eve::detail
         auto se       = bit_xor(sin_eval(z, xr), sign_bit);
         auto ce       = cos_eval(z);
         auto z1       = if_else(n, se, ce);
+//        return z1;
         return if_else(xnlepio2, eve::allbits_, z1);
       }
     }
