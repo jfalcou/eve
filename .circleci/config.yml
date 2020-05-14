@@ -20,7 +20,7 @@ docker_clang: &docker_clang
   docker:
     - image: compilaction/clang-dev:latest
       environment:
-        COMPILER: clang++-9
+        COMPILER: clang++
 docker_ppc64: &docker_ppc64
   docker:
     - image: compilaction/gcc-dev:latest
