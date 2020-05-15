@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::gamma behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::gamma(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  TTS_ULP_EQUAL(eve::gamma(T(0.5)), T(std::tgamma(v_t(0.5))), 0.5);
+  TTS_ULP_EQUAL(eve::gamma(T(0.5)), T(std::tgamma(v_t(0.5))), 1. );
   TTS_ULP_EQUAL(eve::gamma(T(-35)), T(std::tgamma(v_t(-35))), 0.5);
 
   TTS_IEEE_EQUAL(eve::gamma(T( 0 )), eve::Inf<T>()  );
