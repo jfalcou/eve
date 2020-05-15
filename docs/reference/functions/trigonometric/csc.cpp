@@ -34,7 +34,7 @@ Member functions
 template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs cotine computation.
+Performs cosecant computation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -44,13 +44,13 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the [element-wise](../../../glossary.html#elment-wise) cotangent of the input.
+Returns the [element-wise](../../../glossary.html#elment-wise) cosecant of the input.
 
 In particular:
 
    * If the element is $\pm0$, $\pm\infty$ is returned.
    * If the element is $\pm\infty$, Nan is returned.
-   * If the element is a `NaN`, `NaN` is returned.
+   * If the element is a `Nan`, `NaN` is returned.
 
 
 Supported Decorators
@@ -64,7 +64,8 @@ to see the [properties and rationale](../trigonometric.html)
 
 See Also
 ====================================================================================================
-[sin](sin.html), [sincot](sincos.html), [tan](tan.html), [cos](cos.html),.
+[eve::sin](sin.html), [eve::sincos](sincos.html), [eve::tan](tan.html), [eve::cot](cot.html),
+[eve::cos](cos.html), [eve::sec](sec.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

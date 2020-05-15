@@ -15,7 +15,7 @@ These functions provide scalar and SIMD version of the direct trigonometric oper
 Each one is supported with four decorators aside the regular call, which all provides the same accuracy, but in different ranges and this in peculiarly
 important for radian and degree inputs:
 
- * Radian
+ * Radians
 
    The possible decorators are:
 
@@ -34,15 +34,15 @@ important for radian and degree inputs:
     - if $x \in  $             a simplified scheme can be used.
     - for the whole range a quite heavy algorithm is to be used.
 
-   The time ratio between the fastest and the slowest can be of 20.
+      The time ratio between the fastest and the slowest can be of 20.
 
-   If you are not sure of your interval the regular call works and the penalty is the range test that is not much in the medium and big cases,
-   but not neglectable in the restricted and small ones.
+      If you are not sure of your interval the regular call works and the penalty is the range test that is not much in the medium and big cases,
+      but not neglectable in the restricted and small ones.
 
- * Degree
+ * Degrees
 
    For degree the function are computed by multiplying the entry by $\pi/180$ and so the same comments are valid on the same intervals expressed in degrees.
-   Also the multiplication causes a little loss in accuracy.
+   Also the multiplication causes a little loss in accuracy as $\pi$ is not represented exactly.
 
  * $\pi$ multiples
 
@@ -83,15 +83,13 @@ important for radian and degree inputs:
 <span class="mediumskip"></span>
   [`eve::sincos`](trigonometric/sincos.html)
 <span class="mediumskip"></span>
-  [`eve::sincosd`](trigonometric/sincosd.html)
+  [`eve::sindcosd`](trigonometric/sindcosd.html)
 <span class="mediumskip"></span>
   [`eve::sinpicospi`](trigonometric/sinpicospi.html)
 <span class="mediumskip"></span>
   [`eve::tan`](trigonometric/tan.html)
 <span class="mediumskip"></span>
   [`eve::tanpi`](trigonometric/tanpi.html)
-<span class="mediumskip"></span>
-  [`eve::quadrant`](trigonometric/quadrant.html)
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

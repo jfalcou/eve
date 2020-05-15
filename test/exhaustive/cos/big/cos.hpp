@@ -22,5 +22,5 @@ TTS_CASE_TPL("wide random check on cos", EVE_TYPE)
   auto std_cos = tts::vectorize<T>( [](auto e) { return std::cos(double(e)); } );
 
   eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-  TTS_RANGE_CHECK(p, std_cos, eve::big_(eve::cos));
+  TTS_ULP_RANGE_CHECK(p, std_cos, eve::big_(eve::cos), 0.5);
 }

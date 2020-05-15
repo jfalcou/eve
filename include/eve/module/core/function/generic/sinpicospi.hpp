@@ -51,8 +51,10 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       if constexpr( scalar_value<T> )
+      {
         if( is_not_finite(a0) )
           return std::make_tuple(Nan<T>(), Nan<T>());
+      }
       T x = abs(a0);
       if constexpr( scalar_value<T> )
       {
@@ -61,8 +63,9 @@ namespace eve::detail
       }
       else
       {
-        auto y = if_else(is_not_finite(x), eve::allbits_, x);
-        x      = y & bit_mask(y <= Maxflint(as(y)));
+        auto invalid = is_not_finite(x);
+        x = if_else(x > Maxflint(as(x)), eve::zero_, x);
+        x = if_else(invalid, eve::allbits_, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);
