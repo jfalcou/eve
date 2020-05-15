@@ -68,9 +68,9 @@ TTS_CASE_TPL("logical mask conversion", EVE_TYPE)
 
 TTS_CASE_TPL("logical bits conversion", EVE_TYPE)
 {
-  eve::logical<T> bool_t = true;
-  eve::logical<T> bool_f = false;
-  using bits_t              = eve::logical<T>::bits_type;
+  eve::logical<T> bool_t  = true;
+  eve::logical<T> bool_f  = false;
+  using bits_t            = typename eve::logical<T>::bits_type;
 
   TTS_IEEE_EQUAL(bool_t.bits(), eve::Allbits<bits_t>());
   TTS_IEEE_EQUAL(bool_f.bits(), bits_t(0));
