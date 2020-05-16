@@ -6,8 +6,8 @@
   SPDX-License-Identifier: MIT
  */
 //==================================================================================================
-#ifndef SPY_SPY_HPP_INLUDED
-#define SPY_SPY_HPP_INLUDED
+#ifndef SPY_SPY_HPP_INCLUDED
+#define SPY_SPY_HPP_INCLUDED
 #include <iostream>
 namespace spy::detail
 {
@@ -462,7 +462,7 @@ namespace spy
 {
 #if defined(_LIBCPP_VERSION)
   #define SPY_STDLIB_IS_LIBCPP
-  using stdlib_type = detail::stdcpp_t<(_LIBCPP_VERSION/1000)%10,0,_LIBCPP_VERSION%1000,0>;
+  using stdlib_type = detail::libcpp_t<(_LIBCPP_VERSION/1000)%10,0,_LIBCPP_VERSION%1000,0>;
 #elif defined(__GLIBCXX__)
   #define SPY_STDLIB_IS_GLIBCXX
   #define SPY0 (__GLIBCXX__/100)
@@ -499,6 +499,74 @@ namespace spy::literal
   }
 }
 #include <iostream>
+#if !defined(SPY_SIMD_DETECTED) && defined(__AVX512F__)
+#  define SPY_SIMD_IS_X86_AVX512
+#  define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx512_
+#if defined(__AVX512BW__)
+#  define SPY_SIMD_IS_X86_AVX512_BW
+#  define SPY_SIMD_X86_AVX512_SUB 0x0001
+#endif
+#if defined(__AVX512CD__)
+#  define SPY_SIMD_IS_X86_AVX512_CD
+#  define SPY_SIMD_X86_AVX512_SUB 0x0002
+#endif
+#if defined(__AVX512DQ__)
+#  define SPY_SIMD_IS_X86_AVX512_DQ
+#  define SPY_SIMD_X86_AVX512_SUB 0x0004
+#endif
+#if defined(__AVX512ER__)
+#  define SPY_SIMD_IS_X86_AVX512_ER
+#  define SPY_SIMD_X86_AVX512_SUB 0x0008
+#endif
+#if defined(__AVX512IFMA__)
+#  define SPY_SIMD_IS_X86_AVX512_IFMA
+#  define SPY_SIMD_X86_AVX512_SUB 0x0010
+#endif
+#if defined(__AVX512PF__)
+#  define SPY_SIMD_IS_X86_AVX512_PF
+#  define SPY_SIMD_X86_AVX512_SUB 0x0020
+#endif
+#if defined(__AVX512VL__)
+#  define SPY_SIMD_IS_X86_AVX512_VL
+#  define SPY_SIMD_X86_AVX512_SUB 0x0040
+#endif
+#if defined(__AVX512VPOPCNTDQ__)
+#  define SPY_SIMD_IS_X86_AVX512_POPCNTDQ
+#  define SPY_SIMD_X86_AVX512_SUB 0x0080
+#endif
+#if defined(__AVX5124FMAPS__)
+#  define SPY_SIMD_IS_X86_AVX512_4FMAPS
+#  define SPY_SIMD_X86_AVX512_SUB 0x0100
+#endif
+#if defined(__AVX5124VNNIW__)
+#  define SPY_SIMD_IS_X86_AVX512_VNNIW
+#  define SPY_SIMD_X86_AVX512_SUB 0x0200
+#endif
+#if defined(__AVX512VBMI__)
+#  define SPY_SIMD_IS_X86_AVX512_VBMI
+#  define SPY_SIMD_X86_AVX512_SUB 0x0400
+#endif
+#if defined(__AVX512BF16__)
+#  define SPY_SIMD_IS_X86_AVX512_BF16
+#  define SPY_SIMD_X86_AVX512_SUB 0x0800
+#endif
+#if defined(__AVX512BITALG__)
+#  define SPY_SIMD_IS_X86_AVX512_BITALG
+#  define SPY_SIMD_X86_AVX512_SUB 0x1000
+#endif
+#if defined(__AVX512VBMI2__)
+#  define SPY_SIMD_IS_X86_AVX512_VBMI2
+#  define SPY_SIMD_X86_AVX512_SUB 0x2000
+#endif
+#if defined(__AVX512VNNI__)
+#  define SPY_SIMD_IS_X86_AVX512_VNNI
+#  define SPY_SIMD_X86_AVX512_SUB 0x4000
+#endif
+#if defined(__AVX512VP2INTERSECT__)
+#  define SPY_SIMD_IS_X86_AVX512_VP2INTERSECT
+#  define SPY_SIMD_X86_AVX512_SUB 0x8000
+#endif
+#endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__AVX2__)
 #  define SPY_SIMD_IS_X86_AVX2
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx2_
@@ -555,6 +623,105 @@ namespace spy::supports
 #else
   constexpr inline auto xop_ = false;
 #endif
+namespace avx512
+{
+#if defined(__AVX512BW__)
+#  define SPY_SIMD_IS_X86_AVX512_BW
+  constexpr inline auto bw_ = true;
+#else
+  constexpr inline auto bw_ = false;
+#endif
+#if defined(__AVX512CD__)
+#  define SPY_SIMD_IS_X86_AVX512_CD
+  constexpr inline auto cd_ = true;
+#else
+  constexpr inline auto cd_ = false;
+#endif
+#if defined(__AVX512DQ__)
+#  define SPY_SIMD_IS_X86_AVX512_DQ
+  constexpr inline auto dq_ = true;
+#else
+  constexpr inline auto dq_ = false;
+#endif
+#if defined(__AVX512ER__)
+#  define SPY_SIMD_IS_X86_AVX512_ER
+  constexpr inline auto er_ = true;
+#else
+  constexpr inline auto er_ = false;
+#endif
+#if defined(__AVX512IFMA__)
+#  define SPY_SIMD_IS_X86_AVX512_IFMA
+  constexpr inline auto ifma_ = true;
+#else
+  constexpr inline auto ifma_ = false;
+#endif
+#if defined(__AVX512PF__)
+#  define SPY_SIMD_IS_X86_AVX512_PF
+  constexpr inline auto pf_ = true;
+#else
+  constexpr inline auto pf_ = false;
+#endif
+#if defined(__AVX512VL__)
+#  define SPY_SIMD_IS_X86_AVX512_VL
+  constexpr inline auto vl_ = true;
+#else
+  constexpr inline auto vl_ = false;
+#endif
+#if defined(__AVX512VPOPCNTDQ__)
+#  define SPY_SIMD_IS_X86_AVX512_POPCNTDQ
+  constexpr inline auto popcntdq_ = true;
+#else
+  constexpr inline auto popcntdq_ = false;
+#endif
+#if defined(__AVX5124FMAPS__)
+#  define SPY_SIMD_IS_X86_AVX512_4FMAPS
+  constexpr inline auto _4fmaps_ = true;
+#else
+  constexpr inline auto _4fmaps_ = false;
+#endif
+#if defined(__AVX5124VNNIW__)
+#  define SPY_SIMD_IS_X86_AVX512_VNNIW
+  constexpr inline auto vnniw_ = true;
+#else
+  constexpr inline auto vnniw_ = false;
+#endif
+#if defined(__AVX512VBMI__)
+#  define SPY_SIMD_IS_X86_AVX512_VBMI
+  constexpr inline auto vbmi_ = true;
+#else
+  constexpr inline auto vbmi_ = false;
+#endif
+#if defined(__AVX512BF16__)
+#  define SPY_SIMD_IS_X86_AVX512_BF16
+  constexpr inline auto bf16_ = true;
+#else
+  constexpr inline auto bf16_ = false;
+#endif
+#if defined(__AVX512BITALG__)
+#  define SPY_SIMD_IS_X86_AVX512_BITALG
+  constexpr inline auto bitalg_ = true;
+#else
+  constexpr inline auto bitalg_ = false;
+#endif
+#if defined(__AVX512VBMI2__)
+#  define SPY_SIMD_IS_X86_AVX512_VBMI2
+  constexpr inline auto vbmi2_ = true;
+#else
+  constexpr inline auto vbmi2_ = false;
+#endif
+#if defined(__AVX512VNNI__)
+#  define SPY_SIMD_IS_X86_AVX512_VNNI
+  constexpr inline auto vnni_ = true;
+#else
+  constexpr inline auto vnni_ = false;
+#endif
+#if defined(__AVX512VP2INTERSECT__)
+#  define SPY_SIMD_IS_X86_AVX512_VP2INTERSECT
+  constexpr inline auto vpintersect_ = true;
+#else
+  constexpr inline auto vpintersect_ = false;
+#endif
+}
 }
 #if !defined(SPY_SIMD_DETECTED) && (defined(__ARM_NEON__) || defined(_M_ARM) || defined(__aarch64__))
 #  define SPY_SIMD_IS_ARM_NEON
@@ -589,30 +756,31 @@ namespace spy::detail
 {
   enum class simd_isa { undefined_ = -1, x86_ = 1000, ppc_ = 2000, arm_ = 3000 };
   enum class simd_version { undefined_ = -1
-                          , sse1_  = 1110, sse2_  = 1120, sse3_ = 1130, ssse3_ = 1131
-                          , sse41_ = 1141, sse42_ = 1142, avx_  = 1201, avx2_  = 1202
-                          , vmx_   = 2001, vsx_   = 2002
-                          , neon_  = 3001
+                          , sse1_   = 1110, sse2_  = 1120, sse3_ = 1130, ssse3_ = 1131
+                          , sse41_  = 1141, sse42_ = 1142, avx_  = 1201, avx2_  = 1202
+                          , avx512_ = 1300
+                          , vmx_    = 2001, vsx_   = 2002
+                          , neon_   = 3001
                           };
   template<simd_isa ISA = simd_isa::undefined_, simd_version VERSION = simd_version::undefined_>
   struct simd_info
   {
     static constexpr auto isa     = ISA;
     static constexpr auto version = VERSION;
-
     friend std::ostream& operator<<(std::ostream& os, simd_info const&)
     {
-            if constexpr ( VERSION == simd_version::sse1_ ) os << "X86 SSE";
-      else  if constexpr ( VERSION == simd_version::sse2_ ) os << "X86 SSE2";
-      else  if constexpr ( VERSION == simd_version::sse3_ ) os << "X86 SSE3";
-      else  if constexpr ( VERSION == simd_version::ssse3_) os << "X86 SSSE3";
-      else  if constexpr ( VERSION == simd_version::sse41_) os << "X86 SSE4.1";
-      else  if constexpr ( VERSION == simd_version::sse42_) os << "X86 SSE4.2";
-      else  if constexpr ( VERSION == simd_version::avx_  ) os << "X86 AVX";
-      else  if constexpr ( VERSION == simd_version::avx2_ ) os << "X86 AVX2";
-      else  if constexpr ( VERSION == simd_version::vmx_  ) os << "PPC VMX";
-      else  if constexpr ( VERSION == simd_version::vsx_  ) os << "PPC VSX";
-      else  if constexpr ( VERSION == simd_version::neon_ ) os << "ARM NEON";
+            if constexpr ( VERSION == simd_version::sse1_   ) os << "X86 SSE";
+      else  if constexpr ( VERSION == simd_version::sse2_   ) os << "X86 SSE2";
+      else  if constexpr ( VERSION == simd_version::sse3_   ) os << "X86 SSE3";
+      else  if constexpr ( VERSION == simd_version::ssse3_  ) os << "X86 SSSE3";
+      else  if constexpr ( VERSION == simd_version::sse41_  ) os << "X86 SSE4.1";
+      else  if constexpr ( VERSION == simd_version::sse42_  ) os << "X86 SSE4.2";
+      else  if constexpr ( VERSION == simd_version::avx_    ) os << "X86 AVX";
+      else  if constexpr ( VERSION == simd_version::avx2_   ) os << "X86 AVX2";
+      else  if constexpr ( VERSION == simd_version::avx512_ ) os << "X86 AVX512";
+      else  if constexpr ( VERSION == simd_version::vmx_    ) os << "PPC VMX";
+      else  if constexpr ( VERSION == simd_version::vsx_    ) os << "PPC VSX";
+      else  if constexpr ( VERSION == simd_version::neon_   ) os << "ARM NEON";
       else return os << "Undefined SIMD instructions set";
       if constexpr (spy::supports::aarch64_) os << " (with AARCH64 support)";
       if constexpr (spy::supports::fma_)     os << " (with FMA3 support)";
@@ -667,14 +835,15 @@ namespace spy
   template<detail::simd_version V = detail::simd_version::undefined_>
   using x86_simd_info = detail::simd_info<detail::simd_isa::x86_,V>;
   constexpr inline auto x86_simd_ = x86_simd_info<>{};
-  constexpr inline auto sse1_     = x86_simd_info<detail::simd_version::sse1_ >{};
-  constexpr inline auto sse2_     = x86_simd_info<detail::simd_version::sse2_ >{};
-  constexpr inline auto sse3_     = x86_simd_info<detail::simd_version::sse3_ >{};
-  constexpr inline auto ssse3_    = x86_simd_info<detail::simd_version::ssse3_>{};
-  constexpr inline auto sse41_    = x86_simd_info<detail::simd_version::sse41_>{};
-  constexpr inline auto sse42_    = x86_simd_info<detail::simd_version::sse42_>{};
-  constexpr inline auto avx_      = x86_simd_info<detail::simd_version::avx_  >{};
-  constexpr inline auto avx2_     = x86_simd_info<detail::simd_version::avx2_ >{};
+  constexpr inline auto sse1_     = x86_simd_info<detail::simd_version::sse1_   >{};
+  constexpr inline auto sse2_     = x86_simd_info<detail::simd_version::sse2_   >{};
+  constexpr inline auto sse3_     = x86_simd_info<detail::simd_version::sse3_   >{};
+  constexpr inline auto ssse3_    = x86_simd_info<detail::simd_version::ssse3_  >{};
+  constexpr inline auto sse41_    = x86_simd_info<detail::simd_version::sse41_  >{};
+  constexpr inline auto sse42_    = x86_simd_info<detail::simd_version::sse42_  >{};
+  constexpr inline auto avx_      = x86_simd_info<detail::simd_version::avx_    >{};
+  constexpr inline auto avx2_     = x86_simd_info<detail::simd_version::avx2_   >{};
+  constexpr inline auto avx512_   = x86_simd_info<detail::simd_version::avx512_ >{};
   template<detail::simd_version V = detail::simd_version::undefined_>
   using ppc_simd_info = detail::simd_info<detail::simd_isa::ppc_,V>;
   constexpr inline auto ppc_simd_ = ppc_simd_info<>{};
@@ -773,10 +942,9 @@ namespace spy::supports
 {
 #if(MAC_OS_X_VERSION_MIN_REQUIRED >= 1090) || (_POSIX_C_SOURCE >= 200112L) || (_XOPEN_SOURCE >= 600)
 #define SPY_SUPPORTS_POSIX
- constexpr inline auto posix_ = true;
+  constexpr inline auto posix_ = true;
 #else
   constexpr inline auto posix_ = false;
 #endif
 }
-
 #endif
