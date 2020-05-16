@@ -25,62 +25,49 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the  computation of acscd.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Computes the principal value of the arc coseccant of `x`.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [floating real value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Returns the [element-wise](../../../glossary.html#elment-wise) arc cosecant in degrees of the
+input in the range $[-90, 90]$.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = acscd(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+In particular:
 
-is semantically equivalent to:
+   * If the element is $\pm1$, $\pm90$ is returned.
+   * If the element $|x| < 1$, `NaN` is returned.
+   * If the element is $\pm\infty$, $\pm0$ is returned.
+   * If the element is a `Nan`, `NaN` is returned.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+Supported Decorators
+====================================================================================================
+As all direct trigonometric functions, `acscd` supports the restricted_, small_, medium_ and big_ decorators. Click
+to see the [properties and rationale](../trigonometric.html)
 
-  <!--(insert ../../src/acscd.src.html here)-->
+  (insert ../../src/acscd.src.html here)
 
-  <!--(insert ../../out/acscd.out.html here)-->
+  (insert ../../out/acscd.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::acosd](acosd.html), [eve::atand](atand.html), [eve::acotd](acotd.html),
+[eve::asiond](asind.html), [eve::asecd](asecd.html), [eve::atan2d](atan2d.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
