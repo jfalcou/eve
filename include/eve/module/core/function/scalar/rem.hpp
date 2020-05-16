@@ -67,11 +67,8 @@ namespace eve::detail
  ) noexcept
   Requires(T, Vectorizable<T>)
   {
-    return if_else(is_nez(a1), fnma(a1, div(a0, a1, tag_), a0), a0); 
+    return if_else(is_nez(a1), fnma(a1, div(a0, a1, tag_), a0), a0);
   }
-
-
-  
 }
 
 #endif
