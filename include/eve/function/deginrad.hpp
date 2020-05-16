@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_DEGINRAD_HPP_INCLUDED
 
 #include <eve/function/definition/deginrad.hpp>
-#include <eve/module/core/function/scalar/deginrad.hpp>
-#include <eve/module/core/function/simd/deginrad.hpp>
+#include <eve/module/core/function/generic/deginrad.hpp>
 
 #endif

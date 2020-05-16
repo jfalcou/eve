@@ -16,17 +16,20 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::radinpi return type") { TTS_EXPR_IS(eve::radinpi(EVE_TYPE(0)), (EVE_TYPE)); }
-
-TTS_CASE("Check eve::radinpi behavior")
+TTS_CASE_TPL("Check eve::radinpi return type", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<EVE_TYPE>()), (EVE_TYPE(-1)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<EVE_TYPE>() / 3), (EVE_TYPE(-1. / 3.)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_2<EVE_TYPE>()), (EVE_TYPE(-0.5)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_4<EVE_TYPE>()), (EVE_TYPE(-0.25)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi((EVE_TYPE(0))), (EVE_TYPE(0)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_4<EVE_TYPE>()), (EVE_TYPE(0.25)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_2<EVE_TYPE>()), (EVE_TYPE(0.5)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<EVE_TYPE>() / 3), (EVE_TYPE(1. / 3.)), 0.5);
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<EVE_TYPE>()), (EVE_TYPE(1)), 0.5);
+  TTS_EXPR_IS(eve::radinpi(T()), T);
+}
+
+TTS_CASE_TPL("Check eve::radinpi behavior", EVE_TYPE)
+{
+  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<T>())     , -T(1)     , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<T>()/3)   , -T(1./3.) , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_2<T>())  , -T(0.5)   , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_4<T>())  , -T(0.25)  , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(T(0))              ,  T(0)     , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_4<T>())   ,  T(0.25)  , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_2<T>())   ,  T(0.5)   , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<T>() / 3)  ,  T(1./3.) , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<T>())      ,  T(1)     , 0.5 );
 }

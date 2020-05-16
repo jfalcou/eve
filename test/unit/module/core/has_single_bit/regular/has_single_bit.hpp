@@ -9,30 +9,28 @@
 **/
 //==================================================================================================
 #include <eve/function/has_single_bit.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/valmax.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::has_single_bit return type")
+TTS_CASE_TPL("Check eve::has_single_bit return type", EVE_TYPE)
 {
-  using eve::logical;
-
-  TTS_EXPR_IS((eve::has_single_bit(EVE_TYPE() )), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::has_single_bit(T()), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::has_single_bit behavior")
+TTS_CASE_TPL("Check eve::has_single_bit behavior", EVE_TYPE)
 {
-  if constexpr(std::is_signed_v<EVE_TYPE>)
+  if constexpr(std::is_signed_v<T>)
   {
-    TTS_EQUAL(eve::has_single_bit(EVE_TYPE(-1)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::has_single_bit(T(-1)), eve::False<T>());
   }
 
-  TTS_EQUAL(eve::has_single_bit(EVE_TYPE(0)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::has_single_bit(EVE_TYPE(1)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::has_single_bit(EVE_TYPE(3)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::has_single_bit(EVE_TYPE(4)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::has_single_bit(eve::Valmax<EVE_TYPE>()/2+1), eve::True<EVE_TYPE>());
+  TTS_EQUAL(eve::has_single_bit(T(0))                 , eve::False<T>() );
+  TTS_EQUAL(eve::has_single_bit(T(1))                 , eve::True<T>()  );
+  TTS_EQUAL(eve::has_single_bit(T(3))                 , eve::False<T>() );
+  TTS_EQUAL(eve::has_single_bit(T(4))                 , eve::True<T>()  );
+  TTS_EQUAL(eve::has_single_bit(eve::Valmax<T>()/2+1) , eve::True<T>()  );
 }

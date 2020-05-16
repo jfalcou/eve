@@ -13,13 +13,13 @@
 #include <tts/tests/types.hpp>
 #include <numeric>
 
-TTS_CASE("Check eve::gcd return type")
+TTS_CASE_TPL("Check eve::gcd return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::gcd(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::gcd(T(0), T(0)), T);
 }
 
-TTS_CASE("Check eve::gcd behavior")
+TTS_CASE_TPL("Check eve::gcd behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::gcd((EVE_TYPE(22)) , (EVE_TYPE(10)) ) ,  EVE_TYPE(eve::gcd((EVE_TYPE(22)) , (EVE_TYPE(10)))));
-  TTS_EQUAL(eve::gcd((EVE_TYPE(22)) , (EVE_TYPE(-10)) ) ,  EVE_TYPE(eve::gcd((EVE_TYPE(22)) , (EVE_TYPE(10)))));
+  TTS_EQUAL(eve::gcd(T(22), T( 10)) , T(eve::gcd(T(22), T(10))) );
+  TTS_EQUAL(eve::gcd(T(22), T(-10)) , T(eve::gcd(T(22), T(10))) );
 }
