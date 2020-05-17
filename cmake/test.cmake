@@ -79,7 +79,6 @@ function(make_all_units)
 
   # Generate tests for each variant location
   foreach( variant ${locations})
-
     # header to include in autogen tests
     set(header "${variant}/${GEN_TEST_NAME}")
 
@@ -224,6 +223,9 @@ add_dependencies(tests unit)
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(core.unit)
+add_custom_target(core.constant.unit)
+add_custom_target(core.constant.scalar.unit)
+add_custom_target(core.constant.simd.unit)
 add_custom_target(core.scalar.unit)
 add_custom_target(core.simd.unit)
 add_custom_target(random.unit)
@@ -232,6 +234,9 @@ add_custom_target(random.simd.unit)
 add_custom_target(exhaustive.unit)
 add_custom_target(exhaustive.scalar.unit)
 add_custom_target(exhaustive.simd.unit)
+add_dependencies(core.constant.unit core.constant.scalar.unit)
+add_dependencies(core.constant.unit core.constant.simd.unit)
+add_dependencies(core.unit core.constant.unit)
 add_dependencies(core.unit core.scalar.unit)
 add_dependencies(core.unit core.simd.unit)
 add_dependencies(random.unit random.scalar.unit)
