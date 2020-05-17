@@ -59,11 +59,39 @@ namespace eve::detail
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)
+    {
       return l_t(_mm256_cmp_ps(v0, v1, _CMP_EQ_OQ));
+    }
     else if constexpr(std::is_same_v<T, double>)
+    {
       return l_t(_mm256_cmp_pd(v0, v1, _CMP_EQ_OQ));
+    }
     else if constexpr(std::is_integral_v<T>)
-      return aggregate(eve::is_equal, v0, v1);
+    {
+      if constexpr(current_api >= avx2)
+      {
+        if constexpr(sizeof(T) == 1)
+        {
+          return l_t(_mm256_cmpeq_epi8(v1, v0));
+        }
+        else if constexpr(sizeof(T) == 2)
+        {
+          return l_t(_mm256_cmpeq_epi16(v1, v0));
+        }
+        else if constexpr(sizeof(T) == 4)
+        {
+          return l_t(_mm256_cmpeq_epi32(v1, v0));
+        }
+        else if constexpr(sizeof(T) == 8)
+        {
+          return l_t(_mm256_cmpeq_epi64(v1, v0));
+        }
+      }
+      else
+      {
+        return aggregate(eve::is_equal, v0, v1);
+      }
+    }
   }
 }
 
