@@ -441,11 +441,15 @@ namespace eve::detail
         auto [low, high] = v0.slice();
         return _mm256_packs_epi16(low, high);
       }
-      else if constexpr( N::value <= 16 )
+      else if constexpr( N::value == 16 )
       {
         return _mm256_packs_epi16(v0, v0);
       }
-    }
+       else if constexpr( N::value <= 8 )
+      {
+        return convert_(EVE_RETARGET(sse2_), sat_, v0, tgt);
+      }
+   }
     else if constexpr( std::is_same_v<In,
                                       int32_t> && std::is_same_v<Out, int16_t> && (N::value <= 16) )
     {
