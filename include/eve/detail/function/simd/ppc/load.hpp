@@ -28,7 +28,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &tgt,
                             eve::ppc_ const &,
-                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
+                            T const *ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                       vectorizable<T>)
   {
     if constexpr(current_api == spy::vmx_)
@@ -58,7 +58,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
        eve::ppc_ const &      mode,
-       aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
+       aligned_ptr<T const, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                     vectorizable<T>)
   {
     if constexpr(current_api == spy::vmx_)
@@ -83,6 +83,16 @@ namespace eve::detail
         return vec_vsx_ld(0, ptr.get());
       }
     }
+  }
+
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &tgt,
+       eve::ppc_ const &      mode,
+       aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                    vectorizable<T>)
+  {
+    return load(tgt, mode, aligned_ptr<T const, A>(ptr));
   }
 }
 

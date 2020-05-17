@@ -42,6 +42,14 @@ namespace eve::detail
     return load(tgt, mode, ptr.get());
   }
 
+  template<typename T, typename Pack, std::size_t N>
+  EVE_FORCEINLINE Pack load(as_<Pack> const &     tgt,
+                            eve::emulated_ const &mode,
+                            aligned_ptr<T const, N>     ptr) noexcept
+  {
+    return load(tgt, mode, ptr.get());
+  }
+
   template<typename Iterator, typename ABI, typename Pack>
   EVE_FORCEINLINE Pack load(as_<Pack> const &tgt, ABI const &, Iterator b, Iterator) noexcept
   {

@@ -29,7 +29,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
                             eve::neon128_ const &,
-                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
+                            T const*ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                       vectorizable<T>)
   {
 #if defined(__aarch64__)
@@ -60,7 +60,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &,
                             eve::neon64_ const &,
-                            T *ptr) noexcept requires(typename wide<T, N>::storage_type,
+                            T const *ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                       vectorizable<T>)
   {
 #if defined(__aarch64__)
@@ -93,7 +93,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
        eve::neon128_ const &,
-       aligned_ptr<T, Align> p) noexcept requires(typename wide<T, N>::storage_type,
+       aligned_ptr<T const, Align> p) noexcept requires(typename wide<T, N>::storage_type,
                                                   vectorizable<T>)
   {
     auto ptr = p.get();
@@ -138,7 +138,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &,
        eve::neon64_ const &,
-       aligned_ptr<T, Align> p) noexcept requires(typename wide<T, N>::storage_type,
+       aligned_ptr<T const, Align> p) noexcept requires(typename wide<T, N>::storage_type,
                                                   vectorizable<T>)
   {
     auto ptr = p.get();
@@ -178,7 +178,47 @@ namespace eve::detail
       }
     }
   }
+
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &tgt,
+       eve::neon128_ const &,
+       aligned_ptr<T, Align> p) noexcept requires(typename wide<T, N>::storage_type,
+                                                  vectorizable<T>)
+  {
+    return load(tgt, mode, aligned_ptr<T const, A>(p));
+  }
+
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &,
+       eve::neon64_ const &,
+       aligned_ptr<T, Align> p) noexcept requires(typename wide<T, N>::storage_type,
+                                                  vectorizable<T>)
+  {
+    return load(tgt, mode, aligned_ptr<T const, A>(p));
+  }
 #else
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &tgt,
+       eve::neon128_ const &  mode,
+       aligned_ptr<T const, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                    vectorizable<T>)
+  {
+    return load(tgt, mode, ptr.get());
+  }
+
+  template<typename T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
+  load(as_<wide<T, N>> const &tgt,
+       eve::neon64_ const &   mode,
+       aligned_ptr<T const, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
+                                                    vectorizable<T>)
+  {
+    return load(tgt, mode, ptr.get());
+  }
+
   template<typename T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,

@@ -41,6 +41,27 @@ TTS_CASE_TPL("Check ctor from unaligned pointer for wide",
   TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
 }
 
+TTS_CASE_TPL("Check ctor from const unaligned pointer for wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+  std::array<EVE_TYPE, T::value> ref;
+
+  EVE_TYPE k = {};
+  for(auto &e : ref) e = k++;
+
+  EVE_TYPE const* ptr = &ref[ 0 ];
+  wide<EVE_TYPE, T> simd(ptr);
+
+  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+}
+
 TTS_CASE_TPL("Check ctor from aligned pointer for wide",
              fixed<1>,
              fixed<2>,
@@ -58,7 +79,29 @@ TTS_CASE_TPL("Check ctor from aligned pointer for wide",
   EVE_TYPE k = {};
   for(auto &e : ref) e = k++;
 
-  wide<EVE_TYPE, T> simd(as_aligned<algt>(&ref[ 0 ]));
+  wide<EVE_TYPE, T> simd(as_aligned<algt>(&ref[0]));
+  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+}
+
+TTS_CASE_TPL("Check ctor from const aligned pointer for wide",
+             fixed<1>,
+             fixed<2>,
+             fixed<4>,
+             fixed<8>,
+             fixed<16>,
+             fixed<32>,
+             fixed<64>)
+{
+  using eve::wide;
+  constexpr auto algt = wide<EVE_TYPE, T>::static_alignment;
+
+  alignas(algt) std::array<EVE_TYPE, T::value> ref;
+
+  EVE_TYPE k = {};
+  for(auto &e : ref) e = k++;
+
+  EVE_TYPE const* ptr = &ref[0];
+  wide<EVE_TYPE, T> simd(as_aligned<algt>(ptr));
   TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
 }
 
