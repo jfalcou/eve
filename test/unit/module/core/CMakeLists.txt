@@ -111,7 +111,11 @@ make_all_units(ROOT core NAME fnma                  ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME fnms                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME frac                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME frexp                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT core NAME gamma                 ARCH scalar simd TYPES ${real_types}    )
+
+### TEMPORARY MEASURE
+###make_all_units(ROOT core NAME gamma                 ARCH scalar simd TYPES ${real_types}    )
+### TEMPORARY MEASURE
+
 make_all_units(ROOT core NAME gather                ARCH simd        TYPES ${all_types}     )
 make_all_units(ROOT core NAME gcd                   ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME has_single_bit        ARCH scalar simd TYPES ${integral_types})
@@ -205,7 +209,9 @@ make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME popcount              ARCH scalar simd TYPES ${integral_types})
 make_all_units(ROOT core NAME pow                   ARCH scalar simd TYPES ${all_types}    )
-make_all_units(ROOT core NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
+### TEMPORARY MEASURE
+### make_all_units(ROOT core NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
+### TEMPORARY MEASURE
 make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
