@@ -92,7 +92,7 @@ namespace eve::detail
        aligned_ptr<T, Align>  ptr) noexcept requires(typename wide<T, N>::storage_type,
                                                     vectorizable<T>)
   {
-    return load(tgt, mode, aligned_ptr<T const, A>(ptr));
+    return load(tgt, mode, aligned_ptr<T const, Align>(ptr));
   }
 }
 
