@@ -9,17 +9,13 @@
 **/
 //==================================================================================================
 #include <eve/function/exp2.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/is_negative.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::pedantic_(eve::exp2) return type", EVE_TYPE)
@@ -29,18 +25,19 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::exp2) return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::pedantic_(eve::exp2) behavior", EVE_TYPE)
 {
+  TTS_ULP_EQUAL (eve::pedantic_(eve::exp2)(T(1)), T(2), 0.5);
+  TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(T(0)), T(1));
 
-  TTS_ULP_EQUAL(eve::pedantic_(eve::exp2)(T(1)), T(2), 0.5);
-  TTS_IEEE_EQUAL((eve::pedantic_(eve::exp2)(T(0))), (T(1)));
-  if constexpr(std::is_floating_point_v<T>)
+  if constexpr(eve::floating_value<T>)
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Nan<T>()) , (eve::Nan<T>()) );
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Inf<T>()) , (eve::Inf<T>()) );
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Minf<T>()), (T( 0 )) );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Nan<T>()) , eve::Nan<T>() );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Inf<T>()) , eve::Inf<T>() );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Minf<T>()), T( 0 ) );
     }
-    TTS_ULP_EQUAL(eve::pedantic_(eve::exp2)(T(-1)),T(0.5), 0.5);
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::exp2)(T(-0.))), (T(1)));
+
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(T(-0.)), T(1));
+    TTS_ULP_EQUAL (eve::pedantic_(eve::exp2)(T(-1)) , T(0.5), 0.5);
   }
 }

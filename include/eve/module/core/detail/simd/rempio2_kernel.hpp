@@ -156,24 +156,25 @@ namespace eve::detail
       T      x2    = x - x1;
       T      sum(0);
 
-      auto pass = [&toverp](t_t x1, t_t & b1, t_t &bb1)
-      {
-        uint64_t  t576 = 0x63f0000000000000ULL;                      /* 2 ^ 576  */
-        double    tm24 = Constant<double, 0x3e70000000000000ULL>();  /* 2 ^- 24  */
-        double     big = Constant<double, 0x4338000000000000ULL>();  /*  6755399441055744      */
-        double    big1 = Constant<double, 0x4358000000000000ULL>();  /* 27021597764222976      */
-        t_t sum(0);
-        ui64_t zero_lo(0xFFFFFFFF00000000ULL);
-        i32_t k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
-        k =  bit_shr(k, 20) & 2047;
-        k = eve::max((k-450)/24, 0);
-        auto tmp = bit_cast(ui64_t(t576), as_<i32_t>());
-        tmp -= shl(k*24, 20);
-        t_t tmp1 = bit_cast(tmp, as_<t_t>());
-        k = eve::max(k, 0);
-        t_t r[6];
-        auto inds = shr(bit_cast(k, as<ui64_t>()), 32); //TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
-        for (int i=0;i<6;++i)
+      auto pass = [&toverp](T x1, T &b1, T &bb1) {
+        uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
+        double   tm24 = Constant<double, 0x3e70000000000000ULL>(); /* 2 ^- 24  */
+        double   big  = Constant<double, 0x4338000000000000ULL>(); /*  6755399441055744      */
+        double   big1 = Constant<double, 0x4358000000000000ULL>(); /* 27021597764222976      */
+        T        sum(0);
+        ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
+        i32_t    k = bit_cast(bit_and(bit_cast(x1, as_<ui64_t>()), zero_lo), as_<i32_t>());
+        k          = bit_shr(k, 20) & 2047;
+        k          = eve::max((k - 450) / 24, 0);
+        auto tmp   = bit_cast(ui64_t(t576), as_<i32_t>());
+        tmp -= shl(k * 24, 20);
+        T tmp1 = bit_cast(tmp, as_<T>());
+        k      = eve::max(k, 0);
+        T    r[6];
+        auto inds =
+            shr(bit_cast(k, as<ui64_t>()),
+                32); // TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+        for( int i = 0; i < 6; ++i )
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
           inds        = inc(inds);

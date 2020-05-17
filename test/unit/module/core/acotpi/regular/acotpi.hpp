@@ -8,13 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/smallestposval.hpp>
 #include <eve/function/acotpi.hpp>
 #include <eve/function/radinpi.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/platform.hpp>
 
 #include <tts/tests/precision.hpp>
@@ -39,13 +38,13 @@ TTS_CASE_TPL("Check eve::acotpi behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::acotpi(eve::Minf<T>()), T(0), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acotpi(T( 0.5)) , eve::inpi(T(1.107148717794090e+00))  , 1.5 );
-  TTS_ULP_EQUAL(eve::acotpi(T(-0.5)) , eve::inpi(T(-1.107148717794090e+00)) , 1.5 );
-  TTS_ULP_EQUAL(eve::acotpi(T(-1. )) , T(-0.25)                             , 0.5 );
-  TTS_ULP_EQUAL(eve::acotpi(T( 1. )) , T( 0.25)                             , 0.5 );
-  TTS_ULP_EQUAL(eve::acotpi(T( 0. )) , T( 0.5 )                             , 0.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T( 0.5)) , eve::radinpi(T(1.107148717794090e+00)) , 1.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T(-0.5)) , eve::radinpi(T(-1.107148717794090e+00)), 1.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T(-1. )) , T(-0.25)                               , 0.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T( 1. )) , T( 0.25)                               , 0.5 );
+  TTS_ULP_EQUAL(eve::acotpi(T( 0. )) , T( 0.5 )                               , 0.5 );
 
   auto inv_smallest = eve::rec(eve::Smallestposval<T>());
-  TTS_ULP_EQUAL(eve::acotpi(T(-0.)) ,  T(-0.5)                           , 0.5);
-  TTS_ULP_EQUAL(eve::acotpi(inv_smallest)       , eve::inpi(eve::Smallestposval<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::acotpi(T(-0.))       ,  T(-0.5)                              , 0.5);
+  TTS_ULP_EQUAL(eve::acotpi(inv_smallest) , eve::radinpi(eve::Smallestposval<T>()), 0.5);
 }

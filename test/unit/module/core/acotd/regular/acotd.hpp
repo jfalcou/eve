@@ -46,5 +46,5 @@ TTS_CASE_TPL("Check eve::acotd behavior", EVE_TYPE)
 
   auto inv_smallest = eve::rec(eve::Smallestposval<T>());
   TTS_ULP_EQUAL(eve::acotd(T(-0.))      ,  T(-90)                             , 0.5);
-  TTS_ULP_EQUAL(eve::acotd(inv_smallest), eve::indeg(eve::Smallestposval<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::acotd(inv_smallest), eve::radindeg(eve::Smallestposval<T>()), 0.5);
 }

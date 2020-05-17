@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::eve::atand behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::atand(eve::Minf<T>()), (T(-90.)), 0.5);
   }
 
-  TTS_ULP_EQUAL(eve::atand(T(0.5))  , (eve::indeg(T(4.636476090008061e-01)))  , 0.5);
-  TTS_ULP_EQUAL(eve::atand(T(-0.5)) , (eve::indeg(T(-4.636476090008061e-01))) , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(0.5))  , (eve::radindeg(T(4.636476090008061e-01)))  , 0.5);
+  TTS_ULP_EQUAL(eve::atand(T(-0.5)) , (eve::radindeg(T(-4.636476090008061e-01))) , 0.5);
   TTS_ULP_EQUAL(eve::atand(T(-1.))  , (T(-45))                                , 0.5);
   TTS_ULP_EQUAL(eve::atand(T(1.))   , (T(45))                                 , 0.5);
   TTS_ULP_EQUAL(eve::atand(T(0.))   , (T(0))                                  , 0.5);

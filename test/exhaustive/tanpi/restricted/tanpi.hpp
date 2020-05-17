@@ -19,7 +19,6 @@
 
 TTS_CASE_TPL("wide exhaustive check on tanpi", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
   auto my_stdtanpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x)/boost::math::cos_pi(x); });
 
   eve::exhaustive_producer<T> p(-0.25, 0.25);

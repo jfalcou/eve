@@ -21,7 +21,7 @@ TTS_CASE_TPL("wide random check on cot", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
   auto std_cot = tts::vectorize<T>( [](auto e) { return 1/std::tan(double(e)); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), v_t());
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<v_t>());
 
   if constexpr(eve::platform::supports_denormals)
   {

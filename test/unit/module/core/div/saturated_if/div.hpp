@@ -9,21 +9,22 @@
 **/
 //==================================================================================================
 #include <eve/function/div.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-
 
 TTS_CASE_TPL("Check conditional saturated(eve::div) return type", EVE_TYPE)
 {
   TTS_EXPR_IS( (eve::saturated_(eve::div[ T()              ])(T(), T())), T);
   TTS_EXPR_IS( (eve::saturated_(eve::div[ eve::logical<T>()])(T(), T())), T);
-  TTS_EXPR_IS( (eve::saturated_(eve::div[ true                ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ true             ])(T(), T())), T);
 }
 
 TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
 {
-  T tv{eve::Valmax<T>()};
-  T fv{3};
+  T tv(eve::Valmax<T>());
+  T fv(3);
   auto t = eve::True<T>();
   auto f = eve::False<T>();
 

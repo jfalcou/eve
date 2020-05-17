@@ -14,6 +14,7 @@
 
 TTS_CASE_TPL("Check extract return type", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
   using i_t = eve::detail::as_integer_t<v_t, signed>;
   using u_t = eve::detail::as_integer_t<v_t, unsigned>;
 
@@ -24,6 +25,7 @@ TTS_CASE_TPL("Check extract return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::extract behavior on arithmetic types", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::extract(T(42), 0), v_t(42));
 
 #if defined(EVE_SIMD_TESTS)
@@ -53,5 +55,4 @@ TTS_CASE_TPL("Check eve::extract behavior on logical types", EVE_TYPE)
   for(int i=0; i< EVE_CARDINAL; ++i)
     TTS_EQUAL(eve::extract(arg, i), ((1+i) % 2) == 0);
 #endif
-
 }

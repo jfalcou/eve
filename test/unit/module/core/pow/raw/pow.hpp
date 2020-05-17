@@ -9,30 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/pow.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/is_negative.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
-#include <tts/tests/basic.hpp>
 #include <tts/tests/types.hpp>
-#include <cmath>
 
 TTS_CASE_TPL("Check eve::raw_(eve::pow) return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::raw_(eve::pow)(T(0), T(0)), T);
 }
 
-TTS_CASE_TPL("pow conformity", EVE_TYPE)
+TTS_CASE_TPL("Check eve::raw_(eve::pow) behavior", EVE_TYPE)
 {
   if constexpr (eve::floating_value<T>)
   {

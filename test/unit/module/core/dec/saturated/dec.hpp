@@ -27,15 +27,15 @@ TTS_CASE_TPL("Check eve::saturated_(eve::dec) behavior", EVE_TYPE)
   using eve::saturated_;
 
   TTS_EQUAL(saturated_(eve::dec)(eve::Valmin<T>()), eve::Valmin<T>());
-  TTS_EQUAL(saturated_(eve::dec)(T(1)), (T( 0)) );
-  TTS_EQUAL(saturated_(eve::dec)(T(2)), (T( 1)) );
+  TTS_EQUAL(saturated_(eve::dec)(T(1))            , (T( 0)) );
+  TTS_EQUAL(saturated_(eve::dec)(T(2))            , (T( 1)) );
 
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(saturated_(eve::dec)(T(0)), (T(-1)) );
+    TTS_EQUAL(saturated_(eve::dec)(T(0)), T(-1) );
   }
   else
   {
-    TTS_EQUAL(saturated_(eve::dec)(T(0)), (T(0)) );
+    TTS_EQUAL(saturated_(eve::dec)(T(0)), T(0) );
   }
 }

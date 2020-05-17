@@ -8,17 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/nan.hpp>
 #include <eve/function/acospi.hpp>
+#include <eve/function/radinpi.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/raw.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
-
-#include <cmath>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
 TTS_CASE_TPL("Check eve::raw_(eve::acospi) return type", EVE_TYPE)
 {
@@ -28,6 +28,8 @@ TTS_CASE_TPL("Check eve::raw_(eve::acospi) return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::raw_(eve::acospi) behavior", EVE_TYPE)
 {
   using eve::all;
+  using eve::radinpi;
+
   using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_nans )

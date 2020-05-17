@@ -28,12 +28,12 @@ TTS_CASE_TPL("Check pow_abs return type", EVE_TYPE)
   {
     TTS_EXPR_IS(eve::pow(T(0), T(0)), T);
   }
+
   TTS_EXPR_IS(eve::pow(T(0), int(0)), T);
 }
 
 TTS_CASE_TPL("pow conformity", EVE_TYPE)
 {
-
   if constexpr(eve::floating_value<T>)
   {
     TTS_EXPECT(eve::all(eve::is_positive(eve::pow(eve::Minf<T>(), T(-4) ))));

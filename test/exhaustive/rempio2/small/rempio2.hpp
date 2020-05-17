@@ -25,7 +25,7 @@ TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
   auto rempio2_n =  [](auto e) { auto [n, x, dx] = eve::small_(eve::rempio2)(e); return n; };
   auto rempio2_x =  [](auto e) { auto [n, x, dx] = eve::small_(eve::rempio2)(e); return x; };
 
-  auto l = eve::detail::Rempio2_limit(eve::small_type(), v_t());
+  auto l = eve::detail::Rempio2_limit(eve::small_type(), eve::as<v_t>());
   eve::exhaustive_producer<T> p(0, l);
   TTS_RANGE_CHECK(p, std_rempio2_n, rempio2_n);
   TTS_RANGE_CHECK(p, std_rempio2_x, rempio2_x);

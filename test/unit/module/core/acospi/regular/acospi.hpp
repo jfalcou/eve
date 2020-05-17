@@ -12,6 +12,7 @@
 #include <eve/function/acospi.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_positive.hpp>
+#include <eve/function/radinpi.hpp>
 #include <eve/platform.hpp>
 
 #include <cmath>
@@ -27,6 +28,7 @@ TTS_CASE_TPL("Check eve::acospi return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::acospi behavior", EVE_TYPE)
 {
   using eve::all;
+  using eve::radinpi;
   using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_nans )
@@ -43,14 +45,14 @@ TTS_CASE_TPL("Check eve::acospi behavior", EVE_TYPE)
 
   TTS_EXPECT( all(eve::is_positive(eve::acospi(T(1.)))) );
 
-  TTS_ULP_EQUAL(eve::acospi(T(8.414715528e-01)), T(inpi(std::acos(v_t(8.414715528e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.689134359e-01)), T(inpi(std::acos(v_t(9.689134359e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.922192097e-01)), T(inpi(std::acos(v_t(9.922192097e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.995127916e-01)), T(inpi(std::acos(v_t(9.995127916e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.998779893e-01)), T(inpi(std::acos(v_t(9.998779893e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.999695420e-01)), T(inpi(std::acos(v_t(9.999695420e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.999927878e-01)), T(inpi(std::acos(v_t(9.999927878e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.999984503e-01)), T(inpi(std::acos(v_t(9.999984503e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.999996424e-01)), T(inpi(std::acos(v_t(9.999996424e-01)))), 1);
-  TTS_ULP_EQUAL(eve::acospi(T(9.999999404e-01)), T(inpi(std::acos(v_t(9.999999404e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(8.414715528e-01)), T(radinpi(std::acos(v_t(8.414715528e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.689134359e-01)), T(radinpi(std::acos(v_t(9.689134359e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.922192097e-01)), T(radinpi(std::acos(v_t(9.922192097e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.995127916e-01)), T(radinpi(std::acos(v_t(9.995127916e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.998779893e-01)), T(radinpi(std::acos(v_t(9.998779893e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.999695420e-01)), T(radinpi(std::acos(v_t(9.999695420e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.999927878e-01)), T(radinpi(std::acos(v_t(9.999927878e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.999984503e-01)), T(radinpi(std::acos(v_t(9.999984503e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.999996424e-01)), T(radinpi(std::acos(v_t(9.999996424e-01)))), 1);
+  TTS_ULP_EQUAL(eve::acospi(T(9.999999404e-01)), T(radinpi(std::acos(v_t(9.999999404e-01)))), 1);
 }
