@@ -48,6 +48,6 @@ TTS_CASE_TPL("Check eve::big_(eve::csc) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::csc)(-T(100.0)        ) , T(ref_csc(v_t(-100.0)))       , 1.5 );
   TTS_ULP_EQUAL(eve::big_(eve::csc)( T(100000.0)     ) , T(ref_csc(v_t(100000.0)))     , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::csc)(-T(100000.0)     ) , T(ref_csc(v_t(-100000.0)))    , 0.5 );
-  TTS_ULP_EQUAL(eve::big_(eve::csc)( T(1000000.0)    ) , T(ref_csc(v_t(1000000.0)))     , 0.5 );
-  TTS_ULP_EQUAL(eve::big_(eve::csc)(-T(1000000.0)    ) , T(ref_csc(v_t(-1000000.0)))    , 0.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::csc)( T(1000000.0)    ) , T(ref_csc(v_t(1000000.0)))     , 1.0 );
+  TTS_ULP_EQUAL(eve::big_(eve::csc)(-T(1000000.0)    ) , T(ref_csc(v_t(-1000000.0)))    , 1.0 );
 }

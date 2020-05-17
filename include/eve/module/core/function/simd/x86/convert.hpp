@@ -434,7 +434,7 @@ namespace eve::detail
     if constexpr( std::is_same_v<In, Out> )
       return v0;
 
-    if constexpr( std::is_same_v<In, int16_t> && std::is_same_v<In, int8_t> && (N::value <= 32) )
+    if constexpr( std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N::value <= 32) )
     {
       if constexpr( N::value == 32 )
       {
