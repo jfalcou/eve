@@ -29,6 +29,12 @@ namespace eve
   }
 
   template<typename T, std::size_t Align>
+  EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr) noexcept
+  {
+    return *ptr;
+  }
+
+  template<typename T, std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr) noexcept
   {
     return *ptr;
@@ -42,6 +48,12 @@ namespace eve
 
   template<typename T, std::size_t Align, typename = std::enable_if_t<(Align >= alignof(T))>>
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr, as_<T> const &) noexcept
+  {
+    return *ptr;
+  }
+
+  template<typename T, std::size_t Align, typename = std::enable_if_t<(Align >= alignof(T))>>
+  EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<T> const &) noexcept
   {
     return *ptr;
   }
@@ -62,6 +74,12 @@ namespace eve
     return *ptr;
   }
 
+  template<typename T, typename Size, typename ABI>
+  EVE_FORCEINLINE auto load(aligned_ptr<wide<T, Size, ABI>> ptr) noexcept
+  {
+    return *ptr;
+  }
+
   template<typename Size, typename T, typename ABI>
   EVE_FORCEINLINE auto load(T const* ptr, as_<wide<T, Size, ABI>> const &) noexcept
   {
@@ -74,6 +92,16 @@ namespace eve
            std::size_t Align,
            typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
   EVE_FORCEINLINE auto load(aligned_ptr<T const, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
+  {
+    return wide<T, Size>(ptr);
+  }
+
+  template<typename Size,
+           typename ABI,
+           typename T,
+           std::size_t Align,
+           typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
+  EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
   {
     return wide<T, Size>(ptr);
   }
@@ -92,6 +120,17 @@ namespace eve
            std::size_t Align,
            typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
   EVE_FORCEINLINE auto load(aligned_ptr<logical<T> const, Align> ptr,
+                            as_<logical<wide<T, Size, ABI>>> const &) noexcept
+  {
+    return logical<wide<T, Size, ABI>>(ptr);
+  }
+
+  template<typename Size,
+           typename ABI,
+           typename T,
+           std::size_t Align,
+           typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
+  EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr,
                             as_<logical<wide<T, Size, ABI>>> const &) noexcept
   {
     return logical<wide<T, Size, ABI>>(ptr);
