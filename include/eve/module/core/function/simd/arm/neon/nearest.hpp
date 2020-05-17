@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value, typename N>
+  template<floating_real_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> nearest_(EVE_SUPPORTS(neon128_),
                                                wide<T, N, neon64_> const &v0) noexcept
   {
@@ -33,7 +33,7 @@ namespace eve::detail
 #endif
   }
 
-  template<floating_real_value, typename N>
+  template<floating_real_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> nearest_(EVE_SUPPORTS(neon128_),
                                                 wide<T, N, neon128_> const &v0) noexcept
   {

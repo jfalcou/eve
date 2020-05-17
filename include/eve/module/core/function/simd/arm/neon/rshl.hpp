@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSHL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSHL_HPP_INCLUDED
 
-#include <eve/concept/value>
+#include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
 

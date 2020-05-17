@@ -62,7 +62,7 @@ namespace eve::detail
     return fma(v0, v1, v2);
   }
 
-  template<typename real_scalar_value, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon128_> const &v0,
                                             wide<T, N, neon128_> const &v1,

@@ -12,6 +12,11 @@
 #define EVE_FUNCTION_REFINE_REC_HPP_INCLUDED
 
 #include <eve/function/definition/refine_rec.hpp>
-#include <eve/module/core/function/simd/refine_rec.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/refine_rec.hpp>
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/refine_rec.hpp>
+#endif
 
 #endif

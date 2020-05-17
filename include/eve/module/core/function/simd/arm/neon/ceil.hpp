@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-  template<typename floating_real_scalar_value, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon64_> ceil_(EVE_SUPPORTS(neon128_),
                                             wide<T, N, neon64_> const &v0) noexcept
   {
@@ -36,7 +36,7 @@ namespace eve::detail
 #endif
   }
 
-  template<typename floating_real_scalar_value, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, neon128_> ceil_(EVE_SUPPORTS(neon128_),
                                              wide<T, N, neon128_> const &v0) noexcept
   {

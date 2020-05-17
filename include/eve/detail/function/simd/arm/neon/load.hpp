@@ -290,6 +290,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, std::size_t Align>
+  EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::neon128_ const &mode, aligned_ptr<T, Align> ptr) noexcept
   {
     return load(tgt, mode, ptr.get());

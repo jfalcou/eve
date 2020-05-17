@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSHR_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_RSHR_HPP_INCLUDED
 
-#include <eve/concept/value>
+#include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
 
@@ -28,7 +28,7 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
-  EVE_FORCEINLINE ide<T, N, neon64_>
+  EVE_FORCEINLINE wide<T, N, neon64_>
                   rshr_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> const &v0, I v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;

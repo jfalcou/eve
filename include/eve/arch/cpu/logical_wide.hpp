@@ -101,13 +101,25 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a pointer
-    EVE_FORCEINLINE explicit logical(logical<Type> *ptr) noexcept
+    EVE_FORCEINLINE explicit logical(logical<Type> const* ptr) noexcept
+        : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+    {
+    }
+
+    EVE_FORCEINLINE explicit logical(logical<Type>* ptr) noexcept
         : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
+                    requires(Alignment >= static_alignment)
+                  : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+    {
+    }
+
+    template<std::size_t Alignment>
+    EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type> const, Alignment> ptr) noexcept
                     requires(Alignment >= static_alignment)
                   : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
     {

@@ -24,6 +24,7 @@
 #include <eve/function/roundings.hpp>
 #include <eve/function/saturate.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/function/shr.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
