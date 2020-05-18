@@ -8,79 +8,64 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::logical_notor`
+                           `eve::bit_notor`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/logical_notor.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/bit_notor.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ logical_notor = /*unspecified*/;
+  inline constexpr /*unspecified*/ bit_notor = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the logical NOTOR operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) logical NOTOR of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  logical NOTOR of the two parameters following the
+[logical operations semantic](../../../glossary.html#Logical).
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = logical_notor(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+the call `logical_notor(x, y)` is semantically equivalent to `!x || y`
+if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
-is semantically equivalent to:
+!!! WARNING
+   Although the infix notation with `||` and `!` is supported for all
+   [simd values](../../concepts.html#value), the `&&` operator on
+   standard scalar type is the original one and so does not allow floating parameters.
+   Moreover if a proper intrinsic exists for NOTOR
+   the infix notation will not be able use it.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+  (insert ../../src/logical_notor.src.html here)
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/logical_notor.src.html here)-->
-
-  <!--(insert ../../out/logical_notor.out.html here)-->
+  (insert ../../out/logical_notor.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::logical_notor](./logical_notor.html), [eve::logical_notor](./logical_notor.html), [eve::logical_or](./logical_or),
+[eve::logical_and](./logical_and.html), [eve::logical_notor](./logical_notor.html), [eve::logical_xor](./logical_xor),
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

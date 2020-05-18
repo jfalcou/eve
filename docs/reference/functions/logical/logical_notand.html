@@ -25,62 +25,47 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the logicalwise NOTAND operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires logical_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) logicalwise NOTAND of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  logicalwise NOTAND of the two parameters following the
+[logicalwise operations semantic](../../../glossary.html#Logicalwise).
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = logical_notand(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
+if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
-is semantically equivalent to:
+!!! WARNING
+   Although the infix notation with `&&` and `!` is supported for all
+   [simd values](../../concepts.html#value), the `&&` operator on
+   standard scalar type is the original one and so does not allow floating parameters.
+   Moreover if a proper intrinsic exists for NOTAND
+   the infix notation will not be able use it.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+  (insert ../../src/logical_notand.src.html here)
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/logical_notand.src.html here)-->
-
-  <!--(insert ../../out/logical_notand.out.html here)-->
+  (insert ../../out/logical_notand.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::logical_ornot](./logical_ornot.html), [eve::logical_notor](./logical_notor.html), [eve::logical_or](./logical_or),
+[eve::logical_and](./logical_and.html), [eve::logical_andnot](./logical_andnot.html), [eve::logical_xor](./logical_xor),
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
