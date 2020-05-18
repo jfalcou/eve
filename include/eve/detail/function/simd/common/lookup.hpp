@@ -22,58 +22,51 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, Y> const &ind) noexcept
   {
-    using type = wide<T, N, X>;
-
-    if constexpr( std::is_signed_v<I> )
+    auto const cond = [&]()
     {
-      auto cond = ind >= 0;
-      auto idx  = cond.bits();
-      idx &= ind;
+      if constexpr( std::is_signed_v<I> ) return ind >= 0;
+      else                                return ind < N::value;
+    }();
 
-      return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
-    }
-    else
-    {
-      auto cond = ind < N::value;
-      auto idx  = cond.bits();
-      idx &= ind;
+    // Compute mask as SIMD
+    auto  idx  = cond.bits();
+          idx &= ind;
+    auto  msk  = cond.mask();
 
-      return apply<N::value>([&](auto... v) { return type(a[idx[v]]...); }) & cond.mask();
-    }
+    // Rebuild as scalar
+    wide<T, N, X> data;
+    apply<N::value>([&](auto... v) { ((data[v] = a[idx[v]]),...); });
+
+    // Apply mask as SIMD
+    data &= msk;
+    return data;
   }
 
   template<scalar_value T, integral_scalar_value I, typename N, typename X>
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, aggregated_> const &ind) noexcept
   {
-    using type = wide<T, N, X>;
-
-    if constexpr( std::is_signed_v<I> )
+    auto const cond = [&]()
     {
-      auto cond = ind >= 0;
-      auto idx  = cond.bits();
-      idx &= ind;
+      if constexpr( std::is_signed_v<I> ) return ind >= 0;
+      else                                return ind < N::value;
+    }();
 
-      using htype = wide<T, typename N::split_type>;
+    // Compute mask as SIMD
+    auto  idx  = cond.bits();
+          idx &= ind;
+    auto  msk  = cond.mask();
 
-      auto la = apply<N::value / 2>([&, lx = idx.slice(lower_)](auto... v) { return htype(a[lx[v]]...); });
-      auto ha = apply<N::value / 2>([&, hx = idx.slice(upper_)](auto... v) { return htype(a[hx[v]]...); });
+    // Rebuild as scalar
+    wide<T, N, X> data;
 
-      return type {la, ha} & cond.mask();
-    }
-    else
-    {
-      auto cond = ind < N::value;
-      auto idx  = cond.bits();
-      idx &= ind;
+    constexpr auto const half = N::value / 2;
+    apply<half>([&, lx = idx.slice(lower_)](auto... v) { ((data[v]      = a[lx[v]]),...); } );
+    apply<half>([&, hx = idx.slice(upper_)](auto... v) { ((data[v+half] = a[hx[v]]),...); } );
 
-      using htype = wide<T, typename N::split_type>;
-
-      auto la = apply<N::value / 2>([&, lx = idx.slice(lower_)](auto... v) { return htype(a[lx[v]]...); });
-      auto ha = apply<N::value / 2>([&, hx = idx.slice(upper_)](auto... v) { return htype(a[hx[v]]...); });
-
-      return type {la, ha} & cond.mask();
-    }
+    // Apply mask as SIMD
+    data &= msk;
+    return data;
   }
 }
 
