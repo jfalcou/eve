@@ -118,8 +118,10 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 
     TTS_AND_THEN("we check decrementing by valid value")
     {
-      ptr -= ptr.alignment();
-      TTS_EQUAL(ptr.get(), &value - ptr.alignment());
+      auto shifted = &value;
+      shifted -= ptr.alignment();
+      ptr     -= ptr.alignment();
+      TTS_EQUAL(ptr.get(), shifted);
     }
 
     TTS_AND_THEN("we check swap")
