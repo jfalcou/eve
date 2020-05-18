@@ -25,62 +25,40 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the ifnot_else operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
+requires  compatible< U, V >;
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the [element-wise](../../../glossary.html#regular_) ifnot_else operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`x`, `y`, `z`
+:   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+The call `ifnot_else(x, y, z)` is performs a choice between the elements of `y` and `z` according to the truth value
+of the elements of `x`. It is merely syntaxic sugar for `if_else(x, z, y)`
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = ifnot_else(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+   (insert ../../src/ifnot_else.src.html here)
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/ifnot_else.src.html here)-->
-
-  <!--(insert ../../out/ifnot_else.out.html here)-->
+   (insert ../../out/ifnot_else.out.html here)
 
 See Also
 ====================================================================================================
+[eve::if_else](./if_else.html), [eve::binarize](./binarize.html),
+[eve::binarize_not](./binarize_not.html),[eve::bit_select](..:bits/bit_select.html).
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

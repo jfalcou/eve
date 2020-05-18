@@ -14,22 +14,22 @@ int main()
   wide_lt lsi = {true, false, false, true};
 
   std::cout << "---- simd" << '\n'
-            << " <- si =                              " << si << '\n'
-            << " <- lsi =                             " << lsi << '\n'
-            << " <- pi =                              " << pi << '\n'
-            << " <- qi =                              " << qi << '\n'
-            << " -> eve::ifnot_else(si, pi, qi) =     " << eve::ifnot_else(si, pi, qi) << '\n'
-            << " -> eve::ifnot_else(lsi, pi, qi) =    " << eve::ifnot_else(lsi, pi, qi) << '\n';
+            << " <- si                           = " << si << '\n'
+            << " <- lsi                          = " << lsi << '\n'
+            << " <- pi                           = " << pi << '\n'
+            << " <- qi                           = " << qi << '\n'
+            << " -> eve::ifnot_else(si, pi, qi)  = " << eve::ifnot_else(si, pi, qi) << '\n'
+            << " -> eve::ifnot_else(lsi, pi, qi) = " << eve::ifnot_else(lsi, pi, qi) << '\n';
 
   iT               ssi = 3, xi = 3, yi = 4;
   eve::logical<iT> lssi = false;
 
   std::cout << "---- scalar" << '\n'
-            << " ssi =                                " << ssi << '\n'
-            << " lssi =                               " << lssi << '\n'
-            << " xi =                                 " << xi << '\n'
-            << " yi =                                 " << yi << '\n'
-            << " -> eve::ifnot_else(ssi, xi, yi) =    " << eve::ifnot_else(ssi, xi, yi) << '\n'
-            << " -> eve::ifnot_else(lssi, xi, yi) =   " << eve::ifnot_else(lssi, xi, yi) << '\n';
+            << " ssi =                            = " << ssi << '\n'
+            << " lssi =                           = " << lssi << '\n'
+            << " xi =                             = " << xi << '\n'
+            << " yi =                             = " << yi << '\n'
+            << " -> eve::ifnot_else(ssi, xi, yi)  = " << eve::ifnot_else(ssi, xi, yi) << '\n'
+            << " -> eve::ifnot_else(lssi, xi, yi) = " << eve::ifnot_else(lssi, xi, yi) << '\n';
   return 0;
 }

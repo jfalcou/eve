@@ -1,21 +1,17 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                                     (0, 1, -1, -2)
-<- qf =                                     (1, -1, -2, 4)
--> eve::binarize(p < qf) =                  (1, 0, 0, 1)
--> eve::binarize(p < qf,  10) =             (10, 0, 0, 10)
--> eve::binarize(p < qf,  eve::allbits_) =  (-nan, 0, 0, -nan)
--> eve::binarize(p < qf,  eve::mone_) =     (-1, 0, 0, -1)
+<- pf                          = (0, 1, -1, -0.5)
+-> eve::binarize(pf > 0.0f)    = (0, 1, 0, 0)
+-> eve::binarize(pf > 0.0f, 3) = (0, 3, 0, 0)
 ---- scalar
-<- xf =                                     1
-<- yf =                                     2
--> eve::binarize(eve::is_less(xf, yf))    = 1
--> eve::binarize(eve::is_less(xf, yf), 5) = 1
+<- xf                                     = -1
+-> eve::binarize(eve::True<float>(), xf)  = -1
+-> eve::binarize(eve::False<float>(), xf) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

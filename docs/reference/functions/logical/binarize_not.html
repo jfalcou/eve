@@ -8,79 +8,67 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::bit_select`
+                           `eve::binarize_not`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/bit_select.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/binarize_not.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ bit_select = /*unspecified*/;
+  inline constexpr /*unspecified*/ binarize_not = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the bit_select operation.
+Function object representing the computation of the binarize_not operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T m, U x, U y ) const noexcept
-requires compatible< T,U>;
-
+template< value T, scalar_value V > auto operator()( Logical< T >  c, V v = 1 ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the [element-wise](../../../glossary.html#regular_) bit_select operation on its parameters.
+Performs the  [element-wise](../../../glossary.html#element-wise_) binarize_not operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`mx`
-:   mask [value](../../concepts.html#value)
-`y`, `z`
-:   selection [values](../../concepts.html#value)
+`c`
+:   [logical value](../../concepts.html#value).
+`v`
+:   [scalar value](../../concepts.html#value) defaulting to 1.
+
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
 
-The types T and U must be  bit_compatible and the call
+The call:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-r==bit_select(m,x,y)
+logical<T> r = binarize_not(c,v);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-is semantically equivalent to
-
+computation is semantically  equivalent to:
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-r = bit_or(bit_and(x, m), bit_andnot(y, m))
+T r = if_else(c, T(0), T(v);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is
-composed of the bits of `x` for which the corresponding bit of `m` is set
-and the bits of  `y` for which the corresponding bit of `m` is unset.
+  (insert ../../src/binarize_not.src.html here)
 
-If `T` or `M` is an [simd value](../../concepts.html#value), the type of the result has the element type
- of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
-
-
-   (insert ../../src/bit_select.src.html here)
-
-   (insert ../../out/bit_select.out.html here)
+  (insert ../../out/binarize_not.out.html here)
 
 See Also
 ====================================================================================================
-[eve::if_else](../logical/if_else.html).
-
-
+[eve::binarize](./binarize.html), [eve::if_else](./if_elsehtml).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

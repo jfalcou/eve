@@ -1,41 +1,36 @@
-<meta charset="utf-8">
-**Example:**
+ <meta charset="utf-8">
+Example
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/binarize.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/is_less.hpp>
+#include <eve/constant/true.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
+using wide_ft = eve::wide <float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf  = {0.0f,1.0f,-1.0f,-2.0f};
-  wide_ft qf  = {1.0f,-1.0f,-2.0f,4.0f};
+  wide_ft pf = { 0.0f, 1.0f, -1.0f, -0.5f};
 
+  std::cout
+    << "---- simd" << '\n'
+    << "<- pf                          = " << pf << '\n'
+    << "-> eve::binarize(pf > 0.0f)    = " << eve::binarize(pf> 0.0f) << '\n'
+    << "-> eve::binarize(pf > 0.0f, 3) = " << eve::binarize(pf> 0.0f,  3) << '\n';
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf =                                     " << pf << '\n'
-            << "<- qf =                                     " << qf << '\n'
-            << "-> eve::binarize(p < qf) =                  " << eve::binarize(pf < qf) << '\n'
-            << "-> eve::binarize(p < qf,  10) =             " << eve::binarize(pf < qf,  10) << '\n'
-            << "-> eve::binarize(p < qf,  eve::allbits_) =  " << eve::binarize(pf < qf,  eve::allbits_) << '\n'
-            << "-> eve::binarize(p < qf,  eve::mone_) =     " << eve::binarize(pf < qf,  eve::mone_) << '\n';
+  float xf = -1.0f;
 
-  float   xf = 1.0f;
-  float   yf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf =                                     " << xf << '\n'
-            << "<- yf =                                     " << yf << '\n'
-            << "-> eve::binarize(eve::is_less(xf, yf))    = " << eve::binarize(eve::is_less(xf, yf)) << '\n'
-            << "-> eve::binarize(eve::is_less(xf, yf), 5) = " << eve::binarize(eve::is_less(xf, yf)) << '\n';
-
+  std::cout
+    << "---- scalar"  << '\n'
+    << "<- xf                                     = " << xf << '\n'
+    << "-> eve::binarize(eve::True<float>(), xf)  = " << eve::binarize(eve::True<float>(), xf) << '\n'
+    << "-> eve::binarize(eve::False<float>(), xf) = " << eve::binarize(eve::False<float>(), xf) << '\n'        ;
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ </script>
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

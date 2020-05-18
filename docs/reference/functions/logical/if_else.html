@@ -25,62 +25,83 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the if_else operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
+requires  compatible< U, V >;
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the [element-wise](../../../glossary.html#regular_) if_else operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`x`, `y`, `z`
+:   [values](../../concepts.html#value)
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+The call `if_else(x, y, z)` is performs a choice between the elements of `y` and `z` according to the truth value
+of the elements of `x`.
 
-<script type="preformatted">
+Let `UV` be the compatibility result of `U` and `V`.
+The call `auto r = if_else(x, y, z)` is semantically equivalent to:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = if_else(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
 
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
+if constexpr(scalar_value< T >)
 {
-  **TODO: FILL THIS BLANK**
+  return x ? UV(x) : UV(y);
 }
-else if constexpr( simd_value<T> )
+else if constexpr(scalar_value< U > && scalar_value< V >)
 {
-  **TODO: FILL THIS BLANK**
+  for(int i=0; i<cardinal_v< T >; ++i)
+  {
+    r[i] = (xx[i]) ? y : z;
+  }
 }
+else
+{
+  using C = wide< element_t< T >, cardinal_t< UV >>;
+  auto xx = C(x);
+  UV r;
+  for(int i=0; i<cardinal_v< UV >; ++i)
+  {
+    r[i] = (xx[i]) ? y[i] : z[i];
+  }
+}
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+if `U`, `V` and `T` are scalar the result `r` is of type `UV`, else
+if `U` or `V` are simd_values the result is of type `UV`, else it is of type  `wide< UV, cardinal_t< T >>`.
 
-  <!--(insert ../../src/if_else.src.html here)-->
+Possible optimizations
+====================================================================================================
+The following calls where `x`, `y` and `z` are values can be optimized:
 
-  <!--(insert ../../out/if_else.out.html here)-->
+ * `if_else(x, y, Allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
+ * `if_else(x, y, One< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
+ * `if_else(x, y, Mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
+ * `if_else(x, y, Zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
+ * `if_else(x, Allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
+ * `if_else(x, One< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
+ * `if_else(x, Mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
+ * `if_else(x, Zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
+
+   (insert ../../src/if_else.src.html here)
+
+   (insert ../../out/if_else.out.html here)
 
 See Also
 ====================================================================================================
+[eve::binarize](./binarize.html), [eve::binarize_not](./binarize_not.html),[eve::bit_select](..:bits/bit_select.html).
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
