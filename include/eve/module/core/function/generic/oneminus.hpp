@@ -30,7 +30,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Decorated
   template<real_value T, decorator D>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_), D const &, T const &v) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_), D const &, T const &v) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -64,7 +64,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // regular
   template<real_value T>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     return oneminus(regular_type(), v);
   }
@@ -72,38 +72,31 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // saturated masked
   template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T
-  oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, saturated_type const &, T const &v) noexcept
+  EVE_FORCEINLINE constexpr auto
+  oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, saturated_type const & d, T const &v) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
+    using elt_t = element_type_t<T>;
+    if constexpr( floating_value<elt_t> )
     {
-      using elt_t = element_type_t<T>;
-      if constexpr( floating_value<elt_t> )
-      {
-        return if_else(cond, oneminus(v), v);
-      }
-      else
-      {
-        if constexpr( scalar_value<COND> )
-        {
-          return cond ? saturated_(oneminus)(v) : v;
-        }
-        else
-        {
-          return if_else(cond, saturated_(oneminus)(v), v);
-        }
-      }
+      return if_else(cond, oneminus(v), v);
     }
     else
     {
-      return aggregate(oneminus, cond, saturated_type(), v);
+      if constexpr( scalar_value<COND> )
+      {
+        return cond ? saturated_(oneminus)(v) : v;
+      }
+      else
+      {
+        return if_else(cond, saturated_(oneminus)(v), v);
+      }
     }
   }
 
   // -----------------------------------------------------------------------------------------------
   // Basic masked
   template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, T const &v) noexcept
+  EVE_FORCEINLINE constexpr auto oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, T const &v) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -127,7 +120,6 @@ namespace eve::detail
     else
       return apply_over(oneminus, cond, v);
   }
-
 }
 
 #endif
