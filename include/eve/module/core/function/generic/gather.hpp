@@ -24,7 +24,9 @@ namespace eve::detail
   template<typename U, integral_scalar_value T, typename N, typename ABI>
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, wide<T, N, ABI> const &v) noexcept
   {
-    return apply<N::value>([&](auto... I) { return wide<U, N> {ptr[v[I]]...}; });
+    wide<U, N> that;
+    apply<N::value>([&](auto... I) { ((that[I] = ptr[v[I]]),...); });
+    return that;
   }
 
   template<typename U, value X, integral_scalar_value T, typename N, typename ABI>
