@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-  template<typename real_scalar_value, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> fma_(EVE_SUPPORTS(vmx_),
                                         wide<T, N, ppc_> const &v0,
                                         wide<T, N, ppc_> const &v1,
@@ -32,7 +32,7 @@ namespace eve::detail
       return v0.storage() * v1.storage() + v2.storage();
   }
 
-  template<decorator D, typename real_scalar_value, typename N>
+  template<decorator D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> fma_(EVE_SUPPORTS(vmx_),
                                         D const &,
                                         wide<T, N, ppc_> const &v0,

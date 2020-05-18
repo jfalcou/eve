@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value, typename N>
+  template<floating_real_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> nearest_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, float>) { return vec_round(v0.storage()); }

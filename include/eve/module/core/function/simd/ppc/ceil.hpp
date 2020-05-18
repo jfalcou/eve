@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-  template<typename floating_real_scalar_value, typename N>
+  template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> ceil_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)

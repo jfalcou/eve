@@ -132,7 +132,7 @@ namespace eve::detail
           {
             T x  = bit_andnot(a0, Expobits_mask<T>());        // clear exp. in a0
             e = bit_shr(e,nmb)- Maxexponentm1<T>();         // compute exp.
-            if (e > Limitexponent<T>()) return {a0, i_t(0)};
+            if (e > Limitexponent<T>()) return std::make_tuple(a0, i_t(0));
             return std::make_tuple(bit_or(x,Half<T>()), e);
           }
         }

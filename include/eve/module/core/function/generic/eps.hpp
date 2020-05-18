@@ -40,25 +40,33 @@ namespace eve::detail
       if constexpr(has_native_abi_v<T>)
       {
         auto a = eve::abs(a0);
-        auto altspv = is_less(a, Smallestposval<T>());
+
         if constexpr(eve::platform::supports_denormals && scalar_value<T>)
         {
+          auto altspv = is_less(a, Smallestposval<T>());
           if (altspv) return Mindenormal<T>();
         }
+
         using i_t = as_integer_t<T>;
         using v_t = value_type_t<T>;
+
         auto e1 = exponent(a)-Nbmantissabits<T>();
         auto e = bit_cast(bit_cast(T(1), as<i_t>())+(shl(e1,Nbmantissabits<v_t>())), as<T>());
         e =  add[is_not_finite(a)](e, Nan<T>());
+
         if constexpr(eve::platform::supports_denormals && simd_value<T>)
         {
+          auto altspv = is_less(a, Smallestposval<T>());
           return if_else(altspv, Mindenormal<T>(), e);
         }
-        else return e;
+        else
+        {
+          return e;
+        }
       }
       else
       {
-        return  apply_over(eps, a0);
+        return apply_over(eps, a0);
       }
     }
     else if constexpr(integral_value<T>) return T(1);
