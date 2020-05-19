@@ -29,6 +29,14 @@
 #define AS_UNIQUE2(ID, LINE)  AS_UNIQUE3(ID, LINE)
 #define AS_UNIQUE(ID)         AS_UNIQUE2(ID, __LINE__)
 
+#define EVE_REGISTER_BENCHMARK(FUNC, TYPE, ...)                                                     \
+eve::bench::experiment  AS_UNIQUE(bench)                                                            \
+                        ( std::string(AS_STRING(FUNC)) + " - " + ::tts::type_id<TYPE>()             \
+                        , FUNC, eve::bench::optimal_size<TYPE>, __VA_ARGS__                         \
+                        )                                                                           \
+/**/
+
+
 namespace eve::bench
 {
   template<typename Fun, typename... Args>

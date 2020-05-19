@@ -11,16 +11,9 @@
 #include <eve/function/acos.hpp>
 #include <cmath>
 
-#define REGISTER_BENCHMARK(FUNC, TYPE, ...)                                                         \
-eve::bench::experiment  AS_UNIQUE(bench)                                                            \
-                        ( std::string(AS_STRING(FUNC)) + " - " + ::tts::type_id<TYPE>()             \
-                        , FUNC, eve::bench::optimal_size<TYPE>, __VA_ARGS__                         \
-                        )                                                                           \
-/**/
-
 int main(int argc, char** argv)
 {
-  REGISTER_BENCHMARK(eve::acos, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  EVE_REGISTER_BENCHMARK(eve::acos, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
   eve::bench::start_benchmarks(argc, argv);
 }
