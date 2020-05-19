@@ -17,6 +17,7 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_gtz.hpp>
@@ -40,9 +41,26 @@ namespace eve::detail
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const &v0, as_<OUT> const &tgt) noexcept
   {
     if constexpr( scalar_value<IN> )
+    {
       return static_cast<OUT>(v0);
+    }
     else
-      return map(convert, v0, tgt);
+    {
+      using out_t = as_wide_t<OUT, cardinal_t<IN>>;
+
+      // If input or output are aggregated, we can slice and combine without lose of performance
+      if constexpr( has_aggregated_abi_v<IN> || has_aggregated_abi_v<out_t> )
+      {
+        auto[l,h] = v0.slice();
+        auto ll = eve::convert(l,tgt);
+        auto hh = eve::convert(h,tgt);
+        return out_t{ll,hh};
+      }
+      else
+      {
+        return map(convert, v0, tgt);
+      }
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////
