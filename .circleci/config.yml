@@ -16,6 +16,11 @@ docker_gcc: &docker_gcc
     - image: compilaction/gcc-dev:latest
       environment:
         COMPILER: g++
+docker_clang: &docker_clang
+  docker:
+    - image: compilaction/clang-dev:latest
+      environment:
+        COMPILER: clang++
 docker_aarch64: &docker_aarch64
   docker:
     - image: compilaction/gcc-dev:latest
@@ -28,6 +33,8 @@ docker_aarch64: &docker_aarch64
 ##==================================================================================================
 config_gcc_x86: &config_gcc_x86
   <<: *docker_gcc
+config_clang_x86: &config_clang_x86
+  <<: *docker_clang
 config_aarch64: &config_aarch64
  <<: *docker_aarch64
 
@@ -40,6 +47,32 @@ jobs:
   ##================================================================================================
   gcc_x86:
     <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running Basic Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX
+          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - FMA3
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
+
+  clang_x86:
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -145,6 +178,7 @@ workflows:
     ## All tests
     ##==============================================================================================
       - gcc_x86
+      - clang_x86
       - arm_aarch64
       - arm_aarch64_neon:
           requires:
