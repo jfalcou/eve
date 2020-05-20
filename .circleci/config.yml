@@ -56,7 +56,7 @@ jobs:
           command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx -mfma" . .circleci/perform_basic.sh
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
@@ -119,7 +119,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
 
   x86_avx2:
     <<: *config_gcc_x86
