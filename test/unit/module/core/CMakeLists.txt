@@ -249,7 +249,9 @@ make_all_units(ROOT core NAME sinpicospi            ARCH scalar simd TYPES ${rea
 make_all_units(ROOT core NAME sqr                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME sqr_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME sqrt                  ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT core NAME stirling              ARCH scalar simd TYPES ${real_types}    )
+### TEMPORARY MEASURE
+### make_all_units(ROOT core NAME stirling              ARCH scalar simd TYPES ${real_types}    )
+### TEMPORARY MEASURE
 make_all_units(ROOT core NAME sub                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME tan                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME tand                  ARCH scalar simd TYPES ${real_types}    )
