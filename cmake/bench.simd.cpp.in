@@ -8,6 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <cstdint>
+#include <cstddef>
 #include <eve/wide.hpp>
 
 using EVE_TYPE  = eve::wide<${target}>;

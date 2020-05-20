@@ -21,3 +21,4 @@ add_dependencies(bench std.bench)
 ## List of tests
 ##==================================================================================================
 make_all_benchs(ROOT std NAME acos  ARCH scalar TYPES ${real_types} )
+make_all_benchs(ROOT std NAME asin  ARCH scalar TYPES ${real_types} )
