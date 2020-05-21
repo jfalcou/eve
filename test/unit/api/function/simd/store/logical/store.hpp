@@ -24,7 +24,7 @@ using eve::fixed;
 using eve::logical;
 using eve::wide;
 
-template<int N> std::array<logical<EVE_TYPE>, 3 * N> target;
+template<int N> alignas(wide<EVE_TYPE>::alignment()) std::array<logical<EVE_TYPE>, 3 * N> target;
 
 TTS_CASE_TPL("Check store behavior to unaligned logical pointer",
               fixed<1>,
