@@ -9,46 +9,24 @@
 **/
 //==================================================================================================
 #include <eve/function/if_else.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::if_else return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::if_else(EVE_TYPE()               , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(eve::logical<EVE_TYPE>() , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(true                 , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::if_else, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::if_else behavior with arithmetic alternatives")
-{
-  EVE_TYPE tv{2};
-  EVE_TYPE fv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
-
-  TTS_EQUAL(eve::if_else(1    , tv, fv), tv);
-  TTS_EQUAL(eve::if_else(1.0  , tv, fv), tv);
-  TTS_EQUAL(eve::if_else(true , tv, fv), tv);
-  TTS_EQUAL(eve::if_else(t    , tv, fv), tv);
-  TTS_EQUAL(eve::if_else(0    , tv, fv), fv);
-  TTS_EQUAL(eve::if_else(0.0  , tv, fv), fv);
-  TTS_EQUAL(eve::if_else(false, tv, fv), fv);
-  TTS_EQUAL(eve::if_else(f    , tv, fv), fv);
-}
-
-TTS_CASE("Check eve::if_else behavior with logical alternatives")
-{
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
-
-  TTS_EQUAL(eve::if_else(1    , t, f), t);
-  TTS_EQUAL(eve::if_else(1.0  , t, f), t);
-  TTS_EQUAL(eve::if_else(true , t, f), t);
-  TTS_EQUAL(eve::if_else(t    , t, f), t);
-  TTS_EQUAL(eve::if_else(0    , t, f), f);
-  TTS_EQUAL(eve::if_else(0.0  , t, f), f);
-  TTS_EQUAL(eve::if_else(false, t, f), f);
-  TTS_EQUAL(eve::if_else(f    , t, f), f);
+  EVE_REGISTER_BENCHMARK(eve::if_else, EVE_TYPE
+                        , eve::bench::random<L_TYPE>(0, 1)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  eve::bench::start_benchmarks(argc, argv);
 }

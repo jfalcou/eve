@@ -16,7 +16,7 @@
 int main(int argc, char** argv)
 {
   EVE_REGISTER_BENCHMARK(eve::acotpi, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE<(), eve::Valmax<EVE_VALUE>()));
+                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE(), eve::Valmax<EVE_VALUE>()));
 
 
   eve::bench::start_benchmarks(argc, argv);

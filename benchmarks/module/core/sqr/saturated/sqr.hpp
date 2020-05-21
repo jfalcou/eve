@@ -9,36 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/sqr.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::saturated_(eve::sqr) return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::sqr)(EVE_TYPE(0)), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::saturated_(eve::sqr), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::sqr behavior")
-{
-  TTS_EQUAL(eve::saturated_(eve::sqr)(EVE_TYPE(1)), (EVE_TYPE(1)));
-  TTS_EQUAL(eve::saturated_(eve::sqr)(EVE_TYPE(2)), (EVE_TYPE(4)));
-
-  if constexpr(std::is_signed_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(4)));
-  }
-
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
-  }
-
-  if constexpr(std::is_integral_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<EVE_TYPE>())), eve::Valmax<EVE_TYPE>());
-  }
+  eve::bench::start_benchmarks(argc, argv);
 }

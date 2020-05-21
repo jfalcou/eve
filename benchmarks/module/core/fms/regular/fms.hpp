@@ -9,18 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/fms.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::fms return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::fms(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::fms, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::fms behavior")
-{
-  TTS_EQUAL(eve::fms(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::fms(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(3)));
-  TTS_EQUAL(eve::fms(EVE_TYPE(8), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(33)));
+  eve::bench::start_benchmarks(argc, argv);
 }
-

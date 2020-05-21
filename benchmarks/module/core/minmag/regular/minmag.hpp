@@ -9,45 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/minmag.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::minmag return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::minmag(EVE_TYPE(0)  , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minmag(EVE_VALUE(0) , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minmag(EVE_TYPE(0)  , EVE_VALUE(0)) , (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lminmag = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::minmag, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lminmag)
+                        , eve::bench::random<EVE_TYPE>(lmin,lminmag));
 
-TTS_CASE("Check eve::minmag behavior")
-{
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_TYPE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
-
-  TTS_EQUAL(eve::minmag((EVE_VALUE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(0)), (EVE_TYPE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(1)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
-
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_VALUE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_VALUE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_VALUE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_VALUE(1))), (EVE_TYPE(1)));
-
-  if constexpr(std::is_signed_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
-
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
-
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
-  }
+  eve::bench::start_benchmarks(argc, argv);
 }

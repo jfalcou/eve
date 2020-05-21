@@ -9,31 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/logical_not.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check logical_not return type")
+int main(int argc, char** argv)
 {
-  using eve::logical;
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::logical_not, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  TTS_EXPR_IS((eve::logical_not(EVE_TYPE())          ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_not(logical<EVE_TYPE>()) ), (logical<EVE_TYPE>));
-}
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  EVE_REGISTER_BENCHMARK(eve::logical_not, L_TYPE
+                        , eve::bench::random<L_TYPE>(0, 1));
 
-TTS_CASE("Check eve::logical_not behavior")
-{
-  TTS_EQUAL(eve::logical_not(EVE_TYPE(1))             , eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_not(EVE_TYPE(0))             , eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_not(eve::Allbits<EVE_TYPE>()), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_not(eve::True<EVE_TYPE>())   , eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_not(eve::False<EVE_TYPE>())  , eve::True<EVE_TYPE>() );
-}
-
-TTS_CASE("Check eve::operator! behavior")
-{
-  TTS_EQUAL(!eve::True<EVE_TYPE>()  , eve::False<EVE_TYPE>());
-  TTS_EQUAL(!eve::False<EVE_TYPE>() , eve::True<EVE_TYPE>());
+  eve::bench::start_benchmarks(argc, argv);
 }

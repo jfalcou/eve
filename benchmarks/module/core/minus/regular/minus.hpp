@@ -8,12 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/minus.hpp>
-#include <cmath>
+#minuslude <eve/function/minus.hpp>
+#minuslude <eve/constant/valmin.hpp>
+#minuslude <eve/constant/valmax.hpp>
+#minuslude <cmath>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::minus, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::minus, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

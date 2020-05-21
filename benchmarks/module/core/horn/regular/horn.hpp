@@ -9,35 +9,43 @@
 **/
 //==================================================================================================
 #include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <tts/tests/relation.hpp>
 #include <type_traits>
 
-#ifndef HORN_INCLUDED
-#define HORN_INCLUDED
-template<typename T> constexpr auto coeff0()
+int main(int argc, char** argv)
 {
-  if constexpr( std::is_same_v<T, float> )  return 0x00000000U;
-  else                                      return 0x00000000ULL;
-}
-
-template<typename T> constexpr auto coeff1()
-{
-  if constexpr( std::is_same_v<T, float> )  return 0x3f800000U;
-  else                                      return 0x3FF0000000000000ULL;
-}
-
-template<typename T> constexpr auto coeff2()
-{
-  if constexpr( std::is_same_v<T, float> )  return 0x40000000U;
-  else                                      return 0x4000000000000000ULL;
-}
-#endif
-
-TTS_CASE("Check eve::horn behavior")
-{
-  using eve::detail::horn;
-
-  TTS_EQUAL((horn<EVE_TYPE, coeff0<EVE_VALUE>()>(EVE_TYPE(0)))                                  , (EVE_TYPE(0)));
-  TTS_EQUAL((horn<EVE_TYPE, coeff1<EVE_VALUE>(), coeff0<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(1))), (EVE_TYPE(2)));
-  TTS_EQUAL((horn<EVE_TYPE, coeff2<EVE_VALUE>(), coeff1<EVE_VALUE>(), coeff1<EVE_VALUE>()>(EVE_TYPE(2))), (EVE_TYPE(8)));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  if constexpr(std::is_same_v<EVE_VALUE, double>)
+  {
+    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    auto f = [](auto z){
+      return eve::detail::horn<EVE_TYPE,
+      i_t(0x403c896240f3081dll),
+      i_t(0xc03991aaac01ab68ll),
+      i_t(0x401bdff5baf33e6all),
+      i_t(0xbfe2079259f9290fll),
+      i_t(0x3f684fc3988e9f08ll)
+      >(z);
+    };
+    EVE_REGISTER_BENCHMARK(f, EVE_TYPE
+                          , eve::bench::random<EVE_TYPE>(-1., 1.));
+    eve::bench::start_benchmarks(argc, argv);
+  }
+  else if constexpr(std::is_same_v<EVE_VALUE, float>)
+  {
+    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    auto f = [](auto z){
+      return eve::detail::horn<EVE_TYPE,
+      i_t(0x3e2aaae4u),
+      i_t(0x3d9980f6u),
+      i_t(0x3d3a3ec7u),
+      i_t(0x3cc617e3u),
+      i_t(0x3d2cb352u)
+      > (z);
+    };
+    EVE_REGISTER_BENCHMARK(f, EVE_TYPE
+                          , eve::bench::random<EVE_TYPE>(-1.f, 1.f));
+    eve::bench::start_benchmarks(argc, argv);
+  }
 }

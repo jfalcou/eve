@@ -9,42 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/minus.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/logical.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check conditional eve::minus return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::minus[ EVE_VALUE(0)  ](EVE_TYPE(0))              , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minus[ (EVE_TYPE(0)) ](EVE_TYPE(0))              , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minus[ (eve::logical<EVE_TYPE>(0))](EVE_TYPE(0)) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minus[ eve::logical<EVE_VALUE>(0) ](EVE_TYPE(0)) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minus[ true ](EVE_TYPE(0))                   , (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::minus, EVE_TYPE
+                        , eve::bench::random<L_TYPE>(0, 1)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check conditional eve::minus behavior")
-{
-  EVE_TYPE tv(2);
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
-
-  TTS_EQUAL(eve::minus[ 1 ](tv)   , (EVE_TYPE(-tv)));
-  TTS_EQUAL(eve::minus[ 1.0 ](tv) , (EVE_TYPE(-tv)));
-  TTS_EQUAL(eve::minus[ true ](tv), (EVE_TYPE(-tv)));
-  TTS_EQUAL(eve::minus[ t ](tv)   , (EVE_TYPE(-tv)));
-
-  TTS_EQUAL(eve::minus[ 0 ](tv)     , tv);
-  TTS_EQUAL(eve::minus[ 0.0 ](tv)   , tv);
-  TTS_EQUAL(eve::minus[ false ](tv) , tv);
-  TTS_EQUAL(eve::minus[ f ](tv)     , tv);
-
-    // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
-
-  TTS_EQUAL(eve::minus[ m ](tv), eve::if_else(m,  (EVE_TYPE(-tv)), tv) );
+  eve::bench::start_benchmarks(argc, argv);
 }

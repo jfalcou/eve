@@ -8,9 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_less_equal.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/function/hypot.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
@@ -18,9 +18,16 @@ int main(int argc, char** argv)
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::is_less_equal, EVE_TYPE
+  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::hypot), EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        );
+
+  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::hypot), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        );
 
   eve::bench::start_benchmarks(argc, argv);
 }

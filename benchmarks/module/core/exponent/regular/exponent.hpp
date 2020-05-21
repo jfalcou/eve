@@ -9,11 +9,16 @@
 **/
 //==================================================================================================
 #include <eve/function/exponent.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::exponent, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Maxlog<EVE_VALUE>();
+  auto lmax = eve::Minlog<EVE_VALUE>();
+   EVE_REGISTER_BENCHMARK(eve::exponent, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

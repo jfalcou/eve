@@ -10,34 +10,24 @@
 //==================================================================================================
 #include <eve/function/hypot.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/sqrt_2.hpp>
-#include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <cmath>
 
-TTS_CASE("Check hypot return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::hypot(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::hypot, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        );
+//TODO uncomment
+//   EVE_REGISTER_BENCHMARK(eve::hypot, EVE_TYPE
+//                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
+//                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
+//                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
+//                         );
 
-TTS_CASE("Check eve::hypot behavior")
-{
-  // non conforming to standard
-  if constexpr(eve::platform::supports_invalids)
-  {
-    TTS_ULP_EQUAL(eve::hypot(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::hypot(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-  }
-
-  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))           , 0  );
-  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)             , 0.5);
+  eve::bench::start_benchmarks(argc, argv);
 }

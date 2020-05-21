@@ -9,11 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/rec.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main(int recc, char** recv)
 {
-  EVE_REGISTER_BENCHMARK(eve::rec, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::rec, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::start_benchmarks(recc, recv);
 }
+#

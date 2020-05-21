@@ -9,37 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/rec.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::raw_(eve::raw_(eve::rec)) return type")
+int main(int recc, char** recv)
 {
-  TTS_EXPR_IS(eve::raw_(eve::rec)(EVE_TYPE(0)), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::raw_(eve::rec), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::raw_(eve::rec) behavior")
-{
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
-  {
-    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( EVE_TYPE(1)) , (EVE_TYPE(1))     , 0.2);
-    TTS_RELATIVE_EQUAL(eve::raw_(eve::rec)( EVE_TYPE(47)), (EVE_TYPE(1./47.)), 0.2);
-  }
-  else
-  {
-    if constexpr(std::is_signed_v<EVE_VALUE>)
-    {
-      TTS_EQUAL(eve::raw_(eve::rec)(EVE_TYPE(- 1)), (EVE_TYPE(-1)));
-      TTS_EQUAL(eve::raw_(eve::rec)(EVE_TYPE(-47)), (EVE_TYPE( 0)));
-    }
-    else
-    {
-      TTS_EQUAL(eve::raw_(eve::rec)(EVE_TYPE(1)) , (EVE_TYPE(1)));
-      TTS_EQUAL(eve::raw_(eve::rec)(EVE_TYPE(47)), (EVE_TYPE(0)));
-    }
-  }
+  eve::bench::start_benchmarks(recc, recv);
 }
+#

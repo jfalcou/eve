@@ -9,44 +9,32 @@
 **/
 //==================================================================================================
 #include <eve/function/if_else.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/mone.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::if_else return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::if_else(EVE_TYPE()               , EVE_TYPE(), eve::mone_), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(eve::logical<EVE_TYPE>() , EVE_TYPE(), eve::mone_), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(true                 , EVE_TYPE(), eve::mone_), (EVE_TYPE));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto fl = [](auto a,  auto b){ return eve::if_else(a, b, eve::mone_); };
+  EVE_REGISTER_BENCHMARK(fl, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  TTS_EXPR_IS(eve::if_else(EVE_TYPE()               , eve::mone_, EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(eve::logical<EVE_TYPE>() , eve::mone_, EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(true                 , eve::mone_, EVE_TYPE()), (EVE_TYPE));
-}
+  EVE_REGISTER_BENCHMARK(fl, EVE_TYPE
+                        , eve::bench::random<L_TYPE>(0, 1)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto fr = [](auto a,  auto b){ return eve::if_else(a, eve::mone_, b); };
 
-TTS_CASE("Check eve::if_else(., ., mone_) behavior ")
-{
-  auto f = EVE_TYPE(-1);
-  auto t = EVE_TYPE(9);
+  EVE_REGISTER_BENCHMARK(fr, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  TTS_IEEE_EQUAL(eve::if_else(1                 , t, eve::mone_), t);
-  TTS_IEEE_EQUAL(eve::if_else(1.0               , t, eve::mone_), t);
-  TTS_IEEE_EQUAL(eve::if_else(true              , t, eve::mone_), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<EVE_TYPE>() , t, eve::mone_), t);
-  TTS_IEEE_EQUAL(eve::if_else(0                 , t, eve::mone_), f);
-  TTS_IEEE_EQUAL(eve::if_else(0.0               , t, eve::mone_), f);
-  TTS_IEEE_EQUAL(eve::if_else(false             , t, eve::mone_), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False<EVE_TYPE>(), t, eve::mone_), f);
-
-  TTS_IEEE_EQUAL(eve::if_else(1                 , eve::mone_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(1.0               , eve::mone_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(true              , eve::mone_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<EVE_TYPE>() , eve::mone_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(0                 , eve::mone_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(0.0               , eve::mone_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(false             , eve::mone_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False<EVE_TYPE>(), eve::mone_, t), t);
+  EVE_REGISTER_BENCHMARK(fr, EVE_TYPE
+                        , eve::bench::random<L_TYPE>(0, 1)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+ eve::bench::start_benchmarks(argc, argv);
 }

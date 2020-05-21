@@ -9,46 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/negatenz.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::pedantic_(eve::negatenz) return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::negatenz)(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::negatenz), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE(" negatenz behaviour")
-{
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
-  {
-    if constexpr(eve::platform::supports_invalids)
-    {
-      TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>());
-      TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Inf<EVE_TYPE>());
-      TTS_ULP_EQUAL((eve::pedantic_(eve::negatenz)(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-      TTS_ULP_EQUAL((eve::pedantic_(eve::negatenz)(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-      TTS_ULP_EQUAL((eve::pedantic_(eve::negatenz)(eve::Zero<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-      TTS_ULP_EQUAL((eve::pedantic_(eve::negatenz)(eve::One<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-      TTS_ULP_EQUAL((eve::pedantic_(eve::negatenz)(eve::Nan<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    }
-    TTS_EQUAL((eve::pedantic_(eve::negatenz)(eve::One<EVE_TYPE>(), eve::Mzero<EVE_TYPE>())), eve::Mone<EVE_TYPE>()); 
-    TTS_EQUAL((eve::pedantic_(eve::negatenz)(EVE_TYPE(2), EVE_TYPE(-3))), EVE_TYPE(-2));
-    TTS_EQUAL((eve::pedantic_(eve::negatenz)(EVE_TYPE(2), EVE_TYPE(3))), EVE_TYPE(2));
-  }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>()), eve::One<EVE_TYPE>());
-    TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::Mone<EVE_TYPE>(), eve::One<EVE_TYPE>()), eve::Mone<EVE_TYPE>());
-  }
-  TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>()), eve::One<EVE_TYPE>());
-  TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL(eve::pedantic_(eve::negatenz)(eve::One<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>());
+  eve::bench::start_benchmarks(argc, argv);
 }

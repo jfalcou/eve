@@ -9,11 +9,14 @@
 **/
 //==================================================================================================
 #include <eve/function/log10.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::log10, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::log10, EVE_TYPE, eve::bench::random<EVE_TYPE>(EVE_VALUE(0), lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

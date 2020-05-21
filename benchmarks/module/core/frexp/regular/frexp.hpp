@@ -9,32 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/frexp.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check frexp return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS((eve::frexp(EVE_TYPE())), (std::tuple<EVE_TYPE,EVE_TYPE>));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::frexp, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check (eve::frexp behavior")
-{
-  {
-    auto [p0, p1] = eve::frexp(EVE_TYPE(1));
-    TTS_EQUAL(p0, EVE_TYPE(0.5));
-    TTS_EQUAL(p1, EVE_TYPE(1));
-  }
-  {
-    auto [p0, p1] = eve::frexp(EVE_TYPE(0));
-    TTS_EQUAL (p0 , EVE_TYPE(0));
-    TTS_EQUAL (p1, EVE_TYPE(0));
-  }
+  eve::bench::start_benchmarks(argc, argv);
 }
+#

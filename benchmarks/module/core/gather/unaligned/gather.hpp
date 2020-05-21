@@ -9,30 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/gather.hpp>
+#include <eve/memory/aligned_ptr.hpp>
 #include <tts/tests/relation.hpp>
 
-TTS_CASE("Check eve::gather behavior with 32 bits indexes")
+int main(int argc, char** argv)
 {
-  EVE_VALUE data[EVE_CARDINAL];
-  for(std::size_t i = 0;i<EVE_CARDINAL;++i) data[i] = EVE_VALUE(1) + i;
-
-  eve::wide<std::int32_t, eve::fixed<EVE_CARDINAL>> maps([](auto i, auto c) { return i%3 ? i : c-i-1; });
-  EVE_TYPE ref( [&](auto i, auto) { return data[maps[i]]; } );
-
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
+  int N = eve::cardinal_v<EVE_TYPE>;
+  EVE_VALUE data[2*N];
+  for(std::size_t i = 0;i<2*N;++i) data[i] = EVE_VALUE(1) + i;
   const EVE_VALUE* cdata = &data[0];
-  TTS_EQUAL( ref, eve::gather(cdata   , maps) );
-  TTS_EQUAL( ref, eve::gather(&data[0], maps) );
-}
+  auto g =  [&cdata](auto i){ return eve::gather(cdata, i); };
+  EVE_REGISTER_BENCHMARK(g, EVE_TYPE
+                        , eve::bench::random<I_TYPE>(0, 2*N-1));
 
-TTS_CASE("Check eve::gather behavior with 64 bits indexes")
-{
-  EVE_VALUE data[EVE_CARDINAL];
-  for(std::size_t i = 0;i<EVE_CARDINAL;++i) data[i] = EVE_VALUE(1) + i;
-
-  eve::wide<std::int64_t, eve::fixed<EVE_CARDINAL>> maps([](auto i, auto c) { return i%3 ? i : c-i-1; });
-  EVE_TYPE ref( [&](auto i, auto) { return data[maps[i]]; } );
-
-  const EVE_VALUE* cdata = &data[0];
-  TTS_EQUAL( ref, eve::gather(cdata   , maps) );
-  TTS_EQUAL( ref, eve::gather(&data[0], maps) );
+  eve::bench::start_benchmarks(argc, argv);
 }

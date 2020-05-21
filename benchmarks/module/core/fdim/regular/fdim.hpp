@@ -9,39 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/fdim.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <type_traits>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::fdim return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::fdim(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Maxlog<EVE_VALUE>();
+  auto lmax = eve::Minlog<EVE_VALUE>();
+   EVE_REGISTER_BENCHMARK(eve::fdim, EVE_TYPE
+                         , eve::bench::random<EVE_TYPE>(lmin, lmax)
+                         , eve::bench::random<EVE_TYPE>(lmin, lmax));
 
-TTS_CASE(" fdim behaviour")
-{
-  if constexpr(eve::platform::supports_invalids)
-  {
-    TTS_EQUAL(eve::fdim(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
-    TTS_EQUAL(eve::fdim(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Zero<EVE_TYPE>());
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Zero<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL((eve::fdim(eve::Nan<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Nan<EVE_TYPE>(), 0);
-  }
-  TTS_EQUAL((eve::fdim(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL((eve::fdim(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL((eve::fdim(eve::One<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::One<EVE_TYPE>());
-  TTS_EQUAL((eve::fdim(EVE_TYPE(2), EVE_TYPE(-3))), EVE_TYPE(5));
-  TTS_EQUAL((eve::fdim(EVE_TYPE(2), EVE_TYPE(3))), EVE_TYPE(0));
+  eve::bench::start_benchmarks(argc, argv);
 }

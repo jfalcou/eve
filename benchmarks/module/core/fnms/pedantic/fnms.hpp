@@ -9,31 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/fnms.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check eve::fnms return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::fnms)(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::fnms), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::pedantic_(eve::fnms) behavior")
-{
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-7)));
-  TTS_EQUAL(eve::pedantic_(eve::fnms)(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), (EVE_TYPE(-17)));
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
-  {
-    EVE_TYPE e = eve::Eps<EVE_TYPE>();
-    TTS_EQUAL(eve::pedantic_(eve::fnms)(eve::inc(e), eve::dec(e), eve::One<EVE_TYPE>()), -(eve::sqr(e)));
-  }
-  
+  eve::bench::start_benchmarks(argc, argv);
 }
