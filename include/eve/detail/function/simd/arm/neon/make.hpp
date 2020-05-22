@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   // Arithmetic cases
   //================================================================================================
-  template<typename T, typename ABI> struct neon_maker
+  template<real_scalar_value T, typename ABI> struct neon_maker
   {
     template<typename... Vs> auto operator()(Vs... vs) const
     {
@@ -57,7 +57,7 @@ namespace eve::detail
   //================================================================================================
   // Logical cases
   //================================================================================================
-  template<typename T, typename ABI> struct neon_maker<logical<T>, ABI>
+  template<real_scalar_value T, typename ABI> struct neon_maker<logical<T>, ABI>
   {
     template<typename... Vs> auto operator()(Vs... vs) const
     {
@@ -83,13 +83,13 @@ namespace eve::detail
     }
   };
 
-  template<typename T, typename... Vs>
+  template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::neon64_ const &, Vs... vs) noexcept
   {
     return neon_maker<logical<T>, eve::neon64_> {}(vs...);
   }
 
-  template<typename T, typename... Vs>
+  template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::neon128_ const &, Vs... vs) noexcept
   {
     return neon_maker<logical<T>, eve::neon128_> {}(vs...);

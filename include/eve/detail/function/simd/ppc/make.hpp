@@ -21,7 +21,7 @@ namespace eve::detail
   //================================================================================================
   // arithmetic cases
   //================================================================================================
-  template<typename T, typename... Vs>
+  template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
     using type = as_register_t<T, fixed<sizeof...(vs)>, eve::ppc_>;
@@ -29,7 +29,7 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T, typename V>
+  template<real_scalar_value T, typename V>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::ppc_ const &, V v) noexcept
   {
     auto impl = [&](auto... I) {
@@ -47,7 +47,7 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<typename T, typename... Vs>
+  template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::ppc_ const &, Vs... vs) noexcept
   {
     using type = as_register_t<logical<T>, fixed<sizeof...(vs)>, eve::ppc_>;
@@ -55,7 +55,7 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T, typename V>
+  template<real_scalar_value T, typename V>
   EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::ppc_ const &, V v) noexcept
   {
     using ltype = logical<T>;
