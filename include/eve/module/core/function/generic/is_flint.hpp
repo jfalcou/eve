@@ -36,8 +36,11 @@ namespace eve::detail
                                           , pedantic_type const &
                                           , T const &a) noexcept
   {
-    if constexpr(integral_value<T>)   return True<T>();
-    if constexpr(has_native_abi_v<T>) return is_eqz(frac(a)) && (a < eve::Maxflint<T>());
+    if constexpr(has_native_abi_v<T>)
+    {
+      if constexpr(integral_value<T>) return True<T>();
+      if constexpr(floating_value<T>) return is_eqz(frac(a)) && (a <= eve::Maxflint<T>());
+    }
     else                              return apply_over(pedantic_(is_flint), a);
   }
 }
