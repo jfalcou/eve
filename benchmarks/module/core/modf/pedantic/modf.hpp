@@ -19,6 +19,7 @@ int main(int argc, char** argv)
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
   EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::modf), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);

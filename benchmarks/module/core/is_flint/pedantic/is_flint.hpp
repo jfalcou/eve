@@ -9,28 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/is_flint.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE_TPL("Check eve::is_flint return type", EVE_TYPE)
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::is_flint(T(0)), eve::logical<T>);
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::is_flint), EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE_TPL("Check eve::is_flint behavior", EVE_TYPE)
-{
-  TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1)), eve::True<T>() );
-  TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(2)), eve::True<T>() );
-
-  if constexpr(eve::floating_value<T>)
-  {
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1) / T(2)), eve::False<T>());
-    TTS_EQUAL(eve::pedantic_(eve::Maxflint<T>()),  eve::True<T>());
-    TTS_EQUAL(eve::pedantic_(eve::Maxflint<T>()*2), eve::False<T>());
-    TTS_EQUAL(eve::pedantic_(eve::Valmax<T>()*2), eve::False<T>());
-  }
+  eve::bench::start_benchmarks(argc, argv);
 }

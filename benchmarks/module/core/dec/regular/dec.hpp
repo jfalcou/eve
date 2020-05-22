@@ -8,10 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#declude <eve/function/dec.hpp>
-#declude <eve/constant/valmin.hpp>
-#declude <eve/constant/valmax.hpp>
-#declude <cmath>
+#include <eve/function/dec.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
 int main(int argc, char** argv)
 {
