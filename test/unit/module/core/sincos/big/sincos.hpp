@@ -12,6 +12,8 @@
 #include <eve/constant/pi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/function/ulpdist.hpp>
+#include <eve/function/all.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
@@ -29,15 +31,26 @@ TTS_CASE_TPL("Check  eve::big_(eve::sincos) behavior", EVE_TYPE)
   auto max_v = eve::Valmax<v_t>();
   auto min_v = eve::Valmin<v_t>();
 
-  v_t x[] = {  pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, v_t(1), v_t(-1), v_t(10), v_t(-10)
-            , v_t(1000000), v_t(-1000000), v_t(1000000000), v_t(-1000000000)
-            , max_v, min_v, max_v/100000, min_v/10000
-            };
+  v_t x[] = {  pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, v_t(1), v_t(-1), v_t(10), v_t(-10)};
 
-  for(auto v : x)
+  v_t y[] = { v_t(1000000), v_t(-1000000), v_t(1000000000), v_t(-1000000000)
+              , max_v, min_v, max_v/100000, min_v/10000  };
+
+ for(int i=0; i < 8; ++i)
   {
-    auto [p0, p1] = eve::big_(eve::sincos)(T(v));
-    TTS_ULP_EQUAL(p0, T(std::sin(v)), 0.5);
-    TTS_ULP_EQUAL(p1, T(std::cos(v)), 0.5);
+    auto [p0, p1] = eve::big_(eve::sincos)(T(x[i]));
+    v_t pp0 = std::sin(x[i]);
+    v_t pp1 = std::cos(x[i]);
+    TTS_ULP_EQUAL(p0, T(pp0), 0.5);
+    TTS_ULP_EQUAL(p1, T(pp1), 0.5);
+  }
+
+  for(int i=0; i < 8; ++i)
+  {
+    auto [p0, p1] = eve::big_(eve::sincos)(T(y[i]));
+    v_t pp0 = std::sin(y[i]);
+    v_t pp1 = std::cos(y[i]);
+    TTS_ULP_EQUAL(p0, T(pp0), 0.5);
+    TTS_ULP_EQUAL(p1, T(pp1), 0.5);
   }
 }
