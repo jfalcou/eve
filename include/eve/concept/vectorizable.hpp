@@ -12,92 +12,43 @@
 #define EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
-#include <concepts>
 #include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
+
+#include <concepts>
 #include <type_traits>
 
 namespace eve::detail
 {
-  template<typename Type>
-  struct is_Vectorizable : std::is_arithmetic<Type>
-  {
-  };
+  //==============================================================================================
+  // Check if something is a scalar_value
+  //==============================================================================================
+  template<typename T> struct is_scalar_value : std::is_arithmetic<T>
+  {};
+
+  template<typename T>
+  struct is_scalar_value<eve::logical<T>> : std::is_arithmetic<T>
+  {};
 
   template<typename Type>
-  struct is_Vectorizable<Type &> : is_Vectorizable<Type>
+  requires( rebindable<Type> && !detail::is_wide<Type>::value )
+  struct is_scalar_value<Type>
   {
-  };
+    template<typename Idx>      struct eval_n;
+    template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
+    {
+      static constexpr bool value = (is_scalar_value<std::tuple_element_t<N,Type>>::value && ...);
+    };
 
-  template<typename Type>
-  struct is_Vectorizable<Type const> : is_Vectorizable<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorizable<Type const &> : is_Vectorizable<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorizable<Type &&> : is_Vectorizable<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorizable<logical<Type>> : is_Vectorizable<Type>
-  {
+    using size = std::tuple_size<Type>;
+    static constexpr bool value = eval_n<std::make_index_sequence<size::value>>::value;
   };
 }
 
 namespace eve
 {
-  template<typename Type>
-  struct is_Vectorizable : detail::is_Vectorizable<Type>
-  {
-  };
-
-  template<typename Type>
-  using is_Vectorizable_t = typename is_Vectorizable<Type>::type;
-
-  template<typename Type>
-  inline constexpr bool is_Vectorizable_v = is_Vectorizable_t<Type>::value;
-
-  template<typename Type>
-  using Vectorizable = std::enable_if_t<is_Vectorizable_v<Type>>;
-
-
-  namespace detail
-  {
-    //==============================================================================================
-    // Check if something is a scalar_value
-    //==============================================================================================
-    template<typename T> struct is_scalar_value : std::is_arithmetic<T>
-    {};
-
-    template<typename T>
-    struct is_scalar_value<eve::logical<T>> : std::is_arithmetic<T>
-    {};
-
-    template<typename Type>
-    requires( rebindable<Type> && !detail::is_wide<Type>::value )
-    struct is_scalar_value<Type>
-    {
-      template<typename Idx>      struct eval_n;
-      template<std::size_t... N>  struct eval_n<std::index_sequence<N...>>
-      {
-        static constexpr bool value = (is_scalar_value<std::tuple_element_t<N,Type>>::value && ...);
-      };
-
-      using size = std::tuple_size<Type>;
-      static constexpr bool value = eval_n<std::make_index_sequence<size::value>>::value;
-    };
-  }
-
-  template<typename Type> concept vectorizable = is_Vectorizable_v<Type>;
-
   template<typename T> concept scalar_value                   = detail::is_scalar_value<T>::value;
 
   template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
@@ -109,7 +60,6 @@ namespace eve
   template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
   template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
-
 }
 
 #endif

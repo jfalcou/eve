@@ -82,16 +82,15 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a Range
     //==============================================================================================
-    template<typename Iterator>
+    template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
-                    requires( std::input_iterator<Iterator> )
-        : data_(detail::load(as_<wide>{}, abi_type{}, b, e))
+                  : data_(detail::load(as_<wide>{}, abi_type{}, b, e))
     {
     }
 
-    template<typename Range>
+    template<detail::range Range>
     EVE_FORCEINLINE explicit wide(Range &&r) noexcept
-          requires( detail::range<Range> && !is_Vectorized_v<Range> && !std::same_as<storage_type, Range>)
+          requires( !simd_value<Range> && !std::same_as<storage_type, Range>)
         : wide(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
     {
     }

@@ -11,75 +11,15 @@
 #ifndef EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 #define EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 
-#include <concepts> // to replace by <concepts> when libc++ is uptodate
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::detail
-{
-  template<typename Type>
-  struct is_Vectorized : std::false_type
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorized<Type &> : is_Vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorized<Type const> : is_Vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorized<Type const &> : is_Vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorized<Type &&> : is_Vectorized<Type>
-  {
-  };
-
-  template<typename Type, typename Size, typename ABI>
-  struct is_Vectorized<wide<Type, Size, ABI>> : std::true_type
-  {
-  };
-
-  template<typename Type>
-  struct is_Vectorized<logical<Type>> : is_Vectorized<Type>
-  {
-  };
-}
+#include <concepts>
 
 namespace eve
 {
-  template<typename Type>
-  struct is_Vectorized : detail::is_Vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  using is_Vectorized_t = typename is_Vectorized<Type>::type;
-
-  template<typename Type>
-  inline constexpr bool is_Vectorized_v = is_Vectorized_t<Type>::value;
-
-  template<typename Type>
-  using Vectorized = std::enable_if_t<is_Vectorized_v<Type>>;
-
-  template<typename T, typename U>
-  using equal_cardinal = std::enable_if_t<cardinal_v<T> == cardinal_v<U>>;
-
-  template<typename N, typename... Us>
-  using has_compatible_cardinal =
-      std::enable_if_t<(((cardinal_v<Us> == N::value) || (cardinal_v<Us> == 1)) && ...)>;
-
-  template<typename Type> concept vectorized = is_Vectorized_v<Type>;
-
   //================================================================================================
   // A type satisfies simd_value iff its cardinal is not scalar_cardinal
   //================================================================================================
@@ -94,7 +34,6 @@ namespace eve
   template<typename T> concept real_simd_value            = simd_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
   template<typename T> concept floating_real_simd_value   = real_simd_value<T> && std::floating_point<detail::value_type_t<T>>;
   template<typename T> concept integral_real_simd_value   = real_simd_value<T> && std::integral<detail::value_type_t<T>>;
-
 }
 
 #endif
