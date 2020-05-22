@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   // Arithmetic cases
   //================================================================================================
-  template<real_scalar_value T, typename ABI> struct neon_maker
+  template<typename T, typename ABI> struct neon_maker
   {
     template<typename... Vs> auto operator()(Vs... vs) const
     {
