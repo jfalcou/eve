@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ABS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ABS_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/value.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/valmax.hpp>

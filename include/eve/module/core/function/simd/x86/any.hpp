@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_ANY_HPP_INCLUDED
 
 #include <eve/arch/limits.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 

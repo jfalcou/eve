@@ -11,7 +11,7 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/slice.hpp>

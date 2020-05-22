@@ -12,9 +12,10 @@
 #define EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
 
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/arch/abi_of.hpp>
 #include <eve/forward.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -31,6 +32,8 @@ namespace eve::detail
 
 namespace eve
 {
+  template<typename T> concept arithmetic = std::is_arithmetic_v<T>;
+
   // Find proper ABI for wide
   template<typename Type, typename Size> struct expected_abi {};
 

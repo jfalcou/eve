@@ -11,7 +11,7 @@
 #ifndef EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 #define EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp> // to replace by <concepts> when libc++ is uptodate
+#include <concepts> // to replace by <concepts> when libc++ is uptodate
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/is_logical.hpp>

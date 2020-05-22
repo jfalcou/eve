@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_NEGATENZ_HPP_INCLUDED
 
 #include <eve/concept/compatible.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>

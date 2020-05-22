@@ -12,7 +12,7 @@
 #define EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
 
 #include <eve/forward.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>

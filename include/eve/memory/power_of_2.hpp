@@ -11,7 +11,7 @@
 #ifndef EVE_MEMORY_POWER_OF_2_HPP_INCLUDED
 #define EVE_MEMORY_POWER_OF_2_HPP_INCLUDED
 
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <climits>
 #include <cstdint>
 

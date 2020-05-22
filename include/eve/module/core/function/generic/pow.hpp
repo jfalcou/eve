@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_POW_HPP_INCLUDED
 
 #include <eve/concept/compatible.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/concept/value.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/constant/nan.hpp>

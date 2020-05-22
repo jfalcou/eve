@@ -12,7 +12,7 @@
 #define EVE_MEMORY_ALIGN_HPP_INCLUDED
 
 #include <eve/memory/power_of_2.hpp>
-#include <eve/concept/stdconcepts.hpp>
+#include <concepts>
 #include <eve/assert.hpp>
 #include <cstdint>
 

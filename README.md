@@ -7,8 +7,8 @@
 ## Purpose
 
 EVE is a reimplementation of the old EVE SIMD library by Falcou et al. which for a while was
-named Boost.SIMD. It's a C++17 and forward implementation of a type based wrapper around
-SIMD extensions sets for most current architectures. It aims at showing how C++17/20 can be used
+named Boost.SIMD. It's a C++20 and onward implementation of a type based wrapper around
+SIMD extensions sets for most current architectures. It aims at showing how C++20 can be used
 to design and implement efficient, low level, high abstraction library suited for high performances.
 
 It's a research project first and an open source library second. We reserve the right to
@@ -19,14 +19,15 @@ needs to change.
 ## What's left to do?
 
 EVE is roughly usable at the moment but we need to:
- - Complete and host the documentations on the web
- - Implement algorithms à la std over SIMD-izable ranges
- - Complete implementations of some functions like multi-register shuffles and some math functions
- - Harden the test suite, especially the exhaustive one
- - Fix potential performance or codegen issues
+ [ ]  Complete and host the documentations on the web
+ [ ]  Implement algorithms à la std over SIMD-izable ranges
+ [ ]  Complete implementations of some functions like multi-register shuffles and some math functions
+ [ ] Fix potential performance or codegen issues
 
 ## FAQ
 
+ - **Why C++20 ?** Becasue we want to be able to use modern design components like Concepts, and later on, Modules.
+ - 
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
  design and implementation decision for such libraries. Vc and its standard version are fine pieces
  of work but we aim at pushing the envelop in term of API and implementation without any standard
