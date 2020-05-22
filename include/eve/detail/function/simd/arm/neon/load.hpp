@@ -258,8 +258,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt,
        eve::neon128_ const &,
-       aligned_ptr<T, Align> p) noexcept Requires(typename wide<T, N>::storage_type,
-                                                  Vectorizable<T>)
+       aligned_ptr<T, Align> p) noexcept
   {
     return load(tgt, mode, aligned_ptr<T const, A>(p));
   }
@@ -268,8 +267,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &,
        eve::neon64_ const &,
-       aligned_ptr<T, Align> p) noexcept Requires(typename wide<T, N>::storage_type,
-                                                  Vectorizable<T>)
+       aligned_ptr<T, Align> p) noexcept
   {
     return load(tgt, mode, aligned_ptr<T const, A>(p));
   }
