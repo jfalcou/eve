@@ -326,9 +326,9 @@ namespace eve
 
     template<typename Other>
     EVE_FORCEINLINE   auto operator%=(Other const &other) noexcept
-                  ->  decltype(detail::self_mod(*this, other))
+                  ->  decltype(detail::self_rem(*this, other))
     {
-      return detail::self_mod(*this, other);
+      return detail::self_rem(*this, other);
     }
 
     // >>= <<=
