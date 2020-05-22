@@ -2,7 +2,6 @@
 #include <eve/wide.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/tags.hpp>
 #include <iostream>
 
 using wide_it = eve::wide<float, eve::fixed<4>>;
