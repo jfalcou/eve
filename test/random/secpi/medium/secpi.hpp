@@ -19,11 +19,18 @@
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
-#include <type_traits>
 
-TTS_CASE("wide random check on secpi")
+TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
 {
-  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((x < eve::Maxflint<EVE_VALUE>()) && eve::is_odd(x*2)) ? eve::Nan<EVE_VALUE>() : eve::rec(boost::math::cos_pi(x)); });
-  eve::rng_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
-  TTS_RANGE_CHECK(p, my_stdsecpi, eve::medium_(eve::secpi)); 
+  using v_t = eve::element_type_t<T>;
+  auto my_stdsecpi =  tts::vectorize<T> ( [](auto x)
+                                          {
+                                            return  ((x < eve::Maxflint<v_t>()) && eve::is_odd(x*2))
+                                                  ? eve::Nan<v_t>()
+                                                  : eve::rec(boost::math::cos_pi(x));
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(v_t(-100000.0), v_t(100000.0));
+  TTS_RANGE_CHECK(p, my_stdsecpi, eve::medium_(eve::secpi));
 }

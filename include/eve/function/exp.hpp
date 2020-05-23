@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_EXP_HPP_INCLUDED
 
 #include <eve/function/definition/exp.hpp>
-#include <eve/module/core/function/scalar/exp.hpp>
-#include <eve/module/core/function/simd/exp.hpp>
+#include <eve/module/core/function/generic/exp.hpp>
 
 #endif

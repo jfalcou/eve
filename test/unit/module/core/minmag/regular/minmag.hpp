@@ -12,42 +12,44 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::minmag return type")
+TTS_CASE_TPL("Check eve::minmag return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::minmag(EVE_TYPE(0)  , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minmag(EVE_VALUE(0) , EVE_TYPE(0) ) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::minmag(EVE_TYPE(0)  , EVE_VALUE(0)) , (EVE_TYPE));
+  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::minmag(T(0)  , T(0)  ) , T);
+  TTS_EXPR_IS(eve::minmag(v_t(0), T(0)  ) , T);
+  TTS_EXPR_IS(eve::minmag(T(0)  , v_t(0)) , T);
 }
 
-TTS_CASE("Check eve::minmag behavior")
+TTS_CASE_TPL("Check eve::minmag behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_TYPE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL(eve::minmag(T(0), T(0)), T(0));
+  TTS_EQUAL(eve::minmag(T(0), T(1)), T(0));
+  TTS_EQUAL(eve::minmag(T(1), T(0)), T(0));
+  TTS_EQUAL(eve::minmag(T(1), T(1)), T(1));
 
-  TTS_EQUAL(eve::minmag((EVE_VALUE(0)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(0)), (EVE_TYPE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(1)), (EVE_TYPE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_VALUE(1)), (EVE_TYPE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::minmag(v_t(0), T(0)), T(0));
+  TTS_EQUAL(eve::minmag(v_t(0), T(1)), T(0));
+  TTS_EQUAL(eve::minmag(v_t(1), T(0)), T(0));
+  TTS_EQUAL(eve::minmag(v_t(1), T(1)), T(1));
 
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_VALUE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(0)), (EVE_VALUE(1))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_VALUE(0))), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::minmag((EVE_TYPE(1)), (EVE_VALUE(1))), (EVE_TYPE(1)));
+  TTS_EQUAL(eve::minmag(T(0), v_t(0)), T(0));
+  TTS_EQUAL(eve::minmag(T(0), v_t(1)), T(0));
+  TTS_EQUAL(eve::minmag(T(1), v_t(0)), T(0));
+  TTS_EQUAL(eve::minmag(T(1), v_t(1)), T(1));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-3), T(2)), T(2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-1), T(2)), static_cast<T>(-1));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-2), T(2)), static_cast<T>(-2));
 
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-3), T(2)), T(2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-1), T(2)), static_cast<T>(-1));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-2), T(2)), static_cast<T>(-2));
 
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-3), (EVE_TYPE(2))), (EVE_TYPE(2)));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-1), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-1));
-    TTS_EQUAL(eve::minmag(static_cast<EVE_TYPE>(-2), (EVE_TYPE(2))), static_cast<EVE_TYPE>(-2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-3), T(2)), T(2));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-1), T(2)), static_cast<T>(-1));
+    TTS_EQUAL(eve::minmag(static_cast<T>(-2), T(2)), static_cast<T>(-2));
   }
 }

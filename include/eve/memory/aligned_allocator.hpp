@@ -14,6 +14,7 @@
 #include <eve/memory/aligned_alloc.hpp>
 #include <eve/memory/aligned_dealloc.hpp>
 #include <eve/memory/power_of_2.hpp>
+#include <eve/memory/align.hpp>
 #include <cstddef>
 
 namespace eve
@@ -39,7 +40,7 @@ namespace eve
 
     value_type *allocate(std::size_t n)
     {
-      auto ptr = aligned_alloc<Alignment>(n * sizeof(value_type));
+      auto ptr = aligned_alloc<Alignment>( align(n * sizeof(value_type), over{Alignment}) );
       return static_cast<value_type *>(ptr.get());
     }
 

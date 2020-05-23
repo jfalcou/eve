@@ -11,8 +11,9 @@
 #ifndef EVE_CONSTANT_CONSTANT_HPP_INCLUDED
 #define EVE_CONSTANT_CONSTANT_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

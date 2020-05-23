@@ -11,6 +11,7 @@
 #ifndef EVE_DETAIL_META_TRAITS_HPP_INCLUDED
 #define EVE_DETAIL_META_TRAITS_HPP_INCLUDED
 
+#include <eve/concept/rebindable.hpp>
 #include <type_traits>
 #include <utility>
 #include <cstdint>
@@ -24,6 +25,18 @@ namespace eve::detail
   {
   };
 
+  // Check if a type is contained in a types list
+  template<typename T, typename... Ts>
+  constexpr bool is_one_of(types<Ts...> const&) noexcept
+  {
+    bool found[] = { std::is_same_v<T,Ts>... };
+
+    return [&]<std::size_t... I>( std::index_sequence<I...> const&)
+    {
+      return (false || ... || found[I]);
+    }( std::make_index_sequence<sizeof...(Ts)>{} );
+  }
+
   // Type identity
   template<typename T>
   struct always
@@ -32,20 +45,20 @@ namespace eve::detail
   };
 
   // Extract value_type from type
-  template<typename T, typename Enable = void>
-  struct value_type
+  template<typename T> struct value_type
   {
     using type = T;
   };
 
   template<typename T>
-  struct value_type<T, std::void_t<typename T::value_type>>
+  requires requires { typename T::value_type; }
+  struct value_type<T>
   {
     using type = typename T::value_type;
   };
 
   template<typename T>
-  using value_type_t = typename value_type<T>::type;
+  using value_type_t    = typename value_type<T>::type;
 
   // Extract abi_type from type
   template<typename T, typename Enable = void>
@@ -251,8 +264,8 @@ namespace eve::detail
   struct count : std::integral_constant<std::size_t,0>
   {};
 
-  template<template<class...> class W, typename... T>
-  struct count<W<T...>> : std::integral_constant<std::size_t,sizeof...(T)>
+  template<typename T> requires( rebindable<T> )
+  struct count<T> : std::tuple_size<T>
   {};
 
   template<typename T>

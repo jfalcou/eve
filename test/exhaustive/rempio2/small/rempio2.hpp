@@ -16,15 +16,17 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on rempio2")
+TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
 {
-  auto std_rempio2_n = tts::vectorize<EVE_TYPE>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return n; } );
-  auto std_rempio2_x = tts::vectorize<EVE_TYPE>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return x; } );
+  using v_t = eve::element_type_t<T>;
+
+  auto std_rempio2_n = tts::vectorize<T>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return n; } );
+  auto std_rempio2_x = tts::vectorize<T>( [](auto e) { auto [n, x, dx] = eve::rem_pio2(e); return x; } );
   auto rempio2_n =  [](auto e) { auto [n, x, dx] = eve::small_(eve::rempio2)(e); return n; };
   auto rempio2_x =  [](auto e) { auto [n, x, dx] = eve::small_(eve::rempio2)(e); return x; };
-  
-  auto l = eve::detail::Rempio2_limit(eve::small_type(), EVE_VALUE()); 
-  eve::exhaustive_producer<EVE_TYPE> p(0, l);
+
+  auto l = eve::detail::Rempio2_limit(eve::small_type(), eve::as<v_t>());
+  eve::exhaustive_producer<T> p(0, l);
   TTS_RANGE_CHECK(p, std_rempio2_n, rempio2_n);
-  TTS_RANGE_CHECK(p, std_rempio2_x, rempio2_x); 
+  TTS_RANGE_CHECK(p, std_rempio2_x, rempio2_x);
 }

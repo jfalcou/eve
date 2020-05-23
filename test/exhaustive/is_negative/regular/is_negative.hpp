@@ -11,28 +11,30 @@
 #include <eve/function/is_negative.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on is_negative")
+TTS_CASE_TPL("wide exhaustive check on is_negative", EVE_TYPE)
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>; 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using l_t = eve::as_logical_t<T>;
+  using v_t = eve::element_type_t<T>;
+
+  if constexpr(eve::floating_value<T>)
   {
     auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 1; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_negative, eve::is_negative);
   }
   else
   {
     auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return e < 0; } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_negative, eve::is_negative);
   }
-  
-  
 }

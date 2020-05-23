@@ -13,44 +13,45 @@
 
 #include "test.hpp"
 #include <tts/tests/basic.hpp>
+#include <tts/tests/sequence.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/store.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <algorithm>
 
 using eve::as_aligned;
 using eve::fixed;
+using eve::logical;
+using eve::wide;
+
+template<int N> alignas(wide<EVE_TYPE>::alignment()) std::array<logical<EVE_TYPE>, 3 * N> target;
 
 TTS_CASE_TPL("Check store behavior to unaligned logical pointer",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+              fixed<1>,
+              fixed<2>,
+              fixed<4>,
+              fixed<8>,
+              fixed<16>,
+              fixed<32>,
+              fixed<64>)
 {
-  using eve::logical;
-  using eve::wide;
-
   auto filler = [](auto i, auto) { return i % 3 == 0; };
 
   logical<wide<EVE_TYPE, T>>                  simd(filler);
   std::array<logical<EVE_TYPE>, 3 * T::value> ref;
-  std::array<logical<EVE_TYPE>, 3 * T::value> target;
 
-  for(std::size_t i = 0; i < T::value; ++i)
+  for(int i = 0; i < T::value; ++i)
   {
-    auto v   = filler(i, T::value);
-    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<EVE_TYPE>(v);
+    ref[ i             ] = (i % 3 == 0);
+    ref[ i + T::value  ] = (i % 3 == 0);
+    ref[ i + 2*T::value] = (i % 3 == 0);
   }
 
-  eve::store(simd, &target[ 0 ]);
-  eve::store(simd, &target[ T::value ]);
-  eve::store(simd, &target[ 2 * T::value ]);
+  eve::store(simd, &target<T::value>[ 0 ]);
+  eve::store(simd, &target<T::value>[ T::value ]);
+  eve::store(simd, &target<T::value>[ 2 * T::value ]);
 
-  TTS_EXPECT(std::equal(target.begin(), target.end(), ref.begin()));
+  TTS_ALL_EQUAL(target<T::value>, ref);
 }
 
 TTS_CASE_TPL("Check store behavior to aligned pointer of logical",
@@ -62,28 +63,25 @@ TTS_CASE_TPL("Check store behavior to aligned pointer of logical",
              fixed<32>,
              fixed<64>)
 {
-  using eve::logical;
-  using eve::wide;
-
   auto filler = [](auto i, auto) { return i % 3 == 0; };
 
   constexpr auto algt = logical<wide<EVE_TYPE, T>>::alignment();
 
-  logical<wide<EVE_TYPE, T>>                                simd(filler);
-  alignas(algt) std::array<logical<EVE_TYPE>, 3 * T::value> ref;
-  alignas(algt) std::array<logical<EVE_TYPE>, 3 * T::value> target;
+  logical<wide<EVE_TYPE, T>>                  simd(filler);
+  std::array<logical<EVE_TYPE>, 3 * T::value> ref;
 
-  for(std::size_t i = 0; i < T::value; ++i)
+  for(int i = 0; i < T::value; ++i)
   {
-    auto v   = filler(i, T::value);
-    ref[ i ] = ref[ i + T::value ] = ref[ i + 2 * T::value ] = static_cast<EVE_TYPE>(v);
+    ref[ i             ] = (i % 3 == 0);
+    ref[ i + T::value  ] = (i % 3 == 0);
+    ref[ i + 2*T::value] = (i % 3 == 0);
   }
 
-  eve::store(simd, as_aligned<algt>(&target[ 0 ]));
-  eve::store(simd, as_aligned<algt>(&target[ T::value ]));
-  eve::store(simd, as_aligned<algt>(&target[ 2 * T::value ]));
+  eve::store(simd, as_aligned<algt>(&target<T::value>[ 0 ]));
+  eve::store(simd, as_aligned<algt>(&target<T::value>[ T::value ]));
+  eve::store(simd, as_aligned<algt>(&target<T::value>[ 2 * T::value ]));
 
-  TTS_EXPECT(std::equal(target.begin(), target.end(), ref.begin()));
+  TTS_ALL_EQUAL(target<T::value>, ref);
 }
 
 #endif

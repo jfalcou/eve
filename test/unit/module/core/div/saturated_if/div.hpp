@@ -9,23 +9,24 @@
 **/
 //==================================================================================================
 #include <eve/function/div.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-
-TTS_CASE("Check conditional saturated(eve::div) return type")
+TTS_CASE_TPL("Check conditional saturated(eve::div) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::saturated_(eve::div[ EVE_TYPE()              ])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::saturated_(eve::div[ eve::logical<EVE_TYPE>()])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::saturated_(eve::div[ true                ])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ T()              ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ eve::logical<T>()])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::div[ true             ])(T(), T())), T);
 }
 
-TTS_CASE("Check conditional saturated(eve::div) behavior")
+TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
 {
-  EVE_TYPE tv{eve::Valmax<EVE_TYPE>()};
-  EVE_TYPE fv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv(eve::Valmax<T>());
+  T fv(3);
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   TTS_EQUAL(eve::saturated_(eve::div[ 1 ])(tv, fv)    , eve::saturated_(eve::div)(tv,fv));
   TTS_EQUAL(eve::saturated_(eve::div[ 1.0 ])(tv, fv)  , eve::saturated_(eve::div)(tv,fv));
@@ -38,7 +39,7 @@ TTS_CASE("Check conditional saturated(eve::div) behavior")
   TTS_EQUAL(eve::saturated_(eve::div[ f ])(tv, fv)    , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

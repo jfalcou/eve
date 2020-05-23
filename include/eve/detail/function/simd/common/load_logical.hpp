@@ -11,47 +11,46 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_LOGICAL_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_LOGICAL_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/as.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/as.hpp>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Common logical case
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto
-  load(as_<logical<wide<T, N, ABI>>> const &tgt,
-       ABI const &                          mode,
-       logical<T> const*ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type,
-                                          native<ABI>)
+  //================================================================================================
+  template<real_scalar_value T, typename N, native ABI>
+  EVE_FORCEINLINE auto load(as_<logical<wide<T, N, ABI>>> const &,
+                            ABI const & mode,
+                            logical<T> const* ptr) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
-    return type(load(as_<wide<T, N, ABI>>{}, mode, (T *)ptr));
+    auto raw_data = load(as_<wide<T, N, ABI>> {}, mode, (T *)ptr);
+    return type(raw_data);
   }
 
-  template<typename T, typename N, std::size_t Align, typename ABI>
+  template<typename T, typename N, std::size_t Align, native ABI>
   EVE_FORCEINLINE auto
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
-       aligned_ptr<logical<T> const, Align>
-           ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, native<ABI>)
+       aligned_ptr<logical<T> const, Align> ptr) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
-    return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));
+    auto raw_data = load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T const*)ptr.get()));
+    return type(raw_data);
   }
 
-  template<typename T, typename N, std::size_t Align, typename ABI>
+  template<typename T, typename N, std::size_t Align, native ABI>
   EVE_FORCEINLINE auto
   load(as_<logical<wide<T, N, ABI>>> const &tgt,
        ABI const &                          mode,
-       aligned_ptr<logical<T>, Align>
-           ptr) noexcept requires(typename logical<wide<T, N, ABI>>::storage_type, native<ABI>)
+       aligned_ptr<logical<T>, Align>       ptr) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
-    return type(load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get())));
+    auto raw_data = load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get()));
+    return type(raw_data);
   }
 }
 

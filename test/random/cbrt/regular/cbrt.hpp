@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cbrt")
+TTS_CASE_TPL("wide random check on cbrt", EVE_TYPE)
 {
-  auto std_cbrt = tts::vectorize<EVE_TYPE>( [](auto e) { return std::cbrt(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_cbrt = tts::vectorize<T>( [](auto e) { return std::cbrt(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt);
 }

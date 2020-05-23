@@ -13,42 +13,45 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::bit_andnot return type")
+TTS_CASE_TPL("Check eve::bit_andnot return type", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
-  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using ui_t = as_integer_t<T, unsigned>;
+  using vi_t = as_integer_t<v_t, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_andnot(EVE_TYPE(), EVE_TYPE()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_andnot(EVE_TYPE(), EVE_VALUE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_andnot(EVE_TYPE(), ui_t()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_andnot(EVE_TYPE(), vi_t()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::bit_andnot(ui_t(), EVE_TYPE()) , ui_t  );
+  TTS_EXPR_IS(eve::bit_andnot(T(), T()) , T);
+  TTS_EXPR_IS(eve::bit_andnot(T(), v_t()), T);
+  TTS_EXPR_IS(eve::bit_andnot(T(), ui_t()) , T);
+  TTS_EXPR_IS(eve::bit_andnot(T(), vi_t()) , T);
+  TTS_EXPR_IS(eve::bit_andnot(ui_t(), T()) , ui_t  );
 }
 
-TTS_CASE( "Check eve::bit_andnot behavior")
+TTS_CASE_TPL( "Check eve::bit_andnot behavior", EVE_TYPE)
 {
   using eve::detail::as_integer_t;
   using eve::bit_cast;
   using eve::as;
 
-  using ui_t = as_integer_t<EVE_TYPE , unsigned>;
-  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
+  using v_t = eve::element_type_t<T>;
+  using ui_t = as_integer_t<T , unsigned>;
+  using svi_t = as_integer_t<v_t, unsigned>;
 
   constexpr auto u  = 0x5555555555555555ULL;
   constexpr auto d  = 0xAAAAAAAAAAAAAAAAULL;
 
-  auto tz = EVE_TYPE(0);
+  auto tz = T(0);
 
-  ui_t uu( static_cast<vi_t>(u) );
-  ui_t ud( static_cast<vi_t>(d) );
-  auto td = bit_cast(ud, as<EVE_TYPE>());
-  auto tu = bit_cast(uu, as<EVE_TYPE>());
+  ui_t uu( static_cast<svi_t>(u) );
+  ui_t uz( static_cast<svi_t>(0) );
+  ui_t ud( static_cast<svi_t>(d) );
+  auto td = bit_cast(ud, as<T>());
+  auto tu = bit_cast(uu, as<T>());
 
-  vi_t su( static_cast<vi_t>(u) );
-  vi_t sd( static_cast<vi_t>(d) );
-  auto vu = bit_cast(su, as<EVE_VALUE>());
-  auto vd = bit_cast(sd, as<EVE_VALUE>());
+  svi_t su( static_cast<svi_t>(u) );
+  svi_t sd( static_cast<svi_t>(d) );
+  auto vu = bit_cast(su, as<v_t>());
+  auto vd = bit_cast(sd, as<v_t>());
 
   TTS_EQUAL(eve::bit_andnot(tu,tu),tz);
   TTS_EQUAL(eve::bit_andnot(tu,td),tu);
@@ -69,4 +72,10 @@ TTS_CASE( "Check eve::bit_andnot behavior")
   TTS_EQUAL(eve::bit_andnot(tu,sd),tu);
   TTS_EQUAL(eve::bit_andnot(td,su),td);
   TTS_EQUAL(eve::bit_andnot(td,sd),tz);
+
+  TTS_EQUAL(eve::bit_andnot(su,tu),uz);
+  TTS_EQUAL(eve::bit_andnot(sd,tu),ud);
+  TTS_EQUAL(eve::bit_andnot(su,td),uu);
+  TTS_EQUAL(eve::bit_andnot(sd,td),uz);
+
 }

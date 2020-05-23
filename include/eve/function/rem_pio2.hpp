@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_REM_PIO2_HPP_INCLUDED
 
 #include <eve/function/definition/rem_pio2.hpp>
-#include <eve/module/core/function/scalar/rem_pio2.hpp>
-#include <eve/module/core/function/simd/rem_pio2.hpp>
+#include <eve/module/core/function/generic/rem_pio2.hpp>
 
 #endif

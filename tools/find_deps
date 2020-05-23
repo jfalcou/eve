@@ -1,0 +1,31 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2020 Joel FALCOU
+##  Copyright 2020 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+#!/bin/bash
+# Usage:
+#
+#  find_deps.sh <file name> <root_path> <filter>
+
+FILE="#include <$1>"
+
+if [[ "$#" -lt 2 ]]; then
+  ROOT=`pwd`
+else
+  ROOT=$2
+fi
+
+if [[ "$#" -lt 3 ]]; then
+  MARK="eve/function/definition"
+else
+  MARK=$3
+fi
+
+INCLUDE="$ROOT/include"
+OPTIONS="-std=c++2a -fconcepts"
+
+echo $FILE | g++ -I$INCLUDE $OPTIONS -M  -x c++ - | grep -v "$1" | grep $MARK | uniq | sort | tr '\\' ' '

@@ -15,7 +15,7 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::convert return type")
+TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 {
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<float, eve::fixed<EVE_CARDINAL>>;
@@ -23,11 +23,11 @@ TTS_CASE("Check eve::convert return type")
   using target_t = float;
 #endif
 
-  TTS_EXPR_IS(eve::convert(EVE_TYPE(), eve::as<float>()), target_t);
-  TTS_EXPR_IS(eve::convert(EVE_TYPE(), eve::single_)     , target_t);
+  TTS_EXPR_IS(eve::convert(T(), eve::as<float>()), target_t);
+  TTS_EXPR_IS(eve::convert(T(), eve::single_)     , target_t);
 }
 
-TTS_CASE("Check eve::convert behavior")
+TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
 {
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<float, eve::fixed<EVE_CARDINAL>>;
@@ -35,12 +35,14 @@ TTS_CASE("Check eve::convert behavior")
   using target_t = float;
 #endif
 
-  TTS_EQUAL(eve::convert((EVE_TYPE(0))          , eve::single_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::convert((EVE_TYPE(42.69))      , eve::single_), static_cast<target_t>(EVE_VALUE(42.69)) );
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(sizeof(EVE_VALUE)<=sizeof(float))
+  TTS_EQUAL(eve::convert((T(0))          , eve::single_), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::convert((T(42.69))      , eve::single_), static_cast<target_t>(v_t(42.69)) );
+
+  if constexpr(sizeof(v_t)<=sizeof(float))
   {
-    TTS_EQUAL(eve::convert(eve::Valmin<EVE_TYPE>(), eve::single_), static_cast<target_t>(eve::Valmin<EVE_VALUE>()) );
-    TTS_EQUAL(eve::convert(eve::Valmax<EVE_TYPE>(), eve::single_), static_cast<target_t>(eve::Valmax<EVE_VALUE>()) );
+    TTS_EQUAL(eve::convert(eve::Valmin<T>(), eve::single_), static_cast<target_t>(eve::Valmin<v_t>()) );
+    TTS_EQUAL(eve::convert(eve::Valmax<T>(), eve::single_), static_cast<target_t>(eve::Valmax<v_t>()) );
   }
 }

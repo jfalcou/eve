@@ -1,20 +1,16 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
- <- si =                              (2, 4294967295, 0, 4)
- <- pi =                              (3, 4294967294, 4294967286, 0)
- <- qi =                              (4, 4294967295, 0, 5)
- -> eve::bit_select(si, pi, qi) =  (6, 4294967294, 0, 1)
+ <- mi                                = (0, 65535, 1, 65280)
+ <- pi                                = (2, 65533, 0, 1024)
+ <- qi                                = (3, 65534, 4, 2)
+ -> bit_select(mi, pi, qi)            = (3, 65533, 4, 1026)
 ---- scalar
- ssi =                                3
- xi =                                 3
- yi =                                 4
- -> eve::bit_select(ssi, xi, yi) = 7
+ -> bit_select(32767, 1, 32768 )      = 32769
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

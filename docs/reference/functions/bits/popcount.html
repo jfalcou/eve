@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::popcount`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::popcount
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/popcount.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/popcount.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,34 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the computation of the number of bits set.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the [element-wise](../../../glossary.html#element-wise_) popcount operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [unsigned value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the number of bit set in each [`element`](../../../glossary.html#element-wise) of the parameter.
 
   (insert ../../src/popcount.src.html here)
 
   (insert ../../out/popcount.out.html here)
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

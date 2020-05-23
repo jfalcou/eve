@@ -12,12 +12,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::conj return type")
+TTS_CASE_TPL("Check eve::conj return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::conj(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::conj(T(0)), T);
 }
 
-TTS_CASE("Check eve::conj behavior")
+TTS_CASE_TPL("Check eve::conj behavior", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::conj(EVE_TYPE(1)), (EVE_TYPE)(1), 0.5);
+  TTS_ULP_EQUAL(eve::conj(T(1)), T(1), 0.5);
 }

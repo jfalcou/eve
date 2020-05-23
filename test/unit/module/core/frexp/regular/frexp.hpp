@@ -11,30 +11,24 @@
 #include <eve/function/frexp.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <utility>
+#include <tuple>
 
-TTS_CASE("Check frexp return type")
+TTS_CASE_TPL("Check frexp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::frexp(EVE_TYPE())), (std::tuple<EVE_TYPE,EVE_TYPE>));
+  TTS_EXPR_IS((eve::frexp(T())), (std::tuple<T,T>));
 }
 
-TTS_CASE("Check (eve::frexp behavior")
+TTS_CASE_TPL("Check (eve::frexp behavior", EVE_TYPE)
 {
   {
-    auto [p0, p1] = eve::frexp(EVE_TYPE(1));
-    TTS_EQUAL(p0, EVE_TYPE(0.5));
-    TTS_EQUAL(p1, EVE_TYPE(1));
+    auto [p0, p1] = eve::frexp(T(1));
+    TTS_EQUAL(p0, T(0.5));
+    TTS_EQUAL(p1, T(1  ));
   }
+
   {
-    auto [p0, p1] = eve::frexp(EVE_TYPE(0));
-    TTS_EQUAL (p0 , EVE_TYPE(0));
-    TTS_EQUAL (p1, EVE_TYPE(0));
+    auto [p0, p1] = eve::frexp(T(0));
+    TTS_EQUAL (p0, T(0));
+    TTS_EQUAL (p1, T(0));
   }
 }

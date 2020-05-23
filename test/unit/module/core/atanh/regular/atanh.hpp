@@ -13,32 +13,33 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::atanh return type")
+TTS_CASE_TPL("Check eve::atanh return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::atanh(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::atanh(T(0)), T);
 }
 
-TTS_CASE("Check eve::atanh behavior")
+TTS_CASE_TPL("Check eve::atanh behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::atanh(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::atanh(eve::Nan<T>()) , eve::Nan<T>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atanh( EVE_TYPE( 1.0)), eve::Inf<EVE_TYPE>()  , 0);
-    TTS_ULP_EQUAL(eve::atanh( EVE_TYPE(-1.0)), eve::Minf<EVE_TYPE>() , 0);
+    TTS_ULP_EQUAL(eve::atanh( T( 1.0)), eve::Inf<T>()  , 0);
+    TTS_ULP_EQUAL(eve::atanh( T(-1.0)), eve::Minf<T>() , 0);
   }
-  
-  TTS_ULP_EQUAL(eve::atanh(EVE_TYPE( 0.5))         ,  EVE_TYPE(std::atanh(EVE_VALUE(0.5)))  , 0.5  );
-  TTS_ULP_EQUAL(eve::atanh(EVE_TYPE(-0.5))         ,  EVE_TYPE(std::atanh(EVE_VALUE(-0.5))) , 0.5  );
-  TTS_ULP_EQUAL(eve::atanh(EVE_TYPE( 0. ))         ,  EVE_TYPE(0)   , 0  );
+
+  TTS_ULP_EQUAL(eve::atanh(T( 0.5)) , T(std::atanh(v_t(0.5))) , 0.5 );
+  TTS_ULP_EQUAL(eve::atanh(T(-0.5)) , T(std::atanh(v_t(-0.5))), 0.5 );
+  TTS_ULP_EQUAL(eve::atanh(T( 0. )) , T(0)                    , 0   );
 }

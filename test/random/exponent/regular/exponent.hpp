@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/exponent.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/inc.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -18,13 +16,16 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on exponent")
+TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_VALUE>; 
-  auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); }; 
-  using vi_t = eve::detail::as_integer_t<EVE_TYPE>; 
+  using v_t = eve::element_type_t<T>;
+  using i_t = eve::detail::as_integer_t<v_t>;
+
+  auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); };
+  using vi_t = eve::detail::as_integer_t<T>;
+
   auto std_exponent = tts::vectorize<vi_t>( [ internal_f ](auto e) { return internal_f(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_exponent, eve::exponent); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_exponent, eve::exponent);
 }

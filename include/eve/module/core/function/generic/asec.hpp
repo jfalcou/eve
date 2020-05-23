@@ -11,34 +11,35 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ASEC_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ASEC_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/acos.hpp>
 #include <eve/function/raw.hpp>
-#include <type_traits>
+#include <eve/function/rec.hpp>
 
 namespace eve::detail
 {
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
-  requires(T, floating_point<value_type_t<T>>)
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
+      requires(is_one_of<D>(types<regular_type, raw_type> {}))
   {
-    return acos(rec(a0)); 
-  }
-  
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &     
-                                  , T const &a0) noexcept
-  requires(T, floating_point<value_type_t<T>>)
-  {
-    return raw_(acos)(rec(a0)); 
+    if constexpr( has_native_abi_v<T> )
+    {
+      return decorator(acos)(rec(a));
+    }
+    else
+    {
+      return apply_over(decorator(asec), a);
+    }
   }
 
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto asec_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return asec(regular_type {}, a);
+  }
 }
 
 #endif

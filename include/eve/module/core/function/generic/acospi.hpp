@@ -11,28 +11,37 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ACOSPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ACOSPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/raw.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/function/acos.hpp>
-#include <eve/function/inpi.hpp>
+#include <eve/function/radinpi.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto
+  acospi_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
+      requires(is_one_of<D>(types<regular_type, raw_type> {}))
   {
-    return inpi(eve::acos(a0));
+    if constexpr( has_native_abi_v<T> )
+    {
+      return radinpi(decorator(acos)(a));
+    }
+    else
+    {
+      return apply_over(decorator(acospi), a);
+    }
   }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_)
-                                        , raw_type const &, T const &a0
-                                        ) noexcept
-  requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto acospi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return inpi(eve::raw_(eve::acos)(a0));
+    return acospi(regular_type {}, a);
   }
 }
 

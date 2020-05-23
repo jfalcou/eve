@@ -9,38 +9,40 @@
 **/
 //==================================================================================================
 #include <eve/function/add.hpp>
+
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::add return type")
+TTS_CASE_TPL("Check eve::add return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::add(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::add(T(), T()), T);
 }
 
-TTS_CASE("Check eve::add behavior")
+TTS_CASE_TPL("Check eve::add behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_TYPE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_TYPE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_TYPE{2}), EVE_TYPE(4));
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::add(EVE_VALUE{0}, EVE_TYPE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_VALUE{1}, EVE_TYPE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_VALUE{2}, EVE_TYPE{2}), EVE_TYPE(4));
+  TTS_EQUAL(eve::add(T{0}, T{0}), T(0));
+  TTS_EQUAL(eve::add(T{1}, T{1}), T(2));
+  TTS_EQUAL(eve::add(T{2}, T{2}), T(4));
 
-  TTS_EQUAL(eve::add(EVE_TYPE{0}, EVE_VALUE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::add(EVE_TYPE{1}, EVE_VALUE{1}), EVE_TYPE(2));
-  TTS_EQUAL(eve::add(EVE_TYPE{2}, EVE_VALUE{2}), EVE_TYPE(4));
+  TTS_EQUAL(eve::add(v_t{0}, T{0}), T(0));
+  TTS_EQUAL(eve::add(v_t{1}, T{1}), T(2));
+  TTS_EQUAL(eve::add(v_t{2}, T{2}), T(4));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  TTS_EQUAL(eve::add(T{0}, v_t{0}), T(0));
+  TTS_EQUAL(eve::add(T{1}, v_t{1}), T(2));
+  TTS_EQUAL(eve::add(T{2}, v_t{2}), T(4));
+
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::add(EVE_TYPE(-1), EVE_TYPE(1)), EVE_TYPE(0));
-    TTS_EQUAL(eve::add(EVE_TYPE(-2), EVE_TYPE(-6)), EVE_TYPE(-8));
+    TTS_EQUAL(eve::add(T(-1), T(1)), T(0));
+    TTS_EQUAL(eve::add(T(-2), T(-6)), T(-8));
 
-    TTS_EQUAL(eve::add(EVE_VALUE(-1), EVE_TYPE(1)), EVE_TYPE(0));
-    TTS_EQUAL(eve::add(EVE_VALUE(-2), EVE_TYPE(-6)), EVE_TYPE(-8));
+    TTS_EQUAL(eve::add(v_t(-1), T(1)), T(0));
+    TTS_EQUAL(eve::add(v_t(-2), T(-6)), T(-8));
 
-    TTS_EQUAL(eve::add(EVE_TYPE(-1), EVE_VALUE(1)), EVE_TYPE(0));
-    TTS_EQUAL(eve::add(EVE_TYPE(-2), EVE_VALUE(-6)), EVE_TYPE(-8));
+    TTS_EQUAL(eve::add(T(-1), v_t(1)), T(0));
+    TTS_EQUAL(eve::add(T(-2), v_t(-6)), T(-8));
   }
 }

@@ -12,22 +12,14 @@
 #define EVE_MEMORY_ALIGNED_DEALLOC_HPP_INCLUDED
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/memory/power_of_2.hpp>
-#include <eve/detail/spy.hpp>
-#include <cstdint>
+#include <cstddef>
 
 namespace eve
 {
   template<typename T, std::size_t Alignment>
-  void aligned_dealloc(aligned_ptr<T, Alignment> const &ptr)
+ void aligned_dealloc(aligned_ptr<T, Alignment> const &ptr)
   {
-#if defined(SPY_SUPPORTS_POSIX) || defined(SPY_OS_IS_MACOS)
-    ::free((void *)ptr.get());
-#elif defined(SPY_COMPILER_IS_MSVC)
-    ::_aligned_free(ptr.get());
-#else
-    if(ptr) ::free(*((void **)(ptr.get()) - 1));
-#endif
+    std::free((void *)ptr.get());
   }
 }
 

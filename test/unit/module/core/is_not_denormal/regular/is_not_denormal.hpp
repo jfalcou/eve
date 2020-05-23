@@ -14,24 +14,24 @@
 #include <eve/constant/smallestposval.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::is_not_denormal return type")
+TTS_CASE_TPL("Check eve::is_not_denormal return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_not_denormal(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_denormal(T(0)), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::is_not_denormal behavior")
-{
-  TTS_EQUAL(eve::is_not_denormal(EVE_TYPE(0)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_denormal(EVE_TYPE(2)), eve::True<EVE_TYPE>());
 
-  if constexpr(eve::platform::supports_denormals && std::is_floating_point_v<EVE_VALUE>)
+TTS_CASE_TPL("Check eve::is_not_denormal behavior", EVE_TYPE)
+{
+  TTS_EQUAL(eve::is_not_denormal(T(0)), eve::True<T>());
+  TTS_EQUAL(eve::is_not_denormal(T(2)), eve::True<T>());
+
+  if constexpr(eve::platform::supports_denormals && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_not_denormal(eve::Smallestposval<EVE_TYPE>() / 2), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_denormal(eve::Smallestposval<T>() / 2), eve::False<T>());
   }
   else
   {
-    TTS_EQUAL(eve::is_not_denormal(eve::Smallestposval<EVE_TYPE>() / 2), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_denormal(eve::Smallestposval<T>() / 2), eve::True<T>());
   }
 }

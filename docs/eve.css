@@ -18,6 +18,15 @@ body
   text-align: justify;
 }
 
+.md h2, .md .nonumberh2
+{
+    counter-reset: h3 h4 h5 h6;
+    border-bottom: 2px solid #000;
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .md div.title
 {
     background-image: url('logo.png');
@@ -55,7 +64,7 @@ body
 
 .md code, .md pre {
     font-family: Consolas,monospace;
-    font-size: 100%;
+    font-size: 90%;
 }
 
 .md div.afterTitles { height: 75px; }

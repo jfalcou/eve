@@ -16,15 +16,17 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
-#include <cmath>
 
-TTS_CASE("wide random check on is_pow2")
+TTS_CASE_TPL("wide random check on is_pow2", EVE_TYPE)
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>; 
+  using v_t = eve::element_type_t<T>;
+  using l_t = eve::as_logical_t<T>;
   auto std_is_pow2 = tts::vectorize<l_t>( [](auto e)
-    { return ((e > 0) && (eve::popcount(e) == 1u)); }
-  );
-  eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+                                          {
+                                            return ((e > 0) && (eve::popcount(e) == 1u));
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_is_pow2, eve::is_pow2);
 }

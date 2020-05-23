@@ -14,71 +14,75 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::logical_andnot return type")
+TTS_CASE_TPL("Check eve::logical_andnot return type", EVE_TYPE)
 {
-  using eve::logical;
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS((eve::logical_andnot(EVE_TYPE()         , EVE_TYPE())         ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_TYPE>(), EVE_TYPE())         ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_TYPE>(), logical<EVE_TYPE>())), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(EVE_TYPE()         , logical<EVE_TYPE>())), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::logical_andnot(T()              , T()              ), eve::logical<T>);
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<T>(), T()              ), eve::logical<T>);
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<T>(), eve::logical<T>()), eve::logical<T>);
+  TTS_EXPR_IS(eve::logical_andnot(T()              , eve::logical<T>()), eve::logical<T>);
 
-  TTS_EXPR_IS((eve::logical_andnot(EVE_VALUE()         , EVE_TYPE())           ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(EVE_TYPE()          , EVE_VALUE())          ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_TYPE>() , EVE_VALUE())          ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_VALUE>(), EVE_TYPE())           ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_VALUE>(), logical<EVE_TYPE>())  ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(logical<EVE_TYPE>() , logical<EVE_VALUE>()) ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(EVE_VALUE()         , logical<EVE_TYPE>())  ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS((eve::logical_andnot(EVE_TYPE()          , logical<EVE_VALUE>()) ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::logical_andnot(v_t()               , T()                 ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(T()                 , v_t()               ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<T>()   , v_t()               ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<v_t>() , T()                 ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<v_t>() , eve::logical<T>()   ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(eve::logical<T>()   , eve::logical<v_t>() ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(v_t()               , eve::logical<T>()   ) , eve::logical<T> );
+  TTS_EXPR_IS(eve::logical_andnot(T()                 , eve::logical<v_t>() ) , eve::logical<T> );
 }
 
-TTS_CASE("Check eve::logical_andnot behavior on scalars")
+TTS_CASE_TPL("Check eve::logical_andnot behavior on scalars", EVE_TYPE)
 {
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), (EVE_TYPE(0))), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), (EVE_TYPE(1))), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(2)), (EVE_TYPE(1))), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(1)), (EVE_TYPE(0))), eve::True<EVE_TYPE>()  );
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::logical_andnot(EVE_VALUE(0), (EVE_TYPE(0))), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(EVE_VALUE(0), (EVE_TYPE(1))), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(EVE_VALUE(2), (EVE_TYPE(1))), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(EVE_VALUE(1), (EVE_TYPE(0))), eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::logical_andnot(T(0), T(0)), eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(T(0), T(1)), eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(T(2), T(1)), eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(T(1), T(0)), eve::True<T>()  );
 
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), EVE_VALUE(0)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), EVE_VALUE(1)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(2)), EVE_VALUE(1)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot((EVE_TYPE(1)), EVE_VALUE(0)), eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::logical_andnot(v_t(0), T(0)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(v_t(0), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(v_t(2), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(v_t(1), T(0)), eve::True<T>() );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  TTS_EQUAL(eve::logical_andnot(T(0), v_t(0)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(T(0), v_t(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(T(2), v_t(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(T(1), v_t(0)), eve::True<T>() );
+
+  if constexpr(eve::floating_value<T>)
   {
-    using i_t = eve::detail::as_integer_t<EVE_TYPE>; 
-    TTS_EQUAL(eve::logical_andnot((i_t(0)), (EVE_TYPE(0))), eve::False<i_t>());
-    TTS_EQUAL(eve::logical_andnot((i_t(0)), (EVE_TYPE(1))), eve::False<i_t>());
-    TTS_EQUAL(eve::logical_andnot((i_t(2)), (EVE_TYPE(1))), eve::False<i_t>() );
-    TTS_EQUAL(eve::logical_andnot((i_t(1)), (EVE_TYPE(0))), eve::True<i_t>());
-    
-    TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), i_t(0)), eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::logical_andnot((EVE_TYPE(0)), i_t(1)), eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::logical_andnot((EVE_TYPE(2)), i_t(1)), eve::False<EVE_TYPE>() );
-    TTS_EQUAL(eve::logical_andnot((EVE_TYPE(1)), i_t(0)), eve::True<EVE_TYPE>());
+    using i_t = eve::detail::as_integer_t<T>;
+    TTS_EQUAL(eve::logical_andnot(i_t(0), T(0)), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_andnot(i_t(0), T(1)), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_andnot(i_t(2), T(1)), eve::False<i_t>());
+    TTS_EQUAL(eve::logical_andnot(i_t(1), T(0)), eve::True<i_t>() );
+
+    TTS_EQUAL(eve::logical_andnot(T(0), i_t(0)), eve::False<T>());
+    TTS_EQUAL(eve::logical_andnot(T(0), i_t(1)), eve::False<T>());
+    TTS_EQUAL(eve::logical_andnot(T(2), i_t(1)), eve::False<T>());
+    TTS_EQUAL(eve::logical_andnot(T(1), i_t(0)), eve::True<T>() );
   }
 }
 
-TTS_CASE("Check eve::logical_andnot behavior on logicals")
+TTS_CASE_TPL("Check eve::logical_andnot behavior on logicals", EVE_TYPE)
 {
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_TYPE>() , eve::False<EVE_TYPE>()) , eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_TYPE>() , eve::True<EVE_TYPE>() ) , eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_TYPE>()  , eve::True<EVE_TYPE>() ) , eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_TYPE>()  , eve::False<EVE_TYPE>()) , eve::True<EVE_TYPE>()  );
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_VALUE>(), eve::False<EVE_TYPE>()), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_VALUE>(), eve::True<EVE_TYPE>() ), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_VALUE>() , eve::True<EVE_TYPE>() ), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_VALUE>() , eve::False<EVE_TYPE>()), eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::logical_andnot(eve::False<T>() , eve::False<T>()) , eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(eve::False<T>() , eve::True<T>() ) , eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(eve::True<T>()  , eve::True<T>() ) , eve::False<T>() );
+  TTS_EQUAL(eve::logical_andnot(eve::True<T>()  , eve::False<T>()) , eve::True<T>()  );
 
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_TYPE>() , eve::False<EVE_VALUE>() ), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::False<EVE_TYPE>() , eve::True<EVE_VALUE>()  ), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_TYPE>()  , eve::True<EVE_VALUE>()  ), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::logical_andnot(eve::True<EVE_TYPE>()  , eve::False<EVE_VALUE>() ), eve::True<EVE_TYPE>() );
+  TTS_EQUAL(eve::logical_andnot(eve::False<v_t>(), eve::False<T>()), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::False<v_t>(), eve::True<T>() ), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::True<v_t>() , eve::True<T>() ), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::True<v_t>() , eve::False<T>()), eve::True<T>() );
+
+  TTS_EQUAL(eve::logical_andnot(eve::False<T>() , eve::False<v_t>() ), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::False<T>() , eve::True<v_t>()  ), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::True<T>()  , eve::True<v_t>()  ), eve::False<T>());
+  TTS_EQUAL(eve::logical_andnot(eve::True<T>()  , eve::False<v_t>() ), eve::True<T>() );
 }

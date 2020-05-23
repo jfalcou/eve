@@ -11,17 +11,17 @@
 #include <eve/function/is_nltz.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
-#include <cmath>
 
-TTS_CASE("wide random check on is_nltz")
+TTS_CASE_TPL("wide random check on is_nltz", EVE_TYPE)
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>; 
-  auto std_is_nltz = tts::vectorize<l_t>( [](auto e) { return !(e < EVE_VALUE(0)); } );
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+  using v_t = eve::element_type_t<T>;
+  using l_t = eve::as_logical_t<T>;
+  auto std_is_nltz = tts::vectorize<l_t>( [](auto e) { return !(e < v_t(0)); } );
+
+  eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_is_nltz, eve::is_nltz);
 }

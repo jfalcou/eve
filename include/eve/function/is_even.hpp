@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_EVEN_HPP_INCLUDED
 
 #include <eve/function/definition/is_even.hpp>
-#include <eve/module/core/function/scalar/is_even.hpp>
-#include <eve/module/core/function/simd/is_even.hpp>
+#include <eve/module/core/function/generic/is_even.hpp>
 
 #endif

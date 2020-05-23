@@ -11,19 +11,16 @@
 #ifndef EVE_CONSTANT_TRUE_HPP_INCLUDED
 #define EVE_CONSTANT_TRUE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/as_logical.hpp>
-#include <eve/is_logical.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/as_logical.hpp>
 #include <eve/as.hpp>
-#include <type_traits>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(true_, true_);
 
   template<typename T>
-  EVE_FORCEINLINE auto True(as_<T> const & = {})
+  EVE_FORCEINLINE auto True(as_<T> const & = {}) noexcept
   {
     return as_logical_t<T>(true);
   }

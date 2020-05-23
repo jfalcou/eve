@@ -8,41 +8,28 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef IS_UNORDERED_HPP
-#define IS_UNORDERED_HPP
-
-#include "test.hpp"
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+#include <eve/function/is_unordered.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <type_traits>
+#include <tts/tests/relation.hpp>
+#include <tts/tests/types.hpp>
 
-TTS_CASE("Check is_unordered return type")
+TTS_CASE_TPL("Check is_unordered return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_unordered(EVE_TYPE(), EVE_TYPE()), eve::as_logical_t<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_unordered(T(), T()), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::is_unordered behavior on arithmetic")
+TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(1)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_unordered(EVE_TYPE(3), EVE_TYPE(1)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(3)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_unordered(T(1), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_unordered(T(3), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_unordered(T(1), T(3)), eve::False<T>());
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_unordered(eve::Nan<EVE_TYPE>(), EVE_TYPE(3)), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::is_unordered(EVE_TYPE(3), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::is_unordered(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , T(3)          ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(T(3)          , eve::Nan<T>() ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , eve::Nan<T>() ), eve::True<T>());
   }
 }
-
-TTS_CASE("Check eve::is_unordered behavior on logical")
-{
-  TTS_EQUAL(eve::is_unordered(eve::logical<EVE_TYPE>(1), eve::logical<EVE_TYPE>(0)), eve::False<EVE_TYPE>());
-}
-
-#endif
-

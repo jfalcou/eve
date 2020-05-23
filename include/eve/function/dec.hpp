@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_DEC_HPP_INCLUDED
 
 #include <eve/function/definition/dec.hpp>
-#include <eve/module/core/function/scalar/dec.hpp>
-#include <eve/module/core/function/simd/dec.hpp>
+#include <eve/module/core/function/generic/dec.hpp>
 
 #endif

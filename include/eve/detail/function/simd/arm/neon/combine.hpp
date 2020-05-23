@@ -11,9 +11,8 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_COMBINE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_COMBINE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/arch/limits.hpp>
+#include <eve/detail/abi.hpp>
 
 namespace eve::detail
 {
@@ -22,7 +21,7 @@ namespace eve::detail
   combine(neon128_ const &, wide<T, N, neon128_> const &l, wide<T, N, neon128_> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
-    return that_t(typename that_t::storage_type{l, h});
+    return that_t(typename that_t::storage_type {l, h});
   }
 
   template<typename T, typename N>
@@ -31,23 +30,56 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr(N::value * sizeof(T) == limits<eve::neon64_>::bytes)
+    if constexpr( N::value * sizeof(T) == limits<eve::neon64_>::bytes )
     {
-      constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
-      constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
-
+      if constexpr( std::is_same_v<T, float> )
+      {
+        return vcombine_f32(l, h);
+      }
 #if defined(__aarch64__)
-      if constexpr(std::is_same_v<T, double>) return vcombine_f64(l, h);
+      else if constexpr( std::is_same_v<T, double> )
+      {
+        return vcombine_f64(l, h);
+      }
 #endif
-      if constexpr(std::is_same_v<T, float>) return vcombine_f32(l, h);
-      if constexpr(is_signed_int && sizeof(T) == 8) return vcombine_s64(l, h);
-      if constexpr(is_signed_int && sizeof(T) == 4) return vcombine_s32(l, h);
-      if constexpr(is_signed_int && sizeof(T) == 2) return vcombine_s16(l, h);
-      if constexpr(is_signed_int && sizeof(T) == 1) return vcombine_s8(l, h);
-      if constexpr(is_unsigned_int && sizeof(T) == 8) return vcombine_u64(l, h);
-      if constexpr(is_unsigned_int && sizeof(T) == 4) return vcombine_u32(l, h);
-      if constexpr(is_unsigned_int && sizeof(T) == 2) return vcombine_u16(l, h);
-      if constexpr(is_unsigned_int && sizeof(T) == 1) return vcombine_u8(l, h);
+      else if constexpr( std::signed_integral<T> )
+      {
+        if constexpr( sizeof(T) == 8 )
+        {
+          return vcombine_s64(l, h);
+        }
+        if constexpr( sizeof(T) == 4 )
+        {
+          return vcombine_s32(l, h);
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return vcombine_s16(l, h);
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return vcombine_s8(l, h);
+        }
+      }
+      else if constexpr( std::unsigned_integral<T> )
+      {
+        if constexpr( sizeof(T) == 4 )
+        {
+          return vcombine_u32(l, h);
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return vcombine_u16(l, h);
+        }
+        if constexpr( sizeof(T) == 8 )
+        {
+          return vcombine_u64(l, h);
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return vcombine_u8(l, h);
+        }
+      }
     }
     else
     {

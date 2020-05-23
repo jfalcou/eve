@@ -21,21 +21,21 @@
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/pi.hpp>
 #include <type_traits>
-
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template <typename T>
+  template <floating_real_value T>
   EVE_FORCEINLINE auto  rem2(T const &x) noexcept
   {
     T xi = nearest(x+x);
     T x_2 = fma(xi, Mhalf<T>(), x);
     auto xr = x_2*Pi<T>();
-    auto dxr =  Zero(as(xr)); 
+    auto dxr =  Zero(as(xr));
     return std::make_tuple(quadrant(xi), xr, dxr);
   }
 
-  
+
 }
 
 #endif

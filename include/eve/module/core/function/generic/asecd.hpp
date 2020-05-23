@@ -11,34 +11,35 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ASECD_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ASECD_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/asec.hpp>
-#include <eve/function/indeg.hpp>
-#include <eve/tags.hpp>
-#include <type_traits>
+#include <eve/function/radindeg.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
 
 namespace eve::detail
 {
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_), D const &decorator, T const &a) noexcept
   {
-    return indeg(asec(a0));
-  }
-  
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_)
-                                  , raw_type const &      
-                                  , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
-  {
-    return indeg(raw_(asec)(a0));
+    if constexpr( has_native_abi_v<T> )
+    {
+      return radindeg(decorator(asec)(a));
+    }
+    else
+    {
+      return apply_over(decorator(asecd), a);
+    }
   }
 
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto asecd_(EVE_SUPPORTS(cpu_), T const &a) noexcept
+  {
+    return asecd(regular_type(), a);
+  }
 }
 
 #endif

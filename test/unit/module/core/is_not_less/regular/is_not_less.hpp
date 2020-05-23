@@ -15,30 +15,32 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::is_not_less return type")
+TTS_CASE_TPL("Check eve::is_not_less return type", EVE_TYPE)
 {
-  using eve::logical;
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::is_not_less(EVE_TYPE() , EVE_TYPE()  ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS(eve::is_not_less(EVE_TYPE() , EVE_VALUE() ), (logical<EVE_TYPE>));
-  TTS_EXPR_IS(eve::is_not_less(EVE_VALUE(), EVE_TYPE()  ), (logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_not_less(T()  , T()   ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_not_less(T()  , v_t() ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_not_less(v_t(), T()   ), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::is_not_less behavior")
+TTS_CASE_TPL("Check eve::is_not_less behavior", EVE_TYPE)
 {
-  if constexpr(eve::platform::supports_nans && std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+
+  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_not_less(EVE_TYPE(1), eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
-    TTS_EQUAL(eve::is_not_less(eve::Nan<EVE_TYPE>(), EVE_TYPE(1)), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_not_less(T(1)         , eve::Nan<T>() ), eve::True<T>());
+    TTS_EQUAL(eve::is_not_less(eve::Nan<T>(), T(1)          ), eve::True<T>());
   }
 
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(1) , EVE_TYPE(1) ), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(1) , EVE_VALUE(1)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_VALUE(1), EVE_TYPE(1) ), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(3) , EVE_TYPE(1) ), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(3) , EVE_VALUE(1)), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_VALUE(3), EVE_TYPE(1) ), eve::True<EVE_TYPE>());
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(1) , EVE_TYPE(3) ), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_not_less(EVE_TYPE(1) , EVE_VALUE(3)), eve::False<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_not_less(EVE_VALUE(1), EVE_TYPE(3) ), eve::False<EVE_TYPE>() );
+  TTS_EQUAL(eve::is_not_less(T(1)   , T(1)  ), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(T(1)   , v_t(1)), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(v_t(1) , T(1)  ), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(T(3)   , T(1)  ), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(T(3)   , v_t(1)), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(v_t(3) , T(1)  ), eve::True<T>() );
+  TTS_EQUAL(eve::is_not_less(T(1)   , T(3)  ), eve::False<T>());
+  TTS_EQUAL(eve::is_not_less(T(1)   , v_t(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_not_less(v_t(1) , T(3)  ), eve::False<T>());
 }

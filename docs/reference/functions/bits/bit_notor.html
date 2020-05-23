@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::bit_notor`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::bit_notor
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/bit_notor.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/bit_notor.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,49 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the bitwise NOTOR operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  the  [element-wise](../../../glossary.html#regular_) bitwise NOTOR of the two [values](../../concepts.html#value).
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-**Return value:**
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes  bitwise NOTOR of the two parameters following the
+[bitwise operations semantic](../../../glossary.html#Bitwise).
+
+the call `bit_notor(x, y)` is semantically equivalent to `~x | y`.
+
+!!! WARNING
+   Although the infix notation with `|` and `~` is supported for all
+   [simd values](../../concepts.html#value), the `|` operator on
+   standard scalar type is the original one and so does not allow floating parameters.
+   Moreover if a proper intrinsic exists for NOTOR
+   the infix notation will not be able to use it.
 
   (insert ../../src/bit_notor.src.html here)
 
   (insert ../../out/bit_notor.out.html here)
 
+====================================================================================================
+[eve::bit_ornot](./bit_ornot.html), [eve::bit_notand](./bit_notand.html), [eve::bit_or](./bit_or),
+[eve::bit_and](./bit_and.html), [eve::bit_andnot](./bit_andnot.html), [eve::bit_xor](./bit_xor),
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

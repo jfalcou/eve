@@ -9,40 +9,39 @@
 **/
 //==================================================================================================
 #include <eve/function/log10.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/mindenormal.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::log10 return type")
+TTS_CASE_TPL("Check eve::log10 return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::log10(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::log10(T()), T);
 }
 
-TTS_CASE(" log10")
+TTS_CASE_TPL("Check eve::log10 behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::log10(eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Mone<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::log10(eve::Zero<EVE_TYPE>()), eve::Minf<EVE_TYPE>(), 0);
+    TTS_IEEE_EQUAL(eve::log10(eve::Inf<T>())  , eve::Inf<T>() );
+    TTS_IEEE_EQUAL(eve::log10(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log10(eve::Mone<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log10(T( 0 ))         , eve::Minf<T>());
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_ULP_EQUAL(eve::log10(eve::Mindenormal<EVE_TYPE>()), EVE_TYPE(std::log10(eve::Mindenormal<EVE_VALUE>())), 0);
+    TTS_IEEE_EQUAL(eve::log10(eve::Mindenormal<T>()), T(std::log10(eve::Mindenormal<v_t>())));
   }
-  
-  TTS_ULP_EQUAL(eve::log10(eve::One<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(10)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(1000)), EVE_TYPE(3), 0);
-  TTS_ULP_EQUAL(eve::log10(EVE_TYPE(1000000)), EVE_TYPE(6), 0);
+
+  TTS_IEEE_EQUAL(eve::log10(T(1)      ), T(0) );
+  TTS_IEEE_EQUAL(eve::log10(T(10)     ), T(1) );
+  TTS_IEEE_EQUAL(eve::log10(T(1000)   ), T(3) );
+  TTS_IEEE_EQUAL(eve::log10(T(1000000)), T(6) );
 }

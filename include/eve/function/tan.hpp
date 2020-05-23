@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_TAN_HPP_INCLUDED
 
 #include <eve/function/definition/tan.hpp>
-#include <eve/module/core/function/scalar/tan.hpp>
-#include <eve/module/core/function/simd/tan.hpp>
+#include <eve/module/core/function/generic/tan.hpp>
 
 #endif

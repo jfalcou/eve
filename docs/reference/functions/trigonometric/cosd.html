@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::cosd`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::cosd
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/cosd.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/cosd.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,51 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of cosd.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs cosine computation of argument in degrees.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) cosine of the input expressed in degrees.
 
-  <!--(todo:insert ../../src/cosd.src.html here)-->
+In particular:
 
-  <!--(todo:insert ../../out/cosd.out.html here)-->
+   * If the element is $\pm0$, $1$ is returned.
+   * If the element is $\pm\infty$, Nan is returned.
+   * If the element is a `NaN`, `NaN` is returned.
+
+
+Supported Decorators
+====================================================================================================
+As all direct trigonometric functions, `cosd` supports the restricted_, small_, medium_ and big_ decorators. Click
+to see the [properties and rationale](../trigonometric.html)
+
+  (insert ../../src/cosd.src.html here)
+
+  (insert ../../out/cosd.out.html here)
+
+See Also
+====================================================================================================
+[eve::sind](sind.html), [eve::sindcosd](sindcosd.html), [eve::tand](tand.html), [eve::cotd](cotd.html),
+[eve::cscd](cscd.html), [eve::secd](secd.html).
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

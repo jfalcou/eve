@@ -15,10 +15,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on tan")
+TTS_CASE_TPL("wide random check on tan", EVE_TYPE)
 {
-  auto std_tan = tts::vectorize<EVE_TYPE>( [](auto e) { return std::tan(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_tan = tts::vectorize<T>( [](auto e) { return std::tan(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(-eve::Pio_4<EVE_VALUE>(), eve::Pio_4<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_tan, eve::restricted_(eve::tan)); 
+  eve::rng_producer<T> p(-eve::Pio_4<v_t>(), eve::Pio_4<v_t>());
+  TTS_RANGE_CHECK(p, std_tan, eve::restricted_(eve::tan));
 }

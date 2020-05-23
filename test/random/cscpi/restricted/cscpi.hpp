@@ -16,9 +16,14 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cscpi")
+TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
 {
-  auto my_stdcscpi =  tts::vectorize<EVE_TYPE>([](auto x){return eve::rec(boost::math::sin_pi(x)); }); 
-  eve::rng_producer<EVE_TYPE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdcscpi, eve::restricted_(eve::cscpi)); 
+  auto my_stdcscpi =  tts::vectorize<T> ( [](auto x)
+                                          {
+                                            return  eve::rec(boost::math::sin_pi(x));
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(-0.25, 0.25);
+  TTS_RANGE_CHECK(p, my_stdcscpi, eve::restricted_(eve::cscpi));
 }

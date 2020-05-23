@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::frac`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::frac
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/frac.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/frac.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,43 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the computation of the fractional part of a value.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the[element-wise](../../../glossary.html#regular_) frac operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns a value with the same type as `x`  containing the [element-wise](../../../glossary.html#value) fractional part of `x` with the same sign as `x`.
+
+In particular:
+ * If an [element](../../../glossary.html#value) of `x` is $\pm0$,  $\pm0$ is returned.
+ * If an [element](../../../glossary.html#value) of `x` is $\pm\infty$ or `Nan`, a `Nan` is returned.
 
   (insert ../../src/frac.src.html here)
 
   (insert ../../out/frac.out.html here)
 
+See Also
+====================================================================================================
+[eve::trunc](../rounding/trunc.html)
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

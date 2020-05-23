@@ -11,60 +11,130 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_SLICE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_SLICE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+
 #include <cstddef>
+#include <type_traits>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE wide<T, typename N::split_type> slice(wide<T, N, neon128_> const &a,
-                                                        Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, neon128_> const &a, Slice const &) noexcept
+      requires(N::value > 1)
   {
-    constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
-    constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
+    using type = wide<T, typename N::split_type>;
 
-    if constexpr(Slice::value)
+    if constexpr( Slice::value )
     {
+      if constexpr( std::is_same_v<T, float> )
+      {
+        return type {vget_high_f32(a)};
+      }
 #if defined(__aarch64__)
-      if constexpr(std::is_same_v<T, double>) return vget_high_f64(a);
+      else if constexpr( std::is_same_v<T, double> )
+      {
+        return type {vget_high_f64(a)};
+      }
 #endif
-      if constexpr(std::is_same_v<T, float>) return vget_high_f32(a);
-      if constexpr(is_signed_int && sizeof(T) == 8) return vget_high_s64(a);
-      if constexpr(is_signed_int && sizeof(T) == 4) return vget_high_s32(a);
-      if constexpr(is_signed_int && sizeof(T) == 2) return vget_high_s16(a);
-      if constexpr(is_signed_int && sizeof(T) == 1) return vget_high_s8(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 8) return vget_high_u64(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 4) return vget_high_u32(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 2) return vget_high_u16(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 1) return vget_high_u8(a);
+      else if constexpr( std::signed_integral<T> )
+      {
+        if constexpr( sizeof(T) == 8 )
+        {
+          return type {vget_high_s64(a)};
+        }
+        if constexpr( sizeof(T) == 4 )
+        {
+          return type {vget_high_s32(a)};
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return type {vget_high_s16(a)};
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return type {vget_high_s8(a)};
+        }
+      }
+      else
+      {
+        if constexpr( sizeof(T) == 8 )
+        {
+          return type {vget_high_u64(a)};
+        }
+        if constexpr( sizeof(T) == 4 )
+        {
+          return type {vget_high_u32(a)};
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return type {vget_high_u16(a)};
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return type {vget_high_u8(a)};
+        }
+      }
     }
     else
     {
+      if constexpr( std::is_same_v<T, float> )
+      {
+        return type {vget_low_f32(a)};
+      }
 #if defined(__aarch64__)
-      if constexpr(std::is_same_v<T, double>) return vget_low_f64(a);
+      else if constexpr( std::is_same_v<T, double> )
+      {
+        return type {vget_low_f64(a)};
+      }
 #endif
-      if constexpr(std::is_same_v<T, float>) return vget_low_f32(a);
-      if constexpr(is_signed_int && sizeof(T) == 8) return vget_low_s64(a);
-      if constexpr(is_signed_int && sizeof(T) == 4) return vget_low_s32(a);
-      if constexpr(is_signed_int && sizeof(T) == 2) return vget_low_s16(a);
-      if constexpr(is_signed_int && sizeof(T) == 1) return vget_low_s8(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 8) return vget_low_u64(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 4) return vget_low_u32(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 2) return vget_low_u16(a);
-      if constexpr(is_unsigned_int && sizeof(T) == 1) return vget_low_u8(a);
+      else if constexpr( std::signed_integral<T> )
+      {
+        if constexpr( sizeof(T) == 8 )
+        {
+          return type {vget_low_s64(a)};
+        }
+        if constexpr( sizeof(T) == 4 )
+        {
+          return type {vget_low_s32(a)};
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return type {vget_low_s16(a)};
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return type {vget_low_s8(a)};
+        }
+      }
+      else
+      {
+        if constexpr( sizeof(T) == 8 )
+        {
+          return type {vget_low_u64(a)};
+        }
+        if constexpr( sizeof(T) == 4 )
+        {
+          return type {vget_low_u32(a)};
+        }
+        if constexpr( sizeof(T) == 2 )
+        {
+          return type {vget_low_u16(a)};
+        }
+        if constexpr( sizeof(T) == 1 )
+        {
+          return type {vget_low_u8(a)};
+        }
+      }
     }
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a,
-                             Slice const &) noexcept requires(wide<T, typename N::split_type>,
-                                                              if_<(N::value > 1)>)
+  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a, Slice const &) noexcept
+      requires(N::value > 1)
   {
     using type = wide<T, typename N::split_type>;
-    if constexpr(Slice::value)
+    if constexpr( Slice::value )
     {
       auto select = [](auto const &v, auto size) {
         auto mask = [&](auto... I) {
@@ -76,7 +146,7 @@ namespace eve::detail
         return vtbl1_u8((uint8x8_t)(v.storage()), apply<8>(mask));
       };
 
-      return type((typename type::storage_type)(select(a, N{})));
+      return type((typename type::storage_type)(select(a, N {})));
     }
     else
     {
@@ -85,16 +155,16 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon128_> const &a) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, neon128_> const &a) noexcept requires(N::value > 1)
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a) noexcept requires(N::value > 1)
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }

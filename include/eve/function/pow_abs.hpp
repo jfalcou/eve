@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_POW_ABS_HPP_INCLUDED
 
 #include <eve/function/definition/pow_abs.hpp>
-#include <eve/module/core/function/scalar/pow_abs.hpp>
-#include <eve/module/core/function/simd/pow_abs.hpp>
+#include <eve/module/core/function/generic/pow_abs.hpp>
 
 #endif

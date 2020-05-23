@@ -25,8 +25,8 @@ namespace eve
     template<typename X, typename L, typename H>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_)
                               , X const&
-                              , L const& lo
-                              , H const& hi)
+                              , [[maybe_unused]] L const& lo
+                              , [[maybe_unused]] H const& hi)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
     }

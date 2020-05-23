@@ -12,7 +12,11 @@
 #define EVE_FUNCTION_IS_ORDERED_HPP_INCLUDED
 
 #include <eve/function/definition/is_ordered.hpp>
-#include <eve/module/core/function/scalar/is_ordered.hpp>
-#include <eve/module/core/function/simd/is_ordered.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/is_ordered.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/is_ordered.hpp>
+#endif
 
 #endif

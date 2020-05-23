@@ -13,30 +13,29 @@
 #include <tts/tests/types.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <type_traits>
 
-TTS_CASE("Check saturated_(eve::dist) return type")
+TTS_CASE_TPL("Check saturated_(eve::dist) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::dist)(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturated_(eve::dist)(T(), T()), T);
 }
 
-TTS_CASE("Check saturated_(eve::dist) behavior")
+TTS_CASE_TPL("Check saturated_(eve::dist) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(1), EVE_TYPE(5)), (EVE_TYPE(4)));
+  TTS_EQUAL(eve::saturated_(eve::dist)(T(0), T(0)), T(0));
+  TTS_EQUAL(eve::saturated_(eve::dist)(T(1), T(5)), T(4));
 
-  if constexpr(std::is_integral_v<EVE_VALUE>)
+  if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::Valmax<EVE_TYPE>(),eve::Valmin<EVE_TYPE>())
-              , eve::Valmax<EVE_TYPE>()
+    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::Valmax<T>(),eve::Valmin<T>())
+              , eve::Valmax<T>()
               );
 
-    if constexpr(std::is_signed_v<EVE_VALUE>)
+    if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<EVE_TYPE>(),EVE_TYPE(-1)), eve::Valmax<EVE_TYPE>());
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<EVE_TYPE>(),EVE_TYPE( 0)), eve::Valmax<EVE_TYPE>());
-      TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(-1), EVE_TYPE(1) ), (EVE_TYPE(2)));
-      TTS_EQUAL(eve::saturated_(eve::dist)(EVE_TYPE(-2), EVE_TYPE(-6)), (EVE_TYPE(4)));
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<T>() , T(-1)), eve::Valmax<T>());
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<T>() , T( 0)), eve::Valmax<T>());
+      TTS_EQUAL(eve::saturated_(eve::dist)(T(-1)            , T( 1)), T(2)            );
+      TTS_EQUAL(eve::saturated_(eve::dist)(T(-2)            , T(-6)), T(4)            );
     }
   }
 }

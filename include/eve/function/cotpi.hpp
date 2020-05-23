@@ -12,7 +12,7 @@
 #define EVE_FUNCTION_COTPI_HPP_INCLUDED
 
 #include <eve/function/definition/cotpi.hpp>
-#include <eve/module/core/function/scalar/cotpi.hpp>
-#include <eve/module/core/function/simd/cotpi.hpp>
+#include <eve/module/core/function/generic/cotpi.hpp>
+
 
 #endif

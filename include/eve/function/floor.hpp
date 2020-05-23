@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_FLOOR_HPP_INCLUDED
 
 #include <eve/function/definition/floor.hpp>
-#include <eve/module/core/function/scalar/floor.hpp>
-#include <eve/module/core/function/simd/floor.hpp>
+#include <eve/module/core/function/generic/floor.hpp>
 
 #endif

@@ -11,22 +11,20 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_NBTRUE_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_X86_NBTRUE_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/popcount.hpp>
-#include <eve/forward.hpp>
-#include <eve/wide.hpp>
 #include <eve/arch/limits.hpp>
 #include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
-  template<typename T, typename N>
+  template<real_value T, typename N>
   EVE_FORCEINLINE size_t  nbtrue_(EVE_SUPPORTS(sse2_)
                             , logical<wide<T, N, sse_>> const &v) noexcept
   {
@@ -34,7 +32,7 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>)
     {
-      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
 
@@ -53,7 +51,7 @@ namespace eve::detail
     }
     else if constexpr(std::is_same_v<T, double>)
     {
-      using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
       static constexpr int Card = Bytes/sizeof(T);
       static constexpr int SH = (Card-N::value);
 
@@ -90,7 +88,7 @@ namespace eve::detail
       }
       else
       {
-        using i8_t = wide<int8_t, fixed<Bytes> , sse_>;
+        using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
         if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
         {
           static constexpr int sv = SH;
@@ -107,7 +105,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
-  template<typename T, typename N>
+  template<real_value T, typename N>
   EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(avx_)
                            , logical<wide<T, N, avx_>> const &v) noexcept
   {

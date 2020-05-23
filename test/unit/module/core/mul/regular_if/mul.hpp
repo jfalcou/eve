@@ -11,19 +11,20 @@
 #include <eve/function/mul.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-TTS_CASE("Check eve::mul[condition] return type")
+
+TTS_CASE_TPL("Check eve::mul[condition] return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::mul[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::mul[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::mul[ true ](EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::mul[ T() ](T(), T())), T);
+  TTS_EXPR_IS( (eve::mul[ eve::logical<T>() ](T(), T())), T);
+  TTS_EXPR_IS( (eve::mul[ true ](T(), T())), T);
 }
 
-TTS_CASE("Check eve::mul[condition] behavior")
+TTS_CASE_TPL("Check eve::mul[condition] behavior", EVE_TYPE)
 {
-  EVE_TYPE tv{2};
-  EVE_TYPE fv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv{2};
+  T fv{3};
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   // All basic TRUE
   TTS_EQUAL(eve::mul[ 1 ](tv, fv)     , tv * fv);
@@ -38,10 +39,10 @@ TTS_CASE("Check eve::mul[condition] behavior")
   TTS_EQUAL(eve::mul[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::mul[ m ](tv, fv) , eve::if_else(m,tv * fv, tv) );
+  TTS_EQUAL(eve::mul[ m ](tv, fv) , eve::if_else(m,eve::mul(tv, fv), tv) );
 }

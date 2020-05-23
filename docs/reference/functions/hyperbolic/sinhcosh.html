@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::sinhcosh`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::sinhcosh
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/sinhcosh.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/sinhcosh.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,41 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of sinhcosh.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  {$\frac{e^x-e^{-x}}2, \frac{e^x-e^{-x}}2$}.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) pair of values containing the hyperbolic sine and
+the hyperbolic cosine of the input.
 
-  <!-- (todo:insert ../../src/sinhcosh.src.html here) -->
 
-  <!-- (todo:insert ../../out/sinhcosh.out.html here) -->
+  (insert ../../src/sinhcosh.src.html here)
+
+  (insert ../../out/sinhcosh.out.html here)
+
+See Also
+====================================================================================================
+[cosh](cosh.html), [sinhcoshcosh](sinhcoshcosh.html), [tanh](tanh.html), [coth](coth.html),.
+
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

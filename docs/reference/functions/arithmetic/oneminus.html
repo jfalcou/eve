@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::oneminus`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::oneminus
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/oneminus.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/oneminus.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,44 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the oneminus operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the  [element-wise](../../../glossary.html#element-wise) oneminus operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes  [element-wise](../../../glossary.html#elment-wise) `1-x` with the type of `x`.
+
+!!! WARNING
+    If an  [element](../../../glossary.html#element_) of the expected result is not representable in
+    the result type, the corresponding result [element](../../../glossary.html#element_) is undefined.
+
+Supported Decorators
+====================================================================================================
+[`saturated_`](../decorators.html#saturated_)
+:   The call `saturated_(oneminus)(x)` is semantically equivalent to `saturated_(sub)(One(as(x)), x)`
+    and is never undefined.
 
   (insert ../../src/oneminus.src.html here)
 
   (insert ../../out/oneminus.out.html here)
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

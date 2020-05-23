@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::firstbitunset`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::firstbitunset
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/firstbitunset.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/firstbitunset.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,42 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the firstbitunset operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< unsigned_value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the  [element-wise](../../../glossary.html#element-wise) firstbitunset operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
 
-**Return value:**
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [unsigned value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes [element-wise](../../../glossary.html#element-wise_) the bit pattern in which the only bit set (if it exists) is
+the first bit unset (beginning with the least significant bit) in the input.
 
   (insert ../../src/firstbitunset.src.html here)
 
   (insert ../../out/firstbitunset.out.html here)
 
+See Also
+====================================================================================================
+[eve::floor](./floor.html), [eve::trunc](./trunc.html),
+[eve::nearest](./nearest.html), [eve::round](./round.html).
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

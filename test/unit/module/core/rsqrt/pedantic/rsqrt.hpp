@@ -9,40 +9,35 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
+#include <eve/constant/mindenormal.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/ulpdist.hpp>
-#include <eve/function/extract.hpp>
-#include <eve/function/any.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/ulpdist.hpp>
-#include <eve/function/prev.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 #include <cmath>
 
-TTS_CASE("Check eve::pedantic_(eve::rsqrt) return type")
+TTS_CASE_TPL("Check eve::pedantic_(eve::rsqrt) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::rsqrt)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::pedantic_(eve::rsqrt)(T(0)), T);
 }
 
-TTS_CASE("Check eve::pedantic_(eve::rsqrt) behavior")
+TTS_CASE_TPL("Check eve::pedantic_(eve::rsqrt) behavior", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(EVE_TYPE(1)), (EVE_TYPE(1  )), 0.5);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(EVE_TYPE(4)), (EVE_TYPE(0.5)), 0.5);
-  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_invalids)
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(T(1)), T(1  ), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(T(4)), T(0.5), 0.5);
+
+  if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<EVE_TYPE>())) , (eve::Nan<EVE_TYPE>()));
-    TTS_EQUAL(eve::pedantic_(eve::rsqrt)((EVE_TYPE(0)))               , eve::Inf<EVE_TYPE>());
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<T>())) , (eve::Nan<T>()));
+    TTS_EQUAL(eve::pedantic_(eve::rsqrt)((T(0)))               , eve::Inf<T>());
   }
-  auto z = eve::Mindenormal<EVE_VALUE>();
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(EVE_TYPE(z)), EVE_TYPE(eve::rec(std::sqrt(z))), 2.0);
-}
 
+  using v_t = eve::element_type_t<T>;
+  auto z = eve::Mindenormal<v_t>();
+
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(eve::Mindenormal<T>())   , T(eve::rec(std::sqrt(z)))   , 2.0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(2*eve::Mindenormal<T>()) , T(eve::rec(std::sqrt(2*z))) , 2.0);
+}

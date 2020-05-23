@@ -5,24 +5,26 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<double, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {2.0f, 1.0f, -1.0f, eve::Inf<float>()
-                , eve::Minf<float>(), eve::Nan<float>(), 0.0f, -2.0f};
+  wide_ft pf = {-1.0f, 0.0f, 367.0f, -1005600.0f, eve::Mindenormal<double>(),
+               eve::Inf<double>(), eve::Minf<double>(), eve::Nan<double>()};
 
-  auto [sh, ch] =  eve::sinhcosh(pf); 
+  auto [s, c]    = eve::sinhcosh(pf);
   std::cout << "---- simd" << '\n'
-            << "<- pf =                  " << pf << '\n'
-            << "-> eve::sinhcosh(pf) =  [" << sh << ", \n"
-            << "                         " << ch << "] \n"; 
+            << "<- pf                      = " << pf << '\n'
+            << "-> sinhcosh(pf)            = [" << '\n'
+            << "                           " << s << ", \n"
+            << "                           " << c << '\n'
+            << "                             ]\n";
 
-  float xf = 2;
-  auto [ssh, sch] =  eve::sinhcosh(xf); 
+  float xf = 2.3;
+  auto [ss, sc] =  eve::sinhcosh(xf);
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf  =                " << xf << '\n'
-            << "-> eve::sinhcosh(xf) = [" << ssh << ", " << sch << "]\n"; 
+            << "<- xf           =  " << xf << '\n'
+            << "-> sinhcosh(xf) = [" << ss << ", " << sc << "]\n";
   return 0;
 }

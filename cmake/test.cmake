@@ -14,11 +14,16 @@ include(add_parent_target)
 ##==================================================================================================
 set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
 set(_TestSrcDir     "${PROJECT_BINARY_DIR}/tmp-src")
-if( MSVC )
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  set( _TestOptions -std=c++20 -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set( _TestOptions -std=c++20 -Wall)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set( _TestOptions /std:c++latest -W3 -EHsc)
-else()
-  set( _TestOptions -std=c++17 -Wall -Wno-missing-braces )
 endif()
+
+message( STATUS "[eve] Compiler base options: ${_TestOptions}")
 
 ##==================================================================================================
 ## Basic type roots
@@ -74,7 +79,6 @@ function(make_all_units)
 
   # Generate tests for each variant location
   foreach( variant ${locations})
-
     # header to include in autogen tests
     set(header "${variant}/${GEN_TEST_NAME}")
 
@@ -219,6 +223,9 @@ add_dependencies(tests unit)
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(core.unit)
+add_custom_target(core.constant.unit)
+add_custom_target(core.constant.scalar.unit)
+add_custom_target(core.constant.simd.unit)
 add_custom_target(core.scalar.unit)
 add_custom_target(core.simd.unit)
 add_custom_target(random.unit)
@@ -227,6 +234,11 @@ add_custom_target(random.simd.unit)
 add_custom_target(exhaustive.unit)
 add_custom_target(exhaustive.scalar.unit)
 add_custom_target(exhaustive.simd.unit)
+add_dependencies(core.constant.unit core.constant.scalar.unit)
+add_dependencies(core.constant.unit core.constant.simd.unit)
+add_dependencies(core.scalar.unit   core.constant.scalar.unit)
+add_dependencies(core.simd.unit     core.constant.simd.unit)
+add_dependencies(core.unit core.constant.unit)
 add_dependencies(core.unit core.scalar.unit)
 add_dependencies(core.unit core.simd.unit)
 add_dependencies(random.unit random.scalar.unit)

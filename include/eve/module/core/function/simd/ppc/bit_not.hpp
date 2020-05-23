@@ -14,11 +14,11 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_> bit_not_(EVE_SUPPORTS(vmx_),
                                                 wide<T, N, ppc_> const &v0) noexcept
   {

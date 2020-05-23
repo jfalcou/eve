@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::fdim`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::fdim
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/fdim.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/fdim.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,38 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the fdim operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< real_value T, real_value U> auto operator()( T x, U y ) const noexcept
+requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  the [element-wise](../../../glossary.html#elment-wise) positive difference of the two [values](../../concepts.html#value).
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`
+:    [values](../../concepts.html#value)
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the  [element-wise](../../../glossary.html#value) positive difference between `x` and `y`:
+ * if `x>y`,   x-y is returned
+ * if `x<=y`,  +0 is returned
+ * otherwise a `Nan` is returned
 
-  <!--(todo:insert ../../src/fdim.src.html here)-->
+  (insert ../../src/fdim.src.html here)
 
-  <!--(todo:insert ../../out/fdim.out.html here)-->
+  (insert ../../out/fdim.out.html here)
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

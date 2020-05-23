@@ -1,30 +1,26 @@
-#include <eve/function/bit.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/function/fma.hpp>
+#include <eve/constant/eps.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <iomanip>
 
-using iT      = std::uint32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
+using wide_t = eve::wide<std::uint16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pi = {3, -2, -10, 0};
-  wide_it qi = {4, -1, 0, 5};
-  wide_it si = {2, eve::Allbits<iT>(), 0, 4};
+
+  wide_t pi = {2, -3, 0,  1 << 10};
+  wide_t qi = {3, -2, 4,  2 };
+  wide_t mi = {0, -1, 1, -1 << 8};
 
   std::cout << "---- simd" << '\n'
-            << " <- si =                              " << si << '\n'
-            << " <- pi =                              " << pi << '\n'
-            << " <- qi =                              " << qi << '\n'
-            << " -> eve::bit_select(si, pi, qi) =  " << eve::bit_select(si, pi, qi) << '\n';
+            << " <- mi                                = " << mi << '\n'
+            << " <- pi                                = " << pi << '\n'
+            << " <- qi                                = " << qi << '\n'
+            << " -> bit_select(mi, pi, qi)            = " << eve::bit_select(mi, pi, qi) << '\n';
 
-  iT ssi = 3, xi = 3, yi = 4;
-
-  std::cout << "---- scalar" << '\n'
-            << " ssi =                                " << ssi << '\n'
-            << " xi =                                 " << xi << '\n'
-            << " yi =                                 " << yi << '\n'
-            << " -> eve::bit_select(ssi, xi, yi) = " << eve::bit_select(ssi, xi, yi)
-            << '\n';
+  std::cout << "---- scalar" << std::setprecision(10) << '\n'
+            << " -> bit_select(32767, 1, 32768 )      = " << eve::bit_select(32767, 1, 32768) << '\n';
   return 0;
 }

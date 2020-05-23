@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::copysign`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::copysign
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/copysign.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/copysign.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,41 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing sign copying operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< real_floating_value T, real_floating_value U > auto operator()( T x, U y ) const noexcept
+requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Composes a floating point value with the magnitude of `x` and the sign of `y`.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`
+:    [real floating values](../../concepts.html#value)
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#regular_) composition of a value with the magnitude of `x`
+and the bit of sign of `y`.
 
   (insert ../../src/copysign.src.html here)
 
   (insert ../../out/copysign.out.html here)
 
+See Also
+====================================================================================================
+[eve::abs](./abs.html), [eve::signnz](./signnz.html)
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

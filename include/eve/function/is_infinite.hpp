@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_INFINITE_HPP_INCLUDED
 
 #include <eve/function/definition/is_infinite.hpp>
-#include <eve/module/core/function/scalar/is_infinite.hpp>
-#include <eve/module/core/function/simd/is_infinite.hpp>
+#include <eve/module/core/function/generic/is_infinite.hpp>
 
 #endif

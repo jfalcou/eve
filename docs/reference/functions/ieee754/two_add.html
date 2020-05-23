@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::two_add`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::two_add
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/two_add.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/two_add.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,44 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the two_addt operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic two_add of its parameters.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-**Return value:**
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+computes [element-wise](../../../glossary.html#element-wise_) a pair of values `[a,e]` such that:
 
-  <!--(todo:insert  ../../src/two_add.src.html here)-->
+* `a` is `x+y`
+* `e` is a value such that `a $\oplus$ `e` is equal to `x``$\oplus$`y`
 
-  <!--(todo:insert  ../../out/two_add.out.html here)-->
+where $\oplus$ adds its two parameters with infinite precision.
+
+  (insert ../../src/two_add.src.html here)
+
+  (insert ../../out/two_add.out.html here)
+
+See Also
+====================================================================================================
+[eve::two_add](./two_add.html).
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

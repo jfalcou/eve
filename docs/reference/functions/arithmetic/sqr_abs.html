@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::sqr_abs`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::sqr_abs
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/sqr_abs.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/sqr_abs.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,40 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the sqr_abs operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< real_floating_value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the  [element-wise](../../../glossary.html#element-wise) sqr_abs operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
 
-**Return value:**
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [real floating value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes  [element-wise](../../../glossary.html#elment-wise) the square of the absolute value of `x` .
+
 
   (insert ../../src/sqr_abs.src.html here)
 
   (insert ../../out/sqr_abs.out.html here)
 
+See Also
+====================================================================================================
+[eve::arg](eve::arg), [eve::conj](eve::conj), [eve::real](eve::real), [eve::imag](eve::imag).
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

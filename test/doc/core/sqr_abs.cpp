@@ -1,35 +1,21 @@
 #include <eve/function/sqr_abs.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f,
-                1.0f,
-                -1.0f,
-                -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+  wide_ft pf = {-1.0f, 2.0f, -3.0f, 182.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                  " << pf << '\n'
-            << "-> eve::sqr_abs(pf) = " << eve::sqr_abs(pf) << '\n';
+            << "<- pf          = " << pf << '\n'
+            << "-> sqr_abs(pf) = " << eve::sqr_abs(pf) << '\n';
 
-  float xf = 1.0f;
-  float yf = eve::Mindenormal<float>();
+  float        xf = -32768.0f;
+
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                  " << xf << '\n'
-            << "-> eve::sqr_abs(xf) = " << eve::sqr_abs(xf) << '\n'
-            << "<- yf =                  " << yf << '\n'
-            << "-> eve::sqr_abs(yf) = " << eve::sqr_abs(yf) << '\n';
+            << "<- xf          = " << xf << '\n'
+            << "-> sqr_abs(xf) = " << eve::sqr_abs(xf) << '\n';
   return 0;
 }

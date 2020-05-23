@@ -11,69 +11,29 @@
 #ifndef EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 #define EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
 
+#include <eve/traits/element_type.hpp>
+#include <eve/traits/cardinal.hpp>
+#include <eve/traits/is_logical.hpp>
 #include <eve/forward.hpp>
-#include <eve/cardinal.hpp>
 
-namespace eve::detail
-{
-  template<typename Type>
-  struct is_vectorized : std::false_type
-  {
-  };
-
-  template<typename Type>
-  struct is_vectorized<Type &> : is_vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_vectorized<Type const> : is_vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_vectorized<Type const &> : is_vectorized<Type>
-  {
-  };
-
-  template<typename Type>
-  struct is_vectorized<Type &&> : is_vectorized<Type>
-  {
-  };
-
-  template<typename Type, typename Size, typename ABI>
-  struct is_vectorized<wide<Type, Size, ABI>> : std::true_type
-  {
-  };
-
-  template<typename Type>
-  struct is_vectorized<logical<Type>> : is_vectorized<Type>
-  {
-  };
-}
+#include <concepts>
 
 namespace eve
 {
-  template<typename Type>
-  struct is_vectorized : detail::is_vectorized<Type>
-  {
-  };
+  //================================================================================================
+  // A type satisfies simd_value iff its cardinal is not scalar_cardinal
+  //================================================================================================
+  template<typename T> concept simd_value = !std::same_as<eve::cardinal_t<T>, scalar_cardinal>;
 
-  template<typename Type>
-  using is_vectorized_t = typename is_vectorized<Type>::type;
-
-  template<typename Type>
-  inline constexpr bool is_vectorized_v = is_vectorized_t<Type>::value;
-
-  template<typename Type>
-  using vectorized = std::enable_if_t<is_vectorized_v<Type>>;
-
-  template<typename T, typename U>
-  using equal_cardinal = std::enable_if_t<cardinal_v<T> == cardinal_v<U>>;
-
-  template<typename N, typename... Us>
-  using has_compatible_cardinal =
-      std::enable_if_t<(((cardinal_v<Us> == N::value) || (cardinal_v<Us> == 1)) && ...)>;
+  template<typename T> concept integral_simd_value        = simd_value<T> && std::integral<detail::value_type_t<T>>;
+  template<typename T> concept signed_simd_value          = simd_value<T> && std::is_signed_v<detail::value_type_t<T>>;
+  template<typename T> concept unsigned_simd_value        = simd_value<T> && std::unsigned_integral<detail::value_type_t<T>>;
+  template<typename T> concept signed_integral_simd_value = simd_value<T> && std::signed_integral<detail::value_type_t<T>>;
+  template<typename T> concept floating_simd_value        = simd_value<T> && std::floating_point<detail::value_type_t<T>>;
+  template<typename T> concept logical_simd_value         = simd_value<T> && is_logical_v<T>;
+  template<typename T> concept real_simd_value            = simd_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
+  template<typename T> concept floating_real_simd_value   = real_simd_value<T> && std::floating_point<detail::value_type_t<T>>;
+  template<typename T> concept integral_real_simd_value   = real_simd_value<T> && std::integral<detail::value_type_t<T>>;
 }
 
 #endif

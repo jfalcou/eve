@@ -11,8 +11,7 @@
 #ifndef EVE_CONSTANT_ZERO_HPP_INCLUDED
 #define EVE_CONSTANT_ZERO_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
 
 namespace eve
@@ -20,7 +19,7 @@ namespace eve
   EVE_MAKE_CALLABLE(zero_, zero_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Zero(as_<T> const & = {})
+  EVE_FORCEINLINE auto Zero(as_<T> const & = {}) noexcept
   {
     return T(0);
   }

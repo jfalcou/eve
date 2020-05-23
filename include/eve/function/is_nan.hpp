@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_NAN_HPP_INCLUDED
 
 #include <eve/function/definition/is_nan.hpp>
-#include <eve/module/core/function/scalar/is_nan.hpp>
-#include <eve/module/core/function/simd/is_nan.hpp>
+#include <eve/module/core/function/generic/is_nan.hpp>
 
 #endif

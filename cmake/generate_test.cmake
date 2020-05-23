@@ -45,22 +45,16 @@ function(generate_test root rootpath dep file)
       string(REPLACE ".cpp" ".out.html" doc_output ${file})
       string(REPLACE ".cpp" ".src.html" doc_source ${file})
 
-      set( MKHEADER "<meta charset=\\\"utf-8\\\">\\n**Possible Output:**\\n\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash")
-      set( MKFOOTER "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\n\\n<\!-- Markdeep: -->\\n<script src=\\\"../../markdeep.min.js\\\"></script>\\n<script src=\\\"https://casual-effects.com/markdeep/latest/markdeep.min.js?\\\"></script>\\n")
-
-      set( MKCPPHEADER "<meta charset=\\\"utf-8\\\">\\n**Example:**\\n<script type=\\\"preformatted\\\">\\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++")
-      set( MKCPPFOOTER "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\n</script>\\n<\!-- Markdeep: -->\\n<script src=\\\"../../markdeep.min.js\\\"></script>\\n<script src=\\\"https://casual-effects.com/markdeep/latest/markdeep.min.js?\\\"></script>\\n")
-
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND sh -c "{ echo -e \"${MKHEADER}\"; $<TARGET_FILE:${test}>; echo -e \"${MKFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
+                COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
               )
 
       set(src_test "src.${test}")
 
       add_test( NAME ${src_test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND sh -c "{ echo -e \"${MKCPPHEADER}\"; cat ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file}; echo -e \"${MKCPPFOOTER}\"; } > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
+                COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
               )
     else()
     add_test( NAME ${test}

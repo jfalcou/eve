@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::log`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::log
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/log.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/log.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,46 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of the natural logarithm.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs $\log x$.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) the natural logarithm  of `x`
+In partucular, for floating inputs:
+
+   * If the element is $\pm0$, $-\infty$ is returned.
+   * If the element is $1$, $+0$ is returned.
+   * If the element is $\infty$, $\infty$ is returned.
+   * If the element is less than 0, `NaN` is returned.
+
 
   (insert ../../src/log.src.html here)
 
   (insert ../../out/log.out.html here)
 
+See Also
+====================================================================================================
+[eve::log10](log10.html), [eve::log2](log2.html), [eve::exp](exp.html).
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

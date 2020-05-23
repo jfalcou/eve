@@ -10,20 +10,20 @@ int main()
   wide_it pi = {-1, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                            " << pf << '\n'
-            << "-> eve::abs(pf) =                  " << eve::abs(pf) << '\n'
-            << "<- pi =                            " << pi << '\n'
-            << "-> eve::saturated_(eve::abs)(pi) = " << eve::saturated_(eve::abs)(pi) << '\n'
-            << "-> eve::abs(pi) =                  " << eve::abs(pi) << '\n';
+            << "<- pf =                  " << pf << '\n'
+            << "-> abs(pf) =             " << eve::abs(pf) << '\n'
+            << "<- pi =                  " << pi << '\n'
+            << "-> saturated_(abs)(pi) = " << eve::saturated_(eve::abs)(pi) << '\n'
+            << "-> abs(pi) =             " << eve::abs(pi) << '\n';
 
   float        xf = -32768.0f;
   std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                            " << xf << '\n'
-            << "-> eve::abs(xf) =                  " << eve::abs(xf) << '\n'
-            << "<- xi =                            " << xi << '\n'
-            << "-> eve:saturated_(eve::abs)(xi)    " << eve::saturated_(eve::abs)(xi) << '\n'
-            << "-> eve::abs(xi) =                  " << eve::abs(xi) << '\n';
+            << "<- xf =                  " << xf << '\n'
+            << "-> abs(xf) =             " << eve::abs(xf) << '\n'
+            << "<- xi =                  " << xi << '\n'
+            << "-> saturated_(abs)(xi)   " << eve::saturated_(eve::abs)(xi) << '\n'
+            << "-> abs(xi) =             " << eve::abs(xi) << '\n';
   return 0;
 }

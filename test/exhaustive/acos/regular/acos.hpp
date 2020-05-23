@@ -14,10 +14,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on acos")
+TTS_CASE_TPL("wide exhaustive check on acos", EVE_TYPE)
 {
-  auto std_acos = tts::vectorize<EVE_TYPE>( [](auto e) { return std::acos(e); } );
+  auto std_acos = tts::vectorize<T>( [](auto e) { return std::acos(e); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-1,1);
+  eve::exhaustive_producer<T> p(-1,1);
   TTS_RANGE_CHECK(p, std_acos, eve::acos);
 }

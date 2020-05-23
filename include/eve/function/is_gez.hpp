@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_IS_GEZ_HPP_INCLUDED
 
 #include <eve/function/definition/is_gez.hpp>
-#include <eve/module/core/function/scalar/is_gez.hpp>
-#include <eve/module/core/function/simd/is_gez.hpp>
+#include <eve/module/core/function/generic/is_gez.hpp>
 
 #endif

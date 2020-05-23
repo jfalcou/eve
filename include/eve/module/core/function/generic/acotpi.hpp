@@ -11,25 +11,27 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ACOTPI_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_ACOTPI_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/has_abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/acot.hpp>
-#include <eve/function/inpi.hpp>
-#include <eve/tags.hpp>
-#include <type_traits>
+#include <eve/function/radinpi.hpp>
 
 namespace eve::detail
 {
-
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto acotpi_(EVE_SUPPORTS(cpu_)
-                                  , T const &a0) noexcept
-  requires(T, behave_as<floating_point,T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto acotpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    return inpi(acot(a0));
+    if constexpr( has_native_abi_v<T> )
+    {
+      return radinpi(acot(a));
+    }
+    else
+    {
+      return apply_over(acotpi, a);
+    }
   }
-
 }
 
 #endif

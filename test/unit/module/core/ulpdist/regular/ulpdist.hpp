@@ -9,56 +9,42 @@
 **/
 //==================================================================================================
 #include <eve/function/ulpdist.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>  
+#include <eve/constant/minf.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/function/nb_values.hpp>
 #include <eve/function/minus.hpp>
 #include <type_traits>
 
-TTS_CASE("Check eve::ulpdist return type")
+TTS_CASE_TPL("Check eve::ulpdist return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::ulpdist(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::ulpdist(T(0), T(0)), (T));
 }
 
-TTS_CASE("Check eve::ulpdist behavior")
+TTS_CASE_TPL("Check eve::ulpdist behavior", EVE_TYPE)
 {
-  using eve::ulpdist; 
-  TTS_EXPR_IS( (ulpdist(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  using eve::ulpdist;
+  TTS_EXPR_IS( ulpdist(T(), T()), T);
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
     if constexpr(eve::platform::supports_invalids)
     {
-      TTS_EQUAL((ulpdist(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>())), (eve::Zero<EVE_TYPE>()));
-      TTS_EQUAL((ulpdist(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>())), (eve::Zero<EVE_TYPE>()));
-      TTS_EQUAL((ulpdist(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>())), (eve::Zero<EVE_TYPE>()));
+      TTS_EQUAL ( ulpdist(eve::Inf<T>(), eve::Inf<T>())   , T(0) );
+      TTS_EQUAL ( ulpdist(eve::Minf<T>(), eve::Minf<T>()) , T(0) );
+      TTS_EQUAL ( ulpdist(eve::Nan<T>(), eve::Nan<T>())   , T(0) );
     }
-    
-    TTS_EQUAL( (ulpdist(eve::One<EVE_TYPE>(), eve::inc(eve::Eps<EVE_TYPE>())))
-             , EVE_TYPE(0.5)
-             );
-    
-    TTS_EQUAL( (ulpdist(eve::One<EVE_TYPE>(), EVE_TYPE(-eve::dec(eve::Eps<EVE_TYPE>()))))
-             , EVE_TYPE(1)
-             );
-    
-    TTS_EQUAL( (ulpdist(eve::One<EVE_TYPE>(), EVE_TYPE(-eve::dec(eve::Eps<EVE_TYPE>()/2))))
-             , EVE_TYPE(0.5)
-             );
+
+    TTS_EQUAL( ulpdist(T(1), eve::inc(eve::Eps<T>()))      , T(0.5 ) );
+    TTS_EQUAL( ulpdist(T(1), T(-eve::dec(eve::Eps<T>())))  , T(1   ) );
+    TTS_EQUAL( ulpdist(T(1), T(-eve::dec(eve::Eps<T>()/2))), T(0.5 ) );
   }
-  TTS_EQUAL((ulpdist(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL((ulpdist(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
-  TTS_EQUAL((ulpdist(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>())), eve::Zero<EVE_TYPE>());
+
+  TTS_EQUAL ( ulpdist(T(-1), T(-1)), T(0) );
+  TTS_EQUAL ( ulpdist(T( 1), T( 1)), T(0) );
+  TTS_EQUAL ( ulpdist(T( 0), T( 0)), T(0) );
 }

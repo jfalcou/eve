@@ -1,29 +1,25 @@
 #include <eve/function/nb_values.hpp>
+#include <eve/constant/eps.hpp>
+#include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/tags.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
+#include <iomanip>
 
 int main()
 {
-  wide_ft pf = {0, 1, -1, -eve::Valmax<int16_t>()};
-  wide_ft qf = {1, -1, 0, eve::Valmax<int16_t>()};
+  using w_t = eve::wide<float, eve::fixed<4>>;
+  w_t pi = {0.0f, 1.0f, 1.0f-eve::Eps<float>(), 1.0f};
+  w_t qi = {1.0f, 2.0f, 1.0f, eve::Inf<float>()};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf =                          " << pf << '\n'
-            << "<- qf =                          " << qf << '\n'
-            << "-> eve::nb_values(pf, qf) =      " << eve::nb_values(pf, qf) << '\n'
-            << '\n';
+  std::cout << "---- simd" << std::setprecision(9) << '\n'
+            << " <- pi                = " << pi << '\n'
+            << " <- qi                = " << qi << '\n'
+            << " -> nb_values(pi, qi) = " << eve::nb_values(pi, qi) << '\n';
 
-  int16_t xf = -eve::Valmax<int16_t>();
-  int16_t yf = eve::Valmax<int16_t>();
+  std::uint32_t xi = 3, yi = 7;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                          " << xf << '\n'
-            << "<- yf =                          " << yf << '\n'
-            << "-> eve::nb_values(xf, yf) =      " << eve::nb_values(xf, yf) << '\n'
-            << '\n';
+            << " xi                   = " << xi << '\n'
+            << " yi                   = " << yi << '\n'
+            << " -> nb_values(xi, yi) = " << eve::nb_values(xi, yi) << '\n';
   return 0;
 }

@@ -11,30 +11,21 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_INEAREST_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_INEAREST_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/toint.hpp>
-#include <type_traits>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
-  ////////////////////////////////////////////////
-  // saturated_
-  template<typename T>
+  template<real_value T>
   EVE_FORCEINLINE constexpr auto inearest_(EVE_SUPPORTS(cpu_)
-                                      , T const &a) noexcept
+                                          , T const &a) noexcept
   {
-    if constexpr(std::is_floating_point_v<value_type_t<T>>)
-    {
-      return saturated_(toint)(eve::nearest(a));
-
-    }
-    else // if constexpr(std::is_integral_v<value_type_t<T>>)
-    {
-      return a; 
-    }
+    if constexpr(integral_value<T>)  return a;
+    else if constexpr(has_native_abi_v<T>)     return saturated_(toint)(eve::nearest(a));
+    else                             return apply_over(inearest, a);
   }
 }
 

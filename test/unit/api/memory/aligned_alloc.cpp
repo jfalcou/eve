@@ -1,7 +1,7 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -14,17 +14,18 @@
 #include <eve/memory/aligned_dealloc.hpp>
 #include <tts/tests/basic.hpp>
 
-TTS_CASE_TPL("aligned_alloc behavior",
-             std::integral_constant<int, 1>,
-             std::integral_constant<int, 2>,
-             std::integral_constant<int, 4>,
-             std::integral_constant<int, 8>,
-             std::integral_constant<int, 16>,
-             std::integral_constant<int, 32>,
-             std::integral_constant<int, 64>,
-             std::integral_constant<int, 128>)
+TTS_CASE_TPL( "aligned_alloc behavior"
+            , std::integral_constant<int,    8>
+            , std::integral_constant<int,   16>
+            , std::integral_constant<int,   32>
+            , std::integral_constant<int,   64>
+            , std::integral_constant<int,  128>
+            , std::integral_constant<int,  256>
+            , std::integral_constant<int,  512>
+            , std::integral_constant<int, 1024>
+            )
 {
-  auto ptr = eve::aligned_alloc<T::value>(7 * sizeof(float));
+  auto ptr = eve::aligned_alloc<T::value>( (3 + sizeof(float)) * T::value);
 
   TTS_EXPECT(eve::is_aligned<T::value>(ptr));
 

@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_CSC_HPP_INCLUDED
 
 #include <eve/function/definition/csc.hpp>
-#include <eve/module/core/function/scalar/csc.hpp>
-#include <eve/module/core/function/simd/csc.hpp>
+#include <eve/module/core/function/generic/csc.hpp>
 
 #endif

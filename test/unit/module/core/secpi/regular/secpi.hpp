@@ -9,44 +9,39 @@
 **/
 //==================================================================================================
 #include <eve/function/secpi.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/rec.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::secpi return type")
+TTS_CASE_TPL("Check eve::secpi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::secpi(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::secpi(T()), T);
 }
 
-TTS_CASE("Check eve::eve::secpi behavior")
-{ 
+TTS_CASE_TPL("Check eve::secpi behavior", EVE_TYPE)
+{
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::secpi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::secpi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL((eve::secpi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::secpi(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::secpi(eve::Inf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::secpi(eve::Minf<T>()), eve::Nan<T>() );
   }
-  TTS_ULP_EQUAL((eve::secpi)(EVE_TYPE(1)), (EVE_TYPE(-1)), 0.5);
-  TTS_ULP_EQUAL((eve::secpi)(EVE_TYPE(-1)),(EVE_TYPE(-1)), 0.5);
-  TTS_IEEE_EQUAL((eve::secpi)(EVE_TYPE(0)),(EVE_TYPE(1)));
-  TTS_IEEE_EQUAL((eve::secpi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-  TTS_ULP_EQUAL(((eve::secpi)(EVE_TYPE(22.5))), (eve::Nan<EVE_TYPE>()), 0.5);
-  TTS_ULP_EQUAL(((eve::secpi)(-EVE_TYPE(22.5))),(eve::Nan<EVE_TYPE>()), 0.5);    
-  TTS_ULP_EQUAL(((eve::secpi)(EVE_TYPE(100000.0))), EVE_TYPE(1), 0.5);
-  TTS_ULP_EQUAL(((eve::secpi)(EVE_TYPE(-100000.0))),EVE_TYPE(1), 0.5);
-  TTS_ULP_EQUAL(((eve::secpi)(EVE_TYPE(1000001.0))), EVE_TYPE(-1), 0.5);
-  TTS_ULP_EQUAL(((eve::secpi)(EVE_TYPE(-100001.0))),EVE_TYPE(-1), 0.5);
+
+  TTS_IEEE_EQUAL(eve::secpi(T( 0 )) , T(1));
+  TTS_IEEE_EQUAL(eve::secpi(T(-0.)) , T(1));
+
+  TTS_ULP_EQUAL(eve::secpi(T(22.5)) , eve::Nan<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::secpi(-T(22.5)), eve::Nan<T>() , 0.5);
+
+  TTS_ULP_EQUAL(eve::secpi( T(1))         , T(-1), 0.5);
+  TTS_ULP_EQUAL(eve::secpi(-T(1))         , T(-1), 0.5);
+  TTS_ULP_EQUAL(eve::secpi( T(100000.0))  , T( 1), 0.5);
+  TTS_ULP_EQUAL(eve::secpi(-T(100000.0))  , T( 1), 0.5);
+  TTS_ULP_EQUAL(eve::secpi( T(1000001.0)) , T(-1), 0.5);
+  TTS_ULP_EQUAL(eve::secpi(-T(1000001.0)) , T(-1), 0.5);
 
 }

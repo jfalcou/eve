@@ -9,37 +9,32 @@
 **/
 //==================================================================================================
 #include <eve/function/copysign.hpp>
-#include <eve/constant/mzero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::copysign return type")
+TTS_CASE_TPL("Check eve::copysign return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::copysign(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::copysign(T(), T()  ), T);
+  TTS_EXPR_IS(eve::copysign(T(), v_t()), T);
 }
 
-TTS_CASE("Check eve::copysign behavior")
+TTS_CASE_TPL("Check eve::copysign behavior", EVE_TYPE)
 {
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), eve::Mzero<EVE_TYPE>()), (EVE_TYPE(-1.)));
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))        ), (EVE_TYPE(1.)));
-  }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(1.))  ) , (EVE_TYPE(1.))  );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)) , (EVE_TYPE(-1.)) ) , (EVE_TYPE(-1.)) );
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL(eve::copysign(  T( 1.),   T(-0.)) , T(-1.));
+  TTS_EQUAL(eve::copysign(  T( 1.), v_t(-0.)) , T(-1.));
+  TTS_EQUAL(eve::copysign(v_t( 1.),   T(-0.)) , T(-1.));
 
-    TTS_EQUAL(eve::copysign((EVE_TYPE(0.)) , (EVE_TYPE(0.))) , (EVE_TYPE(0.))  );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(-1.)), (EVE_TYPE(0.))) , (EVE_TYPE(1.))  );
-  }
-  else
-  {
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(1.))), (EVE_TYPE(1.)) );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(1.)), (EVE_TYPE(0.))), (EVE_TYPE(1.)) );
-    TTS_EQUAL(eve::copysign((EVE_TYPE(0.)), (EVE_TYPE(0.))), (EVE_TYPE(0.)) );
-  }
+  TTS_EQUAL(eve::copysign(  T( 1.),   T( 0.)) , T( 1.));
+  TTS_EQUAL(eve::copysign(  T( 1.), v_t( 0.)) , T( 1.));
+  TTS_EQUAL(eve::copysign(v_t( 1.),   T( 0.)) , T( 1.));
+
+  TTS_EQUAL(eve::copysign(  T(-1.),   T(-0.)) , T(-1.));
+  TTS_EQUAL(eve::copysign(  T(-1.), v_t(-0.)) , T(-1.));
+  TTS_EQUAL(eve::copysign(v_t(-1.),   T(-0.)) , T(-1.));
+
+  TTS_EQUAL(eve::copysign(  T(-1.),   T( 0.)) , T( 1.));
+  TTS_EQUAL(eve::copysign(  T(-1.), v_t( 0.)) , T( 1.));
+  TTS_EQUAL(eve::copysign(v_t(-1.),   T( 0.)) , T( 1.));
 }

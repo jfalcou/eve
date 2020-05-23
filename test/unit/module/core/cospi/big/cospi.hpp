@@ -9,54 +9,51 @@
 **/
 //==================================================================================================
 #include <eve/function/cospi.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/constant/valmax.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::cospi return type")
+TTS_CASE_TPL("Check eve::big_(eve::cospi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::cospi(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::big_(eve::cospi)(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::cospi behavior")
+TTS_CASE_TPL("Check eve::big_(eve::cospi) behavior", EVE_TYPE)
 {
-  if constexpr(std::is_floating_point_v<EVE_VALUE> )
+  if constexpr(eve::floating_value<T> )
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Nan<T>()) , eve::Nan<T>() );
+      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Inf<T>()) , eve::Nan<T>() );
+      TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Minf<T>()), eve::Nan<T>() );
     }
-    TTS_ULP_EQUAL(eve::big_(eve::cospi)(EVE_TYPE(1)), EVE_TYPE(-1), 0.5);
-    TTS_ULP_EQUAL(eve::big_(eve::cospi)(EVE_TYPE(-1)),EVE_TYPE(-1), 0.5);
-    TTS_IEEE_EQUAL(eve::big_(eve::cospi)(EVE_TYPE(0)), (EVE_TYPE(1)));
-    TTS_IEEE_EQUAL(eve::big_(eve::cospi)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(22.5))), (EVE_TYPE(0)), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(-EVE_TYPE(22.5))),(EVE_TYPE(0)), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(100000.0))), EVE_TYPE(1), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(-100000.0))),EVE_TYPE(1), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(100000000.0))), EVE_TYPE(1), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(-100000000.0))),EVE_TYPE(1), 0.5);
-    TTS_ULP_EQUAL((eve::big_(eve::cospi)(EVE_TYPE(0.0625))),EVE_TYPE(0.98078528040323044912618223613423903697393373089333), 0.5);
+
+    TTS_IEEE_EQUAL(eve::big_(eve::cospi)(T(-0.)), T(1) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cospi)(T(0))  , T(1) );
+
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)( T(        1  )), T(-1), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)(-T(        1  )), T(-1), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)( T(       22.5)), T( 0), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)(-T(       22.5)), T( 0), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)( T(   100000.0)), T( 1), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)(-T(   100000.0)), T( 1), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)( T(100000000.0)), T( 1), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)(-T(100000000.0)), T( 1), 0.5);
+
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)( T(0.0625)),T(0.98078528040323044912618223613423903697393373089333), 0.5);
+    TTS_ULP_EQUAL(eve::big_(eve::cospi)(-T(0.0625)),T(0.98078528040323044912618223613423903697393373089333), 0.5);
   }
-  else if constexpr(std::is_signed_v<EVE_VALUE>)
+  else if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(1)), (EVE_TYPE(-1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(-1)),(EVE_TYPE(-1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(2)), (EVE_TYPE(1)));
-    TTS_EQUAL((eve::cospi)(EVE_TYPE(-2)), (EVE_TYPE(1)));
+    TTS_EQUAL(eve::big_(eve::cospi)(T( 1)) , T(-1));
+    TTS_EQUAL(eve::big_(eve::cospi)(T(-1)) , T(-1));
+    TTS_EQUAL(eve::big_(eve::cospi)(T( 2)) , T( 1));
+    TTS_EQUAL(eve::big_(eve::cospi)(T(-2)) , T( 1));
   }
-}  
-
-
- 
+}

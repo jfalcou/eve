@@ -12,20 +12,17 @@
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_SLICE_HPP_INCLUDED
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
-#include <type_traits>
+
 #include <cstddef>
 
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a,
-                             Slice const &) noexcept requires(wide<T, typename N::split_type>,
-                                                              if_<(N::value > 1)>)
-
+  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a, Slice const &) noexcept
+      requires(N::value > 1)
   {
-    if constexpr(Slice::value)
+    if constexpr( Slice::value )
     {
       auto select = [](auto const &v, auto size) {
         auto mask = [&](auto... I) {
@@ -37,7 +34,7 @@ namespace eve::detail
         return vec_perm(v.storage(), v.storage(), apply<16>(mask));
       };
 
-      return wide<T, typename N::split_type>(select(a, N{}));
+      return wide<T, typename N::split_type>(select(a, N {}));
     }
     else
     {
@@ -46,11 +43,9 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  slice(wide<T, N, ppc_> const &a) noexcept requires(std::array<wide<T, typename N::split_type>, 2>,
-                                                     if_<(N::value > 1)>)
+  EVE_FORCEINLINE auto slice(wide<T, N, ppc_> const &a) noexcept requires(N::value > 1)
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+    std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
   }
 }

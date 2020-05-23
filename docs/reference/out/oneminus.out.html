@@ -1,18 +1,16 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::oneminus(pf) = (1, 0, 2, 3, 1, -inf, inf, -nan)
+<- pi                       = (0, 1, 2, 3, -1, -32766, -32767, -32768)
+-> oneminus(pi)             = (1, 0, -1, -2, 2, 32767, -32768, -32767)
+-> saturated_(oneminus(pi)) = (1, 0, -1, -2, 2, 32767, 32767, 32767)
 ---- scalar
-<- xf =                  1
--> eve::oneminus(xf) = 0
-<- yf =                  1.4013e-45
--> eve::oneminus(yf) = 1
+<- xf                       = 2
+-> oneminus(xf)             = -1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

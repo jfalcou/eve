@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_DIST_HPP_INCLUDED
 
 #include <eve/function/definition/dist.hpp>
-#include <eve/module/core/function/scalar/dist.hpp>
-#include <eve/module/core/function/simd/dist.hpp>
+#include <eve/module/core/function/generic/dist.hpp>
 
 #endif

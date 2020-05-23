@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on rsqrt")
+TTS_CASE_TPL("wide random check on rsqrt", EVE_TYPE)
 {
-  auto std_rsqrt = tts::vectorize<EVE_TYPE>( [](auto e) { return EVE_VALUE(1)/std::sqrt(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_rsqrt = tts::vectorize<T>( [](auto e) { return v_t(1)/std::sqrt(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Smallestposval<EVE_VALUE>(), EVE_VALUE(eve::Valmax<float>()));
-  TTS_RANGE_CHECK(p, std_rsqrt, eve::rsqrt); 
+  eve::rng_producer<T> p(eve::Smallestposval<v_t>(), v_t(eve::Valmax<float>()));
+  TTS_RANGE_CHECK(p, std_rsqrt, eve::rsqrt);
 }

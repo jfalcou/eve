@@ -17,19 +17,22 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on inc")
+TTS_CASE_TPL("wide exhaustive check on inc", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_inc = tts::vectorize<EVE_TYPE>( [](auto e) { return std::inc(e); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_inc = tts::vectorize<T>( [](auto e) { return std::inc(e); } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_inc, eve::inc);
   }
   else
   {
-    auto std_inc = tts::vectorize<EVE_TYPE>( [](auto e) { return  e == Valmax<EVE_VALUE>() ? e : e+1); } );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
+    auto std_inc = tts::vectorize<T>( [](auto e) { return  e == Valmax<v_t>() ? e : e+1); } );
+
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_inc, eve::inc);
-  } 
+  }
 }

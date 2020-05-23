@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_MAXMAG_HPP_INCLUDED
 
 #include <eve/function/definition/maxmag.hpp>
-#include <eve/module/core/function/scalar/maxmag.hpp>
-#include <eve/module/core/function/simd/maxmag.hpp>
+#include <eve/module/core/function/generic/maxmag.hpp>
 
 #endif

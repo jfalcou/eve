@@ -10,41 +10,38 @@
 //==================================================================================================
 #include <eve/function/rshl.hpp>
 #include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::rshl return type")
+TTS_CASE_TPL("Check eve::rshl return type", EVE_TYPE)
 {
-  using i_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
-  using u_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using i_t = eve::detail::as_integer_t<T, signed>;
+  using u_t = eve::detail::as_integer_t<T, unsigned>;
 
-  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), EVE_TYPE()) , (EVE_TYPE));
-  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), i_t())  , (EVE_TYPE));
-  TTS_EXPR_IS(eve::rshl(EVE_TYPE(), u_t())  , (EVE_TYPE));
-  TTS_EXPR_IS(eve::rshl(i_t() , EVE_TYPE())  , i_t);
-  TTS_EXPR_IS(eve::rshl(u_t() , EVE_TYPE())  , u_t);
+  TTS_EXPR_IS(eve::rshl(  T(),  T()),   T);
+  TTS_EXPR_IS(eve::rshl(  T(),i_t()),   T);
+  TTS_EXPR_IS(eve::rshl(  T(),u_t()),   T);
+  TTS_EXPR_IS(eve::rshl(i_t(),  T()), i_t);
+  TTS_EXPR_IS(eve::rshl(u_t(),  T()), u_t);
 }
 
-TTS_CASE("Check eve::rshl behavior")
+TTS_CASE_TPL("Check eve::rshl behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::rshl((EVE_TYPE(1)), (EVE_TYPE(4))  ), (EVE_TYPE(16)));
+  TTS_EQUAL(eve::rshl(T(1), T(4)), (T(16)));
 
-  TTS_EQUAL(eve::rshl((EVE_TYPE(1)),  4         ), (EVE_TYPE(16)));
-  TTS_EQUAL(eve::rshl((EVE_TYPE(3)), -1         ), (EVE_TYPE( 1)));
-  TTS_EQUAL(eve::rshl((EVE_TYPE(0)),  3         ), (EVE_TYPE( 0)));
-  TTS_EQUAL(eve::rshl((EVE_TYPE(8)), -2         ), (EVE_TYPE( 2)));
+  TTS_EQUAL(eve::rshl(T(1),  4), (T(16)));
+  TTS_EQUAL(eve::rshl(T(3), -1), (T( 1)));
+  TTS_EQUAL(eve::rshl(T(0),  3), (T( 0)));
+  TTS_EQUAL(eve::rshl(T(8), -2), (T( 2)));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), 1), EVE_TYPE(-2));
-    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), -1), eve::Allbits<EVE_TYPE>());
+    TTS_EQUAL(eve::rshl(eve::Allbits<T>(),  1), T(-2)             );
+    TTS_EQUAL(eve::rshl(eve::Allbits<T>(), -1), eve::Allbits<T>() );
   }
   else
   {
-    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(), -1), eve::Allbits<EVE_TYPE>()/2 );
-    TTS_EQUAL(eve::rshl(eve::Allbits<EVE_TYPE>(),  1), eve::Allbits<EVE_TYPE>() - 1 );
+    TTS_EQUAL(eve::rshl(eve::Allbits<T>(),  1), eve::Allbits<T>() - 1 );
+    TTS_EQUAL(eve::rshl(eve::Allbits<T>(), -1), eve::Allbits<T>()/2   );
   }
 }

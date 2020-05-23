@@ -15,11 +15,12 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sec")
+TTS_CASE_TPL("wide random check on sec", EVE_TYPE)
 {
-  auto std_sec = tts::vectorize<EVE_TYPE>( [](auto e) { return 1/std::cos(double(e)); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
+  using v_t = eve::element_type_t<T>;
+  auto std_sec = tts::vectorize<T>( [](auto e) { return 1/std::cos(double(e)); } );
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<v_t>());
 
-  eve::rng_producer<EVE_TYPE>  p(-l, l);
-  TTS_RANGE_CHECK(p, std_sec, eve::medium_(eve::sec)); 
+  eve::rng_producer<T>  p(-l, l);
+  TTS_RANGE_CHECK(p, std_sec, eve::medium_(eve::sec));
 }

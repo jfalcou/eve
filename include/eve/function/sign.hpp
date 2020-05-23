@@ -12,7 +12,11 @@
 #define EVE_FUNCTION_SIGN_HPP_INCLUDED
 
 #include <eve/function/definition/sign.hpp>
-#include <eve/module/core/function/scalar/sign.hpp>
-#include <eve/module/core/function/simd/sign.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/sign.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/sign.hpp>
+#endif
 
 #endif

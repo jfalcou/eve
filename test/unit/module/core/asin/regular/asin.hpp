@@ -10,7 +10,6 @@
 //==================================================================================================
 #include <eve/function/asin.hpp>
 #include <eve/function/all.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/function/is_negative.hpp>
@@ -20,12 +19,12 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::asin return type")
+TTS_CASE_TPL("Check eve::asin return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::asin(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::asin(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::asin behavior")
+TTS_CASE_TPL("Check eve::eve::asin behavior", EVE_TYPE)
 {
   using eve::all;
   using eve::is_negative;
@@ -33,19 +32,19 @@ TTS_CASE("Check eve::eve::asin behavior")
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asin(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::asin(EVE_TYPE(2))          , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::asin(EVE_TYPE(-2))         , (eve::Nan<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asin(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asin(T(2))          , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asin(T(-2))         , eve::Nan<T>() );
   }
 
-  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 0.5)) ,  eve::Pio_2<EVE_TYPE>()/3 , 0.5);
-  TTS_ULP_EQUAL(eve::asin(EVE_TYPE(-0.5)) , -eve::Pio_2<EVE_TYPE>()/3 , 0.5);
-  TTS_ULP_EQUAL(eve::asin(EVE_TYPE(-1. )) , -eve::Pio_2<EVE_TYPE>()   , 0.5);
-  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 1. )) ,  eve::Pio_2<EVE_TYPE>()   , 0.5);
-  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 0. )) ,  (EVE_TYPE(0))            , 0.5);
+  TTS_ULP_EQUAL(eve::asin(T( 0.5)) ,  eve::Pio_2<T>()/3 , 0.5);
+  TTS_ULP_EQUAL(eve::asin(T(-0.5)) , -eve::Pio_2<T>()/3 , 0.5);
+  TTS_ULP_EQUAL(eve::asin(T(-1. )) , -eve::Pio_2<T>()   , 0.5);
+  TTS_ULP_EQUAL(eve::asin(T( 1. )) ,  eve::Pio_2<T>()   , 0.5);
+  TTS_ULP_EQUAL(eve::asin(T( 0. )) ,  T(0)              , 0.5);
 
-  TTS_ULP_EQUAL(eve::asin(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)), 0.5);
+  TTS_ULP_EQUAL(eve::asin(T(-0.)), T(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asin(eve::Mzero<EVE_TYPE>()))) );
-  TTS_EXPECT( all(is_positive(eve::asin(EVE_TYPE(0))))            );
+  TTS_EXPECT( all(is_negative(eve::asin(T(-0.)))) );
+  TTS_EXPECT( all(is_positive(eve::asin(T(0))))   );
 }

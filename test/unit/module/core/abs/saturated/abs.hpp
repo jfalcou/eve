@@ -15,21 +15,21 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check abs return type")
+TTS_CASE_TPL("Check abs return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::abs)(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturated_(eve::abs)(T()), T);
 }
 
-TTS_CASE("Check eve::saturated_(eve::abs) behavior")
+TTS_CASE_TPL("Check eve::saturated_(eve::abs) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{0}), EVE_TYPE(0));
-  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{1}), EVE_TYPE(1));
-  TTS_EQUAL(eve::saturated_(eve::abs)(EVE_TYPE{2}), EVE_TYPE(2));
+  TTS_EQUAL(eve::saturated_(eve::abs)(T{0}), T(0));
+  TTS_EQUAL(eve::saturated_(eve::abs)(T{1}), T(1));
+  TTS_EQUAL(eve::saturated_(eve::abs)(T{2}), T(2));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<EVE_TYPE>(-1)), EVE_TYPE(1));
-    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<EVE_TYPE>(-2)), EVE_TYPE(2));
-    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<EVE_TYPE>()), eve::Valmax<EVE_TYPE>());
+    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<T>(-1)), T(1));
+    TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<T>(-2)), T(2));
+    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<T>()), eve::Valmax<T>());
   }
 }

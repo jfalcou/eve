@@ -11,12 +11,12 @@
 #ifndef EVE_DETAIL_SKELETON_HPP_INCLUDED
 #define EVE_DETAIL_SKELETON_HPP_INCLUDED
 
-#include <eve/detail/is_range.hpp>
+#include <eve/concept/range.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
-#include <eve/ext/has_abi.hpp>
-#include <eve/ext/as_wide.hpp>
-#include <eve/concept/vectorized.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/element_type.hpp>
+#include <eve/traits/as_wide.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <algorithm>
 #include <utility>
 #include <tuple>
@@ -24,55 +24,49 @@
 namespace eve::detail
 {
   // Value extraction from RandomAccessRange
-  template<typename T>
-  EVE_FORCEINLINE constexpr decltype(auto) at(T &&t, std::size_t i) noexcept
+  template<typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(random_access_range<T>)
   {
-    if constexpr(is_random_access_range_v<T>)
-      return std::forward<T>(t)[ i ];
-    else
-      return std::forward<T>(t);
+    return std::forward<T>(t)[ i ];
+  }
+
+  template<typename T> EVE_FORCEINLINE
+  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!random_access_range<T>)
+  {
+    return std::forward<T>(t);
   }
 
   // Subparts extraction
   template<typename T>
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
-      return eve::detail::slice(std::forward<T>(t), upper_);
-    else
-      return std::forward<T>(t);
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), upper_);
+    else                          return std::forward<T>(t);
   }
 
   // Lower values extraction
   template<typename T>
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
-      return eve::detail::slice(std::forward<T>(t), lower_);
-    else
-      return std::forward<T>(t);
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return eve::detail::slice(std::forward<T>(t), lower_);
+    else                          return std::forward<T>(t);
   }
 
   template<typename T, typename I>
   EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
   {
-    if constexpr(is_vectorized_v<T>)
-    {
-      return std::forward<T>(t).storage().segments[idx];
-    }
-    else
-    {
-      return std::forward<T>(t);
-    }
+    using u_t = std::remove_cvref_t<T>;
+    if constexpr(simd_value<u_t>) return std::forward<T>(t).storage().segments[idx];
+    else                          return std::forward<T>(t);
   }
 
   // Compute a transformed wide type
   template<typename F, typename... Ts>
   struct wide_result
   {
-    template<typename T>
-    using card_t                        = eve::cardinal<std::decay_t<T>>;
-    static constexpr std::size_t card_v = std::max({card_t<Ts>::value...});
+    static constexpr std::size_t card_v = std::max({eve::cardinal_v<std::decay_t<Ts>>...});
     using value_t                       = decltype(std::declval<F>()(at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
     using type                          = as_wide_t<value_t, fixed_t>;
@@ -106,7 +100,7 @@ namespace eve::detail
     EVE_FORCEINLINE auto operator()(Func &&fn, Idx const &i, Ts &&... vs) const noexcept
     {
       return std::forward<Func>(fn)(at(std::forward<Ts>(vs), i)...);
-    };
+    }
   };
 
   template<typename Fn, typename... Ts>
@@ -116,9 +110,9 @@ namespace eve::detail
 
     auto impl = [&](auto... I)
     {
-      static constexpr auto sz = count_v<w_t>;
+      static constexpr auto sz = count_v<element_type_t<w_t>>;
 
-      if constexpr( (sz != 0) && !is_vectorized_v<w_t> )
+      if constexpr( sz != 0 )
       {
         return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
       }

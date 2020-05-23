@@ -15,20 +15,21 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
-#include <eve/function/rec.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
 #include <cmath>
 
-
-
-TTS_CASE("wide random check on cotpi") 
+TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
 {
-  auto my_stdcotpi =  tts::vectorize<EVE_TYPE>([](auto x){return (x == 0 || !eve::is_flint(x))
-                                               ? boost::math::cos_pi(x)/boost::math::sin_pi(x)
-                                               : eve::Nan<EVE_VALUE>(); });
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::big_(eve::cotpi)); 
+  using v_t = eve::element_type_t<T>;
+  auto my_stdcotpi =  tts::vectorize<T> ( [](auto x)
+                                          { return   (x == 0 || !eve::is_flint(x))
+                                                    ? boost::math::cos_pi(x)/boost::math::sin_pi(x)
+                                                    : eve::Nan<v_t>();
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdcotpi, eve::big_(eve::cotpi));
 }

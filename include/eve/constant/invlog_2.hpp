@@ -11,24 +11,24 @@
 #ifndef EVE_CONSTANT_INVLOG_2_HPP_INCLUDED
 #define EVE_CONSTANT_INVLOG_2_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/constant/constant.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta/traits.hpp>
 #include <eve/as.hpp>
+#include <type_traits>
 
 namespace eve
 {
   EVE_MAKE_CALLABLE(invlog_2_, invlog_2_);
 
-  template<typename T>
+  template<floating_value T>
   constexpr EVE_FORCEINLINE auto Invlog_2(as_<T> const & = {}) noexcept
-  requires(T, detail::behave_as<detail::floating_point, T>)
   {
     using t_t = detail::value_type_t<T>;
 
     if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0X3FB8AA3BU>();
-    if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X3FF71547652B82FEULL>();
+    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X3FF71547652B82FEULL>();
   }
 
   EVE_MAKE_NAMED_CONSTANT(invlog_2_, Invlog_2);

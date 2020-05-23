@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_SEC_HPP_INCLUDED
 
 #include <eve/function/definition/sec.hpp>
-#include <eve/module/core/function/scalar/sec.hpp>
-#include <eve/module/core/function/simd/sec.hpp>
+#include <eve/module/core/function/generic/sec.hpp>
 
 #endif

@@ -21,11 +21,17 @@
 #include <type_traits>
 #include <cmath>
 
-
-
-TTS_CASE("wide random check on cscpi") 
+TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
 {
-  auto my_stdcscpi =  tts::vectorize<EVE_TYPE>([](auto x){return (x == 0 || !eve::is_flint(x)) ? eve::rec(boost::math::sin_pi(x)) : eve::Nan<EVE_VALUE>(); });
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdcscpi, eve::big_(eve::cscpi)); 
+  using v_t = eve::element_type_t<T>;
+  auto my_stdcscpi =  tts::vectorize<T> ( [](auto x)
+                                          {
+                                            return    (x == 0 || !eve::is_flint(x))
+                                                    ? eve::rec(boost::math::sin_pi(x))
+                                                    : eve::Nan<v_t>();
+                                          }
+                                        );
+
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdcscpi, eve::big_(eve::cscpi));
 }

@@ -14,13 +14,12 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
-#include <cmath>
 
-TTS_CASE("wide random check on plus")
+TTS_CASE_TPL("wide random check on plus", EVE_TYPE)
 {
-    auto std_plus = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>()+1, eve::Valmax<EVE_VALUE>());
-    TTS_RANGE_CHECK(p, std_plus, eve::plus);
+  using v_t = eve::element_type_t<T>;
+  auto std_plus = tts::vectorize<T>( [](auto e) { return e; } );
 
+  eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_plus, eve::plus);
 }

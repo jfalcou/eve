@@ -11,9 +11,8 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_COMBINE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_COMBINE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/arch/limits.hpp>
+#include <eve/detail/abi.hpp>
 
 namespace eve::detail
 {
@@ -23,8 +22,10 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr(N::value * sizeof(T) == limits<eve::vmx_>::bytes)
-    { return typename that_t::storage_type{l, h}; }
+    if constexpr( N::value * sizeof(T) == limits<eve::vmx_>::bytes )
+    {
+      return typename that_t::storage_type {l, h};
+    }
     else
     {
       auto mask = [&](auto... I) {

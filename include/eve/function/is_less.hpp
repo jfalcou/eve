@@ -12,7 +12,19 @@
 #define EVE_FUNCTION_IS_LESS_HPP_INCLUDED
 
 #include <eve/function/definition/is_less.hpp>
-#include <eve/module/core/function/scalar/is_less.hpp>
-#include <eve/module/core/function/simd/is_less.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/is_less.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/is_less.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/is_less.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/is_less.hpp>
+#endif
 
 #endif

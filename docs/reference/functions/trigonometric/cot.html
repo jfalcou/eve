@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::cot`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::cot
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/cot.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/cot.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,51 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of cot.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs cotangent computation.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) cotangent of the input.
 
-  <!--(todo:insert ../../src/cot.src.html here) -->
+In particular:
 
-  <!--(todo:insert ../../out/cot.out.html here) -->
+   * If the element is $\pm0$, $\pm\infty$ is returned.
+   * If the element is $\pm\infty$, Nan is returned.
+   * If the element is a `NaN`, `NaN` is returned.
+
+
+Supported Decorators
+====================================================================================================
+As all direct trigonometric functions, `cot` supports the restricted_, small_, medium_ and big_ decorators. Click
+to see the [properties and rationale](../trigonometric.html)
+
+  (insert ../../src/cot.src.html here)
+
+  (insert ../../out/cot.out.html here)
+
+See Also
+====================================================================================================
+[eve::sin](sin.html), [eve::sincos](sincos.html), [eve::tan](tan.html), [eve::cos](cos.html),
+[eve::csc](csc.html), [eve::sec](sec.html).
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

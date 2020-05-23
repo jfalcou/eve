@@ -11,21 +11,26 @@
 #ifndef EVE_FUNCTION_DEFINITION_SQRT_HPP_INCLUDED
 #define EVE_FUNCTION_DEFINITION_SQRT_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
+#include <eve/detail/overload.hpp>
+
 #include <type_traits>
 
 namespace eve
 {
-  namespace tag { struct sqrt_; }
+  namespace tag
+  {
+    struct sqrt_;
+  }
 
   namespace detail
   {
-    template<typename T> EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sqrt_), T const& v)
+    template<typename T>
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sqrt_), [[maybe_unused]] T const &v)
     {
-      if constexpr(std::is_integral_v<T> && std::is_signed_v<T>)
+      if constexpr( std::is_integral_v<T> && std::is_signed_v<T> )
       {
-        EVE_ASSERT(v >= 0, "[eve::sqrt] - Invalid parameter: " << v );
+        EVE_ASSERT(v >= 0, "[eve::sqrt] - Invalid parameter: " << v);
       }
     }
   }

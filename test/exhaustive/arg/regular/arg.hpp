@@ -19,10 +19,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on arg")
+TTS_CASE_TPL("wide exhaustive check on arg", EVE_TYPE)
 {
-  auto std_arg = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::is_negative(e) ? eve::Pi<EVE_VALUE>() : eve::Zero<EVE_VALUE>(); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_arg = tts::vectorize<T>( [](auto e) { return eve::is_negative(e) ? eve::Pi<v_t>() : eve::Zero<v_t>(); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_arg, eve::arg); 
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_arg, eve::arg);
 }

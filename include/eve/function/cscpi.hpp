@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_CSCPI_HPP_INCLUDED
 
 #include <eve/function/definition/cscpi.hpp>
-#include <eve/module/core/function/scalar/cscpi.hpp>
-#include <eve/module/core/function/simd/cscpi.hpp>
+#include <eve/module/core/function/generic/cscpi.hpp>
 
 #endif

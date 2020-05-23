@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on conj")
+TTS_CASE_TPL("wide random check on conj", EVE_TYPE)
 {
-  auto std_conj = tts::vectorize<EVE_TYPE>( [](auto e) { return e; } );
+  using v_t = eve::element_type_t<T>;
+  auto std_conj = tts::vectorize<T>( [](auto e) { return e; } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_conj, eve::conj); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_conj, eve::conj);
 }

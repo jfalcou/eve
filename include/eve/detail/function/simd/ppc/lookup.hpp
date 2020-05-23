@@ -11,30 +11,33 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_LOOKUP_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_PPC_LOOKUP_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/detail/function/simd/lookup_helpers.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/detail/function/simd/lookup.hpp>
-#include <eve/forward.hpp>
 
 namespace eve::detail
 {
   template<typename T, typename I, typename N>
-  EVE_FORCEINLINE wide<T,N,ppc_> lookup_( EVE_SUPPORTS(vmx_),
-                                          wide<T,N,ppc_> a, wide<I,N,ppc_> idx
-                                        ) noexcept
+  EVE_FORCEINLINE auto
+  lookup_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> a, wide<I, N, ppc_> idx) noexcept
   {
-    using t8_t = typename wide<T,N,ppc_>::template rebind<std::uint8_t, fixed<16>>;
+    using type = wide<T, N, ppc_>;
+    using t8_t = typename type::template rebind<std::uint8_t, fixed<16>>;
 
-    if constexpr(sizeof(I) == 1)
+    if constexpr( sizeof(I) == 1 )
     {
-      return vec_perm(a.storage(),a.storage(), bit_cast(idx,as<t8_t>()).storage());
+      return type {vec_perm(a.storage(), a.storage(), bit_cast(idx, as<t8_t>()).storage())};
     }
     else
     {
-      t8_t  i1 = lookup(bit_cast(idx<<shift<I>, as(i1)), t8_t{repeater<I>});
-            i1 = bit_cast(bit_cast(i1,as<wide<I,N,ppc_>>())+offset<I>,as<t8_t>());
-      return bit_cast( lookup(bit_cast(a, as<t8_t>()),i1), as(a));
+      as_wide_t<as_integer_t<T, unsigned>, N> shf {shift<I>};
+
+      t8_t i1 = lookup(bit_cast(vec_sl(idx.storage(), shf.storage()), as<t8_t>()),
+                       t8_t {repeater<I, false>});
+
+      i1 = bit_cast(bit_cast(i1, as<wide<I, N, ppc_>>()) + offset<I, false>, as<t8_t>());
+
+      return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
     }
   }
 }

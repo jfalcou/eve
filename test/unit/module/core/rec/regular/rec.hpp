@@ -11,38 +11,36 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/sequence.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::rec return type")
+TTS_CASE_TPL("Check eve::rec return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::rec(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::rec(T(0)), T);
 }
 
-TTS_CASE("Check eve::rec behavior")
+TTS_CASE_TPL("Check eve::rec behavior", EVE_TYPE)
 {
-  if constexpr(std::is_floating_point_v<EVE_VALUE> && eve::platform::supports_infinites)
+  if constexpr(eve::floating_value<T> && eve::platform::supports_infinites)
   {
-    TTS_ULP_EQUAL(eve::rec( EVE_TYPE(0)), (eve::Inf<EVE_TYPE>()) , 0.5);
-    TTS_ALL_ULP_EQUAL(eve::rec(eve::Mzero<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()), 0.5);
-    TTS_ULP_EQUAL(eve::rec( EVE_TYPE(1)), (EVE_TYPE(1))          , 0.5);
-    TTS_ULP_EQUAL(eve::rec( EVE_TYPE(2)), (EVE_TYPE(1./2.))      , 0.5);
+    TTS_ULP_EQUAL(eve::rec( T(-0.)), eve::Minf<T>() , 0.5);
+    TTS_ULP_EQUAL(eve::rec( T( 0 )), eve::Inf<T>()  , 0.5);
+    TTS_ULP_EQUAL(eve::rec( T( 1 )), T(1)           , 0.5);
+    TTS_ULP_EQUAL(eve::rec( T( 2 )), T(1./2.)       , 0.5);
   }
   else
   {
-    if constexpr(std::is_signed_v<EVE_VALUE>)
+    if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL(eve::rec(EVE_TYPE(- 1)), (EVE_TYPE(-1)));
-      TTS_EQUAL(eve::rec(EVE_TYPE(-47)), (EVE_TYPE( 0)));
+      TTS_EQUAL(eve::rec(T(- 1)), T(-1));
+      TTS_EQUAL(eve::rec(T(-47)), T( 0));
     }
     else
     {
-      TTS_EQUAL(eve::rec(EVE_TYPE(1)) , (EVE_TYPE(1)));
-      TTS_EQUAL(eve::rec(EVE_TYPE(47)), (EVE_TYPE(0)));
+      TTS_EQUAL(eve::rec(T(1)) , T(1));
+      TTS_EQUAL(eve::rec(T(47)), T(0));
     }
   }
 }

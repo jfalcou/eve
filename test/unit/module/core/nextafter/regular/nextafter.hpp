@@ -9,63 +9,57 @@
 **/
 //==================================================================================================
 #include <eve/function/nextafter.hpp>
+#include <eve/constant/eps.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <type_traits>
 
-TTS_CASE("Check nextafter return type")
+TTS_CASE_TPL("Check nextafter return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::nextafter(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS((eve::nextafter(EVE_TYPE(), EVE_VALUE())), (EVE_TYPE));
-  TTS_EXPR_IS((eve::nextafter(EVE_VALUE(), EVE_TYPE())), (EVE_TYPE));
+  using v_t   = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::nextafter(  T(),  T()), T);
+  TTS_EXPR_IS(eve::nextafter(  T(),v_t()), T);
+  TTS_EXPR_IS(eve::nextafter(v_t(),  T()), T);
 }
 
-TTS_CASE("Check eve::nextafter one parameter behavior")
+TTS_CASE_TPL("Check eve::nextafter one parameter behavior", EVE_TYPE)
 {
-  if constexpr(std::is_integral_v<EVE_VALUE>)
+  using v_t   = eve::element_type_t<T>;
+  if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{1}, EVE_TYPE{1})), EVE_TYPE(1));
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{1}, EVE_TYPE{5})), EVE_TYPE(2));
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{2}, EVE_TYPE(0))), EVE_TYPE(1));
-    TTS_EQUAL((eve::nextafter(EVE_VALUE{1}, EVE_TYPE{1})), EVE_TYPE(1));
-    TTS_EQUAL((eve::nextafter(EVE_VALUE{1}, EVE_TYPE{5})), EVE_TYPE(2));
-    TTS_EQUAL((eve::nextafter(EVE_VALUE{2}, EVE_TYPE(0))), EVE_TYPE(1));
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{1}, EVE_VALUE{1})), EVE_TYPE(1));
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{1}, EVE_VALUE{5})), EVE_TYPE(2));
-    TTS_EQUAL((eve::nextafter(EVE_TYPE{2}, EVE_VALUE(0))), EVE_TYPE(1));
+    TTS_EQUAL(eve::nextafter(T(1)  ,   T(1)), T(1));
+    TTS_EQUAL(eve::nextafter(T(1)  ,   T(5)), T(2));
+    TTS_EQUAL(eve::nextafter(T(2)  ,   T(0)), T(1));
+    TTS_EQUAL(eve::nextafter(v_t(1),   T(1)), T(1));
+    TTS_EQUAL(eve::nextafter(v_t(1),   T(5)), T(2));
+    TTS_EQUAL(eve::nextafter(v_t(2),   T(0)), T(1));
+    TTS_EQUAL(eve::nextafter(T(1)  , v_t(1)), T(1));
+    TTS_EQUAL(eve::nextafter(T(1)  , v_t(5)), T(2));
+    TTS_EQUAL(eve::nextafter(T(2)  , v_t(0)), T(1));
 
-    if constexpr(std::is_signed_v<EVE_VALUE>)
+    if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL((eve::nextafter(EVE_TYPE(-1), EVE_TYPE(-1))), EVE_TYPE(-1));
-      TTS_EQUAL((eve::nextafter(EVE_TYPE(-1), EVE_TYPE(5))), EVE_TYPE(0));
-      TTS_EQUAL((eve::nextafter(EVE_VALUE(-2), EVE_TYPE(-4))), EVE_TYPE(-3));
-      TTS_EQUAL((eve::nextafter(EVE_VALUE(-1), EVE_TYPE(-1))), EVE_TYPE(-1));
-      TTS_EQUAL((eve::nextafter(EVE_VALUE(-1), EVE_TYPE(5))), EVE_TYPE(0));
-      TTS_EQUAL((eve::nextafter(EVE_VALUE(-2), EVE_TYPE(-4))), EVE_TYPE(-3));
-      TTS_EQUAL((eve::nextafter(EVE_TYPE(-1), EVE_VALUE(-1))), EVE_TYPE(-1));
-      TTS_EQUAL((eve::nextafter(EVE_TYPE(-1), EVE_VALUE(5))), EVE_TYPE(0));
-      TTS_EQUAL((eve::nextafter(EVE_TYPE(-2), EVE_VALUE(-4))), EVE_TYPE(-3));
+      TTS_EQUAL(eve::nextafter(   T(-1),   T(-1)), T(-1));
+      TTS_EQUAL(eve::nextafter(   T(-1),   T( 5)), T( 0));
+      TTS_EQUAL(eve::nextafter( v_t(-2),   T(-4)), T(-3));
+      TTS_EQUAL(eve::nextafter( v_t(-1),   T(-1)), T(-1));
+      TTS_EQUAL(eve::nextafter( v_t(-1),   T( 5)), T( 0));
+      TTS_EQUAL(eve::nextafter( v_t(-2),   T(-4)), T(-3));
+      TTS_EQUAL(eve::nextafter(   T(-1), v_t(-1)), T(-1));
+      TTS_EQUAL(eve::nextafter(   T(-1), v_t( 5)), T( 0));
+      TTS_EQUAL(eve::nextafter(   T(-2), v_t(-4)), T(-3));
     }
-    
   }
   else
   {
-    TTS_EQUAL((eve::nextafter(eve::Mone<EVE_TYPE>(), EVE_TYPE(2)))        , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_TYPE>(), EVE_TYPE(-1)))        , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_TYPE>(), EVE_TYPE(1)))        , (eve::One<EVE_TYPE>()));
-    TTS_EQUAL((eve::nextafter(eve::Mone<EVE_VALUE>(), EVE_TYPE(2)))       , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_VALUE>(), EVE_TYPE(-1)))       , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_VALUE>(), EVE_TYPE(1)))       , (eve::One<EVE_TYPE>()));
-    TTS_EQUAL((eve::nextafter(eve::Mone<EVE_TYPE>(), EVE_VALUE(2)))       , (eve::Mone<EVE_TYPE>()+eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_TYPE>(), EVE_VALUE(-1)))       , (eve::One<EVE_TYPE>()-eve::Eps<EVE_TYPE>()/2));
-    TTS_EQUAL((eve::nextafter(eve::One<EVE_VALUE>(), EVE_TYPE(1)))       , (eve::One<EVE_TYPE>()));
+    TTS_EQUAL(eve::nextafter(  T(-1),   T( 2)), T(-1)+eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(  T( 1),   T(-1)), T( 1)-eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(  T( 1),   T( 1)), T( 1)                 );
+    TTS_EQUAL(eve::nextafter(v_t(-1),   T( 2)), T(-1)+eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(v_t( 1),   T(-1)), T( 1)-eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(v_t( 1),   T( 1)), T( 1)                 );
+    TTS_EQUAL(eve::nextafter(  T(-1), v_t( 2)), T(-1)+eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(  T( 1), v_t(-1)), T( 1)-eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(v_t( 1),   T( 1)), T( 1)                 );
   }
 }

@@ -18,12 +18,13 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on is_pow2")
+TTS_CASE_TPL("wide random check on is_pow2", EVE_TYPE)
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>; 
-  auto std_is_pow2 = tts::vectorize<l_t>( [](auto e)
-    { return ((e > 0) && (eve::popcount(e) == 1u)); }
-  );
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+  using l_t = eve::as_logical_t<T>;
+  using v_t = eve::element_type_t<T>;
+
+  auto std_is_pow2 = tts::vectorize<l_t>( [](auto e) { return ((e > 0) && (eve::popcount(e) == 1u));} );
+
+  eve::exhaustive_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_is_pow2, eve::is_pow2);
 }

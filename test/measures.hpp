@@ -55,6 +55,16 @@ namespace tts::ext
     }
   };
 
+  template<typename T, typename EnableIf>
+  struct reldist<eve::logical<T>, eve::logical<T>, EnableIf>
+  {
+    using arg_t = eve::logical<T>;
+    inline double operator()(arg_t const &l, arg_t const &r) const
+    {
+      return l.value() == r.value() ? 0 : 1;
+    }
+  };
+
   template<typename T, typename N, typename ABI, typename EnableIf>
   struct ulpdist<eve::wide<T, N, ABI>, eve::wide<T, N, ABI>, EnableIf>
   {

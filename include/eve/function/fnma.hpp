@@ -12,7 +12,15 @@
 #define EVE_FUNCTION_FNMA_HPP_INCLUDED
 
 #include <eve/function/definition/fnma.hpp>
-#include <eve/module/core/function/scalar/fnma.hpp>
-#include <eve/module/core/function/simd/fnma.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/fnma.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/fnma.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/fnma.hpp>
+#endif
 
 #endif

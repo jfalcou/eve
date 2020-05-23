@@ -20,11 +20,12 @@
 #include <cmath>
 #include <type_traits>
 
-TTS_CASE("wide exhaustive check on secpi")
+TTS_CASE_TPL("wide exhaustive check on secpi", EVE_TYPE)
 {
-  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return ((eve::frac(std::abs(x)) == eve::Half<EVE_VALUE>()))
-                                               ?  eve::Nan<EVE_VALUE>()
+  using v_t = eve::element_type_t<T>;
+  auto my_stdsecpi =  tts::vectorize<T>([](auto x){return ((eve::frac(std::abs(x)) == eve::Half<v_t>()))
+                                               ?  eve::Nan<v_t>()
                                                : eve::rec(boost::math::cos_pi(x)); });
-  eve::exhaustive_producer<EVE_TYPE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
-  TTS_RANGE_CHECK(p, my_stdsecpi, eve::medium_(eve::secpi)); 
+  eve::exhaustive_producer<T> p(v_t(-100000.0), v_t(100000.0));
+  TTS_RANGE_CHECK(p, my_stdsecpi, eve::medium_(eve::secpi));
 }

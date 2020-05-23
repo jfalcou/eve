@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_EXTRACT_HPP_INCLUDED
 
 #include <eve/function/definition/extract.hpp>
-#include <eve/module/core/function/scalar/extract.hpp>
-#include <eve/module/core/function/simd/extract.hpp>
+#include <eve/module/core/function/generic/extract.hpp>
 
 #endif

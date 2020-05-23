@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_MANTISSA_HPP_INCLUDED
 
 #include <eve/function/definition/mantissa.hpp>
-#include <eve/module/core/function/scalar/mantissa.hpp>
-#include <eve/module/core/function/simd/mantissa.hpp>
+#include <eve/module/core/function/generic/mantissa.hpp>
 
 #endif

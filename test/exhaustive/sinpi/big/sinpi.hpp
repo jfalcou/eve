@@ -18,23 +18,23 @@
 #include <type_traits>
 #include <cmath>
 
-
-
-TTS_CASE("wide exhaustive check on sinpi") 
+TTS_CASE_TPL("wide exhaustive check on sinpi", EVE_TYPE)
 {
-  auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::sin_pi(x); });
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi)); 
+  using v_t = eve::element_type_t<T>;
+
+  auto my_stdsinpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x); });
+
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi));
 }
-
-
 
 // #include <crlibm.h>
 
-// TTS_CASE("wide exhaustive check on sinpi") 
+// TTS_CASE_TPL("wide exhaustive check on sinpi", EVE_TYPE)
 // {
-//   ::crlibm_init(); 
-//   auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](EVE_VALUE x){return EVE_VALUE(::sinpi_rn(x)); });
-//   eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-//   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi)); 
+//   ::crlibm_init();
+//   using v_t = eve::element_type_t<T>;
+//   auto my_stdsinpi =  tts::vectorize<T>([](v_t x){return v_t(::sinpi_rn(x)); });
+//   eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+//   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big_(eve::sinpi));
 // }

@@ -34,6 +34,8 @@ int main()
   std::cout << "\n";
   std::cout << "========================\n";
   std::cout << "PPC SIMD extensions\n";
+  std::cout << "VSX   : " << std::boolalpha << (eve::current_api == eve::vsx   ) << "\n";
+  std::cout << "VMX   : " << std::boolalpha << (eve::current_api == eve::vmx   ) << "\n";
   std::cout << "\n";
   std::cout << "========================\n";
   std::cout << "ARM SIMD extensions\n";

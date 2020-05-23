@@ -11,15 +11,17 @@
 #ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
 #define EVE_DETAIL_FUNCTION_SIMD_COMMON_MAKE_HPP_INCLUDED
 
-#include <eve/detail/abi.hpp>
-#include <eve/logical.hpp>
 #include <eve/as.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/forward.hpp>
+
 #include <cstddef>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Emulation
+  //================================================================================================
   template<typename Pack, typename V0, typename... Values>
   EVE_FORCEINLINE Pack make(as_<Pack> const &, eve::emulated_ const &, V0 v0, Values... vs) noexcept
   {
@@ -27,8 +29,8 @@ namespace eve::detail
     Pack        that;
     std::size_t i = 0;
 
-    that[ i++ ] = static_cast<type>(v0);
-    ((that[ i++ ] = vs), ...);
+    that[i++] = static_cast<type>(v0);
+    ((that[i++] = vs), ...);
 
     return that;
   }
@@ -38,25 +40,27 @@ namespace eve::detail
   {
     using type = typename Pack::value_type;
     Pack that;
-    for(auto &e : that) e = static_cast<type>(vs);
+    for( auto &e : that ) e = static_cast<type>(vs);
     return that;
   }
 
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Aggregation
+  //================================================================================================
   template<typename Pack, typename V0, typename... Values>
-  EVE_FORCEINLINE Pack make(as_<Pack> const &tgt, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
+  EVE_FORCEINLINE Pack
+  make(as_<Pack> const &tgt, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
   {
-    return make(tgt, eve::emulated_{}, v0, vs...);
+    return make(tgt, eve::emulated_ {}, v0, vs...);
   }
 
   template<typename Pack, typename Value>
   EVE_FORCEINLINE Pack make(as_<Pack> const &, eve::aggregated_ const &, Value vs) noexcept
   {
     typename Pack::storage_type::value_type sub_value(vs);
-    Pack that;
+    Pack                                    that;
 
-    that.storage().apply( [&sub_value](auto&... v) { ((v = sub_value),...); } );
+    that.storage().apply([&sub_value](auto &... v) { ((v = sub_value), ...); });
     return that;
   }
 }

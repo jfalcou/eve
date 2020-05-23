@@ -14,13 +14,13 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <cmath>
 
-TTS_CASE("wide random check on is_not_real")
+TTS_CASE_TPL("wide random check on is_not_real", EVE_TYPE)
 {
-  using l_t =  eve::as_logical_t<EVE_TYPE>;
-   auto std_is_not_real = tts::vectorize<l_t>( [](auto e) { return false; } );
+  using v_t = eve::element_type_t<T>;
+  using l_t =  eve::as_logical_t<T>;
+  auto std_is_not_real = tts::vectorize<l_t>( [](auto e) { return false; } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_is_not_real, eve::is_not_real); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_is_not_real, eve::is_not_real);
 }

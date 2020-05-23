@@ -15,24 +15,18 @@ docker_gcc: &docker_gcc
   docker:
     - image: compilaction/gcc-dev:latest
       environment:
-        COMPILER: g++-9
+        COMPILER: g++
 docker_clang: &docker_clang
   docker:
     - image: compilaction/clang-dev:latest
       environment:
-        COMPILER: clang++-9
-docker_ppc64: &docker_ppc64
-  docker:
-    - image: compilaction/gcc-dev:latest
-      environment:
-        RUN_COMMAND: qemu-ppc64
-        COMPILER: powerpc64-linux-gnu-g++-9
+        COMPILER: clang++
 docker_aarch64: &docker_aarch64
   docker:
     - image: compilaction/gcc-dev:latest
       environment:
         RUN_COMMAND: qemu-aarch64
-        COMPILER: aarch64-linux-gnu-g++-9
+        COMPILER: aarch64-linux-gnu-g++
 
 ##==================================================================================================
 ## Build configurations
@@ -43,8 +37,6 @@ config_clang_x86: &config_clang_x86
   <<: *docker_clang
 config_aarch64: &config_aarch64
  <<: *docker_aarch64
-config_gcc_ppc64: &config_gcc_ppc64
-  <<: *docker_ppc64
 
 ##==================================================================================================
 ## Jobs list
@@ -71,7 +63,7 @@ jobs:
           command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx -mfma" . .circleci/perform_basic.sh
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
@@ -97,7 +89,7 @@ jobs:
           command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx -mfma" . .circleci/perform_basic.sh
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
@@ -115,20 +107,6 @@ jobs:
       - run:
           name: Running Basic Tests - AARCH64 NEON
           command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
-
-  ppc64:
-    <<: *config_gcc_ppc64
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="vsx" OPTIONS="-DEVE_NO_SIMD -O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - PPC64 VSX
-          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_basic.sh
       - run:
           name: Running Basic Tests - Scalar
           command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
@@ -174,7 +152,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx -mfma -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
 
   x86_avx2:
     <<: *config_gcc_x86
@@ -192,14 +170,6 @@ jobs:
           name: Running SIMD Tests - AARCH64 NEON
           command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
 
-  ppc64_vsx:
-    <<: *config_gcc_ppc64
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - PPC64 VSX
-          command: VARIANT="vsx" OPTIONS="-O3 -mvsx -mpower8-vector" . .circleci/perform_simd.sh
-
 workflows:
   version: 2
   build_and_test:
@@ -209,43 +179,25 @@ workflows:
     ##==============================================================================================
       - gcc_x86
       - clang_x86
-      - arm_aarch64:
-          requires:
-            - gcc_x86
-            - clang_x86
+      - arm_aarch64
       - arm_aarch64_neon:
           requires:
-            - gcc_x86
-            - clang_x86
+            - arm_aarch64
       - x86_sse2:
           requires:
             - gcc_x86
-            - clang_x86
       - x86_sse4:
           requires:
             - gcc_x86
-            - clang_x86
       - x86_avx:
           requires:
             - gcc_x86
-            - clang_x86
       - x86_avx2:
           requires:
             - gcc_x86
-            - clang_x86
       - x86_fma:
           requires:
             - gcc_x86
-            - clang_x86
       - x86_emulation:
           requires:
             - gcc_x86
-            - clang_x86
-      # - ppc64:
-      #     requires:
-      #       - gcc_x86
-      #       - clang_x86
-      # - ppc64_vsx:
-      #     requires:
-      #       - gcc_x86
-      #       - clang_x86

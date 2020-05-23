@@ -1,29 +1,31 @@
-<meta charset="utf-8">
-**Example:**
+ <meta charset="utf-8">
+Example
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/popcount.hpp>
+#include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
 
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pi = {12, 1, 3, 7, 20, 23000, 0, 27};
+  wide_it pi = {14, 1, 3, 0};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi =                      " << pi << '\n'
-            << "-> eve::popcount(pi) =       " << eve::popcount(pi) << '\n';
+            << "<- pi            = " << pi << '\n'
+            << "-> popcount(pi) = " << eve::popcount(pi) << '\n';
 
-  std::uint32_t xi = 48;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi =                      " << xi << '\n'
-            << "-> eve::popcount(xi) =       " << eve::popcount(xi) << '\n';
+            << "<- xf            = " << xf << '\n'
+            << "-> popcount(xf) = " << eve::popcount(xf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ </script>
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

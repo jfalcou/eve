@@ -26,8 +26,19 @@ namespace std
     using type = T;
   };
 
+  template<std::size_t I, typename T, typename N, typename ABI>
+  struct tuple_element<I, eve::logical<eve::wide<T, N, ABI>>>
+  {
+    using type = T;
+  };
+
   template<typename T, typename N, typename ABI>
   struct tuple_size<eve::wide<T, N, ABI>> : N
+  {
+  };
+
+  template<typename T, typename N, typename ABI>
+  struct tuple_size<eve::logical<eve::wide<T, N, ABI>>> : N
   {
   };
 }
@@ -45,6 +56,18 @@ namespace eve
 
   template<std::size_t I, typename T, typename N, typename ABI>
   auto &get(wide<T, N, ABI> &w)
+  {
+    return w[ I ];
+  }
+
+  template<std::size_t I, typename T, typename N, typename ABI>
+  auto get(logical<wide<T, N, ABI>> const &w)
+  {
+    return w[ I ];
+  }
+
+  template<std::size_t I, typename T, typename N, typename ABI>
+  auto &get(logical<wide<T, N, ABI>> &w)
   {
     return w[ I ];
   }

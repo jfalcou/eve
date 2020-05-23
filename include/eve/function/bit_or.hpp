@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BIT_OR_HPP_INCLUDED
 
 #include <eve/function/definition/bit_or.hpp>
-#include <eve/module/core/function/scalar/bit_or.hpp>
-#include <eve/module/core/function/simd/bit_or.hpp>
+#include <eve/module/core/function/generic/bit_or.hpp>
 
 #endif

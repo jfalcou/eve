@@ -15,6 +15,12 @@
 
 namespace eve
 {
+   namespace tag { struct bit_mask_; }
+
+  template<>
+  struct supports_conditionnal<tag::bit_mask_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
 }
 

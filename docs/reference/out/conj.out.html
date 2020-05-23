@@ -1,18 +1,15 @@
-<meta charset="utf-8">
+ <meta charset="utf-8">
 **Possible Output:**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =                  (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
--> eve::conj(pf) =       (0, 1, -1, -2, 1.4013e-45, inf, -inf, -nan)
+<- pf =             (0, 1, -1, -2, 2, inf, -inf, -nan)
+-> conj(pf) =       (0, 1, -1, -2, 2, inf, -inf, -nan)
 ---- scalar
-<- xf =                  1
--> eve::conj(xf) =       1
-<- yf =                  1.4013e-45
--> eve::conj(yf) =       1.4013e-45
+<- xf =             1
+-> conj(xf) =       1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
-

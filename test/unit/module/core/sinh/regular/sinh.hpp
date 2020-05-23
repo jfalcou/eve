@@ -21,31 +21,33 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::sinh return type")
+TTS_CASE_TPL("Check eve::sinh return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::sinh(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::sinh(T(0)), T);
 }
 
-TTS_CASE("Check eve::eve::sinh behavior")
+TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::sinh(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::sinh(eve::Inf<EVE_TYPE>()) , (eve::Inf<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::sinh(eve::Minf<EVE_TYPE>()), (eve::Minf<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::sinh(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::sinh(eve::Inf<T>()) , (eve::Inf<T>()) );
+    TTS_IEEE_EQUAL(eve::sinh(eve::Minf<T>()), (eve::Minf<T>()) );
   }
-  TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(eve::Mzero<EVE_TYPE>()))) );
-  TTS_EXPECT(eve::all(eve::is_positive(eve::sinh(EVE_TYPE(0))))            );
-  
-  EVE_VALUE ovflimit =  eve::Ieee_constant<EVE_VALUE,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384  
-  std::array<EVE_VALUE, 10> a = {EVE_VALUE(1), EVE_VALUE(-1), EVE_VALUE(0), EVE_VALUE(-0.0), EVE_VALUE(10), EVE_VALUE(-10)
-                             , eve::Maxlog<EVE_VALUE>(), ovflimit/2, ovflimit, 2*ovflimit};
-  
+  TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(T(-0.)))) );
+  TTS_EXPECT(eve::all(eve::is_positive(eve::sinh(T(0))))            );
+
+  // 88.376251220703125f, 709.782712893384
+  v_t ovflimit =  eve::Ieee_constant<v_t,0x42B0C0A4U, 0x40862E42FEFA39EFULL>();
+  std::array<v_t, 10> a = {v_t(1), v_t(-1), v_t(0), v_t(-0.0), v_t(10), v_t(-10)
+                             , eve::Maxlog<v_t>(), ovflimit/2, ovflimit, 2*ovflimit};
+
   for(size_t i=0; i < a.size(); ++i)
   {
-    auto sh  = eve::sinh(EVE_TYPE(a[i]));
-    EVE_VALUE sh1 = std::sinh(double(a[i]));
-    TTS_ULP_EQUAL(sh, (EVE_TYPE(sh1)), 0.5);
+    auto sh  = eve::sinh(T(a[i]));
+    v_t sh1 = std::sinh(double(a[i]));
+    TTS_ULP_EQUAL(sh, (T(sh1)), 0.5);
   }
 }

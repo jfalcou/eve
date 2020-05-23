@@ -12,14 +12,15 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/as_logical.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto
   is_greater_(EVE_SUPPORTS(vmx_), wide<T, N, ppc_> const &v0, wide<T, N, ppc_> const &v1) noexcept
   {

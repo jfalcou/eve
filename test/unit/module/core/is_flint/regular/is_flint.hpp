@@ -13,20 +13,19 @@
 #include <eve/constant/true.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::is_flint return type")
+TTS_CASE_TPL("Check eve::is_flint return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_flint(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_flint(T(0)), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::is_flint behavior")
+TTS_CASE_TPL("Check eve::is_flint behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_flint(EVE_TYPE(1)), eve::True<EVE_TYPE>() );
-  TTS_EQUAL(eve::is_flint(EVE_TYPE(2)), eve::True<EVE_TYPE>()  );
+  TTS_EQUAL(eve::is_flint(T(1)), eve::True<T>() );
+  TTS_EQUAL(eve::is_flint(T(2)), eve::True<T>() );
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_flint(EVE_TYPE(1) / EVE_TYPE(2)), eve::False<EVE_TYPE>());
+    TTS_EQUAL(eve::is_flint(T(1) / T(2)), eve::False<T>());
   }
 }

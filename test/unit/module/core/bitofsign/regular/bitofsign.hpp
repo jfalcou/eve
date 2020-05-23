@@ -21,49 +21,53 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check bitofsign return type")
+TTS_CASE_TPL("Check bitofsign return type", EVE_TYPE)
 {
   using eve::bitofsign;
-  TTS_EXPR_IS(bitofsign(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(bitofsign(T()), T);
 }
 
-TTS_CASE("Check eve::bitofsign behavior")
+TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
 {
   using eve::all;
   using eve::bitofsign;
   using eve::is_positive;
   using eve::is_negative;
 
-  if constexpr( std::is_floating_point_v<EVE_VALUE>)
+  if constexpr( eve::floating_value<T>)
   {
     if constexpr( eve::platform::supports_infinites )
     {
-      TTS_EQUAL( bitofsign(eve::Inf<EVE_TYPE>() ), EVE_TYPE(0)           );
-      TTS_EQUAL( bitofsign(eve::Minf<EVE_TYPE>()), eve::Mzero<EVE_TYPE>());
-      TTS_EXPECT( all(is_positive(bitofsign( eve::Inf<EVE_TYPE>()))) );
-      TTS_EXPECT( all(is_negative(bitofsign(eve::Minf<EVE_TYPE>()))) );
+      TTS_EQUAL( bitofsign(eve::Inf<T>() ), T(0)           );
+      TTS_EQUAL( bitofsign(eve::Minf<T>()), T(-0.));
+      TTS_EXPECT( all(is_positive(bitofsign( eve::Inf<T>()))) );
+      TTS_EXPECT( all(is_negative(bitofsign(eve::Minf<T>()))) );
     }
 
-    TTS_EQUAL (bitofsign(EVE_TYPE(0))           , EVE_TYPE(0));
-    TTS_EQUAL (bitofsign(eve::Mzero<EVE_TYPE>()), eve::Mzero<EVE_TYPE>());
-    TTS_EXPECT( all(is_positive(bitofsign(EVE_TYPE(0)))) );
-    TTS_EXPECT( all(is_negative(bitofsign(eve::Mzero<EVE_TYPE>()))) );
+    TTS_EQUAL (bitofsign(T(0))  , T(0));
+    TTS_EQUAL (bitofsign(T(-0.)), T(-0.));
+    TTS_EXPECT( all(is_positive(bitofsign(T(0)))) );
+    TTS_EXPECT( all(is_negative(bitofsign(T(-0.)))) );
 
-    TTS_EQUAL (bitofsign(EVE_TYPE(1)), EVE_TYPE(0));
-    TTS_EXPECT( all(is_positive(bitofsign(EVE_TYPE(1)))) );
+    TTS_EQUAL (bitofsign(T(1)), T(0));
+    TTS_EXPECT( all(is_positive(bitofsign(T(1)))) );
 
-    TTS_EQUAL (bitofsign(EVE_TYPE(-1)), eve::Mzero<EVE_TYPE>());
-    TTS_EXPECT( all(is_negative(bitofsign(EVE_TYPE(-1)))) );
+    TTS_EQUAL (bitofsign(T(-1)), T(-0.));
+    TTS_EXPECT( all(is_negative(bitofsign(T(-1)))) );
   }
-  else if constexpr( std::is_unsigned_v<EVE_VALUE>)
+  else if constexpr( eve::unsigned_value<T> )
   {
-    TTS_EQUAL(bitofsign(EVE_TYPE(1)), EVE_TYPE(0));
-    TTS_EQUAL(bitofsign(eve::Valmax<EVE_TYPE>()), EVE_TYPE(1ull << (sizeof(EVE_VALUE)*8-1)));
+    using v_t = eve::element_type_t<T>;
+
+    TTS_EQUAL(bitofsign(T(1)), T(0));
+    TTS_EQUAL(bitofsign(eve::Valmax<T>()), T(1ull << (sizeof(v_t)*8-1)));
   }
   else
   {
-    TTS_EQUAL(bitofsign(EVE_TYPE(-1)), EVE_TYPE(1ull << (sizeof(EVE_VALUE)*8-1)));
-    TTS_EQUAL(bitofsign(EVE_TYPE( 1)), EVE_TYPE(0));
-    TTS_EQUAL(bitofsign(EVE_TYPE( 0)), EVE_TYPE(0));
+    using v_t = eve::element_type_t<T>;
+
+    TTS_EQUAL(bitofsign(T(-1)), T(1ull << (sizeof(v_t)*8-1)));
+    TTS_EQUAL(bitofsign(T( 1)), T(0));
+    TTS_EQUAL(bitofsign(T( 0)), T(0));
   }
 }

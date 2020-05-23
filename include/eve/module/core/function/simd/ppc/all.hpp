@@ -11,31 +11,32 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ALL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ALL_HPP_INCLUDED
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N>
+  template<real_scalar_value T, typename N>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(vmx_), logical<wide<T, N, ppc_>> const &v0) noexcept
   {
     auto m = v0.bits();
 
-    if constexpr( N::value == 1)
+    if constexpr( N::value == 1 )
     {
       return static_cast<bool>(m[0]);
     }
-    else if constexpr( N::value == expected_cardinal<T,ppc_>::value )
+    else if constexpr( N::value == expected_cardinal_v<T, ppc_> )
     {
-      return vec_all_eq( m.storage(), True(as(v0)).storage() );
+      return vec_all_eq(m.storage(), True(as(v0)).storage());
     }
     else
     {
-      using type = decltype(m);
-      auto mm = apply<N::value>( [](auto... I) { return type{ (I<N::value)... }; });
-      return vec_all_eq( (m & mm).storage(), mm.storage() );
+      using type = logical<wide<T, N, ppc_>>;
+
+      auto mm = apply<N::value>([](auto... I) { return type {(I < N::value)...}; });
+      m &= mm.bits();
+
+      return vec_all_eq(m.storage(), mm.storage());
     }
   }
 }

@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_EXPONENT_HPP_INCLUDED
 
 #include <eve/function/definition/exponent.hpp>
-#include <eve/module/core/function/scalar/exponent.hpp>
-#include <eve/module/core/function/simd/exponent.hpp>
+#include <eve/module/core/function/generic/exponent.hpp>
 
 #endif

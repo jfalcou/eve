@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_NEXTAFTER_HPP_INCLUDED
 
 #include <eve/function/definition/nextafter.hpp>
-#include <eve/module/core/function/scalar/nextafter.hpp>
-#include <eve/module/core/function/simd/nextafter.hpp>
+#include <eve/module/core/function/generic/nextafter.hpp>
 
 #endif

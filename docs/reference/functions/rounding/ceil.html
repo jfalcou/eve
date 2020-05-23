@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::ceil`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::ceil
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/ceil.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/ceil.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,41 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the ceil operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the  [element-wise](../../../glossary.html#element-wise) ceil operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
 
-**Return value:**
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes  [element-wise](../../../glossary.html#elment-wise) the smallest integer not less than `x`.
 
   (insert ../../src/ceil.src.html here)
 
   (insert ../../out/ceil.out.html here)
 
+See Also
+====================================================================================================
+[eve::floor](./floor.html), [eve::trunc](./trunc.html),
+[eve::nearest](./nearest.html), [eve::round](./round.html).
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

@@ -51,7 +51,7 @@
         }                                                                                          \
                                                                                                    \
         return TAG(delay_t{},EVE_CURRENT_API{},std::forward<Arg>(d),std::forward<Args>(args)...);  \
-      };                                                                                           \
+      }                                                                                            \
     };                                                                                             \
                                                                                                    \
     template<typename Condition, typename Dummy>                                                   \
@@ -82,7 +82,7 @@
         return TAG( delay_t{},EVE_CURRENT_API{}, state_,                                           \
                     std::forward<Arg>(d),std::forward<Args>(args)...                               \
                   );                                                                               \
-      };                                                                                           \
+      }                                                                                            \
     };                                                                                             \
   }                                                                                                \
   /**/
@@ -120,6 +120,7 @@ namespace eve
   // decorator mark-up and detection
   struct decorator_ {};
   template<typename ID> struct is_decorator : std::is_base_of<decorator_,ID> {};
+  template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
 
   namespace detail
   {

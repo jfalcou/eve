@@ -17,19 +17,21 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on cot")
+TTS_CASE_TPL("wide random check on cot", EVE_TYPE)
 {
-  auto std_cot = tts::vectorize<EVE_TYPE>( [](auto e) { return 1/std::tan(double(e)); } );
-  auto l = eve::detail::Rempio2_limit(eve::medium_type(), EVE_VALUE()); 
+  using v_t = eve::element_type_t<T>;
+
+  auto std_cot = tts::vectorize<T>( [](auto e) { return 1/std::tan(double(e)); } );
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<v_t>());
 
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::rng_producer<EVE_TYPE>  p(-l, l);
+    eve::rng_producer<T>  p(-l, l);
     TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
   }
   else
   {
-    eve::rng_producer<EVE_TYPE>  p(eve::Smallestposval<EVE_VALUE>(), l);
+    eve::rng_producer<T>  p(eve::Smallestposval<v_t>(), l);
     TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
-  } 
+  }
 }

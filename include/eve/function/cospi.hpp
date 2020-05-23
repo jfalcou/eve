@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_COSPI_HPP_INCLUDED
 
 #include <eve/function/definition/cospi.hpp>
-#include <eve/module/core/function/scalar/cospi.hpp>
-#include <eve/module/core/function/simd/cospi.hpp>
+#include <eve/module/core/function/generic/cospi.hpp>
 
 #endif

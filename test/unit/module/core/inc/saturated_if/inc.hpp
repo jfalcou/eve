@@ -10,35 +10,34 @@
 //==================================================================================================
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/mzero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check conditional saturated_(eve::inc) return type")
+TTS_CASE_TPL("Check conditional saturated_(eve::inc) return type", EVE_TYPE)
 {
   using eve::saturated_;
+  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS((saturated_(eve::inc[EVE_TYPE()])(EVE_TYPE()))                , (EVE_TYPE));
-  TTS_EXPR_IS((saturated_(eve::inc[EVE_VALUE()])(EVE_TYPE()))               , (EVE_TYPE));
-  TTS_EXPR_IS((saturated_(eve::inc[true])(EVE_TYPE()))                  , (EVE_TYPE));
-  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<EVE_TYPE>()])(EVE_TYPE()))  , (EVE_TYPE));
-  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<EVE_VALUE>()])(EVE_TYPE())) , (EVE_TYPE));
+  TTS_EXPR_IS((saturated_(eve::inc[T()])(T()))                , T);
+  TTS_EXPR_IS((saturated_(eve::inc[v_t()])(T()))              , T);
+  TTS_EXPR_IS((saturated_(eve::inc[true])(T()))               , T);
+  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<T>()])(T()))  , T);
+  TTS_EXPR_IS((saturated_(eve::inc[eve::logical<v_t>()])(T())), T);
 }
 
-TTS_CASE("Check conditional saturated_(eve::inc) behavior")
+TTS_CASE_TPL("Check conditional saturated_(eve::inc) behavior", EVE_TYPE)
 {
   using eve::saturated_;
 
-  EVE_TYPE tv(2);
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv(2);
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   // All basic TRUE
-  TTS_EQUAL(saturated_(eve::inc[ 1 ])(eve::Valmax<EVE_TYPE>())     , eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(saturated_(eve::inc[ 1.0 ])(eve::Valmax<EVE_TYPE>())   , eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(saturated_(eve::inc[ true ])(eve::Valmax<EVE_TYPE>())  , eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(saturated_(eve::inc[ t ])(eve::Valmax<EVE_TYPE>())     , eve::Valmax<EVE_TYPE>());
+  TTS_EQUAL(saturated_(eve::inc[ 1 ])(eve::Valmax<T>())     , eve::Valmax<T>());
+  TTS_EQUAL(saturated_(eve::inc[ 1.0 ])(eve::Valmax<T>())   , eve::Valmax<T>());
+  TTS_EQUAL(saturated_(eve::inc[ true ])(eve::Valmax<T>())  , eve::Valmax<T>());
+  TTS_EQUAL(saturated_(eve::inc[ t ])(eve::Valmax<T>())     , eve::Valmax<T>());
 
   // All basic FALSE
   TTS_EQUAL(saturated_(eve::inc[ 0 ])(tv)     , tv);
@@ -47,7 +46,7 @@ TTS_CASE("Check conditional saturated_(eve::inc) behavior")
   TTS_EQUAL(saturated_(eve::inc[ f ])(tv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

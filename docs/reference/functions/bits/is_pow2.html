@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::is_pow2`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::is_pow2
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/is_pow2.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/is_pow2.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,41 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the is_pow2 operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< unsigned_real_value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs the  [element-wise](../../../glossary.html#element-wise) is_pow2 operation on its parameter.
 
-**Parameters:**
-`name`
-:   Description
 
-**Return value:**
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [unsigned value](../../concepts.html#value).
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Checks [element-wise](../../../glossary.html#element-wise) if `x` is an integral power of two.
 
   (insert ../../src/is_pow2.src.html here)
 
   (insert ../../out/is_pow2.out.html here)
 
+See Also
+====================================================================================================
+[eve::floor](./floor.html), [eve::trunc](./trunc.html),
+[eve::nearest](./nearest.html), [eve::round](./round.html).
+
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

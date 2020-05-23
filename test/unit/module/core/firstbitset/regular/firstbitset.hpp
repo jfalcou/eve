@@ -11,22 +11,21 @@
 #include <eve/function/firstbitset.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check firstbitset return type")
+TTS_CASE_TPL("Check firstbitset return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::firstbitset(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::firstbitset(T()), T);
 }
 
-TTS_CASE("Check eve::firstbitset behavior")
+TTS_CASE_TPL("Check eve::firstbitset behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::firstbitset(EVE_TYPE(0)), EVE_TYPE(0));
-  TTS_EQUAL(eve::firstbitset(EVE_TYPE(1)), EVE_TYPE(1));
-  TTS_EQUAL(eve::firstbitset(EVE_TYPE(2)), EVE_TYPE(2));
+  TTS_EQUAL(eve::firstbitset(T(0)), T(0));
+  TTS_EQUAL(eve::firstbitset(T(1)), T(1));
+  TTS_EQUAL(eve::firstbitset(T(2)), T(2));
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-1)), EVE_TYPE(1));
-    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-2)), EVE_TYPE(2));
+    TTS_EQUAL(eve::firstbitset(T(-1)), T(1));
+    TTS_EQUAL(eve::firstbitset(T(-2)), T(2));
   }
 }

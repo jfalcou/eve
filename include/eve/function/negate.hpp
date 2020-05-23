@@ -12,7 +12,11 @@
 #define EVE_FUNCTION_NEGATE_HPP_INCLUDED
 
 #include <eve/function/definition/negate.hpp>
-#include <eve/module/core/function/scalar/negate.hpp>
-#include <eve/module/core/function/simd/negate.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/negate.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/negate.hpp>
+#endif
 
 #endif

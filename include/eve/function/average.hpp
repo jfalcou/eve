@@ -12,7 +12,18 @@
 #define EVE_FUNCTION_AVERAGE_HPP_INCLUDED
 
 #include <eve/function/definition/average.hpp>
-#include <eve/module/core/function/scalar/average.hpp>
-#include <eve/module/core/function/simd/average.hpp>
+#include <eve/module/core/function/generic/average.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/average.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/average.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/average.hpp>
+#endif
 
 #endif

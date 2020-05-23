@@ -3,52 +3,41 @@
    EVE - Expressive Vector Engine
    Copyright 2020 Jean-Thierry LAPRESTE
    Copyright 2020 Joel FALCOU
-   
+
    Licensed under the MIT License <http://opensource.org/licenses/MIT>.
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_FREXP_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_FREXP_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FREXP_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_GENERIC_FREXP_HPP_INCLUDED
 
-
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/ifrexp.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <type_traits>
+#include <eve/function/ifrexp.hpp>
+#include <eve/function/regular.hpp>
+
 #include <tuple>
 
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // tagged cases
-  template<typename T, typename TAG>
-  EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
-                                        , TAG const & tag_
-                                        , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating_point, T>)
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_), D const &, T const &a0) noexcept
   {
-    auto [m, e] = ifrexp(tag_, a0);
-    if constexpr(is_vectorizable_v<T>)
-      return  std::tuple<T, T>{m, static_cast<T>(e)};
-    else
-      return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));
+    auto [m, e] = D()(ifrexp)(a0);
+    return std::make_tuple(m, convert(e, as<element_type_t<T>>()));
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Regular case
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_)
-                                        , T const & a0) noexcept
-  requires(std::tuple<T, T>, behave_as<floating_point, T>)
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
-    auto [m, e] = ifrexp(a0); 
-    if constexpr(is_vectorizable_v<T>)
-      return  std::tuple<T, T>{m, static_cast<T>(e)};
-    else
-      return  std::make_tuple(m, convert(e, as<value_type_t<T>>()));
+    auto [m, e] = ifrexp(a0);
+    return std::make_tuple(m, convert(e, as<element_type_t<T>>()));
   }
 }
 

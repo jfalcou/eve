@@ -13,30 +13,41 @@
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/ppc/predef.hpp>
+#include <eve/detail/meta/traits.hpp>
 
 namespace eve
 {
+  // clang-format off
   //================================================================================================
   // Tag for all PPC SIMD ABI
+  //================================================================================================
   struct ppc_ {};
 
   //================================================================================================
   // Dispatching tag for V*X SIMD implementation
-  struct vmx_ : simd_ { using parent  = simd_;};
-  struct vsx_ : vmx_  { using parent  = vmx_; };
+  //================================================================================================
+  struct vmx_ : simd_ { using parent = simd_; };
+  struct vsx_ : vmx_  { using parent = vmx_; };
 
   //================================================================================================
   // V*X extension tag objects
+  //================================================================================================
   inline constexpr auto vmx = spy::vmx_;
   inline constexpr auto vsx = spy::vsx_;
 
+  // clang-format on
   //================================================================================================
   // Runtime detection of CPU support
-  template<auto Version>
-  inline bool is_supported(spy::ppc_simd_info<Version> const &) noexcept
+  //================================================================================================
+  template<auto Version> inline bool is_supported(spy::ppc_simd_info<Version> const &) noexcept
   {
     return false;
   }
+
+  //================================================================================================
+  // PPC ABI concept
+  //================================================================================================
+  template<typename T> concept ppc_abi = detail::is_one_of<T>(detail::types<ppc_> {});
 }
 
 #endif

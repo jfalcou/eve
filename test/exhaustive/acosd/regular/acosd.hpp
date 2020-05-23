@@ -8,19 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/acosd.hpp>
-#include <eve/function/indeg.hpp>
-#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/function/acosd.hpp>
+#include <eve/function/radindeg.hpp>
+
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
+#include <tts/tests/range.hpp>
 
-TTS_CASE("wide exhaustive check on acosd")
+TTS_CASE_TPL("wide exhaustive check on acosd", EVE_TYPE)
 {
-  auto std_acosd = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::indeg(std::acos(e)); } );
+  auto std_acosd = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::acos(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
-  TTS_RANGE_CHECK(p, std_acosd, eve::acosd); 
+  eve::exhaustive_producer<T> p(-1, 1);
+  TTS_RANGE_CHECK(p, std_acosd, eve::acosd);
 }

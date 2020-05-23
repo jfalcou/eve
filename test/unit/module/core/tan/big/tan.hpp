@@ -9,9 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/tan.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/constant/mzero.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -23,32 +20,41 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::big_(eve::tan) return type")
+TTS_CASE_TPL("Check eve::big_(eve::tan) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::big_(eve::tan)(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::big_(eve::tan)(T(0)), T);
 }
 
-TTS_CASE("Check eve::big_(eve::tan) behavior")
+TTS_CASE_TPL("Check eve::big_(eve::tan) behavior", EVE_TYPE)
 {
-
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Nan<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Inf<EVE_TYPE>()) , (eve::Nan<EVE_TYPE>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Minf<EVE_TYPE>()), (eve::Nan<EVE_TYPE>()) );   
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Inf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Minf<T>()), eve::Nan<T>() );
   }
-  TTS_ULP_EQUAL(eve::big_(eve::tan)(EVE_TYPE(1)), EVE_TYPE(std::tan(1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::tan)(EVE_TYPE(-1)),EVE_TYPE(std::tan(-1.0)), 0.5);
-  TTS_IEEE_EQUAL(eve::big_(eve::tan)(EVE_TYPE(0)), (EVE_TYPE(0)));
-  TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Mzero<EVE_TYPE>()), (EVE_TYPE(0)));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::tan)(eve::Mzero<EVE_TYPE>()))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tan)(eve::Zero<EVE_TYPE>()))));
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(eve::Pio_4<EVE_TYPE>())), (EVE_TYPE(std::tan(eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(-eve::Pio_4<EVE_TYPE>())),(EVE_TYPE(std::tan(-eve::Pio_4<EVE_VALUE>()))), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(100000.0))), EVE_TYPE(std::tan(100000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(-100000.0))),EVE_TYPE(std::tan(-100000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(100000000.0))), EVE_TYPE(std::tan(100000000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(-100000000.0))),EVE_TYPE(std::tan(-100000000.0)), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))),EVE_TYPE(std::tan(eve::Valmax<EVE_VALUE>())), 0.5);
-  TTS_ULP_EQUAL((eve::big_(eve::tan)(EVE_TYPE(eve::Valmax<EVE_TYPE>()))/10),EVE_TYPE(std::tan(eve::Valmax<EVE_VALUE>())/10), 0.5);     
+
+  TTS_IEEE_EQUAL( eve::big_(eve::tan)(T( 0 )) , T(0) );
+  TTS_IEEE_EQUAL( eve::big_(eve::tan)(T(-0.)) , T(0) );
+
+  TTS_EXPECT( eve::all(eve::is_negative(eve::medium_(eve::tan)(T(-0.)))) );
+  TTS_EXPECT( eve::all(eve::is_positive(eve::medium_(eve::tan)(T( 0 )))) );
+
+  using v_t = eve::element_type_t<T>;
+  auto vpi_4    = eve::Pio_4<T>();
+  auto spi_4    = eve::Pio_4<v_t>();
+  auto vvalmax  = eve::Valmax<T>();
+  auto svalmax  = eve::Valmax<v_t>();
+
+  TTS_ULP_EQUAL(eve::big_(eve::tan)(T(1)), T(std::tan(1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::tan)(T(-1)),T(std::tan(-1.0)), 0.5);
+
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(vpi_4)            , T(std::tan(spi_4))        , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(-vpi_4)           , T(std::tan(-spi_4))       , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(T(100000.0))      , T(std::tan(100000.0))     , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(T(-100000.0))     , T(std::tan(-100000.0))    , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(T(100000000.0))   , T(std::tan(100000000.0))  , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(T(-100000000.0))  , T(std::tan(-100000000.0)) , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(vvalmax)          , T(std::tan(svalmax))      , 0.5);
+  TTS_ULP_EQUAL ( eve::big_(eve::tan)(vvalmax)/10       , T(std::tan(svalmax)/10)   , 0.5);
 }

@@ -14,25 +14,24 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on itrunc")
+TTS_CASE_TPL("wide random check on itrunc", EVE_TYPE)
 {
-  using vi_t =  eve::detail::as_integer_t<EVE_TYPE>;
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+  using vi_t =  eve::detail::as_integer_t<T>;
+
+  if constexpr(eve::floating_value<T>)
   {
-    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    using i_t =  eve::detail::as_integer_t<v_t>;
     auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return i_t(std::trunc(e)); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
+    eve::rng_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
     TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
   }
   else
   {
     auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return e; } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_itrunc, eve::itrunc);
   }
-  
-  
 }

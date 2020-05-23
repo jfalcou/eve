@@ -10,30 +10,28 @@
 //==================================================================================================
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/mzero.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check inc return type")
+TTS_CASE_TPL("Check inc return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::inc)(EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::saturated_(eve::inc)(T()), T);
 }
 
-TTS_CASE("Check saturated_(inc) behavior")
+TTS_CASE_TPL("Check saturated_(inc) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::inc)(eve::Valmax<EVE_TYPE>()), eve::Valmax<EVE_TYPE>());
-  TTS_EQUAL(eve::saturated_(eve::inc)(EVE_TYPE(1)), (EVE_TYPE(2)));
-  TTS_EQUAL(eve::saturated_(eve::inc)(EVE_TYPE(2)), (EVE_TYPE(3)));
+  TTS_EQUAL(eve::saturated_(eve::inc)(eve::Valmax<T>()), eve::Valmax<T>() );
+  TTS_EQUAL(eve::saturated_(eve::inc)(T(1)            ), T(2)             );
+  TTS_EQUAL(eve::saturated_(eve::inc)(T(2)            ), T(3)             );
 
-if constexpr(std::is_signed_v<EVE_VALUE>)
+if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::inc)(EVE_TYPE(-2)), (EVE_TYPE(-1)));
+    TTS_EQUAL(eve::saturated_(eve::inc)(T(-2)), T(-1));
   }
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::inc)( eve::Mzero<EVE_TYPE>()), (EVE_TYPE(1)));
-    TTS_EQUAL(eve::saturated_(eve::inc)( (EVE_TYPE(0))         ), (EVE_TYPE(1)));
+    TTS_EQUAL(eve::saturated_(eve::inc)( T(-0.)), T(1));
+    TTS_EQUAL(eve::saturated_(eve::inc)( T( 0 )), T(1));
   }
 }

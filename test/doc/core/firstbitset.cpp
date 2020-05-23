@@ -1,20 +1,20 @@
 #include <eve/function/firstbitset.hpp>
 #include <eve/wide.hpp>
 
-using wide_it = eve::wide<std::int32_t, eve::fixed<8>>;
+using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_it pi = {-1, -2, -3, 27, 2, 3, 4, 0};
+  wide_it pi = {14, 1, 3, 7, 20, 23000, 0, 27};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi =                   " << pi << '\n'
-            << "-> eve::firstbitset(pi) =        " << eve::firstbitset(pi) << '\n';
+            << "<- pi              = " << pi << '\n'
+            << "-> firstbitset(pi) = " << eve::firstbitset(pi) << '\n';
 
-  std::int32_t xi = 31;
+  std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi =                          " << xi << '\n'
-            << "-> eve::firstbitset(xi) =        " << eve::firstbitset(xi) << '\n';
+            << "<- xf              = " << xf << '\n'
+            << "-> firstbitset(xf) = " << eve::firstbitset(xf) << '\n';
   return 0;
 }

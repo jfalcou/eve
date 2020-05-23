@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BIT_XOR_HPP_INCLUDED
 
 #include <eve/function/definition/bit_xor.hpp>
-#include <eve/module/core/function/scalar/bit_xor.hpp>
-#include <eve/module/core/function/simd/bit_xor.hpp>
+#include <eve/module/core/function/generic/bit_xor.hpp>
 
 #endif

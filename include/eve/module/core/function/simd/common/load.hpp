@@ -8,8 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMONLOAD_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMONLOAD_HPP_INCLUDED
+#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_LOAD_HPP_INCLUDED
+#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_LOAD_HPP_INCLUDED
 
 #include <eve/function/scalar/load.hpp>
 #include <eve/detail/overload.hpp>
@@ -21,30 +21,15 @@ namespace eve
 {
   //================================================================================================
   // Arithmetic
-  template<typename T, typename Size, typename ABI>
-  EVE_FORCEINLINE auto load(wide<T, Size, ABI> *ptr) noexcept
-  {
-    return *ptr;
-  }
-
-  template<typename T, typename Size, typename ABI>
-  EVE_FORCEINLINE auto load(aligned_ptr<wide<T, Size, ABI>> ptr) noexcept
-  {
-    return *ptr;
-  }
-
   template<typename Size, typename T, typename ABI>
   EVE_FORCEINLINE auto load(T *ptr, as_<wide<T, Size, ABI>> const &) noexcept
   {
     return wide<T, Size>(ptr);
   }
 
-  template<typename Size,
-           typename ABI,
-           typename T,
-           std::size_t Align,
-           typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
+  template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<T, Align> ptr, as_<wide<T, Size, ABI>> const &) noexcept
+  requires(Align >= wide<T, Size>::static_alignment)
   {
     return wide<T, Size>(ptr);
   }
@@ -57,13 +42,10 @@ namespace eve
     return logical<wide<T, Size>>(ptr);
   }
 
-  template<typename Size,
-           typename ABI,
-           typename T,
-           std::size_t Align,
-           typename = std::enable_if_t<(Align >= wide<T, Size>::static_alignment)>>
+  template<typename Size,typename ABI,typename T,std::size_t Align>
   EVE_FORCEINLINE auto load(aligned_ptr<logical<T>, Align> ptr,
                             as_<logical<wide<T, Size, ABI>>> const &) noexcept
+  requires(Align >= wide<T, Size>::static_alignment)
   {
     return logical<wide<T, Size, ABI>>(ptr);
   }

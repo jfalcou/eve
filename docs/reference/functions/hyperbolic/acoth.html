@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::acoth`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::acoth
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/acoth.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/acoth.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,45 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of acoth.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs $\frac{1}{2}\log((x+1)/(x-1))$.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cotangent of the input.
+The inverse hyperbolic sine is semantically equivalent to $\frac{1}{2}\log((x+1)/(x-1))$.
+
+In particular:
+
+   * If the element is $\pm1$, $\pm0$ is returned.
+   * If the element is $\pm\infty$, $\pm1$ is returned.
+   * If the element is less than one or a `NaN`, `NaN` is returned.
 
   (insert ../../src/acoth.src.html here)
 
   (insert ../../out/acoth.out.html here)
 
+See Also
+====================================================================================================
+[acosh](acosh.html), [asinh](asinh.html), [atanh](expm1.html).
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

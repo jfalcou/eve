@@ -18,20 +18,20 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide random check on eps")
+TTS_CASE_TPL("wide random check on eps", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
 
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    auto std_eps = tts::vectorize<EVE_TYPE>( [](auto e) { return (e > 0 ? e : -e)*eve::Eps<EVE_VALUE>()/2; } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_eps = tts::vectorize<T>( [](auto e) { return (e > 0 ? e : -e)*eve::Eps<v_t>()/2; } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_eps, eve::eps);
   }
   else
   {
-    auto std_eps = tts::vectorize<EVE_TYPE>( [](auto e) { return  EVE_VALUE(1); } );
-    eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_eps = tts::vectorize<T>( [](auto e) { return  v_t(1); } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_eps, eve::eps);
   }
-  
 }

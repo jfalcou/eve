@@ -16,9 +16,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on secpi")
+TTS_CASE_TPL("wide exhaustive check on secpi", EVE_TYPE)
 {
-  auto my_stdsecpi =  tts::vectorize<EVE_TYPE>([](auto x){return eve::rec(boost::math::cos_pi(x)); }); 
-  eve::exhaustive_producer<EVE_TYPE> p(-0.25, 0.25);
-  TTS_RANGE_CHECK(p, my_stdsecpi, eve::restricted_(eve::secpi)); 
+  auto my_stdsecpi =  tts::vectorize<T>([](auto x){return eve::rec(boost::math::cos_pi(x)); });
+
+  eve::exhaustive_producer<T> p(-0.25, 0.25);
+  TTS_RANGE_CHECK(p, my_stdsecpi, eve::restricted_(eve::secpi));
 }

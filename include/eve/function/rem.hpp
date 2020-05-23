@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_REM_HPP_INCLUDED
 
 #include <eve/function/definition/rem.hpp>
-#include <eve/module/core/function/scalar/rem.hpp>
-#include <eve/module/core/function/simd/rem.hpp>
+#include <eve/module/core/function/generic/rem.hpp>
 
 #endif

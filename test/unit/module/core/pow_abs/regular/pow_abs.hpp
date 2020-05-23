@@ -10,61 +10,55 @@
 //==================================================================================================
 #include <eve/function/pow_abs.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check pow_abs return type")
+TTS_CASE_TPL("Check eve::pow_abs return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::pow_abs(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EXPR_IS(eve::pow_abs(T(0)   , T(0)  ), T);
+  TTS_EXPR_IS(eve::pow_abs(T(0)   , v_t(0)), T);
+  TTS_EXPR_IS(eve::pow_abs(v_t(0) , T(0)  ), T);
 }
 
-TTS_CASE("Check eve::pow_abs behavior")
+TTS_CASE_TPL("Check eve::pow_abs behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), eve::Half<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), eve::Mhalf<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Minf<EVE_TYPE>(), eve::Minf<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Nan<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(2), eve::Inf<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0); 
-    TTS_ULP_EQUAL(eve::pow_abs(eve::Half<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Zero<EVE_TYPE>(), 0); 
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Minf<T>(), eve::Minf<T>()), T(0) );
+
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Inf<T>() , T(-0.5)       ), T(0)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Inf<T>() , T( 0 )        ), T(1)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Inf<T>() , T(0.5)        ), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Inf<T>() , eve::Inf<T>() ), eve::Inf<T>());
+
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Nan<T>() ,  T(0)         ), T(1)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Nan<T>() , -T(0)         ), T(1)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(eve::Nan<T>() , eve::Nan<T>() ), eve::Nan<T>());
+
+    TTS_IEEE_EQUAL(eve::pow_abs(T(0)  , T(-1)         ), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pow_abs(T(0)  , T(-2)         ), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pow_abs(T(0.5), eve::Inf<T>() ), T(0)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(T(0.5), eve::Minf<T>()), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pow_abs(T(1)  , eve::Nan<T>() ), T(1)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(T(1)  , eve::Inf<T>() ), T(1)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(T(2)  , eve::Minf<T>()), T(0)         );
+    TTS_IEEE_EQUAL(eve::pow_abs(T(2)  , eve::Inf<T>() ), eve::Inf<T>());
   }
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::One<EVE_TYPE>(), eve::One<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Zero<EVE_TYPE>(), eve::Zero<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(-1),EVE_TYPE(5)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(-1),EVE_TYPE(6)), EVE_TYPE(1), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0.5), EVE_TYPE(0.25)), EVE_TYPE(0.840896415253715), 2);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0.5), EVE_TYPE(0.25)), EVE_TYPE(std::pow(EVE_VALUE(0.5), EVE_VALUE(0.25))), 2);
-}
 
-
-TTS_CASE("pow_abs conformity")
-{
-  // specific values tests
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0), EVE_TYPE(-1)), eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0), EVE_TYPE(-2)), eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(1), eve::Nan<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(1), eve::Inf<EVE_TYPE>()), eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), EVE_TYPE(-2)),  eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Inf<EVE_TYPE>(), EVE_TYPE( 2)),  eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0.5), eve::Inf<EVE_TYPE>()),  eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(2), eve::Inf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(0.5), eve::Minf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(EVE_TYPE(2), eve::Minf<EVE_TYPE>()),  eve::Zero<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Nan<EVE_TYPE>(), EVE_TYPE(0)),  eve::One<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::pow_abs(eve::Nan<EVE_TYPE>(), -EVE_TYPE(0)),  eve::One<EVE_TYPE>(), 0);
-
+  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T(-1))  , T(1));
+  TTS_IEEE_EQUAL(eve::pow_abs(T( 1)  , T( 1))  , T(1));
+  TTS_IEEE_EQUAL(eve::pow_abs(T( 0)  , T( 0))  , T(1));
+  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 5))  , T(1));
+  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 6))  , T(1));
+  TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(0.840896415253715)            , 2);
+  TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(std::pow(v_t(0.5), v_t(0.25))), 2);
 }

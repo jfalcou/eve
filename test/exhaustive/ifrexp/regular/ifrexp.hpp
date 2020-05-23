@@ -16,10 +16,17 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on ifrexp")
+TTS_CASE_TPL("wide exhaustive check on ifrexp", EVE_TYPE)
 {
-  auto std_ifrexp = tts::vectorize<EVE_TYPE>( [](auto e) { return std::ifrexp(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_ifrexp = tts::vectorize<T> ( [](auto e)
+                                        {
+                                          int i;
+                                          auto z = std::frexp(e, &i);
+                                          return std::make_tuple(z, eve::detail::as_integer_t<v_t>(i));
+                                        }
+                                      );
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_ifrexp, eve::ifrexp); 
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_ifrexp, eve::ifrexp);
 }

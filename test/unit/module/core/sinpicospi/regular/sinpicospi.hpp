@@ -11,40 +11,37 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/cospi.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/one.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <utility>
-#include <cmath>
+#include <tuple>
 
-TTS_CASE("Check sinpicospi return type")
+TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS((eve::sinpicospi(EVE_TYPE())), (std::tuple<EVE_TYPE,EVE_TYPE>));
-} 
+  TTS_EXPR_IS(eve::sinpicospi(T()), (std::tuple<T,T>));
+}
 
-TTS_CASE("Check (eve::sinpicospi behavior")
+TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
 {
-  static const int N = 16; 
-  EVE_VALUE x[N] = {   eve::One<EVE_VALUE>()/8, -eve::One<EVE_VALUE>()/8
-                   , eve::One<EVE_VALUE>()/4, -eve::One<EVE_VALUE>()/4
-                   , EVE_VALUE(1), EVE_VALUE(-1)
-                   , EVE_VALUE(10), EVE_VALUE(-10)
-                   , EVE_VALUE(1000000), EVE_VALUE(-1000000)
-                   , EVE_VALUE(1000000000), EVE_VALUE(-1000000000)
-                   , eve::Valmax<EVE_VALUE>(), eve::Valmin<EVE_VALUE>()
-                   , eve::Valmax<EVE_VALUE>()/100000, eve::Valmin<EVE_VALUE>()/100000}; 
-  
+  using v_t = eve::element_type_t<T>;
+
+  static const int N = 16;
+  v_t x[N]  = { v_t(1)/8, -v_t(1)/8
+              , v_t(1)/4, -v_t(1)/4
+              , v_t(1), v_t(-1)
+              , v_t(10), v_t(-10)
+              , v_t(1000000), v_t(-1000000)
+              , v_t(1000000000), v_t(-1000000000)
+              , eve::Valmax<v_t>(), eve::Valmin<v_t>()
+              , eve::Valmax<v_t>()/100000, eve::Valmin<v_t>()/100000
+              };
+
   for(int i=0; i < N ; ++i)
   {
-    auto [p0, p1] = eve::sinpicospi(EVE_TYPE(x[i]));
-    TTS_ULP_EQUAL(p0, eve::sinpi(EVE_TYPE(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, eve::cospi(EVE_TYPE(x[i])), 0.5);
+    auto [p0, p1] = eve::sinpicospi(T(x[i]));
+    TTS_ULP_EQUAL(p0, eve::sinpi(T(x[i])), 0.5);
+    TTS_ULP_EQUAL(p1, eve::cospi(T(x[i])), 0.5);
   }
 }

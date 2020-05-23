@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
+  Copyright 2019 Joel FALCOU
+  Copyright 2019 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
@@ -18,26 +18,59 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <cmath>
 
-TTS_CASE("Check hypot return type")
+TTS_CASE_TPL("Check hypot return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::hypot(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
+  using v_t = eve::element_type_t<T>;
+
+  TTS_EXPR_IS(eve::hypot(   T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0)), T);
+
+  TTS_EXPR_IS(eve::hypot(   T(0),   T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot(   T(0),   T(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0), v_t(0)), T);
+  TTS_EXPR_IS(eve::hypot( v_t(0), v_t(0),   T(0)), T);
 }
 
-TTS_CASE("Check eve::hypot behavior")
+TTS_CASE_TPL("Check eve::hypot behavior", EVE_TYPE)
 {
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::hypot(eve::Nan<EVE_TYPE>(), eve::Inf<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::hypot(eve::Inf<EVE_TYPE>(), eve::Nan<EVE_TYPE>()), eve::Nan<EVE_TYPE>(), 0);
+    TTS_IEEE_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>()), eve::Nan<T>());
   }
 
-  TTS_ULP_EQUAL(eve::hypot(eve::Valmax<EVE_TYPE>(), (EVE_TYPE(0)))          , eve::Inf<EVE_TYPE>(), 0);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(0))          , eve::Valmax<EVE_TYPE>()), eve::Inf<EVE_TYPE>(), 0);
+  TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            ) , eve::Inf<T>());
+  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::Valmax<T>()) , eve::Inf<T>());
 
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE(-1)), (EVE_TYPE(-1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 1)), (EVE_TYPE( 1)))                  , eve::Sqrt_2<EVE_TYPE>() , 0.5);
-  TTS_ULP_EQUAL(eve::hypot((EVE_TYPE( 0)), (EVE_TYPE( 0)))                  , (EVE_TYPE(0))           , 0  );
-  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<EVE_TYPE>(), eve::Sqrt_2<EVE_TYPE>()), EVE_TYPE(2)             , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1))                      , eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1))                      , eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0))                      , T(0)            , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<T>(), eve::Sqrt_2<T>()), T(2)            , 0.5);
+}
+
+TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
+{
+  using v_t = eve::element_type_t<T>;
+
+  // non conforming to standard
+  if constexpr(eve::platform::supports_invalids)
+  {
+    TTS_IEEE_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>());
+  }
+
+  TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            , T(0)) , eve::Inf<T>());
+  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::Valmax<T>(), T(0)) , eve::Inf<T>());
+
+  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1), eve::Sqrt_2<T>() ) , T(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), eve::Sqrt_2<T>() ) , T(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0), T( 0)            ) , T(0)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), T( 1)            ) , T(std::sqrt(v_t(3))), 0.5);
 }

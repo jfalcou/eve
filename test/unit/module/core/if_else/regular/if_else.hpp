@@ -14,19 +14,19 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE("Check eve::if_else return type")
+TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::if_else(EVE_TYPE()               , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(eve::logical<EVE_TYPE>() , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
-  TTS_EXPR_IS(eve::if_else(true                 , EVE_TYPE(), EVE_TYPE()), (EVE_TYPE));
+  TTS_EXPR_IS(eve::if_else(T()               , T(), T()), T);
+  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , T(), T()), T);
+  TTS_EXPR_IS(eve::if_else(true              , T(), T()), T);
 }
 
-TTS_CASE("Check eve::if_else behavior with arithmetic alternatives")
+TTS_CASE_TPL("Check eve::if_else behavior with arithmetic alternatives", EVE_TYPE)
 {
-  EVE_TYPE tv{2};
-  EVE_TYPE fv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T tv{2};
+  T fv{3};
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   TTS_EQUAL(eve::if_else(1    , tv, fv), tv);
   TTS_EQUAL(eve::if_else(1.0  , tv, fv), tv);
@@ -38,10 +38,10 @@ TTS_CASE("Check eve::if_else behavior with arithmetic alternatives")
   TTS_EQUAL(eve::if_else(f    , tv, fv), fv);
 }
 
-TTS_CASE("Check eve::if_else behavior with logical alternatives")
+TTS_CASE_TPL("Check eve::if_else behavior with logical alternatives", EVE_TYPE)
 {
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   TTS_EQUAL(eve::if_else(1    , t, f), t);
   TTS_EQUAL(eve::if_else(1.0  , t, f), t);

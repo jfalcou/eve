@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_BINARIZE_HPP_INCLUDED
 
 #include <eve/function/definition/binarize.hpp>
-#include <eve/module/core/function/scalar/binarize.hpp>
-#include <eve/module/core/function/simd/binarize.hpp>
+#include <eve/module/core/function/generic/binarize.hpp>
 
 #endif 

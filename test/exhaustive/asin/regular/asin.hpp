@@ -14,10 +14,10 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on asin")
+TTS_CASE_TPL("wide exhaustive check on asin", EVE_TYPE)
 {
-  auto std_asin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::asin(e); } );
+  auto std_asin = tts::vectorize<T>( [](auto e) { return std::asin(e); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(-1, 1);
-  TTS_RANGE_CHECK(p, std_asin, eve::asin); 
+  eve::exhaustive_producer<T> p(-1, 1);
+  TTS_RANGE_CHECK(p, std_asin, eve::asin);
 }

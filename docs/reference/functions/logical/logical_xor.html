@@ -6,50 +6,62 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::bit_xor`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::logical_xor
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/bit_xor.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/logical_xor.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ logical_xor = /*unspecified*/;
+  inline constexpr /*unspecified*/ bit_xor = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the logical XOR operation.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  the  [element-wise](../../../glossary.html#regular_) logical XOR of the two [values](../../concepts.html#value).
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-**Return value:**
+
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Computes  logical XOR of the two parameters following the
+[logical operations semantic](../../../glossary.html#Logical).
+
+the call `logical_xor(x, y)` is semantically equivalent to `(x && !y) || (!x && y)`.
 
   (insert ../../src/logical_xor.src.html here)
 
   (insert ../../out/logical_xor.out.html here)
 
+See Also
+====================================================================================================
+[eve::logical_ornot](./logical_ornot.html), [eve::logical_notor](./logical_notor.html), [eve::logical_or](./logical_or),
+[eve::logical_andnot](./logical_andnot.html), [eve::logical_notand](./logical_notand.html), [eve::logical_and](./logical_and),
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

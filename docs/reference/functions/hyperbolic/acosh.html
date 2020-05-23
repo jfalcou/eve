@@ -6,19 +6,17 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::acosh`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::acosh
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/acosh.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/acosh.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -27,29 +25,46 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of acosh.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Performs  $\log(x+\sqrt{x^2-1})$.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) inverse hyperbolic cosine of the input.
+For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to $\log(x+\sqrt{x^2-1})$.
+
+In particular:
+
+   * If the element is less than 1 or Nan, Nan is returned.
+   * If the element is 1, +0 is returned.
+   * If the element is $+\infty$, $+\infty$ returned.
+   * If the element is a `NaN`, `NaN` is returned.
 
   (insert ../../src/acosh.src.html here)
 
   (insert ../../out/acosh.out.html here)
 
+See Also
+====================================================================================================
+[exp10](exp10.html), [exp2](exp2.html), [expm1](expm1.html).
+
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

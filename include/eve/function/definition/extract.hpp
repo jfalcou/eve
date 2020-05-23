@@ -13,7 +13,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
 

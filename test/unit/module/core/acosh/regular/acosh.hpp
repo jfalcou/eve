@@ -20,25 +20,26 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::acosh return type")
+TTS_CASE_TPL("Check eve::acosh return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::acosh(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::acosh(T(0)), T);
 }
 
-TTS_CASE("Check eve::acosh behavior")
+TTS_CASE_TPL("Check eve::acosh behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acosh(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::acosh(eve::Nan<T>()) , eve::Nan<T>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acosh(eve::Inf<EVE_TYPE>()) , eve::Inf<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::acosh(eve::Inf<T>()) , eve::Inf<T>(), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acosh(EVE_TYPE( 0.5))         ,  eve::Nan<EVE_TYPE>()  , 0   );
-  TTS_ULP_EQUAL(eve::acosh(EVE_TYPE(-0.5))         ,  eve::Nan<EVE_TYPE>()  , 0   );
-  TTS_ULP_EQUAL(eve::acosh(EVE_TYPE( 1. ))         ,  eve::Zero<EVE_TYPE>() , 0   );
-  TTS_ULP_EQUAL(eve::acosh(EVE_TYPE( 2. ))         ,  EVE_TYPE(std::acosh(EVE_VALUE(2))), 0.5  );
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(eve::acosh(T( 0.5)) ,  eve::Nan<T>()  , 0   );
+  TTS_ULP_EQUAL(eve::acosh(T(-0.5)) ,  eve::Nan<T>()  , 0   );
+  TTS_ULP_EQUAL(eve::acosh(T( 1. )) ,  T( 0 ) , 0   );
+  TTS_ULP_EQUAL(eve::acosh(T( 2. )) ,  T(std::acosh(v_t(2))), 0.5  );
 }

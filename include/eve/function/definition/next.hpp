@@ -15,6 +15,7 @@
 #include <eve/function/all.hpp>
 #include <eve/function/is_gez.hpp>
 #include <eve/function/saturated.hpp>
+#include <eve/concept/value.hpp>
 #include <type_traits>
 
 namespace eve
@@ -23,13 +24,13 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U>
+    template<real_value T, integral_real_value U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const& a,  U const & n)
     {
       EVE_ASSERT(all(is_gez(n)), "[eve::next] : second parameter must be positive");
     }
     
-    template<typename T, typename U>
+    template<real_value T, integral_real_value U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::next_), T const&,  U const & n)
     {
       EVE_ASSERT(all(is_gez(n)), "[eve::saturated_(eve::next)] : second parameter must be positive"); 

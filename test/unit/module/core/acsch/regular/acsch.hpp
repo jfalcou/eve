@@ -13,7 +13,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
@@ -23,28 +22,30 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE("Check eve::acsch return type")
+TTS_CASE_TPL("Check eve::acsch return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::acsch(EVE_TYPE(0)), (EVE_TYPE));
+  TTS_EXPR_IS(eve::acsch(T(0)), T);
 }
 
-TTS_CASE("Check eve::acsch behavior")
+TTS_CASE_TPL("Check eve::acsch behavior", EVE_TYPE)
 {
+  using v_t = eve::element_type_t<T>;
+
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::Nan<EVE_TYPE>()) , eve::Nan<EVE_TYPE>(), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::Nan<T>()) , eve::Nan<T>(), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::Inf<EVE_TYPE>()) , EVE_TYPE(0), 0);
-    TTS_ULP_EQUAL(eve::acsch(eve::Minf<EVE_TYPE>()) , EVE_TYPE(-0.0), 0);
-    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::Minf<EVE_TYPE>()))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::Inf<EVE_TYPE>()))));   
+    TTS_ULP_EQUAL(eve::acsch(eve::Inf<T>()) , T(0), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::Minf<T>()) , T(-0.0), 0);
+    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::Minf<T>()))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::Inf<T>()))));
   }
 
-  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE(-0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(-2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 1. )) , EVE_TYPE(std::asinh(EVE_VALUE(1.0)))  , 0.5   );
-  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 2. )) , EVE_TYPE(std::asinh(EVE_VALUE(0.5))), 0.5  );
+  TTS_ULP_EQUAL(eve::acsch(T( 0.5)) , T(std::asinh(v_t(2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(T(-0.5)) , T(std::asinh(v_t(-2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(T( 1. )) , T(std::asinh(v_t(1.0)))  , 0.5   );
+  TTS_ULP_EQUAL(eve::acsch(T( 2. )) , T(std::asinh(v_t(0.5))), 0.5  );
 }

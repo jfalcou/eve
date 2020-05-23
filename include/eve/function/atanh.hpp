@@ -12,7 +12,6 @@
 #define EVE_FUNCTION_ATANH_HPP_INCLUDED
 
 #include <eve/function/definition/atanh.hpp>
-#include <eve/module/core/function/scalar/atanh.hpp>
-#include <eve/module/core/function/simd/atanh.hpp>
+#include <eve/module/core/function/generic/atanh.hpp>
 
 #endif

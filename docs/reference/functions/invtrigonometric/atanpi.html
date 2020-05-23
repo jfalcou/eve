@@ -6,50 +6,71 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::atand`
+<br>
 
-<meta charset="utf-8">
+  (insert ../../../crumbs.html here)
 
-eve::atanpi
+Synopsis
 ====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/atand.hpp>`</script>
 
-**Required header:**
-
-<script type="preformatted">
-`#include <eve/function/atanpi.hpp>`
-</script>
-
-**Synopsis:**
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ atanpi = /*unspecified*/;
+  inline constexpr /*unspecified*/ atand = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing ....
+Function object representing the  computation of atand.
 
-**Member functions:**
+Member functions
+====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<value T> auto operator()( ??? ) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs ???.
+Computes the principal value of the arc cotangent of `x`.
 
-**Parameters:**
-`name`
-:   Description
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [floating real value](../../concepts.html#value).
 
-**Return value:**
+Return value
+----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Description here
+Returns the [element-wise](../../../glossary.html#elment-wise) arc cotangent of the
+input in the range $[-\frac12, \frac12]$.
 
-  (insert ../../src/atanpi.src.html here)
+In particular:
 
-  (insert ../../out/atanpi.out.html here)
+   * If the element is $\pm0$, $\pm0$ is returned.
+   * If the element is $\pm\infty$, $\pm\frac\pi2$ is returned.
+   * If the element is a `Nan`, `NaN` is returned.
+
+
+Supported Decorators
+====================================================================================================
+As all direct trigonometric functions, `atand` supports the restricted_, small_, medium_ and big_ decorators. Click
+to see the [properties and rationale](../trigonometric.html)
+
+  (insert ../../src/atand.src.html here)
+
+  (insert ../../out/atand.out.html here)
+
+See Also
+====================================================================================================
+[eve::acos](acos.html), [eve::asind](asind.html), [eve::acotd](acotd.html),
+[eve::acsc](acsc.html), [eve::asec](asec.html), [eve::atand2](atand2.html).
 
 <!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'medium'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

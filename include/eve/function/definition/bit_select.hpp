@@ -12,11 +12,16 @@
 #define EVE_FUNCTION_DEFINITION_BIT_SELECT_HPP_INCLUDED
 
 #include <eve/detail/overload.hpp>
-#include <eve/concept/vectorized.hpp>
 #include <type_traits>
 
 namespace eve
 {
+  namespace tag { struct bit_select_; }
+
+  template<>
+  struct supports_conditionnal<tag::bit_select_> : std::false_type
+  {};
+
   EVE_MAKE_CALLABLE(bit_select_, bit_select);
 }
 

@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on acot")
+TTS_CASE_TPL("wide exhaustive check on acot", EVE_TYPE)
 {
-  auto std_acot = tts::vectorize<EVE_TYPE>( [](auto e) { return std::atan(eve::rec(e)); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_acot = tts::vectorize<T>( [](auto e) { return std::atan(eve::rec(e)); } );
 
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_acot, eve::acot); 
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_acot, eve::acot);
 }

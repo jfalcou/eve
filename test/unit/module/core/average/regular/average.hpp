@@ -18,21 +18,21 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE("Check average return type")
+TTS_CASE_TPL("Check average return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::average(EVE_TYPE(), EVE_TYPE()), (EVE_TYPE) );
+  TTS_EXPR_IS(eve::average(T(), T()), T );
 }
 
-TTS_CASE("Check  eve::average behavior")
+TTS_CASE_TPL("Check  eve::average behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::average(eve::One<EVE_TYPE>() ,  eve::One<EVE_TYPE>()     ) , eve::One<EVE_TYPE>()    );
-  TTS_EQUAL(eve::average(eve::Zero<EVE_TYPE>()  , eve::Zero<EVE_TYPE>()   ) , eve::Zero<EVE_TYPE>()   );
-  TTS_EQUAL(eve::average(eve::One <EVE_TYPE>()  , EVE_TYPE(3)             ) , EVE_TYPE(2)             );
-  TTS_EQUAL(eve::average(eve::Valmax<EVE_TYPE>(), eve::Valmax<EVE_TYPE>() ) , eve::Valmax<EVE_TYPE>() );
-  TTS_EQUAL(eve::average(eve::Valmin<EVE_TYPE>(), eve::Valmin<EVE_TYPE>() ) , eve::Valmin<EVE_TYPE>() );
+  TTS_EQUAL(eve::average(eve::One<T>() ,  eve::One<T>()     ) , eve::One<T>()    );
+  TTS_EQUAL(eve::average(T( 0 )  , T( 0 )   ) , T( 0 )   );
+  TTS_EQUAL(eve::average(eve::One <T>()  , T(3)             ) , T(2)             );
+  TTS_EQUAL(eve::average(eve::Valmax<T>(), eve::Valmax<T>() ) , eve::Valmax<T>() );
+  TTS_EQUAL(eve::average(eve::Valmin<T>(), eve::Valmin<T>() ) , eve::Valmin<T>() );
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::average(eve::Mone<EVE_TYPE>(), eve::Mone<EVE_TYPE>()), eve::Mone<EVE_TYPE>());
+    TTS_EQUAL(eve::average(eve::Mone<T>(), eve::Mone<T>()), eve::Mone<T>());
   }
 }

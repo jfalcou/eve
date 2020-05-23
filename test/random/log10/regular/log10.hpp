@@ -9,17 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/log10.hpp>
-#include <eve/constant/zero.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on log10")
+TTS_CASE_TPL("wide random check on log10", EVE_TYPE)
 {
-  auto std_log10 = tts::vectorize<EVE_TYPE>( [](auto e) { return std::log10(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_log10 = tts::vectorize<T>( [](auto e) { return std::log10(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_log10, eve::log10); 
+  eve::rng_producer<T> p(v_t(0), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_log10, eve::log10);
 }

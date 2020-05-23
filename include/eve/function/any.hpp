@@ -12,7 +12,19 @@
 #define EVE_FUNCTION_ANY_HPP_INCLUDED
 
 #include <eve/function/definition/any.hpp>
-#include <eve/module/core/function/scalar/any.hpp>
-#include <eve/module/core/function/simd/any.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/any.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/any.hpp>
+#endif
+
+#if defined(EVE_HW_POWERPC)
+#  include <eve/module/core/function/simd/ppc/any.hpp>
+#endif
+
+#if defined(EVE_HW_ARM)
+#  include <eve/module/core/function/simd/arm/neon/any.hpp>
+#endif
 
 #endif

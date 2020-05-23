@@ -17,18 +17,20 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on oneminus")
+TTS_CASE_TPL("wide exhaustive check on oneminus", EVE_TYPE)
 {
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  using v_t = eve::element_type_t<T>;
+
+  if constexpr(eve::signed_value<T>)
   {
-    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return  EVE_VALUE(1)-e; });
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_oneminus = tts::vectorize<T>( [](auto e) { return  v_t(1)-e; });
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
   }
   else
   {
-    auto std_oneminus = tts::vectorize<EVE_TYPE>( [](auto e) { return  static_cast<EVE_VALUE>(eve::One<EVE_VALUE>()-e);} );
-    eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+    auto std_oneminus = tts::vectorize<T>( [](auto e) { return  static_cast<v_t>(eve::One<v_t>()-e);} );
+    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_oneminus,  eve::oneminus);
-  }  
+  }
 }

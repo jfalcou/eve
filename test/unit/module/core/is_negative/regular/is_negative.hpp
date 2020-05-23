@@ -14,30 +14,29 @@
 #include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
-#include <type_traits>
 
-TTS_CASE("Check eve::is_negative return type")
+TTS_CASE_TPL("Check eve::is_negative return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::is_negative(EVE_TYPE(0)), (eve::logical<EVE_TYPE>));
+  TTS_EXPR_IS(eve::is_negative(T(0)), eve::logical<T>);
 }
 
-TTS_CASE("Check eve::is_negative behavior")
+TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_negative(EVE_TYPE(0)), eve::False<EVE_TYPE>());
-  TTS_EQUAL(eve::is_negative(EVE_TYPE(2)), eve::False<EVE_TYPE>());
+  TTS_EQUAL(eve::is_negative(T(0)), eve::False<T>());
+  TTS_EQUAL(eve::is_negative(T(2)), eve::False<T>());
 
-  if constexpr(std::is_signed_v<EVE_VALUE>)
+  if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::is_negative(EVE_TYPE(-1)), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_negative(T(-1)), eve::True<T>());
   }
-  if constexpr(std::is_floating_point_v<EVE_VALUE>)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_negative(eve::Zero<EVE_TYPE>()) , eve::False<EVE_TYPE>());
-    TTS_EQUAL(eve::is_negative(eve::Mzero<EVE_TYPE>()), eve::True<EVE_TYPE>());
+    TTS_EQUAL(eve::is_negative(T( 0 )), eve::False<T>() );
+    TTS_EQUAL(eve::is_negative(T(-0.)), eve::True<T>()  );
 
     if constexpr(eve::platform::supports_nans)
     {
-      TTS_EQUAL(eve::is_negative( eve::Nan<EVE_TYPE>()), eve::True<EVE_TYPE>());
+      TTS_EQUAL(eve::is_negative(eve::Nan<T>()), eve::True<T>());
     }
   }
 }

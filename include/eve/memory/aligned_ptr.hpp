@@ -12,56 +12,48 @@
 #define EVE_MEMORY_ALIGNED_PTR_HPP_INCLUDED
 
 #include <eve/memory/is_aligned.hpp>
+#include <concepts>
 #include <eve/assert.hpp>
-#include <type_traits>
 
 namespace eve
 {
-  template<typename Type, std::size_t Alignment = alignof(Type)>
+  template<typename Type, std::size_t Alignment = alignof(Type)> requires(is_power_of_2(Alignment))
   struct aligned_ptr
   {
-    static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
-
     using pointer = std::add_pointer_t<Type>;
 
     static constexpr std::size_t alignment() { return Alignment; }
 
     aligned_ptr() noexcept {}
-    aligned_ptr(std::nullptr_t) noexcept
-        : pointer_(nullptr)
+    aligned_ptr(std::nullptr_t) noexcept : pointer_(nullptr) {}
+
+    aligned_ptr(pointer p) noexcept : pointer_(p)
+    {
+      EVE_ASSERT(is_aligned<Alignment>(p),(void *)(p) << " is not aligned on " << Alignment << ".");
+    }
+
+    template<typename U, std::size_t A>
+    aligned_ptr(aligned_ptr<U, A> p) noexcept requires(A >= Alignment)
+              : pointer_(static_cast<pointer>(p.get()))
+    {}
+
+    template<std::size_t A>
+    aligned_ptr(aligned_ptr<void, A> p) noexcept requires(A >= Alignment)
+              : pointer_(static_cast<pointer>(p.get()))
     {
     }
 
-    aligned_ptr(pointer p) noexcept
-        : pointer_(p)
-    {
-      EVE_ASSERT(is_aligned<Alignment>(p),
-                 (void *)(p) << " is not aligned on " << Alignment << ".");
-    }
-
-    template<typename U, std::size_t A, typename = std::enable_if_t<(A >= Alignment)>>
-    aligned_ptr(aligned_ptr<U, A> p) noexcept
-        : pointer_(static_cast<pointer>(p.get()))
-    {
-    }
-
-    template<std::size_t A, std::enable_if_t<(A >= Alignment)>>
-    aligned_ptr(aligned_ptr<void, A> p) noexcept
-        : pointer_(static_cast<pointer>(p.get()))
-    {
-    }
-
-    template<typename U,
-             std::size_t A,
-             typename = std::enable_if_t<(A >= Alignment) && std::is_convertible_v<U *, pointer>>>
+    template<typename U, std::size_t A>
     aligned_ptr &operator=(aligned_ptr<U, A> p) noexcept
+    requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
     {
       pointer_ = static_cast<pointer>(p.get());
       return *this;
     }
 
-    template<std::size_t A, typename = std::enable_if_t<(A >= Alignment)>>
-    aligned_ptr &operator=(aligned_ptr<void, A> p) noexcept
+
+    template<std::size_t A>
+    aligned_ptr &operator=(aligned_ptr<void, A> p) noexcept  requires(A >= Alignment)
     {
       pointer_ = static_cast<pointer>(p.get());
       return *this;
@@ -85,31 +77,27 @@ namespace eve
       return *this;
     }
 
-    aligned_ptr &operator++() noexcept
+    aligned_ptr &operator++() noexcept requires(Alignment == 1)
     {
-      static_assert(Alignment == 1, "[eve] Pointer of non-unit alignment can't be incremented");
       pointer_++;
       return *this;
     }
 
-    aligned_ptr operator++(int) noexcept
+    aligned_ptr operator++(int) noexcept requires(Alignment == 1)
     {
-      static_assert(Alignment == 1, "[eve] Pointer of non-unit alignment can't be incremented");
       aligned_ptr tmp(*this);
       this->      operator++();
       return tmp;
     }
 
-    aligned_ptr &operator--() noexcept
+    aligned_ptr &operator--() noexcept requires(Alignment == 1)
     {
-      static_assert(Alignment == 1, "[eve] Pointer of non-unit alignment can't be decremented");
       pointer_--;
       return *this;
     }
 
-    aligned_ptr operator--(int) noexcept
+    aligned_ptr operator--(int) noexcept requires(Alignment == 1)
     {
-      static_assert(Alignment == 1, "[eve] Pointer of non-unit alignment can't be decremented");
       aligned_ptr tmp(*this);
       this->      operator--();
       return tmp;
@@ -134,39 +122,30 @@ namespace eve
     pointer pointer_;
   };
 
-  template<std::size_t Alignment>
+  template<std::size_t Alignment>  requires(is_power_of_2(Alignment))
   struct aligned_ptr<void, Alignment>
   {
-    static_assert(is_power_of_2(Alignment), "[eve] Alignment must be a power of 2");
-
     using pointer = void *;
 
     static constexpr std::size_t alignment() { return Alignment; }
 
     aligned_ptr() noexcept {}
-    aligned_ptr(std::nullptr_t) noexcept
-        : pointer_(nullptr)
+    aligned_ptr(std::nullptr_t) noexcept : pointer_(nullptr) {}
+    aligned_ptr(pointer p) noexcept : pointer_(p)
     {
-    }
-    aligned_ptr(pointer p) noexcept
-        : pointer_(p)
-    {
-      EVE_ASSERT(is_aligned<Alignment>(p),
-                 (void *)(p) << " is not aligned on " << Alignment << ".");
+      EVE_ASSERT(is_aligned<Alignment>(p),(void *)(p) << " is not aligned on " << Alignment << ".");
     }
 
-    template<typename U,
-             std::size_t A,
-             typename = std::enable_if_t<(A >= Alignment) && std::is_convertible_v<U *, pointer>>>
-    aligned_ptr(aligned_ptr<U, A> const &p) noexcept
+    template<typename U, std::size_t A>
+    aligned_ptr(aligned_ptr<U, A> p) noexcept
+    requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
     {
       pointer_ = p.get();
     }
 
-    template<typename U,
-             std::size_t A,
-             typename = std::enable_if_t<(A >= Alignment) && std::is_convertible_v<U *, pointer>>>
-    aligned_ptr &operator=(aligned_ptr<U, A> const &p) noexcept
+    template<typename U, std::size_t A>
+    aligned_ptr &operator=(aligned_ptr<U, A> p) noexcept
+                requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
     {
       pointer_ = p.get();
       return *this;

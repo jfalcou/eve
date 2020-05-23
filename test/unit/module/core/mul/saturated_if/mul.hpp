@@ -12,20 +12,19 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
-
-TTS_CASE("Check conditional saturated(eve::mul) return type")
+TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::saturated_(eve::mul[ EVE_TYPE()              ])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::saturated_(eve::mul[ eve::logical<EVE_TYPE>()])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
-  TTS_EXPR_IS( (eve::saturated_(eve::mul[ true                ])(EVE_TYPE(), EVE_TYPE())), (EVE_TYPE));
+  TTS_EXPR_IS( (eve::saturated_(eve::mul[ T()              ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::mul[ eve::logical<T>()])(T(), T())), T);
+  TTS_EXPR_IS( (eve::saturated_(eve::mul[ true             ])(T(), T())), T);
 }
 
-TTS_CASE("Check conditional saturated(eve::mul) behavior")
+TTS_CASE_TPL("Check conditional saturated(eve::mul) behavior", EVE_TYPE)
 {
-  EVE_TYPE fv{eve::Valmax<EVE_TYPE>()};
-  EVE_TYPE tv{3};
-  auto t = eve::True<EVE_TYPE>();
-  auto f = eve::False<EVE_TYPE>();
+  T fv{eve::Valmax<T>()};
+  T tv{3};
+  auto t = eve::True<T>();
+  auto f = eve::False<T>();
 
   TTS_EQUAL(eve::saturated_(eve::mul[ 1 ])(tv, fv)    , eve::saturated_(eve::mul)(tv,fv));
   TTS_EQUAL(eve::saturated_(eve::mul[ 1.0 ])(tv, fv)  , eve::saturated_(eve::mul)(tv,fv));
@@ -38,7 +37,7 @@ TTS_CASE("Check conditional saturated(eve::mul) behavior")
   TTS_EQUAL(eve::saturated_(eve::mul[ f ])(tv, fv)    , tv);
 
   // Mixed case
-  eve::as_logical_t<EVE_TYPE> m;
+  eve::as_logical_t<T> m;
   std::for_each ( tts::detail::begin(m), tts::detail::end(m)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );

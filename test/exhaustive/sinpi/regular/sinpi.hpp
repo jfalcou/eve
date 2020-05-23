@@ -11,15 +11,17 @@
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>    
+#include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide exhaustive check on sinpi")
+TTS_CASE_TPL("wide exhaustive check on sinpi", EVE_TYPE)
 {
-  auto my_stdsinpi =  tts::vectorize<EVE_TYPE>([](auto x){return boost::math::sin_pi(x); });
-  eve::exhaustive_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, my_stdsinpi, eve::sinpi); 
+  using v_t = eve::element_type_t<T>;
+
+  auto my_stdsinpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x); });
+  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, my_stdsinpi, eve::sinpi);
 }

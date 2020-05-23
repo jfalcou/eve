@@ -16,14 +16,15 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on sincos")
+TTS_CASE_TPL("wide random check on sincos", EVE_TYPE)
 {
-  auto std_sin = tts::vectorize<EVE_TYPE>( [](auto e) { return std::sin(double(e)); } );
-  auto std_cos = tts::vectorize<EVE_TYPE>( [](auto e) { return std::cos(double(e)); } );    
+  using v_t = eve::element_type_t<T>;
+  auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(double(e)); } );
+  auto std_cos = tts::vectorize<T>( [](auto e) { return std::cos(double(e)); } );
   auto sincos_s =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return s; };
   auto sincos_c =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return c; };
-  
-  eve::rng_producer<EVE_TYPE> p(-eve::Pio_2<EVE_VALUE>(), eve::Pio_2<EVE_VALUE>());
+
+  eve::rng_producer<T> p(-eve::Pio_2<v_t>(), eve::Pio_2<v_t>());
   TTS_RANGE_CHECK(p, std_sin, sincos_s);
-  TTS_RANGE_CHECK(p, std_cos, sincos_c); 
+  TTS_RANGE_CHECK(p, std_cos, sincos_c);
 }

@@ -16,10 +16,11 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide random check on frexp")
+TTS_CASE_TPL("wide random check on frexp", EVE_TYPE)
 {
-  auto std_frexp = tts::vectorize<EVE_TYPE>( [](auto e) { return std::frexp(e); } );
+  using v_t = eve::element_type_t<T>;
+  auto std_frexp = tts::vectorize<T>( [](auto e) { return std::frexp(e); } );
 
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
-  TTS_RANGE_CHECK(p, std_frexp, eve::eve::raw_(eve::frexp)); 
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  TTS_RANGE_CHECK(p, std_frexp, eve::eve::raw_(eve::frexp));
 }

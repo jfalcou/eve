@@ -16,16 +16,17 @@
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
-#include <cmath>
 
-TTS_CASE("wide random check on sinpicospi")
+TTS_CASE_TPL("wide random check on sinpicospi", EVE_TYPE)
 {
-  auto std_sinpi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::sinpi(double(e)); } );
-  auto std_cospi = tts::vectorize<EVE_TYPE>( [](auto e) { return eve::cospi(double(e)); } );    
+  using v_t = eve::element_type_t<T>;
+
+  auto std_sinpi = tts::vectorize<T>( [](auto e) { return eve::sinpi(double(e)); } );
+  auto std_cospi = tts::vectorize<T>( [](auto e) { return eve::cospi(double(e)); } );
   auto sinpicospi_s =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return s; };
   auto sinpicospi_c =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return c; };
-  
-  eve::rng_producer<EVE_TYPE> p(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+
+  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_sinpi, sinpicospi_s);
-  TTS_RANGE_CHECK(p, std_cospi, sinpicospi_c); 
+  TTS_RANGE_CHECK(p, std_cospi, sinpicospi_c);
 }
