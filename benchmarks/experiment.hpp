@@ -12,7 +12,7 @@
 #define BENCHMARK_BENCH_HPP
 
 #include <benchmark/benchmark.h>
-#include <eve/cardinal.hpp>
+#include <eve/traits/cardinal.hpp>
 #include "tts/detail/type_id.hpp"
 #include "cycleclock.h"
 #include <algorithm>
