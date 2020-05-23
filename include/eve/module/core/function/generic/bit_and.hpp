@@ -14,6 +14,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/operators.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/if_else.hpp>
 

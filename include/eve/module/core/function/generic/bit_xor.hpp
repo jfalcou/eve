@@ -12,6 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_XOR_HPP_INCLUDED
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/operators.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/if_else.hpp>
