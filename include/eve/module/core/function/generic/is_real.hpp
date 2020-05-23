@@ -11,11 +11,10 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_REAL_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_REAL_HPP_INCLUDED
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::detail
 {
