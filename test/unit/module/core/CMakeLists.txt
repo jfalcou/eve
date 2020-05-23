@@ -208,8 +208,8 @@ make_all_units(ROOT core NAME none                  ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME oneminus              ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME plus                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME popcount              ARCH scalar simd TYPES ${integral_types})
-make_all_units(ROOT core NAME pow                   ARCH scalar simd TYPES ${all_types}    )
 ### TEMPORARY MEASURE
+### make_all_units(ROOT core NAME pow                   ARCH scalar simd TYPES ${all_types}    )
 ### make_all_units(ROOT core NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE
 make_all_units(ROOT core NAME prev                  ARCH scalar simd TYPES ${all_types}     )

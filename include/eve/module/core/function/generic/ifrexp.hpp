@@ -94,14 +94,13 @@ namespace eve::detail
         auto r0 = bit_or(Half<T>(), x);
         auto test0 = is_nez(a0);
         auto test1 = is_greater(e,Limitexponent<T>());
-        e = if_else(logical_notand(test1, test0), e, eve::zero_);
+        auto ee = if_else(logical_notand(test1, test0), e, eve::zero_);
 
         if constexpr(eve::platform::supports_denormals)
         {
-          e -= t ;
+          ee -= t ;
         }
-        return std::make_tuple( if_else(test0, add[test1](r0,a0), eve::zero_), e);
-
+        return std::make_tuple( if_else(test0, add[test1](r0,a0), eve::zero_), ee);
       }
       else  if constexpr(scalar_value<T>)
       {
