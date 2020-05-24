@@ -13,10 +13,11 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/function/bit_cast.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/traits/as_wide.hpp>
 
 namespace eve
 {

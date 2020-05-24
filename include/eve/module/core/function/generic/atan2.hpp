@@ -15,6 +15,7 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/constant/zero.hpp>
+#include <eve/constant/nan.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/div.hpp>
