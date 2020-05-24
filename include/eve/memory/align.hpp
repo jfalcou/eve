@@ -21,8 +21,8 @@ namespace eve
   enum class over  : std::size_t {};
   enum class under : std::size_t {};
 
-  std::size_t as_integer(over n)  { return static_cast<std::size_t>(n); }
-  std::size_t as_integer(under n) { return static_cast<std::size_t>(n); }
+  constexpr inline std::size_t as_integer(over n)  noexcept { return static_cast<std::size_t>(n); }
+  constexpr inline std::size_t as_integer(under n) noexcept { return static_cast<std::size_t>(n); }
 
   template<std::integral T> constexpr auto align(T value, over alignment) noexcept
   {
