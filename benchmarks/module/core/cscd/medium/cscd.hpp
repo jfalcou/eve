@@ -8,20 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/bit_cast.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/function/cscd.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  auto f =  [](auto x){ return eve::bit_cast(x, eve::as_<eve::detail::as_integer_t<EVE_TYPE>>());
-  }
- ;
-  EVE_REGISTER_BENCHMARK(f, EVE_TYPE
+  auto lmax = eve::detail::Rempio2_limit(eve::medium_type(), eve::as_<EVE_VALUE>());
+  auto lmin = -lmax;
+  EVE_REGISTER_BENCHMARK(eve::medium_(eve::cscd), EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
