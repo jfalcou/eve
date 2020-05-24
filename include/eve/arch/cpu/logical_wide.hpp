@@ -17,7 +17,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/arch/cpu/logical.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <type_traits>

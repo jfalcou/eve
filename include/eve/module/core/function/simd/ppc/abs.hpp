@@ -11,7 +11,7 @@
 #ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ABS_HPP_INCLUDED
 #define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_ABS_HPP_INCLUDED
 
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 

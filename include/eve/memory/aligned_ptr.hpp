@@ -12,7 +12,7 @@
 #define EVE_MEMORY_ALIGNED_PTR_HPP_INCLUDED
 
 #include <eve/memory/is_aligned.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/assert.hpp>
 
 namespace eve

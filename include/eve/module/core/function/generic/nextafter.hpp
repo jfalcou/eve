@@ -12,7 +12,7 @@
 #define EVE_MODULE_CORE_FUNCTION_GENERIC_NEXTAFTER_HPP_INCLUDED
 
 #include <eve/concept/compatible.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>

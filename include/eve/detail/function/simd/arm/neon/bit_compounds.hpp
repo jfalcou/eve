@@ -12,7 +12,7 @@
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_BIT_COMPOUNDS_HPP_INCLUDED
 
 #include <eve/concept/compatible.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 

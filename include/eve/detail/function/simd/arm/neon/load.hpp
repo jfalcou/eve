@@ -12,7 +12,7 @@
 #define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_LOAD_HPP_INCLUDED
 
 #include <eve/as.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>

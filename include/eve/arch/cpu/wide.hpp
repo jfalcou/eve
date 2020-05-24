@@ -14,7 +14,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/as_register.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/base_wide.hpp>
 #include <eve/detail/function/compounds.hpp>

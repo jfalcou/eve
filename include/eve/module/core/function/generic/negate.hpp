@@ -18,7 +18,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 
 namespace eve::detail
 {

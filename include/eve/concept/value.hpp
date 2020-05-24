@@ -16,7 +16,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/is_logical.hpp>
 
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <type_traits>
 
 namespace eve
