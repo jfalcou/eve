@@ -9,38 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/rem.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <eve/constant/mone.hpp>
-#include <type_traits>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <cmath>
 
-TTS_CASE("Check rem return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_TYPE() ), (EVE_TYPE));
-  TTS_EXPR_IS(eve::rem(EVE_TYPE(), EVE_VALUE() ), (EVE_TYPE));
-  TTS_EXPR_IS(eve::rem(EVE_VALUE(), EVE_TYPE() ), (EVE_TYPE));
-}
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::rem, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-TTS_CASE("Check eve::rem behavior")
-{
-  if constexpr(std::is_integral_v<EVE_VALUE> && std::is_signed_v<EVE_VALUE>)
-  {
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_TYPE{2} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_VALUE>() , EVE_TYPE{2} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(eve::Mone<EVE_TYPE>()  , EVE_VALUE{2}), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_TYPE{3} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_VALUE(-4) , EVE_TYPE{3} ), EVE_TYPE(-1));
-    TTS_EQUAL(eve::rem(EVE_TYPE(-4)  , EVE_VALUE{3}), EVE_TYPE(-1));
-  }
-  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_TYPE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_TYPE{3}), EVE_TYPE(1));
-
-  TTS_EQUAL(eve::rem(EVE_VALUE{12}, EVE_TYPE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_VALUE{1} , EVE_TYPE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_VALUE{4} , EVE_TYPE{3}), EVE_TYPE(1));
-
-  TTS_EQUAL(eve::rem(EVE_TYPE{12}, EVE_VALUE{4}), EVE_TYPE{0});
-  TTS_EQUAL(eve::rem(EVE_TYPE{1} , EVE_VALUE{2}), EVE_TYPE(1));
-  TTS_EQUAL(eve::rem(EVE_TYPE{4} , EVE_VALUE{3}), EVE_TYPE(1));
+  eve::bench::start_benchmarks(argc, argv);
 }

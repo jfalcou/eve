@@ -11,7 +11,7 @@
 #ifndef EVE_FUNCTION_LOOKUP_HPP_INCLUDED
 #define EVE_FUNCTION_LOOKUP_HPP_INCLUDED
 
-#include <eve/concept/vectorizable.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/function/definition/lookup.hpp>
