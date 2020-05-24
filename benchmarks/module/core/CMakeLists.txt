@@ -198,6 +198,8 @@ make_all_benchs(ROOT core NAME oneminus           ARCH scalar simd TYPES ${real_
 make_all_benchs(ROOT core NAME plus               ARCH scalar simd TYPES ${all_types}  )
 make_all_benchs(ROOT core NAME popcount           ARCH scalar simd TYPES ${integral_types} )
 make_all_benchs(ROOT core NAME prev               ARCH scalar simd TYPES ${all_types}  )
+make_all_benchs(ROOT core NAME radindeg           ARCH scalar simd TYPES ${real_types} )
+make_all_benchs(ROOT core NAME radinpi           ARCH scalar simd TYPES ${real_types} )
 make_all_benchs(ROOT core NAME rec                ARCH scalar simd TYPES ${all_types}  )
 make_all_benchs(ROOT core NAME rem                ARCH scalar simd TYPES ${all_types}  )
 make_all_benchs(ROOT core NAME rempio2            ARCH scalar simd TYPES ${real_types} )
