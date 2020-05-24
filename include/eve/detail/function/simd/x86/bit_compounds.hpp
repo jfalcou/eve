@@ -46,7 +46,7 @@ namespace eve::detail
       {
         self = _mm_and_pd(self, bit_other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         self = _mm_and_si128(self, bit_other);
       }
@@ -120,7 +120,7 @@ namespace eve::detail
       {
         self = _mm_or_pd(self, bit_other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         self = _mm_or_si128(self, bit_other);
       }
@@ -193,7 +193,7 @@ namespace eve::detail
       {
         self = _mm_xor_pd(self, bit_other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         self = _mm_xor_si128(self, bit_other);
       }

@@ -20,7 +20,7 @@ namespace eve
   template<typename T, typename U>
   concept element_compatible_to = scalar_value<T>
                                && simd_value<U>
-                               && std::convertible_to<T, element_type_t<U>>;
+                               && convertible_to<T, element_type_t<U>>;
 
   template<typename T, typename U>
   concept compatible_values = element_compatible_to<T, U>

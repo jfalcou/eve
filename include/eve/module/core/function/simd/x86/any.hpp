@@ -66,7 +66,7 @@ namespace eve::detail
         return _mm_movemask_pd(v.mask());
       }
     }
-    else if constexpr( std::integral<T> )
+    else if constexpr( integral<T> )
     {
       if constexpr( sizeof(T) == 1 )
       {

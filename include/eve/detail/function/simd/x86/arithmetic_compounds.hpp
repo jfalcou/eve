@@ -45,7 +45,7 @@ namespace eve::detail
       {
         self = _mm_add_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {
@@ -88,7 +88,7 @@ namespace eve::detail
       {
         self = _mm256_add_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         if constexpr( current_api >= avx2 )
         {
@@ -145,7 +145,7 @@ namespace eve::detail
       {
         self = _mm_sub_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {
@@ -188,7 +188,7 @@ namespace eve::detail
       {
         self = _mm256_sub_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         if constexpr( current_api >= avx2 )
         {
@@ -314,7 +314,7 @@ namespace eve::detail
       {
         self = _mm256_mul_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         constexpr bool require_slice = (sizeof(T) == 1) || (sizeof(T) == 8) || (current_api < avx2);
 
@@ -362,7 +362,7 @@ namespace eve::detail
       {
         self = _mm_div_ps(self, other);
       }
-      else if constexpr( std::integral<T> )
+      else if constexpr( integral<T> )
       {
         if constexpr( sizeof(T) == 4 && std::is_signed_v<T> && current_api >= avx )
         {

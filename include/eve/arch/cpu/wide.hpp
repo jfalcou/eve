@@ -82,7 +82,7 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a Range
     //==============================================================================================
-    template<std::input_iterator Iterator>
+    template<input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
                   : data_(detail::load(as_<wide>{}, abi_type{}, b, e))
     {
@@ -125,7 +125,7 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a single value
     template<typename T>
-    EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( std::convertible_to<T, Type> )
+    EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( convertible_to<T, Type> )
                             : data_(detail::make(as_<target_type>{}, abi_type{}, v))
     {
     }
@@ -134,8 +134,8 @@ namespace eve
     // Constructs a wide from a sequence of values
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE wide(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
-          requires(     std::convertible_to<T0,Type> && std::convertible_to<T0,Type>
-                    &&  (... && std::convertible_to<Ts,Type>)
+          requires(     convertible_to<T0,Type> && convertible_to<T0,Type>
+                    &&  (... && convertible_to<Ts,Type>)
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
@@ -146,7 +146,7 @@ namespace eve
     // Constructs a wide with a generator function
     template<typename Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
-                    requires( std::invocable<Generator,size_type,size_type>)
+                    requires( invocable<Generator,size_type,size_type>)
                   : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
     {}
 

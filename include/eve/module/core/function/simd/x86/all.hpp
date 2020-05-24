@@ -70,7 +70,7 @@ namespace eve::detail
         return _mm_movemask_pd(v.mask()) == mask;
       }
     }
-    else if constexpr( std::integral<T> )
+    else if constexpr( integral<T> )
     {
       constexpr int SH   = (Bytes - sizeof(T) * N::value);
       constexpr int mask = 0xFFFF >> SH;

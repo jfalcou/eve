@@ -12,8 +12,10 @@
 #define EVE_DETAIL_OVERLOAD_HPP_INCLUDED
 
 #include <eve/arch/spec.hpp>
+#include <eve/concept/std_replacements.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <concepts>
 #include <utility>
 
 #define EVE_DECLARE_CALLABLE(TAG)                                                                  \
@@ -120,7 +122,7 @@ namespace eve
   // decorator mark-up and detection
   struct decorator_ {};
   template<typename ID> struct is_decorator : std::is_base_of<decorator_,ID> {};
-  template<typename ID> concept decorator = std::derived_from<ID,decorator_>;
+  template<typename ID> concept decorator = derived_from<ID,decorator_>;
 
   namespace detail
   {

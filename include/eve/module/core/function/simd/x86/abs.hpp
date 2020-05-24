@@ -24,15 +24,15 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> abs_(EVE_SUPPORTS(ssse3_), wide<T, N, sse_> const &v) noexcept
   {
-    if constexpr( std::unsigned_integral<T> )
+    if constexpr( unsigned_integral<T> )
     {
       return v;
     }
-    else if constexpr( std::floating_point<T> )
+    else if constexpr( floating_point<T> )
     {
       return bit_notand(Mzero(as(v)), v);
     }
-    else if constexpr( std::integral<T> )
+    else if constexpr( integral<T> )
     {
       if constexpr( sizeof(T) == 1 )
       {
@@ -59,15 +59,15 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> abs_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
   {
-    if constexpr( std::unsigned_integral<T> )
+    if constexpr( unsigned_integral<T> )
     {
       return v;
     }
-    else if constexpr( std::floating_point<T> )
+    else if constexpr( floating_point<T> )
     {
       return bit_notand(Mzero(as(v)), v);
     }
-    else if constexpr( std::integral<T> )
+    else if constexpr( integral<T> )
     {
       if constexpr( current_api >= avx2 )
       {

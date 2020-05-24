@@ -36,13 +36,13 @@ namespace eve::detail
                                         wide<T, N, sse_> const &v0,
                                         wide<T, N, sse_> const &v1) noexcept
   {
-    if constexpr( std::floating_point<T> )
+    if constexpr( floating_point<T> )
     {
       return add(v0, v1);
     }
     else if constexpr( current_api >= avx2 )
     {
-      if constexpr( std::signed_integral<T> )
+      if constexpr( signed_integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {
@@ -57,7 +57,7 @@ namespace eve::detail
           return add_(EVE_RETARGET(cpu_), st, v0, v1);
         }
       }
-      else if constexpr( std::unsigned_integral<T> )
+      else if constexpr( unsigned_integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {
@@ -88,13 +88,13 @@ namespace eve::detail
                                         wide<T, N, avx_> const &v0,
                                         wide<T, N, avx_> const &v1) noexcept
   {
-    if constexpr( std::floating_point<T> )
+    if constexpr( floating_point<T> )
     {
       return add(v0, v1);
     }
     else if constexpr( current_api >= avx2 )
     {
-      if constexpr( std::signed_integral<T> )
+      if constexpr( signed_integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {
@@ -109,7 +109,7 @@ namespace eve::detail
           return add_(EVE_RETARGET(cpu_), st, v0, v1);
         }
       }
-      else if constexpr( std::unsigned_integral<T> )
+      else if constexpr( unsigned_integral<T> )
       {
         if constexpr( sizeof(T) == 1 )
         {

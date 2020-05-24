@@ -45,7 +45,7 @@ namespace eve
 
     template<typename U, std::size_t A>
     aligned_ptr &operator=(aligned_ptr<U, A> p) noexcept
-    requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
+    requires( (A >= Alignment) && convertible_to<U*, pointer> )
     {
       pointer_ = static_cast<pointer>(p.get());
       return *this;
@@ -138,14 +138,14 @@ namespace eve
 
     template<typename U, std::size_t A>
     aligned_ptr(aligned_ptr<U, A> p) noexcept
-    requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
+    requires( (A >= Alignment) && convertible_to<U*, pointer> )
     {
       pointer_ = p.get();
     }
 
     template<typename U, std::size_t A>
     aligned_ptr &operator=(aligned_ptr<U, A> p) noexcept
-                requires( (A >= Alignment) && std::convertible_to<U*, pointer> )
+                requires( (A >= Alignment) && convertible_to<U*, pointer> )
     {
       pointer_ = p.get();
       return *this;

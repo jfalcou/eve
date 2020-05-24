@@ -18,6 +18,7 @@
 #include <eve/detail/spy.hpp>
 #include <eve/arch/cpu/logical.hpp>
 #include <concepts>
+#include <eve/concept/std_replacements.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <type_traits>
@@ -85,7 +86,7 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a Range
-    template<std::input_iterator Iterator>
+    template<input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
                   : data_(detail::load(as_<logical>{}, abi_type{}, b, e))
     {
@@ -128,7 +129,7 @@ namespace eve
     // Constructs a wide from a single value
     template<typename T>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
-                    requires( std::convertible_to<T, logical<Type>> )
+                    requires( convertible_to<T, logical<Type>> )
                   : data_(detail::make(as_<target_type>{}, abi_type{}, v))
     {
     }
@@ -137,8 +138,8 @@ namespace eve
     // Constructs a wide from a sequence of values
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
-          requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
-                    &&  (... && std::convertible_to<Ts,logical<Type>>)
+          requires(     convertible_to<T0,logical<Type>> && convertible_to<T0,logical<Type>>
+                    &&  (... && convertible_to<Ts,logical<Type>>)
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
         : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
@@ -149,7 +150,7 @@ namespace eve
     // Constructs a wide with a generator function
     template<typename Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                    requires( std::invocable<Generator,size_type,size_type>)
+                    requires( invocable<Generator,size_type,size_type>)
                   : data_ ( detail::fill( as_<logical>{}, abi_type{},
                             [&](int i, int c)
                             {

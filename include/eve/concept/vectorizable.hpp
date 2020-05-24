@@ -13,6 +13,7 @@
 
 #include <eve/forward.hpp>
 #include <eve/concept/rebindable.hpp>
+#include <eve/concept/std_replacements.hpp>
 #include <eve/detail/is_wide.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
@@ -51,15 +52,15 @@ namespace eve
 {
   template<typename T> concept scalar_value                   = detail::is_scalar_value<T>::value;
 
-  template<typename T> concept integral_scalar_value          = scalar_value<T> && std::integral<T>;
+  template<typename T> concept integral_scalar_value          = scalar_value<T> && integral<T>;
   template<typename T> concept signed_scalar_value            = scalar_value<T> && std::is_signed_v<T>;
-  template<typename T> concept unsigned_scalar_value          = scalar_value<T> && std::unsigned_integral<T>;
-  template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
-  template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
+  template<typename T> concept unsigned_scalar_value          = scalar_value<T> && unsigned_integral<T>;
+  template<typename T> concept signed_integral_scalar_value   = scalar_value<T> && signed_integral<T>;
+  template<typename T> concept floating_scalar_value          = scalar_value<T> && floating_point<T>;
   template<typename T> concept logical_scalar_value           = scalar_value<T> && is_logical_v<T>;
   template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
-  template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
-  template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
+  template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && floating_point<detail::value_type_t<T>>;
+  template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && integral<detail::value_type_t<T>>;
 }
 
 #endif
