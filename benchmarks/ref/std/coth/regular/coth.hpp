@@ -8,16 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <cmath>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/function/coth.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  auto const std_cos = [](auto x) { return std::cos(x); };
-
-  EVE_REGISTER_BENCHMARK(std_cos, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Maxlog<EVE_VALUE>();
+  auto lmax = eve::Minlog<EVE_VALUE>();
+   EVE_REGISTER_BENCHMARK(eve::coth, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

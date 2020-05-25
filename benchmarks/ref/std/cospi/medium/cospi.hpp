@@ -9,15 +9,14 @@
 **/
 //==================================================================================================
 #include <cmath>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  auto const std_cos = [](auto x) { return std::cos(x); };
-
-  EVE_REGISTER_BENCHMARK(std_cos, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  auto const std_cospi = [](auto x) { return std::cospi(x); };
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  EVE_REGISTER_BENCHMARK(std_cospi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }

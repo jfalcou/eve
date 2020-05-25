@@ -9,15 +9,16 @@
 **/
 //==================================================================================================
 #include <cmath>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <cmath>
 
 int main(int argc, char** argv)
 {
-  auto const std_cos = [](auto x) { return std::cos(x); };
-
-  EVE_REGISTER_BENCHMARK(std_cos, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  auto constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  auto const std_cosd = [inrad](auto x) { return inrad*std::cos(x); };
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmax = EVE_TYPE(90);
+  auto lmin = EVE_TYPE(-lmax);
+  EVE_REGISTER_BENCHMARK(std_cosd, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

@@ -8,16 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <cmath>
+#include <eve/function/conj.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main(int conjc, char** conjv)
 {
-  auto const std_cos = [](auto x) { return std::cos(x); };
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  EVE_REGISTER_BENCHMARK(eve::conj, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  EVE_REGISTER_BENCHMARK(std_cos, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
-
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::start_benchmarks(conjc, conjv);
 }
+#

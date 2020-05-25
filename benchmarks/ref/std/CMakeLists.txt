@@ -66,9 +66,9 @@ make_all_benchs(ROOT std NAME bit_select      ARCH scalar TYPES ${integral_types
 make_all_benchs(ROOT std NAME bit_shl         ARCH scalar TYPES ${integral_types} )
 make_all_benchs(ROOT std NAME bit_shr         ARCH scalar TYPES ${integral_types} )
 make_all_benchs(ROOT std NAME bit_xor         ARCH scalar TYPES ${integral_types} )
-
 make_all_benchs(ROOT std NAME cbrt            ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME ceil            ARCH scalar TYPES ${all_types}  )
+make_all_benchs(ROOT std NAME clamp           ARCH scalar TYPES ${all_types}  )
 make_all_benchs(ROOT std NAME copysign        ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME cos             ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME cosh            ARCH scalar TYPES ${real_types} )
