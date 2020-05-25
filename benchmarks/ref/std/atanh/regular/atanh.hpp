@@ -8,12 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atanh.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::atanh, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto const std_atanh = [](auto x) { return std::atanh(x); };
+  EVE_REGISTER_BENCHMARK(std_atanh, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
   eve::bench::start_benchmarks(argc, argv);
 }

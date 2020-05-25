@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atan2d.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -17,10 +16,10 @@
 int main(int argc, char** argv)
 {
   constexpr EVE_TYPE indeg = EVE_TYPE(180)/std::numbers::pi_v<EVE_TYPE>;
-  auto const std_atan2d = [](auto x, auto y) { return indeg*std::atan2d(x, y); };
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::atan2d, EVE_TYPE
+  auto const std_atan2d = [](auto x, auto y) { return indeg*std::atan2(x, y); };
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+  EVE_REGISTER_BENCHMARK(std_atan2d, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

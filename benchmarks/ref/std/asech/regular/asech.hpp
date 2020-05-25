@@ -8,12 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/asech.hpp>
 #include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::asech, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto const std_asech = [](auto x) { return invpi*std::acos(1/x); };
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+  EVE_REGISTER_BENCHMARK(std_asech, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

@@ -9,11 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/asinpi.hpp>
+#include <numbers>
 #include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::asinpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  constexpr EVE_TYPE invpi = std::numbers::inv_pi_v<EVE_TYPE>;
+  auto const std_asinpi = [invpi](auto x) { return invpi*std::asin(x); };
+  EVE_REGISTER_BENCHMARK(std_asinpi, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(EVE_VALUE(1), eve::Valmax<EVE_VALUE>()));
 
   eve::bench::start_benchmarks(argc, argv);
 }

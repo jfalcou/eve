@@ -62,7 +62,6 @@ namespace eve::detail
       requires has_native_abi_v<T>
   {
     return D()(fma)(t, b, D()(fnma)(t, a, a));
-    ;
   }
 }
 

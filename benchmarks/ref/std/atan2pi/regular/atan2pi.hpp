@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/atan2pi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -18,9 +17,9 @@ int main(int argc, char** argv)
 {
   constexpr EVE_TYPE invpi = std::numbers::inv_pi_v<EVE_TYPE>;
   auto const std_atan2pi = [](auto x, auto y) { return invpi*std::atan2(x, y); };
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::atan2pi, EVE_TYPE
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+  EVE_REGISTER_BENCHMARK(std_atan2pi, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

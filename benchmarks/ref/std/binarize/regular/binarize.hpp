@@ -8,20 +8,22 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <cmath>
+#include <numbers>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <eve/constant/half.hpp>
-#include <cmath>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto const std_average = [](auto x, auto y) { return std::lerp(x, y, eve::Half<EVE_TYPE>()); };
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(std_average, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto const std_binarize = [](auto x) { return x ? EVE_TYPE(1) : EVE_TYPE(0); };
+  auto const std_binarize2= [](auto x, auto y){ return x ? EVE_TYPE(y) : EVE_TYPE(0); };
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+
+  EVE_REGISTER_BENCHMARK(std_binarize, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  EVE_REGISTER_BENCHMARK(std_binarize2, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin, lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }
