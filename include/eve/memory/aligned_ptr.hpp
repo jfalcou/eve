@@ -166,6 +166,66 @@ namespace eve
     pointer pointer_;
   };
 
+  template<typename T1, std::size_t A1, typename T2, std::size_t A2>
+  bool operator==(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
+  {
+    return lhs.get() == rhs.get();
+  }
+
+  template<typename T, std::size_t A>
+  bool operator==(aligned_ptr<T, A> lhs, T* rhs) noexcept
+  {
+    return lhs.get() == rhs;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator==(T* lhs, aligned_ptr<T, A> rhs) noexcept
+  {
+    return rhs.get() == lhs;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator==(aligned_ptr<T, A> lhs, std::nullptr_t) noexcept
+  {
+    return lhs.get() == nullptr;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator==(std::nullptr_t, aligned_ptr<T, A> rhs) noexcept
+  {
+    return rhs.get() == nullptr;
+  }
+
+  template<typename T1, std::size_t A1, typename T2, std::size_t A2>
+  bool operator!=(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
+  {
+    return lhs.get() != rhs.get();
+  }
+
+  template<typename T, std::size_t A>
+  bool operator!=(aligned_ptr<T, A> lhs, T* rhs) noexcept
+  {
+    return lhs.get() != rhs;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator!=(T* lhs, aligned_ptr<T, A> rhs) noexcept
+  {
+    return rhs.get() != lhs;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator!=(aligned_ptr<T, A> lhs, std::nullptr_t) noexcept
+  {
+    return lhs.get() !=nullptr;
+  }
+
+  template<typename T, std::size_t A>
+  bool operator!=(std::nullptr_t, aligned_ptr<T, A> rhs) noexcept
+  {
+    return rhs.get()!= nullptr;
+  }
+
   template<typename Type, std::size_t Alignment>
   void swap(aligned_ptr<Type, Alignment> &lhs, aligned_ptr<Type, Alignment> &rhs) noexcept
   {

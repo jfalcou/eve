@@ -17,14 +17,24 @@ TTS_CASE("aligned_ptr constructor from nullptr")
 {
   eve::aligned_ptr<double> nullptr_constructed_ptr = nullptr;
 
-  TTS_EQUAL(nullptr_constructed_ptr.get(), nullptr);
+  TTS_EQUAL(nullptr_constructed_ptr.get() , nullptr);
+  TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
 }
 
 TTS_CASE("aligned_ptr factory functions")
 {
   alignas(8) std::array<char, 10> values;
-  TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get(), &values[ 0 ]);
+  TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get()   , &values[ 0 ]);
+  TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , &values[ 0 ]);
+  TTS_EQUAL(eve::as_aligned(&values[ 0 ])         , eve::as_aligned(&values[ 0 ]));
+  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , &values[ 3 ]);
+  TTS_NOT_EQUAL(eve::as_aligned(&values[ 0 ])     , eve::as_aligned(&values[ 3 ]));
+
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ]).get(), &values[ 0 ]);
+  TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , &values[ 0 ]);
+  TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , eve::as_aligned<8>(&values[ 0 ]));
+  TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , &values[ 3 ]);
+  TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , eve::as_aligned<8>(&values[ 3 ]));
 }
 
 TTS_CASE("aligned_ptr pre/post increment & decrement")
