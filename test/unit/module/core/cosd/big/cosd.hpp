@@ -33,7 +33,10 @@ TTS_CASE_TPL("Check eve::big_(eve::cosd) behavior",EVE_TYPE)
   }
 
   using v_t = eve::element_type_t<T>;
-  auto ref_cosd = [](auto e) { return eve::cospi(double(e) / 180.); };
+//  auto ref_cosd = [](auto e) { return eve::cospi(double(e) / 180.); };
+  long double pi_180 = (long double)(1.7453292519943295769236907684886127134428718885417e-2);
+  auto ref_cosd = [pi_180](auto e) { return v_t(std::cos((long double)(e)*pi_180)); };
+
 
   TTS_IEEE_EQUAL(eve::big_(eve::cosd)(T(0   )), T(1));
   TTS_IEEE_EQUAL(eve::big_(eve::cosd)(T(-0. )), T(1));
@@ -44,4 +47,8 @@ TTS_CASE_TPL("Check eve::big_(eve::cosd) behavior",EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::cosd)(-T(45.0))  , T(ref_cosd(-v_t(45.0))) , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(500.0))  , T(ref_cosd(500.0))      , 2   );
   TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(-500.0)) , T(ref_cosd(-500.0))     , 2   );
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(500.0)) , T(-0.7660444431189780352023926505554166739358324570804)   , 2   );
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(500.0)) , T(ref_cosd(500.0)), 2);
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(v_t(+1.02415649e+02))), T(ref_cosd(v_t(+1.02415649e+02)))     , 2   );
+  TTS_ULP_EQUAL(eve::big_(eve::cosd)(T(v_t(+1.02415649e+02))), T(-0.2150020743082519444931481559295890154738935892796), 2);
 }

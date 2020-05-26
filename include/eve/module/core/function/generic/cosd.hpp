@@ -15,6 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/div_180.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/regular.hpp>
 
@@ -26,15 +27,15 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cosd_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     using elt_t         = element_type_t<T>;
-    const double inv180 = 5.5555555555555555555555555555555555555555555555555e-3;
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      return D()(cospi)(a0 * inv180);
+      return D()(cospi)(div_180(a0));
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto tmp = convert(convert(a0, double_) * inv180, single_);
+      auto tmp = convert(div_180(convert(a0, double_)), single_);
       return D()(cospi)(tmp);
+//      return D()(cospi)(div_180(a0));
     }
     else
       return apply_over(D()(cosd), a0);
