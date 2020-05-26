@@ -26,8 +26,6 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sind) return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::restricted_(eve::sind) behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::sind)(eve::Nan<T>() ) , eve::Nan<T>() );
@@ -35,15 +33,14 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sind) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::restricted_(eve::sind)(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  auto ref_sind = [](auto e) { return eve::sinpi(double(e) / 180); };
-
   TTS_IEEE_EQUAL(eve::restricted_(eve::sind)(T( 0 ))  , T(0)          );
   TTS_IEEE_EQUAL(eve::restricted_(eve::sind)(T(-0.))  , T(0)          );
   TTS_IEEE_EQUAL(eve::restricted_(eve::sind)( T(90.0)), eve::Nan<T>() );
   TTS_IEEE_EQUAL(eve::restricted_(eve::sind)(-T(90.0)), eve::Nan<T>() );
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::sind)( T(1)    ) , T(ref_sind(1.0))        , 3.0);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sind)(-T(1)    ) , T(ref_sind(-1.0))       , 3.0);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sind)( T(45.0) ) , T(ref_sind(v_t(45.0)))  , 3.0);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sind)(-T(45.0) ) , T(ref_sind(-v_t(45.0))) , 3.0);
+
+  TTS_ULP_EQUAL(eve::big_(eve::sind)( T(1)    ) , T(1.745240643728351281941897851631619247225272030714e-2)  , 3.0);
+  TTS_ULP_EQUAL(eve::big_(eve::sind)(-T(1)    ) , T(-1.745240643728351281941897851631619247225272030714e-2) , 3.0);
+  TTS_ULP_EQUAL(eve::big_(eve::sind)( T(45.0) ) , T(0.70710678118654752440084436210484903928483593768847)   , 3.0);
+  TTS_ULP_EQUAL(eve::big_(eve::sind)(-T(45.0) ) , T(-0.70710678118654752440084436210484903928483593768847)  , 3.0);
 }

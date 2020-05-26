@@ -25,8 +25,6 @@ TTS_CASE_TPL("Check eve::tand return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::tand behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::tand(eve::Nan<T>())  , eve::Nan<T>() );
@@ -34,15 +32,13 @@ TTS_CASE_TPL("Check eve::tand behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::tand(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  auto ref_tand = [](auto e) { return eve::tanpi(double(e) / 180); };
-
   TTS_IEEE_EQUAL(eve::tand(T( 0 )) , T(0) );
   TTS_IEEE_EQUAL(eve::tand(T(-0.)) , T(0) );
 
-  TTS_ULP_EQUAL(eve::tand( T(  1)) , T(ref_tand(1.0))        , 3 );
-  TTS_ULP_EQUAL(eve::tand(-T(  1)) , T(ref_tand(-1.0))       , 3 );
-  TTS_ULP_EQUAL(eve::tand( T( 45)) , T(ref_tand(v_t(45.0)))  , 3 );
-  TTS_ULP_EQUAL(eve::tand(-T( 45)) , T(ref_tand(-v_t(45.0))) , 3 );
-  TTS_ULP_EQUAL(eve::tand( T(500)) , T(ref_tand(500.0))      , 6 );
-  TTS_ULP_EQUAL(eve::tand(-T(500)) , T(ref_tand(-500.0))     , 6 );
+  TTS_ULP_EQUAL(eve::tand( T(  1)) , T(1.74550649282175857651288952197278243141015888398755e-2) , 3 );
+  TTS_ULP_EQUAL(eve::tand(-T(  1)) , T(-1.74550649282175857651288952197278243141015888398755e-2) , 3 );
+  TTS_ULP_EQUAL(eve::tand( T( 45)) , T(1)  , 3 );
+  TTS_ULP_EQUAL(eve::tand(-T( 45)) , T(-1) , 3 );
+  TTS_ULP_EQUAL(eve::tand( T(500)) , T(-0.83909963117728001176312729812318136468743428301234)   , 10 );
+  TTS_ULP_EQUAL(eve::tand(-T(500)) , T(0.83909963117728001176312729812318136468743428301234)    , 10 );
 }

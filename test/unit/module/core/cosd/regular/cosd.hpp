@@ -32,16 +32,14 @@ TTS_CASE_TPL("Check eve::cosd behavior",EVE_TYPE)
     TTS_IEEE_EQUAL(eve::cosd(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  using v_t = eve::element_type_t<T>;
-  auto ref_cosd = [](auto e) { return eve::cospi(double(e) / 180.); };
 
   TTS_IEEE_EQUAL(eve::cosd(T(0   )), T(1));
   TTS_IEEE_EQUAL(eve::cosd(T(-0. )), T(1));
 
-  TTS_ULP_EQUAL(eve::cosd(T(1))      , T(ref_cosd(1.0))        , 0.5 );
-  TTS_ULP_EQUAL(eve::cosd(T(-1))     , T(ref_cosd(-1.0))       , 0.5 );
-  TTS_ULP_EQUAL(eve::cosd(T(45.0))   , T(ref_cosd(v_t(45.0)))  , 0.5 );
-  TTS_ULP_EQUAL(eve::cosd(-T(45.0))  , T(ref_cosd(-v_t(45.0))) , 0.5 );
-  TTS_ULP_EQUAL(eve::cosd(T(500.0))  , T(ref_cosd(500.0))      , 2   );
-  TTS_ULP_EQUAL(eve::cosd(T(-500.0)) , T(ref_cosd(-500.0))     , 2   );
+  TTS_ULP_EQUAL(eve::cosd(T(1))      , T(0.9998476951563912391570115588139148516927403105832)    , 0.5 );
+  TTS_ULP_EQUAL(eve::cosd(T(-1))     , T(0.9998476951563912391570115588139148516927403105832)    , 0.5 );
+  TTS_ULP_EQUAL(eve::cosd(T(45.0))   , T(0.70710678118654752440084436210484903928483593768847)   , 0.5 );
+  TTS_ULP_EQUAL(eve::cosd(-T(45.0))  , T(0.70710678118654752440084436210484903928483593768847)   , 0.5 );
+  TTS_ULP_EQUAL(eve::cosd(T(-500.0)) , T(-0.7660444431189780352023926505554166739358324570804)   , 2   );
+  TTS_ULP_EQUAL(eve::cosd(T(500.0))  , T(-0.7660444431189780352023926505554166739358324570804)   , 2   );
 }

@@ -31,15 +31,13 @@ TTS_CASE_TPL("Check eve::cotd behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::cotd(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  auto ref_cotd = [](auto e) { return eve::cotpi(double(e) / 180); };
-
   TTS_IEEE_EQUAL(eve::cotd(T(0))  , eve::Inf<T>() );
   TTS_IEEE_EQUAL(eve::cotd(T(-0.)), eve::Minf<T>());
 
-  TTS_ULP_EQUAL(eve::cotd( T(  1))   , T(ref_cotd(1.0))    , 3.0);
-  TTS_ULP_EQUAL(eve::cotd(-T(  1))   , T(ref_cotd(-1.0))   , 3.0);
-  TTS_ULP_EQUAL(eve::cotd( T( 45))   , T(ref_cotd(45.0))   , 3.0);
-  TTS_ULP_EQUAL(eve::cotd(-T( 45))   , T(ref_cotd(-45.0))  , 3.0);
-  TTS_ULP_EQUAL(eve::cotd( T(100.0)) , T(ref_cotd(100.0))  , 3.0);
-  TTS_ULP_EQUAL(eve::cotd(-T(100.0)) , T(ref_cotd(-100.0)) , 3.0);
+  TTS_ULP_EQUAL(eve::cotd( T(  1))   , T(57.289961630759424687278147537112577980217522235144)    , 6);
+  TTS_ULP_EQUAL(eve::cotd(-T(  1))   , T(-57.289961630759424687278147537112577980217522235144)   , 6);
+  TTS_ULP_EQUAL(eve::cotd( T( 45))   , T(1)                                                      , 6);
+  TTS_ULP_EQUAL(eve::cotd(-T( 45))   , T(-1)                                                     , 6);
+  TTS_ULP_EQUAL(eve::cotd( T(500.0)) , T(-1.19175359259420995870530807186041933693070040770853)  , 6);
+  TTS_ULP_EQUAL(eve::cotd(-T(500.0)) , T(1.19175359259420995870530807186041933693070040770853)   , 6);
 }

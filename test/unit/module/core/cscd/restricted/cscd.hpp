@@ -33,13 +33,14 @@ TTS_CASE_TPL("Check eve::restricted_(eve::cscd) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Minf<T>()) , eve::Nan<T>() );
   }
 
-  auto ref_cscd = [](auto e) { return eve::cscpi(double(e) / 180); };
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(  0 )) , eve::Inf<T>() );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(- 0.)) , eve::Minf<T>());
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)( T(90) ) , eve::Nan<T>() );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(-T(90) ) , eve::Nan<T>() );
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)( T(1)  ) , T(ref_cscd(1.0))        , 3);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(-T(1)  ) , T(ref_cscd(-1.0))       , 3);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)( T(1)  ) , T(57.298688498550185476612685755175779889969877177276)   , 5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(-T(1)  ) , T(-57.298688498550185476612685755175779889969877177276)  , 5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)( T(45) ) , T(1.41421356237309504880168872420969807856967187537694)  , 5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cscd)(-T(45) ) , T(-1.41421356237309504880168872420969807856967187537694) , 5);
 }
