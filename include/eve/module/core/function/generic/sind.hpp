@@ -30,14 +30,7 @@ namespace eve::detail
     {
       using elt_t = element_type_t<T>;
       auto a0_180 =  convert(div_180(convert(a0, double_)), as_<elt_t>()); // better precision in float
-      auto test   = is_nez(a0_180) && is_flint(a0_180);
-      if constexpr( scalar_value<T> ) // early return for nans in scalar case
-      {
-        if( test ) return Nan<T>();
-      }
-      auto tmp = D()(sinpi)(a0_180);
-      if constexpr( scalar_value<T> ) return tmp;
-      return if_else(test, eve::allbits_, tmp);
+      return D()(sinpi)(a0_180);
     }
     else
       return apply_over(D()(sind), a0);
