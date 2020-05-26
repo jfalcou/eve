@@ -8,17 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cotpi.hpp>
-#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <cmath>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::detail::Rempio2_limit(eve::medium_type(), eve::as_<EVE_VALUE>());
-  auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::medium_(eve::cotpi), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto const std_cotpi = [](auto x) { return 1/std::tan(std::numbers::pi_v<EVE_TYPE>*x); };
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  EVE_REGISTER_BENCHMARK(std_cotpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }

@@ -10,11 +10,11 @@
 //==================================================================================================
 #include <cmath>
 #include <eve/module/core/detail/constant/rempio2_limits.hpp>
-#include <cmath>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  auto const std_cospi = [](auto x) { return std::cospi(x); };
+  auto const std_cospi = [](auto x) { return std::cos(std::numbers::pi_v<EVE_TYPE>*x); };
   auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_cospi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 

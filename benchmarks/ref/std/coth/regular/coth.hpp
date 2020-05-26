@@ -16,9 +16,10 @@
 int main(int argc, char** argv)
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto const std_coth = [](auto x) { return 1/std::tan(x); };
   auto lmin = eve::Maxlog<EVE_VALUE>();
   auto lmax = eve::Minlog<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::coth, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+   EVE_REGISTER_BENCHMARK(std_coth, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

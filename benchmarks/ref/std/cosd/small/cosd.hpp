@@ -9,10 +9,11 @@
 **/
 //==================================================================================================
 #include <cmath>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  auto constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_cosd = [inrad](auto x) { return inrad*std::cos(x); };
   using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = EVE_TYPE(90);

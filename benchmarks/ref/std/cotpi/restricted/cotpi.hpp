@@ -8,17 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cotpi.hpp>
-#include <eve/constant/pio_4.hpp>
 #include <cmath>
+#include <eve/constant/pio_4.hpp>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_4<EVE_VALUE>();
-  auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::restricted_(eve::cotpi), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto const std_cotpi = [](auto x) { return 1/std::tan(std::numbers::pi_v<EVE_TYPE>*x); };
+
+  EVE_REGISTER_BENCHMARK(std_cotpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Pio_4<EVE_TYPE>(), eve::Pio_4<EVE_TYPE>()));
 
   eve::bench::start_benchmarks(argc, argv);
 }

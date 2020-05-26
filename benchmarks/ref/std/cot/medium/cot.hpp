@@ -8,17 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cot.hpp>
-#include <eve/module/core/detail/constant/rempio2_limits.hpp>
 #include <cmath>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::detail::Rempio2_limit(eve::medium_type(), eve::as_<EVE_VALUE>());
-  auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::medium_(eve::cot), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto const std_cot = [](auto x) { return 1/std::tan(x); };
+
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  EVE_REGISTER_BENCHMARK(std_cot, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }

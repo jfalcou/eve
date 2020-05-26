@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-  auto constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_cosd = [](auto x) { return inrad*std::cos(x); };
 
   auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());

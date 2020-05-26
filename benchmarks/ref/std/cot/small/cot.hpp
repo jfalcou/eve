@@ -8,16 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cot.hpp>
-#include <eve/constant/pio_2.hpp>
 #include <cmath>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_2<EVE_VALUE>();
-  auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::small_(eve::cot), EVE_TYPE
+  constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  auto const std_cot = [inrad](auto x) { return inrad*std::cos(x); };
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmax = EVE_TYPE(90);
+  auto lmin = EVE_TYPE(-lmax);
+  EVE_REGISTER_BENCHMARK(std_cot, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);

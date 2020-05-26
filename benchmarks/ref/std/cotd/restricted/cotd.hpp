@@ -8,17 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/cotd.hpp>
-#include <eve/constant/pio_4.hpp>
 #include <cmath>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_4<EVE_VALUE>();
-  auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::restricted_(eve::cotd), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  auto const std_cotd = [inrad](auto x) { return 1/tan(inrad*x); };
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmax = EVE_TYPE(45);
+  auto lmin = EVE_TYPE(-lmax);
+
+  EVE_REGISTER_BENCHMARK(std_cotd, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }
