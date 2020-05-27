@@ -9,16 +9,17 @@
 **/
 //==================================================================================================
 #include <cmath>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <numbers>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
 
 int main(int argc, char** argv)
 {
-  auto const std_asinh = [](auto x) { return std::asinh(x); };
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto const std_exp = [](auto x) { return std::exp(x); };
+  auto lmin = eve::Minlog<EVE_TYPE>();
+  auto lmax = eve::Maxlog<EVE_TYPE>();
 
-  EVE_REGISTER_BENCHMARK(std_asinh, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  EVE_REGISTER_BENCHMARK(std_exp, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

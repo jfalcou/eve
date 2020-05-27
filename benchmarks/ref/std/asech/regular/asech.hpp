@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-  auto const std_asech = [](auto x) { return invpi*std::acos(1/x); };
+  auto const std_asech = [](auto x) { return std::acos(1/x); };
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
   EVE_REGISTER_BENCHMARK(std_asech, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
