@@ -9,15 +9,16 @@
 **/
 //==================================================================================================
 #include <cmath>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  auto const std_sin = [](auto x) { return std::sin(x); };
+  constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
+  auto const std_sind = [](auto x) { return inrad*std::sin(x); };
 
-  EVE_REGISTER_BENCHMARK(std_sin, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  EVE_REGISTER_BENCHMARK(std_sind, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }
