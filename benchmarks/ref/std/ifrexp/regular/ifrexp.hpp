@@ -11,19 +11,16 @@
 #include <cmath>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/detail/meta/as_integer.hpp>
 
 int main(int argc, char** argv)
 {
-  auto const std_hypot2 = [](auto x, auto y) { return std::hypot(x, y); };
+  using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
+  auto const std_ifrexp = [](auto x) { int e; auto m = std::ifrexp(x,  &e);
+                                      return std::make_tuple(m, I_TYPE(e)); };
   auto l = eve::Valmax<EVE_TYPE>();
-  EVE_REGISTER_BENCHMARK(std_hypot2, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(-l, l)
-                        , eve::bench::random<EVE_TYPE>(-l, l));
-  auto const std_hypot3 = [](auto x, auto y, auto z) { return std::hypot(x, y, z); };
-   EVE_REGISTER_BENCHMARK(std_hypot3, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(-l, l)
-                        , eve::bench::random<EVE_TYPE>(-l, l)
-                        , eve::bench::random<EVE_TYPE>(-l, l));
+  EVE_REGISTER_BENCHMARK(std_ifrexp, EVE_TYPE
+                        , eve::bench::random< EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }
