@@ -15,10 +15,10 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto const std_bitofsign = [](auto x) { return (std::signbit(x)) ? EVE_TYPE(-0.0) : EVE_TYPE(0.0); };
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
   EVE_REGISTER_BENCHMARK(std_bitofsign, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

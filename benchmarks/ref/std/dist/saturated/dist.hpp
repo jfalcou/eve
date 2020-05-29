@@ -8,16 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/dist.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
   auto std_dist =  [](auto x,  auto y){ auto d = std::max(x, y)-std::min(x, y); return d < 0 ? eve::Valmax(eve::as(x)) : d; };
 
   EVE_REGISTER_BENCHMARK(std_dist, EVE_TYPE

@@ -8,16 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/csc.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_2<EVE_VALUE>();
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmax = eve::Pio_2<EVE_TYPE>();
   auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::small_(eve::csc), EVE_TYPE
+  auto const std_csc = [](auto x) { return 1/std::sin(x); };
+  EVE_REGISTER_BENCHMARK(std_csc, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);

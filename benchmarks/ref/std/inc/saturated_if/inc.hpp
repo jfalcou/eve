@@ -15,10 +15,10 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   using L_TYPE = eve::logical<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
   auto std_inc = [](auto c, auto e){return (e != eve::Valmax<EVE_TYPE>() && c) ? e+1 : e; };
   EVE_REGISTER_BENCHMARK(std_inc, EVE_TYPE
                         , eve::bench::random<L_TYPE>(0,1)

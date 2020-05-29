@@ -14,10 +14,10 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto const std_bit_not = [](auto x) { return EVE_TYPE(~x); };
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
   EVE_REGISTER_BENCHMARK(std_bit_not, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
