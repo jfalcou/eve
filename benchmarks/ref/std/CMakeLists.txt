@@ -148,9 +148,12 @@ make_all_benchs(ROOT std NAME is_positive          ARCH scalar TYPES ${real_type
 make_all_benchs(ROOT std NAME is_pow2              ARCH scalar TYPES ${uint_types} )
 make_all_benchs(ROOT std NAME is_real              ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME is_unordered         ARCH scalar TYPES ${real_types} )
-
 make_all_benchs(ROOT std NAME itrunc               ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME ldexp                ARCH scalar TYPES ${real_types} )
+make_all_benchs(ROOT std NAME log                  ARCH scalar TYPES ${real_types} )
+make_all_benchs(ROOT std NAME log1p                 ARCH scalar TYPES ${real_types} )
+make_all_benchs(ROOT std NAME log10                 ARCH scalar TYPES ${real_types} )
+make_all_benchs(ROOT std NAME log2                 ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME popcount             ARCH scalar TYPES ${uint_types} )
 make_all_benchs(ROOT std NAME sin                  ARCH scalar TYPES ${real_types} )
 make_all_benchs(ROOT std NAME sind                 ARCH scalar TYPES ${real_types} )
