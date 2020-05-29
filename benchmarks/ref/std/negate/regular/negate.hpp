@@ -16,10 +16,10 @@ int main(int argc, char** argv)
 {
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
-  auto std_conj = [](auto x)(return x; };
-  EVE_REGISTER_BENCHMARK(std_:conj, EVE_TYPE
+  auto std_negate =  [](auto x,  auto y){return (y < 0) ? -x : ((y > 0) ? x : x*y);};
+  EVE_REGISTER_BENCHMARK(std_negate, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }
-#

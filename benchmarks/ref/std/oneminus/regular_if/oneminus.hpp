@@ -14,12 +14,13 @@
 
 int main(int argc, char** argv)
 {
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto std_oneminus = [](auto c, auto e){ return c ? e : 1-e; };
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
-  auto std_conj = [](auto x)(return x; };
-  EVE_REGISTER_BENCHMARK(std_:conj, EVE_TYPE
+  EVE_REGISTER_BENCHMARK(std_oneminus, EVE_TYPE
+                        , eve::bench::random<int>(0, 1)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }
-#
