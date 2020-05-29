@@ -8,12 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_pow2.hpp>
-#include <cmath>
+#include <bit>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::is_pow2, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto const std_is_pow2 = [](auto x) { return std::has_single_bit(x); };
+
+  EVE_REGISTER_BENCHMARK(std_is_pow2, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
   eve::bench::start_benchmarks(argc, argv);
 }

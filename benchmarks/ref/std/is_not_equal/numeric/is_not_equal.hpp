@@ -8,7 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_not_equal.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -16,9 +15,10 @@
 int main(int argc, char** argv)
 {
   using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto const std_is_not_equal = [](auto x, auto y) { return (x != y) && !(std::isnan(x) && std::isnan(y)); };
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
-  EVE_REGISTER_BENCHMARK(eve::numeric_(eve::is_not_equal), EVE_TYPE
+  EVE_REGISTER_BENCHMARK(std_is_not_equal, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

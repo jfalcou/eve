@@ -8,12 +8,23 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_odd.hpp>
 #include <cmath>
+#include <type_traits>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::is_odd, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  if constexpr(std::is_integral_v<EVE_TYPE>)
+  {
+    auto const std_is_odd = [](auto x) { return static_cast<int>(x)&1; };
+    EVE_REGISTER_BENCHMARK(std_is_odd, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
-  eve::bench::start_benchmarks(argc, argv);
+    eve::bench::start_benchmarks(argc, argv);
+  }
+  else
+  {
+    auto const std_is_odd = [](auto x) {x = x-1; return  (x/2-std::trunc(x/2)); };
+    EVE_REGISTER_BENCHMARK(std_is_odd, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+
+    eve::bench::start_benchmarks(argc, argv);
+  }
 }

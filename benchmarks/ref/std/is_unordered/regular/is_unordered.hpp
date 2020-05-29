@@ -8,17 +8,16 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_unordered.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
-  EVE_REGISTER_BENCHMARK(eve::is_unordered, EVE_TYPE
+  auto const std_is_unordered = [](auto x, auto y) { return std::isunordered(x, y); };
+  EVE_REGISTER_BENCHMARK(std_is_unordered, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

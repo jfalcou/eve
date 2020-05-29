@@ -8,12 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_not_infinite.hpp>
 #include <cmath>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::is_not_infinite, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto const std_is_not_infinite = [](auto x) { return std::isfinite(x) || isnan(x); ; };
+  EVE_REGISTER_BENCHMARK(std_is_not_infinite, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

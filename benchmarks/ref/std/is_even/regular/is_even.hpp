@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
   if constexpr(std::is_integral_v<EVE_TYPE>)
   {
-    auto const std_is_even = [](auto x) { return !((x/2)*2-x); };
+    auto const std_is_even = [](auto x) { return !(static_cast<int>(x)&1); };
     EVE_REGISTER_BENCHMARK(std_is_even, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
     eve::bench::start_benchmarks(argc, argv);
