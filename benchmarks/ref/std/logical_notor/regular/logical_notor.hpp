@@ -8,24 +8,19 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/logical_notor.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::logical_notor, EVE_TYPE
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto const std_logical_notor = [](auto x, auto y) { return EVE_TYPE(!x || y); };
+  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::Valmax<EVE_TYPE>();
+  EVE_REGISTER_BENCHMARK(std_logical_notor, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
-
-  using L_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::logical_notor, L_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1)
-                        , eve::bench::random<L_TYPE>(0, 1));
 
   eve::bench::start_benchmarks(argc, argv);
 }
