@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACSCD_HPP_INCLUDED
 
 #include <eve/function/definition/acscd.hpp>
-#include <eve/module/core/function/generic/acscd.hpp>
+#include <eve/module/math/function/generic/acscd.hpp>
 
 #endif

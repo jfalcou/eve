@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASECH_HPP_INCLUDED
 
 #include <eve/function/definition/asech.hpp>
-#include <eve/module/core/function/generic/asech.hpp>
+#include <eve/module/math/function/generic/asech.hpp>
 
 #endif

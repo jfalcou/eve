@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_POW_HPP_INCLUDED
 
 #include <eve/function/definition/pow.hpp>
-#include <eve/module/core/function/generic/pow.hpp>
+#include <eve/module/math/function/generic/pow.hpp>
 
 #endif

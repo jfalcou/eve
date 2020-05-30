@@ -1,0 +1,65 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_SECH_HPP_INCLUDED
+#define EVE_MODULE_MATH_FUNCTION_GENERIC_SECH_HPP_INCLUDED
+
+#include <eve/detail/implementation.hpp>
+#include <eve/function/abs.hpp>
+#include <eve/function/exp.hpp>
+#include <eve/function/if_else.hpp>
+#include <eve/function/none.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/log_2.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <type_traits>
+#include <eve/detail/apply_over.hpp>
+#include <eve/concept/value.hpp>
+
+namespace eve::detail
+{
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE constexpr auto sech_(EVE_SUPPORTS(cpu_)
+                                     , T a0) noexcept
+  {
+    //////////////////////////////////////////////////////////////////////////////
+    // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
+    // respectively computed
+    // *  in the first case sech (e+rec(e))/2
+    // *  in the second     sech is (e/2)*e (avoiding undue overflow)
+    // Threshold is Maxlog - Log_2
+    //////////////////////////////////////////////////////////////////////////////
+    if constexpr(has_native_abi_v<T>)
+    {
+      T x = eve::abs(a0);
+      auto test1 = (x > Maxlog<T>()-Log_2<T>());
+      auto fac = if_else(test1, Half<T>(),eve::one_);
+      T tmp1 = exp(-x*fac);
+      T tmp = T(2)*tmp1;
+      if constexpr(scalar_value<T>)
+      {
+        return test1 ? tmp1*tmp : tmp/fma(tmp1, tmp1, T(1));
+      }
+      else
+      {
+        return if_else(test1, tmp1*tmp, tmp/fma(tmp1, tmp1, T(1)));
+      }
+    }
+    else
+    {
+      return apply_over(sech, a0);
+    }
+
+  }
+}
+
+#endif

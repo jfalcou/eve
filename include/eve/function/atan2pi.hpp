@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ATAN2PI_HPP_INCLUDED
 
 #include <eve/function/definition/atan2pi.hpp>
-#include <eve/module/core/function/generic/atan2pi.hpp>
+#include <eve/module/math/function/generic/atan2pi.hpp>
 
 #endif

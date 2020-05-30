@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SECH_HPP_INCLUDED
 
 #include <eve/function/definition/sech.hpp>
-#include <eve/module/core/function/generic/sech.hpp>
+#include <eve/module/math/function/generic/sech.hpp>
 
 #endif

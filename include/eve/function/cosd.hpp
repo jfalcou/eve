@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_COSD_HPP_INCLUDED
 
 #include <eve/function/definition/cosd.hpp>
-#include <eve/module/core/function/generic/cosd.hpp>
+#include <eve/module/math/function/generic/cosd.hpp>
 
 #endif

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SINHCOSH_HPP_INCLUDED
 
 #include <eve/function/definition/sinhcosh.hpp>
-#include <eve/module/core/function/generic/sinhcosh.hpp>
+#include <eve/module/math/function/generic/sinhcosh.hpp>
 
 #endif

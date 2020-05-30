@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOSPI_HPP_INCLUDED
 
 #include <eve/function/definition/acospi.hpp>
-#include <eve/module/core/function/generic/acospi.hpp>
+#include <eve/module/math/function/generic/acospi.hpp>
 
 #endif

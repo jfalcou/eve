@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SIND_HPP_INCLUDED
 
 #include <eve/function/definition/sind.hpp>
-#include <eve/module/core/function/generic/sind.hpp>
+#include <eve/module/math/function/generic/sind.hpp>
 
 #endif

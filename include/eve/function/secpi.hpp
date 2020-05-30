@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SECPI_HPP_INCLUDED
 
 #include <eve/function/definition/secpi.hpp>
-#include <eve/module/core/function/generic/secpi.hpp>
+#include <eve/module/math/function/generic/secpi.hpp>
 
 #endif

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOSD_HPP_INCLUDED
 
 #include <eve/function/definition/acosd.hpp>
-#include <eve/module/core/function/generic/acosd.hpp>
+#include <eve/module/math/function/generic/acosd.hpp>
 
 #endif

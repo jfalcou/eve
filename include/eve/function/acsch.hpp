@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACSCH_HPP_INCLUDED
 
 #include <eve/function/definition/acsch.hpp>
-#include <eve/module/core/function/generic/acsch.hpp>
+#include <eve/module/math/function/generic/acsch.hpp>
 
 #endif

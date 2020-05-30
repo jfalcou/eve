@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACSC_HPP_INCLUDED
 
 #include <eve/function/definition/acsc.hpp>
-#include <eve/module/core/function/generic/acsc.hpp>
+#include <eve/module/math/function/generic/acsc.hpp>
 
 #endif

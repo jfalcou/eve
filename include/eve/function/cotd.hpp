@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_COTD_HPP_INCLUDED
 
 #include <eve/function/definition/cotd.hpp>
-#include <eve/module/core/function/generic/cotd.hpp>
+#include <eve/module/math/function/generic/cotd.hpp>
 
 #endif

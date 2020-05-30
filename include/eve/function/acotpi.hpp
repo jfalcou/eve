@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOTPI_HPP_INCLUDED
 
 #include <eve/function/definition/acotpi.hpp>
-#include <eve/module/core/function/generic/acotpi.hpp>
+#include <eve/module/math/function/generic/acotpi.hpp>
 
 #endif

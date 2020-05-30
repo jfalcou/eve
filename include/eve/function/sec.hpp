@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SEC_HPP_INCLUDED
 
 #include <eve/function/definition/sec.hpp>
-#include <eve/module/core/function/generic/sec.hpp>
+#include <eve/module/math/function/generic/sec.hpp>
 
 #endif

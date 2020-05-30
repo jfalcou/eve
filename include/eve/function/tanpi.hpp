@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_TANPI_HPP_INCLUDED
 
 #include <eve/function/definition/tanpi.hpp>
-#include <eve/module/core/function/generic/tanpi.hpp>
+#include <eve/module/math/function/generic/tanpi.hpp>
 
 #endif

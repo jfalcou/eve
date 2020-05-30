@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASECD_HPP_INCLUDED
 
 #include <eve/function/definition/asecd.hpp>
-#include <eve/module/core/function/generic/asecd.hpp>
+#include <eve/module/math/function/generic/asecd.hpp>
 
 #endif
