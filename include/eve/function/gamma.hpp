@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_GAMMA_HPP_INCLUDED
 
 #include <eve/function/definition/gamma.hpp>
-#include <eve/module/core/function/generic/gamma.hpp>
+#include <eve/module/special/function/generic/gamma.hpp>
 
 #endif

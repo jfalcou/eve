@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_STIRLING_HPP_INCLUDED
 
 #include <eve/function/definition/stirling.hpp>
-#include <eve/module/core/function/generic/stirling.hpp>
+#include <eve/module/special/function/generic/stirling.hpp>
 
 #endif
