@@ -14,7 +14,7 @@
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
-#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 
 TTS_CASE_TPL("wide random check on rempio2", EVE_TYPE)
 {
