@@ -8,19 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rec.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
 #include <cmath>
+#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <numbers>
 
 int main(int argc, char** argv)
 {
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
-  auto const std_rec = [](auto x) { return 1/x; };
-  EVE_REGISTER_BENCHMARK(std_rec, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto const std_secpi = [](auto x) { return 1/std::cos(std::numbers::pi_v<EVE_TYPE>*x); };
+  auto l = eve::detail::Rempio2_limit(eve::medium_type(),eve::as_<EVE_TYPE>());
+  EVE_REGISTER_BENCHMARK(std_secpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-l, l));
 
   eve::bench::start_benchmarks(argc, argv);
 }
-#
