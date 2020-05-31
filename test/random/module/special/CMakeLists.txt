@@ -10,22 +10,20 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(special.scalar.unit)
-add_custom_target(special.simd.unit)
-add_dependencies(special.unit special.scalar.unit)
-add_dependencies(special.unit special.simd.unit)
-
-##==================================================================================================
-## Other tests
-##==================================================================================================
-#add_subdirectory(failure)
-#add_subdirectory(constant)
+add_custom_target(random.special.unit)
+add_custom_target(random.special.scalar.unit)
+add_custom_target(random.special.simd.unit)
+add_dependencies(random.special.unit random.special.scalar.unit)
+add_dependencies(random.special.unit random.special.simd.unit)
+add_dependencies(random.scalar.unit random.special.scalar.unit)
+add_dependencies(random.simd.unit random.special.simd.unit)
+add_dependencies(random.unit random.special.unit)
 
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
 
 ### TEMPORARY MEASURE
-### make_all_units(ROOT special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
-### make_all_units(ROOT special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
+### make_all_units(ROOT random.special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
+### make_all_units(ROOT random.special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE

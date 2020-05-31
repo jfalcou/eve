@@ -218,15 +218,10 @@ add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
 add_custom_target(tests)
 add_custom_target(unit)
 add_dependencies(tests unit)
-add_custom_target(random)
 
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(algorithm.unit)
-add_custom_target(core.unit)
-add_custom_target(math.unit)
-add_custom_target(special.unit)
 add_custom_target(random.unit)
 add_custom_target(random.scalar.unit)
 add_custom_target(random.simd.unit)

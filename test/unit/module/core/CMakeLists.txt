@@ -10,6 +10,7 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
+add_custom_target(core.unit)
 add_custom_target(core.constant.unit)
 add_custom_target(core.constant.scalar.unit)
 add_custom_target(core.constant.simd.unit)
@@ -22,6 +23,7 @@ add_dependencies(core.simd.unit     core.constant.simd.unit)
 add_dependencies(core.unit core.constant.unit)
 add_dependencies(core.unit core.scalar.unit)
 add_dependencies(core.unit core.simd.unit)
+
 ##==================================================================================================
 ## Other tests
 ##==================================================================================================

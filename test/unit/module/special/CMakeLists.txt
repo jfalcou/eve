@@ -10,6 +10,7 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
+add_custom_target(special.unit)
 add_custom_target(special.scalar.unit)
 add_custom_target(special.simd.unit)
 add_dependencies(special.unit special.scalar.unit)
