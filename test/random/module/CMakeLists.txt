@@ -6,4 +6,7 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-add_subdirectory(module)
+add_subdirectory(algorithm)
+add_subdirectory(core)
+add_subdirectory(math)
+add_subdirectory(special)
