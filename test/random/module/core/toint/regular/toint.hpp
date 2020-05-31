@@ -22,13 +22,14 @@ TTS_CASE_TPL("wide random check on toint", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_toint = tts::vectorize<T>( [](auto e) { return std::toint(e); } );
+    using i_t = eve::detail::as_integer_t<v_t>;
+    auto std_toint = tts::vectorize<T>( [](auto e) { return i_t(e); } );
     eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_toint, eve::toint);
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_toint = tts::vectorize<T>( [](auto e) { return  std::toint(e); } );
+    auto std_toint = tts::vectorize<T>( [](auto e) { return e; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_toint, eve::toint);
   }

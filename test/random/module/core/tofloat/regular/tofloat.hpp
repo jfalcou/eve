@@ -22,14 +22,15 @@ TTS_CASE_TPL("wide random check on tofloat", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_tofloat = tts::vectorize<T>( [](auto e) { return std::tofloat(e); } );
+    auto std_tofloat = tts::vectorize<T>( [](auto e) { return e; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_tofloat, eve::tofloat);
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_tofloat = tts::vectorize<T>( [](auto e) { return  std::tofloat(e); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    using fT = eve::detail::as_floating_point_t<v_t>;
+    auto std_tofloat = tts::vectorize<T>( [](auto e) { return  fT(e); } );
+    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_tofloat, eve::tofloat);
   }
   else

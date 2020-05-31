@@ -17,9 +17,11 @@
 #include <type_traits>
 #include <bit>
 
-TTS_CASE("wide random check on bit_width")
+TTS_CASE_TPL("wide random check on bit_width", EVE_TYPE)
 {
-  auto std_bit_width = tts::vectorize<EVE_TYPE>( [](auto e) { return sizeof(EVE_VALUE)*8-std::countl_zero(e); } );
-  eve::rng_producer<EVE_TYPE> p(eve::Zero<EVE_VALUE>(), eve::Valmax<EVE_VALUE>());
+
+  using v_t = eve::element_type_t<T>;
+  auto std_bit_width = tts::vectorize<T>( [](auto e) { return sizeof(v_t)*8-std::countl_zero(e); } );
+  eve::rng_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_bit_width, eve::bit_width);
 }
