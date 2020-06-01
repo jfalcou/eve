@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/all.hpp>
@@ -22,4 +21,3 @@ namespace eve
   EVE_MAKE_CALLABLE(eps_, eps);
 }
 
-#endif

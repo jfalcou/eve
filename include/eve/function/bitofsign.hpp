@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BITOFSIGN_HPP_INCLUDED
-#define EVE_FUNCTION_BITOFSIGN_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bitofsign.hpp>
 #include <eve/module/core/function/generic/bitofsign.hpp>
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ATAN2PI_HPP_INCLUDED
-#define EVE_FUNCTION_ATAN2PI_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/atan2pi.hpp>
 #include <eve/module/math/function/generic/atan2pi.hpp>
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_GATHER_HPP_INCLUDED
-#define EVE_FUNCTION_GATHER_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/gather.hpp>
 #include <eve/module/core/function/simd/gather.hpp>
 
-#endif

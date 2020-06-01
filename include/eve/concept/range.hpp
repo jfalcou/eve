@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPT_RANGE_HPP_INCLUDED
-#define EVE_CONCEPT_RANGE_HPP_INCLUDED
+#pragma once
 
 #include <iterator>
 #include <type_traits>
@@ -29,4 +28,3 @@ namespace eve::detail
   };
 }
 
-#endif

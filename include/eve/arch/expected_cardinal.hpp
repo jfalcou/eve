@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_EXPECTED_CARDINAL_HPP_INCLUDED
-#define EVE_ARCH_EXPECTED_CARDINAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
@@ -90,4 +89,3 @@ namespace eve
   constexpr inline auto expected_cardinal_v = expected_cardinal<Type, API>::value;
 }
 
-#endif

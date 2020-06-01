@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ACSC_HPP_INCLUDED
-#define EVE_FUNCTION_ACSC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/acsc.hpp>
 #include <eve/module/math/function/generic/acsc.hpp>
 
-#endif

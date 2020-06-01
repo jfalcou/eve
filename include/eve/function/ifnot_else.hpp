@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IFNOT_ELSE_HPP_INCLUDED
-#define EVE_FUNCTION_IFNOT_ELSE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/ifnot_else.hpp>
 #include <eve/module/core/function/generic/ifnot_else.hpp>
 
-#endif

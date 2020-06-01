@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ARM_LIMITS_HPP_INCLUDED
-#define EVE_ARCH_ARM_LIMITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/arm/tags.hpp>
 #include <eve/detail/meta.hpp>
@@ -84,4 +83,3 @@ namespace eve
   };
 }
 
-#endif

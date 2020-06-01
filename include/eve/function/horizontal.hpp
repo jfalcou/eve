@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_HORIZONTAL_HPP_INCLUDED
-#define EVE_FUNCTION_HORIZONTAL_HPP_INCLUDED
+#pragma once
 
 // helper file to include all horizontal functions
 #include <eve/function/definition/horizontal.hpp>
@@ -17,4 +16,3 @@
 #include <eve/function/none.hpp>
 #include <eve/function/nbtrue.hpp>
 
-#endif

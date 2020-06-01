@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_EQUAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_EQUAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_equal.hpp>
 #include <eve/module/core/function/generic/is_equal.hpp>
@@ -26,4 +25,3 @@
 #  include <eve/module/core/function/simd/arm/neon/is_equal.hpp>
 #endif
 
-#endif

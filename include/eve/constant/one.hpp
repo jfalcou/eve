@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_ONE_HPP_INCLUDED
-#define EVE_CONSTANT_ONE_HPP_INCLUDED
+#pragma once
 
 #include <eve/constant/constant.hpp>
 #include <eve/detail/implementation.hpp>
@@ -30,4 +29,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(one_, One);
 }
 
-#endif

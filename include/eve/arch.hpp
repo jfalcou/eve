@@ -8,11 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_HPP_INCLUDED
-#define EVE_ARCH_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/tags.hpp>
 #include <eve/arch/limits.hpp>
-#include <eve/arch/spec.hpp>
-
-#endif

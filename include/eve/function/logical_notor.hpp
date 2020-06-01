@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
-#define EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/logical_notor.hpp>
 #include <eve/module/core/function/generic/logical_notor.hpp>
 
-#endif

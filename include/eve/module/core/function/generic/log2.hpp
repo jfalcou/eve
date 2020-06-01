@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_LOG2_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_LOG2_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/half.hpp>
@@ -402,4 +401,3 @@ namespace eve::detail
   }
 }
 
-#endif

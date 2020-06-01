@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOOKUP_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -70,4 +69,3 @@ namespace eve::detail
   }
 }
 
-#endif

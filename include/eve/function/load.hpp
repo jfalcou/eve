@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOAD_HPP_INCLUDED
-#define EVE_FUNCTION_LOAD_HPP_INCLUDED
+#pragma once
 
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/detail/overload.hpp>
@@ -126,4 +125,3 @@ namespace eve
   }
 }
 
-#endif

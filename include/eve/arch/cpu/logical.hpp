@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_LOGICAL_HPP_INCLUDED
-#define EVE_ARCH_CPU_LOGICAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
@@ -92,4 +91,3 @@ namespace eve
 #  pragma GCC diagnostic pop
 #endif
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_PPC_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_PPC_AS_REGISTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/ppc/predef.hpp>
 #include <type_traits>
@@ -110,4 +109,3 @@ namespace eve
 }
 #endif
 
-#endif

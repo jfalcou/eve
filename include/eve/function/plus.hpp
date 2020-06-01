@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_PLUS_HPP_INCLUDED
-#define EVE_FUNCTION_PLUS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/plus.hpp>
 #include <eve/module/core/function/generic/plus.hpp>
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_XOR_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_XOR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_xor.hpp>
 #include <eve/module/core/function/generic/bit_xor.hpp>
 
-#endif

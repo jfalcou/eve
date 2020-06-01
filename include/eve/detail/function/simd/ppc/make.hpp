@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_MAKE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_MAKE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/as_register.hpp>
 #include <eve/as.hpp>
@@ -72,4 +71,3 @@ namespace eve::detail
   }
 }
 
-#endif

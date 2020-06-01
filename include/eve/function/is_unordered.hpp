@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_UNORDERED_HPP_INCLUDED
-#define EVE_FUNCTION_IS_UNORDERED_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_unordered.hpp>
 #include <eve/module/core/function/generic/is_unordered.hpp>
@@ -17,5 +16,4 @@
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/core/function/simd/x86/is_unordered.hpp>
-#endif
 #endif

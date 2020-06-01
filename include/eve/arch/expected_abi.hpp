@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
-#define EVE_ARCH_EXPECTED_ABI_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/concepts.hpp>
@@ -67,4 +66,3 @@ namespace eve
   using expected_abi_t = typename expected_abi<Type, Size>::type;
 }
 
-#endif

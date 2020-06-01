@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NONE_HPP_INCLUDED
-#define EVE_FUNCTION_NONE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/none.hpp>
 #include <eve/module/algorithm/function/generic/none.hpp>
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_GEZ_HPP_INCLUDED
-#define EVE_FUNCTION_IS_GEZ_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_gez.hpp>
 #include <eve/module/core/function/generic/is_gez.hpp>
 
-#endif

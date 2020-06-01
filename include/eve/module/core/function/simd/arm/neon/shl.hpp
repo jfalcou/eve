@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SHL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_SHL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/function/simd/arm/neon/detail/shift.hpp>
@@ -53,4 +52,3 @@ namespace eve::detail
   }
 }
 
-#endif

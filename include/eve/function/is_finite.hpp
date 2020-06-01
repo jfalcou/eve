@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_FINITE_HPP_INCLUDED
-#define EVE_FUNCTION_IS_FINITE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_finite.hpp>
 #include <eve/module/core/function/generic/is_finite.hpp>
 
-#endif

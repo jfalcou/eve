@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_MAKE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_ARM_NEON_MAKE_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
@@ -96,4 +95,3 @@ namespace eve::detail
   }
 }
 
-#endif

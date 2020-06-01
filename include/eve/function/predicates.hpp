@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_PREDICATES_HPP_INCLUDED
-#define EVE_FUNCTION_PREDICATES_HPP_INCLUDED
+#pragma once
 
 // helper file to include all predicates functions and operators
 #include <eve/function/is_denormal.hpp>
@@ -54,4 +53,3 @@
 #include <eve/function/is_real.hpp>
 #include <eve/function/is_unordered.hpp>
 
-#endif

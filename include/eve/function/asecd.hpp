@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ASECD_HPP_INCLUDED
-#define EVE_FUNCTION_ASECD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/asecd.hpp>
 #include <eve/module/math/function/generic/asecd.hpp>
 
-#endif

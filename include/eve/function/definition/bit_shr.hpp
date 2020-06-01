@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_BIT_SHR_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_BIT_SHR_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
@@ -36,4 +35,3 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_shr_, bit_shr);
 }
 
-#endif

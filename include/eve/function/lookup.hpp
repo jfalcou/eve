@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOOKUP_HPP_INCLUDED
-#define EVE_FUNCTION_LOOKUP_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
@@ -27,4 +26,3 @@ namespace eve::detail
 
 #include <eve/detail/function/lookup.hpp>
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ABI_OF_HPP_INCLUDED
-#define EVE_ARCH_ABI_OF_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 #include <eve/arch/tags.hpp>
@@ -85,4 +84,3 @@ namespace eve
   using abi_of_t = typename abi_of<Type, Cardinal>::type;
 }
 
-#endif

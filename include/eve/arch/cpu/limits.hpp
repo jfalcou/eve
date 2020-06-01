@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_LIMITS_HPP_INCLUDED
-#define EVE_ARCH_CPU_LIMITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/tags.hpp>
 #include <type_traits>
@@ -43,4 +42,3 @@ namespace eve
   };
 }
 
-#endif

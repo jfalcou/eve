@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_ALGORITHM_FUNCTION_GENERIC_ALL_HPP_INCLUDED
-#define EVE_MODULE_ALGORITHM_FUNCTION_GENERIC_ALL_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
@@ -47,4 +46,3 @@ namespace eve::detail
   }
 }
 
-#endif

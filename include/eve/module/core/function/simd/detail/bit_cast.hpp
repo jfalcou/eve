@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_DETAIL_BIT_CAST_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_DETAIL_BIT_CAST_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/function/definition/bit_cast.hpp>
@@ -86,4 +85,3 @@ namespace eve::detail
   }
 }
 
-#endif

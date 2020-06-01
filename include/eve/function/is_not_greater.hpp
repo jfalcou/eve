@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_not_greater.hpp>
 #include <eve/arch.hpp>
@@ -19,4 +18,3 @@
 #  include <eve/module/core/function/simd/x86/add.hpp>
 #endif
 
-#endif

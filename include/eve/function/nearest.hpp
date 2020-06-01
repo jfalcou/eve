@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NEAREST_HPP_INCLUDED
-#define EVE_FUNCTION_NEAREST_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch.hpp>
 #include <eve/function/definition/nearest.hpp>
@@ -27,4 +26,3 @@
 #    include <eve/module/core/function/simd/arm/neon/nearest.hpp>
 #  endif
 
-#endif

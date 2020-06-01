@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_X86_COMBINE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_X86_COMBINE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/limits.hpp>
 #include <eve/detail/function/simd/x86/make.hpp>
@@ -126,4 +125,3 @@ namespace eve::detail
   }
 }
 
-#endif

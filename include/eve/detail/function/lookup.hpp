@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_LOOKUP_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_LOOKUP_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch.hpp>
 #include <eve/function/definition/lookup.hpp>
@@ -27,4 +26,3 @@
 #  include <eve/detail/function/simd/arm/neon/lookup.hpp>
 #endif
 
-#endif

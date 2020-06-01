@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEGINRAD_HPP_INCLUDED
-#define EVE_FUNCTION_DEGINRAD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/deginrad.hpp>
 #include <eve/module/core/function/generic/deginrad.hpp>
 
-#endif

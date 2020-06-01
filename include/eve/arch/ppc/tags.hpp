@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_PPC_TAGS_HPP_INCLUDED
-#define EVE_ARCH_PPC_TAGS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/ppc/predef.hpp>
@@ -50,4 +49,3 @@ namespace eve
   template<typename T> concept ppc_abi = detail::is_one_of<T>(detail::types<ppc_> {});
 }
 
-#endif

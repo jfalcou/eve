@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ATAND_HPP_INCLUDED
-#define EVE_FUNCTION_ATAND_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/atand.hpp>
 #include <eve/module/math/function/generic/atand.hpp>
 
-#endif

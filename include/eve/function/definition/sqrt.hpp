@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_SQRT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_SQRT_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
@@ -38,4 +37,3 @@ namespace eve
   EVE_MAKE_CALLABLE(sqrt_, sqrt);
 }
 
-#endif

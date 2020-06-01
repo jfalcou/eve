@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_LOAD_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_LOAD_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -87,4 +86,3 @@ namespace eve::detail
   }
 }
 
-#endif

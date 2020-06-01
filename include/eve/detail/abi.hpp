@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_ABI_HPP_INCLUDED
-#define EVE_DETAIL_ABI_HPP_INCLUDED
+#pragma once
 
 // Force a function to be inline
 #if !defined(EVE_FORCEINLINE)
@@ -57,4 +56,3 @@
 #  define EVE_NO_INFINITIES
 #endif
 
-#endif

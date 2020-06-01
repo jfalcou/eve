@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TRIGO_TAGS_HPP_INCLUDED
-#define EVE_FUNCTION_TRIGO_TAGS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/abi.hpp>
 
@@ -127,4 +126,3 @@ namespace eve
   }
 }
 
-#endif

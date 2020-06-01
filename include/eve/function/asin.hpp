@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ASIN_HPP_INCLUDED
-#define EVE_FUNCTION_ASIN_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/asin.hpp>
 #include <eve/module/math/function/generic/asin.hpp>
 
-#endif

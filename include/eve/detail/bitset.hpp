@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_BITSET_HPP_INCLUDED
-#define EVE_DETAIL_BITSET_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/scalar/popcount.hpp>
 #include <eve/detail/meta.hpp>
@@ -174,4 +173,3 @@ namespace eve
   using bitset = typename detail::select_bitset<N>::type;
 }
 
-#endif

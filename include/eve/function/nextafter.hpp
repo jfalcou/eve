@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NEXTAFTER_HPP_INCLUDED
-#define EVE_FUNCTION_NEXTAFTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/nextafter.hpp>
 #include <eve/module/core/function/generic/nextafter.hpp>
 
-#endif

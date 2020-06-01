@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_LITERALS_HPP_INCLUDED
-#define EVE_LITERALS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/wide.hpp>
 #include <type_traits>
@@ -52,4 +51,3 @@ namespace eve::literal
   inline auto operator""_wu8(unsigned long long int d) noexcept { return wide<std::uint8_t>(d); }
 }
 
-#endif

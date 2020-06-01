@@ -8,9 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_SHL_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_SHL_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_shl.hpp>
 
-#endif

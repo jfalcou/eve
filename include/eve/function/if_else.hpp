@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
-#define EVE_FUNCTION_IF_ELSE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/if_else.hpp>
 #include <eve/arch.hpp>
@@ -23,4 +22,3 @@
 #  include <eve/module/core/function/simd/ppc/if_else.hpp>
 #endif
 
-#endif

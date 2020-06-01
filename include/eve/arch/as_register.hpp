@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_AS_REGISTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/as_register.hpp>
 
@@ -19,4 +18,3 @@
 #include <eve/arch/arm/as_register.hpp>
 #endif
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_LTZ_HPP_INCLUDED
-#define EVE_FUNCTION_IS_LTZ_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_ltz.hpp>
 #include <eve/module/core/function/generic/is_ltz.hpp>
 
-#endif

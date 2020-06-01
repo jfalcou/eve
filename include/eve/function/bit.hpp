@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_HPP_INCLUDED
+#pragma once
 
 // helper file to include all bit functions and operators
 #include <eve/function/bit_and.hpp>
@@ -25,4 +24,3 @@
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/bit_shl.hpp>
 
-#endif

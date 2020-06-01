@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_CAST_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_CAST_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_cast.hpp>
 #include <eve/arch.hpp>
@@ -28,4 +27,3 @@
 #endif
 
 
-#endif

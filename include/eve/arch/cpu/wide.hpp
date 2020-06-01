@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_WIDE_HPP_INCLUDED
-#define EVE_ARCH_CPU_WIDE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/expected_cardinal.hpp>
@@ -386,4 +385,3 @@ namespace eve
 #  pragma GCC diagnostic pop
 #endif
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPT_VALUE_HPP_INCLUDED
-#define EVE_CONCEPT_VALUE_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -33,4 +32,3 @@ namespace eve
   template<typename T> concept logical_value         = value<T> && is_logical_v<T>;
 }
 
-#endif

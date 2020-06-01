@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
-#define EVE_CONCEPT_VECTORIZED_HPP_INCLUDED
+#pragma once
 
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/cardinal.hpp>
@@ -36,4 +35,3 @@ namespace eve
   template<typename T> concept integral_real_simd_value   = real_simd_value<T> && std::integral<detail::value_type_t<T>>;
 }
 
-#endif

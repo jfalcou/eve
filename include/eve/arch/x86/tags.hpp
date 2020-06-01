@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_TAGS_HPP_INCLUDED
-#define EVE_ARCH_X86_TAGS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/x86/predef.hpp>
@@ -134,4 +133,3 @@ namespace eve
   concept x86_abi = detail::is_one_of<T>(detail::types<sse_, avx_> {});
 }
 
-#endif

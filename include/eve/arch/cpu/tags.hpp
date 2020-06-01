@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_TAGS_HPP_INCLUDED
-#define EVE_ARCH_CPU_TAGS_HPP_INCLUDED
+#pragma once
 
 namespace eve
 {
@@ -53,4 +52,3 @@ namespace eve
   inline bool is_supported(cpu_ const &) noexcept { return true; }
 }
 
-#endif

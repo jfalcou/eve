@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
-#define EVE_CONCEPT_VECTORIZABLE_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/concept/rebindable.hpp>
@@ -62,4 +61,3 @@ namespace eve
   template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
 }
 
-#endif

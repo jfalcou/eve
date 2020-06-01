@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SIGNNZ_HPP_INCLUDED
-#define EVE_FUNCTION_SIGNNZ_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/signnz.hpp>
 #include <eve/module/core/function/generic/signnz.hpp>
 
-#endif

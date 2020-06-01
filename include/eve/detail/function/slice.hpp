@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SLICE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SLICE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch.hpp>
 #include <eve/detail/function/simd/common/slice.hpp>
@@ -26,4 +25,3 @@
 #  include <eve/detail/function/simd/arm/neon/slice.hpp>
 #endif
 
-#endif

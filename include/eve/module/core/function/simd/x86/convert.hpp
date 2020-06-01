@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
@@ -21,4 +20,3 @@
 #include <eve/module/core/function/simd/x86/convert_256.hpp>
 #include <eve/module/core/function/simd/x86/convert_saturated.hpp>
 
-#endif

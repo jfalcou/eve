@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SHR_HPP_INCLUDED
-#define EVE_FUNCTION_SHR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/shr.hpp>
 #include <eve/arch.hpp>
@@ -27,4 +26,3 @@
 #  include <eve/module/core/function/simd/arm/neon/shr.hpp>
 #endif
 
-#endif

@@ -6,8 +6,7 @@
   SPDX-License-Identifier: MIT
  */
 //==================================================================================================
-#ifndef SPY_SPY_HPP_INCLUDED
-#define SPY_SPY_HPP_INCLUDED
+#pragma once
 #include <iostream>
 namespace spy::detail
 {
@@ -947,4 +946,3 @@ namespace spy::supports
   constexpr inline auto posix_ = false;
 #endif
 }
-#endif

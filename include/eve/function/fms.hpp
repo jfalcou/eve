@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FMS_HPP_INCLUDED
-#define EVE_FUNCTION_FMS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/fms.hpp>
 #include <eve/arch.hpp>
@@ -23,4 +22,3 @@
 #  include <eve/module/core/function/simd/arm/neon/fms.hpp>
 #endif
 
-#endif

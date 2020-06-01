@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_IS_LOGICAL_HPP_INCLUDED
-#define EVE_TRAITS_IS_LOGICAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <type_traits>
@@ -33,4 +32,3 @@ namespace eve
   static inline constexpr bool is_logical_v = is_logical<T>::value;
 }
 
-#endif

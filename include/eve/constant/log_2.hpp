@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_LOG_2_HPP_INCLUDED
-#define EVE_CONSTANT_LOG_2_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/constant.hpp>
@@ -34,4 +33,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(log_2_, Log_2);
 }
 
-#endif

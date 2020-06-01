@@ -8,8 +8,7 @@
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_ACOTH_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_GENERIC_ACOTH_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -35,4 +34,3 @@ namespace eve::detail
   }
 }
 
-#endif

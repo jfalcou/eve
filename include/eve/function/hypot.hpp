@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_HYPOT_HPP_INCLUDED
-#define EVE_FUNCTION_HYPOT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/hypot.hpp>
 #include <eve/module/core/function/generic/hypot.hpp>
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_BIT_SELECT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_BIT_SELECT_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <type_traits>
@@ -25,4 +24,3 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_select_, bit_select);
 }
 
-#endif

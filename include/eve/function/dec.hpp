@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEC_HPP_INCLUDED
-#define EVE_FUNCTION_DEC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/dec.hpp>
 #include <eve/module/core/function/generic/dec.hpp>
 
-#endif

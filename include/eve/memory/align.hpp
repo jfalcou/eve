@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MEMORY_ALIGN_HPP_INCLUDED
-#define EVE_MEMORY_ALIGN_HPP_INCLUDED
+#pragma once
 
 #include <eve/memory/power_of_2.hpp>
 #include <eve/detail/concepts.hpp>
@@ -49,4 +48,3 @@ namespace eve
   }
 }
 
-#endif

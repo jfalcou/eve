@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ALL_HPP_INCLUDED
-#define EVE_FUNCTION_ALL_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/all.hpp>
 #include <eve/arch.hpp>
@@ -27,4 +26,3 @@
 #  include <eve/module/algorithm/function/simd/arm/neon/all.hpp>
 #endif
 
-#endif

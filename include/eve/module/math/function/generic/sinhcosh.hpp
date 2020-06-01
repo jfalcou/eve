@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_SINHCOSH_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_GENERIC_SINHCOSH_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
@@ -86,4 +85,3 @@ namespace eve::detail
   }
 }
 
-#endif

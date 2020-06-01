@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_INVERSE_HYPERBOLIC_HPP_INCLUDED
-#define EVE_FUNCTION_INVERSE_HYPERBOLIC_HPP_INCLUDED
+#pragma once
 
 // helper file to include all inverse hyperbolic functions
 #include <eve/function/definition/hyperbolic.hpp>
@@ -20,4 +19,3 @@
 #include <eve/function/tanh.hpp>
 
 
-#endif

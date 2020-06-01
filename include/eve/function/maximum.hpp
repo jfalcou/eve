@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MAXIMUM_HPP_INCLUDED
-#define EVE_FUNCTION_MAXIMUM_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/maximum.hpp>
 #include <eve/module/core/function/scalar/maximum.hpp>
 //#include <eve/module/core/function/simd/maximum.hpp>
 
-#endif

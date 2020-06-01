@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LCM_HPP_INCLUDED
-#define EVE_FUNCTION_LCM_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/lcm.hpp>
 #include <eve/module/core/function/generic/lcm.hpp>
 
-#endif

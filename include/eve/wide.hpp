@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_WIDE_HPP_INCLUDED
-#define EVE_WIDE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
@@ -21,4 +20,3 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_less_equal.hpp>
 
-#endif

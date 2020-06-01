@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COTPI_HPP_INCLUDED
-#define EVE_FUNCTION_COTPI_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/cotpi.hpp>
 #include <eve/module/math/function/generic/cotpi.hpp>
 
 
-#endif

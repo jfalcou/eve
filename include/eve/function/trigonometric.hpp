@@ -7,11 +7,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TRIGONOMETRIC_HPP_INCLUDED
-#define EVE_FUNCTION_TRIGONOMETRIC_HPP_INCLUDED
+#pragma once
 
 // helper file to include all trigonometric functions
 #include <eve/function/definition/trigonometric.hpp>
 
 
-#endif

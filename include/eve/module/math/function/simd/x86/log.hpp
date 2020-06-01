@@ -8,8 +8,7 @@
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_SIMD_X86_LOG_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_SIMD_X86_LOG_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/half.hpp>
@@ -165,4 +164,3 @@ namespace eve::detail
   }
 }
 
-#endif

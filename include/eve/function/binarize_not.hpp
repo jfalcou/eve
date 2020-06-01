@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BINARIZE_NOT_HPP_INCLUDED
-#define EVE_FUNCTION_BINARIZE_NOT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/binarize_not.hpp>
 #include <eve/module/core/function/generic/binarize_not.hpp>
 
-#endif 

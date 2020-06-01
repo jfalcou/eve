@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_MASK_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_MASK_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_mask.hpp>
 #include <eve/module/core/function/generic/bit_mask.hpp>
 
-#endif

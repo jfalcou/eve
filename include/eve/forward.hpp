@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FORWARD_HPP_INCLUDED
-#define EVE_FORWARD_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/expected_abi.hpp>
@@ -26,4 +25,3 @@ namespace eve
   struct wide;
 }
 
-#endif

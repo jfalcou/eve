@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SQR_ABS_HPP_INCLUDED
-#define EVE_FUNCTION_SQR_ABS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/sqr_abs.hpp>
 #include <eve/module/core/function/generic/sqr_abs.hpp>
 
-#endif

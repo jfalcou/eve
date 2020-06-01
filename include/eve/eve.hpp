@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_EVE_HPP_INCLUDED
-#define EVE_EVE_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/wide.hpp>
@@ -18,4 +17,3 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/module/core.hpp>
 
-#endif

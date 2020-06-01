@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MANTISSA_HPP_INCLUDED
-#define EVE_FUNCTION_MANTISSA_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/mantissa.hpp>
 #include <eve/module/core/function/generic/mantissa.hpp>
 
-#endif

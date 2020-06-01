@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_REM_PIO2_HPP_INCLUDED
-#define EVE_FUNCTION_REM_PIO2_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/rem_pio2.hpp>
 #include <eve/module/math/function/generic/rem_pio2.hpp>
 
-#endif

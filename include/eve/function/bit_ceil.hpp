@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_CEIL_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_CEIL_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_ceil.hpp>
 #include <eve/module/core/function/generic/bit_ceil.hpp>
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ONEMINUS_HPP_INCLUDED
-#define EVE_FUNCTION_ONEMINUS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/oneminus.hpp>
 #include <eve/module/core/function/generic/oneminus.hpp>
 
-#endif

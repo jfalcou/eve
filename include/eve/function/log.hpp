@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOG_HPP_INCLUDED
-#define EVE_FUNCTION_LOG_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch.hpp>
 #include <eve/function/definition/log.hpp>
@@ -19,4 +18,3 @@
 #  include <eve/module/math/function/simd/x86/log.hpp>
 #endif
 
-#endif

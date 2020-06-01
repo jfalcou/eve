@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_BINARIZE_NOT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_BINARIZE_NOT_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorizable.hpp>
@@ -21,6 +20,3 @@ namespace eve
 {
   EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
 }
-
-#endif
- 

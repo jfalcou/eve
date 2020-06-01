@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_CPUID_HPP_INCLUDED
-#define EVE_DETAIL_CPUID_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 #include <cstdio>
@@ -80,4 +79,3 @@ namespace eve::detail
 }
 #endif
 
-#endif

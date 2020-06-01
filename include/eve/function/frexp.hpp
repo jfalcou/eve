@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FREXP_HPP_INCLUDED
-#define EVE_FUNCTION_FREXP_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/frexp.hpp>
 #include <eve/module/core/function/generic/frexp.hpp>
 
-#endif

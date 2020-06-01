@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_CSCPI_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_CSCPI_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/maxflint.hpp>
@@ -84,4 +83,3 @@ namespace eve::detail
   }
 }
 
-#endif

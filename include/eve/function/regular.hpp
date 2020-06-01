@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_REGULAR_HPP_INCLUDED
-#define EVE_FUNCTION_REGULAR_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -38,4 +37,3 @@ namespace eve
   }
 }
 
-#endif

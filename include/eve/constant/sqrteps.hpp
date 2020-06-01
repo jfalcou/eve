@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_SQRTEPS_HPP_INCLUDED
-#define EVE_CONSTANT_SQRTEPS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/constant.hpp>
@@ -34,6 +33,3 @@ namespace eve
 
   EVE_MAKE_NAMED_CONSTANT(sqrteps_, Sqrteps);
 }
-
-#endif
-

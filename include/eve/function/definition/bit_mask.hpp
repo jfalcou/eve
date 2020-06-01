@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_BIT_MASK_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_BIT_MASK_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 
@@ -24,4 +23,3 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
 }
 
-#endif

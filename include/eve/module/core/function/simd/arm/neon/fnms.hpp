@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_FNMS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_FNMS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
@@ -57,4 +56,3 @@ namespace eve::detail
   }
 }
 
-#endif

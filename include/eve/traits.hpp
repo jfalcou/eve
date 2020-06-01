@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_HPP_INCLUDED
-#define EVE_TRAITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/traits/as_arithmetic.hpp>
 #include <eve/traits/as_logical.hpp>
@@ -18,4 +17,3 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
 
-#endif

@@ -8,9 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_LOGICAL_HPP_INCLUDED
-#define EVE_ARCH_LOGICAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/logical.hpp>
 
-#endif
