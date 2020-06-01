@@ -9,11 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/lookup.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::lookup, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
-
+  using I_TYPE    = eve::detail::as_integer_t<EVE_TYPE>;
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto vmin = I_TYPE(0);
+  auto vmax = I_TYPE(eve::cardinal_v<EVE_VALUE>-1);
+  EVE_REGISTER_BENCHMARK(eve::lookup, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<I_TYPE>(vmin,vmax));
   eve::bench::start_benchmarks(argc, argv);
 }
