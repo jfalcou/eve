@@ -25,7 +25,7 @@ namespace eve
   {
     template<typename T, typename I>
     EVE_FORCEINLINE void check( EVE_MATCH_CALL(eve::tag::extract_),
-                                T const&, I const& i
+                                T const&,  [[maybe_unused]] I const& i
                               )
     {
       EVE_ASSERT( (i < I(cardinal_v<T>)),

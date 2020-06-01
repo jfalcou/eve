@@ -21,13 +21,13 @@
 namespace eve
 {
   namespace tag { struct exp2_; }
-  
+
   namespace detail
   {
     template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::exp2_), T const& v, S const& s)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::exp2_), T const& ,  [[maybe_unused]] S const& s)
     {
-      using vt_t = value_type_t<T>; 
+      using vt_t = value_type_t<T>;
       if constexpr(std::is_integral_v<vt_t>)
       {
         EVE_ASSERT( all(is_gez(s)),
@@ -39,7 +39,7 @@ namespace eve
       }
     }
   }
-  
+
   EVE_MAKE_CALLABLE(exp2_, exp2);
 }
 

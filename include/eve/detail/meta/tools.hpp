@@ -18,10 +18,10 @@
 namespace eve::detail
 {
   // Silence unused warning
-  template<typename... T>
-  void ignore(T &&...)
-  {
-  }
+//   template<typename... T>
+//   void ignore(T &&...)
+//   {
+//   }
 
   // Tuple free apply
   template<typename Func, std::size_t... I>

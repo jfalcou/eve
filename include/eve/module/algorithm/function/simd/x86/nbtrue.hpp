@@ -70,8 +70,7 @@ namespace eve::detail
     }
     else // if constexpr(std::is_integral_v<T>)
     {
-      static constexpr int SH   = (Bytes-sizeof(T)*N::value);
-      ignore(SH);
+      [[maybe_unused]]  static constexpr int SH   = (Bytes-sizeof(T)*N::value);
       if constexpr(sizeof(T) == 1)
       {
         if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types

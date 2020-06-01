@@ -30,7 +30,7 @@ TTS_CASE_TPL("wide random check on eps", EVE_TYPE)
   }
   else
   {
-    auto std_eps = tts::vectorize<T>( [](auto e) { return  v_t(1); } );
+    auto std_eps = tts::vectorize<T>( [](auto ) { return  v_t(1); } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_eps, eve::eps);
   }

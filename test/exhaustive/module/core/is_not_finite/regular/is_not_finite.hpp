@@ -36,7 +36,7 @@ TTS_CASE_TPL("wide random check on is_not_finite", EVE_TYPE)
   }
   else
   {
-    auto std_is_not_finite = tts::vectorize<l_t>( [](auto e) { return false; } );
+    auto std_is_not_finite = tts::vectorize<l_t>( [](auto ) { return false; } );
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }

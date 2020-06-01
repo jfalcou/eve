@@ -93,7 +93,7 @@ namespace eve::detail
   // saturated_
   template<real_value T>
   EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
-                                      , saturated_type const & _
+                                      , saturated_type const &
                                       , T const &a) noexcept
   {
     if constexpr(has_native_abi_v<T>)

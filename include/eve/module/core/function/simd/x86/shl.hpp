@@ -115,13 +115,12 @@ namespace eve::detail
        wide<T, N, avx_> const &a0,
        wide<I, N, avx_> const &a1) noexcept
   {
-    auto ifxop_choice = [](const auto &a0, const auto &a1) {
+    [[ maybe_unused ]] auto ifxop_choice = [](const auto &a0, const auto &a1) {
       if constexpr(supports_xop)
         return shl_(EVE_RETARGET(sse2_), a0, a1);
       else
         return map(shl, a0, a1);
     };
-    ignore(ifxop_choice);
     if constexpr(current_api >= avx2)
     {
       if constexpr(sizeof(T) <= 2)

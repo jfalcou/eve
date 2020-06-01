@@ -20,7 +20,7 @@ namespace spy::detail
     static constexpr archs  vendor  = ARCH;
     inline constexpr operator bool() const noexcept;
     template<archs A2>
-    constexpr bool operator==(arch_info<A2> const& c2) const noexcept
+    constexpr bool operator==(arch_info<A2> const& ) const noexcept
     {
       return A2 == vendor;
     }
@@ -203,7 +203,7 @@ namespace spy::detail
     static constexpr version_id<M,N,P>  version = {};
     inline constexpr operator bool() const noexcept;
     template<compilers C2>
-    constexpr bool operator==(compilers_info<C2,-1,0,0> const& c2) const noexcept
+    constexpr bool operator==(compilers_info<C2,-1,0,0> const&) const noexcept
     {
       return C2 == vendor;
     }
@@ -287,7 +287,7 @@ namespace spy::detail
   {
     inline constexpr operator bool() const noexcept;
     template<int SS2, int SI2, int SL2, int SPTR2>
-    constexpr bool operator==(data_model_info<SS2, SI2, SL2, SPTR2> const& c2) const noexcept
+    constexpr bool operator==(data_model_info<SS2, SI2, SL2, SPTR2> const&) const noexcept
     {
       return (SS==SS2) && (SI == SI2) && (SL == SL2) && (SPTR == SPTR2);
     }
@@ -339,7 +339,7 @@ namespace spy::detail
     static constexpr version_id<M,N,P>  version = {};
     inline constexpr operator bool() const noexcept;
     template<libC C2>
-    constexpr bool operator==(libc_info<C2,-1,0,0> const& c2) const noexcept
+    constexpr bool operator==(libc_info<C2,-1,0,0> const& ) const noexcept
     {
       return C2 == vendor;
     }
@@ -442,7 +442,7 @@ namespace spy::detail
     static constexpr version_id<M,N,P>  version = {};
     inline constexpr operator bool() const noexcept;
     template<stdlib C2>
-    constexpr bool operator==(stdlib_info<C2,-1,0,0> const& c2) const noexcept
+    constexpr bool operator==(stdlib_info<C2,-1,0,0> const& ) const noexcept
     {
       return C2 == vendor;
     }
@@ -868,7 +868,7 @@ namespace spy::detail
     static constexpr systems            vendor  = OS;
     inline constexpr operator bool() const noexcept;
     template<systems C2>
-    constexpr bool operator==(os_info<C2> const& c2) const noexcept
+    constexpr bool operator==(os_info<C2> const& ) const noexcept
     {
       return C2 == vendor;
     }
