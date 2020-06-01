@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASIND_HPP_INCLUDED
 
 #include <eve/function/definition/asind.hpp>
-#include <eve/module/core/function/generic/asind.hpp>
+#include <eve/module/math/function/generic/asind.hpp>
 
 #endif

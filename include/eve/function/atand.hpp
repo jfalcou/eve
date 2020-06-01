@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ATAND_HPP_INCLUDED
 
 #include <eve/function/definition/atand.hpp>
-#include <eve/module/core/function/generic/atand.hpp>
+#include <eve/module/math/function/generic/atand.hpp>
 
 #endif

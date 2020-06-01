@@ -16,7 +16,7 @@
 #include <eve/module/core/function/generic/log.hpp>
 
 #if defined(EVE_HW_X86)
-#  include <eve/module/core/function/simd/x86/log.hpp>
+#  include <eve/module/math/function/simd/x86/log.hpp>
 #endif
 
 #endif

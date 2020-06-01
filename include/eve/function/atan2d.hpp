@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ATAN2D_HPP_INCLUDED
 
 #include <eve/function/definition/atan2d.hpp>
-#include <eve/module/core/function/generic/atan2d.hpp>
+#include <eve/module/math/function/generic/atan2d.hpp>
 
 #endif

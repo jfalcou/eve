@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_COS_HPP_INCLUDED
 
 #include <eve/function/definition/cos.hpp>
-#include <eve/module/core/function/generic/cos.hpp>
+#include <eve/module/math/function/generic/cos.hpp>
 
 #endif

@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASINH_HPP_INCLUDED
 
 #include <eve/function/definition/asinh.hpp>
-#include <eve/module/core/function/generic/asinh.hpp>
+#include <eve/module/math/function/generic/asinh.hpp>
 
 #endif

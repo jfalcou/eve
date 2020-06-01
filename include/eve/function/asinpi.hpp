@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ASINPI_HPP_INCLUDED
 
 #include <eve/function/definition/asinpi.hpp>
-#include <eve/module/core/function/generic/asinpi.hpp>
+#include <eve/module/math/function/generic/asinpi.hpp>
 
 #endif

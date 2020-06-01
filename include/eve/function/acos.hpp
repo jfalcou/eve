@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOS_HPP_INCLUDED
 
 #include <eve/function/definition/acos.hpp>
-#include <eve/module/core/function/generic/acos.hpp>
+#include <eve/module/math/function/generic/acos.hpp>
 
 #endif 

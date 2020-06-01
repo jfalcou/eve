@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_EXP10_HPP_INCLUDED
 
 #include <eve/function/definition/exp10.hpp>
-#include <eve/module/core/function/generic/exp10.hpp>
+#include <eve/module/math/function/generic/exp10.hpp>
 
 #endif

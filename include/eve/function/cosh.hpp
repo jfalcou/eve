@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_COSH_HPP_INCLUDED
 
 #include <eve/function/definition/cosh.hpp>
-#include <eve/module/core/function/generic/cosh.hpp>
+#include <eve/module/math/function/generic/cosh.hpp>
 
 #endif

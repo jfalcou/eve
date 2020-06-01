@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_TAND_HPP_INCLUDED
 
 #include <eve/function/definition/tand.hpp>
-#include <eve/module/core/function/generic/tand.hpp>
+#include <eve/module/math/function/generic/tand.hpp>
 
 #endif

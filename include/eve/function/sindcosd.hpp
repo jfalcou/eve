@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_SINDCOSD_HPP_INCLUDED
 
 #include <eve/function/definition/sindcosd.hpp>
-#include <eve/module/core/function/generic/sindcosd.hpp>
+#include <eve/module/math/function/generic/sindcosd.hpp>
 
 #endif

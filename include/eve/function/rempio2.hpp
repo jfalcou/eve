@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_REMPIO2_HPP_INCLUDED
 
 #include <eve/function/definition/rempio2.hpp>
-#include <eve/module/core/function/generic/rempio2.hpp>
+#include <eve/module/math/function/generic/rempio2.hpp>
 
 #endif

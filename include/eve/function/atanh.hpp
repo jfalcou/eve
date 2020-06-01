@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ATANH_HPP_INCLUDED
 
 #include <eve/function/definition/atanh.hpp>
-#include <eve/module/core/function/generic/atanh.hpp>
+#include <eve/module/math/function/generic/atanh.hpp>
 
 #endif

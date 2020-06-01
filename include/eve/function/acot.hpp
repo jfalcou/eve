@@ -12,6 +12,6 @@
 #define EVE_FUNCTION_ACOT_HPP_INCLUDED
 
 #include <eve/function/definition/acot.hpp>
-#include <eve/module/core/function/generic/acot.hpp>
+#include <eve/module/math/function/generic/acot.hpp>
 
 #endif
