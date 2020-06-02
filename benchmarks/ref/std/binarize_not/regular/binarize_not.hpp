@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_binarize_not = [](auto x) { return x ? EVE_TYPE(0) : EVE_TYPE(1); };
-  auto const std_binarize_not2= [](auto x, auto y){ return x ? EVE_TYPE(0) : EVE_TYPE(1); };
+  auto const std_binarize_not2= [](auto x, auto y){ return x ? EVE_TYPE(0) : EVE_TYPE(y); };
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
 

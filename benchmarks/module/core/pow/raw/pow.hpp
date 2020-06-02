@@ -8,62 +8,18 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/pow.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/mhalf.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/basic.hpp>
-#include <tts/tests/types.hpp>
 #include <cmath>
+#include <eve/function/pow.hpp>
 
-TTS_CASE("Check eve::raw_(eve::pow) return type")
+int main(int argc, char** argv)
 {
-  TTS_EXPR_IS(eve::raw_(eve::pow)(EVE_TYPE(0), EVE_TYPE(0)), (EVE_TYPE));
-}
+  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
+  auto const std_pow = [](auto x, auto y) { return eve::raw_(eve::pow)(x, y); };
+  auto lmin = EVE_TYPE(-10);
+  auto lmax = EVE_TYPE(10);
+  EVE_REGISTER_BENCHMARK(std_pow, EVE_TYPE
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-
-TTS_CASE("pow conformity")
-{
-  if (std::is_floating_point_v<EVE_VALUE>)
-  {
-    // std::pow conform
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(0), EVE_TYPE(-1)), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(0), EVE_TYPE(-2)), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(0), EVE_TYPE(-2)), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(0),  eve::Minf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(0),  eve::Minf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(0.5), eve::Inf<EVE_TYPE>()),  eve::Zero<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(2), eve::Inf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(0.5), eve::Minf<EVE_TYPE>()),  eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(2), eve::Minf<EVE_TYPE>()),  eve::Zero<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<EVE_TYPE>(), EVE_TYPE(4) ),  eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<EVE_TYPE>(), EVE_TYPE(-4) ),  eve::Zero<EVE_TYPE>(), 0);
-    // std::pow non conform
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(0), EVE_TYPE(-1)), eve::Inf<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(1),  eve::Minf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(1),  eve::Inf <EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(EVE_TYPE(1), eve::Nan<EVE_TYPE>()) ,  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Nan<EVE_TYPE>(), EVE_TYPE(0)) ,  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Nan<EVE_TYPE>(), -EVE_TYPE(0)) ,  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(0.5), eve::Inf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(2), eve::Inf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(0.5), eve::Minf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-EVE_TYPE(2), eve::Minf<EVE_TYPE>()),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Minf<EVE_TYPE>(), EVE_TYPE(-3) ),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Minf<EVE_TYPE>(), EVE_TYPE(-4) ),  eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Minf<EVE_TYPE>(),  EVE_TYPE(-4)), eve::Nan<EVE_TYPE>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Minf<EVE_TYPE>(), EVE_TYPE(-4)) , eve::Nan<EVE_TYPE>(), 0);
-  }
-  TTS_ULP_EQUAL(0, 0, 0); 
+  eve::bench::start_benchmarks(argc, argv);
 }

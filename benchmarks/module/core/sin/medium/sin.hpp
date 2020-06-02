@@ -9,7 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/sin.hpp>
-#include <eve/module/core/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)

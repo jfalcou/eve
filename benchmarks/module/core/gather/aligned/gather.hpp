@@ -19,7 +19,7 @@ int main(int argc, char** argv)
   using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
   int N = eve::cardinal_v<EVE_TYPE>;
   alignas(alg) EVE_VALUE data[2*N];
-  for(std::size_t i = 0;i<2*N;++i) data[i] = EVE_VALUE(1) + i;
+  for(int i = 0;i<2*N;++i) data[i] = EVE_VALUE(1) + i;
   const EVE_VALUE* cdata = &data[0];
   auto g =  [&cdata](auto i){ return eve::gather(cdata, i); };
   EVE_REGISTER_BENCHMARK(g, EVE_TYPE

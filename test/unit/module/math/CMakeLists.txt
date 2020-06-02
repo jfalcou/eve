@@ -75,8 +75,8 @@ make_all_units(ROOT math NAME log1p                 ARCH scalar simd TYPES ${rea
 make_all_units(ROOT math NAME log2                  ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE
 ### make_all_units(ROOT math NAME pow                   ARCH scalar simd TYPES ${all_types}    )
-### make_all_units(ROOT math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE
+make_all_units(ROOT math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME rempio2               ARCH scalar simd TYPES ${real_types}    )
@@ -84,7 +84,7 @@ make_all_units(ROOT math NAME sec                   ARCH scalar simd TYPES ${rea
 make_all_units(ROOT math NAME secd                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sech                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME secpi                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
+mcoreake_all_units(ROOT math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sincos                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sind                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sindcosd              ARCH scalar simd TYPES ${real_types}    )
