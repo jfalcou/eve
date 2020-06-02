@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOGICAL_HPP
-#define LOGICAL_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/basic.hpp>
@@ -75,5 +74,3 @@ TTS_CASE_TPL("logical bits conversion", EVE_TYPE)
   TTS_IEEE_EQUAL(bool_t.bits(), eve::Allbits<bits_t>());
   TTS_IEEE_EQUAL(bool_f.bits(), bits_t(0));
 }
-
-#endif

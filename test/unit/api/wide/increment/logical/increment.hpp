@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef INCREMENT_HPP
-#define INCREMENT_HPP
+#pragma once
 
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
@@ -47,5 +46,3 @@ auto post8  = x8++;
 auto post16 = x16++;
 auto post32 = x32++;
 auto post64 = x64++;
-
-#endif

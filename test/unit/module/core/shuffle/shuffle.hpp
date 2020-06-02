@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef SHUFFLE_HPP
-#define SHUFFLE_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -36,5 +35,3 @@ TTS_CASE_TPL("Check shuffle behavior",
   TTS_EQUAL(ref, eve::convert(arg, as<double>()));
   TTS_EQUAL(ref1 eve::convert(arg1, as<double>()));
 }
-
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef SPLAT_HPP
-#define SPLAT_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/basic.hpp>
@@ -34,5 +33,3 @@ TTS_CASE_TPL("Check splatting constructor for arithmetic wide",
 
   TTS_EXPECT(std::all_of(simd.begin(), simd.end(), [=](auto e) { return e == base; }));
 }
-
-#endif

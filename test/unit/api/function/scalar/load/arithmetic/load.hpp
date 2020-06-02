@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOAD_HPP
-#define LOAD_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -48,5 +47,3 @@ TTS_CASE_TPL("load behavior for scalar", EVE_TYPE)
     }
   }
 }
-
-#endif

@@ -8,10 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef LOAD_HPP
-#define LOAD_HPP
-
+#pragma once
 #include "test.hpp"
+
 #include <tts/tests/basic.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/wide.hpp>
@@ -131,5 +130,3 @@ TTS_CASE_TPL("Check ctor from range for wide",
     TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
   }
 }
-
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef SLICE_HPP
-#define SLICE_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -40,5 +39,3 @@ TTS_CASE_TPL("Check slicing for logical wide",
   TTS_EQUAL(high, ref_high);
   TTS_EQUAL(simd.slice(eve::upper_), ref_high);
 }
-
-#endif
