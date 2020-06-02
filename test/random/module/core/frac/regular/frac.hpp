@@ -29,7 +29,7 @@ TTS_CASE_TPL("wide random check on frac", EVE_TYPE)
   }
   else
   {
-    auto std_frac = tts::vectorize<T>( [](auto e) { return v_t(0); } );
+    auto std_frac = tts::vectorize<T>( [](auto ) { return v_t(0); } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_frac, eve::frac);
   }

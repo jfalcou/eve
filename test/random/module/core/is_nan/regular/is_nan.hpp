@@ -29,7 +29,7 @@ TTS_CASE_TPL("wide random check on is_nan", EVE_TYPE)
   }
   else
   {
-    auto std_is_nan = tts::vectorize<l_t>( [](auto e) { return false; } );
+    auto std_is_nan = tts::vectorize<l_t>( [](auto ) { return false; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_nan, eve::is_nan);
   }

@@ -30,7 +30,7 @@ TTS_CASE_TPL("wide random check on is_not_infinite", EVE_TYPE)
   }
   else
   {
-    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto e) { return true; } );
+    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto ) { return true; } );
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_RANGE_CHECK(p, std_is_not_infiniteinite, eve::is_not_infinite);
   }

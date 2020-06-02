@@ -33,7 +33,7 @@ namespace eve::detail
 
   template<typename T, typename N, std::size_t Align, native ABI>
   EVE_FORCEINLINE auto
-  load(as_<logical<wide<T, N, ABI>>> const &tgt,
+  load(as_<logical<wide<T, N, ABI>>> const &,
        ABI const &                          mode,
        aligned_ptr<logical<T> const, Align> ptr) noexcept
   {
@@ -44,7 +44,7 @@ namespace eve::detail
 
   template<typename T, typename N, std::size_t Align, native ABI>
   EVE_FORCEINLINE auto
-  load(as_<logical<wide<T, N, ABI>>> const &tgt,
+  load(as_<logical<wide<T, N, ABI>>> const &,
        ABI const &                          mode,
        aligned_ptr<logical<T>, Align>       ptr) noexcept
   {

@@ -25,7 +25,7 @@
 namespace boost{ namespace math{ namespace detail{
 
 template <class T, class Policy>
-T cos_pi_imp(T x, const Policy& pol)
+T cos_pi_imp(T x,  [[maybe_unused]] const Policy& pol)
 {
    BOOST_MATH_STD_USING // ADL of std names
    // cos of pi*x:
@@ -47,7 +47,7 @@ T cos_pi_imp(T x, const Policy& pol)
    }
    if(rem == 0.5f)
       return 0;
-   
+
    if(rem > 0.25f)
    {
       rem = 0.5f - rem;
@@ -71,7 +71,7 @@ inline typename tools::promote_args<T>::type cos_pi(T x, const Policy&)
       policies::promote_double<false>,
       policies::discrete_quantile<>,
       policies::assert_undefined<>,
-      // We want to ignore overflows since the result is in [-1,1] and the 
+      // We want to ignore overflows since the result is in [-1,1] and the
       // check slows the code down considerably.
       policies::overflow_error<policies::ignore_error> >::type forwarding_policy;
    return policies::checked_narrowing_cast<result_type, forwarding_policy>(boost::math::detail::cos_pi_imp<value_type>(x, forwarding_policy()), "cos_pi");
@@ -86,4 +86,3 @@ inline typename tools::promote_args<T>::type cos_pi(T x)
 } // namespace math
 } // namespace boost
 #endif
-

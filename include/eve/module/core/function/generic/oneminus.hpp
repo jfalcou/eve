@@ -73,7 +73,7 @@ namespace eve::detail
   // saturated masked
   template<real_value T, value COND>
   EVE_FORCEINLINE constexpr T
-  oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, saturated_type const & d, T const &v) noexcept
+  oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, saturated_type const &, T const &v) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( floating_value<elt_t> )

@@ -24,7 +24,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const& v, S const& s)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&, [[ maybe_unused ]]S const& s)
     {
       EVE_ASSERT( assert_good_shift<T>(eve::abs(s)),
                   "[eve::rshl] - Shifting by " << s

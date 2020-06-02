@@ -17,12 +17,6 @@
 
 namespace eve::detail
 {
-  // Silence unused warning
-  template<typename... T>
-  void ignore(T &&...)
-  {
-  }
-
   // Tuple free apply
   template<typename Func, std::size_t... I>
   EVE_FORCEINLINE decltype(auto) apply_impl(Func &&f, std::index_sequence<I...> const &)

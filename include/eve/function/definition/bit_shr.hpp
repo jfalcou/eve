@@ -22,7 +22,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bit_shr_), T const& v, S const& s)
+    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bit_shr_), T const&,  [[maybe_unused]] S const& s)
     {
       EVE_ASSERT( assert_good_shift<T>(s),
                   "[eve::bit_shr] Shifting by " << s

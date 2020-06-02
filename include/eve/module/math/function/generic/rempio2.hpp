@@ -30,7 +30,7 @@
 namespace eve::detail
 {
   template<decorator D, floating_value T>
-  EVE_FORCEINLINE auto rempio2_(EVE_SUPPORTS(cpu_), D const &deco, T const &xx) noexcept
+  EVE_FORCEINLINE auto rempio2_(EVE_SUPPORTS(cpu_), D const &, T const &xx) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

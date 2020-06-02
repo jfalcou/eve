@@ -19,7 +19,7 @@ TTS_CASE_TPL("wide random check on is_real", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
   using l_t = eve::as_logical_t<T>;
-  auto std_is_real = tts::vectorize<l_t>( [](auto e) { return true; } );
+  auto std_is_real = tts::vectorize<l_t>( [](auto ) { return true; } );
 
   eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_is_real, eve::is_real);

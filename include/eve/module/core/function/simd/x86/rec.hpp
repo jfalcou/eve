@@ -22,7 +22,7 @@ namespace eve::detail
   // 128 bits implementation
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_>
-                  rec_(EVE_SUPPORTS(sse2_), raw_type const &mode, wide<T, N, sse_> const &a0) noexcept
+                  rec_(EVE_SUPPORTS(sse2_),  raw_type const &, wide<T, N, sse_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, double>)
     {
@@ -44,7 +44,7 @@ namespace eve::detail
 
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_>
-                  rec_(EVE_SUPPORTS(sse2_), pedantic_type const &mode, wide<T, N, sse_> const &a0) noexcept
+                  rec_(EVE_SUPPORTS(sse2_), pedantic_type const &, wide<T, N, sse_> const &a0) noexcept
   {
     return  rec(a0);
   }
@@ -53,7 +53,7 @@ namespace eve::detail
   // 256 bits implementation
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_>
-                  rec_(EVE_SUPPORTS(avx_), raw_type const &mode, wide<T, N, avx_> const &a0) noexcept
+                  rec_(EVE_SUPPORTS(avx_), raw_type const &, wide<T, N, avx_> const &a0) noexcept
   {
     if constexpr(std::is_same_v<T, double>)
     {
@@ -75,7 +75,7 @@ namespace eve::detail
 
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_>
-                  rec_(EVE_SUPPORTS(avx_), pedantic_type const &mode, wide<T, N, avx_> const &a0) noexcept
+                  rec_(EVE_SUPPORTS(avx_), pedantic_type const &, wide<T, N, avx_> const &a0) noexcept
   {
     return rec(a0);
   }

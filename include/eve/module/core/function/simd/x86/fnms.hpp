@@ -117,7 +117,7 @@ namespace eve::detail
 
   template<decorator D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> fnms_(EVE_SUPPORTS(avx2_),
-                                         D const &               deco,
+                                         D const &,
                                          wide<T, N, avx_> const &a,
                                          wide<T, N, avx_> const &b,
                                          wide<T, N, avx_> const &c) noexcept

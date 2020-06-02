@@ -78,7 +78,7 @@ namespace eve::detail
   //================================================================================================
   template<value IN, scalar_value OUT>
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_),
-                                pedantic_type const &ped_,
+                                pedantic_type const &,
                                 IN const &           v00,
                                 as_<OUT> const &     tgt) noexcept
   {
