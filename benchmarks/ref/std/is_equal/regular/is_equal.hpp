@@ -14,7 +14,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto const std_is_equal = [](auto x, auto y) { return x == y; };
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();

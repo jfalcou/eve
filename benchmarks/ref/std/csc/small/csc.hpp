@@ -13,7 +13,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = eve::Pio_2<EVE_TYPE>();
   auto lmin = -lmax;
   auto const std_csc = [](auto x) { return 1/std::sin(x); };

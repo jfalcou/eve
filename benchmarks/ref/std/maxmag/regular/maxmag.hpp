@@ -14,7 +14,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto const std_maxmag = [](auto x, auto y) {
     EVE_TYPE ax = std::abs(x);
     EVE_TYPE ay = std::abs(y);

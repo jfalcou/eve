@@ -13,6 +13,7 @@
 
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/arch.hpp>
+#include <eve/arch/spec.hpp>
 #include <algorithm>
 #include <numeric>
 

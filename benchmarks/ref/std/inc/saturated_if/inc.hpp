@@ -15,7 +15,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   using L_TYPE = eve::logical<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();

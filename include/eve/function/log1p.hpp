@@ -12,7 +12,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/function/definition/log1p.hpp>
-#include <eve/module/core/function/generic/log1p.hpp>
+#include <eve/module/math/function/generic/log1p.hpp>
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/math/function/simd/x86/log1p.hpp>

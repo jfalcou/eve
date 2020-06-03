@@ -16,7 +16,6 @@
 int main(int argc, char** argv)
 {
   auto const std_is_flint = [](auto x) { return (x < eve::Maxflint<EVE_TYPE>()) && !(x-trunc(x)); };
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_TYPE>();
   auto lmax = eve::Valmax<EVE_TYPE>();
   EVE_REGISTER_BENCHMARK(std_is_flint, EVE_TYPE
