@@ -12,7 +12,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/function/definition/log10.hpp>
-#include <eve/module/core/function/generic/log10.hpp>
+#include <eve/module/math/function/generic/log10.hpp>
 
 #if defined(EVE_HW_X86)
 #  include <eve/module/math/function/simd/x86/log10.hpp>

@@ -84,7 +84,7 @@ make_all_units(ROOT math NAME sec                   ARCH scalar simd TYPES ${rea
 make_all_units(ROOT math NAME secd                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sech                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME secpi                 ARCH scalar simd TYPES ${real_types}    )
-mcoreake_all_units(ROOT math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT math NAME sin                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sincos                ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sind                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME sindcosd              ARCH scalar simd TYPES ${real_types}    )

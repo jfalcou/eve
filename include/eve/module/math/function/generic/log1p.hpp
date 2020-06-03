@@ -287,4 +287,3 @@ namespace eve::detail
     return log1p(regular_type(), x);
   }
 }
-

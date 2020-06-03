@@ -400,4 +400,3 @@ namespace eve::detail
     return log2(regular_type(), x);
   }
 }
-
