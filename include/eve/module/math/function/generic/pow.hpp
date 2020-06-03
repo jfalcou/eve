@@ -76,22 +76,27 @@ namespace eve::detail
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
   {
-    if constexpr( floating_value<U> )
+    if constexpr(has_native_abi_v<T> )
     {
-      if constexpr( scalar_value<U> )  return pow(a, T {b});
-      else if constexpr(  scalar_value<T> ) return pow(U {a}, b);
-      else
+      if constexpr( floating_value<U> )
       {
-        if constexpr( std::is_same_v<T, U> )
+        if constexpr( scalar_value<U> )  return pow(a, T {b});
+        else if constexpr(  scalar_value<T> ) return pow(U {a}, b);
+        else
         {
-           return exp(b * log(a));
+          if constexpr( std::is_same_v<T, U> )
+          {
+            return exp(b * log(a));
+          }
         }
       }
+      else
+      {
+        return pow(a, b);
+      }
     }
-    else
-    {
-      return pow(a, b);
-    }
+    else return apply_over(raw_(pow), a, b);
+
   }
 
   template<floating_value T, integral_real_scalar_value U>

@@ -8,12 +8,23 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/is_not_inf.hpp>
+#include <eve/function/cospi.hpp>
+#include <eve/constant/pio_4.hpp>
 #include <cmath>
+#include <eve/concept/value.hpp>
+
 
 int main(int argc, char** argv)
 {
-  EVE_REGISTER_BENCHMARK(eve::is_not_inf, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  if (eve::floating_value<EVE_TYPE>)
+  {
+    auto lmax = EVE_VALUE(0.25);
+    auto lmin = EVE_VALUE(-0.25);
+    EVE_REGISTER_BENCHMARK(eve::restricted_(eve::cospi), EVE_TYPE
+                          , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+    eve::bench::start_benchmarks(argc, argv);
+  }
+
 }

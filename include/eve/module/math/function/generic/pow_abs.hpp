@@ -65,9 +65,9 @@ namespace eve::detail
     z                = fma(Log2_em1, x, w);
     z += x;
     w          = fnma(tofloat(i), Oneo_16, ee);
-    auto reduc = [](T x) {
+    auto reduc = [Oneo_16](T x) {
       // Find a multiple of 1/16 that is within 1/16 of x.
-      return T(0.0625) * floor(T(16) * x);
+      return Oneo_16 * floor(T(16) * x);
     };
     T ya = reduc(b);
     T yb = b - ya;
@@ -199,14 +199,26 @@ namespace eve::detail
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(pow_abs, a, b);
+    std::cout << "icitte" << std::endl;
+    return arithmetic_call(raw_(pow_abs), a, b);
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE auto
-  pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, T const &b) noexcept
+  /*EVE_FORCEINLINE*/ auto
+  pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
-    return exp(b * log(eve::abs(a)));
+//     auto tmp = eve::log(abs(a));
+//     auto tmp1= exp(b);
+//     return tmp1+tmp;
+//    return exp(tmp);
+//     if (has_native_abi_v<T>)
+//     {
+//     std::cout << tts::type_id<T>()<< std::endl;
+//     std::cout << "latte" << std::endl;
+    return eve::exp(b * eve::log(eve::abs(a)));
+//     }
+//     else
+//       apply_over(raw_(pow_abs), a, b);
   }
 
 }
