@@ -15,7 +15,6 @@ int main(int argc, char** argv)
 {
   constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_cot = [inrad](auto x) { return inrad*std::cos(x); };
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = EVE_TYPE(90);
   auto lmin = EVE_TYPE(-lmax);
   EVE_REGISTER_BENCHMARK(std_cot, EVE_TYPE

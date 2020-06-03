@@ -13,7 +13,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto const std_pow = [](auto x, auto y) { return eve::raw_(eve::pow)(x, y); };
   auto lmin = EVE_TYPE(-10);
   auto lmax = EVE_TYPE(10);

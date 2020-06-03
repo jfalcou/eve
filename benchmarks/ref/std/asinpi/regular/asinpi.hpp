@@ -15,7 +15,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   constexpr EVE_TYPE invpi = std::numbers::inv_pi_v<EVE_TYPE>;
   auto const std_asinpi = [invpi](auto x) { return invpi*std::asin(x); };
   EVE_REGISTER_BENCHMARK(std_asinpi, EVE_TYPE

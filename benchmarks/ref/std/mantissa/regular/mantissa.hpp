@@ -14,7 +14,6 @@
 
 int main(int argc, char** argv)
 {
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Maxlog<EVE_TYPE>();
   auto lmax = eve::Minlog<EVE_TYPE>();
   auto std_mantissa =  [](auto x){ int e;  return std::frexp(x, &e)*2; };

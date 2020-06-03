@@ -15,7 +15,6 @@ int main(int argc, char** argv)
 {
   constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_cscd = [inrad](auto x) { return inrad*1/std::sin(x); };
-  using EVE_TYPE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = EVE_TYPE(45);
   auto lmin = EVE_TYPE(-lmax);
 
