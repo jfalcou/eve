@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_SPEC_HPP_INCLUDED
-#define EVE_ARCH_CPU_SPEC_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 
@@ -29,4 +28,3 @@ namespace eve
   inline constexpr bool supports_aarch64  = spy::supports::aarch64_;
 }
 
-#endif

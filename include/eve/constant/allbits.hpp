@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_ALLBITS_HPP_INCLUDED
-#define EVE_CONSTANT_ALLBITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -42,4 +41,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(allbits_, Allbits);
 }
 
-#endif

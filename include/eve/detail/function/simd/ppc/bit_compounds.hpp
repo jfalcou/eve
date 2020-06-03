@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_BIT_COMPOUNDS_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_BIT_COMPOUNDS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/concepts.hpp>
@@ -88,4 +87,3 @@ namespace eve::detail
   }
 }
 
-#endif

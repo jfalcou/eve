@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_OPERATORS_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_OPERATORS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -267,4 +266,3 @@ namespace eve::detail
   }
 }
 
-#endif

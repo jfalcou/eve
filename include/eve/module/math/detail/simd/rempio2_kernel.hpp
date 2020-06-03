@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_DETAIL_SIMD_REMPIO2_KERNEL_HPP_INCLUDED
-#define EVE_MODULE_MATH_DETAIL_SIMD_REMPIO2_KERNEL_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/pio_2.hpp>
@@ -286,4 +285,3 @@ namespace eve::detail
   }
 }
 
-#endif

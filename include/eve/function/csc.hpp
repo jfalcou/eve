@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CSC_HPP_INCLUDED
-#define EVE_FUNCTION_CSC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/csc.hpp>
 #include <eve/module/core/function/generic/csc.hpp>
 
-#endif

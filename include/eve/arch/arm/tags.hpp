@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ARM_TAGS_HPP_INCLUDED
-#define EVE_ARCH_ARM_TAGS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/arm/predef.hpp>
 #include <eve/arch/cpu/tags.hpp>
@@ -49,4 +48,3 @@ namespace eve
   template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<neon128_, neon64_> {});
 }
 
-#endif

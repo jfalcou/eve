@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_PREDEF_HPP_INCLUDED
-#define EVE_ARCH_X86_PREDEF_HPP_INCLUDED
+#pragma once
 
 // Make MSVC compliant with macro we look for
 #if defined(_MSC_VER)
@@ -50,4 +49,3 @@
 #  define EVE_HW_X86
 #endif
 
-#endif

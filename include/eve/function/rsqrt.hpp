@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_RSQRT_HPP_INCLUDED
-#define EVE_FUNCTION_RSQRT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/rsqrt.hpp>
 #include <eve/arch.hpp>
@@ -27,4 +26,3 @@
 #  include <eve/module/core/function/simd/arm/neon/rsqrt.hpp>
 #endif
 
-#endif

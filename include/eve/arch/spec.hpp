@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_SPEC_HPP_INCLUDED
-#define EVE_ARCH_SPEC_HPP_INCLUDED
+#pragma once
 
 #if !defined(EVE_NO_SIMD)
 #  include <eve/arch/x86/spec.hpp>
@@ -34,4 +33,3 @@ namespace eve
 # endif
 }
 
-#endif

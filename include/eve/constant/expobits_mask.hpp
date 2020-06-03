@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_EXPOBITS_MASK_HPP_INCLUDED
-#define EVE_CONSTANT_EXPOBITS_MASK_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -33,4 +32,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(expobits_mask_, Expobits_mask);
 }
 
-#endif

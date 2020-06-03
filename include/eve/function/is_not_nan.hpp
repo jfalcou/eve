@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_not_nan.hpp>
 #include <eve/module/core/function/generic/is_not_nan.hpp>
 
-#endif

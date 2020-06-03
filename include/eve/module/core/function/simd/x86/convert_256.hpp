@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_256_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_256_HPP_INCLUDED
+#pragma once
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
@@ -213,4 +212,3 @@ namespace eve::detail
   }
 }
 
-#endif

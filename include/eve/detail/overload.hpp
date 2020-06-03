@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_OVERLOAD_HPP_INCLUDED
-#define EVE_DETAIL_OVERLOAD_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
@@ -185,4 +184,3 @@ namespace eve
   {};
 }
 
-#endif

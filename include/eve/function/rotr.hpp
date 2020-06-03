@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ROTR_HPP_INCLUDED
-#define EVE_FUNCTION_ROTR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/rotr.hpp>
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/rotr.hpp>
 
-#endif

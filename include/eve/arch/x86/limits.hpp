@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_LIMITS_HPP_INCLUDED
-#define EVE_ARCH_X86_LIMITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/x86/tags.hpp>
 #include <eve/detail/meta.hpp>
@@ -116,4 +115,3 @@ namespace eve
   // TODO: AVX512 ABI
 }
 
-#endif

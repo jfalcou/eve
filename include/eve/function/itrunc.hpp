@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ITRUNC_HPP_INCLUDED
-#define EVE_FUNCTION_ITRUNC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/itrunc.hpp>
 #include <eve/module/core/function/generic/itrunc.hpp>
 
-#endif

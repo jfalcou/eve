@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_ALIAS_HPP_INCLUDED
-#define EVE_DETAIL_ALIAS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 #include <type_traits>
@@ -44,4 +43,3 @@ namespace eve::detail
   using alias_t = typename alias<T>::type;
 }
 
-#endif

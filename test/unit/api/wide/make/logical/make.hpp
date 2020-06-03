@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef MAKE_HPP
-#define MAKE_HPP
+#pragma once
 
 #include "test.hpp"
 #include <eve/wide.hpp>
@@ -39,5 +38,3 @@ TTS_CASE_TPL("Check enumerating constructor for wide of logical",
 
   TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
 }
-
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_LDEXP_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_LDEXP_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/is_flint.hpp>
@@ -39,4 +38,3 @@ namespace eve
   EVE_MAKE_CALLABLE(ldexp_, ldexp);
 }
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NEGATENZ_HPP_INCLUDED
-#define EVE_FUNCTION_NEGATENZ_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/negatenz.hpp>
 #include <eve/module/core/function/generic/negatenz.hpp>
 
-#endif

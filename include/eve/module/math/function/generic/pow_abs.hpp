@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_POW_ABS_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_GENERIC_POW_ABS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/concepts.hpp>
@@ -212,4 +211,3 @@ namespace eve::detail
 
 }
 
-#endif

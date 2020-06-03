@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_AS_LOGICAL_HPP_INCLUDED
-#define EVE_TRAITS_AS_LOGICAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/logical.hpp>
@@ -38,4 +37,3 @@ namespace eve
   using as_logical_t = typename as_logical<T>::type;
 }
 
-#endif

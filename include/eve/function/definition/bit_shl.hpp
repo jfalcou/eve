@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_BIT_SHL_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_BIT_SHL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/shl.hpp>
@@ -19,4 +18,3 @@ namespace eve
   inline auto const bit_shl = eve::shl;
 }
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_TANH_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_GENERIC_TANH_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
@@ -61,4 +60,3 @@ namespace eve::detail
   }
 }
 
-#endif

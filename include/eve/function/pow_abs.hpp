@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_POW_ABS_HPP_INCLUDED
-#define EVE_FUNCTION_POW_ABS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/pow_abs.hpp>
 #include <eve/module/math/function/generic/pow_abs.hpp>
 
-#endif

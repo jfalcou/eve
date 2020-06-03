@@ -9,8 +9,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_IS_GREATER_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
@@ -29,4 +28,3 @@ namespace eve::detail
   }
 }
 
-#endif

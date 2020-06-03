@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COSH_HPP_INCLUDED
-#define EVE_FUNCTION_COSH_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/cosh.hpp>
 #include <eve/module/math/function/generic/cosh.hpp>
 
-#endif

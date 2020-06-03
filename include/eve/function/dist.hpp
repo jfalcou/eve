@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DIST_HPP_INCLUDED
-#define EVE_FUNCTION_DIST_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/dist.hpp>
 #include <eve/module/core/function/generic/dist.hpp>
 
-#endif

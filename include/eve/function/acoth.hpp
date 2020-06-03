@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ACOTH_HPP_INCLUDED
-#define EVE_FUNCTION_ACOTH_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/acoth.hpp>
 #include <eve/module/math/function/generic/acoth.hpp>
 
-#endif

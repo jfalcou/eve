@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONCEPT_REBINDABLE_HPP_INCLUDED
-#define EVE_CONCEPT_REBINDABLE_HPP_INCLUDED
+#pragma once
 
 #include <utility>
 
@@ -23,4 +22,3 @@ namespace eve
   };
 }
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_COPYSIGN_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_COPYSIGN_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
@@ -20,4 +19,3 @@ namespace eve
   EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
-#endif

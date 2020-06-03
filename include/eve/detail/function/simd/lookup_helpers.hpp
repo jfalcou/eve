@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_LOOKUP_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_LOOKUP_HPP_INCLUDED
+#pragma once
 
 namespace eve::detail
 {
@@ -73,4 +72,3 @@ namespace eve::detail
   }();
 }
 
-#endif

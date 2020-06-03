@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_PPC_LOOKUP_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_PPC_LOOKUP_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/function/simd/lookup_helpers.hpp>
 #include <eve/detail/implementation.hpp>
@@ -42,4 +41,3 @@ namespace eve::detail
   }
 }
 
-#endif

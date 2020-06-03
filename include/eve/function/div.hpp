@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DIV_HPP_INCLUDED
-#define EVE_FUNCTION_DIV_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/div.hpp>
 #include <eve/arch.hpp>
@@ -25,5 +24,4 @@
 
 #if defined(EVE_HW_ARM)
 #  include <eve/module/core/function/simd/arm/neon/div.hpp>
-#endif
 #endif

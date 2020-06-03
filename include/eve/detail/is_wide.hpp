@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_IS_WIDE_HPP_INCLUDED
-#define EVE_DETAIL_IS_WIDE_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/concept/rebindable.hpp>
@@ -40,4 +39,3 @@ namespace eve::detail
   };
 }
 
-#endif

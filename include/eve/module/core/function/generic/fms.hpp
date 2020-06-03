@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_FMS_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_FMS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -57,4 +56,3 @@ namespace eve::detail
   }
 }
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_LOG2_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_LOG2_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 
@@ -18,4 +17,3 @@ namespace eve
   EVE_MAKE_CALLABLE(log2_, log2);
 }
 
-#endif

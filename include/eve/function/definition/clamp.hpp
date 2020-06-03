@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_CLAMP_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_CLAMP_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -35,4 +34,3 @@ namespace eve
   EVE_MAKE_CALLABLE(clamp_, clamp);
 }
 
-#endif

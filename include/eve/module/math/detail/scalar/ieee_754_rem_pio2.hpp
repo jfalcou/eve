@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_DETAIL_SCALAR_IEEE_754_REM_PIO2_HPP_INCLUDED
-#define EVE_MODULE_MATH_DETAIL_SCALAR_IEEE_754_REM_PIO2_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
@@ -38,7 +37,7 @@ namespace eve::detail
 {
   EVE_FORCEINLINE
   int __kernel_rem_pio2(double *x, double *y, int e0, int nx
-                       , int prec, const std::int32_t *ipio2); 
+                       , int prec, const std::int32_t *ipio2);
   /*
    * ====================================================
    * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
@@ -50,7 +49,7 @@ namespace eve::detail
    * ====================================================
    */
 #define   EVE_ENDIAN_LITTLE_BYTE 1
-  
+
 #if EVE_ENDIAN_LITTLE_BYTE
 #define LOW_WORD_IDX 0
 #define HIGH_WORD_IDX sizeof(std::uint32_t)
@@ -58,7 +57,7 @@ namespace eve::detail
 #define LOW_WORD_IDX sizeof(std::uint32_t)
 #define HIGH_WORD_IDX 0
 #endif
-  
+
 #define GET_HIGH_WORD(i,d)                                              \
   do {                                                                  \
     double f = (d);                                                     \
@@ -66,7 +65,7 @@ namespace eve::detail
                 HIGH_WORD_IDX, sizeof(std::uint32_t));                  \
   } ONCE0                                                               \
     /**/
-  
+
 #define GET_LOW_WORD(i,d)                                               \
   do {                                                                  \
     double f = (d);                                                     \
@@ -74,7 +73,7 @@ namespace eve::detail
                 LOW_WORD_IDX, sizeof(std::uint32_t));                   \
   } ONCE0                                                               \
     /**/
-  
+
 #define SET_HIGH_WORD(d,v)                                              \
   do {                                                                  \
     double f = (d);                                                     \
@@ -84,7 +83,7 @@ namespace eve::detail
     (d) = f;                                                            \
   } ONCE0                                                               \
     /**/
-  
+
 #define SET_LOW_WORD(d,v)                                               \
   do {                                                                  \
     double f = (d);                                                     \
@@ -111,7 +110,7 @@ namespace eve::detail
       0x91615E, 0xE61B08, 0x659985, 0x5F14A0, 0x68408D, 0xFFD880,
       0x4D7327, 0x310606, 0x1556CA, 0x73A8C9, 0x60E27B, 0xC08C6B,
     };
-    
+
     static const std::int32_t npio2_hw[] = {
       0x3FF921FB, 0x400921FB, 0x4012D97C, 0x401921FB, 0x401F6A7A, 0x4022D97C,
       0x4025FDBB, 0x402921FB, 0x402C463A, 0x402F6A7A, 0x4031475C, 0x4032D97C,
@@ -120,7 +119,7 @@ namespace eve::detail
       0x4043A28C, 0x40446B9C, 0x404534AC, 0x4045FDBB, 0x4046C6CB, 0x40478FDB,
       0x404858EB, 0x404921FB,
     };
-    
+
     /*
      * invpio2:  53 bits of 2/pi
      * pio2_1:   first  33 bit of pi/2
@@ -130,7 +129,7 @@ namespace eve::detail
      * pio2_3:   third  33 bit of pi/2
      * pio2_3t:  pi/2 - (pio2_1+pio2_2+pio2_3)
      */
-    
+
     static const double
       zero =  0.00000000000000000000e+00, /* 0x00000000, 0x00000000 */
       half =  5.00000000000000000000e-01, /* 0x3FE00000, 0x00000000 */
@@ -142,12 +141,12 @@ namespace eve::detail
       pio2_2t =  2.02226624879595063154e-21, /* 0x3BA3198A, 0x2E037073 */
       pio2_3  =  2.02226624871116645580e-21, /* 0x3BA3198A, 0x2E000000 */
       pio2_3t =  8.47842766036889956997e-32; /* 0x397B839A, 0x252049C1 */
-    
+
     double z = Zero<double>(),w,t,r,fn;
     double tx[3];
     std::int32_t e0,i,j,nx,n,ix,hx;
     std::uint32_t low;
-    
+
     GET_HIGH_WORD(hx,x);        /* high word of x */
     ix = hx&0x7fffffff;
     if(ix<=0x3fe921fb)   /* |x| ~<= pi/4 , no need for reduction */
@@ -176,7 +175,7 @@ namespace eve::detail
           y[0] = z + pio2_2t;
           y[1] = (z-y[0])+pio2_2t;
         }
-        
+
         return -1;
       }
     }
@@ -237,7 +236,7 @@ namespace eve::detail
     if(hx<0) {y[0] = -y[0]; y[1] = -y[1]; return -n;}
     return n;
   }
-  
+
   /*
    * __kernel_rem_pio2(x,y,e0,nx,prec,ipio2)
    * Double x[],y[]; int e0,nx,prec; int ipio2[];
@@ -344,12 +343,12 @@ namespace eve::detail
    *        it also indicates the *sign* of the result.
    *
    */
-  
+
   EVE_FORCEINLINE
   int __kernel_rem_pio2(double *x, double *y, int e0, int nx, int prec, const std::int32_t *ipio2)
   {
     static const int init_jk[] = {2,3,4,6}; /* initial value for jk */
-    
+
     static const double PIo2[] = {
       1.57079625129699707031e+00, /* 0x3FF921FB, 0x40000000 */
       7.54978941586159635335e-08, /* 0x3E74442D, 0x00000000 */
@@ -360,7 +359,7 @@ namespace eve::detail
       2.73370053816464559624e-44, /* 0x36E38222, 0x80000000 */
       2.16741683877804819444e-51, /* 0x3569F31D, 0x00000000 */
     };
-    
+
     static const double
       zero   = 0.0,
       one    = 1.0,
@@ -399,7 +398,7 @@ namespace eve::detail
     }
 
     /* compute n */
-    z  = std::ldexp(z,q0); 
+    z  = std::ldexp(z,q0);
     z -= 8.0*eve::floor(z*0.125);        /* trim off integer >= 8 */
     n  = (std::int32_t) z;
     z -= (double)n;
@@ -432,7 +431,7 @@ namespace eve::detail
       }
       if(ih==2) {
         z = one - z;
-        if(carry!=0) z -= std::ldexp(one, q0); 
+        if(carry!=0) z -= std::ldexp(one, q0);
       }
     }
 
@@ -468,7 +467,7 @@ namespace eve::detail
     }
 
     /* convert integer "bit" chunk to floating-point value */
-    fw = std::ldexp(one, q0); 
+    fw = std::ldexp(one, q0);
     for(i=jz;i>=0;i--) {
       q[i] = fw*(double)iq[i]; fw*=twon24;
     }
@@ -523,6 +522,3 @@ namespace eve::detail
 #undef SET_LOW_WORD
 #undef ONCE0
 }
-
-#endif
-

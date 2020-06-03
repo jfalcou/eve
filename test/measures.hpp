@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef TEST_MEASURES_HPP
-#define TEST_MEASURES_HPP
+#pragma once
 
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -100,5 +99,3 @@ namespace tts::ext
     }
   };
 }
-
-#endif

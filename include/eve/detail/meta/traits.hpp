@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_META_TRAITS_HPP_INCLUDED
-#define EVE_DETAIL_META_TRAITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/rebindable.hpp>
 #include <type_traits>
@@ -272,4 +271,3 @@ namespace eve::detail
   inline constexpr auto count_v = count<T>::value;
 }
 
-#endif

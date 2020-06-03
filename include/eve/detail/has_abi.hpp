@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIl_HAS_ABI_HPP_INCLUDED
-#define EVE_DETAIl_HAS_ABI_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/tags.hpp>
 #include <type_traits>
@@ -63,7 +62,3 @@ namespace eve
   template<typename T>
   using has_native_abi_t = typename has_native_abi<T>::type;
 }
-
-#endif
-
-

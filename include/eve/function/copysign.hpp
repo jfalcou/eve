@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COPYSIGN_HPP_INCLUDED
-#define EVE_FUNCTION_COPYSIGN_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/copysign.hpp>
 #include <eve/module/core/function/generic/copysign.hpp>
 
-#endif

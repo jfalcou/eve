@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_NOTOR_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_NOTOR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_notor.hpp>
 #include <eve/arch.hpp>
@@ -19,4 +18,3 @@
 #  include <eve/module/core/function/simd/arm/neon/bit_notor.hpp>
 #endif
 
-#endif

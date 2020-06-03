@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ACSCPI_HPP_INCLUDED
-#define EVE_FUNCTION_ACSCPI_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/acscpi.hpp>
 #include <eve/module/math/function/generic/acscpi.hpp>
 
-#endif

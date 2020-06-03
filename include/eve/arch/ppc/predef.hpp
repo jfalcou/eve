@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_PPC_PREDEF_HPP_INCLUDED
-#define EVE_ARCH_PPC_PREDEF_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 
@@ -19,4 +18,3 @@
 #  define EVE_HW_POWERPC
 #endif
 
-#endif

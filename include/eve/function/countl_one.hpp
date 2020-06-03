@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COUNTL_ONE_HPP_INCLUDED
-#define EVE_FUNCTION_COUNTL_ONE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/countl_one.hpp>
 #include <eve/module/core/function/generic/countl_one.hpp>
 
-#endif

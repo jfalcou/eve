@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOGICAL_HPP_INCLUDED
-#define EVE_FUNCTION_LOGICAL_HPP_INCLUDED
+#pragma once
 
 // helper file to include all logical functions and operators
 #include <eve/function/logical_and.hpp>
@@ -22,4 +21,3 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/ifnot_else.hpp>
 
-#endif

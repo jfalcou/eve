@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SWAPBYTES_HPP_INCLUDED
-#define EVE_FUNCTION_SWAPBYTES_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/swapbytes.hpp>
 #include <eve/module/core/function/scalar/swapbytes.hpp>
 //#include <eve/module/core/function/simd/swapbytes.hpp>
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_OR_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_BIT_OR_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/detail/implementation.hpp>
@@ -53,4 +52,3 @@ namespace eve::detail
   }
 }
 
-#endif

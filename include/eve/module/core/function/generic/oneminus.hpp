@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_ONEMINUS_HPP_ONEMINUSLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_ONEMINUS_HPP_ONEMINUSLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
@@ -122,4 +121,3 @@ namespace eve::detail
   }
 }
 
-#endif

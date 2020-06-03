@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_SELECT_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_SELECT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_select.hpp>
 #include <eve/arch.hpp>
@@ -27,4 +26,3 @@
 #  include <eve/module/core/function/simd/arm/neon/bit_select.hpp>
 #endif
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ULPDIST_HPP_INCLUDED
-#define EVE_FUNCTION_ULPDIST_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/ulpdist.hpp>
 #include <eve/module/core/function/generic/ulpdist.hpp>
 
-#endif

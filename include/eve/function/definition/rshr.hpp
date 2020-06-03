@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_RSHR_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_RSHR_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
@@ -41,4 +40,3 @@ namespace eve
   EVE_MAKE_CALLABLE(rshr_, rshr);
 }
 
-#endif

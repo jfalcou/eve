@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_FUNCTION_GENERIC_ATAN2_HPP_INCLUDED
-#define EVE_MODULE_MATH_FUNCTION_GENERIC_ATAN2_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -120,4 +119,3 @@ namespace eve::detail
   }
 }
 
-#endif

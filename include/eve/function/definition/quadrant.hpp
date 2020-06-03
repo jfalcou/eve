@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_QUADRANT_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_QUADRANT_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 
@@ -18,4 +17,3 @@ namespace eve
   EVE_MAKE_CALLABLE(quadrant_, quadrant);
 }
 
-#endif

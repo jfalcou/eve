@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FNMS_HPP_INCLUDED
-#define EVE_FUNCTION_FNMS_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/fnms.hpp>
 #include <eve/arch.hpp>
@@ -21,5 +20,4 @@
 
 #if defined(EVE_HW_ARM)
 #  include <eve/module/core/function/simd/arm/neon/fnms.hpp>
-#endif
 #endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef STORE_HPP
-#define STORE_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/basic.hpp>
@@ -81,5 +80,3 @@ TTS_CASE_TPL("Check store behavior to aligned pointer of arithmetic",
 
   TTS_ALL_EQUAL(target<T::value>, ref);
 }
-
-#endif

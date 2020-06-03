@@ -82,4 +82,3 @@ inline typename tools::promote_args<T>::type sin_pi(T x)
 } // namespace math
 } // namespace boost
 #endif
-

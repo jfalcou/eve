@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef TEST_PRODUCERS_HPP
-#define TEST_PRODUCERS_HPP
+#pragma once
 
 #include <eve/function/clamp.hpp>
 #include <eve/function/nb_values.hpp>
@@ -127,7 +126,7 @@ namespace eve
     }
 
     template<typename P>
-    exhaustive_producer(P const &src, std::size_t i0, std::size_t i1, std::size_t)
+    exhaustive_producer(P const &src, std::size_t i0, std::size_t, std::size_t)
         : exhaustive_producer(src.self())
     {
       current_ = eve::next(current_, i0);
@@ -141,5 +140,3 @@ namespace eve
     std::size_t size_;
   };
 }
-
-#endif

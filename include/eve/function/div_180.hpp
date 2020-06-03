@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DIV_180_HPP_INCLUDED
-#define EVE_FUNCTION_DIV_180_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/div_180.hpp>
 #include <eve/module/core/function/generic/div_180.hpp>
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_WIDE_HPP_INCLUDED
-#define EVE_ARCH_WIDE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/wide.hpp>
 #include <eve/arch/cpu/logical_wide.hpp>
@@ -48,4 +47,3 @@ namespace eve::detail
   template<typename T> struct sign_of<logical<T>> : sign_of<T> {};
 }
 
-#endif

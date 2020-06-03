@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_STD_API_HPP_INCLUDED
-#define EVE_DETAIL_STD_API_HPP_INCLUDED
+#pragma once
 
 #include <tuple>
 
@@ -73,4 +72,3 @@ namespace eve
   }
 }
 
-#endif

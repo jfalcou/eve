@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MEMORY_ALIGNED_ALLOCATOR_HPP_INCLUDED
-#define EVE_MEMORY_ALIGNED_ALLOCATOR_HPP_INCLUDED
+#pragma once
 
 #include <eve/memory/aligned_alloc.hpp>
 #include <eve/memory/aligned_dealloc.hpp>
@@ -63,4 +62,3 @@ namespace eve
   }
 }
 
-#endif

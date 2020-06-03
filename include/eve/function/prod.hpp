@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_PROD_HPP_INCLUDED
-#define EVE_FUNCTION_PROD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/prod.hpp>
 #include <eve/module/core/function/scalar/prod.hpp>
 //#include <eve/module/core/function/simd/prod.hpp>
 
-#endif

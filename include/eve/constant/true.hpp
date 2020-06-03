@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_TRUE_HPP_INCLUDED
-#define EVE_CONSTANT_TRUE_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
@@ -28,4 +27,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(true_, True);
 }
 
-#endif

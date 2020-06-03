@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_CONCEPTS_HPP_INCLUDED
-#define EVE_DETAIL_CONCEPTS_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/spy.hpp>
 
@@ -111,4 +110,3 @@ namespace std
 
 #endif
 
-#endif

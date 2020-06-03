@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_LIMITS_HPP_INCLUDED
-#define EVE_ARCH_LIMITS_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/cpu/limits.hpp>
 
@@ -19,4 +18,3 @@
 #include <eve/arch/arm/limits.hpp>
 #endif
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_IEEE_CONSTANT_IEEE_CONSTANT_HPP_INCLUDED
-#define EVE_IEEE_CONSTANT_IEEE_CONSTANT_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -48,4 +47,3 @@ namespace eve
   }
 }
 
-#endif

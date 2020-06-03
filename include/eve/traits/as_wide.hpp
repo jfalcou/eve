@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_AS_WIDE_HPP_INCLUDED
-#define EVE_TRAITS_AS_WIDE_HPP_INCLUDED
+#pragma once
 
 #include <eve/forward.hpp>
 #include <eve/concept/rebindable.hpp>
@@ -88,4 +87,3 @@ namespace eve
   using as_wide_t = typename as_wide<Type, Size>::type;
 }
 
-#endif

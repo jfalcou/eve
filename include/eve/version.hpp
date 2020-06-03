@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_VERSION_HPP_INCLUDED
-#define EVE_VERSION_HPP_INCLUDED
+#pragma once
 
 #define EVE_VERSION 12005000
 #define EVE_VERSION_SEMANTIC  (EVE_VERSION / 10000000)
@@ -19,4 +18,3 @@
 
 #define EVE_LIB_VERSION "1.20.5.0"
 
-#endif

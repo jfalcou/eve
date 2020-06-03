@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_REFINE_REC_HPP_INCLUDED
-#define EVE_FUNCTION_REFINE_REC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/refine_rec.hpp>
 #include <eve/arch.hpp>
@@ -19,4 +18,3 @@
 #  include <eve/module/core/function/simd/arm/neon/refine_rec.hpp>
 #endif
 
-#endif

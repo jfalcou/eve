@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NBTRUE_HPP_INCLUDED
-#define EVE_FUNCTION_NBTRUE_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/nbtrue.hpp>
 #include <eve/arch.hpp>
@@ -19,4 +18,3 @@
 #  include <eve/module/algorithm/function/simd/x86/nbtrue.hpp>
 #endif
 
-#endif

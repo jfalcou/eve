@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_X86_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_X86_AS_REGISTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/x86/predef.hpp>
 #include <type_traits>
@@ -79,4 +78,3 @@ namespace eve
 #  pragma GCC diagnostic pop
 #endif
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_CPU_AS_REGISTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/traits/as_wide.hpp>
 #include <eve/arch/expected_cardinal.hpp>
@@ -62,4 +61,3 @@ namespace eve
   };
 }
 
-#endif

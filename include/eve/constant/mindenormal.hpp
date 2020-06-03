@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_CONSTANT_MINDENORMAL_HPP_INCLUDED
-#define EVE_CONSTANT_MINDENORMAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/constant.hpp>
@@ -33,4 +32,3 @@ namespace eve
   EVE_MAKE_NAMED_CONSTANT(mindenormal_, Mindenormal);
 }
 
-#endif

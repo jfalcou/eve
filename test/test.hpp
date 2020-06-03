@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef TEST_TEST_HPP
-#define TEST_TEST_HPP
+#pragma once
 
 #define TTS_USE_CUSTOM_DRIVER
 #include <tts/tts.hpp>
@@ -27,5 +26,3 @@ int main(int argc, char **argv)
   ::tts::env runtime(argc, argv, std::cout);
   return ::tts::run(runtime, ::tts::detail::suite, 0, 0);
 }
-
-#endif

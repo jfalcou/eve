@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_FIRSTBITSET_HPP_INCLUDED
-#define EVE_FUNCTION_FIRSTBITSET_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/firstbitset.hpp>
 #include <eve/module/core/function/generic/firstbitset.hpp>
 
-#endif

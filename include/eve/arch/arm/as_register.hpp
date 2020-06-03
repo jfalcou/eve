@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_ARCH_ARM_AS_REGISTER_HPP_INCLUDED
-#define EVE_ARCH_ARM_AS_REGISTER_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/arch/arm/predef.hpp>
@@ -108,4 +107,3 @@ namespace eve
 }
 #endif
 
-#endif

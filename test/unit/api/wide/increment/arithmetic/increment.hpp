@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef INCREMENT_HPP
-#define INCREMENT_HPP
+#pragma once
 
 #include "test.hpp"
 #include <eve/wide.hpp>
@@ -54,5 +53,3 @@ TTS_CASE_TPL("Check self-increment on wide",
     }
   }
 }
-
-#endif

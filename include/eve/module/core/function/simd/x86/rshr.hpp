@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSHR_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_RSHR_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
@@ -73,4 +72,3 @@ namespace eve::detail
   }
 }
 
-#endif

@@ -7,8 +7,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_DETAIL_GENERIC_WORKAROUND_HPP_INCLUDED
-#define EVE_MODULE_MATH_DETAIL_GENERIC_WORKAROUND_HPP_INCLUDED
+#pragma once
 namespace eve::detail
 {
   
@@ -20,4 +19,3 @@ namespace eve::detail
   
 }
 
-#endif

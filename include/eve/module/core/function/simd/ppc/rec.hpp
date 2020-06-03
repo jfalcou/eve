@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/refine_rec.hpp>
@@ -52,7 +51,7 @@ namespace eve::detail
 
     estimate = if_else(is_eqz(v0), bit_or(v0, Inf(as(v0))), estimate);
 
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_PPC_REC_HPP_INCLUDED
+#pragma once
     estimate = if_else(is_infinite(v0), bit_and(v0, Mzero(as(v0))), estimate);
 #endif
 
@@ -60,4 +59,3 @@ namespace eve::detail
   }
 }
 
-#endif

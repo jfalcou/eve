@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_SKELETON_HPP_INCLUDED
-#define EVE_DETAIL_SKELETON_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
@@ -169,4 +168,3 @@ namespace eve::detail
   }
 }
 
-#endif

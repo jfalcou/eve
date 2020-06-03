@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_DETAIL_GENERIC_NEXT_KERNEL_HPP_INCLUDED
-#define EVE_MODULE_CORE_DETAIL_GENERIC_NEXT_KERNEL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -43,4 +42,3 @@ namespace eve::detail
 
 }
 
-#endif

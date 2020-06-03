@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SINPI_HPP_INCLUDED
-#define EVE_FUNCTION_SINPI_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/sinpi.hpp>
 #include <eve/module/math/function/generic/sinpi.hpp>
 
-#endif

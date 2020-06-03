@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_SATURATED_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_X86_CONVERT_SATURATED_HPP_INCLUDED
+#pragma once
 
 
 namespace eve::detail
@@ -183,4 +182,3 @@ namespace eve::detail
   }
 }
 
-#endif

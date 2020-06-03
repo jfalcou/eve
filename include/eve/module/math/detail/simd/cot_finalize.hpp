@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_DETAIL_SIMD_COMMON_COT_FINALIZE_HPP_INCLUDED
-#define EVE_MODULE_MATH_DETAIL_SIMD_COMMON_COT_FINALIZE_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/meta.hpp>
@@ -51,4 +50,3 @@ namespace eve::detail
   }
 }
 
-#endif

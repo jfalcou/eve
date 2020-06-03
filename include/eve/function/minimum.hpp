@@ -8,11 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MINIMUM_HPP_INCLUDED
-#define EVE_FUNCTION_MINIMUM_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/minimum.hpp>
 #include <eve/module/core/function/scalar/minimum.hpp>
 //#include <eve/module/core/function/simd/minimum.hpp>
 
-#endif

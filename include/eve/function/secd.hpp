@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_SECD_HPP_INCLUDED
-#define EVE_FUNCTION_SECD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/secd.hpp>
 #include <eve/module/math/function/generic/secd.hpp>
 
-#endif

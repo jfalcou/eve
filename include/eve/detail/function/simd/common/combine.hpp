@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
@@ -48,4 +47,3 @@ namespace eve::detail
   }
 }
 
-#endif

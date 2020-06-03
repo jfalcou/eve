@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_REC_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_ARM_NEON_REC_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/refine_rec.hpp>
@@ -81,4 +80,3 @@ namespace eve::detail
   }
 }
 
-#endif

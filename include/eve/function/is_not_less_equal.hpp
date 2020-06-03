@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_LESS_EQUAL_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_LESS_EQUAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/is_not_less_equal.hpp>
 #include <eve/module/core/function/generic/is_not_less_equal.hpp>
@@ -18,4 +17,3 @@
 #  include <eve/module/core/function/simd/x86/is_not_less.hpp>
 #endif
 
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_COUNTL_ZERO_HPP_INCLUDED
-#define EVE_FUNCTION_COUNTL_ZERO_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/countl_zero.hpp>
 #include <eve/module/core/function/generic/countl_zero.hpp>
 
-#endif

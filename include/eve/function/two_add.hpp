@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TWO_ADD_HPP_INCLUDED
-#define EVE_FUNCTION_TWO_ADD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/two_add.hpp>
 #include <eve/module/core/function/generic/two_add.hpp>
 
-#endif

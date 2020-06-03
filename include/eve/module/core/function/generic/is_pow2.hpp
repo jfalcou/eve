@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_GENERIC_IS_POW2_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_GENERIC_IS_POW2_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -36,4 +35,3 @@ namespace eve::detail
   }
 }
 
-#endif

@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_RSHR_HPP_INCLUDED
-#define EVE_FUNCTION_RSHR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/rshr.hpp>
 #include <eve/arch.hpp>
@@ -23,4 +22,3 @@
 #  include <eve/module/core/function/simd/arm/neon/rshr.hpp>
 #endif
 
-#endif

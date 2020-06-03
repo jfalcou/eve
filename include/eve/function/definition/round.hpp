@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_DEFINITION_ROUND_HPP_INCLUDED
-#define EVE_FUNCTION_DEFINITION_ROUND_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/roundings.hpp>
@@ -20,4 +19,3 @@ namespace eve
   EVE_MAKE_CALLABLE(round_, round);
 }
 
-#endif

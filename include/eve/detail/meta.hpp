@@ -8,11 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_META_HPP_INCLUDED
-#define EVE_DETAIL_META_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/detail/meta/tools.hpp>
-
-#endif
-

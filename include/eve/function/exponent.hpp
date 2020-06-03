@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXPONENT_HPP_INCLUDED
-#define EVE_FUNCTION_EXPONENT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/exponent.hpp>
 #include <eve/module/core/function/generic/exponent.hpp>
 
-#endif

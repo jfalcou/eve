@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_EXPM1_HPP_INCLUDED
-#define EVE_FUNCTION_EXPM1_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/expm1.hpp>
 #include <eve/module/math/function/generic/expm1.hpp>
 
-#endif

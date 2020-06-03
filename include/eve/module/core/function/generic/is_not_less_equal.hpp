@@ -8,8 +8,7 @@
    SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_NOT_LESS_EQUAL_HPP_INCLUDED
-#define EVE_MODULE_CORE_FUNCTION_SIMD_COMMON_IS_NOT_LESS_EQUAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_greater.hpp>
@@ -41,4 +40,3 @@ namespace eve::detail
   }
 }
 
-#endif

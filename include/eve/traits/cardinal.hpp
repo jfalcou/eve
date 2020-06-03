@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_CARDINAL_HPP_INCLUDED
-#define EVE_TRAITS_CARDINAL_HPP_INCLUDED
+#pragma once
 
 #include <eve/concept/rebindable.hpp>
 #include <eve/detail/is_wide.hpp>
@@ -51,4 +50,3 @@ namespace eve
   inline constexpr auto cardinal_v = cardinal<Type>::value;
 }
 
-#endif

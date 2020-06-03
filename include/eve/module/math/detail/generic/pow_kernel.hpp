@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_MODULE_MATH_DETAIL_GENERIC_POW_KERNEL_HPP_INCLUDED
-#define EVE_MODULE_MATH_DETAIL_GENERIC_POW_KERNEL_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
@@ -206,4 +205,3 @@ namespace eve::detail
 
 }
 
-#endif

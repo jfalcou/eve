@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_NB_VALUES_HPP_INCLUDED
-#define EVE_FUNCTION_NB_VALUES_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/nb_values.hpp>
 #include <eve/module/core/function/generic/nb_values.hpp>
 
-#endif

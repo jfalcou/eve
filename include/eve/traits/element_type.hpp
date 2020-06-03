@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_TRAITS_ELEMENT_TYPE_HPP_INCLUDED
-#define EVE_TRAITS_ELEMENT_TYPE_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/meta/traits.hpp>
 #include <eve/forward.hpp>
@@ -35,7 +34,4 @@ namespace eve
   template<typename T>
   using element_type_t = typename element_type<T>::type;
 }
-
-#endif
-
 

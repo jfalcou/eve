@@ -8,9 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_HAS_SINGLE_BIT_HPP_INCLUDED
-#define EVE_FUNCTION_HAS_SINGLE_BIT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/has_single_bit.hpp>
 
-#endif

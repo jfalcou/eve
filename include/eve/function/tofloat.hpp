@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TOFLOAT_HPP_INCLUDED 
-#define EVE_FUNCTION_TOFLOAT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/tofloat.hpp>
 #include <eve/module/core/function/generic/tofloat.hpp>
 
-#endif

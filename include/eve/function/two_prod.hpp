@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TWO_PROD_HPP_INCLUDED
-#define EVE_FUNCTION_TWO_PROD_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/two_prod.hpp>
 #include <eve/module/core/function/generic/two_prod.hpp>
 
-#endif

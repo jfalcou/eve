@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
-#define EVE_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/logical_ornot.hpp>
 #include <eve/module/core/function/generic/logical_ornot.hpp>
 
-#endif

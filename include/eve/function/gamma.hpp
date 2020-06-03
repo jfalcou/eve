@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_GAMMA_HPP_INCLUDED
-#define EVE_FUNCTION_GAMMA_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/gamma.hpp>
 #include <eve/module/special/function/generic/gamma.hpp>
 
-#endif

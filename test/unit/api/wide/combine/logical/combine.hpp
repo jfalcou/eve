@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef COMBINE_HPP
-#define COMBINE_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -48,5 +47,3 @@ TTS_CASE_TPL("Check combining for logical wide",
   TTS_EQUAL((logical<wide<EVE_TYPE, typename T::combined_type>>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);
 }
-
-#endif

@@ -8,10 +8,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_BIT_FLOOR_HPP_INCLUDED
-#define EVE_FUNCTION_BIT_FLOOR_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/bit_floor.hpp>
 #include <eve/module/core/function/generic/bit_floor.hpp>
 
-#endif

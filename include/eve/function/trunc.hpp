@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_TRUNC_HPP_INCLUDED
-#define EVE_FUNCTION_TRUNC_HPP_INCLUDED
+#pragma once
 
 #include <eve/function/definition/trunc.hpp>
 #include <eve/arch.hpp>
@@ -28,4 +27,3 @@
 #endif
 
 
-#endif

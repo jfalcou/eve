@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef QUADRANT_HPP
-#define QUADRANT_HPP
+#pragma once
 
 #include "test.hpp"
 #include <tts/tests/relation.hpp>
@@ -35,5 +34,3 @@ TTS_CASE_TPL("Check quadrant behavior on wide",
       ref([](auto i, auto) { return eve::quadrant(EVE_TYPE(10*i)); });
   TTS_EQUAL(ref, eve::quadrant(lhs));
 }
-
-#endif

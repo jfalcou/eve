@@ -8,8 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_IS_NATIVE_HPP_INCLUDED
-#define EVE_DETAIL_IS_NATIVE_HPP_INCLUDED
+#pragma once
 
 #include <eve/arch/tags.hpp>
 #include <type_traits>
@@ -67,4 +66,3 @@ namespace eve
   template<typename T> concept native     = detail::is_native_v<T>;
 }
 
-#endif
