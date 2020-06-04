@@ -24,7 +24,7 @@
 namespace eve::detail
 {
   template <floating_real_value T>
-  EVE_FORCEINLINE T kernel_pow1(const T& x, const T& z) noexcept
+  EVE_FORCEINLINE T kernel_pow1(T x,  T z) noexcept
   {
     if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
@@ -54,7 +54,7 @@ namespace eve::detail
   }
 
   template <floating_real_value T>
-  EVE_FORCEINLINE T  kernel_pow2(const T& x) noexcept
+  EVE_FORCEINLINE T  kernel_pow2(T x) noexcept
   {
     if constexpr(std::is_same_v<element_type_t<T>, float>)
     {
@@ -80,7 +80,7 @@ namespace eve::detail
   }
 
   template <integral_value I>
-  EVE_FORCEINLINE as_floating_point_t<I> twomio16(const I& i) noexcept
+  EVE_FORCEINLINE as_floating_point_t<I> twomio16(I i) noexcept
   {
     /* 2^(-i/16)
      * The decimal values are rounded to 24-bit precision
@@ -141,7 +141,7 @@ namespace eve::detail
   }
 
   template <integral_value I>
-  EVE_FORCEINLINE auto continuation(const I& i) noexcept
+  EVE_FORCEINLINE auto continuation(I i) noexcept
   {
     /* continuation, for even i only
      * 2^(i/16)  =  A[i] + B[i/2]
@@ -186,7 +186,7 @@ namespace eve::detail
   }
 
   template <floating_real_value T>
-  EVE_FORCEINLINE auto kernel_select(const T& xx) noexcept
+  EVE_FORCEINLINE auto kernel_select(T xx) noexcept
   {
     using i_t = as_integer_t<T>;
     // find significand in antilog table A[]
@@ -198,10 +198,9 @@ namespace eve::detail
     i = inc(i);
     T tmp = twomio16(i);
     auto x = xx-tmp;
-    x -= continuation(shr(i, 1));
+    x = x - continuation(shr(i, 1));
     x /= tmp;
     return std::make_tuple(x, i);
   }
 
 }
-
