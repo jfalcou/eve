@@ -38,10 +38,9 @@ namespace eve::detail
   template<typename Size, typename Type, typename Storage, typename ABI>
   struct wide_align
   {
-    static constexpr std::size_t base   = alignof(Type);
     static constexpr std::size_t native = alignof(Storage);
     static constexpr std::size_t limit  = Size::value * sizeof(Type);
-    static constexpr std::size_t value  = limit < native ? base : native;
+    static constexpr std::size_t value  = limit < native ? limit : native;
   };
 
   template<typename Size, typename Type, typename Storage>

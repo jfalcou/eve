@@ -24,17 +24,26 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &, eve::sse_ const &, T const* p)
   {
-    if constexpr( std::is_same_v<T, double> )
+    if constexpr( N::value * sizeof(T) == limits<eve::sse2_>::bytes )
     {
-      return _mm_loadu_pd(p);
+      if constexpr( std::is_same_v<T, double> )
+      {
+        return _mm_loadu_pd(p);
+      }
+      else if constexpr( std::is_same_v<T, float> )
+      {
+        return _mm_loadu_ps(p);
+      }
+      else if constexpr( std::is_integral_v<T> )
+      {
+        return _mm_loadu_si128((__m128i *)p);
+      }
     }
-    else if constexpr( std::is_same_v<T, float> )
+    else
     {
-      return _mm_loadu_ps(p);
-    }
-    else if constexpr( std::is_integral_v<T> )
-    {
-      return _mm_loadu_si128((__m128i *)p);
+      typename wide<T, N>::storage_type that;
+      std::memcpy(&that, p, N::value * sizeof(T));
+      return that;
     }
   }
 
@@ -42,7 +51,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::sse_ const &mode, aligned_ptr<T const, A> p) noexcept
   {
-    if constexpr( A >= 16 )
+    if constexpr( A >= 16 && N::value * sizeof(T) == limits<eve::sse2_>::bytes )
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -96,7 +105,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::avx_ const &mode, aligned_ptr<T const, A> p) noexcept
   {
-    if constexpr( A >= 16 )
+    if constexpr( A >= 32 )
     {
       if constexpr( std::is_same_v<T, double> )
       {
