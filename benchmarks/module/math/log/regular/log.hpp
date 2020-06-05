@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmax = EVE_VALUE(10); //eve::Valmax<EVE_VALUE>();
   EVE_REGISTER_BENCHMARK(eve::log, EVE_TYPE, eve::bench::random<EVE_TYPE>(EVE_VALUE(0), lmax));
 
   eve::bench::start_benchmarks(argc, argv);

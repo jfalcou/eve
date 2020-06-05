@@ -40,6 +40,7 @@
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -57,67 +58,79 @@ namespace eve::detail
 //     return map(std_pow, a, b);
     if constexpr(has_native_abi_v<T>)
     {
-      const T Oneo_16 = T(0.0625);
-      //        using i_t = as_integer_t<T>;
-      T ax             = eve::abs(a);
-      auto [xm, ee]    = pedantic_(frexp)(ax);
-      auto [x, i]      = kernel_select(xm);
-      T z              = sqr(x);
-      T w              = kernel_pow1(x, z);
-      w                = fma(Mhalf<T>(), z, w);
-      const T Log2_em1 = T(0.44269504088896340735992468100189);
-      w                = fma(Log2_em1, w, w);
-      z                = fma(Log2_em1, x, w);
-      z += x;
-      w          = fnma(tofloat(i), Oneo_16, ee);
-      auto reduc = [Oneo_16](T const & x) {
-        // Find a multiple of 1/16 that is within 1/16 of x.
-        return Oneo_16 * floor(T(16) * x);
-      };
-      T ya = reduc(b);
-      T yb = b - ya;
-      T W  = fma(z, b, w * yb);
-      T Wa = reduc(W);
-      T Wb = W - Wa;
-      W    = fma(w, ya, Wa);
-      Wa   = reduc(W);
-      T u  = W - Wa;
-      W    = Wb + u;
-      Wb   = reduc(W);
-      w    = T(16) * (Wa + Wb);
-      // Test the power of 2 for over/underflow
-      const T Powlargelim = Ieee_constant<T, 0x44ffe000U, 0x40cfff8000000000ULL>();
-      const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
-      auto    inf_ret     = is_greater(w, Powlargelim);
-      auto    zer_ret     = is_less(w, Powlowlim);
-      auto    e           = toint(w);
-      Wb                  = W - Wb;
-      auto test           = is_gtz(Wb);
-      e                   = inc[test](e);
-      Wb                  = sub[test](Wb, Oneo_16);
-      z                   = kernel_pow2(Wb) * Wb;
-      i                   = inc[is_gtz(e)](e / 16);
-      e                   = fms(i, 16, e);
-      w                   = twomio16(e);
-      z                   = fma(w, z, w);
-      z                   = pedantic_(ldexp)(z, i);
-      if constexpr( eve::platform::supports_infinites )
+      using elt_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<elt_t, float>)
       {
-        auto gtax1 = is_greater(ax, One<T>());
-        z          = if_else(is_equal(b, Inf<T>()), if_else(gtax1, Inf<T>(), eve::zero_), z);
-        z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, Inf<T>()), z);
-        z = if_else(is_equal(ax, Inf<T>()), if_else(is_gtz(b), Inf<T>(), binarize(is_gez(b))), z);
+        auto tmp = convert(raw_(pow_abs)(convert(a, double_), convert(b, double_)), single_);
+        tmp =  if_else(is_eqz(b)||is_equal(a, One(as(a))), eve::one_, tmp);
+        tmp =  if_else(is_eqz(b)&&is_eqz(a), eve::one_, tmp);
+        tmp =  if_else(is_equal(a, One(as(a))), eve::one_, tmp);
+        return tmp;
       }
-      z = if_else(zer_ret, eve::zero_, z);
-      z = if_else(inf_ret, Inf<T>(), z);
-      z = if_else(is_equal(ax, One<T>()), ax, z);
+      else
+      {
+        const T Oneo_16 = T(0.0625);
+        //        using i_t = as_integer_t<T>;
+        T ax             = eve::abs(a);
+        auto [xm, ee]    = pedantic_(frexp)(ax);
+        auto [x, i]      = kernel_select(xm);
+        T z              = sqr(x);
+        T w              = kernel_pow1(x, z);
+        w                = fma(Mhalf<T>(), z, w);
+        const T Log2_em1 = T(0.44269504088896340735992468100189);
+        w                = fma(Log2_em1, w, w);
+        z                = fma(Log2_em1, x, w);
+        z += x;
+        w          = fnma(tofloat(i), Oneo_16, ee);
+        auto reduc = [Oneo_16](T const & x) {
+          // Find a multiple of 1/16 that is within 1/16 of x.
+          return Oneo_16 * floor(T(16) * x);
+        };
+        T ya = reduc(b);
+        T yb = b - ya;
+        T W  = fma(z, b, w * yb);
+        T Wa = reduc(W);
+        T Wb = W - Wa;
+        W    = fma(w, ya, Wa);
+        Wa   = reduc(W);
+        T u  = W - Wa;
+        W    = Wb + u;
+        Wb   = reduc(W);
+        w    = T(16) * (Wa + Wb);
+        // Test the power of 2 for over/underflow
+        const T Powlargelim = Ieee_constant<T, 0x44ffe000U, 0x40cfff8000000000ULL>();
+        const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
+        auto    inf_ret     = is_greater(w, Powlargelim);
+        auto    zer_ret     = is_less(w, Powlowlim);
+        auto    e           = toint(w);
+        Wb                  = W - Wb;
+        auto test           = is_gtz(Wb);
+        e                   = inc[test](e);
+        Wb                  = sub[test](Wb, Oneo_16);
+        z                   = kernel_pow2(Wb) * Wb;
+        i                   = inc[is_gtz(e)](e / 16);
+        e                   = fms(i, 16, e);
+        w                   = twomio16(e);
+        z                   = fma(w, z, w);
+        z                   = pedantic_(ldexp)(z, i);
+        if constexpr( eve::platform::supports_infinites )
+        {
+          auto gtax1 = is_greater(ax, One<T>());
+          z          = if_else(is_equal(b, Inf<T>()), if_else(gtax1, Inf<T>(), eve::zero_), z);
+          z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, Inf<T>()), z);
+          z = if_else(is_equal(ax, Inf<T>()), if_else(is_gtz(b), Inf<T>(), binarize(is_gez(b))), z);
+        }
+        z = if_else(zer_ret, eve::zero_, z);
+        z = if_else(inf_ret, Inf<T>(), z);
+        z = if_else(is_equal(ax, One<T>()), ax, z);
 
-      z = if_else(is_eqz(a), if_else(is_ltz(b), eve::Inf<T>(), binarize(is_eqz(b))), z);
-      if constexpr( eve::platform::supports_invalids )
-      {
-        z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits_), z);
+        z = if_else(is_eqz(a), if_else(is_ltz(b), eve::Inf<T>(), binarize(is_eqz(b))), z);
+        if constexpr( eve::platform::supports_invalids )
+        {
+          z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits_), z);
+        }
+        return z;
       }
-       return z;
     }
     else
       return apply_over(pow_abs, a, b);

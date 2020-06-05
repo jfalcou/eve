@@ -19,20 +19,20 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::pow_abs return type", EVE_TYPE)
-{
-  using v_t = eve::element_type_t<T>;
+// TTS_CASE_TPL("Check eve::pow_abs return type", EVE_TYPE)
+// {
+//   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::pow_abs(T(0)   , T(0)  ), T);
-  TTS_EXPR_IS(eve::pow_abs(T(0)   , v_t(0)), T);
-  TTS_EXPR_IS(eve::pow_abs(v_t(0) , T(0)  ), T);
-}
+//   TTS_EXPR_IS(eve::pow_abs(T(0)   , T(0)  ), T);
+//   TTS_EXPR_IS(eve::pow_abs(T(0)   , v_t(0)), T);
+//   TTS_EXPR_IS(eve::pow_abs(v_t(0) , T(0)  ), T);
+// }
 
 TTS_CASE_TPL("Check eve::pow_abs behavior", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  if constexpr(eve::platform::supports_invalids)
-  {
+//  using v_t = eve::element_type_t<T>;
+   if constexpr(eve::platform::supports_invalids)
+   {
     TTS_IEEE_EQUAL(eve::pow_abs(eve::Minf<T>(), eve::Minf<T>()), T(0) );
 
     TTS_IEEE_EQUAL(eve::pow_abs(eve::Inf<T>() , T(-0.5)       ), T(0)         );
@@ -52,13 +52,13 @@ TTS_CASE_TPL("Check eve::pow_abs behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::pow_abs(T(1)  , eve::Inf<T>() ), T(1)         );
     TTS_IEEE_EQUAL(eve::pow_abs(T(2)  , eve::Minf<T>()), T(0)         );
     TTS_IEEE_EQUAL(eve::pow_abs(T(2)  , eve::Inf<T>() ), eve::Inf<T>());
-  }
+   }
 
-  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T(-1))  , T(1));
-  TTS_IEEE_EQUAL(eve::pow_abs(T( 1)  , T( 1))  , T(1));
-  TTS_IEEE_EQUAL(eve::pow_abs(T( 0)  , T( 0))  , T(1));
-  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 5))  , T(1));
-  TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 6))  , T(1));
-  TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(0.840896415253715)            , 2);
-  TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(std::pow(v_t(0.5), v_t(0.25))), 2);
+   TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T(-1))  , T(1));
+   TTS_IEEE_EQUAL(eve::pow_abs(T( 1)  , T( 1))  , T(1));
+   TTS_IEEE_EQUAL(eve::pow_abs(T( 0)  , T( 0))  , T(1));
+   TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 5))  , T(1));
+   TTS_IEEE_EQUAL(eve::pow_abs(T(-1)  , T( 6))  , T(1));
+   TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(0.840896415253715)            , 2);
+//   TTS_ULP_EQUAL(eve::pow_abs(T(0.5) , T(0.25)), T(std::pow(v_t(0.5), v_t(0.25))), 2);
 }

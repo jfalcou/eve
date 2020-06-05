@@ -29,17 +29,30 @@ TTS_CASE_TPL("Check eve::raw_(eve::pow) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0), T(-1)), eve::Inf<T>(), 0);
     TTS_ULP_EQUAL(eve::raw_(eve::pow)(-T(0), T(-2)), eve::Inf<T>(), 0);
     TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0), T(-2)), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0),  eve::Minf<T>()),  eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-T(0),  eve::Minf<T>()),  eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0.5), eve::Inf<T>()),  T( 0 ), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0),  eve::Minf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(-T(0),  eve::Minf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0.5), eve::Inf<T>()), T( 0 ), 0);
     TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(2), eve::Inf<T>()),  eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0.5), eve::Minf<T>()),  eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(2), eve::Minf<T>()),  T( 0 ), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<T>(), T(4) ),  eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<T>(), T(-4) ),  T( 0 ), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(0.5), eve::Minf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(T(2), eve::Minf<T>()), T( 0 ), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<T>(), T(4) ), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::raw_(eve::pow)(eve::Inf<T>(), T(-4) ), T( 0 ), 0);
   }
 
   TTS_EQUAL(eve::raw_(eve::pow)(T(2),-3), T(1/8.0));
-  TTS_EQUAL(eve::raw_(eve::pow)(T(2),3) , T(8)    );
-  TTS_EQUAL(eve::raw_(eve::pow)(T(2),3u), T(8)    );
+  TTS_EQUAL(eve::raw_(eve::pow)(T(2), 3) , T(8)    );
+  TTS_EQUAL(eve::raw_(eve::pow)(T(2), 3u), T(8)    );
+  using i_t = eve::detail::as_integer_t<T>;
+  TTS_EQUAL(eve::raw_(eve::pow)(T(2),i_t(-3)), T(1/8.0));
+  TTS_EQUAL(eve::raw_(eve::pow)(T(2), i_t(3)) , T(8)   );
+  using ui_t = eve::detail::as_integer_t<T, unsigned>;
+  TTS_EQUAL(eve::raw_(eve::pow)(T(2), ui_t(3)), T(8)   );
+  if constexpr(eve::integral_value<T>)
+  {
+    TTS_EQUAL(eve::raw_(eve::pow)(T(2), 64) , T(0)      );
+    TTS_EQUAL(eve::raw_(eve::pow)(T(2), i_t(64)) , T(0) );
+    TTS_EQUAL(eve::raw_(eve::pow)(T(0), i_t(0)), T(0)   );
+    TTS_EQUAL(eve::raw_(eve::pow)(T(2), ui_t(64)), T(0) );
+    TTS_EQUAL(eve::raw_(eve::pow)(T(0), ui_t(0)), T(0)  );
+  }
 }

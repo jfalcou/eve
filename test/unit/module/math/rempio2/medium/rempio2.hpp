@@ -11,6 +11,7 @@
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/function/trigo_tags.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 

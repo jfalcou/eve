@@ -13,10 +13,10 @@
 
 int main(int argc, char** argv)
 {
-  auto const std_pow = [](auto x, auto y) { return eve::pow_abs(x, y); };
+  // auto const std_pow = [](auto x, auto y) { return eve::pow_abs(x, y); };
   auto lmin = EVE_TYPE(-10);
   auto lmax = EVE_TYPE(10);
-  EVE_REGISTER_BENCHMARK(std_pow, EVE_TYPE
+  EVE_REGISTER_BENCHMARK(eve::pow_abs, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

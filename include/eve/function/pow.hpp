@@ -13,3 +13,7 @@
 #include <eve/function/definition/pow.hpp>
 #include <eve/module/math/function/generic/pow.hpp>
 
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/math/function/simd/x86/pow.hpp>
+#endif

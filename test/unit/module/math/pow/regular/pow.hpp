@@ -67,4 +67,17 @@ TTS_CASE_TPL("pow conformity", EVE_TYPE)
   TTS_EQUAL(eve::pow(T(2),-3), T(1/8.0));
   TTS_EQUAL(eve::pow(T(2),3) , T(8)    );
   TTS_EQUAL(eve::pow(T(2),3u), T(8)    );
+  using i_t = eve::detail::as_integer_t<T>;
+  TTS_EQUAL(eve::pow(T(2),i_t(-3)), T(1/8.0));
+  TTS_EQUAL(eve::pow(T(2), i_t(3)) , T(8)    );
+  using ui_t = eve::detail::as_integer_t<T, unsigned>;
+  TTS_EQUAL(eve::pow(T(2), ui_t(3)), T(8)    );
+  if constexpr(eve::integral_value<T>)
+  {
+    TTS_EQUAL(eve::pow(T(2), 64) , T(0)    );
+    TTS_EQUAL(eve::pow(T(2), i_t(64)) , T(0)    );
+    TTS_EQUAL(eve::pow(T(0), i_t(0)), T(0)    );
+    TTS_EQUAL(eve::pow(T(2), ui_t(64)), T(0)    );
+    TTS_EQUAL(eve::pow(T(0), ui_t(0)), T(0)    );
+  }
 }

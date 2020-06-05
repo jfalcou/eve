@@ -88,7 +88,7 @@ namespace eve::detail
     using elt_t = as_floating_point_t<element_type_t<I>>;
     if constexpr(std::is_same_v<elt_t, float>)
     {
-      const elt_t A[17] =  {
+      constexpr elt_t A[17] =  {
         elt_t(1.00000000000000000000E0),
         elt_t(9.57603275775909423828125E-1),
         elt_t(9.17004048824310302734375E-1),
@@ -114,7 +114,7 @@ namespace eve::detail
     }
     else if constexpr(std::is_same_v<elt_t, double>)
     {
-      const elt_t A[17] =  {
+      constexpr elt_t A[17] =  {
         elt_t(1.00000000000000000000E0),
         elt_t(9.57603280698573700036E-1),
         elt_t(9.17004043204671215328E-1),
@@ -149,7 +149,7 @@ namespace eve::detail
     using elt_t = as_floating_point_t<element_type_t<I>>;
     if constexpr(std::is_same_v<elt_t, float>)
     {
-      const elt_t B[9] =  {
+      constexpr elt_t B[9] =  {
         elt_t( 0.00000000000000000000E0),
         elt_t(-5.61963907099083340520586E-9),
         elt_t(-1.23776636307969995237668E-8),
@@ -167,7 +167,7 @@ namespace eve::detail
     }
     else if constexpr(std::is_same_v<elt_t, double>)
     {
-      const elt_t B[9] =  {
+      constexpr elt_t B[9] =  {
         elt_t( 0.00000000000000000000E0),
         elt_t( 1.64155361212281360176E-17),
         elt_t( 4.09950501029074826006E-17),
