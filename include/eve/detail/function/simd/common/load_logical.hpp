@@ -37,7 +37,7 @@ namespace eve::detail
        aligned_ptr<logical<T> const, Align> ptr) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
-    auto raw_data = load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T const*)ptr.get()));
+    auto raw_data = load(as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T const, Align>((T const*)ptr.get()));
     return type(raw_data);
   }
 

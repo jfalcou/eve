@@ -21,28 +21,37 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const* ptr) noexcept
   {
-    if constexpr( current_api == spy::vmx_ )
+    if constexpr( N::value * sizeof(T) >= limits<eve::vmx_>::bytes )
     {
-      if constexpr( sizeof(T) <= 8 )
+      if constexpr( current_api == spy::vmx_ )
       {
-        return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
+        if constexpr( sizeof(T) <= 8 )
+        {
+          return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
+        }
+        else
+        {
+          return load(tgt, cpu_ {}, ptr);
+        }
       }
-      else
+      else if constexpr( current_api == spy::vsx_ )
       {
-        return load(tgt, cpu_ {}, ptr);
+        if constexpr( std::is_integral_v<T> )
+        {
+          using type = typename wide<T, N>::storage_type *;
+          return vec_vsx_ld(0, type(ptr));
+        }
+        else
+        {
+          return vec_vsx_ld(0, ptr);
+        }
       }
     }
-    else if constexpr( current_api == spy::vsx_ )
+    else
     {
-      if constexpr( std::is_integral_v<T> )
-      {
-        using type = typename wide<T, N>::storage_type *;
-        return vec_vsx_ld(0, type(ptr));
-      }
-      else
-      {
-        return vec_vsx_ld(0, ptr);
-      }
+      typename wide<T, N>::storage_type that;
+      std::memcpy(&that, ptr, N::value * sizeof(T));
+      return that;
     }
   }
 
@@ -50,31 +59,40 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T const, Align> ptr) noexcept
   {
-    if constexpr( current_api == spy::vmx_ )
+    if constexpr( N::value * sizeof(T) >= limits<eve::vmx_>::bytes )
     {
-      if constexpr( sizeof(T) <= 8 )
+      if constexpr( current_api == spy::vmx_ )
       {
-        if constexpr( Align >= 16 )
+        if constexpr( sizeof(T) <= 8 )
         {
-          return vec_ld(0, ptr.get());
+          if constexpr( Align >= 16 )
+          {
+            return vec_ld(0, ptr.get());
+          }
+          else
+          {
+            return load(tgt, mode, ptr.get());
+          }
+        }
+      }
+      else if constexpr( current_api == spy::vsx_ )
+      {
+        if constexpr( std::is_integral_v<T> )
+        {
+          using type = typename wide<T, N>::storage_type *;
+          return vec_vsx_ld(0, type(ptr.get()));
         }
         else
         {
-          return load(tgt, mode, ptr.get());
+          return vec_vsx_ld(0, ptr.get());
         }
       }
     }
-    else if constexpr( current_api == spy::vsx_ )
+    else
     {
-      if constexpr( std::is_integral_v<T> )
-      {
-        using type = typename wide<T, N>::storage_type *;
-        return vec_vsx_ld(0, type(ptr.get()));
-      }
-      else
-      {
-        return vec_vsx_ld(0, ptr.get());
-      }
+      typename wide<T, N>::storage_type that;
+      std::memcpy(&that, ptr.get(), N::value * sizeof(T));
+      return that;
     }
   }
 
