@@ -142,19 +142,19 @@ namespace eve::detail
     }
   }
 
-  template<value T, real_value U, real_value V>
+  template<value T, real_value U, real_value V, decorator D>
   EVE_FORCEINLINE auto
-  div_(EVE_SUPPORTS(cpu_), T const &cond, saturated_type const &, U const &t, V const &f) noexcept
+  div_(EVE_SUPPORTS(cpu_), T const &cond, D const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    using r_t = decltype(saturated_(div)(t, f));
+    using r_t = decltype(D()(div)(t, f));
     if constexpr( scalar_value<T> )
     {
-      return cond ? saturated_(div)(t, f) : r_t(t);
+      return cond ? D()(div)(t, f) : r_t(t);
     }
     else if constexpr( simd_value<T> )
     {
-      return saturated_(div)(r_t(t), if_else(cond, r_t(f), eve::one_));
+      return D()(div)(r_t(t), if_else(cond, r_t(f), eve::one_));
     }
   }
 
@@ -174,21 +174,21 @@ namespace eve::detail
     }
   }
 
-  template<value T, real_value U, real_value V>
+  template<value T, real_value U, real_value V, decorator D>
   EVE_FORCEINLINE auto div_(EVE_SUPPORTS(cpu_),
                             not_t<T> const &cond,
-                            saturated_type const &,
+                            D const &,
                             U const &t,
                             V const &f) noexcept requires compatible_values<U, V>
   {
     using r_t = decltype(div(t, f));
     if constexpr( scalar_value<T> )
     {
-      return cond.value ? r_t(t) : saturated_(div)(t, f);
+      return cond.value ? r_t(t) : D()(div)(t, f);
     }
     else if constexpr( simd_value<T> )
     {
-      return saturated_(div)(r_t(t), if_else(cond.value, eve::one_, r_t(f)));
+      return D()(div)(r_t(t), if_else(cond.value, eve::one_, r_t(f)));
     }
   }
 }
@@ -196,4 +196,3 @@ namespace eve::detail
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(pop)
 #endif
-
