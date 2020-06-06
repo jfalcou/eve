@@ -13,3 +13,7 @@
 #include <eve/function/definition/pow_abs.hpp>
 #include <eve/module/math/function/generic/pow_abs.hpp>
 
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/math/function/simd/x86/pow_abs.hpp>
+#endif

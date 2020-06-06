@@ -43,6 +43,5 @@ namespace eve::detail
     {
       return apply_over(pow, a, b);
     }
-
   }
 }

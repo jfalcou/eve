@@ -37,6 +37,17 @@
 #include <eve/function/shr.hpp>
 #include <eve/function/sqr.hpp>
 
+////////////////////////////////////////////////////////////////////////////////////
+// some benches results                                        clang10
+// AVX2 FMA
+// std_pow  - float                                        29.8664
+// std_pow  - double                                       98.7585
+// eve::pow - eve::wide<float, eve::fixed<8l>, eve::avx_>  16.4208
+// eve::pow - eve::wide<double, eve::fixed<4l>, eve::avx_> 162.901
+// eve::pow - float                                        30.6931  - using std
+// eve::pow - double                                       94.1383  - using std
+
+
 namespace eve::detail
 {
   /////////////////////////////////////////////////////////////////////////////
@@ -59,33 +70,33 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
-    if constexpr(scalar_value<T>)
+    if constexpr(scalar_value<T>)                  // for now scalar uses std::
     {
-//       if constexpr(std::is_same_v<T, float>)
-//       {
-//         return std::pow(a, b);
-//       }
-//       else
-//       {
-      auto ltza   = is_ltz(a);
-      auto isinfb = is_infinite(b);
-      if( a == Mone<T>() && isinfb )                return One<T>();
-      if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
-      auto z = pow_abs(a, b);
-      if( isinfb )                                  return z;
-      return (is_negative(a) && is_odd(b)) ? -z : z;
-      //     }
+      if constexpr(std::is_same_v<T, float>)
+      {
+        return std::pow(a, b);
+      }
+      else
+      {
+        auto ltza   = is_ltz(a);
+        auto isinfb = is_infinite(b);
+        if( a == Mone<T>() && isinfb )                return One<T>();
+        if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
+        auto z = pow_abs(a, b);
+        if( isinfb )                                  return z;
+        return (is_negative(a) && is_odd(b)) ? -z : z;
+      }
     }
     else  if constexpr(has_native_abi_v<T> )
     {
-//     using elt_t =  element_type_t<T>;
-//       if constexpr(std::is_same_v<elt_t, float>)
-//       {
-//         auto std_pow = [](auto const & a,  auto const & b){ return std::pow(a, b);};
-//         return map(std_pow, a, b);
-//       }
-//       else
-//       {
+      using elt_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<elt_t, float>)
+      {
+        auto std_pow = [](auto const & a,  auto const & b){ return std::pow(a, b);};
+        return map(std_pow, a, b);
+      }
+      else
+      {
         auto isinfb = is_infinite(b);
         auto nega    = is_negative(a);
         a =  if_else( a == Mone<T>() && isinfb , One(as(a)), a);
@@ -93,7 +104,7 @@ namespace eve::detail
         z            = minus[logical_and(is_odd(b), nega)](z);
         auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
         return if_else(invalid, eve::allbits_, z);
-//      }
+      }
     }
     else
     {
