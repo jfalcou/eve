@@ -55,43 +55,30 @@ namespace eve::detail
   {
     return arithmetic_call(pow, a, b);
   }
+
   template<floating_real_value T>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
     if constexpr(scalar_value<T>)
     {
-      return std::pow(a, b);
-    }
-    else
-    {
-      auto std_pow = [](auto const & a,  auto const & b){ return std::pow(a, b);};
-      return map(std_pow, a, b);
-    }
-  }
-
-//   template<floating_real_value T>
-//   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
-//   {
-//     if constexpr(scalar_value<T>)
-//     {
-// //       if constexpr(std::is_same_v<T, float>)
-// //       {
+//       if constexpr(std::is_same_v<T, float>)
+//       {
 //         return std::pow(a, b);
-// //       }
-// //       else
-// //       {
-// //       auto ltza   = is_ltz(a);
-// //       auto isinfb = is_infinite(b);
-// //       if( a == Mone<T>() && isinfb )                return One<T>();
-// //       if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
-// //       auto z = pow_abs(a, b);
-// //       if( isinfb )                                  return z;
-// //       return (is_negative(a) && is_odd(b)) ? -z : z;
-// //       }
-//     }
-//     else  if constexpr(has_native_abi_v<T> )
-//     {
-//      using elt_t =  element_type_t<T>;
+//       }
+//       else
+//       {
+      auto ltza   = is_ltz(a);
+      auto isinfb = is_infinite(b);
+      if( a == Mone<T>() && isinfb )                return One<T>();
+      if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
+      auto z = pow_abs(a, b);
+      if( isinfb )                                  return z;
+      return (is_negative(a) && is_odd(b)) ? -z : z;
+      //     }
+    }
+    else  if constexpr(has_native_abi_v<T> )
+    {
+//     using elt_t =  element_type_t<T>;
 //       if constexpr(std::is_same_v<elt_t, float>)
 //       {
 //         auto std_pow = [](auto const & a,  auto const & b){ return std::pow(a, b);};
@@ -99,21 +86,21 @@ namespace eve::detail
 //       }
 //       else
 //       {
-//         auto isinfb = is_infinite(b);
-//         auto nega    = is_negative(a);
-//         a =  if_else( a == Mone<T>() && isinfb , One(as(a)), a);
-//         T    z       = pow_abs(a, b);
-//         z            = minus[logical_and(is_odd(b), nega)](z);
-//         auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
-//         return if_else(invalid, eve::allbits_, z);
-//       }
-//     }
-//     else
-//     {
-//       return apply_over(pow, a, b);
-//     }
+        auto isinfb = is_infinite(b);
+        auto nega    = is_negative(a);
+        a =  if_else( a == Mone<T>() && isinfb , One(as(a)), a);
+        T    z       = pow_abs(a, b);
+        z            = minus[logical_and(is_odd(b), nega)](z);
+        auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
+        return if_else(invalid, eve::allbits_, z);
+//      }
+    }
+    else
+    {
+      return apply_over(pow, a, b);
+    }
 
-//   }
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////
   // raw

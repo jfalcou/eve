@@ -22,10 +22,7 @@
 #include <eve/function/logical_and.hpp>
 #include <eve/function/logical_andnot.hpp>
 #include <eve/function/minus.hpp>
-#include <eve/function/pow_abs.hpp>
 
-namespace eve::detail
-{
   // this implementation is better only if we are in  avx_ or greater
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(avx_), T a, T b) noexcept
