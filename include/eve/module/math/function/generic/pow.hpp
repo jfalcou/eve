@@ -38,15 +38,22 @@
 #include <eve/function/sqr.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////
-// some benches results                                        clang10
+// some benches results                                     clang10  g++10
 // AVX2 FMA
-// std_pow  - float                                        29.8664
-// std_pow  - double                                       98.7585
-// eve::pow - eve::wide<float, eve::fixed<8l>, eve::avx_>  19.2366
-// eve::pow - eve::wide<double, eve::fixed<4l>, eve::avx_> 68.0063 
-// eve::pow - float                                        30.6931  - using std
-// eve::pow - double                                       88.7653  - using std
+// std_pow  - float                                        29.8664  30.1404
+// std_pow  - double                                       98.7585  99.5642
+// eve::pow - eve::wide<float, eve::fixed<8l>, eve::avx_>  19.2366  19.295
+// eve::pow - eve::wide<double, eve::fixed<4l>, eve::avx_> 68.0063  88.5471
+// eve::pow - float                                        30.6931  29.9285  - using std
+// eve::pow - double                                       88.7653  92.5587  - using std
 
+// sse2 FMA
+// std_pow  - float                                        29.8664  29.9171
+// std_pow  - double                                       98.7585  97.6834
+// eve::pow - eve::wide<float, eve::fixed<4l>, eve::sse_>  20.8891  21.1565
+// eve::pow - eve::wide<double, eve::fixed<2l>, eve::sse_> 151.439  158.774
+// eve::pow - float                                        29.2598  30.1083 - using std
+// eve::pow - double                                       90.142   96.4589 - using std
 
 namespace eve::detail
 {

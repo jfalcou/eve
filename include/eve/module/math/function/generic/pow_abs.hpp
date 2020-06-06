@@ -50,9 +50,17 @@
 // std_pow - float                                             22.7127   23.5926
 // std_pow - double                                            137.553   137.081
 // eve::pow_abs - eve::wide<float, eve::fixed<8l>, eve::avx_>  13.9966   14.1333
-// eve::pow_abs - eve::wide<double, eve::fixed<4l>, eve::avx_> 156.477   62.6098
-// eve::pow_abs - float                                        78.1466   94.3149
-// eve::pow_abs - double                                       141.136   136.408
+// eve::pow_abs - eve::wide<double, eve::fixed<4l>, eve::avx_> 83.9918   62.6098
+// eve::pow_abs - float                                        78.1466   94.3149 -using std
+// eve::pow_abs - double                                       137.35    136.408 -using std
+// SSE2
+// std_pow - float                                             22.569    22.8972
+// std_pow - double                                            139.033   137.367
+// eve::pow_abs - eve::wide<float, eve::fixed<8l>, eve::avx_>  35.4091   33.0504
+// eve::pow_abs - eve::wide<double, eve::fixed<4l>, eve::avx_> 134.297   134.349
+// eve::pow_abs - float                                        103.87    95.3176 -using std
+// eve::pow_abs - double                                       139.169   137.503 -using std
+
 
 namespace eve::detail
 {
