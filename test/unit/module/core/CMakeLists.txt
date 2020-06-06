@@ -113,6 +113,7 @@ make_all_units(ROOT core NAME is_lessgreater        ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME is_lez                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_ltz                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_nan                ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME is_naninfzero         ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME is_negative           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_nez                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_ngez               ARCH scalar simd TYPES ${all_types}     )

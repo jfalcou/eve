@@ -41,7 +41,7 @@
 namespace eve::detail
 {
   template<floating_real_simd_value T, decorator D>
-  EVE_FORCEINLINE constexpr T log2_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
+  /*EVE_FORCEINLINE */constexpr T log2_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -226,7 +226,7 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, decorator D>
-  EVE_FORCEINLINE constexpr auto log2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
+  /*EVE_FORCEINLINE */constexpr auto log2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
   {
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T, signed>;
