@@ -42,10 +42,10 @@
 // AVX2 FMA
 // std_pow  - float                                        29.8664
 // std_pow  - double                                       98.7585
-// eve::pow - eve::wide<float, eve::fixed<8l>, eve::avx_>  16.4208
-// eve::pow - eve::wide<double, eve::fixed<4l>, eve::avx_> 162.901
+// eve::pow - eve::wide<float, eve::fixed<8l>, eve::avx_>  19.2366
+// eve::pow - eve::wide<double, eve::fixed<4l>, eve::avx_> 68.0063 
 // eve::pow - float                                        30.6931  - using std
-// eve::pow - double                                       94.1383  - using std
+// eve::pow - double                                       88.7653  - using std
 
 
 namespace eve::detail
