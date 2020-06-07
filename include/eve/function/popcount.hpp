@@ -13,3 +13,6 @@
 #include <eve/function/definition/popcount.hpp>
 #include <eve/module/core/function/generic/popcount.hpp>
 
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/popcount.hpp>
+#endif

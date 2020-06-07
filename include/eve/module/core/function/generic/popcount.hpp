@@ -10,12 +10,14 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/concept/value.hpp>
 #include <type_traits>
+#include <eve/as.hpp>
 #include <eve/traits.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <bit>
 
 #if defined(SPY_COMPILER_IS_MSVC)
 #  include <intrin.h>
@@ -27,55 +29,10 @@ namespace eve::detail
   EVE_FORCEINLINE as_integer_t<T, unsigned> popcount_(EVE_SUPPORTS(cpu_)
                                                      , T const &v) noexcept
   {
+    using r_t = as_integer_t<T, unsigned>;
     if constexpr(scalar_value<T>)
     {
-      if constexpr(sizeof(T) == 1)
-      {
-#if defined(SPY_COMPILER_IS_MSVC)
-        std::uint8_t r = static_cast<std::uint8_t>(__popcnt16(static_cast<std::int16_t>(v) & 0xFF));
-#else
-        std::uint8_t  r   = __builtin_popcount(static_cast<std::uint32_t>(v) & 0xFF);
-#endif
-        return r;
-      }
-
-      if constexpr(sizeof(T) == 2)
-      {
-#if defined(SPY_COMPILER_IS_MSVC)
-        std::uint16_t r = __popcnt16(v);
-#else
-        std::uint16_t r = __builtin_popcount(static_cast<std::uint32_t>(v) & 0xFFFF);
-#endif
-        return r;
-      }
-
-      if constexpr(sizeof(T) == 4)
-      {
-#if defined(SPY_COMPILER_IS_MSVC)
-        std::uint32_t r = __popcnt(v);
-#else
-        std::uint32_t r = __builtin_popcount(v);
-#endif
-        return r;
-      }
-
-      if constexpr(sizeof(T) == 8)
-      {
-#if defined(SPY_COMPILER_IS_MSVC) && defined(_WIN64)
-        std::uint64_t r = __popcnt64(v);
-#else
-        std::uint32_t hi0 = (static_cast<std::uint32_t>(v >> 32) & 0xFFFFFFFF);
-        std::uint32_t lo0 = (v & 0xFFFFFFFF);
-
-#  if defined(SPY_COMPILER_IS_MSVC)
-        std::uint64_t r = __popcnt(hi0) + __popcnt(lo0);
-#  else
-        std::uint64_t r = __builtin_popcount(hi0) + __builtin_popcount(lo0);
-#  endif
-
-#endif
-        return r;
-      }
+      return r_t(std::popcount(bit_cast(v, as<r_t>())));
     }
     else if constexpr(has_native_abi_v<T>)
     {
@@ -87,4 +44,3 @@ namespace eve::detail
     }
   }
 }
-
