@@ -154,7 +154,7 @@ namespace eve::detail
     }
     else if constexpr( simd_value<T> )
     {
-      return D()(div)(r_t(t), if_else(cond, r_t(f), eve::one_));
+     return  if_else(cond, D()(div)(t, f), t); //D()(div)(t, if_else(cond, r_t(f), eve::one_));
     }
   }
 
