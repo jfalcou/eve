@@ -12,6 +12,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -27,6 +28,11 @@ TTS_CASE_TPL("Check eve::exp2 behavior", EVE_TYPE)
 {
   TTS_ULP_EQUAL (eve::exp2(T(1)), T(2), 0.5);
   TTS_IEEE_EQUAL(eve::exp2(T(0)), T(1));
+  TTS_IEEE_EQUAL(eve::exp2(T(4)), T(16));
+  if constexpr(eve::signed_value<T>)
+  {
+    TTS_IEEE_EQUAL(eve::exp2(T(-4)), T(0));
+  }
 
   if constexpr(eve::floating_value<T>)
   {

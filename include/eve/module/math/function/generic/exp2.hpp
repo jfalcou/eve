@@ -88,5 +88,27 @@ namespace eve::detail
   {
     return exp2(regular_type(), x);
   }
-}
 
+////////////////////////////////////////////////////////////////////////////////////
+// integral types
+
+  template<integral_real_value T, decorator D>
+  EVE_FORCEINLINE constexpr T exp2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
+      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto tmp =  if_else(is_ltz(x), zero_, One(as(x)) << x);
+      if constexpr(std::is_same_v<D, saturated_type>)
+      {
+        using elt_t =  element_type_t<T>;
+        return if_else(is_gez(x, T(sizeof(elt_t))), Valmax<T>(), tmp);
+      }
+      else
+         return tmp;
+    }
+    else
+      return apply_over(exp2, x);
+  }
+
+}
