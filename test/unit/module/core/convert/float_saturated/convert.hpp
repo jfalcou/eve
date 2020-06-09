@@ -26,7 +26,6 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::as<float>()), target_t);
-  TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::single_)     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
@@ -41,18 +40,18 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
 
   if constexpr(std::is_same_v<v_t, double>)
   {
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::single_), (eve::Valmin<target_t>()) );
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::single_), (eve::Valmax<target_t>()) );
+    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<float>()), (eve::Valmin<target_t>()) );
+    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<float>()), (eve::Valmax<target_t>()) );
   }
   else
   {
     if constexpr(sizeof(v_t)<=sizeof(float))
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::single_), static_cast<target_t>(eve::Valmin<v_t>()) );
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::single_), static_cast<target_t>(eve::Valmax<v_t>()) );
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<float>()), static_cast<target_t>(eve::Valmin<v_t>()) );
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<float>()), static_cast<target_t>(eve::Valmax<v_t>()) );
     }
   }
 
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::single_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::single_), static_cast<target_t>(v_t(42.69)) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::as<float>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::as<float>()), static_cast<target_t>(v_t(42.69)) );
 }

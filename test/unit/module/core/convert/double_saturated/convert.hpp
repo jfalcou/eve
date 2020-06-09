@@ -24,7 +24,6 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::as<double>()), target_t);
-  TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::double_)     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
@@ -37,8 +36,8 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
 
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::double_), static_cast<target_t>(eve::Valmin<v_t>()) );
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::double_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::double_), static_cast<target_t>(v_t(42.69)) );
-  TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::double_), static_cast<target_t>(eve::Valmax<v_t>()) );
+  TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<double>()), static_cast<target_t>(eve::Valmin<v_t>()) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::as<double>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::as<double>()), static_cast<target_t>(v_t(42.69)) );
+  TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<double>()), static_cast<target_t>(eve::Valmax<v_t>()) );
 }

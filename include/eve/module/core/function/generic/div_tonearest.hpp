@@ -18,6 +18,7 @@
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -113,8 +114,7 @@ namespace eve::detail
           {
             return if_else(
                 is_nez(b),
-                saturated_(convert)(nearest(convert(a, double_) / convert(b, double_)),
-                                    as<elt_t>()),
+                saturated_(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
                 if_else(is_eqz(a), eve::zero_, if_else(is_gtz(a), Valmax<T>(), Valmin<T>())));
           }
         }
@@ -130,4 +130,3 @@ namespace eve::detail
     }
   } 
 }
-

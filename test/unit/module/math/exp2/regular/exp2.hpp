@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::exp2 behavior", EVE_TYPE)
   TTS_ULP_EQUAL (eve::exp2(T(1)), T(2), 0.5);
   TTS_IEEE_EQUAL(eve::exp2(T(0)), T(1));
   TTS_IEEE_EQUAL(eve::exp2(T(4)), T(16));
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_integral_value<T>)
   {
     TTS_IEEE_EQUAL(eve::exp2(T(-4)), T(0));
   }

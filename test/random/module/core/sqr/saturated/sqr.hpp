@@ -28,14 +28,14 @@ TTS_CASE_TPL("wide random check on sqr", EVE_TYPE)
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_sqr = tts::vectorize<T>( [](auto e) { return eve::abs(e) > eve::Sqrtvalmax<v_t>() ? eve::Valmax<v_t>() : e*e; } );
+    auto std_sqr = tts::vectorize<T>( [](auto e) { return (eve::abs(e) > eve::Sqrtvalmax<v_t>() || e == eve::Valmin<v_t>()) ? eve::Valmax<v_t>() : e*e; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_sqr, eve::sqr);
+    TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
   else
   {
     auto std_sqr = tts::vectorize<T>( [](auto e) { return e > eve::Sqrtvalmax<v_t>() ? eve::Valmax<v_t>() : e*e; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_sqr, eve::sqr);
+    TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
 }

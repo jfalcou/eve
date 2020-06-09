@@ -32,7 +32,15 @@ namespace eve::detail
         return rec(D()(cosd)(a0));
       }
       using elt_t = element_type_t<T>;
-      auto a0_180 =  convert(div_180(convert(a0, double_)), as_<elt_t>()); // better precision in float
+      T a0_180;
+      if constexpr(std::is_same_v<elt_t, float>)
+      {
+        a0_180 =  single_(div_180(double_(a0))); // better precision in float
+      }
+      else
+      {
+        a0_180 = div_180(a0);
+      }
       auto test   = is_flint(a0_180+Mhalf(as(a0_180)));
       if constexpr( scalar_value<T> ) // early return for nans in scalar case
       {
@@ -53,4 +61,3 @@ namespace eve::detail
   }
 
 }
-

@@ -41,7 +41,6 @@ make_all_units(ROOT exhaustive.core NAME countl_one            ARCH scalar simd 
 ##make_all_units(ROOT exhaustive.core NAME dec                   ARCH scalar simd TYPES ${all_types_32}     )
 ##make_all_units(ROOT exhaustive.core NAME dist                  ARCH scalar simd TYPES ${all_types_32}     )
 ##make_all_units(ROOT exhaustive.core NAME div                   ARCH scalar simd TYPES ${all_types_32}     )
-make_all_units(ROOT exhaustive.core NAME eps                   ARCH scalar simd TYPES ${all_types_32}     )
 make_all_units(ROOT exhaustive.core NAME exponent              ARCH scalar simd TYPES ${real_types_32}    )
 ##make_all_units(ROOT exhaustive.core NAME fdim                  ARCH scalar simd TYPES ${real_types_32}    )
 make_all_units(ROOT exhaustive.core NAME firstbitset           ARCH scalar simd TYPES ${integral_types_32})

@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<std::int64_t>()), target_t);
-  TTS_EXPR_IS(eve::convert(T(), eve::int64_)     , target_t);
+  TTS_EXPR_IS(eve::int64_(T())     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
@@ -37,12 +37,12 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
 
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::convert((T(0))          , eve::int64_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::convert((T(42.69))      , eve::int64_), static_cast<target_t>(v_t(42.69)) );
+  TTS_EQUAL(eve::convert((T(0))          , eve::as<std::int64_t>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::convert((T(42.69))      , eve::as<std::int64_t>()), static_cast<target_t>(v_t(42.69)) );
   if constexpr(eve::integral_value<T>)
   {
     // with floating value this test produces undefined behaviour
-    TTS_EQUAL(eve::convert(eve::Valmax<T>(), eve::int64_), static_cast<target_t>(eve::Valmax<v_t>()) );
-    TTS_EQUAL(eve::convert(eve::Valmin<T>(), eve::int64_), static_cast<target_t>(eve::Valmin<v_t>()) );
+    TTS_EQUAL(eve::convert(eve::Valmax<T>(), eve::as<std::int64_t>()), static_cast<target_t>(eve::Valmax<v_t>()) );
+    TTS_EQUAL(eve::convert(eve::Valmin<T>(), eve::as<std::int64_t>()), static_cast<target_t>(eve::Valmin<v_t>()) );
   }
 }

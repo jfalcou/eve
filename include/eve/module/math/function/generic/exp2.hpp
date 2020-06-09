@@ -23,6 +23,7 @@
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/ldexp.hpp>
@@ -30,6 +31,7 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/regular.hpp>
+#include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
@@ -93,12 +95,12 @@ namespace eve::detail
 // integral types
 
   template<integral_real_value T, decorator D>
-  EVE_FORCEINLINE constexpr T exp2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
+  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
       requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto tmp =  if_else(is_ltz(x), zero_, One(as(x)) << x);
+      auto tmp =  if_else(is_ltz(x), eve::zero_, shl(One(as(x)), x));
       if constexpr(std::is_same_v<D, saturated_type>)
       {
         using elt_t =  element_type_t<T>;
@@ -108,7 +110,6 @@ namespace eve::detail
          return tmp;
     }
     else
-      return apply_over(exp2, x);
+      return apply_over(D()(exp2), x);
   }
-
 }

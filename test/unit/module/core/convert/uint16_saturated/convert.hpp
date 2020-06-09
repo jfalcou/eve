@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::as<std::uint16_t>()), target_t);
-  TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::uint16_)     , target_t);
+  TTS_EXPR_IS(eve::uint16_(T())     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
@@ -37,21 +37,21 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
 
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::uint16_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::uint16_), static_cast<target_t>(v_t(42.69)) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::as<std::uint16_t>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::as<std::uint16_t>()), static_cast<target_t>(v_t(42.69)) );
 
   if constexpr(eve::integral_value<T>)
   {
     // with floating value this test produces undefined behaviour
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::uint16_), (target_t(0)) );
+    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::uint16_t>()), (target_t(0)) );
 
     if constexpr(sizeof(v_t) <= 2)
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::uint16_), target_t(eve::Valmax<v_t>()) );
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::uint16_t>()), target_t(eve::Valmax<v_t>()) );
     }
     else
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::uint16_), (eve::Valmax<target_t>()) );
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::uint16_t>()), (eve::Valmax<target_t>()) );
     }
   }
 }

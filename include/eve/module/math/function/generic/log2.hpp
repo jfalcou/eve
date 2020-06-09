@@ -171,8 +171,8 @@ namespace eve::detail
          * so that extra precision is not needed for terms involving R.
          *
          * Compiler bugs involving extra precision used to break Dekker's
-         * theorem for spitting f-hfsq as hi+lo, unless double_t was used
-         * or the multi-precision calculations were avoided when double_t
+         * theorem for spitting f-hfsq as hi+lo, unless double was used
+         * or the multi-precision calculations were avoided when double
          * has extra precision.  These problems are now automatically
          * avoided as a side effect of the optimization of combining the
          * Dekker splitting step with the clear-low-bits step.
@@ -185,7 +185,7 @@ namespace eve::detail
          *
          * This uses Dekker's theorem to normalize y+val_hi, so the
          * compiler bugs are back in some configurations, sigh.  And I
-         * don't want to used double_t to avoid them, since that gives a
+         * don't want to used double to avoid them, since that gives a
          * pessimization and the support for avoiding the pessimization
          * is not yet available.
          *
@@ -353,8 +353,8 @@ namespace eve::detail
        * so that extra precision is not needed for terms involving R.
        *
        * Compiler bugs involving extra precision used to break Dekker's
-       * theorem for spitting f-hfsq as hi+lo, unless double_t was used
-       * or the multi-precision calculations were avoided when double_t
+       * theorem for spitting f-hfsq as hi+lo, unless double was used
+       * or the multi-precision calculations were avoided when double
        * has extra precision.  These problems are now automatically
        * avoided as a side effect of the optimization of combining the
        * Dekker splitting step with the clear-low-bits step.
@@ -367,7 +367,7 @@ namespace eve::detail
        *
        * This uses Dekker's theorem to normalize y+val_hi, so the
        * compiler bugs are back in some configurations, sigh.  And I
-       * don't want to used double_t to avoid them, since that gives a
+       * don't want to used double to avoid them, since that gives a
        * pessimization and the support for avoiding the pessimization
        * is not yet available.
        *

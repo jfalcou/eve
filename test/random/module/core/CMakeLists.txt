@@ -56,7 +56,6 @@ make_all_units(ROOT random.core NAME countl_one            ARCH scalar simd TYPE
 ##make_all_units(ROOT random.core NAME dec                   ARCH scalar simd TYPES ${all_types_32}     )
 ##make_all_units(ROOT random.core NAME dist                  ARCH scalar simd TYPES ${all_types_32}     )
 ##make_all_units(ROOT random.core NAME div                   ARCH scalar simd TYPES ${all_types_32}     )
-make_all_units(ROOT random.core NAME eps                   ARCH scalar simd TYPES ${all_types_32}     )
 make_all_units(ROOT random.core NAME exponent              ARCH scalar simd TYPES ${real_types_32}    )
 ##make_all_units(ROOT random.core NAME extract               ARCH scalar simd TYPES ${all_types_32}     )
 ##make_all_units(ROOT random.core NAME fdim                  ARCH scalar simd TYPES ${real_types_32}    )

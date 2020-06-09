@@ -14,23 +14,28 @@
 
 TTS_CASE_TPL("Check eve::touint return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::touint(T(0)), (eve::detail::as_integer_t<T, unsigned>));
+  TTS_EXPR_IS(eve::pedantic_(eve::touint)(T(0)), (eve::detail::as_integer_t<T, unsigned>));
 }
 
-TTS_CASE_TPL("Check eve::touint behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::pedantic_(eve::touint) behavior", EVE_TYPE)
 {
   using r_t = eve::detail::as_integer_t<T, unsigned>;
 
-  TTS_EQUAL(eve::touint(T( 1.2357)), static_cast<r_t>( 1.2357));
-  TTS_EQUAL(eve::touint(T( 1))     , static_cast<r_t>( 1));
-  TTS_EQUAL(eve::touint(T( 0))     , static_cast<r_t>( 0));
+  TTS_EQUAL(eve::pedantic_(eve::touint)(T( 1.2357)), static_cast<r_t>( 1.2357));
+  TTS_EQUAL(eve::pedantic_(eve::touint)(T( 1))     , static_cast<r_t>( 1));
+  TTS_EQUAL(eve::pedantic_(eve::touint)(T( 0))     , static_cast<r_t>( 0));
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::touint(T(-0.)), r_t(0));
+    TTS_EQUAL(eve::pedantic_(eve::touint)(T(-0.)), r_t(0));
   }
   else if constexpr( eve::signed_value<T> )
   {
-    TTS_EQUAL(eve::touint(T(-47)), r_t(-47));
+    TTS_EQUAL(eve::pedantic_(eve::touint)(T(-47)), r_t(-47));
+  }
+  using elt_t = eve::element_type_t<T>;
+  if constexpr( std::is_same_v<elt_t, float> )
+  {
+    TTS_EQUAL(eve::pedantic_(eve::touint)(T(+2.055783936e+09)), r_t(2055783936));
   }
 }

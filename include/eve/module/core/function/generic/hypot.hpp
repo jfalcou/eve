@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/exponent.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_infinite.hpp>
@@ -102,7 +103,7 @@ namespace eve::detail
       if (is_infinite(a) || is_infinite(b)) return Inf(as(a));
     if constexpr(std::is_same_v<elt_t, float>)
     {
-      auto res = convert(hypot(convert(a, double_), convert(b, double_)), single_);
+      auto res = single_(hypot(double_(a), double_(b)));
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
         return if_else(is_infinite(a) || is_infinite(b), Inf<T>(), res);
       else return res;
@@ -144,7 +145,7 @@ namespace eve::detail
       if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return Inf(as(a));
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
-      return convert(hypot(convert(a, double_), convert(b, double_), convert(c, double_)), single_);
+      return single_(hypot(double_(a), double_(b), double_(c)));
     }
     else
     {
@@ -160,4 +161,3 @@ namespace eve::detail
     }
   }
 }
-
