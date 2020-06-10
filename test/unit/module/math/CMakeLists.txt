@@ -67,7 +67,7 @@ make_all_units(ROOT math NAME cscpi                 ARCH scalar simd TYPES ${rea
 make_all_units(ROOT math NAME deginrad              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME exp                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT math NAME exp2                  ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT math NAME exp2                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME log                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT math NAME log10                 ARCH scalar simd TYPES ${real_types}    )

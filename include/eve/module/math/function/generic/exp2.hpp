@@ -14,19 +14,27 @@
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/log_2.hpp>
+#include <eve/constant/maxexponent.hpp>
 #include <eve/constant/maxlog2.hpp>
 #include <eve/constant/minlog2.hpp>
+#include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta/traits.hpp>
+#include <eve/function/converter.hpp>
+#include <eve/function/add.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/function/bit_or.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_greater_equal.hpp>
 #include <eve/function/is_less_equal.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/ldexp.hpp>
+#include <eve/function/min.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/pedantic.hpp>
@@ -34,6 +42,7 @@
 #include <eve/function/shl.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -94,22 +103,43 @@ namespace eve::detail
 ////////////////////////////////////////////////////////////////////////////////////
 // integral types
 
-  template<integral_real_value T, decorator D>
-  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const &, T x) noexcept
-      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<integral_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const & , T xx) noexcept
+  //      requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto tmp =  if_else(is_ltz(x), eve::zero_, shl(One(as(x)), x));
-      if constexpr(std::is_same_v<D, saturated_type>)
+      if constexpr( std::is_same_v<converter_type<float>, D> || std::is_same_v<converter_type<double>, D>)
       {
-        using elt_t =  element_type_t<T>;
-        return if_else(is_gez(x, T(sizeof(elt_t))), Valmax<T>(), tmp);
+        using vd_t = value_type_t<D>;
+        using i_t  = as_integer_t<vd_t>;
+        auto x = convert(xx,  as<i_t>());
+        using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
+        auto z = is_nez(x);
+        auto zz = if_else(z, eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1), eve::zero_);
+        zz =(zz << Nbmantissabits<vd_t>());
+        return bit_cast(zz, as<r_t>());
+        return r_t();
       }
       else
-         return tmp;
+      {
+        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(as(xx)), xx));
+        if constexpr(std::is_same_v<D, saturated_type>)
+        {
+          using elt_t =  element_type_t<T>;
+          return if_else(is_gez(xx, T(sizeof(elt_t))), Valmax<T>(), tmp);
+        }
+        else
+          return tmp;
+      }
     }
     else
-      return apply_over(D()(exp2), x);
+      return apply_over(D()(exp2), xx);
+  }
+
+  template<integral_real_value T>
+  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), T x) noexcept
+  {
+    return exp2(regular_type(), x);
   }
 }

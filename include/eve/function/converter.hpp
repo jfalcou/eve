@@ -21,6 +21,7 @@ namespace eve
   template <typename T>
   struct converter_type : decorator_
   {
+    using value_type = T;
     template<value Val>
     constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
     {
