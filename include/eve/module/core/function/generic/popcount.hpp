@@ -34,9 +34,10 @@ namespace eve::detail
     {
       return r_t(std::popcount(bit_cast(v, as<r_t>())));
     }
-    else if constexpr(has_native_abi_v<T>)
-    {
-      return map(eve::popcount, v);
+
+   else if constexpr(has_native_abi_v<T>)
+   {
+     return map(eve::popcount, v);
     }
     else
     {
