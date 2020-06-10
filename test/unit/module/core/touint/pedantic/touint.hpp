@@ -29,10 +29,6 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::touint) behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::pedantic_(eve::touint)(T(-0.)), r_t(0));
   }
-  else if constexpr( eve::signed_value<T> )
-  {
-    TTS_EQUAL(eve::pedantic_(eve::touint)(T(-47)), r_t(-47));
-  }
   using elt_t = eve::element_type_t<T>;
   if constexpr( std::is_same_v<elt_t, float> )
   {
