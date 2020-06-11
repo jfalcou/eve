@@ -31,9 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - regular mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto regular_(Function f) noexcept
-  {
-    return regular_type{}(f);
-  }
+  inline constexpr regular_type const regular_ = {};
 }
 

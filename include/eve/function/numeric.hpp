@@ -31,9 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - numeric mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto numeric_(Function f) noexcept
-  {
-    return numeric_type{}(f);
-  }
+  inline constexpr numeric_type const numeric_ = {};
 }
 

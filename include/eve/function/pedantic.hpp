@@ -31,9 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - pedantic mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto pedantic_(Function f) noexcept
-  {
-    return pedantic_type{}(f);
-  }
+  inline constexpr pedantic_type const pedantic_ = {};
 }
 

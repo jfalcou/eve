@@ -31,9 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - raw mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto raw_(Function f) noexcept
-  {
-    return raw_type{}(f);
-  }
+  inline constexpr raw_type const raw_ = {};
 }
 

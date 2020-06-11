@@ -10,8 +10,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <tts/tests/types.hpp>
-#include <eve/detail/function/musl.hpp>
-#include <eve/detail/function/plain.hpp>
+#include <eve/function/musl.hpp>
+#include <eve/function/plain.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/raw.hpp>
