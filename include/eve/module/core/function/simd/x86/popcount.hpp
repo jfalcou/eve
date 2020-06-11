@@ -12,7 +12,7 @@
 
 #include <eve/detail/spy.hpp>
 #include <eve/concept/value.hpp>
-#include <type_traits>
+#include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
