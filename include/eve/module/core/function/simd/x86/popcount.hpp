@@ -13,9 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/spy.hpp>
 #include <eve/as.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
@@ -47,7 +45,7 @@ namespace eve::detail
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
       using N16 = fixed<8>;
-      using i16_t = wide<std::uint16_t, N16>;
+      using i16_t = wide<T,N,avx_>::template rebind<uint16_t,N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
@@ -94,7 +92,7 @@ namespace eve::detail
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
       using N16 = fixed<16>;
-      using i16_t = wide<std::uint16_t, N16>;
+      using i16_t = wide<T,N,avx_>::template rebind<uint16_t,N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
