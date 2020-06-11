@@ -45,7 +45,7 @@ namespace eve::detail
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
       using N16 = fixed<8>;
-      using i16_t = wide<T,N,avx_>::template rebind<uint16_t,N16>;
+      using i16_t = typename wide<T,N,avx_>::template rebind<uint16_t,N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
@@ -92,7 +92,7 @@ namespace eve::detail
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
       using N16 = fixed<16>;
-      using i16_t = wide<T,N,avx_>::template rebind<uint16_t,N16>;
+      using i16_t = typename wide<T,N,avx_>::template rebind<uint16_t,N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
