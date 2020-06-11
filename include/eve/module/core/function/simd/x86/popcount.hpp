@@ -60,7 +60,6 @@ namespace eve::detail
     using i16_t = wide<std::uint16_t, N16>;
     auto xx =  bit_cast(x, as<i16_t>());
     const i16_t masklow(0xff);
-    const i16_t maskhi (0xffFF00);
     return bit_cast(popcount(xx&masklow)+ bit_shl(popcount(bit_shr(xx, 8)&masklow), 8), as<r_t>());
   }
 
@@ -84,9 +83,9 @@ namespace eve::detail
     x = (x & pattern_4bit) + ( bit_shr(x, 2) & pattern_4bit);  //put count of each 4 bits into those 4 bits
     x = (x +  bit_shr(x, 4)) & pattern_16bit;                  //put count of each 8 bits into those 8 bits
     if constexpr(std::is_same_v<ABI, avx_>)
-      return  bit_cast(_mm256_sad_epu8(x, _mm256_setzero_si256()), as<r_t>());
+      return  bit_cast(_mm256_sad_epu8(x.storage(), _mm256_setzero_si256()), as<r_t>());
     else if constexpr(std::is_same_v<ABI, sse_>)
-      return  bit_cast(_mm_sad_epu8(x, _mm_setzero_si128()), as<r_t>());
+      return  bit_cast(_mm_sad_epu8(x.storage(), _mm_setzero_si128()), as<r_t>());
   }
 
 }
