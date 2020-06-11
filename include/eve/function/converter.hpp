@@ -44,63 +44,20 @@ namespace eve
   };
 
   //================================================================================================
-  // Function decorator - single mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto single_(Function f) noexcept
-  {
-    return converter_type<float>{}(f);
-  }
+  // Function decorators for all basic type
+  inline constexpr converter_type<float>          const single_   = {};
+  inline constexpr converter_type<double>         const double_   = {};
+  inline constexpr converter_type<std::uint8_t >  const uint8_    = {};
+  inline constexpr converter_type<std::uint16_t>  const uint16_   = {};
+  inline constexpr converter_type<std::uint32_t>  const uint32_   = {};
+  inline constexpr converter_type<std::uint64_t>  const uint64_   = {};
+  inline constexpr converter_type<std::int8_t >   const int8_     = {};
+  inline constexpr converter_type<std::int16_t>   const int16_    = {};
+  inline constexpr converter_type<std::int32_t>   const int32_    = {};
+  inline constexpr converter_type<std::int64_t>   const int64_    = {};
+
   //================================================================================================
-  // Function decorator - double mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto double_(Function f) noexcept
-  {
-    return converter_type<double>{}(f);
-  }
-  //================================================================================================
-  // Function decorator - uint8 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto uint8_(Function f) noexcept
-  {
-    return converter_type<std::uint8_t>{}(f);
-  }
-  //================================================================================================
-  // Function decorator - int8 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto int8_(Function f) noexcept
-  {
-    return converter_type<std::int8_t>{}(f);
-  }
- //================================================================================================
-  // Function decorator - uint16 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto uint16_(Function f) noexcept
-  {
-    return converter_type<std::uint16_t>{}(f);
-  }
-  //================================================================================================
-  // Function decorator - int16 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto int16_(Function f) noexcept
-  {
-    return converter_type<std::int16_t>{}(f);
-  }
- //================================================================================================
-  // Function decorator - uint32 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto uint32_(Function f) noexcept
-  {
-    return converter_type<std::uint32_t>{}(f);
-  }
-  //================================================================================================
-  // Function decorator - int32 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto int32_(Function f) noexcept
-  {
-    return converter_type<std::int32_t>{}(f);
-  }
- //================================================================================================
-  // Function decorator - uint64 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto uint64_(Function f) noexcept
-  {
-    return converter_type<std::uint64_t>{}(f);
-  }
-  //================================================================================================
-  // Function decorator - int64 mode
-  template<typename Function> EVE_FORCEINLINE constexpr  auto int64_(Function f) noexcept
-  {
-    return converter_type<std::int64_t>{}(f);
-  }
+  // Function decorator for template conversion
+  template<typename T>
+  inline constexpr converter_type<T> const to_ = {};
 }
