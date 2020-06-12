@@ -38,6 +38,10 @@ namespace eve::detail
       {
         return Ieee_constant<T, 0x58C91073U, 0x42E6BCC41E900000ULL>(); //1.76858e+15,  2.0e14
       }
+      else
+      {
+        return Valmax<T>();
+      }
     }
     else
     {
@@ -45,4 +49,3 @@ namespace eve::detail
     }
   }
 }
-

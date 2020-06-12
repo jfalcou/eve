@@ -13,8 +13,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
 #include <eve/function/div_180.hpp>
 #include <eve/function/sinpicospi.hpp>
 
@@ -27,16 +25,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      using elt_t = element_type_t<T>;
-      if constexpr(std::is_same_v<elt_t, double>)
-      {
-        return D()(sinpicospi)(div_180(a0));
-      }
-      else
-      {
-        auto a0_180 =  single_(div_180(double_(a0))); // better precision in float
-        return D()(sinpicospi)(a0_180);
-      }
+      return D()(sinpicospi)(div_180(a0));
     }
     else
       return apply_over2(D()(sindcosd), a0);
