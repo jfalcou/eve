@@ -34,7 +34,7 @@ namespace eve
       {
         if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
-          return f(std::forward<Ts>(args)..., as_<T>());
+          return f(converter_type<T>(), std::forward<Ts>(args)...);
         }
         else
         {
