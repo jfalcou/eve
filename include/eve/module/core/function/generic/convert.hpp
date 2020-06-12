@@ -18,6 +18,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/function/bit_cast.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_less.hpp>
@@ -102,12 +103,13 @@ namespace eve::detail
     {
       auto v0    = eve::max(v00, Zero(as(v00)));
       using r_t  = as_integer_t<IN, unsigned>;
-      using si_t = as_integer_t<IN, signed>;
-      IN  sign_f = inc(IN(Valmax<si_t>()));
-      r_t sign_i = inc(r_t(Valmax<si_t>()));
+      using si_t = as_integer_t<elt_tin, signed>;
+
+      IN  sign_f(inc(IN(Valmax<si_t>())));
+      r_t sign_i(inc(r_t(Valmax<si_t>())));
       return if_else(is_less(v0, sign_f),
-                     bit_cast(convert(v0, as<OUT>()), as<OUT>()),
-                     bit_cast(convert(v0 - sign_f, as<OUT>()), as<OUT>()) + sign_i);
+                     convert(v0, as<OUT>()),
+                     convert(v0 - sign_f, as<OUT>())+ sign_i);
     }
     else if constexpr( signed_value<IN> && unsigned_value<OUT> )
     {
@@ -120,4 +122,3 @@ namespace eve::detail
   }
 
 }
-

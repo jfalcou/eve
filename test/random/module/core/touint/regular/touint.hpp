@@ -19,24 +19,31 @@
 TTS_CASE_TPL("wide random check on touint", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-
+  using sui_t = eve::detail::as_integer_t<v_t,  unsigned>;
+  using si_t = eve::detail::as_integer_t<v_t>;
+  using ui_t = eve::detail::as_integer_t<T,  unsigned>;
   if constexpr(eve::floating_value<T>)
   {
-    using i_t = eve::detail::as_integer_t<v_t>;
-    auto std_touint = tts::vectorize<T>( [](auto e) { return i_t(e); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    auto lmin = v_t(0);
+    auto lmax = v_t(eve::Valmax<si_t>());
+    auto std_touint = tts::vectorize<ui_t>( [](auto e) { return sui_t(e); } );
+    eve::rng_producer<T> p(lmin, lmax);
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
-  else if constexpr(eve::integral_value<T>)
+  else if constexpr(eve::signed_integral_value<T>)
   {
-    auto std_touint = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    auto lmin = v_t(si_t(0));
+    auto lmax = v_t(eve::Valmax<v_t>());
+    auto std_touint = tts::vectorize<ui_t>( [](auto e) { return sui_t(e); } );
+    eve::rng_producer<T> p(lmin, lmax);
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
   else
   {
+    auto lmin = v_t(sui_t(0));
+    auto lmax = v_t(eve::Valmax<sui_t>());
     auto std_touint = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(lmin, lmax);
     TTS_RANGE_CHECK(p, std_touint, eve::touint);
   }
 }

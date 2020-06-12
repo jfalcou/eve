@@ -19,6 +19,7 @@
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/ceil.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -99,8 +100,7 @@ namespace eve::detail
           {
             auto z = if_else(is_gtz(a), Valmax<T>(), Valmin<T>());
             z      = if_else(is_eqz(a), eve::zero_, z);
-            auto q = saturated_(convert)(/*i*/ ceil(convert(a, double_) / convert(b, double_)),
-                                         as<elt_t>());
+            auto q = saturated_(convert)(ceil(double_(a) / double_(b)), as<elt_t>());
             return if_else(is_nez(b), q, z);
           }
         }
@@ -115,4 +115,3 @@ namespace eve::detail
     }
   }
 }
-

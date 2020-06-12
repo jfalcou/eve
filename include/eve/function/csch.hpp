@@ -11,5 +11,4 @@
 #pragma once
 
 #include <eve/function/definition/csch.hpp>
-#include <eve/module/core/function/generic/csch.hpp>
-
+#include <eve/module/math/function/generic/csch.hpp>

@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
@@ -22,8 +23,8 @@ namespace eve::detail
   {
     using vt_t = element_type_t<T>;
     if constexpr( floating_value<T> )      return a;
-    else if constexpr(sizeof(vt_t) <= 4)   return convert(a, single_);
-    else if constexpr(sizeof(vt_t) == 8)   return convert(a, double_);
+    else if constexpr(sizeof(vt_t) <= 4)   return single_(a);
+    else if constexpr(sizeof(vt_t) == 8)   return double_(a);
   }
 
   template<real_value T, typename Tag>
@@ -33,8 +34,7 @@ namespace eve::detail
   {
     using vt_t = element_type_t<T>;
     if constexpr( floating_value<T> ) return a;
-    else if constexpr(sizeof(vt_t) <= 4)   return Tag()(convert)(a, single_);
-    else if constexpr(sizeof(vt_t) == 8)   return Tag()(convert)(a, double_);
+    else if constexpr(sizeof(vt_t) <= 4)   return Tag()(convert)(a, as<float>());
+    else if constexpr(sizeof(vt_t) == 8)   return Tag()(convert)(a, as<double>());
   }
 }
-

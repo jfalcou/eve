@@ -12,6 +12,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/constant/minlog.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -39,4 +40,8 @@ TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
 
   TTS_IEEE_EQUAL( eve::exp(T( 0.)), T(1));
   TTS_IEEE_EQUAL( eve::exp(T(-0.)), T(1));
+  v_t z = eve::Minlog<v_t>()+1;
+
+  TTS_ULP_EQUAL( eve::exp(T(z)), T(std::exp((z))), 0.5);
+
 }

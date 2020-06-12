@@ -8,17 +8,17 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/eps.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/function/bit_mantissa.hpp>
+#include <eve/constant/maxlog.hpp>
+#include <eve/constant/minlog.hpp>
 #include <cmath>
 
 int main(int argc, char** argv)
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmax<EVE_VALUE>();
-  auto lmax = eve::Valmin<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::eps, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  auto lmin = eve::Maxlog<EVE_VALUE>();
+  auto lmax = eve::Minlog<EVE_VALUE>();
+   EVE_REGISTER_BENCHMARK(eve::bit_mantissa, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
   eve::bench::start_benchmarks(argc, argv);
 }

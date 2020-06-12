@@ -13,7 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/div_180.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/regular.hpp>
@@ -28,8 +28,15 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
-      auto a0_180 =  convert(div_180(convert(a0, double_)), as_<elt_t>()); // better precision in float
-      return D()(cospi)(a0_180);
+      if constexpr(std::is_same_v<elt_t, double>)
+      {
+        return D()(cospi)(div_180(a0));
+      }
+      else
+      {
+        auto a0_180 =  single_(div_180(double_(a0))); // better precision in float
+        return D()(cospi)(a0_180);
+      }
     }
     else
       return apply_over(D()(cosd), a0);
@@ -42,4 +49,3 @@ namespace eve::detail
   }
 
 }
-

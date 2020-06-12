@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/one.hpp>
@@ -22,7 +23,6 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/bit_xor.hpp>
-#include <eve/function/eps.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/fnms.hpp>
@@ -147,4 +147,3 @@ namespace eve::detail
       return apply_over(cot, a0);
   }
 }
-

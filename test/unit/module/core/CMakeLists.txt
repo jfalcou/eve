@@ -69,7 +69,6 @@ make_all_units(ROOT core NAME countr_zero           ARCH scalar simd TYPES ${uin
 make_all_units(ROOT core NAME dec                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME dist                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME div                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT core NAME eps                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME exponent              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME extract               ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME fdim                  ARCH scalar simd TYPES ${real_types}    )

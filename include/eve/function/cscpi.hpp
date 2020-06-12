@@ -11,5 +11,4 @@
 #pragma once
 
 #include <eve/function/definition/cscpi.hpp>
-#include <eve/module/core/function/generic/cscpi.hpp>
-
+#include <eve/module/math/function/generic/cscpi.hpp>

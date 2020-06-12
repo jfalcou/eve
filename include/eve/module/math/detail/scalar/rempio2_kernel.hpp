@@ -18,6 +18,7 @@
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
@@ -104,20 +105,20 @@ namespace eve::detail
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
-      auto x  = convert(xx, double_);
+      auto x  = double_(xx);
       auto xn =  nearest(x*Twoopi<double>());
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-      auto n = convert(quadrant(xn), single_);
+      auto n = single_(quadrant(xn));
       auto da = xn1 * pp3;
       auto t = y - da;
       da = (y - t) - da;
       da = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a = t + da;
       da = (t - a) + da;
-      auto fa = convert(a, single_);
-      auto dfa = convert((a-convert(fa, double_))+da, single_);
+      auto fa = single_(a);
+      auto dfa = single_((a- double_(fa))+da);
       if (fa >= Pio_4<float>() || fa < - Pio_4<float>())
       {
         T n1;
@@ -168,7 +169,7 @@ namespace eve::detail
     tmp.lo = int32_t(t576 & 0x00000000FFFFFFFFULL);
     tmp.hi -= shl(k.hi*24, 20);
 
-    double gor = bit_cast(tmp, double_);
+    double gor = bit_cast(tmp, as<double>());
     double r[6];
     auto inds = shr(bit_cast(k, as<ui64_t>()), 32);
     for (int i=0;i<6;++i)
@@ -287,4 +288,3 @@ namespace eve::detail
     }
   }
 }
-

@@ -25,12 +25,12 @@ TTS_CASE_TPL("wide random check on inc", EVE_TYPE)
   {
     auto std_inc = tts::vectorize<T>( [](auto e) { return e+1; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_inc, eve::inc);
+    TTS_RANGE_CHECK(p, std_inc, eve::saturated_(eve::inc));
   }
   else
   {
     auto std_inc = tts::vectorize<T>( [](auto e) { return  e == eve::Valmax<v_t>() ? e : e+1; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_inc, eve::inc);
+    TTS_RANGE_CHECK(p, std_inc, eve::saturated_(eve::inc));
   }
 }

@@ -26,7 +26,6 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::as<std::int32_t>()), target_t);
-  TTS_EXPR_IS(eve::saturated_(eve::convert)(T(), eve::int32_)     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
@@ -38,34 +37,34 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
 #endif
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::int32_), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::int32_), static_cast<target_t>(v_t(42.69)) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(0))          , eve::as<std::int32_t>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::saturated_(eve::convert)((T(42.69))      , eve::as<std::int32_t>()), static_cast<target_t>(v_t(42.69)) );
 
   if constexpr(eve::integral_value<T>)
   {
     // with floating value this test produces undefined behaviour
     if constexpr(sizeof(v_t) >= 4)
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::int32_), eve::Valmax<target_t>());
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int32_t>()), eve::Valmax<target_t>());
     }
     else
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::int32_), static_cast<target_t>(eve::Valmax<v_t>()));
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int32_t>()), static_cast<target_t>(eve::Valmax<v_t>()));
     }
   }
   if constexpr(sizeof(v_t) >= 4)
   {
     if constexpr(!eve::signed_value<T>)
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::int32_), target_t(0));
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int32_t>()), target_t(0));
     }
     else
     {
-      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::int32_), eve::Valmin<target_t>());
+      TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int32_t>()), eve::Valmin<target_t>());
     }
   }
   else
   {
-    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::int32_), static_cast<target_t>(eve::Valmin<v_t>()));
+    TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int32_t>()), static_cast<target_t>(eve::Valmin<v_t>()));
   }
 }

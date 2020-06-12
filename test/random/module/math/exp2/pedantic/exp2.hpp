@@ -19,8 +19,16 @@
 TTS_CASE_TPL("wide random check on exp2", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
+  if constexpr(eve::integral_value<T>)
+  {
+    auto std_exp2 = tts::vectorize<T>( [](auto e) { return v_t(std::exp2(e)); } );
+    eve::rng_producer<T> p(v_t(-63), v_t(63));
+    TTS_RANGE_CHECK(p, std_exp2, eve::exp2);
+  }
+  else
+  {
   auto std_exp2 = tts::vectorize<T>( [](auto e) { return std::exp2(e); } );
-
-  eve::rng_producer<T> p(eve::Minlog2<v_t>(), eve::Maxlog2<v_t>());
-  TTS_RANGE_CHECK(p, std_exp2, eve::pedantic_(eve::exp2));
+    eve::rng_producer<T> p(eve::Minlog2<v_t>()+1, eve::Maxlog2<v_t>());
+    TTS_RANGE_CHECK(p, std_exp2, eve::exp2);
+  }
 }

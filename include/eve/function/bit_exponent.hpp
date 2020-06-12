@@ -10,14 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/saturated.hpp>
-#include <type_traits>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(eps_, eps);
-}
+#include <eve/function/definition/bit_exponent.hpp>
+#include <eve/module/core/function/generic/bit_exponent.hpp>
 

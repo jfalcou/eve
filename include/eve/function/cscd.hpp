@@ -11,5 +11,4 @@
 #pragma once
 
 #include <eve/function/definition/cscd.hpp>
-#include <eve/module/core/function/generic/cscd.hpp>
-
+#include <eve/module/math/function/generic/cscd.hpp>

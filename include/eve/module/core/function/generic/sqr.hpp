@@ -43,7 +43,7 @@ namespace eve::detail
       }
       else
       {
-        return if_else((a0 > Sqrtvalmax(as(a0))), Valmax(as(a0)), sqr(a0));
+        return if_else((saturated_(abs)(a0) > Sqrtvalmax(as(a0))), Valmax(as(a0)), sqr(a0));
       }
     }
     else
@@ -52,4 +52,3 @@ namespace eve::detail
     }
   }
 }
-

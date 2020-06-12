@@ -13,7 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/cotpi.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/div_180.hpp>
@@ -28,7 +28,15 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       using elt_t = element_type_t<T>;
-      auto a0_180 =  convert(div_180(convert(a0, double_)), as_<elt_t>()); // better precision in float
+      T a0_180;
+      if constexpr(std::is_same_v<elt_t, float>)
+      {
+        a0_180 =  single_(div_180(double_(a0))); // better precision in float
+      }
+      else
+      {
+        a0_180 = div_180(a0);
+      }
       auto test   = is_nez(a0_180) && is_flint(a0_180);
       if constexpr( scalar_value<T> ) // early return for nans in scalar case
       {
@@ -49,4 +57,3 @@ namespace eve::detail
   }
 
 }
-

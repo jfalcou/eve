@@ -98,4 +98,3 @@ namespace eve::detail
     return exp(regular_type(), x);
   }
 }
-

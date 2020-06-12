@@ -17,18 +17,17 @@
 TTS_CASE_TPL("Check eve::saturate return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::saturate(T(), eve::as<std::int64_t>()), T);
-  TTS_EXPR_IS(eve::saturate(T(), eve::int64_            ), T);
 }
 
 TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturate(T(0)    , eve::int64_ ), T(0)     );
-  TTS_EQUAL(eve::saturate(T(42.69), eve::int64_ ), T(42.69) );
+  TTS_EQUAL(eve::saturate(T(0)    , eve::as<std::int64_t>() ), T(0)     );
+  TTS_EQUAL(eve::saturate(T(42.69), eve::as<std::int64_t>() ), T(42.69) );
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::int64_), T(eve::Valmin<std::int64_t>()) );
-    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::int64_), T(eve::Valmax<std::int64_t>()) );
+    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int64_t>()), T(eve::Valmin<std::int64_t>()) );
+    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int64_t>()), T(eve::Valmax<std::int64_t>()) );
   }
   else
   {
@@ -37,26 +36,26 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
       using v_t = eve::element_type_t<T>;
       if constexpr(sizeof(v_t) <= sizeof(std::int64_t))
       {
-        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::int64_), eve::Valmin<T>() );
+        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int64_t>()), eve::Valmin<T>() );
       }
       else
       {
-        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::int64_), T(eve::Valmin<std::int64_t>()) );
+        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int64_t>()), T(eve::Valmin<std::int64_t>()) );
       }
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::int64_), T(0) );
+      TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int64_t>()), T(0) );
     }
 
     using v_t = eve::element_type_t<T>;
     if constexpr(sizeof(v_t) < sizeof(std::int64_t))
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::int64_), eve::Valmax<T>() );
+      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int64_t>()), eve::Valmax<T>() );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::int64_), T(eve::Valmax<std::int64_t>()) );
+      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int64_t>()), T(eve::Valmax<std::int64_t>()) );
     }
   }
 }

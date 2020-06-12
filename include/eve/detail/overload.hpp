@@ -182,5 +182,9 @@ namespace eve
   template<typename Tag>
   struct supports_conditionnal : std::true_type
   {};
+  // Traits foroptimized conversion support 
+  template<typename F> 
+  struct supports_optimized_conversion : std::false_type {};
+
 }
 

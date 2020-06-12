@@ -22,6 +22,8 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
@@ -47,10 +49,10 @@ namespace eve::detail
     using elt_t             = element_type_t<T>;
     if constexpr(std::is_same_v<elt_t,  float>)
     {
-      auto x =  convert(xx, double_);
+      auto x =  double_(xx);
       auto n =  nearest(x*Twoopi<double>());
       auto dxr = fma(n, -Pio_2<double>(), x);
-      return std::make_tuple(quadrant(convert(n, single_)), convert(dxr, single_), T(0.0f));
+      return std::make_tuple(quadrant(single_(n)), single_(dxr), T(0.0f));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {
@@ -96,20 +98,20 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = convert(xx, double_);
+      auto x   = double_(xx);
       auto xn  = nearest(x * Twoopi<double>());
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-      auto n   = convert(quadrant(xn), single_);
+      auto n   = single_(quadrant(xn));
       auto da  = xn1 * pp3;
       auto t   = y - da;
       da       = (y - t) - da;
       da       = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a   = t + da;
       da       = (t - a) + da;
-      auto fa  = convert(a, single_);
-      auto dfa = convert((a - convert(fa, double_)) + da, single_);
+      auto fa  = single_(a);
+      auto dfa = single_((a - double_(fa)) + da);
       if( any(fa >= Pio_4<float>() || fa < -Pio_4<float>()) )
       {
         T n1;
@@ -250,17 +252,15 @@ namespace eve::detail
         auto xi                     = bit_cast(xx, as_<ui_t>());
         auto index                  = bit_and(shr(xi, 26), 15);
         auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-        auto arr4 =
-            convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4), as<uint64_t>());
-        auto arr8 =
-            convert(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8), as<uint64_t>());
+        auto arr4 =      uint64_(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
+        auto arr8 =      uint64_(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
 
         auto shift  = bit_and(shr(xi, 23), 7);
         auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
               xi    = shl(xii, shift);
 
-        auto xi64   = convert(xi, as<uint64_t>());
-        auto res0   = convert(xi * arr0, as<uint64_t>());
+        auto xi64   = uint64_(xi);
+        auto res0   = uint64_(xi * arr0);
 
         using wui_t = as_wide_t<uint64_t, cardinal_t<T>>;
         wui_t res1  = mul(xi64, arr4);
@@ -271,11 +271,11 @@ namespace eve::detail
         auto n = shr((res0 + (1ULL << 61)), 62);
         res0   = res0 - (n << 62); // -= n << 62;
         auto tmp =  bit_cast(res0, as<i_t>());
-        auto xx1  = convert(tmp, as<double>());
-        auto bn   = if_else(xlerfl, sn, convert(n, single_));
+        auto xx1  = double_(tmp);
+        auto bn   = if_else(xlerfl, sn, single_(n));
         auto z    = xx1 * pi63;
-        auto sr1  = convert(z, single_);
-        auto dsr1 = convert(z - convert(sr1 , double_), single_);
+        auto sr1  = single_(z);
+        auto dsr1 = single_(z - double_(sr1));
         auto br   = if_else(xlerfl, sr, sr1);
         auto dbr  = if_else(xlerfl, dsr, dsr1);
         br        = if_else(is_not_finite(xx), eve::allbits_, br);
@@ -284,4 +284,3 @@ namespace eve::detail
     }
   }
 }
-

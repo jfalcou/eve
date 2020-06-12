@@ -10,6 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/eps.hpp>
-#include <eve/module/core/function/generic/eps.hpp>
+#include <eve/function/definition/bit_mantissa.hpp>
+#include <eve/module/core/function/generic/bit_mantissa.hpp>
 
