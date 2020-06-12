@@ -29,25 +29,17 @@ namespace eve::detail
     {
       if constexpr(sizeof(T) == 1)
       {
-// waiting for shuffles
-//      if constexpr(supports_avx)
-//         {
-//           auto x16 = _mm256_cvtepu8_epi16(a0);
-//           auto tmp = shr(x16, a1);
-//           return //shuffle tmp to a 128bits of low parts
-//         }
-//         else
-         {
-          using r_t = wide<T, N, sse_>;
-          using N16 = fixed<N::value/2>;
-          using i16_t = wide<std::uint16_t, N16>;
-          const i16_t masklow(0xff);
-          const i16_t maskhi (0xff00);
-          auto xx =  bit_cast(a0, as<i16_t>());
-          auto odd  = shr(xx&maskhi, a1)&masklow;
-          auto even = shr(xx, a1)&maskhi;
-          return bit_cast(odd+even, as<r_t>());
-         }
+        using t_t = wide<T, N, sse_>;
+        using int_t     = std::uint16_t;
+        using gen_t     = wide<int_t, fixed<N::value / 2>>;
+        t_t const Mask1 = bit_cast(gen_t(0x00ff),as(a0));
+        t_t const Mask2 = bit_cast(gen_t(0xff00),as(a0));
+        t_t       tmp   = bit_and(a0, Mask1);
+        t_t       tmp1  = _mm_srli_epi16(tmp, int(a1));
+        tmp1            = bit_and(tmp1, Mask1);
+        tmp             = bit_and(a0, Mask2);
+        t_t tmp3        = _mm_srli_epi16(tmp, int(a1));
+        return bit_or(tmp1, bit_and(tmp3, Mask2));
       }
       else if constexpr(sizeof(T) == 2) { return _mm_srli_epi16(a0, a1); }
       else if constexpr(sizeof(T) == 4) { return _mm_srli_epi32(a0, a1); }
@@ -111,17 +103,7 @@ namespace eve::detail
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) == 1)
-        {
-          using r_t = wide<T, N, avx_>;
-          using N16 = fixed<N::value/2>;
-          using i16_t = wide<std::uint16_t, N16>;
-          const i16_t masklow(0xff);
-          const i16_t maskhi (0xff00);
-          auto xx =  bit_cast(a0, as<i16_t>());
-          auto odd  = shr(xx&maskhi, a1)&masklow;
-          auto even = shr(xx, a1)&maskhi;
-          return bit_cast(odd+even, as<r_t>());
-        }
+          return shr_(EVE_RETARGET(sse2_), a0, a1);
         else if constexpr(sizeof(T) == 2)
           return _mm256_srli_epi16(a0, a1);
         else if constexpr(sizeof(T) == 4)
@@ -160,7 +142,7 @@ namespace eve::detail
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) <= 2) return ifxop_choice(a0, a1);
-        if constexpr(sizeof(T) == 4) return _mm256_srlv_epi32(a0, a1);
+        if constexpr(sizeof(T) == 4) return _mm256_srlv_epi32(a0, a1) ;
         if constexpr(sizeof(T) == 8) return _mm256_srlv_epi64(a0, a1);
       }
       else
