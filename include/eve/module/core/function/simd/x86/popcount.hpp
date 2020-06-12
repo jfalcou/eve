@@ -27,7 +27,7 @@ namespace eve::detail
 {
 
   template<integral_scalar_value T,  typename N>
-  EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(sse_), wide<T, N, sse_>  x) noexcept
+  EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(sse2_), wide<T, N, sse_>  x) noexcept
   {
     auto putcounts = [](auto xx){
       using N8 = fixed<N::value*sizeof(T)>;
@@ -41,16 +41,16 @@ namespace eve::detail
       return xx;
     };
 
-    using r_t = wide<as_integer_t<T, unsigned>, N>;
+     using r_t = wide<as_integer_t<T, unsigned>, N>;
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
-      using N16 = fixed<8>;
-      using i16_t = typename wide<T,N,avx_>::template rebind<uint16_t,N16>;
+      using N16 = fixed< (sizeof(T) < 8) ? 8u : sizeof(T)>;
+      using i16_t = wide < uint16_t, N16>; //typename wide<T,N,avx_>::template rebind<uint16_t,N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
         xx = putcounts(xx);
-        return  bit_cast(_mm_sad_epu8(xx.storage(), _mm_setzero_si128()), as<r_t>());
+       return  bit_cast(_mm_sad_epu8(xx.storage(), _mm_setzero_si128()), as<r_t>());
       }
       else if constexpr(sizeof(T) == 1)
       {
@@ -91,8 +91,8 @@ namespace eve::detail
 
     if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
     {
-      using N16 = fixed<16>;
-      using i16_t = typename wide<T,N,avx_>::template rebind<uint16_t,N16>;
+      using N16 = fixed<(sizeof(T) < 8) ? 16 : sizeof(T)*2>;
+      using i16_t = wide<uint16_t, N16>;
       auto xx =  bit_cast(x, as<i16_t>());
       if constexpr(sizeof(T) == 8)
       {
@@ -114,6 +114,4 @@ namespace eve::detail
       return bit_cast(x & mask, as<r_t>());
     }
   }
-
-
 }

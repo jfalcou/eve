@@ -15,6 +15,7 @@
 #include <type_traits>
 #include <eve/as.hpp>
 #include <eve/traits.hpp>
+#include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <bit>
@@ -30,14 +31,16 @@ namespace eve::detail
                                                      , T const &v) noexcept
   {
     using r_t = as_integer_t<T, unsigned>;
-    if constexpr(scalar_value<T>)
+    if constexpr(has_native_abi_v<T>)
     {
-      return r_t(std::popcount(bit_cast(v, as<r_t>())));
-    }
-
-   else if constexpr(has_native_abi_v<T>)
-   {
-     return map(eve::popcount, v);
+      if constexpr(scalar_value<T>)
+      {
+        return r_t(std::popcount(bit_cast(v, as<r_t>())));
+      }
+      else
+      {
+        return map(eve::popcount, v);
+      }
     }
     else
     {
