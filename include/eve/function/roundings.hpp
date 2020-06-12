@@ -10,13 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve
 {
   //================================================================================================
-  // Function decorator - upward mode
+  // Rounding decorator types
   struct upward_type : decorator_
   {
     template<typename Function>
@@ -29,14 +28,6 @@ namespace eve
     }
   };
 
-  template<typename Function> constexpr EVE_FORCEINLINE auto upward_(Function f) noexcept
-  {
-    return upward_type{}(f);
-  }
-
-
-  //================================================================================================
-  // Function decorator - downward mode
   struct downward_type : decorator_
   {
     template<typename Function>
@@ -49,13 +40,6 @@ namespace eve
     }
   };
 
-  template<typename Function> constexpr EVE_FORCEINLINE auto downward_(Function f) noexcept
-  {
-    return downward_type{}(f);
-  }
-
-  //================================================================================================
-  // Function decorator - to_nearest mode
   struct to_nearest_type : decorator_
   {
     template<typename Function>
@@ -68,13 +52,6 @@ namespace eve
     }
   };
 
-  template<typename Function> constexpr EVE_FORCEINLINE auto to_nearest_(Function f) noexcept
-  {
-    return to_nearest_type{}(f);
-  }
-
-  //================================================================================================
-  // Function decorator - toward_zero mode
   struct toward_zero_type : decorator_
   {
     template<typename Function>
@@ -87,9 +64,11 @@ namespace eve
     }
   };
 
-  template<typename Function> constexpr EVE_FORCEINLINE auto toward_zero_(Function f) noexcept
-  {
-    return toward_zero_type{}(f);
-  }
+  //================================================================================================
+  // Rounding decorator objects
+  inline constexpr upward_type      const upward_       = {};
+  inline constexpr downward_type    const downward_     = {};
+  inline constexpr to_nearest_type  const to_nearest_   = {};
+  inline constexpr toward_zero_type const toward_zero_  = {};
 }
 

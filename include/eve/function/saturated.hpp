@@ -31,9 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - saturated mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto saturated_(Function f) noexcept
-  {
-    return saturated_type{}(f);
-  }
+  inline constexpr saturated_type const saturated_ = {};
 }
 
