@@ -25,12 +25,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N, sse_> shr_(EVE_SUPPORTS(sse2_)
                                        , wide<T, N, sse_> const &a0, I const & a1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
-
     if constexpr(std::is_unsigned_v<T>)
     {
       if constexpr(sizeof(T) == 1)
       {
+        using t_t = wide<T, N, sse_>;
         using int_t     = std::uint16_t;
         using gen_t     = wide<int_t, fixed<N::value / 2>>;
         t_t const Mask1 = bit_cast(gen_t(0x00ff),as(a0));
@@ -42,9 +41,9 @@ namespace eve::detail
         t_t tmp3        = _mm_srli_epi16(tmp, int(a1));
         return bit_or(tmp1, bit_and(tmp3, Mask2));
       }
-      if constexpr(sizeof(T) == 2) { return _mm_srli_epi16(a0, a1); }
-      if constexpr(sizeof(T) == 4) { return _mm_srli_epi32(a0, a1); }
-      if constexpr(sizeof(T) == 8) { return _mm_srli_epi64(a0, a1); }
+      else if constexpr(sizeof(T) == 2) { return _mm_srli_epi16(a0, a1); }
+      else if constexpr(sizeof(T) == 4) { return _mm_srli_epi32(a0, a1); }
+      else if constexpr(sizeof(T) == 8) { return _mm_srli_epi64(a0, a1); }
     }
     else
     {
@@ -143,7 +142,7 @@ namespace eve::detail
       if constexpr(std::is_unsigned_v<T>)
       {
         if constexpr(sizeof(T) <= 2) return ifxop_choice(a0, a1);
-        if constexpr(sizeof(T) == 4) return _mm256_srlv_epi32(a0, a1);
+        if constexpr(sizeof(T) == 4) return _mm256_srlv_epi32(a0, a1) ;
         if constexpr(sizeof(T) == 8) return _mm256_srlv_epi64(a0, a1);
       }
       else
@@ -158,4 +157,3 @@ namespace eve::detail
     }
   }
 }
-
