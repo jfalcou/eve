@@ -50,7 +50,7 @@ namespace eve::detail
       if constexpr(sizeof(T) == 8)
       {
         xx = putcounts(xx);
-       return  bit_cast(_mm_sad_epu8(xx.storage(), _mm_setzero_si128()), as<r_t>());
+       return  bit_cast(_mm_sad_epu8(xx, _mm_setzero_si128()), as<r_t>());
       }
       else if constexpr(sizeof(T) == 1)
       {
@@ -73,45 +73,55 @@ namespace eve::detail
     }
   }
 
- template<integral_scalar_value T,  typename N>
+  /////////////////////////////////////////////////////////////////////////////
+  // 256 bits
+  template<integral_scalar_value T,  typename N>
   EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(avx_), wide<T, N, avx_>  x) noexcept
   {
-    using r_t = wide<as_integer_t<T, unsigned>, N>;
-    auto putcounts = [](auto xx){
-      using N8 = fixed<N::value*sizeof(T)>;
-      using i8_t = wide<std::int8_t, N8>;
-      const i8_t pattern_2bit(0x55);
-      const i8_t pattern_4bit(0x33);
-      const i8_t pattern_16bit(0x0f);
-      xx -=  bit_shr(xx, 1) & pattern_2bit;                         //put count of each 2 bits into those 2 bits
-      xx = (xx & pattern_4bit) + ( bit_shr(xx, 2) & pattern_4bit);  //put count of each 4 bits into those 4 bits
-      xx = (xx +  bit_shr(xx, 4)) & pattern_16bit;                  //put count of each 8 bits into those 8 bits
-      return xx;
-    };
-
-    if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
+    if constexpr( current_api >=  avx2)
     {
-      using N16 = fixed<(sizeof(T) < 8) ? 16 : sizeof(T)*2>;
-      using i16_t = wide<uint16_t, N16>;
-      auto xx =  bit_cast(x, as<i16_t>());
-      if constexpr(sizeof(T) == 8)
+      using r_t = wide<as_integer_t<T, unsigned>, N>;
+      auto putcounts = [](auto xx){
+        using N8 = fixed<N::value*sizeof(T)>;
+        using i8_t = wide<std::int8_t, N8>;
+        const i8_t pattern_2bit(0x55);
+        const i8_t pattern_4bit(0x33);
+        const i8_t pattern_16bit(0x0f);
+        xx -=  bit_shr(xx, 1) & pattern_2bit;                         //put count of each 2 bits into those 2 bits
+        xx = (xx & pattern_4bit) + ( bit_shr(xx, 2) & pattern_4bit);  //put count of each 4 bits into those 4 bits
+        xx = (xx +  bit_shr(xx, 4)) & pattern_16bit;                  //put count of each 8 bits into those 8 bits
+        return xx;
+      };
+
+      if constexpr(sizeof(T) == 8 || sizeof(T) == 1)
       {
-        xx =  putcounts(xx);
-        return  bit_cast(_mm256_sad_epu8(xx.storage(), _mm256_setzero_si256()), as<r_t>());
+        using N16 = fixed<(sizeof(T) < 8) ? 16 : sizeof(T)*2>;
+        using i16_t = wide<uint16_t, N16>;
+        auto xx =  bit_cast(x, as<i16_t>());
+        if constexpr(sizeof(T) == 8)
+        {
+          xx =  putcounts(xx);
+          return  bit_cast(_mm256_sad_epu8(xx, _mm256_setzero_si256()), as<r_t>());
+        }
+        else if constexpr(sizeof(T) == 1)
+        {
+          const i16_t masklow(0xff);
+          return bit_cast(popcount(xx&masklow)+ bit_shl(popcount(bit_shr(xx, 8)&masklow), 8), as<r_t>());
+        }
       }
-      else if constexpr(sizeof(T) == 1)
+      else if constexpr( sizeof(T) == 4 || sizeof(T) == 2)
       {
-        const i16_t masklow(0xff);
-        return bit_cast(popcount(xx&masklow)+ bit_shl(popcount(bit_shr(xx, 8)&masklow), 8), as<r_t>());
+        x =  putcounts(x);
+        if constexpr(sizeof(T) >= 2) x += bit_shr(x,  8);         //put count of each 16 bits into their lowest 8 bits
+        if constexpr(sizeof(T) >= 4) x += bit_shr(x, 16);         //put count of each 32 bits into their lowest 8 bits
+        if constexpr(sizeof(T) >= 8) x += bit_shr(x, 32);         //put count of each 64 bits into their lowest 8 bits
+        const r_t mask(0x7f);
+        return bit_cast(x & mask, as<r_t>());
       }
     }
-    else if constexpr(sizeof(T) == 4 || sizeof(T) == 2)
+    else
     {
-      x =  putcounts(x);
-      if constexpr(sizeof(T) >= 2) x += bit_shr(x,  8);         //put count of each 16 bits into their lowest 8 bits
-      if constexpr(sizeof(T) >= 4) x += bit_shr(x, 16);         //put count of each 32 bits into their lowest 8 bits
-      const r_t mask(0x7f);
-      return bit_cast(x & mask, as<r_t>());
+      return popcount_(EVE_RETARGET(sse2_), x);
     }
   }
 }
