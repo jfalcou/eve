@@ -8,11 +8,9 @@
 **/
 //==================================================================================================
 #pragma once
-// **========================================================
-// helper file to include all inverse hyperbolic functions
-#include <eve/function/acosh.hpp>
-#include <eve/function/acoth.hpp>
-#include <eve/function/acsch.hpp>
-#include <eve/function/asech.hpp>
-#include <eve/function/asinh.hpp>
-#include <eve/function/atanh.hpp>
+// **=======================================================
+// helper file to include all algorithms functions
+#include <eve/function/all.hpp>
+#include <eve/function/any.hpp>
+#include <eve/function/none.hpp>
+#include <eve/function/nbtrue.hpp>
