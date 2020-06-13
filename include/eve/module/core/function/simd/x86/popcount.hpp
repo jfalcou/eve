@@ -78,9 +78,9 @@ namespace eve::detail
   template<integral_scalar_value T,  typename N>
   EVE_FORCEINLINE auto popcount_(EVE_SUPPORTS(avx_), wide<T, N, avx_>  x) noexcept
   {
+    using r_t = wide<as_integer_t<T, unsigned>, N>;
     if constexpr( current_api >=  avx2)
     {
-      using r_t = wide<as_integer_t<T, unsigned>, N>;
       auto putcounts = [](auto xx){
         using N8 = fixed<N::value*sizeof(T)>;
         using i8_t = wide<std::int8_t, N8>;
@@ -121,7 +121,13 @@ namespace eve::detail
     }
     else
     {
-      return popcount_(EVE_RETARGET(sse2_), x);
+      if constexpr(sizeof(T) >= 8)
+        return popcount_(EVE_RETARGET(cpu_), x);
+      else
+      {
+        auto [lo, hi] = x.slice();
+        return r_t(popcount(lo), popcount(hi));
+      }
     }
   }
 }
