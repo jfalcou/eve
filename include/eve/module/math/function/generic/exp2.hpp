@@ -104,33 +104,40 @@ namespace eve::detail
 // integral types
 
   template<integral_real_value T, typename D>
-  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const & d, T xx) noexcept
+  EVE_FORCEINLINE constexpr auto exp2_(EVE_SUPPORTS(cpu_), D const &, T xx) noexcept
+  requires(is_one_of<D>(types<converter_type<float>
+                             , converter_type<double>
+                             , pedantic_type
+                             , raw_type>{}))
   {
-    if constexpr( std::is_same_v<converter_type<float>, D> || std::is_same_v<converter_type<double>, D>)
+    if constexpr( has_native_abi_v<T> )
     {
-      using vd_t = value_type_t<D>;
-      using i_t  = as_integer_t<vd_t>;
-      auto x = convert(xx,  as<i_t>());
-      auto z = is_nez(x);
-      auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
-      zz = zz << Nbmantissabits<vd_t>();
-      using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
-      return bit_cast(zz, as<r_t>());
-    }
-    else  if constexpr( has_native_abi_v<T> )
-    {
-      auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(as(xx)), xx));
-      if constexpr(std::is_same_v<D, saturated_type>)
+      if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
       {
-        using elt_t =  element_type_t<T>;
-        return if_else(is_gez(xx, T(sizeof(elt_t))), Valmax<T>(), tmp);
+        using vd_t = value_type_t<D>;
+        using i_t  = as_integer_t<vd_t>;
+        auto x = convert(xx,  as<i_t>());
+        auto z = is_nez(x);
+        auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
+        zz = zz << Nbmantissabits<vd_t>();
+        using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
+        return bit_cast(zz, as<r_t>());
       }
       else
-        return tmp;
+      {
+        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(as(xx)), xx));
+        if constexpr(std::is_same_v<D, saturated_type>)
+        {
+          using elt_t =  element_type_t<T>;
+          return if_else(is_gez(xx, T(sizeof(elt_t))), Valmax<T>(), tmp);
+        }
+        else
+          return tmp;
+      }
     }
     else
     {
-      return apply_over(d(exp2), xx);
+      return apply_over(D()(exp2), xx);
     }
   }
 
