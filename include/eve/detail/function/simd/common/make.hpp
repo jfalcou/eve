@@ -56,10 +56,11 @@ namespace eve::detail
   template<typename Pack, typename Value>
   EVE_FORCEINLINE Pack make(as_<Pack> const &, eve::aggregated_ const &, Value vs) noexcept
   {
-    typename Pack::storage_type::value_type sub_value(vs);
-    Pack                                    that;
+    using sub_t = typename Pack::storage_type::value_type;
+    Pack  that;
 
-    that.storage().apply([&sub_value](auto &... v) { ((v = sub_value), ...); });
+    that.storage().for_each( [sub_value = sub_t(vs)](auto& s) { s = sub_value; } );
+
     return that;
   }
 }

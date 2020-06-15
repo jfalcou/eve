@@ -11,12 +11,9 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/alias.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
-
-#include <cstring>
 
 namespace eve::detail
 {
@@ -34,13 +31,8 @@ namespace eve::detail
     {
       that_t that;
 
-      // TODO: use std::bit_cast when available
-      auto const *srcl = reinterpret_cast<detail::alias_t<std::byte const> *>(&l);
-      auto const *srch = reinterpret_cast<detail::alias_t<std::byte const> *>(&h);
-      auto *      dst  = reinterpret_cast<detail::alias_t<std::byte> *>(&that);
-
-      std::memcpy(dst, srcl, sizeof(l));
-      std::memcpy(dst + sizeof(l), srch, sizeof(h));
+      that.storage().segments[0] = l;
+      that.storage().segments[1] = h;
 
       return that;
     }
