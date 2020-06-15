@@ -10,7 +10,7 @@
  -> numeric_(fnma)(oi, pi, qi)         = (-2, -7, -1.42109e-14, -3.40282e+38)
  -> fnma(oi, pi, qi)                   = (-2, -7, 0, -inf)
 
- if the last fnma result ends by '0, inf}', it is because
+ if the last fnma result ends by '0, -inf}', it means that
  the system has no simd fnma family intrinsics
  or is not configured to use them.
 

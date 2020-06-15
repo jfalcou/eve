@@ -38,6 +38,7 @@
 #include <eve/function/is_not_denormal.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/is_not_finite.hpp>
+#include <eve/function/is_not_flint.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/function/is_not_greater.hpp>
 #include <eve/function/is_not_imag.hpp>
