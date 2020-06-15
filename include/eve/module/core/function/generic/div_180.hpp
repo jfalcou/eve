@@ -41,10 +41,6 @@ namespace eve::detail
       else
       {
         return single_(div_180(double_(a)));
-//         const T Ch =  T(0.00555555569007993f);
-//         const T Cl =  T(1.34524377748413e-10);
-//         T c = Cl*a;
-//         return if_else(test, a, fma(a, Ch, c));
       }
     }
     else return apply_over(div_180, a);
