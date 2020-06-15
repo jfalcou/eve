@@ -25,62 +25,53 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the minus unary operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise) minus operation on its parameter.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  [element-wise](../../../glossary.html#elment-wise) the opposite of `x`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = minus(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+!!! WARNING
+   Although the operator notation with `-` is supported, the `-` operator on
+   standard scalar type is the original one and so can lead to automatic promotion.
 
-is semantically equivalent to:
+Supported Decorators
+====================================================================================================
+[`saturated_`](../decorators.html#pedantic_)
+:   The call `saturated_(minus)(x,y)` computes the saturated opposite of `x`. The only interest of this behaviour is that
+    for integral signed type T  `saturated_(minus)(Valmin<T>())` returns `Valmax<T>()` and is not u.b.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+Masked calls
+====================================================================================================
+ The call `minus[cond](x)` (resp.  `saturated_(minus[cond])(x)`) computes the opposite (resp the saturated  opposite of `x`)
+ if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ *  `if_else(cond, minus(x), x)`,
+ *  `if_else(cond, saturated_(minus)(x), x)`;
 
-  <!--(insert ../../src/minus.src.html here)-->
+  (insert ../../src/minus.src.html here)
 
-  <!--(insert ../../out/minus.out.html here)-->
+  (insert ../../out/minus.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::plus](./plus.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

@@ -59,19 +59,19 @@ Return the remainder of the division of `x` by `y`.
 Supported Decorators
 ====================================================================================================
 [`toward_zero_`](../decorators.html#toward_zero_)
-:   The call `toward_zero_(rem)(x,y)`  computes  `x-towarzero_(div)(x,y)*y`).
+:   The call `toward_zero_(rem)(x,y)`  computes  `x-towarzero_(div)(x,y)*y`.
 
 [`downward_`](../decorators.html#downward_)
-:   The call `downward_(rem)(x,y)`  computes  `x-downward_(div)(x,y)*y`).
+:   The call `downward_(rem)(x,y)`  computes  `x-downward_(div)(x,y)*y`.
 
 [`upward_`](../decorators.html#upward_)
-:   The call `upward_(rem)(x,y)`  computes  `x-upward_(div)(x,y)*y`).
-It is not defined for unsigned values as the result can be negative.
+:   The call `upward_(rem)(x,y)`  computes  `x-upward_(div)(x,y)*y`.
+    It is not defined for unsigned values as the result can be negative.
 
 
 [`to_nearest_`](../decorators.html#to_nearest_)
-:   The call `to_nearest_(rem)(x,y)`  computes  `x-to_nearest(div)(x,y)*y`).
-It is not defined for unsigned values as the result can be negative.
+:   The call `to_nearest_(rem)(x,y)`  computes  `x-to_nearest(div)(x,y)*y`.
+    It is not defined for unsigned values as the result can be negative.
 
 
 Masked calls
@@ -80,8 +80,8 @@ Masked calls
  computes the remainder (resp the saturated  remainder) of `x` by `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
- *  `if_else(cond, rem(x,y),x)`,
- *  `if_else(cond, xxx_(rem)(x,y),x)`;
+ *  `if_else(cond, rem(x,y), x)`,
+ *  `if_else(cond, xxx_(rem)(x,y), x)`;
 
   (insert ../../src/rem.src.html here)
 
