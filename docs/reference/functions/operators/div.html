@@ -25,62 +25,57 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the div operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic divison of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
+`x`, `y`
+:   [values](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Return the difference of `x` and `y`.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = div(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+ The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
-is semantically equivalent to:
+ The call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+!!! WARNING
+   Although the infix notation with `/` is supported, the `/` operator on
+   standard scalar type is the original one and so can lead to automatic promotion.
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/div.src.html here)-->
-
-  <!--(insert ../../out/div.out.html here)-->
-
-See Also
+Supported Decorators
 ====================================================================================================
+[`saturated_`](../decorators.html#pedantic_)
+:   The call `saturated_(div)(x,y)` computes the saturated  difference of `x` and `y`. The saturation is obtained in the
+     [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
+     The relevant case are just in fact for integral division the division than 0 in which case the result is `Valmin` or
+     `Valmax` according to the dividend sign, and the division of `Valmin` by -1 that produces `Valmax`.
 
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+Masked calls
+====================================================================================================
+ The call `div[cond](x,y)` (resp.  `saturated_(div[cond])(x,y)`) computes the difference (resp the saturated  difference of `x` and `y`)
+ if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
+
+ *  `if_else(cond, div(x,y),x)`,
+ *  `if_else(cond, saturated_(div)(x,y),x)`;
+
+  (insert ../../src/div.src.html here)
+
+  (insert ../../out/div.out.html here)
+
+
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

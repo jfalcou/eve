@@ -18,6 +18,6 @@ int main()
             << " xi =             " << xi << '\n'
             << " yi =             " << yi << '\n'
             << " -> add(xi, yi) = " << eve::add(xi, yi) << '\n'
-            << " -> xi + yi     = " << xi + yi << '  //promotted to int by C++\n';
+            << " -> xi + yi     = " << xi + yi << '\n'; // C++ promotion to int
   return 0;
 }
