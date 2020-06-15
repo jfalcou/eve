@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/is_eqz.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -39,13 +40,9 @@ namespace eve::detail
       }
       else
       {
-        const T Ch =  T(0.00555555569007993f);
-        const T Cl =  T(1.34524377748413e-10);
-        T c = Cl*a;
-        return if_else(test, a, fma(a, Ch, c));
+        return single_(div_180(double_(a)));
       }
     }
     else return apply_over(div_180, a);
   }
 }
-

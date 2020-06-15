@@ -11,7 +11,9 @@
 #include <eve/function/secpi.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/maxflint.hpp>
 #include <eve/constant/minf.hpp>
+#include <eve/constant/maxflint.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -42,4 +44,5 @@ TTS_CASE_TPL("Check eve::big_(eve::secpi) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100000.0)) , T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(1000001.0)),-T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100001.0)) ,-T(1)          , 0.5);
-}
+  auto z = eve::Maxflint<T>()*10;
+  TTS_ULP_EQUAL(eve::big_(eve::secpi)(z) , T(1) , 0.5);}

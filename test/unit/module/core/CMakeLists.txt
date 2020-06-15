@@ -122,6 +122,7 @@ make_all_units(ROOT core NAME is_normal             ARCH scalar simd TYPES ${all
 make_all_units(ROOT core NAME is_not_denormal       ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_equal          ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_finite         ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT core NAME is_not_flint          ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT core NAME is_not_greater        ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_greater_equal  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT core NAME is_not_imag           ARCH scalar simd TYPES ${real_types}    )
