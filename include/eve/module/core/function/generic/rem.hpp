@@ -30,10 +30,7 @@ namespace eve::detail
   rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires compatible_values<T, U>
   {
-    if (integral_value<T>)
-      return a % b;
-    else
-      return arithmetic_call(rem, a, b);
+    return arithmetic_call(rem, a, b);
   }
 
  template<real_value T>
@@ -42,7 +39,10 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return toward_zero_(rem)(a, b);
+//       if (integral_value<T>)
+//         return a % b;
+//       else
+        return fnma(b, eve::div(a,b), a);
     }
     else
       return apply_over(toward_zero_(rem), a, b);
