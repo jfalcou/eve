@@ -12,52 +12,67 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/copysign.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/if_else.hpp>
+#include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/function/is_not_finite.hpp>
 #include <eve/function/roundings.hpp>
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto
-  rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires compatible_values<T, U>
-  {
-    return fnma(b, toward_zero_(div)(a,b), a);
-  }
 
   template<real_value T, real_value U>
-  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
-                            , pedantic_type const&,T const &a, U const &b
-                            ) noexcept requires compatible_values<T, U>
+  EVE_FORCEINLINE auto
+  rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+  requires compatible_values<T, U>
   {
-    return if_else(is_nez(b), rem(a,b), a);
+    if (integral_value<T>)
+      return a % b;
+    else
+      return arithmetic_call(rem, a, b);
+  }
+
+ template<real_value T>
+  EVE_FORCEINLINE auto
+  rem_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      return toward_zero_(rem)(a, b);
+    }
+    else
+      return apply_over(toward_zero_(rem), a, b);
   }
 
   template<real_value T, real_value U, decorator D>
-  EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), D const& d, T const &a, U const &b) noexcept
-  requires compatible_values<T, U>
+  EVE_FORCEINLINE auto
+  rem_(EVE_SUPPORTS(cpu_), D const &, T const &a, U const &b) noexcept requires compatible_values<T, U>
+  {
+    return arithmetic_call(D()(rem), a, b);
+  }
+
+  template<real_value T, decorator D>
+  EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), D const& d, T const &a, T const &b) noexcept
   {
     return fnma(b, d(eve::div)(a,b), a);
   }
 
-  template<real_value T, real_value U, decorator D>
-  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_), pedantic_type const&, D const& d
-                            , T const &a, U const &b
-                            ) noexcept
-  requires compatible_values<T, U>
+  template<floating_real_value T, decorator D>
+  EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), D const& , T const &a, T const &b) noexcept
+  requires(is_one_of<D>(types<to_nearest_type, toward_zero_type> {}))
   {
-    return if_else(is_nez(b), d(rem)(a,b), a);
-  }
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto tmp =  fnma(b, D()(eve::div)(a,b), a);
+      return if_else(is_eqz(tmp), copysign(tmp, a),  tmp);
+    }
+    else
+      return apply_over(D()(rem), a, b);
 
-  template<real_value T, real_value U, decorator D>
-  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_), D const& d, pedantic_type const&
-                            , T const &a, U const &b
-                            ) noexcept
-  requires compatible_values<T, U>
-  {
-    return if_else(is_nez(b), d(rem)(a,b), a);
   }
 
   //================================================================================================
@@ -65,16 +80,16 @@ namespace eve::detail
   //================================================================================================
   template<value T, real_value U, real_value V>
   EVE_FORCEINLINE auto rem_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
-  //      requires compatible_values<U, V>
+  requires compatible_values<U, V>
   {
-    using r_t = decltype(rem(t, f));
+    using r_t = decltype(if_else(cond, f, t));
     if constexpr( scalar_value<T> )
     {
-      return cond ? rem(t, f) : r_t(t);
+      return cond ? toward_zero_(rem)(t, f) : r_t(t);
     }
     else if constexpr( simd_value<T> )
     {
-      return if_else(cond, rem(r_t(t), r_t(f)), r_t(t));
+      return if_else(cond, toward_zero_(rem)(r_t(t), r_t(f)), r_t(t));
     }
   }
 
@@ -102,11 +117,11 @@ namespace eve::detail
     using r_t = decltype(rem(t, f));
     if constexpr( scalar_value<T> )
     {
-      return cond.value ? r_t(t) : rem(t, f);
+      return cond.value ? r_t(t) : toward_zero_(rem)(t, f);
     }
     else if constexpr( simd_value<T> )
     {
-      return if_else(cond, r_t(t), rem(r_t(t), r_t(f)));
+      return if_else(cond, r_t(t), toward_zero_(rem)(r_t(t), r_t(f)));
     }
   }
 

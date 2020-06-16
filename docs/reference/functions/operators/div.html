@@ -59,9 +59,12 @@ Supported Decorators
 ====================================================================================================
 [`saturated_`](../decorators.html#pedantic_)
 :   The call `saturated_(div)(x,y)` computes the saturated  difference of `x` and `y`. The saturation is obtained in the
-     [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
-     The relevant case are just in fact for integral division the division than 0 in which case the result is `Valmin` or
-     `Valmax` according to the dividend sign, and the division of `Valmin` by -1 that produces `Valmax`.
+    [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
+    The relevant case are just in fact for integral division the division than 0 in which case the result
+    is [`eve::Valmin(as(x))`](../../constants/limits/valmin.html) or
+    [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) according to the dividend sign, and
+    the division of [`eve::Valmin(as(x))`](../../constants/limits/valmin.html)
+    by -1 that produces [`eve::Valmax(as(x))`](../../constants/limits/valmax.html).
 
 Masked calls
 ====================================================================================================

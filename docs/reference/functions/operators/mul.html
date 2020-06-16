@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic difference of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic multiplication  of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,11 +45,11 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Return the difference of `x` and `y`.
+Return the multiplication of `x` by `y`.
 
  The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
- The call `mul(x, y)` is equivalent to `x *y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
+ The call `mul(x, y)` is equivalent to `x * y` if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
 !!! WARNING
    Although the infix notation with `*` is supported, the `*` operator on
@@ -63,7 +63,7 @@ Supported Decorators
 
 Masked calls
 ====================================================================================================
- The call `mul[cond](x,y)` (resp.  `saturated_(mul[cond])(x,y)`) computes the difference (resp the saturated  difference of `x` and `y`)
+ The call `mul[cond](x,y)` (resp.  `saturated_(mul[cond])(x,y)`) computes the difference (resp the saturated  multiplication of `x` by `y`)
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, mul(x,y),x)`,
