@@ -63,14 +63,17 @@ namespace eve::detail
   template<typename Pack, typename Pointer>
   EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::aggregated_ const &, Pointer ptr) noexcept
   {
-    using str_t = typename Pack::storage_type;
-    using sub_t = typename str_t::value_type;
     Pack that;
 
-    that.storage().apply([&](auto &... v) {
-      int offset = 0;
-      (((v = sub_t(ptr + offset), offset += str_t::small_size), ...));
-    });
+    that.storage().apply
+    (
+      [&]<typename... Sub>(Sub&... v)
+      {
+        int offset = 0;
+        (((v = Sub(ptr + offset), offset += Sub::static_size), ...));
+      }
+    );
+
     return that.storage();
   }
 }

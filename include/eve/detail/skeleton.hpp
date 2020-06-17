@@ -53,14 +53,6 @@ namespace eve::detail
     else                          return std::forward<T>(t);
   }
 
-  template<typename T, typename I>
-  EVE_FORCEINLINE constexpr auto subpart(T &&t, I const& idx) noexcept
-  {
-    using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return std::forward<T>(t).storage().segments[idx];
-    else                          return std::forward<T>(t);
-  }
-
   // Compute a transformed wide type
   template<typename F, typename... Ts>
   struct wide_result
@@ -127,11 +119,19 @@ namespace eve::detail
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
   template<std::size_t I> struct aggregate_step
   {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto subpart(T &&t) noexcept
+    {
+      using u_t = std::remove_cvref_t<T>;
+      if constexpr(simd_value<u_t>) return std::forward<T>(t).storage().template get<I>();
+      else                          return std::forward<T>(t);
+    }
+
     // Not a lambda as we need force-inlining
     template<typename Func, typename Out, typename... Ts>
     static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &&... ts) -> decltype(auto)
     {
-      dst.segments[I] =  std::forward<Func>(f)( subpart(std::forward<Ts>(ts),I)... );
+      dst.template get<I>() =  std::forward<Func>(f)( subpart(std::forward<Ts>(ts))... );
     }
   };
 
@@ -147,12 +147,12 @@ namespace eve::detail
       wide_t that;
 
       detail::apply<str_t::replication>
-      ( [&](auto const&... I)
+      ( [&]<typename... I>(I const&...)
         {
-          ( ( aggregate_step<std::decay_t<decltype(I)>::value>
-                            ::perform ( std::forward<Func>(f),
-                                        that.storage(), std::forward<Ts>(ts)...
-                                      )
+          ( ( aggregate_step<I::value>::perform ( std::forward<Func>(f)
+                                                , that.storage()
+                                                , std::forward<Ts>(ts)...
+                                                )
             ),...
           );
         }

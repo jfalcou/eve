@@ -47,10 +47,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        using st_t = typename type::storage_type;
-        st_t::for_each([&](auto const &... I) {
-          ((self.storage().segments[I] &= other.storage().segments[I]), ...);
-        });
+        self.storage().for_each( [&](auto& s, auto const& o)  { s &= o; }, other );
         return self;
       }
     }
@@ -82,10 +79,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        using st_t = typename type::storage_type;
-        st_t::for_each([&](auto const &... I) {
-          ((self.storage().segments[I] |= other.storage().segments[I]), ...);
-        });
+        self.storage().for_each( [&](auto& s, auto const& o)  { s |= o; }, other );
         return self;
       }
     }
@@ -117,10 +111,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        using st_t = typename type::storage_type;
-        st_t::for_each([&](auto const &... I) {
-          ((self.storage().segments[I] ^= other.storage().segments[I]), ...);
-        });
+        self.storage().for_each( [&](auto& s, auto const& o)  { s ^= o; }, other );
         return self;
       }
     }

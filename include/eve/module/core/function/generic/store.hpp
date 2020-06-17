@@ -46,11 +46,13 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(cpu_), wide<T, N, aggregated_> const &value, T *ptr) noexcept
   {
-    using str_t = typename wide<T, N, aggregated_>::storage_type;
-    value.storage().apply([&](auto &... v) {
-      int k = 0;
-      ((store(v, ptr + k), k += str_t::small_size), ...);
-    });
+    value.storage().apply
+    ( [&]<typename... Sub>(Sub&... v)
+      {
+        int k = 0;
+        ((store(v, ptr + k), k += Sub::static_size), ...);
+      }
+    );
   }
 
   template<real_scalar_value T, typename N, typename ABI>
@@ -76,11 +78,13 @@ namespace eve::detail
   store_(EVE_SUPPORTS(cpu_), wide<T, S, aggregated_> const &value, aligned_ptr<T, N> ptr) noexcept
       requires(wide<T, S, aggregated_>::static_alignment <= N)
   {
-    using str_t = typename wide<T, S, aggregated_>::storage_type;
-    value.storage().apply([&](auto &... v) {
-      int k = 0;
-      ((store(v, ptr + k), k += str_t::small_size), ...);
-    });
+    value.storage().apply
+    ( [&]<typename... Sub>(Sub&... v)
+      {
+        int k = 0;
+        ((store(v, ptr + k), k += Sub::static_size), ...);
+      }
+    );
   }
 
   template<real_scalar_value T, typename S, std::size_t N, typename ABI>

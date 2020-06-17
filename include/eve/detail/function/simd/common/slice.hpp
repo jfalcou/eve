@@ -55,8 +55,7 @@ namespace eve::detail
     }
     else if constexpr( is_aggregated_v<abi_t> )
     {
-      std::array<sub_t, 2> that {a.slice(lower_), a.slice(upper_)};
-      return that;
+      return a.storage().segments;
     }
   }
 
@@ -80,24 +79,7 @@ namespace eve::detail
     }
     else if constexpr( is_aggregated_v<abi_t> )
     {
-      static constexpr auto reps = P::storage_type::replication;
-
-      if constexpr( reps == 2 )
-      {
-        return a.storage().segments[Slice::value];
-      }
-      else
-      {
-        sub_t                 that;
-        static constexpr auto subreps = sub_t::storage_type::replication;
-        static constexpr auto offset  = Slice::value * subreps;
-
-        auto const &out = a.storage().segments;
-        detail::apply<subreps>(
-            [&](auto const &... I) { that.storage().segments = {out[I + offset]...}; });
-
-        return that;
-      }
+      return a.storage().segments[Slice::value];
     }
   }
 
