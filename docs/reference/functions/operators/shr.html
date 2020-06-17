@@ -25,62 +25,48 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the arithmetic right shift operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, integral_real_value U > auto operator()( T x, U n ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic right shift of the first parameter by the second one.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
+:   [value](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`n`
+:   [integral value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes the [element-wise](../../../glossary.html#element-wise) arithmetic right shift of the first parameter by the second one.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = shr(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](../../concepts.html#value).
 
-is semantically equivalent to:
+The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+all  [elements](../../../glossary.html#element) of n must belong to the
+interval: `[0, N[` or the result is undefined.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+!!! WARNING
+   Although the infix notation with `<<` is supported, the `<<` operator on
+   standard scalar type is the original one and so can not be overloaded on standard floating parameters
+   due to **C++** limitations.
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+  (insert ../../src/shr.src.html here)
 
-  <!--(insert ../../src/shr.src.html here)-->
-
-  <!--(insert ../../out/shr.out.html here)-->
+  (insert ../../out/shr.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::bit_shr](./bit_shr.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

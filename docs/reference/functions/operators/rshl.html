@@ -25,62 +25,43 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the arithmetic left/right shift operation according to shift sign.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T, integral_real_value U > auto operator()( T x, U n ) const noexcept requires bit_compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic left shift of the first parameter by the second one.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
+:   [value](../../concepts.html#value).
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+`n`
+:   [integral value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes the [element-wise](../../../glossary.html#element-wise) arithmetic left/right shift of the first parameter by the second one.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = rshl(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](../../concepts.html#value).
 
-is semantically equivalent to:
+The types must share the same cardinal or be scalar and if $N$ is the size in bits  of the element type of `T`,
+all  [elements](../../../glossary.html#element) of n must belong to the
+interval: `[-N, N[` or the result is undefined.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
+  (insert ../../src/rshl.src.html here)
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/rshl.src.html here)-->
-
-  <!--(insert ../../out/rshl.out.html here)-->
+  (insert ../../out/rshl.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::bit_rshl](./bit_rshl.html).
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
