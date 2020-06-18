@@ -17,6 +17,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/concept/value.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::exp2 return type", EVE_TYPE)
@@ -53,30 +54,24 @@ TTS_CASE_TPL("Check single_(eve::exp2) behavior", EVE_TYPE)
 {
   if constexpr(eve::integral_value<T>)
   {
-    if constexpr(eve::scalar_value<T>)
+    using v_t = eve::element_type_t<T>;
+    TTS_EXPR_IS(eve::double_(eve::exp2)(T(0)), double);
+    TTS_EXPR_IS(eve::single_(eve::exp2)(T(0)), float);
+    TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(37)), exp2(float(37)));
+    TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(127)), exp2(float(127)));
+    if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
     {
-      TTS_EXPR_IS(eve::double_(eve::exp2)(T(0)), double);
-      TTS_EXPR_IS(eve::single_(eve::exp2)(T(0)), float);
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(37)), exp2(T(37)));
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(127)), exp2(T(127)));
       TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::Inf<float>());
       TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::Inf<float>());
-
-      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(37)), exp2(T(37)));
-      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(127)), exp2(T(127)));
-      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(128)), eve::Inf<float>());
-      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(129)), eve::Inf<float>());
     }
-    else
+
+
+    TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(37)), exp2(double(37)));
+    TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(127)), exp2(double(127)));
+    if constexpr(sizeof(v_t) > 1)
     {
-      using f_t = eve::wide<float, eve::cardinal_t<T>>;
-      using d_t = eve::wide<double, eve::cardinal_t<T>>;
-      TTS_EXPR_IS(eve::double_(eve::exp2)(T(0)), d_t);
-      TTS_EXPR_IS(eve::single_(eve::exp2)(T(0)), f_t);
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(37)), f_t(eve::exp2(37.0)));
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(127)), f_t(eve::exp2(127.0)));
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), f_t(eve::Inf<float>()));
-      TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), f_t(eve::Inf<float>()));
+      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::Inf<float>());
+      TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::Inf<float>());
     }
   }
   else

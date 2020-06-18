@@ -108,7 +108,8 @@ namespace eve::detail
   requires(is_one_of<D>(types<converter_type<float>
                              , converter_type<double>
                              , pedantic_type
-                             , raw_type>{}))
+                             , raw_type
+                             , regular_type>{}))
   {
     if constexpr( has_native_abi_v<T> )
     {
