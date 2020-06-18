@@ -13,6 +13,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/slice.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
