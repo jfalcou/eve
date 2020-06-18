@@ -11,6 +11,11 @@
 #include <eve/function/rem.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
+#include <eve/constant/inf.hpp>
+#include <eve/constant/minf.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/function/is_negative.hpp>
+#include <eve/function/is_positive.hpp>
 
 TTS_CASE_TPL("Check eve::toward_zero_(eve::rem) return type", EVE_TYPE)
 {
@@ -46,4 +51,18 @@ TTS_CASE_TPL("Check eve::toward_zero_(eve::rem) behavior", EVE_TYPE)
   TTS_EQUAL(eve::toward_zero_(eve::rem)(T(12), v_t(4)), T(0));
   TTS_EQUAL(eve::toward_zero_(eve::rem)(T( 1), v_t(2)), T(1));
   TTS_EQUAL(eve::toward_zero_(eve::rem)(T( 4), v_t(3)), T(1));
+
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EQUAL(eve::toward_zero_(eve::rem)(  T(0),   T(1)), T(0));
+    TTS_EQUAL(eve::toward_zero_(eve::rem)(  T(-0),   T(1)), T(0));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::toward_zero_(eve::rem)(  -T(0), T(1)))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::toward_zero_(eve::rem)(  T(0) , T(1)))));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(1),   T(0)), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(-1),   T(0)), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Inf<T>(),   T(0)), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Minf<T>(),   T(0)), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1),  eve::Inf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1), eve::Minf<T>()), eve::Nan<T>());
+  }
 }

@@ -61,6 +61,14 @@ if   constexpr(floating_real_value<T>) r = is_eqz(frac(x));
 else constexpr(integral_real_value<T>) r = True<T>());
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Supported Decorators
+====================================================================================================
+[`pedantic_`](../decorators.html#downward_)
+:   Pedantically speaking flint stands for floating integer. The call `pedantic_(is_flint)(x)` considers
+    that integral typed values are not floating and so `pedantic_(is_flint)(x)` returns false for all elements of this types. Moreover a
+    floating point value is pedantically deemed as flint only is the next representable value is not flint, so
+    great floating values are not pedantically flint.
+
 </script>
 
   (insert ../../src/is_flint.src.html here)

@@ -1,12 +1,23 @@
 #include <eve/function/sub.hpp>
-#include <eve/literals.hpp>
 #include <eve/wide.hpp>
 
 int main()
 {
-  using namespace eve::literal;
-  eve::wide<float, eve::fixed<4>> w([](auto i, auto) { return 1.f + i; });
+  using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
+  w_t pi = {3, 2, 3, -32700}, qi = {4, 1, 1, 100};
 
-  std::cout << "sub(3.f, 5.5f) = " << eve::sub(3.f, 5.5f) << '\n';
-  std::cout << "sub({3,3,3,3}, {1,2,3,4}) = " << eve::sub(3.0f, w) << '\n';
+  std::cout << "---- simd" << '\n'
+            << " <- pi =          " << pi << '\n'
+            << " <- qi =          " << qi << '\n'
+            << " -> sub(pi, qi) = " << eve::sub(pi, qi) << '\n'
+            << " -> pi - qi     = " << pi - qi << '\n';
+
+  std::int16_t xi = 100, yi = -32700;
+
+  std::cout << "---- scalar" << '\n'
+            << " xi =             " << xi << '\n'
+            << " yi =             " << yi << '\n'
+            << " -> sub(xi, yi) = " << eve::sub(xi, yi) << '\n'
+            << " -> xi - yi     = " << xi - yi << '\n'; // C++ promotion to int
+  return 0;
 }

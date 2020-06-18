@@ -25,62 +25,39 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the plus unary operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs the  [element-wise](../../../glossary.html#element-wise) plus operation on its parameter.
+
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generally is a no-op.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = plus(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+!!! WARNING
+   Although the operator notation with `+` is supported, the `+` operator on
+   standard scalar type is the original one and so can lead to automatic C++ promotion.
 
-is semantically equivalent to:
+  (insert ../../src/plus.src.html here)
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-  <!--(insert ../../src/plus.src.html here)-->
-
-  <!--(insert ../../out/plus.out.html here)-->
+  (insert ../../out/plus.out.html here)
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::minus](./minus.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

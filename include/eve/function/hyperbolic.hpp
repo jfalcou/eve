@@ -8,14 +8,12 @@
 **/
 //==================================================================================================
 #pragma once
-
+// **========================================================
 // helper file to include all inverse hyperbolic functions
-#include <eve/function/definition/hyperbolic.hpp>
 #include <eve/function/cosh.hpp>
 #include <eve/function/coth.hpp>
 #include <eve/function/sech.hpp>
 #include <eve/function/csch.hpp>
 #include <eve/function/sinh.hpp>
+#include <eve/function/sinhcosh.hpp>
 #include <eve/function/tanh.hpp>
-
-
