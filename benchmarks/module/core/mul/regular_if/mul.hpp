@@ -12,7 +12,7 @@
 #include <eve/constant/true.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using I_TYPE = eve::logical<EVE_TYPE>;
   EVE_REGISTER_BENCHMARK(eve::mul, EVE_TYPE
@@ -20,5 +20,4 @@ int main(int argc, char** argv)
                         , eve::bench::random<EVE_TYPE>(-1.,1.)
                         , eve::bench::random<EVE_TYPE>(-1.,1.));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

@@ -13,7 +13,7 @@
 #include <tts/tests/relation.hpp>
 #include <type_traits>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)

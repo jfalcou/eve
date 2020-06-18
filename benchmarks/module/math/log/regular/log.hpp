@@ -12,11 +12,10 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = eve::Valmax<EVE_VALUE>();
   EVE_REGISTER_BENCHMARK(eve::log, EVE_TYPE, eve::bench::random<EVE_TYPE>(EVE_VALUE(0), lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

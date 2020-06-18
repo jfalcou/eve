@@ -11,10 +11,10 @@
 #ifndef BENCHMARK_BENCH_HPP
 #define BENCHMARK_BENCH_HPP
 
-#include <benchmark/benchmark.h>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
+
 #include <eve/traits/cardinal.hpp>
-#include "tts/detail/type_id.hpp"
-#include "cycleclock.h"
 #include <algorithm>
 #include <numeric>
 #include <iostream>
@@ -29,61 +29,85 @@
 #define AS_UNIQUE2(ID, LINE)  AS_UNIQUE3(ID, LINE)
 #define AS_UNIQUE(ID)         AS_UNIQUE2(ID, __LINE__)
 
-#define EVE_REGISTER_BENCHMARK(FUNC, TYPE, ...)                                                     \
-eve::bench::experiment  AS_UNIQUE(bench)                                                            \
-                        ( std::string(AS_STRING(FUNC)) + " - " + ::tts::type_id<TYPE>()             \
-                        , FUNC, eve::bench::optimal_size<TYPE>, __VA_ARGS__                         \
-                        )                                                                           \
-/**/
-
+#define EVE_NAME(FUNC) std::string(AS_STRING(FUNC))
 
 namespace eve::bench
 {
-  template<typename Fun, typename... Args>
-  struct experiment
+  template<typename T> struct type_name_
   {
-    using out_type = decltype( std::declval<Fun>()(std::declval<typename Args::value_type>()...) );
-
-    experiment(std::string const& root, Fun fun, std::size_t size, Args const&... args) : output(size)
+    static constexpr auto value() noexcept
     {
-      auto card = std::max({eve::cardinal_v<typename Args::value_type>...});
-
-      benchmark::RegisterBenchmark( root.c_str()
-                                  , [=,out = output.data()](benchmark::State& st)
-                                    {
-                                      auto c0 = benchmark::cycleclock::Now();
-                                      while (st.KeepRunning())
-                                      {
-                                        for(std::size_t i=0;i<size;++i) out[i] = fun(args[i]...);
-                                        benchmark::DoNotOptimize(out);
-                                      }
-                                      auto c1 = benchmark::cycleclock::Now();
-
-                                      metrics{size}(st, (c1 - c0), card);
-                                    }
-                                  )
-      ->ReportAggregatesOnly(true)
-      ->Repetitions(5);
+  #if defined(_MSC_VER )
+      std::string_view data(__FUNCSIG__);
+      auto i = data.find('<') + 1,
+        j = data.find(">::value");
+      return data.substr(i, j - i);
+  #else
+      std::string_view data(__PRETTY_FUNCTION__);
+      auto i = data.find('=') + 2,
+        j = data.find_last_of(']');
+      return data.substr(i, j - i);
+  #endif
     }
-
-  private:
-    using o_t = std::conditional_t< std::is_same_v<out_type,bool>, int, out_type>;
-    std::vector < o_t >  output;
   };
 
-  inline void start_benchmarks(int argc, char** argv)
+  template<typename T>
+  inline auto const typename_ = std::string ( type_name_<T>::value().data()
+                                            , type_name_<T>::value().size()
+                                            );
+
+  template<typename Type, typename XP, typename Fun, typename... Gens>
+  void run(std::string const& name, XP& xp, Fun f, Gens const&... gs)
   {
-    benchmark::Initialize(&argc, argv);
+    xp.run( name + "(" + ::eve::bench::typename_<Type> + ")"
+          , f, gs.template build<Type>()...
+          );
 
-    std::cout << "[EVE] - Target: "<< AS_STRING(EVE_CURRENT_API) << " - Build type: ";
-    #ifdef NDEBUG
-    std::cout << "Release\n";
-    #else
-    std::cout << "Debug\n";
-    #endif
-
-    benchmark::RunSpecifiedBenchmarks();
+    if constexpr( eve::cardinal_v<Type> != 1 )
+    {
+      using card_t = typename eve::cardinal_t<Type>::split_type;
+      run<eve::as_wide_t<Type,card_t>>(name, xp, f, gs... );
+    }
   }
+
+  struct experiment2
+  {
+    ankerl::nanobench::Bench bench_;
+    std::size_t size_;
+
+    experiment2(std::size_t size) : size_(size)
+    {
+      bench_.warmup(100).unit("element").performanceCounters(true);
+
+      std::cout << "[EVE] - Target: "<< AS_STRING(EVE_CURRENT_API) << " - Assertions: ";
+#ifdef NDEBUG
+      std::cout << "Disabled\n";
+#else
+      std::cout << "Enabled\n";
+#endif
+    }
+
+    template<typename Fun, typename... Args>
+    void run(std::string const& root, Fun fun, Args const&... args)
+    {
+      using b_t   = decltype( std::declval<Fun>()(std::declval<typename Args::value_type>()...) );
+      using out_t = std::conditional_t< std::is_same_v<b_t,bool>, int, b_t>;
+
+      std::vector<out_t> output(size_);
+
+      bench_.batch(size_ * eve::cardinal_v<out_t>);
+      bench_.run( root
+                , [&]()
+                  {
+                    for(std::size_t i=0;i<size_;i++)
+                      output[i] = fun( args[i]...);
+                    ankerl::nanobench::doNotOptimizeAway(output);
+                  }
+                );
+    }
+
+    private:
+  };
 }
 
 #endif

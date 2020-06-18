@@ -11,9 +11,8 @@
 #include <eve/function/asind.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   EVE_REGISTER_BENCHMARK(eve::asind, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

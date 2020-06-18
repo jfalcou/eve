@@ -11,11 +11,10 @@
 #include <eve/function/acoth.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   EVE_REGISTER_BENCHMARK(eve::acoth, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(EVE_VALUE(1), eve::Valmax<EVE_VALUE>()));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

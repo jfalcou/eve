@@ -29,7 +29,7 @@ endfunction()
 ##==================================================================================================
 function(make_all_benchs)
   # Parse our options to find name, arch and types to generate
-  set(multiValueArgs TYPES ARCH)
+  set(multiValueArgs TYPES)
   set(oneValueArgs ROOT NAME CARDINAL)
   cmake_parse_arguments(GEN_TEST "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
@@ -48,52 +48,20 @@ function(make_all_benchs)
       file(RELATIVE_PATH base_file ${CMAKE_CURRENT_SOURCE_DIR} ${variant})
 
       # Generate test for each arch
-      foreach( arch ${GEN_TEST_ARCH})
-        # Scalar case just uses the types as setup
-        if( arch STREQUAL scalar)
-          foreach(type ${GEN_TEST_TYPES})
-            to_std("${type}" target)
-            set(file_to_compile "${_BenchSrcDir}/bench/${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp")
+      foreach(type ${GEN_TEST_TYPES})
+        to_std("${type}" target)
+        set(file_to_compile "${_BenchSrcDir}/bench/${GEN_TEST_ROOT}.${base_file}.${type}.cpp")
 
-            configure_file( "${_BenchCurrentDir}/bench.scalar.cpp.in" "${file_to_compile}" )
-            generate_bench( "" "${_BenchSrcDir}/bench/" "${GEN_TEST_ROOT}.scalar.bench"
-                            "${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp"
-                          )
-          endforeach()
-        endif()
+        configure_file( "${_BenchCurrentDir}/bench.cpp.in" "${file_to_compile}" )
 
-        # SIMD case uses the types x cardinals as setup
-        if( arch STREQUAL simd)
-          foreach(type ${GEN_TEST_TYPES})
-            to_std("${type}" target)
-            set(file_to_compile "${_BenchSrcDir}/bench/${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp")
-
-            configure_file( "${_BenchCurrentDir}/bench.simd.cpp.in" "${file_to_compile}" )
-
-            generate_bench( "" "${_BenchSrcDir}/bench/" "${GEN_TEST_ROOT}.simd.bench"
-                            "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
-                          )
-          endforeach()
-        endif()
+        generate_bench( "" "${_BenchSrcDir}/bench/" "${GEN_TEST_ROOT}.bench"
+                        "${GEN_TEST_ROOT}.${base_file}.${type}.cpp"
+                      )
       endforeach()
     endif()
 
   endforeach()
 endfunction()
-
-##==================================================================================================
-## Disable benching/doc for Google Bench
-set(BENCHMARK_ENABLE_TESTING OFF CACHE INTERNAL "")
-
-download_project( PROJ                googlebenchmark
-                  GIT_REPOSITORY      https://github.com/google/benchmark.git
-                  GIT_TAG             master
-                  "UPDATE_DISCONNECTED 1"
-                  QUIET
-                )
-
-add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR})
-
 
 ##==================================================================================================
 ## Setup our tests

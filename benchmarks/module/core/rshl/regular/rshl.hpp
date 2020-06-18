@@ -13,7 +13,7 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using I_TYPE    = eve::detail::as_integer_t<EVE_TYPE, signed>;
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
@@ -32,5 +32,4 @@ int main(int argc, char** argv)
   EVE_REGISTER_BENCHMARK(eve::rshl, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<I_TYPE>(vmin,vmax));
-  eve::bench::start_benchmarks(argc, argv);
 }

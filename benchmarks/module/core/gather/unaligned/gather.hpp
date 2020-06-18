@@ -12,7 +12,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <tts/tests/relation.hpp>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
@@ -24,5 +24,4 @@ int main(int argc, char** argv)
   EVE_REGISTER_BENCHMARK(g, EVE_TYPE
                         , eve::bench::random<I_TYPE>(0, 2*N-1));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

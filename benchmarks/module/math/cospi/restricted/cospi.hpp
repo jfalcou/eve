@@ -14,7 +14,7 @@
 #include <eve/concept/value.hpp>
 
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   if (eve::floating_value<EVE_TYPE>)

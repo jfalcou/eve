@@ -26,10 +26,6 @@ function(generate_bench root rootpath dep file)
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
 
-  set ( bench_args
-        " --benchmark_counters_tabular=true --benchmark_repetitions=5 --benchmark_report_aggregates_only=true"
-      )
-
   if( NOT root STREQUAL "")
     set(bench "${root}.${base}")
   else()
@@ -48,17 +44,11 @@ function(generate_bench root rootpath dep file)
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
               )
 
-  if (CMAKE_CROSSCOMPILING_CMD)
+
     add_test( NAME ${bench}
               WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
-              COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${bench}> ${bench_args}
+              COMMAND $<TARGET_FILE:${bench}>
             )
-  else()
-    add_test( NAME ${bench}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/bench"
-              COMMAND $<TARGET_FILE:${bench}> ${bench_args}
-            )
-  endif()
 
   set_target_properties ( ${bench} PROPERTIES
                           EXCLUDE_FROM_DEFAULT_BUILD TRUE
@@ -69,13 +59,11 @@ function(generate_bench root rootpath dep file)
   target_include_directories( ${bench}
                               PRIVATE
                                 ${PROJECT_SOURCE_DIR}/include
-                                ${googlebenchmark_SOURCE_DIR}/include
-                                ${googlebenchmark_SOURCE_DIR}/src
                                 ${PROJECT_SOURCE_DIR}/benchmarks
                                 ${Boost_INCLUDE_DIRS}
                             )
 
-  target_link_libraries(${bench} benchmark tts)
+  target_link_libraries(${bench})
 
   add_dependencies(bench ${bench})
 

@@ -12,7 +12,7 @@
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = eve::detail::Rempio2_limit(eve::medium_type(), eve::as_<EVE_VALUE>());
@@ -20,5 +20,4 @@ int main(int argc, char** argv)
   EVE_REGISTER_BENCHMARK(eve::medium_(eve::csc), EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

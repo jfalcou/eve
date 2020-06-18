@@ -11,7 +11,7 @@
 #include <eve/function/sub.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using I_TYPE = eve::logical<EVE_TYPE>;
   auto f = [](auto c, auto a, auto b) { return eve::saturated_(eve::sub[c])(a,b);};
@@ -20,5 +20,4 @@ int main(int argc, char** argv)
                         , eve::bench::random<EVE_TYPE>(-1.,1.)
                         , eve::bench::random<EVE_TYPE>(-1.,1.));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

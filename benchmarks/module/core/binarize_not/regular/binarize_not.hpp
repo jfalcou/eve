@@ -11,7 +11,7 @@
 #include <eve/function/binarize_not.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using I_TYPE = eve::logical<EVE_TYPE>;
   using E_TYPE = eve::detail::value_type_t<EVE_TYPE>;
@@ -22,5 +22,4 @@ int main(int argc, char** argv)
   EVE_REGISTER_BENCHMARK(eve::binarize_not, EVE_TYPE
                         , eve::bench::random<I_TYPE>(0, 1));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

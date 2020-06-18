@@ -11,7 +11,7 @@
 #include <cmath>
 #include <eve/function/pow_abs.hpp>
 
-int main(int argc, char** argv)
+int main()
 {
   auto const my_pow_abs = [](auto x, auto y) { return eve::raw_(eve::pow_abs)(x, y); };
   auto lmin = EVE_TYPE(-10);
@@ -20,5 +20,4 @@ int main(int argc, char** argv)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
 }

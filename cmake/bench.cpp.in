@@ -10,9 +10,11 @@
 //==================================================================================================
 #include <cstdint>
 #include <cstddef>
-using EVE_TYPE  = ${target};
+#include <eve/wide.hpp>
 
-#include "metrics.hpp"
+using EVE_TYPE  = eve::wide<${target}>;
+using EVE_VALUE = ${target};
+
 #include "generators.hpp"
 #include "experiment.hpp"
 #include "${header}.hpp"
