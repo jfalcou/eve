@@ -27,16 +27,4 @@ namespace eve
   {
     return {};
   }
-
- //  // Predefine type objects
-//   inline constexpr auto const double_ = as_<double>{};
-//   inline constexpr auto const single_ = as_<float> {};
-//   inline constexpr auto const uint8_  = as_<std::uint8_t> {};
-//   inline constexpr auto const uint16_ = as_<std::uint16_t>{};
-//   inline constexpr auto const uint32_ = as_<std::uint32_t>{};
-//   inline constexpr auto const uint64_ = as_<std::uint64_t>{};
-//   inline constexpr auto const int8_   = as_<std::int8_t>  {};
-//   inline constexpr auto const int16_  = as_<std::int16_t> {};
-//   inline constexpr auto const int32_  = as_<std::int32_t> {};
-//   inline constexpr auto const int64_  = as_<std::int64_t> {};
 }

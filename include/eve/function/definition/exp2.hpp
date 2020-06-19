@@ -21,6 +21,9 @@ namespace eve
 {
   namespace tag { struct exp2_; }
 
+  template<>
+  struct supports_optimized_conversion<tag::exp2_> : std::true_type {};
+
   namespace detail
   {
     template<typename T, typename S>
@@ -41,4 +44,3 @@ namespace eve
 
   EVE_MAKE_CALLABLE(exp2_, exp2);
 }
-
