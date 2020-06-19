@@ -125,8 +125,6 @@ namespace eve::detail
          * is preserved.
          * ====================================================
          */
-        using uiT    = as_integer_t<T, unsigned>;
-        using iT     = as_integer_t<T, signed>;
         T          x = a0;
         iT         k(0);
         auto       isnez = is_nez(a0);
