@@ -130,12 +130,11 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        using i_t = as_integer_t<value_type_t<T>>;
-        return bitfloating(bitinteger(a)+  convert(n, as<i_t>()));
+        return bitfloating(bitinteger(a)+  toint_<T>(n));
       }
       else if constexpr(integral_value<T>)
       {
-        return add(a, convert(n, as<value_type_t<T>>()));
+        return add(a, to_elt_<T>(n));
       }
     }
     else
@@ -155,8 +154,7 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        using i_t = as_integer_t<value_type_t<T>>;
-        auto pz = dec(bitinteger(a) +  convert(n, as<i_t>()));
+        auto pz = dec(bitinteger(a) +  toint_<T>(n));
         auto z  = bitfloating( inc(pz) );
         auto test = is_negative(a) && is_positive(z);
         if constexpr(scalar_value<T> && scalar_value<U>)
@@ -170,7 +168,7 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(add)(a, convert(n, as<value_type_t<T>>()));
+        return saturated_(add)(a, to_elt_<T>(n));
       }
    }
     else
@@ -196,7 +194,7 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(add)(a, convert(n, as<value_type_t<T>>()));
+        return saturated_(add)(a, to_elt_<T>(n));
       }
     }
     else
@@ -205,4 +203,3 @@ namespace eve::detail
     }
   }
 }
-

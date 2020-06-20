@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/function/convert.hpp>
+#include <eve/function/saturated.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
@@ -64,12 +65,15 @@ namespace eve
   inline constexpr converter_type<T> const to_ = {};
 
   template<typename T>
-  inline constexpr converter_type<element_type_t<T>> const to_elt = {};
+  inline constexpr converter_type<element_type_t<T>> const to_elt_ = {};
 
   template<typename T>
-  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, signed>> const toint_ = {};
+  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>>> const toint_ = {};
 
   template<typename T>
+  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, signed>> const tosint_ = {};
+
+   template<typename T>
   inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, unsigned>> const touint_ = {};
 
   template<typename T>
@@ -107,27 +111,30 @@ namespace eve
 
   //================================================================================================
   // Function saturated decorators for all basic type
-  inline constexpr converter_type<float>          const s_single_   = {};
-  inline constexpr converter_type<double>         const s_double_   = {};
-  inline constexpr converter_type<std::uint8_t >  const s_uint8_    = {};
-  inline constexpr converter_type<std::uint16_t>  const s_uint16_   = {};
-  inline constexpr converter_type<std::uint32_t>  const s_uint32_   = {};
-  inline constexpr converter_type<std::uint64_t>  const s_uint64_   = {};
-  inline constexpr converter_type<std::int8_t >   const s_int8_     = {};
-  inline constexpr converter_type<std::int16_t>   const s_int16_    = {};
-  inline constexpr converter_type<std::int32_t>   const s_int32_    = {};
-  inline constexpr converter_type<std::int64_t>   const s_int64_    = {};
+  inline constexpr s_converter_type<float>          const s_single_   = {};
+  inline constexpr s_converter_type<double>         const s_double_   = {};
+  inline constexpr s_converter_type<std::uint8_t >  const s_uint8_    = {};
+  inline constexpr s_converter_type<std::uint16_t>  const s_uint16_   = {};
+  inline constexpr s_converter_type<std::uint32_t>  const s_uint32_   = {};
+  inline constexpr s_converter_type<std::uint64_t>  const s_uint64_   = {};
+  inline constexpr s_converter_type<std::int8_t >   const s_int8_     = {};
+  inline constexpr s_converter_type<std::int16_t>   const s_int16_    = {};
+  inline constexpr s_converter_type<std::int32_t>   const s_int32_    = {};
+  inline constexpr s_converter_type<std::int64_t>   const s_int64_    = {};
 
   //================================================================================================
   // Function decorator for template conversion
   template<typename T>
-  inline constexpr s_converter_type<T> const to_ = {};
+  inline constexpr s_converter_type<T> const s_to_ = {};
 
   template<typename T>
-  inline constexpr s_converter_type<element_type_t<T>> const to_elt = {};
+  inline constexpr s_converter_type<element_type_t<T>> const s_to_elt_ = {};
 
   template<typename T>
-  inline constexpr s_converter_type<detail::as_integer_t<element_type_t<T>, signed>> const s_toint_ = {};
+  inline constexpr s_converter_type<detail::as_integer_t<element_type_t<T>>> const s_toint_ = {};
+
+  template<typename T>
+  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, signed>> const s_tosint_ = {};
 
   template<typename T>
   inline constexpr s_converter_type<detail::as_integer_t<element_type_t<T>, unsigned>> const s_touint_ = {};

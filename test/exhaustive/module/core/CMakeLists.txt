@@ -106,7 +106,4 @@ make_all_units(ROOT exhaustive.core NAME signnz                ARCH scalar simd 
 make_all_units(ROOT exhaustive.core NAME sqr                   ARCH scalar simd TYPES ${all_types_32}     )
 make_all_units(ROOT exhaustive.core NAME sqr_abs               ARCH scalar simd TYPES ${real_types_32}    )
 make_all_units(ROOT exhaustive.core NAME sqrt                  ARCH scalar simd TYPES ${real_types_32}    )
-make_all_units(ROOT exhaustive.core NAME tofloat               ARCH scalar simd TYPES ${all_types_32}     )
-make_all_units(ROOT exhaustive.core NAME toint                 ARCH scalar simd TYPES ${all_types_32}     )
-make_all_units(ROOT exhaustive.core NAME touint                ARCH scalar simd TYPES ${all_types_32}     )
 make_all_units(ROOT exhaustive.core NAME trunc                 ARCH scalar simd TYPES ${all_types_32}     )

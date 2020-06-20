@@ -64,7 +64,7 @@ namespace eve::detail
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
     z += x;
-    w          = fnma(tofloat(i), Oneo_16, ee);
+    w          = fnma(tofloating_<T>(i), Oneo_16, ee);
     auto reduc = [Oneo_16](T x) {
       // Find a multiple of 1/16 that is within 1/16 of x.
       return Oneo_16 * floor(T(16) * x);
@@ -85,7 +85,7 @@ namespace eve::detail
     const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
     auto    inf_ret     = is_greater(w, Powlargelim);
     auto    zer_ret     = is_less(w, Powlowlim);
-    auto    e           = toint(w);
+    auto    e           = toint_<T>(w);
     Wb                  = W - Wb;
     auto test           = is_gtz(Wb);
     e                   = inc[test](e);
@@ -154,7 +154,7 @@ namespace eve::detail
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
     z += x;
-    w          = fnma(tofloat(i), Oneo_16, tofloat(e));
+    w          = fnma(tofloating_<T>(i), Oneo_16, tofloating_<T>(e));
     auto reduc = [](T x) {
       // Find a multiple of 1/16 that is within 1/16 of x.
       return T(0.0625) * floor(T(16) * x);
@@ -222,4 +222,3 @@ namespace eve::detail
   }
 
 }
-

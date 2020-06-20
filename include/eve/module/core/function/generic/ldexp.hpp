@@ -12,11 +12,11 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_less.hpp>
-#include <eve/function/itrunc.hpp>
+#include <eve/function/trunc.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/bit_shl.hpp>
 #include <eve/function/sub.hpp>
@@ -53,7 +53,7 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-        return ldexp(a, itrunc(b));
+        return ldexp(a, toint_<T>(trunc)(b));
       }
     }
     else  return apply_over(ldexp, a, b);
@@ -70,10 +70,9 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
     {
       using elt_t = element_type_t<T>;
-      using i_t = as_integer_t<elt_t, signed>;
       if constexpr(integral_value<U>)
       {
-        auto e = convert(b, as(i_t()));
+        auto e = toint_<T>(b);
         auto f = One<T>();
         if constexpr( eve::platform::supports_denormals)
         {
@@ -93,7 +92,7 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-        return pedantic_(ldexp)(a, itrunc(b));
+        return pedantic_(ldexp)(a, s_toint_<T>(trunc(b)));
       }
     }
     else  return apply_over(ldexp, a, b);
@@ -101,4 +100,3 @@ namespace eve::detail
 
 
 }
-

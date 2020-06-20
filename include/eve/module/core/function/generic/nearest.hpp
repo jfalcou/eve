@@ -53,6 +53,4 @@ namespace eve::detail
       return apply_over(nearest, a0);
     }
   }
-
 }
-

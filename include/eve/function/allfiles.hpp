@@ -116,16 +116,12 @@
 #include <eve/function/horizontal.hpp>
 #include <eve/function/hyperbolic.hpp>
 #include <eve/function/hypot.hpp>
-#include <eve/function/iceil.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/function/ifloor.hpp>
 #include <eve/function/ifnot_else.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/inearest.hpp>
 #include <eve/function/inverse_hyperbolic.hpp>
 #include <eve/function/inverse_trigo.hpp>
-#include <eve/function/iround.hpp>
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/is_eqz.hpp>
@@ -273,9 +269,6 @@
 #include <eve/function/tanh.hpp>
 #include <eve/function/tan.hpp>
 #include <eve/function/tanpi.hpp>
-#include <eve/function/tofloat.hpp>
-#include <eve/function/toint.hpp>
-#include <eve/function/touint.hpp>
 #include <eve/function/trigonometric.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/trunc.hpp>

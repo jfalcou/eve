@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/inearest.hpp>
+#include <eve/function/nearest.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -28,13 +28,13 @@ TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
     auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
 
     eve::exhaustive_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
-    TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
+    TTS_RANGE_CHECK(p, std_inearest,  eve::toint_<T>(eve::nearest));
   }
   else
   {
     auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return e; } );
 
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_inearest, eve::inearest);
+    TTS_RANGE_CHECK(p, std_inearest,  eve::toint_<T>(eve::nearest));
   }
 }

@@ -16,7 +16,7 @@
 #include <eve/detail/meta/traits.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/shr.hpp>
 
@@ -57,7 +57,7 @@ namespace eve::detail
     }
     else if constexpr( has_aggregated_abi_v<T> || has_aggregated_abi_v<U> )
     {
-      if constexpr( std::is_same_v<T, U> ) // || is_same_v<T, as_integer_t<U, unsigned>>)
+      if constexpr( std::is_same_v<T, U> )
       {
         return aggregate(rotl, a0, n);
       }
@@ -66,8 +66,7 @@ namespace eve::detail
         using elt_t = element_type_t<T>;
         using elt_u = element_type_t<U>;
         using i_t = std::conditional_t<std::is_signed_v<elt_u>, as_integer_t<elt_t, signed>, elt_t>;
-        //        auto z = convert(n, as<i_t>());
-        return aggregate(rotl, a0, convert(n, as<i_t>()));
+        return aggregate(rotl, a0, toint_<i_t>(n));
       }
     }
     else if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
@@ -77,4 +76,3 @@ namespace eve::detail
   }
 
 }
-
