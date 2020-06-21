@@ -153,10 +153,10 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr auto sin_finalize(  const T & a0
-                                             ,  const T & fn
-                                             ,  const T & xr
-                                             ,  const T & dxr = T(0)) noexcept
+  EVE_FORCEINLINE constexpr auto sin_finalize( T a0
+                                             , T fn
+                                             , T xr
+                                             , T dxr = T(0)) noexcept
   {
     if constexpr(scalar_value<T>)
     {
@@ -168,7 +168,7 @@ namespace eve::detail
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
       auto ce = cos_eval(z);
-      auto xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
+      xr =  swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
       return bit_xor(xr,sign_bit);
     }
     else

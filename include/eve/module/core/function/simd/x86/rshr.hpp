@@ -46,22 +46,22 @@ namespace eve::detail
       }
       else
       {
-        auto sa1 = -a1;
+        auto ssa1 = -a1;
         if constexpr(sizeof(T) == 1)
         {
-          return _mm_shl_epi8(a0, sa1);
+          return _mm_shl_epi8(a0, ssa1);
         }
         else if constexpr(sizeof(T) == 2)
         {
-          return _mm_shl_epi16(a0, sa1);
+          return _mm_shl_epi16(a0, ssa1);
         }
         else if constexpr(sizeof(T) == 4)
         {
-          return _mm_shl_epi32(a0, sa1);
+          return _mm_shl_epi32(a0, ssa1);
         }
         else if constexpr(sizeof(T) == 8)
         {
-          return _mm_shl_epi64(a0, sa1);
+          return _mm_shl_epi64(a0, ssa1);
         }
       }
     }
@@ -71,4 +71,3 @@ namespace eve::detail
     }
   }
 }
-

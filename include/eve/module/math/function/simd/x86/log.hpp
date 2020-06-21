@@ -56,7 +56,7 @@ namespace eve::detail
         T          xx    = a0;
         T          dk    = Zero<T>();
         auto       isnez = is_nez(a0);
-        logical<T> test;
+//        logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
           auto test = is_less(a0, Smallestposval<T>()) && isnez;
@@ -163,4 +163,3 @@ namespace eve::detail
       return musl_(log)(v);
   }
 }
-
