@@ -25,7 +25,7 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the equality predicate.
+Function object representing the "greater than" predicate.
 
 Member functions
 ====================================================================================================
@@ -46,12 +46,12 @@ Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
 Returns the logical value containing the [element-wise](../../../glossary.html#value) comparison test result
-between `x` and `y`. The infix notation `x >= y` can also be used.
+between `x` and `y`. The infix notation `x > y` can also be used.
 
 The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
 
 !!! WARNING
-   Although the infix notation with `>=` is supported, the `>` operator on
+   Although the infix notation with `>` is supported, the `>` operator on
    standard scalar types is the original one and so returns bool result, not `logical`.
 
   (insert ../../src/is_greater.src.html here)
@@ -60,7 +60,7 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 See Also
 ====================================================================================================
-[eve::is_not_equa](./is_not_equal.html)
+[eve::is_not_greater](./is_not_greater.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

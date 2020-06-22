@@ -8,60 +8,54 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::is_equal`
+                           `eve::is_gez`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/is_equal.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/is_gez.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ is_equal = /*unspecified*/;
+  inline constexpr /*unspecified*/ is_gez = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the equality predicate.
+Function object representing the greater or equal to zero predicate.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< value T > auto operator()( T x ) const noexcept
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Tests the  [element-wise](../../../glossary.html#regular_) equality the two [values](../../concepts.html#value).
+Tests  [element-wise](../../../glossary.html#regular_) if the greater or equal to zero predicate is satisfied.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
+`x`
 :   [values](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the logical value containing the [element-wise](../../../glossary.html#value) equality test result
-between `x` and `y`. The infix notation `x == y` can also be used.
+Returns the [element-wise](../../../glossary.html#value) `x >= 0`.
 
-The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+The result type is `logical< T >`.
 
-Supported Decorators
-====================================================================================================
-[`numerics_`](../decorators.html#saturated_)
-:   The expression `numerics_(is_equal)(x,y)` considers that Nan values are equal.
+  (insert ../../src/is_gez.src.html here)
 
-  (insert ../../src/is_equal.src.html here)
-
-  (insert ../../out/is_equal.out.html here)
+  (insert ../../out/is_gez.out.html here)
 
 See Also
 ====================================================================================================
-[eve::is_not_equa](./is_not_equal.html)
+[eve::is_ngez](./is_ngez.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
