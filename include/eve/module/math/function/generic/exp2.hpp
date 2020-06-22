@@ -116,7 +116,8 @@ namespace eve::detail
       if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
       {
         using vd_t = value_type_t<D>;
-        auto x = toint_<vd_t>(xx);
+        using i_t  = as_integer_t<vd_t>;
+        auto x = to_<i_t>(xx);
         auto z = is_nez(x);
         auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
         zz = zz << Nbmantissabits<vd_t>();

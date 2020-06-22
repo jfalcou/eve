@@ -27,12 +27,12 @@ TTS_CASE_TPL("wide random check on ifloor", EVE_TYPE)
     using i_t =  eve::detail::as_integer_t<v_t>;
     auto std_ifloor = tts::vectorize<vi_t>( [](auto e) { return i_t(std::floor(e)); } );
     eve::rng_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
-    TTS_RANGE_CHECK(p, std_ifloor, eve::toint_<T>(eve::floor));
+    TTS_RANGE_CHECK(p, std_ifloor, eve::int_(eve::floor));
   }
   else
   {
     auto std_ifloor = tts::vectorize<vi_t>( [](auto e) { return e; } );
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_ifloor, eve::toint_<T>(eve::floor));
+    TTS_RANGE_CHECK(p, std_ifloor, eve::int_(eve::floor));
   }
 }

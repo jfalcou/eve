@@ -59,7 +59,7 @@ namespace eve::detail
       return if_else(numeric_(is_equal)(a, b), eve::zero_
                     , if_else (is_unordered(a, b)
                               , eve::allbits_
-                              , to_elt_<T>(dist(bb, aa))
+                              , to_<T>(dist(bb, aa))
                               )*Half(as(a))
                     );
     }

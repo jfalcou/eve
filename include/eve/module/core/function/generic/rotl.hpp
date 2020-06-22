@@ -66,7 +66,7 @@ namespace eve::detail
         using elt_t = element_type_t<T>;
         using elt_u = element_type_t<U>;
         using i_t = std::conditional_t<std::is_signed_v<elt_u>, as_integer_t<elt_t, signed>, elt_t>;
-        return aggregate(rotl, a0, toint_<i_t>(n));
+        return aggregate(rotl, a0, to_<i_t>(n));
       }
     }
     else if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )

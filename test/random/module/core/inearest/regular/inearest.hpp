@@ -28,13 +28,13 @@ TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
     auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
 
     eve::rng_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
-    TTS_RANGE_CHECK(p, std_inearest, eve::toint_<T>(eve::nearest));
+    TTS_RANGE_CHECK(p, std_inearest, eve::int_(eve::nearest));
   }
   else
   {
     auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return e; } );
 
     eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_inearest, eve::toint_<T>(eve::nearest));
+    TTS_RANGE_CHECK(p, std_inearest, eve::int_(eve::nearest));
   }
 }

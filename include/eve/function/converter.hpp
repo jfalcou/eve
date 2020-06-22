@@ -62,85 +62,96 @@ namespace eve
   //================================================================================================
   // Function decorator for template conversion
   template<typename T>
-  inline constexpr converter_type<T> const to_ = {};
+  inline constexpr converter_type<element_type_t<T>> const to_ = {};
 
-  template<typename T>
-  inline constexpr converter_type<element_type_t<T>> const to_elt_ = {};
-
-  template<typename T>
-  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>>> const toint_ = {};
-
-  template<typename T>
-  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, signed>> const tosint_ = {};
-
-   template<typename T>
-  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, unsigned>> const touint_ = {};
-
-  template<typename T>
-  inline constexpr converter_type<detail::as_floating_point_t<element_type_t<T>>> const tofloating_ = {};
-
-
-  //================================================================================================
-  // Function saturated decorators mark-up used in function overloads
-  template <typename T>
-  struct s_converter_type : decorator_
+  struct int_converter
   {
-    using value_type = element_type_t<T>;
     template<value Val>
     constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
     {
-      return saturated_(convert)(val, as<T>());
+      using value_type = detail::as_integer_t<element_type_t<Val>>;
+      return convert(val, as<value_type>());
     }
+
     template<typename Function>
     EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
     {
-      return  [f]<typename... Ts>(Ts&&... args)
+      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
       {
+        using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>>;
+
         if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
-          return f(s_converter_type<T>(), std::forward<Ts>(args)...);
+          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
         }
         else
         {
-          return saturated_(convert)(f(std::forward<Ts>(args)...), as_<T>());
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
         }
       };
     }
   };
 
+  inline constexpr int_converter const int_ = {};
 
-  //================================================================================================
-  // Function saturated decorators for all basic type
-  inline constexpr s_converter_type<float>          const s_single_   = {};
-  inline constexpr s_converter_type<double>         const s_double_   = {};
-  inline constexpr s_converter_type<std::uint8_t >  const s_uint8_    = {};
-  inline constexpr s_converter_type<std::uint16_t>  const s_uint16_   = {};
-  inline constexpr s_converter_type<std::uint32_t>  const s_uint32_   = {};
-  inline constexpr s_converter_type<std::uint64_t>  const s_uint64_   = {};
-  inline constexpr s_converter_type<std::int8_t >   const s_int8_     = {};
-  inline constexpr s_converter_type<std::int16_t>   const s_int16_    = {};
-  inline constexpr s_converter_type<std::int32_t>   const s_int32_    = {};
-  inline constexpr s_converter_type<std::int64_t>   const s_int64_    = {};
+  struct uint_converter
+  {
+    template<value Val>
+    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    {
+      using value_type = detail::as_integer_t<element_type_t<Val>, unsigned>;
+      return convert(val, as<value_type>());
+    }
 
-  //================================================================================================
-  // Function decorator for template conversion
-  template<typename T>
-  inline constexpr s_converter_type<T> const s_to_ = {};
+    template<typename Function>
+    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    {
+      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      {
+        using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>, unsigned>;
 
-  template<typename T>
-  inline constexpr s_converter_type<element_type_t<T>> const s_to_elt_ = {};
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+        {
+          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
+        }
+        else
+        {
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
+        }
+      };
+    }
+  };
 
-  template<typename T>
-  inline constexpr s_converter_type<detail::as_integer_t<element_type_t<T>>> const s_toint_ = {};
+  inline constexpr uint_converter const uint_ = {};
 
-  template<typename T>
-  inline constexpr converter_type<detail::as_integer_t<element_type_t<T>, signed>> const s_tosint_ = {};
+  struct floating_converter
+  {
+    template<value Val>
+    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    {
+      using value_type = detail::as_floating_point_t<element_type_t<Val>>;
+      return convert(val, as<value_type>());
+    }
 
-  template<typename T>
-  inline constexpr s_converter_type<detail::as_integer_t<element_type_t<T>, unsigned>> const s_touint_ = {};
+    template<typename Function>
+    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    {
+      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      {
+        using value_type = detail::as_floating_point_t<element_type_t<std::remove_cvref_t<T>>>;
 
-  template<typename T>
-  inline constexpr s_converter_type<detail::as_floating_point_t<element_type_t<T>>> const s_tofloating_ = {};
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+        {
+          return f(converter_type<value_type>(), std::forward<T>(arg0), std::forward<Ts>(args)...);
+        }
+        else
+        {
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
+        }
+      };
+    }
+  };
 
+  inline constexpr floating_converter const floating_ = {};
 
 }

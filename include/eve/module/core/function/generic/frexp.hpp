@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_), D const &, T const &a0) noexcept
   {
     auto [m, e] = D()(ifrexp)(a0);
-    return std::make_tuple(m, to_elt_<T>(e));
+    return std::make_tuple(m, to_<T>(e));
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -36,6 +36,6 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto frexp_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     auto [m, e] = ifrexp(a0);
-    return std::make_tuple(m, to_elt_<T>(e));
+    return std::make_tuple(m, to_<T>(e));
   }
 }

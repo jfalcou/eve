@@ -53,7 +53,7 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-        return ldexp(a, toint_<T>(trunc)(b));
+        return ldexp(a, int_(trunc)(b));
       }
     }
     else  return apply_over(ldexp, a, b);
@@ -72,7 +72,8 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       if constexpr(integral_value<U>)
       {
-        auto e = toint_<T>(b);
+        using i_t =  as_integer_t<T>;
+        auto e = to_<i_t>(b);
         auto f = One<T>();
         if constexpr( eve::platform::supports_denormals)
         {
@@ -92,7 +93,7 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-        return pedantic_(ldexp)(a, s_toint_<T>(trunc(b)));
+        return ldexp(a, saturated_(convert)(trunc(b), as<elt_t>()));
       }
     }
     else  return apply_over(ldexp, a, b);

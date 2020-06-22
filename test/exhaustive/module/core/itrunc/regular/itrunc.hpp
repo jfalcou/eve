@@ -26,12 +26,12 @@ TTS_CASE_TPL("wide random check on itrunc", EVE_TYPE)
     using i_t =  eve::detail::as_integer_t<v_t>;
     auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return i_t(std::trunc(e)); } );
     eve::exhaustive_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
-    TTS_RANGE_CHECK(p, std_itrunc,  eve::toint_<T>(eve::trunc));
+    TTS_RANGE_CHECK(p, std_itrunc,  eve::int_(eve::trunc));
   }
   else
   {
     auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return e; } );
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_itrunc,  eve::toint_<T>(eve::trunc));
+    TTS_RANGE_CHECK(p, std_itrunc,  eve::int_(eve::trunc));
   }
 }
