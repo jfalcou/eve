@@ -41,8 +41,8 @@ TTS_CASE("aligned_ptr ordering")
 {
   char                      values[ 2 ];
   eve::aligned_ptr<char, 1> ptr = &values[ 0 ];
-  eve::aligned_ptr<char, 1> ptr1= ptr++
-
+  eve::aligned_ptr<char, 1> ptr1= ptr;
+  ptr1++;
   TTS_EXPECT(ptr < ptr1);
   ptr1--;
   TTS_EXPECT(ptr ==  ptr1);
