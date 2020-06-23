@@ -117,7 +117,7 @@ namespace eve::detail
       {
         using vd_t = value_type_t<D>;
         using i_t  = as_integer_t<vd_t>;
-        auto x = convert(xx,  as<i_t>());
+        auto x = to_<i_t>(xx);
         auto z = is_nez(x);
         auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
         zz = zz << Nbmantissabits<vd_t>();

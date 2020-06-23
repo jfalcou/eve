@@ -54,16 +54,14 @@ namespace eve::detail
     }
     else if constexpr(simd_value<T>)
     {
-      using vt_t =  value_type_t<T>;
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);
       return if_else(numeric_(is_equal)(a, b), eve::zero_
                     , if_else (is_unordered(a, b)
                               , eve::allbits_
-                              , convert(dist(bb, aa), as<vt_t>())
+                              , to_<T>(dist(bb, aa))
                               )*Half(as(a))
                     );
     }
   }
 }
-

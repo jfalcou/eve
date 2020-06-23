@@ -21,6 +21,7 @@
 
 namespace eve::detail
 {
+
   template<real_value T, decorator D>
   EVE_FORCEINLINE constexpr auto iround_(EVE_SUPPORTS(cpu_), D const &, T const &a) noexcept
   {

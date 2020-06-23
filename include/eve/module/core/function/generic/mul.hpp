@@ -128,9 +128,9 @@ namespace eve::detail
       if constexpr( sizeof(elt_t) <= 4 )
       {
         using sup_t = upgrade_t<elt_t>;
-        auto z      = mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
+        auto z      = mul(to_<sup_t>(a), to_<sup_t>(b));
         auto s      = saturate(z, as<elt_t>()); // TODO saturated_(convert) ?
-        return convert(s, as<elt_t>());
+        return to_<elt_t>(s);
       }
       else
       {
@@ -208,4 +208,3 @@ namespace eve::detail
     }
   }
 }
-

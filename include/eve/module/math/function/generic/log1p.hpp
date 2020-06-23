@@ -33,7 +33,6 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/function/tofloat.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
@@ -66,7 +65,7 @@ namespace eve::detail
         T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
         T R    = t2 + t1;
         T hfsq = Half<T>() * sqr(f);
-        T dk   = tofloat(k);
+        T dk   = single_(k);
         T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
         T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
         T zz;
@@ -117,7 +116,7 @@ namespace eve::detail
                       0x3fc7466496cb03dell,
                       0x3fc2f112df3e5244ll>(w);
         T R  = t2 + t1;
-        T dk = tofloat(k);
+        T dk = double_(k);
         T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )

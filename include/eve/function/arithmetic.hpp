@@ -44,13 +44,8 @@
 #include <eve/function/gcd.hpp>
 #include <eve/function/has_single_bit.hpp>
 #include <eve/function/hypot.hpp>
-#include <eve/function/iceil.hpp>
-#include <eve/function/ifloor.hpp>
 #include <eve/function/ifrexp.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/inearest.hpp>
-#include <eve/function/iround.hpp>
-#include <eve/function/itrunc.hpp>
 #include <eve/function/lcm.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/lerp.hpp>
@@ -97,9 +92,6 @@
 #include <eve/function/sqrt.hpp>
 #include <eve/function/sub.hpp>
 ///#include <eve/function/swapbytes.hpp>
-#include <eve/function/tofloat.hpp>
-#include <eve/function/toint.hpp>
-#include <eve/function/touint.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/two_add.hpp>
 #include <eve/function/two_prod.hpp>

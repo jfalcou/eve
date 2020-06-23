@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/trunc.hpp>
@@ -32,4 +33,3 @@ namespace eve::detail
     else return apply_over(floor, a0);
   }
 }
-

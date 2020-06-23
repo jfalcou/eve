@@ -26,7 +26,6 @@
 #include <eve/function/fnma.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/constant/signmask.hpp>
-#include <eve/function/toint.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/mhalf.hpp>
 #include <eve/constant/nan.hpp>
@@ -128,7 +127,7 @@ namespace eve::detail
     if constexpr(scalar_value<T>)
     {
       using i_t =  detail::as_integer_t<T, signed>;
-      i_t n = toint(fn);
+      i_t n = int_(fn);
       i_t swap_bit = n&One<i_t>();
       auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       i_t cos_sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
@@ -162,7 +161,7 @@ namespace eve::detail
     {
       using i_t =  detail::as_integer_t<T, signed>;
       if (is_not_finite(xr)) return Nan<T>();
-      i_t n = toint(fn);
+      i_t n = int_(fn);
       i_t swap_bit = n&One<i_t>();
       auto  sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       auto z = sqr(xr);
@@ -237,4 +236,3 @@ namespace eve::detail
     }
   }
 }
-

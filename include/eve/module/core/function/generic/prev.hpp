@@ -124,12 +124,12 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        using i_t = as_integer_t<value_type_t<T>>;
-        return bitfloating(bitinteger(a) -  convert(n, as<i_t>()));
+        using i_t = as_integer_t<T>;
+        return bitfloating(bitinteger(a) -  to_<i_t>(n));
       }
       else if constexpr(integral_value<T>)
       {
-        return sub(a, convert(n, as<value_type_t<T>>()));
+        return sub(a, to_<T>(n));
       }
     }
     else  { return apply_over(prev, a, n);    }
@@ -148,8 +148,8 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        using i_t = as_integer_t<value_type_t<T>>;
-        auto nz = inc(bitinteger(a) -  convert(n, as<i_t>()));
+        using iT = as_integer_t<T>;
+        auto nz = inc(bitinteger(a) -  to_<iT>(n));
         auto z  = bitfloating( dec(nz) );
         auto test = is_negative(z) && is_positive(a);
         if constexpr(scalar_value<T> && scalar_value<U>)
@@ -163,7 +163,7 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(sub)(a, convert(n, as<value_type_t<T>>()));
+        return saturated_(sub)(a, to_<T>(n));
       }
     }
     else  { return apply_over(pedantic_(prev), a, n);    }
@@ -187,10 +187,9 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(sub)(a, convert(n, as<value_type_t<T>>()));
+        return saturated_(sub)(a, to_<T>(n));
       }
     }
     else  { return apply_over(saturated_(prev), a, n);    }
   }
 }
-

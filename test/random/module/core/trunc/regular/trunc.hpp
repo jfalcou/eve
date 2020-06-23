@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on touint", EVE_TYPE)
+TTS_CASE_TPL("wide random check on to int", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::floating_value<T>)

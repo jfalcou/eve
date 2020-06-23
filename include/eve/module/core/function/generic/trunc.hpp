@@ -14,6 +14,7 @@
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/concept/value.hpp>
@@ -30,8 +31,7 @@ namespace eve::detail
            if constexpr(integral_value<T>) return a0;
       else if constexpr(floating_value<T>)
       {
-        auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>()); //TODO
-        //       auto already_integral = is_not_less_equal(bit_andnot(a0, Signmask<T>()), Maxflint<T>());
+        auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>());
              if constexpr(scalar_value<T>) return already_integral ? a0 :raw_(trunc)(a0);
         else if constexpr(simd_value<T>)   return if_else(already_integral, a0, eve::raw_(trunc)(a0));
       }
@@ -48,12 +48,12 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      using vt_t = value_type_t<T>;
-      using it_t = as_integer_t<vt_t>;
+      using elt_t = element_type_t<T>;
+      using i_t = as_integer_t<elt_t>;
       if constexpr(integral_value<T>)      return a0;
-      else if constexpr(floating_value<T>) return convert(convert(a0, as<it_t>()), as<vt_t>());
+      else if constexpr(floating_value<T>) return convert(convert(a0, as<i_t>()), as<elt_t>());
     }
     else return apply_over(trunc, a0);
   }
-}
 
+}

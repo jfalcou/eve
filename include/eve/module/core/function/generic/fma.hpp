@@ -70,8 +70,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      return convert(convert(a, as<double>()) * convert(b, as<double>()) + convert(c, as<double>()),
-                     as<float>());
+      return single_(double_(a)*double_(b)+double_(c));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {
@@ -105,4 +104,3 @@ namespace eve::detail
     }
   }
 }
-

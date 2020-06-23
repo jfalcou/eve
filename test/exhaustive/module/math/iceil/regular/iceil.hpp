@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/iceil.hpp>
+#include <eve/function/ceil.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -27,12 +27,12 @@ TTS_CASE_TPL("wide random check on iceil", EVE_TYPE)
     using i_t = eve::detail::value_type_t<vi_t>;
     auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
     eve::exhaustive_producer<T> p(eve::Valmin<i_t>(), eve::Valmax<i_t>());
-    TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
+    TTS_RANGE_CHECK(p, std_iceil, eve::int_(eve::ceil));
   }
   else
   {
     auto std_iceil = tts::vectorize<T>( [](auto e) { return e; } );
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
-    TTS_RANGE_CHECK(p, std_iceil, eve::iceil);
+    TTS_RANGE_CHECK(p, std_iceil, eve::int_(eve::ceil));
   }
 }
