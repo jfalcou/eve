@@ -11,6 +11,7 @@
 #include "test.hpp"
 #include <eve/memory/aligned_ptr.hpp>
 #include <tts/tests/relation.hpp>
+#include <tts/tests/basic.hpp>
 #include <array>
 
 TTS_CASE("aligned_ptr constructor from nullptr")
@@ -35,6 +36,20 @@ TTS_CASE("aligned_ptr factory functions")
   TTS_EQUAL(eve::as_aligned<8>(&values[ 0 ])      , eve::as_aligned<8>(&values[ 0 ]));
   TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , &values[ 8 ]);
   TTS_NOT_EQUAL(eve::as_aligned<8>(&values[ 0 ])  , eve::as_aligned<8>(&values[ 8 ]));
+}
+
+TTS_CASE("aligned_ptr ordering")
+{
+  char                      values[ 2 ];
+  eve::aligned_ptr<char, 1> ptr = &values[ 0 ];
+  eve::aligned_ptr<char, 1> ptr1= ptr;
+  ptr1++;
+  TTS_EXPECT(ptr < ptr1);
+  ptr1--;
+  TTS_EXPECT(ptr ==  ptr1);
+  ptr1--;
+  TTS_EXPECT(ptr >  ptr1);
+
 }
 
 TTS_CASE("aligned_ptr pre/post increment & decrement")

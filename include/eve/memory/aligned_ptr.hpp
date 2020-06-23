@@ -13,6 +13,7 @@
 #include <eve/memory/is_aligned.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/assert.hpp>
+#include <compare>
 
 namespace eve
 {
@@ -31,6 +32,7 @@ namespace eve
       EVE_ASSERT(is_aligned<Alignment>(p),(void *)(p) << " is not aligned on " << Alignment << ".");
     }
 
+    auto operator<=>(const aligned_ptr<Type, Alignment>&) const = default;
     template<typename U, std::size_t A>
     aligned_ptr(aligned_ptr<U, A> p) noexcept requires(A >= Alignment)
               : pointer_(static_cast<pointer>(p.get()))
@@ -288,4 +290,3 @@ namespace eve
       return is_aligned(ptr.get());
   }
 }
-
