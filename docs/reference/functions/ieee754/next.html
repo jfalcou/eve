@@ -31,7 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, integral_value U > auto operator()( T x, U n = 1 ) const noexcept requires compatible< T, U >;
+template< value T, integral_value U > auto operator()( T x, U n ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_) next `n`th representable greater than `x` .
@@ -48,10 +48,6 @@ Return value
 computes [`element-wise`](../../../glossary.html#element-wise), the `n`th  representable value greater than `x`.
 If `n` is zero returns `x`.
 
-Supported Decorators
-====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(next)(x)` distinguish -0.0 and +0.0 for floating point point inputs and so `pedantic_(next)(-0.0)` is +0.0.
 
   (insert ../../src/next.src.html here)
 

@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_and.hpp>
 #include <eve/function/mul.hpp>
+#include <eve/function/trunc.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/concept/value.hpp>
 
@@ -36,4 +37,3 @@ namespace eve::detail
       return apply_over(quadrant, a);
   }
 }
-
