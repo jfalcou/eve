@@ -10,5 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sinc.hpp>
-#include <eve/module/math/function/generic/sinc.hpp>
+#include <eve/function/definition/sinpic.hpp>
+#include <eve/module/math/function/generic/sinpic.hpp>

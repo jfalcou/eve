@@ -16,4 +16,3 @@ namespace eve
 {
   EVE_MAKE_CALLABLE(sinhc_, sinhc);
 }
-
