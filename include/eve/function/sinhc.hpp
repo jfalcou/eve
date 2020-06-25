@@ -11,6 +11,4 @@
 #pragma once
 
 #include <eve/function/definition/sinhc.hpp>
-#include <eve/module/core/function/scalar/sinhc.hpp>
-//#include <eve/module/core/function/simd/sinhc.hpp>
-
+#include <eve/module/math/function/generic/sinhc.hpp>

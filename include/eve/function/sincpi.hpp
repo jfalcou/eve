@@ -11,6 +11,4 @@
 #pragma once
 
 #include <eve/function/definition/sincpi.hpp>
-#include <eve/module/core/function/scalar/sincpi.hpp>
-//#include <eve/module/core/function/simd/sincpi.hpp>
-
+#include <eve/module/mayh/function/generic/sincpi.hpp>
