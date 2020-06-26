@@ -50,7 +50,7 @@ Computes  [element-wise](../../../glossary.html#elment-wise) the integral part o
 The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
     This function object implements the `FE_TOWARDZERO` version.
 
-The call to `trunc(a)` is equivalent to the call `round(a, toward_zero_)`.
+The call to `trunc(a)` is equivalent to the call `toward_zero_(round)(a)`.
 
 
   (insert ../../src/trunc.src.html here)
