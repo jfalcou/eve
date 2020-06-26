@@ -10,7 +10,7 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =            " << pf << '\n'
+    << "<- pf             = " << pf << '\n'
     << "-> eve::acosd(pf) = " << eve::acosd(pf) << '\n';
 
   float xf = 1.0f;
@@ -18,9 +18,9 @@ int main()
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =             " << xf << '\n'
+    << "<- xf             = " << xf << '\n'
     << "-> eve::acosd(xf) = " << eve::acosd(xf) << '\n'
-    << "<- yf =             " << yf << '\n'
+    << "<- yf             = " << yf << '\n'
     << "-> eve::acosd(yf) = " << eve::acosd(yf) << '\n';
   return 0;
 }

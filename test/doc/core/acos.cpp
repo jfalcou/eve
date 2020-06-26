@@ -1,4 +1,4 @@
-#include <eve/function/acos.hpp>
+#include <eve/function/acos.hpp>=
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -10,7 +10,7 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =            " << pf << '\n'
+    << "<- pf            = " << pf << '\n'
     << "-> eve::acos(pf) = " << eve::acos(pf) << '\n';
 
   float xf = 1.0f;
@@ -18,9 +18,9 @@ int main()
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =            " << xf << '\n'
+    << "<- xf            = " << xf << '\n'
     << "-> eve::acos(xf) = " << eve::acos(xf) << '\n'
-    << "<- yf =            " << yf << '\n'
+    << "<- yf            = " << yf << '\n'
     << "-> eve::acos(yf) = " << eve::acos(yf) << '\n';
   return 0;
 }
