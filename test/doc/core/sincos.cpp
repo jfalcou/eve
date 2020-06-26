@@ -11,17 +11,17 @@ int main()
 
   auto [s, c]    = eve::sincos(pf);
   std::cout << "---- simd" << '\n'
-            << "<- pf                      = " << pf << '\n'
-            << "-> sincos(pf)            = [" << '\n'
-            << "                           " << s << ", \n"
-            << "                           " << c << '\n'
-            << "                             ]\n";
+            << "<- pf          = " << pf << '\n'
+            << "-> sincos(pf)  = [" << '\n'
+            << "                  " << s << ", \n"
+            << "                  " << c << '\n'
+            << "                 ]\n";
 
   float xf = 2.3;
   auto [ss, sc] =  eve::sincos(xf);
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf           =  " << xf << '\n'
+            << "<- xf         =  " << xf << '\n'
             << "-> sincos(xf) = [" << ss << ", " << sc << "]\n";
   return 0;
 }

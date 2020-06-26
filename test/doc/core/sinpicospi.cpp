@@ -9,11 +9,11 @@ int main(){
 
   auto [s, c]    = eve::sinpicospi(pf);
   std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "-> sinpicospi(pf)            = [" << '\n'
-            << "                             " << s << ", \n"
-            << "                             " << c << '\n'
-            << "                             ]\n";
+            << "<- pf             = " << pf << '\n'
+            << "-> sinpicospi(pf) = [" << '\n'
+            << "                     " << s << ", \n"
+            << "                     " << c << '\n'
+            << "                    ]\n";
 
   float xf = 2.3;
   auto [ss, sc] =  eve::sinpicospi(xf);

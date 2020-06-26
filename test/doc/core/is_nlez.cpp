@@ -13,7 +13,6 @@ int main()
             << "-> is_nlez(pf) = " << eve::is_nlez(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Mindenormal<float>();
 
   std::cout << "---- scalar" << '\n'
             << "<- xf          = " << xf << '\n'
