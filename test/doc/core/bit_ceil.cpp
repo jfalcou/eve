@@ -14,7 +14,7 @@ int main()
   std::uint32_t xf = 48;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =           " << xf << '\n'
+            << "<- xf           = " << xf << '\n'
             << "-> bit_ceil(xf) = " << eve::bit_ceil(xf) << '\n';
   return 0;
 }

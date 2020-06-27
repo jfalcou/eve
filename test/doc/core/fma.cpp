@@ -29,7 +29,7 @@ int main()
             << " or is not configured to use them.\n\n";
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm =                                " << vm << '\n'
+            << " <- vm                                = " << vm << '\n'
             << " -> pedantic_(fma)(vm, 2.0f, -vm)     = " << eve::pedantic_(eve::fma)(vm, 2.0f, -vm) << '\n'
             << " -> numeric_(fma)(vm, 2.0f, -vm)      = " << eve::numeric_(eve::fma)(vm, 2.0f, -vm) << '\n'
             << " -> fma(vm, 2.0f, -vm)                = " << eve::fma(vm, 2.0f, -vm) << '\n'

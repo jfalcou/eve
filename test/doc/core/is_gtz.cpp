@@ -9,7 +9,7 @@ int main()
   wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =         " << pf << '\n'
+            << "<- pf         = " << pf << '\n'
             << "-> is_gtz(pf) = " << eve::is_gtz(pf) << '\n';
 
   float xf = 1.0f;

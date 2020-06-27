@@ -15,17 +15,17 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =                      " << pf << '\n'
-    << "-> eve::asinpi(pf) =          " << eve::asinpi(pf) << '\n'; 
+    << "<- pf         = " << pf << '\n'
+    << "-> asinpi(pf) = " << eve::asinpi(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =                      " << xf << '\n'
-    << "-> eve::asinpi(xf) =            " << eve::asinpi(xf) << '\n'
-    << "<- yf =                      " << yf << '\n'
-    << "-> eve::asinpi(yf) =            " << eve::asinpi(yf) << '\n'; 
+    << "<- xf         = " << xf << '\n'
+    << "-> asinpi(xf) = " << eve::asinpi(xf) << '\n'
+    << "<- yf         = " << yf << '\n'
+    << "-> asinpi(yf) = " << eve::asinpi(yf) << '\n';
   return 0;
 }

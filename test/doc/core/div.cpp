@@ -7,8 +7,8 @@ int main()
   w_t pi = {3, 2, 3, 32700}, qi = {4, 1, 1, 100};
 
   std::cout << "---- simd" << '\n'
-            << " <- pi =          " << pi << '\n'
-            << " <- qi =          " << qi << '\n'
+            << " <- pi          = " << pi << '\n'
+            << " <- qi          = " << qi << '\n'
             << " -> div(pi, qi) = " << eve::div(pi, qi) << '\n'
             << " -> pi / qi     = " << pi / qi << '\n';
 

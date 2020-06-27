@@ -11,7 +11,7 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =            " << pf << '\n'
+    << "<- pf            = " << pf << '\n'
     << "-> eve::acot(pf) = " << eve::acot(pf) << '\n';
 
   float xf = 1.0f;
@@ -19,9 +19,9 @@ int main()
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =            " << xf << '\n'
+    << "<- xf            = " << xf << '\n'
     << "-> eve::acot(xf) = " << eve::acot(xf) << '\n'
-    << "<- yf =            " << yf << '\n'
+    << "<- yf            = " << yf << '\n'
     << "-> eve::acot(yf) = " << eve::acot(yf) << '\n';
   return 0;
 }

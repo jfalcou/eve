@@ -10,17 +10,17 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =             " << pf << '\n'
-    << "-> eve::acospi(pf) = " << eve::acospi(pf) << '\n';
+    << "<- pf         = " << pf << '\n'
+    << "-> acospi(pf) = " << eve::acospi(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =              " << xf << '\n'
-    << "-> eve::acospi(xf) = " << eve::acospi(xf) << '\n'
-    << "<- yf =              " << yf << '\n'
-    << "-> eve::acospi(yf) = " << eve::acospi(yf) << '\n';
+    << "<- xf         = " << xf << '\n'
+    << "-> acospi(xf) = " << eve::acospi(xf) << '\n'
+    << "<- yf         = " << yf << '\n'
+    << "-> acospi(yf) = " << eve::acospi(yf) << '\n';
   return 0;
 }
