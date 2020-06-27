@@ -10,17 +10,17 @@ int main()
   wide_it qi = {1, -2, 3, -1};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi =              " << pi << '\n'
-            << "<- qi =              " << qi << '\n'
-            << "-> eve::rshr(pi, qi) = " << eve::rshr(pi, qi) << '\n';
+            << "<- pi            = " << pi << '\n'
+            << "<- qi            = " << qi << '\n'
+            << "-> shl(pi, qi)   = " << eve::rshr(pi, qi) << '\n';
 
   iT xi = 2, mxi = -2, yi = 3;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xi  =                      " << xi << '\n'
-            << "<- mxi =                      " << mxi << '\n'
-            << "<- yi  =                      " << yi << '\n'
-            << "-> eve::rshr(xi, yi) = " << eve::rshr(xi, yi) << '\n'
-            << "-> eve::rshr(mxi, yi)= " << eve::rshr(mxi, yi) << '\n';
+            << "<- xi            = " << xi << '\n'
+            << "<- mxi           = " << mxi << '\n'
+            << "<- yi            = " << yi << '\n'
+            << "-> rshr(xi, yi)  = " << eve::rshr(xi, yi) << '\n'
+            << "-> rshr(mxi, yi) = " << eve::rshr(mxi, yi) << '\n';
   return 0;
 }

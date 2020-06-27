@@ -15,21 +15,21 @@ int main()
   wide_it pi = {-1, 2, -3, 182};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                  " << pf << '\n'
-            << "-> sqr(pf) =             " << eve::sqr(pf) << '\n'
-            << "<- pi =                  " << pi << '\n'
+            << "<- pf                  = " << pf << '\n'
+            << "-> sqr(pf)             = " << eve::sqr(pf) << '\n'
+            << "<- pi                  = " << pi << '\n'
             << "-> saturated_(sqr)(pi) = " << eve::saturated_(eve::sqr)(pi) << '\n'
-            << "-> sqr(pi) =             " << eve::sqr(pi) << '\n';
+            << "-> sqr(pi)             = " << eve::sqr(pi) << '\n';
 
   float        xf = -32768.0f;
   std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                  " << xf << '\n'
-            << "-> sqr(xf) =             " << eve::sqr(xf) << '\n'
-            << "<- xi =                  " << xi << '\n'
-            << "-> saturated_(sqr)(xi)   " << eve::saturated_(eve::sqr)(xi) << '\n'
-            << "-> sqr(xi) =             " << eve::sqr(xi) << '\n';
+            << "<- xf                  = " << xf << '\n'
+            << "-> sqr(xf)             = " << eve::sqr(xf) << '\n'
+            << "<- xi                  = " << xi << '\n'
+            << "-> saturated_(sqr)(xi) = " << eve::saturated_(eve::sqr)(xi) << '\n'
+            << "-> sqr(xi)             = " << eve::sqr(xi) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

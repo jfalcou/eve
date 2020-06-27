@@ -31,7 +31,8 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< floating_real_value T, integral_real_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< floating_real_value T, integral_real_value U > auto operator()( T x, U y ) const noexcept
+requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_)  ldexp of its parameters.
@@ -47,7 +48,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-the call `ldexp(x,y)` issemantically equivalent to  $x2^y$:
+the call `ldexp(x,y)` issemantically equivalent to  $\textstyle x 2^y$:
 
   (insert ../../src/ldexp.src.html here)
 

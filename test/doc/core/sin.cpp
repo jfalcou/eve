@@ -1,4 +1,4 @@
-#include <eve/function/sec.hpp>
+#include <eve/function/sin.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/pi.hpp>
@@ -11,13 +11,13 @@ int main()
   wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), eve::Pi<float>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> sec(pf) = " << eve::sec(pf) << '\n';
+            << "<- pf      = " << pf << '\n'
+            << "-> sin(pf) = " << eve::sin(pf) << '\n';
 
   float xf = 3.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf       = " << xf << '\n'
-            << "-> sec(xf) = " << eve::sec(xf) << '\n';
+            << "<- xf      = " << xf << '\n'
+            << "-> sin(xf) = " << eve::sin(xf) << '\n';
   return 0;
 }

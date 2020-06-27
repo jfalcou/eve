@@ -14,23 +14,24 @@ using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 2.0f, eve::Eps<float>(), eve::Bitincrement<float>()};
+  wide_ft pf = {-0.0f, 2.0f, eve::Eps<float>(), 0.0f};
   wide_it pi = {-1, 2, -3, -32};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                " << std::setprecision(12) << pf << '\n'
-            << "-> eve::prev(pf) =     " << eve::prev(pf) << '\n'
-            << "<- pi =                " << pi << '\n'
-            << "-> eve::prev(pi) =     " << eve::prev(pi) << '\n';
+            << "<- pf                  =" << std::setprecision(12) << pf << '\n'
+            << "-> prev(pf)            =" << eve::prev(pf) << '\n'
+            << "-> pedantic_(prev)(pf) =" << eve::pedantic_(eve::prev)(pf) << '\n'
+            << "<- pi                  =" << pi << '\n'
+            << "-> prev(pi)            =" << eve::prev(pi) << '\n';
 
   float        xf = 0.0f;
   std::int16_t xi = -3;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                " << xf << '\n'
-            << "-> eve::prev(xf) =     " << eve::prev(xf) << '\n'
-            << "<- xi =                " << xi << '\n'
-            << "-> eve::prev(xi) =     " << eve::prev(xi) << '\n';
+            << "<- xf                  = " << xf << '\n'
+            << "-> prev(xf, 3)         = " << eve::prev(xf, 3) << '\n'
+            << "<- xi                  = " << xi << '\n'
+            << "-> prev(xi)            = " << eve::prev(xi) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

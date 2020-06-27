@@ -10,18 +10,18 @@ int main()
   wide_it pi = {-1, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                            " << pf << '\n'
-            << "-> eve::plus(pf) =                  " << eve::plus(pf) << '\n'
-            << "<- pi =                            " << pi << '\n'
-            << "-> eve::plus(pi) =                  " << eve::plus(pi) << '\n';
+            << "<- pf       = " << pf << '\n'
+            << "-> plus(pf) = " << eve::plus(pf) << '\n'
+            << "<- pi       = " << pi << '\n'
+            << "-> plus(pi) = " << eve::plus(pi) << '\n';
 
   float        xf = -32768.0f;
   std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                            " << xf << '\n'
-            << "-> eve::plus(xf) =                  " << eve::plus(xf) << '\n'
-            << "<- xi =                            " << xi << '\n'
-            << "-> eve::plus(xi) =                  " << eve::plus(xi) << '\n';
+            << "<- xf       = " << xf << '\n'
+            << "-> plus(xf) = " << eve::plus(xf) << '\n'
+            << "<- xi       = " << xi << '\n'
+            << "-> plus(xi) = " << eve::plus(xi) << '\n';
   return 0;
 }
