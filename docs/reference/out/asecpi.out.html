@@ -3,13 +3,13 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
-<- pf =             (0, 2, -1, -0.5)
--> eve::asecpi(pf) = (-nan, 0.333333, 1, -nan)
+<- pf         = (0, 2, -1, -0.5)
+-> asecpi(pf) = (-nan, 0.333333, 1, -nan)
 ---- scalar
-<- xf =            1
--> eve::asecpi(xf)   0
-<- yf =            inf
--> eve::asecpi(yf) = 0.5
+<- xf         = 1
+-> asecpi(xf) = 0
+<- yf         = inf
+-> asecpi(yf) = 0.5
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

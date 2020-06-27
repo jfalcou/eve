@@ -4,12 +4,12 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
 ---- simd
 <- pf                          = (0, 1, -1, -0.5)
--> eve::binarize(pf > 0.0f)    = (0, 1, 0, 0)
--> eve::binarize(pf > 0.0f, 3) = (0, 3, 0, 0)
+-> binarize(pf > 0.0f)         = (0, 1, 0, 0)
+-> binarize(pf > 0.0f, 3)      = (0, 3, 0, 0)
 ---- scalar
-<- xf                                     = -1
--> eve::binarize(eve::True<float>(), xf)  = -1
--> eve::binarize(eve::False<float>(), xf) = 0
+<- xf                           = -1
+-> binarize(True<float>(), xf)  = -1
+-> binarize(False<float>(), xf) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

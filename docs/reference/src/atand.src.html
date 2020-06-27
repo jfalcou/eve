@@ -15,18 +15,18 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =            " << pf << '\n'
-    << "-> eve::atand(pf) = " << eve::atand(pf) << '\n';
+    << "<- pf        = " << pf << '\n'
+    << "-> atand(pf) = " << eve::atand(pf) << '\n';
 
   float xf = 1.0f;
   float yf = -2.0f;
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =             " << xf << '\n'
-    << "-> eve::atand(xf) = " << eve::atand(xf) << '\n'
-    << "<- yf =             " << yf << '\n'
-    << "-> eve::atand(yf) = " << eve::atand(yf) << '\n';
+    << "<- xf        = " << xf << '\n'
+    << "-> atand(xf) = " << eve::atand(xf) << '\n'
+    << "<- yf        = " << yf << '\n'
+    << "-> atand(yf) = " << eve::atand(yf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
