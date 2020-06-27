@@ -15,6 +15,7 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/assert_utils.hpp>
 #include <type_traits>
 
 namespace eve
@@ -38,4 +39,3 @@ namespace eve
 
   EVE_MAKE_CALLABLE(next_, next);
 }
-

@@ -13,6 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_gez.hpp>
+#include <eve/detail/assert_utils.hpp>
 #include <eve/function/saturated.hpp>
 #include <type_traits>
 
@@ -38,4 +39,3 @@ namespace eve
 
   EVE_MAKE_CALLABLE(prev_, prev);
 }
-
