@@ -13,7 +13,6 @@ int main()
             << "-> is_ltz(pf) = " << eve::is_ltz(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Mindenormal<float>();
 
   std::cout << "---- scalar" << '\n'
             << "<- xf         = " << xf << '\n'
