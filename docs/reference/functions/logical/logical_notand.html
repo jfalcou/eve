@@ -25,16 +25,16 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the logicalwise NOTAND operation.
+Function object representing the element-wise NOTAND operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires logical_compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) logicalwise NOTAND of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular_) element-wise NOTAND of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -45,8 +45,8 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Computes  logicalwise NOTAND of the two parameters following the
-[logicalwise operations semantic](../../../glossary.html#Logicalwise).
+Computes  element-wise NOTAND of the two parameters following the
+[element-wise operations semantic](../../../glossary.html#Logicalwise).
 
 the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
 if `x` or  `y` is an  [simd value](../../concepts.html#value).

@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::bit_not`
+                           `eve::logical_not`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/bit_not.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/logical_not.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ bit_not = /*unspecified*/;
+  inline constexpr /*unspecified*/ logical_not = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,7 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T > auto operator()( T x ) const noexcept requires bit_compatible< T, U >;
+template< value T > auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_) logical NOT of the parameter.

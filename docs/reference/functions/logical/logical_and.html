@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::bit_and`
+                           `eve::logical_and`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/bit_and.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/logical_and.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ bit_and = /*unspecified*/;
+  inline constexpr /*unspecified*/ logical_and = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,7 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_) logical AND of the two [values](../../concepts.html#value).
