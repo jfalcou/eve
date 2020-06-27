@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::sinc`
+                           `eve::sinpic`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/sinc.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/sinpic.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ sinc = /*unspecified*/;
+  inline constexpr /*unspecified*/ sinpic = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the  computation of sinc.
+Function object representing the  computation of sinpic.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs sine cardinal computation.
+Performs pi-sine cardinal computation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ Parameters
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input divided by the input.
+Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input times $\pi$  divided by the input times $\pi$.
 
 In particular:
 
@@ -53,9 +53,9 @@ In particular:
    * If the element is a `Nan`, `NaN` is returned.
 
 
-  (insert ../../src/sinc.src.html here)
+  (insert ../../src/sinpic.src.html here)
 
-  (insert ../../out/sinc.out.html here)
+  (insert ../../out/sinpic.out.html here)
 
 
 See Also
