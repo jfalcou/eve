@@ -12,9 +12,9 @@ int main()
   wide_it qf = {1, -1, 0, eve::Valmax<int16_t>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                       " << pf << '\n'
-            << "<- qf =                       " << qf << '\n'
-            << "-> dist(pf, qf) =             " << eve::dist(pf, qf) << '\n'
+            << "<- pf                       = " << pf << '\n'
+            << "<- qf                       = " << qf << '\n'
+            << "-> dist(pf, qf)             = " << eve::dist(pf, qf) << '\n'
             << "-> saturated_(dist)(pf, qf) = " << eve::saturated_(eve::dist)(pf, qf)
             << '\n';
 
@@ -22,9 +22,9 @@ int main()
   int16_t yf = eve::Valmax<int16_t>();
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                       " << xf << '\n'
-            << "<- yf =                       " << yf << '\n'
-            << "-> dist(xf, yf) =             " << eve::dist(xf, yf) << '\n'
+            << "<- xf                       = " << xf << '\n'
+            << "<- yf                       = " << yf << '\n'
+            << "-> dist(xf, yf)             = " << eve::dist(xf, yf) << '\n'
             << "-> saturated_(dist)(xf, yf) = " << eve::saturated_(eve::dist)(xf, yf)
             << '\n';
   return 0;

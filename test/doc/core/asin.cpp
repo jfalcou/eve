@@ -10,17 +10,17 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =            " << pf << '\n'
-    << "-> eve::asin(pf) = " << eve::asin(pf) << '\n';
+    << "<- pf       = " << pf << '\n'
+    << "-> asin(pf) = " << eve::asin(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Nan<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =            " << xf << '\n'
-    << "-> eve::asin(xf) = " << eve::asin(xf) << '\n'
-    << "<- yf =            " << yf << '\n'
-    << "-> eve::asin(yf) = " << eve::asin(yf) << '\n';
+    << "<- xf       = " << xf << '\n'
+    << "-> asin(xf) = " << eve::asin(xf) << '\n'
+    << "<- yf       = " << yf << '\n'
+    << "-> asin(yf) = " << eve::asin(yf) << '\n';
   return 0;
 }

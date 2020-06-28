@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::bit_andnot`
+                           `eve::logical_ornot`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/bit_andnot.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/logical_ornot.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ bit_andnot = /*unspecified*/;
+  inline constexpr /*unspecified*/ logical_ornot = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,7 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_) logical ANDNOT of the two [values](../../concepts.html#value).
@@ -52,10 +52,10 @@ the call `logical_andnot(x, y)` is semantically equivalent to `x && !y`
 if `x` or  `y` is an  [simd value](../../concepts.html#value).
 
 !!! WARNING
-   Although the infix notation with `&&` and `!` is supported for all
+   Although the infix notation with `||` and `!` is supported for all
    [simd values](../../concepts.html#value), the `&&` operator on
    standard scalar type is the original one and so does not allow floating parameters.
-   Moreover if a proper intrinsic exists for ANDNOT
+   Moreover if a proper intrinsic exists for ORNOT
    the infix notation will not be able use it.
 
   (insert ../../src/logical_andnot.src.html here)

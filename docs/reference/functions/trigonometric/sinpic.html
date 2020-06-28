@@ -8,58 +8,59 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::average`
+                           `eve::sinpic`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/average.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/sinpic.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ average = /*unspecified*/;
+  inline constexpr /*unspecified*/ sinpic = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the mid-point operation.
+Function object representing the  computation of sinpic.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic average of the two [values](../../concepts.html#value).
+Performs pi-sine cardinal computation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
-:   [values](../../concepts.html#value).
-
+`x`
+:   [floating real value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Half the sum of `x` and `y`. No overflow occurs.
+Returns the [element-wise](../../../glossary.html#elment-wise) sine of the input times $\pi$  divided by the input times $\pi$.
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+In particular:
 
-!!! WARNING
-    If `x` and `y` are [real integral values](../../concepts.html#value) and the sum is odd, the result is a rounded value at a distance guaranteed
-    to be less than or equal to 0.5 of the average floating value, but may differ
-    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
-    simd intrinsics to perform the operation, the scalar results may differ by one unit from
-    simd ones and is system dependent.
+   * If the element is $\pm0$, $1$ is returned.
+   * If the element is $\pm\infty$, 0 is returned.
+   * If the element is a `Nan`, `NaN` is returned.
 
-  (insert ../../src/average.src.html here)
 
-  (insert ../../out/average.out.html here)
+  (insert ../../src/sinpic.src.html here)
 
+  (insert ../../out/sinpic.out.html here)
+
+
+See Also
+====================================================================================================
+[eve::sinpic](sinpic.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

@@ -16,18 +16,18 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =             " << pf << '\n'
-    << "-> eve::acscd(pf) = " << eve::acscd(pf) << '\n';
+    << "<- pf        = " << pf << '\n'
+    << "-> acscd(pf) = " << eve::acscd(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Inf<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =             " << xf << '\n'
-    << "-> eve::acscd(xf) = " << eve::acscd(xf) << '\n'
-    << "<- yf =             " << yf << '\n'
-    << "-> eve::acscd(yf) = " << eve::acscd(yf) << '\n';
+    << "<- xf        = " << xf << '\n'
+    << "-> acscd(xf) = " << eve::acscd(xf) << '\n'
+    << "<- yf        = " << yf << '\n'
+    << "-> acscd(yf) = " << eve::acscd(yf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

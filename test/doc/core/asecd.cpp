@@ -11,7 +11,7 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =             " << pf << '\n'
+    << "<- pf             = " << pf << '\n'
     << "-> eve::asecd(pf) = " << eve::asecd(pf) << '\n';
 
   float xf = 1.0f;
@@ -19,9 +19,9 @@ int main()
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =            " << xf << '\n'
-    << "-> eve::asecd(xf)   " << eve::asecd(xf) << '\n'
-    << "<- yf =            " << yf << '\n'
+    << "<- xf             = " << xf << '\n'
+    << "-> eve::asecd(xf) = " << eve::asecd(xf) << '\n'
+    << "<- yf             = " << yf << '\n'
     << "-> eve::asecd(yf) = " << eve::asecd(yf) << '\n';
   return 0;
 }

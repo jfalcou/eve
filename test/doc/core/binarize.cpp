@@ -12,15 +12,15 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf                          = " << pf << '\n'
-    << "-> eve::binarize(pf > 0.0f)    = " << eve::binarize(pf> 0.0f) << '\n'
-    << "-> eve::binarize(pf > 0.0f, 3) = " << eve::binarize(pf> 0.0f,  3) << '\n';
+    << "-> binarize(pf > 0.0f)         = " << eve::binarize(pf> 0.0f) << '\n'
+    << "-> binarize(pf > 0.0f, 3)      = " << eve::binarize(pf> 0.0f,  3) << '\n';
 
   float xf = -1.0f;
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf                                     = " << xf << '\n'
-    << "-> eve::binarize(eve::True<float>(), xf)  = " << eve::binarize(eve::True<float>(), xf) << '\n'
-    << "-> eve::binarize(eve::False<float>(), xf) = " << eve::binarize(eve::False<float>(), xf) << '\n'        ;
+    << "<- xf                           = " << xf << '\n'
+    << "-> binarize(True<float>(), xf)  = " << eve::binarize(eve::True<float>(), xf) << '\n'
+    << "-> binarize(False<float>(), xf) = " << eve::binarize(eve::False<float>(), xf) << '\n'        ;
   return 0;
 }

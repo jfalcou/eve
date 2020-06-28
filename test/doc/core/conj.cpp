@@ -14,13 +14,13 @@ int main()
                 eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>()};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =             " << pf << '\n'
-            << "-> conj(pf) =       " << eve::conj(pf) << '\n';
+            << "<- pf       = " << pf << '\n'
+            << "-> conj(pf) = " << eve::conj(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =             " << xf << '\n'
-            << "-> conj(xf) =       " << eve::conj(xf) << '\n';
+            << "<- xf       = " << xf << '\n'
+            << "-> conj(xf) = " << eve::conj(xf) << '\n';
   return 0;
 }

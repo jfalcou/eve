@@ -11,17 +11,17 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =             " << pf << '\n'
-    << "-> eve::acsc(pf) = " << eve::acsc(pf) << '\n';
+    << "<- pf       =  " << pf << '\n'
+    << "-> acsc(pf) = " << eve::acsc(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Inf<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =            " << xf << '\n'
-    << "-> eve::acsc(xf)   " << eve::acsc(xf) << '\n'
-    << "<- yf =            " << yf << '\n'
-    << "-> eve::acsc(yf) = " << eve::acsc(yf) << '\n';
+    << "<- xf       = " << xf << '\n'
+    << "-> acsc(xf) = " << eve::acsc(xf) << '\n'
+    << "<- yf       = " << yf << '\n'
+    << "-> acsc(yf) = " << eve::acsc(yf) << '\n';
   return 0;
 }

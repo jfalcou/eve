@@ -16,18 +16,18 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =              " << pf << '\n'
-    << "-> eve::acotpi(pf) = " << eve::acotpi(pf) << '\n';
+    << "<- pf         = " << pf << '\n'
+    << "-> acotpi(pf) = " << eve::acotpi(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::Inf<float>();
 
   std::cout
     << "---- scalar"  << '\n'
-    << "<- xf =              " << xf << '\n'
-    << "-> eve::acotpi(xf) = " << eve::acotpi(xf) << '\n'
-    << "<- yf =              " << yf << '\n'
-    << "-> eve::acotpi(yf) = " << eve::acotpi(yf) << '\n';
+    << "<- xf         = " << xf << '\n'
+    << "-> acotpi(xf) = " << eve::acotpi(xf) << '\n'
+    << "<- yf         = " << yf << '\n'
+    << "-> acotpi(yf) = " << eve::acotpi(yf) << '\n';
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

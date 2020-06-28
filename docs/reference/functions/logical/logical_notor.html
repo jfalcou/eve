@@ -8,20 +8,20 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::bit_notor`
+                           `eve::logical_notor`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/bit_notor.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/logical_notor.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ bit_notor = /*unspecified*/;
+  inline constexpr /*unspecified*/ logical_notor = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
@@ -31,7 +31,7 @@ Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< value T, value U > auto operator()( T x, U y ) const noexcept requires bit_compatible< T, U >;
+template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 Performs  the  [element-wise](../../../glossary.html#regular_) logical NOTOR of the two [values](../../concepts.html#value).

@@ -25,62 +25,42 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object representing the  computation of sinhc.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template< floating_real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+Performs hyperbolic-sine cardinal computation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 `x`
-:   **TODO: FILL THIS BLANK**
-
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+:   [floating real value](../../concepts.html#value).
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
+Returns the [element-wise](../../../glossary.html#elment-wise) hyperbolic sine of the input divided by the input.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = sinhc(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+In particular:
 
-is semantically equivalent to:
+   * If the element is $\pm0$, $1$ is returned.
+   * If the element is $\pm\infty$, $\pm\infty$ is returned.
+   * If the element is a `Nan`, `NaN` is returned.
 
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
 
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+  (insert ../../src/sinhc.src.html here)
 
-  <!--(insert ../../src/sinhc.src.html here)-->
+  (insert ../../out/sinhc.out.html here)
 
-  <!--(insert ../../out/sinhc.out.html here)-->
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::sinhc](sinhc.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">

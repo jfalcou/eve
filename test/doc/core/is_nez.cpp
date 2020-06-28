@@ -9,7 +9,7 @@ int main()
   wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =         " << pf << '\n'
+            << "<- pf         = " << pf << '\n'
             << "-> is_nez(pf) = " << eve::is_nez(pf) << '\n';
 
   float xf = 1.0f;

@@ -34,7 +34,7 @@ int main()
             << " or is not configured to use them.\n\n";
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm =                                " << vm << '\n'
+            << " <- vm                                = " << vm << '\n'
             << " -> pedantic_(fnms)(vm, 2.0f, vm)     = " << eve::pedantic_(eve::fnms)(vm, 2.0f, -vm) << '\n'
             << " -> numeric_(fnms)(vm, 2.0f, vm)      = " << eve::numeric_(eve::fnms)(vm, 2.0f, -vm) << '\n'
             << " -> fnms(vm, 2.0f, vm)                = " << eve::fnms(vm, 2.0f, -vm) << '\n'

@@ -29,7 +29,7 @@ int main()
   auto [sm, se] =  eve::ifrexp(xf);
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf       =  " << xf << '\n'
+            << "<- xf         =  " << xf << '\n'
             << "-> ifrexp(xf) = [" << sm << ", " << se << "]\n";
   return 0;
 }

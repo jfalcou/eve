@@ -19,8 +19,8 @@ int main()
   float xi = -3.4565;
 
   std::cout << "---- scalar" << '\n'
-            << " <- xi                        = " << xi << '\n'
-            << " <- mask                      = " << mask << '\n'
-            << " -> eve::bit_notand(xi, mask) = " << eve::bit_notand(xi, mask) << '\n';
+            << " <- xi                   = " << xi << '\n'
+            << " <- mask                 = " << mask << '\n'
+            << " -> bit_notand(xi, mask) = " << eve::bit_notand(xi, mask) << '\n';
   return 0;
 }
