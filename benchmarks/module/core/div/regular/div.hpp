@@ -20,7 +20,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment2 xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
   run<EVE_VALUE>(EVE_NAME(eve::div) , xp, eve::div, arg0, arg1);
   run<EVE_TYPE> (EVE_NAME(eve::div) , xp, eve::div, arg0, arg1);
 }

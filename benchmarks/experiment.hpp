@@ -70,14 +70,14 @@ namespace eve::bench
     }
   }
 
-  struct experiment2
+  struct experiment
   {
     ankerl::nanobench::Bench bench_;
     std::size_t size_;
 
-    experiment2(std::size_t size) : size_(size)
+    experiment(std::size_t size) : size_(size)
     {
-      bench_.warmup(100).unit("element").performanceCounters(true);
+      bench_.warmup(100).unit("element").performanceCounters(true).minEpochIterations(500);
 
       std::cout << "[EVE] - Target: "<< AS_STRING(EVE_CURRENT_API) << " - Assertions: ";
 #ifdef NDEBUG
@@ -111,4 +111,3 @@ namespace eve::bench
 }
 
 #endif
-
