@@ -8,19 +8,19 @@
 
 ##==================================================================================================
 ## General meta tests
-make_unit( "meta" as_floating_point.cpp )
-make_unit( "meta" as_integer.cpp )
-make_unit( "meta" as_wide.cpp )
-make_unit( "meta" sign_of.cpp )
+make_unit( "unit.meta" as_floating_point.cpp )
+make_unit( "unit.meta" as_integer.cpp )
+make_unit( "unit.meta" as_wide.cpp )
+make_unit( "unit.meta" sign_of.cpp )
 
 ##==================================================================================================
 ## Concepts tests
-make_unit( "meta.concept" rebindable.cpp )
-make_unit( "meta.concept" decorator.cpp )
-make_unit( "meta.concept" value.cpp )
+make_unit( "unit.meta.concept" rebindable.cpp )
+make_unit( "unit.meta.concept" decorator.cpp )
+make_unit( "unit.meta.concept" value.cpp )
 
 ##==================================================================================================
 ## Traits tests
-make_unit( "meta" cardinal.cpp )
-make_unit( "meta" has_abi.cpp )
-make_unit( "meta" element_type.cpp )
+make_unit( "unit.meta" cardinal.cpp )
+make_unit( "unit.meta" has_abi.cpp )
+make_unit( "unit.meta" element_type.cpp )

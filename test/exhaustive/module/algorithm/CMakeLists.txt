@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(exhaustive.algorithm.unit)
-add_custom_target(exhaustive.algorithm.scalar.unit)
-add_custom_target(exhaustive.algorithm.simd.unit)
-add_dependencies(exhaustive.algorithm.unit exhaustive.algorithm.scalar.unit)
-add_dependencies(exhaustive.algorithm.unit exhaustive.algorithm.simd.unit)
-add_dependencies(exhaustive.scalar.unit exhaustive.algorithm.scalar.unit)
-add_dependencies(exhaustive.simd.unit exhaustive.algorithm.simd.unit)
-add_dependencies(exhaustive.unit exhaustive.algorithm.unit)
+add_custom_target(exhaustive.algorithm.tst)
+add_custom_target(exhaustive.algorithm.scalar.tst)
+add_custom_target(exhaustive.algorithm.simd.tst)
+add_dependencies(exhaustive.algorithm.tst exhaustive.algorithm.scalar.tst)
+add_dependencies(exhaustive.algorithm.tst exhaustive.algorithm.simd.tst)
+add_dependencies(exhaustive.scalar.tst exhaustive.algorithm.scalar.tst)
+add_dependencies(exhaustive.simd.tst exhaustive.algorithm.simd.tst)
+add_dependencies(exhaustive.tst exhaustive.algorithm.tst)
 
 ##==================================================================================================
 ## Algoritms function unit tests

@@ -96,7 +96,7 @@ function(make_all_units)
             set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp")
 
             configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
-            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.unit"
+            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.tst"
                             "${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp"
                           )
           endforeach()
@@ -111,12 +111,12 @@ function(make_all_units)
             configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
 
             if(GEN_TEST_CARDINAL)
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.tst"
                               "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                               "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
                             )
             else()
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.unit"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.tst"
                               "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                             )
             endif()
@@ -133,7 +133,7 @@ endfunction()
 ##==================================================================================================
 function(check_failure root)
   foreach(file ${ARGN})
-    string(REPLACE ".cpp" ".unit" base ${file})
+    string(REPLACE ".cpp" ".tst" base ${file})
     string(REPLACE "/"    "." base ${base})
     string(REPLACE "\\"   "." base ${base})
     set(test "${root}.${base}")
@@ -222,21 +222,27 @@ add_dependencies(tests unit)
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.unit)
-add_custom_target(random.scalar.unit)
-add_custom_target(random.simd.unit)
-add_custom_target(exhaustive.unit)
-add_custom_target(exhaustive.scalar.unit)
-add_custom_target(exhaustive.simd.unit)
-add_dependencies(random.unit random.scalar.unit)
-add_dependencies(random.unit random.simd.unit)
-add_dependencies(exhaustive.unit exhaustive.scalar.unit)
-add_dependencies(exhaustive.unit exhaustive.simd.unit)
+add_custom_target(unit.tst              )
+add_custom_target(unit.scalar.tst       )
+add_custom_target(unit.basic.tst        )
+add_custom_target(unit.simd.tst         )
+add_custom_target(random.tst            )
+add_custom_target(random.scalar.tst     )
+add_custom_target(random.simd.tst       )
+add_custom_target(exhaustive.tst        )
+add_custom_target(exhaustive.scalar.tst )
+add_custom_target(exhaustive.simd.tst   )
 
-add_custom_target(basic.unit)
-add_dependencies(basic.unit arch.unit)
-add_dependencies(basic.unit doc.unit)
-add_dependencies(basic.unit api.unit)
+add_dependencies(unit.tst       unit.scalar.tst       )
+add_dependencies(unit.tst       unit.simd.tst         )
+add_dependencies(random.tst     random.scalar.tst     )
+add_dependencies(random.tst     random.simd.tst       )
+add_dependencies(exhaustive.tst exhaustive.scalar.tst )
+add_dependencies(exhaustive.tst exhaustive.simd.tst   )
+
+add_dependencies(unit.basic.tst unit.arch.tst   )
+add_dependencies(unit.basic.tst unit.api.tst    )
+add_dependencies(unit.basic.tst unit.meta.tst   )
 
 ##==================================================================================================
 ## Incldue tests themselves

@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.special.unit)
-add_custom_target(random.special.scalar.unit)
-add_custom_target(random.special.simd.unit)
-add_dependencies(random.special.unit random.special.scalar.unit)
-add_dependencies(random.special.unit random.special.simd.unit)
-add_dependencies(random.scalar.unit random.special.scalar.unit)
-add_dependencies(random.simd.unit random.special.simd.unit)
-add_dependencies(random.unit random.special.unit)
+add_custom_target(random.special.tst)
+add_custom_target(random.special.scalar.tst)
+add_custom_target(random.special.simd.tst)
+add_dependencies(random.special.tst random.special.scalar.tst)
+add_dependencies(random.special.tst random.special.simd.tst)
+add_dependencies(random.scalar.tst random.special.scalar.tst)
+add_dependencies(random.simd.tst random.special.simd.tst)
+add_dependencies(random.tst random.special.tst)
 
 ##==================================================================================================
 ## Elementwise function unit tests
