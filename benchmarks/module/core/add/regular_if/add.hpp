@@ -11,17 +11,22 @@
 #include <eve/function/add.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using L_TYPE = eve::logical<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::add, EVE_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  using L_VALUE = eve::logical<EVE_VALUE>;
+
+  auto arg00 = eve::bench::random_<EVE_VALUE>(0, 1);
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(eve::add) , xp, eve::add, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(eve::add) , xp, eve::add, arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(eve::add) , xp, eve::add, arg00, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(eve::add) , xp, eve::add, arg00, arg1, arg2);
 
 }
