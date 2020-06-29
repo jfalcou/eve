@@ -11,15 +11,20 @@
 #include <eve/function/average.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <numeric>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::average, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  auto std__average =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(std::midpoint(x, y)); };
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__average) , xp, std__average, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(eve::average) , xp, eve::average, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::average) , xp, eve::average, arg0, arg1);
 }

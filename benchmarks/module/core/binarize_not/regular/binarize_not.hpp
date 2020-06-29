@@ -9,17 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/binarize_not.hpp>
-#include <cmath>
 
 int main()
 {
-  using I_TYPE = eve::logical<EVE_TYPE>;
-  using E_TYPE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::binarize_not, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1)
-                        , eve::bench::random<E_TYPE>(-1.,1.));
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE  = eve::logical<EVE_TYPE>;
 
-  EVE_REGISTER_BENCHMARK(eve::binarize_not, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1));
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<L_TYPE> );
+  run<L_VALUE>(EVE_NAME(eve::binarize_not) , xp, eve::binarize_not, arg0);
+  run<L_TYPE> (EVE_NAME(eve::binarize_not) , xp, eve::binarize_not, arg0);
+
 
 }
