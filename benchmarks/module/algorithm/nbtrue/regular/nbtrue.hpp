@@ -9,10 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/nbtrue.hpp>
-#include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::nbtrue, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  EVE_VALUE lmax = eve::cardinal_v<EVE_TYPE>+1;
+  EVE_VALUE lmin = -lmax;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  if (lmin > 0) lmin = 0;
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<L_TYPE>(EVE_NAME(eve::nbtrue) , xp, eve::nbtrue, arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::nbtrue) , xp, eve::nbtrue, arg0);
 }

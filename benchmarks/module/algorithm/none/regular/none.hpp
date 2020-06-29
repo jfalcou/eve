@@ -9,17 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/none.hpp>
-#include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   EVE_VALUE lmax = eve::cardinal_v<EVE_TYPE>+1;
   EVE_VALUE lmin = -lmax;
-  if (lmin > 0) lmin = 0;
-  EVE_REGISTER_BENCHMARK(eve::none, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
-
   using L_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::none, L_TYPE, eve::bench::random<L_TYPE>(0, 1));
+  if (lmin > 0) lmin = 0;
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<L_TYPE>(EVE_NAME(eve::none) , xp, eve::none, arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::none) , xp, eve::none, arg0);
 }
