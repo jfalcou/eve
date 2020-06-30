@@ -9,22 +9,16 @@
 **/
 //==================================================================================================
 #include <eve/function/cospi.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <cmath>
-#include <eve/concept/value.hpp>
-
+#include <eve/function/radindeg.hpp>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  if (eve::floating_value<EVE_TYPE>)
-  {
-    auto lmax = EVE_VALUE(0.25);
-    auto lmin = EVE_VALUE(-0.25);
-    EVE_REGISTER_BENCHMARK(eve::restricted_(eve::cospi), EVE_TYPE
-                          , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmax = EVE_VALUE(0.25);
+  auto lmin = -lmax;
 
-    eve::bench::start_benchmarks(argc, argv);
-  }
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(eve::restricted_(eve::cospi)) , xp, eve::restricted_(eve::cospi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::restricted_(eve::cospi)) , xp, eve::restricted_(eve::cospi) , arg0);
 }
