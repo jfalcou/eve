@@ -15,9 +15,15 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Maxlog<EVE_VALUE>();
-  auto lmax = eve::Minlog<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::expm1, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  auto lmin = EVE_VALUE(eve::Minlog<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Maxlog<EVE_VALUE>());
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__expm1 = [](auto x){return std::expm1(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__expm1) , xp, std__expm1 , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::expm1) , xp, eve::expm1 , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::expm1) , xp, eve::expm1 , arg0);
 
 }

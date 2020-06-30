@@ -14,8 +14,15 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::log2, EVE_TYPE, eve::bench::random<EVE_TYPE>(EVE_VALUE(0), lmax));
+  auto lmin = EVE_VALUE(0);
+  auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__log2 = [](auto x){return std::log2(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__log2) , xp, std__log2 , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::log2) , xp, eve::log2 , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::log2) , xp, eve::log2 , arg0);
 
 }
