@@ -9,14 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/asinh.hpp>
-#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::asinh, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()));
+  auto lmin = EVE_VALUE(-eve::Oneotwoeps<EVE_VALUE>()); //eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>()); //eve::Valmax<EVE_VALUE>());
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__asinh = [](auto x){return std::asinh(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__asinh) , xp, std__asinh , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::asinh) , xp, eve::asinh , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::asinh) , xp, eve::asinh , arg0);
 }
