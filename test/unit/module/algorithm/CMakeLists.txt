@@ -10,16 +10,19 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(algorithm.unit)
-add_custom_target(algorithm.scalar.unit)
-add_custom_target(algorithm.simd.unit)
-add_dependencies(algorithm.unit algorithm.scalar.unit)
-add_dependencies(algorithm.unit algorithm.simd.unit)
+add_custom_target(unit.algorithm.tst       )
+add_custom_target(unit.algorithm.scalar.tst)
+add_custom_target(unit.algorithm.simd.tst  )
+
+add_dependencies(unit.scalar.tst    unit.algorithm.scalar.tst )
+add_dependencies(unit.simd.tst      unit.algorithm.simd.tst   )
+add_dependencies(unit.algorithm.tst unit.algorithm.scalar.tst )
+add_dependencies(unit.algorithm.tst unit.algorithm.simd.tst   )
 
 ##==================================================================================================
 ## Algoritms function unit tests
 ##==================================================================================================
-make_all_units(ROOT algorithm NAME all                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT algorithm NAME any                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT algorithm NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT algorithm NAME none                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.algorithm NAME all                   ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.algorithm NAME any                   ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.algorithm NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.algorithm NAME none                  ARCH scalar simd TYPES ${all_types}     )

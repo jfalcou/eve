@@ -12,7 +12,7 @@
 ## Setup a test with many option
 ##==================================================================================================
 function(generate_test root rootpath dep file)
-  string(REPLACE ".cpp" ".unit" base ${file})
+  string(REPLACE ".cpp" ".tst" base ${file})
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
 

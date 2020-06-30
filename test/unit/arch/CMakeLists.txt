@@ -10,4 +10,4 @@ set(  SOURCES
       is_supported.cpp
    )
 
-make_unit( "arch" ${SOURCES} )
+make_unit( "unit.arch" ${SOURCES} )
