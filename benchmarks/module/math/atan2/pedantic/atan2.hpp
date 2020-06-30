@@ -15,11 +15,16 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::atan2), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmin = EVE_VALUE(eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__atan2 = [](auto x, auto y){return std::atan2(x, y);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__atan2) , xp, std__atan2 , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(eve::pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
 
 }
