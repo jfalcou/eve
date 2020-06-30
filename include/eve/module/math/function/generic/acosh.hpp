@@ -17,6 +17,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/dec.hpp>
+#include <eve/function/fma.hpp>
 #include <eve/function/is_greater.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log1p.hpp>
@@ -29,12 +30,12 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      T          t    = dec(x);
+      const T    t    = dec(x);
       auto const test = is_greater(t, Oneotwoeps<T>());
 
       if constexpr( simd_value<T> )
       {
-        T z = if_else(test, x, t + sqrt(t + t + sqr(t)));
+        const T z = if_else(test, x, t + sqrt(fma(t, t, t+t)));
         return add[test](log1p(z), Log_2<T>());
       }
       else if constexpr( scalar_value<T> )
@@ -45,7 +46,7 @@ namespace eve::detail
         }
         else
         {
-          return eve::log1p(t + eve::sqrt(t + t + sqr(t)));
+          return eve::log1p(t + eve::sqrt(fma(t, t, t+t)));
         }
       }
     }
@@ -55,4 +56,3 @@ namespace eve::detail
     }
   }
 }
-

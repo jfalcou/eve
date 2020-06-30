@@ -9,10 +9,20 @@
 **/
 //==================================================================================================
 #include <eve/function/acospi.hpp>
+#include <eve/function/radinpi.hpp>
 #include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::acospi, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = EVE_VALUE(-1);
+  auto lmax = EVE_VALUE(1);
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__acospi = [](auto x){return eve::radinpi(std::acos(x));};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__acospi) , xp, std__acospi , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::acospi) , xp, eve::acospi , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::acospi) , xp, eve::acospi , arg0);
 
 }

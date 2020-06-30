@@ -14,8 +14,8 @@
 int main(int argc, char** argv)
 {
   auto const std_acot = [](auto x) { return std::atan(1/x); };
-  auto lmin = EVE_TYPE(1);
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = EVE_TYPE(-5);
+  auto lmax = EVE_TYPE(5);
 
   EVE_REGISTER_BENCHMARK(std_acot, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 
