@@ -9,14 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/floor.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::floor, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto const std__floor = [](EVE_VALUE x) { return std::floor(x); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE> (EVE_NAME(std__floor) , xp, std__floor, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::floor) , xp, eve::floor, arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::floor) , xp, eve::floor, arg0);
 }
