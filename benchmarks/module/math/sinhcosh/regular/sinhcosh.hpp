@@ -11,13 +11,16 @@
 #include <eve/function/sinhcosh.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
-#include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Maxlog<EVE_VALUE>();
-  auto lmax = eve::Minlog<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::sinhcosh, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  auto lmin = EVE_VALUE(eve::Minlog<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Maxlog<EVE_VALUE>());
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(eve::sinhcosh) , xp, eve::sinhcosh , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::sinhcosh) , xp, eve::sinhcosh , arg0);
 
 }

@@ -20,7 +20,7 @@ int main()
   auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>()); //eve::Valmax<EVE_VALUE>());
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__acscd = [](auto x){return eve;::radindeg(std::acos(1/x));};
+  auto std__acscd = [](auto x){return eve::radindeg(std::acos(1/x));};
 
   eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
   run<EVE_VALUE>(EVE_NAME(std__acscd) , xp, std__acscd , arg0);

@@ -15,10 +15,15 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::big_(eve::sin), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmin = EVE_VALUE(eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__sin = [](auto x){return std::sin(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::big_(eve::sin)) , xp, eve::big_(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::big_(eve::sin)) , xp, eve::big_(eve::sin) , arg0);
 
 }

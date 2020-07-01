@@ -13,6 +13,14 @@
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::atanh, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = EVE_VALUE(-1);
+  auto lmax = EVE_VALUE(1);
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__atanh = [](auto x){return std::atanh(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__atanh) , xp, std__atanh , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::atanh) , xp, eve::atanh , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::atanh) , xp, eve::atanh , arg0);
 }

@@ -9,15 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/sin.hpp>
-#include <eve/constant/pio_2.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_2<EVE_VALUE>();
+  auto lmax = eve::detail::Rempio2_limit(eve::small_type(), eve::as_<EVE_VALUE>());
   auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::small_(eve::sin), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__sin = [](auto x){return std::sin(x);};
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
 
 }

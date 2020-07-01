@@ -9,11 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/mul.hpp>
-#include <cmath>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::mul, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.)
-                                               , eve::bench::random<EVE_TYPE>(-1.,1.));
+  EVE_VALUE lmin = 1;
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(eve::mul) , xp, eve::mul, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::mul) , xp, eve::mul, arg0, arg1);
 }

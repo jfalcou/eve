@@ -9,15 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/mul.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  using I_TYPE = eve::logical<EVE_TYPE>;
+  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
   EVE_REGISTER_BENCHMARK(eve::mul, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.));
+                        , eve::bench::random<L_TYPE>(0, 1)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
+                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
 }
