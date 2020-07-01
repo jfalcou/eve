@@ -11,15 +11,25 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/concept/value.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::bit_or, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  if constexpr(eve::integral_value<EVE_VALUE>)
+  {
+    auto std__bit_or =  [](auto x,  auto y){return EVE_VALUE(x|y); };
+
+    run<EVE_VALUE>(EVE_NAME(std__bit_or) , xp, std__bit_or, arg0, arg1);
+  }
+
+  run<EVE_VALUE>(EVE_NAME(eve::bit_or) , xp, eve::bit_or, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::bit_or) , xp, eve::bit_or, arg0, arg1);
 }
