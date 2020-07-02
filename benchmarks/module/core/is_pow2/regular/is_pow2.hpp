@@ -9,10 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/is_pow2.hpp>
-#include <cmath>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <bit>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::is_pow2, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto const std__is_pow2 = [](EVE_VALUE x) { return std::hasonebitset; };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE> (EVE_NAME(std__is_pow2) , xp, std__is_pow2, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::is_pow2) , xp, eve::is_pow2, arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::is_pow2) , xp, eve::is_pow2, arg0);
 }

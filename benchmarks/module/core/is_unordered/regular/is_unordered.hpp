@@ -11,15 +11,19 @@
 #include <eve/function/is_unordered.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <numeric>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::is_unordered, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__is_unordered =  [](EVE_VALUE x,  EVE_VALUE y){return std::isunordered(x, y); };
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__is_unordered) , xp, std__is_unordered, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(eve::is_unordered) , xp, eve::is_unordered, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::is_unordered) , xp, eve::is_unordered, arg0, arg1);
 }
