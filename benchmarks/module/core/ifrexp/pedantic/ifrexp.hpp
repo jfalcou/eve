@@ -15,11 +15,12 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::pedantic_(eve::ifrexp), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE> (EVE_NAME(eve::pedantic_(eve::ifrexp)) , xp, eve::pedantic_(eve::ifrexp), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::pedantic_(eve::ifrexp)) , xp, eve::pedantic_(eve::ifrexp), arg0);
 }
-#

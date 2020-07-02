@@ -11,30 +11,21 @@
 #include <eve/function/if_else.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <numeric>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using L_TYPE = eve::logical<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  auto fl = [](auto a,  auto b){ return eve::if_else(a, b, eve::mone_); };
-  EVE_REGISTER_BENCHMARK(fl, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  EVE_REGISTER_BENCHMARK(fl, EVE_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
-  auto fr = [](auto a,  auto b){ return eve::if_else(a, eve::mone_, b); };
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  EVE_REGISTER_BENCHMARK(fr, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto std__if_else =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x ? y : EVE_VALUE(-1)); };
+  auto eve__if_else =  [](auto x,  auto y){return eve::if_else(x, y, eve::mone_); };
 
-  EVE_REGISTER_BENCHMARK(fr, EVE_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
- eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__if_else) , xp, std__if_else, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(eve__if_else) , xp, eve__if_else, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve__if_else) , xp, eve__if_else, arg0, arg1);
 }

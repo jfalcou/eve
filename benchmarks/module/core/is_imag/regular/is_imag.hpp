@@ -9,10 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/is_imag.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::is_imag, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto const std__is_imag = [](EVE_VALUE x) { return x == 0; };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE> (EVE_NAME(std__is_imag) , xp, std__is_imag, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::is_imag) , xp, eve::is_imag, arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::is_imag) , xp, eve::is_imag, arg0);
 }

@@ -9,10 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/is_eqz.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::is_eqz, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto const std__is_eqz = [](EVE_VALUE x) { return !x; };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE> (EVE_NAME(std__is_eqz) , xp, std__is_eqz, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::is_eqz) , xp, eve::is_eqz, arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::is_eqz) , xp, eve::is_eqz, arg0);
 }
