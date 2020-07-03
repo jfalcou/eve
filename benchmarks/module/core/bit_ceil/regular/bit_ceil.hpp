@@ -22,8 +22,8 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__bit_ceil) , xp, std__bit_ceil, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::bit_ceil) , xp, eve::bit_ceil, arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::bit_ceil) , xp, eve::bit_ceil, arg0);
+  run<EVE_VALUE> (EVE_NAME(bit_ceil) , xp, eve::bit_ceil, arg0);
+  run<EVE_TYPE>  (EVE_NAME(bit_ceil) , xp, eve::bit_ceil, arg0);
 }

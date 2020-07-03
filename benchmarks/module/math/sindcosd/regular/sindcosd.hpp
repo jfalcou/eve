@@ -22,9 +22,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__sindcosd = [](auto x){return eve::radindeg(std::cos(x));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sindcosd) , xp, std__sindcosd , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::sindcosd) , xp, eve::sindcosd , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::sindcosd) , xp, eve::sindcosd , arg0);
+  run<EVE_VALUE>(EVE_NAME(sindcosd) , xp, eve::sindcosd , arg0);
+  run<EVE_TYPE> (EVE_NAME(sindcosd) , xp, eve::sindcosd , arg0);
 
 }

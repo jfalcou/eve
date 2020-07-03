@@ -21,9 +21,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__sin = [](auto x){return std::sin(x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
+  run<EVE_VALUE>(EVE_NAME(small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(small_(eve::sin)) , xp, eve::small_(eve::sin) , arg0);
 
 }

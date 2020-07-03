@@ -24,8 +24,8 @@ int main()
 
   auto std__fms =  [](EVE_VALUE x,  EVE_VALUE y, auto z){return EVE_VALUE(std::fma(x, y, -z)); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__fms) , xp, std__fms, arg0, arg1, arg2);
-  run<EVE_VALUE>(EVE_NAME(eve::fms) , xp, eve::fms, arg0, arg1, arg2);
-  run<EVE_TYPE> (EVE_NAME(eve::fms) , xp, eve::fms, arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(fms) , xp, eve::fms, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(fms) , xp, eve::fms, arg0, arg1, arg2);
 }

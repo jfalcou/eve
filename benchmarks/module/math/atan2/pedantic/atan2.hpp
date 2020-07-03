@@ -22,9 +22,9 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__atan2 = [](auto x, auto y){return std::atan2(x, y);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__atan2) , xp, std__atan2 , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::atan2)) , xp, eve::pedantic_(eve::atan2) , arg0, arg1);
 
 }

@@ -20,9 +20,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__log1p = [](auto x){return std::log1p(x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__log1p) , xp, std__log1p , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::log1p) , xp, eve::log1p , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::log1p) , xp, eve::log1p , arg0);
+  run<EVE_VALUE>(EVE_NAME(log1p) , xp, eve::log1p , arg0);
+  run<EVE_TYPE> (EVE_NAME(log1p) , xp, eve::log1p , arg0);
 
 }

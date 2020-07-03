@@ -22,6 +22,6 @@ int main()
 
 //   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-//   eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+//   eve::bench::experiment xp;
 //   run<EVE_TYPE>  (EVE_NAME(my__bit_cast) , xp, my__bit_cast, arg0);
 }

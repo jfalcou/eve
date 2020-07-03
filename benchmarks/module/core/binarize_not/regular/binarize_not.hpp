@@ -18,8 +18,8 @@ int main()
   auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
 
   eve::bench::experiment xp( eve::bench::optimal_size<L_TYPE> );
-  run<L_VALUE>(EVE_NAME(eve::binarize_not) , xp, eve::binarize_not, arg0);
-  run<L_TYPE> (EVE_NAME(eve::binarize_not) , xp, eve::binarize_not, arg0);
+  run<L_VALUE>(EVE_NAME(binarize_not) , xp, eve::binarize_not, arg0);
+  run<L_TYPE> (EVE_NAME(binarize_not) , xp, eve::binarize_not, arg0);
 
 
 }

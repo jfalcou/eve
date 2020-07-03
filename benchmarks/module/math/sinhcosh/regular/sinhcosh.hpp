@@ -19,8 +19,8 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
-  run<EVE_VALUE>(EVE_NAME(eve::sinhcosh) , xp, eve::sinhcosh , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::sinhcosh) , xp, eve::sinhcosh , arg0);
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(sinhcosh) , xp, eve::sinhcosh , arg0);
+  run<EVE_TYPE> (EVE_NAME(sinhcosh) , xp, eve::sinhcosh , arg0);
 
 }

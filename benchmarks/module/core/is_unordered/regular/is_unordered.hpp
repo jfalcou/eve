@@ -22,8 +22,8 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__is_unordered =  [](EVE_VALUE x,  EVE_VALUE y){return std::isunordered(x, y); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__is_unordered) , xp, std__is_unordered, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::is_unordered) , xp, eve::is_unordered, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::is_unordered) , xp, eve::is_unordered, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(is_unordered) , xp, eve::is_unordered, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(is_unordered) , xp, eve::is_unordered, arg0, arg1);
 }

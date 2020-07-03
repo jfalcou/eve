@@ -23,8 +23,8 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__inearest) , xp, std__inearest, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::int_(eve::ceil)) , xp, eve::int_(eve::ceil), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::int_(eve::ceil)) , xp, eve::int_(eve::ceil), arg0);
+  run<EVE_VALUE> (EVE_NAME(int_(eve::ceil)) , xp, eve::int_(eve::ceil), arg0);
+  run<EVE_TYPE>  (EVE_NAME(int_(eve::ceil)) , xp, eve::int_(eve::ceil), arg0);
 }

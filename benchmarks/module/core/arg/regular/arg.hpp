@@ -20,7 +20,7 @@ int main()
   auto lmax = eve::Valmax<EVE_VALUE>();
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
-  run<EVE_VALUE> (EVE_NAME(eve::arg) , xp, eve::arg, arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::arg) , xp, eve::arg, arg0);
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(arg) , xp, eve::arg, arg0);
+  run<EVE_TYPE>  (EVE_NAME(arg) , xp, eve::arg, arg0);
 }

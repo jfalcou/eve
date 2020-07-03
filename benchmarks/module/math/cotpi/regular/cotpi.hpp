@@ -22,9 +22,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__cotpi = [](auto x){return eve::radindeg(std::cos(x));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cotpi) , xp, std__cotpi , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::cotpi) , xp, eve::cotpi , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::cotpi) , xp, eve::cotpi , arg0);
+  run<EVE_VALUE>(EVE_NAME(cotpi) , xp, eve::cotpi , arg0);
+  run<EVE_TYPE> (EVE_NAME(cotpi) , xp, eve::cotpi , arg0);
 
 }

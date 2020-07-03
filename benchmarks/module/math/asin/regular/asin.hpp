@@ -19,8 +19,8 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__asin = [](auto x){return std::asin(x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__asin) , xp, std__asin , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::asin) , xp, eve::asin , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::asin) , xp, eve::asin , arg0);
+  run<EVE_VALUE>(EVE_NAME(asin) , xp, eve::asin , arg0);
+  run<EVE_TYPE> (EVE_NAME(asin) , xp, eve::asin , arg0);
 }

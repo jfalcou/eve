@@ -24,8 +24,8 @@ int main()
 
   auto std__clamp =  [](EVE_VALUE x,  EVE_VALUE y,  EVE_VALUE z){return std::clamp(x, y, z); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__clamp) , xp, std__clamp, arg0, arg1, arg2);
-  run<EVE_VALUE>(EVE_NAME(eve::clamp) , xp, eve::clamp, arg0, arg1, arg2);
-  run<EVE_TYPE> (EVE_NAME(eve::clamp) , xp, eve::clamp, arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(clamp) , xp, eve::clamp, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(clamp) , xp, eve::clamp, arg0, arg1, arg2);
 }

@@ -23,8 +23,8 @@ int main()
 
   auto std__manhattan =  [](EVE_VALUE x, EVE_VALUE y){return EVE_VALUE(std::abs(x)+std::abs(y)); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__manhattan) , xp, std__manhattan, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::manhattan) , xp, eve::manhattan, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::manhattan) , xp, eve::manhattan, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(manhattan) , xp, eve::manhattan, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(manhattan) , xp, eve::manhattan, arg0, arg1);
 }

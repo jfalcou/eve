@@ -21,7 +21,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
-  run<EVE_VALUE>(EVE_NAME(eve::pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::maxmag)) , xp, eve::pedantic_(eve::maxmag), arg0, arg1);
 }

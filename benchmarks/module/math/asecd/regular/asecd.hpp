@@ -22,8 +22,8 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__asecd = [](auto x){return eve::radindeg(std::acos(1/x));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__asecd) , xp, std__asecd , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::asecd) , xp, eve::asecd , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::asecd) , xp, eve::asecd , arg0);
+  run<EVE_VALUE>(EVE_NAME(asecd) , xp, eve::asecd , arg0);
+  run<EVE_TYPE> (EVE_NAME(asecd) , xp, eve::asecd , arg0);
 }

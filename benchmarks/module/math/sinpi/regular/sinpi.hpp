@@ -22,9 +22,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__sinpi = [](auto x){return eve::radindeg(std::cos(x));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sinpi) , xp, std__sinpi , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::sinpi) , xp, eve::sinpi , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::sinpi) , xp, eve::sinpi , arg0);
+  run<EVE_VALUE>(EVE_NAME(sinpi) , xp, eve::sinpi , arg0);
+  run<EVE_TYPE> (EVE_NAME(sinpi) , xp, eve::sinpi , arg0);
 
 }

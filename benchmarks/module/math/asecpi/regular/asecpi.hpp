@@ -22,8 +22,8 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__asecpi = [](auto x){return eve::radinpi(std::asin(1/x));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__asecpi) , xp, std__asecpi , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::asecpi) , xp, eve::asecpi , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::asecpi) , xp, eve::asecpi , arg0);
+  run<EVE_VALUE>(EVE_NAME(asecpi) , xp, eve::asecpi , arg0);
+  run<EVE_TYPE> (EVE_NAME(asecpi) , xp, eve::asecpi , arg0);
 }

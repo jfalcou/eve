@@ -21,9 +21,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__exp10 = [](auto x){return std::exp(x*EVE_VALUE(2.30258509299405e+00));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__exp10) , xp, std__exp10 , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::exp10) , xp, eve::exp10 , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::exp10) , xp, eve::exp10 , arg0);
+  run<EVE_VALUE>(EVE_NAME(exp10) , xp, eve::exp10 , arg0);
+  run<EVE_TYPE> (EVE_NAME(exp10) , xp, eve::exp10 , arg0);
 
 }

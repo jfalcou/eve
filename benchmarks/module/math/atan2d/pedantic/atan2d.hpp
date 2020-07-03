@@ -23,9 +23,9 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__atan2d = [](auto x, auto y){return eve::radindeg(std::atan2(x, y));};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__atan2d) , xp, std__atan2d , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
 
 }

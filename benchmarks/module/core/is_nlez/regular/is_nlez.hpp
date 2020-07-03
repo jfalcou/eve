@@ -22,8 +22,8 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__is_nlez) , xp, std__is_nlez, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::is_nlez) , xp, eve::is_nlez, arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::is_nlez) , xp, eve::is_nlez, arg0);
+  run<EVE_VALUE> (EVE_NAME(is_nlez) , xp, eve::is_nlez, arg0);
+  run<EVE_TYPE>  (EVE_NAME(is_nlez) , xp, eve::is_nlez, arg0);
 }

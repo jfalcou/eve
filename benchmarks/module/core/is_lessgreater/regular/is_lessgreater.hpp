@@ -22,8 +22,8 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__is_lessgreater =  [](EVE_VALUE x,  EVE_VALUE y){return std::islessgreater(x, y); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__is_lessgreater) , xp, std__is_lessgreater, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::is_lessgreater) , xp, eve::is_lessgreater, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::is_lessgreater) , xp, eve::is_lessgreater, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(is_lessgreater) , xp, eve::is_lessgreater, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(is_lessgreater) , xp, eve::is_lessgreater, arg0, arg1);
 }

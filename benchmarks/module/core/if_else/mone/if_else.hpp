@@ -24,7 +24,7 @@ int main()
   auto std__if_else =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x ? y : EVE_VALUE(-1)); };
   auto eve__if_else =  [](auto x,  auto y){return eve::if_else(x, y, eve::mone_); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__if_else) , xp, std__if_else, arg0, arg1);
   run<EVE_VALUE>(EVE_NAME(eve__if_else) , xp, eve__if_else, arg0, arg1);
   run<EVE_TYPE> (EVE_NAME(eve__if_else) , xp, eve__if_else, arg0, arg1);

@@ -21,9 +21,9 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__sech = [](auto x){return 1/std::cosh(x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sech) , xp, std__sech , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::sech) , xp, eve::sech , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::sech) , xp, eve::sech , arg0);
+  run<EVE_VALUE>(EVE_NAME(sech) , xp, eve::sech , arg0);
+  run<EVE_TYPE> (EVE_NAME(sech) , xp, eve::sech , arg0);
 
 }

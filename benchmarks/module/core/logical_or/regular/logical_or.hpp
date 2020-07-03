@@ -22,7 +22,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   if constexpr(eve::integral_value<EVE_VALUE>)
   {
     auto std__logical_or =  [](auto x,  auto y){return EVE_VALUE(x||y); };
@@ -30,6 +30,6 @@ int main()
     run<EVE_VALUE>(EVE_NAME(std__logical_or) , xp, std__logical_or, arg0, arg1);
   }
 
-  run<EVE_VALUE>(EVE_NAME(eve::logical_or) , xp, eve::logical_or, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::logical_or) , xp, eve::logical_or, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(logical_or) , xp, eve::logical_or, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(logical_or) , xp, eve::logical_or, arg0, arg1);
 }

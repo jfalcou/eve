@@ -14,10 +14,12 @@
 #define ANKERL_NANOBENCH_IMPLEMENT
 #include <nanobench.h>
 
+#include <eve/function/load.hpp>
+#include <eve/function/store.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
-#include <numeric>
 #include <iostream>
+#include <numeric>
 #include <type_traits>
 
 // Turn a variadic macro calls into a string containing properly placed commas
@@ -56,28 +58,77 @@ namespace eve::bench
                                             , type_name_<T>::value().size()
                                             );
 
+  template<typename T0, typename... T> struct types
+  {
+    static std::string print()
+    {
+      std::string out = typename_<T0>;
+      ((out += ", " + typename_<T>),...);
+      return out;
+    }
+  };
+  template<typename T>    struct is_typelist              : std::false_type {};
+  template<typename... T> struct is_typelist<types<T...>> : std::true_type  {};
+
+  template<typename T, typename... N> struct replicate
+  {
+    template<typename I, typename O> using rep = I;
+    using type = types< rep<T,N>... >;
+  };
+
+  template<typename T>  struct split;
+
+  template<typename T>  requires( eve::scalar_value<T> )
+  struct split<T>
+  {
+    using type = T;
+  };
+
+  template<typename T>  requires( eve::simd_value<T> )
+  struct split<T>
+  {
+    using type = as_wide_t<T,typename cardinal_t<T>::split_type>;
+  };
+
+  template<typename... T> struct split<types<T...>>
+  {
+    using type = types< typename split<T>::type... >;
+  };
+
+  template<typename T> struct max_cardinal : eve::cardinal<T> {};
+
+  template<typename... T>
+  struct  max_cardinal<types<T...>>
+        : std::integral_constant<int, std::max({eve::cardinal_v<T>...})>
+  {
+  };
+
   template<typename Type, typename XP, typename Fun, typename... Gens>
   void run(std::string const& name, XP& xp, Fun f, Gens const&... gs)
   {
-    xp.run( name + "(" + ::eve::bench::typename_<Type> + ")"
-          , f, gs.template build<Type>()...
-          );
-
-    if constexpr( eve::cardinal_v<Type> != 1 )
+    if constexpr( is_typelist<Type>::value )
     {
-      using card_t = typename eve::cardinal_t<Type>::split_type;
-      run<eve::as_wide_t<Type,card_t>>(name, xp, f, gs... );
+      std::string desc = name + "(" + Type::print() +")";
+      xp.run( Type{}, desc, f, gs...);
+
+      if constexpr( max_cardinal<Type>::value != 1 )
+      {
+        run<typename split<Type>::type>(name, xp, f, gs... );
+      }
+    }
+    else
+    {
+      run<typename replicate<Type,Gens...>::type>(name,xp,f,gs...);
     }
   }
 
   struct experiment
   {
     ankerl::nanobench::Bench bench_;
-    std::size_t size_;
 
-    experiment(std::size_t size) : size_(size)
+    experiment()
     {
-      bench_.warmup(100).unit("element").performanceCounters(true).minEpochIterations(500);
+      bench_.warmup(1500).unit("element").performanceCounters(true).minEpochIterations(1500);
 
       std::cout << "[EVE] - Target: "<< AS_STRING(EVE_CURRENT_API) << " - Assertions: ";
 #ifdef NDEBUG
@@ -87,26 +138,50 @@ namespace eve::bench
 #endif
     }
 
-    template<typename Fun, typename... Args>
-    void run(std::string const& root, Fun fun, Args const&... args)
+    template<typename... Types, typename Fun, typename... Args>
+    void run(types<Types...> const&, std::string const& root, Fun fun, Args const&... args)
     {
-      using b_t   = decltype( std::declval<Fun>()(std::declval<typename Args::value_type>()...) );
+      using b_t   = decltype( std::declval<Fun>()(std::declval<Types>()...) );
       using out_t = std::conditional_t< std::is_same_v<b_t,bool>, int, b_t>;
 
-      std::vector<out_t> output(size_);
+      constexpr auto card_out = eve::cardinal_v<out_t>;
+      constexpr auto size = optimal_size<eve::element_type_t<out_t>>;
+      std::vector<eve::element_type_t<out_t>> output(size);
 
-      bench_.batch(size_ * eve::cardinal_v<out_t>);
+      bench_.batch(size);
+
+      constexpr std::array<std::ptrdiff_t,sizeof...(Args)> cards  = { eve::cardinal_v<Types>... };
+
+      auto loader = []<typename Tgt>(auto* ptr, as_<Tgt> const& target)
+      {
+        if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned<alignof(Tgt)>(ptr) );
+        else                            return *ptr;
+      };
+
       bench_.run( root
                 , [&]()
                   {
-                    for(std::size_t i=0;i<size_;i++)
-                      output[i] = fun( args[i]...);
-                    ankerl::nanobench::doNotOptimizeAway(output);
+                    std::tuple<eve::element_type_t<Types> const*...> ptrs = { args.data()... };
+
+                    for(std::size_t i=0;i<size;i+=card_out)
+                    {
+                      auto result = [&]<std::size_t... N>(std::index_sequence<N...> const&)
+                      {
+                        return fun( loader(std::get<N>(ptrs), eve::as_<Types>{})... );
+                      }( std::index_sequence_for<Types...>{} );
+
+                      eve::store( result, &output[i]);
+
+                      [&]<std::size_t... N>(std::index_sequence<N...> const&)
+                      {
+                        ((std::get<N>(ptrs) += cards[N]),...);
+                      }( std::index_sequence_for<Types...>{} );
+
+                      ankerl::nanobench::doNotOptimizeAway(result);
+                    }
                   }
                 );
     }
-
-    private:
   };
 }
 

@@ -23,8 +23,8 @@ int main()
 
   auto std__div =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x+y); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__div) , xp, std__div, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::div) , xp, eve::div, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::div) , xp, eve::div, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(div) , xp, eve::div, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(div) , xp, eve::div, arg0, arg1);
 }

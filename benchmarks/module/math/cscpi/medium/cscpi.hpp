@@ -21,8 +21,8 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
-  run<EVE_VALUE>(EVE_NAME(eve::medium_(eve::cscpi)) , xp, eve::medium_(eve::cscpi) , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::medium_(eve::cscpi)) , xp, eve::medium_(eve::cscpi) , arg0);
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(medium_(eve::cscpi)) , xp, eve::medium_(eve::cscpi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium_(eve::cscpi)) , xp, eve::medium_(eve::cscpi) , arg0);
 
 }

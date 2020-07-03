@@ -23,8 +23,8 @@ int main()
 
   auto std__hypot =  [](EVE_VALUE x, EVE_VALUE y){return EVE_VALUE(std::hypot(x, y)); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__hypot) , xp, std__hypot, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::hypot) , xp, eve::hypot, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::hypot) , xp, eve::hypot, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(hypot) , xp, eve::hypot, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(hypot) , xp, eve::hypot, arg0, arg1);
 }

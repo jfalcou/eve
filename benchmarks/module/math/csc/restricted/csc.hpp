@@ -19,8 +19,8 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__csc = [](auto x){return 1/std::sin(x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__csc) , xp, std__csc , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::restricted_(eve::csc)) , xp, eve::restricted_(eve::csc) , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::restricted_(eve::csc)) , xp, eve::restricted_(eve::csc) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted_(eve::csc)) , xp, eve::restricted_(eve::csc) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted_(eve::csc)) , xp, eve::restricted_(eve::csc) , arg0);
 }

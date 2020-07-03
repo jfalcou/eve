@@ -21,9 +21,9 @@ int main()
   auto std__acosd = [](auto x){return eve::radindeg( std::acos(x));};
 
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acosd) , xp, std__acosd , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(raw_(eve::acosd)) , xp, eve::raw_(eve::acosd) , arg0);
 
 }

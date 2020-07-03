@@ -24,7 +24,7 @@ namespace eve::bench
   inline std::mt19937 pRNG = {};
 
   template<typename T> using alloc = eve::aligned_allocator<T,eve::limits<EVE_CURRENT_API>::bytes>;
-  template<typename T> inline const auto optimal_size = 128*1024 / sizeof(T);
+  template<typename T> inline const auto optimal_size = 92*1024/sizeof(T);
 
   // -------------------------------------------------------------------------------------------------
   // Helpers over begin/end
@@ -42,47 +42,19 @@ namespace eve::bench
 
   // -------------------------------------------------------------------------------------------------
   // Generators
-  template <typename T> struct value_
+  template <typename U, typename T> auto value_(T const& val)
   {
-    value_(T const& val) : v_(val) {}
+    return std::vector<U,alloc<U>>(optimal_size<U>, static_cast<U>(val));
+  }
 
-    template <typename U> auto build() const
-    {
-      return std::vector<U,alloc<U>>(optimal_size<U>, static_cast<U>(v_));
-    }
-
-    T v_;
-  };
-
-  template <typename T>
-  struct random_
+  template <typename U, typename T> auto random_(T mn, T mx)
   {
-    template <typename U> random_(U mn, U mx) : vmn_(mn), vmx_(mx) {}
+    std::vector<U,alloc<U>>                 data(optimal_size<U>);
+    std::uniform_real_distribution<double>  dist(mn,mx);
+    std::generate(data.begin(), data.end(), [&]() { return static_cast<U>( dist(pRNG) ); });
 
-    template <typename U> auto build() const
-    {
-      std::vector<U,alloc<U>> data(optimal_size<U>);
-      std::uniform_real_distribution<double> dist(vmn_,vmx_);
-
-      std::generate ( data.begin(), data.end()
-                    , [&]()
-                      {
-                        U that{};
-                        std::generate ( bench::begin(that), bench::end(that)
-                                      , [&]()
-                                        {
-                                          return static_cast<eve::element_type_t<U>>( dist(pRNG) );
-                                        }
-                                      );
-                        return that;
-                      }
-                    );
-
-      return data;
-    }
-
-    T vmn_, vmx_;
-  };
+    return data;
+  }
 }
 
 #endif

@@ -21,8 +21,8 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__acotd = [](auto x){return std::atan(1/x);};
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acotd) , xp, std__acotd , arg0);
-  run<EVE_VALUE>(EVE_NAME(eve::acotd) , xp, eve::acotd , arg0);
-  run<EVE_TYPE> (EVE_NAME(eve::acotd) , xp, eve::acotd , arg0);
+  run<EVE_VALUE>(EVE_NAME(acotd) , xp, eve::acotd , arg0);
+  run<EVE_TYPE> (EVE_NAME(acotd) , xp, eve::acotd , arg0);
 }

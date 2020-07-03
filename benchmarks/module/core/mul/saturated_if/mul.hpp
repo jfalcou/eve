@@ -23,10 +23,10 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
-//   run<EVE_VALUE>(EVE_NAME(eve::saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg0, arg1, arg2);
-//   run<EVE_TYPE> (EVE_NAME(eve::saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg0, arg1, arg2);
-//   run<EVE_VALUE>(EVE_NAME(eve::saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg00, arg1, arg2);
-//   run<EVE_TYPE> (EVE_NAME(eve::saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg00, arg1, arg2);
+  eve::bench::experiment xp;
+//   run<EVE_VALUE>(EVE_NAME(saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg0, arg1, arg2);
+//   run<EVE_TYPE> (EVE_NAME(saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg0, arg1, arg2);
+//   run<EVE_VALUE>(EVE_NAME(saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg00, arg1, arg2);
+//   run<EVE_TYPE> (EVE_NAME(saturated_(eve::mul)) , xp, eve::saturated_(eve::mul), arg00, arg1, arg2);
 
 }

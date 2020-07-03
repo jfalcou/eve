@@ -23,8 +23,8 @@ int main()
 
   auto std__average =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(std::midpoint(x, y)); };
 
-  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__average) , xp, std__average, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(eve::average) , xp, eve::average, arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(eve::average) , xp, eve::average, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(average) , xp, eve::average, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(average) , xp, eve::average, arg0, arg1);
 }
