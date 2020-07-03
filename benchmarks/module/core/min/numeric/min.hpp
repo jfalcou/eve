@@ -10,16 +10,20 @@
 //==================================================================================================
 #include <eve/function/min.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/valmin.hpp>
-#include <cmath>
+#include <eve/constant/valmax.hpp>
+#include <numeric>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::numeric_(eve::min), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__min =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(std::min(x, y)); };
+
+  eve::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  run<EVE_VALUE>(EVE_NAME(std__min) , xp, std__min, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(eve::numeric_(eve::min)) , xp, eve::numeric_(eve::min), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(eve::numeric_(eve::min)) , xp, eve::numeric_(eve::min), arg0, arg1);
 }
