@@ -152,7 +152,7 @@ namespace eve::bench
 
       constexpr std::array<std::ptrdiff_t,sizeof...(Args)> cards  = { eve::cardinal_v<Types>... };
 
-      auto loader = []<typename Tgt>(auto* ptr, as_<Tgt> const& target)
+      auto loader = []<typename Tgt>(auto* ptr, as_<Tgt> const& )
       {
         if constexpr( simd_value<Tgt> ) return Tgt( eve::as_aligned<alignof(Tgt)>(ptr) );
         else                            return *ptr;

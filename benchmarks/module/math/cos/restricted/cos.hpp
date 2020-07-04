@@ -16,7 +16,7 @@ int main()
   auto lmax = eve::Pio_4<EVE_VALUE>();
   auto lmin = -lmax;
 
-  auto arg0 = eve::bench::random_<EVE_VALUE>(-0.5,+0.5);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin, lmax);
   auto std__cos = [](auto x){return std::cos(x);};
 
   eve::bench::experiment xp;

@@ -15,11 +15,13 @@
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::saturated_(eve::rem), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(saturated_(eve::rem)) , xp, eve::saturated_(eve::rem), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(saturated_(eve::rem)) , xp, eve::saturated_(eve::rem), arg0, arg1);
 }

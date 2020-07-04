@@ -9,15 +9,24 @@
 **/
 //==================================================================================================
 #include <eve/function/sub.hpp>
-#include <eve/constant/true.hpp>
-#include <cmath>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 
 int main()
 {
-  using I_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::sub, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  using L_VALUE = eve::logical<EVE_VALUE>;
+
+  auto arg00 = eve::bench::random_<EVE_VALUE>(0, 1);
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(sub) , xp, eve::sub, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(sub) , xp, eve::sub, arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(sub) , xp, eve::sub, arg00, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(sub) , xp, eve::sub, arg00, arg1, arg2);
 
 }

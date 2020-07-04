@@ -9,6 +9,8 @@
 **/
 //==================================================================================================
 #include <eve/function/div.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -16,10 +18,13 @@
 int main()
 {
   auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmax = [](){
+    if constexpr(eve::floating_value<EVE_VALUE>) return eve::Oneotwoeps<EVE_VALUE>();
+    else return eve::Valmax<EVE_VALUE>();
+  }();
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(EVE_VALUE(1),lmax);
 
   auto std__div =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x+y); };
 

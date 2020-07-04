@@ -9,16 +9,26 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::rsqrt, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmax = [](){
+    if constexpr(eve::floating_value<EVE_VALUE>) return eve::Oneotwoeps<EVE_VALUE>();
+    else return eve::Valmax<EVE_VALUE>();
+  }();
+  auto lmin = EVE_VALUE(0);
 
+  auto const std__rsqrt = [](EVE_VALUE x) { return EVE_VALUE(1/std::sqrt(x)); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__rsqrt) , xp, std__rsqrt, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::rsqrt) , xp, eve::rsqrt, arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::rsqrt) , xp, eve::rsqrt, arg0);
 }

@@ -9,12 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/sub.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::saturated_(eve::sub), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(-1.,1.)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(saturated_(eve::sub)) , xp, eve::saturated_(eve::sub), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(saturated_(eve::sub)) , xp, eve::saturated_(eve::sub), arg0, arg1);
 }
