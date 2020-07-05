@@ -18,13 +18,13 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__oneminus = [](EVE_VALUE x) { return EVE_VALUE(1-x); };
+  auto std__oneminus = [](EVE_VALUE e) { return e <= eve::Valmin<EVE_VALUE>()+1 ? eve::Valmax<EVE_VALUE>() : EVE_VALUE(1-e); };
 
-  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,eve);
-  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,eve);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  lmax::bench::experiment xp( eve::bench::optimal_size<EVE_TYPE> );
+  eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__oneminus) , xp, std__oneminus, arg0);
-  run<EVE_VALUE> (EVE_NAME(saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus)), arg0, arg1);
-  run<EVE_TYPE>  (EVE_NAME(saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus)), arg0, arg1);
+  run<EVE_VALUE> (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus), arg0);
 }

@@ -25,7 +25,7 @@ int main()
   eve::bench::experiment xp;
   if constexpr(eve::integral_value<EVE_VALUE>)
   {
-    auto std__logical_andnot =  [](auto x,  auto y){return EVE_VALUE(x&|!y); };
+    auto std__logical_andnot =  [](auto x,  auto y){return EVE_VALUE(x|!y); };
 
     run<EVE_VALUE>(EVE_NAME(std__logical_andnot) , xp, std__logical_andnot, arg0, arg1);
   }

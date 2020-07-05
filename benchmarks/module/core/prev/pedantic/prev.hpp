@@ -8,7 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/shl.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
@@ -23,15 +23,13 @@ int main()
   auto smin = I_VALUE(0);
   auto smax = I_VALUE(sizeof(EVE_VALUE)-1);
 
-  auto std__shl =  [](EVE_VALUE x,  I_VALUE y){return EVE_VALUE(x << y); };
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<I_VALUE>(smin,smax);
 
   eve::bench::experiment xp;
-  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(std__shl) , xp, std__shl, arg0, arg1);
-  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(shl) , xp, eve::shl, arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(shl) , xp, eve::shl, arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(shl) , xp, eve::shl, arg0, arg1);
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(eve::pedantic_(eve::prev)) , xp, eve::pedantic_(eve::prev), arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(eve::pedantic_(eve::prev)) , xp, eve::pedantic_(eve::prev), arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(eve::pedantic_(eve::prev)) , xp, eve::pedantic_(eve::prev), arg0, arg1);
 
 
 }

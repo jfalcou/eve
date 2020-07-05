@@ -18,7 +18,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_pow2 = [](EVE_VALUE x) { return std::hasonebitset; };
+  auto const std__is_pow2 = [](EVE_VALUE x) { return std::has_single_bit(x); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
