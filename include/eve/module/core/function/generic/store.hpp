@@ -19,7 +19,7 @@ namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
   // scalar Regular case
-  template<real_scalar_value T>
+  template<scalar_value T>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, T *ptr) noexcept
   {
     *ptr = value;
@@ -27,7 +27,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // scalar Aligned case
-  template<real_scalar_value T, std::size_t N>
+  template<scalar_value T, std::size_t N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(cpu_), T value, aligned_ptr<T, N> ptr) noexcept
   {
     *ptr = value;
@@ -97,4 +97,3 @@ namespace eve::detail
     store(raw_data, (T *)(ptr.get()));
   }
 }
-

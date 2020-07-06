@@ -15,7 +15,6 @@
 #include <nanobench.h>
 
 #include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
 #include <iostream>
@@ -144,9 +143,9 @@ namespace eve::bench
       using b_t   = decltype( std::declval<Fun>()(std::declval<Types>()...) );
       using out_t = std::conditional_t< std::is_same_v<b_t,bool>, int, b_t>;
 
-      constexpr auto card_out = eve::cardinal_v<out_t>;
-      constexpr auto size = optimal_size<eve::element_type_t<out_t>>;
-      std::vector<eve::element_type_t<out_t>> output(size);
+       constexpr auto card_out = eve::cardinal_v<out_t>;
+       constexpr auto size = optimal_size<eve::element_type_t<out_t>>;
+//      std::vector<eve::element_type_t<out_t>> output(size);
 
       bench_.batch(size);
 
@@ -169,8 +168,6 @@ namespace eve::bench
                       {
                         return fun( loader(std::get<N>(ptrs), eve::as_<Types>{})... );
                       }( std::index_sequence_for<Types...>{} );
-
-                      eve::store( result, &output[i]);
 
                       [&]<std::size_t... N>(std::index_sequence<N...> const&)
                       {

@@ -11,6 +11,7 @@
 #ifndef BENCHMARKS_GENERATORS_HPP
 #define BENCHMARKS_GENERATORS_HPP
 
+#include <eve/logical.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/arch.hpp>
@@ -55,6 +56,21 @@ namespace eve::bench
 
     return data;
   }
+
+  template <typename U> auto bernoulli_()
+  {
+    std::vector<eve::logical<U>,alloc<eve::logical<U>>>   data(optimal_size<U>);
+    std::bernoulli_distribution dist;
+    std::generate ( data.begin(), data.end()
+                  , [&]()
+                  {
+                    return static_cast<eve::logical<U>>( dist(pRNG) );
+                  }
+                  );
+    return data;
+  }
+
+
 }
 
 #endif
