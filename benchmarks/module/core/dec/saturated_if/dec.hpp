@@ -15,15 +15,17 @@
 
 int main()
 {
-// TODO
-//   auto lmin = eve::Valmin<EVE_VALUE>();
-//   auto lmax = eve::Valmax<EVE_VALUE>();
-//   using L_VALUE = eve::logical<EVE_VALUE>;
-//   auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
-//   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-//   eve::bench::experiment xp;
-//   run<EVE_VALUE> (EVE_NAME(saturated_(eve::dec)) , xp, eve::saturated_(eve::dec), arg0, arg1);
-//   run<EVE_TYPE>  (EVE_NAME(saturated_(eve::dec)) , xp, eve::saturated_(eve::dec), arg0, arg1);
+  auto eve__dec =  [](auto x,  auto y){ return eve::saturated_(eve::dec[x])(y); };
+  eve::bench::experiment xp;
+  run<eve::bench::types<L_VALUE, EVE_VALUE>> (EVE_NAME(eve__dec) , xp, eve__dec, arg0, arg1);
+  run<eve::bench::types<L_TYPE, EVE_TYPE>>  (EVE_NAME(eve__dec) , xp, eve__dec, arg0, arg1);
+
 
 }

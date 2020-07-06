@@ -18,11 +18,12 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
   using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
   auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE> (EVE_NAME(dec) , xp, eve::dec, arg0, arg1);
-  run<EVE_TYPE>  (EVE_NAME(dec) , xp, eve::dec, arg0, arg1);
+  run<eve::bench::types<L_VALUE, EVE_VALUE>> (EVE_NAME(dec) , xp, eve::dec, arg0, arg1);
+  run<eve::bench::types<L_TYPE, EVE_TYPE>>  (EVE_NAME(dec) , xp, eve::dec, arg0, arg1);
 
 }
