@@ -18,7 +18,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_negative = [](EVE_VALUE x) { return std::signbit(x) == 1; };
+  auto const std__is_negative = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return std::signbit(x) == 1; };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

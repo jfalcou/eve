@@ -20,7 +20,7 @@ int main()
   using L_VALUE = eve::logical<EVE_VALUE>; 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__is_ordered =  [](EVE_VALUE x,  EVE_VALUE y){return L_VALUE(!std::isunordered(x, y)); };
+  auto std__is_ordered =  [](EVE_VALUE x,  EVE_VALUE y) -> eve::logical<EVE_VALUE> {return L_VALUE(!std::isunordered(x, y)); };
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__is_ordered) , xp, std__is_ordered, arg0, arg1);

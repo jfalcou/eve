@@ -21,7 +21,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  auto std__dist =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(std::midpoint(x, y)); };
+  auto std__dist =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(std::max(x, y)-std::min(x, y)); };
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__dist) , xp, std__dist, arg0, arg1);

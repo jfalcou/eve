@@ -9,18 +9,24 @@
 **/
 //==================================================================================================
 #include <eve/function/extract.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmax<EVE_VALUE>();
-  auto lmax = eve::Valmin<EVE_VALUE>();
-  int N = eve::cardinal_v<EVE_TYPE>;
-   EVE_REGISTER_BENCHMARK(eve::extract, EVE_TYPE
-                         , eve::bench::random<EVE_TYPE>(lmin, lmax)
-                         , eve::bench::random<int>(0, N));
+  using I_VALUE  = eve::detail::as_integer_t<EVE_VALUE>;
+  using I_TYPE   = eve::detail::as_integer_t<EVE_TYPE>;
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto smin = I_VALUE(0);
+  auto smax = I_VALUE(sizeof(EVE_VALUE)-1);
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<I_VALUE>(smin,smax);
+
+  eve::bench::experiment xp;
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(extract) , xp, eve::extract, arg0, arg1);
+
 
 }

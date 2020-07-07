@@ -18,7 +18,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_odd = [](EVE_VALUE x) {
+  auto const std__is_odd = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  {
     if constexpr(std::is_integral_v<EVE_TYPE>)
     {
       return  (static_cast<int>(x)&1);

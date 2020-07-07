@@ -18,7 +18,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_not_real = [](EVE_VALUE x) { return false; };
+  auto const std__is_not_real = [](EVE_VALUE ) -> eve::logical<EVE_VALUE>  { return false; };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

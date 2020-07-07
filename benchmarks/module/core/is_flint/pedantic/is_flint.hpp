@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/is_flint.hpp>
+#include <eve/function/abs.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/maxflint.hpp>
@@ -19,7 +20,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_flint = [](EVE_VALUE x) { return std::abs(x) < eve::Maxflint<EVE_TYPE>() && !(x-std::trunc(x)); };
+  auto const std__is_flint = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return (eve::abs(x) < eve::Maxflint<EVE_VALUE>()) && !(x-std::trunc(x)); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

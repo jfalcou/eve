@@ -18,7 +18,7 @@ int main()
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
 
-  auto const std__is_normal = [](EVE_VALUE x) { return std::fpclassify(x) ==  FP_NORMAL; };
+  auto const std__is_normal = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return std::fpclassify(x) ==  FP_NORMAL; };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

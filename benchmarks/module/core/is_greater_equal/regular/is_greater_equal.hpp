@@ -20,7 +20,7 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__is_greater_equal =  [](EVE_VALUE x,  EVE_VALUE y){return (x >=  y); };
+  auto std__is_greater_equal =  [](EVE_VALUE x,  EVE_VALUE y) -> eve::logical<EVE_VALUE> {return (x >=  y); };
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__is_greater_equal) , xp, std__is_greater_equal, arg0, arg1);

@@ -9,10 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/plus.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::plus, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto const std__plus = [](EVE_VALUE x) { return EVE_VALUE(-x); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__plus) , xp, std__plus, arg0);
+  run<EVE_VALUE> (EVE_NAME(plus) , xp, eve::plus, arg0);
+  run<EVE_TYPE>  (EVE_NAME(plus) , xp, eve::plus, arg0);
 }

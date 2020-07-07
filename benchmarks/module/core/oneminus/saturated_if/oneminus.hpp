@@ -17,14 +17,14 @@ int main()
 {
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
 
-  auto const std__oneminus = [](EVE_VALUE x, EVE_VALUE y) { return x ? EVE_VALUE(1-y):y; };
-
-  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto const eve__oneminus = [](  L_VALUE x, EVE_VALUE y) { return eve::saturated_(eve::oneminus[x])(y);};
+  auto arg0 = eve::bench::bernoulli_<EVE_VALUE>();
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE> (EVE_NAME(std__oneminus) , xp, std__oneminus, arg0, arg1);
-  run<EVE_VALUE> (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus), arg0, arg1);
-  run<EVE_TYPE>  (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve::saturated_(eve::oneminus), arg0, arg1);
+  run<eve::bench::types<L_VALUE, EVE_VALUE>>(EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus, arg0, arg1);
+  run<eve::bench::types<L_TYPE, EVE_TYPE>> (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus, arg0, arg1);
 }

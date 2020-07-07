@@ -9,16 +9,28 @@
 **/
 //==================================================================================================
 #include <eve/function/bit_select.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/concept/value.hpp>
 #include <cmath>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::bit_select, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(),eve::Valmax<EVE_VALUE>())
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(),eve::Valmax<EVE_VALUE>())
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(),eve::Valmax<EVE_VALUE>()));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  if constexpr(eve::integral_value<EVE_VALUE>)
+  {
+    auto std__bit_select =  [](auto x,  auto y, auto z){return EVE_VALUE((x&y) | (~x&z)); };
+
+    run<EVE_VALUE>(EVE_NAME(std__bit_select) , xp, std__bit_select, arg0, arg1, arg2);
+  }
+
+  run<EVE_VALUE>(EVE_NAME(bit_select) , xp, eve::bit_select, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(bit_select) , xp, eve::bit_select, arg0, arg1, arg2);
 }
