@@ -21,10 +21,12 @@ int main()
   using L_TYPE = eve::logical<EVE_TYPE>;
 
   auto const eve__oneminus = [](  L_VALUE x, EVE_VALUE y) { return eve::saturated_(eve::oneminus[x])(y);};
+  auto const eve__oneminus1= [](  L_TYPE  x, EVE_TYPE  y) -> EVE_TYPE { return eve::saturated_(eve::oneminus[x])(y);};
   auto arg0 = eve::bench::bernoulli_<EVE_VALUE>();
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
   run<eve::bench::types<L_VALUE, EVE_VALUE>>(EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus, arg0, arg1);
-  run<eve::bench::types<L_TYPE, EVE_TYPE>> (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus, arg0, arg1);
+//  run<eve::bench::types<L_VALUE, EVE_TYPE >>(EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus, arg0, arg1);
+  run<eve::bench::types<L_TYPE, EVE_TYPE>> (EVE_NAME(eve::saturated_(eve::oneminus)) , xp, eve__oneminus1, arg0, arg1);
 }
