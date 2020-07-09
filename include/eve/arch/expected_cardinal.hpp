@@ -12,6 +12,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/arch/cardinals.hpp>
 #include <eve/concept/rebindable.hpp>
 #include <type_traits>
 #include <cstddef>
@@ -20,30 +21,6 @@
 
 namespace eve
 {
-  template<std::ptrdiff_t Cardinal>
-  struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
-  {
-    static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || (!(v & (v - 1)) && v); }
-    static_assert(is_pow2(Cardinal), "Cardinal must be a power of 2");
-
-    static constexpr bool is_default = false;
-    using split_type                 = fixed<Cardinal / 2>;
-    using combined_type              = fixed<Cardinal * 2>;
-  };
-
-  template<>
-  struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
-  {
-    static constexpr bool is_default = false;
-    using combined_type              = fixed<2>;
-  };
-
-  struct scalar_cardinal : std::integral_constant<std::ptrdiff_t, 1ULL>
-  {
-    static constexpr bool is_default = false;
-    using combined_type              = fixed<2>;
-  };
-
   template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
   struct expected_cardinal
       : fixed<ABI::template expected_cardinal<Type>>
@@ -88,5 +65,11 @@ namespace eve
 
   template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
   constexpr inline auto expected_cardinal_v = expected_cardinal<Type, ABI>::value;
+
+  //================================================================================================
+  // Cardinal template inline object for passing cardinal values to functions like load/store
+  //================================================================================================
+  template<typename Type, typename API = EVE_CURRENT_API>
+  inline constexpr expected_cardinal<Type,API> const expected = {};
 }
 

@@ -49,8 +49,14 @@ TTS_CASE_TPL( "Check ctor from unaligned pointer for wide", EVE_TYPE )
   logical<T> constructed(ref_ptr);
   TTS_EQUAL(constructed, ref);
 
-  logical<T> loaded = eve::load(ref_ptr, eve::as_<logical<T>>());
+  logical<T> loaded = eve::load(ref_ptr);
   TTS_EQUAL(loaded, ref);
+
+  logical<T> loaded_lane = eve::load(ref_ptr, eve::lane<EVE_CARDINAL>);
+  TTS_EQUAL(loaded_lane, ref);
+
+  logical<EVE_VALUE> loaded_single = eve::load(ref_ptr, eve::scalar);
+  TTS_EQUAL(loaded_single, data[idx]);
 }
 
 TTS_CASE_TPL( "Check ctor from const unaligned pointer for wide", EVE_TYPE )
@@ -65,8 +71,14 @@ TTS_CASE_TPL( "Check ctor from const unaligned pointer for wide", EVE_TYPE )
   logical<T> constructed(ref_ptr);
   TTS_EQUAL( constructed, ref );
 
-  logical<T> loaded = eve::load(ref_ptr, eve::as_<logical<T>>());
+  logical<T> loaded = eve::load(ref_ptr);
   TTS_EQUAL(loaded, ref);
+
+  logical<T> loaded_lane = eve::load(ref_ptr, eve::lane<EVE_CARDINAL>);
+  TTS_EQUAL(loaded_lane, ref);
+
+  logical<EVE_VALUE> loaded_single = eve::load(ref_ptr, eve::scalar);
+  TTS_EQUAL(loaded_single, data[idx]);
 }
 
 TTS_CASE_TPL( "Check ctor from aligned pointer for wide", EVE_TYPE )
@@ -83,8 +95,14 @@ TTS_CASE_TPL( "Check ctor from aligned pointer for wide", EVE_TYPE )
   logical<T> constructed(eve::as_aligned<algt>(ref_ptr));
   TTS_EQUAL( constructed, ref );
 
-  logical<T> loaded = eve::load(eve::as_aligned<algt>(ref_ptr), eve::as_<logical<T>>());
+  logical<T> loaded = eve::load(eve::as_aligned<algt>(ref_ptr));
   TTS_EQUAL(loaded, ref);
+
+  logical<T> loaded_lane = eve::load(eve::as_aligned<algt>(ref_ptr), eve::lane<EVE_CARDINAL>);
+  TTS_EQUAL(loaded_lane, ref);
+
+  logical<EVE_VALUE> loaded_single = eve::load(eve::as_aligned<algt>(ref_ptr), eve::scalar);
+  TTS_EQUAL(loaded_single, data[idx]);
 }
 
 TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE)
@@ -101,8 +119,14 @@ TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE)
   logical<T> constructed(eve::as_aligned<algt>(ref_ptr));
   TTS_EQUAL( constructed, ref );
 
-  logical<T> loaded = eve::load(eve::as_aligned<algt>(ref_ptr), eve::as_<logical<T>>());
+  logical<T> loaded = eve::load(eve::as_aligned<algt>(ref_ptr));
   TTS_EQUAL(loaded, ref);
+
+  logical<T> loaded_lane = eve::load(eve::as_aligned<algt>(ref_ptr), eve::lane<EVE_CARDINAL>);
+  TTS_EQUAL(loaded_lane, ref);
+
+  logical<EVE_VALUE> loaded_single = eve::load(eve::as_aligned<algt>(ref_ptr), eve::scalar);
+  TTS_EQUAL(loaded_single, data[idx]);
 }
 
 TTS_CASE_TPL( "Check ctor from range for wide", EVE_TYPE )

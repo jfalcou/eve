@@ -10,6 +10,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/memory/is_aligned.hpp>
+#include <eve/traits/element_type.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/memory/is_aligned.hpp>
 #include <eve/traits/alignment.hpp>
@@ -170,6 +172,9 @@ namespace eve
   private:
     pointer pointer_;
   };
+
+  template<typename T, std::size_t A> struct element_type<aligned_ptr<T,A>> { using type = T; };
+  template<typename T>                struct element_type<aligned_ptr<T>>   { using type = T; };
 
   template<typename T1, std::size_t A1, typename T2, std::size_t A2>
   bool operator==(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
