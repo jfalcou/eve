@@ -9,15 +9,28 @@
 **/
 //==================================================================================================
 #include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/wide.hpp>
+#include <eve/constant/zero.hpp>
+
+
+// auto eve__horn = []<typename T>(T z) -> T{
+//   return eve::detail::horn<T/*,
+//                                      i_t(0x403c896240f3081dll),
+//                                      i_t(0xc03991aaac01ab68ll),
+//                                      i_t(0x401bdff5baf33e6all),
+//                                      i_t(0xbfe2079259f9290fll),
+//                                      i_t(0x3f684fc3988e9f08ll)*/
+//   >(z);
+// };
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
-    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
-    auto eve__horn = [](auto z){
-      return eve::detail::horn<EVE_TYPE,
+   using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+    auto eve__horn = []<typename T>(T z) -> T{
+      return eve::detail::horn<T,
       i_t(0x403c896240f3081dll),
       i_t(0xc03991aaac01ab68ll),
       i_t(0x401bdff5baf33e6all),
@@ -34,9 +47,9 @@ int main()
   }
   else if constexpr(std::is_same_v<EVE_VALUE, float>)
   {
-    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
-    auto eve__horn = [](auto z){
-      return eve::detail::horn<EVE_TYPE,
+     using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+    auto eve__horn = []<typename T>(T z) -> T{
+      return eve::detail::horn<T,
       i_t(0x3e2aaae4u),
       i_t(0x3d9980f6u),
       i_t(0x3d3a3ec7u),
