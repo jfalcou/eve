@@ -143,9 +143,9 @@ namespace eve::bench
       using b_t   = decltype( std::declval<Fun>()(std::declval<Types>()...) );
       using out_t = std::conditional_t< std::is_same_v<b_t,bool>, int, b_t>;
 
-       constexpr auto card_out = eve::cardinal_v<out_t>;
-       constexpr auto size = optimal_size<eve::element_type_t<out_t>>;
-//      std::vector<eve::element_type_t<out_t>> output(size);
+      constexpr auto card_out = eve::cardinal_v<out_t>;
+      constexpr auto card_in  = std::max( {card_out, eve::cardinal_v<Types>...} );
+      constexpr auto size     = optimal_size<eve::element_type_t<out_t>>;
 
       bench_.batch(size);
 
@@ -162,7 +162,7 @@ namespace eve::bench
                   {
                     std::tuple<eve::element_type_t<Types> const*...> ptrs = { args.data()... };
 
-                    for(std::size_t i=0;i<size;i+=card_out)
+                    for(std::size_t i=0;i<size;i+=card_in)
                     {
                       auto result = [&]<std::size_t... N>(std::index_sequence<N...> const&)
                       {
