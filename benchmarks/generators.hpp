@@ -28,20 +28,6 @@ namespace eve::bench
   template<typename T> inline const auto optimal_size = 92*1024/sizeof(T);
 
   // -------------------------------------------------------------------------------------------------
-  // Helpers over begin/end
-  template<typename C> inline decltype(auto) begin(C&& c)
-  {
-    if constexpr( requires{ c.begin(); } )  return std::forward<C>(c).begin();
-    else                                    return &c;
-  }
-
-  template<typename C> inline auto end(C&& c)
-  {
-    if constexpr( requires{ c.end(); } )  return std::forward<C>(c).end();
-    else                                  return (&c) + 1;
-  }
-
-  // -------------------------------------------------------------------------------------------------
   // Generators
   template <typename U, typename T> auto value_(T const& val)
   {
