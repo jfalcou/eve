@@ -28,6 +28,7 @@ namespace eve::detail
                                             wide<U, N, sse_> const &v1,
                                             wide<U, N, sse_> const &v2) noexcept
   {
+    std::cout << "if_else x86 logical sse4.1" << std::endl;
     return if_else(bit_cast(v0.bits(),as(v2)), v1, v2);
   }
 
@@ -37,6 +38,7 @@ namespace eve::detail
                                             wide<U, N, sse_> const &v1,
                                             wide<U, N, sse_> const &v2) noexcept
   {
+    std::cout << "if_else x86 arith sse4.1" << std::endl;
     if constexpr(std::is_same_v<U, float>)        return _mm_blendv_ps(v2, v1, bit_cast(bit_mask(v0),as(v2)));
     else if constexpr(std::is_same_v<U, double>)  return _mm_blendv_pd(v2, v1, bit_cast(bit_mask(v0),as(v2)));
     else                                          return _mm_blendv_epi8(v2, v1, bit_cast(bit_mask(v0),as(v2)));
@@ -48,6 +50,7 @@ namespace eve::detail
                                 logical<wide<U, N, sse_>> const &v1,
                                 logical<wide<U, N, sse_>> const &v2) noexcept
   {
+    std::cout << "if_else x86 lllogical sse4.1" << std::endl;
     return bit_cast(if_else(v0.mask(), v1.mask(), v2.mask()), as(v2));
   }
 
@@ -57,7 +60,8 @@ namespace eve::detail
                                             logical<wide<U, N, sse_>> const &v1,
                                             logical<wide<U, N, sse_>> const &v2) noexcept
   {
-    return bit_cast(if_else(v0, v1, v2), as(v2));;
+    std::cout << "if_else x86 lllogical sse4.1" << std::endl;
+    return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v2));;
   }
 
   //------------------------------------------------------------------------------------------------
@@ -68,6 +72,7 @@ namespace eve::detail
                                             wide<U, N, avx_> const &v1,
                                             wide<U, N, avx_> const &v2) noexcept
   {
+    std::cout << "if_else x86 logical avx" << std::endl;
          if constexpr(std::is_same_v<U, float>)  return _mm256_blendv_ps(v2, v1,  bit_cast(v0.bits(),as(v2)));
     else if constexpr(std::is_same_v<U, double>) return _mm256_blendv_pd(v2, v1,  bit_cast(v0.bits(),as(v2)));
     else if constexpr(std::is_integral_v<U>)
@@ -95,6 +100,7 @@ namespace eve::detail
                                             wide<U, N, avx_> const &v1,
                                             wide<U, N, avx_> const &v2) noexcept
   {
+    std::cout << "if_else x86 arith avx" << std::endl;
     if constexpr(std::is_same_v<U, float>)  return _mm256_blendv_ps(v2, v1, bit_cast(bit_mask(v0),as(v2)));
     else if constexpr(std::is_same_v<U, double>) return _mm256_blendv_pd(v2, v1, bit_cast(bit_mask(v0),as(v2)));
     else if constexpr(std::is_integral_v<U>)
@@ -122,6 +128,7 @@ namespace eve::detail
                                             logical<wide<U, N, avx_>> const &v1,
                                             logical<wide<U, N, avx_>> const &v2) noexcept
   {
+    std::cout << "if_else x86 lllogical avx" << std::endl;
     return bit_cast(if_else(v0.mask(), v1.mask(), v2.mask()), as(v2));
   }
 
@@ -131,6 +138,7 @@ namespace eve::detail
                                             logical<wide<U, N, avx_>> const &v1,
                                             logical<wide<U, N, avx_>> const &v2) noexcept
   {
+    std::cout << "if_else x86 laaogical avx" << std::endl;
     return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v2));
   }
 
