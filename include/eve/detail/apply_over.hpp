@@ -38,8 +38,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto apply_over(Obj f, T const & v, U const & w, V const & x )
     requires (simd_value<T> || simd_value<U> || simd_value<V>)
   {
-         if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(f, v, w, x);
-    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w, x);
+         if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>||has_aggregated_abi_v<V>) return aggregate(f, v, w, x);
+    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>||has_emulated_abi_v<V>)   return map(f, v, w, x);
   }
 
   template<typename Obj, simd_value T>
