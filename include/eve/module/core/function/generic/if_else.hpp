@@ -65,15 +65,12 @@ namespace eve::detail
                                , U const &t
                                , U const &f) noexcept
   {
-    std::cout << "if_else cpu " << std::endl;
     if constexpr(scalar_value<T>)
     {
-      std::cout << "scalar T " << std::endl;
       return cond ? t : f;
     }
     else
     {
-      std::cout << "simd T " << std::endl;
            if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(if_else, cond, t, f);
       else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
       else if constexpr(scalar_value<U>)
@@ -84,23 +81,8 @@ namespace eve::detail
       else
       {
         auto cond_mask = bit_mask(cond);
-        std::cout << "bit select " << std::endl;
         return bit_select(cond_mask, t, f);
       }
-
-//       {
-//         auto cond_mask = bit_mask(cond);
-//         if constexpr(simd_value<U>)
-//         {
-//           std::cout << "bit select " << std::endl;
-//           return bit_select(cond_mask, t, f);
-//         }
-//         else
-//         {
-//           using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
-//           return bit_select(cond_mask, r_t(t), r_t(f));
-//         }
-//       }
     }
   }
 
@@ -115,7 +97,6 @@ namespace eve::detail
                                           &) noexcept
   //requires has_native_abi_v<T> && bit_compatible_values<T, U>
   {
-    std::cout << "if_else cpu zero_ 0" << std::endl;
     if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : U(0);
     else                                  return bit_and(t, bit_mask(cond));
   }
@@ -127,7 +108,6 @@ namespace eve::detail
                                           U const &t) noexcept
   // requires has_native_abi_v<T> && bit_compatible_values<T, U>
   {
-    std::cout << "if_else cpu zero_ 1" << std::endl;
      if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? U(0) : t;
      else                          return bit_andnot(t, bit_mask(cond));
   }
@@ -141,7 +121,6 @@ namespace eve::detail
                                           eve::callable_allbits_ const
                                           &) noexcept
   {
-    std::cout << "if_else cpu allbits_ 0" << std::endl;
     if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : Allbits(as(t));
     else                          return bit_ornot(t, bit_mask(cond));
   }
@@ -152,7 +131,6 @@ namespace eve::detail
                                           eve::callable_allbits_ const &,
                                           U const &t) noexcept
   {
-    std::cout << "if_else cpu allbits_ 1" << std::endl;
     if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? Allbits(as(t)) : t;
     else                          return bit_or(t, bit_mask(cond));
   }
@@ -166,7 +144,6 @@ namespace eve::detail
                                           eve::callable_mone_ const
                                           &) noexcept
   {
-    std::cout << "if_else cpu mone_ 0" << std::endl;
     if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? t : Mone(as(t));
     else if constexpr(integral_value<U>) return bit_ornot(t, bit_mask(cond));
     else                                 return if_else(cond, t, eve::Mone<U>());
@@ -178,7 +155,6 @@ namespace eve::detail
                                           eve::callable_mone_ const &,
                                           U const &t) noexcept
   {
-    std::cout << "if_else cpu mone_ 1" << std::endl;
     if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? Mone(as(t)) : t;
     else if constexpr(integral_value<U>) return bit_or(t, bit_mask(cond));
     else                                 return if_else(cond, Mone(as(t)), t);
@@ -193,7 +169,6 @@ namespace eve::detail
                                           eve::callable_one_ const
                                           &) noexcept
   {
-    std::cout << "if_else cpu one_ 0" << std::endl;
     if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : One(as(t));
     else if constexpr(std::is_integral_v<U>) return minus(bit_ornot(minus(t), bit_mask(cond)));
     else                                return if_else(cond, t, One(as(t)));
@@ -205,7 +180,6 @@ namespace eve::detail
                                           eve::callable_one_ const &,
                                           U const &t) noexcept
   {
-    std::cout << "if_else cpu one_ 1" << std::endl;
     if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? One(as(t)) : t;
     else if constexpr(std::is_integral_v<U>) return minus(bit_or(minus(t), bit_mask(cond)));
     else                                return if_else(cond, One(as(t)), t);
