@@ -22,7 +22,7 @@ namespace eve::detail
                                             wide<U, N, ppc_> const &         v0,
                                             wide<U, N, ppc_> const &         v1) noexcept
   {
-    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as(v1).storage());
+    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as(v1)).storage());
   }
 
   template<real_scalar_value T, real_scalar_value U, typename N>
@@ -31,7 +31,7 @@ namespace eve::detail
                                             wide<U, N, ppc_> const &         v0,
                                             wide<U, N, ppc_> const &         v1) noexcept
   {
-    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as(v1).storage());
+    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as(v1)).storage());
   }
 
   template<real_scalar_value T, real_scalar_value U, typename N>

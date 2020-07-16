@@ -81,8 +81,8 @@ namespace eve::detail
       else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
       else if constexpr(scalar_value<U>)
       {
-        using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
-        return if_else(bit_mask(cond), r_t(t), r_t(f));
+        using r_t =  as_wide_t<U, cardinal_t<T>>;
+        return if_else(cond, r_t(t), r_t(f));
       }
       else
       {
