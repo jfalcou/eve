@@ -16,9 +16,11 @@
 
 TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 {
+  using sT =  eve::element_type_t<T>;
   TTS_EXPR_IS(eve::if_else(T()               , T(), T()), T);
-  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , T(), T()), T);
+  TTS_EXPR_IS( eve::if_else(eve::logical<T>() , T(), T()), T);
   TTS_EXPR_IS(eve::if_else(true              , T(), T()), T);
+  TTS_EXPR_IS(eve::if_else(eve::logical<T>(), T(),  sT()), T);
 }
 
 TTS_CASE_TPL("Check eve::if_else behavior with arithmetic alternatives", EVE_TYPE)
@@ -45,7 +47,6 @@ TTS_CASE_TPL("Check eve::if_else behavior with logical alternatives", EVE_TYPE)
   auto f = eve::False<T>();
  T fv{3};
 
-  std::cout << tts::type_id<T>() << std::endl;
   TTS_EQUAL(eve::if_else(1    , t, f), t);
   TTS_EQUAL(eve::if_else(1.0  , t, f), t);
   TTS_EQUAL(eve::if_else(true , t, f), t);

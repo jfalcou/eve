@@ -28,8 +28,9 @@
 
 namespace eve::detail
 {
+
   template<value T, value U, value V>
-  EVE_FORCEINLINE auto if_else_(T const & cond, U const & t, V const & f )
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
     requires compatible_values<U, V>
   {
     if constexpr(scalar_value<T>)
@@ -56,6 +57,11 @@ namespace eve::detail
       {
         return if_else(is_nez(cond), V(t), f);
       }
+      else
+      {
+        return T();
+      }
+
     }
   }
 
