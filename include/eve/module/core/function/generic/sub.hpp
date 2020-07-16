@@ -16,6 +16,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/operators.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/bit_cast.hpp>
@@ -132,69 +133,19 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto sub_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto sub_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    using r_t = decltype(sub(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond ? sub(t, f) : r_t(t);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return sub(r_t(t), if_else(cond, r_t(f), eve::zero_));
-    }
+    return mask_op( EVE_CURRENT_API{}, cond, eve::sub, t, f);
   }
 
-  template<value T, real_value U, real_value V>
+  template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto
-  sub_(EVE_SUPPORTS(cpu_), T const &cond, saturated_type const &, U const &t, V const &f) noexcept
+  sub_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    using r_t = decltype(sub(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond ? saturated_(sub)(t, f) : r_t(t);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return saturated_(sub)(r_t(t), if_else(cond, r_t(f), eve::zero_));
-    }
-  }
-
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto
-  sub_(EVE_SUPPORTS(cpu_), not_t<T> const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    using r_t = decltype(sub(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond.value ? r_t(t) : sub(t, f);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return sub(r_t(t), if_else(cond.value, eve::zero_, r_t(f)));
-    }
-  }
-
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto sub_(EVE_SUPPORTS(cpu_),
-                            not_t<T> const &cond,
-                            saturated_type const &,
-                            U const &t,
-                            V const &f) noexcept requires compatible_values<U, V>
-  {
-    using r_t = decltype(sub(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond.value ? r_t(t) : saturated_(sub)(t, f);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return saturated_(sub)(r_t(t), if_else(cond.value, eve::zero_, r_t(f)));
-    }
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(sub), t, f);
   }
 }
 
