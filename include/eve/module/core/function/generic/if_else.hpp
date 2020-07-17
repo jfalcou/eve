@@ -23,40 +23,71 @@
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bit_ornot.hpp>
 #include <eve/function/bit_select.hpp>
+#include <eve/function/is_nez.hpp>
 #include <eve/function/minus.hpp>
 
 namespace eve::detail
 {
+
   template<value T, value U, value V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_)
-                               , T const &cond
-                               , U const &t
-                               , V const &f) noexcept
-  requires compatible_values<U, V>
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), T const & cond, U const & t, V const & f )
+    requires compatible_values<U, V>
   {
     if constexpr(scalar_value<T>)
     {
-       if constexpr(simd_value<U> ^simd_value<V>)
-       {
-         using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
-         return cond ? r_t(t) : r_t(f);
-       }
-       else
-       {
-         return cond ? t : f;
-       }
+           if constexpr(simd_value<U> && simd_value<V>) return  cond ? t : f;
+      else if constexpr(simd_value<U>) return  cond ? t : U(f);
+      else if constexpr(simd_value<V>) return  cond ? V(t) : f;
+      else                             return  cond ? t : f;
     }
-    else
+    else if constexpr(simd_value<T>)
     {
-      auto cond_mask = bit_mask(cond);
-      if constexpr(simd_value<U> || simd_value<V>)
+           if constexpr(has_aggregated_abi_v<V>||has_aggregated_abi_v<U>) return aggregate(if_else, cond, t, f);
+      else if constexpr(has_emulated_abi_v<V>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
+      else if constexpr(scalar_value<U> && scalar_value<V>)
       {
-        return bit_select(cond_mask, t, f);
+        using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
+        return  if_else(is_nez(cond), r_t(t), r_t(f));
+      }
+      else if constexpr(simd_value<U> && scalar_value<V>)
+      {
+        return if_else(is_nez(cond), t, U(f));
+      }
+      else if constexpr(scalar_value<U> && simd_value<V>)
+      {
+        return if_else(is_nez(cond), V(t), f);
       }
       else
       {
-        using r_t =  as_wide_t<element_type_t<U>, cardinal_t<T>>;
-        return bit_select(cond_mask, r_t(t), r_t(f));
+        return T();
+      }
+
+    }
+  }
+
+  template<value T, value U>
+  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_)
+                               , T const &cond
+                               , U const &t
+                               , U const &f) noexcept
+  {
+    if constexpr(scalar_value<T>)
+    {
+      return cond ? t : f;
+    }
+    else
+    {
+           if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(if_else, cond, t, f);
+      else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
+      else if constexpr(scalar_value<U>)
+      {
+        using r_t =  as_wide_t<U, cardinal_t<T>>;
+        return if_else(cond, r_t(t), r_t(f));
+      }
+      else
+      {
+        auto cond_mask = bit_mask(cond);
+        return bit_select(cond_mask, t, f);
       }
     }
   }
@@ -160,4 +191,3 @@ namespace eve::detail
     else                                return if_else(cond, One(as(t)), t);
   }
 }
-
