@@ -13,3 +13,6 @@
 #include <eve/function/definition/frac.hpp>
 #include <eve/module/core/function/generic/frac.hpp>
 
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/frac.hpp>
+#endif
