@@ -12,17 +12,6 @@
 #include <eve/wide.hpp>
 #include <eve/constant/zero.hpp>
 
-
-// auto eve__horn = []<typename T>(T z) -> T{
-//   return eve::detail::horn<T/*,
-//                                      i_t(0x403c896240f3081dll),
-//                                      i_t(0xc03991aaac01ab68ll),
-//                                      i_t(0x401bdff5baf33e6all),
-//                                      i_t(0xbfe2079259f9290fll),
-//                                      i_t(0x3f684fc3988e9f08ll)*/
-//   >(z);
-// };
-
 int main()
 {
   using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
