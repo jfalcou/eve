@@ -99,7 +99,14 @@ namespace eve::detail
                                         wide<T, N, sse_> const &b,
                                         wide<T, N, sse_> const &c) noexcept
   {
-    return fma(a, b, c);
+    if constexpr( supports_fma3 || supports_fma4  )
+    {
+      return fma(a, b, c);
+    }
+    else
+    {
+      return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+    }
   }
 
   template<decorator D, real_scalar_value T, typename N>
@@ -109,6 +116,13 @@ namespace eve::detail
                                         wide<T, N, avx_> const &b,
                                         wide<T, N, avx_> const &c) noexcept
   {
-    return fma(a, b, c);
+    if constexpr( supports_fma3 || supports_fma4  )
+    {
+      return fma(a, b, c);
+    }
+    else
+    {
+      return fma_(EVE_RETARGET(cpu_), D(), a, b, c);
+    }
   }
 }
