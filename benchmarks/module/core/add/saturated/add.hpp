@@ -13,14 +13,15 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::saturated_(eve::add), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(saturated_(eve::add)) , xp, eve::saturated_(eve::add), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(saturated_(eve::add)) , xp, eve::saturated_(eve::add), arg0, arg1);
 }

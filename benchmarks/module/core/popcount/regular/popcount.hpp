@@ -9,11 +9,22 @@
 **/
 //==================================================================================================
 #include <eve/function/popcount.hpp>
+#include <eve/function/bit_cast.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::popcount, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  using ui_t = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
+  auto const std__popcount = [](EVE_VALUE x) { return std::popcount(eve::bit_cast(x, eve::as<ui_t>())); };
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__popcount) , xp, std__popcount, arg0);
+  run<EVE_VALUE> (EVE_NAME(popcount) , xp, eve::popcount, arg0);
+  run<EVE_TYPE>  (EVE_NAME(popcount) , xp, eve::popcount, arg0);
 }

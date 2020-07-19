@@ -9,16 +9,23 @@
 **/
 //==================================================================================================
 #include <eve/function/mul.hpp>
-#include <eve/constant/true.hpp>
-#include <cmath>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 
-int main(int argc, char** argv)
+int main()
 {
-  using I_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::mul, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.)
-                        , eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = eve::Valmin<EVE_VALUE>();
+  auto lmax = eve::Valmax<EVE_VALUE>();
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::bernoulli_<EVE_VALUE>();
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  auto eve__mul =  [](auto x,  auto y,  auto z){ return eve::mul[x](y, z); };
+
+  eve::bench::experiment xp;
+  run<eve::bench::types<L_VALUE, EVE_VALUE, EVE_VALUE>>(EVE_NAME( eve_mul) , xp, eve__mul, arg0, arg1, arg2);
+  run<eve::bench::types<L_TYPE, EVE_TYPE, EVE_TYPE>> (EVE_NAME( eve_mul) , xp, eve__mul, arg0, arg1, arg2);
 }

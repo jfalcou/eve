@@ -9,11 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/nbtrue.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::nbtrue, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  EVE_VALUE lmax = eve::cardinal_v<EVE_VALUE>;
+  EVE_VALUE lmin = -lmax;
+  using L_TYPE = eve::logical<EVE_TYPE>;
+  if (lmin > 0) lmin = 0;
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg00= eve::bench::bernoulli_<EVE_VALUE>();
+
+  eve::bench::experiment xp;
+  run<L_TYPE>(EVE_NAME(nbtrue) , xp, eve::nbtrue, arg00);
+  run<EVE_TYPE> (EVE_NAME(nbtrue) , xp, eve::nbtrue, arg0);
 }

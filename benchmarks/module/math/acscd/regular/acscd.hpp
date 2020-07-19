@@ -9,14 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/acscd.hpp>
+#include <eve/function/radindeg.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::acscd, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(EVE_VALUE(1), eve::Valmax<EVE_VALUE>()));
+  auto lmin = EVE_VALUE(1);
+  auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>()); //eve::Valmax<EVE_VALUE>());
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__acscd = [](auto x){return eve::radindeg(std::acos(1/x));};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__acscd) , xp, std__acscd , arg0);
+  run<EVE_VALUE>(EVE_NAME(acscd) , xp, eve::acscd , arg0);
+  run<EVE_TYPE> (EVE_NAME(acscd) , xp, eve::acscd , arg0);
 }

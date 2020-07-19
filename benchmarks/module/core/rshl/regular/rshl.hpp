@@ -13,24 +13,25 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
   using I_TYPE    = eve::detail::as_integer_t<EVE_TYPE, signed>;
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using I_VALUE   = eve::detail::value_type_t<EVE_VALUE>;
+  using I_VALUE   = eve::detail::as_integer_t<EVE_VALUE, signed>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
   auto smax = I_VALUE(sizeof(EVE_VALUE)-1);
   auto smin = I_VALUE(-smax);
 
-  EVE_REGISTER_BENCHMARK(eve::rshl, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<I_VALUE>(smin,smax));
+  auto std__rshl =  [](EVE_VALUE x,  I_VALUE y){return EVE_VALUE(y > 0 ? x << y : x >> -y); };
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<I_VALUE>(smin,smax);
 
-  auto vmin = I_TYPE(0);
-  auto vmax = I_TYPE(sizeof(EVE_VALUE)-1);
-  EVE_REGISTER_BENCHMARK(eve::rshl, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<I_TYPE>(vmin,vmax));
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp;
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(std__rshl) , xp, std__rshl, arg0, arg1);
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(rshl) , xp, eve::rshl, arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(rshl) , xp, eve::rshl, arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(rshl) , xp, eve::rshl, arg0, arg1);
+
+
 }

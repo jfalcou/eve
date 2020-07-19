@@ -13,16 +13,17 @@
 #include <eve/constant/valmin.hpp>
 #include <cmath>
 //THE BENCH IS VERY PARTIAL just type  to signed integer type of same size
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  auto f =  [](auto x){ return eve::convert(x, eve::as_<eve::detail::as_integer_t<EVE_VALUE, signed>>());
+  auto lmin = eve::Valmin<EVE_VALUE>()/2;
+  auto lmax = eve::Valmax<EVE_VALUE>()/2;
+  using i_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  auto f =  [](auto x){ return eve::convert(x, eve::as_<i_t>());
   }
  ;
-  EVE_REGISTER_BENCHMARK(f, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(convert) , xp, f, arg0);
+
 }

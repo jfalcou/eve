@@ -11,18 +11,26 @@
 #include <eve/function/div.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using L_TYPE = eve::logical<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::div, EVE_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg00 = eve::bench::random_<EVE_VALUE>(0, 1);
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  auto eve__div =  [](auto x,  auto y,  auto z){ return eve::div[x](y, z); };
+
+  eve::bench::experiment xp;
+  run<eve::bench::types<L_VALUE, EVE_VALUE, EVE_VALUE>>(EVE_NAME( eve_div) , xp, eve__div, arg0, arg1, arg2);
+  run<eve::bench::types<L_TYPE, EVE_TYPE, EVE_TYPE>> (EVE_NAME( eve_div) , xp, eve__div, arg0, arg1, arg2);
+
+  run<EVE_VALUE>(EVE_NAME( eve_div) , xp, eve__div, arg00, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME( eve_div) , xp, eve__div, arg00, arg1, arg2);
+
 }

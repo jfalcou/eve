@@ -11,9 +11,16 @@
 #include <eve/function/asech.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::asech, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = EVE_VALUE(0);
+  auto lmax = EVE_VALUE(1);
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__asech = [](auto x){return std::acosh(1/x);};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__asech) , xp, std__asech , arg0);
+  run<EVE_VALUE>(EVE_NAME(asech) , xp, eve::asech , arg0);
+  run<EVE_TYPE> (EVE_NAME(asech) , xp, eve::asech , arg0);
 }

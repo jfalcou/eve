@@ -9,15 +9,23 @@
 **/
 //==================================================================================================
 #include <eve/function/acsch.hpp>
-#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::acsch, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()));
+//   auto lmin = EVE_VALUE(eve::Valmin<EVE_VALUE>());
+//   auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
+  auto lmin = EVE_VALUE(-eve::Oneotwoeps<EVE_VALUE>()); //EVE_VALUE(eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>());  // EVE_VALUE(eve::Valmax<EVE_VALUE>());
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__acsch = [](auto x){return std::asinh(1/x);};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__acsch) , xp, std__acsch , arg0);
+  run<EVE_VALUE>(EVE_NAME(acsch) , xp, eve::acsch , arg0);
+  run<EVE_TYPE> (EVE_NAME(acsch) , xp, eve::acsch , arg0);
 }

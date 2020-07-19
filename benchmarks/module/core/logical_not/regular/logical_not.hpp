@@ -13,17 +13,17 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::logical_not, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  using L_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::logical_not, L_TYPE
-                        , eve::bench::random<L_TYPE>(0, 1));
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp;
+  auto const std__logical_not = [](auto x) { return EVE_VALUE(!x); };
+  run<EVE_VALUE> (EVE_NAME(std__logical_not) , xp, std__logical_not, arg0);
+
+  run<EVE_VALUE> (EVE_NAME(logical_not) , xp, eve::logical_not, arg0);
+  run<EVE_TYPE>  (EVE_NAME(logical_not) , xp, eve::logical_not, arg0);
 }

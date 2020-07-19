@@ -11,16 +11,19 @@
 #include <eve/function/is_not_greater_equal.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <numeric>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::is_not_greater_equal, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__is_not_greater_equal =  [](EVE_VALUE x,  EVE_VALUE y) -> eve::logical<EVE_VALUE> {return !(x >=  y); };
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__is_not_greater_equal) , xp, std__is_not_greater_equal, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(is_not_greater_equal) , xp, eve::is_not_greater_equal, arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(is_not_greater_equal) , xp, eve::is_not_greater_equal, arg0, arg1);
 }

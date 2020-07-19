@@ -9,17 +9,26 @@
 **/
 //==================================================================================================
 #include <eve/function/sqrt.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/constant/oneotwoeps.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::raw_(eve::sqrt), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmax = [](){
+    if constexpr(eve::floating_value<EVE_VALUE>) return eve::Oneotwoeps<EVE_VALUE>();
+    else return eve::Valmax<EVE_VALUE>();
+  }();
+  auto lmin = EVE_VALUE(0);
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto const std__sqrt = [](EVE_VALUE x) { return EVE_VALUE(std::sqrt(x)); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__sqrt) , xp, std__sqrt, arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
 }

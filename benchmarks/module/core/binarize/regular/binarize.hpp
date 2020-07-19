@@ -9,18 +9,17 @@
 **/
 //==================================================================================================
 #include <eve/function/binarize.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using I_TYPE = eve::logical<EVE_TYPE>;
-  using E_TYPE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::binarize, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1)
-                        , eve::bench::random<E_TYPE>(-1.,1.));
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE  = eve::logical<EVE_TYPE>;
 
-  EVE_REGISTER_BENCHMARK(eve::binarize, EVE_TYPE
-                        , eve::bench::random<I_TYPE>(0, 1));
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
 
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp;
+  run<L_VALUE>(EVE_NAME(binarize) , xp, eve::binarize, arg0);
+  run<L_TYPE> (EVE_NAME(binarize) , xp, eve::binarize, arg0);
+
+
 }

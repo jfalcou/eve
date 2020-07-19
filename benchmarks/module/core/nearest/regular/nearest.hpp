@@ -9,15 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/nearest.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::nearest, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto const std__nearest = [](EVE_VALUE x) { return std::round(x); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__nearest) , xp, std__nearest, arg0);
+  run<EVE_VALUE> (EVE_NAME(nearest) , xp, eve::nearest, arg0);
+  run<EVE_TYPE>  (EVE_NAME(nearest) , xp, eve::nearest, arg0);
 }

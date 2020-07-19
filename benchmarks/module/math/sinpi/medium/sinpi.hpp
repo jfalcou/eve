@@ -10,15 +10,19 @@
 //==================================================================================================
 #include <eve/function/sinpi.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/function/radindeg.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = eve::detail::Rempio2_limit(eve::medium_type(), eve::as_<EVE_VALUE>());
   auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::medium_(eve::sinpi), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(medium_(eve::sinpi)) , xp, eve::medium_(eve::sinpi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium_(eve::sinpi)) , xp, eve::medium_(eve::sinpi) , arg0);
+
 }

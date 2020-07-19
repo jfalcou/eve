@@ -9,18 +9,18 @@
 **/
 //==================================================================================================
 #include <eve/function/any.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_VALUE lmax = eve::cardinal_v<EVE_TYPE>+1;
+  EVE_VALUE lmax = eve::cardinal_v<EVE_VALUE>;
   EVE_VALUE lmin = -lmax;
-  if (lmin > 0) lmin = 0;
-  EVE_REGISTER_BENCHMARK(eve::any, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
-
   using L_TYPE = eve::logical<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::any, L_TYPE, eve::bench::random<L_TYPE>(0, 1));
+  if (lmin > 0) lmin = 0;
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg00= eve::bench::bernoulli_<EVE_VALUE>();
+
+  eve::bench::experiment xp;
+  run<L_TYPE>(EVE_NAME(any) , xp, eve::any, arg00);
+  run<EVE_TYPE> (EVE_NAME(any) , xp, eve::any, arg0);
 }

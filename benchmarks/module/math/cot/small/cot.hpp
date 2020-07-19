@@ -9,16 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/cot.hpp>
-#include <eve/constant/pio_2.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmax = eve::Pio_2<EVE_VALUE>();
+  auto lmax = eve::detail::Rempio2_limit(eve::small_type(), eve::as_<EVE_VALUE>());
   auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::small_(eve::cot), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__cot = [](auto x){return std::tan(1/x);};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
+  run<EVE_VALUE>(EVE_NAME(small_(eve::cot)) , xp, eve::small_(eve::cot) , arg0);
+  run<EVE_TYPE> (EVE_NAME(small_(eve::cot)) , xp, eve::small_(eve::cot) , arg0);
+
 }

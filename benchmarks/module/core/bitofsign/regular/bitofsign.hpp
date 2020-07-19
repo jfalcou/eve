@@ -13,14 +13,17 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int bitofsignc, char** bitofsignv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::bitofsign, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(bitofsignc, bitofsignv);
+  auto const std__bitofsign = [](auto x) { return (std::signbit(x)) ? EVE_TYPE(-0.0) : EVE_TYPE(0.0); };
+
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE> (EVE_NAME(std__bitofsign) , xp, std__bitofsign, arg0);
+  run<EVE_VALUE> (EVE_NAME(bitofsign) , xp, eve::bitofsign, arg0);
+  run<EVE_TYPE>  (EVE_NAME(bitofsign) , xp, eve::bitofsign, arg0);
 }
-#

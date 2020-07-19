@@ -13,12 +13,17 @@
 #include <eve/constant/minlog.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Maxlog<EVE_VALUE>();
-  auto lmax = eve::Minlog<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::csch, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  auto lmin = EVE_VALUE(eve::Minlog<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Maxlog<EVE_VALUE>());
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__csch = [](auto x){return 1/std::sinh(x);};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__csch) , xp, std__csch , arg0);
+  run<EVE_VALUE>(EVE_NAME(csch) , xp, eve::csch , arg0);
+  run<EVE_TYPE> (EVE_NAME(csch) , xp, eve::csch , arg0);
+
 }

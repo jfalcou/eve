@@ -10,15 +10,15 @@
 //==================================================================================================
 #include <eve/function/sincos.hpp>
 #include <eve/constant/pio_4.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmax = eve::Pio_4<EVE_VALUE>();
   auto lmin = -lmax;
-  EVE_REGISTER_BENCHMARK(eve::restricted_(eve::sincos), EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(restricted_(eve::sincos)) , xp, eve::restricted_(eve::sincos) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted_(eve::sincos)) , xp, eve::restricted_(eve::sincos) , arg0);
 }

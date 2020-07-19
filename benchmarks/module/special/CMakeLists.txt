@@ -11,16 +11,12 @@
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(special.bench)
-add_custom_target(special.scalar.bench)
-add_custom_target(special.simd.bench)
-add_dependencies(special.bench special.scalar.bench)
-add_dependencies(special.bench special.simd.bench)
 
 ##==================================================================================================
 ## Elementwise function bench tests
 ##==================================================================================================
 
 ### TEMPORARY MEASURE
-### make_all_benchs(ROOT special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
-### make_all_benchs(ROOT special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
+### make_all_benchs(ROOT special NAME gamma    TYPES ${real_types}    )
+### make_all_benchs(ROOT special NAME stirling TYPES ${real_types}    )
 ### TEMPORARY MEASURE

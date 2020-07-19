@@ -11,9 +11,16 @@
 #include <eve/function/asin.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  EVE_REGISTER_BENCHMARK(eve::asin, EVE_TYPE, eve::bench::random<EVE_TYPE>(-1.,1.));
+  auto lmin = EVE_VALUE(-1);
+  auto lmax = EVE_VALUE(1);
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__asin = [](auto x){return std::asin(x);};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__asin) , xp, std__asin , arg0);
+  run<EVE_VALUE>(EVE_NAME(asin) , xp, eve::asin , arg0);
+  run<EVE_TYPE> (EVE_NAME(asin) , xp, eve::asin , arg0);
 }

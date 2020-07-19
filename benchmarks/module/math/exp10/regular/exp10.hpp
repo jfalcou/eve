@@ -9,16 +9,21 @@
 **/
 //==================================================================================================
 #include <eve/function/exp10.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/minlog.hpp>
+#include <eve/constant/maxlog10.hpp>
+#include <eve/constant/minlog10.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Maxlog<EVE_VALUE>();
-  auto lmax = eve::Minlog<EVE_VALUE>();
-   EVE_REGISTER_BENCHMARK(eve::exp10, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
+  auto lmin = EVE_VALUE(eve::Minlog10<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Maxlog10<EVE_VALUE>());
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__exp10 = [](auto x){return std::exp(x*EVE_VALUE(2.30258509299405e+00));};
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__exp10) , xp, std__exp10 , arg0);
+  run<EVE_VALUE>(EVE_NAME(exp10) , xp, eve::exp10 , arg0);
+  run<EVE_TYPE> (EVE_NAME(exp10) , xp, eve::exp10 , arg0);
+
 }

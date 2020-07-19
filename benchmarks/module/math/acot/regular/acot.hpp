@@ -13,12 +13,16 @@
 #include <eve/constant/valmin.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  EVE_REGISTER_BENCHMARK(eve::acot, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_VALUE>(), eve::Valmax<EVE_VALUE>()));
+  auto lmin = EVE_VALUE(-5);
+  auto lmax = EVE_VALUE(5);
 
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto std__acot = [](auto x){return std::atan(1/x);};
 
-  eve::bench::start_benchmarks(argc, argv);
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__acot) , xp, std__acot , arg0);
+  run<EVE_VALUE>(EVE_NAME(acot) , xp, eve::acot , arg0);
+  run<EVE_TYPE> (EVE_NAME(acot) , xp, eve::acot , arg0);
 }

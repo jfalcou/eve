@@ -11,19 +11,26 @@
 #include <eve/function/add.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  using L_TYPE = eve::logical<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  auto f = [](auto c, auto a, auto b) { return eve::saturated_(eve::add[c])(a,b);};
-  EVE_REGISTER_BENCHMARK(f, EVE_TYPE
-                        , eve::bench::random<L_TYPE>(0,1)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  using L_VALUE = eve::logical<EVE_VALUE>;
+  using L_TYPE = eve::logical<EVE_TYPE>;
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg00 = eve::bench::random_<EVE_VALUE>(0, 1);
+  auto arg0 = eve::bench::random_<L_VALUE>(0, 1);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  auto eve__add =  [](auto x,  auto y,  auto z){ return eve::saturated_(eve::add[x])(y, z); };
+
+  eve::bench::experiment xp;
+  run<eve::bench::types<L_VALUE, EVE_VALUE, EVE_VALUE>>(EVE_NAME( eve_add) , xp, eve__add, arg0, arg1, arg2);
+  run<eve::bench::types<L_TYPE, EVE_TYPE, EVE_TYPE>> (EVE_NAME( eve_add) , xp, eve__add, arg0, arg1, arg2);
+
+  run<EVE_VALUE>(EVE_NAME( eve_add) , xp, eve__add, arg00, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME( eve_add) , xp, eve__add, arg00, arg1, arg2);
+
 }

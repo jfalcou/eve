@@ -11,66 +11,52 @@
 #ifndef BENCHMARKS_GENERATORS_HPP
 #define BENCHMARKS_GENERATORS_HPP
 
+#include <eve/logical.hpp>
 #include <eve/memory/aligned_allocator.hpp>
+#include <eve/traits/element_type.hpp>
 #include <eve/arch.hpp>
 #include <eve/arch/spec.hpp>
 #include <algorithm>
 #include <numeric>
+#include <random>
 
 namespace eve::bench
 {
-  template<typename T>
-  using bench_alloc = eve::aligned_allocator<T, eve::limits<EVE_CURRENT_API>::bytes>;
+  inline std::mt19937 pRNG = {};
 
-  template<typename T>
-  inline const auto optimal_size = benchmark::CPUInfo::Get().caches[1].size / sizeof(T);
+  template<typename T> using alloc = eve::aligned_allocator<T,eve::limits<EVE_CURRENT_API>::bytes>;
+  template<typename T> inline const auto optimal_size = 92*1024/sizeof(T);
 
   // -------------------------------------------------------------------------------------------------
   // Generators
-  template <typename T> auto value(T const& val)
+  template <typename U, typename T> auto value_(T const& val)
   {
-    std::vector<T,bench_alloc<T>> data(optimal_size<T>, val);
-    return data;
+    return std::vector<U,alloc<U>>(optimal_size<U>, static_cast<U>(val));
   }
 
-  template <typename T> auto iota(T first = {})
+  template <typename U, typename T> auto random_(T mn, T mx)
   {
-    std::vector<T,bench_alloc<T>> data(optimal_size<T>);
-    std::iota(data.begin(),data.end(),first);
-    return data;
-  }
-
-  template <typename T> auto arithmetic(T first = {}, T step = 1)
-  {
-    std::vector<T,bench_alloc<T>> data(optimal_size<T>);
-
-    data[0] = first;
-    for(std::size_t i=1;i<optimal_size<T>;++i) data[i] = data[i-1] + step;
+    std::vector<U,alloc<U>>                 data(optimal_size<U>);
+    std::uniform_real_distribution<double>  dist(mn,mx);
+    std::generate(data.begin(), data.end(), [&]() { return static_cast<U>( dist(pRNG) ); });
 
     return data;
   }
 
-  template <typename T> auto geometric(T first = 1, T step = 2)
+  template <typename U> auto bernoulli_()
   {
-    std::vector<T,bench_alloc<T>> data(optimal_size<T>);
-
-    data[0] = first;
-    for(std::size_t i=1;i<optimal_size<T>;++i) data[i] = data[i-1] * step;
-
-    return data;
-  }
-
-  template <typename T, typename U> auto random(U mn, U mx)
-  {
-    std::vector<T,bench_alloc<T>> data(optimal_size<T>);
+    std::vector<eve::logical<U>,alloc<eve::logical<U>>>   data(optimal_size<U>);
+    std::bernoulli_distribution dist;
     std::generate ( data.begin(), data.end()
-                  , [=]()
-                    {
-                      return static_cast<T>( mn + std::rand() / (double)RAND_MAX * (mx - mn));
-                    }
+                  , [&]()
+                  {
+                    return static_cast<eve::logical<U>>( dist(pRNG) );
+                  }
                   );
     return data;
   }
+
+
 }
 
 #endif

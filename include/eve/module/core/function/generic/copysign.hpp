@@ -15,6 +15,7 @@
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/extract.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/concept/compatible.hpp>
@@ -26,8 +27,8 @@ namespace eve::detail
   // regular case
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE  auto copysign_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
+                            , T a
+                            , U b) noexcept
   requires compatible_values<T, U>
   {
     return arithmetic_call(copysign, a, b);
@@ -35,11 +36,10 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE  T copysign_(EVE_SUPPORTS(cpu_)
-                              , T const &a
-                              , T const &b) noexcept
+                              , T a
+                              , T b) noexcept
   requires has_native_abi_v<T>
   {
     return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
   }
 }
-

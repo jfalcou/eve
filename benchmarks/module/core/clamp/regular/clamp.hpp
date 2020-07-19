@@ -11,18 +11,21 @@
 #include <eve/function/clamp.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <cmath>
+#include <algorithm>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  auto z    = EVE_VALUE(0);
-  EVE_REGISTER_BENCHMARK(eve::clamp, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax)
-                        , eve::bench::random<EVE_TYPE>(lmin,z)
-                        , eve::bench::random<EVE_TYPE>(z,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,EVE_VALUE(lmax/4));
+  auto arg2 = eve::bench::random_<EVE_VALUE>(EVE_VALUE(lmax/4),EVE_VALUE(lmax/2));
+
+  auto std__clamp =  [](EVE_VALUE x,  EVE_VALUE y,  EVE_VALUE z){return std::clamp(x, y, z); };
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(std__clamp) , xp, std__clamp, arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(clamp) , xp, eve::clamp, arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(clamp) , xp, eve::clamp, arg0, arg1, arg2);
 }

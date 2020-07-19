@@ -9,18 +9,19 @@
 **/
 //==================================================================================================
 #include <eve/function/radinpi.hpp>
-#include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
 #include <cmath>
 
-int main(int radinpic, char** radinpiv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::radinpi, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
+  auto lmin = EVE_VALUE(eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
 
-  eve::bench::start_benchmarks(radinpic, radinpiv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  run<EVE_VALUE>(EVE_NAME(radinpi) , xp, eve::radinpi , arg0);
+  run<EVE_TYPE> (EVE_NAME(radinpi) , xp, eve::radinpi , arg0);
+
 }
-#

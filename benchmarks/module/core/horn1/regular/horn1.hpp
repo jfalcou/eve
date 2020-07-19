@@ -10,17 +10,16 @@
 //==================================================================================================
 #include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <tts/tests/relation.hpp>
 #include <type_traits>
 
-int main(int argc, char** argv)
+int main()
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
     using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
-    auto f = [](auto z){
-      return eve::detail::horn1<EVE_TYPE,
+    auto eve__horn1 =  []<typename T>(T z) -> T{
+      return eve::detail::horn1<T,
       i_t(0x403c896240f3081dll),
       i_t(0xc03991aaac01ab68ll),
       i_t(0x401bdff5baf33e6all),
@@ -28,15 +27,18 @@ int main(int argc, char** argv)
       i_t(0x3f684fc3988e9f08ll)
       >(z);
     };
-    EVE_REGISTER_BENCHMARK(f, EVE_TYPE
-                          , eve::bench::random<EVE_TYPE>(-1., 1.));
-    eve::bench::start_benchmarks(argc, argv);
+    auto lmin = EVE_VALUE(-1);
+    auto lmax = EVE_VALUE(1);
+    auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+    eve::bench::experiment xp;
+    run<EVE_VALUE> (EVE_NAME(eve__horn1) , xp, eve__horn1, arg0);
+    run<EVE_TYPE>  (EVE_NAME(eve__horn1) , xp, eve__horn1, arg0);
   }
   else if constexpr(std::is_same_v<EVE_VALUE, float>)
   {
     using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
-    auto f = [](auto z){
-      return eve::detail::horn1<EVE_TYPE,
+    auto eve__horn1 = []<typename T>(T z) -> T{
+      return eve::detail::horn1<T,
       i_t(0x3e2aaae4u),
       i_t(0x3d9980f6u),
       i_t(0x3d3a3ec7u),
@@ -44,8 +46,11 @@ int main(int argc, char** argv)
       i_t(0x3d2cb352u)
       > (z);
     };
-    EVE_REGISTER_BENCHMARK(f, EVE_TYPE
-                          , eve::bench::random<EVE_TYPE>(-1.f, 1.f));
-    eve::bench::start_benchmarks(argc, argv);
+    auto lmin = EVE_VALUE(-1);
+    auto lmax = EVE_VALUE(1);
+    auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+    eve::bench::experiment xp;
+    run<EVE_VALUE> (EVE_NAME(eve__horn) , xp, eve__horn1, arg0);
+    run<EVE_TYPE>  (EVE_NAME(eve__horn) , xp, eve__horn1, arg0);
   }
 }

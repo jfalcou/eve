@@ -89,6 +89,13 @@ namespace eve::detail
           return _mm_sha_epi64(a0, sa1);
       }
     }
+    else if constexpr(current_api >= avx2 && sizeof(T) == 4)
+    {
+      if constexpr(std::is_unsigned_v<T>)
+        return _mm_srlv_epi32(a0, a1);
+      else
+        return _mm_srav_epi32(a0, a1);
+    }
     else
       return map(eve::shr, a0, a1);
   }

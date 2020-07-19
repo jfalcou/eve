@@ -13,13 +13,20 @@
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
-int main(int argc, char** argv)
+int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   auto lmin = eve::Valmin<EVE_VALUE>();
   auto lmax = eve::Valmax<EVE_VALUE>();
-  EVE_REGISTER_BENCHMARK(eve::bit_not, EVE_TYPE
-                        , eve::bench::random<EVE_TYPE>(lmin,lmax));
 
-  eve::bench::start_benchmarks(argc, argv);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+
+  eve::bench::experiment xp;
+  if constexpr(eve::integral_value<EVE_VALUE>)
+  {
+    auto const std__bit_not = [](auto x) { return EVE_VALUE(~x); };
+    run<EVE_VALUE> (EVE_NAME(std__bit_not) , xp, std__bit_not, arg0);
+  }
+
+  run<EVE_VALUE> (EVE_NAME(bit_not) , xp, eve::bit_not, arg0);
+  run<EVE_TYPE>  (EVE_NAME(bit_not) , xp, eve::bit_not, arg0);
 }
