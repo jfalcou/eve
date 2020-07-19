@@ -27,21 +27,66 @@ namespace eve::detail
   {
     using t_t = wide<T, N, sse_>;
     using l_t = as_logical_t<t_t>;
-
-         if constexpr(std::is_same_v<T, float>)      return l_t(_mm_cmpeq_ps(v0, v1));
-    else if constexpr(std::is_same_v<T, double>)     return l_t(_mm_cmpeq_pd(v0, v1));
-    else if constexpr(integral_value<T>)
+    if constexpr(supports_xop)
     {
-      if constexpr(sizeof(T) == 1)                   return l_t(_mm_cmpeq_epi8(v0, v1));
-      else if constexpr(sizeof(T) == 2)              return l_t(_mm_cmpeq_epi16(v0, v1));
-      else if constexpr(sizeof(T) == 4)              return l_t(_mm_cmpeq_epi32(v0, v1));
-      else if constexpr(sizeof(T) == 8)
+#if defined(__clang__)
+#  if !defined(_MM_PCOMCTRL_EQ)
+#    define _MM_PCOMCTRL_EQ 4
+#    define _MM_PCOMCTRL_EQ_MISSING
+#  endif
+        if(std::is_signed_v<T>)
+        {
+          if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_EQ));
+        }
+        else
+        {
+          if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_EQ));
+          else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_EQ));
+        }
+#  ifdef _MM_PCOMCTRL_EQ_MISSING
+#    undef _MM_PCOMCTRL_EQ
+#    undef _MM_PCOMCTRL_EQ_MISSING
+#  endif
+#else
+        if(std::is_signed_v<T>)
+        {
+          if constexpr(sizeof(T) == 1)      return l_t(_mm_comeq_epi8(v0, v1));
+          else if constexpr(sizeof(T) == 2) return l_t(_mm_comeq_epi16(v0, v1));
+          else if constexpr(sizeof(T) == 4) return l_t(_mm_comeq_epi32(v0, v1));
+          else if constexpr(sizeof(T) == 8) return l_t(_mm_comeq_epi64(v0, v1));
+        }
+        else
+        {
+          if constexpr(sizeof(T) == 1)      return l_t(_mm_comeq_epu8(v0, v1));
+          else if constexpr(sizeof(T) == 2) return l_t(_mm_comeq_epu16(v0, v1));
+          else if constexpr(sizeof(T) == 4) return l_t(_mm_comeq_epu32(v0, v1));
+          else if constexpr(sizeof(T) == 8) return l_t(_mm_comeq_epu64(v0, v1));
+        }
+#endif
+    }
+    else
+    {
+           if constexpr(std::is_same_v<T, float>)      return l_t(_mm_cmpeq_ps(v0, v1));
+      else if constexpr(std::is_same_v<T, double>)     return l_t(_mm_cmpeq_pd(v0, v1));
+      else if constexpr(integral_value<T>)
       {
-        if constexpr(current_api >= sse4_1)          return l_t(_mm_cmpeq_epi64(v0, v1));
-        else                                         return map(is_equal, v0, v1);
+        if constexpr(sizeof(T) == 1)                   return l_t(_mm_cmpeq_epi8(v0, v1));
+        else if constexpr(sizeof(T) == 2)              return l_t(_mm_cmpeq_epi16(v0, v1));
+        else if constexpr(sizeof(T) == 4)              return l_t(_mm_cmpeq_epi32(v0, v1));
+        else if constexpr(sizeof(T) == 8)
+        {
+          if constexpr(current_api >= sse4_1)          return l_t(_mm_cmpeq_epi64(v0, v1));
+          else                                         return map(is_equal, v0, v1);
+        }
       }
     }
   }
+
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
@@ -64,8 +109,7 @@ namespace eve::detail
         else if constexpr(sizeof(T) == 4)          return l_t(_mm256_cmpeq_epi32(v0, v1));
         else if constexpr(sizeof(T) == 8)          return l_t(_mm256_cmpeq_epi64(v0, v1));
       }
-      else                                         return aggregate(is_equal, v0, v1); //is_equal_(EVE_RETARGET(sse2_), v0, v1);
+      else                                         return aggregate(is_equal, v0, v1);
     }
   }
 }
-

@@ -53,6 +53,59 @@ namespace eve::detail
     }
   }
 
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(avx_),
+                                   wide<T, N, sse_> const &v0,
+                                   wide<T, N, sse_> const &v1) noexcept
+  {
+    using t_t = wide<T, N, sse_>;
+    using l_t = as_logical_t<t_t>;
+
+    if constexpr(supports_xop)
+    {
+#if defined(__clang__)
+#  if !defined(_MM_PCOMCTRL_LT)
+#    define _MM_PCOMCTRL_LT 0
+#    define _MM_PCOMCTRL_LT_MISSING
+#  endif
+      if(std::is_signed_v<T>)
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_LT));
+      }
+      else
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_LT));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_LT));
+      }
+#  ifdef _MM_PCOMCTRL_LT_MISSING
+#    undef _MM_PCOMCTRL_LT
+#    undef _MM_PCOMCTRL_LT_MISSING
+#  endif
+#else
+      if(std::is_signed_v<T>)
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_comlt_epi8(v0, v1));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_comlt_epi16(v0, v1));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_comlt_epi32(v0, v1));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_comlt_epi64(v0, v1));
+      }
+      else
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_comlt_epu8(v0, v1));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_comlt_epu16(v0, v1));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_comlt_epu32(v0, v1));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_comlt_epu64(v0, v1));
+      }
+#endif
+    }
+    else                                  return is_less_(EVE_RETARGET(sse2_), v0, v1);
+  }
+
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>
@@ -82,4 +135,3 @@ namespace eve::detail
     }
   }
 }
-

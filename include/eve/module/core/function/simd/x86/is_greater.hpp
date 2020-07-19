@@ -10,18 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <eve/function/sub.hpp>
 #include <eve/constant/signmask.hpp>
-#include <type_traits>
+#include <eve/function/sub.hpp>
 #include <eve/concept/value.hpp>
-
+#include <eve/detail/implementation.hpp>
+#include <type_traits>
 namespace eve::detail
 {
   // -----------------------------------------------------------------------------------------------
@@ -61,6 +56,59 @@ namespace eve::detail
                             );
       }
     }
+  }
+
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx_),
+                                   wide<T, N, sse_> const &v0,
+                                   wide<T, N, sse_> const &v1) noexcept
+  {
+    using t_t = wide<T, N, sse_>;
+    using l_t = as_logical_t<t_t>;
+
+    if constexpr(supports_xop)
+    {
+#if defined(__clang__)
+#  if !defined(_MM_PCOMCTRL_GT)
+#    define _MM_PCOMCTRL_GT 2
+#    define _MM_PCOMCTRL_GT_MISSING
+#  endif
+      if(std::is_signed_v<T>)
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epi8(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epi16(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epi32(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epi64(v0, v1, _MM_PCOMCTRL_GT));
+      }
+      else
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_com_epu8(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_com_epu16(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_com_epu32(v0, v1, _MM_PCOMCTRL_GT));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_com_epu64(v0, v1, _MM_PCOMCTRL_GT));
+      }
+#  ifdef _MM_PCOMCTRL_GT_MISSING
+#    undef _MM_PCOMCTRL_GT
+#    undef _MM_PCOMCTRL_GT_MISSING
+#  endif
+#else
+      if(std::is_signed_v<T>)
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_comgt_epi8(v0, v1));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_comgt_epi16(v0, v1));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_comgt_epi32(v0, v1));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_comgt_epi64(v0, v1));
+      }
+      else
+      {
+        if constexpr(sizeof(T) == 1)      return l_t(_mm_comgt_epu8(v0, v1));
+        else if constexpr(sizeof(T) == 2) return l_t(_mm_comgt_epu16(v0, v1));
+        else if constexpr(sizeof(T) == 4) return l_t(_mm_comgt_epu32(v0, v1));
+        else if constexpr(sizeof(T) == 8) return l_t(_mm_comgt_epu64(v0, v1));
+      }
+#endif
+    }
+    else                                  return is_greater_(EVE_RETARGET(sse2_), v0, v1);
   }
 
   // -----------------------------------------------------------------------------------------------
