@@ -55,9 +55,8 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<conditional_expr C, template<integral_value T, integral_value U>
+  template<conditional_expr C, integral_value T, integral_value U>
   EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b) noexcept
-      requires compatible_values<U, V>
   {
     return mask_op( EVE_CURRENT_API{}, cond, eve::bit_shr, a, b);
   }
