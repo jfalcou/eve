@@ -30,20 +30,24 @@ namespace eve::detail
     return add(a, b);
   }
 
-  template<real_value T, real_value U, value COND>
-  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), COND const &cond, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires compatible_values<U, V>
   {
-    return add[cond](a, b);
+    return mask_op( EVE_CURRENT_API{}, cond, eve::add, t, f);
   }
 
-  template<real_value T, real_value U, value COND, decorator D>
+  template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto
-  plus_(EVE_SUPPORTS(cpu_), COND const &cond, D const &, T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  plus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
+      requires compatible_values<U, V>
   {
-    return D()(add[cond])(a, b);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(add), t, f);
   }
+
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -52,4 +56,3 @@ namespace eve
 {
   template<simd_value T> EVE_FORCEINLINE auto operator+(T const &v) noexcept { return v; }
 }
-

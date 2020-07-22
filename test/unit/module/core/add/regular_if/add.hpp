@@ -23,6 +23,7 @@ TTS_CASE_TPL("Check eve::add[condition] return type", EVE_TYPE)
   TTS_EXPR_IS( (eve::add[ T() ](T(), T())), T);
   TTS_EXPR_IS( (eve::add[ eve::logical<T>() ](T(), T())), T);
   TTS_EXPR_IS( (eve::add[ true ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add[ eve::if_(true)](T(), T())), T);
 }
 
 TTS_CASE_TPL("Check eve::add[condition] behavior", EVE_TYPE)

@@ -50,7 +50,7 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                           , callable_object<eve::tag::allbits_, void, void> const &
+                           , callable_object<eve::tag::allbits_, void> const &
                            ) noexcept
   {
     return cond.mask();
@@ -59,15 +59,10 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                           , callable_object<eve::tag::mone_, void, void> const &
+                           , callable_object<eve::tag::mone_, void> const &
                            ) noexcept
   {
-//     if constexpr(has_native_abi_v<T>)
-//     {
-      if constexpr(integral_value<T>) return  cond.mask();
-      else                            return  eve::binarize(cond,Mone<value_type_t<T>>());
-//     }
-//     else return  apply_over(binarize, cond, eve::mone_);
+    if constexpr(integral_value<T>) return  cond.mask();
+    else                            return  eve::binarize(cond,Mone<value_type_t<T>>());
   }
 }
-

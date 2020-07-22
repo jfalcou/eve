@@ -27,10 +27,9 @@ namespace eve
     }
     else
     {
-      return T([](auto i, auto c) { return i; } );
+      return T([](auto i, auto ) { return i; } );
     }
   }
 
   EVE_MAKE_NAMED_CONSTANT(iota_, Iota);
 }
-

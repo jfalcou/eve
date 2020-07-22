@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_mask.hpp>
@@ -57,47 +58,16 @@ namespace eve::detail
   }
 
   // -----------------------------------------------------------------------------------------------
-  // Basic masked
-  template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(cpu_)
-                                  , COND const & cond
-                                  , T const &v) noexcept
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(scalar_value<COND>) return cond ? inc(v) : v;
-      else if constexpr(integral_value<T>)
-      {
-         return v - (bit_mask(bit_cast(cond,as(v))));
-      }
-      else if constexpr(floating_value<T>)  return if_else(cond, inc(v), v);
-    }
-    else                                    return apply_over(inc, cond, v);
+    return mask_op( EVE_CURRENT_API{}, cond, eve::inc, t);
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // saturated masked
-  template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(cpu_)
-                                  , COND const & cond
-                                  , saturated_type const &
-                                  , T const &v) noexcept
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
   {
-//     if constexpr(has_native_abi_v<T>)
-//     {
-      if constexpr(floating_value<T>) return if_else(cond, inc(v), v);
-      else
-      {
-        auto tst = is_not_equal(Valmax(as(v)), v);
-             if constexpr(scalar_value<COND>)  return cond ? inc[tst](v) : v;
-        else if constexpr(integral_value<T>)
-        {
-          return inc[ tst && cond ](v);
-        }
-
-      }
-//     }
-//     else  return apply_over(inc, saturated_type(), cond, v);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::inc), t);
   }
 }
-

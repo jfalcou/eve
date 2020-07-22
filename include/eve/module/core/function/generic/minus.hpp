@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_xor.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/constant/signmask.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/concept/value.hpp>
@@ -45,23 +46,20 @@ namespace eve::detail
     else  { return apply_over(minus, a); }
   }
 
-  template<real_value T,  typename COND>
-  EVE_FORCEINLINE constexpr T minus_(EVE_SUPPORTS(cpu_)
-                                    , COND const & cond
-                                    , T const &a) noexcept
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto minus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(scalar_value<T>)
-      {
-        return cond ? static_cast<T>(-a) : a;
-      }
-      else
-      {
-        return if_else(cond, minus(a), a);
-      }
-    }
-    else  { return apply_over(minus, cond, a); }
+    return mask_op( EVE_CURRENT_API{}, cond, eve::minus, t);
+  }
+
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto minus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires compatible_values<U, V>
+  {
+    auto substract =  [](auto x, auto y){return x-y;};
+    return mask_op( EVE_CURRENT_API{}, cond, substract, t, f);
   }
 }
 
@@ -74,4 +72,3 @@ namespace eve
     return minus(v);
   }
 }
-

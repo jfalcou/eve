@@ -14,6 +14,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/if_else.hpp>
@@ -68,56 +69,18 @@ namespace eve::detail
     return oneminus(regular_type(), v);
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // saturated masked
-  template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T
-  oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, saturated_type const &, T const &v) noexcept
-  {
-    using elt_t = element_type_t<T>;
-    if constexpr( floating_value<elt_t> )
-    {
-      return if_else(cond, oneminus(v), v);
-    }
-    else
-    {
-      if constexpr( scalar_value<COND> )
-      {
-        return cond ? saturated_(oneminus)(v) : v;
-      }
-      else
-      {
-        return if_else(cond, saturated_(oneminus)(v), v);
-      }
-    }
-  }
 
   // -----------------------------------------------------------------------------------------------
-  // Basic masked
-  template<real_value T, value COND>
-  EVE_FORCEINLINE constexpr T oneminus_(EVE_SUPPORTS(cpu_), COND const &cond, T const &v) noexcept
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
-    {
-      using elt_t = element_type_t<T>;
-      if constexpr( floating_value<elt_t> )
-      {
-        return if_else(cond, oneminus(v), v);
-      }
-      else
-      {
-        if constexpr( scalar_value<COND> )
-        {
-          return cond ? One(as(v)) - v : v;
-        }
-        else
-        {
-          return if_else(cond, One(as(v)) - v, v);
-        }
-      }
-    }
-    else
-      return apply_over(oneminus, cond, v);
+    return mask_op( EVE_CURRENT_API{}, cond, eve::oneminus, t);
+  }
+
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::oneminus), t);
   }
 }
-

@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
@@ -51,31 +52,13 @@ namespace eve::detail
     return bit_or(a, bit_not(b)); // fallback never taken if proper intrinsics are at hand
   }
 
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_ornot_(EVE_SUPPORTS(cpu_)
-                           , T const & cond
-                           , U const & t
-                           , V const & f) noexcept
-  requires bit_compatible_values<U, V>
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto bit_ornot_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_ornot(t, f));
-         if constexpr(scalar_value<T>) return  cond ? bit_ornot(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return  if_else(cond,bit_ornot(t, f), t);
+    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_ornot, t, f);
   }
 
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_ornot_(EVE_SUPPORTS(cpu_)
-                           , not_t<T> const & cond
-                           , U const & t
-                           , V const & f) noexcept
-  requires bit_compatible_values<U, V>
-  {
-    using r_t = decltype(bit_ornot(t, f));
-         if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : bit_ornot(t, f);
-    else if constexpr(simd_value<T>)   return  if_else(cond.value,t, bit_ornot(t, f));
-  }
 }
-
