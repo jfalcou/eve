@@ -113,11 +113,6 @@ namespace eve
     struct delay_t {};
 
     //==============================================================================================
-    // Helper for conditional function negation optimization
-    // TODO REMOVE WHEN ALL CONDITIONAL GOT FIXED
-    template<typename T> struct not_t { T value; };
-
-    //==============================================================================================
     // Extension point for centralizing asserts & static_asserts
     template<typename Tag, typename... Args>
     void check(delay_t const&, Tag const&, Args const&... ) {}
