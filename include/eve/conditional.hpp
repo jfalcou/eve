@@ -11,6 +11,8 @@
 #pragma once
 
 #include <eve/as.hpp>
+#include <eve/traits.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve
 {

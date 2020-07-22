@@ -17,30 +17,30 @@
 #include <type_traits>
 #include <algorithm>
 
-TTS_CASE_TPL("Check eve::dec[condition] return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::bitofsign[condition] return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::dec[ T() ](T())               , T);
-  TTS_EXPR_IS( eve::dec[ eve::logical<T>() ](T()) , T);
-  TTS_EXPR_IS( eve::dec[ true ](T())              , T);
+  TTS_EXPR_IS( eve::bitofsign[ T() ](T())               , T);
+  TTS_EXPR_IS( eve::bitofsign[ eve::logical<T>() ](T()) , T);
+  TTS_EXPR_IS( eve::bitofsign[ true ](T())              , T);
 }
 
-TTS_CASE_TPL("Check eve::dec[condition] behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::bitofsign[condition] behavior", EVE_TYPE)
 {
   T tv{2};
   auto t = eve::True<T>();
   auto f = eve::False<T>();
 
   // All basic TRUE
-  TTS_EQUAL(eve::dec[ 1 ](tv)     , eve::dec(tv));
-  TTS_EQUAL(eve::dec[ 1.0 ](tv)   , eve::dec(tv));
-  TTS_EQUAL(eve::dec[ true ](tv)  , eve::dec(tv));
-  TTS_EQUAL(eve::dec[ t ](tv)     , eve::dec(tv));
+  TTS_EQUAL(eve::bitofsign[ 1 ](tv)     , eve::bitofsign(tv));
+  TTS_EQUAL(eve::bitofsign[ 1.0 ](tv)   , eve::bitofsign(tv));
+  TTS_EQUAL(eve::bitofsign[ true ](tv)  , eve::bitofsign(tv));
+  TTS_EQUAL(eve::bitofsign[ t ](tv)     , eve::bitofsign(tv));
 
   // All basic FALSE
-  TTS_EQUAL(eve::dec[ 0 ](tv)     , tv);
-  TTS_EQUAL(eve::dec[ 0.0 ](tv)   , tv);
-  TTS_EQUAL(eve::dec[ false ](tv) , tv);
-  TTS_EQUAL(eve::dec[ f ](tv)     , tv);
+  TTS_EQUAL(eve::bitofsign[ 0 ](tv)     , tv);
+  TTS_EQUAL(eve::bitofsign[ 0.0 ](tv)   , tv);
+  TTS_EQUAL(eve::bitofsign[ false ](tv) , tv);
+  TTS_EQUAL(eve::bitofsign[ f ](tv)     , tv);
 
   // Mixed case
   eve::as_logical_t<T> m;
@@ -48,5 +48,5 @@ TTS_CASE_TPL("Check eve::dec[condition] behavior", EVE_TYPE)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::dec[ m ](tv) , eve::if_else(m,eve::dec(tv), tv) );
+  TTS_EQUAL(eve::bitofsign[ m ](tv) , eve::if_else(m,eve::bitofsign(tv), tv) );
 }
