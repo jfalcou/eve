@@ -80,8 +80,7 @@ namespace eve::detail
     }
     z = eve::fma(xx, z, xx);
     z = add[flag2]     (z, Ieee_constant<T, 0XB2BBBD2EU, 0X3C81A62633145C07ULL>());  //pio_4lo
-    z = add.not_[flag1](z, Ieee_constant<T,0XB33BBD2EU, 0X3C91A62633145C07ULL>());   //pio_2lo
+    z = add[if_not_(flag1)](z, Ieee_constant<T,0XB33BBD2EU, 0X3C91A62633145C07ULL>());   //pio_2lo
     return yy + z;
   }
 }
-
