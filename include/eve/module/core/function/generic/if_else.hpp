@@ -41,7 +41,7 @@ namespace eve::detail
     }
     else if constexpr(simd_value<T>)
     {
-           if constexpr(has_aggregated_abi_v<V>||has_aggregated_abi_v<U>) return aggregate(if_else, cond, t, f);
+      if constexpr(has_aggregated_abi_v<V>||has_aggregated_abi_v<U>) return map(if_else, cond, t, f);//aggregate(if_else, cond, t, f);
       else if constexpr(has_emulated_abi_v<V>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
       else if constexpr(scalar_value<U> && scalar_value<V>)
       {
@@ -56,9 +56,9 @@ namespace eve::detail
       {
         return if_else(is_nez(cond), V(t), f);
       }
-      else
+      else if constexpr(simd_value<U> && simd_value<V>)
       {
-        return T();
+        return bit_select(bit_mask(cond), t, f);
       }
     }
   }
