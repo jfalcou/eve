@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/log10.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(log10_, log10);
+}
+
 #include <eve/module/math/function/generic/log10.hpp>
 
 #if defined(EVE_HW_X86)

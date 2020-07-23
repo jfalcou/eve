@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/sub.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sub_, sub);
+}
+
 #include <eve/module/core/function/generic/sub.hpp>
 
 #if defined(EVE_HW_X86)

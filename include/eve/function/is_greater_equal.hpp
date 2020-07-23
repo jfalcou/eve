@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_greater_equal.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_greater_equal_, is_greater_equal);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/is_greater_equal.hpp>
 

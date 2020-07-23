@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/trunc.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(trunc_, trunc);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/trunc.hpp>
 

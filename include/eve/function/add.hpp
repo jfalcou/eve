@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/add.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(add_, add);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/add.hpp>
 

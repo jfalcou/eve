@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/tanpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(tanpi_, tanpi);
+}
+
 #include <eve/module/math/function/generic/tanpi.hpp>
 

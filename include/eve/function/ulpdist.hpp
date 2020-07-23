@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/ulpdist.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
+}
+
 #include <eve/module/core/function/generic/ulpdist.hpp>
 

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_mask.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
+}
+
 #include <eve/module/core/function/generic/bit_mask.hpp>
 

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_not_finite.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_finite_, is_not_finite);
+}
+
 #include <eve/module/core/function/generic/is_not_finite.hpp>
 

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/logical_notand.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
+}
+
 #include <eve/module/core/function/generic/logical_notand.hpp>
 

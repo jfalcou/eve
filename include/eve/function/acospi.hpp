@@ -10,6 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acospi.hpp>
-#include <eve/module/math/function/generic/acospi.hpp>
+#include <eve/detail/overload.hpp>
 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acospi_, acospi);
+}
+
+#include <eve/module/math/function/generic/acospi.hpp>

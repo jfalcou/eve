@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/radinpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(radinpi_, radinpi);
+}
+
 #include <eve/module/core/function/generic/radinpi.hpp>
 

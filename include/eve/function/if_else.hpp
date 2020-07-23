@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/if_else.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(if_else_, if_else);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/if_else.hpp>
 

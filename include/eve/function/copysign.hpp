@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/copysign.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(copysign_, copysign);
+}
+
 #include <eve/module/core/function/generic/copysign.hpp>
 

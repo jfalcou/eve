@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_not.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_not_, bit_not);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/bit_not.hpp>
 

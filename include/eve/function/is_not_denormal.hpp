@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_not_denormal.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_denormal_, is_not_denormal);
+}
+
 #include <eve/module/core/function/generic/is_not_denormal.hpp>
 

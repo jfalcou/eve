@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/frexp.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(frexp_, frexp);
+}
+
 #include <eve/module/core/function/generic/frexp.hpp>
 

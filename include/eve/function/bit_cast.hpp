@@ -9,8 +9,14 @@
 **/
 //==================================================================================================
 #pragma once
-
 #include <eve/function/definition/bit_cast.hpp>
+// #include <eve/detail/overload.hpp>
+
+// namespace eve
+// {
+//   EVE_MAKE_CALLABLE(bit_cast_, bit_cast);
+// }
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/bit_cast.hpp>
 
@@ -25,5 +31,3 @@
 #if defined(EVE_HW_ARM)
 #  include <eve/module/core/function/simd/arm/neon/bit_cast.hpp>
 #endif
-
-

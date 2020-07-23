@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/expm1.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(expm1_, expm1);
+}
+
 #include <eve/module/math/function/generic/expm1.hpp>
 

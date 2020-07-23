@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/ifnot_else.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ifnot_else_, ifnot_else);
+}
+
 #include <eve/module/core/function/generic/ifnot_else.hpp>
 

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sindcosd.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sindcosd_, sindcosd);
+}
+
 #include <eve/module/math/function/generic/sindcosd.hpp>
 

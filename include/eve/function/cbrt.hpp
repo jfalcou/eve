@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/cbrt.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cbrt_, cbrt);
+}
+
 #include <eve/module/core/function/generic/cbrt.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/negate.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(negate_, negate);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/negate.hpp>
 

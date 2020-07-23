@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_eqz.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
+}
+
 #include <eve/module/core/function/generic/is_eqz.hpp>
 

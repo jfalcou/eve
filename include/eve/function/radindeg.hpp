@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/radindeg.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(radindeg_, radindeg);
+}
+
 #include <eve/module/core/function/generic/radindeg.hpp>
 

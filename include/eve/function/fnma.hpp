@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/fnma.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(fnma_, fnma);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/fnma.hpp>
 

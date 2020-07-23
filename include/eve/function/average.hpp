@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/average.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(average_, average);
+}
+
 #include <eve/module/core/function/generic/average.hpp>
 
 #if defined(EVE_HW_X86)

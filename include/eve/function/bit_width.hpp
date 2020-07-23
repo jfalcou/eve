@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_width.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_width_, bit_width);
+}
+
 #include <eve/module/core/function/generic/bit_width.hpp>
 

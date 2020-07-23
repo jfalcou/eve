@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_ltz.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
+}
+
 #include <eve/module/core/function/generic/is_ltz.hpp>
 

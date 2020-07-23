@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sinhc.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sinhc_, sinhc);
+}
+
 #include <eve/module/math/function/generic/sinhc.hpp>

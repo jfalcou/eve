@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/asinh.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(asinh_, asinh);
+}
+
 #include <eve/module/math/function/generic/asinh.hpp>
 

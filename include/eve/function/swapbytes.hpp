@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/swapbytes.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(swapbytes_, swapbytes);
+}
+
 #include <eve/module/core/function/scalar/swapbytes.hpp>
 //#include <eve/module/core/function/simd/swapbytes.hpp>
 

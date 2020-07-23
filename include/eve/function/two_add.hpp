@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/two_add.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(two_add_, two_add);
+}
+
 #include <eve/module/core/function/generic/two_add.hpp>
 

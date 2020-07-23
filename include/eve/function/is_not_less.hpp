@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_not_less.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_less_, is_not_less);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/is_not_less.hpp>
 

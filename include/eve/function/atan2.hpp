@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/atan2.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(atan2_, atan2);
+}
+
 #include <eve/module/math/function/generic/atan2.hpp>
 

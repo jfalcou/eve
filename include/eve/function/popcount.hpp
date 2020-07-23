@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/popcount.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(popcount_, popcount);
+}
+
 #include <eve/module/core/function/generic/popcount.hpp>
 
 #if defined(EVE_HW_X86)

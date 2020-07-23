@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/signnz.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(signnz_, signnz);
+}
+
 #include <eve/module/core/function/generic/signnz.hpp>
 

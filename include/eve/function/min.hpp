@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/min.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(min_, min);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/min.hpp>
 

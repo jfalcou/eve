@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_or.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_or_, bit_or);
+}
+
 #include <eve/module/core/function/generic/bit_or.hpp>
 

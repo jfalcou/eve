@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/nbtrue.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(nbtrue_, nbtrue);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/algorithm/function/generic/nbtrue.hpp>
 

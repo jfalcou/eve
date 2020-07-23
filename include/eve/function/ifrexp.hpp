@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/ifrexp.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
+}
+
 #include <eve/module/core/function/generic/ifrexp.hpp>
 

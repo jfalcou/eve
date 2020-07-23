@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/slice_low.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(slice_low_, slice_low);
+}
+
 #include <eve/module/core/function/scalar/slice_low.hpp>
 //#include <eve/module/core/function/simd/slice_low.hpp>
 

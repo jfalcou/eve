@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/nextafter.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(nextafter_, nextafter);
+}
+
 #include <eve/module/core/function/generic/nextafter.hpp>
 

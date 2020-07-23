@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sqr_abs.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sqr_abs_, sqr_abs);
+}
+
 #include <eve/module/core/function/generic/sqr_abs.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/rec.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(rec_, rec);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/rec.hpp>
 

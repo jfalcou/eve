@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/countl_one.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(countl_one_, countl_one);
+}
+
 #include <eve/module/core/function/generic/countl_one.hpp>
 

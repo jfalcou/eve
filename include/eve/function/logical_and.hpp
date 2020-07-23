@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/logical_and.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_and_, logical_and);
+}
+
 #include <eve/module/core/function/generic/logical_and.hpp>
 

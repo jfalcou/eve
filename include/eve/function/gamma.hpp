@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/gamma.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(gamma_, gamma);
+}
+
 #include <eve/module/special/function/generic/gamma.hpp>
 

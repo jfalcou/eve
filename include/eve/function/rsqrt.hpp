@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/rsqrt.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(rsqrt_, rsqrt);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/rsqrt.hpp>
 

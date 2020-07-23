@@ -13,7 +13,13 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/definition/lookup.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(lookup_, lookup);
+}
+
 
 namespace eve::detail
 {

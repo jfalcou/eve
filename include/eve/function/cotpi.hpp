@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/cotpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cotpi_, cotpi);
+}
+
 #include <eve/module/math/function/generic/cotpi.hpp>
 
 
