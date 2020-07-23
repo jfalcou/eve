@@ -30,5 +30,8 @@ namespace eve
       EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
     }
   }
+  EVE_MAKE_CALLABLE(clamp_, clamp);
+
+}
 
 #include <eve/module/core/function/generic/clamp.hpp>

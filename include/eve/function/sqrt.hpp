@@ -32,6 +32,9 @@ namespace eve
     }
   }
 
+  EVE_MAKE_CALLABLE(sqrt_, sqrt);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/sqrt.hpp>
 
