@@ -10,6 +10,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
@@ -53,4 +54,3 @@ namespace eve::detail
     return mask_op( EVE_CURRENT_API{}, cond, eve::sqrt, t);
   }
 }
-
