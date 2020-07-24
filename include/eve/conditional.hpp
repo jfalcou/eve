@@ -21,10 +21,10 @@ namespace eve
   //================================================================================================
   template<typename T> concept conditional_expr = requires(T a)
   {
-    { T::has_alternative      };
-    { T::is_inverted          };
-    { a.mask(as_<int>())      };
-    { a.condition(as_<int>()) };
+    { T::has_alternative  };
+    { T::is_inverted      };
+    { T::is_complete      };
+    { a.mask(as_<int>())  };
   };
 
   //================================================================================================
@@ -34,11 +34,11 @@ namespace eve
   {
     static constexpr bool has_alternative = true;
     static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
 
     if_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
 
-    template<typename T> auto mask(as_<T> const&)       const { return condition_; }
-    template<typename T> auto condition(as_<T> const&)  const { return condition_; }
+    template<typename T> auto mask(as_<T> const&)  const { return condition_; }
 
     V alternative;
     C condition_;
@@ -51,11 +51,11 @@ namespace eve
   {
     static constexpr bool has_alternative = true;
     static constexpr bool is_inverted     = true;
+    static constexpr bool is_complete     = false;
 
     if_not_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
 
-    template<typename T> auto mask(as_<T> const&)       const { return !condition_;  }
-    template<typename T> auto condition(as_<T> const&)  const { return condition_;   }
+    template<typename T> auto mask(as_<T> const&) const { return condition_;  }
 
     V alternative;
     C condition_;
@@ -68,14 +68,14 @@ namespace eve
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
 
     if_(C const& c) : condition_(c) {}
 
     template<typename V>
     auto else_(V v) const { return if_or_(condition_,v); }
 
-    template<typename T> auto mask(as_<T> const&)       const { return condition_; }
-    template<typename T> auto condition(as_<T> const&)  const { return condition_; }
+    template<typename T> auto mask(as_<T> const&)  const { return condition_; }
 
     C condition_;
   };
@@ -87,99 +87,44 @@ namespace eve
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = true;
+    static constexpr bool is_complete     = false;
 
     if_not_(C const& c) : condition_(c) {}
 
     template<typename V>
     auto else_(V v) const { return if_not_or_(condition_,v); }
 
-    template<typename T> auto mask(as_<T> const&)       const { return !condition_; }
-    template<typename T> auto condition(as_<T> const&)  const { return condition_;  }
+    template<typename T> auto mask(as_<T> const&)  const { return condition_;  }
 
     C condition_;
   };
 
   //================================================================================================
-  // Helper structure to encode conditional based on indexing
+  // Helper structure to encode conditional expression selecting all or nothing
   //================================================================================================
   template<bool IsNone> struct ignore_
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = IsNone;
+    static constexpr bool is_complete     = true;
 
     template<typename T> auto mask(as_<T> const&) const
     {
       return eve::as_logical_t<T>(is_inverted);
     }
-
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
   };
 
-  inline constexpr ignore_<false> ignore_all = {};
-  inline constexpr ignore_<false> keep_none  = {};
+  inline constexpr ignore_<false> ignore_all  = {};
+  inline constexpr ignore_<true>  ignore_none = {};
 
-  inline constexpr ignore_<true> ignore_none = {};
-  inline constexpr ignore_<true> keep_all    = {};
-
-  struct ignore_between
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-
-    constexpr ignore_between(int b, int e) noexcept : begin_(b), end_(e) {}
-
-    template<typename T> auto mask(as_<T> const&) const
-    {
-      auto const i = Iota(eve::as_<T>());
-      return (i < begin_) || (i > end_);
-    }
-
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
-
-    int begin_, end_;
-  };
-
-  struct keep_between
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-
-    constexpr keep_between(int b, int e) noexcept : begin_(b), end_(e) {}
-
-    template<typename T> auto mask(as_<T> const&) const
-    {
-      auto const i = Iota(eve::as_<T>());
-      return (i >= begin_) && (i <= end_);
-    }
-
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
-
-    int begin_, end_;
-  };
-
-  struct keep_between_relative
-  {
-    static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = false;
-
-    constexpr keep_between_relative(int b, int e) noexcept : begin_(b), end_(e) {}
-
-    template<typename T> auto mask(as_<T> const&) const
-    {
-      constexpr auto card = cardinal_v<T> - 1;
-      auto const i = Iota(eve::as_<T>());
-      return (i >= begin_) && (i <= (card-end_));
-    }
-
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
-
-    int begin_, end_;
-  };
-
+  //================================================================================================
+  // Helper structure to encode ignoring the last N elements
+  //================================================================================================
   struct ignore_last
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
 
     constexpr ignore_last(int n) noexcept : index_(n) {}
 
@@ -189,15 +134,17 @@ namespace eve
       return Iota(eve::as_<T>()) < (card-index_);
     }
 
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
-
     int index_;
   };
 
+  //================================================================================================
+  // Helper structure to encode ignoring the first N elements
+  //================================================================================================
   struct ignore_first
   {
     static constexpr bool has_alternative = false;
     static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
 
     constexpr ignore_first(int n) noexcept : index_(n) {}
 
@@ -206,18 +153,79 @@ namespace eve
       return Iota(eve::as_<T>()) >= index_;
     }
 
-    template<typename T> auto condition(as_<T> const& tgt)  const { return mask(tgt);  }
-
     int index_;
   };
 
-  constexpr auto operator&&( ignore_first b, ignore_last e) noexcept
+  //================================================================================================
+  // Helper structure to encode ignoring elements in between two index
+  //================================================================================================
+  template<bool isRelative> struct ignore_between
   {
-    return keep_between_relative(b.index_,e.index_);
-  }
+    static constexpr bool has_alternative = false;
+    static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
 
-  constexpr auto operator&&( ignore_last e, ignore_first b) noexcept
+    constexpr ignore_between(int b, int e) noexcept : begin_(b), end_(e) {}
+
+    constexpr ignore_between(ignore_first b, ignore_last e) noexcept
+            : begin_(b.index_), end_(e.index_)
+    {}
+
+    template<typename T> auto mask(as_<T> const&) const
+    {
+      auto const i = Iota(eve::as_<T>());
+
+      if constexpr(isRelative)
+      {
+        constexpr auto card = cardinal_v<T> - 1;
+        return (i < begin_) || (i > (card-end_));
+      }
+      else
+      {
+        return (i < begin_) || (i > end_);
+      }
+    }
+
+    int begin_, end_;
+  };
+
+  ignore_between(int,int)                   -> ignore_between<false>;
+  ignore_between(ignore_first, ignore_last) -> ignore_between<true>;
+
+  //================================================================================================
+  // Helper structure to encode keeping elements in between two index and ignoring the rest
+  // with optional remembrance of relative indexing
+  //================================================================================================
+  template<bool isRelative> struct keep_between
   {
-    return keep_between_relative(b.index_,e.index_);
-  }
+    static constexpr bool has_alternative = false;
+    static constexpr bool is_inverted     = false;
+    static constexpr bool is_complete     = false;
+
+    constexpr keep_between(int b, int e) noexcept : begin_(b), end_(e) {}
+
+    constexpr keep_between(ignore_first b, ignore_last e) noexcept
+            : begin_(b.index_), end_(e.index_)
+    {}
+
+    template<typename T> auto mask(as_<T> const&) const
+    {
+      auto const i = Iota(eve::as_<T>());
+
+      if constexpr(isRelative)
+      {
+        constexpr auto card = cardinal_v<T> - 1;
+        return (i >= begin_) && (i <= (card-end_));
+      }
+      else
+      {
+        return (i >= begin_) && (i <= end_);
+      }
+    }
+
+    int begin_, end_;
+  };
+
+  keep_between(int,int)                   -> keep_between<false>;
+  keep_between(ignore_first, ignore_last) -> keep_between<true>;
 }

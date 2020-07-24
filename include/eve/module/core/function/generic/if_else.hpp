@@ -83,20 +83,21 @@ namespace eve::detail
   EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& f )
   requires compatible_values<U, V>
   {
-    using r_t             = std::conditional_t< simd_value<U>, U, V>;
-    auto const condition  = cond.condition(as_<r_t>());
-
-    if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
-    else                            { return if_else(condition, t, f ); }
-  }
-
-  template<bool IsNone, value U, value V>
-  EVE_FORCEINLINE auto if_else_(EVE_SUPPORTS(cpu_), ignore_<IsNone> const&, U const& t, V const& f )
-  requires compatible_values<U, V>
-  {
     using r_t = std::conditional_t< simd_value<U>, U, V>;
-    if constexpr( IsNone )  { return r_t(f); }
-    else                    { return r_t(t); }
+
+    // If the ignore/keep is complete we can jump over if_else
+    if constexpr( C::is_complete )
+    {
+      if constexpr(C::is_inverted)  { return r_t(t); }
+      else                          { return r_t(f); }
+    }
+    else
+    {
+      auto const condition  = cond.mask(as_<r_t>());
+
+      if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
+      else                            { return if_else(condition, t, f ); }
+    }
   }
 
   //------------------------------------------------------------------------------------------------

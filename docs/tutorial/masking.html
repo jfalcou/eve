@@ -255,9 +255,127 @@ element index inside a [SIMD value](reference/concepts.html#simd_value) than its
 One may want for example to not compute an expression on the first and last element of such
 [SIMD values](reference/concepts.html#simd_value).
 
+Let's write a function that compute the difference between two vectors in multiple scenario: not
+using the first elements and not using the last elements.
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <eve/function/sub.hpp>
+#include <eve/wide.hpp>
+
+using w_t = eve::wide<float, eve::fixed<4>>;
+
+auto sub_not_first( w_t const& a, w_t const& b )
+{
+  return eve::sub[ eve::ignore_first(1) ](a,b);
+}
+
+auto sub_not_last( w_t const& a, w_t const& b )
+{
+  return eve::sub[ eve::ignore_last(1) ](a,b);
+}
+
+int main()
+{
+  w_t v = { 10, 20, 30, 40 };
+  w_t w = {  4,  3,  2,  1 };
+
+  std::cout << sub_not_first(v,w) << "\n";
+  std::cout << sub_not_last(v,w) << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+The output is then:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+(10, 17, 28, 39)
+(6, 17, 30, 40)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+!!! Tip
+    The [ignore_first](../reference/types/mask.html#eve::ignore_first) and
+    [ignore_last](../reference/types/mask.html#eve::ignore_last) conditional takes a number of element
+    as parameters so they can be applied generically on any size of [SIMD value](reference/concepts.html#simd_value)
+
+But what if we want to apply our operation to every element but the first and last one ? Clearly,
+calling two operations with two different conditional mask is sub-optimal. **EVE** provides some
+more conditional expression to express just that like [keep_between](../reference/types/mask.html#eve::keep_between).
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <eve/function/sub.hpp>
+#include <eve/wide.hpp>
+
+using w_t = eve::wide<float, eve::fixed<4>>;
+
+auto sub_not_first_nor_last( w_t const& a, w_t const& b )
+{
+  return eve::sub[ eve::keep_between(1,2) ](a,b);
+}
+
+int main()
+{
+  w_t v = { 10, 20, 30, 40 };
+  w_t w = {  4,  3,  2,  1 };
+
+  std::cout << sub_not_first_nor_last(v,w) << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+The output is then:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+(10, 17, 28, 40)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+In this case, we used [keep_between](../reference/types/mask.html#eve::keep_between) with ad-hoc
+indexes, which makes the code a bit too size dependent. One can also use the same conditional but
+use [ignore_first](../reference/types/mask.html#eve::ignore_first) and [ignore_last](../reference/types/mask.html#eve::ignore_last) as parameters, keeping the relative aspect of the code.
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <eve/function/sub.hpp>
+#include <eve/wide.hpp>
+
+using w_t = eve::wide<float, eve::fixed<4>>;
+
+auto sub_not_first_nor_last( w_t const& a, w_t const& b )
+{
+  return eve::sub[ eve::keep_between(eve::ignore_first(1),eve::ignore_last(1)) ](a,b);
+}
+
+int main()
+{
+  w_t v = { 10, 20, 30, 40 };
+  w_t w = {  4,  3,  2,  1 };
+
+  std::cout << sub_not_first_nor_last(v,w) << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+The output is the same obviously:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+(10, 17, 28, 40)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
 
 Conclusion
 ====================================================================================================
+Conditional operations on [SIMD values](reference/concepts.html#simd_value) is a good way to
+keep a high level code over some complex computation. **EVE** provides different level of abstractions
+for such operations as well as various helpers to specify how the conditions can be computed based
+either on value or index.
+
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
