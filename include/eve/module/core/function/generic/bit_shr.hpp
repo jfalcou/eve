@@ -12,6 +12,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/shr.hpp>
@@ -50,5 +51,14 @@ namespace eve::detail
     else
       return apply_over(bit_shr, a, b);
   }
-}
 
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, integral_value T, integral_value U>
+  EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_shr, a, b);
+  }
+
+}

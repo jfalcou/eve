@@ -21,11 +21,15 @@
 #  endif
 #endif
 
-// Less sever forceinline so MSVC doesn't die
-#if defined(_MSC_VER)
-#  define EVE_MAYBE_FORCEINLINE inline
-#else
-#  define EVE_MAYBE_FORCEINLINE EVE_FORCEINLINE
+// Force a lambda function to be inline
+#if !defined(EVE_LAMBDA_FORCEINLINE)
+#  if defined(_MSC_VER)
+#    define EVE_LAMBDA_FORCEINLINE __forceinline
+#  elif defined(__GNUC__) && __GNUC__ > 3
+#    define EVE_LAMBDA_FORCEINLINE __attribute__((__always_inline__))
+#  else
+#    define EVE_LAMBDA_FORCEINLINE
+#  endif
 #endif
 
 // Captures math related options and translate to proper setup

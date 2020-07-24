@@ -76,5 +76,19 @@ namespace eve::detail
       return apply_over(saturated_(abs), a);
     }
   }
-}
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, eve::abs, t);
+  }
+
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::abs), t);
+  }
+
+}

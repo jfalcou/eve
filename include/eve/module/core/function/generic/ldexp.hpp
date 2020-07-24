@@ -16,6 +16,7 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/inc.hpp>
 #include <eve/function/is_less.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/trunc.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/bit_shl.hpp>

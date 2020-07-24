@@ -14,6 +14,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/meta/traits.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/function/operators.hpp>
@@ -140,71 +141,22 @@ namespace eve::detail
     }
   }
 
+
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), T const &cond, U const &t, V const &f) noexcept
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    using r_t = decltype(mul(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond ? mul(t, f) : r_t(t);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return mul(r_t(t), if_else(cond, r_t(f), eve::one_));
-    }
+    return mask_op( EVE_CURRENT_API{}, cond, eve::mul, t, f);
   }
 
-  template<value T, real_value U, real_value V>
+  template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto
-  mul_(EVE_SUPPORTS(cpu_), T const &cond, saturated_type const &, U const &t, V const &f) noexcept
+  mul_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    using r_t = decltype(saturated_(mul)(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond ? saturated_(mul)(t, f) : r_t(t);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return saturated_(mul)(r_t(t), if_else(cond, r_t(f), eve::one_));
-    }
-  }
-
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto
-  mul_(EVE_SUPPORTS(cpu_), not_t<T> const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    using r_t = decltype(mul(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond.value ? r_t(t) : mul(t, f);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return mul(r_t(t), if_else(cond.value, eve::one_, r_t(f)));
-    }
-  }
-
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_),
-                            not_t<T> const &cond,
-                            saturated_type const &,
-                            U const &t,
-                            V const &f) noexcept requires compatible_values<U, V>
-  {
-    using r_t = decltype(mul(t, f));
-    if constexpr( scalar_value<T> )
-    {
-      return cond.value ? r_t(t) : saturated_(mul)(t, f);
-    }
-    else if constexpr( simd_value<T> )
-    {
-      return saturated_(mul)(r_t(t), if_else(cond.value, eve::one_, r_t(f)));
-    }
+    return mask_op( EVE_CURRENT_API{}, cond, saturated_(mul), t, f);
   }
 }

@@ -31,13 +31,13 @@ namespace eve::detail
     else return apply_over(bit_not, v);
   }
 
-  template<value COND, real_value T>
-  EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_)
-                               ,  COND const & cond
-                               , T const &v) noexcept
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto bit_not_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    if constexpr(has_native_abi_v<T>) return branch<scalar_value<COND>>(cond, bit_not)(v);
-    else                    return apply_over(bit_not, cond, v);
+    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_not, t);
   }
 }
 
@@ -52,4 +52,3 @@ namespace eve
     return bit_not(v);
   }
 }
-

@@ -31,10 +31,10 @@ TTS_CASE_TPL("Check eve::dec[condition] behavior", EVE_TYPE)
   auto f = eve::False<T>();
 
   // All basic TRUE
-  TTS_EQUAL(eve::dec[ 1 ](tv)     , tv - 1);
-  TTS_EQUAL(eve::dec[ 1.0 ](tv)   , tv - 1);
-  TTS_EQUAL(eve::dec[ true ](tv)  , tv - 1);
-  TTS_EQUAL(eve::dec[ t ](tv)     , tv - 1);
+  TTS_EQUAL(eve::dec[ 1 ](tv)     , eve::dec(tv));
+  TTS_EQUAL(eve::dec[ 1.0 ](tv)   , eve::dec(tv));
+  TTS_EQUAL(eve::dec[ true ](tv)  , eve::dec(tv));
+  TTS_EQUAL(eve::dec[ t ](tv)     , eve::dec(tv));
 
   // All basic FALSE
   TTS_EQUAL(eve::dec[ 0 ](tv)     , tv);

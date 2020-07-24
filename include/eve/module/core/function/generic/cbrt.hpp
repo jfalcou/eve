@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/smallestposval.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/fma.hpp>
@@ -73,5 +74,14 @@ namespace eve::detail
     }
     else return apply_over(cbrt, x);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_value U>
+  EVE_FORCEINLINE auto cbrt_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, eve::cbrt, t);
+  }
+  
 }
 

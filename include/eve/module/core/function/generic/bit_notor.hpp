@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_not.hpp>
 #include <eve/concept/value.hpp>
@@ -51,28 +52,10 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
-                           , T const & cond
-                           , U const & t
-                           , V const & f) noexcept
-  requires bit_compatible_values<U, V>
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires bit_compatible_values<U, V>
   {
-    using r_t = decltype(bit_notor(t, f));
-         if constexpr(scalar_value<T>) return  cond ? bit_notor(t, f) : r_t(t);
-    else if constexpr(simd_value<T>)   return  if_else(cond,bit_notor(t, f), t);
-  }
-
-  template<value T, real_value U, real_value V>
-  EVE_FORCEINLINE auto bit_notor_(EVE_SUPPORTS(cpu_)
-                           , not_t<T> const & cond
-                           , U const & t
-                           , V const & f) noexcept
-  requires bit_compatible_values<U, V>
-  {
-    using r_t = decltype(bit_notor(t, f));
-         if constexpr(scalar_value<T>) return  cond.value ? r_t(t) : bit_notor(t, f);
-    else if constexpr(simd_value<T>)   return  if_else(cond.value,t, bit_notor(t, f));
+    return mask_op( EVE_CURRENT_API{}, cond, eve::bit_notor, t, f);
   }
 }
-

@@ -17,14 +17,14 @@
 #include <type_traits>
 #include <algorithm>
 
-TTS_CASE_TPL("Check eve::add.not_[condition] return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::add[if_not_(condition)] return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::add.not_[ T() ](T(), T())), T);
-  TTS_EXPR_IS( (eve::add.not_[ eve::logical<T>() ](T(), T())), T);
-  TTS_EXPR_IS( (eve::add.not_[ true ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add[ eve::if_not_(T()) ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add[ eve::if_not_(eve::logical<T>()) ](T(), T())), T);
+  TTS_EXPR_IS( (eve::add[ eve::if_not_(true) ](T(), T())), T);
 }
 
-TTS_CASE_TPL("Check eve::add.not_[condition] behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::add[if_not_(condition)] behavior", EVE_TYPE)
 {
   T tv{2};
   T fv{3};
@@ -32,16 +32,16 @@ TTS_CASE_TPL("Check eve::add.not_[condition] behavior", EVE_TYPE)
   auto f = eve::False<T>();
 
   // All basic TRUE
-  TTS_EQUAL(eve::add.not_[ 1 ](tv, fv)     , tv);
-  TTS_EQUAL(eve::add.not_[ 1.0 ](tv, fv)   , tv);
-  TTS_EQUAL(eve::add.not_[ true ](tv, fv)  , tv);
-  TTS_EQUAL(eve::add.not_[ t ](tv, fv)     , tv);
+  TTS_EQUAL(eve::add[ eve::if_not_(1)    ](tv, fv) , tv);
+  TTS_EQUAL(eve::add[ eve::if_not_(1.0)  ](tv, fv) , tv);
+  TTS_EQUAL(eve::add[ eve::if_not_(true) ](tv, fv) , tv);
+  TTS_EQUAL(eve::add[ eve::if_not_(t)    ](tv, fv) , tv);
 
   // All basic FALSE
-  TTS_EQUAL(eve::add.not_[ 0 ](tv, fv)     , tv + fv);
-  TTS_EQUAL(eve::add.not_[ 0.0 ](tv, fv)   , tv + fv);
-  TTS_EQUAL(eve::add.not_[ false ](tv, fv) , tv + fv);
-  TTS_EQUAL(eve::add.not_[ f ](tv, fv)     , tv + fv);
+  TTS_EQUAL(eve::add[ eve::if_not_(0)    ](tv, fv) , tv + fv );
+  TTS_EQUAL(eve::add[ eve::if_not_(0.0)  ](tv, fv) , tv + fv );
+  TTS_EQUAL(eve::add[ eve::if_not_(false)](tv, fv) , tv + fv );
+  TTS_EQUAL(eve::add[ eve::if_not_(f)    ](tv, fv) , tv + fv );
 
   // Mixed case
   eve::as_logical_t<T> m;
@@ -49,5 +49,5 @@ TTS_CASE_TPL("Check eve::add.not_[condition] behavior", EVE_TYPE)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::add.not_[ m ](tv, fv) , eve::if_else(m,tv, eve::add(tv, fv)) );
+  TTS_EQUAL(eve::add[ eve::if_not_(m )](tv, fv) , eve::if_else(m,tv, eve::add(tv, fv)) );
 }

@@ -14,6 +14,7 @@
 #include <eve/constant/half.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/bit_and.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/mul.hpp>
@@ -48,5 +49,15 @@ namespace eve::detail
    }
     else return  apply_over(average, a, b);
   }
-}
 
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto average_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
+      requires compatible_values<U, V>
+  {
+    return mask_op( EVE_CURRENT_API{}, cond, eve::average, t, f);
+  }
+
+}
