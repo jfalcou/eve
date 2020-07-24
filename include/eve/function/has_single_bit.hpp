@@ -10,11 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/function/is_pow2.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(has_single_bit_, has_single_bit);
+  EVE_ALIAS_CALLABLE(is_pow2_, has_single_bit);
 }
-
-

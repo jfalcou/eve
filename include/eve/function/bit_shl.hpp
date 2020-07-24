@@ -10,11 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/function/shl.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(bit_shl_, bit_shl);
+  EVE_ALIAS_CALLABLE(shl_, bit_shl);
 }
-
-
