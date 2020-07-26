@@ -32,7 +32,7 @@ namespace eve::detail
     else
     {
       [[maybe_unused]] Target that;
-      std::memcpy(&that, &a, sizeof(a));
+      std::memcpy((char*)&that, (char*)&a, sizeof(a));
       return that;
     }
   }
