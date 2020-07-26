@@ -11,10 +11,8 @@
 #pragma once
 
 #include <eve/detail/function/simd/lookup_helpers.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
-
-// TODO: later std::bit_cast
-#include <eve/module/core/function/simd/x86/bit_cast.hpp>
 
 // TODO: fix operator<< in operators.hpp
 #include <eve/function/shl.hpp>

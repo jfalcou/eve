@@ -11,12 +11,10 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-
-// TODO: std:bitcast instead
-#include <eve/module/core/function/generic/bit_cast.hpp>
+#include <eve/detail/concepts.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 
 namespace eve::detail
 {
