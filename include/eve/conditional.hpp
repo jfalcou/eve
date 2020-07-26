@@ -13,6 +13,7 @@
 #include <eve/as.hpp>
 #include <eve/traits.hpp>
 #include <eve/concept/value.hpp>
+#include <iosfwd>
 
 namespace eve
 {
@@ -40,6 +41,11 @@ namespace eve
 
     template<typename T> auto mask(as_<T> const&)  const { return condition_; }
 
+    friend std::ostream& operator<<(std::ostream& os, if_or_ const& c)
+    {
+      return os << "if( " << c.condition_ << " ) else ( " << c.alternative << " )";
+    }
+
     V alternative;
     C condition_;
   };
@@ -56,6 +62,11 @@ namespace eve
     if_not_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
 
     template<typename T> auto mask(as_<T> const&) const { return condition_;  }
+
+    friend std::ostream& operator<<(std::ostream& os, if_not_or_ const& c)
+    {
+      return os << "if( !" << c.condition_ << " ) else ( " << c.alternative << " )";
+    }
 
     V alternative;
     C condition_;
@@ -77,6 +88,11 @@ namespace eve
 
     template<typename T> auto mask(as_<T> const&)  const { return condition_; }
 
+    friend std::ostream& operator<<(std::ostream& os, if_ const& c)
+    {
+      return os << "if( " << c.condition_ << " )";
+    }
+
     C condition_;
   };
 
@@ -96,6 +112,11 @@ namespace eve
 
     template<typename T> auto mask(as_<T> const&)  const { return condition_;  }
 
+    friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
+    {
+      return os << "if( !" << c.condition_ << " )";
+    }
+
     C condition_;
   };
 
@@ -112,6 +133,12 @@ namespace eve
     {
       return eve::as_logical_t<T>(is_inverted);
     }
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_ const&)
+    {
+      if constexpr( is_inverted ) return os << "ignore_none";
+      else                        return os << "ignore_all";
+    }
   };
 
   inline constexpr ignore_<false> ignore_all  = {};
@@ -126,15 +153,20 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_last(int n) noexcept : index_(n) {}
+    constexpr ignore_last(int n) noexcept : count_(n) {}
 
     template<typename T> auto mask(as_<T> const&) const
     {
       constexpr auto card = cardinal_v<T> - 1;
-      return Iota(eve::as_<T>()) < (card-index_);
+      return Iota(eve::as_<T>()) < (card-count_);
     }
 
-    int index_;
+    friend std::ostream& operator<<(std::ostream& os, ignore_last const& c)
+    {
+      return os << "ignore_last( " << c.count_ << " )";
+    }
+
+    int count_;
   };
 
   //================================================================================================
@@ -146,14 +178,19 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_first(int n) noexcept : index_(n) {}
+    constexpr ignore_first(int n) noexcept : count_(n) {}
 
     template<typename T> auto mask(as_<T> const&) const
     {
-      return Iota(eve::as_<T>()) >= index_;
+      return Iota(eve::as_<T>()) >= count_;
     }
 
-    int index_;
+    friend std::ostream& operator<<(std::ostream& os, ignore_first const& c)
+    {
+      return os << "ignore_first( " << c.count_ << " )";
+    }
+
+    int count_;
   };
 
   //================================================================================================
@@ -168,7 +205,7 @@ namespace eve
     constexpr ignore_between(int b, int e) noexcept : begin_(b), end_(e) {}
 
     constexpr ignore_between(ignore_first b, ignore_last e) noexcept
-            : begin_(b.index_), end_(e.index_)
+            : begin_(b.count_), end_(e.count_)
     {}
 
     template<typename T> auto mask(as_<T> const&) const
@@ -183,6 +220,18 @@ namespace eve
       else
       {
         return (i < begin_) || (i > end_);
+      }
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_between const& c)
+    {
+      if constexpr(isRelative)
+      {
+        return os << "ignore_between( first(" << c.begin_ << "), last(" << c.end_ << ") )";
+      }
+      else
+      {
+        return os << "ignore_between( " << c.begin_ << ", " << c.end_ << " )";
       }
     }
 
@@ -205,7 +254,7 @@ namespace eve
     constexpr keep_between(int b, int e) noexcept : begin_(b), end_(e) {}
 
     constexpr keep_between(ignore_first b, ignore_last e) noexcept
-            : begin_(b.index_), end_(e.index_)
+            : begin_(b.count_), end_(e.count_)
     {}
 
     template<typename T> auto mask(as_<T> const&) const
@@ -220,6 +269,18 @@ namespace eve
       else
       {
         return (i >= begin_) && (i <= end_);
+      }
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, keep_between const& c)
+    {
+      if constexpr(isRelative)
+      {
+        return os << "keep_between( first(" << c.begin_ << "), last(" << c.end_ << ") )";
+      }
+      else
+      {
+        return os << "keep_between( " << c.begin_ << ", " << c.end_ << " )";
       }
     }
 
