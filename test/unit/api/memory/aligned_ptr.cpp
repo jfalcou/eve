@@ -77,12 +77,11 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 {
   TTS_WHEN("We initialize a aligned_ptr")
   {
-
-    type            value{42}, other_value{17};
+    type values[2] = {42,17};
     alignas(8) type extra_aligned_value{87};
 
-    eve::aligned_ptr<type>    ptr           = &value;
-    eve::aligned_ptr<type>    other_ptr     = &other_value;
+    eve::aligned_ptr<type>    ptr           = &values[0];
+    eve::aligned_ptr<type>    other_ptr     = &values[1];
     eve::aligned_ptr<type, 8> realigned_ptr = &extra_aligned_value;
 
     TTS_AND_THEN("we check the proper default alignment")
@@ -92,29 +91,29 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 
     TTS_AND_THEN("we check access to its pointee members")
     {
-      TTS_EQUAL(ptr.get(), &value);
-      TTS_EQUAL(ptr->method(), &value);
+      TTS_EQUAL(ptr.get(), &values[0]);
+      TTS_EQUAL(ptr->method(), &values[0]);
       TTS_EQUAL(ptr->member, 42);
       ptr->member = 69;
-      TTS_EQUAL(value.member, 69);
+      TTS_EQUAL(values[0].member, 69);
     }
 
     TTS_AND_THEN("we check re-assignment from raw pointer")
     {
-      ptr = &other_value;
-      TTS_EQUAL(ptr->method(), &other_value);
+      ptr = &values[1];
+      TTS_EQUAL(ptr->method(), &values[1]);
       TTS_EQUAL(ptr->member, 17);
       ptr->member = 101;
-      TTS_EQUAL(other_value.member, 101);
+      TTS_EQUAL(values[1].member, 101);
     }
 
     TTS_AND_THEN("we check re-assignment from other aligned_ptr")
     {
       ptr = other_ptr;
-      TTS_EQUAL(ptr->method(), &other_value);
+      TTS_EQUAL(ptr->method(), &values[1]);
       TTS_EQUAL(ptr->member, 17);
       ptr->member = 99;
-      TTS_EQUAL(other_value.member, 99);
+      TTS_EQUAL(values[1].member, 99);
     }
 
     TTS_AND_THEN("we check re-assignment from other aligned_ptr of different alignment")
@@ -128,24 +127,23 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 
     TTS_AND_THEN("we check subscripting operator")
     {
-      ptr[ 0 ] = other_value;
-      TTS_EQUAL(ptr->method(), &value);
+      ptr[ 0 ] = values[1];
+      TTS_EQUAL(ptr->method(), &values[0]);
       TTS_EQUAL(ptr->member, 17);
       ptr->member = 99;
-      TTS_EQUAL(value.member, 99);
+      TTS_EQUAL(values[0].member, 99);
     }
 
     TTS_AND_THEN("we check incrementing by valid value")
     {
       ptr += ptr.alignment();
-      TTS_EQUAL(ptr.get(), &value + ptr.alignment());
+      TTS_EQUAL(ptr.get(), &values[0] + ptr.alignment());
     }
 
     TTS_AND_THEN("we check decrementing by valid value")
     {
-      auto shifted = &value;
+      auto shifted = &values[1];
       shifted -= ptr.alignment();
-      ptr     -= ptr.alignment();
       TTS_EQUAL(ptr.get(), shifted);
     }
 
