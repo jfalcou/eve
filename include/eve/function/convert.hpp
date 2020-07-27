@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/convert.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(convert_, convert);
+}
+
 #include <eve/module/core/function/generic/convert.hpp>
 
 #if defined(EVE_HW_X86)

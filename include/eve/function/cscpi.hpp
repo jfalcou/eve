@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/cscpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cscpi_, cscpi);
+}
+
 #include <eve/module/math/function/generic/cscpi.hpp>

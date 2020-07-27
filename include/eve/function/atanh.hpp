@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/atanh.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(atanh_, atanh);
+}
+
 #include <eve/module/math/function/generic/atanh.hpp>
 

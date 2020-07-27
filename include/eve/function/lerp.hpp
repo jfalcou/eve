@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/lerp.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(lerp_, lerp);
+}
+
 #include <eve/module/core/function/generic/lerp.hpp>
 

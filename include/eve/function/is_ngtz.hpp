@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_ngtz.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ngtz_, is_ngtz);
+}
+
 #include <eve/module/core/function/generic/is_ngtz.hpp>
 

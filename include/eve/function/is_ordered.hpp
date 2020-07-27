@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_ordered.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/is_ordered.hpp>
 

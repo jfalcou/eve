@@ -10,5 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_shl.hpp>
+#include <eve/function/shl.hpp>
 
+namespace eve
+{
+  EVE_ALIAS_CALLABLE(shl_, bit_shl);
+}

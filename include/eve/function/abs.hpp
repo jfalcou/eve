@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/abs.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(abs_, abs);
+}
+
 #include <eve/module/core/function/generic/abs.hpp>
 
 #if defined(EVE_HW_X86)

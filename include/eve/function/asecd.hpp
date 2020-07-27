@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/asecd.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(asecd_, asecd);
+}
+
 #include <eve/module/math/function/generic/asecd.hpp>
 

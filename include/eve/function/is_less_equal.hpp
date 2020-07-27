@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_less_equal.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_less_equal_, is_less_equal);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/is_less_equal.hpp>
 

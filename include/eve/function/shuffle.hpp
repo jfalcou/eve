@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/shuffle.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(shuffle_, shuffle);
+}
+
 #include <eve/module/core/function/scalar/shuffle.hpp>
 //#include <eve/module/core/function/simd/shuffle.hpp>
 

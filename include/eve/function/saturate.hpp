@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/saturate.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(saturate_, saturate);
+}
+
 #include <eve/module/core/function/generic/saturate.hpp>
 

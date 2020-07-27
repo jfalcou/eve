@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/cotd.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cotd_, cotd);
+}
+
 #include <eve/module/math/function/generic/cotd.hpp>
 

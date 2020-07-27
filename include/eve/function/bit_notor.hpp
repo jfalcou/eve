@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_notor.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_notor_, bit_notor);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/bit_notor.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_negative.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_negative_, is_negative);
+}
+
 #include <eve/module/core/function/generic/is_negative.hpp>
 
 

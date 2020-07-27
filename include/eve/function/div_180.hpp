@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/div_180.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(div_180_, div_180);
+}
+
 #include <eve/module/core/function/generic/div_180.hpp>
 

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acoth.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acoth_, acoth);
+}
+
 #include <eve/module/math/function/generic/acoth.hpp>
 

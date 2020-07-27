@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/stirling.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(stirling_, stirling);
+}
+
 #include <eve/module/special/function/generic/stirling.hpp>
 

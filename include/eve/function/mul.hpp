@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/mul.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(mul_, mul);
+}
+
 #include <eve/module/core/function/generic/mul.hpp>
 
 #if defined(EVE_HW_X86)

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/two_prod.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(two_prod_, two_prod);
+}
+
 #include <eve/module/core/function/generic/two_prod.hpp>
 

@@ -24,6 +24,12 @@
 #include <eve/function/atan2.hpp>
 #include <eve/function/atan2d.hpp>
 #include <eve/function/atand.hpp>
-#include <eve/function/definition/inverse_trigo.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(inverse_trigo_, inverse_trigo);
+}
+
 #include <eve/function/radindeg.hpp>
 

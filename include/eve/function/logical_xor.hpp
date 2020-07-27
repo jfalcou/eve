@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/logical_xor.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
+}
+
 #include <eve/module/core/function/generic/logical_xor.hpp>
 

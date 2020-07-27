@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_equal.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_equal_, is_equal);
+}
+
 #include <eve/module/core/function/generic/is_equal.hpp>
 
 #if defined(EVE_HW_X86)

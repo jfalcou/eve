@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/secpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(secpi_, secpi);
+}
+
 #include <eve/module/math/function/generic/secpi.hpp>
 

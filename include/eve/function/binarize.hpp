@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/binarize.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(binarize_, binarize);
+}
+
 #include <eve/module/core/function/generic/binarize.hpp>
 

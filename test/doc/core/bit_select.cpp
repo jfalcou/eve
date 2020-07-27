@@ -12,7 +12,7 @@ int main()
 
   wide_t pi = {2, -3, 0,  1 << 10};
   wide_t qi = {3, -2, 4,  2 };
-  wide_t mi = {0, -1, 1, -1 << 8};
+  wide_t mi = {0, -1, 1, ~0u << 8};
 
   std::cout << "---- simd" << '\n'
             << " <- mi                                = " << mi << '\n'

@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sinh.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sinh_, sinh);
+}
+
 #include <eve/module/math/function/generic/sinh.hpp>
 

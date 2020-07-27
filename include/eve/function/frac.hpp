@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/frac.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(frac_, frac);
+}
+
 #include <eve/module/core/function/generic/frac.hpp>
 
 #if defined(EVE_HW_X86)

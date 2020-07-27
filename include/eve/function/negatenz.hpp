@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/negatenz.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(negatenz_, negatenz);
+}
+
 #include <eve/module/core/function/generic/negatenz.hpp>
 

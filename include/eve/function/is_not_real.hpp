@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_not_real.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_real_, is_not_real);
+}
+
 #include <eve/module/core/function/generic/is_not_real.hpp>
 

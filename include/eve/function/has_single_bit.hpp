@@ -10,5 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/has_single_bit.hpp>
+#include <eve/function/is_pow2.hpp>
 
+namespace eve
+{
+  EVE_ALIAS_CALLABLE(is_pow2_, has_single_bit);
+}

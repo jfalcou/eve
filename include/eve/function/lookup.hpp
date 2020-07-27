@@ -12,8 +12,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/function/definition/lookup.hpp>
+#include <eve/detail/function/lookup.hpp>
 
 namespace eve::detail
 {
@@ -23,6 +22,3 @@ namespace eve::detail
     return (i == static_cast<I>(-1)) ? 0 : a;
   }
 }
-
-#include <eve/detail/function/lookup.hpp>
-

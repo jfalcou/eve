@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_lessgreater.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
+}
+
 #include <eve/module/core/function/generic/is_lessgreater.hpp>
 
 #if defined(EVE_HW_X86)

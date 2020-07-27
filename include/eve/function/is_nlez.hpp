@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_nlez.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_nlez_, is_nlez);
+}
+
 #include <eve/module/core/function/generic/is_nlez.hpp>
 

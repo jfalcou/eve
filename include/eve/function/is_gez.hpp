@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/is_gez.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_gez_, is_gez);
+}
+
 #include <eve/module/core/function/generic/is_gez.hpp>
 

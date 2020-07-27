@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/two_split.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(two_split_, two_split);
+}
+
 #include <eve/module/core/function/generic/two_split.hpp>

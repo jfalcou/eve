@@ -10,6 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acosd.hpp>
-#include <eve/module/math/function/generic/acosd.hpp>
+#include <eve/detail/overload.hpp>
 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acosd_, acosd);
+}
+
+#include <eve/module/math/function/generic/acosd.hpp>

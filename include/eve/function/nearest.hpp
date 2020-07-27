@@ -11,7 +11,13 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/function/definition/nearest.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(nearest_, nearest);
+}
+
 #include <eve/module/core/function/generic/nearest.hpp>
 
 #  if defined(EVE_HW_X86)

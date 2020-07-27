@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/atanpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(atanpi_, atanpi);
+}
+
 #include <eve/module/math/function/generic/atanpi.hpp>
 

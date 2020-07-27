@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/rem_pio2.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(rem_pio2_, rem_pio2);
+}
+
 #include <eve/module/math/function/generic/rem_pio2.hpp>
 

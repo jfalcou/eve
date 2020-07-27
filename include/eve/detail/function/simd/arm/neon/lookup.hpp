@@ -14,8 +14,7 @@
 #include <eve/detail/implementation.hpp>
 
 // TODO: fix operator<< in operators.hpp
-#include <eve/function/definition/shl.hpp>
-#include <eve/module/core/function/simd/arm/neon/shl.hpp>
+#include <eve/function/shl.hpp>
 
 // TODO: later std::bit_cast
 #include <eve/function/bit_cast.hpp>

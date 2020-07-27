@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sincpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sincpi_, sincpi);
+}
+
 #include <eve/module/mayh/function/generic/sincpi.hpp>

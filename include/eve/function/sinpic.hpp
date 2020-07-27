@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sinpic.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sinpic_, sinpic);
+}
+
 #include <eve/module/math/function/generic/sinpic.hpp>

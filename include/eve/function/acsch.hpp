@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acsch.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acsch_, acsch);
+}
+
 #include <eve/module/math/function/generic/acsch.hpp>
 

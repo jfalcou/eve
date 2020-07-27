@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_and.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_and_, bit_and);
+}
+
 #include <eve/module/core/function/generic/bit_and.hpp>
 

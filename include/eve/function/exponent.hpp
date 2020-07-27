@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/exponent.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(exponent_, exponent);
+}
+
 #include <eve/module/core/function/generic/exponent.hpp>
 

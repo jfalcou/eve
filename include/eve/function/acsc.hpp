@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acsc.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acsc_, acsc);
+}
+
 #include <eve/module/math/function/generic/acsc.hpp>
 

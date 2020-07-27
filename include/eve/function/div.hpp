@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/div.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(div_, div);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/div.hpp>
 

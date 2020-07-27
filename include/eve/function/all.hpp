@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/all.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(all_, all);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/algorithm/function/generic/all.hpp>
 
@@ -25,4 +31,3 @@
 #if defined(EVE_HW_ARM)
 #  include <eve/module/algorithm/function/simd/arm/neon/all.hpp>
 #endif
-

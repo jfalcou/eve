@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_select.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_select_, bit_select);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/bit_select.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/any.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(any_, any);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/algorithm/function/generic/any.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/reldist.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(reldist_, reldist);
+}
+
 #include <eve/module/core/function/scalar/reldist.hpp>
 //#include <eve/module/core/function/simd/reldist.hpp>
 

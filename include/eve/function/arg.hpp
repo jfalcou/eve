@@ -10,6 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/arg.hpp>
-#include <eve/module/core/function/generic/arg.hpp>
+#include <eve/detail/overload.hpp>
 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(arg_, arg);
+}
+
+#include <eve/module/core/function/generic/arg.hpp>

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/refine_rec.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(refine_rec_, refine_rec);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/refine_rec.hpp>
 

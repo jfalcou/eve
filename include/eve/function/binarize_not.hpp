@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/binarize_not.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
+}
+
 #include <eve/module/core/function/generic/binarize_not.hpp>
 

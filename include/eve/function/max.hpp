@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/max.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(max_, max);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/max.hpp>
 

@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_ornot.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_ornot_, bit_ornot);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/bit_ornot.hpp>
 

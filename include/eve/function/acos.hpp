@@ -10,6 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acos.hpp>
-#include <eve/module/math/function/generic/acos.hpp>
+#include <eve/detail/overload.hpp>
 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acos_, acos);
+}
+
+#include <eve/module/math/function/generic/acos.hpp>

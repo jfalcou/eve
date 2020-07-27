@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/acotpi.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(acotpi_, acotpi);
+}
+
 #include <eve/module/math/function/generic/acotpi.hpp>
 

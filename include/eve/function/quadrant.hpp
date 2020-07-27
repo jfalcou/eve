@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/quadrant.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(quadrant_, quadrant);
+}
+
 #include <eve/module/core/function/generic/quadrant.hpp>
 

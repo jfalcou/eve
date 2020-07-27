@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sincosd.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sincosd_, sincosd);
+}
+
 #include <eve/module/core/function/scalar/sincosd.hpp>
 //#include <eve/module/core/function/simd/sincosd.hpp>
 

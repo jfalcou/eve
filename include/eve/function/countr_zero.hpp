@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/countr_zero.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(countr_zero_, countr_zero);
+}
+
 #include <eve/module/core/function/generic/countr_zero.hpp>
 

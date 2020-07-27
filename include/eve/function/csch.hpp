@@ -10,5 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/csch.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(csch_, csch);
+}
+
 #include <eve/module/math/function/generic/csch.hpp>

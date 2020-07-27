@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/bit_floor.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(bit_floor_, bit_floor);
+}
+
 #include <eve/module/core/function/generic/bit_floor.hpp>
 

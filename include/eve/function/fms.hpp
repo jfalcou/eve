@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/fms.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(fms_, fms);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/fms.hpp>
 

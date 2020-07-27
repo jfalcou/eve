@@ -10,6 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/manhattan.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(manhattan_, manhattan);
+}
+
 #include <eve/module/core/function/generic/manhattan.hpp>
 

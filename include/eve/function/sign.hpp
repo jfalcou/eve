@@ -10,7 +10,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/definition/sign.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(sign_, sign);
+}
+
 #include <eve/arch.hpp>
 #include <eve/module/core/function/generic/sign.hpp>
 
