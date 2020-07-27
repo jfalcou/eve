@@ -17,7 +17,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve::detail
 {

@@ -11,7 +11,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 #include <limits>

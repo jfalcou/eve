@@ -15,7 +15,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/function/bit_xor.hpp>

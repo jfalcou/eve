@@ -13,7 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/converter.hpp>

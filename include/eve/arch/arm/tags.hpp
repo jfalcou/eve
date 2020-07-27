@@ -12,7 +12,7 @@
 
 #include <eve/arch/arm/predef.hpp>
 #include <eve/arch/cpu/tags.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 
 #if defined( SPY_SIMD_IS_ARM )
   #if defined( SPY_OS_IS_LINUX )

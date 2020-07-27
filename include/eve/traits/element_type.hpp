@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta/traits.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

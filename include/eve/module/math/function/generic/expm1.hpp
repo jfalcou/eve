@@ -20,7 +20,7 @@
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/inc.hpp>

@@ -13,7 +13,7 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/x86/predef.hpp>
 #include <eve/detail/cpuid.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {

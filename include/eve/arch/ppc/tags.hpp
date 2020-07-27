@@ -12,7 +12,7 @@
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/ppc/predef.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {

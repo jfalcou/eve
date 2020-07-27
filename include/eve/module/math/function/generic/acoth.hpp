@@ -14,7 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/function/atanh.hpp>
 #include <eve/function/rec.hpp>
 

@@ -10,7 +10,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/constant/constant.hpp>
 #include <eve/as.hpp>
 #include <type_traits>

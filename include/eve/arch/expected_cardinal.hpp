@@ -12,7 +12,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/arch/limits.hpp>
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/concept/rebindable.hpp>
 #include <type_traits>
 #include <cstddef>

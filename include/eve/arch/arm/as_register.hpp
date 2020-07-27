@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta/traits.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/arch/arm/predef.hpp>
 #include <type_traits>
 
