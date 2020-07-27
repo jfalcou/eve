@@ -14,6 +14,13 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/detail/meta/traits.hpp>
 
+#if defined( SPY_SIMD_IS_ARM )
+  #if defined( SPY_OS_IS_LINUX )
+    #include <asm/hwcap.h>
+    #include <sys/auxv.h>
+  #endif
+#endif
+
 namespace eve
 {
   // clang-format off
@@ -29,17 +36,34 @@ namespace eve
   struct neon128_ : simd_ { using parent = simd_; };
 
   //================================================================================================
-  // NEON extension tag object
+  // NEON extension tag objects
   //================================================================================================
   inline constexpr auto neon = spy::neon_;
 
-  // clang-format on
+  struct aarch64_   {};
+  inline constexpr auto aarch64 = aarch64_{};
+
   //================================================================================================
   // Runtime detection of CPU support
   //================================================================================================
-  template<auto Version> inline bool is_supported(spy::arm_simd_info<Version> const &) noexcept
+  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::neon_ > const &) noexcept
   {
-    return false;
+    #if defined( SPY_SIMD_IS_ARM )
+    auto hwcaps = getauxval(AT_HWCAP);
+    return (hwcaps & (1 << 12)) != 0;
+    #else
+      return false;
+    #endif
+  }
+
+  inline bool is_supported(aarch64_ const &) noexcept
+  {
+    #if defined( SPY_SIMD_IS_ARM )
+    auto hwcaps = getauxval(AT_HWCAP);
+    return (hwcaps & HWCAP_ASIMD) != 0;
+    #else
+      return false;
+    #endif
   }
 
   //================================================================================================
