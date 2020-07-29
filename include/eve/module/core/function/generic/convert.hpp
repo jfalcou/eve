@@ -26,39 +26,39 @@
 #include <eve/function/saturate.hpp>
 #include <eve/function/shl.hpp>
 #include <eve/function/trunc.hpp>
+#include <concepts>
 
 namespace eve::detail
 {
-  // Don't do anything if we idem-cast
-  template<value IN>
-  EVE_FORCEINLINE auto
-  convert_(EVE_SUPPORTS(cpu_), IN const &v0, as_<element_type_t<IN>> const &) noexcept
-  {
-    return v0;
-  }
-
   template<value IN, scalar_value OUT>
   EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), IN const &v0, as_<OUT> const &tgt) noexcept
   {
-    if constexpr( scalar_value<IN> )
+    if constexpr(std::same_as<element_type_t<IN>, OUT>)
     {
-      return static_cast<OUT>(v0);
+      return v0;
     }
     else
     {
-      using out_t = as_wide_t<OUT, cardinal_t<IN>>;
-
-      // If input or output are aggregated, we can slice and combine without lose of performance
-      if constexpr( has_aggregated_abi_v<IN> || has_aggregated_abi_v<out_t> )
+      if constexpr( scalar_value<IN> )
       {
-        auto[l,h] = v0.slice();
-        auto ll = eve::convert(l,tgt);
-        auto hh = eve::convert(h,tgt);
-        return out_t{ll,hh};
+        return static_cast<OUT>(v0);
       }
       else
       {
-        return map(convert, v0, tgt);
+        using out_t = as_wide_t<OUT, cardinal_t<IN>>;
+
+        // If input or output are aggregated, we can slice and combine without lose of performance
+        if constexpr( has_aggregated_abi_v<IN> || has_aggregated_abi_v<out_t> )
+        {
+          auto[l,h] = v0.slice();
+          auto ll = eve::convert(l,tgt);
+          auto hh = eve::convert(h,tgt);
+          return out_t{ll,hh};
+        }
+        else
+        {
+          return map(convert, v0, tgt);
+        }
       }
     }
   }

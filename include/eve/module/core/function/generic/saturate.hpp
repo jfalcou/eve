@@ -23,22 +23,19 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/logical_and.hpp>
+#include <concepts>
 
 namespace eve::detail
 {
-  // Don't do anything if we idem-saturate
-  template<value IN>
-  EVE_FORCEINLINE auto
-  saturate_(EVE_SUPPORTS(cpu_), IN const &v0, as_<element_type_t<IN>> const &) noexcept
-  {
-    return v0;
-  }
-
   template<real_scalar_value Target, real_scalar_value U>
   EVE_FORCEINLINE constexpr auto
   saturate_(EVE_SUPPORTS(cpu_), U const &a0, as_<Target> const &) noexcept
   {
-    if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
+    if constexpr(std::same_as<U, Target>)
+    {
+      return a0;
+    }
+    else if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
     {
       if constexpr( std::is_floating_point_v<U> ) // from a floating point
       {
@@ -118,7 +115,10 @@ namespace eve::detail
   EVE_FORCEINLINE auto saturate_(EVE_SUPPORTS(cpu_), U const &v, as_<Target> const &at)
   {
     using elt_u = element_type_t<U>;
-    if constexpr( has_aggregated_abi_v<U> )
+
+    if constexpr(std::same_as<elt_u, Target>)
+      return v;
+    else if constexpr( has_aggregated_abi_v<U> )
       return aggregate(eve::saturate, v, at);
     else if constexpr( has_emulated_abi_v<U> )
       return map(eve::saturate, v, at);
@@ -188,4 +188,3 @@ namespace eve::detail
     }
   }
 }
-

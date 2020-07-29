@@ -30,7 +30,7 @@ namespace eve
       return convert(val, as<T>());
     }
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
     {
       return  [f]<typename... Ts>(Ts&&... args)
       {
@@ -74,7 +74,7 @@ namespace eve
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
     {
       return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
       {
@@ -104,7 +104,7 @@ namespace eve
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
     {
       return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
       {
@@ -134,7 +134,7 @@ namespace eve
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function f) const noexcept
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
     {
       return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
       {
