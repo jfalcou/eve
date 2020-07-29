@@ -241,26 +241,28 @@ namespace eve::detail
   //================================================================================================
   // infix bit_xor
   //================================================================================================
-  template<real_value T, real_value U>
+  template<real_scalar_value T, real_scalar_value U>
   EVE_FORCEINLINE  auto  bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
-    if constexpr(scalar_value<T> && scalar_value<U>)
+    if constexpr(floating_value<T> || floating_value<U>)
     {
-      if constexpr(floating_value<T> || floating_value<U>)
-      {
-        using b_t = as_integer_t<T, unsigned>;
-        auto ba = bit_cast( a           , as<b_t>() );
-        auto bb = bit_cast( b           , as<b_t>() );
-        return    bit_cast( b_t(ba ^ bb), as(a)     );
-      }
-      else
-      {
-        return static_cast<T>(a ^ b);
-      }
+      using b_t = as_integer_t<T, unsigned>;
+      auto ba = bit_cast( a           , as<b_t>() );
+      auto bb = bit_cast( b           , as<b_t>() );
+      return    bit_cast( b_t(ba ^ bb), as(a)     );
     }
     else
-      return a ^ b;
-
+    {
+      return static_cast<T>(a ^ b);
+    }
   }
+
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto
+  bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires bit_compatible_values<T, U>
+  {
+    return a ^ b;
+  }
+
 }
