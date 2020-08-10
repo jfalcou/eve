@@ -13,7 +13,6 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/assert.hpp>
 #include <cstddef>
-#include <iostream>
 
 namespace eve
 {

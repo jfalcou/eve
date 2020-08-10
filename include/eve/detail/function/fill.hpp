@@ -46,7 +46,7 @@ namespace eve::detail
       static constexpr typename Pack::size_type sz = cardinal_v<Pack>;
       Pack  that;
 
-      for( typename Pack::size_type i = 0; i < sz; ++i ) that[i] = g(i, sz);
+      for( typename Pack::size_type i = 0; i < sz; ++i ) that.set(i, g(i, sz) );
 
       return that;
     }

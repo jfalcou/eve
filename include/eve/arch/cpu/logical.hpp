@@ -55,6 +55,8 @@ namespace eve
       return *this;
     }
 
+    void swap( logical& other ) { std::swap(value_,other.value_); }
+
     /// Convert a logical value to bool
     EVE_FORCEINLINE constexpr operator bool() const noexcept { return !!value_; }
 
@@ -75,15 +77,21 @@ namespace eve
       return that;
     }
 
-  private:
+    /// Stream insertion operator
+    friend EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical const &v)
+    {
+      return os << (v.value_ ? "true" : "false");
+    }
+
+    private:
     bits_type value_;
   };
 
-  /// Stream insertion operator
+
   template<typename T>
-  EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical<T> const &v)
+  EVE_FORCEINLINE void swap(logical<T> &lhs, logical<T> &rhs) noexcept
   {
-    return os << (v.value() ? "true" : "false");
+    lhs.swap(rhs);
   }
 }
 

@@ -11,30 +11,27 @@
 #pragma once
 
 #include "test.hpp"
-#include <eve/wide.hpp>
+#include <tts/tests/relation.hpp>
 #include <eve/logical.hpp>
-#include <tts/tests/basic.hpp>
-#include <algorithm>
+#include <eve/wide.hpp>
 
-using eve::fixed;
-
-TTS_CASE_TPL("Check enumerating constructor for wide of logical",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check enumerating constructor for wide of logical"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  using eve::logical;
-  using eve::wide;
-
   auto filler = [](auto i, auto) { return i % 3 ? true : false; };
 
-  logical<wide<EVE_TYPE, T>>              simd(filler);
-  std::array<logical<EVE_TYPE>, T::value> ref;
-  for(std::size_t i = 0; i < T::value; ++i) ref[ i ] = filler(i, T::value);
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(filler);
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
 
-  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+  for(std::size_t i = 0; i < T::value; ++i)
+    ref.set(i, filler(i, T::value));
+
+  TTS_EQUAL(simd, ref);
 }

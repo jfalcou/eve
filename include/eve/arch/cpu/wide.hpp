@@ -16,19 +16,19 @@
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/base_wide.hpp>
-#include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/combine.hpp>
-#include <eve/detail/function/lookup.hpp>
-#include <eve/detail/function/slice.hpp>
-#include <eve/detail/function/make.hpp>
-#include <eve/detail/function/load.hpp>
+#include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
+#include <eve/detail/function/load.hpp>
+#include <eve/detail/function/lookup.hpp>
+#include <eve/detail/function/make.hpp>
+#include <eve/detail/function/slice.hpp>
+#include <eve/detail/function/subscript.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
 #include <type_traits>
-#include <iterator>
-#include <iostream>
+#include <iosfwd>
 
 #if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic push
@@ -50,33 +50,19 @@ namespace eve
     using abi_type               = ABI;
     using value_type             = Type;
     using size_type              = std::ptrdiff_t;
-    using reference              = Type &;
-    using const_reference        = Type const &;
-    using iterator               = Type *;
-    using const_iterator         = Type const *;
-    using reverse_iterator       = std::reverse_iterator<iterator>;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-
     using target_type = typename detail::target_type<wide, abi_type>::type;
 
-    static constexpr size_type   static_size = Size::value;
-    static constexpr std::size_t static_alignment =
-        detail::wide_align<Size, value_type, storage_type, abi_type>::value;
+    template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
 
-    using iterator_facade = detail::wide_iterator<Type, storage_type, abi_type>;
-
-    template<typename T, typename N = expected_cardinal_t<T>>
-    using rebind = wide<T,N>;
+    static constexpr size_type static_size = Size::value;
+    static constexpr auto static_alignment = detail::wide_align<Size,Type,storage_type,ABI>::value;
 
     //==============================================================================================
     // Ctor
     //==============================================================================================
     EVE_FORCEINLINE wide() noexcept {}
 
-    EVE_FORCEINLINE wide(storage_type const &r) noexcept
-        : data_(r)
-    {
-    }
+    EVE_FORCEINLINE wide(storage_type const &r) noexcept : data_(r) {}
 
     //==============================================================================================
     // Constructs a wide from a Range
@@ -170,16 +156,16 @@ namespace eve
 
     //==============================================================================================
     // Raw storage access
-    EVE_FORCEINLINE storage_type storage() const noexcept { return data_; }
-    EVE_FORCEINLINE storage_type &storage() noexcept { return data_; }
+    EVE_FORCEINLINE storage_type  storage() const noexcept { return data_; }
+    EVE_FORCEINLINE storage_type &storage()       noexcept { return data_; }
 
     EVE_FORCEINLINE operator storage_type() const noexcept { return data_; }
 
     //==============================================================================================
     // array-like interface
-    static EVE_FORCEINLINE constexpr size_type size() noexcept { return static_size; }
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return static_size; }
     static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return static_size; }
-    static EVE_FORCEINLINE constexpr bool      empty() noexcept { return false; }
+    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     // alignment interface
@@ -203,45 +189,6 @@ namespace eve
       swap(data_, rhs.data_);
     }
 
-    wide &      self() { return *this; }
-    wide const &self() const { return *this; }
-
-    //==============================================================================================
-    // begin() variants
-    EVE_FORCEINLINE iterator begin() noexcept { return iterator_facade::begin(data_); }
-    EVE_FORCEINLINE const_iterator begin() const noexcept { return iterator_facade::begin(data_); }
-
-    EVE_FORCEINLINE const_iterator cbegin() const noexcept
-    {
-      return iterator_facade::begin(static_cast<storage_type const &>(data_));
-    }
-
-    EVE_FORCEINLINE reverse_iterator rbegin() noexcept { return reverse_iterator(end()); }
-    EVE_FORCEINLINE const_reverse_iterator rbegin() const noexcept
-    {
-      return reverse_iterator(end());
-    }
-    EVE_FORCEINLINE const_reverse_iterator crbegin() const noexcept
-    {
-      return const_reverse_iterator(cend());
-    }
-
-    //==============================================================================================
-    // end() variants
-    EVE_FORCEINLINE iterator end() noexcept { return begin() + size(); }
-    EVE_FORCEINLINE const_iterator end() const noexcept { return begin() + size(); }
-    EVE_FORCEINLINE const_iterator cend() const noexcept { return cbegin() + size(); }
-
-    EVE_FORCEINLINE reverse_iterator rend() noexcept { return reverse_iterator(begin()); }
-    EVE_FORCEINLINE const_reverse_iterator rend() const noexcept
-    {
-      return reverse_iterator(begin());
-    }
-    EVE_FORCEINLINE const_reverse_iterator crend() const noexcept
-    {
-      return const_reverse_iterator(cbegin());
-    }
-
     //==============================================================================================
     // Dynamic index lookup
     template<typename Index>
@@ -252,17 +199,18 @@ namespace eve
 
     //==============================================================================================
     // elementwise access
-    EVE_FORCEINLINE reference operator[](std::size_t i) noexcept { return begin()[ i ]; }
-    EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept
+    EVE_FORCEINLINE void set(std::size_t i, value_type v) noexcept
     {
-      return begin()[ i ];
+      detail::insert(*this,i,v);
     }
 
-    EVE_FORCEINLINE reference back() noexcept { return *rbegin(); }
-    EVE_FORCEINLINE const_reference back() const noexcept { return *rbegin(); }
+    EVE_FORCEINLINE value_type operator[](std::size_t i) const noexcept
+    {
+      return detail::extract(*this, i);
+    }
 
-    EVE_FORCEINLINE reference front() noexcept { return *begin(); }
-    EVE_FORCEINLINE const_reference front() const noexcept { return *begin(); }
+    EVE_FORCEINLINE value_type back()  const noexcept { return this->operator[](static_size-1); }
+    EVE_FORCEINLINE value_type front() const noexcept { return this->operator[](0);             }
 
     //===============================================================================================
     // Self-increment/decrement operators
@@ -352,6 +300,16 @@ namespace eve
       return detail::self_bitxor(*this, other);
     }
 
+    friend std::ostream &operator<<(std::ostream &os, wide const &p)
+    {
+      constexpr auto sz = sizeof(storage_type)/sizeof(Type);
+      auto that = bit_cast( p, as_<std::array<Type,sz>>());
+
+      os << '(' << +that[ 0 ];
+      for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
+      return os << ')';
+    }
+
     //==============================================================================================
     // SIMD register storage
     //==============================================================================================
@@ -364,22 +322,7 @@ namespace eve
   {
     lhs.swap(rhs);
   }
-
-  template<typename T, typename N, typename ABI>
-  std::ostream &operator<<(std::ostream &os, wide<T, N, ABI> const &p)
-  {
-    using size_type = typename wide<T, N, ABI>::size_type;
-    T that[ N::value ];
-    memcpy(&that[ 0 ], p.begin(), N::value * sizeof(T));
-
-    os << '(' << +that[ 0 ];
-    for(size_type i = 1; i != p.size(); ++i) os << ", " << +that[ i ];
-    return os << ')';
-  }
 }
-
-// + - * / & ^ | + infix version made from compounds versions ?
-//#include <eve/detail/function/operators.hpp>
 
 #if defined(SPY_COMPILER_IS_GNUC)
 #  pragma GCC diagnostic pop

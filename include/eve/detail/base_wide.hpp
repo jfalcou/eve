@@ -12,7 +12,6 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <iterator>
 #include <cstddef>
 
 namespace eve::detail
@@ -47,27 +46,6 @@ namespace eve::detail
   struct wide_align<Size, Type, Storage, ::eve::aggregated_>
   {
     static constexpr std::size_t value = Storage::value_type::static_alignment;
-  };
-
-  template<typename Type, typename Storage, typename ABI>
-  struct wide_iterator
-  {
-    static EVE_FORCEINLINE auto begin(Storage &s) noexcept
-    {
-      return reinterpret_cast<detail::alias_t<Type> *>(&s);
-    }
-
-    static EVE_FORCEINLINE auto begin(Storage const &s) noexcept
-    {
-      return reinterpret_cast<detail::alias_t<Type> const *>(&s);
-    }
-  };
-
-  template<typename Type, typename Storage>
-  struct wide_iterator<Type, Storage, ::eve::aggregated_>
-  {
-    static EVE_FORCEINLINE auto begin(Storage &s) noexcept { return s.segments[0].begin(); }
-    static EVE_FORCEINLINE auto begin(Storage const &s) noexcept { return s.segments[0].begin(); }
   };
 }
 

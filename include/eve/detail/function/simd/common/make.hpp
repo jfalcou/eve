@@ -28,8 +28,8 @@ namespace eve::detail
     Pack        that;
     std::size_t i = 0;
 
-    that[i++] = static_cast<type>(v0);
-    ((that[i++] = vs), ...);
+    that.set(i++, static_cast<type>(v0));
+    (that.set(i++,vs), ...);
 
     return that;
   }

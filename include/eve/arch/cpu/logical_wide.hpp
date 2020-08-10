@@ -43,12 +43,6 @@ namespace eve
     using abi_type               = typename parent::abi_type;
     using value_type             = typename parent::value_type;
     using size_type              = typename parent::size_type;
-    using reference              = typename parent::reference;
-    using const_reference        = typename parent::const_reference;
-    using iterator               = typename parent::iterator;
-    using const_iterator         = typename parent::const_iterator;
-    using reverse_iterator       = typename parent::reverse_iterator;
-    using const_reverse_iterator = typename parent::const_reverse_iterator;
     using target_type            = typename parent::target_type;
 
     static constexpr size_type   static_size      = parent::static_size;
@@ -189,11 +183,11 @@ namespace eve
       return *this;
     }
 
-    template<typename Slice>
-    EVE_FORCEINLINE auto slice(Slice const &s) const
+    template<typename Slice> EVE_FORCEINLINE auto slice(Slice const &s) const
     {
       return detail::slice(*this, s);
     }
+
     EVE_FORCEINLINE auto slice() const { return detail::slice(*this); }
 
     // ---------------------------------------------------------------------------------------------
@@ -217,26 +211,6 @@ namespace eve
     EVE_FORCEINLINE void swap(logical &rhs) noexcept { data_.swap(rhs.data_); }
 
     // ---------------------------------------------------------------------------------------------
-    // begin() variants
-    EVE_FORCEINLINE iterator begin() noexcept { return data_.begin(); }
-    EVE_FORCEINLINE const_iterator begin() const noexcept { return data_.begin(); }
-    EVE_FORCEINLINE const_iterator cbegin() const noexcept { return data_.cbegin(); }
-
-    EVE_FORCEINLINE reverse_iterator rbegin() noexcept { return data_.rbegin(); }
-    EVE_FORCEINLINE const_reverse_iterator rbegin() const noexcept { return data_.rbegin(); }
-    EVE_FORCEINLINE const_reverse_iterator crbegin() const noexcept { return data_.crbegin(); }
-
-    // ---------------------------------------------------------------------------------------------
-    // end() variants
-    EVE_FORCEINLINE iterator end() noexcept { return data_.end(); }
-    EVE_FORCEINLINE const_iterator end() const noexcept { return data_.end(); }
-    EVE_FORCEINLINE const_iterator cend() const noexcept { return data_.cend(); }
-
-    EVE_FORCEINLINE reverse_iterator rend() noexcept { return data_.rend(); }
-    EVE_FORCEINLINE const_reverse_iterator rend() const noexcept { return data_.rend(); }
-    EVE_FORCEINLINE const_reverse_iterator crend() const noexcept { return data_.crend(); }
-
-    // ---------------------------------------------------------------------------------------------
     // Dynamic index lookup
     template<typename Index>
     EVE_FORCEINLINE logical operator[](wide<Index,N> const& idx) noexcept
@@ -246,47 +220,41 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // elementwise access
-    EVE_FORCEINLINE reference operator[](std::size_t i) noexcept { return data_[ i ]; }
-    EVE_FORCEINLINE const_reference operator[](std::size_t i) const noexcept { return data_[ i ]; }
+    EVE_FORCEINLINE void set(std::size_t i, value_type v) noexcept
+    {
+      data_.set(i,v);
+    }
 
-    EVE_FORCEINLINE reference back() noexcept { return data_.back(); }
-    EVE_FORCEINLINE const_reference back() const noexcept { return data_.back(); }
+    EVE_FORCEINLINE value_type operator[](std::size_t i)  const noexcept  { return data_[ i ];    }
 
-    EVE_FORCEINLINE reference front() noexcept { return data_.front(); }
-    EVE_FORCEINLINE const_reference front() const noexcept { return data_.front(); }
+    EVE_FORCEINLINE value_type back()                     const noexcept  { return data_.back();  }
+    EVE_FORCEINLINE value_type front()                    const noexcept  { return data_.front(); }
 
     // ---------------------------------------------------------------------------------------------
     // logical interface
-    EVE_FORCEINLINE logical &self() { return *this; }
-    EVE_FORCEINLINE logical const &self() const { return *this; }
-
     EVE_FORCEINLINE constexpr bits_type bits() const noexcept
     {
-      return bit_cast(mask(), as_<bits_type>{});
+      return bit_cast(*this, as_<bits_type>{});
     }
 
     /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr mask_type mask() const noexcept
     {
-      return bit_cast(self(), as_<mask_type>{});
+      return bit_cast(*this, as_<mask_type>{});
     }
 
-  private:
+    friend std::ostream &operator<<(std::ostream &os, logical const &p)
+    {
+      constexpr auto sz = sizeof(storage_type)/sizeof(logical<Type>);
+      auto that = bit_cast( p, as_<std::array<logical<Type>,sz>>());
+      os << '(' << that[0];
+      for(size_type i = 1; i != p.size(); ++i) os << ", " << that[i];
+      return os << ')';
+    }
+
+    private:
     wide<logical<Type>, N> data_;
   };
-
-  /// Stream insertion operator
-  template<typename Type, typename N, typename ABI>
-  EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical<wide<Type, N, ABI>> const &p)
-  {
-    using size_type = typename logical<wide<Type, N, ABI>>::size_type;
-    logical<Type> that[ N::value ];
-    memcpy(&that[ 0 ], p.begin(), N::value * sizeof(Type));
-
-    os << '(' << that[ 0 ];
-    for(size_type i = 1; i != p.size(); ++i) os << ", " << that[ i ];
-    return os << ')';
-  }
 }
 
 #if defined(SPY_COMPILER_IS_GNUC)

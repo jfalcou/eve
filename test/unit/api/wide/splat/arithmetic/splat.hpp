@@ -11,25 +11,25 @@
 #pragma once
 
 #include "test.hpp"
-#include <tts/tests/basic.hpp>
+#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
-#include <algorithm>
 
-using eve::fixed;
-
-TTS_CASE_TPL("Check splatting constructor for arithmetic wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check splatting constructor for arithmetic wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  using eve::wide;
+  EVE_TYPE                base = 42;
+  eve::wide<EVE_TYPE, T>  simd(base);
+  eve::wide<EVE_TYPE, T>  ref;
 
-  EVE_TYPE          base = 42;
-  wide<EVE_TYPE, T> simd(base);
+  for(std::size_t i = 0; i < T::value; ++i)
+    ref.set(i, base);
 
-  TTS_EXPECT(std::all_of(simd.begin(), simd.end(), [=](auto e) { return e == base; }));
+  TTS_EQUAL(simd, ref);
 }

@@ -11,12 +11,11 @@
 #pragma once
 #include "test.hpp"
 
-#include <tts/tests/basic.hpp>
+#include <tts/tests/relation.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/wide.hpp>
 #include <eve/logical.hpp>
-#include <algorithm>
+#include <eve/wide.hpp>
 #include <vector>
 #include <list>
 
@@ -39,96 +38,124 @@ auto data_block()
   return std::pair{ref,start};
 }
 
-TTS_CASE_TPL("Check ctor from unaligned pointer for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL( "Check ctor from unaligned pointer for wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  auto [data,idx] = data_block<EVE_TYPE, T>();
-  auto* ref = &data[idx];
+  auto  [data,idx]  = data_block<EVE_TYPE, T>();
+  auto* ref_ptr     = &data[idx];
 
-  logical<eve::wide<EVE_TYPE, T>> simd(ref);
-  TTS_EXPECT( std::equal(simd.begin(), simd.end(), ref) );
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+
+  for(std::size_t i=0;i<T::value;++i)
+    ref.set(i, data[idx+i]);
+
+  TTS_EQUAL( simd, ref );
 }
 
-TTS_CASE_TPL("Check ctor from const unaligned pointer for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL( "Check ctor from const unaligned pointer for wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  auto [data,idx] = data_block<EVE_TYPE, T>();
-  auto const* ref = &data[idx];
+  auto        [data,idx]  = data_block<EVE_TYPE, T>();
+  auto const* ref_ptr     = &data[idx];
 
-  logical<eve::wide<EVE_TYPE, T>> simd(ref);
-  TTS_EXPECT( std::equal(simd.begin(), simd.end(), ref) );
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+
+  for(std::size_t i=0;i<T::value;++i)
+    ref.set(i, data[idx+i]);
+
+  TTS_EQUAL( simd, ref );
 }
 
-TTS_CASE_TPL("Check ctor from aligned pointer for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL( "Check ctor from aligned pointer for wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  auto constexpr algt = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
-  auto [data,idx] = data_block<EVE_TYPE, T>();
-  auto*       ref = &data[idx];
+  auto constexpr  algt        = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
+  auto            [data,idx]  = data_block<EVE_TYPE, T>();
+  auto*           ref_ptr     = &data[idx];
 
-  logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref));
-  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref));
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref_ptr));
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+
+  for(std::size_t i=0;i<T::value;++i)
+    ref.set(i, data[idx+i]);
+
+  TTS_EQUAL( simd, ref );
 }
 
-TTS_CASE_TPL("Check ctor from const aligned pointer for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check ctor from const aligned pointer for wide"
+             , eve::fixed<1>
+             , eve::fixed<2>
+             , eve::fixed<4>
+             , eve::fixed<8>
+             , eve::fixed<16>
+             , eve::fixed<32>
+             , eve::fixed<64>
+             )
 {
-  auto constexpr algt = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
-  auto [data,idx] = data_block<EVE_TYPE, T>();
-  auto const* ref = &data[idx];
+  auto constexpr  algt        = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
+  auto            [data,idx]  = data_block<EVE_TYPE, T>();
+  auto const*     ref_ptr     = &data[idx];
 
-  logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref));
-  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref));
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref_ptr));
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+
+  for(std::size_t i=0;i<T::value;++i)
+    ref.set(i, data[idx+i]);
+
+  TTS_EQUAL( simd, ref );
 }
-/*
-TTS_CASE_TPL("Check ctor from range for wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+
+TTS_CASE_TPL( "Check ctor from range for wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  using eve::wide;
+  std::list<eve::logical<EVE_TYPE>> ref_ptr(T::value);
 
-  std::list<EVE_TYPE> ref(T::value);
+  eve::logical<EVE_TYPE> k = true;
+  for(auto &e : ref_ptr) e = (k = !k);
 
-  EVE_TYPE k = {};
-  for(auto &e : ref) e = k++;
+  k = true;
+  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+
+  for(std::size_t i=0;i<T::value;++i)
+    ref.set(i, (k = !k));
 
   {
-    wide<EVE_TYPE, T> simd(ref);
-    TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+    eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
+    TTS_EQUAL( simd, ref );
   }
 
   {
-    wide<EVE_TYPE, T> simd(ref.begin(), ref.end());
-    TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+    eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr.begin(), ref_ptr.end());
+    TTS_EQUAL( simd, ref );
   }
 }
-*/

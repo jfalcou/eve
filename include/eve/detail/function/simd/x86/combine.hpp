@@ -59,7 +59,7 @@ namespace eve::detail
       if constexpr( std::is_same_v<T, float> )
       {
         t_t that = l.storage();
-        that[1]  = h[0];
+        that.set(1,h[0]);
         return that.storage();
       }
 

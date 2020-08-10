@@ -10,24 +10,5 @@
 //==================================================================================================
 #pragma once
 
-#include <iterator>
-#include <type_traits>
-
-namespace eve::detail
-{
-  template<typename R> concept range = requires(R const& r)
-  {
-    { std::begin(r) };
-    { std::end(r)   };
-  };
-
-  template<typename R>
-  concept has_random_access = requires(R const& r)
-  {
-    { r[0] };
-  };
-
-  template<typename R>
-  concept random_access_range = range<R> && has_random_access<R>;
-}
-
+#include <eve/arch.hpp>
+#include <eve/detail/function/simd/common/subscript.hpp>
