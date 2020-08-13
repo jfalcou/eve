@@ -32,6 +32,10 @@ namespace eve::detail
       auto ptr = reinterpret_cast<detail::alias_t<type> const *>(&p.segments[0]);
       return ptr[i];
     }
+    else if constexpr( has_emulated_abi_v<Wide> )
+    {
+      return p[i];
+    }
     else
     {
       auto ptr = reinterpret_cast<detail::alias_t<type> const *>(&p);
@@ -53,6 +57,10 @@ namespace eve::detail
     {
       auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.segments[0]);
       ptr[i] = v;
+    }
+    else if constexpr( has_emulated_abi_v<Wide> )
+    {
+      p[i] = v;
     }
     else
     {

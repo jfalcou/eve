@@ -30,12 +30,15 @@ namespace eve::detail
     using type = wide<T, N, ABI>;
 
     if constexpr( scalar_value<U> )
+    {
       return self_add(self, type {other});
+    }
     else if constexpr( std::same_as<type, U> )
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) += get<I>(other)), ...); });
+        auto& data = self.storage();
+        apply<N::value>([&](auto... I) { ((data[I] = self[I] + other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -62,7 +65,8 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) -= get<I>(other)), ...); });
+        auto& data = self.storage();
+        apply<N::value>([&](auto... I) { ((data[I] = self[I] - other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -89,7 +93,8 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) *= get<I>(other)), ...); });
+        auto& data = self.storage();
+        apply<N::value>([&](auto... I) { ((data[I] = self[I] * other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -116,7 +121,8 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) /= get<I>(other)), ...); });
+        auto& data = self.storage();
+        apply<N::value>([&](auto... I) { ((data[I] = self[I] / other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -150,11 +156,10 @@ namespace eve::detail
       }
       else
       {
-        wide<T, N, ABI> that;
-        apply<N::value>([&](auto... I) { ((get<I>(that) = get<I>(self) % get<I>(other)), ...); });
-        return self = that;
+        auto& data = self.storage();
+        apply<N::value>([&](auto... I) { ((data[I] = self[I] % other[I]), ...); });
+        return self;
       }
     }
   }
 }
-

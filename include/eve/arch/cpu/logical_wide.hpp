@@ -10,16 +10,16 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/cpu/logical.hpp>
+#include <eve/concept/range.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/concepts.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/arch/cpu/logical.hpp>
-#include <eve/detail/concepts.hpp>
-#include <eve/concept/range.hpp>
 #include <eve/function/bit_cast.hpp>
-#include <type_traits>
 #include <cstring>
 #include <iosfwd>
+#include <type_traits>
 
 namespace eve
 {
