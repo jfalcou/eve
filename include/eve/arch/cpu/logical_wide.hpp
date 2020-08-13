@@ -11,23 +11,15 @@
 #pragma once
 
 #include <eve/detail/is_native.hpp>
-#include <eve/detail/alias.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/spy.hpp>
 #include <eve/arch/cpu/logical.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <type_traits>
-#include <iostream>
 #include <cstring>
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wuninitialized"
-#  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
+#include <iosfwd>
 
 namespace eve
 {
@@ -75,6 +67,9 @@ namespace eve
 
     {
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // TODO: constructor from bitmap to logical
 
     // ---------------------------------------------------------------------------------------------
     // Constructs a wide from a Range
@@ -159,18 +154,8 @@ namespace eve
                             , logical<wide<Type, HalfSize, Other>> const &h
                             ) noexcept
                     requires( static_size == 2 * HalfSize::value )
-                  : logical(detail::combine(EVE_CURRENT_API{}, l.bits(), h.bits()), from_bits)
+                  : logical(detail::combine(EVE_CURRENT_API{}, l, h))
     {
-    }
-
-    // ---------------------------------------------------------------------------------------------
-    // Internal constructors
-    template<typename Storage>
-    EVE_FORCEINLINE logical(Storage const &s, from_bits_ const &)
-    {
-      void const *src = reinterpret_cast<detail::alias_t<void const> *>(&s);
-      void *      dst = reinterpret_cast<detail::alias_t<void> *>(&data_.storage());
-      std::memcpy(dst, src, sizeof(s));
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -232,6 +217,7 @@ namespace eve
 
     // ---------------------------------------------------------------------------------------------
     // logical interface
+    // TODO EXPORT IMPLEMENTATION TO ARCH SPECIFIC FUNCTION
     EVE_FORCEINLINE constexpr bits_type bits() const noexcept
     {
       return bit_cast(*this, as_<bits_type>{});
@@ -242,6 +228,9 @@ namespace eve
     {
       return bit_cast(*this, as_<mask_type>{});
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // TODO: integral bit_map() const
 
     friend std::ostream &operator<<(std::ostream &os, logical const &p)
     {
@@ -256,8 +245,3 @@ namespace eve
     wide<logical<Type>, N> data_;
   };
 }
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic pop
-#endif
-

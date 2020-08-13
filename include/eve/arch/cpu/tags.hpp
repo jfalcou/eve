@@ -47,14 +47,6 @@ namespace eve
   };
 
   //================================================================================================
-  // Indicator for construction from arbitrary storage
-  struct from_bits_
-  {
-  };
-
-  static constexpr inline from_bits_ from_bits = {};
-
-  //================================================================================================
   // Runtime detection of CPU support
   inline bool is_supported(cpu_ const &) noexcept { return true; }
 }

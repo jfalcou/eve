@@ -7,6 +7,18 @@
 ##==================================================================================================
 
 ##==================================================================================================
+## Setup aggregation of tests
+##==================================================================================================
+add_custom_target(unit.api.tst       )
+add_custom_target(unit.api.scalar.tst)
+add_custom_target(unit.api.simd.tst  )
+
+add_dependencies(unit.scalar.tst    unit.api.scalar.tst )
+add_dependencies(unit.simd.tst      unit.api.simd.tst   )
+add_dependencies(unit.api.tst       unit.api.scalar.tst )
+add_dependencies(unit.api.tst       unit.api.simd.tst   )
+
+##==================================================================================================
 ## General API tests
 make_unit( "unit.api" memory/aligned_alloc.cpp )
 make_unit( "unit.api" memory/aligned_allocator.cpp )
@@ -48,4 +60,4 @@ make_unit( "unit.api" wide/std.cpp )
 
 ##==================================================================================================
 ## logical API tests
-make_units("logical"   "unit.api" ${all_types})
+make_all_units(ROOT unit.api NAME logical ARCH scalar simd TYPES ${all_types} )

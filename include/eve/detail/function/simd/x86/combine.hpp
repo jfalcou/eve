@@ -27,7 +27,6 @@ namespace eve::detail
 
     //==============================================================================================
     // If we aggregate two fully sized wide, just coalesce inside new storage
-    //==============================================================================================
     if constexpr( N::value * sizeof(T) == eve::sse_::bytes )
     {
       return s_t {l, h};
@@ -123,4 +122,3 @@ namespace eve::detail
     }
   }
 }
-

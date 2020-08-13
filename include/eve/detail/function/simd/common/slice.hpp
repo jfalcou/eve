@@ -93,8 +93,8 @@ namespace eve::detail
     {
       using l_t   = logical<wide<T, typename N::split_type>>;
       using t_t   = std::array<l_t, 2>;
-      auto [l, h] = a.bits().slice();
-      return t_t {l_t(l.storage(), eve::from_bits), l_t(h.storage(), eve::from_bits)};
+      auto [l, h] = a.mask().slice();
+      return t_t { l_t(l.storage()), l_t(h.storage())};
     }
     else
     {
@@ -109,7 +109,7 @@ namespace eve::detail
     if constexpr( is_native_v<ABI> )
     {
       using l_t = logical<wide<T, typename N::split_type>>;
-      return l_t(a.bits().slice(s).storage(), eve::from_bits);
+      return l_t(a.mask().slice(s).storage());
     }
     else
     {
