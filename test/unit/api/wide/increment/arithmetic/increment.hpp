@@ -18,7 +18,7 @@
 auto baseg = [](auto i, auto) { return i; };
 auto nextg = [](auto i, auto) { return i + 1; };
 
-TTS_CASE_TPL("Check self-decrement on wide"
+TTS_CASE_TPL( "Check self-increment on wide"
             , eve::fixed<1>
             , eve::fixed<2>
             , eve::fixed<4>
@@ -33,14 +33,14 @@ TTS_CASE_TPL("Check self-decrement on wide"
     eve::wide<EVE_TYPE, T> simd(baseg), next(nextg);
     eve::wide<EVE_TYPE, T> prev(simd), res;
 
-    TTS_AND_THEN("We call post-decrement operator on the value")
+    TTS_AND_THEN("We call post-increment operator on the value")
     {
       res = simd++;
       TTS_EQUAL(simd, next);
       TTS_EQUAL(res , prev);
     }
 
-    TTS_AND_THEN("We call pre-decrement operator on the value")
+    TTS_AND_THEN("We call pre-increment operator on the value")
     {
       res = ++simd;
       TTS_EQUAL(simd, next);

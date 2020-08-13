@@ -10,27 +10,18 @@
 //==================================================================================================
 #pragma once
 
-#include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL( "Check enumerating constructor for arithmetic wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE_TPL( "Check enumerating constructor for arithmetic wide", EVE_TYPE )
 {
-  auto filler = [](auto i, auto) { return EVE_TYPE(i + 1); };
+  auto filler = [](auto i, auto) { return EVE_VALUE(i + 1); };
 
-  eve::wide<EVE_TYPE, T> simd(filler);
-  eve::wide<EVE_TYPE, T> ref;
+  T simd(filler);
+  T ref;
 
-  for(std::size_t i = 0; i < T::value; ++i)
-    ref.set(i, filler(i, T::value));
+  for(std::ptrdiff_t i = 0; i < simd.size(); ++i)
+    ref.set(i, filler(i, simd.size()));
 
   TTS_EQUAL(simd, ref);
 }

@@ -10,33 +10,24 @@
 //==================================================================================================
 #pragma once
 
-#include "test.hpp"
 #include <tts/tests/relation.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check splatting constructor for logical wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE_TPL("Check splatting constructor for logical wide", EVE_TYPE )
 {
-  eve::logical<eve::wide<EVE_TYPE, T>> from_bool_t{true};
-  eve::logical<eve::wide<EVE_TYPE, T>> from_logical_t{eve::logical<EVE_TYPE>(true)};
-  eve::logical<eve::wide<EVE_TYPE, T>> from_value_t{EVE_TYPE{123}};
+  eve::logical<T> from_bool_t{true};
+  eve::logical<T> from_logical_t{eve::logical<T>(true)};
+  eve::logical<T> from_value_t{EVE_VALUE{123}};
 
-  eve::logical<eve::wide<EVE_TYPE, T>> from_bool_f{false};
-  eve::logical<eve::wide<EVE_TYPE, T>> from_logical_f{eve::logical<EVE_TYPE>(false)};
-  eve::logical<eve::wide<EVE_TYPE, T>> from_value_f{EVE_TYPE{0}};
+  eve::logical<T> from_bool_f{false};
+  eve::logical<T> from_logical_f{eve::logical<T>(false)};
+  eve::logical<T> from_value_f{EVE_VALUE{0}};
 
-  eve::logical<eve::wide<EVE_TYPE, T>> all_t;
-  eve::logical<eve::wide<EVE_TYPE, T>> all_f;
+  eve::logical<T> all_t;
+  eve::logical<T> all_f;
 
-  for(std::size_t i = 0; i < T::value; ++i)
+  for(std::size_t i = 0; i < EVE_CARDINAL; ++i)
   {
     all_t.set(i, true);
     all_f.set(i, false);
