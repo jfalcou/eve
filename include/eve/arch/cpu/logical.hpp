@@ -10,17 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/spy.hpp>
-#include <iostream>
-#include <cstring>
+#include <eve/detail/meta.hpp>
 
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wuninitialized"
-#  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
+#include <bitset>
+#include <cstring>
+#include <iosfwd>
 
 namespace eve
 {
@@ -67,7 +62,7 @@ namespace eve
     EVE_FORCEINLINE constexpr bool not_value() const noexcept { return !value_; }
 
     /// Convert a logical to its internal representation value
-    EVE_FORCEINLINE constexpr auto bits() const noexcept { return value_; }
+    EVE_FORCEINLINE constexpr bits_type bits() const noexcept { return value_; }
 
     /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr T mask() const noexcept
@@ -75,6 +70,12 @@ namespace eve
       value_type that;
       std::memcpy(&that, &value_, sizeof(value_type));
       return that;
+    }
+
+    // Convert a logical to a bitmap of its truth values
+    EVE_FORCEINLINE constexpr auto bitmap() const noexcept
+    {
+      return std::bitset<1>(value_ & 1);
     }
 
     /// Stream insertion operator
@@ -94,8 +95,3 @@ namespace eve
     lhs.swap(rhs);
   }
 }
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic pop
-#endif
-
