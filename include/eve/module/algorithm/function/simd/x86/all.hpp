@@ -22,7 +22,20 @@ namespace eve::detail
   template<real_scalar_value T, typename N, x86_abi ABI>
   EVE_FORCEINLINE bool all_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    return v.bitmap().all();
+    if constexpr( N::value == 1)
+    {
+      return v[0];
+    }
+    else if constexpr(sizeof(T) == 2)
+    {
+      using tgt = typename logical<wide<T, N, ABI>>::template rebind< std::uint8_t
+                                                                    , typename N::combined_type
+                                                                    >;
+      return bit_cast(v, as_<tgt>()).bitmap().all();
+    }
+    else
+    {
+      return v.bitmap().all();
+    }
   }
 }
-

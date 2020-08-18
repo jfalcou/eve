@@ -550,7 +550,7 @@ namespace eve::detail
 #endif
       else
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) /= get<I>(other)), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] / other[I]), ...); });
       }
     }
 
@@ -588,7 +588,7 @@ namespace eve::detail
 #endif
       else
       {
-        apply<N::value>([&](auto... I) { ((get<I>(self) /= get<I>(other)), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] / other[I]), ...); });
       }
     }
 

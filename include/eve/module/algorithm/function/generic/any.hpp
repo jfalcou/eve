@@ -34,7 +34,7 @@ namespace eve::detail
         }
         else
         {
-          bool r = true;
+          bool r = false;
 
           [&]<std::size_t... I>(std::index_sequence<I...> const &) { r = (r || ... || get<I>(v)); }
           (std::make_index_sequence<cardinal_v<T>> {});

@@ -38,9 +38,12 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
+        auto& data = self.storage();
+
         apply<N::value>([&](auto... I) {
-          ((get<I>(self) = bit_and_(EVE_RETARGET(cpu_), get<I>(self), get<I>(other))), ...);
+          ((data[I] = bit_and_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
         });
+
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -70,9 +73,12 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
+        auto& data = self.storage();
+
         apply<N::value>([&](auto... I) {
-          ((get<I>(self) = bit_or_(EVE_RETARGET(cpu_), get<I>(self), get<I>(other))), ...);
+          ((data[I] = bit_or_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
         });
+
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -102,9 +108,12 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
+        auto& data = self.storage();
+
         apply<N::value>([&](auto... I) {
-          ((get<I>(self) = bit_xor_(EVE_RETARGET(cpu_), get<I>(self), get<I>(other))), ...);
+          ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
         });
+
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -115,4 +124,3 @@ namespace eve::detail
     }
   }
 }
-

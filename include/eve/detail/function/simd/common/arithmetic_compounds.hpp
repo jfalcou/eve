@@ -37,8 +37,7 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = self[I] + other[I]), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] + other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -65,8 +64,7 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = self[I] - other[I]), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] - other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -93,8 +91,7 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = self[I] * other[I]), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] * other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -121,8 +118,7 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = self[I] / other[I]), ...); });
+        apply<N::value>([&](auto... I) { (self.set(I, self[I] / other[I]), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
@@ -156,9 +152,9 @@ namespace eve::detail
       }
       else
       {
-        auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = self[I] % other[I]), ...); });
-        return self;
+        wide<T, N, ABI> that;
+        apply<N::value>([&](auto... I) { (that.set(I, self[I] % other[I]), ...); });
+        return self = that;
       }
     }
   }
