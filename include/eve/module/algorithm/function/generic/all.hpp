@@ -23,25 +23,28 @@ namespace eve::detail
     {
       return bool(v);
     }
-    else if constexpr( logical_simd_value<T> )
+    else if constexpr( simd_value<T> )
     {
-      if constexpr( has_aggregated_abi_v<T> )
+      if constexpr( is_logical_v<T> )
       {
-        return v.storage().apply([](auto const &... e) { return eve::all((e.bits() & ...)); });
+        if constexpr( has_aggregated_abi_v<T> )
+        {
+          return v.storage().apply( [](auto const &... e) { return eve::all((e && ...)); } );
+        }
+        else
+        {
+          bool r = true;
+
+          [&]<std::size_t... I>(std::index_sequence<I...> const &) { r = (r && ... && get<I>(v)); }
+          (std::make_index_sequence<cardinal_v<T>> {});
+
+          return r;
+        }
       }
       else
       {
-        bool r = true;
-
-        [&]<std::size_t... I>(std::index_sequence<I...> const &) { r = (r && ... && get<I>(v)); }
-        (std::make_index_sequence<cardinal_v<T>> {});
-
-        return r;
+        return all(is_nez(v));
       }
-    }
-    else
-    {
-      return all(is_nez(v));
     }
   }
 }

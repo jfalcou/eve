@@ -10,21 +10,18 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_nez.hpp>
-#include <eve/function/extract.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/traits.hpp>
 
 namespace eve::detail
 {
   template<value T>
-  EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(cpu_)
-                           , T const &v) noexcept
+  EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     if constexpr(scalar_value<T>)
     {
-      return  v!= 0;
+      return  v != 0;
     }
     else if constexpr(is_logical_v<T>)
     {
