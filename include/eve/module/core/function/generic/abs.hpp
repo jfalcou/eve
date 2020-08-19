@@ -10,18 +10,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/concepts.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/max.hpp>
-#include <eve/function/minus.hpp> // A METTRE DANS WIDE
 #include <eve/function/saturated.hpp>
 
 namespace eve::detail
@@ -30,22 +29,9 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      if constexpr( floating_value<T> )
-      {
-        return bit_andnot(a, Mzero(as(a)));
-      }
-      else if constexpr( unsigned_value<T> )
-      {
-        return a;
-      }
-      else if constexpr( signed_integral_scalar_value<T> )
-      {
-        return a < T(0) ? -a : a;
-      }
-      else if constexpr( signed_integral_simd_value<T> )
-      {
-        return eve::max(a, -a);
-      }
+            if constexpr( floating_value<T> ) return bit_andnot(a, Mzero(as(a)));
+      else  if constexpr( unsigned_value<T> ) return a;
+      else                                    return eve::max(a, -a);
     }
     else
     {
@@ -90,5 +76,4 @@ namespace eve::detail
   {
     return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::abs), t);
   }
-
 }
