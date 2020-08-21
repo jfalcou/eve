@@ -123,26 +123,43 @@ namespace eve
   //================================================================================================
   // Helper structure to encode conditional expression selecting all or nothing
   //================================================================================================
-  template<bool IsNone> struct ignore_
+  struct ignore_all_
   {
     static constexpr bool has_alternative = false;
-    static constexpr bool is_inverted     = IsNone;
+    static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
     template<typename T> auto mask(as_<T> const&) const
     {
-      return eve::as_logical_t<T>(is_inverted);
+      return eve::as_logical_t<T>(false);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, ignore_ const&)
+    friend std::ostream& operator<<(std::ostream& os, ignore_all_ const&)
     {
-      if constexpr( is_inverted ) return os << "ignore_none";
-      else                        return os << "ignore_all";
+      return os << "ignore_all";
     }
   };
 
-  inline constexpr ignore_<false> ignore_all  = {};
-  inline constexpr ignore_<true>  ignore_none = {};
+  inline constexpr ignore_all_ ignore_all  = {};
+
+  struct ignore_none_
+  {
+    static constexpr bool has_alternative = false;
+    static constexpr bool is_inverted     = true;
+    static constexpr bool is_complete     = true;
+
+    template<typename T> auto mask(as_<T> const&) const
+    {
+      return eve::as_logical_t<T>(true);
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, ignore_none_ const&)
+    {
+      return os << "ignore_none";
+    }
+  };
+
+  inline constexpr ignore_none_  ignore_none = {};
 
   //================================================================================================
   // Helper structure to encode ignoring the last N elements
