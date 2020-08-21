@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
@@ -49,17 +48,16 @@ namespace eve::detail
       else
       {
         constexpr auto bytes_size = N::value * sizeof(T);
-        constexpr auto lims       = limits<eve::sse2_>::bytes;
 
         if constexpr( N::value == 2 )
         {
           return that_t(a[1]);
         }
-        if constexpr( bytes_size == lims )
+        if constexpr( bytes_size == eve::sse_::bytes )
         {
           return that_t(_mm_shuffle_epi32(a, 0xEE));
         }
-        if constexpr( 2 * bytes_size == lims )
+        if constexpr( 2 * bytes_size == eve::sse_::bytes )
         {
           return that_t(_mm_shuffle_epi32(a, 0x01));
         }

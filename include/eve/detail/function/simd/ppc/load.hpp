@@ -21,7 +21,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const* ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) >= limits<eve::vmx_>::bytes )
+    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api == spy::vmx_ )
       {
@@ -59,7 +59,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T const, Align> ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) >= limits<eve::vmx_>::bytes )
+    if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
       if constexpr( current_api == spy::vmx_ )
       {

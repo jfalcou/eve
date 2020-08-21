@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
@@ -24,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> const &value, T *ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) == limits<neon64_>::bytes )
+    if constexpr( N::value * sizeof(T) == neon64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -146,7 +145,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(neon128_), wide<T, S, neon64_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
-    if constexpr( N >= limits<neon64_>::bytes )
+    if constexpr( N >= neon64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -210,7 +209,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(neon128_), wide<T, S, neon128_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
-    if constexpr( N >= limits<neon128_>::bytes )
+    if constexpr( N >= neon128_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {

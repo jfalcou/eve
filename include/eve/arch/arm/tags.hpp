@@ -32,8 +32,25 @@ namespace eve
   //================================================================================================
   // Dispatching tag for VMX SIMD implementation
   //================================================================================================
-  struct neon64_  : simd_ { using parent = simd_; };
-  struct neon128_ : simd_ { using parent = simd_; };
+  struct neon64_  : simd_
+  {
+    static constexpr std::size_t bits           = 64;
+    static constexpr std::size_t bytes          = 8;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
+
+  struct neon128_ : simd_
+  {
+    static constexpr std::size_t bits           = 128;
+    static constexpr std::size_t bytes          = 16;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
 
   //================================================================================================
   // NEON extension tag objects

@@ -23,7 +23,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N, arm_abi ABI, typename Arch>
   EVE_FORCEINLINE auto load(as_<wide<T, N, ABI>> const &, Arch const &, T const* ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) >= limits<eve::neon64_>::bytes )
+    if constexpr( N::value * sizeof(T) >= neon64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -94,7 +94,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( N::value * sizeof(T) >= limits<eve::neon64_>::bytes )
+      if constexpr( N::value * sizeof(T) >= eve::neon64_::bytes )
       {
         if constexpr( std::is_same_v<T, float> )
         {

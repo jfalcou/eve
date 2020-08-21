@@ -25,6 +25,7 @@ namespace eve::detail
     uint_     = 0x02000000,
     float_    = 0x04000000,
     unsigned_ = 0x02000000,
+    integer_  = int_ | uint_,
     signed_   = int_ | float_,
     size64_   = 0x00080000,
     size32_   = 0x00040000,

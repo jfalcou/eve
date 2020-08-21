@@ -24,7 +24,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto load(as_<wide<T, N>> const &, eve::sse_ const &, T const* p)
   {
-    if constexpr( N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    if constexpr( N::value * sizeof(T) == sse_::bytes )
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -51,7 +51,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   load(as_<wide<T, N>> const &tgt, eve::sse_ const &mode, aligned_ptr<T const, A> p) noexcept
   {
-    if constexpr( A >= 16 && N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    if constexpr( A >= 16 && N::value * sizeof(T) == sse_::bytes )
     {
       if constexpr( std::is_same_v<T, double> )
       {

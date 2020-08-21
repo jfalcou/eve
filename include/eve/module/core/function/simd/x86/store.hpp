@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &value, T *ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == limits<sse2_>::bytes)
+    if constexpr(N::value * sizeof(T) == sse_::bytes)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm_storeu_pd(ptr, value);
@@ -44,7 +44,7 @@ namespace eve::detail
   {
     static constexpr auto alg = wide<T, N, sse_>::static_alignment;
 
-    if constexpr(N::value * sizeof(T) == limits<sse2_>::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == sse_::bytes && A >= alg)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm_store_pd(ptr.get(), value);
@@ -64,7 +64,7 @@ namespace eve::detail
   template<typename T, typename N>
   EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &value, T *ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == limits<avx_>::bytes)
+    if constexpr(N::value * sizeof(T) == avx_::bytes)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_storeu_pd(ptr, value);
@@ -85,7 +85,7 @@ namespace eve::detail
   {
     static constexpr auto alg = wide<T, N, avx_>::static_alignment;
 
-    if constexpr(N::value * sizeof(T) == limits<avx_>::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == avx_::bytes && A >= alg)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_store_pd(ptr.get(), value);

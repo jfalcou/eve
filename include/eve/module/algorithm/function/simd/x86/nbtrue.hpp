@@ -11,13 +11,13 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/function/binarize.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/popcount.hpp>
-#include <eve/arch/limits.hpp>
+
 #include <type_traits>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE size_t  nbtrue_(EVE_SUPPORTS(sse2_)
                             , logical<wide<T, N, sse_>> const &v) noexcept
   {
-    static constexpr int Bytes = limits<eve::sse2_>::bytes;
+    static constexpr int Bytes = eve::sse_::bytes;
 
     if constexpr(std::is_same_v<T, float>)
     {
