@@ -122,15 +122,3 @@ namespace eve::detail
     else        { return apply_over(logical_xor, a, b); }
   }
 }
-
-namespace eve
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto operator ^(T const &v0, U const &v1) noexcept
-  -> decltype( eve::logical_xor(v0,v1) )
-  {
-    return eve::logical_xor(v0, v1);
-  }
-}
-
-

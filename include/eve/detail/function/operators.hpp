@@ -188,7 +188,7 @@ namespace eve::detail
   // infix bit_and
   //================================================================================================
   template<real_scalar_value T, real_scalar_value U>
-  EVE_FORCEINLINE  auto  bit_and_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+  EVE_FORCEINLINE  auto  bit_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
     if constexpr(floating_value<T> || floating_value<U>)
@@ -215,7 +215,7 @@ namespace eve::detail
   // infix bit_or
   //================================================================================================
   template<real_scalar_value T, real_scalar_value U>
-  EVE_FORCEINLINE  auto  bit_or_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+  EVE_FORCEINLINE  auto  bit_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
     if constexpr(floating_value<T> || floating_value<U>)
@@ -242,7 +242,7 @@ namespace eve::detail
   // infix bit_xor
   //================================================================================================
   template<real_scalar_value T, real_scalar_value U>
-  EVE_FORCEINLINE  auto  bit_xor_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+  EVE_FORCEINLINE  auto  bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
     if constexpr(floating_value<T> || floating_value<U>)
@@ -264,5 +264,5 @@ namespace eve::detail
   {
     return a ^ b;
   }
-}
 
+}
