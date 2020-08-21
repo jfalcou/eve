@@ -10,6 +10,8 @@
 //==================================================================================================
 #pragma once
 
+#include <cstddef>
+
 namespace eve
 {
   //================================================================================================
@@ -36,7 +38,12 @@ namespace eve
   // Dispatching tag for emulated SIMD implementation
   struct emulated_ : cpu_
   {
-    using parent = cpu_;
+    static constexpr std::size_t bits           = 128;
+    static constexpr std::size_t bytes          = 16;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
   //================================================================================================

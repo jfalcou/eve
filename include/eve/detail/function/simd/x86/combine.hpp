@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/detail/function/simd/x86/make.hpp>
 #include <eve/detail/implementation.hpp>
 
@@ -29,14 +28,14 @@ namespace eve::detail
     //==============================================================================================
     // If we aggregate two fully sized wide, just coalesce inside new storage
     //==============================================================================================
-    if constexpr( N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    if constexpr( N::value * sizeof(T) == eve::sse_::bytes )
     {
       return s_t {l, h};
     }
     //==============================================================================================
     // Handle half-storage
     //==============================================================================================
-    else if constexpr( 2 * N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    else if constexpr( 2 * N::value * sizeof(T) == eve::sse_::bytes )
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -55,7 +54,7 @@ namespace eve::detail
     //==============================================================================================
     // Handle quarter-storage
     //==============================================================================================
-    else if constexpr( 4 * N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    else if constexpr( 4 * N::value * sizeof(T) == eve::sse_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -103,7 +102,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   combine(avx_ const &, wide<T, N, sse_> const &l, wide<T, N, sse_> const &h) noexcept
   {
-    if constexpr( N::value * sizeof(T) == limits<eve::sse2_>::bytes )
+    if constexpr( N::value * sizeof(T) == eve::sse_::bytes )
     {
       if constexpr( std::is_same_v<T, double> )
       {

@@ -23,7 +23,7 @@ namespace eve::detail
   template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::sse_ const &, Vs... vs) noexcept
   {
-    static_assert(sizeof...(Vs) <= limits<eve::sse2_>::bytes / sizeof(T),
+    static_assert(sizeof...(Vs) <= sse_::bytes / sizeof(T),
                   "[eve::make sse] - Invalid number of arguments");
 
     if constexpr( std::is_same_v<T, double> )
@@ -137,7 +137,7 @@ namespace eve::detail
   template<real_scalar_value T, typename... Vs>
   EVE_FORCEINLINE auto make(as_<T> const &, eve::avx_ const &, Vs... vs) noexcept
   {
-    static_assert(sizeof...(Vs) <= limits<eve::avx_>::bytes / sizeof(T),
+    static_assert(sizeof...(Vs) <= avx_::bytes / sizeof(T),
                   "[eve::make avx] - Invalid number of arguments");
 
     if constexpr( std::is_same_v<T, double> )

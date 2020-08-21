@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve::detail
@@ -21,7 +20,7 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( N::value * sizeof(T) == limits<eve::vmx_>::bytes )
+    if constexpr( N::value * sizeof(T) == ppc_::bytes )
     {
       return typename that_t::storage_type {l, h};
     }
@@ -29,7 +28,7 @@ namespace eve::detail
     {
       auto mask = [&](auto... I) {
         __vector unsigned char m = {static_cast<std::uint8_t>(I)...,
-                                    static_cast<std::uint8_t>(I + limits<eve::vmx_>::bytes)...};
+                                    static_cast<std::uint8_t>(I + ppc_::bytes)...};
         return m;
       };
 
@@ -37,4 +36,3 @@ namespace eve::detail
     }
   }
 }
-

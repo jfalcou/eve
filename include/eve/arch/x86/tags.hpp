@@ -21,18 +21,44 @@ namespace eve
   //================================================================================================
   // ABI tag for all X86 128 bits SIMD registers
   //================================================================================================
-  struct sse_ {};
+  struct sse_
+  {
+    static constexpr std::size_t bits           = 128;
+    static constexpr std::size_t bytes          = 16;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
   //================================================================================================
-  struct sse2_    : simd_   { using parent  = simd_;  };
-  struct sse3_    : sse2_   { using parent  = sse2_;  };
-  struct ssse3_   : sse3_   { using parent  = sse3_;  };
-  struct sse4_1_  : ssse3_  { using parent  = ssse3_; };
-  struct sse4_2_  : sse4_1_ { using parent  = sse4_1_;};
-  struct avx_     : sse4_2_ { using parent  = sse4_2_;};
-  struct avx2_    : avx_    { using parent  = avx_;   };
+  struct sse2_    : simd_   {};
+  struct sse3_    : sse2_   {};
+  struct ssse3_   : sse3_   {};
+  struct sse4_1_  : ssse3_  {};
+  struct sse4_2_  : sse4_1_ {};
+
+  struct avx_     : sse4_2_
+  {
+    static constexpr std::size_t bits           = 256;
+    static constexpr std::size_t bytes          = 32;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
+
+  struct avx2_    : avx_
+  {
+    static constexpr std::size_t bits           = 512;
+    static constexpr std::size_t bytes          = 64;
+    static constexpr bool        is_bit_logical = true;
+
+    template<typename Type>
+    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+  };
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY

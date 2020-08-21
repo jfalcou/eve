@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/detail/concepts.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -25,7 +24,7 @@ namespace eve::detail
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE bool any_(EVE_SUPPORTS(sse2_), logical<wide<T, N, sse_>> const &v) noexcept
   {
-    static constexpr int Bytes = limits<eve::sse2_>::bytes;
+    static constexpr int Bytes = eve::sse_::bytes;
 
     if constexpr( std::is_same_v<T, float> )
     {

@@ -10,88 +10,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
+#include <eve/as.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/constant/mzero.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_notand.hpp>
 
 namespace eve::detail
 {
-  //================================================================================================
-  // 128 bits implementation
-  //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> abs_(EVE_SUPPORTS(ssse3_), wide<T, N, sse_> const &v) noexcept
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE wide<T, N, ABI> abs_(EVE_SUPPORTS(ssse3_), wide<T, N, ABI> const &v) noexcept
   {
-    if constexpr( std::unsigned_integral<T> )
-    {
-      return v;
-    }
-    else if constexpr( std::floating_point<T> )
-    {
-      return bit_notand(Mzero(as(v)), v);
-    }
-    else if constexpr( std::integral<T> )
-    {
-      if constexpr( sizeof(T) == 1 )
-      {
-        return _mm_abs_epi8(v);
-      }
-      else if constexpr( sizeof(T) == 2 )
-      {
-        return _mm_abs_epi16(v);
-      }
-      else if constexpr( sizeof(T) == 4 )
-      {
-        return _mm_abs_epi32(v);
-      }
-      else if constexpr( sizeof(T) == 8 )
-      {
-        return abs_(EVE_RETARGET(cpu_), v);
-      }
-    }
-  }
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-  //================================================================================================
-  // 256 bits implementation
-  //================================================================================================
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> abs_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
-  {
-    if constexpr( std::unsigned_integral<T> )
+          if constexpr( cat && category::unsigned_) return v;
+    else  if constexpr( cat && category::float_   ) return bit_notand(Mzero(as(v)), v);
+    else  if constexpr( cat && category::size64_  ) return map(eve::abs, v);
+    else  if constexpr( cat == category::int32x4  ) return _mm_abs_epi32(v);
+    else  if constexpr( cat == category::int16x8  ) return _mm_abs_epi16(v);
+    else  if constexpr( cat == category::int8x16  ) return _mm_abs_epi8(v);
+    else  if constexpr(current_api >= avx2)
     {
-      return v;
+          if constexpr( cat == category::int32x8  ) return _mm256_abs_epi32(v);
+    else  if constexpr( cat == category::int16x16 ) return _mm256_abs_epi16(v);
+    else  if constexpr( cat == category::int8x32  ) return _mm256_abs_epi8(v);
     }
-    else if constexpr( std::floating_point<T> )
-    {
-      return bit_notand(Mzero(as(v)), v);
-    }
-    else if constexpr( std::integral<T> )
-    {
-      if constexpr( current_api >= avx2 )
-      {
-        if constexpr( sizeof(T) == 1 )
-        {
-          return _mm256_abs_epi8(v);
-        }
-        else if constexpr( sizeof(T) == 2 )
-        {
-          return _mm256_abs_epi16(v);
-        }
-        else if constexpr( sizeof(T) == 4 )
-        {
-          return _mm256_abs_epi32(v);
-        }
-        else if constexpr( sizeof(T) == 8 )
-        {
-          return aggregate(eve::abs, v);
-        }
-      }
-      else
-      {
-        return aggregate(eve::abs, v);
-      }
-    }
+    else                                            return aggregate(eve::abs, v);
   }
 }
-

@@ -10,7 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/limits.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve::detail
@@ -29,7 +28,7 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( N::value * sizeof(T) == limits<eve::neon64_>::bytes )
+    if constexpr( N::value * sizeof(T) == eve::neon64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -84,7 +83,7 @@ namespace eve::detail
     {
       auto mask = [&](auto... I) {
         uint8x8_t m = {static_cast<std::uint8_t>(I)...,
-                       static_cast<std::uint8_t>(I + limits<eve::neon64_>::bytes)...};
+                       static_cast<std::uint8_t>(I + eve::neon64_::bytes)...};
         return m;
       };
 
@@ -95,4 +94,3 @@ namespace eve::detail
     }
   }
 }
-
