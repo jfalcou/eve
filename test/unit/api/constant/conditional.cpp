@@ -64,7 +64,7 @@ TTS_CASE("ignore_last behavior")
   TTS_EQUAL( ignore_last(0).mask(as_<type>())         , eve::True( as_<type>() ));
   TTS_EQUAL( (if_else(ignore_last(0),value, type(69))), value                   );
 
-  for(int i = 1;i < value.size();i++)
+  for(int i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](auto j, auto c) { return j < c-i; };
     type          ref   = [i,value](auto j, auto c) { return (j < c-i) ? value[j] : 69.f; };
@@ -73,8 +73,8 @@ TTS_CASE("ignore_last behavior")
     TTS_EQUAL( (if_else(ignore_last(i),value, type(69))), ref);
   }
 
-  TTS_EQUAL( ignore_last(value.size()).mask(as_<type>())          , eve::False( as_<type>() ) );
-  TTS_EQUAL( (if_else(ignore_last(value.size()),value, type(69))) , type(69)                  );
+  TTS_EQUAL( ignore_last(type::static_size).mask(as_<type>())          , eve::False( as_<type>() ) );
+  TTS_EQUAL( (if_else(ignore_last(type::static_size),value, type(69))) , type(69)                  );
 }
 
 TTS_CASE("ignore_first behavior")
@@ -94,7 +94,7 @@ TTS_CASE("ignore_first behavior")
   TTS_EQUAL( ignore_first(0).mask(as_<type>())         , eve::True( as_<type>() ));
   TTS_EQUAL( (if_else(ignore_first(0),value, type(69))), value                   );
 
-  for(int i = 1;i < value.size();i++)
+  for(int i = 1;i < type::static_size;i++)
   {
     logical<type> mref  = [i](auto j, auto) { return j >= i; };
     type          ref   = [i,value](auto j, auto) { return (j >= i) ? value[j] : 69.f; };
@@ -103,6 +103,6 @@ TTS_CASE("ignore_first behavior")
     TTS_EQUAL( (if_else(ignore_first(i),value, type(69))), ref);
   }
 
-  TTS_EQUAL( ignore_first(value.size()).mask(as_<type>())          , eve::False( as_<type>() ) );
-  TTS_EQUAL( (if_else(ignore_first(value.size()),value, type(69))) , type(69)                  );
+  TTS_EQUAL( ignore_first(type::static_size).mask(as_<type>())          , eve::False( as_<type>() ) );
+  TTS_EQUAL( (if_else(ignore_first(type::static_size),value, type(69))) , type(69)                  );
 }

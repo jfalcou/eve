@@ -170,7 +170,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_last(int n) noexcept : count_(n) {}
+    constexpr ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename T> auto mask(as_<T> const&) const
     {
@@ -183,7 +183,7 @@ namespace eve
       return os << "ignore_last( " << c.count_ << " )";
     }
 
-    int count_;
+    std::ptrdiff_t count_;
   };
 
   //================================================================================================
@@ -195,7 +195,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_first(int n) noexcept : count_(n) {}
+    constexpr ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     template<typename T> auto mask(as_<T> const&) const
     {
@@ -207,7 +207,7 @@ namespace eve
       return os << "ignore_first( " << c.count_ << " )";
     }
 
-    int count_;
+    std::ptrdiff_t count_;
   };
 
   //================================================================================================
@@ -219,7 +219,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr ignore_between(int b, int e) noexcept : begin_(b), end_(e) {}
+    constexpr ignore_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
 
     constexpr ignore_between(ignore_first b, ignore_last e) noexcept
             : begin_(b.count_), end_(e.count_)
@@ -252,10 +252,10 @@ namespace eve
       }
     }
 
-    int begin_, end_;
+    std::ptrdiff_t begin_, end_;
   };
 
-  ignore_between(int,int)                   -> ignore_between<false>;
+  ignore_between(std::ptrdiff_t,std::ptrdiff_t)                   -> ignore_between<false>;
   ignore_between(ignore_first, ignore_last) -> ignore_between<true>;
 
   //================================================================================================
@@ -268,7 +268,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = false;
 
-    constexpr keep_between(int b, int e) noexcept : begin_(b), end_(e) {}
+    constexpr keep_between(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
 
     constexpr keep_between(ignore_first b, ignore_last e) noexcept
             : begin_(b.count_), end_(e.count_)
@@ -301,9 +301,9 @@ namespace eve
       }
     }
 
-    int begin_, end_;
+    std::ptrdiff_t begin_, end_;
   };
 
-  keep_between(int,int)                   -> keep_between<false>;
+  keep_between(std::ptrdiff_t,std::ptrdiff_t)                   -> keep_between<false>;
   keep_between(ignore_first, ignore_last) -> keep_between<true>;
 }
