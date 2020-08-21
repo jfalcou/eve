@@ -174,7 +174,7 @@ namespace eve
 
     template<typename T> auto mask(as_<T> const&) const
     {
-      constexpr auto card = cardinal_v<T> - 1;
+      constexpr auto card = cardinal_v<T>;
       return Iota(eve::as_<T>()) < (card-count_);
     }
 
