@@ -32,7 +32,7 @@ namespace eve::detail
       }
       else
       {
-        size_t r = 0u;
+        std::size_t r = 0u;
 
         [&]<std::size_t... I>( std::index_sequence<I...> const& )
         {
