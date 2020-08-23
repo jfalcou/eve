@@ -12,6 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/is_native.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/platform.hpp>
 #include <eve/traits/as_wide.hpp>
 
@@ -92,9 +93,12 @@ namespace eve::detail
     if constexpr( is_native_v<ABI> )
     {
       using l_t   = logical<wide<T, typename N::split_type>>;
+      using s_t   = typename l_t::storage_type;
       using t_t   = std::array<l_t, 2>;
-      auto [l, h] = a.bits().slice();
-      return t_t {l_t(l.storage(), eve::from_bits), l_t(h.storage(), eve::from_bits)};
+      auto [l, h] = a.mask().slice();
+      return t_t{ l_t( bit_cast(l.storage(), as_<s_t>()) )
+                , l_t( bit_cast(h.storage(), as_<s_t>()) )
+                };
     }
     else
     {
@@ -109,7 +113,8 @@ namespace eve::detail
     if constexpr( is_native_v<ABI> )
     {
       using l_t = logical<wide<T, typename N::split_type>>;
-      return l_t(a.bits().slice(s).storage(), eve::from_bits);
+      using s_t   = typename l_t::storage_type;
+      return l_t( bit_cast(a.mask().slice(s).storage(), as_<s_t>()) );
     }
     else
     {

@@ -24,7 +24,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(cpu_), U const *ptr, wide<T, N, ABI> const &v) noexcept
   {
     wide<U, N> that;
-    apply<N::value>([&](auto... I) { ((that[I] = ptr[v[I]]),...); });
+    apply<N::value>([&](auto... I) { (that.set(I,ptr[v[I]]),...); });
     return that;
   }
 

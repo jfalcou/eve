@@ -10,31 +10,19 @@
 //==================================================================================================
 #pragma once
 
-#include "test.hpp"
-#include <eve/wide.hpp>
+#include <tts/tests/relation.hpp>
 #include <eve/logical.hpp>
-#include <tts/tests/basic.hpp>
-#include <algorithm>
+#include <eve/wide.hpp>
 
-using eve::fixed;
-
-TTS_CASE_TPL("Check enumerating constructor for wide of logical",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check enumerating constructor for wide of logical", EVE_TYPE)
 {
-  using eve::logical;
-  using eve::wide;
-
   auto filler = [](auto i, auto) { return i % 3 ? true : false; };
 
-  logical<wide<EVE_TYPE, T>>              simd(filler);
-  std::array<logical<EVE_TYPE>, T::value> ref;
-  for(std::size_t i = 0; i < T::value; ++i) ref[ i ] = filler(i, T::value);
+  eve::logical<T> simd(filler);
+  eve::logical<T> ref;
 
-  TTS_EXPECT(std::equal(simd.begin(), simd.end(), ref.begin()));
+  for(std::ptrdiff_t i = 0; i < simd.size(); ++i)
+    ref.set(i, filler(i, simd.size()));
+
+  TTS_EQUAL(simd, ref);
 }

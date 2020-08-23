@@ -11,45 +11,40 @@
 #pragma once
 
 #include "test.hpp"
+#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/basic.hpp>
-#include <algorithm>
-
-using eve::as_aligned;
-using eve::fixed;
 
 // Generator for the base values
 auto baseg = [](auto i, auto) { return i + 1; };
 auto nextg = [](auto i, auto) { return i; };
 
-TTS_CASE_TPL("Check self-decrement on wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check self-decrement on wide"
+            , eve::fixed<1>
+            , eve::fixed<2>
+            , eve::fixed<4>
+            , eve::fixed<8>
+            , eve::fixed<16>
+            , eve::fixed<32>
+            , eve::fixed<64>
+            )
 {
-  using eve::wide;
-
   TTS_WHEN("A value is initialized")
   {
-    wide<EVE_TYPE, T> simd(baseg), next(nextg);
-    wide<EVE_TYPE, T> prev(simd), res;
+    eve::wide<EVE_TYPE, T> simd(baseg), next(nextg);
+    eve::wide<EVE_TYPE, T> prev(simd), res;
 
     TTS_AND_THEN("We call post-decrement operator on the value")
     {
       res = simd--;
-      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-      TTS_EXPECT(std::equal(res.begin(), res.end(), prev.begin()));
+      TTS_EQUAL(simd, next);
+      TTS_EQUAL(res , prev);
     }
 
     TTS_AND_THEN("We call pre-decrement operator on the value")
     {
       res = --simd;
-      TTS_EXPECT(std::equal(simd.begin(), simd.end(), next.begin()));
-      TTS_EXPECT(std::equal(res.begin(), res.end(), next.begin()));
+      TTS_EQUAL(simd, next);
+      TTS_EQUAL(res , next);
     }
   }
 }

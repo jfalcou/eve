@@ -25,13 +25,13 @@ namespace eve::detail
 {
   // Value extraction from RandomAccessRange
   template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(random_access_range<T>)
+  constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(has_random_access<T>)
   {
     return std::forward<T>(t)[ i ];
   }
 
   template<typename T> EVE_FORCEINLINE
-  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!random_access_range<T>)
+  constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!has_random_access<T>)
   {
     return std::forward<T>(t);
   }

@@ -7,6 +7,22 @@
 ##==================================================================================================
 
 ##==================================================================================================
+## Setup aggregation of tests
+##==================================================================================================
+add_custom_target(unit.api.tst       )
+add_custom_target(unit.api.scalar.tst)
+add_custom_target(unit.api.simd.tst  )
+
+add_dependencies(unit.scalar.tst    unit.api.scalar.tst )
+add_dependencies(unit.simd.tst      unit.api.simd.tst   )
+add_dependencies(unit.api.tst       unit.api.scalar.tst )
+add_dependencies(unit.api.tst       unit.api.simd.tst   )
+
+##==================================================================================================
+## wide API tests
+add_subdirectory(wide)
+
+##==================================================================================================
 ## General API tests
 make_unit( "unit.api" memory/aligned_alloc.cpp )
 make_unit( "unit.api" memory/aligned_allocator.cpp )
@@ -29,23 +45,14 @@ make_unit( "unit.api" constant/constant.cpp )
 ##==================================================================================================
 ## wide API tests
 make_units("wide/combine/arithmetic"    "unit.api" ${all_types})
+make_units("wide/combine/logical"       "unit.api" ${all_types})
 make_units("wide/decrement/arithmetic"  "unit.api" ${all_types})
 make_units("wide/increment/arithmetic"  "unit.api" ${all_types})
 make_units("wide/load/arithmetic"       "unit.api" ${all_types})
-make_units("wide/make/arithmetic"       "unit.api" ${all_types})
+make_units("wide/load/logical"          "unit.api" ${all_types})
 make_units("wide/slice/arithmetic"      "unit.api" ${all_types})
-make_units("wide/splat/arithmetic"      "unit.api" ${all_types})
-
-check_failures("wide/decrement/logical" "unit.api" ${all_types})
-check_failures("wide/increment/logical" "unit.api" ${all_types})
-make_units      ("wide/combine/logical"   "unit.api" ${all_types})
-make_units      ("wide/load/logical"      "unit.api" ${all_types})
-make_units      ("wide/make/logical"      "unit.api" ${all_types})
-make_units      ("wide/slice/logical"     "unit.api" ${all_types})
-make_units      ("wide/splat/logical"     "unit.api" ${all_types})
-
-make_unit( "unit.api" wide/std.cpp )
+make_units("wide/slice/logical"         "unit.api" ${all_types})
 
 ##==================================================================================================
 ## logical API tests
-make_units("logical"   "unit.api" ${all_types})
+make_all_units(ROOT unit.api      NAME logical  ARCH scalar simd  TYPES ${all_types} )

@@ -10,134 +10,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/popcount.hpp>
-
-#include <type_traits>
+#include <eve/detail/category.hpp>
+#include <eve/detail/concepts.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
-  template<real_value T, typename N>
-  EVE_FORCEINLINE size_t  nbtrue_(EVE_SUPPORTS(sse2_)
-                            , logical<wide<T, N, sse_>> const &v) noexcept
+  //================================================================================================
+  // X86 implementation
+  //================================================================================================
+  template<real_scalar_value T, typename N, x86_abi ABI>
+  EVE_FORCEINLINE auto nbtrue_(EVE_SUPPORTS(sse2_), logical<wide<T, N, ABI>> const &v) noexcept
   {
-    static constexpr int Bytes = eve::sse_::bytes;
+    constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-    if constexpr(std::is_same_v<T, float>)
+    if constexpr(cat == category::int16x8 || cat == category::uint16x8)
     {
-      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
-      static constexpr int Card = Bytes/sizeof(T);
-      static constexpr int SH = (Card-N::value);
-
-      if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
-      {
-        using t_t  = wide<float, fixed<Card>, sse_>;
-        static constexpr int sv = SH*sizeof(T);
-        i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
-
-        return popcount(_mm_movemask_ps(bit_cast(z,as_<t_t>())));
-      }
-      else
-      {
-        return popcount(_mm_movemask_ps(v.mask()));
-      }
-    }
-    else if constexpr(std::is_same_v<T, double>)
-    {
-      using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
-      static constexpr int Card = Bytes/sizeof(T);
-      static constexpr int SH = (Card-N::value);
-
-      if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
-      {
-        using t_t  = wide<double, fixed <Card>, sse_>;
-        static constexpr int sv = SH*sizeof(T);
-        i8_t z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t>()), sv);
-
-        return popcount(_mm_movemask_pd(bit_cast(z,as_<t_t>())));
-      }
-      else
-      {
-        return popcount(_mm_movemask_pd(v.mask()));
-      }
-    }
-    else // if constexpr(std::is_integral_v<T>)
-    {
-      [[maybe_unused]]  static constexpr int SH   = (Bytes-sizeof(T)*N::value);
-      if constexpr(sizeof(T) == 1)
-      {
-        if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
-        {
-          static constexpr int sv = SH;
-          auto z = _mm_bslli_si128(v.mask(), sv);
-
-          return popcount(_mm_movemask_epi8(z));
-        }
-        else
-        {
-          return popcount(_mm_movemask_epi8(v.mask()));
-        }
-      }
-      else
-      {
-        using i8_t = typename wide<T, N, sse_>::template rebind<int8_t, fixed<Bytes>>;
-        if constexpr(N::value*sizeof(T) != Bytes) // "small" wide types
-        {
-          static constexpr int sv = SH;
-          auto z = _mm_bslli_si128(bit_cast(v.mask(), as_<i8_t >()), sv);
-          return popcount(_mm_movemask_epi8(z))/sizeof(T);
-        }
-        else
-        {
-          return popcount(_mm_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
-        }
-      }
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // 256 bits implementation
-  template<real_value T, typename N>
-  EVE_FORCEINLINE size_t nbtrue_(EVE_SUPPORTS(avx_)
-                           , logical<wide<T, N, avx_>> const &v) noexcept
-  {
-    if constexpr(std::is_floating_point_v<T>)
-    {
-      if constexpr(std::is_same_v<T, float>)
-      {
-        return popcount(_mm256_movemask_ps(v.mask()));
-      }
-      else
-      {
-        return popcount(_mm256_movemask_pd(v.mask()));
-      }
+      // Using bitmap directly on short is pessimistic, we do a custom check here
+      using type  = logical<wide<T, N, ABI>>;
+      using tgt   = typename type::template rebind<std::uint8_t,typename N::combined_type>;
+      return bit_cast(v,as_<tgt>()).bitmap().count() / 2;
     }
     else
     {
-      if constexpr(current_api >= avx2)
-      {
-        if constexpr(sizeof(T) == 1)
-        {
-          return popcount(_mm256_movemask_epi8(v.mask()));
-        }
-        else
-        {
-          using i8_t = wide<int8_t, fixed<32> , avx_>;
-          return popcount(_mm256_movemask_epi8(bit_cast(v.mask(), as_<i8_t >())))/sizeof(T);
-        }
-      }
-      else
-      {
-        auto [sl, sh] = v.slice();
-        return nbtrue(sl) + nbtrue(sh);
-      }
+      return v.bitmap().count();
     }
   }
 }
-

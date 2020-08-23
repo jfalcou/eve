@@ -77,7 +77,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 {
   TTS_WHEN("We initialize a aligned_ptr")
   {
-    type values[2] = {42,17};
+    type values[2] = {{42},{17}};
     alignas(8) type extra_aligned_value{87};
 
     eve::aligned_ptr<type>    ptr           = &values[0];

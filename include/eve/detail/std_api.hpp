@@ -54,19 +54,7 @@ namespace eve
   }
 
   template<std::size_t I, typename T, typename N, typename ABI>
-  auto &get(wide<T, N, ABI> &w)
-  {
-    return w[ I ];
-  }
-
-  template<std::size_t I, typename T, typename N, typename ABI>
   auto get(logical<wide<T, N, ABI>> const &w)
-  {
-    return w[ I ];
-  }
-
-  template<std::size_t I, typename T, typename N, typename ABI>
-  auto &get(logical<wide<T, N, ABI>> &w)
   {
     return w[ I ];
   }

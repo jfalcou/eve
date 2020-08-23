@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::extract behavior on arithmetic types", EVE_TYPE)
   T arg;
 
   for(int i=0; i< EVE_CARDINAL; ++i)
-    arg[i] = static_cast<v_t>(1+i);
+    arg.set(i, static_cast<v_t>(1+i));
 
   for(int i=0; i< EVE_CARDINAL; ++i)
     TTS_EQUAL(eve::extract(arg, i), static_cast<v_t>(1+i));
@@ -50,7 +50,7 @@ TTS_CASE_TPL("Check eve::extract behavior on logical types", EVE_TYPE)
   logical<T> arg;
 
   for(int i=0; i< EVE_CARDINAL; ++i)
-    arg[i] = ((1+i) % 2) == 0;
+    arg.set(i, ((1+i) % 2) == 0);
 
   for(int i=0; i< EVE_CARDINAL; ++i)
     TTS_EQUAL(eve::extract(arg, i), ((1+i) % 2) == 0);

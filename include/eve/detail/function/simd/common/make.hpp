@@ -48,9 +48,16 @@ namespace eve::detail
   //================================================================================================
   template<typename Pack, typename V0, typename... Values>
   EVE_FORCEINLINE Pack
-  make(as_<Pack> const &tgt, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
+  make(as_<Pack> const &, eve::aggregated_ const &, V0 v0, Values... vs) noexcept
   {
-    return make(tgt, eve::emulated_ {}, v0, vs...);
+    using type = typename Pack::value_type;
+    Pack        that;
+    std::size_t i = 0;
+
+    that.set(i++, static_cast<type>(v0));
+    ((that.set(i++, vs)), ...);
+
+    return that;
   }
 
   template<typename Pack, typename Value>

@@ -47,10 +47,10 @@ TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_TYPE)
 
     for(int i=0; i< EVE_CARDINAL; ++i)
     {
-      rhs1[i] = i >= j ? 0 : 1;
-      rhs2[i] = i <= j ? 0 : 1;
-      rhs3[i] = i == j ? 0 : 1;
-      rhs4[i] = i == j ? 1 : 0;
+      rhs1.set(i, i >= j ? 0 : 1);
+      rhs2.set(i, i <= j ? 0 : 1);
+      rhs3.set(i, i == j ? 0 : 1);
+      rhs4.set(i, i == j ? 1 : 0);
     }
 
     TTS_EXPECT_NOT(eve::all(rhs1));

@@ -39,7 +39,12 @@ namespace tts::ext
     using arg_t = eve::wide<T, N, ABI>;
     inline bool operator()(arg_t const &l, arg_t const &r) const
     {
-      return std::equal(l.begin(), l.end(), r.begin());
+      auto check = [&]<std::size_t... I>(std::index_sequence<I...> const&)
+      {
+        return (true && ... && (l[I] == r[I]));
+      };
+
+      return check( std::make_index_sequence<N::value>{});
     }
   };
 
@@ -49,8 +54,15 @@ namespace tts::ext
     using arg_t = eve::logical<T>;
     inline bool operator()(arg_t const &l, arg_t const &r) const
     {
-      using b_t = typename arg_t::bits_type;
-      return equal<b_t, b_t>{}(l.bits(), r.bits());
+      auto check = [&]<std::size_t... I>(std::index_sequence<I...> const&)
+      {
+        if constexpr(eve::simd_value<T>)
+          return (true && ... && (l[I] == r[I]));
+        else
+          return l == r;
+      };
+
+      return check( std::make_index_sequence<eve::cardinal_v<arg_t>>{});
     }
   };
 

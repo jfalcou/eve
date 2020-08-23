@@ -10,17 +10,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/spy.hpp>
-#include <iostream>
-#include <cstring>
+#include <eve/detail/meta.hpp>
 
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wuninitialized"
-#  pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
+#include <bitset>
+#include <cstring>
+#include <iosfwd>
 
 namespace eve
 {
@@ -55,6 +50,8 @@ namespace eve
       return *this;
     }
 
+    void swap( logical& other ) { std::swap(value_,other.value_); }
+
     /// Convert a logical value to bool
     EVE_FORCEINLINE constexpr operator bool() const noexcept { return !!value_; }
 
@@ -65,7 +62,7 @@ namespace eve
     EVE_FORCEINLINE constexpr bool not_value() const noexcept { return !value_; }
 
     /// Convert a logical to its internal representation value
-    EVE_FORCEINLINE constexpr auto bits() const noexcept { return value_; }
+    EVE_FORCEINLINE constexpr bits_type bits() const noexcept { return value_; }
 
     /// Convert a logical to a typed mask value
     EVE_FORCEINLINE constexpr T mask() const noexcept
@@ -75,19 +72,26 @@ namespace eve
       return that;
     }
 
-  private:
+    // Convert a logical to a bitmap of its truth values
+    EVE_FORCEINLINE constexpr auto bitmap() const noexcept
+    {
+      return std::bitset<1>(value_ & 1);
+    }
+
+    /// Stream insertion operator
+    friend EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical const &v)
+    {
+      return os << (v.value_ ? "true" : "false");
+    }
+
+    private:
     bits_type value_;
   };
 
-  /// Stream insertion operator
+
   template<typename T>
-  EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical<T> const &v)
+  EVE_FORCEINLINE void swap(logical<T> &lhs, logical<T> &rhs) noexcept
   {
-    return os << (v.value() ? "true" : "false");
+    lhs.swap(rhs);
   }
 }
-
-#if defined(SPY_COMPILER_IS_GNUC)
-#  pragma GCC diagnostic pop
-#endif
-
