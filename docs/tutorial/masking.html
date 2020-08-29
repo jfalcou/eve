@@ -18,7 +18,7 @@
 When you call a function on one or more [SIMD values](reference/concepts.html#simd_value), you
 expect the computation to be performed on every element of its parameters. Sometimes, you may want
 to make the application of a given function dependent on some condition. Let's explore the
-functionalities **EVE** provides for those kind of task.
+functionalities **EVE** provides for this kind of task.
 
 Explicit Selection
 ====================================================================================================
@@ -137,7 +137,7 @@ The code of `safe_sqrt` now plays differently:
 
 The fact the conditional syntax builds a new callable object is interesting because it ensures
 that any optimization over the conditional computation can be captured and that this new callable
-can be passed as-if to algorithms without having to worry about changing the number of argument
+can be passed as-if to algorithms without having to worry about changing the number of arguments
 requested.
 
 !!! Tip
@@ -251,11 +251,11 @@ The output is then:
 Context-sensitive mask
 ----------------------------------------------------------------------------------------------------
 Some algorithms require conditional function calls but use logical expression relative to the
-element index inside a [SIMD value](reference/concepts.html#simd_value) than its value themselves.
+element index inside a [SIMD value](reference/concepts.html#simd_value) rather than its value.
 One may want for example to not compute an expression on the first and last element of such
 [SIMD values](reference/concepts.html#simd_value).
 
-Let's write a function that compute the difference between two vectors in multiple scenario: not
+Let's write a function that computes the differences between two vectors in multiple scenarios: not
 using the first elements and not using the last elements.
 
 
@@ -298,11 +298,11 @@ The output is then:
 
 !!! Tip
     The [ignore_first](../reference/types/mask.html#eve::ignore_first) and
-    [ignore_last](../reference/types/mask.html#eve::ignore_last) conditional takes a number of element
-    as parameters so they can be applied generically on any size of [SIMD value](reference/concepts.html#simd_value)
+    [ignore_last](../reference/types/mask.html#eve::ignore_last) conditional takes a number of elements
+    as parameter so they can be applied generically on any size of [SIMD value](reference/concepts.html#simd_value)
 
 But what if we want to apply our operation to every element but the first and last one ? Clearly,
-calling two operations with two different conditional mask is sub-optimal. **EVE** provides some
+calling two operations with two different conditional masks is sub-optimal. **EVE** provides some
 more conditional expression to express just that like [keep_between](../reference/types/mask.html#eve::keep_between).
 
 <script type="preformatted">
@@ -372,9 +372,9 @@ The output is the same obviously:
 Conclusion
 ====================================================================================================
 Conditional operations on [SIMD values](reference/concepts.html#simd_value) is a good way to
-keep a high level code over some complex computation. **EVE** provides different level of abstractions
+keep a high level code over some complex computations. **EVE** provides different levels of abstraction
 for such operations as well as various helpers to specify how the conditions can be computed based
-either on value or index.
+either on values or indexes.
 
 
 ----------------------------------------------------------------------------------------------------

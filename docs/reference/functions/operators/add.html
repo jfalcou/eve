@@ -41,6 +41,18 @@ Parameters
 `x`, `y`
 :   [values](../../concepts.html#value).
 
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template<conditional_expr Cond > auto operator[](Cond cond) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Returns a function object that performs the same operations than `eve::add` but using a
+[conditional call](../../tutorial/masking.html)
+Parameters
+----------------------------------------------------------------------------------------------------
+`cond`
+:   [conditional_expr](../../concepts.html#conditional_expr) use to mask the operation.
+
 
 Return value
 ----------------------------------------------------------------------------------------------------
@@ -57,13 +69,17 @@ Return the sum of `x` and `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#pedantic_)
+[`saturated_`](../decorator/saturated.html)
 :   The call `saturated_(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 Masked calls
 ====================================================================================================
- The call `add[cond](x,y)` (resp.  `saturated_(add[cond])(x,y)`) computes the sum (resp the saturated  sum of `x` and `y`)
+ The [masked](../../../tutorial/masking.html) calls `add[cond](x,y)` and `saturated_(add[cond])(x,y)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ Peculiarly, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the sum (resp the saturated  sum) of `x` and `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, add(x,y),x)`,

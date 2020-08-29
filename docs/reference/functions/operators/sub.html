@@ -57,13 +57,18 @@ Return the difference of `x` and `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#pedantic_)
+[`saturated_`](../decorator/saturated.html)
 :   The call `saturated_(sub)(x,y)` computes the saturated  difference of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 Masked calls
 ====================================================================================================
- The call `sub[cond](x,y)` (resp.  `saturated_(sub[cond])(x,y)`) computes the difference (resp the saturated  difference of `x` and `y`)
+ The [masked](../../../tutorial/masking.html) calls `sub[cond](x,y)` and `saturated_(sub[cond])(x,y)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ Peculiarly, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the difference (resp the saturated
+  difference) of `x` and `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, sub(x,y),x)`,

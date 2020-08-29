@@ -51,13 +51,17 @@ The result is `x+1`.
 
 Supported Incorators
 ====================================================================================================
-[`saturated_`](../incorators.html#pedantic_)
+[`saturated_`](../incorators.html#saturated_)
 :   The call `saturated_(inc)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral type T  `saturated_(inc)(Valmax< T >())` returns `Valmax< T >()`.
 
 Masked calls
 ====================================================================================================
- The call `inc[cond](x)` (resp.  `saturated_(inc[cond])(x)`) computes the opposite (resp the saturated  opposite of `x`)
+ The [masked](../../../tutorial/masking.html) calls `inc[cond](x)` and `saturated_(inc[cond])(x)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ Peculiarly, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the increment (resp the saturated  increment) of `x`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, inc(x), x)`,

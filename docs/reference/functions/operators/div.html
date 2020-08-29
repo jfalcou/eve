@@ -57,7 +57,7 @@ Return the difference of `x` and `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#pedantic_)
+[`saturated_`](../decorator/saturated.html)
 :   The call `saturated_(div)(x,y)` computes the saturated  difference of `x` and `y`. The saturation is obtained in the
     [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
     The relevant case are just in fact for integral division the division than 0 in which case the result
@@ -68,7 +68,11 @@ Supported Decorators
 
 Masked calls
 ====================================================================================================
- The call `div[cond](x,y)` (resp.  `saturated_(div[cond])(x,y)`) computes the difference (resp the saturated  difference of `x` and `y`)
+ The [masked](../../../tutorial/masking.html) calls `div[cond](x,y)` and `saturated_(div[cond])(x,y)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ Peculiarly, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the division (resp the saturated  division) of `x` by `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, div(x,y),x)`,
