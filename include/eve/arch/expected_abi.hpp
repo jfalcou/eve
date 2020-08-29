@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/arch/abi_of.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

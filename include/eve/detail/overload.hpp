@@ -13,7 +13,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/conditional.hpp>
 #include <utility>
 

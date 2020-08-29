@@ -15,7 +15,7 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_andnot.hpp>

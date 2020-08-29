@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/concept/value.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>

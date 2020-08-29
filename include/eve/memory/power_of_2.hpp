@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <climits>
 #include <cstdint>
 
