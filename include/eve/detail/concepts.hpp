@@ -12,9 +12,9 @@
 
 #include <eve/detail/spy.hpp>
 
-#if __has_include(<concepts>) && !defined(SPY_STDLIB_IS_LIBCPP)
 #include <concepts>
-#else
+
+#if defined(SPY_STDLIB_IS_LIBCPP)
 #include <type_traits>
 #include <functional>
 namespace std
