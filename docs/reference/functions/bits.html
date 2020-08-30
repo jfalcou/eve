@@ -12,7 +12,18 @@
 <br>
 These functions provide scalar and SIMD version of bit operations. Bitwise operations are extended to work on any [value](../concepts.html#value) types by considering the masking operations to apply on the value bit patterns while retaining its original types.
 
-There is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [real floating values](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
+For the two parameters operations which are truly bitwise operation on the whole input datas (i.e. excluding shifts)
+or for `bit_not`,
+there is no type nor cardinal restrictions between operands of bitwise function as long as their size in bytes are equal. This implies calls of such function on [real floating values](../concepts.html#ieee_value) are possible as long as they are performed with a second parameters of proper size.
+
+The other one parameter operations, if not stated explicitely, are restricted to unsigned based values.
+
+!!! WARNING
+   Notice that if a binary operator contains a negation as `bit_andnot`, the position of the negation
+   matches the position of the parameter: for example, `bit_andnot(x,y)` is semantically equivalent to `bit_and(x,bit_not(y))`
+   and often optimized.
+
+
 
 The header `eve/function/bit.hpp` allows the inclusion of all bits related functions.
 
@@ -56,6 +67,8 @@ The header `eve/function/bit.hpp` allows the inclusion of all bits related funct
   [`eve::bit_shl`](bits/bit_shl.html)
 <span class="mediumskip"></span>
   [`eve::bit_shr`](bits/bit_shr.html)
+<span class="mediumskip"></span>
+  [`eve::bit_ternary`](bits/bit_ternary.html)
 <span class="mediumskip"></span>
   [`eve::bit_xor`](bits/bit_xor.html)
 <span class="mediumskip"></span>

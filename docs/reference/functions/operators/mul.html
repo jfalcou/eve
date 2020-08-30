@@ -57,13 +57,18 @@ Return the multiplication of `x` by `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#pedantic_)
-:   The call `saturated_(mul)(x,y)` computes the saturated  difference of `x` and `y`. The saturation is obtained in the
+[`saturated_`](../decorator/saturated.html)
+:   The call `saturated_(mul)(x,y)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 Masked calls
 ====================================================================================================
- The call `mul[cond](x,y)` (resp.  `saturated_(mul[cond])(x,y)`) computes the difference (resp the saturated  multiplication of `x` by `y`)
+ The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated_(mul[cond])(x,y)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ More precisely, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the multiplication
+ (resp the saturated  multiplication) of `x` and `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, mul(x,y),x)`,

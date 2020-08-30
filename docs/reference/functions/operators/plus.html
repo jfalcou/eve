@@ -51,6 +51,14 @@ Computes  [element-wise](../../../glossary.html#elment-wise) `+x` which generall
    Although the operator notation with `+` is supported, the `+` operator on
    standard scalar type is the original one and so can lead to automatic C++ promotion.
 
+Masked calls
+====================================================================================================
+ The [masked](../../../tutorial/masking.html) calls `plus[cond](x)` and `saturated_(plus[cond])(x)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ For this peculiar operation, as `plus` acts merely as identity, the masked calls are really interesting only if the `cond` clause
+ invloves an `else_` part (see [the masking tutorial](../../../tutorial/masking.html)).
+
   (insert ../../src/plus.src.html here)
 
   (insert ../../out/plus.out.html here)

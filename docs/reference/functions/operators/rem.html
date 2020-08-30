@@ -89,12 +89,16 @@ Supported Decorators
 
 Masked calls
 ====================================================================================================
- The call `rem[cond](x,y)` (resp.  `xxx_(rem[cond])(x,y)` where xxx_ is one of the supported decorators)
- computes the remainder (resp the saturated  remainder) of `x` by `y`
+ The [masked](../../../tutorial/masking.html) calls `rem[cond](x,y)` and `d_(rem[cond])(x,y)` where d_ is one
+ of the supported decorators and `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
+
+ More precisely, if `cond` is a mere [logical value](../../concepts.html#value) these expressions compute
+ the remainder (resp the decorated remainder) of `x` and `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, rem(x,y), x)`,
- *  `if_else(cond, xxx_(rem)(x,y), x)`;
+ *  `if_else(cond, d_(rem)(x,y), x)`;
 
   (insert ../../src/rem.src.html here)
 

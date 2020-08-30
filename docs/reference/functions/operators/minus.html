@@ -56,15 +56,19 @@ is not representable and the result is undefined behaviour.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#pedantic_)
+[`saturated_`](../decorator/saturated.html)
 :   The call `saturated_(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
     for integral signed type T  `saturated_(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
 
 Masked calls
 ====================================================================================================
- The call `minus[cond](x)` (resp.  `saturated_(minus[cond])(x)`) computes the opposite (resp. the saturated  opposite of `x`)
- if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
+ The [masked](../../../tutorial/masking.html) calls `minus[cond](x)` and `saturated_(minus[cond])(x)` where `cond` satisfies the
+ [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
+ More precisely, if `cond` is
+ a mere [logical value](../../concepts.html#value) these expressions compute the opposite (resp the saturated  opposite) of `x`
+ if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
+.
  *  `if_else(cond, minus(x), x)`,
  *  `if_else(cond, saturated_(minus)(x), x)`;
 
