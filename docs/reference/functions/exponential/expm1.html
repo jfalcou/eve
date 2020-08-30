@@ -34,7 +34,7 @@ Member functions
 template< real_value T> auto operator()( T x ) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs $2^x$.
+Performs $e^x-1$.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -48,8 +48,8 @@ Returns the [element-wise](../../../glossary.html#elment-wise) exponential input
 In partucular, for floating inputs:
 
    * If the element is $\pm0$, $\pm0$ is returned
-   * If the element is $-\infty$, -1 is returned
-   * If the element is $\infty$, $\infty$ returned
+   * If the element is $-\infty$, $-1$ is returned
+   * If the element is $\infty$, $\infty$ is returned
    * If the element is a `NaN`, `NaN` is returned
 
 
