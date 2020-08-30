@@ -12,7 +12,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/detail/implementation.hpp>
 
 namespace eve::detail

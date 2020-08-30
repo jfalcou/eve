@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/memory/is_aligned.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/assert.hpp>
 #include <compare>
 

@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/slice.hpp>

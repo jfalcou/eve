@@ -14,7 +14,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/bitmask.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 

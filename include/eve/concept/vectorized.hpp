@@ -15,7 +15,7 @@
 #include <eve/traits/is_logical.hpp>
 #include <eve/forward.hpp>
 
-#include <concepts>
+#include <eve/detail/concepts.hpp>
 
 namespace eve
 {
