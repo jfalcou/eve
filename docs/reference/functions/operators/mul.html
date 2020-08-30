@@ -66,7 +66,7 @@ Masked calls
  The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated_(mul[cond])(x,y)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
- Peculiarly, if `cond` is
+ More precisely, if `cond` is
  a mere [logical value](../../concepts.html#value) these expressions compute the multiplication
  (resp the saturated  multiplication) of `x` and `y`
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
