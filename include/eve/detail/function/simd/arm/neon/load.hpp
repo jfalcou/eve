@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/spy.hpp>

@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/memory/power_of_2.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/assert.hpp>
 #include <cstdint>
 

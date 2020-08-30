@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/concepts.hpp>
+#include <concepts>
 #include <eve/detail/implementation.hpp>
 
 namespace eve::detail
