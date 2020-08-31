@@ -21,26 +21,52 @@ namespace eve::detail
   // Extract value
   //================================================================================================
   template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto extract( cpu_ const&, as_<Wide> const&
-                              , Storage const& p, std::size_t i
-                              ) noexcept
+  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage const& p ) noexcept
   {
     using type = element_type_t<Wide>;
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type> const *>(&p.segments[0]);
-      return ptr[i];
+      return reinterpret_cast<detail::alias_t<type> const *>(&p.segments[0]);
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      return p[i];
+      return p.data();
     }
     else
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type> const *>(&p);
-      return ptr[i];
+      return reinterpret_cast<detail::alias_t<type> const *>(&p);
     }
+  }
+
+  template<typename Storage, typename Wide>
+  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage & p ) noexcept
+  {
+    using type = element_type_t<Wide>;
+
+    if constexpr( has_aggregated_abi_v<Wide> )
+    {
+      return reinterpret_cast<detail::alias_t<type> *>(&p.segments[0]);
+    }
+    else if constexpr( has_emulated_abi_v<Wide> )
+    {
+      return p.data();
+    }
+    else
+    {
+      return reinterpret_cast<detail::alias_t<type> *>(&p);
+    }
+  }
+
+  //================================================================================================
+  // Extract value
+  //================================================================================================
+  template<typename Storage, typename Wide>
+  EVE_FORCEINLINE element_type_t<Wide> extract( cpu_ const& arch, as_<Wide> const& tgt
+                                              , Storage const& p, std::size_t i
+                                              ) noexcept
+  {
+    return at_begin(arch,tgt,p)[i];
   }
 
   //================================================================================================

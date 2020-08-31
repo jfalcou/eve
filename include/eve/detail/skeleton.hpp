@@ -121,18 +121,30 @@ namespace eve::detail
   template<std::size_t I> struct aggregate_step
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr auto subpart(T &&t) noexcept
+    static EVE_FORCEINLINE constexpr auto subpart(T &t) noexcept
     {
-      using u_t = std::remove_cvref_t<T>;
-      if constexpr(simd_value<u_t>) return std::forward<T>(t).storage().template get<I>();
-      else                          return std::forward<T>(t);
+      if constexpr(simd_value<T>) return t.storage().template get<I>();
+      else                        return t;
+    }
+
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto subpart(T const &t) noexcept
+    {
+      if constexpr(simd_value<T>) return t.storage().template get<I>();
+      else                        return t;
     }
 
     // Not a lambda as we need force-inlining
     template<typename Func, typename Out, typename... Ts>
-    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &&... ts) -> decltype(auto)
+    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &... ts) -> decltype(auto)
     {
-      dst.template get<I>() =  std::forward<Func>(f)( subpart(std::forward<Ts>(ts))... );
+      dst.template get<I>() =  std::forward<Func>(f)( subpart(ts)... );
+    }
+
+    template<typename Func, typename Out, typename... Ts>
+    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts const&... ts) -> decltype(auto)
+    {
+      dst.template get<I>() =  std::forward<Func>(f)( subpart(ts)... );
     }
   };
 
