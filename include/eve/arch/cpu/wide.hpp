@@ -178,10 +178,26 @@ namespace eve
     //==============================================================================================
     // Raw storage access
     //==============================================================================================
-    EVE_FORCEINLINE storage_type  storage() const noexcept { return data_; }
-    EVE_FORCEINLINE storage_type &storage()       noexcept { return data_; }
+    EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
+    EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
+    EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
 
-    EVE_FORCEINLINE operator storage_type() const noexcept { return data_; }
+    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
+    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
+    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
+
+    EVE_FORCEINLINE auto  begin() noexcept
+    {
+      return detail::at_begin(EVE_CURRENT_API{}, as_<wide>{}, data_);
+    }
+
+    EVE_FORCEINLINE auto  begin() const  noexcept
+    {
+      return detail::at_begin(EVE_CURRENT_API{}, as_<wide>{}, data_);
+    }
+
+    EVE_FORCEINLINE auto  end()        noexcept { return begin() + static_size; }
+    EVE_FORCEINLINE auto  end() const  noexcept { return begin() + static_size; }
 
     //==============================================================================================
     // alignment interface
