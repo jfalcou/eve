@@ -12,17 +12,60 @@
 
   (insert ../../crumbs.html here)
 
-  (insert basic/allbits.html       here)
-  (insert basic/constant.html      here)
-  (insert basic/false.html         here)
-  (insert basic/half.html          here)
-  (insert basic/ieee_constant.html here)
-  (insert basic/mhalf.html         here)
-  (insert basic/mone.html          here)
-  (insert basic/mzero.html         here)
-  (insert basic/one.html           here)
-  (insert basic/true.html          here)
-  (insert basic/zero.html          here)
+Those constants provides generator function for basic values used in various settings.
+
+Synopsis
+====================================================================================================
+
+All constant are implemented as callable object taking a [type specifier](../types/helpers.html#eve::as_) as argument.
+
+**Example:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <iostream>
+#include <eve/wide.hpp>
+#include <eve/constant/one.hpp>
+
+int main()
+{
+  suing eve::wide;
+  suing eve::fixed;
+
+  // generate the constant 1 of the same type than 4
+  std::cout << eve::one( as(4) ) << "\n";
+
+  // geneates a wide<float> filled with 1s
+  std::cout << eve::one( as_<wide<float,fixed<4>>>() ) << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+**Output:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+scalar : 1
+simd   : {1, 1, 1, 1}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+List of constants
+====================================================================================================
+
+In the following table, `T` represents the requested type for the generated constant.
+
+Constant      | Header file                 | Callable object | Value                     | Constraints on `T`   |
+:-------------|:----------------------------|:----------------|:--------------------------|:---------------------|
+All bits set  | `eve\constant\allbits.hpp`  | `eve::allbits`  |  see below                | `arithmetic_value`   |
+True          | `eve\constant\true.hpp`     | `eve::true`     | `as_logical_t<T>(true)`   | `value`              |
+False         | `eve\constant\false.hpp`    | `eve::false`    | `as_logical_t<T>(false)`  | `value`              |
+Half          | `eve\constant\half.hpp`     | `eve::half`     | `T(0.5)`                  | `floating_value`     |
+Minus half    | `eve\constant\mhalf.hpp`    | `eve::mhalf`    | `T(-0.5)`                 | `floating_value`     |
+One           | `eve\constant\one.hpp`      | `eve::one`      | `T(1)`                    | `arithmetic_value`   |
+Minus one     | `eve\constant\mone.hpp`     | `eve::mone`     | `T(-1)`                   | `arithmetic_value`   |
+Zero          | `eve\constant\zero.hpp`     | `eve::zero`     | `T(0)`                    | `arithmetic_value`   |
+Minus Zero    | `eve\constant\mzero.hpp`    | `eve::mzero`    | `T(-0)`                   | `arithmetic_value`   |
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

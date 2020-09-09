@@ -12,23 +12,75 @@
 
   (insert ../../crumbs.html here)
 
-  (insert ieee/bitincrement.html    here)
-  (insert ieee/eps.html             here)
-  (insert ieee/expobits_mask.html   here)
-  (insert ieee/limitexponent.html   here)
-  (insert ieee/mantissamask.html    here)
-  (insert ieee/maxexponent.html     here)
-  (insert ieee/maxexponentm1.html   here)
-  (insert ieee/mindenormal.html     here)
-  (insert ieee/minexponent.html     here)
-  (insert ieee/nan.html             here)
-  (insert ieee/nbmantissabits.html  here)
-  (insert ieee/signmask.html        here)
-  (insert ieee/sqrteps.html         here)
-  (insert ieee/twotonmb.html        here)
+Those constants provides generator function for constants tied to the IEEE standard or that ease
+implementation of IEEE standard functions.
+
+Synopsis
+====================================================================================================
+
+All constant are implemented as callable object taking a [type specifier](../types/helpers.html#eve::as_) as argument.
+
+**Example:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+#include <iostream>
+#include <eve/wide.hpp>
+#include <eve/constant/maxexponent.hpp>
+
+int main()
+{
+  suing eve::wide;
+  suing eve::fixed;
+
+  // generate the value of the maximum exponent supported by double
+  std::cout << eve::maxexponent( as(4.) ) << "\n";
+
+  // geneates a wide<float> filled with the value of the maximum exponent supported by float
+  std::cout << eve::maxexponent( as_<wide<float,fixed<4>>>() ) << "\n";
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+**Output:**
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+scalar : 1023
+simd   : {127, 127, 127, 127}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+List of constants
+====================================================================================================
+
+$$\newcommand{\braceif}[4]{\left\{
+  \begin{array}{@{}ll@{}}
+    #1 & \text{if T} \equiv #2\ \\
+    #3 & \text{if T} \equiv #4
+  \end{array}\right.}$$
+
+In the following table, `T` represents the requested type for the generated constant.
+
+Constant                              | Header file                       | Callable object        | Value                     | Constraints on `T` |
+:-------------------------------------|:----------------------------------|:-----------------------|:--------------------------|:-------------------|
+Smallest value increment              | `eve\constant\bitincrement.hpp`   | `eve::bitincrement`    |                           | `value`            |
+???                                   | `eve\constant\expobits_mask.hpp`  | `eve::expobits_mask`   |     | `floating_value`   |
+???                                   | `eve\constant\limitexponent.hpp`  | `eve::limitexponent`   |                           | `floating_value`   |
+Bit mask for mantissa extraction      | `eve\constant\mantissamask.hpp`   | `eve::mantissamask`    |                           | `floating_value`   |
+Largest possible exponent             | `eve\constant\maxexponent.hpp`    | `eve::maxexponent`     | $$\braceif{127}{float}{1023}{double}$$  | `floating_value`   |
+Largest possible exponent minus one   | `eve\constant\maxexponentm1.hpp`  | `eve::maxexponentm1`   | $$\braceif{126}{float}{1022}{double}$$  | `floating_value`   |
+Smallest non-null denormal value      | `eve\constant\mindenormal.hpp`    | `eve::mindenormal`     |                           | `floating_value`   |
+Smallest possible exponent            | `eve\constant\minexponent.hpp`    | `eve::minexponent`     |   | `floating_value`   |
+Not a Number                          | `eve\constant\nan.hpp`            | `eve::nan`             |                           | `floating_value`   |
+Size of the mantissa in bits          | `eve\constant\nbmantissabits.hpp` | `eve::nbmantissabits`  |                           | `floating_value`   |
+Bit mask for sign bit extraction      | `eve\constant\signmask.hpp`       | `eve::signmask`        |                           | `floating_value`   |
+Square root of the machine $\epsilon$ | `eve\constant\sqrteps.hpp`        | `eve::sqrteps`         |                           | `floating_value`   |
+????                                  | `eve\constant\twotonmb.hpp`       | `eve::twotonmb`        |                           | `floating_value`   |
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
+
 
 <!-- Footnotes -->
 
