@@ -18,7 +18,9 @@ implementation of IEEE standard functions.
 Synopsis
 ====================================================================================================
 
-All constant are implemented as callable object taking a [type specifier](../types/helpers.html#eve::as_) as argument.
+All constant are implemented as callable object taking a [type specifier](../types/helpers.html#eve::as_)
+as argument. Each constant is available by including the header file `eve/constant/name.hpp`, where `name`
+is the constant name.
 
 **Example:**
 
@@ -30,10 +32,10 @@ All constant are implemented as callable object taking a [type specifier](../typ
 
 int main()
 {
-  suing eve::wide;
-  suing eve::fixed;
+  using eve::wide;
+  using eve::fixed;
 
-  // generate the value of the maximum exponent supported by double
+  // generates the value of the maximum exponent supported by double
   std::cout << eve::maxexponent( as(4.) ) << "\n";
 
   // geneates a wide<float> filled with the value of the maximum exponent supported by float
@@ -54,29 +56,31 @@ simd   : {127, 127, 127, 127}
 List of constants
 ====================================================================================================
 
-$$\newcommand{\braceif}[4]{\left\{
+$$\newcommand{\choose}[4]{\left\{
   \begin{array}{@{}ll@{}}
-    #1 & \text{if T} \equiv #2\ \\
-    #3 & \text{if T} \equiv #4
+    #1 & \text{if E is } \texttt{#2}\ \\
+    #3 & \text{if E is } \texttt{#4}
   \end{array}\right.}$$
 
-In the following table, `T` represents the requested type for the generated constant.
+In the following table:
+  * `T` represents the requested type for the generated constant.
+  * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`
 
-Constant                              | Header file                       | Callable object        | Value                     | Constraints on `T` |
-:-------------------------------------|:----------------------------------|:-----------------------|:--------------------------|:-------------------|
-Smallest value increment              | `eve\constant\bitincrement.hpp`   | `eve::bitincrement`    |                           | `value`            |
-???                                   | `eve\constant\expobits_mask.hpp`  | `eve::expobits_mask`   |     | `floating_value`   |
-???                                   | `eve\constant\limitexponent.hpp`  | `eve::limitexponent`   |                           | `floating_value`   |
-Bit mask for mantissa extraction      | `eve\constant\mantissamask.hpp`   | `eve::mantissamask`    |                           | `floating_value`   |
-Largest possible exponent             | `eve\constant\maxexponent.hpp`    | `eve::maxexponent`     | $$\braceif{127}{float}{1023}{double}$$  | `floating_value`   |
-Largest possible exponent minus one   | `eve\constant\maxexponentm1.hpp`  | `eve::maxexponentm1`   | $$\braceif{126}{float}{1022}{double}$$  | `floating_value`   |
-Smallest non-null denormal value      | `eve\constant\mindenormal.hpp`    | `eve::mindenormal`     |                           | `floating_value`   |
-Smallest possible exponent            | `eve\constant\minexponent.hpp`    | `eve::minexponent`     |   | `floating_value`   |
-Not a Number                          | `eve\constant\nan.hpp`            | `eve::nan`             |                           | `floating_value`   |
-Size of the mantissa in bits          | `eve\constant\nbmantissabits.hpp` | `eve::nbmantissabits`  |                           | `floating_value`   |
-Bit mask for sign bit extraction      | `eve\constant\signmask.hpp`       | `eve::signmask`        |                           | `floating_value`   |
-Square root of the machine $\epsilon$ | `eve\constant\sqrteps.hpp`        | `eve::sqrteps`         |                           | `floating_value`   |
-????                                  | `eve\constant\twotonmb.hpp`       | `eve::twotonmb`        |                           | `floating_value`   |
+Description                                     | Callable object        | Value                                 | Constraints on `T` |
+:-----------------------------------------------|:-----------------------|:--------------------------------------|:-------------------|
+Smallest value increment                        | `eve::bitincrement`    |                                       | `value`            |
+???                                             | `eve::expobits_mask`   |                                       | `floating_value`   |
+???                                             | `eve::limitexponent`   |                                       | `floating_value`   |
+Bit mask for mantissa extraction                | `eve::mantissamask`    |                                       | `floating_value`   |
+Largest possible exponent                       | `eve::maxexponent`     | $$\choose{127}{float}{1023}{double}$$ | `floating_value`   |
+Largest possible exponent minus one             | `eve::maxexponentm1`   | $$\choose{126}{float}{1022}{double}$$ | `floating_value`   |
+Smallest positive denormal value                | `eve::mindenormal`     |                                       | `floating_value`   |
+Smallest possible exponent                      | `eve::minexponent`     |                                       | `floating_value`   |
+Not a Number                                    | `eve::nan`             |                                       | `floating_value`   |
+Size of the mantissa in bits                    | `eve::nbmantissabits`  |                                       | `floating_value`   |
+Bit mask for sign bit extraction                | `eve::signmask`        |                                       | `floating_value`   |
+Square root of the machine $\epsilon$           | `eve::sqrteps`         |                                       | `floating_value`   |
+Two at the power of the number of mantissa bits | `eve::twotonmb`        |                                       | `floating_value`   |
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
