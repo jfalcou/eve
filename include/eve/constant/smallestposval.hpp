@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(smallestposval_, smallestposval_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Smallestposval(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Smallestposval(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

@@ -89,7 +89,7 @@ namespace eve::detail
         T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
         T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T hi   = f - hfsq;
         hi     = bit_and(hi, 0xfffff000u);
         T lo   = fma(s, hfsq + R, f - hi - hfsq);
@@ -151,10 +151,10 @@ namespace eve::detail
                       0x3fc7466496cb03dell,
                       0x3fc2f112df3e5244ll>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
         T hi     = f - hfsq;
-        hi       = bit_and(hi, (Allbits<uiT>() << 32));
+        hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo     = f - hi - hfsq + s * (hfsq + R);
         T val_hi = hi * Invlog_10hi;
         T y      = dk * Log10_2hi;

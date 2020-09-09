@@ -52,7 +52,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(a0) )
-          return std::make_tuple(Nan<T>(), Nan<T>());
+          return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
       }
       T x = abs(a0);
       if constexpr( scalar_value<T> )
@@ -63,7 +63,7 @@ namespace eve::detail
       else
       {
         auto invalid = is_not_finite(x);
-        x = if_else(x > Maxflint(as(x)), eve::zero_, x);
+        x = if_else(x > Maxflint(eve::as(x)), eve::zero_, x);
         x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);

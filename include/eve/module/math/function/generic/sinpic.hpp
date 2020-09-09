@@ -33,19 +33,19 @@ namespace eve::detail
     {
       if constexpr(scalar_value<T>)
       {
-        if (is_eqz(a0)) return One(as(a0));
+        if (is_eqz(a0)) return One(eve::as(a0));
         if constexpr(eve::platform::supports_infinites) if(is_infinite(a0)) return Zero<T>();
         if constexpr(eve::platform::supports_denormals)
-          return eve::abs(a0) < Eps<T>() ? One<T>() : sinpi(a0)/(Pi(as(a0))*a0);
+          return eve::abs(a0) < eps(as<T>()) ? One<T>() : sinpi(a0)/(Pi(eve::as(a0))*a0);
         else
-          return sinpi(a0)/(Pi(as(a0))*a0);
+          return sinpi(a0)/(Pi(eve::as(a0))*a0);
       }
       else
       {
-        auto r1 =  sinpi(a0)/(Pi(as(a0))*a0);
+        auto r1 =  sinpi(a0)/(Pi(eve::as(a0))*a0);
         if constexpr(eve::platform::supports_denormals)
         {
-          r1 = if_else (eve::abs(a0) < Eps<T>(), One<T>() , r1);
+          r1 = if_else (eve::abs(a0) < eps(as<T>()), One<T>() , r1);
         }
         else
           r1 = if_else(is_eqz(a0), One<T>(), r1);

@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::none behavior on arithmetic", EVE_TYPE)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EXPECT_NOT(eve::none(eve::Nan<T>()));
+      TTS_EXPECT_NOT(eve::none(eve::nan(eve::as<T>())));
     }
 
     TTS_EXPECT(eve::none(T(-0.)));

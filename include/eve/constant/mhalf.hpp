@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(mhalf_, mhalf_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Mhalf(as_<T> const & = {})
+  EVE_FORCEINLINE auto Mhalf(eve::as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
 

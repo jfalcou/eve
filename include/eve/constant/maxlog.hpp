@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(maxlog_, maxlog_);
 
   template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Maxlog(as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto Maxlog(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

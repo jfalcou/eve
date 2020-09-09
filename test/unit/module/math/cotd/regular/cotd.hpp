@@ -26,9 +26,9 @@ TTS_CASE_TPL("Check eve::cotd behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::cotd(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::cotd(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::cotd(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::cotd(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cotd(eve::Inf<T>())  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cotd(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::cotd(T(0))  , eve::Inf<T>() );

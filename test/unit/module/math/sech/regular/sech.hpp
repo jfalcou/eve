@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::sech behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::sech(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::sech(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::sech(eve::Inf<T>()) , T(0)          );
     TTS_IEEE_EQUAL(eve::sech(eve::Minf<T>()), T(0)          );
 

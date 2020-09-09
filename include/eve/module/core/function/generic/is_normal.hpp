@@ -30,7 +30,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(integral_value<T>) return is_nez(a);
-      else                            return is_finite(a) && is_greater_equal(eve::abs(a), Smallestposval(as(a)));
+      else                            return is_finite(a) && is_greater_equal(eve::abs(a), Smallestposval(eve::as(a)));
     }
     else                              return apply_over(is_normal, a);
   }

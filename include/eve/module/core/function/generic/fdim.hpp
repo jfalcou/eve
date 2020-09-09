@@ -50,7 +50,7 @@ namespace eve::detail
       }
       else
       {
-        return max(b - a, Zero(as(a)));
+        return max(b - a, Zero(eve::as(a)));
       }
     }
   }

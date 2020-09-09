@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::arg) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL( (eve::pedantic_(eve::arg)(eve::Nan<T>())), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL( (eve::pedantic_(eve::arg)(eve::nan(eve::as<T>()))), (eve::nan(eve::as<T>())) );
   }
 
   if constexpr( eve::platform::supports_infinites )

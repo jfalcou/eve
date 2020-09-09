@@ -30,10 +30,10 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       auto  a0_180 = div_180(a0);
-      auto test   = is_not_flint(a0_180) && is_flint(a0_180+Mhalf(as(a0_180)));
+      auto test   = is_not_flint(a0_180) && is_flint(a0_180+Mhalf(eve::as(a0_180)));
       if constexpr( scalar_value<T> ) // early return for nans in scalar case
       {
-        if( test ) return Nan<T>();
+        if( test ) return nan(eve::as<T>());
       }
       auto tmp = D()(tanpi)(a0_180);
       if constexpr( scalar_value<T> ) return tmp;

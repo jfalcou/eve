@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check eve::log behavior", EVE_TYPE)
   if constexpr(eve::platform::supports_invalids)
   {
     TTS_IEEE_EQUAL(eve::log(eve::Inf<T>())  , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::log(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::log(eve::Mone<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log(eve::Mone<T>()) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::log(T( 0 ))         , eve::Minf<T>());
   }
 

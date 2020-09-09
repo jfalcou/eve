@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(maxexponentm1_, maxexponentm1_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Maxexponentm1(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Maxexponentm1(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
     using i_t = detail::as_integer_t<T>;

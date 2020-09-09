@@ -86,7 +86,7 @@ namespace eve::detail
         T t1   = w * horn<T, 0x3eccce13u, 0x3e789e26u>(w);
         T t2   = z * horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
 
         T dk = single_(k);
         T r  = fma(fms(s, hfsq + R, hfsq) + f, Invlog_2<T>(), dk);
@@ -156,7 +156,7 @@ namespace eve::detail
                       0x3fc7466496cb03deull,
                       0x3fc2f112df3e5244ull>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         //        return -(hfsq-(s*(hfsq+R))-f)*Invlog_2<T>()+dk;  // fast ?
 
         /*
@@ -195,7 +195,7 @@ namespace eve::detail
         T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
         T Invlog_2hi = Ieee_constant<T, 0x3fb8b000U, 0x3ff7154765200000ULL>();
         T hi         = f - hfsq;
-        hi           = bit_and(hi, (Allbits<uiT>() << 32));
+        hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo         = fma(s, hfsq + R, f - hi - hfsq);
 
         T val_hi = hi * Invlog_2hi;
@@ -247,7 +247,7 @@ namespace eve::detail
         if( ix << 1 == 0 )
           return Minf<T>(); /* log(+-0)=-inf */
         if( ix >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         if constexpr( eve::platform::supports_denormals )
         { /* subnormal number, scale up x */
           k -= 25;
@@ -260,7 +260,7 @@ namespace eve::detail
         return x;
       }
       else if( ix == 0x3f800000 )
-        return Zero(as(x));
+        return Zero(eve::as(x));
 
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
@@ -306,7 +306,7 @@ namespace eve::detail
         if( is_eqz(x) )
           return Minf<T>(); /* log(+-0)=-inf */
         if( hx >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         /* subnormal number, scale x up */
         if constexpr( eve::platform::supports_denormals )
         {
@@ -377,7 +377,7 @@ namespace eve::detail
       T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
       T Invlog_2hi = Ieee_constant<T, 0x3fb8b000UL, 0x3ff7154765200000ULL>();
       T hi         = f - hfsq;
-      hi           = bit_and(hi, (Allbits<uiT>() << 32));
+      hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
       T lo         = f - hi - hfsq + s * (hfsq + R);
 
       T val_hi = hi * Invlog_2hi;

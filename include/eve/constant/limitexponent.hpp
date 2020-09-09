@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(limitexponent_, limitexponent_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Limitexponent(as_<T> const & = {})
+  EVE_FORCEINLINE auto Limitexponent(eve::as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
     using i_t = detail::as_integer_t<t_t>;

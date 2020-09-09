@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(mindenormal_, mindenormal_);
 
   template<floating_value T>
-  EVE_FORCEINLINE T Mindenormal(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE T Mindenormal(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

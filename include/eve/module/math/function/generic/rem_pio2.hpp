@@ -47,7 +47,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), double const &a0) noexcept
   {
     if( a0 == Inf<double>() )
-      return std::make_tuple(Zero<double>(), Nan<double>(), Nan<double>());
+      return std::make_tuple(Zero<double>(), nan(eve::as<double>()), nan(eve::as<double>()));
     double       y[2];
     std::int32_t n = __ieee754_rem_pio2(a0, y);
     return std::make_tuple(static_cast<double>(n & std::int32_t(3)), y[0], y[1]);
@@ -56,7 +56,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto rem_pio2_(EVE_SUPPORTS(cpu_), float const &a0) noexcept
   {
     if( a0 == Inf<float>() )
-      return std::make_tuple(Zero<float>(), Nan<float>(), Nan<float>());
+      return std::make_tuple(Zero<float>(), nan(eve::as<float>()), nan(eve::as<float>()));
     // This is the musl way
     // pio2_1:   first 25 bits of pi/2
     // pio2_1t:  pi/2 - pio2_1
@@ -76,4 +76,3 @@ namespace eve::detail
     return std::make_tuple(static_cast<float>(fn), fx, 0.0f);
   }
 }
-

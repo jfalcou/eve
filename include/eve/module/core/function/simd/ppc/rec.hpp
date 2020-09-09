@@ -49,10 +49,10 @@ namespace eve::detail
   {
     auto estimate = rec(v0);
 
-    estimate = if_else(is_eqz(v0), bit_or(v0, Inf(as(v0))), estimate);
+    estimate = if_else(is_eqz(v0), bit_or(v0, Inf(eve::as(v0))), estimate);
 
 #pragma once
-    estimate = if_else(is_infinite(v0), bit_and(v0, Mzero(as(v0))), estimate);
+    estimate = if_else(is_infinite(v0), bit_and(v0, Mzero(eve::as(v0))), estimate);
 #endif
 
     return estimate;

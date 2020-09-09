@@ -160,7 +160,7 @@ namespace eve::detail
     if constexpr(scalar_value<T>)
     {
       using i_t =  detail::as_integer_t<T, signed>;
-      if (is_not_finite(xr)) return Nan<T>();
+      if (is_not_finite(xr)) return nan(eve::as<T>());
       i_t n = int_(fn);
       i_t swap_bit = n&One<i_t>();
       auto  sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
@@ -189,12 +189,12 @@ namespace eve::detail
                                              , T xr
                                              , T dxr = T(0)) noexcept
   {
-    auto aa0lteps = eve::abs(a0) < Eps<T>();
+    auto aa0lteps = eve::abs(a0) < eps(as<T>());
     T y = tancot_eval(xr);
     if constexpr(scalar_value<T>)
     {
       if (aa0lteps) return a0;
-      if (is_not_finite(xr)) return Nan<T>();
+      if (is_not_finite(xr)) return nan(eve::as<T>());
       y =  (int(fn)&1) ? -rec(y): y;
       if (dxr) y+= dxr*fma(y, y, One<T>());
       return bit_xor(y, bitofsign(a0));
@@ -219,14 +219,14 @@ namespace eve::detail
     T y = tancot_eval(xr);
     if constexpr(scalar_value<T>)
     {
-      if (is_not_finite(a0)) return Nan<T>();
+      if (is_not_finite(a0)) return nan(eve::as<T>());
       y =  (int(fn)&1) ? -y: rec(y);
       if (dxr) y+= dxr*fma(y, y, One<T>());
       return bit_xor(y, bitofsign(a0));
     }
     else
     {
-      auto aa0lteps = eve::abs(a0) < Eps<T>();
+      auto aa0lteps = eve::abs(a0) < eps(as<T>());
       auto tmp = binarize( fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto test = is_eqz(swap_bit);

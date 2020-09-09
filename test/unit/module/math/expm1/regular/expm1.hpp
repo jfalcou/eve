@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::expm1 behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::expm1(eve::Nan<T>()) , eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::expm1(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::expm1(eve::Inf<T>()) , eve::Inf<T>());
     TTS_IEEE_EQUAL(eve::expm1(eve::Minf<T>()), T(-1)        );
   }

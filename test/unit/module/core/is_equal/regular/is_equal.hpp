@@ -53,8 +53,8 @@ TTS_CASE_TPL("Check eve::is_equal behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_equal(eve::Nan<T>(), eve::Nan<T>())   , eve::False<T>());
-    TTS_EQUAL(eve::is_equal(eve::Nan<T>(), T(4))            , eve::False<T>());
+    TTS_EQUAL(eve::is_equal(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()))   , eve::False<T>());
+    TTS_EQUAL(eve::is_equal(eve::nan(eve::as<T>()), T(4))            , eve::False<T>());
   }
 
   TTS_EQUAL(eve::is_equal(T(1)            ,   T(1) )          , eve::True<T>() );
@@ -76,8 +76,8 @@ TTS_CASE_TPL("Check eve::operator== behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::Nan<T>() == eve::Nan<T>(), eve::False<T>());
-    TTS_EQUAL(eve::Nan<T>() == T(4)         , eve::False<T>());
+    TTS_EQUAL(eve::nan(eve::as<T>()) == eve::nan(eve::as<T>()), eve::False<T>());
+    TTS_EQUAL(eve::nan(eve::as<T>()) == T(4)         , eve::False<T>());
   }
 
   TTS_EQUAL( T(1)           == T(1)           , eve::True<T>() );

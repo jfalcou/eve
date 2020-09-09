@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(integral_value<T>) return True(as(a));
+      if constexpr(integral_value<T>) return True(eve::as(a));
       else                            return a == a;
     }
     else                              return apply_over(is_not_nan, a);

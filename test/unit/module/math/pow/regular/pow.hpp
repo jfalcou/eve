@@ -47,9 +47,9 @@ TTS_CASE_TPL("pow conformity", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::pow(-T(0)          ,  eve::Minf<T>() ) , eve::Inf<T>() );
     TTS_IEEE_EQUAL(eve::pow(-T(1)          ,  eve::Minf<T>() ) , T(1)          );
     TTS_IEEE_EQUAL(eve::pow(-T(1)          ,  eve::Inf<T>()  ) , T(1)          );
-    TTS_IEEE_EQUAL(eve::pow( T(1)          ,  eve::Nan<T>()  ) , T(1)          );
-    TTS_IEEE_EQUAL(eve::pow( eve::Nan<T>() ,  T(0)           ) , T(1)          );
-    TTS_IEEE_EQUAL(eve::pow( eve::Nan<T>() , -T(0)           ) , T(1)          );
+    TTS_IEEE_EQUAL(eve::pow( T(1)          ,  eve::nan(eve::as<T>())  ) , T(1)          );
+    TTS_IEEE_EQUAL(eve::pow( eve::nan(eve::as<T>()) ,  T(0)           ) , T(1)          );
+    TTS_IEEE_EQUAL(eve::pow( eve::nan(eve::as<T>()) , -T(0)           ) , T(1)          );
     TTS_IEEE_EQUAL(eve::pow( T(0.5)        ,  eve::Inf<T>()  ) , T( 0 )        );
     TTS_IEEE_EQUAL(eve::pow( T(2)          ,  eve::Inf<T>()  ) , eve::Inf<T>() );
     TTS_IEEE_EQUAL(eve::pow( T(0.5)        ,  eve::Minf<T>() ) , eve::Inf<T>() );

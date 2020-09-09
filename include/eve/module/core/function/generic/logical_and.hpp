@@ -39,7 +39,7 @@ namespace eve::detail
     if constexpr(is_logical_v<T>) { return logical_and(a.value(), b); }
     else if  constexpr(is_logical_v<U>) { return logical_and(a, b.value()); }
     else  {  return as_logical_t<T>(a && b);  }
-    // ne suffit pas : (bool) return as_logical_t<T>(as_logical_t<T>(a).value() && as_logical_t<T>( b).value());
+    // ne suffit pas : (bool) return as_logical_t<T>(eve::as_logical_t<T>(a).value() && as_logical_t<T>( b).value());
   }
 
   template<simd_value T, simd_value U>

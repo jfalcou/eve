@@ -19,7 +19,7 @@ namespace eve
   EVE_MAKE_CALLABLE(iota_, iota_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Iota(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Iota(eve::as_<T> const & = {}) noexcept
   {
     if constexpr( scalar_value<T> )
     {

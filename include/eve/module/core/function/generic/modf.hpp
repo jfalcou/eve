@@ -34,7 +34,7 @@ namespace eve::detail
       }
       else
       {
-        return std::make_tuple(Zero(as(a)), a);
+        return std::make_tuple(Zero(eve::as(a)), a);
       }
     }
     else
@@ -53,7 +53,7 @@ namespace eve::detail
         if constexpr( scalar_value<T> )
         {
           if( is_infinite(a) )
-            return std::make_tuple(Zero(as(a)), a);
+            return std::make_tuple(Zero(eve::as(a)), a);
           auto t = trunc(a);
           return std::make_tuple(a - t, t);
         }
@@ -66,7 +66,7 @@ namespace eve::detail
       }
       else
       {
-        return std::make_tuple(Zero(as(a)), a);
+        return std::make_tuple(Zero(eve::as(a)), a);
       }
     }
     else

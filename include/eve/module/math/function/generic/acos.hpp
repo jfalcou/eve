@@ -38,7 +38,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto tmp = Pio_2(as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
+      auto tmp = Pio_2(eve::as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
       return if_else(a0 == T(1), eve::zero_, tmp);
     }
     else
@@ -54,8 +54,8 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        auto const half  = eve::Half(as(a0));
-        auto const mhalf = eve::Mhalf(as(a0));
+        auto const half  = eve::half(eve::as(a0));
+        auto const mhalf = eve::Mhalf(eve::as(a0));
 
         auto x           = eve::abs(a0);
         auto x_larger_05 = is_greater(x, half);
@@ -63,9 +63,9 @@ namespace eve::detail
         x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
         x = asin(x);
         x = add[x_larger_05](x, x);
-        x = eve::if_else(is_less(a0, mhalf), eve::Pi(as(a0)) - x, x);
+        x = eve::if_else(is_less(a0, mhalf), eve::Pi(eve::as(a0)) - x, x);
 
-        return eve::if_else(x_larger_05, x, eve::Pio_2(as(a0)) - x);
+        return eve::if_else(x_larger_05, x, eve::Pio_2(eve::as(a0)) - x);
       }
       else
       {
@@ -81,7 +81,7 @@ namespace eve::detail
 
       if( eve::abs(a0) > T(1) )
       {
-        return Nan<T>();
+        return nan(eve::as<T>());
       }
 
       if constexpr( std::same_as<T, float> )

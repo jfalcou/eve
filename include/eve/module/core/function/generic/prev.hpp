@@ -77,7 +77,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(a), Mzero(as(a)), bitfloating(nz)), z);
+          return if_else(test, if_else(is_eqz(a), Mzero(eve::as(a)), bitfloating(nz)), z);
         }
       }
       else if constexpr(integral_value<T>)

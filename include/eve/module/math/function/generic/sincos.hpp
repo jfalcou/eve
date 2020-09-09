@@ -49,7 +49,7 @@ namespace eve::detail
       auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
       if constexpr( scalar_value<T> )
       {
-        return (x2nlepi2_16) ? std::make_tuple(Nan<T>(), Nan<T>())
+        return (x2nlepi2_16) ? std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()))
                              : std::make_tuple(sin_eval(x2, a0), cos_eval(x2));
       }
       else
@@ -86,8 +86,8 @@ namespace eve::detail
       {
         using i_t =  as_integer_t<T, signed>;
 
-        if (is_less_equal(x, Eps<T>()))       return std::make_tuple(a0, One<T>());
-        if (is_not_less_equal(x, Pio_2<T>())) return std::make_tuple(Nan<T>(), Nan<T>());
+        if (is_less_equal(x, eps(as<T>())))       return std::make_tuple(a0, One<T>());
+        if (is_not_less_equal(x, Pio_2<T>())) return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
 
         i_t n = x > Pio_4<T>();
 
@@ -126,7 +126,7 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return std::make_tuple(Nan<T>(), Nan<T>());
+          return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
       const T x          = abs(a0);
       auto [fn, xr, dxr] = D()(rempio2)(x);
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);
@@ -143,9 +143,9 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( all(x <= Pio_4(as(x))) )
+      if( all(x <= Pio_4(eve::as(x))) )
         return restricted_(sincos)(a0);
-      else if( all(x <= Pio_2(as(x))) )
+      else if( all(x <= Pio_2(eve::as(x))) )
         return small_(sincos)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
         return medium_(sincos)(a0);

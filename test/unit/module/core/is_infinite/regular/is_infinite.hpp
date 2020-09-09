@@ -36,6 +36,6 @@ TTS_CASE_TPL("Check eve::is_infinite behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_nans)
   {
-    TTS_EQUAL(eve::is_infinite(eve::Nan<T>()), eve::False<T>());
+    TTS_EQUAL(eve::is_infinite(eve::nan(eve::as<T>())), eve::False<T>());
   }
 }

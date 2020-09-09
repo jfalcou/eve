@@ -32,15 +32,15 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::cot) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(T( 0 )) , eve::Inf<T>() );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(T(-0.)) , eve::Minf<T>());
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)( T(1 )) , eve::Nan<T>() );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(-T(1 )) , eve::Nan<T>() );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)( T(1 )) , eve::nan(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(-T(1 )) , eve::nan(eve::as<T>()) );
 
   TTS_ULP_EQUAL(eve::restricted_(eve::cot)( eve::Pio_4<T>())  , T(ref_cot( eve::Pio_4<v_t>())), 1  );
   TTS_ULP_EQUAL(eve::restricted_(eve::cot)(-eve::Pio_4<T>())  , T(ref_cot(-eve::Pio_4<v_t>())), 1  );

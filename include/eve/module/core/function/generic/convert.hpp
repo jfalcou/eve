@@ -101,7 +101,7 @@ namespace eve::detail
     else if constexpr( floating_real_value<
                            IN> && std::is_same_v<OUT, as_integer_t<elt_tin, unsigned>> )
     {
-      auto v0    = eve::max(v00, Zero(as(v00)));
+      auto v0    = eve::max(v00, Zero(eve::as(v00)));
       using r_t  = as_integer_t<IN, unsigned>;
       using si_t = as_integer_t<elt_tin, signed>;
 
@@ -113,7 +113,7 @@ namespace eve::detail
     }
     else if constexpr( signed_value<IN> && unsigned_value<OUT> )
     {
-      return convert(eve::max(v00, Zero(as(v00))), as<OUT>());
+      return convert(eve::max(v00, Zero(eve::as(v00))), as<OUT>());
     }
     else
     {

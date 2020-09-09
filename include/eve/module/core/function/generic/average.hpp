@@ -45,7 +45,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
-      else                            return fma(a, Half(as(a)), mul(b, Half(as(a))));
+      else                            return fma(a, half(eve::as(a)), mul(b, half(eve::as(a))));
    }
     else return  apply_over(average, a, b);
   }

@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
   if constexpr(eve::platform::supports_invalids)
   {
     TTS_IEEE_EQUAL(eve::log1p(eve::Inf<T>())  , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::log1p(eve::Nan<T>())  , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::log1p(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::log1p(eve::Mone<T>()) , eve::Minf<T>());
     TTS_IEEE_EQUAL(eve::log1p(T( 0 ))         , T( 0 )        );
   }
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::log1p(eve::Mindenormal<T>()), T(std::log1p(eve::Mindenormal<v_t>())));
   }
 
-  auto epsi = eve::Eps<T>();
+  auto epsi = eve::eps(eve::as<T>());
 
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );

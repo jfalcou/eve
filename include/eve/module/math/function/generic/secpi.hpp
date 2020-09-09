@@ -38,7 +38,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( test )
-          return Nan<T>();
+          return nan(eve::as<T>());
       }
       else
       {
@@ -64,7 +64,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(x) )
-          return Nan<T>();
+          return nan(eve::as<T>());
         if( x > Maxflint<T>() )
           return T(1);
       }
@@ -73,7 +73,7 @@ namespace eve::detail
       T z                = cos_finalize(quadrant(fn), xr, dxr);
       if constexpr( scalar_value<T> )
       {
-        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : Nan<T>();
+        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : nan(eve::as<T>());
       }
       else
       {

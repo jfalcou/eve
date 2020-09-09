@@ -64,8 +64,8 @@ namespace eve::detail
         w         = fma(w, stirling1(w), One<T>());
         T    y    = exp(-a0);
         auto test = is_less(a0, Stirlingsplitlim);
-        T    z    = a0 - Half<T>();
-        z         = if_else(test, z, Half<T>() * z);
+        T    z    = a0 - half(eve::as<T>());
+        z         = if_else(test, z, half(eve::as<T>()) * z);
         T v       = pow_abs(a0, z);
         y *= v;
         y = if_else(test, y, y * v); /* Avoid overflow in pow() */
@@ -78,7 +78,7 @@ namespace eve::detail
       else if constexpr( scalar_value<T> )
       {
         if( is_ltz(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
 #ifndef BOOST_SIMD_NO_INVALIDS
         if( is_nan(a0) )
           return a0;
@@ -90,10 +90,10 @@ namespace eve::detail
         T y = exp(-a0);
         if( is_eqz(y) )
           return Inf<T>();
-        T z = a0 - Half<T>();
+        T z = a0 - half(eve::as<T>());
         if( a0 >= Stirlingsplitlim )
         { /* Avoid overflow in pow() */
-          const T v = pow_abs(a0, z * Half<T>());
+          const T v = pow_abs(a0, z * half(eve::as<T>()));
           y *= v;
           y *= v;
         }

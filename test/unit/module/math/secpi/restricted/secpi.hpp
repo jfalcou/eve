@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check eve::restricted_(eve::secpi) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::secpi)(T(0))   , T(1));

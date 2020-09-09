@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::is_not_flint behavior", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::is_not_flint(eve::Inf<T>()), eve::True<T>() );
-    TTS_EQUAL(eve::is_not_flint(eve::Nan<T>()), eve::True<T>() );
+    TTS_EQUAL(eve::is_not_flint(eve::nan(eve::as<T>())), eve::True<T>() );
     TTS_EQUAL(eve::is_not_flint(T(1) / T(2)), eve::True<T>());
   }
 }

@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_negative_(EVE_SUPPORTS(cpu_)
                                              , T const &v) noexcept
   {
-    if constexpr(unsigned_value<T>)        return False(as(v));
+    if constexpr(unsigned_value<T>)        return False(eve::as(v));
     else if constexpr(has_native_abi_v<T>)
     {
      if constexpr(signed_integral_value<T>) return is_ltz(v);

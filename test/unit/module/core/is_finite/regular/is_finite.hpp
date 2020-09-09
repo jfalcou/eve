@@ -32,6 +32,6 @@ TTS_CASE_TPL("Check eve::is_finite behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::is_finite(eve::Inf<T>()) , eve::False<T>());
     TTS_EQUAL(eve::is_finite(eve::Minf<T>()), eve::False<T>());
-    TTS_EQUAL(eve::is_finite(eve::Nan<T>()) , eve::False<T>());
+    TTS_EQUAL(eve::is_finite(eve::nan(eve::as<T>())) , eve::False<T>());
   }
 }

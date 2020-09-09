@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::acoth behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acoth(eve::Nan<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acoth(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
@@ -41,5 +41,5 @@ TTS_CASE_TPL("Check eve::acoth behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::acoth(T( 2.))  , T(std::atanh(v_t(0.5))) , 0.5 );
   TTS_ULP_EQUAL(eve::acoth(T(-2.))  , T(std::atanh(v_t(-0.5))), 0.5 );
-  TTS_ULP_EQUAL(eve::acoth(T( 0. )) ,  eve::Nan<T>()          , 0   );
+  TTS_ULP_EQUAL(eve::acoth(T( 0. )) ,  eve::nan(eve::as<T>())          , 0   );
 }

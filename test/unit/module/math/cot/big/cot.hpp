@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::eve::big_(eve::cot) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cot)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::big_(eve::cot)(T( 0 )), eve::Inf<T>()  );

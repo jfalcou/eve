@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::is_nlez behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_nlez(eve::Nan<T>()), eve::True<T>());
+    TTS_EQUAL(eve::is_nlez(eve::nan(eve::as<T>())), eve::True<T>());
   }
 
   TTS_EQUAL(eve::is_nlez(T(0)), eve::False<T>());

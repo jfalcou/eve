@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check eve::restricted_(eve::tan) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 
   using v_t = eve::element_type_t<T>;
@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check eve::restricted_(eve::tan) behavior", EVE_TYPE)
   auto vpi_4 = eve::Pio_4<T>();
   auto spi_4 = eve::Pio_4<v_t>();
 
-  TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(1))     , eve::Nan<T>()         , 0.5 );
-  TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(-1))    , eve::Nan<T>()         , 0.5 );
+  TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(1))     , eve::nan(eve::as<T>())         , 0.5 );
+  TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(-1))    , eve::nan(eve::as<T>())         , 0.5 );
   TTS_ULP_EQUAL( eve::restricted_(eve::tan)( vpi_4)   , T(std::tan( spi_4)   ), 0.5 );
   TTS_ULP_EQUAL( eve::restricted_(eve::tan)(-vpi_4)   , T(std::tan(-spi_4)   ), 0.5 );
   TTS_ULP_EQUAL( eve::restricted_(eve::tan)( vpi_4/2) , T(std::tan( spi_4/2) ), 0.5 );

@@ -87,13 +87,13 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto aa    = a + !((b + One(as(a))) | ((ui_t)a + Valmin(as(a))));
+        auto aa    = a + !((b + One(eve::as(a))) | ((ui_t)a + Valmin(eve::as(a))));
         if( b )
           return aa / b;
         else if( a )
-          return Valmax(as(a)) + ((ui_t)a >> (sizeof(T) * 8 - 1));
+          return Valmax(eve::as(a)) + ((ui_t)a >> (sizeof(T) * 8 - 1));
         else
-          return Zero(as(a));
+          return Zero(eve::as(a));
       }
       else if constexpr( simd_value<T> )
       {
@@ -118,7 +118,7 @@ namespace eve::detail
       else if constexpr( simd_value<T> )
       {
         auto iseqzb = is_eqz(b);
-        auto bb     = if_else(iseqzb, One(as(a)), b);
+        auto bb     = if_else(iseqzb, One(eve::as(a)), b);
         auto aa     = if_else(iseqzb, bit_mask(a), a);
         return div(aa, bb);
       }

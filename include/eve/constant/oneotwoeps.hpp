@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(oneotwoeps_, oneotwoeps_);
 
   template<real_value T>
-  constexpr EVE_FORCEINLINE auto Oneotwoeps(as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto Oneotwoeps(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

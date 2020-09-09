@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check eve::acotd behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acotd(eve::Nan<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::acotd(T( 0.5)), T( 63.4349488229220) , 1   );

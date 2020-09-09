@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(pi_, pi_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Pi(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Pi(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

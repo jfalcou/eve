@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check eve::medium_(eve::sin) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Nan<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Inf<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Minf<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Inf<T>()) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::sin)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
   }
 
   TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::sin)(T(-0.)))));

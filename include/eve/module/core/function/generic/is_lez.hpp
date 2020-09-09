@@ -27,7 +27,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(unsigned_value<T>) return is_eqz(a);
-      else                            return a <= Zero(as(a));
+      else                            return a <= Zero(eve::as(a));
     }
     else                              return apply_over(is_lez, a);
   }

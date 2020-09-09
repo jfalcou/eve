@@ -51,11 +51,11 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::next) one parameter behavior", EVE_TYPE)
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()) , eve::Nan<T>()           );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()) , eve::nan(eve::as<T>())           );
     TTS_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<T>())   , eve::Inf<T>()           );
     TTS_EQUAL(eve::pedantic_(eve::next)(eve::Minf<T>())     , eve::Valmin<T>()        );
-    TTS_EQUAL(eve::pedantic_(eve::next)(T(-1))              , T(-1) + eve::Eps<T>()/2 );
-    TTS_EQUAL(eve::pedantic_(eve::next)(T( 1))              , T( 1) + eve::Eps<T>()   );
+    TTS_EQUAL(eve::pedantic_(eve::next)(T(-1))              , T(-1) + eve::eps(eve::as<T>())/2 );
+    TTS_EQUAL(eve::pedantic_(eve::next)(T( 1))              , T( 1) + eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::pedantic_(eve::next)(T(-0.))             , T( 0)                   );
     TTS_EQUAL(eve::pedantic_(eve::next)(T( 0 ))             , eve::Mindenormal<T>()   );
   }
@@ -92,18 +92,18 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::next) two parameters behavior", EVE_TYPE
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()      ,  i_t(2)), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<T>()   ,  i_t(2)), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()      , si_t(2)), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<T>()   , si_t(2)), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<v_t>()    ,  i_t(2)), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<v_t>() ,  i_t(2)), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()      ,  i_t(2)), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<T>()   ,  i_t(2)), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<T>()      , si_t(2)), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<T>()   , si_t(2)), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Inf<v_t>()    ,  i_t(2)), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::next)(eve::Valmax<v_t>() ,  i_t(2)), eve::nan(eve::as<T>()) );
 
-    TTS_EQUAL(eve::pedantic_(eve::next)(  T(-1),  i_t(2)), T(-1) + eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::next)(  T( 1),  i_t(2)), T( 1) + eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::pedantic_(eve::next)(  T(-1), si_t(2)), T(-1) + eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::next)(  T( 1), si_t(2)), T( 1) + eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::pedantic_(eve::next)(v_t(-1),  i_t(2)), T(-1) + eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::next)(v_t( 1),  i_t(2)), T( 1) + eve::Eps<T>()*2 );
+    TTS_EQUAL(eve::pedantic_(eve::next)(  T(-1),  i_t(2)), T(-1) + eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::next)(  T( 1),  i_t(2)), T( 1) + eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::pedantic_(eve::next)(  T(-1), si_t(2)), T(-1) + eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::next)(  T( 1), si_t(2)), T( 1) + eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::pedantic_(eve::next)(v_t(-1),  i_t(2)), T(-1) + eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::next)(v_t( 1),  i_t(2)), T( 1) + eve::eps(eve::as<T>())*2 );
   }
 }

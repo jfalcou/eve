@@ -96,7 +96,7 @@ TTS_CASE_TPL( "Check ctor from aligned pointer for wide"
   auto            [data,idx]  = data_block<EVE_TYPE, T>();
   auto*           ref_ptr     = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref_ptr));
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(eve::as_aligned<algt>(ref_ptr));
   eve::logical<eve::wide<EVE_TYPE, T>> ref;
 
   for(std::size_t i=0;i<T::value;++i)
@@ -119,7 +119,7 @@ TTS_CASE_TPL("Check ctor from const aligned pointer for wide"
   auto            [data,idx]  = data_block<EVE_TYPE, T>();
   auto const*     ref_ptr     = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(as_aligned<algt>(ref_ptr));
+  eve::logical<eve::wide<EVE_TYPE, T>> simd(eve::as_aligned<algt>(ref_ptr));
   eve::logical<eve::wide<EVE_TYPE, T>> ref;
 
   for(std::size_t i=0;i<T::value;++i)

@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::if_else(., ., allbits) behavior ", EVE_TYPE)
 {
-  auto f = eve::Allbits<T>();
+  auto f = eve::allbits(eve::as<T>());
   auto t = T(9);
 
   TTS_IEEE_EQUAL(eve::if_else(1                 , t, eve::allbits), t);

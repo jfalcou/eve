@@ -53,12 +53,12 @@ TTS_CASE_TPL("Check eve::saturated_(eve::prev) one parameter behavior", EVE_TYPE
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()), eve::nan(eve::as<T>()));
 
     TTS_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<T>()), eve::Minf<T>()          );
     TTS_EQUAL(eve::saturated_(eve::prev)(eve::Inf<T>())   , eve::Valmax<T>()        );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1 ))          , T(-1) - eve::Eps<T>()   );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1 ))          , T( 1) - eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1 ))          , T(-1) - eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1 ))          , T( 1) - eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::saturated_(eve::prev)(T( 0 ))          , -eve::Mindenormal<T>()  );
     TTS_EQUAL(eve::saturated_(eve::prev)(T(-0.))          , -eve::Mindenormal<T>()  );
   }
@@ -95,21 +95,21 @@ TTS_CASE_TPL("Check eve::saturated_(eve::prev) two parameters behavior", EVE_TYP
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()    , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<T>()  , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()    , si_t(2) ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<T>()  , si_t(2) ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<v_t>()  , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<v_t>(), i_t(2)  ), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()    , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<T>()  , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<T>()    , si_t(2) ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<T>()  , si_t(2) ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Minf<v_t>()  , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::saturated_(eve::prev)(eve::Valmin<v_t>(), i_t(2)  ), eve::nan(eve::as<T>()));
 
     TTS_EXPECT(eve::all(eve::is_negative(eve::saturated_(eve::prev)(T( 0 ), 1) )));
 
-    TTS_EQUAL(eve::saturated_(eve::prev)(v_t(-1), i_t(2))         , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1), si_t(2))          , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1), i_t(2))           , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1), i_t(2))           , T( 1)-eve::Eps<T>()   );
-    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1), si_t(2))          , T( 1)-eve::Eps<T>()   );
-    TTS_EQUAL(eve::saturated_(eve::prev)(v_t(1), i_t(2))          , T( 1)-eve::Eps<T>()   );
+    TTS_EQUAL(eve::saturated_(eve::prev)(v_t(-1), i_t(2))         , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1), si_t(2))          , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T(-1), i_t(2))           , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1), i_t(2))           , T( 1)-eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::saturated_(eve::prev)(T( 1), si_t(2))          , T( 1)-eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::saturated_(eve::prev)(v_t(1), i_t(2))          , T( 1)-eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::saturated_(eve::prev)(T( 0 ), 1)               , -eve::Mindenormal<T>());
     TTS_EQUAL(eve::saturated_(eve::prev)(T(-0.), 1)               , -eve::Mindenormal<T>());
     TTS_EQUAL(eve::saturated_(eve::prev)(eve::Mindenormal<T>(), 2), -eve::Mindenormal<T>());

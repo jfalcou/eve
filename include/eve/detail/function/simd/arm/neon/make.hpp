@@ -42,13 +42,13 @@ namespace eve::detail
   };
 
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(as_<T> const &, eve::neon64_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::neon64_ const &, Vs... vs) noexcept
   {
     return neon_maker<T, eve::neon64_> {}(vs...);
   }
 
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(as_<T> const &, eve::neon128_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::neon128_ const &, Vs... vs) noexcept
   {
     return neon_maker<T, eve::neon128_> {}(vs...);
   }
@@ -83,13 +83,13 @@ namespace eve::detail
   };
 
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::neon64_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::neon64_ const &, Vs... vs) noexcept
   {
     return neon_maker<logical<T>, eve::neon64_> {}(vs...);
   }
 
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(as_<logical<T>> const &, eve::neon128_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::neon128_ const &, Vs... vs) noexcept
   {
     return neon_maker<logical<T>, eve::neon128_> {}(vs...);
   }

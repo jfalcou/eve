@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::is_ngtz behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_ngtz(eve::Nan<T>()), eve::True<T>());
+    TTS_EQUAL(eve::is_ngtz(eve::nan(eve::as<T>())), eve::True<T>());
   }
 
   TTS_EQUAL(eve::is_ngtz(T(0)), eve::True<T>());

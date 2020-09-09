@@ -25,11 +25,11 @@ namespace eve::detail
     {
       using t_t = wide<T, N, sse_>;
       if constexpr(sizeof(T) == 1)
-        return t_t(_mm_sign_epi8(One(as(a)), a));
+        return t_t(_mm_sign_epi8(One(eve::as(a)), a));
       else if constexpr(sizeof(T) == 2)
-        return t_t(_mm_sign_epi16(One(as(a)), a));
+        return t_t(_mm_sign_epi16(One(eve::as(a)), a));
       else if constexpr(sizeof(T) == 4)
-        return t_t(_mm_sign_epi32(One(as(a)), a));
+        return t_t(_mm_sign_epi32(One(eve::as(a)), a));
       else if constexpr(sizeof(T) == 8)
         return map(sign, a);
     }

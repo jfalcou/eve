@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::eve::tanh behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::tanh(eve::Nan<T>() ), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::tanh(eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::tanh(eve::Inf<T>() ), T(1)          );
     TTS_IEEE_EQUAL(eve::tanh(eve::Minf<T>()), T(-1)         );
   }

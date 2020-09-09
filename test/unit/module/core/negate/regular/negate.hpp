@@ -29,12 +29,12 @@ TTS_CASE_TPL(" negate behaviour", EVE_TYPE)
       TTS_EQUAL(eve::negate(eve::Inf<T>() , eve::Inf<T>() ), eve::Inf<T>());
       TTS_EQUAL(eve::negate(eve::Minf<T>(), eve::Minf<T>()), eve::Inf<T>());
 
-      TTS_IEEE_EQUAL(eve::negate(eve::Nan<T>(), eve::Nan<T>() ), eve::Nan<T>());
-      TTS_IEEE_EQUAL(eve::negate(eve::Nan<T>(), T(0)          ), eve::Nan<T>());
-      TTS_IEEE_EQUAL(eve::negate(T(0)         , eve::Nan<T>() ), eve::Nan<T>());
-      TTS_IEEE_EQUAL(eve::negate(eve::Nan<T>(), T(0)          ), eve::Nan<T>());
-      TTS_IEEE_EQUAL(eve::negate(T(1)         , eve::Nan<T>() ), eve::Nan<T>());
-      TTS_IEEE_EQUAL(eve::negate(eve::Nan<T>(), T(1)          ), eve::Nan<T>());
+      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(0)          ), eve::nan(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::negate(T(0)         , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(0)          ), eve::nan(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::negate(T(1)         , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(1)          ), eve::nan(eve::as<T>()));
     }
 
     TTS_EQUAL(eve::negate(T(-1), T(-1)), T( 1));

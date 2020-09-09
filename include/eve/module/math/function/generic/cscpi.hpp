@@ -54,7 +54,7 @@ namespace eve::detail
         if( is_eqz(a0) )
           return rec(a0);
         if( is_flint(a0) || is_not_finite(a0) )
-          return Nan<T>(); // Nan or Inf input
+          return nan(eve::as<T>()); // nan or Inf input
       }
       T x = abs(a0);
       if constexpr( simd_value<T> )

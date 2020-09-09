@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::rsqrt) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<T>())) , (eve::Nan<T>()));
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::nan(eve::as<T>()))) , (eve::nan(eve::as<T>())));
     TTS_EQUAL(eve::pedantic_(eve::rsqrt)((T(0)))               , eve::Inf<T>());
   }
 

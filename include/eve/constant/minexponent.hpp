@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(minexponent_, minexponent_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Minexponent(as_<T> const & = {})
+  EVE_FORCEINLINE auto Minexponent(eve::as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
     using i_t = detail::as_integer_t<t_t>;

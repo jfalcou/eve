@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check eve::medium_(eve::cscd) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Inf<T>())  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(T( 0 )) , eve::Inf<T>() );

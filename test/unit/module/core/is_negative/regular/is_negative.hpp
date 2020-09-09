@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
 
     if constexpr(eve::platform::supports_nans)
     {
-      TTS_EQUAL(eve::is_negative(eve::Nan<T>()), eve::True<T>());
+      TTS_EQUAL(eve::is_negative(eve::nan(eve::as<T>())), eve::True<T>());
     }
   }
 }

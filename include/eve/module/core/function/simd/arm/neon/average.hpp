@@ -28,7 +28,7 @@ namespace eve::detail
   {
     using in_t = typename wide<T, N, neon64_>::storage_type;
 
-    if constexpr(std::is_floating_point_v<T>) return fma(v0, Half(as(v0)), v1 * Half(as(v1))); 
+    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1))); 
     else
     {
            if constexpr(sizeof(T) == 8)                   return map(average, v0, v1);
@@ -48,7 +48,7 @@ namespace eve::detail
   {
     using in_t = typename wide<T, N, neon128_>::storage_type;
 
-    if constexpr(std::is_floating_point_v<T>) return fma(v0, Half(as(v0)), v1 * Half(as(v1))); 
+    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1))); 
     else
     {
            if constexpr(sizeof(T) == 8)                   return map(average, v0, v1);

@@ -64,7 +64,7 @@ namespace eve::detail
         T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
         T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T dk   = single_(k);
         T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
         T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
@@ -104,7 +104,7 @@ namespace eve::detail
                        as<T>());
         f   = dec(f);
 
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T s    = f / (2.0 + f);
         T z    = sqr(s);
         T w    = sqr(z);
@@ -163,7 +163,7 @@ namespace eve::detail
         {
           if( x == Mone<T>() )
             return Minf<T>(); /* log1p(-1)=-inf */
-          return Nan<T>();    /* log1p(x<-1)=NaN */
+          return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( ix << 1 < 0x33800000 << 1 ) /* |x| < 2**-24 */
         {
@@ -229,7 +229,7 @@ namespace eve::detail
         {
           if( x == Mone<T>() )
             return Minf<T>(); /* log1p(-1)=-inf */
-          return Nan<T>();    /* log1p(x<-1)=NaN */
+          return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( hx << 1 < 0x3ca00000 << 1 ) /* |x| < 2**-53 */
         {

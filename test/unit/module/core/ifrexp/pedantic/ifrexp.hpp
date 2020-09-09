@@ -39,9 +39,9 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::ifrexp) behavior", EVE_TYPE)
   }
   if constexpr(eve::platform::supports_nans)
   {
-    auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::Nan<T>());
+    auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::nan(eve::as<T>()));
 
-    TTS_IEEE_EQUAL(r0 , (eve::Nan<T>()));
+    TTS_IEEE_EQUAL(r0 , (eve::nan(eve::as<T>())));
     TTS_EQUAL     (r1, (i_t(0)));
   }
   if constexpr(eve::platform::supports_infinites)

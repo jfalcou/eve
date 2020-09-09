@@ -20,7 +20,7 @@ namespace eve
   EVE_MAKE_CALLABLE(sqrtvalmax_, sqrtvalmax_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Sqrtvalmax(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Sqrtvalmax(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
     if constexpr(std::is_same_v<t_t, float>)              {

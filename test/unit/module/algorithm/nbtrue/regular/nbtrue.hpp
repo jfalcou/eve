@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EQUAL(eve::nbtrue(eve::Nan<T>()), cardinal);
+      TTS_EQUAL(eve::nbtrue(eve::nan(eve::as<T>())), cardinal);
     }
 
     TTS_EQUAL(eve::nbtrue(T(-0.)), 0u);

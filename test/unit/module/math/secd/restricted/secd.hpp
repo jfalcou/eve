@@ -28,15 +28,15 @@ TTS_CASE_TPL("Check eve::restricted_(eve::secd) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::Inf<T>())  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::secd)( T( 0) ) , T(1));
   TTS_IEEE_EQUAL(eve::restricted_(eve::secd)( T(-0.)) , T(1));
-  TTS_IEEE_EQUAL(eve::restricted_(eve::secd)( T(90) ) , eve::Nan<T>());
-  TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(-T(90) ) , eve::Nan<T>());
+  TTS_IEEE_EQUAL(eve::restricted_(eve::secd)( T(90) ) , eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::restricted_(eve::secd)(-T(90) ) , eve::nan(eve::as<T>()));
 
   TTS_ULP_EQUAL(eve::medium_(eve::secd)( T(  1)  ) , T(1.00015232804390766542842643421257380147891180422143)  , 3);
   TTS_ULP_EQUAL(eve::medium_(eve::secd)(-T(  1)  ) , T(1.00015232804390766542842643421257380147891180422143)  , 3);

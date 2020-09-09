@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(invsqrt_2_, invsqrt_2_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Invsqrt_2(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Invsqrt_2(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

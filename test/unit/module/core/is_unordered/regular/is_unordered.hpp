@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , T(3)          ), eve::True<T>());
-    TTS_EQUAL(eve::is_unordered(T(3)          , eve::Nan<T>() ), eve::True<T>());
-    TTS_EQUAL(eve::is_unordered(eve::Nan<T>() , eve::Nan<T>() ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<T>()) , T(3)          ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(T(3)          , eve::nan(eve::as<T>()) ), eve::True<T>());
+    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::True<T>());
   }
 }

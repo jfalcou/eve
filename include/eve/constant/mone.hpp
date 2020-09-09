@@ -20,7 +20,7 @@ namespace eve
   EVE_MAKE_CALLABLE(mone_, mone_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Mone(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Mone(eve::as_<T> const & = {}) noexcept
   {
     return T(-1);
   }

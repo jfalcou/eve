@@ -18,17 +18,20 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(bitincrement_, bitincrement_);
+  EVE_MAKE_CALLABLE(bitincrement_, bitincrement);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Bitincrement(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto bitincrement_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      using i_t           = detail::as_integer_t<t_t, unsigned>;
+      constexpr auto mask = ~0ULL;
 
-    if constexpr(std::is_integral_v<t_t>) return T(1);
-    else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X1U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
+      if constexpr(std::is_integral_v<t_t>) return T(1);
+      else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X1U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(bitincrement_, Bitincrement);
 }

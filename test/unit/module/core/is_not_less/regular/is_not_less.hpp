@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check eve::is_not_less behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_not_less(T(1)         , eve::Nan<T>() ), eve::True<T>());
-    TTS_EQUAL(eve::is_not_less(eve::Nan<T>(), T(1)          ), eve::True<T>());
+    TTS_EQUAL(eve::is_not_less(T(1)         , eve::nan(eve::as<T>()) ), eve::True<T>());
+    TTS_EQUAL(eve::is_not_less(eve::nan(eve::as<T>()), T(1)          ), eve::True<T>());
   }
 
   TTS_EQUAL(eve::is_not_less(T(1)   , T(1)  ), eve::True<T>() );

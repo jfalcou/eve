@@ -27,6 +27,6 @@ TTS_CASE_TPL("Check eve::bit_mask behavior", EVE_TYPE)
   TTS_EQUAL(eve::bit_mask(-T(0))           , T(0));
   TTS_EQUAL(eve::bit_mask(eve::False<T>()) , T(0));
 
-  TTS_IEEE_EQUAL(eve::bit_mask(T(1))           , (eve::Allbits<T>()));
-  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<T>()) , (eve::Allbits<T>()));
+  TTS_IEEE_EQUAL(eve::bit_mask(T(1))           , (eve::allbits(eve::as<T>())));
+  TTS_IEEE_EQUAL(eve::bit_mask(eve::True<T>()) , (eve::allbits(eve::as<T>())));
 }

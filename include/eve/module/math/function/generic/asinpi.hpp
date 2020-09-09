@@ -21,9 +21,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto asinpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return radinpi(asin(a));
+      return radinpi(eve::asin(a));
     else
-      return apply_over(asinpi, a);
+      return apply_over(eve::asinpi, a);
   }
 
 }

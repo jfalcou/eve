@@ -50,7 +50,7 @@ namespace eve::detail
         if constexpr(scalar_value<T>) // faster for great or small values
         {
           if (x_gt_oneosqrteps)         return bit_xor(log(x)+Log_2<T>(), bts);
-          else if (x >= eve::Half<T>()) return bit_xor(log(x+hypot(One<T>(), x)), bts);
+          else if (x >= eve::half(eve::as<T>())) return bit_xor(log(x+hypot(One<T>(), x)), bts);
         }
         // remaining scalar case and all simd cases to avoid multiple computations as
         // this one is always ok
@@ -61,7 +61,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_same_v<vt_t, float>)
       {
-        auto x_lt_half = x < Half<T>();
+        auto x_lt_half = x < half(eve::as<T>());
         T x2 = sqr(x);
         T z = Zero<T>();
         std::size_t nb = nbtrue(x_lt_half);
@@ -80,7 +80,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(asinh, a0);
+      return apply_over(eve::asinh, a0);
     }
   }
 }

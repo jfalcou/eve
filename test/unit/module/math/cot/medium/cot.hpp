@@ -36,9 +36,9 @@ TTS_CASE_TPL("Check eve::medium_(eve::cot) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Nan<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Inf<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Minf<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Inf<T>()) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
   }
   TTS_ULP_EQUAL(eve::medium_(eve::cot)(T(1)), T(my_stdcot(1.0)), 1.0);
   TTS_ULP_EQUAL(eve::medium_(eve::cot)(T(-1)),T(my_stdcot(-1.0)), 1.0);

@@ -46,8 +46,8 @@ namespace eve::detail
   {
     const auto flag1 = x <  Ieee_constant<T,  0X401A827AU, 0X4003504F333F9DE6ULL>(); //tan(3pi/8)
     const auto flag2 = eve::logical_and(x >= Ieee_constant<T, 0x3ed413cdU, 0X3FDA827999FCEF31ULL>(), flag1); // tan(pi/8)
-    T yy =  eve::if_else(flag1, eve::zero_, Pio_2(as(x)));
-    yy =  eve::if_else(flag2, Pio_4(as(x)), yy);
+    T yy =  eve::if_else(flag1, eve::zero_, Pio_2(eve::as(x)));
+    yy =  eve::if_else(flag2, Pio_4(eve::as(x)), yy);
     T xx =   eve::if_else(flag1, x, -recx);
     xx =  eve::if_else(flag2, eve::dec(x)/eve::inc(x),xx);
     T z = eve::sqr(xx);

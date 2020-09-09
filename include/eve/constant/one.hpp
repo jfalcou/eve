@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(one_, one_);
 
   template<typename T>
-  EVE_FORCEINLINE auto One(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto One(eve::as_<T> const & = {}) noexcept
   {
     return T(1);
   }

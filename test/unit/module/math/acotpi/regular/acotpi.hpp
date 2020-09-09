@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::acotpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acotpi(eve::Nan<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acotpi(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )

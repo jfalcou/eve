@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check eve::acos behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acos(T(2)) , eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::acos(T(-2)), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acos(T(2)) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::acos(T(-2)), eve::nan(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::acos(T( 0.5)) , eve::Pi<T>()/3   , 0.5 );

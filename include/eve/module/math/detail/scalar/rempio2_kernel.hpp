@@ -201,7 +201,7 @@ namespace eve::detail
   template<floating_real_scalar_value T>
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
-    if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
+    if (is_not_finite(xx)) return std::make_tuple(T(0), nan(eve::as<T>()),T(0));
     else if (xx < Rempio2_limit(restricted_type(), as(xx))) return std::make_tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {

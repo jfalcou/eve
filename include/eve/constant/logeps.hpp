@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(logeps_, logeps_);
 
   template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Logeps(as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto Logeps(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

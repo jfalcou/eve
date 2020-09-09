@@ -143,7 +143,7 @@ namespace eve::detail
       if( is_nan(a0) )
         return is_eqz(a1) ? One<T>() : a0;
       if( is_nan(a1) )
-        return Nan<T>();
+        return nan(eve::as<T>());
     }
     auto [xm, e]     = pedantic_(eve::ifrexp)(xx);
     auto [x, i]      = detail::kernel_select(xm);

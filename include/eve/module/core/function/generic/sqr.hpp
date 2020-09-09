@@ -39,11 +39,11 @@ namespace eve::detail
       }
       else if constexpr(scalar_value<T>)
       {
-        return (eve::saturated_(eve::abs)(a0) > Sqrtvalmax(as(a0))) ? Valmax(as(a0)) : sqr(a0);
+        return (eve::saturated_(eve::abs)(a0) > Sqrtvalmax(eve::as(a0))) ? Valmax(eve::as(a0)) : sqr(a0);
       }
       else
       {
-        return if_else((saturated_(abs)(a0) > Sqrtvalmax(as(a0))), Valmax(as(a0)), sqr(a0));
+        return if_else((saturated_(abs)(a0) > Sqrtvalmax(eve::as(a0))), Valmax(eve::as(a0)), sqr(a0));
       }
     }
     else

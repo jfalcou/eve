@@ -54,19 +54,19 @@ TTS_CASE_TPL("Check eve::atan2pi behavior", EVE_TYPE)
     TTS_EXPECT( all(is_negative(eve::atan2pi((T(-1.)), inf))) );
     TTS_EXPECT( all(is_positive(eve::atan2pi((T(1.)) , inf))) );
 
-    TTS_ULP_EQUAL(eve::atan2pi(minf, minf      ),  eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2pi(inf , minf      ),  eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2pi(minf, inf       ),  eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2pi(inf , inf       ),  eve::Nan<T>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(minf, minf      ),  eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(inf , minf      ),  eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(minf, inf       ),  eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(inf , inf       ),  eve::nan(eve::as<T>()) , 0.5);
     TTS_ULP_EQUAL(eve::atan2pi(inf , (T(1.))),  (T(0.5)), 0.5);
     TTS_ULP_EQUAL(eve::atan2pi(minf, (T(1.))), (T(-0.5)) , 0.5);
   }
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::atan2pi(eve::Nan<T>(), eve::Nan<T>()) , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2pi(eve::Nan<T>(), (T(0.)))       , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2pi((T(0.))      , eve::Nan<T>()) , eve::Nan<T>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi(eve::nan(eve::as<T>()), (T(0.)))       , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::atan2pi((T(0.))      , eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
   }
 
   TTS_ULP_EQUAL(eve::atan2pi((T(0.5)) , (T(0.5)) ) , (T(0.25)) , 0.5);
@@ -80,8 +80,8 @@ TTS_CASE_TPL("Check eve::atan2pi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::atan2pi((T(1.))  , mzero       ) , (T(0.5))  , 0.5);
   TTS_ULP_EQUAL(eve::atan2pi((T(1.))  , (T(0.))  ) , (T(0.5))  , 0.5);
 
-  TTS_ULP_EQUAL(eve::atan2pi((T(0.))  , (T(0.))  ) ,  eve::Nan<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::atan2pi(mzero       , (T(0.))  ) ,  eve::Nan<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::atan2pi(mzero       , mzero       ) ,  eve::Nan<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::atan2pi((T(0.))  , mzero       ) ,  eve::Nan<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::atan2pi((T(0.))  , (T(0.))  ) ,  eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::atan2pi(mzero       , (T(0.))  ) ,  eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::atan2pi(mzero       , mzero       ) ,  eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::atan2pi((T(0.))  , mzero       ) ,  eve::nan(eve::as<T>()), 0.5);
 }

@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::csch behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::csch(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::csch(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::csch(eve::Inf<T>()) , T(0) );
     TTS_IEEE_EQUAL(eve::csch(eve::Minf<T>()), T(0) );
 

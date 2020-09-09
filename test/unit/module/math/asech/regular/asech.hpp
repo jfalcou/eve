@@ -30,17 +30,17 @@ TTS_CASE_TPL("Check eve::asech behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::asech(eve::Nan<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::asech(eve::Inf<T>()) , eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::asech(eve::Minf<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::Inf<T>()) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::Minf<T>()) , eve::nan(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve::asech(T( 2))   ,  eve::Nan<T>()        , 0   );
-  TTS_ULP_EQUAL(eve::asech(T(-2))   ,  eve::Nan<T>()        , 0   );
+  TTS_ULP_EQUAL(eve::asech(T( 2))   ,  eve::nan(eve::as<T>())        , 0   );
+  TTS_ULP_EQUAL(eve::asech(T(-2))   ,  eve::nan(eve::as<T>())        , 0   );
   TTS_ULP_EQUAL(eve::asech(T( 1. )) ,  T( 0 )               , 0   );
   TTS_ULP_EQUAL(eve::asech(T( 0.5 )),  T(std::acosh(v_t(2))), 0.5 );
 }

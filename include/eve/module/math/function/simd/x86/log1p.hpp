@@ -70,7 +70,7 @@ namespace eve::detail
       T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
-      T hfsq = Half<T>() * sqr(f);
+      T hfsq = half(eve::as<T>()) * sqr(f);
       T s    = f / (2.0f + f);
       T z    = sqr(s);
       T w    = sqr(z);

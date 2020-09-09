@@ -26,9 +26,9 @@ TTS_CASE_TPL("Check eve::acscd behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acscd(T(0))  , eve::Nan<T>(), 1);
-    TTS_ULP_EQUAL(eve::acscd(T(-0.)), eve::Nan<T>(), 1);
-    TTS_IEEE_EQUAL(eve::acscd(eve::Nan<T>()) , (eve::Nan<T>()) );
+    TTS_ULP_EQUAL(eve::acscd(T(0))  , eve::nan(eve::as<T>()), 1);
+    TTS_ULP_EQUAL(eve::acscd(T(-0.)), eve::nan(eve::as<T>()), 1);
+    TTS_IEEE_EQUAL(eve::acscd(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
   }
 
   if constexpr( eve::platform::supports_infinites )

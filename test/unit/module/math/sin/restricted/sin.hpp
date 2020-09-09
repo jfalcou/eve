@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::sin) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::Nan<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::Inf<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::Minf<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::Inf<T>()) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
   }
 
   TTS_EXPECT(eve::all(eve::is_negative(eve::restricted_(eve::sin)(T(-0.)))));
@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::sin) behavior", EVE_TYPE)
   auto pio4   = eve::Pio_4<T>();
   auto vpio4  = eve::Pio_4<v_t>();
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T( 1))  , eve::Nan<T>()         , 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T(-1))  , eve::Nan<T>()         , 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T( 1))  , eve::nan(eve::as<T>())         , 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T(-1))  , eve::nan(eve::as<T>())         , 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::sin)( pio4)   , T(std::sin( vpio4  )) , 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::sin)(-pio4)   , T(std::sin(-vpio4  )) , 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::sin)( pio4/2) , T(std::sin( vpio4/2)) , 0.5);

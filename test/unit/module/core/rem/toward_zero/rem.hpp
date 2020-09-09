@@ -58,11 +58,11 @@ TTS_CASE_TPL("Check eve::toward_zero_(eve::rem) behavior", EVE_TYPE)
     TTS_EQUAL(eve::toward_zero_(eve::rem)(  T(-0),   T(1)), T(0));
     TTS_EXPECT(eve::all(eve::is_negative(eve::toward_zero_(eve::rem)(  -T(0), T(1)))));
     TTS_EXPECT(eve::all(eve::is_positive(eve::toward_zero_(eve::rem)(  T(0) , T(1)))));
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(1),   T(0)), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(-1),   T(0)), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Inf<T>(),   T(0)), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Minf<T>(),   T(0)), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1),  eve::Inf<T>()), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1), eve::Minf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(1),   T(0)), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(-1),   T(0)), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Inf<T>(),   T(0)), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Minf<T>(),   T(0)), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1),  eve::Inf<T>()), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1), eve::Minf<T>()), eve::nan(eve::as<T>()));
   }
 }

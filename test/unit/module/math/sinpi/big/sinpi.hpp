@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::big_(eve::sinpi)behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Nan<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Inf<T>()) , (eve::Nan<T>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Minf<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Inf<T>()) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sinpi)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
   }
 
   TTS_EXPECT(eve::all(eve::is_positive(eve::big_(eve::sinpi)(T( 0 )))));

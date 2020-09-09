@@ -80,7 +80,7 @@ namespace eve::detail
                              ) noexcept
   requires has_native_abi_v<T>
   {
-    const auto inf = Inf(as(a));
+    const auto inf = Inf(eve::as(a));
     auto aa = eve::abs(a);
     auto infa = aa == inf;
     if constexpr(scalar_value<T>) { if (infa) return inf;}
@@ -112,7 +112,7 @@ namespace eve::detail
                              ) noexcept
   requires has_native_abi_v<T>
   {
-    const auto inf = Inf(as(a));
+    const auto inf = Inf(eve::as(a));
     auto aa = eve::abs(a);
     auto infa = aa == inf;
     if constexpr(scalar_value<T>) { if (infa) return inf;}

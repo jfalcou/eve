@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(twopi_, twopi_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Twopi(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Twopi(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

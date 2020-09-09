@@ -61,7 +61,7 @@ namespace eve::detail
   requires has_native_abi_v<T>
   {
       auto d = dist(a, b);
-      if constexpr(signed_integral_value<T>) return if_else(is_ltz(d), Valmax(as(a)), d);
+      if constexpr(signed_integral_value<T>) return if_else(is_ltz(d), Valmax(eve::as(a)), d);
       else                                   return d;
   }
 }

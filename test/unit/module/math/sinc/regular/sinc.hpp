@@ -29,6 +29,6 @@ TTS_CASE_TPL("Check eve::sinc behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::sinc(-eve::Pio_4<T>()), eve::sin(eve::Pio_4<T>())/(eve::Pio_4<T>()), 0.5);
   TTS_ULP_EQUAL(eve::sinc(eve::Pio_2<T>()),  T(2)/(eve::Pi<T>()), 0.5);
   TTS_ULP_EQUAL(eve::sinc(eve::Pio_4<T>()), eve::sin(eve::Pio_4<T>())/(eve::Pio_4<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(eve::Eps<T>()), eve::One<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(eve::eps(eve::as<T>())), eve::One<T>(), 0.5);
   TTS_ULP_EQUAL(eve::sinc(eve::Zero<T>()), eve::One<T>(), 0.5);
 }

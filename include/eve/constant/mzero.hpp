@@ -20,7 +20,7 @@ namespace eve
   EVE_MAKE_CALLABLE(mzero_, mzero_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Mzero(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Mzero(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

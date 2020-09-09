@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::asecd behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asecd(eve::Nan<T>()) , (eve::Nan<T>()) );
-    TTS_ULP_EQUAL(eve::asecd(T(0))  , eve::Nan<T>(), 1);
-    TTS_ULP_EQUAL(eve::asecd(T(-0.)), eve::Nan<T>(), 1);
+    TTS_IEEE_EQUAL(eve::asecd(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
+    TTS_ULP_EQUAL(eve::asecd(T(0))  , eve::nan(eve::as<T>()), 1);
+    TTS_ULP_EQUAL(eve::asecd(T(-0.)), eve::nan(eve::as<T>()), 1);
   }
 
   TTS_ULP_EQUAL(eve::asecd(T(-2.)), T(360)/3 , 1   );

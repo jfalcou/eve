@@ -49,7 +49,7 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
       auto x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
@@ -58,8 +58,8 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_not_finite(x), eve::allbits, x); // Nan or Inf input
-        x = if_else(is_greater(x, Maxflint(as(x))), eve::zero_, x);
+        x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+        x = if_else(is_greater(x, Maxflint(eve::as(x))), eve::zero_, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return sin_finalize(bitofsign(a0), fn, xr, dxr);

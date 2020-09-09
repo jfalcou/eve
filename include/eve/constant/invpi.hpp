@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(invpi_, invpi_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Invpi(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Invpi(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

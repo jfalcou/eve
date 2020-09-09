@@ -61,9 +61,9 @@ TTS_CASE_TPL("Check pedantic_(eve::atan2) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Nan<T>(), eve::Nan<T>()) , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Nan<T>(), (T(0.)))       , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T(0.))      , eve::Nan<T>()) , eve::Nan<T>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::nan(eve::as<T>()), (T(0.)))       , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T(0.))      , eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
   }
 
   TTS_ULP_EQUAL(pedantic_(eve::atan2)(T( 0.5), T( 0.5)) ,  eve::Pio_4<T>()   , 0.5);

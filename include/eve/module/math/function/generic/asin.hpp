@@ -51,8 +51,8 @@ namespace eve::detail
       auto sgn = eve::bitofsign(a0);
       if constexpr(std::is_same_v<elt_t, float>)
       {
-        const auto x_larger_05 = x > Half<T>();
-        T z = if_else(x_larger_05, Half<T>()*oneminus(x), eve::sqr(x));
+        const auto x_larger_05 = x > half(eve::as<T>());
+        T z = if_else(x_larger_05, half(eve::as<T>())*oneminus(x), eve::sqr(x));
         x = if_else(x_larger_05, sqrt(z), x);
         T z1 = horn<T, 0x3e2aaae4, 0x3d9980f6, 0x3d3a3ec7, 0x3cc617e3, 0x3d2cb352>(z);
         z1 = fma(z1, z*x, x);
@@ -65,7 +65,7 @@ namespace eve::detail
         if constexpr(scalar_value<T>) //early scalar return
         {
           if (small) return a0;
-          if ((x >  One<T>())) return Nan<T>();
+          if ((x >  One<T>())) return nan(eve::as<T>());
         }
         else if constexpr(simd_value<T>) //simd preparation
         {
@@ -104,7 +104,7 @@ namespace eve::detail
         return  bit_xor(res, sgn);
       }
     }
-    else return apply_over(asin, a0);
+    else return apply_over(eve::asin, a0);
   }
 }
 

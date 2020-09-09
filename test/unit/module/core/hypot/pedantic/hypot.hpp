@@ -42,12 +42,12 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::hypot) behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<T>()  , eve::Inf<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::Nan<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<v_t>(), eve::Inf<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<v_t>(), eve::Nan<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<T>()  , eve::Inf<v_t>()), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::Nan<v_t>()), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<T>())  , eve::Inf<T>())  , eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::nan(eve::as<T>()))  , eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<v_t>()), eve::Inf<T>())  , eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<v_t>(), eve::nan(eve::as<T>()))  , eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<T>())  , eve::Inf<v_t>()), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::nan(eve::as<v_t>())), eve::Inf<T>());
   }
 
   auto tmax   = eve::Valmax<T>();

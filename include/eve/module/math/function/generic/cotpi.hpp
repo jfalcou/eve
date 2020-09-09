@@ -40,10 +40,10 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(a0) )
-          return bit_or(a0, Inf(as(a0)));
+          return bit_or(a0, Inf(eve::as(a0)));
         auto x = abs(a0);
         if( is_not_less_equal(x, T(0.25)) )
-          return Nan<T>();
+          return nan(eve::as<T>());
         return rec(tancot_eval(Pi<T>() * a0));
       }
       else
@@ -51,7 +51,7 @@ namespace eve::detail
         auto x = eve::abs(a0);
         return if_else(
             is_eqz(a0),
-            bit_or(a0, Inf(as(a0))),
+            bit_or(a0, Inf(eve::as(a0))),
             if_else(is_not_less_equal(x, T(0.25)), eve::allbits, rec(tancot_eval(Pi<T>() * a0))));
       }
     }
@@ -69,9 +69,9 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(a0) )
-          return bit_or(a0, Inf(as(a0)));
+          return bit_or(a0, Inf(eve::as(a0)));
         if( is_not_finite(a0) || is_flint(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
       }
       auto x = abs(a0);
       if constexpr( simd_value<T> )

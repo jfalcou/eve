@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::rotr behavior", EVE_TYPE)
   TTS_EQUAL(eve::rotr(T(0)              ,  7) , T(std::rotr(ui_t(0)             ,  7)) );
   TTS_EQUAL(eve::rotr(T(1)              ,  4) , T(std::rotr(ui_t(1)             ,  4)) );
   TTS_EQUAL(eve::rotr(T(3)              ,  2) , T(std::rotr(ui_t(3)             ,  2)) );
-  TTS_EQUAL(eve::rotr(eve::Allbits<T>() ,  1) , T(std::rotr(eve::Allbits<ui_t>(),  1)) );
+  TTS_EQUAL(eve::rotr(eve::allbits(eve::as<T>()) ,  1) , T(std::rotr(eve::allbits(eve::as<ui_t>()),  1)) );
   TTS_EQUAL(eve::rotr(T(0)              , -7) , T(std::rotr(ui_t(0)             , -7)) );
   TTS_EQUAL(eve::rotr(T(1)              , -4) , T(std::rotr(ui_t(1)             , -4)) );
   TTS_EQUAL(eve::rotr(T(3)              , -2) , T(std::rotr(ui_t(3)             , -2)) );
@@ -40,5 +40,5 @@ TTS_CASE_TPL("Check eve::rotr behavior", EVE_TYPE)
   TTS_EQUAL(eve::rotr(T(0)              , T(7)) , T(std::rotr(ui_t(0)             ,  7)) );
   TTS_EQUAL(eve::rotr(T(1)              , T(4)) , T(std::rotr(ui_t(1)             ,  4)) );
   TTS_EQUAL(eve::rotr(T(3)              , T(2)) , T(std::rotr(ui_t(3)             ,  2)) );
-  TTS_EQUAL(eve::rotr(eve::Allbits<T>() , T(1)) , T(std::rotr(eve::Allbits<ui_t>(),  1)) );
+  TTS_EQUAL(eve::rotr(eve::allbits(eve::as<T>()) , T(1)) , T(std::rotr(eve::allbits(eve::as<ui_t>()),  1)) );
 }

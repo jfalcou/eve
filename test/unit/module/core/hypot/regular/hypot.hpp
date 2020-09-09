@@ -42,8 +42,8 @@ TTS_CASE_TPL("Check eve::hypot behavior", EVE_TYPE)
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<T>()), eve::Inf<T>()), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 
   TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            ) , eve::Inf<T>());
@@ -62,8 +62,8 @@ TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::hypot(eve::Nan<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::Nan<T>(), eve::Inf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<T>()), eve::Inf<T>(), eve::Inf<T>()), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::Inf<T>(), eve::nan(eve::as<T>()), eve::Inf<T>()), eve::nan(eve::as<T>()));
   }
 
   TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            , T(0)) , eve::Inf<T>());

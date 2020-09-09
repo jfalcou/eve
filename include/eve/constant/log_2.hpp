@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(log_2_, log_2_);
 
   template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Log_2(as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto Log_2(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

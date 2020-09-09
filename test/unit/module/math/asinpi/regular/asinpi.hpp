@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check eve::eve::asinpi behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asinpi(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::asinpi(T(2))          , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::asinpi(T(-2))         , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asinpi(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asinpi(T(2))          , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asinpi(T(-2))         , eve::nan(eve::as<T>()) );
   }
 
   TTS_ULP_EQUAL(eve::asinpi(T( 0.5)) , T(1./6)  , 0.5);

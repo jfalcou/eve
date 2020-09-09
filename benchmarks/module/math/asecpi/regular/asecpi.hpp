@@ -24,6 +24,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__asecpi) , xp, std__asecpi , arg0);
-  run<EVE_VALUE>(EVE_NAME(asecpi) , xp, eve::asecpi , arg0);
-  run<EVE_TYPE> (EVE_NAME(asecpi) , xp, eve::asecpi , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::asecpi) , xp, eve::asecpi , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::asecpi) , xp, eve::asecpi , arg0);
 }

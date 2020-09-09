@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check eve::logical_not behavior", EVE_TYPE)
 {
   TTS_EQUAL(eve::logical_not(T(1))             , eve::False<T>());
   TTS_EQUAL(eve::logical_not(T(0))             , eve::True<T>() );
-  TTS_EQUAL(eve::logical_not(eve::Allbits<T>()), eve::False<T>());
+  TTS_EQUAL(eve::logical_not(eve::allbits(eve::as<T>())), eve::False<T>());
   TTS_EQUAL(eve::logical_not(eve::True<T>())   , eve::False<T>());
   TTS_EQUAL(eve::logical_not(eve::False<T>())  , eve::True<T>() );
 }

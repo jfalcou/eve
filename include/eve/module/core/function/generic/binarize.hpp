@@ -50,7 +50,7 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto binarize_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                           , callable_object<eve::tag::allbits, void> const &
+                           , callable_allbits_ const &
                            ) noexcept
   {
     return cond.mask();

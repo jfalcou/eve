@@ -19,7 +19,7 @@ namespace eve
   EVE_MAKE_CALLABLE(false_, false_);
 
   template<typename T>
-  EVE_FORCEINLINE auto False(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto False(eve::as_<T> const & = {}) noexcept
   {
     return as_logical_t<T>(false);
   }

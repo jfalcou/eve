@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::asecpi behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asecpi(eve::Nan<T>())  , (eve::Nan<T>()) );
-    TTS_ULP_EQUAL(eve::asecpi(T(-0.)) , eve::Nan<T>(), 1);
-    TTS_ULP_EQUAL(eve::asecpi(T(0))   , eve::Nan<T>(), 1);
+    TTS_IEEE_EQUAL(eve::asecpi(eve::nan(eve::as<T>()))  , (eve::nan(eve::as<T>())) );
+    TTS_ULP_EQUAL(eve::asecpi(T(-0.)) , eve::nan(eve::as<T>()), 1);
+    TTS_ULP_EQUAL(eve::asecpi(T(0))   , eve::nan(eve::as<T>()), 1);
   }
 
   TTS_ULP_EQUAL(eve::asecpi(T(-2.)), T(2)/3 , 1   );

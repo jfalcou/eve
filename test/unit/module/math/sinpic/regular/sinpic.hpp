@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::sinpic behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::sinpic(-T(1)/T(4)), eve::sinpi(T(1)/T(4))*T(4)/(eve::Pi<T>()), 1.0);
   TTS_ULP_EQUAL(eve::sinpic(T(1)/T(2)),  T(2)/(eve::Pi<T>()), 1.0);
   TTS_ULP_EQUAL(eve::sinpic(T(1)/T(4)), eve::sinpi(T(1)/T(4))*T(4)/(eve::Pi<T>()), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(eve::Eps<T>()), eve::One<T>(), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(eve::eps(eve::as<T>())), eve::One<T>(), 1.0);
   TTS_ULP_EQUAL(eve::sinpic(eve::Zero<T>()), eve::One<T>(), 1.0);
 
 }

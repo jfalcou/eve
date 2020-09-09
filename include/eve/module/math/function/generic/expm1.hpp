@@ -48,8 +48,8 @@ namespace eve::detail
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
       T       k         = nearest(Invlog_2 * xx);
-      auto    xlelogeps = xx <= Logeps(as(xx));
-      auto    xgemaxlog = xx >= Maxlog(as(xx));
+      auto    xlelogeps = xx <= Logeps(eve::as(xx));
+      auto    xgemaxlog = xx >= Maxlog(eve::as(xx));
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(xx) )
@@ -63,7 +63,7 @@ namespace eve::detail
       {
         T x        = fnma(k, Log_2hi, xx);
         x          = fnma(k, Log_2lo, x);
-        T hx       = x * Half<T>();
+        T hx       = x * half(eve::as<T>());
         T hxs      = x * hx;
         T r1       = horn<T, 0X3F800000U, 0XBD08887FU, 0X3ACF6DB4U>(hxs);
         T t        = fnma(r1, hx, T(3));
@@ -79,7 +79,7 @@ namespace eve::detail
         T hi       = fnma(k, Log_2hi, xx);
         T lo       = k * Log_2lo;
         T x        = hi - lo;
-        T hxs      = sqr(x) * Half<T>();
+        T hxs      = sqr(x) * half(eve::as<T>());
         T r1       = horn<T,
                     0X3FF0000000000000ULL,
                     0XBFA11111111110F4ULL,
@@ -87,7 +87,7 @@ namespace eve::detail
                     0XBF14CE199EAADBB7ULL,
                     0X3ED0CFCA86E65239ULL,
                     0XBE8AFDB76E09C32DULL>(hxs);
-        T t        = T(3) - r1 * Half<T>() * x;
+        T t        = T(3) - r1 * half(eve::as<T>()) * x;
         T e        = hxs * ((r1 - t) / (T(6) - x * t));
         T c        = (hi - x) - lo;
         e          = (x * (e - c) - c) - hxs;

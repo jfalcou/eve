@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::acot behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acot(eve::Nan<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )

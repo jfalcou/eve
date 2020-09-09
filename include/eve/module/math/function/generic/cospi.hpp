@@ -49,7 +49,7 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
       auto x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
@@ -58,8 +58,8 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_not_finite(x), eve::allbits, x); // Nan or Inf input
-        x = if_else(is_greater(x, Maxflint(as(x))), eve::zero_, x);
+        x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+        x = if_else(is_greater(x, Maxflint(eve::as(x))), eve::zero_, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return cos_finalize(fn, xr, dxr);
@@ -72,7 +72,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
+      return if_else(is_odd(a0), eve::mone_, One(eve::as(a0))); //(-1)^n
     else
       return apply_over(D()(cospi), a0);
   }
@@ -96,7 +96,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return if_else(is_odd(a0), eve::mone_, One(as(a0))); //(-1)^n
+      return if_else(is_odd(a0), eve::mone_, One(eve::as(a0))); //(-1)^n
     else
       return apply_over(cospi, a0);
   }

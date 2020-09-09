@@ -53,15 +53,15 @@ namespace eve::detail
       {
         if( is_eqz(a0) )
           return a0;
-        if( is_not_finite(x) || (frac(x) == Half<T>()) )
-          return Nan<T>();
+        if( is_not_finite(x) || (frac(x) == half(eve::as<T>())) )
+          return nan(eve::as<T>());
         if( x > Maxflint<T>() || is_flint(x) )
           return T(0);
       }
       else
       {
-        x = if_else(is_greater(x, Maxflint(as(x))) || is_flint(x), eve::zero_, x);
-        x = if_else(is_not_finite(a0) || (frac(x) == Half<T>()), eve::allbits, x);
+        x = if_else(is_greater(x, Maxflint(eve::as(x))) || is_flint(x), eve::zero_, x);
+        x = if_else(is_not_finite(a0) || (frac(x) == half(eve::as<T>())), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return tan_finalize(a0 * Pi<T>(), fn, xr, dxr);

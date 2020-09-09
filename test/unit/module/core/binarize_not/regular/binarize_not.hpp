@@ -45,5 +45,5 @@ TTS_CASE_TPL("Check eve::binarize_not on logicals behavior", EVE_TYPE)
   TTS_EQUAL(binarize_not(is_less(T(2), T(1)), v_t(2))             , T(2)              );
   TTS_EQUAL(binarize_not(is_less(T(0), T(1)), v_t(2))             , T(0)              );
   TTS_EQUAL(binarize_not(is_less(T(0), T(1)), eve::allbits)      , T(0)              );
-  TTS_IEEE_EQUAL(binarize_not(is_less(T(2), T(1)), eve::allbits) , eve::Allbits<T>() );
+  TTS_IEEE_EQUAL(binarize_not(is_less(T(2), T(1)), eve::allbits) , eve::allbits(eve::as<T>()) );
 }

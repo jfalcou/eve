@@ -32,6 +32,6 @@ TTS_CASE_TPL("Check eve::sqrt behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::sqrt(eve::Nan<T>()), (eve::Nan<T>()));
+    TTS_IEEE_EQUAL(eve::sqrt(eve::nan(eve::as<T>())), (eve::nan(eve::as<T>())));
   }
 }

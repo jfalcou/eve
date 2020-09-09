@@ -26,9 +26,9 @@ TTS_CASE_TPL("Check eve::acscpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acscpi(T(0))            , eve::Nan<T>(), 1);
-    TTS_ULP_EQUAL(eve::acscpi(T(-0.)) , eve::Nan<T>(), 1);
-    TTS_IEEE_EQUAL(eve::acscpi(eve::Nan<T>())  , (eve::Nan<T>()) );
+    TTS_ULP_EQUAL(eve::acscpi(T(0))            , eve::nan(eve::as<T>()), 1);
+    TTS_ULP_EQUAL(eve::acscpi(T(-0.)) , eve::nan(eve::as<T>()), 1);
+    TTS_IEEE_EQUAL(eve::acscpi(eve::nan(eve::as<T>()))  , (eve::nan(eve::as<T>())) );
   }
 
   if constexpr( eve::platform::supports_infinites )

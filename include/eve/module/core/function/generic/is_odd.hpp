@@ -35,8 +35,8 @@ namespace eve::detail
         auto da = dec(a);
         return (a!= da) && is_even(da);
       }
-      else if constexpr(scalar_value<T>) return (a & One(as(a)));
-      else                               return is_nez((a & One(as(a))));
+      else if constexpr(scalar_value<T>) return (a & One(eve::as(a)));
+      else                               return is_nez((a & One(eve::as(a))));
     }
     else return apply_over(is_odd, a);
   }

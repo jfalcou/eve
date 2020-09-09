@@ -42,7 +42,7 @@ namespace eve::detail
           if( std::is_unsigned_v<T> )
           {
             auto b = a > 1 ? 0 : 1;
-            return (a ? 1 : Valmax(as(a))) * b;
+            return (a ? 1 : Valmax(eve::as(a))) * b;
           }
           else
           {
@@ -50,7 +50,7 @@ namespace eve::detail
             auto b2 = a < -1 ? 0 : 1;
             b2 *= b1;
 
-            return (a ? a : Valmax(as(a))) * b2;
+            return (a ? a : Valmax(eve::as(a))) * b2;
           }
         }
         else
@@ -58,7 +58,7 @@ namespace eve::detail
           if( std::is_unsigned_v<T> )
           {
             return if_else(
-                is_eqz(a), Valmax(as(a)), if_else(eve::abs(a) == One(as(a)), a, eve::zero_));
+                is_eqz(a), Valmax(eve::as(a)), if_else(eve::abs(a) == One(eve::as(a)), a, eve::zero_));
           }
           else
           {

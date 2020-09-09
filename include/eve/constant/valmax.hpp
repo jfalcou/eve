@@ -20,7 +20,7 @@ namespace eve
   EVE_MAKE_CALLABLE(valmax_, valmax_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Valmax(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Valmax(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
     return T(std::numeric_limits<t_t>::max());

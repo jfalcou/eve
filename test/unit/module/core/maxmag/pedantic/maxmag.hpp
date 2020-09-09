@@ -42,13 +42,13 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::maxmag) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::Nan<T>()  , T(1)  ), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::Nan<v_t>(), T(1)  ), eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::Nan<T>()  , v_t(1)), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::nan(eve::as<T>())  , T(1)  ), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::nan(eve::as<v_t>()), T(1)  ), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(eve::nan(eve::as<T>())  , v_t(1)), eve::nan(eve::as<T>()) );
 
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(T(1)  , eve::Nan<T>()  ), T(1) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(v_t(1), eve::Nan<T>()  ), T(1) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(T(1)  , eve::Nan<v_t>()), T(1) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(T(1)  , eve::nan(eve::as<T>())  ), T(1) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(v_t(1), eve::nan(eve::as<T>())  ), T(1) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::maxmag)(T(1)  , eve::nan(eve::as<v_t>())), T(1) );
   }
 
   if constexpr(eve::signed_value<T>)

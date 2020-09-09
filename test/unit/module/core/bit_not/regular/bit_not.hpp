@@ -22,7 +22,7 @@ TTS_CASE_TPL("Check eve::bit_not return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::bit_not behavior", EVE_TYPE)
 {
-  TTS_IEEE_EQUAL(eve::bit_not(T(0)), (eve::Allbits<T>()));
+  TTS_IEEE_EQUAL(eve::bit_not(T(0)), (eve::allbits(eve::as<T>())));
 
   if constexpr(eve::integral_value<T>)
   {
@@ -34,4 +34,3 @@ TTS_CASE_TPL("Check eve::bit_not behavior", EVE_TYPE)
     TTS_EQUAL(eve::bit_not(T(-1)), (T( 0)));
   }
 }
-

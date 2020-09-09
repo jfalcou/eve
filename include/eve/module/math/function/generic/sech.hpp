@@ -41,7 +41,7 @@ namespace eve::detail
     {
       T x = eve::abs(a0);
       auto test1 = (x > Maxlog<T>()-Log_2<T>());
-      auto fac = if_else(test1, Half<T>(),eve::one_);
+      auto fac = if_else(test1, half(eve::as<T>()),eve::one_);
       T tmp1 = exp(-x*fac);
       T tmp = T(2)*tmp1;
       if constexpr(scalar_value<T>)

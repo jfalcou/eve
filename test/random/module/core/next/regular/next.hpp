@@ -27,7 +27,7 @@ TTS_CASE_TPL("wide rng check on next", EVE_TYPE)
     auto std_next = tts::vectorize<T> ( [](auto e)
                                         {
                                           return    (e ==  eve::Inf<v_t>())
-                                                  ? eve::Nan<v_t>()
+                                                  ? eve::nan<v_t>()
                                                   : std::nextafter(e, eve::Inf<v_t>());
                                         }
                                       );

@@ -36,7 +36,7 @@ namespace eve::detail
       auto test = is_nez(a0_180) && is_flint(a0_180);
       if constexpr( scalar_value<T> ) // early return for nans in scalar case
       {
-        if( test ) return Nan<T>();
+        if( test ) return nan(eve::as<T>());
       }
       auto tmp = cscpi(a0_180);
       return if_else(test, eve::allbits, tmp);

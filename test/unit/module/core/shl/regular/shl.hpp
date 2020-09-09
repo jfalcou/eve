@@ -34,10 +34,10 @@ TTS_CASE_TPL("Check eve::shl behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::shl(T(-1), 4), T(-16));
     TTS_EQUAL(eve::shl(T(-3), 2), T(-12));
-    TTS_EQUAL(eve::shl(eve::Allbits<T>(), 1), T(-2));
+    TTS_EQUAL(eve::shl(eve::allbits(eve::as<T>()), 1), T(-2));
   }
   else
   {
-    TTS_EQUAL(eve::shl(eve::Allbits<T>(), 1), eve::Allbits<T>() - 1 );
+    TTS_EQUAL(eve::shl(eve::allbits(eve::as<T>()), 1), eve::allbits(eve::as<T>()) - 1 );
   }
 }

@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::raw_(eve::pow_abs) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Inf<T>() , T(0.5)        ), eve::Inf<T>());
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Inf<T>() , eve::Inf<T>() ), eve::Inf<T>());
 
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Nan<T>() , eve::Nan<T>() ), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
 
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-1)         ), eve::Inf<T>());
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-2)         ), eve::Inf<T>());

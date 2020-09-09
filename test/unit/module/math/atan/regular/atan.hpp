@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::eve::atan behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::Nan<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::atan(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )

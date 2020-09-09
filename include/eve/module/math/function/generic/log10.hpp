@@ -88,7 +88,7 @@ namespace eve::detail
         T t1     = w * horn<T, 0x3eccce13u, 0x3e789e26u>(w);
         T t2     = z * horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
         T R      = t2 + t1;
-        T hfsq   = Half<T>() * sqr(f);
+        T hfsq   = half(eve::as<T>()) * sqr(f);
         T dk     = single_(k);
         T hibits = f - hfsq;
         hibits   = bit_and(hibits, uiT(0xfffff000ul));
@@ -156,11 +156,11 @@ namespace eve::detail
                       0x3fc7466496cb03deull,
                       0x3fc2f112df3e5244ull>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T dk   = double_(k);
         //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
         T hi     = f - hfsq;
-        hi       = bit_and(hi, (Allbits<uiT>() << 32));
+        hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo     = f - hi - hfsq + s * (hfsq + R);
         T val_hi = hi * Invlog_10hi;
         T y      = dk * Log10_2hi;
@@ -222,7 +222,7 @@ namespace eve::detail
         if( ix << 1 == 0 )
           return Minf<T>(); /* log(+-0)=-inf */
         if( ix >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         if constexpr( eve::platform::supports_denormals )
         { /* subnormal number, scale up x */
           k -= 25;
@@ -235,7 +235,7 @@ namespace eve::detail
         return x;
       }
       else if( ix == 0x3f800000 )
-        return Zero(as(x));
+        return Zero(eve::as(x));
 
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
@@ -284,7 +284,7 @@ namespace eve::detail
         if( is_eqz(x) )
           return Minf<T>(); /* log(+-0)=-inf */
         if( hx >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         /* subnormal number, scale x up */
         if constexpr( eve::platform::supports_denormals )
         {
@@ -319,7 +319,7 @@ namespace eve::detail
       //          return -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); //raw ?
 
       T hi     = f - hfsq;
-      hi       = bit_and(hi, (Allbits<uiT>() << 32));
+      hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
       T lo     = f - hi - hfsq + s * (hfsq + R);
       T val_hi = hi * Invlog_10hi;
       T y      = dk * Log10_2hi;

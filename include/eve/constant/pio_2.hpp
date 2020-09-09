@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(pio_2_, pio_2_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Pio_2(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Pio_2(eve::as_<T> const & = {}) noexcept
   {
     using t_t =  detail::value_type_t<T>;
     if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x3fc90fdbU>();

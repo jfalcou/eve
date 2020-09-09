@@ -56,13 +56,13 @@ namespace eve::detail
     if constexpr(std::is_same_v<v_t, double>)
     {
       // To obtain extra accuracy, we need one additional Newton step
-      a0 = fma(fnma(x, sqr(a0), One(as(a0))), a0 * Half(as(a0)), a0);
+      a0 = fma(fnma(x, sqr(a0), One(eve::as(a0))), a0 * half(eve::as(a0)), a0);
     }
 
     if constexpr(platform::supports_infinites)
-    { a0 = if_else(x == Inf(as(x)), eve::zero_, a0); }
+    { a0 = if_else(x == Inf(eve::as(x)), eve::zero_, a0); }
 
-    return if_else(is_eqz(x), Inf(as(x)), a0);
+    return if_else(is_eqz(x), Inf(eve::as(x)), a0);
   }
 
   template<typename Pack>
@@ -77,7 +77,7 @@ namespace eve::detail
       nn  = dec[tst](nn);
       a00 = mul[tst](a00,2);
       auto a0 = rsqrt_x86(a00);
-      return if_else(is_eqz(x), Inf(as(x)), pedantic_(ldexp)(a0, -nn/2));
+      return if_else(is_eqz(x), Inf(eve::as(x)), pedantic_(ldexp)(a0, -nn/2));
     }
     else return rsqrt_x86(x);
   }

@@ -41,8 +41,8 @@ TTS_CASE_TPL("Check eve::operator> behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL((eve::Nan<T>() > eve::Nan<T>()) , eve::False<T>());
-    TTS_EQUAL((eve::Nan<T>() > T(4))          , eve::False<T>());
+    TTS_EQUAL((eve::nan(eve::as<T>()) > eve::nan(eve::as<T>())) , eve::False<T>());
+    TTS_EQUAL((eve::nan(eve::as<T>()) > T(4))          , eve::False<T>());
   }
 
   TTS_EQUAL( (T(1)   > T(1)   ) , eve::False<T>());
@@ -59,11 +59,11 @@ TTS_CASE_TPL("Check eve::operator> behavior", EVE_TYPE)
 TTS_CASE_TPL("Check eve::is_greater behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-
+  using eve::as;
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_greater(T(1), eve::Nan<T>()), eve::False<T>());
-    TTS_EQUAL(eve::is_greater(eve::Nan<T>(), T(1)), eve::False<T>());
+    TTS_EQUAL(eve::is_greater(T(1), eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_greater(eve::nan(eve::as<T>()), T(1)), eve::False<T>());
   }
 
   TTS_EQUAL(eve::is_greater(T(1)  , T(1)  ), eve::False<T>() );

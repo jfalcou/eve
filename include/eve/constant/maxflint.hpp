@@ -21,7 +21,7 @@ namespace eve
   EVE_MAKE_CALLABLE(maxflint_, maxflint_);
 
   template<floating_value T>
-  EVE_FORCEINLINE auto Maxflint(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Maxflint(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

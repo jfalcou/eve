@@ -53,14 +53,14 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t     = element_type_t<T>;
-      auto xltminlog2 = x < Minlog2(as(x));
-      auto xgemaxlog2 = x >= Maxlog2(as(x));
+      auto xltminlog2 = x < Minlog2(eve::as(x));
+      auto xgemaxlog2 = x >= Maxlog2(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog2 )
-          return Inf(as(x));
+          return Inf(eve::as(x));
         if( xltminlog2 )
-          return Zero(as(x));
+          return Zero(eve::as(x));
       }
       auto k = nearest(x);
       x      = x - k;
@@ -86,7 +86,7 @@ namespace eve::detail
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog2, eve::zero_, z);
-        z = if_else(xgemaxlog2, Inf(as(x)), z);
+        z = if_else(xgemaxlog2, Inf(eve::as(x)), z);
       }
       return z;
     }
@@ -126,7 +126,7 @@ namespace eve::detail
       }
       else
       {
-        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(as(xx)), xx));
+        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(eve::as(xx)), xx));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;

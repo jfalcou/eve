@@ -18,7 +18,7 @@ namespace eve
   EVE_MAKE_CALLABLE(zero_, zero_);
 
   template<typename T>
-  EVE_FORCEINLINE auto Zero(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Zero(eve::as_<T> const & = {}) noexcept
   {
     return T(0);
   }

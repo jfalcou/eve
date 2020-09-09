@@ -33,15 +33,15 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        auto aisflt = is_flint(a * Half(as(a)));
+        auto aisflt = is_flint(a * half(eve::as(a)));
         auto aa = eve::abs(a);
         if constexpr(eve::platform::supports_denormals)
           return aisflt && (aa != Mindenormal<T>());
         else
           return aisflt && (aa != Smallestposval<T>());
       }
-      else if constexpr(scalar_value<T>) return (!(a & One(as(a))));
-      else                               return is_eqz((a & One(as(a))));
+      else if constexpr(scalar_value<T>) return (!(a & One(eve::as(a))));
+      else                               return is_eqz((a & One(eve::as(a))));
     }
     else                                 return apply_over(is_even, a);
   }
