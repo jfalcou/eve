@@ -272,27 +272,36 @@ TTS_CASE("ignore_first/last combination")
   using type = wide<float>;
   type value = [](auto i, auto) { return 1.f+i; };
 
-  constexpr auto sz = type::static_size / 2;
-  std::cout << (ignore_first(sz) && ignore_last(sz)) << "\n";
-  TTS_EQUAL ( (ignore_first(sz) && ignore_last(sz)).mask(as_<type>())
-            , eve::False( as_<type>() )
-            );
-  TTS_EQUAL( (if_else(ignore_first(sz) && ignore_last(sz),value,type(69))), type(69));
-
-  std::cout << (ignore_first(0) && ignore_last(0)) << "\n";
-  TTS_EQUAL ( (ignore_first(0) && ignore_last(0)).mask(as_<type>())
-            , eve::True( as_<type>() )
-            );
-  TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(0),value,type(69))), value);
-
-  for(int fi = 0;fi < type::static_size;fi++)
+  // Check that ignore_first(i) === ignore_first(i) && ignore_last(0)
+  for(int i = 0;i <= type::static_size; i++)
   {
-    for(int li = 0;li < type::static_size;li++)
+    logical<type> mref  = ignore_first(i).mask(as_<type>());
+    type          ref   = if_else(ignore_first(i), value, 69);
+
+    TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()), mref );
+    TTS_EQUAL( (if_else(ignore_first(i) && ignore_last(0),value, type(69))), ref);
+  }
+
+  // Check that ignore_last(i) === ignore_first(0) && ignore_last(i)
+  for(int i = 0;i <= type::static_size; i++)
+  {
+    logical<type> mref  = ignore_last(i).mask(as_<type>());
+    type          ref   = if_else(ignore_last(i), value, 69);
+
+    TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()), mref );
+    TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(i),value, type(69))), ref);
+  }
+
+  // All masks combo
+  for(int fi = 1;fi <= type::static_size;fi++)
+  {
+    for(int li = 1;li <= type::static_size;li++)
     {
-      logical<type> mref  = [=](auto j, auto c) { return (j >= fi) && (j <= (c-li-1)); };
-      type          ref   = [=](auto j, auto c) { return (j >= fi) && (j <= (c-li-1)) ? value[j] : 69.f; };
+      logical<type> mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
+      type          ref   = if_else(mref, value, 69);
 
       std::cout << (ignore_first(fi) && ignore_last(li)) << "\n";
+      std::cout << (ignore_first(fi) && ignore_last(li)).mask(as_<type>()) << "\n";
 
       TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()), mref );
       TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
