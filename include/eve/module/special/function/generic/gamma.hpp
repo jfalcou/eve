@@ -214,12 +214,12 @@ namespace eve::detail
           // treat negative large with reflection
           r = large_negative(q);
           if( nb >= cardinal_v<T> )
-            return if_else(nan_result, eve::allbits_, r);
+            return if_else(nan_result, eve::allbits, r);
         }
         auto r1 = other(a0, test);
         auto r2 = if_else(test, r, r1);
         return if_else(
-            is_eqz(a0), copysign(Inf(as(a0)), a0), if_else(nan_result, eve::allbits_, r2));
+            is_eqz(a0), copysign(Inf(as(a0)), a0), if_else(nan_result, eve::allbits, r2));
       }
     }
     else

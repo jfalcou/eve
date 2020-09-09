@@ -106,7 +106,7 @@ namespace eve::detail
         }
         else if constexpr( unsigned_value<T> )
         {
-          auto bb = if_else(is_eqz(b), eve::allbits_, b);
+          auto bb = if_else(is_eqz(b), eve::allbits, b);
           T    q  = saturated_(div)(a, bb);
           q       = inc[is_nez(a - q * b)](q);
           return if_else(is_nez(b), q, bit_mask(a));

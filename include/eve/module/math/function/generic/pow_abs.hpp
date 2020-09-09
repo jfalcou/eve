@@ -110,7 +110,7 @@ namespace eve::detail
     z = if_else(is_eqz(a), if_else(is_ltz(b), eve::Inf<T>(), binarize(is_eqz(b))), z);
     if constexpr( eve::platform::supports_invalids )
     {
-      z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits_), z);
+      z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits), z);
     }
     return z;
   }

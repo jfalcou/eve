@@ -224,7 +224,7 @@ namespace eve::detail
       // fma ? TODO
       s = b + bb;
       t = (b - s) + bb;
-      s = if_else(is_not_finite(x), eve::allbits_, s);
+      s = if_else(is_not_finite(x), eve::allbits, s);
 
       return std::make_tuple(quadrant(sum), s, t);
     }
@@ -278,7 +278,7 @@ namespace eve::detail
         auto dsr1 = single_(z - double_(sr1));
         auto br   = if_else(xlerfl, sr, sr1);
         auto dbr  = if_else(xlerfl, dsr, dsr1);
-        br        = if_else(is_not_finite(xx), eve::allbits_, br);
+        br        = if_else(is_not_finite(xx), eve::allbits, br);
         return std::make_tuple(bn, br, dbr);
       }
     }

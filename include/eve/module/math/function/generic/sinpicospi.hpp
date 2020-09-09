@@ -64,7 +64,7 @@ namespace eve::detail
       {
         auto invalid = is_not_finite(x);
         x = if_else(x > Maxflint(as(x)), eve::zero_, x);
-        x = if_else(invalid, eve::allbits_, x);
+        x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);

@@ -35,7 +35,7 @@ namespace eve::detail
       auto z = if_else(is_negative(a), Pi(as(a)), eve::zero_);
       if constexpr( platform::supports_nans && std::same_as<D, pedantic_type> )
       {
-        return if_else(is_nan(a), eve::allbits_, z);
+        return if_else(is_nan(a), eve::allbits, z);
       }
       else
       {

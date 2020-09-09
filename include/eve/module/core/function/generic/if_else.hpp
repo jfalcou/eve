@@ -131,7 +131,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
                                           U const &t,
-                                          eve::callable_allbits_ const
+                                          eve::callable_allbits const
                                           &) noexcept
   {
     if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : Allbits(as(t));
@@ -141,7 +141,7 @@ namespace eve::detail
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
-                                          eve::callable_allbits_ const &,
+                                          eve::callable_allbits const &,
                                           U const &t) noexcept
   {
     if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? Allbits(as(t)) : t;

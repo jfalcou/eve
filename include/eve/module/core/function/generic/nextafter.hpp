@@ -54,7 +54,7 @@ namespace eve::detail
       auto tmp = if_else(a < b, next(a), if_else(b < a, prev(a), a));
       if constexpr( std::is_same_v<D, pedantic_type> )
       {
-        return if_else(is_unordered(a, b), eve::allbits_, tmp);
+        return if_else(is_unordered(a, b), eve::allbits, tmp);
       }
       else
       {

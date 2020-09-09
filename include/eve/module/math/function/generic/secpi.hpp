@@ -42,7 +42,7 @@ namespace eve::detail
       }
       else
       {
-        a0 = if_else(test, eve::allbits_, a0);
+        a0 = if_else(test, eve::allbits, a0);
       }
 
       a0 *= Pi<T>();
@@ -77,7 +77,7 @@ namespace eve::detail
       }
       else
       {
-        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits_);
+        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits);
       }
     }
     else

@@ -61,7 +61,7 @@ namespace eve::detail
       else
       {
         x = if_else(is_greater(x, Maxflint(as(x))) || is_flint(x), eve::zero_, x);
-        x = if_else(is_not_finite(a0) || (frac(x) == Half<T>()), eve::allbits_, x);
+        x = if_else(is_not_finite(a0) || (frac(x) == Half<T>()), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return tan_finalize(a0 * Pi<T>(), fn, xr, dxr);

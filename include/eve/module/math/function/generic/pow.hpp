@@ -66,7 +66,7 @@ namespace eve::detail
       T    z       = pow_abs(a, b);
       z            = minus[logical_and(is_odd(b), nega)](z);
       auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
-      return if_else(invalid, eve::allbits_, z);
+      return if_else(invalid, eve::allbits, z);
     }
     else return apply_over(pow, a, b);
   }

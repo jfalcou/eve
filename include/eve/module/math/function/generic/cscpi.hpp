@@ -59,7 +59,7 @@ namespace eve::detail
       T x = abs(a0);
       if constexpr( simd_value<T> )
       {
-        x = if_else(is_nez(a0) && (is_not_finite(x) || is_flint(x)), eve::allbits_, x);
+        x = if_else(is_nez(a0) && (is_not_finite(x) || is_flint(x)), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));

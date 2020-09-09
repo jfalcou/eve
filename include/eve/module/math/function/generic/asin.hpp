@@ -69,7 +69,7 @@ namespace eve::detail
         }
         else if constexpr(simd_value<T>) //simd preparation
         {
-          x = if_else(x > One<T>(), eve::allbits_, x);
+          x = if_else(x > One<T>(), eve::allbits, x);
         }
         auto case_1 = [](const T & x){ // x < 0.625
           auto zz1 = eve::oneminus(x);

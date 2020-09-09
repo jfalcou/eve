@@ -17,35 +17,35 @@
 
 TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::if_else(T()               , T(), eve::allbits_), T);
-  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , T(), eve::allbits_), T);
-  TTS_EXPR_IS(eve::if_else(true              , T(), eve::allbits_), T);
+  TTS_EXPR_IS(eve::if_else(T()               , T(), eve::allbits), T);
+  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , T(), eve::allbits), T);
+  TTS_EXPR_IS(eve::if_else(true              , T(), eve::allbits), T);
 
-  TTS_EXPR_IS(eve::if_else(T()               , eve::allbits_, T()), T);
-  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , eve::allbits_, T()), T);
-  TTS_EXPR_IS(eve::if_else(true              , eve::allbits_, T()), T);
+  TTS_EXPR_IS(eve::if_else(T()               , eve::allbits, T()), T);
+  TTS_EXPR_IS(eve::if_else(eve::logical<T>() , eve::allbits, T()), T);
+  TTS_EXPR_IS(eve::if_else(true              , eve::allbits, T()), T);
 }
 
-TTS_CASE_TPL("Check eve::if_else(., ., allbits_) behavior ", EVE_TYPE)
+TTS_CASE_TPL("Check eve::if_else(., ., allbits) behavior ", EVE_TYPE)
 {
   auto f = eve::Allbits<T>();
   auto t = T(9);
 
-  TTS_IEEE_EQUAL(eve::if_else(1                 , t, eve::allbits_), t);
-  TTS_IEEE_EQUAL(eve::if_else(1.0               , t, eve::allbits_), t);
-  TTS_IEEE_EQUAL(eve::if_else(true              , t, eve::allbits_), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , t, eve::allbits_), t);
-  TTS_IEEE_EQUAL(eve::if_else(0                 , t, eve::allbits_), f);
-  TTS_IEEE_EQUAL(eve::if_else(0.0               , t, eve::allbits_), f);
-  TTS_IEEE_EQUAL(eve::if_else(false             , t, eve::allbits_), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False<T>()   , t, eve::allbits_), f);
+  TTS_IEEE_EQUAL(eve::if_else(1                 , t, eve::allbits), t);
+  TTS_IEEE_EQUAL(eve::if_else(1.0               , t, eve::allbits), t);
+  TTS_IEEE_EQUAL(eve::if_else(true              , t, eve::allbits), t);
+  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , t, eve::allbits), t);
+  TTS_IEEE_EQUAL(eve::if_else(0                 , t, eve::allbits), f);
+  TTS_IEEE_EQUAL(eve::if_else(0.0               , t, eve::allbits), f);
+  TTS_IEEE_EQUAL(eve::if_else(false             , t, eve::allbits), f);
+  TTS_IEEE_EQUAL(eve::if_else(eve::False<T>()   , t, eve::allbits), f);
 
-  TTS_IEEE_EQUAL(eve::if_else(1                 , eve::allbits_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(1.0               , eve::allbits_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(true              , eve::allbits_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , eve::allbits_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(0                 , eve::allbits_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(0.0               , eve::allbits_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(false             , eve::allbits_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False<T>()   , eve::allbits_, t), t);
+  TTS_IEEE_EQUAL(eve::if_else(1                 , eve::allbits, t), f);
+  TTS_IEEE_EQUAL(eve::if_else(1.0               , eve::allbits, t), f);
+  TTS_IEEE_EQUAL(eve::if_else(true              , eve::allbits, t), f);
+  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , eve::allbits, t), f);
+  TTS_IEEE_EQUAL(eve::if_else(0                 , eve::allbits, t), t);
+  TTS_IEEE_EQUAL(eve::if_else(0.0               , eve::allbits, t), t);
+  TTS_IEEE_EQUAL(eve::if_else(false             , eve::allbits, t), t);
+  TTS_IEEE_EQUAL(eve::if_else(eve::False<T>()   , eve::allbits, t), t);
 }

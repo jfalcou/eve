@@ -111,7 +111,7 @@ namespace eve::detail
         z = eve::if_else( eve::is_eqz(a00),
                           eve::if_else( eve::is_negative(a10),  eve::Pi(as(a0))*sgn, eve::zero_),
                           z);
-        if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits_, z);
+        if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
         else                                  return z;
       }
     }

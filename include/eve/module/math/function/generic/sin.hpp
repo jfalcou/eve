@@ -52,7 +52,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
         return r;
       else
-        return if_else(is_not_less_equal(x2, pi2_16), eve::allbits_, r);
+        return if_else(is_not_less_equal(x2, pi2_16), eve::allbits, r);
     }
     else
       return apply_over(restricted_(sin), a0);

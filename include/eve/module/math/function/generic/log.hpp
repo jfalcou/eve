@@ -98,7 +98,7 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
       else // if constexpr(std::is_same_v<elt_t, double>)
       {
@@ -158,7 +158,7 @@ namespace eve::detail
         {
           zz = if_else(isnez, r, Minf<T>());
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
     }
     else

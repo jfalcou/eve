@@ -101,7 +101,7 @@ namespace eve::detail
       {
         zz = if_else(isnez, r, Minf<T>());
       }
-      return if_else(is_ngez(uf), eve::allbits_, zz);
+      return if_else(is_ngez(uf), eve::allbits, zz);
     }
     else
       return apply_over(plain_(log1p), a0);

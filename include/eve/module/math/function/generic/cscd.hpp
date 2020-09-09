@@ -39,7 +39,7 @@ namespace eve::detail
         if( test ) return Nan<T>();
       }
       auto tmp = cscpi(a0_180);
-      return if_else(test, eve::allbits_, tmp);
+      return if_else(test, eve::allbits, tmp);
     }
     else
       return apply_over(D()(cscd), a0);

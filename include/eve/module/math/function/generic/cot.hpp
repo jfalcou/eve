@@ -52,7 +52,7 @@ namespace eve::detail
       }
       else
       {
-        return if_else(aa0nlepio4, eve::allbits_, rec(tancot_eval(a0)));
+        return if_else(aa0nlepio4, eve::allbits, rec(tancot_eval(a0)));
       }
     }
     else
@@ -98,7 +98,7 @@ namespace eve::detail
         auto fn       = binarize(xnlepio4);
         auto xr       = if_else(fn, reduce(x), x);
         auto y        = tancot_eval(xr);
-        y             = if_else(is_not_finite(a0), eve::allbits_, if_else(xnlepio4, -y, rec(y)));
+        y             = if_else(is_not_finite(a0), eve::allbits, if_else(xnlepio4, -y, rec(y)));
         return if_else(xleeps, rec(a0), bit_xor(bitofsign(a0), y));
       }
     }

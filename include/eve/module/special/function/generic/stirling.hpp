@@ -59,7 +59,7 @@ namespace eve::detail
       const T Sqrt_2pi = Ieee_constant<T, 0X40206C99U, 0X40040D931FF62704ULL>(); // 2.50662827463100
       if constexpr( simd_value<T> )
       {
-        a0        = if_else(is_gez(a0), a0, eve::allbits_);
+        a0        = if_else(is_gez(a0), a0, eve::allbits);
         T w       = rec(a0);
         w         = fma(w, stirling1(w), One<T>());
         T    y    = exp(-a0);

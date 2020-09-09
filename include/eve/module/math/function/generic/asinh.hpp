@@ -74,7 +74,7 @@ namespace eve::detail
         auto case_2 = [](T const & x){return average(x, hypot(One<T>(), x)); }; // lesser x
         auto tmp =  branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x);
         auto z1 = bit_xor(if_else(x_lt_half, z, log(tmp)+Log_2<T>()), bts);
-        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits_, z1);
+        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits, z1);
         else                                           return z1;
       }
     }

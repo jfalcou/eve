@@ -44,7 +44,7 @@ namespace eve::detail
       }
       auto tmp = D()(cotpi)(a0_180);
       if constexpr( scalar_value<T> ) return tmp;
-      return if_else(test, eve::allbits_, tmp);
+      return if_else(test, eve::allbits, tmp);
     }
     else
       return apply_over(D()(cotd), a0);

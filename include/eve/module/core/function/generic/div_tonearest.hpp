@@ -101,7 +101,7 @@ namespace eve::detail
           {
             auto aa  = saturated_(eve::abs)(a);
             auto bb  = saturated_(eve::abs)(b);
-            bb       = if_else(is_eqz(bb), eve::allbits_, bb);
+            bb       = if_else(is_eqz(bb), eve::allbits, bb);
             auto q   = eve::saturated_(eve::div)(aa, bb);
             auto rx2 = 2 * (aa - q * bb);
             q = if_else(is_greater_equal(rx2, bb), inc[logical_ornot(rx2 != bb, is_even(q))](q), q);
@@ -120,7 +120,7 @@ namespace eve::detail
         }
         else if constexpr( unsigned_value<T> )
         {
-          auto bb  = if_else(is_eqz(b), eve::allbits_, b);
+          auto bb  = if_else(is_eqz(b), eve::allbits, b);
           T    q   = div(a, bb);
           T    rx2 = 2 * (a - q * bb);
           q = if_else(is_greater_equal(rx2, bb), inc[logical_ornot(rx2 != bb, is_even(q))](q), q);

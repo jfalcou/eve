@@ -58,7 +58,7 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_not_finite(x), eve::allbits_, x); // Nan or Inf input
+        x = if_else(is_not_finite(x), eve::allbits, x); // Nan or Inf input
         x = if_else(is_greater(x, Maxflint(as(x))), eve::zero_, x);
       }
       auto [fn, xr, dxr] = rem2(x);

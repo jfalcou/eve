@@ -54,7 +54,7 @@ namespace eve::detail
       }
       else
       {
-        x2 = if_else(x2nlepi2_16, eve::allbits_, x2);
+        x2 = if_else(x2nlepi2_16, eve::allbits, x2);
         return std::make_tuple(sin_eval(x2, a0), cos_eval(x2));
       }
     }
@@ -104,7 +104,7 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_not_less_equal(x, Pio_2<T>()), eve::allbits_, x);
+        x = if_else(is_not_less_equal(x, Pio_2<T>()), eve::allbits, x);
         auto test = is_not_less_equal(x, Pio_4<T>());
         auto n = binarize(test);
         auto xr =  if_else(test, reduce(x), x);

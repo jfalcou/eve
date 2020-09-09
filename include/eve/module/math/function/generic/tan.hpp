@@ -49,7 +49,7 @@ namespace eve::detail
       {
         auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); // 0.61685027506808491367715568749226
                                                                               // but rounded upward
-        a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits_, a0);
+        a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits, a0);
       }
       return tancot_eval(a0);
     }
@@ -95,7 +95,7 @@ namespace eve::detail
         auto test = is_not_less_equal(x, Pio_4(as(a0)));
         T    xr   = if_else(test, reduce(x), x);
         auto y    = tancot_eval(xr);
-        y         = if_else(is_not_finite(a0), eve::allbits_, if_else(test, -rec(y), y));
+        y         = if_else(is_not_finite(a0), eve::allbits, if_else(test, -rec(y), y));
         return if_else(x <= Eps<T>(), a0, bit_xor(bitofsign(a0), y));
       }
     }

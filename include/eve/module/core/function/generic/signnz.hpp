@@ -45,7 +45,7 @@ namespace eve::detail
           }
           else
           {
-            return if_else(is_nan(a), eve::allbits_, r);
+            return if_else(is_nan(a), eve::allbits, r);
           }
         }
         else

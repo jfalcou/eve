@@ -52,7 +52,7 @@ namespace eve::detail
         return if_else(
             is_eqz(a0),
             bit_or(a0, Inf(as(a0))),
-            if_else(is_not_less_equal(x, T(0.25)), eve::allbits_, rec(tancot_eval(Pi<T>() * a0))));
+            if_else(is_not_less_equal(x, T(0.25)), eve::allbits, rec(tancot_eval(Pi<T>() * a0))));
       }
     }
     else
@@ -76,7 +76,7 @@ namespace eve::detail
       auto x = abs(a0);
       if constexpr( simd_value<T> )
       {
-        x = if_else(is_not_finite(a0) || is_flint(x), eve::allbits_, x);
+        x = if_else(is_not_finite(a0) || is_flint(x), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return cot_finalize(a0 * Pi<T>(), quadrant(fn), xr, dxr);

@@ -48,7 +48,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
         return (x2nlepi2_16) ? Nan<T>() : cos_eval(x2);
       else
-        return if_else(x2nlepi2_16, eve::allbits_, cos_eval(x2));
+        return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
     }
     else
       return apply_over(restricted_(cos), a0);
@@ -97,7 +97,7 @@ namespace eve::detail
         auto ce       = cos_eval(z);
         auto z1       = if_else(n, se, ce);
 //        return z1;
-        return if_else(xnlepio2, eve::allbits_, z1);
+        return if_else(xnlepio2, eve::allbits, z1);
       }
     }
     else
