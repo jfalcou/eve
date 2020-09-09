@@ -17,14 +17,14 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(nan_, nan_);
+  EVE_MAKE_CALLABLE(nan_, nan);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Nan(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    return Allbits<T>();
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), as_<T> const& tgt) noexcept
+    {
+      return allbits(tgt);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(nan_, Nan);
 }
-

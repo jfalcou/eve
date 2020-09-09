@@ -10,34 +10,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(allbits_, allbits_);
+  EVE_MAKE_CALLABLE(allbits_, allbits);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Allbits(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t           = detail::value_type_t<T>;
-    using i_t           = detail::as_integer_t<t_t, unsigned>;
-    constexpr auto mask = ~0ULL;
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      using i_t           = detail::as_integer_t<t_t, unsigned>;
+      constexpr auto mask = ~0ULL;
 
-    if constexpr(std::is_integral_v<t_t>)
-    {
-      return T(mask);
-    }
-    else
-    {
-      return T(bit_cast(i_t(mask), as_<t_t>() ));
+      if constexpr(std::is_integral_v<t_t>) return T(mask);
+      else                                  return T(bit_cast(i_t(mask), as_<t_t>() ));
     }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(allbits_, Allbits);
 }
-
