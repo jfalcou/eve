@@ -256,7 +256,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   for(int i = 0;i <= type::static_size; i++)
   {
     logical<type> mref  = ignore_first(i).mask(as_<type>());
-    type          ref   = if_else(ignore_first(i), value, 69);
+    type          ref   = if_else(ignore_first(i), value, T(69));
 
     TTS_EQUAL( (ignore_first(i) && ignore_last(0)).mask(as_<type>()), mref );
     TTS_EQUAL( (if_else(ignore_first(i) && ignore_last(0),value, type(69))), ref);
@@ -266,7 +266,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
   for(int i = 0;i <= type::static_size; i++)
   {
     logical<type> mref  = ignore_last(i).mask(as_<type>());
-    type          ref   = if_else(ignore_last(i), value, 69);
+    type          ref   = if_else(ignore_last(i), value, T(69));
 
     TTS_EQUAL( (ignore_first(0) && ignore_last(i)).mask(as_<type>()), mref );
     TTS_EQUAL( (if_else(ignore_first(0) && ignore_last(i),value, type(69))), ref);
@@ -278,7 +278,7 @@ TTS_CASE_TPL("ignore_first/last combination", TTS_NUMERIC_TYPES)
     for(int li = 1;li <= type::static_size;li++)
     {
       logical<type> mref  = ignore_first(fi).mask(as_<type>()) && ignore_last(li).mask(as_<type>());
-      type          ref   = if_else(mref, value, 69);
+      type          ref   = if_else(mref, value, T(69));
 
       TTS_EQUAL( (ignore_first(fi) && ignore_last(li)).mask(as_<type>()), mref );
       TTS_EQUAL( (if_else(ignore_first(fi) && ignore_last(li),value, type(69))), ref);
