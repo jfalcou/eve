@@ -37,13 +37,13 @@ TTS_CASE_TPL("Check eve::numeric_(eve::is_equal) behavior", EVE_TYPE)
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
     TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()))   , eve::True<T>());
-    TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::nan(eve::as<T>()), T(4))            , eve::False<T>());
+    TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::nan(eve::as<T>()), T(4))            , eve::False(eve::as<T>()));
   }
 
   TTS_EQUAL(eve::numeric_(eve::is_equal)(T(1)           ,   T(1) )        , eve::True<T>() );
   TTS_EQUAL(eve::numeric_(eve::is_equal)(T(1)           , v_t(1))         , eve::True<T>() );
-  TTS_EQUAL(eve::numeric_(eve::is_equal)(T(3)           ,   T(1) )        , eve::False<T>());
-  TTS_EQUAL(eve::numeric_(eve::is_equal)(T(3)           , v_t(1))         , eve::False<T>());
+  TTS_EQUAL(eve::numeric_(eve::is_equal)(T(3)           ,   T(1) )        , eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::numeric_(eve::is_equal)(T(3)           , v_t(1))         , eve::False(eve::as<T>()));
   TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::True<T>() , eve::True<T>()) , eve::True<T>() );
-  TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::True<T>() , eve::False<T>()), eve::False<T>());
+  TTS_EQUAL(eve::numeric_(eve::is_equal)(eve::True<T>() , eve::False(eve::as<T>())), eve::False(eve::as<T>()));
 }

@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::asecd behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::asecd(eve::Inf<T>()) , (T(90)), 0.5);
+    TTS_ULP_EQUAL(eve::asecd(eve::inf(eve::as<T>())) , (T(90)), 0.5);
     TTS_ULP_EQUAL(eve::asecd(eve::Minf<T>()), (T(90)), 0.5);
   }
 

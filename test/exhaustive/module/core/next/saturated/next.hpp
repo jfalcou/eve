@@ -24,7 +24,7 @@ TTS_CASE_TPL("wide exhaustive check on next", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_next = tts::vectorize<T>( [](auto e) { return (e ==  eve::Inf<v_t>()) ?  eve::nan<v_t>() : std::nextafter(e, eve::Inf<v_t>()); } );
+    auto std_next = tts::vectorize<T>( [](auto e) { return (e ==  eve::inf(eve::as<v_t>())) ?  eve::nan<v_t>() : std::nextafter(e, eve::inf(eve::as<v_t>())); } );
     eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
     TTS_ULP_RANGE_CHECK(p, std_next, eve::saturated_(eve::next), 0);
   }

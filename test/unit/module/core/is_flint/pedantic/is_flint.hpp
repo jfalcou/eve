@@ -27,15 +27,15 @@ TTS_CASE_TPL("Check eve::is_flint behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1)), eve::True<T>() );
     TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(2)), eve::True<T>() );
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1) / T(2)), eve::False<T>());
+    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1) / T(2)), eve::False(eve::as<T>()));
     TTS_EQUAL(eve::pedantic_(eve::is_flint)(eve::Maxflint<T>()),  eve::True<T>());
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(eve::Maxflint<T>()*2), eve::False<T>());
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(eve::Valmax<T>()/2), eve::False<T>());
+    TTS_EQUAL(eve::pedantic_(eve::is_flint)(eve::Maxflint<T>()*2), eve::False(eve::as<T>()));
+    TTS_EQUAL(eve::pedantic_(eve::is_flint)(eve::Valmax<T>()/2), eve::False(eve::as<T>()));
   }
   else
   {
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1)), eve::False<T>() );
-    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(2)), eve::False<T>() );
+    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(1)), eve::False(eve::as<T>()) );
+    TTS_EQUAL(eve::pedantic_(eve::is_flint)(T(2)), eve::False(eve::as<T>()) );
   }
 
 

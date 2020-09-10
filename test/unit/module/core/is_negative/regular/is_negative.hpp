@@ -22,8 +22,8 @@ TTS_CASE_TPL("Check eve::is_negative return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_negative(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_negative(T(2)), eve::False<T>());
+  TTS_EQUAL(eve::is_negative(T(0)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_negative(T(2)), eve::False(eve::as<T>()));
 
   if constexpr(eve::signed_value<T>)
   {
@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::is_negative behavior", EVE_TYPE)
   }
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_negative(T( 0 )), eve::False<T>() );
+    TTS_EQUAL(eve::is_negative(T( 0 )), eve::False(eve::as<T>()) );
     TTS_EQUAL(eve::is_negative(T(-0.)), eve::True<T>()  );
 
     if constexpr(eve::platform::supports_nans)

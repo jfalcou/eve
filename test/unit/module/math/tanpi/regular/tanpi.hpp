@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL((eve::tanpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL((eve::tanpi)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL((eve::tanpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL((eve::tanpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 

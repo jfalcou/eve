@@ -32,14 +32,14 @@ TTS_CASE_TPL("Check eve::gamma behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::gamma(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::gamma(eve::Inf<T>())  , eve::Inf<T>() );
+    TTS_IEEE_EQUAL(eve::gamma(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::gamma(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
   TTS_ULP_EQUAL(eve::gamma(T(0.5)), T(std::tgamma(v_t(0.5))), 1. );
   TTS_ULP_EQUAL(eve::gamma(T(-35)), T(std::tgamma(v_t(-35))), 0.5);
 
-  TTS_IEEE_EQUAL(eve::gamma(T( 0 )), eve::Inf<T>()  );
+  TTS_IEEE_EQUAL(eve::gamma(T( 0 )), eve::inf(eve::as<T>())  );
   TTS_IEEE_EQUAL(eve::gamma(T(-0.)), eve::Minf<T>() );
   TTS_IEEE_EQUAL(eve::gamma(T( 1 )), T(1)           );
   TTS_IEEE_EQUAL(eve::gamma(T( 2 )), T(1)           );

@@ -22,9 +22,9 @@ TTS_CASE_TPL("Check is_unordered return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_unordered(T(1), T(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_unordered(T(3), T(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_unordered(T(1), T(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_unordered(T(1), T(1)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_unordered(T(3), T(1)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_unordered(T(1), T(3)), eve::False(eve::as<T>()));
 
   if constexpr(eve::floating_value<T>)
   {

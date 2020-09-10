@@ -25,12 +25,12 @@ TTS_CASE_TPL("Check eve::is_gez behavior", EVE_TYPE)
 {
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::is_gez(T(-1)), eve::False<T>());
+    TTS_EQUAL(eve::is_gez(T(-1)), eve::False(eve::as<T>()));
   }
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_gez(eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_gez(eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
   }
 
   TTS_EQUAL(eve::is_gez(T(0)), eve::True<T>());

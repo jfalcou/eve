@@ -26,6 +26,6 @@ TTS_CASE_TPL("Check eve::is_flint behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_flint(T(1) / T(2)), eve::False<T>());
+    TTS_EQUAL(eve::is_flint(T(1) / T(2)), eve::False(eve::as<T>()));
   }
 }

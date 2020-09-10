@@ -25,17 +25,17 @@ TTS_CASE_TPL("Check eve::is_infinite return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_infinite behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_infinite(T(0)), eve::False<T>() );
-  TTS_EQUAL(eve::is_infinite(T(2)), eve::False<T>() );
+  TTS_EQUAL(eve::is_infinite(T(0)), eve::False(eve::as<T>()) );
+  TTS_EQUAL(eve::is_infinite(T(2)), eve::False(eve::as<T>()) );
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_infinites)
   {
-    TTS_EQUAL(eve::is_infinite(eve::Inf<T>())  , eve::True<T>());
+    TTS_EQUAL(eve::is_infinite(eve::inf(eve::as<T>()))  , eve::True<T>());
     TTS_EQUAL(eve::is_infinite(eve::Minf<T>()) , eve::True<T>());
   }
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_nans)
   {
-    TTS_EQUAL(eve::is_infinite(eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_infinite(eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
   }
 }

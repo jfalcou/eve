@@ -35,18 +35,18 @@ TTS_CASE_TPL("Check eve::raw_(eve::pow_abs) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Minf<T>(), eve::Minf<T>()), T(0) );
 
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Inf<T>() , T(-0.5)       ), T(0)         );
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Inf<T>() , T(0.5)        ), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Inf<T>() , eve::Inf<T>() ), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::inf(eve::as<T>()) , T(-0.5)       ), T(0)         );
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::inf(eve::as<T>()) , T(0.5)        ), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::inf(eve::as<T>()) , eve::inf(eve::as<T>()) ), eve::inf(eve::as<T>()));
 
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
 
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-1)         ), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-2)         ), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::Inf<T>() ), T(0)         );
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::Minf<T>()), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-1)         ), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-2)         ), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::inf(eve::as<T>()) ), T(0)         );
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::Minf<T>()), eve::inf(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::Minf<T>()), T(0)         );
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::Inf<T>() ), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::inf(eve::as<T>()) ), eve::inf(eve::as<T>()));
   }
 
   TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(-1)  , T(-1))  , T(1));

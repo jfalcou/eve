@@ -36,9 +36,9 @@ TTS_CASE_TPL("Check eve::is_not_greater behavior", EVE_TYPE)
   TTS_EQUAL(eve::is_not_greater(T(1)  , T(1)  ), eve::True<T>() );
   TTS_EQUAL(eve::is_not_greater(T(1)  , v_t(1)), eve::True<T>() );
   TTS_EQUAL(eve::is_not_greater(v_t(1), T(1)  ), eve::True<T>() );
-  TTS_EQUAL(eve::is_not_greater(T(3)  , T(1)  ), eve::False<T>());
-  TTS_EQUAL(eve::is_not_greater(T(3)  , v_t(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_not_greater(v_t(3), T(1)  ), eve::False<T>());
+  TTS_EQUAL(eve::is_not_greater(T(3)  , T(1)  ), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_not_greater(T(3)  , v_t(1)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_not_greater(v_t(3), T(1)  ), eve::False(eve::as<T>()));
   TTS_EQUAL(eve::is_not_greater(T(1)  , T(3)  ), eve::True<T>() );
   TTS_EQUAL(eve::is_not_greater(T(1)  , v_t(3)), eve::True<T>() );
   TTS_EQUAL(eve::is_not_greater(v_t(1), T(3)  ), eve::True<T>() );

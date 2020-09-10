@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::atan2 behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    auto inf  = eve::Inf<T>();
+    auto inf  = eve::inf(eve::as<T>());
     auto minf = eve::Minf<T>();
 
     TTS_ULP_EQUAL(eve::atan2(inf         , (T(1.))  ), eve::Pio_2<T>() , 0.5);

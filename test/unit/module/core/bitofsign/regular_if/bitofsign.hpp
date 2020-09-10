@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::bitofsign[condition] behavior", EVE_TYPE)
 {
   T tv{2};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::bitofsign[ 1 ](tv)     , eve::bitofsign(tv));

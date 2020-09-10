@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check eve::sinhcosh behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_infinites)
   {
-    std::array<v_t, 3> a = {eve::nan(eve::as<v_t>()), eve::Inf<v_t>(), eve::Minf<v_t>()};
+    std::array<v_t, 3> a = {eve::nan(eve::as<v_t>()), eve::inf(eve::as<v_t>()), eve::Minf<v_t>()};
 
     for(int i=0; i < 3 ; ++i)
     {

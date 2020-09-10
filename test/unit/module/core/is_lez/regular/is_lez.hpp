@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::is_lez behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_lez(eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_lez(eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
   }
 
   TTS_EQUAL(eve::is_lez(T(0)), eve::True<T>());
-  TTS_EQUAL(eve::is_lez(T(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_lez(T(3)), eve::False(eve::as<T>()));
 }

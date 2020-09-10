@@ -32,6 +32,6 @@ TTS_CASE_TPL("Check eve::is_ngez behavior", EVE_TYPE)
     TTS_EQUAL(eve::is_ngez(eve::nan(eve::as<T>())), eve::True<T>());
   }
 
-  TTS_EQUAL(eve::is_ngez(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_ngez(T(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_ngez(T(0)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_ngez(T(3)), eve::False(eve::as<T>()));
 }

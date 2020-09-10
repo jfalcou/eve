@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::asecpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::asecpi(eve::Inf<T>())  , T(0.5) );
+    TTS_IEEE_EQUAL(eve::asecpi(eve::inf(eve::as<T>()))  , T(0.5) );
     TTS_IEEE_EQUAL(eve::asecpi(eve::Minf<T>()) , T(0.5) );
   }
 

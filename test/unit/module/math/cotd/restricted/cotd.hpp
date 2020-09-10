@@ -27,11 +27,11 @@ TTS_CASE_TPL("Check eve::restricted_(eve::cotd) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(eve::Inf<T>())  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(T(0))    , eve::Inf<T>() );
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(T(0))    , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(T(-0.))  , eve::Minf<T>());
   TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)( T(90.0)), eve::nan(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cotd)(-T(90.0)), eve::nan(eve::as<T>()) );

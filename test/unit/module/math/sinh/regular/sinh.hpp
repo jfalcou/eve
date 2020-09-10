@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::sinh(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::sinh(eve::Inf<T>()) , (eve::Inf<T>()) );
+    TTS_IEEE_EQUAL(eve::sinh(eve::inf(eve::as<T>())) , (eve::inf(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::sinh(eve::Minf<T>()), (eve::Minf<T>()) );
   }
   TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(T(-0.)))) );

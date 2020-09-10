@@ -20,5 +20,5 @@ TTS_CASE_TPL("Check nan return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check nan behavior", EVE_TYPE)
 {
-  TTS_IEEE_EQUAL(eve::nan(eve::as<T>()), eve::Inf<T>() - eve::Inf<T>());
+  TTS_IEEE_EQUAL(eve::nan(eve::as<T>()), eve::inf(eve::as<T>()) - eve::inf(eve::as<T>()));
 }

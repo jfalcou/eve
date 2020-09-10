@@ -29,11 +29,11 @@ TTS_CASE_TPL("Check eve::big_(eve::cscd) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::Inf<T>())  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T( 0 )) , eve::Inf<T>() );
+  TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T( 0 )) , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T(-0.)) , eve::Minf<T>());
 
   TTS_ULP_EQUAL(eve::big_(eve::cscd)( T(1)  ) , T(57.298688498550185476612685755175779889969877177276)   , 5);

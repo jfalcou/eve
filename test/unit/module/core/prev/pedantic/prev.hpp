@@ -56,7 +56,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::prev) one parameter behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Minf<T>()), eve::nan(eve::as<T>()));
 
     TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>()), eve::Minf<T>()          );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Inf<T>())   , eve::Valmax<T>()        );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::inf(eve::as<T>()))   , eve::Valmax<T>()        );
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1 ))          , T(-1) - eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1 ))          , T( 1) - eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::pedantic_(eve::prev)(T( 0 ))          , T(-0.)                  );

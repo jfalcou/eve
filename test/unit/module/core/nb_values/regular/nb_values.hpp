@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)
   {
     if constexpr(eve::platform::supports_invalids)
     {
-      TTS_EQUAL(eve::nb_values(eve::Inf<T>()  , eve::Inf<T>())  , r_t(0)            );
+      TTS_EQUAL(eve::nb_values(eve::inf(eve::as<T>())  , eve::inf(eve::as<T>()))  , r_t(0)            );
       TTS_EQUAL(eve::nb_values(eve::Minf<T>() , eve::Minf<T>()) , r_t(0)            );
       TTS_EQUAL(eve::nb_values(eve::nan(eve::as<T>())  , eve::nan(eve::as<T>()))  , eve::Valmax<r_t>());
     }

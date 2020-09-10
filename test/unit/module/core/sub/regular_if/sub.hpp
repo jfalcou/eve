@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::sub[condition] behavior", EVE_TYPE)
   T tv{5};
   T fv{3};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::sub[ 1     ](tv, fv) , eve::sub(tv,fv));

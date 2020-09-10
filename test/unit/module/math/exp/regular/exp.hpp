@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::exp(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::exp(eve::Inf<T>()) , eve::Inf<T>() );
+    TTS_IEEE_EQUAL(eve::exp(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::exp(eve::Minf<T>()), T( 0 ) );
   }
 

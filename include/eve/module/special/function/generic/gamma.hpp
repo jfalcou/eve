@@ -165,7 +165,7 @@ namespace eve::detail
           auto x = if_else(test, T(2), q);
           if constexpr( eve::platform::supports_nans )
           {
-            auto inf_result = is_equal(q, Inf<T>());
+            auto inf_result = is_equal(q, inf(eve::as<T>()));
             x               = if_else(inf_result, T(2), x);
           }
           auto z     = One<T>();
@@ -196,7 +196,7 @@ namespace eve::detail
           x = z * gamma1(x - T(2));
           if constexpr( eve::platform::supports_infinites )
           {
-            auto inf_result = is_equal(q, Inf<T>());
+            auto inf_result = is_equal(q, inf(eve::as<T>()));
             return if_else(inf_result, q, x);
           }
           else

@@ -24,7 +24,7 @@ TTS_CASE_TPL(" fdim behaviour", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::fdim(eve::Inf<T>() , eve::Inf<T>())  , T(0));
+    TTS_EQUAL(eve::fdim(eve::inf(eve::as<T>()) , eve::inf(eve::as<T>()))  , T(0));
     TTS_EQUAL(eve::fdim(eve::Minf<T>(), eve::Minf<T>()) , T(0));
 
     TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()), 0);

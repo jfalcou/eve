@@ -22,8 +22,8 @@ TTS_CASE_TPL("Check eve::is_nan return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_nan behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_nan(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_nan(T(2)), eve::False<T>());
+  TTS_EQUAL(eve::is_nan(T(0)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_nan(T(2)), eve::False(eve::as<T>()));
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_nans)
   {

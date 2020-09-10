@@ -55,7 +55,7 @@ namespace eve::detail
         // remaining scalar case and all simd cases to avoid multiple computations as
         // this one is always ok
         T z = if_else(x_gt_oneosqrteps,dec(x), x+sqr(x)/eve::inc(hypot(One<T>(), x)));
-        if constexpr(eve::platform::supports_infinites) z = if_else(is_equal(x, Inf<T>()), x, z);
+        if constexpr(eve::platform::supports_infinites) z = if_else(is_equal(x, inf(eve::as<T>())), x, z);
         z =  add[x_gt_oneosqrteps](eve::log1p(z), Log_2<T>());
         return bit_xor(z, bts);
       }

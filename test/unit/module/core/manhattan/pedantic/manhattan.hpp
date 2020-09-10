@@ -29,8 +29,8 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::manhattan) behavior", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::nan(eve::as<T>()), eve::Inf<T>()), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::Inf<T>(), eve::nan(eve::as<T>())), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>())), eve::inf(eve::as<T>()));
   }
 
   TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::Valmax<T>(), T(0))             , eve::Valmax<T>());
@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check 3 params eve::pedantic_(eve::manhattan) behavior", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::nan(eve::as<T>()), eve::Inf<T>(), eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::Inf<T>(), eve::nan(eve::as<T>()), eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::nan(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::Valmax<T>(), T(0),              T(0)), eve::Valmax<T>(), 0);

@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check eve::is_nltz behavior", EVE_TYPE)
 {
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::is_nltz(T(-1)), eve::False<T>());
+    TTS_EQUAL(eve::is_nltz(T(-1)), eve::False(eve::as<T>()));
   }
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)

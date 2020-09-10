@@ -99,15 +99,15 @@ namespace eve::detail
     if constexpr( eve::platform::supports_infinites )
     {
       auto gtax1 = is_greater(ax, One<T>());
-      z          = if_else(is_equal(b, Inf<T>()), if_else(gtax1, Inf<T>(), eve::zero_), z);
-      z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, Inf<T>()), z);
-      z = if_else(is_equal(ax, Inf<T>()), if_else(is_gtz(b), Inf<T>(), binarize(is_gez(b))), z);
+      z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero_), z);
+      z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, inf(eve::as<T>())), z);
+      z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
     z = if_else(zer_ret, eve::zero_, z);
-    z = if_else(inf_ret, Inf<T>(), z);
+    z = if_else(inf_ret, inf(eve::as<T>()), z);
     z = if_else(is_equal(ax, One<T>()), ax, z);
 
-    z = if_else(is_eqz(a), if_else(is_ltz(b), eve::Inf<T>(), binarize(is_eqz(b))), z);
+    z = if_else(is_eqz(a), if_else(is_ltz(b), eve::inf(eve::as<T>()), binarize(is_eqz(b))), z);
     if constexpr( eve::platform::supports_invalids )
     {
       z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits), z);
@@ -124,19 +124,19 @@ namespace eve::detail
     if( xx == One<T>() )
       return xx;
     if( is_eqz(xx) )
-      return is_eqz(a1) ? One<T>() : is_ltz(a1) ? Inf<T>() : Zero<T>();
+      return is_eqz(a1) ? One<T>() : is_ltz(a1) ? inf(eve::as<T>()) : Zero<T>();
     if constexpr( eve::platform::supports_infinites )
     {
-      if( xx == a1 && a1 == Inf<T>() )
-        return Inf<T>();
-      if( xx == Inf<T>() && a1 == Minf<T>() )
+      if( xx == a1 && a1 == inf(eve::as<T>()) )
+        return inf(eve::as<T>());
+      if( xx == inf(eve::as<T>()) && a1 == Minf<T>() )
         return Zero<T>();
-      if( a1 == Inf<T>() )
-        return (xx < One<T>()) ? Zero<T>() : Inf<T>();
+      if( a1 == inf(eve::as<T>()) )
+        return (xx < One<T>()) ? Zero<T>() : inf(eve::as<T>());
       if( a1 == Minf<T>() )
-        return (xx > One<T>()) ? Zero<T>() : Inf<T>();
-      if( xx == Inf<T>() )
-        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : Inf<T>());
+        return (xx > One<T>()) ? Zero<T>() : inf(eve::as<T>());
+      if( xx == inf(eve::as<T>()) )
+        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : inf(eve::as<T>()));
     }
     if constexpr( eve::platform::supports_invalids )
     {
@@ -175,7 +175,7 @@ namespace eve::detail
     const T Powlargelim = Ieee_constant<T, 0x44ffe000U, 0x40cfff8000000000ULL>();
     const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
     if( w > Powlargelim )
-      return Inf<T>();
+      return inf(eve::as<T>());
     if( w < Powlowlim )
       return Zero<T>();
     e  = w;

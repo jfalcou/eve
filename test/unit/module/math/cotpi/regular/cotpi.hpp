@@ -30,11 +30,11 @@ TTS_CASE_TPL("Check eve::eve::cotpi behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::cotpi(eve::nan(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cotpi(eve::Inf<T>() ) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cotpi(eve::inf(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::cotpi(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::cotpi(T( 0 )), eve::Inf<T>()  );
+  TTS_IEEE_EQUAL(eve::cotpi(T( 0 )), eve::inf(eve::as<T>())  );
   TTS_IEEE_EQUAL(eve::cotpi(T(-0.)), eve::Minf<T>() );
 
   TTS_ULP_EQUAL(eve::cotpi( T(1)          ) , eve::nan(eve::as<T>()) , 0.5);

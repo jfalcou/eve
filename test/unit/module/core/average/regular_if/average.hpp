@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::average[condition] behavior", EVE_TYPE)
   T tv{2};
   T fv{3};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::average[ 1 ](tv, fv)     , eve::average(fv,tv));

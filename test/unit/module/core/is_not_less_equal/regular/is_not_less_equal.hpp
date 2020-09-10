@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::is_not_less_equal behavior", EVE_TYPE)
     TTS_EQUAL(eve::is_not_less_equal(eve::nan(eve::as<T>()), T(1)          ), eve::True<T>());
   }
 
-  TTS_EQUAL(eve::is_not_less_equal(T(1), T(1)), eve::False<T>() );
+  TTS_EQUAL(eve::is_not_less_equal(T(1), T(1)), eve::False(eve::as<T>()) );
   TTS_EQUAL(eve::is_not_less_equal(T(3), T(1)), eve::True<T>()  );
-  TTS_EQUAL(eve::is_not_less_equal(T(1), T(3)), eve::False<T>() );
+  TTS_EQUAL(eve::is_not_less_equal(T(1), T(3)), eve::False(eve::as<T>()) );
 }

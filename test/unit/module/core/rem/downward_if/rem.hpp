@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check conditional saturated(eve::rem) behavior", EVE_TYPE)
   T tv(eve::Valmax<T>());
   T fv(3);
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   TTS_EQUAL(eve::downward_(eve::rem[ 1 ])(tv, fv)    , eve::downward_(eve::rem)(tv,fv));
   TTS_EQUAL(eve::downward_(eve::rem[ 1.0 ])(tv, fv)  , eve::downward_(eve::rem)(tv,fv));

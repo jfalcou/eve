@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::arg) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_EQUAL( (eve::arg(eve::Inf<T>())) , T( 0 )         );
+    TTS_EQUAL( (eve::arg(eve::inf(eve::as<T>()))) , T( 0 )         );
     TTS_EQUAL( (eve::arg(eve::Minf<T>())), (eve::Pi<T>()) );
   }
 

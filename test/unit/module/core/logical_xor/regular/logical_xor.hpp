@@ -36,32 +36,32 @@ TTS_CASE_TPL("Check eve::logical_xor return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::logical_xor behavior on scalars", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::logical_xor(T(0), T(0)), eve::False<T>() );
+  TTS_EQUAL(eve::logical_xor(T(0), T(0)), eve::False(eve::as<T>()) );
   TTS_EQUAL(eve::logical_xor(T(0), T(1)), eve::True<T>()  );
-  TTS_EQUAL(eve::logical_xor(T(2), T(1)), eve::False<T>() );
+  TTS_EQUAL(eve::logical_xor(T(2), T(1)), eve::False(eve::as<T>()) );
   TTS_EQUAL(eve::logical_xor(T(1), T(0)), eve::True<T>()  );
 
-  TTS_EQUAL(eve::logical_xor(v_t(0), T(0)), eve::False<T>());
+  TTS_EQUAL(eve::logical_xor(v_t(0), T(0)), eve::False(eve::as<T>()));
   TTS_EQUAL(eve::logical_xor(v_t(0), T(1)), eve::True<T>() );
-  TTS_EQUAL(eve::logical_xor(v_t(2), T(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_xor(v_t(2), T(1)), eve::False(eve::as<T>()));
   TTS_EQUAL(eve::logical_xor(v_t(1), T(0)), eve::True<T>() );
 
-  TTS_EQUAL(eve::logical_xor(T(0), v_t(0)), eve::False<T>());
+  TTS_EQUAL(eve::logical_xor(T(0), v_t(0)), eve::False(eve::as<T>()));
   TTS_EQUAL(eve::logical_xor(T(0), v_t(1)), eve::True<T>() );
-  TTS_EQUAL(eve::logical_xor(T(2), v_t(1)), eve::False<T>());
+  TTS_EQUAL(eve::logical_xor(T(2), v_t(1)), eve::False(eve::as<T>()));
   TTS_EQUAL(eve::logical_xor(T(1), v_t(0)), eve::True<T>() );
 
   if constexpr(eve::floating_value<T>)
   {
     using i_t = eve::detail::as_integer_t<T>;
-    TTS_EQUAL(eve::logical_xor(i_t(0), T(0)), eve::False<i_t>() );
+    TTS_EQUAL(eve::logical_xor(i_t(0), T(0)), eve::False(eve::as<i_t>()) );
     TTS_EQUAL(eve::logical_xor(i_t(0), T(1)), eve::True<i_t>()  );
-    TTS_EQUAL(eve::logical_xor(i_t(2), T(1)), eve::False<i_t>() );
+    TTS_EQUAL(eve::logical_xor(i_t(2), T(1)), eve::False(eve::as<i_t>()) );
     TTS_EQUAL(eve::logical_xor(i_t(1), T(0)), eve::True<i_t>()  );
 
-    TTS_EQUAL(eve::logical_xor(T(0), i_t(0)), eve::False<T>() );
+    TTS_EQUAL(eve::logical_xor(T(0), i_t(0)), eve::False(eve::as<T>()) );
     TTS_EQUAL(eve::logical_xor(T(0), i_t(1)), eve::True<T>()  );
-    TTS_EQUAL(eve::logical_xor(T(2), i_t(1)), eve::False<T>() );
+    TTS_EQUAL(eve::logical_xor(T(2), i_t(1)), eve::False(eve::as<T>()) );
     TTS_EQUAL(eve::logical_xor(T(1), i_t(0)), eve::True<T>()  );
   }
 }
@@ -69,18 +69,18 @@ TTS_CASE_TPL("Check eve::logical_xor behavior on scalars", EVE_TYPE)
 TTS_CASE_TPL("Check eve::logical_xor behavior on logicals", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::logical_xor(eve::False<T>() , eve::False<T>()) , eve::False<T>() );
-  TTS_EQUAL(eve::logical_xor(eve::False<T>() , eve::True<T>() ) , eve::True<T>()  );
-  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::True<T>() ) , eve::False<T>() );
-  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::False<T>()) , eve::True<T>()  );
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<T>()) , eve::False(eve::as<T>())) , eve::False(eve::as<T>()) );
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<T>()) , eve::True<T>() ) , eve::True<T>()  );
+  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::True<T>() ) , eve::False(eve::as<T>()) );
+  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::False(eve::as<T>())) , eve::True<T>()  );
 
-  TTS_EQUAL(eve::logical_xor(eve::False<v_t>(), eve::False<T>()), eve::False<T>());
-  TTS_EQUAL(eve::logical_xor(eve::False<v_t>(), eve::True<T>() ), eve::True<T>() );
-  TTS_EQUAL(eve::logical_xor(eve::True<v_t>() , eve::True<T>() ), eve::False<T>());
-  TTS_EQUAL(eve::logical_xor(eve::True<v_t>() , eve::False<T>()), eve::True<T>() );
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<v_t>()), eve::False(eve::as<T>())), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<v_t>()), eve::True<T>() ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_xor(eve::True<v_t>() , eve::True<T>() ), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_xor(eve::True<v_t>() , eve::False(eve::as<T>())), eve::True<T>() );
 
-  TTS_EQUAL(eve::logical_xor(eve::False<T>() , eve::False<v_t>() ), eve::False<T>());
-  TTS_EQUAL(eve::logical_xor(eve::False<T>() , eve::True<v_t>()  ), eve::True<T>() );
-  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::True<v_t>()  ), eve::False<T>());
-  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::False<v_t>() ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<T>()) , eve::False(eve::as<v_t>()) ), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_xor(eve::False(eve::as<T>()) , eve::True<v_t>()  ), eve::True<T>() );
+  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::True<v_t>()  ), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_xor(eve::True<T>()  , eve::False(eve::as<v_t>()) ), eve::True<T>() );
 }

@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check conditional eve::minus behavior", EVE_TYPE)
 {
   T tv(2);
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   TTS_EQUAL(eve::minus[ 1     ](tv) , T(-tv) );
   TTS_EQUAL(eve::minus[ 1.0   ](tv) , T(-tv) );

@@ -22,8 +22,8 @@ TTS_CASE_TPL("Check eve::is_denormal return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_denormal behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_denormal(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_denormal(T(2)), eve::False<T>());
+  TTS_EQUAL(eve::is_denormal(T(0)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_denormal(T(2)), eve::False(eve::as<T>()));
 
   if constexpr(eve::platform::supports_denormals && eve::floating_value<T>)
   {
@@ -31,6 +31,6 @@ TTS_CASE_TPL("Check eve::is_denormal behavior", EVE_TYPE)
   }
   else
   {
-    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<T>() / 2), eve::False<T>());
+    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<T>() / 2), eve::False(eve::as<T>()));
   }
 }

@@ -71,9 +71,9 @@ namespace eve::detail
         y = if_else(test, y, y * v); /* Avoid overflow in pow() */
         y *= Sqrt_2pi * w;
 #ifndef BOOST_SIMD_NO_INFINITIES
-        y = if_else(is_equal(a0, Inf<T>()), a0, y);
+        y = if_else(is_equal(a0, inf(eve::as<T>())), a0, y);
 #endif
-        return if_else(a0 > Stirlinglargelim, Inf<T>(), y);
+        return if_else(a0 > Stirlinglargelim, inf(eve::as<T>()), y);
       }
       else if constexpr( scalar_value<T> )
       {
@@ -84,12 +84,12 @@ namespace eve::detail
           return a0;
 #endif
         if( a0 > Stirlinglargelim )
-          return Inf<T>();
+          return inf(eve::as<T>());
         T w = rec(a0);
         w   = fma(w, stirling1(w), One<T>());
         T y = exp(-a0);
         if( is_eqz(y) )
-          return Inf<T>();
+          return inf(eve::as<T>());
         T z = a0 - half(eve::as<T>());
         if( a0 >= Stirlingsplitlim )
         { /* Avoid overflow in pow() */

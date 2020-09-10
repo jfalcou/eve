@@ -55,7 +55,7 @@ namespace eve::detail
         if( is_eqz(xx) )
           return xx;
         if( xgemaxlog )
-          return Inf<T>();
+          return inf(eve::as<T>());
         if( xlelogeps )
           return Mone<T>();
       }
@@ -100,7 +100,7 @@ namespace eve::detail
       }
       if constexpr( simd_value<T> )
       {
-        k = if_else(xgemaxlog, Inf<T>(), k);
+        k = if_else(xgemaxlog, inf(eve::as<T>()), k);
         k = if_else(is_eqz(xx), xx, k);
         k = if_else(xlelogeps, eve::mone_, k);
       }

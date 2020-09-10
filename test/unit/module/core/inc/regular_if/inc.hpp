@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check conditional eve::inc behavior", EVE_TYPE)
 {
   T tv(2);
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::inc[ 1 ](tv)     , eve::inc(tv));

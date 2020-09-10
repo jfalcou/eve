@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::medium_(eve::secpi) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::medium_(eve::secpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::secpi)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::secpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::medium_(eve::secpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 

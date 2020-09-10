@@ -67,5 +67,5 @@ TTS_CASE_TPL("Check eve::none behavior on arithmetic", EVE_TYPE)
 TTS_CASE_TPL("Check eve::none behavior on logical", EVE_TYPE)
 {
   TTS_EXPECT_NOT(eve::none(eve::True<T>()));
-  TTS_EXPECT    (eve::none(eve::False<T>()));
+  TTS_EXPECT    (eve::none(eve::False(eve::as<T>())));
 }

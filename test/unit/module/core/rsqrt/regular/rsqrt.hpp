@@ -30,6 +30,6 @@ TTS_CASE_TPL("Check eve::rsqrt behavior", EVE_TYPE)
   if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {
     TTS_IEEE_EQUAL(eve::rsqrt(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()));
-    TTS_EQUAL(eve::rsqrt((T(0)))             , eve::Inf<T>());
+    TTS_EQUAL(eve::rsqrt((T(0)))             , eve::inf(eve::as<T>()));
   }
 }

@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::restricted_(eve::cos) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::cos)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cos)(eve::Inf<T>()) , (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cos)(eve::inf(eve::as<T>())) , (eve::nan(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::restricted_(eve::cos)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
   }
 

@@ -27,8 +27,8 @@ TTS_CASE_TPL("Check eve::eve::cosh behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::cosh(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::cosh(eve::Inf<T>()) , (eve::Inf<T>()) );
-    TTS_IEEE_EQUAL(eve::cosh(eve::Minf<T>()), (eve::Inf<T>()) );
+    TTS_IEEE_EQUAL(eve::cosh(eve::inf(eve::as<T>())) , (eve::inf(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::cosh(eve::Minf<T>()), (eve::inf(eve::as<T>())) );
   }
 
   TTS_ULP_EQUAL(eve::cosh(T(1)), T(std::cosh(1.0)), 0.5);

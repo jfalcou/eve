@@ -30,13 +30,13 @@ TTS_CASE_TPL("Check eve::is_lessgreater behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_lessgreater(T(1)         , eve::nan(eve::as<T>())), eve::False<T>());
-    TTS_EQUAL(eve::is_lessgreater(eve::nan(eve::as<T>()), T(1)         ), eve::False<T>());
+    TTS_EQUAL(eve::is_lessgreater(T(1)         , eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
+    TTS_EQUAL(eve::is_lessgreater(eve::nan(eve::as<T>()), T(1)         ), eve::False(eve::as<T>()));
   }
 
-  TTS_EQUAL(eve::is_lessgreater(  T(1),   T(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_lessgreater(  T(1), v_t(1)), eve::False<T>());
-  TTS_EQUAL(eve::is_lessgreater(v_t(1),   T(1)), eve::False<T>());
+  TTS_EQUAL(eve::is_lessgreater(  T(1),   T(1)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_lessgreater(  T(1), v_t(1)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_lessgreater(v_t(1),   T(1)), eve::False(eve::as<T>()));
 
   TTS_EQUAL(eve::is_lessgreater(  T(3),   T(1)), eve::True<T>());
   TTS_EQUAL(eve::is_lessgreater(  T(3), v_t(1)), eve::True<T>());

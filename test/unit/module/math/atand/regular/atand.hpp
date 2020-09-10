@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::eve::atand behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atand(eve::Inf<T>()) , (T( 90.)), 0.5);
+    TTS_ULP_EQUAL(eve::atand(eve::inf(eve::as<T>())) , (T( 90.)), 0.5);
     TTS_ULP_EQUAL(eve::atand(eve::Minf<T>()), (T(-90.)), 0.5);
   }
 

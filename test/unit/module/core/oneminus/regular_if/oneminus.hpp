@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)
 {
   T tv(2);
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   TTS_EQUAL(eve::oneminus[ 1 ](tv)   , (T(-1)));
   TTS_EQUAL(eve::oneminus[ 1.0 ](tv) , (T(-1)));

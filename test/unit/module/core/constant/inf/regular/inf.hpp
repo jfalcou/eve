@@ -16,11 +16,11 @@
 
 TTS_CASE_TPL("Check inf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::Inf<T>(), T);
+  TTS_EXPR_IS(eve::inf(eve::as<T>()), T);
 }
 
 TTS_CASE_TPL("Check inf behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::Inf<T>(), T(std::numeric_limits<v_t>::infinity()) );
+  TTS_EQUAL(eve::inf(eve::as<T>()), T(std::numeric_limits<v_t>::infinity()) );
 }

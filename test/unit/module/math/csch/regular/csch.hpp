@@ -34,16 +34,16 @@ TTS_CASE_TPL("Check eve::csch behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::csch(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::csch(eve::Inf<T>()) , T(0) );
+    TTS_IEEE_EQUAL(eve::csch(eve::inf(eve::as<T>())) , T(0) );
     TTS_IEEE_EQUAL(eve::csch(eve::Minf<T>()), T(0) );
 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::csch(eve::Inf<T>()))) );
+    TTS_EXPECT(eve::all(eve::is_positive(eve::csch(eve::inf(eve::as<T>())))) );
     TTS_EXPECT(eve::all(eve::is_negative(eve::csch(eve::Minf<T>()))));
   }
 
   TTS_ULP_EQUAL(eve::csch(T(1)) , T(eve::rec(std::sinh(v_t(1))) ), 0.5);
   TTS_ULP_EQUAL(eve::csch(T(-1)), T(eve::rec(std::sinh(v_t(-1)))), 0.5);
 
-  TTS_IEEE_EQUAL(eve::csch(T( 0 )), eve::Inf<T>()  );
+  TTS_IEEE_EQUAL(eve::csch(T( 0 )), eve::inf(eve::as<T>())  );
   TTS_IEEE_EQUAL(eve::csch(T(-0.)), eve::Minf<T>() );
 }

@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::if_else behavior with arithmetic alternatives", EVE_TYP
   T tv{2};
   T fv{3};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   TTS_EQUAL(eve::if_else(1    , tv, fv), tv);
   TTS_EQUAL(eve::if_else(1.0  , tv, fv), tv);
@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check eve::if_else behavior with arithmetic alternatives", EVE_TYP
 TTS_CASE_TPL("Check eve::if_else behavior with logical alternatives", EVE_TYPE)
 {
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
  T fv{3};
 
   TTS_EQUAL(eve::if_else(1    , t, f), t);

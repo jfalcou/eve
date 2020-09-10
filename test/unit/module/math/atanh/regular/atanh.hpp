@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check eve::atanh behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atanh( T( 1.0)), eve::Inf<T>()  , 0);
+    TTS_ULP_EQUAL(eve::atanh( T( 1.0)), eve::inf(eve::as<T>())  , 0);
     TTS_ULP_EQUAL(eve::atanh( T(-1.0)), eve::Minf<T>() , 0);
   }
 

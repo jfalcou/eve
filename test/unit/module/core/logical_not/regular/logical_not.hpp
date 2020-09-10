@@ -23,15 +23,15 @@ TTS_CASE_TPL("Check logical_not return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::logical_not behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::logical_not(T(1))             , eve::False<T>());
+  TTS_EQUAL(eve::logical_not(T(1))             , eve::False(eve::as<T>()));
   TTS_EQUAL(eve::logical_not(T(0))             , eve::True<T>() );
-  TTS_EQUAL(eve::logical_not(eve::allbits(eve::as<T>())), eve::False<T>());
-  TTS_EQUAL(eve::logical_not(eve::True<T>())   , eve::False<T>());
-  TTS_EQUAL(eve::logical_not(eve::False<T>())  , eve::True<T>() );
+  TTS_EQUAL(eve::logical_not(eve::allbits(eve::as<T>())), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_not(eve::True<T>())   , eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::logical_not(eve::False(eve::as<T>()))  , eve::True<T>() );
 }
 
 TTS_CASE_TPL("Check eve::operator! behavior", EVE_TYPE)
 {
-  TTS_EQUAL(!eve::True<T>()  , eve::False<T>());
-  TTS_EQUAL(!eve::False<T>() , eve::True<T>());
+  TTS_EQUAL(!eve::True<T>()  , eve::False(eve::as<T>()));
+  TTS_EQUAL(!eve::False(eve::as<T>()) , eve::True<T>());
 }

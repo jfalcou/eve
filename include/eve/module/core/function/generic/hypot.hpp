@@ -105,7 +105,7 @@ namespace eve::detail
     {
       auto res = single_(hypot(double_(a), double_(b)));
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
-        return if_else(is_infinite(a) || is_infinite(b), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
     }
     else
@@ -116,7 +116,7 @@ namespace eve::detail
       auto tmp = pedantic_(ldexp)(a, -e);
       auto res =  pedantic_(ldexp)(sqrt(fma(tmp, tmp, sqr(pedantic_(ldexp)(b, -e)))), e);
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
-        return if_else(is_infinite(a) || is_infinite(b), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
     }
   }
@@ -156,7 +156,7 @@ namespace eve::detail
       auto tmpj = pedantic_(ldexp)(c, -e);
       T res =  pedantic_(ldexp)(eve::sqrt(fma(tmpr, tmpr, fma(tmpi, tmpi, sqr(tmpj)))), e);
       if constexpr(eve::platform::supports_invalids)
-        return if_else(is_infinite(a) || is_infinite(b) || is_infinite(c), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b) || is_infinite(c), inf(eve::as<T>()), res);
       else  return res;
     }
   }

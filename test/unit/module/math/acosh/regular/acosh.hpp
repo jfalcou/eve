@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::acosh behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acosh(eve::Inf<T>()) , eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::acosh(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()), 0);
   }
 
   using v_t = eve::element_type_t<T>;

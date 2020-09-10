@@ -24,12 +24,12 @@ TTS_CASE_TPL("Check eve::is_not_finite return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_not_finite behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_not_finite(T(0)), eve::False<T>() );
-  TTS_EQUAL(eve::is_not_finite(T(2)), eve::False<T>() );
+  TTS_EQUAL(eve::is_not_finite(T(0)), eve::False(eve::as<T>()) );
+  TTS_EQUAL(eve::is_not_finite(T(2)), eve::False(eve::as<T>()) );
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_infinites)
   {
-    TTS_EQUAL(eve::is_not_finite(eve::Inf<T>())  , eve::True<T>());
+    TTS_EQUAL(eve::is_not_finite(eve::inf(eve::as<T>()))  , eve::True<T>());
     TTS_EQUAL(eve::is_not_finite(eve::Minf<T>()) , eve::True<T>());
   }
 

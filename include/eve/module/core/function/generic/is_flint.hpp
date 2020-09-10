@@ -37,7 +37,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(integral_value<T>) return False<T>();
+      if constexpr(integral_value<T>) return False(eve::as<T>());
       if constexpr(floating_value<T>) return is_eqz(frac(a)) && (a <= eve::Maxflint<T>());
     }
     else                              return apply_over(pedantic_(is_flint), a);

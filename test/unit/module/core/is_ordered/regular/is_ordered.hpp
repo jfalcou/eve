@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check eve::is_ordered behavior on arithmetic", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_ordered(eve::nan(eve::as<T>()), T(3)), eve::False<T>());
-    TTS_EQUAL(eve::is_ordered(T(3), eve::nan(eve::as<T>())), eve::False<T>());
-    TTS_EQUAL(eve::is_ordered(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_ordered(eve::nan(eve::as<T>()), T(3)), eve::False(eve::as<T>()));
+    TTS_EQUAL(eve::is_ordered(T(3), eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
+    TTS_EQUAL(eve::is_ordered(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
   }
 }

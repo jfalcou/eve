@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check eve::exp2 behavior", EVE_TYPE)
     if constexpr( eve::platform::supports_invalids )
     {
       TTS_IEEE_EQUAL(eve::exp2(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-      TTS_IEEE_EQUAL(eve::exp2(eve::Inf<T>()) , eve::Inf<T>() );
+      TTS_IEEE_EQUAL(eve::exp2(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
       TTS_IEEE_EQUAL(eve::exp2(eve::Minf<T>()), T( 0 ) );
     }
 
@@ -63,8 +63,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(126)), exp2(float(126)));
       if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
       {
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::Inf<float>());
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::Inf<float>());
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::inf(eve::as<float>()));
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::inf(eve::as<float>()));
       }
 
 
@@ -72,8 +72,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(127)), exp2(double(127)));
       if constexpr(sizeof(v_t) > 1)
       {
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::Inf<double>());
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::Inf<double>());
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::inf(eve::as<double>()));
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::inf(eve::as<double>()));
       }
     }
     else
@@ -86,8 +86,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(126)), eve::exp2(f_t(126)));
       if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
       {
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::Inf<f_t>());
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::Inf<f_t>());
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::Inf(eve::as<f_t>()));
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::Inf<eve::as<f_t>()));
       }
 
 
@@ -95,8 +95,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(127)),eve::exp2(d_t(127)));
       if constexpr(sizeof(v_t) > 1)
       {
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::Inf<d_t>());
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::Inf<d_t>());
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::Inf<eve::as<d_t>()));
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::Inf<eve::as<d_t>()));
       }
     }
   }

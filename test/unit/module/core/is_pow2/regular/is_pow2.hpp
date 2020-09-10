@@ -25,12 +25,12 @@ TTS_CASE_TPL("Check eve::is_pow2 behavior", EVE_TYPE)
 {
   if constexpr(std::is_signed_v<T>)
   {
-    TTS_EQUAL(eve::is_pow2(T(-1)), eve::False<T>());
+    TTS_EQUAL(eve::is_pow2(T(-1)), eve::False(eve::as<T>()));
   }
 
-  TTS_EQUAL(eve::is_pow2(T(0))                , eve::False<T>() );
+  TTS_EQUAL(eve::is_pow2(T(0))                , eve::False(eve::as<T>()) );
   TTS_EQUAL(eve::is_pow2(T(1))                , eve::True<T>()  );
-  TTS_EQUAL(eve::is_pow2(T(3))                , eve::False<T>() );
+  TTS_EQUAL(eve::is_pow2(T(3))                , eve::False(eve::as<T>()) );
   TTS_EQUAL(eve::is_pow2(T(4))                , eve::True<T>()  );
   TTS_EQUAL(eve::is_pow2(eve::Valmax<T>()/2+1), eve::True<T>()  );
 }

@@ -28,11 +28,11 @@ TTS_CASE_TPL("Check eve::medium_(eve::cscpi) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::Inf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(T(0))  , eve::Inf<T>() );
+  TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(T(0))  , eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(T(-0.)), eve::Minf<T>());
 
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(100000000.0) ) , eve::nan(eve::as<T>())   , 0.5);

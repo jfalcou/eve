@@ -39,23 +39,23 @@ TTS_CASE_TPL("Check pedantic_(eve::atan2) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Inf<T>()         , T(1.)   ), eve::Pio_2<T>() , 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Inf<T>()         , T(-1.)  ), eve::Pio_2<T>() , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::inf(eve::as<T>())         , T(1.)   ), eve::Pio_2<T>() , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::inf(eve::as<T>())         , T(-1.)  ), eve::Pio_2<T>() , 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>()        , T(1.)   ), -eve::Pio_2<T>(), 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>()        , T(-1.)  ), -eve::Pio_2<T>(), 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2)((T( 1.)) , eve::Minf<T>()       ), eve::Pi<T>()    , 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2)((T(-1.)) , eve::Minf<T>()       ), -eve::Pi<T>()   , 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T( 1.)) , eve::Inf<T>()        ), T(0.)         , 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T(-1.)) , eve::Inf<T>()        ), T(-0.)          , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T( 1.)) , eve::inf(eve::as<T>())        ), T(0.)         , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)((T(-1.)) , eve::inf(eve::as<T>())        ), T(-0.)          , 0.5);
 
-    TTS_EXPECT( all(is_negative(pedantic_(eve::atan2)((T(-1.)), eve::Inf<T>()))) );
-    TTS_EXPECT( all(is_positive(pedantic_(eve::atan2)((T(1.)) , eve::Inf<T>()))) );
+    TTS_EXPECT( all(is_negative(pedantic_(eve::atan2)((T(-1.)), eve::inf(eve::as<T>())))) );
+    TTS_EXPECT( all(is_positive(pedantic_(eve::atan2)((T(1.)) , eve::inf(eve::as<T>())))) );
 
     TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>(), eve::Minf<T>()), -3*eve::Pio_4<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Inf<T>() , eve::Minf<T>()),  3*eve::Pio_4<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>(), eve::Inf<T>() ), -eve::Pio_4<T>()  , 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Inf<T>() , eve::Inf<T>() ),  eve::Pio_4<T>()  , 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Inf<T>() , T(1.)),  eve::Pio_2<T>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::inf(eve::as<T>()) , eve::Minf<T>()),  3*eve::Pio_4<T>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>(), eve::inf(eve::as<T>()) ), -eve::Pio_4<T>()  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::inf(eve::as<T>()) , eve::inf(eve::as<T>()) ),  eve::Pio_4<T>()  , 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::inf(eve::as<T>()) , T(1.)),  eve::Pio_2<T>(), 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2)(eve::Minf<T>(), T(1.)), -eve::Pio_2<T>(), 0.5);
   }
 

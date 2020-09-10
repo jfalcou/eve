@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::is_ltz behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_ltz(eve::nan(eve::as<T>())), eve::False<T>());
+    TTS_EQUAL(eve::is_ltz(eve::nan(eve::as<T>())), eve::False(eve::as<T>()));
   }
 
-  TTS_EQUAL(eve::is_ltz(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_ltz(T(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_ltz(T(0)), eve::False(eve::as<T>()));
+  TTS_EQUAL(eve::is_ltz(T(3)), eve::False(eve::as<T>()));
 }

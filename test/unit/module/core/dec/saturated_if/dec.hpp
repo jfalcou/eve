@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check saturated_(eve::dec[condition] behavior", EVE_TYPE)
 
   T tv{2};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(saturated_(eve::dec[ 1 ])(tv)     , tv - 1);

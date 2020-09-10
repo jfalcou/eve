@@ -67,5 +67,5 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on logical", EVE_TYPE)
   auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
 
   TTS_EQUAL(eve::nbtrue(eve::True<T>()) , cardinal);
-  TTS_EQUAL(eve::nbtrue(eve::False<T>()), 0u      );
+  TTS_EQUAL(eve::nbtrue(eve::False(eve::as<T>())), 0u      );
 }

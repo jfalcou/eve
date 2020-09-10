@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::cbrt[condition] behavior", EVE_TYPE)
 {
   T tv{2};
   auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto f = eve::False(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::cbrt[ 1 ](tv)     , eve::cbrt(tv));
