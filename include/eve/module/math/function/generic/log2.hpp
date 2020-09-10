@@ -89,7 +89,7 @@ namespace eve::detail
         T hfsq = half(eve::as<T>()) * sqr(f);
 
         T dk = single_(k);
-        T r  = fma(fms(s, hfsq + R, hfsq) + f, Invlog_2<T>(), dk);
+        T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(eve::as<T>()), dk);
         // The original algorithm does some extra calculation in place of the return line
         // to get extra precision but this is uneeded for float as the exhaustive test shows
         // a 0.5 ulp maximal error on the full range.
@@ -275,7 +275,7 @@ namespace eve::detail
       T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
-      return -(hfsq - (s * (hfsq + R)) - f) * Invlog_2<T>() + k;
+      return -(hfsq - (s * (hfsq + R)) - f) * invlog_2(eve::as<T>()) + k;
       // The original algorithm does some extra calculation in place of the return line
       // to get extra precision but this is uneeded for float as the exhaustive test shows
       // a 0.5 ulp maximal error on the full range.
