@@ -19,16 +19,13 @@ namespace eve::detail
 {
   //------------------------------------------------------------------------------------------------
   // Unary swizzle - arithmetic
-  template<typename T, typename N, typename P, arm_abi ABI, int Size>
-  EVE_FORCEINLINE auto swizzle( neon128_ const&
-                              , wide<T,N,ABI> const& v, swizzler_t<P,Size> p
-                              ) noexcept
+  template<typename T, typename N, arm_abi ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle( neon128_ const&, wide<T,N,ABI> const& v, Pattern p ) noexcept
   {
-    swizzle_matcher < detail::zeroing   , detail::identity
-                    , detail::slide_left, detail::slide_right
-                    , detail::broadcast
-                    , detail::reverse
-                    , detail::any_pattern
+    swizzle_matcher < zero_match, identity_match
+                    , slide_left, slide_right
+                    , reverse_match
+                    , any_match
                     > that;
 
     return that(p, v);

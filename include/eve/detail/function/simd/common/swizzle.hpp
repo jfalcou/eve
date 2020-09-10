@@ -22,7 +22,7 @@ namespace eve::detail
   //================================================================================================
   // Unary swizzle - logical
   //================================================================================================
-  template<typename T, typename N, typename ABI, typename Pattern>
+  template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto swizzle( cpu_ const&
                               , logical<wide<T,N,ABI>> const& v, Pattern p
                               ) noexcept
@@ -34,14 +34,10 @@ namespace eve::detail
   //================================================================================================
   // Unary swizzle - arithmetic
   //================================================================================================
-  template<typename T, typename N, typename ABI, typename Pattern, int Size>
-  EVE_FORCEINLINE auto swizzle( cpu_ const&
-                              , wide<T,N,ABI> const& r, swizzler_t<Pattern,Size> p
-                              ) noexcept
+  template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle( cpu_ const&, wide<T,N,ABI> const& r, Pattern p ) noexcept
   {
-    swizzle_matcher < detail::zeroing   , detail::identity
-                    , detail::broadcast , detail::any_pattern
-                    > that;
+    swizzle_matcher<zero_match,identity_match,broadcast_match,any_match> that;
     return that(p, r);
   }
 }

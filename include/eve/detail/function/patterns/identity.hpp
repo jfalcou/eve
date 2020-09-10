@@ -12,51 +12,44 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/swizzle.hpp>
-#include <eve/traits/as_wide.hpp>
-#include <eve/traits/element_type.hpp>
+#include <eve/patterns.hpp>
 
 #include <cstddef>
 
 namespace eve::detail
 {
   // Match any pattern of the form [0 1 2 ... N-1]
-  struct identity
+  struct identity_match
   {
-    template<typename Pattern, typename Wide>
-    static constexpr auto check(Pattern const& p, as_<Wide> const&)  noexcept
+    template<typename Wide, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
     {
-      constexpr auto c = cardinal_v<Wide>;
-      if(c > expected_cardinal_t<element_type_t<Wide>>::value) return false;
-
-      for(int i=0;i<c;++i)
-      {
-        if(p(i,c) != i && p(i,c) != -1)
-          return false;
-      }
-
-      return true;
+      return  []<std::ptrdiff_t... V>( std::integer_sequence<std::ptrdiff_t,V...>)
+              {
+                return ((I == V) && ... );
+              }( std::make_integer_sequence<std::ptrdiff_t,sizeof...(I)>{} );
     }
   };
 
-  template<typename Wide, typename Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), identity const&
-                                  , Pattern const& p, Wide const& v
+  template<typename Target, typename Wide, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), identity_match const&
+                                  , as_<Target> , pattern_<I...> const& p
+                                  , Wide const& v
                                   )
   {
-    constexpr auto sz = Pattern::size(cardinal_v<Wide>);
-    using that_t      = as_wide_t<Wide,fixed<sz>>;
+    constexpr auto sz = sizeof...(I);
 
     if constexpr(sz >= cardinal_v<Wide>)
     {
-      return process_zeros(that_t(v.storage()),p);
+      return process_zeros(Target(v.storage()),p);
     }
     else if constexpr(cardinal_v<Wide>/sz == 2)
     {
-      return process_zeros(that_t(v.slice(lower_).storage()),p);
+      return process_zeros(Target(v.slice(lower_).storage()),p);
     }
     else
     {
-      return do_swizzle(EVE_RETARGET(cpu_), identity{}, p, v.slice(lower_));
+      return do_swizzle(EVE_RETARGET(cpu_), identity_match{}, as_<Target>{}, p, v.slice(lower_));
     }
   }
 }

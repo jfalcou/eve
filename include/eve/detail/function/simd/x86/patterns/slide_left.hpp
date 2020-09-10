@@ -17,17 +17,13 @@
 
 namespace eve::detail
 {
-  template<typename Wide, typename Pattern>
+  template<typename Wide, typename Target, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(sse2_), slide_left const&
-                                  , Pattern const&, Wide const& v
+                                  , as_<Target> , Pattern const&, Wide const& v
                                   )
   {
-    constexpr auto c  = cardinal_v<Wide>;
-    constexpr auto sz = Pattern::size(c);
-    constexpr auto s  = sizeof(element_type_t<Wide>) * (sz-1-slide_left::find_slide(Pattern(),sz));
-    using st_t        = typename Wide::storage_type;
-    using that_t      = as_wide_t<Wide,fixed<sz>>;
-
-    return that_t( (st_t)_mm_srli_si128((__m128i)(v.storage()),s) );
+    constexpr auto sz = Pattern::size(cardinal_v<Wide>);
+    constexpr auto s  = sizeof(element_type_t<Wide>) * (sz-1-slide_left::find_slide(Pattern()));
+    return Target( (typename Wide::storage_type)_mm_srli_si128((__m128i)(v.storage()),s) );
   }
 }

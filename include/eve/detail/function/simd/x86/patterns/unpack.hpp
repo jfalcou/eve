@@ -12,119 +12,200 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/swizzle.hpp>
-#include <eve/traits/as_wide.hpp>
-#include <eve/forward.hpp>
+#include <eve/traits/element_type.hpp>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
-  // Pattern based on UNPACKHI/UNPACKLO and partial zeroing
-  //------------------------------------------------------------------------------------------------
-  struct unpack_hi
+  //================================================================================================
+  // Pattern based on UNPACKHI/UNPACKLO with partial zeroing
+  //================================================================================================
+  struct unpack_match
   {
-    enum class category { none = -1, full, upper, lower };
-
-    template<typename F, int Size>
-    static constexpr auto categorize(swizzler_t<F,Size> const& p,int c)  noexcept
+    template<typename Wide, typename Pattern>
+    static constexpr auto is_low(Pattern const& p, as_<Wide> const&)  noexcept
     {
-      int p0 = p(0,4), p1 = p(1,4);
+      auto p0 = p(0,Wide::static_size);
+      auto p1 = p(1,Wide::static_size);
+      auto s = Wide::static_size/2;
 
-      if(c == 2)
-      {
-              if(p0== 2 && p1== 2) return category::full;
-        else  if(p0== 2 && p1==-1) return category::upper;
-        else  if(p0==-1 && p1== 2) return category::lower;
-        else  return category::none;
-      }
-      else
-      {
-        int p2 = p(2,4), p3 = p(3,4);
-
-              if(p0== 2 && p1== 2 && p2== 3 && p3== 3) return category::full;
-        else  if(p0== 2 && p1==-1 && p2== 3 && p3==-1) return category::upper;
-        else  if(p0==-1 && p1== 2 && p2==-1 && p3== 3) return category::lower;
-        else  return category::none;
-      }
+      return p0 == -1 ? (p1<s) : (p0<s);
     }
 
-    template<typename F, int Size, typename Wide>
-    static constexpr auto check(swizzler_t<F,Size> const& p, as_<Wide> const&)  noexcept
+    template<typename Wide, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
     {
-      return      (cardinal_v<Wide> <= 4)
-              &&  (sizeof(element_type_t<Wide>) == 4)
-              && categorize(p,cardinal_v<Wide>) != category::none;
+      constexpr pattern_<I...> p{};
+
+      /*
+        32 bits case has a more optimal shuffleps for missing cases
+        16 bits case has a more optimal shuffle16 for missing cases
+        8  bits case requires the most variants
+      */
+      // check for 32 bits unpacks
+      constexpr bool  u32 =   sizeof(element_type_t<Wide>) == 4
+                      &&  (   p.is_similar(pattern< 2, 2, 3, 3>)
+                          ||  p.is_similar(pattern< 2,-1, 3,-1>)
+                          ||  p.is_similar(pattern<-1, 2,-1, 3>)
+                          ||  p.is_similar(pattern< 1, 1, 2, 2>)
+                          ||  p.is_similar(pattern< 1,-1, 2,-1>)
+                          ||  p.is_similar(pattern<-1, 1,-1, 2>)
+                          ||  p.is_similar(pattern< 0, 0, 1, 1>)
+                          ||  p.is_similar(pattern< 0,-1, 1,-1>)
+                          ||  p.is_similar(pattern<-1, 0,-1, 1>)
+                          );
+
+      // check for 16 bits unpacks
+      constexpr bool  u16 =   sizeof(element_type_t<Wide>) == 2
+                      &&  (   p.is_similar(pattern< 4, 4, 5, 5, 6, 6, 7, 7>)
+                          ||  p.is_similar(pattern< 4,-1, 5,-1, 6,-1, 7,-1>)
+                          ||  p.is_similar(pattern<-1, 4,-1, 5,-1, 6,-1, 7>)
+                          ||  p.is_similar(pattern< 3, 3, 4, 4, 5, 5, 6, 6>)
+                          ||  p.is_similar(pattern<-1, 3,-1, 4,-1, 5,-1, 6>)
+                          ||  p.is_similar(pattern< 3,-1, 4,-1, 5,-1, 6,-1>)
+                          ||  p.is_similar(pattern< 1, 1, 2, 2, 3, 3, 4, 4>)
+                          ||  p.is_similar(pattern<-1, 1,-1, 2,-1, 3,-1, 4>)
+                          ||  p.is_similar(pattern< 1,-1, 2,-1, 3,-1, 4,-1>)
+                          ||  p.is_similar(pattern< 0, 0, 1, 1, 2, 2, 3, 3>)
+                          ||  p.is_similar(pattern< 0,-1, 1,-1, 2,-1, 3,-1>)
+                          ||  p.is_similar(pattern<-1, 0,-1, 1,-1, 2,-1, 3>)
+                          );
+
+      // check for 8 bits unpacks
+      constexpr bool  u8  =   sizeof(element_type_t<Wide>) == 1
+                      &&  (   p.is_similar(pattern< 8, 8, 9, 9,10,10,11,11,12,12,13,13,14,14,15,15>)
+                          ||  p.is_similar(pattern< 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14,-1,15,-1>)
+                          ||  p.is_similar(pattern<-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14,-1,15>)
+                          ||  p.is_similar(pattern< 7, 7, 8, 8, 9, 9,10,10,11,11,12,12,13,13,14,14>)
+                          ||  p.is_similar(pattern< 7,-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14,-1>)
+                          ||  p.is_similar(pattern<-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14>)
+                          ||  p.is_similar(pattern< 6, 6, 7, 7, 8, 8, 9, 9,10,10,11,11,12,12,13,13>)
+                          ||  p.is_similar(pattern< 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1>)
+                          ||  p.is_similar(pattern<-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13>)
+                          ||  p.is_similar(pattern< 5, 5, 6, 6, 7, 7, 8, 8, 9, 9,10,10,11,11,12,12>)
+                          ||  p.is_similar(pattern< 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1,12,-1>)
+                          ||  p.is_similar(pattern<-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1,12>)
+                          ||  p.is_similar(pattern< 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9,10,10,11,11>)
+                          ||  p.is_similar(pattern< 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11,-1>)
+                          ||  p.is_similar(pattern<-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1,11>)
+                          ||  p.is_similar(pattern< 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9,10,10>)
+                          ||  p.is_similar(pattern< 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10,-1>)
+                          ||  p.is_similar(pattern<-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1,10>)
+                          ||  p.is_similar(pattern< 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9>)
+                          ||  p.is_similar(pattern< 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9,-1>)
+                          ||  p.is_similar(pattern<-1, 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1, 9>)
+                          ||  p.is_similar(pattern< 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8>)
+                          ||  p.is_similar(pattern< 1,-1, 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8,-1>)
+                          ||  p.is_similar(pattern<-1, 1,-1, 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1, 8>)
+                          ||  p.is_similar(pattern< 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7>)
+                          ||  p.is_similar(pattern< 0,-1, 1,-1, 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7,-1>)
+                          ||  p.is_similar(pattern<-1, 0,-1, 1,-1, 2,-1, 3,-1, 4,-1, 5,-1, 6,-1, 7>)
+                          ||  p.is_similar(pattern< 9, 9,10,10,11,11,12,12>)
+                          ||  p.is_similar(pattern< 9,-1,10,-1,11,-1,12,-1>)
+                          ||  p.is_similar(pattern<-1, 9,-1,10,-1,11,-1,12>)
+                          ||  p.is_similar(pattern<10,10,11,11,12,12,13,13>)
+                          ||  p.is_similar(pattern<10,-1,11,-1,12,-1,13,-1>)
+                          ||  p.is_similar(pattern<-1,10,-1,11,-1,12,-1,13>)
+                          ||  p.is_similar(pattern<11,11,12,12,13,13,14,14>)
+                          ||  p.is_similar(pattern<11,-1,12,-1,13,-1,14,-1>)
+                          ||  p.is_similar(pattern<-1,11,-1,12,-1,13,-1,14>)
+                          ||  p.is_similar(pattern<12,12,13,13,14,14,15,15>)
+                          ||  p.is_similar(pattern<12,-1,13,-1,14,-1,15,-1>)
+                          ||  p.is_similar(pattern<-1,12,-1,13,-1,14,-1,15>)
+                          ||  p.is_similar(pattern<13,13,14,14>)
+                          ||  p.is_similar(pattern<13,-1,14,-1>)
+                          ||  p.is_similar(pattern<-1,13,-1,14>)
+                          ||  p.is_similar(pattern<14,14,15,15>)
+                          ||  p.is_similar(pattern<14,-1,15,-1>)
+                          ||  p.is_similar(pattern<-1,14,-1,15>)
+                          ||  p.is_similar(pattern<15,15>)
+                          ||  p.is_similar(pattern<15,-1>)
+                          ||  p.is_similar(pattern<-1,15>)
+                          );
+
+      return u32 || u16 || u8;
     }
   };
 
-  struct unpack_lo
+  template<typename Wide, typename Target, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(sse2_), unpack_match const&
+                                  , as_<Target> , Pattern const&, Wide const& r
+                                  )
   {
-    enum class category { none = -1, full, upper, lower };
+    using e_t = element_type_t<Wide>;
 
-    template<typename F, int Size>
-    static constexpr auto categorize(swizzler_t<F,Size> const& p, int c)  noexcept
+    // Type-agnostic bit-shifting
+    [[maybe_unused]] constexpr auto shifter = []<typename N>(auto v, N const&)
     {
-      int p0 = p(0,4), p1 = p(1,4);
-
-      if(c == 2)
+      if constexpr( N::value != 0)
       {
-              if(p0== 0 && p1== 0) return category::full;
-        else  if(p0== 0 && p1==-1) return category::upper;
-        else  if(p0==-1 && p1== 0) return category::lower;
-        else  return category::none;
+        auto bits         = (__m128i)(v.storage());
+        auto shifted_bits = _mm_bsrli_si128(bits, N::value);
+        Wide that = (typename Wide::storage_type)(shifted_bits);
+        return that;
       }
       else
       {
-        int p2 = p(2,4), p3 = p(3,4);
-
-              if(p0== 0 && p1== 0 && p2== 1 && p3== 1) return category::full;
-        else  if(p0== 0 && p1==-1 && p2== 1 && p3==-1) return category::upper;
-        else  if(p0==-1 && p1== 0 && p2==-1 && p3== 1) return category::lower;
-        else  return category::none;
+        return v;
       }
-    }
-
-    template<typename F, int Size, typename Wide>
-    static constexpr auto check(swizzler_t<F,Size> const& p, as_<Wide> const&)  noexcept
-    {
-      return      (cardinal_v<Wide> <= 4)
-              &&  (sizeof(element_type_t<Wide>) == 4)
-              && categorize(p,cardinal_v<Wide>) != category::none;
-    }
-  };
-
-  template<typename Wide, typename Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(sse2_), unpack_hi const&
-                                  , Pattern const&, Wide const& v
-                                  )
-  {
-    using that_t  = as_wide_t<Wide,fixed<Pattern::size(cardinal_v<Wide>)>>;
-
-    auto perm = [&]<typename W>(W r)
-    {
-      constexpr auto cc = unpack_hi::categorize(Pattern(),Pattern::size(cardinal_v<Wide>));
-      if constexpr(cc == unpack_hi::category::full)   return W(_mm_unpackhi_ps(r,r));
-      if constexpr(cc == unpack_hi::category::upper)  return W(_mm_unpackhi_ps(r,_mm_setzero_ps()));
-      if constexpr(cc == unpack_hi::category::lower)  return W(_mm_unpackhi_ps(_mm_setzero_ps(),r));
     };
 
-    return bit_cast( perm( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )), as_<that_t>() );
-  }
-
-  template<typename Wide, typename Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(sse2_), unpack_lo const&
-                                  , Pattern const&, Wide const& v
-                                  )
-  {
-    using that_t  = as_wide_t<Wide,fixed<Pattern::size(cardinal_v<Wide>)>>;
-
-    auto perm = [&]<typename W>(W r)
+    // Type-agnostic unpacklo
+    [[maybe_unused]]  constexpr auto unpack_lo = [](auto v, auto w) -> Target
     {
-      constexpr auto cc = unpack_lo::categorize(Pattern(),Pattern::size(cardinal_v<Wide>));
-      if constexpr(cc == unpack_lo::category::full)   return W(_mm_unpacklo_ps(r,r));
-      if constexpr(cc == unpack_lo::category::upper)  return W(_mm_unpacklo_ps(r,_mm_setzero_ps()));
-      if constexpr(cc == unpack_lo::category::lower)  return W(_mm_unpacklo_ps(_mm_setzero_ps(),r));
+      if constexpr( sizeof(e_t) == 4 )
+      {
+        return bit_cast ( _mm_unpacklo_ps ( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )
+                                          , bit_cast(w, as_<wide<float,cardinal_t<Wide>>>() )
+                                          )
+                        , as_<Target>()
+                        );
+      }
+      else if constexpr( sizeof(e_t) == 2 ) return _mm_unpacklo_epi16(v,w);
+      else if constexpr( sizeof(e_t) == 1 ) return _mm_unpacklo_epi8(v,w);
     };
 
-    return bit_cast( perm( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )), as_<that_t>() );
+    // Type-agnostic unpackhi
+    [[maybe_unused]]  constexpr auto unpack_hi = [](auto v, auto w) -> Target
+    {
+      if constexpr( sizeof(e_t) == 4 )
+      {
+        return bit_cast ( _mm_unpackhi_ps ( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )
+                                          , bit_cast(w, as_<wide<float,cardinal_t<Wide>>>() )
+                                          )
+                        , as_<Target>()
+                        );
+      }
+      else if constexpr( sizeof(e_t) == 2 ) return _mm_unpackhi_epi16(v,w);
+      else if constexpr( sizeof(e_t) == 1 ) return _mm_unpackhi_epi8(v,w);
+    };
+
+    constexpr Pattern p{};
+
+    constexpr auto p0     = p(0,Wide::static_size);
+    constexpr auto p1     = p(1,Wide::static_size);
+
+    // ---- Variants of unpacklo
+    if constexpr( unpack_match::is_low(p, as_<Wide>()) )
+    {
+      constexpr auto shift  = p0 == -1 ? p1 : p0;
+
+      constexpr std::integral_constant<std::size_t, sizeof(e_t)*shift> shifting = {};
+      auto sr = shifter(r, shifting );
+
+            if constexpr( p0 == -1) return unpack_lo(Target(0),sr);
+      else  if constexpr( p1 == -1) return unpack_lo(sr,Target(0));
+      else                          return unpack_lo(sr,sr);
+    }
+    else
+    {
+      constexpr auto shift  = (p0 == -1 ? p1 : p0) - Wide::static_size/2;
+
+      constexpr std::integral_constant<std::size_t, sizeof(e_t)*shift> shifting = {};
+      auto sr = shifter(r, shifting );
+
+            if constexpr( p0 == -1) return unpack_hi(Target(0),sr);
+      else  if constexpr( p1 == -1) return unpack_hi(sr,Target(0));
+      else                          return unpack_hi(sr,sr);
+    }
   }
 }

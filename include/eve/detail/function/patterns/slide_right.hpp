@@ -10,30 +10,33 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/swizzle.hpp>
+#include <eve/patterns.hpp>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Slide data right
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   struct slide_right
   {
-    template<typename F, int Size>
-    static constexpr auto find_slide(swizzler_t<F,Size> const& p, int c)  noexcept
+    template<std::ptrdiff_t... I>
+    static constexpr auto find_slide(pattern_<I...> const& p)  noexcept
     {
-      int i = 0;
+      std::ptrdiff_t c = sizeof...(I);
+      std::ptrdiff_t i = 0;
+
       while(p(i,c)==-1 && i<c) i++;
+
       return i;
     }
 
-    template<typename F, int Size, typename Wide>
-    static constexpr auto check(swizzler_t<F,Size> const& p, as_<Wide> const&)  noexcept
+    template<std::ptrdiff_t... I, typename Wide>
+    static constexpr auto check(pattern_<I...> const& p, as_<Wide> const&)  noexcept
     {
       constexpr auto c = cardinal_v<Wide>;
 
       // Find where the -1 streak ends
-      int i = find_slide(p,c), res = i;
+      int i = find_slide(p), res = i;
 
       // Check we have partial identity afterward
       for(;i<c;++i)

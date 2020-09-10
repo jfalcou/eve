@@ -18,32 +18,21 @@
 namespace eve::detail
 {
   // Match any pattern of the form [k k ... k k]
-  struct broadcast
+  struct broadcast_match
   {
-    template<typename F, int Size, typename Wide>
-    static constexpr auto check(swizzler_t<F,Size> const& p, as_<Wide> const&)  noexcept
+    template<typename Wide, std::ptrdiff_t I0, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I0,I...> const&, as_<Wide> const&)  noexcept
     {
-      constexpr auto c = cardinal_v<Wide>;
-
-      auto ref = p(0,c);
-      for(int i=1;i<c;++i)
-      {
-        if(p(i,c) != ref)
-          return false;
-      }
-
-      return true;
+      return ((I==I0) && ...);
     }
   };
 
-  template<typename Wide, typename Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), broadcast const&
-                                  , Pattern const& p, Wide const& v
+  template<typename Target, typename Wide, std::ptrdiff_t I0, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), broadcast_match const&
+                                  , as_<Target> , pattern_<I0,I...> const&
+                                  , Wide const& v
                                   )
   {
-    constexpr auto sz = Pattern::size(cardinal_v<Wide>);
-    using that_t      = as_wide_t<Wide,fixed<sz>>;
-
-    return that_t(v[p(0,cardinal_v<Wide>)]);
+    return Target(v[I0]);
   }
 }

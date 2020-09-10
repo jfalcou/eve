@@ -17,29 +17,24 @@
 
 namespace eve::detail
 {
+  //==================================================================================================
   // Match any pattern of the form [-1 -1 ... -1 -1]
-  struct zeroing
+  //==================================================================================================
+  struct zero_match
   {
-    template<typename F, int Size, typename Wide>
-    static constexpr auto check(swizzler_t<F,Size> const& p, as_<Wide> const&)  noexcept
+    template<typename Wide, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
     {
-      constexpr auto c = cardinal_v<Wide>;
-
-      for(int i=0;i<c;++i)
-      {
-        if(p(i,c) != -1)
-          return false;
-      }
-
-      return true;
+      return ((I == -1) && ...);
     }
   };
 
-  template<typename Wide, typename Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), zeroing const&
-                                  , Pattern const&, Wide const&
+  template<typename Target, typename Wide, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(cpu_), zero_match const&
+                                  , as_<Target> , pattern_<I...> const&
+                                  , Wide const&
                                   )
   {
-    return as_wide_t<Wide,fixed<Pattern::size(cardinal_v<Wide>)>>(0);
+    return Target(0);
   }
 }

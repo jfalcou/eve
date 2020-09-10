@@ -13,26 +13,19 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/simd/x86/patterns.hpp>
 #include <eve/detail/function/patterns/matcher.hpp>
-#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
-  // Unary swizzle - arithmetic
-  template<typename T, typename N, typename P, int Size>
-  EVE_FORCEINLINE auto swizzle( sse2_ const&
-                              , wide<T,N,sse_> const& v, swizzler_t<P,Size> p
-                              ) noexcept
+  //================================================================================================
+  // Unary swizzle
+  //================================================================================================
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto swizzle( sse2_ const&, wide<T,N,x86_128_> const& v, Pattern p ) noexcept
   {
-    swizzle_matcher < detail::zeroing
-                    , detail::unpack_hi   , detail::unpack_lo
-                    , detail::identity
-                    , detail::slide_right , detail::slide_left
-                    , detail::movlh       , detail::movhl
-                    , detail::any_ssse3
-                    , detail::shuffle_16/*,shuffle_8*/
-                    , detail::any_sse2
-                    , detail::any_pattern
+    swizzle_matcher < zero_match  , unpack_match , identity_match
+                    , slide_right , slide_left   , mov_match
+                    , ssse3_match , shuffle_16   , sse2_match
+                    , any_match
                     > that;
 
     return that(p, v);
@@ -40,7 +33,7 @@ namespace eve::detail
 
 //   template<typename T, typename N, typename P, int Size>
 //   EVE_FORCEINLINE auto swizzle( avx_ const&
-//                               , wide<T,N,sse_> const& v, swizzler_t<P,Size> p
+//                               , wide<T,N,x86_128_> const& v, swizzler_t<P,Size> p
 //                               ) noexcept
 //   {
 //     constexpr auto sz = swizzler_t<P,Size>::size(N::value);
@@ -72,7 +65,7 @@ namespace eve::detail
 //     // Go back to SSSE3
 //     else
 //     {
-//       return swizzle(sse_{},v,p);
+//       return swizzle(x86_128_{},v,p);
 //     }
 //  }
 }
