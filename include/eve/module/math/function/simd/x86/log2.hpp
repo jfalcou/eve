@@ -64,7 +64,7 @@ namespace eve::detail
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
 
         auto [x, kk]     = eve::frexp(xx);
-        auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+        auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
         T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
         T s    = f / (T(2) + f);
@@ -126,7 +126,7 @@ namespace eve::detail
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         auto [x, kk]     = eve::frexp(xx);
-        auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+        auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
         T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
         T s  = f / (T(2) + f);

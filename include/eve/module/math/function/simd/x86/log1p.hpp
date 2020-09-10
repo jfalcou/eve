@@ -64,7 +64,7 @@ namespace eve::detail
       T    uf          = inc(a0);
       auto isnez       = is_nez(uf);
       auto [x, k]      = frexp(uf);
-      auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+      auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       k   = dec[x_lt_sqrthf](k);
       T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
