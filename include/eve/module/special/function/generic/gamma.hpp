@@ -94,17 +94,17 @@ namespace eve::detail
           };
         };
         if( is_eqz(a0) )
-          return copysign(Inf(eve::as(a0)), a0);
+          return copysign(inf(eve::as(a0)), a0);
         if constexpr( eve::platform::supports_nans )
         {
-          if( is_nan(a0) || (a0 == Minf(eve::as(a0))) )
+          if( is_nan(a0) || (a0 == minf(eve::as(a0))) )
             return nan(eve::as(a0));
-          if( a0 == Inf(eve::as(a0)) )
+          if( a0 == inf(eve::as(a0)) )
             return a0;
         }
         auto x = a0;
         if( inftest(a0) )
-          return Inf(eve::as(a0));
+          return inf(eve::as(a0));
         auto q = abs(x);
         if( x < T(-33) )
         {
@@ -219,7 +219,7 @@ namespace eve::detail
         auto r1 = other(a0, test);
         auto r2 = if_else(test, r, r1);
         return if_else(
-            is_eqz(a0), copysign(Inf(eve::as(a0)), a0), if_else(nan_result, eve::allbits, r2));
+            is_eqz(a0), copysign(inf(eve::as(a0)), a0), if_else(nan_result, eve::allbits, r2));
       }
     }
     else

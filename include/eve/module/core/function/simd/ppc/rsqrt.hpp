@@ -35,7 +35,7 @@ namespace eve::detail
 
       if(platform::supports_infinites)
       {
-        auto inf = Inf(eve::as(v0));
+        auto inf = inf(eve::as(v0));
         xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero_, xn));
       }
 
@@ -55,7 +55,7 @@ namespace eve::detail
 
       if(platform::supports_infinites)
       {
-        auto inf = Inf(eve::as(v0));
+        auto inf = inf(eve::as(v0));
         xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero_, xn));
       }
 

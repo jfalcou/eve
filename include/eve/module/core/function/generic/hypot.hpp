@@ -100,7 +100,7 @@ namespace eve::detail
   {
     using elt_t =  element_type_t<T>;
     if constexpr(eve::platform::supports_invalids && scalar_value<T>)
-      if (is_infinite(a) || is_infinite(b)) return Inf(eve::as(a));
+      if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
     if constexpr(std::is_same_v<elt_t, float>)
     {
       auto res = single_(hypot(double_(a), double_(b)));
@@ -110,7 +110,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr(eve::platform::supports_invalids && scalar_value<T>) if (is_infinite(a) || is_infinite(b)) return Inf(eve::as(a));
+      if constexpr(eve::platform::supports_invalids && scalar_value<T>) if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
       auto e =  exponent(eve::maxmag(a, b));
       e = eve::min(eve::max(e,Minexponent<T>()),Maxexponentm1<T>());
       auto tmp = pedantic_(ldexp)(a, -e);
@@ -142,7 +142,7 @@ namespace eve::detail
   requires has_native_abi_v<T>
   {
     if constexpr(scalar_value<T>)
-      if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return Inf(eve::as(a));
+      if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return inf(eve::as(a));
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
       return single_(hypot(double_(a), double_(b), double_(c)));

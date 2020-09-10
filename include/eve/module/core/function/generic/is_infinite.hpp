@@ -25,7 +25,7 @@ namespace eve::detail
                                                         , T const &a) noexcept
   {
     if constexpr(integral_value<T>) return False(eve::as(a));
-    else if constexpr(has_native_abi_v<T>)    return is_equal(eve::abs(a), Inf(eve::as(a)));
+    else if constexpr(has_native_abi_v<T>)    return is_equal(eve::abs(a), inf(eve::as(a)));
     else                            return apply_over(is_infinite, a);
   }
 }

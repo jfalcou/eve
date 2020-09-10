@@ -86,8 +86,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(126)), eve::exp2(f_t(126)));
       if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
       {
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::Inf(eve::as<f_t>()));
-        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::Inf<eve::as<f_t>()));
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(128)), eve::inf(eve::as<f_t>()));
+        TTS_IEEE_EQUAL(eve::single_(eve::exp2)(T(129)), eve::inf(eve::as<f_t>()));
       }
 
 
@@ -95,8 +95,8 @@ TTS_CASE_TPL("Check double_ & single_(eve::exp2) behavior", EVE_TYPE)
       TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(127)),eve::exp2(d_t(127)));
       if constexpr(sizeof(v_t) > 1)
       {
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::Inf<eve::as<d_t>()));
-        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::Inf<eve::as<d_t>()));
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1024)), eve::inf(eve::as<d_t>()));
+        TTS_IEEE_EQUAL(eve::double_(eve::exp2)(T(1025)), eve::inf(eve::as<d_t>()));
       }
     }
   }

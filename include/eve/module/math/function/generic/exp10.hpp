@@ -52,7 +52,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog10 )
-          return Inf(eve::as(x));
+          return inf(eve::as(x));
         if( xltminlog10 )
           return Zero(eve::as(x));
       }
@@ -83,7 +83,7 @@ namespace eve::detail
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog10, eve::zero_, z);
-        z = if_else(xgemaxlog10, Inf(eve::as(x)), z);
+        z = if_else(xgemaxlog10, inf(eve::as(x)), z);
       }
       return z;
     }

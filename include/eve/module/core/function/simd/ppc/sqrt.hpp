@@ -27,7 +27,7 @@ namespace eve::detail
       if constexpr(current_api == vmx)
       {
         auto that = if_else(v0, v0 * rsqrt(v0), v0);
-        if constexpr(platform::supports_invalids) { return if_else(v0 == Inf(eve::as(v0)), v0, that); }
+        if constexpr(platform::supports_invalids) { return if_else(v0 == inf(eve::as(v0)), v0, that); }
         else
         {
           return that;

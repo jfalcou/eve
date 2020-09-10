@@ -60,9 +60,9 @@ namespace eve::detail
     }
 
     if constexpr(platform::supports_infinites)
-    { a0 = if_else(x == Inf(eve::as(x)), eve::zero_, a0); }
+    { a0 = if_else(x == inf(eve::as(x)), eve::zero_, a0); }
 
-    return if_else(is_eqz(x), Inf(eve::as(x)), a0);
+    return if_else(is_eqz(x), inf(eve::as(x)), a0);
   }
 
   template<typename Pack>
@@ -77,7 +77,7 @@ namespace eve::detail
       nn  = dec[tst](nn);
       a00 = mul[tst](a00,2);
       auto a0 = rsqrt_x86(a00);
-      return if_else(is_eqz(x), Inf(eve::as(x)), pedantic_(ldexp)(a0, -nn/2));
+      return if_else(is_eqz(x), inf(eve::as(x)), pedantic_(ldexp)(a0, -nn/2));
     }
     else return rsqrt_x86(x);
   }
