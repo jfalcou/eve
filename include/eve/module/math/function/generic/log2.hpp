@@ -319,7 +319,7 @@ namespace eve::detail
       {
         return x;
       }
-      else if( x == One<T>() )
+      else if( x == one(eve::as<T>()) )
         return Zero<T>();
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       hx += 0x3ff00000 - 0x3fe6a09e;

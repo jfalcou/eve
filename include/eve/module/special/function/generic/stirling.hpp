@@ -61,7 +61,7 @@ namespace eve::detail
       {
         a0        = if_else(is_gez(a0), a0, eve::allbits);
         T w       = rec(a0);
-        w         = fma(w, stirling1(w), One<T>());
+        w         = fma(w, stirling1(w), one(eve::as<T>()));
         T    y    = exp(-a0);
         auto test = is_less(a0, Stirlingsplitlim);
         T    z    = a0 - half(eve::as<T>());
@@ -86,7 +86,7 @@ namespace eve::detail
         if( a0 > Stirlinglargelim )
           return inf(eve::as<T>());
         T w = rec(a0);
-        w   = fma(w, stirling1(w), One<T>());
+        w   = fma(w, stirling1(w), one(eve::as<T>()));
         T y = exp(-a0);
         if( is_eqz(y) )
           return inf(eve::as<T>());

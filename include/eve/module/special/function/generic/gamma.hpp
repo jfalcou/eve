@@ -116,7 +116,7 @@ namespace eve::detail
           T z = q - p;
           if( z > half(eve::as(a0)) )
           {
-            p += One(eve::as(a0));
+            p += one(eve::as(a0));
             z = q - p;
           }
           z = q * sinpi(z);
@@ -125,23 +125,23 @@ namespace eve::detail
           st = Pi(eve::as(a0)) / (abs(z) * st);
           return iseven ? -st : st;
         }
-        T z = One(eve::as(a0));
+        T z = one(eve::as(a0));
         while( x >= T(3) )
         {
-          x -= One(eve::as(a0));
+          x -= one(eve::as(a0));
           z *= x;
         }
         while( is_ltz(x) )
         {
           z /= x;
-          x += One(eve::as(a0));
+          x += one(eve::as(a0));
         }
         while( x < T(2) )
         {
           if( is_eqz(x) )
             return nan(eve::as(a0));
           z /= x;
-          x += One(eve::as(a0));
+          x += one(eve::as(a0));
         }
         if( x == T(2) )
           return (z);
@@ -153,7 +153,7 @@ namespace eve::detail
         auto large_negative = [](T q) {
           auto st     = stirling(q);
           auto p      = floor(q);
-          auto sgngam = if_else(is_even(p), One(eve::as(q)), eve::mone_);
+          auto sgngam = if_else(is_even(p), one(eve::as(q)), eve::mone);
           auto z      = q - p;
           auto test2  = is_less(z, half(eve::as(q)));
           z           = dec[test2](z);
@@ -168,7 +168,7 @@ namespace eve::detail
             auto inf_result = is_equal(q, inf(eve::as<T>()));
             x               = if_else(inf_result, T(2), x);
           }
-          auto z     = One<T>();
+          auto z     = one(eve::as<T>());
           auto test1 = is_greater_equal(x, T(3));
           while( any(test1) )
           {

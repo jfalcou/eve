@@ -157,9 +157,9 @@ namespace eve::detail
                                           eve::callable_mone_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? t : Mone(eve::as(t));
+    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? t : mone(eve::as(t));
     else if constexpr(integral_value<U>) return bit_ornot(t, bit_mask(cond));
-    else                                 return if_else(cond, t, eve::Mone<U>());
+    else                                 return if_else(cond, t, eve::mone(eve::as<U>()));
   }
 
   template<typename T, typename U>
@@ -168,9 +168,9 @@ namespace eve::detail
                                           eve::callable_mone_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? Mone(eve::as(t)) : t;
+    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? mone(eve::as(t)) : t;
     else if constexpr(integral_value<U>) return bit_or(t, bit_mask(cond));
-    else                                 return if_else(cond, Mone(eve::as(t)), t);
+    else                                 return if_else(cond, mone(eve::as(t)), t);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -182,9 +182,9 @@ namespace eve::detail
                                           eve::callable_one_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : One(eve::as(t));
+    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : one(eve::as(t));
     else if constexpr(std::is_integral_v<U>) return minus(bit_ornot(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, t, One(eve::as(t)));
+    else                                return if_else(cond, t, one(eve::as(t)));
   }
 
   template<typename T, typename U>
@@ -193,8 +193,8 @@ namespace eve::detail
                                           eve::callable_one_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? One(eve::as(t)) : t;
+    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? one(eve::as(t)) : t;
     else if constexpr(std::is_integral_v<U>) return minus(bit_or(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, One(eve::as(t)), t);
+    else                                return if_else(cond, one(eve::as(t)), t);
   }
 }

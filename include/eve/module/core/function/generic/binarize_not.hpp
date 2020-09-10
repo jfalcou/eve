@@ -28,7 +28,7 @@ namespace eve::detail
                            , logical<T> const &cond
                            ) noexcept
   {
-    return  bit_andnot(One<T>(),cond.bits());
+    return  bit_andnot(one(eve::as<T>()),cond.bits());
   }
 
   template<real_value T, real_scalar_value U>
@@ -52,11 +52,11 @@ namespace eve::detail
   template<real_value T>
   EVE_FORCEINLINE auto binarize_not_(EVE_SUPPORTS(cpu_)
                            , logical<T> const &cond
-                           , callable_object<eve::tag::mone_, void> const &
+                           , callable_mone_ const &
                            ) noexcept
   {
     if constexpr(integral_value<T>) return  bit_not(cond.mask());
-    else                            return  eve::binarize_not(cond,Mone<value_type_t<T>>());
+    else                            return  eve::binarize_not(cond,mone(eve::as<value_type_t<T>>()));
   }
 
 }

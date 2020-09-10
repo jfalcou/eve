@@ -86,7 +86,7 @@ namespace eve::detail
       {
         using i_t =  as_integer_t<T, signed>;
 
-        if (is_less_equal(x, eps(as<T>())))       return std::make_tuple(a0, One<T>());
+        if (is_less_equal(x, eps(as<T>())))       return std::make_tuple(a0, one(eve::as<T>()));
         if (is_not_less_equal(x, Pio_2<T>())) return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
 
         i_t n = x > Pio_4<T>();

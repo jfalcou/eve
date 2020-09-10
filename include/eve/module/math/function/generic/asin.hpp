@@ -65,11 +65,11 @@ namespace eve::detail
         if constexpr(scalar_value<T>) //early scalar return
         {
           if (small) return a0;
-          if ((x >  One<T>())) return nan(eve::as<T>());
+          if ((x >  one(eve::as<T>()))) return nan(eve::as<T>());
         }
         else if constexpr(simd_value<T>) //simd preparation
         {
-          x = if_else(x > One<T>(), eve::allbits, x);
+          x = if_else(x > one(eve::as<T>()), eve::allbits, x);
         }
         auto case_1 = [](const T & x){ // x < 0.625
           auto zz1 = eve::oneminus(x);

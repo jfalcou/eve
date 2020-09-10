@@ -40,7 +40,7 @@ namespace eve::detail
     //////////////////////////////////////////////////////////////////////////////
     if constexpr(scalar_value<T>)
     {
-      if (is_eqz(a0)) return One(eve::as(a0));
+      if (is_eqz(a0)) return one(eve::as(a0));
     }
     if constexpr(has_native_abi_v<T>)
     {

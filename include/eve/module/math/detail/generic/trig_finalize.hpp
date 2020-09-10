@@ -128,7 +128,7 @@ namespace eve::detail
     {
       using i_t =  detail::as_integer_t<T, signed>;
       i_t n = int_(fn);
-      i_t swap_bit = n&One<i_t>();
+      i_t swap_bit = n&one(eve::as<i_t>());
       auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       i_t cos_sign_bit = shl(bit_xor(swap_bit, (n&i_t(2))>>1), sizeof(i_t)*8-1);
       auto ce = fnma(se0, dxr, ce0);
@@ -162,7 +162,7 @@ namespace eve::detail
       using i_t =  detail::as_integer_t<T, signed>;
       if (is_not_finite(xr)) return nan(eve::as<T>());
       i_t n = int_(fn);
-      i_t swap_bit = n&One<i_t>();
+      i_t swap_bit = n&one(eve::as<i_t>());
       auto  sign_bit = bit_xor(bitofsign(a0), shl(n&i_t(2), sizeof(i_t)*8-2));
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
@@ -196,7 +196,7 @@ namespace eve::detail
       if (aa0lteps) return a0;
       if (is_not_finite(xr)) return nan(eve::as<T>());
       y =  (int(fn)&1) ? -rec(y): y;
-      if (dxr) y+= dxr*fma(y, y, One<T>());
+      if (dxr) y+= dxr*fma(y, y, one(eve::as<T>()));
       return bit_xor(y, bitofsign(a0));
     }
     else
@@ -205,7 +205,7 @@ namespace eve::detail
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto test = is_eqz(swap_bit);
       y = if_else(test, y, -rec(y));
-      y = fma(dxr, fma(y, y, One<T>()), y);
+      y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
       return if_else(aa0lteps, a0, bit_xor(y, bitofsign(a0)));
     }
   }
@@ -221,7 +221,7 @@ namespace eve::detail
     {
       if (is_not_finite(a0)) return nan(eve::as<T>());
       y =  (int(fn)&1) ? -y: rec(y);
-      if (dxr) y+= dxr*fma(y, y, One<T>());
+      if (dxr) y+= dxr*fma(y, y, one(eve::as<T>()));
       return bit_xor(y, bitofsign(a0));
     }
     else
@@ -231,7 +231,7 @@ namespace eve::detail
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto test = is_eqz(swap_bit);
       y = if_else(test,rec(y),-y);
-      y = fma(dxr, fma(y, y, One<T>()), y);
+      y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
       return if_else(aa0lteps, pedantic_(rec)(a0), bit_xor(y, bitofsign(a0)));
     }
   }

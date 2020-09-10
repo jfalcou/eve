@@ -72,7 +72,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_), D const &, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return if_else(is_odd(a0), eve::mone_, One(eve::as(a0))); //(-1)^n
+      return if_else(is_odd(a0), eve::mone, one(eve::as(a0))); //(-1)^n
     else
       return apply_over(D()(cospi), a0);
   }
@@ -96,7 +96,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto cospi_(EVE_SUPPORTS(cpu_), T const &a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return if_else(is_odd(a0), eve::mone_, One(eve::as(a0))); //(-1)^n
+      return if_else(is_odd(a0), eve::mone, one(eve::as(a0))); //(-1)^n
     else
       return apply_over(cospi, a0);
   }

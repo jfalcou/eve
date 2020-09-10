@@ -61,7 +61,7 @@ namespace eve::detail
       }
       else
       {
-        auto h = if_else( is_gtz(a0), One<T>(), eve::mone_);
+        auto h = if_else( is_gtz(a0), one(eve::as<T>()), eve::mone);
         auto t = expm1(x);
         auto inct = inc(t);
         auto u = t/inct;

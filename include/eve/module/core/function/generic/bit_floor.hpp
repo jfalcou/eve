@@ -32,13 +32,13 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto vlt1 = v < One(eve::as(v));
+      auto vlt1 = v < one(eve::as(v));
       if constexpr(scalar_value<T>) if (vlt1) return Zero(eve::as(v));
       if constexpr(floating_real_value<T>)
       {
         auto [m, e] = ifrexp(v);
         e = dec(e);
-        auto r = eve::ldexp(One(eve::as(v)), e);
+        auto r = eve::ldexp(one(eve::as(v)), e);
         if constexpr(scalar_value<T>) return r;
         else                          return if_else(vlt1, eve::zero_, r);
       }

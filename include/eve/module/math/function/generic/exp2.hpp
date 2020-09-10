@@ -126,7 +126,7 @@ namespace eve::detail
       }
       else
       {
-        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(eve::as(xx)), xx));
+        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(one(eve::as(xx)), xx));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;

@@ -58,7 +58,7 @@ namespace eve::detail
           if( std::is_unsigned_v<T> )
           {
             return if_else(
-                is_eqz(a), Valmax(eve::as(a)), if_else(eve::abs(a) == One(eve::as(a)), a, eve::zero_));
+                is_eqz(a), Valmax(eve::as(a)), if_else(eve::abs(a) == one(eve::as(a)), a, eve::zero_));
           }
           else
           {

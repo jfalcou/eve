@@ -161,7 +161,7 @@ namespace eve::detail
       {
         if( ix >= 0xbf800000 ) /* x <= -1.0 */
         {
-          if( x == Mone<T>() )
+          if( x == mone(eve::as<T>()) )
             return minf(eve::as<T>()); /* log1p(-1)=-inf */
           return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
@@ -227,7 +227,7 @@ namespace eve::detail
       {
         if( hx >= 0xbff00000 ) /* x <= -1.0 */
         {
-          if( x == Mone<T>() )
+          if( x == mone(eve::as<T>()) )
             return minf(eve::as<T>()); /* log1p(-1)=-inf */
           return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }

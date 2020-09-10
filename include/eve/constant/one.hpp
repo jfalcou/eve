@@ -18,14 +18,14 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(one_, one_);
+  EVE_MAKE_CALLABLE(one_, one);
 
-  template<typename T>
-  EVE_FORCEINLINE auto One(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    return T(1);
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      return T(1);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(one_, One);
 }
-

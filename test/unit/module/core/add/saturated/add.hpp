@@ -37,27 +37,27 @@ TTS_CASE_TPL("Check eve::saturated_(eve::add) behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<T>(),eve::One<T>())),
+    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<T>(),eve::one(eve::as<T>()))),
                     (eve::Valmax<T>())
                   );
-    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<v_t>(),eve::One<T>())),
+    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<v_t>(),eve::one(eve::as<T>()))),
                     (eve::Valmax<T>())
                   );
-    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<T>(),eve::One<v_t>())),
+    TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmax<T>(),eve::one(eve::as<v_t>()))),
                     (eve::Valmax<T>())
                   );
 
     if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<T>(),eve::Mone<T>())),
+      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<T>(),eve::mone(eve::as<T>()))),
                       (eve::Valmin<T>())
                     );
 
-      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<v_t>(),eve::Mone<T>())),
+      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<v_t>(),eve::mone(eve::as<T>()))),
                       (eve::Valmin<T>())
                     );
 
-      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<T>(),eve::Mone<v_t>())),
+      TTS_EQUAL ( (eve::saturated_(eve::add)(eve::Valmin<T>(),eve::mone(eve::as<v_t>()))),
                       (eve::Valmin<T>())
                     );
 

@@ -20,11 +20,11 @@
 TTS_CASE_TPL("wide random check on average", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_average = tts::vectorize<T>( [](auto e) { return std::midpoint(e,  eve::One(eve::as(e))); } );
+  auto std_average = tts::vectorize<T>( [](auto e) { return std::midpoint(e,  one(eve::as(e))); } );
   auto  my_average =  [](auto e) {
     static int i = 0;
     std::cout << ++i <<  "-> " << e <<  std::endl;
-    return eve::average(e,  eve::One(eve::as(e))); };
+    return eve::average(e,  one(eve::as(e))); };
   if constexpr(eve::floating_value<T>)
   {
 

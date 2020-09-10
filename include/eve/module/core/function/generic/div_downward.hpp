@@ -83,7 +83,7 @@ namespace eve::detail
         {
           if constexpr( std::is_same_v<elt_t, std::int64_t> )
           {
-            auto bb = if_else(is_eqz(b), eve::one_, b);
+            auto bb = if_else(is_eqz(b), eve::one, b);
             auto q  = saturated_(eve::div)(a, bb);
             auto r  = a - q * b;
             q       = saturated_(dec[is_nez(r) && is_lez(bit_xor(a, b))])(q);

@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check eve::binarize_not on logicals behavior", EVE_TYPE)
   {
     TTS_EQUAL(binarize_not(is_less(T(2), T(1)), v_t(-2))    , T(-2));
     TTS_EQUAL(binarize_not(is_less(T(0), T(1)), v_t(-2))    , T( 0));
-    TTS_EQUAL(binarize_not(is_less(T(1), T(2)), eve::mone_) , T( 0));
-    TTS_EQUAL(binarize_not(is_less(T(2), T(1)), eve::mone_) , T(-1));
+    TTS_EQUAL(binarize_not(is_less(T(1), T(2)), eve::mone) , T( 0));
+    TTS_EQUAL(binarize_not(is_less(T(2), T(1)), eve::mone) , T(-1));
   }
 
   TTS_EQUAL(binarize_not(is_less(T(2), T(1)), v_t(2))             , T(2)              );

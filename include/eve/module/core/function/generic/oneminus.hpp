@@ -37,7 +37,7 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<D, regular_type> || std::is_floating_point_v<elt_t> )
       {
-        return One<T>() - v;
+        return one(eve::as<T>()) - v;
       }
       else if constexpr( std::is_same_v<D, saturated_type> )
       {

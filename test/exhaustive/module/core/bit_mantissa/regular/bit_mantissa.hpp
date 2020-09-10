@@ -27,8 +27,8 @@ TTS_CASE_TPL("wide random check on bit_mantissa", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
-  auto std_bit_mantissa = [ ](auto e) { return eve::if_else(eve::is_eqz(e), eve::one_, eve::abs(eve::mantissa(e))); };
-  auto  my_bit_mantissa = [ ](auto e) { return eve::bit_or(eve::One(eve::as(e)), eve::bit_mantissa(e)); };
+  auto std_bit_mantissa = [ ](auto e) { return eve::if_else(eve::is_eqz(e), eve::one, eve::abs(eve::mantissa(e))); };
+  auto  my_bit_mantissa = [ ](auto e) { return eve::bit_or(one(eve::as(e)), eve::bit_mantissa(e)); };
 
 
 

@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T dec_(EVE_SUPPORTS(cpu_)
                                   , T const &v) noexcept
   {
-    if constexpr(has_native_abi_v<T>)  return v - One(eve::as(v));
+    if constexpr(has_native_abi_v<T>)  return v - one(eve::as(v));
     else                     return apply_over(dec, v);
   }
 

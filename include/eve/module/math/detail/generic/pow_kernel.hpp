@@ -190,11 +190,11 @@ namespace eve::detail
   {
     using i_t = as_integer_t<T>;
     // find significand in antilog table A[]
-    i_t i = One<i_t>();
+    i_t i = one(eve::as<i_t>());
     i = if_else(is_less_equal(xx, twomio16(i_t(9))), i_t(9), i);
     i = add[is_less_equal(xx, twomio16(i+4))](i, i_t(4));
     i = add[is_less_equal(xx, twomio16(i+2))](i, i_t(2) );
-    i = if_else(is_greater_equal(xx, twomio16(One<i_t>())), i_t(-1), i);
+    i = if_else(is_greater_equal(xx, twomio16(one(eve::as<i_t>()))), i_t(-1), i);
     i = inc(i);
     T tmp = twomio16(i);
     auto x = xx-tmp;

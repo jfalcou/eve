@@ -40,7 +40,7 @@ namespace eve::detail
         auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {
-        if (x < T(0x1.0p-28)) return std::make_tuple(a0, One<T>());
+        if (x < T(0x1.0p-28)) return std::make_tuple(a0, one(eve::as<T>()));
         auto h = (a0 > T(0)) ? T(1) : T(-1);
         if (x >= ovflimit)
         {
@@ -58,7 +58,7 @@ namespace eve::detail
         return std::make_tuple(s, c);       }
       else
       {
-        auto h = if_else( is_positive(a0), One<T>(), Mone<T>());
+        auto h = if_else( is_positive(a0), one(eve::as<T>()), mone(eve::as<T>()));
         auto t = expm1(x);
         auto inct = inc(t);
         auto u = t/inct;

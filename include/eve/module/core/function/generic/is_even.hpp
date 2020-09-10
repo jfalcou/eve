@@ -40,8 +40,8 @@ namespace eve::detail
         else
           return aisflt && (aa != Smallestposval<T>());
       }
-      else if constexpr(scalar_value<T>) return (!(a & One(eve::as(a))));
-      else                               return is_eqz((a & One(eve::as(a))));
+      else if constexpr(scalar_value<T>) return (!(a & one(eve::as(a))));
+      else                               return is_eqz((a & one(eve::as(a))));
     }
     else                                 return apply_over(is_even, a);
   }

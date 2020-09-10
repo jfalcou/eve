@@ -108,7 +108,7 @@ TTS_CASE_TPL("Check eve::prev two parameters behavior", EVE_TYPE)
     TTS_EQUAL(eve::prev(T(-1), i_t(2))           , T(-1)-eve::eps(as<T>())*2 );
     TTS_EQUAL(eve::prev(T( 1), i_t(2))           , T( 1)-eve::eps(as<T>())   );
     TTS_EQUAL(eve::prev(T( 1), si_t(2))          , T( 1)-eve::eps(as<T>())   );
-    TTS_EQUAL(eve::prev(eve::One<v_t>(), i_t(2)) , T( 1)-eve::eps(as<T>())   );
+    TTS_EQUAL(eve::prev(eve::one(eve::as<v_t>()), i_t(2)) , T( 1)-eve::eps(as<T>())   );
     TTS_EQUAL(eve::prev(T( 0 ), 1)               , -eve::mindenormal(eve::as<T>()));
     TTS_EQUAL(eve::prev(T(-0.), 1)               , -eve::mindenormal(eve::as<T>()));
     TTS_EQUAL(eve::prev(eve::mindenormal(eve::as<T>()), 2), -eve::mindenormal(eve::as<T>()));

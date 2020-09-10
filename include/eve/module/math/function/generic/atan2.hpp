@@ -93,8 +93,8 @@ namespace eve::detail
       auto test1 =  eve::is_infinite(a0)&& eve::is_infinite(a1);
       if constexpr(platform::supports_infinites)
       {
-        a00 =  eve::if_else(test1, eve::copysign(One(eve::as(a0)), a00), a00);
-        a10 =  eve::if_else(test1, eve::copysign(One(eve::as(a0)), a10), a10);
+        a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a00), a00);
+        a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a10), a10);
       }
 
       T q = eve::abs(a00/a10);

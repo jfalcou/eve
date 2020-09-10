@@ -32,11 +32,11 @@ namespace eve::detail
     {
       if constexpr( unsigned_value<T> )
       {
-        return One(eve::as(a));
+        return one(eve::as(a));
       }
       else if constexpr( floating_value<T> )
       {
-        auto r = bit_or(One(eve::as(a)), bitofsign(a));
+        auto r = bit_or(one(eve::as(a)), bitofsign(a));
         if constexpr( eve::platform::supports_nans && std::is_same_v<D, pedantic_type> )
         {
           if constexpr( scalar_value<T> )

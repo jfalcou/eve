@@ -45,7 +45,7 @@ namespace eve::detail
       }
       else
       {
-        return abs(a * (b / gcd(a, if_else(b, b, eve::one_))));
+        return abs(a * (b / gcd(a, if_else(b, b, eve::one))));
       }
     }
     else

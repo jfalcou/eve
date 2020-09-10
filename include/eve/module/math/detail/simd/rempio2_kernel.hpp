@@ -211,7 +211,7 @@ namespace eve::detail
       T    b    = b1 + b2;
       T    bb   = if_else(eve::abs(b1) > eve::abs(b2), (b1 - b) + b2, (b2 - b) + b1);
       auto test = eve::abs(b) > 0.5;
-      auto z    = copysign(One<T>(), b);
+      auto z    = copysign(one(eve::as<T>()), b);
       b         = sub[test](b, z);
       sum       = add[test](sum, z);
       T s       = b + (bb + bb1 + bb2);

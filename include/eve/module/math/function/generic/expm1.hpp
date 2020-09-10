@@ -57,7 +57,7 @@ namespace eve::detail
         if( xgemaxlog )
           return inf(eve::as<T>());
         if( xlelogeps )
-          return Mone<T>();
+          return mone(eve::as<T>());
       }
       if constexpr( std::is_same_v<elt_t, float> )
       {
@@ -102,7 +102,7 @@ namespace eve::detail
       {
         k = if_else(xgemaxlog, inf(eve::as<T>()), k);
         k = if_else(is_eqz(xx), xx, k);
-        k = if_else(xlelogeps, eve::mone_, k);
+        k = if_else(xlelogeps, eve::mone, k);
       }
       return k;
     }

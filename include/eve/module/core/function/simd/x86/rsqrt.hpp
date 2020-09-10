@@ -56,7 +56,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<v_t, double>)
     {
       // To obtain extra accuracy, we need one additional Newton step
-      a0 = fma(fnma(x, sqr(a0), One(eve::as(a0))), a0 * half(eve::as(a0)), a0);
+      a0 = fma(fnma(x, sqr(a0), one(eve::as(a0))), a0 * half(eve::as(a0)), a0);
     }
 
     if constexpr(platform::supports_infinites)

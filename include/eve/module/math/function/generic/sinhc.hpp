@@ -40,10 +40,10 @@ namespace eve::detail
     {
       if constexpr(scalar_value<T>)
       {
-        if (is_eqz(a0)) return One(eve::as(a0));
+        if (is_eqz(a0)) return one(eve::as(a0));
         if constexpr(eve::platform::supports_infinites) if(is_infinite(a0)) return Zero<T>();
         if constexpr(eve::platform::supports_denormals)
-          return eve::abs(a0) < eps(as<T>()) ? One<T>() : sinh(a0)/a0;
+          return eve::abs(a0) < eps(as<T>()) ? one(eve::as<T>()) : sinh(a0)/a0;
         else
           return sinh(a0)/a0;
       }
@@ -78,7 +78,7 @@ namespace eve::detail
         };
 
         T x = abs(a0);
-        auto lt1= is_less(x, One<T>());
+        auto lt1= is_less(x, one(eve::as<T>()));
         std::size_t nb = nbtrue(lt1);
         T z = Zero<T>();
         if( nb > 0)
@@ -87,7 +87,7 @@ namespace eve::detail
           if(nb >=T::static_size) return z;
         }
         auto test1 = is_greater(x, maxlog(eve::as<T>())-log_2(eve::as<T>()));
-        T fac = if_else(test1, half(eve::as<T>()), One<T>());
+        T fac = if_else(test1, half(eve::as<T>()), one(eve::as<T>()));
         T tmp = exp(x*fac);
         T tmp1 = (half(eve::as<T>())*tmp)/x;
         T r =  if_else(test1, tmp1*tmp, average(tmp, -rec(tmp))/x);

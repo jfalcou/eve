@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(std::is_same_v<T, float>)
     {
-      auto ct = One(eve::as(v0));
+      auto ct = one(eve::as(v0));
       auto es = raw_(rsqrt)(v0);
       auto xn = sqr(es);
       auto he = es * half(eve::as(v0));
@@ -45,7 +45,7 @@ namespace eve::detail
     {
       auto refine = [](auto sw0, auto w0) {
         auto hest = sw0 * half(eve::as(w0));
-        auto tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), One(eve::as(w0)).storage());
+        auto tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), one(eve::as(w0)).storage());
         return fma(tmp, hest, sw0);
       };
 

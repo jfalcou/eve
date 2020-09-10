@@ -98,19 +98,19 @@ namespace eve::detail
     z                   = pedantic_(ldexp)(z, i);
     if constexpr( eve::platform::supports_infinites )
     {
-      auto gtax1 = is_greater(ax, One<T>());
+      auto gtax1 = is_greater(ax, one(eve::as<T>()));
       z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero_), z);
       z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero_, inf(eve::as<T>())), z);
       z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
     z = if_else(zer_ret, eve::zero_, z);
     z = if_else(inf_ret, inf(eve::as<T>()), z);
-    z = if_else(is_equal(ax, One<T>()), ax, z);
+    z = if_else(is_equal(ax, one(eve::as<T>())), ax, z);
 
     z = if_else(is_eqz(a), if_else(is_ltz(b), eve::inf(eve::as<T>()), binarize(is_eqz(b))), z);
     if constexpr( eve::platform::supports_invalids )
     {
-      z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits), z);
+      z = if_else(is_nan(a), if_else(is_eqz(b), one(eve::as<T>()), eve::allbits), z);
     }
     return z;
   }
@@ -121,10 +121,10 @@ namespace eve::detail
     const T Oneo_16 = T(0.0625);
     using i_t       = as_integer_t<T>;
     T xx            = eve::abs(a0);
-    if( xx == One<T>() )
+    if( xx == one(eve::as<T>()) )
       return xx;
     if( is_eqz(xx) )
-      return is_eqz(a1) ? One<T>() : is_ltz(a1) ? inf(eve::as<T>()) : Zero<T>();
+      return is_eqz(a1) ? one(eve::as<T>()) : is_ltz(a1) ? inf(eve::as<T>()) : Zero<T>();
     if constexpr( eve::platform::supports_infinites )
     {
       if( xx == a1 && a1 == inf(eve::as<T>()) )
@@ -132,16 +132,16 @@ namespace eve::detail
       if( xx == inf(eve::as<T>()) && a1 == minf(eve::as<T>()) )
         return Zero<T>();
       if( a1 == inf(eve::as<T>()) )
-        return (xx < One<T>()) ? Zero<T>() : inf(eve::as<T>());
+        return (xx < one(eve::as<T>())) ? Zero<T>() : inf(eve::as<T>());
       if( a1 == minf(eve::as<T>()) )
-        return (xx > One<T>()) ? Zero<T>() : inf(eve::as<T>());
+        return (xx > one(eve::as<T>())) ? Zero<T>() : inf(eve::as<T>());
       if( xx == inf(eve::as<T>()) )
-        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : inf(eve::as<T>()));
+        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? one(eve::as<T>()) : inf(eve::as<T>()));
     }
     if constexpr( eve::platform::supports_invalids )
     {
       if( is_nan(a0) )
-        return is_eqz(a1) ? One<T>() : a0;
+        return is_eqz(a1) ? one(eve::as<T>()) : a0;
       if( is_nan(a1) )
         return nan(eve::as<T>());
     }

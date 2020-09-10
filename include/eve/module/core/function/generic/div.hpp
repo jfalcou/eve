@@ -87,7 +87,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto aa    = a + !((b + One(eve::as(a))) | ((ui_t)a + Valmin(eve::as(a))));
+        auto aa    = a + !((b + one(eve::as(a))) | ((ui_t)a + Valmin(eve::as(a))));
         if( b )
           return aa / b;
         else if( a )
@@ -105,7 +105,7 @@ namespace eve::detail
         // positive -> valmax
         auto x2 = bit_xor(Valmax<T>(), shr(x, shft));
         x       = if_else(logical_and(iseqzb, is_nez(x)), x2, x);
-        auto y  = if_else(iseqzb, One<T>(), b);
+        auto y  = if_else(iseqzb, one(eve::as<T>()), b);
         return div(x, y);
       }
     }
@@ -118,7 +118,7 @@ namespace eve::detail
       else if constexpr( simd_value<T> )
       {
         auto iseqzb = is_eqz(b);
-        auto bb     = if_else(iseqzb, One(eve::as(a)), b);
+        auto bb     = if_else(iseqzb, one(eve::as(a)), b);
         auto aa     = if_else(iseqzb, bit_mask(a), a);
         return div(aa, bb);
       }
