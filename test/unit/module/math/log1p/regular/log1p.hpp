@@ -42,7 +42,7 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log1p(eve::Mindenormal<T>()), T(std::log1p(eve::Mindenormal<v_t>())));
+    TTS_IEEE_EQUAL(eve::log1p(eve::mindenormal(eve::as<T>())), T(std::log1p(eve::mindenormal(eve::as<v_t>()))));
   }
 
   auto epsi = eve::eps(eve::as<T>());

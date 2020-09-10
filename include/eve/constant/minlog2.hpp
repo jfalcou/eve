@@ -19,17 +19,17 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(minlog2_, minlog2_);
+  EVE_MAKE_CALLABLE(minlog2_, minlog2);
 
-  template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Minlog2(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto minlog2_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0xc2fe0000U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc08ff00000000000ULL>();
+      if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0xc2fe0000U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc08ff00000000000ULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(minlog2_, Minlog2);
 }
-

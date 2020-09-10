@@ -21,6 +21,6 @@ TTS_CASE("wide random check on stirling")
 {
   auto std_stirling = tts::vectorize<EVE_TYPE>([](auto e) { return std::stirling(e); });
 
-  eve::rng_producer<EVE_TYPE> p(eve::Minlog<EVE_VALUE>(), eve::maxlog(eve::as<EVE_VALUE>()) - 1);
+  eve::rng_producer<EVE_TYPE> p(eve::minlog(eve::as<EVE_VALUE>()), eve::maxlog(eve::as<EVE_VALUE>()) - 1);
   TTS_RANGE_CHECK(p, std_stirling, eve::stirling);
 }

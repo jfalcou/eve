@@ -57,7 +57,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::next) one parameter behavior", EVE_TYPE)
     TTS_EQUAL(eve::pedantic_(eve::next)(T(-1))              , T(-1) + eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::pedantic_(eve::next)(T( 1))              , T( 1) + eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::pedantic_(eve::next)(T(-0.))             , T( 0)                   );
-    TTS_EQUAL(eve::pedantic_(eve::next)(T( 0 ))             , eve::Mindenormal<T>()   );
+    TTS_EQUAL(eve::pedantic_(eve::next)(T( 0 ))             , eve::mindenormal(eve::as<T>())   );
   }
 }
 

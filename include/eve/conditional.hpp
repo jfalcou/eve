@@ -14,11 +14,29 @@
 #include <eve/detail/abi.hpp>
 #include <eve/traits.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/iota.hpp>
+//#include <eve/constant/iota.hpp>
+#include <eve/as.hpp>
 #include <iosfwd>
 
 namespace eve
 {
+  // TODO restore iota
+  namespace detail
+  {
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto my_iota(as_<T> const &) noexcept
+    {
+      if constexpr( scalar_value<T> )
+      {
+        return T(0);
+      }
+      else
+      {
+        return T([](auto i, auto ) { return i; } );
+      }
+    }
+  }
+
   //================================================================================================
   // Concept for conditional expression
   //================================================================================================
@@ -173,7 +191,7 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return iota(eve::as_<T>()) < (card-count_);
+      return detail::my_iota(eve::as_<T>()) < (card-count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -203,7 +221,7 @@ namespace eve
     template<typename T> auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return iota(eve::as_<T>()) >= (card-count_);
+      return detail::my_iota(eve::as_<T>()) >= (card-count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -232,7 +250,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      return iota(eve::as_<T>()) >= count_;
+      return detail::my_iota(eve::as_<T>()) >= count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
@@ -261,7 +279,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      return iota(eve::as_<T>()) < count_;
+      return detail::my_iota(eve::as_<T>()) < count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -290,7 +308,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = iota(eve::as_<T>());
+      auto const i = detail::my_iota(eve::as_<T>());
       return (i < begin_) || (i > end_);
     }
 
@@ -320,7 +338,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = iota(eve::as_<T>());
+      auto const i = detail::my_iota(eve::as_<T>());
       return (i >= begin_) && (i <= end_);
     }
 
@@ -352,7 +370,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = iota(eve::as_<T>());
+      auto const i = detail::my_iota(eve::as_<T>());
       constexpr std::ptrdiff_t card = cardinal_v<T>;
       return (i >= first_count_) && (i < (card-last_count_));
     }

@@ -57,9 +57,9 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::frexp) behavior", EVE_TYPE)
   if constexpr(eve::platform::supports_denormals)
   {
     using v_t = eve::element_type_t<T>;
-    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::Mindenormal<T>());
+    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::mindenormal(eve::as<T>()));
 
     TTS_ULP_EQUAL (r0, T(0.5), 1);
-    TTS_EQUAL     (r1, T(eve::Minexponent<v_t>()-eve::Nbmantissabits<v_t>()+1));
+    TTS_EQUAL     (r1, T(eve::minexponent(eve::as<v_t>())-eve::Nbmantissabits<v_t>()+1));
   }
 }

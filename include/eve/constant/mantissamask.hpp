@@ -21,15 +21,15 @@ namespace eve
 {
   EVE_MAKE_CALLABLE(mantissamask_, mantissamask_);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Mantissamask(eve::as_<T> const & = {}) noexcept
-  {
-    using t_t = detail::value_type_t<T>;
+   template<floating_value T>
+    EVE_FORCEINLINE constexpr auto mantissamask_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<t_t>;
 
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x807FFFFFU>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x800FFFFFFFFFFFFFULL>();
+      if constexpr(std::is_same_v<t_t, float>) return i_t(0x807FFFFFU);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(0x800FFFFFFFFFFFFFULL);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(mantissamask_, Mantissamask);
+;
 }
-

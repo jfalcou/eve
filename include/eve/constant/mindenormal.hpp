@@ -18,17 +18,17 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(mindenormal_, mindenormal_);
+  EVE_MAKE_CALLABLE(mindenormal_, mindenormal);
 
-  template<floating_value T>
-  EVE_FORCEINLINE T Mindenormal(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto mindenormal_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x1U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x1U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(mindenormal_, Mindenormal);
 }
-

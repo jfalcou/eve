@@ -40,6 +40,6 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::exp) behavior", EVE_TYPE)
 
   TTS_IEEE_EQUAL( eve::pedantic_(eve::exp)(T( 0.)), T(1));
   TTS_IEEE_EQUAL( eve::pedantic_(eve::exp)(T(-0.)), T(1));
-  v_t z = eve::Minlog<v_t>()+1;
+  v_t z = eve::minlog(eve::as<v_t>())+1;
   TTS_ULP_EQUAL( eve::pedantic_(eve::exp)(T(z)), T(std::exp((z))), 0.5);
 }

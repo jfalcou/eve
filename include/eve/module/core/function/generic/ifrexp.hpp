@@ -89,7 +89,7 @@ namespace eve::detail
         }
         auto e = bit_and(Expobits_mask<T>(), a0); //extract exp.
         auto x  = bit_notand(Expobits_mask<T>(), a0);
-        e = bit_shr(e,Nbmantissabits<elt_t>()) - Maxexponentm1<elt_t>();
+        e = bit_shr(e,Nbmantissabits<elt_t>()) - maxexponentm1(eve::as<elt_t>());
         auto r0 = bit_or(half(eve::as<T>()), x);
         auto test0 = is_nez(a0);
         auto test1 = is_greater(e,limitexponent(eve::as<T>()));

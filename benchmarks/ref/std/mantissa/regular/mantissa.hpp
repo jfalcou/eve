@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto lmin = eve::maxlog(eve::as<EVE_TYPE>());
-  auto lmax = eve::Minlog<EVE_TYPE>();
+  auto lmax = eve::minlog(eve::as<EVE_TYPE>());
   auto std_mantissa =  [](auto x){ int e;  return std::frexp(x, &e)*2; };
    EVE_REGISTER_BENCHMARK(std_mantissa, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 

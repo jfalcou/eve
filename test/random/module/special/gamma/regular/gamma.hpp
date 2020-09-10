@@ -21,6 +21,6 @@ TTS_CASE("wide random check on gamma")
 {
   auto std_gamma = tts::vectorize<EVE_TYPE>([](auto e) { return std::gamma(e); });
 
-  eve::rng_producer<EVE_TYPE> p(eve::Minlog<EVE_VALUE>() + 1, eve::maxlog(eve::as<EVE_VALUE>()) - 1);
+  eve::rng_producer<EVE_TYPE> p(eve::minlog(eve::as<EVE_VALUE>()) + 1, eve::maxlog(eve::as<EVE_VALUE>()) - 1);
   TTS_RANGE_CHECK(p, std_gamma, eve::gamma);
 }

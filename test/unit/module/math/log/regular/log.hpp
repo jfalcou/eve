@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check eve::log behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log(eve::Mindenormal<T>()), T(std::log(eve::Mindenormal<v_t>())));
+    TTS_IEEE_EQUAL(eve::log(eve::mindenormal(eve::as<T>())), T(std::log(eve::mindenormal(eve::as<v_t>()))));
   }
 
   TTS_IEEE_EQUAL(eve::log(T( 1)), T( 0 )               );

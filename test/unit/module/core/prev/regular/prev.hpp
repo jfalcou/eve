@@ -58,9 +58,9 @@ TTS_CASE_TPL("Check eve::prev one parameter behavior", EVE_TYPE)
     TTS_EQUAL(eve::prev(eve::inf(eve::as<T>()))        , eve::Valmax<T>()        );
     TTS_EQUAL(eve::prev(T(-1 ))               , T(-1) - eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::prev(T( 1 ))               , T( 1) - eve::eps(eve::as<T>())/2 );
-    TTS_EQUAL(eve::prev(T( 0 ))               , -eve::Mindenormal<T>()  );
-    TTS_EQUAL(eve::prev(T(-0.))               , -eve::Mindenormal<T>()  );
-    TTS_EQUAL(eve::prev(eve::Mindenormal<T>()), T( 0 )                  );
+    TTS_EQUAL(eve::prev(T( 0 ))               , -eve::mindenormal(eve::as<T>())  );
+    TTS_EQUAL(eve::prev(T(-0.))               , -eve::mindenormal(eve::as<T>())  );
+    TTS_EQUAL(eve::prev(eve::mindenormal(eve::as<T>())), T( 0 )                  );
   }
 }
 
@@ -109,9 +109,9 @@ TTS_CASE_TPL("Check eve::prev two parameters behavior", EVE_TYPE)
     TTS_EQUAL(eve::prev(T( 1), i_t(2))           , T( 1)-eve::eps(as<T>())   );
     TTS_EQUAL(eve::prev(T( 1), si_t(2))          , T( 1)-eve::eps(as<T>())   );
     TTS_EQUAL(eve::prev(eve::One<v_t>(), i_t(2)) , T( 1)-eve::eps(as<T>())   );
-    TTS_EQUAL(eve::prev(T( 0 ), 1)               , -eve::Mindenormal<T>());
-    TTS_EQUAL(eve::prev(T(-0.), 1)               , -eve::Mindenormal<T>());
-    TTS_EQUAL(eve::prev(eve::Mindenormal<T>(), 2), -eve::Mindenormal<T>());
-    TTS_EQUAL(eve::prev(eve::Mindenormal<T>(), 1), T( 0 )                );
+    TTS_EQUAL(eve::prev(T( 0 ), 1)               , -eve::mindenormal(eve::as<T>()));
+    TTS_EQUAL(eve::prev(T(-0.), 1)               , -eve::mindenormal(eve::as<T>()));
+    TTS_EQUAL(eve::prev(eve::mindenormal(eve::as<T>()), 2), -eve::mindenormal(eve::as<T>()));
+    TTS_EQUAL(eve::prev(eve::mindenormal(eve::as<T>()), 1), T( 0 )                );
   }
 }

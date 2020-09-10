@@ -47,7 +47,7 @@ namespace eve::detail
       using elt_t         = element_type_t<T>;
       const T Log10_2hi   = Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
       const T Log10_2lo   = Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
-      auto    xltminlog10 = x < Minlog10(eve::as(x));
+      auto    xltminlog10 = x < minlog10(eve::as(x));
       auto    xgemaxlog10 = x >= maxlog10(eve::as(x));
       if constexpr( scalar_value<T> )
       {

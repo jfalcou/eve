@@ -36,8 +36,8 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::rsqrt) behavior", EVE_TYPE)
   }
 
   using v_t = eve::element_type_t<T>;
-  auto z = eve::Mindenormal<v_t>();
+  auto z = eve::mindenormal(eve::as<v_t>());
 
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(eve::Mindenormal<T>())   , T(eve::rec(std::sqrt(z)))   , 2.0);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(2*eve::Mindenormal<T>()) , T(eve::rec(std::sqrt(2*z))) , 2.0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(eve::mindenormal(eve::as<T>()))   , T(eve::rec(std::sqrt(z)))   , 2.0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(2*eve::mindenormal(eve::as<T>())) , T(eve::rec(std::sqrt(2*z))) , 2.0);
 }

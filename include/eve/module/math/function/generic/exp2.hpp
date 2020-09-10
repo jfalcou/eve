@@ -53,7 +53,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t     = element_type_t<T>;
-      auto xltminlog2 = x < Minlog2(eve::as(x));
+      auto xltminlog2 = x < minlog2(eve::as(x));
       auto xgemaxlog2 = x >= maxlog2(eve::as(x));
       if constexpr( scalar_value<T> )
       {

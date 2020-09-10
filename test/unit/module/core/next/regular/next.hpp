@@ -55,9 +55,9 @@ TTS_CASE_TPL("Check eve::next one parameter behavior", EVE_TYPE)
     TTS_EQUAL(eve::next(eve::minf(eve::as<T>()))         , eve::Valmin<T>()      );
     TTS_EQUAL(eve::next(T(-1))                  , T(-1)+eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::next(T(1))                   , T( 1)+eve::eps(eve::as<T>())   );
-    TTS_EQUAL(eve::next(-eve::Mindenormal<T>()) , T(-0.)                );
-    TTS_EQUAL(eve::next(T( 0 ))                 , eve::Mindenormal<T>() );
-    TTS_EQUAL(eve::next(T(-0.))                 , eve::Mindenormal<T>() );
+    TTS_EQUAL(eve::next(-eve::mindenormal(eve::as<T>())) , T(-0.)                );
+    TTS_EQUAL(eve::next(T( 0 ))                 , eve::mindenormal(eve::as<T>()) );
+    TTS_EQUAL(eve::next(T(-0.))                 , eve::mindenormal(eve::as<T>()) );
   }
 }
 
@@ -105,11 +105,11 @@ TTS_CASE_TPL("Check eve::next two parameters behavior", EVE_TYPE)
     TTS_EQUAL(eve::next(  T( 1), si_t(2)) , T( 1)+eve::eps(eve::as<T>())*2 );
     TTS_EQUAL(eve::next(v_t(-1),  i_t(2)) , T(-1)+eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::next(v_t( 1),  i_t(2)) , T( 1)+eve::eps(eve::as<T>())*2 );
-    TTS_EQUAL(eve::next(  T( 0), 1      ) , eve::Mindenormal<T>() );
-    TTS_EQUAL(eve::next(  T(-0), 1      ) , eve::Mindenormal<T>() );
+    TTS_EQUAL(eve::next(  T( 0), 1      ) , eve::mindenormal(eve::as<T>()) );
+    TTS_EQUAL(eve::next(  T(-0), 1      ) , eve::mindenormal(eve::as<T>()) );
     TTS_EQUAL(eve::next(  T( 0), 0      ) , T( 0 )                );
     TTS_EQUAL(eve::next(  T(-0), 0      ) , T(-0.)                );
 
-    TTS_EQUAL(eve::next(-eve::Mindenormal<T>(), 1), T( 0 )        );
+    TTS_EQUAL(eve::next(-eve::mindenormal(eve::as<T>()), 1), T( 0 )        );
   }
 }

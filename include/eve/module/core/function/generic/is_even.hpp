@@ -36,7 +36,7 @@ namespace eve::detail
         auto aisflt = is_flint(a * half(eve::as(a)));
         auto aa = eve::abs(a);
         if constexpr(eve::platform::supports_denormals)
-          return aisflt && (aa != Mindenormal<T>());
+          return aisflt && (aa != mindenormal(eve::as<T>()));
         else
           return aisflt && (aa != Smallestposval<T>());
       }

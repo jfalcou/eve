@@ -39,7 +39,7 @@ namespace eve::detail
         {
           if(is_not_finite(a)) return a;
         }
-        return bit_or(bit_and(a, Mantissamask<T>()),One(eve::as(a)));
+        return bit_or(bit_and(a, mantissamask(eve::as<T>())),One(eve::as(a)));
       }
       else if constexpr(simd_value<T>)
       {
@@ -54,4 +54,3 @@ namespace eve::detail
     else return apply_over(mantissa, a);
   }
 }
-

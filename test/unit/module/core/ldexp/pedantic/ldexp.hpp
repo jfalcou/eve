@@ -55,6 +55,6 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::ldexp) behavior", EVE_TYPE)
 
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<T>()/4, si_t(2))     , eve::Valmax<T>());
   TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Valmax<T>()/4, i_t(2))      , eve::Valmax<T>());
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <T>(), i_t(2))  , eve::Mindenormal<T>()*4);
-  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::Mindenormal <T>(), si_t(2)) , eve::Mindenormal<T>()*4);
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::mindenormal(eve::as<T>()), i_t(2))  , eve::mindenormal(eve::as<T>())*4);
+  TTS_EQUAL(eve::pedantic_(eve::ldexp)(eve::mindenormal(eve::as<T>()), si_t(2)) , eve::mindenormal(eve::as<T>())*4);
 }
