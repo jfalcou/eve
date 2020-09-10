@@ -41,7 +41,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<elt_t, float>)
     {
       T y = horn<T, 0x3d2aaaa5 , 0xbab60619 , 0x37ccf5ce> (z);
-      return inc( fma(z,Mhalf<T>(), y* sqr(z)));
+      return inc( fma(z,mhalf(eve::as<T>()), y* sqr(z)));
     }
     else if constexpr(std::is_same_v<elt_t, double>)
     {

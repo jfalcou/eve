@@ -32,7 +32,7 @@ namespace eve
         EVE_ASSERT( all(is_gez(s)),
                     "[eve::exp10] - with integral entries the parameter element(s) must be greater then 0"
                   );
-        EVE_ASSERT( all(is_less(s, maxlog10<T>())),
+        EVE_ASSERT( all(is_less(s, maxlog10(eve::as<T>()))),
                     "[eve::exp10]  - overflow caused by too large integral entry"
                   );
       }

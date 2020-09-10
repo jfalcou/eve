@@ -33,7 +33,7 @@ namespace eve::detail
         return rec(D()(cosd)(a0));
       }
       auto a0_180 = div_180(a0);
-      auto test   = is_not_flint(a0_180) && is_flint(a0_180+Mhalf(eve::as(a0_180)));
+      auto test   = is_not_flint(a0_180) && is_flint(a0_180+mhalf(eve::as(a0_180)));
       if constexpr( scalar_value<T> ) // early return for nans in scalar case
       {
         if( test ) return nan(eve::as<T>());

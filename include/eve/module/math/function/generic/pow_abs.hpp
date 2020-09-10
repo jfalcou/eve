@@ -59,7 +59,7 @@ namespace eve::detail
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
-    w                = fma(Mhalf<T>(), z, w);
+    w                = fma(mhalf(eve::as<T>()), z, w);
     const T Log2_em1 = T(0.44269504088896340735992468100189);
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
@@ -149,7 +149,7 @@ namespace eve::detail
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
-    w                = fma(Mhalf<T>(), z, w);
+    w                = fma(mhalf(eve::as<T>()), z, w);
     const T Log2_em1 = T(0.44269504088896340735992468100189);
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);

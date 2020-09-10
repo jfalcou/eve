@@ -55,7 +55,7 @@ namespace eve::detail
       if constexpr( has_native_abi_v<T> )
       {
         auto const half  = eve::half(eve::as(a0));
-        auto const mhalf = eve::Mhalf(eve::as(a0));
+        auto const mhalf = eve::mhalf(eve::as(a0));
 
         auto x           = eve::abs(a0);
         auto x_larger_05 = is_greater(x, half);
