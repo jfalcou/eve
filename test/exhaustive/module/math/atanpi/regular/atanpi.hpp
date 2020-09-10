@@ -20,7 +20,7 @@
 TTS_CASE_TPL("wide random check on atanpi", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_atanpi = tts::vectorize<T>( [](auto e) { return eve::Invpi<v_t>()*std::atan(e); } );
+  auto std_atanpi = tts::vectorize<T>( [](auto e) { return eve::invpi(eve::as<v_t>())*std::atan(e); } );
 
   eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_atanpi, eve::atanpi);
