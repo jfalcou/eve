@@ -27,7 +27,7 @@ TTS_CASE_TPL(" negatenz behaviour", EVE_TYPE)
     if constexpr(eve::platform::supports_invalids)
     {
       TTS_EQUAL(eve::negatenz(eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
-      TTS_EQUAL(eve::negatenz(eve::Minf<T>(), eve::Minf<T>()), eve::inf(eve::as<T>()));
+      TTS_EQUAL(eve::negatenz(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())), eve::inf(eve::as<T>()));
 
       TTS_IEEE_EQUAL( eve::negatenz(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>())), eve::nan(eve::as<T>()) );
       TTS_IEEE_EQUAL( eve::negatenz(eve::nan(eve::as<T>()) , T(0))         , eve::nan(eve::as<T>()) );

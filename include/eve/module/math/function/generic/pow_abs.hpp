@@ -100,7 +100,7 @@ namespace eve::detail
     {
       auto gtax1 = is_greater(ax, One<T>());
       z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero_), z);
-      z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, inf(eve::as<T>())), z);
+      z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero_, inf(eve::as<T>())), z);
       z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
     z = if_else(zer_ret, eve::zero_, z);
@@ -129,11 +129,11 @@ namespace eve::detail
     {
       if( xx == a1 && a1 == inf(eve::as<T>()) )
         return inf(eve::as<T>());
-      if( xx == inf(eve::as<T>()) && a1 == Minf<T>() )
+      if( xx == inf(eve::as<T>()) && a1 == minf(eve::as<T>()) )
         return Zero<T>();
       if( a1 == inf(eve::as<T>()) )
         return (xx < One<T>()) ? Zero<T>() : inf(eve::as<T>());
-      if( a1 == Minf<T>() )
+      if( a1 == minf(eve::as<T>()) )
         return (xx > One<T>()) ? Zero<T>() : inf(eve::as<T>());
       if( xx == inf(eve::as<T>()) )
         return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : inf(eve::as<T>()));

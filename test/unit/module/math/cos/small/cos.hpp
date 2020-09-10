@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::small_(eve::cos) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::inf(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::small_(eve::cos)(eve::minf(eve::as<T>())), (eve::nan(eve::as<T>())) );
   }
 
   auto std_cos = [](auto e) { return std::cos(double(e)); };

@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check eve::acot behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::acot(eve::inf(eve::as<T>())) , T(0), 0);
-    TTS_ULP_EQUAL(eve::acot(eve::Minf<T>()), T(0), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::minf(eve::as<T>())), T(0), 0);
   }
 
   TTS_ULP_EQUAL(eve::acot(T( 0.5))         ,  T(1.107148717794090e+00)  , 1   );

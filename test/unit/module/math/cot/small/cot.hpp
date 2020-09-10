@@ -35,11 +35,11 @@ TTS_CASE_TPL("Check eve::eve::small_(eve::cot) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::small_(eve::cot)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::small_(eve::cot)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::small_(eve::cot)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small_(eve::cot)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::small_(eve::cot)(T( 0 )), eve::inf(eve::as<T>())  );
-  TTS_IEEE_EQUAL(eve::small_(eve::cot)(T(-0.)), eve::Minf<T>() );
+  TTS_IEEE_EQUAL(eve::small_(eve::cot)(T(-0.)), eve::minf(eve::as<T>()) );
 
   TTS_ULP_EQUAL(eve::small_(eve::cot)( T(1))            , T(ref_cot(v_t(1.0)))          , 1  );
   TTS_ULP_EQUAL(eve::small_(eve::cot)(-T(1))            , T(ref_cot(v_t(-1.0)))         , 1  );

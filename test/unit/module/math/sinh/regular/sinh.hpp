@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::sinh(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::sinh(eve::inf(eve::as<T>())) , (eve::inf(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::sinh(eve::Minf<T>()), (eve::Minf<T>()) );
+    TTS_IEEE_EQUAL(eve::sinh(eve::minf(eve::as<T>())), (eve::minf(eve::as<T>())) );
   }
   TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(T(-0.)))) );
   TTS_EXPECT(eve::all(eve::is_positive(eve::sinh(T(0))))            );

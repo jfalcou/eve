@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::raw_(eve::pow_abs) behavior", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::Minf<T>(), eve::Minf<T>()), T(0) );
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())), T(0) );
 
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::inf(eve::as<T>()) , T(-0.5)       ), T(0)         );
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(eve::inf(eve::as<T>()) , T(0.5)        ), eve::inf(eve::as<T>()));
@@ -44,8 +44,8 @@ TTS_CASE_TPL("Check eve::raw_(eve::pow_abs) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-1)         ), eve::inf(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0)  , T(-2)         ), eve::inf(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::inf(eve::as<T>()) ), T(0)         );
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::Minf<T>()), eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::Minf<T>()), T(0)         );
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(0.5), eve::minf(eve::as<T>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::minf(eve::as<T>())), T(0)         );
     TTS_IEEE_EQUAL(eve::raw_(eve::pow_abs)(T(2)  , eve::inf(eve::as<T>()) ), eve::inf(eve::as<T>()));
   }
 

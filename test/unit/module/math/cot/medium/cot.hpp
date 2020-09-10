@@ -38,12 +38,12 @@ TTS_CASE_TPL("Check eve::medium_(eve::cot) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::inf(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cot)(eve::minf(eve::as<T>())), (eve::nan(eve::as<T>())) );
   }
   TTS_ULP_EQUAL(eve::medium_(eve::cot)(T(1)), T(my_stdcot(1.0)), 1.0);
   TTS_ULP_EQUAL(eve::medium_(eve::cot)(T(-1)),T(my_stdcot(-1.0)), 1.0);
   TTS_IEEE_EQUAL(eve::medium_(eve::cot)(T(0)), (eve::inf(eve::as<T>())));
-  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(T(-0.)), (eve::Minf<T>()));
+  TTS_IEEE_EQUAL(eve::medium_(eve::cot)(T(-0.)), (eve::minf(eve::as<T>())));
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(eve::Pio_4<T>())), (T(my_stdcot(eve::Pio_4<v_t>()))), 1.5);
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(-eve::Pio_4<T>())),(T(my_stdcot(-eve::Pio_4<v_t>()))), 1.5);
   TTS_ULP_EQUAL((eve::medium_(eve::cot)(T(100.0))), T(my_stdcot(v_t(100.0))), 1.5);

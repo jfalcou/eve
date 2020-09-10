@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::asec behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_IEEE_EQUAL(eve::asec(eve::inf(eve::as<T>())),  eve::Pio_2<T>() );
-    TTS_IEEE_EQUAL(eve::asec(eve::Minf<T>()), eve::Pio_2<T>() );
+    TTS_IEEE_EQUAL(eve::asec(eve::minf(eve::as<T>())), eve::Pio_2<T>() );
   }
 
   if constexpr( eve::platform::supports_nans )

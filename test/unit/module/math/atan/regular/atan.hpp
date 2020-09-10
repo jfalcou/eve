@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check eve::eve::atan behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_IEEE_EQUAL(eve::atan(eve::inf(eve::as<T>())) , eve::Pio_2<T>() );
-    TTS_IEEE_EQUAL(eve::atan(eve::Minf<T>()), -eve::Pio_2<T>());
+    TTS_IEEE_EQUAL(eve::atan(eve::minf(eve::as<T>())), -eve::Pio_2<T>());
   }
 
   TTS_ULP_EQUAL(eve::atan(T(0.5))  , T(4.636476090008061e-01) , 0.5);

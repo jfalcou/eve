@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::big_(eve::sin) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::big_(eve::sin)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
     TTS_IEEE_EQUAL(eve::big_(eve::sin)(eve::inf(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::big_(eve::sin)(eve::Minf<T>()), (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::big_(eve::sin)(eve::minf(eve::as<T>())), (eve::nan(eve::as<T>())) );
   }
 
   TTS_IEEE_EQUAL(eve::big_(eve::sin)(T( 0 )), T(0));

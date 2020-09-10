@@ -34,11 +34,11 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::cot) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(T( 0 )) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(T(-0.)) , eve::Minf<T>());
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(T(-0.)) , eve::minf(eve::as<T>()));
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)( T(1 )) , eve::nan(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(-T(1 )) , eve::nan(eve::as<T>()) );
 

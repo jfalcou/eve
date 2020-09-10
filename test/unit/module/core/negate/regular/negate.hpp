@@ -27,7 +27,7 @@ TTS_CASE_TPL(" negate behaviour", EVE_TYPE)
     if constexpr(eve::platform::supports_invalids)
     {
       TTS_EQUAL(eve::negate(eve::inf(eve::as<T>()) , eve::inf(eve::as<T>()) ), eve::inf(eve::as<T>()));
-      TTS_EQUAL(eve::negate(eve::Minf<T>(), eve::Minf<T>()), eve::inf(eve::as<T>()));
+      TTS_EQUAL(eve::negate(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())), eve::inf(eve::as<T>()));
 
       TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()));
       TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(0)          ), eve::nan(eve::as<T>()));

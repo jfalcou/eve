@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::csc behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::csc(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::csc(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::csc(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::csc(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::csc(T( 0 )), T(ref_csc(v_t(0.0))));

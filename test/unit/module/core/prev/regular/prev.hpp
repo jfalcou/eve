@@ -52,9 +52,9 @@ TTS_CASE_TPL("Check eve::prev one parameter behavior", EVE_TYPE)
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::prev(eve::Minf<T>()), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::prev(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
 
-    TTS_EQUAL(eve::prev(eve::Valmin<T>())     , eve::Minf<T>()          );
+    TTS_EQUAL(eve::prev(eve::Valmin<T>())     , eve::minf(eve::as<T>())          );
     TTS_EQUAL(eve::prev(eve::inf(eve::as<T>()))        , eve::Valmax<T>()        );
     TTS_EQUAL(eve::prev(T(-1 ))               , T(-1) - eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::prev(T( 1 ))               , T( 1) - eve::eps(eve::as<T>())/2 );
@@ -94,11 +94,11 @@ TTS_CASE_TPL("Check eve::prev two parameters behavior", EVE_TYPE)
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::prev(eve::Minf<T>()    , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::prev(eve::minf(eve::as<T>())    , i_t(2)  ), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::prev(eve::Valmin<T>()  , i_t(2)  ), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::prev(eve::Minf<T>()    , si_t(2) ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::prev(eve::minf(eve::as<T>())    , si_t(2) ), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::prev(eve::Valmin<T>()  , si_t(2) ), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::prev(eve::Minf<v_t>()  , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::prev(eve::minf(eve::as<v_t>())  , i_t(2)  ), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::prev(eve::Valmin<v_t>(), i_t(2)  ), eve::nan(eve::as<T>()));
 
     TTS_EXPECT(eve::all(eve::is_negative(eve::prev(T( 0 ), 1) )));

@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::exp(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::exp(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::exp(eve::Minf<T>()), T( 0 ) );
+    TTS_IEEE_EQUAL(eve::exp(eve::minf(eve::as<T>())), T( 0 ) );
   }
 
   TTS_ULP_EQUAL(eve::exp(T(1)), T(std::exp(v_t(1))), 0.5);

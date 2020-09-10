@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::restricted_(eve::tan) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::tan)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   using v_t = eve::element_type_t<T>;

@@ -103,11 +103,11 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
         return if_else(is_ngez(a0), eve::allbits, zz);
       }
@@ -209,11 +209,11 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
         return if_else(is_ngez(a0), eve::allbits, zz);
       }
@@ -245,7 +245,7 @@ namespace eve::detail
       if( ix < 0x00800000 || ix >> 31 ) /* x < 2**-126  */
       {
         if( ix << 1 == 0 )
-          return Minf<T>(); /* log(+-0)=-inf */
+          return minf(eve::as<T>()); /* log(+-0)=-inf */
         if( ix >> 31 )
           return nan(eve::as<T>()); /* log(-#) = NaN */
         if constexpr( eve::platform::supports_denormals )
@@ -304,7 +304,7 @@ namespace eve::detail
       if( hx < 0x00100000 || hx >> 31 )
       {
         if( is_eqz(x) )
-          return Minf<T>(); /* log(+-0)=-inf */
+          return minf(eve::as<T>()); /* log(+-0)=-inf */
         if( hx >> 31 )
           return nan(eve::as<T>()); /* log(-#) = NaN */
         /* subnormal number, scale x up */

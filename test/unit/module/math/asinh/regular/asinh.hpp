@@ -39,10 +39,10 @@ TTS_CASE_TPL("Check eve::asinh behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::asinh(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::asinh(eve::Minf<T>()), eve::Minf<T>(), 0);
+    TTS_ULP_EQUAL(eve::asinh(eve::minf(eve::as<T>())), eve::minf(eve::as<T>()), 0);
   }
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::asinh(eve::Minf<T>()))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::asinh(eve::minf(eve::as<T>())))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::asinh(eve::inf(eve::as<T>())))));
 
   TTS_ULP_EQUAL(eve::asinh(T(-0.5)),  T(std::asinh(v_t(-0.5))), 0.5 );

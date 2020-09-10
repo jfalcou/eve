@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::asech behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::asech(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::asech(eve::Minf<T>()) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::asech(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::asech(T( 2))   ,  eve::nan(eve::as<T>())        , 0   );

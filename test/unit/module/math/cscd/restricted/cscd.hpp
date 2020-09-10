@@ -30,12 +30,12 @@ TTS_CASE_TPL("Check eve::restricted_(eve::cscd) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
 
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(  0 )) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(- 0.)) , eve::Minf<T>());
+  TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(T(- 0.)) , eve::minf(eve::as<T>()));
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)( T(90) ) , eve::nan(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cscd)(-T(90) ) , eve::nan(eve::as<T>()) );
 

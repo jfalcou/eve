@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tanpi)(T(0)))));

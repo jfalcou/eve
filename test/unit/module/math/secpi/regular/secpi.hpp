@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check eve::secpi behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::secpi(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::secpi(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::secpi(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::secpi(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::secpi(T( 0 )) , T(1));

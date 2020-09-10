@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::acoth behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::acoth( T( 1.0)), eve::inf(eve::as<T>())  , 0);
-    TTS_ULP_EQUAL(eve::acoth( T(-1.0)), eve::Minf<T>() , 0);
+    TTS_ULP_EQUAL(eve::acoth( T(-1.0)), eve::minf(eve::as<T>()) , 0);
   }
 
   TTS_ULP_EQUAL(eve::acoth(T( 2.))  , T(std::atanh(v_t(0.5))) , 0.5 );

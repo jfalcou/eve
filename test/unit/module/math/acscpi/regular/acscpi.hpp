@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::acscpi behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_IEEE_EQUAL(eve::acscpi(eve::inf(eve::as<T>())) , (T(0)));
-    TTS_IEEE_EQUAL(eve::acscpi(eve::Minf<T>()), (T(0)));
+    TTS_IEEE_EQUAL(eve::acscpi(eve::minf(eve::as<T>())), (T(0)));
   }
 
   TTS_ULP_EQUAL(eve::acscpi(T(-2.)), T(-1)/6, 1.  );

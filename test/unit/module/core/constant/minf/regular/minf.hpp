@@ -16,11 +16,11 @@
 
 TTS_CASE_TPL("Check minf return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::Minf<T>(), T);
+  TTS_EXPR_IS(eve::minf(eve::as<T>()), T);
 }
 
 TTS_CASE_TPL("Check minf behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::Minf<T>(), T(-std::numeric_limits<v_t>::infinity()) );
+  TTS_EQUAL(eve::minf(eve::as<T>()), T(-std::numeric_limits<v_t>::infinity()) );
 }

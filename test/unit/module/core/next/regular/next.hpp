@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check eve::next one parameter behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::next(eve::inf(eve::as<T>()))     , eve::nan(eve::as<T>())         );
     TTS_EQUAL(eve::next(eve::Valmax<T>())       , eve::inf(eve::as<T>())         );
-    TTS_EQUAL(eve::next(eve::Minf<T>())         , eve::Valmin<T>()      );
+    TTS_EQUAL(eve::next(eve::minf(eve::as<T>()))         , eve::Valmin<T>()      );
     TTS_EQUAL(eve::next(T(-1))                  , T(-1)+eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::next(T(1))                   , T( 1)+eve::eps(eve::as<T>())   );
     TTS_EQUAL(eve::next(-eve::Mindenormal<T>()) , T(-0.)                );

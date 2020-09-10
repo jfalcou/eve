@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check eve::acotpi behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::acotpi(eve::inf(eve::as<T>())),  T(0), 0);
-    TTS_ULP_EQUAL(eve::acotpi(eve::Minf<T>()), T(0), 0);
+    TTS_ULP_EQUAL(eve::acotpi(eve::minf(eve::as<T>())), T(0), 0);
   }
 
   TTS_ULP_EQUAL(eve::acotpi(T( 0.5)) , eve::radinpi(T(1.107148717794090e+00)) , 1.5 );

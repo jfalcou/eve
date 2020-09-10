@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::cospi behavior", EVE_TYPE)
     {
       TTS_IEEE_EQUAL(eve::cospi(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
       TTS_IEEE_EQUAL(eve::cospi(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-      TTS_IEEE_EQUAL(eve::cospi(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+      TTS_IEEE_EQUAL(eve::cospi(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
     }
 
     TTS_IEEE_EQUAL(eve::cospi(T(-0.)), T(1) );

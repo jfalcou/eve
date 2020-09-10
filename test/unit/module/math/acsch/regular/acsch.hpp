@@ -39,8 +39,8 @@ TTS_CASE_TPL("Check eve::acsch behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_ULP_EQUAL(eve::acsch(eve::inf(eve::as<T>())) , T(0), 0);
-    TTS_ULP_EQUAL(eve::acsch(eve::Minf<T>()) , T(-0.0), 0);
-    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::Minf<T>()))));
+    TTS_ULP_EQUAL(eve::acsch(eve::minf(eve::as<T>())) , T(-0.0), 0);
+    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::minf(eve::as<T>())))));
     TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::inf(eve::as<T>())))));
   }
 

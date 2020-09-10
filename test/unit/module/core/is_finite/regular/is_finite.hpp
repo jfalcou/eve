@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::is_finite behavior", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     TTS_EQUAL(eve::is_finite(eve::inf(eve::as<T>())) , eve::False(eve::as<T>()));
-    TTS_EQUAL(eve::is_finite(eve::Minf<T>()), eve::False(eve::as<T>()));
+    TTS_EQUAL(eve::is_finite(eve::minf(eve::as<T>())), eve::False(eve::as<T>()));
     TTS_EQUAL(eve::is_finite(eve::nan(eve::as<T>())) , eve::False(eve::as<T>()));
   }
 }

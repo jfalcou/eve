@@ -46,12 +46,12 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::frexp) behavior", EVE_TYPE)
   if constexpr(eve::platform::supports_infinites)
   {
     auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::inf(eve::as<T>()));
-    auto [q0, q1] = eve::pedantic_(eve::frexp)(eve::Minf<T>());
+    auto [q0, q1] = eve::pedantic_(eve::frexp)(eve::minf(eve::as<T>()));
 
     TTS_IEEE_EQUAL(r0, (eve::inf(eve::as<T>())));
     TTS_EQUAL     (r1, T(0));
 
-    TTS_IEEE_EQUAL(q0, (eve::Minf<T>()));
+    TTS_IEEE_EQUAL(q0, (eve::minf(eve::as<T>())));
     TTS_EQUAL     (q1, T(0));
   }
   if constexpr(eve::platform::supports_denormals)

@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::log1p(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::log1p(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log1p(eve::Mone<T>()) , eve::Minf<T>());
+    TTS_IEEE_EQUAL(eve::log1p(eve::Mone<T>()) , eve::minf(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::log1p(T( 0 ))         , T( 0 )        );
   }
   if constexpr(eve::platform::supports_denormals)

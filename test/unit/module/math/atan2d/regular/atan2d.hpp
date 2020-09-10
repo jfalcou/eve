@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::atan2d behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     auto inf  = eve::inf(eve::as<T>());
-    auto minf = eve::Minf<T>();
+    auto minf = eve::minf(eve::as<T>());
 
     TTS_ULP_EQUAL(eve::atan2d(inf         , (T(1.))  ), (T(90))  , 0.5);
     TTS_ULP_EQUAL(eve::atan2d(inf         , (T(-1.)) ), (T(90))  , 0.5);

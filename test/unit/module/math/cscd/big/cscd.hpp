@@ -30,11 +30,11 @@ TTS_CASE_TPL("Check eve::big_(eve::cscd) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::cscd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T( 0 )) , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T(-0.)) , eve::Minf<T>());
+  TTS_IEEE_EQUAL(eve::big_(eve::cscd)(T(-0.)) , eve::minf(eve::as<T>()));
 
   TTS_ULP_EQUAL(eve::big_(eve::cscd)( T(1)  ) , T(57.298688498550185476612685755175779889969877177276)   , 5);
   TTS_ULP_EQUAL(eve::big_(eve::cscd)(-T(1)  ) , T(-57.298688498550185476612685755175779889969877177276)  , 5);

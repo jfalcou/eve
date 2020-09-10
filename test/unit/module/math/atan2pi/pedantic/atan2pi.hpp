@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check pedantic_(eve::atan2pi) behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     auto inf  = eve::inf(eve::as<T>());
-    auto minf = eve::Minf<T>();
+    auto minf = eve::minf(eve::as<T>());
 
     TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf         , (T(1.))  ), (T(0.5))  , 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2pi)(inf         , (T(-1.)) ), (T(0.5))  , 0.5);

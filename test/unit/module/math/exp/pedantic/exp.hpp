@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::exp) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::Minf<T>()), T( 0 ) );
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::exp)(eve::minf(eve::as<T>())), T( 0 ) );
   }
 
   TTS_ULP_EQUAL(eve::pedantic_(eve::exp)(T(1)), T(std::exp(v_t(1))), 0.5);

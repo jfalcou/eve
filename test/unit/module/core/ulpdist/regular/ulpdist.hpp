@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check eve::ulpdist behavior", EVE_TYPE)
     if constexpr(eve::platform::supports_invalids)
     {
       TTS_EQUAL ( ulpdist(eve::inf(eve::as<T>()), eve::inf(eve::as<T>()))   , T(0) );
-      TTS_EQUAL ( ulpdist(eve::Minf<T>(), eve::Minf<T>()) , T(0) );
+      TTS_EQUAL ( ulpdist(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())) , T(0) );
       TTS_EQUAL ( ulpdist(eve::nan(eve::as<T>()), eve::nan(eve::as<T>()))   , T(0) );
     }
 

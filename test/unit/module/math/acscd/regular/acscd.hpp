@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::acscd behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_IEEE_EQUAL(eve::acscd(eve::inf(eve::as<T>()))  , (T(0)) );
-    TTS_IEEE_EQUAL(eve::acscd(eve::Minf<T>()) , (T(0)) );
+    TTS_IEEE_EQUAL(eve::acscd(eve::minf(eve::as<T>())) , (T(0)) );
   }
 
   TTS_ULP_EQUAL(eve::acscd(T(-2.)),  -T(30), 1  );

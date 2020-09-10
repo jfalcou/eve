@@ -38,5 +38,5 @@ TTS_CASE_TPL("Check eve::acsc behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::acsc(T( 1.)),  eve::Pio_2<T>()   , 0.5 );
 
   TTS_IEEE_EQUAL(eve::acsc(eve::inf(eve::as<T>())) , (T(0)));
-  TTS_IEEE_EQUAL(eve::acsc(eve::Minf<T>()), (T(0)));
+  TTS_IEEE_EQUAL(eve::acsc(eve::minf(eve::as<T>())), (T(0)));
 }

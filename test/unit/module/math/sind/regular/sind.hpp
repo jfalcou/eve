@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::sind behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::sind(eve::nan(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::sind(eve::inf(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::sind(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::sind(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::sind(T( 0 )), T(0) );

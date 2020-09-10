@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::acotd behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_nans )
   {
     TTS_ULP_EQUAL(eve::acotd(eve::inf(eve::as<T>()))  , T(0), 0);
-    TTS_ULP_EQUAL(eve::acotd(eve::Minf<T>()) , T(0), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::minf(eve::as<T>())) , T(0), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )

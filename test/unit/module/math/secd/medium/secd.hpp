@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check eve::medium_(eve::secd) behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::medium_(eve::secd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::medium_(eve::secd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::secd)(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::secd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::medium_(eve::secd)(T( 0 )) , T(1));

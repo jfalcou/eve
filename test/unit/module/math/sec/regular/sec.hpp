@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check eve::sec behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::sec(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::sec(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::sec(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::sec(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::sec(T( 0 )), T(ref_sec(0.0)) );

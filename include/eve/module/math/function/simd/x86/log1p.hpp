@@ -95,11 +95,11 @@ namespace eve::detail
       T zz;
       if constexpr( eve::platform::supports_infinites )
       {
-        zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), Minf<T>());
+        zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
       }
       else
       {
-        zz = if_else(isnez, r, Minf<T>());
+        zz = if_else(isnez, r, minf(eve::as<T>()));
       }
       return if_else(is_ngez(uf), eve::allbits, zz);
     }

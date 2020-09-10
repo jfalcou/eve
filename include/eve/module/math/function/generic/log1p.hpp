@@ -71,11 +71,11 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
         return if_else(is_ngez(uf), eve::allbits, zz);
       }
@@ -121,11 +121,11 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
         return if_else(is_ngez(uf), eve::allbits, zz);
       }
@@ -162,7 +162,7 @@ namespace eve::detail
         if( ix >= 0xbf800000 ) /* x <= -1.0 */
         {
           if( x == Mone<T>() )
-            return Minf<T>(); /* log1p(-1)=-inf */
+            return minf(eve::as<T>()); /* log1p(-1)=-inf */
           return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( ix << 1 < 0x33800000 << 1 ) /* |x| < 2**-24 */
@@ -228,7 +228,7 @@ namespace eve::detail
         if( hx >= 0xbff00000 ) /* x <= -1.0 */
         {
           if( x == Mone<T>() )
-            return Minf<T>(); /* log1p(-1)=-inf */
+            return minf(eve::as<T>()); /* log1p(-1)=-inf */
           return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( hx << 1 < 0x3ca00000 << 1 ) /* |x| < 2**-53 */

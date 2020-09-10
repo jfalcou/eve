@@ -61,8 +61,8 @@ TTS_CASE_TPL("Check eve::toward_zero_(eve::rem) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(1),   T(0)), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  T(-1),   T(0)), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::inf(eve::as<T>()),   T(0)), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::Minf<T>(),   T(0)), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)(  eve::minf(eve::as<T>()),   T(0)), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1),  eve::inf(eve::as<T>())), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1), eve::Minf<T>()), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::toward_zero_(eve::rem)( T(1), eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 }

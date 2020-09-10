@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
   {
     TTS_IEEE_EQUAL((eve::tanpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL((eve::tanpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL((eve::tanpi)(eve::Minf<T>()), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL((eve::tanpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::tanpi(T(0))   , T(0));

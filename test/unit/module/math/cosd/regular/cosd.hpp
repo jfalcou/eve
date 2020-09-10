@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check eve::cosd behavior",EVE_TYPE)
   {
     TTS_IEEE_EQUAL(eve::cosd(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(eve::cosd(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cosd(eve::Minf<T>()) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cosd(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
 
