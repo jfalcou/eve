@@ -56,7 +56,7 @@ namespace eve::detail
         if( xltminlog10 )
           return Zero(eve::as(x));
       }
-      auto c = nearest(Invlog10_2<T>() * x);
+      auto c = nearest(invlog10_2(eve::as<T>()) * x);
       auto k = c;
       x      = fnma(c, Log10_2hi, x); // x-c*L
       x      = fnma(c, Log10_2lo, x);

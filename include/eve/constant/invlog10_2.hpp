@@ -19,17 +19,16 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(invlog10_2_, invlog10_2_);
+  EVE_MAKE_CALLABLE(invlog10_2_, invlog10_2);
 
-  template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Invlog10_2(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x40549a78U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x400a934f0979a371ULL>();
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto invlog10_2_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x40549a78U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x400a934f0979a371ULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(invlog10_2_, Invlog10_2);
 }
-
