@@ -53,7 +53,7 @@ namespace eve::detail
       static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
       double r = xx * pi_inv;
       int32_t  n = ((int32_t)r + 0x800000) >> 24;
-      double xr = xx - n * Pio_2<double>();
+      double xr = xx - n * pio_2(eve::as<double>());
       float dxr = xr-float(xr);
       float fn =  n&3;
       return std::make_tuple(fn, float(xr), dxr);
@@ -119,7 +119,7 @@ namespace eve::detail
       da = (t - a) + da;
       auto fa = single_(a);
       auto dfa = single_((a- double_(fa))+da);
-      if (fa >= Pio_4<float>() || fa < - Pio_4<float>())
+      if (fa >= pio_4(eve::as<float>()) || fa < - pio_4(eve::as<float>()))
       {
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);

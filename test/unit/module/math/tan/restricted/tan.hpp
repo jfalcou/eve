@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::restricted_(eve::tan) behavior", EVE_TYPE)
   TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::tan)(T(-0.)))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tan)(T( 0 )))));
 
-  auto vpi_4 = eve::Pio_4<T>();
-  auto spi_4 = eve::Pio_4<v_t>();
+  auto vpi_4 = eve::pio_4(eve::as<T>());
+  auto spi_4 = eve::pio_4(eve::as<v_t>());
 
   TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(1))     , eve::nan(eve::as<T>())         , 0.5 );
   TTS_ULP_EQUAL( eve::restricted_(eve::tan)(T(-1))    , eve::nan(eve::as<T>())         , 0.5 );

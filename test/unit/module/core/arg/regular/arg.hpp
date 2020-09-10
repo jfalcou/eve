@@ -28,11 +28,11 @@ TTS_CASE_TPL("Check eve::arg behavior", EVE_TYPE)
   if constexpr( eve::platform::supports_infinites )
   {
     TTS_EQUAL( eve::arg(eve::inf(eve::as<T>()))  , T( 0 )       );
-    TTS_EQUAL( eve::arg(eve::minf(eve::as<T>())) , eve::Pi<T>() );
+    TTS_EQUAL( eve::arg(eve::minf(eve::as<T>())) , eve::pi(eve::as<T>()) );
   }
 
-  TTS_EQUAL( eve::arg(T(-1 )), eve::Pi<T>() );
-  TTS_EQUAL( eve::arg(T(-0.)), eve::Pi<T>() );
+  TTS_EQUAL( eve::arg(T(-1 )), eve::pi(eve::as<T>()) );
+  TTS_EQUAL( eve::arg(T(-0.)), eve::pi(eve::as<T>()) );
   TTS_EQUAL( eve::arg(T( 0 )), T( 0 ) );
   TTS_EQUAL( eve::arg(T( 1 )), T( 0 ) );
 }

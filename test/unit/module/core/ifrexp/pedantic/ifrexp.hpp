@@ -60,6 +60,6 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::ifrexp) behavior", EVE_TYPE)
     auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::mindenormal(eve::as<T>()));
 
     TTS_ULP_EQUAL (r0, T(0.5), 1);
-    TTS_EQUAL     (r1, i_t(eve::minexponent(eve::as<T>())-eve::Nbmantissabits<T>()+1));
+    TTS_EQUAL     (r1, i_t(eve::minexponent(eve::as<T>())-eve::nbmantissabits(eve::as<T>())+1));
   }
 }

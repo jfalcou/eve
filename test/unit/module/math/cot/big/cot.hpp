@@ -42,8 +42,8 @@ TTS_CASE_TPL("Check eve::eve::big_(eve::cot) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::big_(eve::cot)( T(1))               , T(ref_cot(v_t(1.0)))          , 1  );
   TTS_ULP_EQUAL(eve::big_(eve::cot)(-T(1))               , T(ref_cot(v_t(-1.0)))         , 1  );
-  TTS_ULP_EQUAL(eve::big_(eve::cot)( eve::Pio_4<T>())    , T(ref_cot(eve::Pio_4<v_t>())) , 1  );
-  TTS_ULP_EQUAL(eve::big_(eve::cot)(-eve::Pio_4<T>())    , T(ref_cot(-eve::Pio_4<v_t>())), 1  );
+  TTS_ULP_EQUAL(eve::big_(eve::cot)( eve::pio_4(eve::as<T>()))    , T(ref_cot(eve::pio_4(eve::as<v_t>()))) , 1  );
+  TTS_ULP_EQUAL(eve::big_(eve::cot)(-eve::pio_4(eve::as<T>()))    , T(ref_cot(-eve::pio_4(eve::as<v_t>()))), 1  );
   TTS_ULP_EQUAL(eve::big_(eve::cot)( T(100000.0))        , T(ref_cot(100000.0))          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::cot)(-T(100000.0))        , T(ref_cot(-100000.0))         , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::cot)(-T(100000000.0))     , T(ref_cot(-100000000.0))      , 0.5);

@@ -51,7 +51,7 @@ namespace eve::detail
     {
       auto x =  double_(xx);
       auto n =  nearest(x*Twoopi<double>());
-      auto dxr = fma(n, -Pio_2<double>(), x);
+      auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return std::make_tuple(quadrant(single_(n)), single_(dxr), T(0.0f));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
@@ -112,7 +112,7 @@ namespace eve::detail
       da       = (t - a) + da;
       auto fa  = single_(a);
       auto dfa = single_((a - double_(fa)) + da);
-      if( any(fa >= Pio_4<float>() || fa < -Pio_4<float>()) )
+      if( any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);

@@ -28,7 +28,7 @@ namespace eve::detail
                                                        , T const &a) noexcept
   {
     if constexpr(!floating_value<T>) return false_(eve::as<T>());
-    else if constexpr(has_native_abi_v<T>)    return is_nez(a) && (abs(a) < Smallestposval<T>());
+    else if constexpr(has_native_abi_v<T>)    return is_nez(a) && (abs(a) < smallestposval(eve::as<T>()));
     else                            return apply_over(is_denormal, a);
   }
 }

@@ -40,10 +40,10 @@ TTS_CASE_TPL("Check eve::small_(eve::sec) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::small_(eve::sec)( T(1))             , T(ref_sec(1.0))                 , 1.0 );
   TTS_ULP_EQUAL(eve::small_(eve::sec)( T(-1))            , T(ref_sec(-1.0))                , 1.0 );
-  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::Pio_4<T>())  , T(ref_sec(eve::Pio_4<v_t>()))   , 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::Pio_4<T>())  , T(ref_sec(-eve::Pio_4<v_t>()))  , 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::Pio_4<T>()/2), T(ref_sec(eve::Pio_4<v_t>()/2)) , 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::Pio_4<T>()/2), T(ref_sec(-eve::Pio_4<v_t>()/2)), 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::Pio_2<T>())  , T(ref_sec(eve::Pio_2<v_t>()))   , 5.5 );
-  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::Pio_2<T>())  , T(ref_sec(-eve::Pio_2<v_t>()))  , 5.5 );
+  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::pio_4(eve::as<T>()))  , T(ref_sec(eve::pio_4(eve::as<v_t>())))   , 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::pio_4(eve::as<T>()))  , T(ref_sec(-eve::pio_4(eve::as<v_t>())))  , 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::pio_4(eve::as<T>())/2), T(ref_sec(eve::pio_4(eve::as<v_t>())/2)) , 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::pio_4(eve::as<T>())/2), T(ref_sec(-eve::pio_4(eve::as<v_t>())/2)), 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::sec)( eve::pio_2(eve::as<T>()))  , T(ref_sec(eve::pio_2(eve::as<v_t>())))   , 5.5 );
+  TTS_ULP_EQUAL(eve::small_(eve::sec)(-eve::pio_2(eve::as<T>()))  , T(ref_sec(-eve::pio_2(eve::as<v_t>())))  , 5.5 );
 }

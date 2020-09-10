@@ -51,6 +51,6 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
   TTS_ULP_EQUAL(eve::log1p(T(1))                    , eve::log_2(eve::as<T>())         , 0.5 );
   TTS_ULP_EQUAL(eve::log1p(T(0))                    , T(0)                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(eve::Smallestposval<T>()), eve::Smallestposval<T>(), 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(eve::smallestposval(eve::as<T>())), eve::smallestposval(eve::as<T>()), 0.5 );
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
 }

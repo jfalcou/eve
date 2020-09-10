@@ -47,7 +47,7 @@ namespace eve::detail
       else if constexpr(std::is_unsigned_v<T>)
       {
         using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
-        s_t const sm = Signmask<s_t>();
+        s_t const sm = signmask(eve::as<s_t>());
 
         return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
                                                 eve::bit_cast(v1,as(sm)) - sm
@@ -137,7 +137,7 @@ namespace eve::detail
         else
         {
           using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, avx_>;
-          s_t const sm = Signmask<s_t>();
+          s_t const sm = signmask(eve::as<s_t>());
 
           return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
                                                   eve::bit_cast(v1,as(sm)) - sm

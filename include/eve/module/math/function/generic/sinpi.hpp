@@ -34,7 +34,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return eve::restricted_(sin)(x * Pi<T>());
+      return eve::restricted_(sin)(x * pi(eve::as<T>()));
     }
     else
       return apply_over(restricted_(sinpi), x);

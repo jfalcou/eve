@@ -52,7 +52,7 @@ namespace eve::detail
     estimate = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
 
 #pragma once
-    estimate = if_else(is_infinite(v0), bit_and(v0, Mzero(eve::as(v0))), estimate);
+    estimate = if_else(is_infinite(v0), bit_and(v0, mzero(eve::as(v0))), estimate);
 #endif
 
     return estimate;

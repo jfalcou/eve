@@ -29,7 +29,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-            if constexpr( floating_value<T> )               return bit_andnot(a, Mzero(eve::as(a)));
+            if constexpr( floating_value<T> )               return bit_andnot(a, mzero(eve::as(a)));
       else  if constexpr( unsigned_value<T> )               return a;
       else  if constexpr( signed_integral_scalar_value<T> ) return a < T(0) ? -a : a;
       else                                                  return eve::max(a, -a);

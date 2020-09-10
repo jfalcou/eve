@@ -36,13 +36,13 @@ namespace eve::detail
         if (is_eqz(a0)) return one(eve::as(a0));
         if constexpr(eve::platform::supports_infinites) if(is_infinite(a0)) return Zero<T>();
         if constexpr(eve::platform::supports_denormals)
-          return eve::abs(a0) < eps(as<T>()) ? one(eve::as<T>()) : sinpi(a0)/(Pi(eve::as(a0))*a0);
+          return eve::abs(a0) < eps(as<T>()) ? one(eve::as<T>()) : sinpi(a0)/(pi(eve::as(a0))*a0);
         else
-          return sinpi(a0)/(Pi(eve::as(a0))*a0);
+          return sinpi(a0)/(pi(eve::as(a0))*a0);
       }
       else
       {
-        auto r1 =  sinpi(a0)/(Pi(eve::as(a0))*a0);
+        auto r1 =  sinpi(a0)/(pi(eve::as(a0))*a0);
         if constexpr(eve::platform::supports_denormals)
         {
           r1 = if_else (eve::abs(a0) < eps(as<T>()), one(eve::as<T>()) , r1);

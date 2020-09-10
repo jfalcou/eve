@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check eve::medium_(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
-  auto pi_v = eve::Pi<v_t>();
+  auto pi_v = eve::pi(eve::as<v_t>());
 
   v_t x[]  = {  pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, v_t(1), v_t(-1)
               , v_t(10), v_t(-10), v_t(1000000), v_t(-1000000)

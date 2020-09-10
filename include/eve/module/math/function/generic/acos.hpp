@@ -38,7 +38,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto tmp = Pio_2(eve::as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
+      auto tmp = pio_2(eve::as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
       return if_else(a0 == T(1), eve::zero_, tmp);
     }
     else
@@ -63,9 +63,9 @@ namespace eve::detail
         x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
         x = asin(x);
         x = add[x_larger_05](x, x);
-        x = eve::if_else(is_less(a0, mhalf), eve::Pi(eve::as(a0)) - x, x);
+        x = eve::if_else(is_less(a0, mhalf), eve::pi(eve::as(a0)) - x, x);
 
-        return eve::if_else(x_larger_05, x, eve::Pio_2(eve::as(a0)) - x);
+        return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
       }
       else
       {
@@ -88,7 +88,7 @@ namespace eve::detail
       {
         if( a0 < -0.5f )
         {
-          return Pi<T>() - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
+          return pi(eve::as<T>()) - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
         }
         else if( a0 > 0.5f )
         {
@@ -96,7 +96,7 @@ namespace eve::detail
         }
         else
         {
-          return Pio_2<T>() - eve::asin(a0);
+          return pio_2(eve::as<T>()) - eve::asin(a0);
         }
       }
       else if constexpr( std::same_as<T, double> )
@@ -106,10 +106,10 @@ namespace eve::detail
           return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
         }
 
-        T const pio4 = Pio_4<T>();
+        T const pio4 = pio_4(eve::as<T>());
 
         T z = pio4 - eve::asin(a0);
-        z += Constant<T, 0X3C81A62633145C07ULL>(); // Pio_4lo<T>();
+        z += Constant<T, 0X3C81A62633145C07ULL>(); // Pio_4lo(as<T>());
         z += pio4;
 
         return z;
@@ -117,4 +117,3 @@ namespace eve::detail
     }
   }
 }
-

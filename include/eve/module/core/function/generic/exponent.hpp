@@ -35,12 +35,12 @@ namespace eve::detail
       if constexpr(scalar_value<T>)
       {
         if (is_not_finite(a)) return as_integer_t<T>(0);
-        auto x = shr(z, Nbmantissabits<T>());
+        auto x = shr(z, nbmantissabits(eve::as<T>()));
         return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
       }
       else
       {
-        auto x = shr(z, Nbmantissabits<T>());
+        auto x = shr(z, nbmantissabits(eve::as<T>()));
         return if_else(is_not_finite(a), eve::zero_, sub[is_nez(a)](x, maxexponent(eve::as<T>())));
       }
     }

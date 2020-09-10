@@ -56,7 +56,7 @@ namespace eve::detail
         x = if_else(x_larger_05, sqrt(z), x);
         T z1 = horn<T, 0x3e2aaae4, 0x3d9980f6, 0x3d3a3ec7, 0x3cc617e3, 0x3d2cb352>(z);
         z1 = fma(z1, z*x, x);
-        z = if_else(x_larger_05, Pio_2<T>()-(z1+z1), z1);
+        z = if_else(x_larger_05, pio_2(eve::as<T>())-(z1+z1), z1);
         return eve::bit_xor(z, sgn);
       }
       else if constexpr(std::is_same_v<elt_t, double>)
@@ -78,10 +78,10 @@ namespace eve::detail
           auto den = horn1<T, 0x40756709b0b644bell, 0xc077fe08959063eell, 0x40626219af6a7f42ll, 0xc035f2a2b6bf5d8cll>(zz1);
           auto vp =  num/den;
           zz1 =  sqrt(zz1+zz1);
-          auto z = Pio_4<T>()-zz1;
+          auto z = pio_4(eve::as<T>())-zz1;
           zz1 = fms(zz1, vp,  Constant<T, 0X3C91A62633145C07ULL>());//pio_2lo
           z =  z-zz1;
-          zz1 = z+Pio_4<T>();
+          zz1 = z+pio_4(eve::as<T>());
           return zz1;
         };
         auto case_2 =  [](const T & x){ // x >=  0.625

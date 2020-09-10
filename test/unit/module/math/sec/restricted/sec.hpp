@@ -40,8 +40,8 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sec) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::restricted_(eve::sec)( T(1))             , eve::nan(eve::as<T>())                    , 1.0 );
   TTS_ULP_EQUAL(eve::restricted_(eve::sec)( T(-1))            , eve::nan(eve::as<T>())                    , 1.0 );
-  TTS_ULP_EQUAL(eve::restricted_(eve::sec)( eve::Pio_4<T>())  , T(ref_sec(eve::Pio_4<v_t>()))    , 0.75);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sec)(-eve::Pio_4<T>())  , T(ref_sec(-eve::Pio_4<v_t>()))   , 0.75);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sec)( eve::Pio_4<T>()/2), T(ref_sec(eve::Pio_4<v_t>()/2))  , 0.75);
-  TTS_ULP_EQUAL(eve::restricted_(eve::sec)(-eve::Pio_4<T>()/2), T(ref_sec(-eve::Pio_4<v_t>()/2)) , 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sec)( eve::pio_4(eve::as<T>()))  , T(ref_sec(eve::pio_4(eve::as<v_t>())))    , 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sec)(-eve::pio_4(eve::as<T>()))  , T(ref_sec(-eve::pio_4(eve::as<v_t>())))   , 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sec)( eve::pio_4(eve::as<T>())/2), T(ref_sec(eve::pio_4(eve::as<v_t>())/2))  , 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::sec)(-eve::pio_4(eve::as<T>())/2), T(ref_sec(-eve::pio_4(eve::as<v_t>())/2)) , 0.75);
 }

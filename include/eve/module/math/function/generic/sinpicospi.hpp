@@ -36,7 +36,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return restricted_(sincos)(a0 * Pi<T>());
+      return restricted_(sincos)(a0 * pi(eve::as<T>()));
     }
     else
       return apply_over2(restricted_(sinpicospi), a0);

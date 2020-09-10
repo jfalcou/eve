@@ -70,7 +70,7 @@ namespace eve::detail
         //       logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
-          auto test = is_less(a0, Smallestposval<T>()) && isnez;
+          auto test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
           if( any(test) )
           {
             dk = sub[test](dk, T(25));
@@ -126,7 +126,7 @@ namespace eve::detail
         T    dk    = Zero<T>();
         auto isnez = is_nez(a0);
 
-        logical<T> test = is_less(a0, Smallestposval<T>()) && isnez;
+        logical<T> test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
         if constexpr( eve::platform::supports_denormals )
         {
           if( any(test) )

@@ -43,6 +43,6 @@ TTS_CASE_TPL("Check eve::restricted_(eve::cos) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::restricted_(eve::cos)( T(1)           ), eve::nan(eve::as<T>()) , 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::cos)(-T(1)           ), eve::nan(eve::as<T>()) , 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cos)( eve::Pio_4<T>()), T(std_cos( eve::Pio_4<v_t>())), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cos)(-eve::Pio_4<T>()), T(std_cos(-eve::Pio_4<v_t>())), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cos)( eve::pio_4(eve::as<T>())), T(std_cos( eve::pio_4(eve::as<v_t>()))), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cos)(-eve::pio_4(eve::as<T>())), T(std_cos(-eve::pio_4(eve::as<v_t>()))), 0.5);
 }

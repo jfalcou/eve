@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::sin) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(T( 0)) , T(0));
   TTS_IEEE_EQUAL(eve::restricted_(eve::sin)(T(-0.)), T(0));
 
-  auto pio4   = eve::Pio_4<T>();
-  auto vpio4  = eve::Pio_4<v_t>();
+  auto pio4   = eve::pio_4(eve::as<T>());
+  auto vpio4  = eve::pio_4(eve::as<v_t>());
 
   TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T( 1))  , eve::nan(eve::as<T>())         , 0.5);
   TTS_ULP_EQUAL(eve::restricted_(eve::sin)( T(-1))  , eve::nan(eve::as<T>())         , 0.5);

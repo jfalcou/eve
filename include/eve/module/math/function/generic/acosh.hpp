@@ -31,7 +31,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       const T    t    = dec(x);
-      auto const test = is_greater(t, Oneotwoeps<T>());
+      auto const test = is_greater(t, oneotwoeps(eve::as<T>()));
 
       if constexpr( simd_value<T> )
       {

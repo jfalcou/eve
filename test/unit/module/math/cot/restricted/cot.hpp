@@ -42,8 +42,8 @@ TTS_CASE_TPL("Check eve::eve::restricted_(eve::cot) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)( T(1 )) , eve::nan(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::restricted_(eve::cot)(-T(1 )) , eve::nan(eve::as<T>()) );
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)( eve::Pio_4<T>())  , T(ref_cot( eve::Pio_4<v_t>())), 1  );
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(-eve::Pio_4<T>())  , T(ref_cot(-eve::Pio_4<v_t>())), 1  );
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)( eve::Pio_4<T>()/2), T(ref_cot( eve::Pio_4<v_t>()/2)), 0.5);
-  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(-eve::Pio_4<T>()/2), T(ref_cot(-eve::Pio_4<v_t>()/2)), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)( eve::pio_4(eve::as<T>()))  , T(ref_cot( eve::pio_4(eve::as<v_t>()))), 1  );
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(-eve::pio_4(eve::as<T>()))  , T(ref_cot(-eve::pio_4(eve::as<v_t>()))), 1  );
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)( eve::pio_4(eve::as<T>())/2), T(ref_cot( eve::pio_4(eve::as<v_t>())/2)), 0.5);
+  TTS_ULP_EQUAL(eve::restricted_(eve::cot)(-eve::pio_4(eve::as<T>())/2), T(ref_cot(-eve::pio_4(eve::as<v_t>())/2)), 0.5);
 }

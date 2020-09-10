@@ -26,8 +26,8 @@ TTS_CASE_TPL("Check eve::asec behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::asec(eve::inf(eve::as<T>())),  eve::Pio_2<T>() );
-    TTS_IEEE_EQUAL(eve::asec(eve::minf(eve::as<T>())), eve::Pio_2<T>() );
+    TTS_IEEE_EQUAL(eve::asec(eve::inf(eve::as<T>())),  eve::pio_2(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asec(eve::minf(eve::as<T>())), eve::pio_2(eve::as<T>()) );
   }
 
   if constexpr( eve::platform::supports_nans )
@@ -37,8 +37,8 @@ TTS_CASE_TPL("Check eve::asec behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::asec(eve::nan(eve::as<T>()))  , (eve::nan(eve::as<T>())) );
   }
 
-  TTS_ULP_EQUAL(eve::asec(T(-2)) , 2*eve::Pi<T>()/3 , 1   );
-  TTS_ULP_EQUAL(eve::asec(T( 2)) , eve::Pi<T>()/3   , 1   );
-  TTS_ULP_EQUAL(eve::asec(T(-1)) , eve::Pi<T>()     , 0.5 );
+  TTS_ULP_EQUAL(eve::asec(T(-2)) , 2*eve::pi(eve::as<T>())/3 , 1   );
+  TTS_ULP_EQUAL(eve::asec(T( 2)) , eve::pi(eve::as<T>())/3   , 1   );
+  TTS_ULP_EQUAL(eve::asec(T(-1)) , eve::pi(eve::as<T>())     , 0.5 );
   TTS_ULP_EQUAL(eve::asec(T( 1)) , (T(0))           , 0.5 );
 }

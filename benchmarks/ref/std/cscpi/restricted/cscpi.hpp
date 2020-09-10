@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 {
   auto const std_cscpi = [](auto x) { return 1/std::sin(std::numbers::pi_v<EVE_TYPE>*x); };
 
-  EVE_REGISTER_BENCHMARK(std_cscpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Pio_4<EVE_TYPE>(), eve::Pio_4<EVE_TYPE>()));
+  EVE_REGISTER_BENCHMARK(std_cscpi, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::pio_4(eve::as<EVE_TYPE>()), eve::pio_4(eve::as<EVE_TYPE>())));
 
   eve::bench::start_benchmarks(argc, argv);
 }

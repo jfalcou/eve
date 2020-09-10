@@ -23,7 +23,7 @@ namespace eve::detail
   template<typename T>
   EVE_FORCEINLINE auto bitofsign_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
-    if constexpr(has_native_abi_v<T>) return bit_and(a, Signmask(eve::as(a)));
+    if constexpr(has_native_abi_v<T>) return bit_and(a, signmask(eve::as(a)));
     else                              return apply_over(bitofsign, a);
   }
 

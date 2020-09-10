@@ -35,7 +35,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return eve::restricted_(tan)(x * Pi<T>());
+      return eve::restricted_(tan)(x * pi(eve::as<T>()));
     }
     else
       return apply_over(restricted_(tanpi), x);
@@ -64,7 +64,7 @@ namespace eve::detail
         x = if_else(is_not_finite(a0) || (frac(x) == half(eve::as<T>())), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
-      return tan_finalize(a0 * Pi<T>(), fn, xr, dxr);
+      return tan_finalize(a0 * pi(eve::as<T>()), fn, xr, dxr);
     }
     else
       return apply_over(D()(tanpi), a0);

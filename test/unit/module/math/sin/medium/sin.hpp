@@ -45,8 +45,8 @@ TTS_CASE_TPL("Check eve::medium_(eve::sin) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::medium_(eve::sin)(T( 0 )), T(0));
   TTS_IEEE_EQUAL(eve::medium_(eve::sin)(T(-0.)), T(0));
 
-  TTS_ULP_EQUAL(eve::medium_(eve::sin)(eve::Pio_4<T>()) , T(std::sin(eve::Pio_4<v_t>()))  , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-eve::Pio_4<T>()), T(std::sin(-eve::Pio_4<v_t>())) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(eve::pio_4(eve::as<T>())) , T(std::sin(eve::pio_4(eve::as<v_t>())))  , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::sin)(-eve::pio_4(eve::as<T>())), T(std::sin(-eve::pio_4(eve::as<v_t>()))) , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::sin)( T( 1))          , T(std::sin(1.0))                , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::sin)(-T( 1))          , T(std::sin(-1.0))               , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::sin)( T(100.0))       , T(std::sin(v_t(100.0)))         , 0.5);

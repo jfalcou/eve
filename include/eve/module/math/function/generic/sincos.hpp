@@ -87,9 +87,9 @@ namespace eve::detail
         using i_t =  as_integer_t<T, signed>;
 
         if (is_less_equal(x, eps(as<T>())))       return std::make_tuple(a0, one(eve::as<T>()));
-        if (is_not_less_equal(x, Pio_2<T>())) return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
+        if (is_not_less_equal(x, pio_2(eve::as<T>()))) return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
 
-        i_t n = x > Pio_4<T>();
+        i_t n = x > pio_4(eve::as<T>());
 
         if (n)
         {
@@ -104,8 +104,8 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_not_less_equal(x, Pio_2<T>()), eve::allbits, x);
-        auto test = is_not_less_equal(x, Pio_4<T>());
+        x = if_else(is_not_less_equal(x, pio_2(eve::as<T>())), eve::allbits, x);
+        auto test = is_not_less_equal(x, pio_4(eve::as<T>()));
         auto n = binarize(test);
         auto xr =  if_else(test, reduce(x), x);
         return  sincos_finalize(a0, n, xr, T(0));
@@ -143,9 +143,9 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( all(x <= Pio_4(eve::as(x))) )
+      if( all(x <= pio_4(eve::as(x))) )
         return restricted_(sincos)(a0);
-      else if( all(x <= Pio_2(eve::as(x))) )
+      else if( all(x <= pio_2(eve::as(x))) )
         return small_(sincos)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
         return medium_(sincos)(a0);

@@ -43,6 +43,6 @@ TTS_CASE_TPL("Check eve::small_(eve::cos) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::small_(eve::cos)( T(1)           )         , T(std_cos(1.0))                   , 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::cos)(-T(1)           )         , T(std_cos(-1.0))                  , 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cos)( eve::Pio_4<T>())         , T(std_cos( eve::Pio_4<v_t>()))    , 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cos)(-eve::Pio_4<T>())         , T(std_cos(-eve::Pio_4<v_t>()))    , 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cos)( eve::pio_4(eve::as<T>()))         , T(std_cos( eve::pio_4(eve::as<v_t>())))    , 0.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cos)(-eve::pio_4(eve::as<T>()))         , T(std_cos(-eve::pio_4(eve::as<v_t>())))    , 0.5);
 }

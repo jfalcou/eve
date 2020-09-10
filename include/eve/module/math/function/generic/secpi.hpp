@@ -45,7 +45,7 @@ namespace eve::detail
         a0 = if_else(test, eve::allbits, a0);
       }
 
-      a0 *= Pi<T>();
+      a0 *= pi(eve::as<T>());
       auto x2 = sqr(a0);
       return rec(detail::cos_eval(x2));
     }

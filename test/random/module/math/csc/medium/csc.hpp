@@ -31,7 +31,7 @@ TTS_CASE_TPL("wide rng check on csc", EVE_TYPE)
   }
   else
   {
-    eve::rng_producer<T>  p(eve::Smallestposval<v_t>(), l);
+    eve::rng_producer<T>  p(eve::smallestposval(eve::as<v_t>()), l);
     TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
   }
 }

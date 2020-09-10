@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check eve::acotpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::acotpi(T( 1. )) , T( 0.25)                               , 0.5 );
   TTS_ULP_EQUAL(eve::acotpi(T( 0. )) , T( 0.5 )                               , 0.5 );
 
-  auto inv_smallest = eve::rec(eve::Smallestposval<T>());
+  auto inv_smallest = eve::rec(eve::smallestposval(eve::as<T>()));
   TTS_ULP_EQUAL(eve::acotpi(T(-0.))       ,  T(-0.5)                              , 0.5);
-  TTS_ULP_EQUAL(eve::acotpi(inv_smallest) , eve::radinpi(eve::Smallestposval<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::acotpi(inv_smallest) , eve::radinpi(eve::smallestposval(eve::as<T>())), 0.5);
 }

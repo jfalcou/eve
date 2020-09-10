@@ -13,7 +13,7 @@
 
 int main()
 {
-  auto lmax = eve::Pio_4<EVE_VALUE>();
+  auto lmax = eve::pio_4(eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

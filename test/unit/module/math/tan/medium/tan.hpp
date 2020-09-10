@@ -36,8 +36,8 @@ TTS_CASE_TPL("Check eve::medium_(eve::tan) behavior", EVE_TYPE)
   }
 
   using v_t = eve::element_type_t<T>;
-  auto vpi_4 = eve::Pio_4<T>();
-  auto spi_4 = eve::Pio_4<v_t>();
+  auto vpi_4 = eve::pio_4(eve::as<T>());
+  auto spi_4 = eve::pio_4(eve::as<v_t>());
 
   TTS_IEEE_EQUAL( eve::medium_(eve::tan)(T(-0.)), T(0));
   TTS_IEEE_EQUAL( eve::medium_(eve::tan)(T(0))  , T(0));

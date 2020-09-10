@@ -42,6 +42,6 @@ TTS_CASE_TPL("Check eve::restricted_(eve::csc) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::restricted_(eve::csc)( T(1) ) , eve::nan(eve::as<T>())         );
   TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(-T(1) ) , eve::nan(eve::as<T>())         );
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::csc)(-eve::Pio_4<T>() ) , T(ref_csc(-eve::Pio_4<v_t>())), 0.75);
-  TTS_ULP_EQUAL(eve::restricted_(eve::csc)( eve::Pio_4<T>() ) , T(ref_csc(eve::Pio_4<v_t>())) , 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::csc)(-eve::pio_4(eve::as<T>()) ) , T(ref_csc(-eve::pio_4(eve::as<v_t>()))), 0.75);
+  TTS_ULP_EQUAL(eve::restricted_(eve::csc)( eve::pio_4(eve::as<T>()) ) , T(ref_csc(eve::pio_4(eve::as<v_t>()))) , 0.75);
 }

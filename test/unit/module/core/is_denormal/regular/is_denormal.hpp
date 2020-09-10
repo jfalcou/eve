@@ -27,10 +27,10 @@ TTS_CASE_TPL("Check eve::is_denormal behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_denormals && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<T>() / 2), eve::true_(eve::as<T>()));
+    TTS_EQUAL(eve::is_denormal(eve::smallestposval(eve::as<T>()) / 2), eve::true_(eve::as<T>()));
   }
   else
   {
-    TTS_EQUAL(eve::is_denormal(eve::Smallestposval<T>() / 2), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_denormal(eve::smallestposval(eve::as<T>()) / 2), eve::false_(eve::as<T>()));
   }
 }

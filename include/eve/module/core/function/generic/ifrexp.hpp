@@ -44,7 +44,7 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       auto r1   = bit_and(Expobits_mask<T>(), a0);
       auto x    = bit_notand(Expobits_mask<T>(), a0);
-      return  std::make_tuple( bit_or(half(eve::as<T>()), x), bit_shr(r1,Nbmantissabits<elt_t>()) - maxexponentm1(eve::as<elt_t>()));
+      return  std::make_tuple( bit_or(half(eve::as<T>()), x), bit_shr(r1,nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>()));
     }
     else  return apply_over2(raw_(ifrexp), a0);
   }
@@ -84,12 +84,12 @@ namespace eve::detail
         if constexpr(eve::platform::supports_denormals)
         {
           auto test = is_denormal(a0);
-          t = if_else(test,Nbmantissabits<T>(), eve::zero_);
+          t = if_else(test,nbmantissabits(eve::as<T>()), eve::zero_);
           a0 = if_else(test, Twotonmb<T>()*a0, a0);
         }
         auto e = bit_and(Expobits_mask<T>(), a0); //extract exp.
         auto x  = bit_notand(Expobits_mask<T>(), a0);
-        e = bit_shr(e,Nbmantissabits<elt_t>()) - maxexponentm1(eve::as<elt_t>());
+        e = bit_shr(e,nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>());
         auto r0 = bit_or(half(eve::as<T>()), x);
         auto test0 = is_nez(a0);
         auto test1 = is_greater(e,limitexponent(eve::as<T>()));
@@ -109,7 +109,7 @@ namespace eve::detail
         }
         else if constexpr(scalar_value<T>)
         {
-          auto const nmb  = Nbmantissabits<T>();
+          auto const nmb  = nbmantissabits(eve::as<T>());
           i_t e    = bit_and(Expobits_mask<T>(), a0);  // extract exp.
           if constexpr(eve::platform::supports_denormals)
           {

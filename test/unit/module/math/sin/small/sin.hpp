@@ -43,10 +43,10 @@ TTS_CASE_TPL("Check eve::small_(eve::sin) behavior", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::small_(eve::sin)(T( 0 )), T(0));
   TTS_IEEE_EQUAL(eve::small_(eve::sin)(T(-0.)), T(0));
 
-  auto pio2   = eve::Pio_2<T>();
-  auto pio4   = eve::Pio_4<T>();
-  auto vpio2  = eve::Pio_2<v_t>();
-  auto vpio4  = eve::Pio_4<v_t>();
+  auto pio2   = eve::pio_2(eve::as<T>());
+  auto pio4   = eve::pio_4(eve::as<T>());
+  auto vpio2  = eve::pio_2(eve::as<v_t>());
+  auto vpio4  = eve::pio_4(eve::as<v_t>());
 
   TTS_ULP_EQUAL(eve::small_(eve::sin)(  T(1)  ) , T(std::sin( 1.0    )), 0.5);
   TTS_ULP_EQUAL(eve::small_(eve::sin)( -T(1)  ) , T(std::sin(-1.0    )), 0.5);

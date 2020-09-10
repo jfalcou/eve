@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check eve::tan behavior", EVE_TYPE)
   TTS_IEEE_EQUAL( eve::tan(T(-0.)), T(0) );
   TTS_IEEE_EQUAL( eve::tan(T( 0 )), T(0) );
 
-  auto vpi_4 = eve::Pio_4<T>();
-  auto spi_4 = eve::Pio_4<v_t>();
+  auto vpi_4 = eve::pio_4(eve::as<T>());
+  auto spi_4 = eve::pio_4(eve::as<v_t>());
 
   TTS_ULP_EQUAL ( eve::tan( T( 1  ) )         , T(std::tan(v_t(1.0)))           , 0.5 );
   TTS_ULP_EQUAL ( eve::tan( T(-1.0) )         , T(std::tan(v_t(-1.0)))          , 0.5 );

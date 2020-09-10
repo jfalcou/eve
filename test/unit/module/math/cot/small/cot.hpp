@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::eve::small_(eve::cot) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::small_(eve::cot)( T(1))            , T(ref_cot(v_t(1.0)))          , 1  );
   TTS_ULP_EQUAL(eve::small_(eve::cot)(-T(1))            , T(ref_cot(v_t(-1.0)))         , 1  );
-  TTS_ULP_EQUAL(eve::small_(eve::cot)( eve::Pio_4<T>()) , T(ref_cot( eve::Pio_4<v_t>())), 1  );
-  TTS_ULP_EQUAL(eve::small_(eve::cot)(-eve::Pio_4<T>()) , T(ref_cot(-eve::Pio_4<v_t>())), 1  );
-  TTS_ULP_EQUAL(eve::small_(eve::cot)( eve::Pio_2<T>()) , T(ref_cot( eve::Pio_2<v_t>())), 3.5);
-  TTS_ULP_EQUAL(eve::small_(eve::cot)(-eve::Pio_2<T>()) , T(ref_cot(-eve::Pio_2<v_t>())), 3.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cot)( eve::pio_4(eve::as<T>())) , T(ref_cot( eve::pio_4(eve::as<v_t>()))), 1  );
+  TTS_ULP_EQUAL(eve::small_(eve::cot)(-eve::pio_4(eve::as<T>())) , T(ref_cot(-eve::pio_4(eve::as<v_t>()))), 1  );
+  TTS_ULP_EQUAL(eve::small_(eve::cot)( eve::pio_2(eve::as<T>())) , T(ref_cot( eve::pio_2(eve::as<v_t>()))), 3.5);
+  TTS_ULP_EQUAL(eve::small_(eve::cot)(-eve::pio_2(eve::as<T>())) , T(ref_cot(-eve::pio_2(eve::as<v_t>()))), 3.5);
 }

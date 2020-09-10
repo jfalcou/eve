@@ -41,8 +41,8 @@ TTS_CASE_TPL("Check eve::big_(eve::tan) behavior", EVE_TYPE)
   TTS_EXPECT( eve::all(eve::is_positive(eve::medium_(eve::tan)(T( 0 )))) );
 
   using v_t = eve::element_type_t<T>;
-  auto vpi_4    = eve::Pio_4<T>();
-  auto spi_4    = eve::Pio_4<v_t>();
+  auto vpi_4    = eve::pio_4(eve::as<T>());
+  auto spi_4    = eve::pio_4(eve::as<v_t>());
   auto vvalmax  = eve::Valmax<T>();
   auto svalmax  = eve::Valmax<v_t>();
 

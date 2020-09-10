@@ -46,7 +46,7 @@ namespace eve::detail
       constexpr vt_t factor[5] = {0.6299605249474365823836, 0.793700525984099737376, 1.0
                                 , 1.2599210498948731647672, 1.587401051968199474751};
       auto ax = eve::abs (x);
-      auto test = is_less(eve::abs(x), T(100)*Smallestposval<T>());
+      auto test = is_less(eve::abs(x), T(100)*smallestposval(eve::as<T>()));
       ax = if_else(test, ldexp(ax, 54), ax);
       /* Reduce x.  xm now is an range  [0.5, 1.0].  */
       auto [xm, xe] = raw_(ifrexp)(ax);

@@ -29,7 +29,7 @@ namespace eve::detail
   {
     T xi = nearest(x+x);
     T x_2 = fma(xi, mhalf(eve::as<T>()), x);
-    auto xr = x_2*Pi<T>();
+    auto xr = x_2*pi(eve::as<T>());
     auto dxr =  Zero(eve::as(xr));
     return std::make_tuple(quadrant(xi), xr, dxr);
   }

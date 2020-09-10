@@ -27,6 +27,6 @@ TTS_CASE_TPL("Check eve::is_normal behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_denormals && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_normal(eve::Smallestposval<T>() / 2), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_normal(eve::smallestposval(eve::as<T>()) / 2), eve::false_(eve::as<T>()));
   }
 }

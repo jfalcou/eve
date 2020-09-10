@@ -24,7 +24,7 @@ TTS_CASE_TPL("wide random check on sincos", EVE_TYPE)
   auto sincos_s =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return s; };
   auto sincos_c =  [](auto e) { auto [s, c] = eve::small_(eve::sincos)(e); return c; };
 
-  eve::rng_producer<T> p(-eve::Pio_2<v_t>(), eve::Pio_2<v_t>());
+  eve::rng_producer<T> p(-eve::pio_2(eve::as<v_t>()), eve::pio_2(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sin, sincos_s);
   TTS_RANGE_CHECK(p, std_cos, sincos_c);
 }

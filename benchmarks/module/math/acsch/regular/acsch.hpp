@@ -18,8 +18,8 @@ int main()
 {
 //   auto lmin = EVE_VALUE(eve::Valmin<EVE_VALUE>());
 //   auto lmax = EVE_VALUE(eve::Valmax<EVE_VALUE>());
-  auto lmin = EVE_VALUE(-eve::Oneotwoeps<EVE_VALUE>()); //EVE_VALUE(eve::Valmin<EVE_VALUE>());
-  auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>());  // EVE_VALUE(eve::Valmax<EVE_VALUE>());
+  auto lmin = EVE_VALUE(-eve::oneotwoeps(eve::as<EVE_VALUE>())); //EVE_VALUE(eve::Valmin<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::oneotwoeps(eve::as<EVE_VALUE>()));  // EVE_VALUE(eve::Valmax<EVE_VALUE>());
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__acsch = [](auto x){return std::asinh(1/x);};

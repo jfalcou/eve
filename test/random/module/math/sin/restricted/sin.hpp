@@ -20,6 +20,6 @@ TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(e); } );
 
-  eve::rng_producer<T> p(-eve::Pio_4<v_t>(), eve::Pio_4<v_t>());
+  eve::rng_producer<T> p(-eve::pio_4(eve::as<v_t>()), eve::pio_4(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sin, eve::restricted_(eve::sin));
 }

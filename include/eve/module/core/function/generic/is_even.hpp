@@ -38,7 +38,7 @@ namespace eve::detail
         if constexpr(eve::platform::supports_denormals)
           return aisflt && (aa != mindenormal(eve::as<T>()));
         else
-          return aisflt && (aa != Smallestposval<T>());
+          return aisflt && (aa != smallestposval(eve::as<T>()));
       }
       else if constexpr(scalar_value<T>) return (!(a & one(eve::as(a))));
       else                               return is_eqz((a & one(eve::as(a))));

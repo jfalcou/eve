@@ -120,7 +120,7 @@ namespace eve::detail
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);
         auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();
-        zz = zz << Nbmantissabits<vd_t>();
+        zz = zz << nbmantissabits(eve::as<vd_t>());
         using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
         return bit_cast(zz, as<r_t>());
       }

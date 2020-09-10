@@ -28,7 +28,7 @@ namespace eve::detail
   {
     using r_t = as_integer_t<T>;
     r_t a0 = bit_cast(a, as<r_t>());
-    return if_else(is_gez(a0), a0, sub(Signmask<r_t>(), a0) );
+    return if_else(is_gez(a0), a0, sub(signmask(eve::as<r_t>()), a0) );
   }
 
   template<typename T>
@@ -36,7 +36,7 @@ namespace eve::detail
   bitfloating( T const &a) noexcept
   {
     using r_t = as_floating_point_t<T>;
-   T s = bit_cast(Signmask<r_t>(), as<T>());
+   T s = bit_cast(signmask(eve::as<r_t>()), as<T>());
     return bit_cast(if_else(is_gez(a), a, s-a), as<r_t>());
   }
 

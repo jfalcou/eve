@@ -122,7 +122,7 @@ namespace eve::detail
           z = q * sinpi(z);
           if( is_eqz(z) )
             return nan(eve::as(a0));
-          st = Pi(eve::as(a0)) / (abs(z) * st);
+          st = pi(eve::as(a0)) / (abs(z) * st);
           return iseven ? -st : st;
         }
         T z = one(eve::as(a0));
@@ -159,7 +159,7 @@ namespace eve::detail
           z           = dec[test2](z);
           z           = q * sinpi(z);
           z           = abs(z);
-          return sgngam * Pi(eve::as(q)) / (z * st);
+          return sgngam * pi(eve::as(q)) / (z * st);
         };
         auto other = [gamma1](T q, const auto &test) {
           auto x = if_else(test, T(2), q);

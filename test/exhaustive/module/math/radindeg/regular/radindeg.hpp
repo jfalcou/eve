@@ -20,7 +20,7 @@
 TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_indeg = tts::vectorize<T>( [](auto e) { return e*180/eve::Pi<v_t>(); } );
+  auto std_indeg = tts::vectorize<T>( [](auto e) { return e*180/eve::pi(eve::as<v_t>()); } );
 
   eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
   TTS_RANGE_CHECK(p, std_indeg, eve::radindeg);
