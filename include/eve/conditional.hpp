@@ -171,7 +171,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
     {
-      constexpr auto card = cardinal_v<T>;
+      constexpr std::ptrdiff_t card = cardinal_v<T>;
       return Iota(eve::as_<T>()) < (card-count_);
     }
 
@@ -201,7 +201,7 @@ namespace eve
 
     template<typename T> auto mask(as_<T> const&) const
     {
-      constexpr auto card = cardinal_v<T>;
+      constexpr std::ptrdiff_t card = cardinal_v<T>;
       return Iota(eve::as_<T>()) >= (card-count_);
     }
 
@@ -352,8 +352,8 @@ namespace eve
     template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
     {
       auto const i = Iota(eve::as_<T>());
-      constexpr auto card = cardinal_v<T> - 1;
-      return (i >= first_count_) && (i <= (card-last_count_));
+      constexpr std::ptrdiff_t card = cardinal_v<T>;
+      return (i >= first_count_) && (i < (card-last_count_));
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_extrema_ const& c)
