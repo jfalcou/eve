@@ -63,7 +63,7 @@ namespace eve::detail
         };
 
         up_t res  = up_t(a) * up_t(b);
-        un_t res2 = (un_t(a ^ b) >> Sizee::value) + Valmax<T>();
+        un_t res2 = (un_t(a ^ b) >> Sizee::value) + valmax(eve::as<T>());
         T    hi   = (res >> (Sizee::value + 1));
         T    lo   = res;
         if( hi != (lo >> Sizee::value) )
@@ -74,15 +74,15 @@ namespace eve::detail
       {
         using un_t = std::make_unsigned_t<T>;
         if( b == 0 || a == 0 )
-          return Zero<T>();
+          return zero(eve::as<T>());
         T sgn = bit_xor(bitofsign(a), bitofsign(b));
-        if( b == Valmin<T>() || a == Valmin<T>() )
-          return sgn ? Valmin<T>() : Valmax<T>();
+        if( b == valmin(eve::as<T>()) || a == valmin(eve::as<T>()) )
+          return sgn ? valmin(eve::as<T>()) : valmax(eve::as<T>());
         un_t aa  = eve::abs(a);
         un_t bb  = eve::abs(b);
         auto aux = [sgn](const T &mini, const T &maxi, const un_t &amini, const un_t &amaxi) {
-          un_t z = Valmax<T>() / amaxi;
-          return (z < amini) ? (sgn ? Valmin<T>() : Valmax<T>()) : mini * maxi;
+          un_t z = valmax(eve::as<T>()) / amaxi;
+          return (z < amini) ? (sgn ? valmin(eve::as<T>()) : valmax(eve::as<T>())) : mini * maxi;
         };
         if( bb >= aa )
           return aux(a, b, aa, bb);
@@ -96,16 +96,16 @@ namespace eve::detail
       {
         using up_t = upgrade_t<T>;
         up_t res   = up_t(a) * up_t(b);
-        return (res > Valmax<T>()) ? Valmax<T>() : static_cast<T>(res);
+        return (res > valmax(eve::as<T>())) ? valmax(eve::as<T>()) : static_cast<T>(res);
       }
       else
       {
         auto aux = [](const T &mini, const T &maxi) {
-          T z = Valmax<T>() / maxi;
-          return (z < mini) ? Valmax<T>() : mini * maxi;
+          T z = valmax(eve::as<T>()) / maxi;
+          return (z < mini) ? valmax(eve::as<T>()) : mini * maxi;
         };
         if( b == 0 || a == 0 )
-          return Zero<T>();
+          return zero(eve::as<T>());
         if( b >= a )
           return aux(a, b);
         else

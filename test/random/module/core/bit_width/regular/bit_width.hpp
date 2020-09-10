@@ -22,6 +22,6 @@ TTS_CASE_TPL("wide random check on bit_width", EVE_TYPE)
 
   using v_t = eve::element_type_t<T>;
   auto std_bit_width = tts::vectorize<T>( [](auto e) { return sizeof(v_t)*8-std::countl_zero(e); } );
-  eve::rng_producer<T> p(eve::Zero<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::zero(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_bit_width, eve::bit_width);
 }

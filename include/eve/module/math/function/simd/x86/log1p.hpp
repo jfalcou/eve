@@ -67,7 +67,7 @@ namespace eve::detail
       auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       k   = dec[x_lt_sqrthf](k);
-      T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+      T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
       T hfsq = half(eve::as<T>()) * sqr(f);

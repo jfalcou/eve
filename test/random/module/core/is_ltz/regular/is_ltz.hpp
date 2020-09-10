@@ -22,6 +22,6 @@ TTS_CASE_TPL("wide random check on is_ltz", EVE_TYPE)
   using l_t = eve::as_logical_t<T>;
   auto std_is_ltz = tts::vectorize<l_t>( [](auto e) { return e < v_t(0); } );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_is_ltz, eve::is_ltz);
 }

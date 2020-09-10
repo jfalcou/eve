@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 {
   auto const std_asec = [](auto x) { return std::acos(1/x); };
   auto lmin = EVE_TYPE(1);
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
 
   EVE_REGISTER_BENCHMARK(std_asec, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 

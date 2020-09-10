@@ -15,8 +15,8 @@
 
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
   auto const eve__saturate = [](auto x) { return eve::saturate(x, eve::as_<std::int16_t>()); };
 

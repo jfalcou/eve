@@ -20,7 +20,7 @@ TTS_CASE_TPL("Check inc return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check saturated_(inc) behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturated_(eve::inc)(eve::Valmax<T>()), eve::Valmax<T>() );
+  TTS_EQUAL(eve::saturated_(eve::inc)(eve::valmax(eve::as<T>())), eve::valmax(eve::as<T>()) );
   TTS_EQUAL(eve::saturated_(eve::inc)(T(1)            ), T(2)             );
   TTS_EQUAL(eve::saturated_(eve::inc)(T(2)            ), T(3)             );
 

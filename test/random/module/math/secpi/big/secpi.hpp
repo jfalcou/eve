@@ -33,6 +33,6 @@ TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
                                           }
                                         );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::big_(eve::secpi));
 }

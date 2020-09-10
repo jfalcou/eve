@@ -38,5 +38,5 @@ TTS_CASE_TPL("Check eve::popcount behavior", EVE_TYPE)
     TTS_EQUAL(eve::popcount(T(a)) , r_t(sizeof(v_t)*8-i+1));
     a <<= 1;
   }
-  TTS_EQUAL(eve::popcount( eve::Valmax<T>()), r_t(sizeof(v_t)*8-eve::signed_value<T>));
+  TTS_EQUAL(eve::popcount( eve::valmax(eve::as<T>())), r_t(sizeof(v_t)*8-eve::signed_value<T>));
 }

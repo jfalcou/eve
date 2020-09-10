@@ -38,6 +38,6 @@ TTS_CASE_TPL("Check eve::sqr behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::Sqrtvalmax<T>())), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::sqr)(eve::inc(eve::sqrtvalmax(eve::as<T>()))), eve::valmax(eve::as<T>()));
   }
 }

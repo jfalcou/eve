@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 {
   auto const std_csc = [](auto x) { return 1/std::sin(x); };
 
-  EVE_REGISTER_BENCHMARK(std_csc, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  EVE_REGISTER_BENCHMARK(std_csc, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::valmin(eve::as<EVE_TYPE>()), eve::valmax(eve::as<EVE_TYPE>())));
 
   eve::bench::start_benchmarks(argc, argv);
 }

@@ -15,8 +15,8 @@
 int main(int argc, char** argv)
 {
   auto const std_bit_shl = [](auto x, auto y) { return EVE_TYPE(x << y); };
-  auto lmin1 = eve::Valmin<EVE_TYPE>();
-  auto lmax1 = eve::Valmax<EVE_TYPE>();
+  auto lmin1 = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax1 = eve::valmax(eve::as<EVE_TYPE>());
   auto lmin2 = EVE_TYPE(0);
   auto lmax2 = EVE_TYPE(sizeof(EVE_TYPE)-1);
   EVE_REGISTER_BENCHMARK(std_bit_shl, EVE_TYPE

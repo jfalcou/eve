@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check eve::sindcosd behavior", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
 
   auto base = v_t(180);
-  auto vmax = eve::Valmax<v_t>();
-  auto vmin = eve::Valmin<v_t>();
+  auto vmax = eve::valmax(eve::as<v_t>());
+  auto vmin = eve::valmin(eve::as<v_t>());
 
   v_t x[] = { base/8, -base/8, base/4, -base/4
             , base, -base, 10*base, -10*base

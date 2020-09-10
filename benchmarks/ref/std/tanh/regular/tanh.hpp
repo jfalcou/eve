@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_tanh = [](auto x) { return std::tanh(x); };
-  auto l = eve::Valmax<EVE_TYPE>();
+  auto l = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_tanh, EVE_TYPE
                         , eve::bench::random< EVE_TYPE>(-l, l));
 

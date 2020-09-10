@@ -19,19 +19,19 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(sqrt_2_, sqrt_2_);
+  EVE_MAKE_CALLABLE(sqrt_2_, sqrt_2);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Sqrt_2(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE auto sqrt_2_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>) {
-      return Constant<T, 0x3FB504F3>(); }
-    else if constexpr(std::is_same_v<t_t, double>) {
-      return Constant<T, 0x3ff6A09E667F3BCCULL>(); }
+      if constexpr(std::is_same_v<t_t, float>) {
+        return Constant<T, 0x3FB504F3>(); }
+      else if constexpr(std::is_same_v<t_t, double>) {
+        return Constant<T, 0x3ff6A09E667F3BCCULL>(); }
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(sqrt_2_, Sqrt_2);
 }
-

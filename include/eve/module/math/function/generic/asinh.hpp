@@ -42,7 +42,7 @@ namespace eve::detail
     {
       using vt_t = value_type_t<T>;
       T x =  eve::abs(a0);
-      if constexpr(scalar_value<T>) if (x < Sqrteps<T>()) return a0; // scalar early return
+      if constexpr(scalar_value<T>) if (x < sqrteps(eve::as<T>())) return a0; // scalar early return
       auto x_gt_oneosqrteps = x > oneosqrteps(eve::as<T>());
       auto  bts =  bitofsign(a0);
       if constexpr(std::is_same_v<vt_t, double>)
@@ -63,7 +63,7 @@ namespace eve::detail
       {
         auto x_lt_half = x < half(eve::as<T>());
         T x2 = sqr(x);
-        T z = Zero<T>();
+        T z = zero(eve::as<T>());
         std::size_t nb = nbtrue(x_lt_half);
         if(nb > 0)
         {

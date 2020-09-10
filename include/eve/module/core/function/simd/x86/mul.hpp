@@ -31,8 +31,8 @@ namespace eve::detail
   {
     if constexpr(supports_xop)
     {
-           if constexpr(std::is_same_v<T, std::int32_t>) return  _mm_maccs_epi32(v0,v1,Zero(eve::as(v0)));
-      else if constexpr(std::is_same_v<T, std::int16_t>) return  _mm_maccs_epi16(v0,v1,Zero(eve::as(v0)));
+           if constexpr(std::is_same_v<T, std::int32_t>) return  _mm_maccs_epi32(v0,v1,zero(eve::as(v0)));
+      else if constexpr(std::is_same_v<T, std::int16_t>) return  _mm_maccs_epi16(v0,v1,zero(eve::as(v0)));
       else return mul_(EVE_RETARGET(cpu_), saturated_type(), v0, v1);
     }
     else return mul_(EVE_RETARGET(cpu_), saturated_type(), v0, v1);

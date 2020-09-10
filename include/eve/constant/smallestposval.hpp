@@ -23,7 +23,7 @@ namespace eve
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE auto smallestposval(eve::as_<T> const & = {}) noexcept
+    EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
     {
       using t_t = detail::value_type_t<T>;
 

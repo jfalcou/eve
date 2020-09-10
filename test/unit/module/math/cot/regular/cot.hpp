@@ -47,5 +47,5 @@ TTS_CASE_TPL("Check eve::eve::cot behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::cot( T(100000.0))        , T(ref_cot(100000.0))          , 0.5);
   TTS_ULP_EQUAL(eve::cot(-T(100000.0))        , T(ref_cot(-100000.0))         , 0.5);
   TTS_ULP_EQUAL(eve::cot(-T(100000000.0))     , T(ref_cot(-100000000.0))      , 0.5);
-  TTS_ULP_EQUAL(eve::cot( T(eve::Valmax<T>())), T(ref_cot(eve::Valmax<v_t>())), 1.5);
+  TTS_ULP_EQUAL(eve::cot( T(eve::valmax(eve::as<T>()))), T(ref_cot(eve::valmax(eve::as<v_t>()))), 1.5);
 }

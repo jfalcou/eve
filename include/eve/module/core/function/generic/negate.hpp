@@ -37,7 +37,7 @@ namespace eve::detail
   requires has_native_abi_v<T>
   {
     if constexpr(signed_value<T>) {  return a*sign(b); }
-    else { return if_else(is_nez(b), a, eve::zero_);}
+    else { return if_else(is_nez(b), a, eve::zero);}
   }
 }
 

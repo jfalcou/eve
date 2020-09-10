@@ -21,6 +21,6 @@ TTS_CASE_TPL("wide random check on bit_not", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_bit_not = tts::vectorize<T>( [](auto e) { return  ~v_t(e); } );
 
-  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_bit_not, eve::bit_not);
 }

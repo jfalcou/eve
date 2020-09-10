@@ -41,7 +41,7 @@ namespace eve::detail
       else
       {
         auto x = shr(z, nbmantissabits(eve::as<T>()));
-        return if_else(is_not_finite(a), eve::zero_, sub[is_nez(a)](x, maxexponent(eve::as<T>())));
+        return if_else(is_not_finite(a), eve::zero, sub[is_nez(a)](x, maxexponent(eve::as<T>())));
       }
     }
     else return apply_over(exponent, a);

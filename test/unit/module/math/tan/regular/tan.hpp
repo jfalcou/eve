@@ -48,5 +48,5 @@ TTS_CASE_TPL("Check eve::tan behavior", EVE_TYPE)
   TTS_ULP_EQUAL ( eve::tan( T(100000.0))      , T(std::tan(100000.0))           , 0.5 );
   TTS_ULP_EQUAL ( eve::tan( T(-100000.0))     , T(std::tan(-100000.0))          , 0.5 );
   TTS_ULP_EQUAL ( eve::tan( T(-100000000.0) ) , T(std::tan(-100000000.0))       , 0.5 );
-  TTS_ULP_EQUAL ( eve::tan( eve::Valmax<T>()) , T(std::tan(eve::Valmax<v_t>())) , 0.5 );
+  TTS_ULP_EQUAL ( eve::tan( eve::valmax(eve::as<T>())) , T(std::tan(eve::valmax(eve::as<v_t>()))) , 0.5 );
 }

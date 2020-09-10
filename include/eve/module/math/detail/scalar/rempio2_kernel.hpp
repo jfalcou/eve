@@ -64,7 +64,7 @@ namespace eve::detail
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto xn =  nearest(xx*Twoopi<double>());
+      auto xn =  nearest(xx*twoopi(eve::as<double>()));
       auto y  =  fma(xn, mp2, fma(xn, mp1, xx));
       auto n = quadrant(xn);
       auto da = xn * mp3;
@@ -86,7 +86,7 @@ namespace eve::detail
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
 
-      auto xn =  nearest(xx*Twoopi<double>());
+      auto xn =  nearest(xx*twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
@@ -106,7 +106,7 @@ namespace eve::detail
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
       auto x  = double_(xx);
-      auto xn =  nearest(x*Twoopi<double>());
+      auto xn =  nearest(x*twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));

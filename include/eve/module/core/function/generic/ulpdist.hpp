@@ -56,7 +56,7 @@ namespace eve::detail
     {
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);
-      return if_else(numeric_(is_equal)(a, b), eve::zero_
+      return if_else(numeric_(is_equal)(a, b), eve::zero
                     , if_else (is_unordered(a, b)
                               , eve::allbits
                               , to_<T>(dist(bb, aa))

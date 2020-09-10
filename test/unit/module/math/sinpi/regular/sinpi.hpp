@@ -51,6 +51,6 @@ TTS_CASE_TPL("Check eve::eve::sinpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::sinpi(T( 100000000.0)), T(0), 0.5);
   TTS_ULP_EQUAL(eve::sinpi(T(-100000000.0)), T(0), 0.5);
 
-  TTS_ULP_EQUAL(eve::sinpi(eve::Valmax<T>())    , T(0), 0.5);
-  TTS_ULP_EQUAL(eve::sinpi(eve::Valmax<T>()/10) , T(0), 0.5);
+  TTS_ULP_EQUAL(eve::sinpi(eve::valmax(eve::as<T>()))    , T(0), 0.5);
+  TTS_ULP_EQUAL(eve::sinpi(eve::valmax(eve::as<T>())/10) , T(0), 0.5);
 }

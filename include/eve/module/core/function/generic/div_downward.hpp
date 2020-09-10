@@ -47,7 +47,7 @@ namespace eve::detail
           if constexpr( std::is_same_v<elt_t, std::int64_t> )
           {
             if( !a )
-              return Zero<T>();
+              return zero(eve::as<T>());
             if( b )
             {
               auto q = saturated_(div)(a, b);
@@ -58,7 +58,7 @@ namespace eve::detail
                 return q;
             }
             else
-              return ((a > 0) ? Valmax<T>() : Valmin<T>());
+              return ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>()));
           }
           else
           {
@@ -66,7 +66,7 @@ namespace eve::detail
               return saturated_(convert)(floor(static_cast<double>(a) / static_cast<double>(b)),
                                          as<T>());
             else
-              return (a) ? ((a > 0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();
+              return (a) ? ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>())) : zero(eve::as<T>());
           }
         }
         else if constexpr( unsigned_value<T> )
@@ -87,14 +87,14 @@ namespace eve::detail
             auto q  = saturated_(eve::div)(a, bb);
             auto r  = a - q * b;
             q       = saturated_(dec[is_nez(r) && is_lez(bit_xor(a, b))])(q);
-            auto z  = if_else(is_gtz(a), Valmax<T>(), Valmin<T>());
-            z       = if_else(is_eqz(a), eve::zero_, z);
+            auto z  = if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()));
+            z       = if_else(is_eqz(a), eve::zero, z);
             return if_else(is_nez(b), q, z);
           }
           else
           {
-            auto z = if_else(is_gtz(a), Valmax<T>(), Valmin<T>());
-            z      = if_else(is_eqz(a), eve::zero_, z);
+            auto z = if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()));
+            z      = if_else(is_eqz(a), eve::zero, z);
             auto q =
               saturated_(convert)(floor(double_(a) / double_(b)), as<elt_t>());
             return if_else(is_nez(b), q, z);

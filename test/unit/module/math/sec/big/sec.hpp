@@ -46,6 +46,6 @@ TTS_CASE_TPL("Check eve::big_(eve::sec) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::sec)(-T(100000.0))           , T(ref_sec(-100000.0))             , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::sec)( T(100000000.0))        , T(ref_sec(100000000.0))           , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::sec)(-T(100000000.0))        , T(ref_sec(-100000000.0))          , 0.5 );
-  TTS_ULP_EQUAL(eve::big_(eve::sec)(T(eve::Valmax<T>()))    , T(ref_sec(eve::Valmax<v_t>()))    , 1.5 );
-  TTS_ULP_EQUAL(eve::big_(eve::sec)(T(eve::Valmax<T>())/10) , T(ref_sec(eve::Valmax<v_t>()/10)) , 1.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::sec)(T(eve::valmax(eve::as<T>())))    , T(ref_sec(eve::valmax(eve::as<v_t>())))    , 1.5 );
+  TTS_ULP_EQUAL(eve::big_(eve::sec)(T(eve::valmax(eve::as<T>()))/10) , T(ref_sec(eve::valmax(eve::as<v_t>())/10)) , 1.5 );
 }

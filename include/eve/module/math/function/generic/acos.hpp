@@ -39,7 +39,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto tmp = pio_2(eve::as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
-      return if_else(a0 == T(1), eve::zero_, tmp);
+      return if_else(a0 == T(1), eve::zero, tmp);
     }
     else
     {

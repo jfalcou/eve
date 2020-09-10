@@ -51,26 +51,26 @@ TTS_CASE_TPL("Check eve::saturated_(eve::convert) behavior", EVE_TYPE)
     {
       if constexpr(sizeof(v_t) >  2)
       {
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int16_t>()), (eve::Valmin<target_t>()) );
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int16_t>()), (eve::Valmax<target_t>()) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()), (eve::valmin(eve::as<target_t>())) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()), (eve::valmax(eve::as<target_t>())) );
       }
       else
       {
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int16_t>()), target_t(eve::Valmin<v_t>()) );
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int16_t>()), target_t(eve::Valmax<v_t>()) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()), target_t(eve::valmin(eve::as<v_t>())) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()), target_t(eve::valmax(eve::as<v_t>())) );
       }
     }
     else //if constexpr(std::is_unsigned_v<v_t>)
     {
       if constexpr(sizeof(v_t) >=  2)
       {
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int16_t>()), (target_t(0)) );
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int16_t>()), (eve::Valmax<target_t>()) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()), (target_t(0)) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()), (eve::valmax(eve::as<target_t>())) );
       }
       else if  constexpr(sizeof(v_t) < 2)
       {
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmin<T>(), eve::as<std::int16_t>()), target_t(0) );
-        TTS_EQUAL(eve::saturated_(eve::convert)(eve::Valmax<T>(), eve::as<std::int16_t>()), target_t(eve::Valmax<v_t>()) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmin(eve::as<T>()), eve::as<std::int16_t>()), target_t(0) );
+        TTS_EQUAL(eve::saturated_(eve::convert)(eve::valmax(eve::as<T>()), eve::as<std::int16_t>()), target_t(eve::valmax(eve::as<v_t>())) );
       }
     }
   }

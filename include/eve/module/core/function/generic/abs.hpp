@@ -47,11 +47,11 @@ namespace eve::detail
     {
       if constexpr( signed_integral_scalar_value<T> )
       {
-        return ((a == Valmin(eve::as(a))) ? Valmax(eve::as(a)) : eve::abs(a));
+        return ((a == valmin(eve::as(a))) ? valmax(eve::as(a)) : eve::abs(a));
       }
       else if constexpr( signed_integral_simd_value<T> )
       {
-        return if_else(a == Valmin(eve::as(a)), Valmax(eve::as(a)), eve::abs(a));
+        return if_else(a == valmin(eve::as(a)), valmax(eve::as(a)), eve::abs(a));
       }
       else if constexpr( floating_value<T> || unsigned_value<T> )
       {

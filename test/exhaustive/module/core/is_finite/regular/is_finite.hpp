@@ -25,13 +25,13 @@ TTS_CASE_TPL("wide random check on is_finite", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_is_finite = tts::vectorize<l_t>( [](auto e) { return std::isfinite(e); } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
   }
   else
   {
     auto std_is_finite = tts::vectorize<l_t>( [](auto ) { return  true; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
   }
 }

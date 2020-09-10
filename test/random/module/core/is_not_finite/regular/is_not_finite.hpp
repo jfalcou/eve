@@ -31,13 +31,13 @@ TTS_CASE_TPL("wide random check on is_not_finite", EVE_TYPE)
                                                   }
                                                 );
 
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }
   else
   {
     auto std_is_not_finite = tts::vectorize<l_t>( [](auto ) { return false; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_not_finite, eve::is_not_finite);
   }
 }

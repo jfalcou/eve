@@ -26,14 +26,14 @@ TTS_CASE_TPL("Check saturated_(eve::dist) behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::Valmax<T>(),eve::Valmin<T>())
-              , eve::Valmax<T>()
+    TTS_EQUAL ( eve::saturated_(eve::dist)(eve::valmax(eve::as<T>()),eve::valmin(eve::as<T>()))
+              , eve::valmax(eve::as<T>())
               );
 
     if constexpr(eve::signed_value<T>)
     {
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<T>() , T(-1)), eve::Valmax<T>());
-      TTS_EQUAL(eve::saturated_(eve::dist)(eve::Valmin<T>() , T( 0)), eve::Valmax<T>());
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::valmin(eve::as<T>()) , T(-1)), eve::valmax(eve::as<T>()));
+      TTS_EQUAL(eve::saturated_(eve::dist)(eve::valmin(eve::as<T>()) , T( 0)), eve::valmax(eve::as<T>()));
       TTS_EQUAL(eve::saturated_(eve::dist)(T(-1)            , T( 1)), T(2)            );
       TTS_EQUAL(eve::saturated_(eve::dist)(T(-2)            , T(-6)), T(4)            );
     }

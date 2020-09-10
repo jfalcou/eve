@@ -45,6 +45,6 @@ TTS_CASE_TPL("Check eve::eve::cotpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::cotpi(-T(100000.0)   ) , eve::nan(eve::as<T>()) , 0.5);
   TTS_ULP_EQUAL(eve::cotpi( T(100000000.0)) , eve::nan(eve::as<T>()) , 0.5);
 
-  TTS_ULP_EQUAL(eve::cotpi( T(eve::Valmax<T>()) )   , eve::nan(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::cotpi( T(eve::Valmax<T>())/10) , eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::cotpi( T(eve::valmax(eve::as<T>())) )   , eve::nan(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::cotpi( T(eve::valmax(eve::as<T>()))/10) , eve::nan(eve::as<T>()), 0.5);
 }

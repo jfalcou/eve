@@ -156,7 +156,7 @@ namespace eve::detail
        */
       uiT ix = bit_cast(x, as<uiT>());
       iT  k  = 1;
-      T   c = Zero<T>(), f = x;
+      T   c = zero(eve::as<T>()), f = x;
       if( ix < 0x3ed413d0 || ix >> 31 ) /* 1+x < sqrt(2)+  */
       {
         if( ix >= 0xbf800000 ) /* x <= -1.0 */
@@ -221,7 +221,7 @@ namespace eve::detail
       uiT hx = bit_cast(x, as<uiT>()) >> 32;
       iT  k  = 1;
 
-      T c = Zero<T>();
+      T c = zero(eve::as<T>());
       T f = x;
       if( hx < 0x3fda827a || hx >> 31 ) /* 1+x < sqrt(2)+ */
       {

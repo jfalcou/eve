@@ -47,9 +47,9 @@ TTS_CASE_TPL( "Check eve::bit_select behavior", EVE_TYPE)
 
   TTS_EQUAL( eve::bit_select( imask, eve::allbits(eve::as<T>()) , T( 0 ) ), mask );
   TTS_EQUAL( eve::bit_select( imask, eve::allbits(eve::as<v_t>()), T( 0 ) ), mask );
-  TTS_EQUAL( eve::bit_select( imask, eve::allbits(eve::as<T>()) , eve::Zero<v_t>()), mask );
+  TTS_EQUAL( eve::bit_select( imask, eve::allbits(eve::as<T>()) , eve::zero(eve::as<v_t>())), mask );
 
   TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<T>())  , T( 0 ) ), mask);
   TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<v_t>()) , T( 0 ) ), mask);
-  TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<T>())  , eve::Zero<v_t>()), mask);
+  TTS_EQUAL( eve::bit_select( mask, eve::allbits(eve::as<T>())  , eve::zero(eve::as<v_t>())), mask);
 }

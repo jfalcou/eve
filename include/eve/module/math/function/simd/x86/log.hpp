@@ -53,7 +53,7 @@ namespace eve::detail
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T          xx    = a0;
-        T          dk    = Zero<T>();
+        T          dk    = zero(eve::as<T>());
         auto       isnez = is_nez(a0);
 //        logical<T> test;
         if constexpr( eve::platform::supports_denormals )
@@ -70,7 +70,7 @@ namespace eve::detail
         auto [x, kk]     = eve::frexp(xx);
         auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
-        T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+        T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
         T s    = f / (T(2) + f);
         T z    = sqr(s);
         T w    = sqr(z);
@@ -105,7 +105,7 @@ namespace eve::detail
          */
         //        using uiT = as_integer_t<T, unsigned>;
         T    xx    = a0;
-        T    dk    = Zero<T>();
+        T    dk    = zero(eve::as<T>());
         auto isnez = is_nez(a0);
 
         logical<T> test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
@@ -121,7 +121,7 @@ namespace eve::detail
         auto [x, kk]     = eve::frexp(xx);
         auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
-        T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+        T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
         T s  = f / (T(2) + f);
         T z  = sqr(s);
         T w  = sqr(z);

@@ -60,7 +60,7 @@ TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
 
     TTS_EQUAL(bitofsign(T(1)), T(0));
-    TTS_EQUAL(bitofsign(eve::Valmax<T>()), T(1ull << (sizeof(v_t)*8-1)));
+    TTS_EQUAL(bitofsign(eve::valmax(eve::as<T>())), T(1ull << (sizeof(v_t)*8-1)));
   }
   else
   {

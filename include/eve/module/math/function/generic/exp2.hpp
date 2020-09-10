@@ -60,7 +60,7 @@ namespace eve::detail
         if( xgemaxlog2 )
           return inf(eve::as(x));
         if( xltminlog2 )
-          return Zero(eve::as(x));
+          return zero(eve::as(x));
       }
       auto k = nearest(x);
       x      = x - k;
@@ -85,7 +85,7 @@ namespace eve::detail
       auto z = D()(ldexp)(x, k);
       if constexpr( simd_value<T> )
       {
-        z = if_else(xltminlog2, eve::zero_, z);
+        z = if_else(xltminlog2, eve::zero, z);
         z = if_else(xgemaxlog2, inf(eve::as(x)), z);
       }
       return z;
@@ -126,11 +126,11 @@ namespace eve::detail
       }
       else
       {
-        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(one(eve::as(xx)), xx));
+        auto tmp =  if_else(is_ltz(xx), eve::zero, shl(one(eve::as(xx)), xx));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;
-          return if_else(is_gez(xx, T(sizeof(elt_t))), Valmax<T>(), tmp);
+          return if_else(is_gez(xx, T(sizeof(elt_t))), valmax(eve::as<T>()), tmp);
         }
         else
           return tmp;

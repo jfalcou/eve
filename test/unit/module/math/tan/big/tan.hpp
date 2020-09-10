@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::big_(eve::tan) behavior", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto vpi_4    = eve::pio_4(eve::as<T>());
   auto spi_4    = eve::pio_4(eve::as<v_t>());
-  auto vvalmax  = eve::Valmax<T>();
-  auto svalmax  = eve::Valmax<v_t>();
+  auto vvalmax  = eve::valmax(eve::as<T>());
+  auto svalmax  = eve::valmax(eve::as<v_t>());
 
   TTS_ULP_EQUAL(eve::big_(eve::tan)(T(1)), T(std::tan(1.0)), 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::tan)(T(-1)),T(std::tan(-1.0)), 0.5);

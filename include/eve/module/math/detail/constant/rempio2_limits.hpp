@@ -40,12 +40,12 @@ namespace eve::detail
       }
       else
       {
-        return Valmax<T>();
+        return valmax(eve::as<T>());
       }
     }
     else
     {
-      return Valmax<T>();
+      return valmax(eve::as<T>());
     }
   }
 }

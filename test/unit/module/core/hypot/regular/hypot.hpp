@@ -46,13 +46,13 @@ TTS_CASE_TPL("Check eve::hypot behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<T>()), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 
-  TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            ) , eve::inf(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::Valmax<T>()) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<T>()) , T(0)            ) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::valmax(eve::as<T>())) , eve::inf(eve::as<T>()));
 
-  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1))                      , eve::Sqrt_2<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1))                      , eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1))                      , eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1))                      , eve::sqrt_2(eve::as<T>()), 0.5);
   TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0))                      , T(0)            , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(eve::Sqrt_2<T>(), eve::Sqrt_2<T>()), T(2)            , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(eve::sqrt_2(eve::as<T>()), eve::sqrt_2(eve::as<T>())), T(2)            , 0.5);
 }
 
 TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
@@ -66,11 +66,11 @@ TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<T>()), eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::nan(eve::as<T>()));
   }
 
-  TTS_IEEE_EQUAL(eve::hypot(eve::Valmax<T>() , T(0)            , T(0)) , eve::inf(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::Valmax<T>(), T(0)) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<T>()) , T(0)            , T(0)) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::valmax(eve::as<T>()), T(0)) , eve::inf(eve::as<T>()));
 
-  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1), eve::Sqrt_2<T>() ) , T(2)                , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), eve::Sqrt_2<T>() ) , T(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1), eve::sqrt_2(eve::as<T>()) ) , T(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), eve::sqrt_2(eve::as<T>()) ) , T(2)                , 0.5);
   TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0), T( 0)            ) , T(0)                , 0.5);
   TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), T( 1)            ) , T(std::sqrt(v_t(3))), 0.5);
 }

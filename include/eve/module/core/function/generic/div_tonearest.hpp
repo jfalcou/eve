@@ -54,7 +54,7 @@ namespace eve::detail
           {
             using ui_t = as_integer_t<T, unsigned>;
             if( !a )
-              return Zero<T>();
+              return zero(eve::as<T>());
             if( b )
             {
               ui_t aa = saturated_(eve::abs)(a);
@@ -63,7 +63,7 @@ namespace eve::detail
               return if_else(is_gez(a ^ b), q, -q);
             }
             else
-              return ((a > 0) ? Valmax<T>() : Valmin<T>());
+              return ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>()));
           }
           else
           {
@@ -72,7 +72,7 @@ namespace eve::detail
               return saturated_(convert)(nearest(static_cast<f_t>(a) / static_cast<f_t>(b)),
                                          as<T>());
             else
-              return (a) ? ((a > 0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();
+              return (a) ? ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>())) : zero(eve::as<T>());
           }
         }
         else if constexpr( unsigned_value<T> )
@@ -108,14 +108,14 @@ namespace eve::detail
             return if_else(
                 is_nez(b),
                 if_else(is_gez(a ^ b), q, -q),
-                if_else(is_eqz(a), eve::zero_, if_else(is_gtz(a), Valmax<T>(), Valmin<T>())));
+                if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
           else
           {
             return if_else(
                 is_nez(b),
                 saturated_(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
-                if_else(is_eqz(a), eve::zero_, if_else(is_gtz(a), Valmax<T>(), Valmin<T>())));
+                if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
         }
         else if constexpr( unsigned_value<T> )

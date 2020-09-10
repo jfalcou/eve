@@ -61,7 +61,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_same_v<elt_t, double>)
       {
-        auto small = x < Sqrteps<T>();
+        auto small = x < sqrteps(eve::as<T>());
         if constexpr(scalar_value<T>) //early scalar return
         {
           if (small) return a0;

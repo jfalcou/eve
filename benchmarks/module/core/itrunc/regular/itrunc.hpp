@@ -15,8 +15,8 @@
 
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
   using I_VALUE = eve::detail::as_integer_t<EVE_VALUE>;
 
   auto const std__itrunc = [](EVE_VALUE x) { return static_cast<I_VALUE>(std::ceil(x)); };

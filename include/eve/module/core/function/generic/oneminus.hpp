@@ -47,11 +47,11 @@ namespace eve::detail
         }
         if constexpr( scalar_value<T> )
         {
-          return (v <= Valmin(eve::as(v)) + 2) ? Valmax(eve::as(v)) : oneminus(v);
+          return (v <= valmin(eve::as(v)) + 2) ? valmax(eve::as(v)) : oneminus(v);
         }
         else if constexpr( simd_value<T> )
         {
-          return if_else(v < Valmin(eve::as(v)) + 2, Valmax(eve::as(v)), oneminus(v));
+          return if_else(v < valmin(eve::as(v)) + 2, valmax(eve::as(v)), oneminus(v));
         }
       }
     }

@@ -31,7 +31,7 @@ namespace eve::detail
       T z = r0 - a;
       T r1 = a-(r0-z)+(b-z);
       if constexpr(eve::platform::supports_infinites)
-        r1 = if_else(is_infinite(r0), eve::zero_, r1);
+        r1 = if_else(is_infinite(r0), eve::zero, r1);
       return std::make_tuple(r0, r1);
     }
     else return apply_over2(two_add, a, b);

@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)
     {
       TTS_EQUAL(eve::nb_values(eve::inf(eve::as<T>())  , eve::inf(eve::as<T>()))  , r_t(0)            );
       TTS_EQUAL(eve::nb_values(eve::minf(eve::as<T>()) , eve::minf(eve::as<T>())) , r_t(0)            );
-      TTS_EQUAL(eve::nb_values(eve::nan(eve::as<T>())  , eve::nan(eve::as<T>()))  , eve::Valmax<r_t>());
+      TTS_EQUAL(eve::nb_values(eve::nan(eve::as<T>())  , eve::nan(eve::as<T>()))  , eve::valmax(eve::as<r_t>()));
     }
 
     auto eps = eve::eps(eve::as<T>());

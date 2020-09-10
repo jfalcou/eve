@@ -21,7 +21,7 @@ TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check conditional saturated(eve::mul) behavior", EVE_TYPE)
 {
-  T fv{eve::Valmax<T>()};
+  T fv{eve::valmax(eve::as<T>())};
   T tv{3};
   auto t = eve::true_(eve::as<T>());
   auto f = eve::false_(eve::as<T>());

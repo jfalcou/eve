@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check eve::bit_floor behavior", EVE_TYPE)
 
   if constexpr(!eve::floating_value<T>)
   {
-    for(v_t z = 2; z < eve::Valmax<v_t>()/2; z*=2)
+    for(v_t z = 2; z < eve::valmax(eve::as<v_t>())/2; z*=2)
     {
       runtime.stream() << "  -- bitceil with z= " << +z << std::endl;
       TTS_EQUAL(eve::bit_floor(T(z)), T(z));

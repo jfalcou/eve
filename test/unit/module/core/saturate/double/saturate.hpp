@@ -22,8 +22,8 @@ TTS_CASE_TPL("Check eve::saturate return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<double>()), eve::Valmin<T>() );
+  TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<double>()), eve::valmin(eve::as<T>()) );
   TTS_EQUAL(eve::saturate(T(0)            , eve::as<double>()), T(0)             );
   TTS_EQUAL(eve::saturate(T(42.69)        , eve::as<double>()), T(42.69)         );
-  TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<double>()), eve::Valmax<T>() );
+  TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<double>()), eve::valmax(eve::as<T>()) );
 }

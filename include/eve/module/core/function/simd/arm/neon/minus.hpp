@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
-    if constexpr(is_unsigned_int) return Zero(eve::as(v0)) - v0;
+    if constexpr(is_unsigned_int) return zero(eve::as(v0)) - v0;
     if constexpr(std::is_same_v<T, float>) return vneg_f32(v0);
 
 #if defined(__aarch64__)
@@ -33,7 +33,7 @@ namespace eve::detail
 #endif
 
 #if !defined(__aarch64__)
-    if constexpr(is_signed_int && sizeof(T) == 8) return Zero(eve::as(v0)) - v0;
+    if constexpr(is_signed_int && sizeof(T) == 8) return zero(eve::as(v0)) - v0;
 #else
     if constexpr(is_signed_int && sizeof(T) == 8) return vneg_s64(v0);
 #endif
@@ -50,7 +50,7 @@ namespace eve::detail
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
-    if constexpr(is_unsigned_int) return Zero(eve::as(v0)) - v0;
+    if constexpr(is_unsigned_int) return zero(eve::as(v0)) - v0;
     if constexpr(std::is_same_v<T, float>) return vnegq_f32(v0);
 
 #if defined(__aarch64__)
@@ -58,7 +58,7 @@ namespace eve::detail
 #endif
 
 #if !defined(__aarch64__)
-    if constexpr(is_signed_int && sizeof(T) == 8) return Zero(eve::as(v0)) - v0;
+    if constexpr(is_signed_int && sizeof(T) == 8) return zero(eve::as(v0)) - v0;
 #else
     if constexpr(is_signed_int && sizeof(T) == 8) return vnegq_s64(v0);
 #endif

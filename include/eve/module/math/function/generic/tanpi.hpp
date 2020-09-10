@@ -60,7 +60,7 @@ namespace eve::detail
       }
       else
       {
-        x = if_else(is_greater(x, maxflint(eve::as(x))) || is_flint(x), eve::zero_, x);
+        x = if_else(is_greater(x, maxflint(eve::as(x))) || is_flint(x), eve::zero, x);
         x = if_else(is_not_finite(a0) || (frac(x) == half(eve::as<T>())), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);

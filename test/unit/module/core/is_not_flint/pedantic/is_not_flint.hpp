@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check eve::is_not_flint behavior", EVE_TYPE)
     TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(T(1) / T(2)), eve::true_(eve::as<T>()));
     TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::maxflint(eve::as<T>())),  eve::false_(eve::as<T>()));
     TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::maxflint(eve::as<T>())*2), eve::true_(eve::as<T>()));
-    TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::Valmax<T>()/2), eve::true_(eve::as<T>()));
+    TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::valmax(eve::as<T>())/2), eve::true_(eve::as<T>()));
     TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::inf(eve::as<T>())), eve::true_(eve::as<T>()) );
     TTS_EQUAL(eve::pedantic_(eve::is_not_flint)(eve::nan(eve::as<T>())), eve::true_(eve::as<T>()) );
   }

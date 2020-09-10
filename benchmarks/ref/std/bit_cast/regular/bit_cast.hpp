@@ -15,8 +15,8 @@
 
 int main(int argc, char** argv)
 {
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   auto f =  [](auto x){ return eve::bit_cast(x, eve::as_<eve::detail::as_integer_t<EVE_TYPE>>());
   }
  ;

@@ -15,8 +15,8 @@
 int main(int argc, char** argv)
 {
   auto const std_rshl = [](auto x, auto y) { return y < 0 ? x >> -y : x << y; };
-  auto lmin1 = eve::Valmin<EVE_TYPE>();
-  auto lmax1 = eve::Valmax<EVE_TYPE>();
+  auto lmin1 = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax1 = eve::valmax(eve::as<EVE_TYPE>());
   EVE_TYPE lmin2 = std::max(0, -(int(sizeof(EVE_TYPE))-1));
   EVE_TYPE lmax2 = EVE_TYPE(sizeof(EVE_TYPE)-1);
   EVE_REGISTER_BENCHMARK(std_rshl, EVE_TYPE

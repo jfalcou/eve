@@ -60,7 +60,7 @@ namespace eve::detail
     }
 
     if constexpr(platform::supports_infinites)
-    { a0 = if_else(x == inf(eve::as(x)), eve::zero_, a0); }
+    { a0 = if_else(x == inf(eve::as(x)), eve::zero, a0); }
 
     return if_else(is_eqz(x), inf(eve::as(x)), a0);
   }
@@ -69,7 +69,7 @@ namespace eve::detail
   EVE_FORCEINLINE Pack rsqrt_x86_pedantic(Pack const &x) noexcept
   {
     using v_t =  typename Pack::value_type;
-    if(any(is_denormal(x)) || (std::is_same_v<v_t, double> && any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > Valmax<float>())))
+    if(any(is_denormal(x)) || (std::is_same_v<v_t, double> && any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))))
       // this is necessary because of the poor initialisation by float intrinsic
     {
       auto [a00, nn] =  pedantic_(ifrexp)(x);

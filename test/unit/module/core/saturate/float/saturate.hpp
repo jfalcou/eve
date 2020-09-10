@@ -29,12 +29,12 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 
   if constexpr(std::is_same_v<v_t, double>)
   {
-    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<float>()), T(eve::Valmax<float>()) );
-    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<float>()), T(eve::Valmin<float>()) );
+    TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<float>()), T(eve::valmax(eve::as<float>())) );
+    TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<float>()), T(eve::valmin(eve::as<float>())) );
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<float>()), eve::Valmax<T>() );
-    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<float>()), eve::Valmin<T>() );
+    TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<float>()), eve::valmax(eve::as<T>()) );
+    TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<float>()), eve::valmin(eve::as<T>()) );
   }
 }

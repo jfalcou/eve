@@ -41,7 +41,7 @@ namespace eve::detail
       if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
       {
 #ifndef NDEBUG
-      return if_else(is_gtz(a1), shr(a0, max(Zero(eve::as(a1)), a1)), shl(a0, max(Zero(eve::as(a1)), -a1)));
+      return if_else(is_gtz(a1), shr(a0, max(zero(eve::as(a1)), a1)), shl(a0, max(zero(eve::as(a1)), -a1)));
 #else
       return if_else(is_gtz(a1), shr(a0, a1), shl(a0, -a1));
 #endif

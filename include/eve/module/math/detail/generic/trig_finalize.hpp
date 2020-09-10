@@ -144,7 +144,7 @@ namespace eve::detail
       auto tmp =  binarize(fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
       auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
-      auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, signmask(eve::as<T>()), eve::zero_));
+      auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, signmask(eve::as<T>()), eve::zero));
       auto test = is_nez(swap_bit);
       return std::make_tuple( bit_xor(if_else(test, ce0, se0), sin_sign_bit)
                             , bit_xor(if_else(test, se0, ce0), cos_sign_bit) );
@@ -174,7 +174,7 @@ namespace eve::detail
     {
       auto tmp =  binarize(fn >= T(2));
       auto swap_bit = (fma(T(-2), tmp, fn));
-      auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero_));
+      auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero));
       auto z = sqr(xr);
       auto se = sin_eval(z, xr);
       auto ce = cos_eval(z);

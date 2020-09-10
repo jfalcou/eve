@@ -15,8 +15,8 @@
 //THE BENCH IS VERY PARTIAL just type  to signed integer type of same size
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>()/2;
-  auto lmax = eve::Valmax<EVE_VALUE>()/2;
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>())/2;
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>())/2;
   using i_t = eve::detail::as_integer_t<EVE_VALUE, signed>;
   auto f =  [](auto x){ return eve::convert(x, eve::as_<i_t>());
   }

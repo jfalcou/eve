@@ -14,8 +14,8 @@
 
 int main(int argc, char** argv)
 {
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   auto std_dist =  [](auto x,  auto y){ return std::max(x, y)-std::min(x, y); };
 
   EVE_REGISTER_BENCHMARK(std_dist, EVE_TYPE

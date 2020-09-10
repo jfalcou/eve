@@ -33,13 +33,13 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::manhattan) behavior", EVE_TYPE)
     TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>())), eve::inf(eve::as<T>()));
   }
 
-  TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::Valmax<T>(), T(0))             , eve::Valmax<T>());
-  TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(T(0)            , eve::Valmax<T>()) , eve::Valmax<T>());
+  TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(eve::valmax(eve::as<T>()), T(0))             , eve::valmax(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(T(0)            , eve::valmax(eve::as<T>())) , eve::valmax(eve::as<T>()));
 
   TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(T(-1), T(-1)), T(2));
   TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(T( 1), T( 1)), T(2));
   TTS_IEEE_EQUAL(eve::pedantic_(eve::manhattan)(T( 0), T( 0)), T(0));
-  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::Sqrt_2<T>() , eve::Sqrt_2<T>()) , T(2)* eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::sqrt_2(eve::as<T>()) , eve::sqrt_2(eve::as<T>())) , T(2)* eve::sqrt_2(eve::as<T>()), 0.5);
 }
 
 TTS_CASE_TPL("Check 3 params eve::pedantic_(eve::manhattan) behavior", EVE_TYPE)
@@ -50,8 +50,8 @@ TTS_CASE_TPL("Check 3 params eve::pedantic_(eve::manhattan) behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::Valmax<T>(), T(0),              T(0)), eve::Valmax<T>(), 0);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(T(0)          , (eve::Valmax<T>()),  T(0)), eve::Valmax<T>(), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(eve::valmax(eve::as<T>()), T(0),              T(0)), eve::valmax(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(T(0)          , (eve::valmax(eve::as<T>())),  T(0)), eve::valmax(eve::as<T>()), 0);
 
   TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(T(-1), T(-1), T(-1)), T(3) , 0);
   TTS_ULP_EQUAL(eve::pedantic_(eve::manhattan)(T( 1), T( 1), T(-1)), T(3) , 0);

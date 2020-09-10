@@ -17,8 +17,8 @@ int main(int argc, char** argv)
 {
   constexpr EVE_TYPE indeg = EVE_TYPE(180)/std::numbers::pi_v<EVE_TYPE>;
   auto const std_atan2d = [](auto x, auto y) { return indeg*std::atan2(x, y); };
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_atan2d, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));

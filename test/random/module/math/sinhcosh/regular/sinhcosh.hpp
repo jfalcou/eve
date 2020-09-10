@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on sinhcosh", EVE_TYPE)
   auto sinhcosh_s =  [](auto e) { auto [s, c] = eve::sinhcosh(e); return s; };
   auto sinhcosh_c =  [](auto e) { auto [s, c] = eve::sinhcosh(e); return c; };
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sin, sinhcosh_s);
   TTS_RANGE_CHECK(p, std_cos, sinhcosh_c);
 }

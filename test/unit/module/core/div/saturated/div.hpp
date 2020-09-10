@@ -29,13 +29,13 @@ TTS_CASE_TPL("Check saturated_(eve::div) behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    auto tvmax  = eve::Valmax<T>();
-    auto vmax   = eve::Valmax<v_t>();
+    auto tvmax  = eve::valmax(eve::as<T>());
+    auto vmax   = eve::valmax(eve::as<v_t>());
 
     if constexpr(eve::signed_value<T>)
     {
-      auto vmin   = eve::Valmin<v_t>();
-      auto tvmin  = eve::Valmin<T>();
+      auto vmin   = eve::valmin(eve::as<v_t>());
+      auto tvmin  = eve::valmin(eve::as<T>());
 
       TTS_EQUAL(saturated_(eve::div)(tvmax  , T(-1) ), tvmin+(T(1)) );
       TTS_EQUAL(saturated_(eve::div)(tvmin  , T(-1) ), tvmax        );

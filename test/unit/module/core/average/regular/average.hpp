@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check  eve::average behavior", EVE_TYPE)
   TTS_EQUAL(eve::average(eve::one(eve::as<T>()) ,  eve::one(eve::as<T>())     ) , eve::one(eve::as<T>())    );
   TTS_EQUAL(eve::average(T( 0 )  , T( 0 )   ) , T( 0 )   );
   TTS_EQUAL(eve::average(eve::One <T>()  , T(3)             ) , T(2)             );
-  TTS_EQUAL(eve::average(eve::Valmax<T>(), eve::Valmax<T>() ) , eve::Valmax<T>() );
-  TTS_EQUAL(eve::average(eve::Valmin<T>(), eve::Valmin<T>() ) , eve::Valmin<T>() );
+  TTS_EQUAL(eve::average(eve::valmax(eve::as<T>()), eve::valmax(eve::as<T>()) ) , eve::valmax(eve::as<T>()) );
+  TTS_EQUAL(eve::average(eve::valmin(eve::as<T>()), eve::valmin(eve::as<T>()) ) , eve::valmin(eve::as<T>()) );
 
   if constexpr(eve::signed_value<T>)
   {

@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_manhattan2 = [](auto x, auto y) { return std::abs(x)+std::abs(y); };
-  auto l = eve::Valmax<EVE_TYPE>();
+  auto l = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_manhattan2, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(-l, l)
                         , eve::bench::random<EVE_TYPE>(-l, l));

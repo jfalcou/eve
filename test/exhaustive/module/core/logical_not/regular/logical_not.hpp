@@ -23,19 +23,19 @@ TTS_CASE_TPL("wide random check on logical_not", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return !e; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }
   else if constexpr(eve::signed_value<T>)
   {
     auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return  !e; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }
   else
   {
     auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return !e; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }
 }

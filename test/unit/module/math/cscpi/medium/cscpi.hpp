@@ -43,8 +43,8 @@ TTS_CASE_TPL("Check eve::medium_(eve::cscpi) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(T(0.125)        ) , T(2.6131259297527530557132863468543743071675223766986)  , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(0.125)       ) , T(-2.6131259297527530557132863468543743071675223766986) , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(22.5)        ) , T(-1)           , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(22.25)       ) ,-eve::Sqrt_2<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(22.25)       ) , eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(22.25)       ) ,-eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(22.25)       ) , eve::sqrt_2(eve::as<T>()), 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(22.5)        ) , T(1)            , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(100000.0)    ) , eve::nan(eve::as<T>())   , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(100000.5)    ) , T(1)            , 0.5);

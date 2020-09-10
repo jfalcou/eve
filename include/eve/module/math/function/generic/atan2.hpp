@@ -103,13 +103,13 @@ namespace eve::detail
       if constexpr(scalar_value<T>)
       {
         z = (is_positive(a10)? z: pi(eve::as<T>())-z)*sgn;
-        return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero_) : z;
+        return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
       }
       else
       {
         z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
         z = eve::if_else( eve::is_eqz(a00),
-                          eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a0))*sgn, eve::zero_),
+                          eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a0))*sgn, eve::zero),
                           z);
         if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
         else                                  return z;

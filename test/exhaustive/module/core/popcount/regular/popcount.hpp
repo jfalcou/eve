@@ -32,6 +32,6 @@ TTS_CASE_TPL("wide exhaustive check on popcount", EVE_TYPE)
       return j; }
   );
 
-  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_popcount, eve::popcount);
 }

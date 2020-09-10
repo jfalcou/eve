@@ -61,7 +61,7 @@ namespace eve::detail
       else
       {
         auto t = exp(x);
-        auto invt = if_else(x > T(22.0f), eve::zero_, rec(t));
+        auto invt = if_else(x > T(22.0f), eve::zero, rec(t));
         auto c = average(t, invt);
         auto test = x <  ovflimitmln2;
         if (eve::all(test)) return c;

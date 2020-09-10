@@ -46,7 +46,7 @@ namespace eve::detail
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      if constexpr(current_api == vmx) { return if_else(v0, v0 * raw_(rsqrt)(v0), eve::zero_); }
+      if constexpr(current_api == vmx) { return if_else(v0, v0 * raw_(rsqrt)(v0), eve::zero); }
       else
       {
         return vec_sqrt(v0.storage());

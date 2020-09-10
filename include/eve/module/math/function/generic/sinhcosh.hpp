@@ -64,7 +64,7 @@ namespace eve::detail
         auto u = t/inct;
         auto z =  fnma(t, u, t);
         auto s = half(eve::as<T>())*h*(z+t);
-        auto invt = if_else(x > T(22.0f), eve::zero_, rec(inct));
+        auto invt = if_else(x > T(22.0f), eve::zero, rec(inct));
         auto c = average(inct, invt);
         auto test = x <  ovflimit;
         if (eve::all(test)) return std::make_tuple(s, c);

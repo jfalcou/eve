@@ -46,8 +46,8 @@ TTS_CASE_TPL("Check eve::cospi behavior", EVE_TYPE)
     TTS_ULP_EQUAL(eve::cospi( T(100000000.0)), T( 1), 0.5);
     TTS_ULP_EQUAL(eve::cospi(-T(100000000.0)), T( 1), 0.5);
 
-    TTS_ULP_EQUAL(eve::cospi(eve::Valmax<T>())    , T( 1), 0.5);
-    TTS_ULP_EQUAL(eve::cospi(eve::Valmax<T>()/10) , T( 1), 0.5);
+    TTS_ULP_EQUAL(eve::cospi(eve::valmax(eve::as<T>()))    , T( 1), 0.5);
+    TTS_ULP_EQUAL(eve::cospi(eve::valmax(eve::as<T>())/10) , T( 1), 0.5);
 
     TTS_ULP_EQUAL(eve::cospi( T(0.0625)),T(0.98078528040323044912618223613423903697393373089333), 0.5);
     TTS_ULP_EQUAL(eve::cospi(-T(0.0625)),T(0.98078528040323044912618223613423903697393373089333), 0.5);

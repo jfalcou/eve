@@ -99,11 +99,11 @@ namespace eve::detail
     if constexpr( eve::platform::supports_infinites )
     {
       auto gtax1 = is_greater(ax, one(eve::as<T>()));
-      z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero_), z);
-      z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero_, inf(eve::as<T>())), z);
+      z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero), z);
+      z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero, inf(eve::as<T>())), z);
       z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
-    z = if_else(zer_ret, eve::zero_, z);
+    z = if_else(zer_ret, eve::zero, z);
     z = if_else(inf_ret, inf(eve::as<T>()), z);
     z = if_else(is_equal(ax, one(eve::as<T>())), ax, z);
 
@@ -124,19 +124,19 @@ namespace eve::detail
     if( xx == one(eve::as<T>()) )
       return xx;
     if( is_eqz(xx) )
-      return is_eqz(a1) ? one(eve::as<T>()) : is_ltz(a1) ? inf(eve::as<T>()) : Zero<T>();
+      return is_eqz(a1) ? one(eve::as<T>()) : is_ltz(a1) ? inf(eve::as<T>()) : zero(eve::as<T>());
     if constexpr( eve::platform::supports_infinites )
     {
       if( xx == a1 && a1 == inf(eve::as<T>()) )
         return inf(eve::as<T>());
       if( xx == inf(eve::as<T>()) && a1 == minf(eve::as<T>()) )
-        return Zero<T>();
+        return zero(eve::as<T>());
       if( a1 == inf(eve::as<T>()) )
-        return (xx < one(eve::as<T>())) ? Zero<T>() : inf(eve::as<T>());
+        return (xx < one(eve::as<T>())) ? zero(eve::as<T>()) : inf(eve::as<T>());
       if( a1 == minf(eve::as<T>()) )
-        return (xx > one(eve::as<T>())) ? Zero<T>() : inf(eve::as<T>());
+        return (xx > one(eve::as<T>())) ? zero(eve::as<T>()) : inf(eve::as<T>());
       if( xx == inf(eve::as<T>()) )
-        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? one(eve::as<T>()) : inf(eve::as<T>()));
+        return (a1 < zero(eve::as<T>())) ? zero(eve::as<T>()) : ((a1 == zero(eve::as<T>())) ? one(eve::as<T>()) : inf(eve::as<T>()));
     }
     if constexpr( eve::platform::supports_invalids )
     {
@@ -177,7 +177,7 @@ namespace eve::detail
     if( w > Powlargelim )
       return inf(eve::as<T>());
     if( w < Powlowlim )
-      return Zero<T>();
+      return zero(eve::as<T>());
     e  = w;
     Wb = W - Wb;    //
     if( Wb > 0.0f ) //

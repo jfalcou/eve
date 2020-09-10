@@ -22,6 +22,6 @@ TTS_CASE_TPL("wide random check on mantissa", EVE_TYPE)
   auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp);  };
   auto std_mantissa = tts::vectorize<T>( [ internal_f ](auto e) { return internal_f(e); } );
 
-  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa);
 }

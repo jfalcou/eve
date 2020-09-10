@@ -33,8 +33,8 @@ TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
 
   if constexpr(eve::signed_value<T>)
   {
-    tv  = eve::Valmin<T>();
-    res = eve::Valmax<T>();
+    tv  = eve::valmin(eve::as<T>());
+    res = eve::valmax(eve::as<T>());
   }
   else
   {

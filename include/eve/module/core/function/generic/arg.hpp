@@ -32,7 +32,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero_);
+      auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
       if constexpr( platform::supports_nans && std::same_as<D, pedantic_type> )
       {
         return if_else(is_nan(a), eve::allbits, z);

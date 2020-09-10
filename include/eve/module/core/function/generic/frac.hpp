@@ -40,7 +40,7 @@ namespace eve::detail
           return if_else(is_eqz(a), a, a - trunc(a));
         }
       }
-      else return Zero(eve::as(a));
+      else return zero(eve::as(a));
     }
     else return apply_over(frac, a);
   }

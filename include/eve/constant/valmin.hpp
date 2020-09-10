@@ -17,15 +17,15 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(valmin_, valmin_);
+  EVE_MAKE_CALLABLE(valmin_, valmin);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Valmin(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    return T(std::numeric_limits<t_t>::lowest());
+    template<typename T>
+    EVE_FORCEINLINE auto valmin_(EVE_SUPPORTS(cpu_),eve::as_<T> const &) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
+      return T(std::numeric_limits<t_t>::lowest());
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(valmin_, Valmin);
 }
-

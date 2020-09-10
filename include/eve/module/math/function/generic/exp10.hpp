@@ -54,7 +54,7 @@ namespace eve::detail
         if( xgemaxlog10 )
           return inf(eve::as(x));
         if( xltminlog10 )
-          return Zero(eve::as(x));
+          return zero(eve::as(x));
       }
       auto c = nearest(invlog10_2(eve::as<T>()) * x);
       auto k = c;
@@ -82,7 +82,7 @@ namespace eve::detail
       auto z = D()(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
-        z = if_else(xltminlog10, eve::zero_, z);
+        z = if_else(xltminlog10, eve::zero, z);
         z = if_else(xgemaxlog10, inf(eve::as(x)), z);
       }
       return z;

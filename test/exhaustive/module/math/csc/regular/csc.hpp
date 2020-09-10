@@ -25,12 +25,12 @@ TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
 
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_csc, eve::csc);
   }
   else
   {
-    eve::exhaustive_producer<T>  p(eve::smallestposval(eve::as<v_t>()), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T>  p(eve::smallestposval(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_csc, eve::csc);
   }
 }

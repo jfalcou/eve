@@ -40,7 +40,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-           if constexpr(integral_value<T>) return dec[ a != Valmin(eve::as(a)) ](a);
+           if constexpr(integral_value<T>) return dec[ a != valmin(eve::as(a)) ](a);
       else if constexpr(floating_value<T>) return dec(a);
     }
     else return apply_over(saturated_(dec), a);

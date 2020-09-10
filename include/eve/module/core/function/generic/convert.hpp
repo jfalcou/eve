@@ -89,7 +89,7 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_tin, double> && std::is_same_v<OUT, int64_t> )
     {
-      const int32_t Vim32 = Valmin<int32_t>();
+      const int32_t Vim32 = valmin(eve::as<int32_t>());
       const OUT     Vim   = OUT(Vim32);
       const OUT     Vax   = -OUT(Vim32);
       auto          z     = v00 * 1.52587890625000e-05; // v0*2^(-16);
@@ -101,19 +101,19 @@ namespace eve::detail
     else if constexpr( floating_real_value<
                            IN> && std::is_same_v<OUT, as_integer_t<elt_tin, unsigned>> )
     {
-      auto v0    = eve::max(v00, Zero(eve::as(v00)));
+      auto v0    = eve::max(v00, zero(eve::as(v00)));
       using r_t  = as_integer_t<IN, unsigned>;
       using si_t = as_integer_t<elt_tin, signed>;
 
-      IN  sign_f(inc(IN(Valmax<si_t>())));
-      r_t sign_i(inc(r_t(Valmax<si_t>())));
+      IN  sign_f(inc(IN(valmax(eve::as<si_t>()))));
+      r_t sign_i(inc(r_t(valmax(eve::as<si_t>()))));
       return if_else(is_less(v0, sign_f),
                      convert(v0, as<OUT>()),
                      convert(v0 - sign_f, as<OUT>())+ sign_i);
     }
     else if constexpr( signed_value<IN> && unsigned_value<OUT> )
     {
-      return convert(eve::max(v00, Zero(eve::as(v00))), as<OUT>());
+      return convert(eve::max(v00, zero(eve::as(v00))), as<OUT>());
     }
     else
     {

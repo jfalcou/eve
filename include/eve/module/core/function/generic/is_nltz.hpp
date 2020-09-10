@@ -35,7 +35,7 @@ namespace eve::detail
         if constexpr(integral_value<T>)      return is_gez(a);
         else if constexpr(floating_value<T>) return is_gez(a) || is_nan(a);
       }
-      else                                   return is_not_less(a, Zero(eve::as(a)));
+      else                                   return is_not_less(a, zero(eve::as(a)));
     }
     else                                     return apply_over(is_nltz, a);
   }

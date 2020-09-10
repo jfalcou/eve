@@ -235,7 +235,7 @@ namespace eve::detail
         return x;
       }
       else if( ix == 0x3f800000 )
-        return Zero(eve::as(x));
+        return zero(eve::as(x));
 
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
@@ -296,7 +296,7 @@ namespace eve::detail
       else if( hx >= 0x7ff00000 )
         return x;
       else if( x == one(eve::as<T>()) )
-        return Zero<T>();
+        return zero(eve::as<T>());
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       hx += 0x3ff00000 - 0x3fe6a09e;
       k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;

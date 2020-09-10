@@ -63,7 +63,7 @@ namespace eve::detail
       else
       {
         auto invalid = is_not_finite(x);
-        x = if_else(x > maxflint(eve::as(x)), eve::zero_, x);
+        x = if_else(x > maxflint(eve::as(x)), eve::zero, x);
         x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);

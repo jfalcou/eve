@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on bitofsign", EVE_TYPE)
   {
     auto std_bitofsign = tts::vectorize<T>( [](auto e) { return std::copysign(v_t(1), e); } );
     auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), v_t(1)); };
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_bitofsign, eve_bitofsign);
   }
   else
@@ -34,7 +34,7 @@ TTS_CASE_TPL("wide random check on bitofsign", EVE_TYPE)
     auto std_bitofsign = tts::vectorize<T>( [](auto e) {
                                                  using i_t = eve::detail::as_integer_t<v_t>;
                                                  return  v_t(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }
 }

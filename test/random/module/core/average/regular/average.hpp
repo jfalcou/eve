@@ -28,12 +28,12 @@ TTS_CASE_TPL("wide random check on average", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
 
-    eve::piecewise_rng_producer<T> p(1, 4, 2); //eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::piecewise_rng_producer<T> p(1, 4, 2); //eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_ULP_RANGE_CHECK(p, std_average, my_average, 2);
   }
   else
   {
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_ULP_RANGE_CHECK(p, std_average, my_average, 0.5);
   }
 }

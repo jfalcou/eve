@@ -27,8 +27,8 @@ TTS_CASE_TPL("Check (eve::sincos behavior", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
 
   auto pi_v   = eve::pi(eve::as<v_t>());
-  auto max_v  = eve::Valmax<v_t>();
-  auto min_v  = eve::Valmin<v_t>();
+  auto max_v  = eve::valmax(eve::as<v_t>());
+  auto min_v  = eve::valmin(eve::as<v_t>());
 
   v_t x[] = { pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, v_t(1), v_t(-1), v_t(10), v_t(-10)
             , v_t(1000000), v_t(-1000000), v_t(1000000000), v_t(-1000000000)

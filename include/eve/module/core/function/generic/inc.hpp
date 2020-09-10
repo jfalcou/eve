@@ -45,7 +45,7 @@ namespace eve::detail
     {
       if constexpr(integral_value<T>)
       {
-        return inc[ a != Valmax(eve::as(a)) ](a);
+        return inc[ a != valmax(eve::as(a)) ](a);
       }
       else if constexpr(floating_value<T>)
       {

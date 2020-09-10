@@ -142,7 +142,7 @@ namespace eve::detail
       pio2_3  =  2.02226624871116645580e-21, /* 0x3BA3198A, 0x2E000000 */
       pio2_3t =  8.47842766036889956997e-32; /* 0x397B839A, 0x252049C1 */
 
-    double z = Zero<double>(),w,t,r,fn;
+    double z = 0.0,w,t,r,fn;
     double tx[3];
     std::int32_t e0,i,j,nx,n,ix,hx;
     std::uint32_t low;

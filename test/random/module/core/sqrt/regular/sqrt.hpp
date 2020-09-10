@@ -21,6 +21,6 @@ TTS_CASE_TPL("wide random check on sqrt", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_sqrt = tts::vectorize<T>( [](auto e) { return std::sqrt(e); } );
 
-  eve::rng_producer<T> p(v_t(0), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sqrt, eve::sqrt);
 }

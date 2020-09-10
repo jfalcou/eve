@@ -41,7 +41,7 @@ namespace eve::detail
       if constexpr(scalar_value<T>)
       {
         if (is_eqz(a0)) return one(eve::as(a0));
-        if constexpr(eve::platform::supports_infinites) if(is_infinite(a0)) return Zero<T>();
+        if constexpr(eve::platform::supports_infinites) if(is_infinite(a0)) return zero(eve::as<T>());
         if constexpr(eve::platform::supports_denormals)
           return eve::abs(a0) < eps(as<T>()) ? one(eve::as<T>()) : sinh(a0)/a0;
         else
@@ -80,7 +80,7 @@ namespace eve::detail
         T x = abs(a0);
         auto lt1= is_less(x, one(eve::as<T>()));
         std::size_t nb = nbtrue(lt1);
-        T z = Zero<T>();
+        T z = zero(eve::as<T>());
         if( nb > 0)
         {
           z = sinhc_kernel(sqr(x));

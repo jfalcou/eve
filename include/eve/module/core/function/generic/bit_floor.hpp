@@ -33,14 +33,14 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       auto vlt1 = v < one(eve::as(v));
-      if constexpr(scalar_value<T>) if (vlt1) return Zero(eve::as(v));
+      if constexpr(scalar_value<T>) if (vlt1) return zero(eve::as(v));
       if constexpr(floating_real_value<T>)
       {
         auto [m, e] = ifrexp(v);
         e = dec(e);
         auto r = eve::ldexp(one(eve::as(v)), e);
         if constexpr(scalar_value<T>) return r;
-        else                          return if_else(vlt1, eve::zero_, r);
+        else                          return if_else(vlt1, eve::zero, r);
       }
       else
       {
@@ -54,7 +54,7 @@ namespace eve::detail
         if constexpr( sizeof(elt_t) >= 8 )  a |= bit_shr(a, 32);
         a -= (a >> 1);
         if constexpr(scalar_value<T>) return a;
-        else                          return if_else(vlt1, eve::zero_, a);
+        else                          return if_else(vlt1, eve::zero, a);
       }
     }
     else return apply_over(bit_floor, v);

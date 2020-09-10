@@ -43,13 +43,13 @@ TTS_CASE_TPL("Check eve::div behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::div(eve::Valmax<T>()   ,   T(2)) , T(eve::Valmax<v_t>()/2));
-    TTS_EQUAL(eve::div(eve::Valmax<v_t>() ,   T(2)) , T(eve::Valmax<v_t>()/2));
-    TTS_EQUAL(eve::div(eve::Valmax<T>()   , v_t(2)) , T(eve::Valmax<v_t>()/2));
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<T>())   ,   T(2)) , T(eve::valmax(eve::as<v_t>())/2));
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<v_t>()) ,   T(2)) , T(eve::valmax(eve::as<v_t>())/2));
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<T>())   , v_t(2)) , T(eve::valmax(eve::as<v_t>())/2));
 
-    TTS_EQUAL(eve::div(eve::Valmax<T>()   ,   T(1)) , eve::Valmax<T>());
-    TTS_EQUAL(eve::div(eve::Valmax<v_t>() ,   T(1)) , eve::Valmax<T>());
-    TTS_EQUAL(eve::div(eve::Valmax<T>()   , v_t(1)) , eve::Valmax<T>());
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<T>())   ,   T(1)) , eve::valmax(eve::as<T>()));
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<v_t>()) ,   T(1)) , eve::valmax(eve::as<T>()));
+    TTS_EQUAL(eve::div(eve::valmax(eve::as<T>())   , v_t(1)) , eve::valmax(eve::as<T>()));
   }
 
   if constexpr(eve::signed_value<T>)

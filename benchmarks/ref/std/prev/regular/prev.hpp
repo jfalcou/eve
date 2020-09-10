@@ -15,8 +15,8 @@
 int main(int argc, char** argv)
 {
   auto inf =  std::numeric_limits<EVE_TYPE>::infinity();
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   auto std_prev = [inf](auto x){ return std::prevafter(x,-inf); };
   EVE_REGISTER_BENCHMARK(std_prev, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));

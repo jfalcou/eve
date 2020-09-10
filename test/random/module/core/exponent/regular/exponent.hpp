@@ -26,6 +26,6 @@ TTS_CASE_TPL("wide random check on exponent", EVE_TYPE)
 
   auto std_exponent = tts::vectorize<vi_t>( [ internal_f ](auto e) { return internal_f(e); } );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_exponent, eve::exponent);
 }

@@ -32,6 +32,6 @@ TTS_CASE_TPL("wide rng check on popcount", EVE_TYPE)
       return j; }
   );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_popcount, eve::popcount);
 }

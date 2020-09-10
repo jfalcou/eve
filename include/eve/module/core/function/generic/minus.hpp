@@ -39,7 +39,7 @@ namespace eve::detail
         }
         else
         {
-          return Zero(eve::as(a)) - a;
+          return zero(eve::as(a)) - a;
         }
       }
     }
