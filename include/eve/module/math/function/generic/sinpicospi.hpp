@@ -57,13 +57,13 @@ namespace eve::detail
       T x = abs(a0);
       if constexpr( scalar_value<T> )
       {
-        if( x > Maxflint<T>() )
+        if( x > maxflint(eve::as<T>()) )
           return std::make_tuple(T {0}, T(1));
       }
       else
       {
         auto invalid = is_not_finite(x);
-        x = if_else(x > Maxflint(eve::as(x)), eve::zero_, x);
+        x = if_else(x > maxflint(eve::as(x)), eve::zero_, x);
         x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);

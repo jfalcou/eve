@@ -53,13 +53,13 @@ namespace eve::detail
       auto x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
-        if( x > Maxflint<T>() )
+        if( x > maxflint(eve::as<T>()) )
           return T(1);
       }
       else
       {
         x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
-        x = if_else(is_greater(x, Maxflint(eve::as(x))), eve::zero_, x);
+        x = if_else(is_greater(x, maxflint(eve::as(x))), eve::zero_, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return cos_finalize(fn, xr, dxr);

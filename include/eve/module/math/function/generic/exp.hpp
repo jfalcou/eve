@@ -47,7 +47,7 @@ namespace eve::detail
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
       auto    xltminlog = x < Minlog(eve::as(x));
-      auto    xgemaxlog = x >= Maxlog(eve::as(x));
+      auto    xgemaxlog = x >= maxlog(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog )

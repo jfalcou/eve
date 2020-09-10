@@ -27,8 +27,8 @@ TTS_CASE_TPL("Check eve::dec[condition] return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::dec[condition] behavior", EVE_TYPE)
 {
   T tv{2};
-  auto t = eve::True<T>();
-  auto f = eve::False(eve::as<T>());
+  auto t = eve::true_(eve::as<T>());
+  auto f = eve::false_(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::dec[ 1 ](tv)     , eve::dec(tv));

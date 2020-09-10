@@ -18,18 +18,18 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(limitexponent_, limitexponent_);
+  EVE_MAKE_CALLABLE(limitexponent_, limitexponent);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Limitexponent(eve::as_<T> const & = {})
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<t_t>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto limitexponent_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<t_t>;
 
-    if constexpr(std::is_same_v<t_t, float>) return i_t(128);
-    else if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(128);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(limitexponent_, Limitexponent);
 }
-

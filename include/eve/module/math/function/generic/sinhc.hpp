@@ -86,7 +86,7 @@ namespace eve::detail
           z = sinhc_kernel(sqr(x));
           if(nb >=T::static_size) return z;
         }
-        auto test1 = is_greater(x, Maxlog<T>()-Log_2<T>());
+        auto test1 = is_greater(x, maxlog(eve::as<T>())-log_2(eve::as<T>()));
         T fac = if_else(test1, half(eve::as<T>()), One<T>());
         T tmp = exp(x*fac);
         T tmp1 = (half(eve::as<T>())*tmp)/x;

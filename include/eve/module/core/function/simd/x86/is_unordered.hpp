@@ -33,7 +33,7 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>) return l_t(_mm_cmpunord_ps(v0, v1));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpunord_pd(v0, v1));
-    if constexpr(std::is_integral_v<T>) return False(eve::as<l_t>());
+    if constexpr(std::is_integral_v<T>) return false_(eve::as<l_t>());
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -47,6 +47,6 @@ namespace eve::detail
 
     if constexpr(std::is_same_v<T, float>) return l_t(_mm256_cmp_ps(v0, v1, _CMP_UNORD_Q));
     if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_UNORD_Q));
-    if constexpr(std::is_integral_v<T>) return False(eve::as<l_t>());
+    if constexpr(std::is_integral_v<T>) return false_(eve::as<l_t>());
   }
 }

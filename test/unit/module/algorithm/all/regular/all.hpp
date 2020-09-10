@@ -65,6 +65,6 @@ TTS_CASE_TPL("Check eve::all behavior on arithmetic", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::all behavior on logical", EVE_TYPE)
 {
-  TTS_EXPECT    (eve::all(eve::True<T>()));
-  TTS_EXPECT_NOT(eve::all(eve::False(eve::as<T>())));
+  TTS_EXPECT    (eve::all(eve::true_(eve::as<T>())));
+  TTS_EXPECT_NOT(eve::all(eve::false_(eve::as<T>())));
 }

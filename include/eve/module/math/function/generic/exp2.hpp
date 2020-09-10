@@ -54,7 +54,7 @@ namespace eve::detail
     {
       using elt_t     = element_type_t<T>;
       auto xltminlog2 = x < Minlog2(eve::as(x));
-      auto xgemaxlog2 = x >= Maxlog2(eve::as(x));
+      auto xgemaxlog2 = x >= maxlog2(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog2 )
@@ -67,11 +67,11 @@ namespace eve::detail
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T y = horn<T, 0x3e75fdf1, 0x3d6356eb, 0x3c1d9422, 0x3ab01218, 0x3922c8c4>(x);
-        x   = inc(fma(y, sqr(x), x * Log_2<T>()));
+        x   = inc(fma(y, sqr(x), x * log_2(eve::as<T>())));
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        x *= Log_2<T>();
+        x *= log_2(eve::as<T>());
         T    t = sqr(x);
         auto h = horn<T,
                       0x3fc555555555553eull,
@@ -119,7 +119,7 @@ namespace eve::detail
         using i_t  = as_integer_t<vd_t>;
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);
-        auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
+        auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();
         zz = zz << Nbmantissabits<vd_t>();
         using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
         return bit_cast(zz, as<r_t>());

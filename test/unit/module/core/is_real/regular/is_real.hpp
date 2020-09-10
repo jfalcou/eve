@@ -21,6 +21,6 @@ TTS_CASE_TPL("Check is_real return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_real behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_real(T{0}), eve::True<T>());
-  TTS_EQUAL(eve::is_real(T{2}), eve::True<T>());
+  TTS_EQUAL(eve::is_real(T{0}), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_real(T{2}), eve::true_(eve::as<T>()));
 }

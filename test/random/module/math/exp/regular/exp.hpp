@@ -21,6 +21,6 @@ TTS_CASE_TPL("wide random check on exp", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_exp = tts::vectorize<T>( [](auto e) { return std::exp(e); } );
 
-  eve::rng_producer<T> p(eve::Minlog<v_t>()+1, eve::Maxlog<v_t>()-1);
+  eve::rng_producer<T> p(eve::Minlog<v_t>()+1, eve::maxlog(eve::as<v_t>())-1);
   TTS_RANGE_CHECK(p, std_exp, eve::exp);
 }

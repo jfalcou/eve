@@ -44,5 +44,5 @@ TTS_CASE_TPL("Check eve::big_(eve::secpi) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100000.0)) , T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(1000001.0)),-T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100001.0)) ,-T(1)          , 0.5);
-  auto z = eve::Maxflint<T>()*10;
+  auto z = eve::maxflint(eve::as<T>())*10;
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(z) , T(1) , 0.5);}

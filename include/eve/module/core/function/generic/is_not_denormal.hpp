@@ -30,7 +30,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(integral_value<T> || !platform::supports_denormals)
-                                      return True(eve::as(a));
+                                      return true_(eve::as(a));
       else                            return is_eqz(a) || is_not_less(eve::abs(a), Smallestposval(eve::as(a)));
     }
     else                              return apply_over(is_not_denormal, a);

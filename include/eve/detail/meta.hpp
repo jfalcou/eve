@@ -242,7 +242,7 @@ namespace eve::detail
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;
 
-  // False value with dependent type
+  // false_ value with dependent type
   template<typename... T>
   inline constexpr bool wrong = false;
 

@@ -36,13 +36,13 @@ namespace eve::detail
       if constexpr( simd_value<T> )
       {
         const T z = if_else(test, x, t + sqrt(fma(t, t, t+t)));
-        return add[test](log1p(z), Log_2<T>());
+        return add[test](log1p(z), log_2(eve::as<T>()));
       }
       else if constexpr( scalar_value<T> )
       {
         if( test )
         {
-          return eve::log(t) + Log_2<T>();
+          return eve::log(t) + log_2(eve::as<T>());
         }
         else
         {

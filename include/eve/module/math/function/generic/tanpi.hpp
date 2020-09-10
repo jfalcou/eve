@@ -55,12 +55,12 @@ namespace eve::detail
           return a0;
         if( is_not_finite(x) || (frac(x) == half(eve::as<T>())) )
           return nan(eve::as<T>());
-        if( x > Maxflint<T>() || is_flint(x) )
+        if( x > maxflint(eve::as<T>()) || is_flint(x) )
           return T(0);
       }
       else
       {
-        x = if_else(is_greater(x, Maxflint(eve::as(x))) || is_flint(x), eve::zero_, x);
+        x = if_else(is_greater(x, maxflint(eve::as(x))) || is_flint(x), eve::zero_, x);
         x = if_else(is_not_finite(a0) || (frac(x) == half(eve::as<T>())), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);

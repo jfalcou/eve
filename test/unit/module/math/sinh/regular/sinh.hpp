@@ -42,7 +42,7 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   // 88.376251220703125f, 709.782712893384
   v_t ovflimit =  eve::Ieee_constant<v_t,0x42B0C0A4U, 0x40862E42FEFA39EFULL>();
   std::array<v_t, 10> a = {v_t(1), v_t(-1), v_t(0), v_t(-0.0), v_t(10), v_t(-10)
-                             , eve::Maxlog<v_t>(), ovflimit/2, ovflimit, 2*ovflimit};
+                             , eve::maxlog(eve::as<v_t>()), ovflimit/2, ovflimit, 2*ovflimit};
 
   for(size_t i=0; i < a.size(); ++i)
   {

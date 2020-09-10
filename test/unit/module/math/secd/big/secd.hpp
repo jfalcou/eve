@@ -43,6 +43,6 @@ TTS_CASE_TPL("Check eve::big_(eve::secd) behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::secd)(-T( 45.0)) , T(1.41421356237309504880168872420969807856967187537694)  , 5);
   TTS_ULP_EQUAL(eve::big_(eve::secd)( T(500.0)) , T(-1.30540728933227860459313349292274081599849729126374) , 3);
   TTS_ULP_EQUAL(eve::big_(eve::secd)(-T(500.0)) , T(-1.30540728933227860459313349292274081599849729126374) , 3);
-  auto z = eve::Maxflint<T>()*180;
+  auto z = eve::maxflint(eve::as<T>())*180;
   TTS_ULP_EQUAL(eve::big_(eve::secd)(z) , T(1) , 0.5);
 }

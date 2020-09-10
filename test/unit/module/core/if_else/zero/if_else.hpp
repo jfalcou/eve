@@ -33,22 +33,22 @@ TTS_CASE_TPL("Check eve::if_else(., ., zero_) behavior ", EVE_TYPE)
   TTS_EQUAL(eve::if_else(1                  , t, eve::zero_), t);
   TTS_EQUAL(eve::if_else(1.0                , t, eve::zero_), t);
   TTS_EQUAL(eve::if_else(true               , t, eve::zero_), t);
-  TTS_EQUAL(eve::if_else(eve::True<T>()     , t, eve::zero_), t);
+  TTS_EQUAL(eve::if_else(eve::true_(eve::as<T>())     , t, eve::zero_), t);
   TTS_EQUAL(eve::if_else(t                  , t, eve::zero_), t);
   TTS_EQUAL(eve::if_else(0                  , t, eve::zero_), f);
   TTS_EQUAL(eve::if_else(0.0                , t, eve::zero_), f);
   TTS_EQUAL(eve::if_else(false              , t, eve::zero_), f);
-  TTS_EQUAL(eve::if_else(eve::False(eve::as<T>())    , t, eve::zero_), f);
+  TTS_EQUAL(eve::if_else(eve::false_(eve::as<T>())    , t, eve::zero_), f);
   TTS_EQUAL(eve::if_else(f                  , t, eve::zero_), f);
 
   TTS_EQUAL(eve::if_else(1                  , eve::zero_, t), f);
   TTS_EQUAL(eve::if_else(1.0                , eve::zero_, t), f);
   TTS_EQUAL(eve::if_else(true               , eve::zero_, t), f);
-  TTS_EQUAL(eve::if_else(eve::True<T>()     , eve::zero_, t), f);
+  TTS_EQUAL(eve::if_else(eve::true_(eve::as<T>())     , eve::zero_, t), f);
   TTS_EQUAL(eve::if_else(t                  , eve::zero_, t), f);
   TTS_EQUAL(eve::if_else(0                  , eve::zero_, t), t);
   TTS_EQUAL(eve::if_else(0.0                , eve::zero_, t), t);
   TTS_EQUAL(eve::if_else(false              , eve::zero_, t), t);
-  TTS_EQUAL(eve::if_else(eve::False(eve::as<T>())    , eve::zero_, t), t);
+  TTS_EQUAL(eve::if_else(eve::false_(eve::as<T>())    , eve::zero_, t), t);
   TTS_EQUAL(eve::if_else(f                  , eve::zero_, t), t);
 }

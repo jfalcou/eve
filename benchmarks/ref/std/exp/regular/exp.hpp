@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 {
   auto const std_exp = [](auto x) { return std::exp(x); };
   auto lmin = eve::Minlog<EVE_TYPE>();
-  auto lmax = eve::Maxlog<EVE_TYPE>();
+  auto lmax = eve::maxlog(eve::as<EVE_TYPE>());
 
   EVE_REGISTER_BENCHMARK(std_exp, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin, lmax));
 

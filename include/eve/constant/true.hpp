@@ -16,14 +16,14 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(true_, true_);
+  EVE_MAKE_CALLABLE(true__, true_);
 
-  template<typename T>
-  EVE_FORCEINLINE auto True(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    return as_logical_t<T>(true);
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto true__(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+       return as_logical_t<T>(true);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(true_, True);
 }
-

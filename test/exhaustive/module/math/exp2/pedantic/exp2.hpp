@@ -27,7 +27,7 @@ TTS_CASE_TPL("wide random check on exp2", EVE_TYPE)
   }
   else
   {
-    eve::exhaustive_producer<T> p(eve::Minlog2<v_t>(), eve::Maxlog2<v_t>());
+    eve::exhaustive_producer<T> p(eve::Minlog2<v_t>(), eve::maxlog2<v_t>());
     TTS_RANGE_CHECK(p, std_exp2, eve::pedantic_(eve::exp2));
   }
 }

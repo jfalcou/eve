@@ -27,7 +27,7 @@ TTS_CASE_TPL("ignore_all behavior", TTS_NUMERIC_TYPES)
 
   using type = wide<T>;
 
-  TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::False( as_<type>() ) );
+  TTS_EQUAL( ignore_all.mask( as_<type>() )           , eve::false_( as_<type>() ) );
   TTS_EQUAL( (if_else(ignore_all,type(42), type(69))) , type(69)                  );
 }
 
@@ -43,7 +43,7 @@ TTS_CASE_TPL("ignore_none behavior", TTS_NUMERIC_TYPES)
 
   using type = wide<T>;
 
-  TTS_EQUAL( ignore_none.mask( as_<type>() )            , eve::True( as_<type>() )  );
+  TTS_EQUAL( ignore_none.mask( as_<type>() )            , eve::true_( as_<type>() )  );
   TTS_EQUAL( (if_else(ignore_none,type(42), type(69)))  , type(42)                  );
 }
 

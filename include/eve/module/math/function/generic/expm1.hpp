@@ -48,8 +48,8 @@ namespace eve::detail
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
       T       k         = nearest(Invlog_2 * xx);
-      auto    xlelogeps = xx <= Logeps(eve::as(xx));
-      auto    xgemaxlog = xx >= Maxlog(eve::as(xx));
+      auto    xlelogeps = xx <= logeps(eve::as(xx));
+      auto    xgemaxlog = xx >= maxlog(eve::as(xx));
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(xx) )
@@ -70,7 +70,7 @@ namespace eve::detail
         T e        = hxs * ((r1 - t) / (T(6) - x * t));
         e          = fms(x, e, hxs);
         i_t ik     = int_(k);
-        T   two2mk = bit_cast(shl(Maxexponent<T>() - ik, Nbmantissabits<elt_t>()), as<T>());
+        T   two2mk = bit_cast(shl(maxexponent(eve::as<T>()) - ik, Nbmantissabits<elt_t>()), as<T>());
         k          = oneminus(two2mk) - (e - x);
         k          = D()(ldexp)(k, ik);
       }
@@ -92,7 +92,7 @@ namespace eve::detail
         T c        = (hi - x) - lo;
         e          = (x * (e - c) - c) - hxs;
         i_t ik     = int_(k);
-        T   two2mk = bit_cast(shl(Maxexponent<T>() - ik, Nbmantissabits<T>()), as<T>());
+        T   two2mk = bit_cast(shl(maxexponent(eve::as<T>()) - ik, Nbmantissabits<T>()), as<T>());
         T   ct1    = oneminus(two2mk) - (e - x);
         T   ct2    = inc((x - (e + two2mk)));
         k          = if_else((k < T(20)), ct1, ct2);

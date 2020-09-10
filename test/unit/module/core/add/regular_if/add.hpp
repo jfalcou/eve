@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check eve::add[condition] behavior", EVE_TYPE)
 {
   T tv{2};
   T fv{3};
-  auto t = eve::True<T>();
-  auto f = eve::False(eve::as<T>());
+  auto t = eve::true_(eve::as<T>());
+  auto f = eve::false_(eve::as<T>());
 
   // All basic TRUE
   TTS_EQUAL(eve::add[ 1 ](tv, fv)     , tv + fv);

@@ -34,18 +34,18 @@ TTS_CASE_TPL("Check eve::if_else(., ., mone_) behavior ", EVE_TYPE)
   TTS_IEEE_EQUAL(eve::if_else(1                 , t, eve::mone_), t);
   TTS_IEEE_EQUAL(eve::if_else(1.0               , t, eve::mone_), t);
   TTS_IEEE_EQUAL(eve::if_else(true              , t, eve::mone_), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , t, eve::mone_), t);
+  TTS_IEEE_EQUAL(eve::if_else(eve::true_(eve::as<T>())    , t, eve::mone_), t);
   TTS_IEEE_EQUAL(eve::if_else(0                 , t, eve::mone_), f);
   TTS_IEEE_EQUAL(eve::if_else(0.0               , t, eve::mone_), f);
   TTS_IEEE_EQUAL(eve::if_else(false             , t, eve::mone_), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False(eve::as<T>())   , t, eve::mone_), f);
+  TTS_IEEE_EQUAL(eve::if_else(eve::false_(eve::as<T>())   , t, eve::mone_), f);
 
   TTS_IEEE_EQUAL(eve::if_else(1                 , eve::mone_, t), f);
   TTS_IEEE_EQUAL(eve::if_else(1.0               , eve::mone_, t), f);
   TTS_IEEE_EQUAL(eve::if_else(true              , eve::mone_, t), f);
-  TTS_IEEE_EQUAL(eve::if_else(eve::True<T>()    , eve::mone_, t), f);
+  TTS_IEEE_EQUAL(eve::if_else(eve::true_(eve::as<T>())    , eve::mone_, t), f);
   TTS_IEEE_EQUAL(eve::if_else(0                 , eve::mone_, t), t);
   TTS_IEEE_EQUAL(eve::if_else(0.0               , eve::mone_, t), t);
   TTS_IEEE_EQUAL(eve::if_else(false             , eve::mone_, t), t);
-  TTS_IEEE_EQUAL(eve::if_else(eve::False(eve::as<T>())   , eve::mone_, t), t);
+  TTS_IEEE_EQUAL(eve::if_else(eve::false_(eve::as<T>())   , eve::mone_, t), t);
 }

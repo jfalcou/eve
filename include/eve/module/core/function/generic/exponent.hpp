@@ -36,12 +36,12 @@ namespace eve::detail
       {
         if (is_not_finite(a)) return as_integer_t<T>(0);
         auto x = shr(z, Nbmantissabits<T>());
-        return sub[is_nez(a)](x, Maxexponent<T>());
+        return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
       }
       else
       {
         auto x = shr(z, Nbmantissabits<T>());
-        return if_else(is_not_finite(a), eve::zero_, sub[is_nez(a)](x, Maxexponent<T>()));
+        return if_else(is_not_finite(a), eve::zero_, sub[is_nez(a)](x, maxexponent(eve::as<T>())));
       }
     }
     else return apply_over(exponent, a);

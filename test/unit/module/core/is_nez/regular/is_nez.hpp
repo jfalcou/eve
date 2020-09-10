@@ -22,11 +22,11 @@ TTS_CASE_TPL("Check eve::is_nez return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_nez behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_nez(T(0)), eve::False(eve::as<T>()));
-  TTS_EQUAL(eve::is_nez(T(2)), eve::True<T>() );
+  TTS_EQUAL(eve::is_nez(T(0)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_nez(T(2)), eve::true_(eve::as<T>()) );
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::is_nez(T(-0.)), eve::False(eve::as<T>()) );
+    TTS_EQUAL(eve::is_nez(T(-0.)), eve::false_(eve::as<T>()) );
   }
 }

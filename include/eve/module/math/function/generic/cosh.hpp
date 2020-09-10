@@ -36,7 +36,7 @@ namespace eve::detail
     // respectively computed
     // *  in the first case cosh (e+rec(e))/2
     // *  in the second     cosh is (e/2)*e (avoiding undue overflow)
-    // Threshold is Maxlog - Log_2
+    // Threshold is maxlog - Log_2
     //////////////////////////////////////////////////////////////////////////////
     if constexpr(scalar_value<T>)
     {

@@ -12,24 +12,26 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(iota_, iota_);
+  EVE_MAKE_CALLABLE(iota_, iota);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Iota(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    if constexpr( scalar_value<T> )
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto iota_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
-      return T(0);
-    }
-    else
-    {
-      return T([](auto i, auto ) { return i; } );
+      if constexpr( scalar_value<T> )
+      {
+        return T(0);
+      }
+      else
+      {
+        return T([](auto i, auto ) { return i; } );
+      }
     }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(iota_, Iota);
 }

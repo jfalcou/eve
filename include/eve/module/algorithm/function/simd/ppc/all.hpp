@@ -26,7 +26,7 @@ namespace eve::detail
     }
     else if constexpr( N::value == expected_cardinal_v<T, ppc_> )
     {
-      return vec_all_eq(m.storage(), True(eve::as(v0)).storage());
+      return vec_all_eq(m.storage(), true_(eve::as(v0)).storage());
     }
     else
     {

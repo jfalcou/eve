@@ -22,7 +22,7 @@ namespace eve
   EVE_MAKE_CALLABLE(maxlog2_, maxlog2_);
 
   template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Maxlog2(eve::as_<T> const & = {}) noexcept
+  constexpr EVE_FORCEINLINE auto maxlog2(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 
@@ -30,6 +30,6 @@ namespace eve
     else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x408ff80000000000ULL>();
   }
 
-    EVE_MAKE_NAMED_CONSTANT(maxlog2_, Maxlog2);
+    EVE_MAKE_NAMED_CONSTANT(maxlog2_, maxlog2);
 }
 

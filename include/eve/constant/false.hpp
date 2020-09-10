@@ -16,12 +16,12 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(False_, False);
+  EVE_MAKE_CALLABLE(false__, false_);
 
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto False_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto false__(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
        return as_logical_t<T>(false);
     }

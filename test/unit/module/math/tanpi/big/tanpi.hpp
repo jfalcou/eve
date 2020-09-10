@@ -56,6 +56,6 @@ TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(-100000.0)   ), T(0)         , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(100000000.0) ), T(0)         , 0.5 );
   TTS_ULP_EQUAL(eve::big_(eve::tanpi)( T(-100000000.0)), T(0)         , 0.5 );
-  auto z = eve::Maxflint<T>()*10;
+  auto z = eve::maxflint(eve::as<T>())*10;
   TTS_ULP_EQUAL(eve::big_(eve::tanpi)(z) , T(0) , 0.5);
 }

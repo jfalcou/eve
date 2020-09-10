@@ -28,8 +28,8 @@ TTS_CASE_TPL("Check oneminus return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
 {
   T tv, res;
-  auto t = eve::True<T>();
-  auto f = eve::False(eve::as<T>());
+  auto t = eve::true_(eve::as<T>());
+  auto f = eve::false_(eve::as<T>());
 
   if constexpr(eve::signed_value<T>)
   {

@@ -65,7 +65,7 @@ namespace eve::detail
       {
         if( is_not_finite(x) )
           return nan(eve::as<T>());
-        if( x > Maxflint<T>() )
+        if( x > maxflint(eve::as<T>()) )
           return T(1);
       }
 

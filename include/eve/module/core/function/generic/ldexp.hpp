@@ -44,7 +44,7 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       if constexpr(integral_value<U>)
       {
-        auto ik =  b+Maxexponent<elt_t>();
+        auto ik =  b+maxexponent(eve::as<elt_t>());
         ik = shl(ik, Nbmantissabits<elt_t>());
         if constexpr(scalar_value<decltype(ik)>)
           return a*bit_cast(ik, as<elt_t>());
@@ -82,10 +82,10 @@ namespace eve::detail
           e = sub[denormal]( e, Minexponent<elt_t>());
           f = if_else(denormal, Smallestposval<elt_t>(), eve::one_);
         }
-        auto test = is_equal(e, Limitexponent<elt_t>());
+        auto test = is_equal(e, limitexponent(eve::as<elt_t>()));
         f = inc[test](f);
         e = dec[test](e);
-        e += Maxexponent<elt_t>();
+        e += maxexponent(eve::as<elt_t>());
         e = shl(e, Nbmantissabits<elt_t>());
         if constexpr(scalar_value<decltype(e)>)
           return a*bit_cast(e, as(elt_t()))*f;

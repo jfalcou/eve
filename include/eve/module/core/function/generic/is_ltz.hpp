@@ -26,7 +26,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(unsigned_value<T>) return False(eve::as(a));
+      if constexpr(unsigned_value<T>) return false_(eve::as(a));
       else                            return a < Zero(eve::as(a));
     }
     else                              return apply_over(is_ltz, a);

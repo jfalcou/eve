@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv)
 {
-  auto lmin = eve::Maxlog<EVE_TYPE>();
+  auto lmin = eve::maxlog(eve::as<EVE_TYPE>());
   auto lmax = eve::Minlog<EVE_TYPE>();
   auto const std_fdim = [](auto x, auto y) { return std::fdim(x, y); };
 

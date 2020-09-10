@@ -16,7 +16,7 @@
 int main()
 {
   auto lmin = EVE_VALUE(eve::Minlog<EVE_VALUE>());
-  auto lmax = EVE_VALUE(eve::Maxlog<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::maxlog(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__cosh = [](auto x){return std::cosh(x);};
