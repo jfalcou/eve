@@ -19,9 +19,11 @@
 // TODO A METTRE DANS MANTISSABITS
 namespace eve
 {
-  EVE_MAKE_CALLABLE(mantissamask_, mantissamask_);
+  EVE_MAKE_CALLABLE(mantissamask_, mantissamask);
 
-   template<floating_value T>
+  namespace detail
+  {
+    template<floating_value T>
     EVE_FORCEINLINE constexpr auto mantissamask_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
       using t_t = detail::value_type_t<T>;
@@ -31,5 +33,4 @@ namespace eve
       else if constexpr(std::is_same_v<t_t, double >) return i_t(0x800FFFFFFFFFFFFFULL);
     }
   }
-;
 }

@@ -78,8 +78,8 @@ namespace eve::detail
         auto f = one(eve::as<T>());
         if constexpr( eve::platform::supports_denormals)
         {
-          auto denormal =  is_less(e, Minexponent<elt_t>());
-          e = sub[denormal]( e, Minexponent<elt_t>());
+          auto denormal =  is_less(e, minexponent(eve::as<elt_t>()));
+          e = sub[denormal]( e, minexponent(eve::as<elt_t>()));
           f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
         }
         auto test = is_equal(e, limitexponent(eve::as<elt_t>()));

@@ -58,8 +58,14 @@ List of constants
 
 $$\newcommand{\choose}[4]{\left\{
   \begin{array}{@{}ll@{}}
-    #1 & \text{if E is } \texttt{#2}\ \\
-    #3 & \text{if E is } \texttt{#4}
+    #1 & \texttt{if E is } \texttt{#2}\ \\
+    #3 & \texttt{if E is } \texttt{#4}
+  \end{array}\right.}$$
+
+$$\newcommand{\choosefd}[2]{\left\{
+  \begin{array}{@{}ll@{}}
+     \texttt{#1} & \texttt{if E is float }  \\
+     \texttt{#2} & \texttt{if E is double}
   \end{array}\right.}$$
 
 In the following table:
@@ -68,16 +74,16 @@ In the following table:
 
 Description                                     | Callable object        | Value                                 | Constraints on `T` |
 :-----------------------------------------------|:-----------------------|:--------------------------------------|:-------------------|
-Smallest value increment                        | `eve::bitincrement`    |                                       | `value`            |
-???                                             | `eve::expobits_mask`   |                                       | `floating_value`   |
-???                                             | `eve::limitexponent`   |                                       | `floating_value`   |
-Bit mask for mantissa extraction                | `eve::mantissamask`    |                                       | `floating_value`   |
+Smallest value increment                        | `eve::bitincrement`    | `bit_cast(1,as<`T`>())`                   | `value`            |
+Mask for the exponent bits                      | `eve::expobits_mask`   | $$\choosefd{0x7f800000U}{0x7ff0000000000000ULL}$$  | `floating_value`   |
+Largest possible exponent plus one              | `eve::limitexponent`   | $$\choose{128}{float}{1024}{double}$$ | `floating_value`   |
+Bit mask for mantissa extraction                | `eve::mantissamask`    | $$\choosefd{0x807FFFFFU}{0x800FFFFFFFFFFFFFULL}$$  | `floating_value`   |
 Largest possible exponent                       | `eve::maxexponent`     | $$\choose{127}{float}{1023}{double}$$ | `floating_value`   |
 Largest possible exponent minus one             | `eve::maxexponentm1`   | $$\choose{126}{float}{1022}{double}$$ | `floating_value`   |
 Smallest positive denormal value                | `eve::mindenormal`     |                                       | `floating_value`   |
 Smallest possible exponent                      | `eve::minexponent`     |                                       | `floating_value`   |
 Not a Number                                    | `eve::nan`             |                                       | `floating_value`   |
-Size of the mantissa in bits                    | `eve::nbmantissabits`  |                                       | `floating_value`   |
+Number of mantissa bits                         | `eve::nbmantissabits`  |                                       | `floating_value`   |
 Bit mask for sign bit extraction                | `eve::signmask`        |                                       | `floating_value`   |
 Square root of the machine $\epsilon$           | `eve::sqrteps`         |                                       | `floating_value`   |
 Two at the power of the number of mantissa bits | `eve::twotonmb`        |                                       | `floating_value`   |

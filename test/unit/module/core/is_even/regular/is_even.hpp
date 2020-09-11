@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::is_even behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_even(T(0.5)), eve::false_(eve::as<T>())());
+    TTS_EQUAL(eve::is_even(T(0.5)), eve::false_(eve::as<T>()));
     TTS_EQUAL(eve::is_even(T(-0.)), eve::true_(eve::as<T>()) );
   }
 }

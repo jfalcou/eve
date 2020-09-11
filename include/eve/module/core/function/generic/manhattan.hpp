@@ -80,16 +80,16 @@ namespace eve::detail
                              ) noexcept
   requires has_native_abi_v<T>
   {
-    const auto inf = inf(eve::as(a));
+    const auto infty = inf(eve::as(a));
     auto aa = eve::abs(a);
-    auto infa = aa == inf;
-    if constexpr(scalar_value<T>) { if (infa) return inf;}
+    auto infa = aa == infty;
+    if constexpr(scalar_value<T>) { if (infa) return infty;}
     auto bb = eve::abs(b);
-    auto infb = bb == inf;
-    if constexpr(scalar_value<T>) { if (infb) return inf; }
+    auto infb = bb == infty;
+    if constexpr(scalar_value<T>) { if (infb) return infty; }
     auto r =  eve::abs(a)+eve::abs(b);
     if constexpr(scalar_value<T>) { return r; }
-    else { return if_else(infa || infb ,  inf, r); }
+    else { return if_else(infa || infb ,  infty, r); }
   }
 
   template<floating_value T, floating_value U, floating_value V>
@@ -112,20 +112,19 @@ namespace eve::detail
                              ) noexcept
   requires has_native_abi_v<T>
   {
-    const auto inf = inf(eve::as(a));
+    const auto infty = inf(eve::as(a));
     auto aa = eve::abs(a);
-    auto infa = aa == inf;
-    if constexpr(scalar_value<T>) { if (infa) return inf;}
+    auto infa = aa == infty;
+    if constexpr(scalar_value<T>) { if (infa) return infty;}
     auto bb = eve::abs(b);
-    auto infb = bb == inf;
-    if constexpr(scalar_value<T>) { if (infb) return inf; }
+    auto infb = bb == infty;
+    if constexpr(scalar_value<T>) { if (infb) return infty; }
     auto cc = eve::abs(c);
-    auto infc = cc == inf;
-    if constexpr(scalar_value<T>) { if (infc) return inf; }
+    auto infc = cc == infty;
+    if constexpr(scalar_value<T>) { if (infc) return infty; }
     auto r =  eve::abs(a)+eve::abs(b)+eve::abs(c);
     if constexpr(scalar_value<T>) { return r; }
-    else { return if_else(infa || infb || infc,  inf, r); }
+    else { return if_else(infa || infb || infc,  infty, r); }
   }
 
 }
-

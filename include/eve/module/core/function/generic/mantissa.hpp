@@ -48,7 +48,7 @@ namespace eve::detail
         {
           test =  test || is_not_finite(a);
         }
-        return if_else(test, a, bit_or(bit_and(a,Mantissamask<T>()),one(eve::as<T>())));
+        return if_else(test, a, bit_or(bit_and(a,mantissamask(eve::as<T>())),one(eve::as<T>())));
       }
     }
     else return apply_over(mantissa, a);
