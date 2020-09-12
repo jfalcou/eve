@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/function/if_else.hpp>
-#include <eve/constant/iota.hpp>
 
 namespace eve::detail
 {

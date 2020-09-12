@@ -10,28 +10,23 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/as.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(iota_, iota);
-
-  namespace detail
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto linear_ramp(as_<T> const &) noexcept
   {
-    template<typename T>
-    EVE_FORCEINLINE constexpr auto iota_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    if constexpr( scalar_value<T> )
     {
-      if constexpr( scalar_value<T> )
-      {
-        return T(0);
-      }
-      else
-      {
-        return T([](auto i, auto ) { return i; } );
-      }
+      return T(0);
+    }
+    else
+    {
+      return T([](auto i, auto ) { return i; } );
     }
   }
 }
+
