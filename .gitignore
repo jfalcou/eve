@@ -38,5 +38,5 @@
 
 # Potential local build repository
 *build*/
-Testing/
-
+Testing/*
+*.vscode/*
