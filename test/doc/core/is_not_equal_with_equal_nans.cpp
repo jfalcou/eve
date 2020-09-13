@@ -14,18 +14,18 @@ int main()
                 1.0f,
                 -1.0f,
                 -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+                eve::mindenormal(eve::as<float>()),
+                eve::inf(eve::as<float>()),
+                eve::minf(eve::as<float>()),
+                eve::nan(eve::as<float>())};
   wide_ft qf = {0.0f,
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>(),
+                eve::inf(eve::as<float>()),
+                eve::minf(eve::as<float>()),
+                eve::nan(eve::as<float>()),
                 0.0f,
                 1.0f,
                 -1.0f,
-                eve::Nan<float>()};
+                eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                  " << pf << '\n'
@@ -34,8 +34,8 @@ int main()
             << eve::numeric_(eve::is_not_equal)(pf, qf) << '\n';
 
   float xf1 = 1.0f;
-  float xf2 = eve::Nan<float>();
-  float yf  = eve::Nan<float>();
+  float xf2 = eve::nan(eve::as<float>());
+  float yf  = eve::nan(eve::as<float>());
 
   std::cout << "---- scalar" << '\n'
             << "<- xf1 =                  " << xf1 << '\n'

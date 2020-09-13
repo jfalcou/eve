@@ -26,8 +26,6 @@ namespace eve
     EVE_FORCEINLINE constexpr auto bitincrement_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
-      using i_t           = detail::as_integer_t<t_t, unsigned>;
-      constexpr auto mask = ~0ULL;
 
       if constexpr(std::is_integral_v<t_t>) return T(1);
       else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X1U>();

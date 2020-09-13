@@ -17,10 +17,10 @@ int main()
             << " <- si =                              " << si << '\n'
             << " <- lsi =                             " << lsi << '\n'
             << " <- pi =                              " << pi << '\n'
-            << " -> eve::if_else(si, pi, eve::allbits_) =        "
-            << eve::if_else(si, pi, eve::allbits_) << '\n'
-            << " -> eve::if_else(lsi, pi, eve::allbits_) =       "
-            << eve::if_else(lsi, pi, eve::allbits_) << '\n';
+            << " -> eve::if_else(si, pi, eve::allbits) =         "
+            << eve::if_else(si, pi, eve::allbits) << '\n'
+            << " -> eve::if_else(lsi, pi, eve::allbits) =        "
+            << eve::if_else(lsi, pi, eve::allbits) << '\n';
 
   iT               ssi = 3, xi = 3;
   eve::logical<iT> lssi = false;
@@ -29,9 +29,9 @@ int main()
             << " ssi =                                " << ssi << '\n'
             << " lssi =                               " << lssi << '\n'
             << " xi =                                 " << xi << '\n'
-            << " -> eve::if_else(ssi, xi, eve::allbits_) =       "
-            << eve::if_else(ssi, xi, eve::allbits_) << '\n'
-            << " -> eve::if_else(lssi, xi, eve::allbits_) =      "
-            << eve::if_else(lssi, xi, eve::allbits_) << '\n';
+            << " -> eve::if_else(ssi, xi, eve::allbits) =        "
+            << eve::if_else(ssi, xi, eve::allbits) << '\n'
+            << " -> eve::if_else(lssi, xi, eve::allbits) =       "
+            << eve::if_else(lssi, xi, eve::allbits) << '\n';
   return 0;
 }

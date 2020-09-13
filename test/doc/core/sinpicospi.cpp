@@ -5,7 +5,7 @@
 using wide_ft = eve::wide<double, eve::fixed<4>>;
 
 int main(){
-  wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), 0.5f};
+  wide_ft pf = {1.0f, 0.0f, eve::inf(eve::as<float>()), 0.5f};
 
   auto [s, c]    = eve::sinpicospi(pf);
   std::cout << "---- simd" << '\n'

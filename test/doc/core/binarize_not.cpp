@@ -19,7 +19,7 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                               = " << xf << '\n'
-    << "-> binarize_not(True<float>(), xf)  = " << eve::binarize_not(eve::True<float>(), xf) << '\n'
-    << "-> binarize_not(False<float>(), xf) = " << eve::binarize_not(eve::False<float>(), xf) << '\n'        ;
+    << "-> binarize_not(true_(eve::as<float>()), xf)  = " << eve::binarize_not(eve::true_(eve::as<float>()), xf) << '\n'
+    << "-> binarize_not(false_(eve::as<float>()), xf) = " << eve::binarize_not(eve::false_(eve::as<float>()), xf) << '\n'        ;
   return 0;
 }

@@ -11,9 +11,9 @@ using eve::pedantic_;
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
-                eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>()};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, eve::Nan<float>(),
-                -0.0f, eve::Nan<float>(), -2.0f};
+                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
+  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, eve::nan(eve::as<float>()),
+                -0.0f, eve::nan(eve::as<float>()), -2.0f};
 
 
   std::cout << "---- simd" << '\n'
@@ -24,7 +24,7 @@ int main()
             << "-> numeric_(min)(pf, qf)  = " << eve::numeric_(eve::min)(pf, qf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  float yf = eve::nan(eve::as<float>());
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                     = " << xf << '\n'

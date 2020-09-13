@@ -8,8 +8,8 @@
 int main()
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
-  w_t pi = {0.0f,                         1.0f, 1.0f-eve::Eps<float>()/2, 1.0f              };
-  w_t qi = {eve::Smallestposval<float>(), 2.0f, 1.0f,                     eve::Inf<float>() };
+  w_t pi = {0.0f,                         1.0f, 1.0f-eve::eps(eve::as<float>())/2, 1.0f              };
+  w_t qi = {eve::smallestposval(eve::as<float>()), 2.0f, 1.0f,                     eve::inf(eve::as<float>()) };
 
   std::cout << "---- simd" << std::setprecision(9) << '\n'
             << " <- pi              = " << pi << '\n'

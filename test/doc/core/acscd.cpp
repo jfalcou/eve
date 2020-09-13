@@ -15,7 +15,7 @@ int main()
     << "-> acscd(pf) = " << eve::acscd(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Inf<float>();
+  float yf = eve::inf(eve::as<float>());
 
   std::cout
     << "---- scalar"  << '\n'
