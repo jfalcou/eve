@@ -8,8 +8,8 @@
 -> binarize(pf > 0.0f, 3)      = (0, 3, 0, 0)
 ---- scalar
 <- xf                           = -1
--> binarize(True<float>(), xf)  = -1
--> binarize(False<float>(), xf) = 0
+-> binarize(true_(eve::as<float>()), xf)  = -1
+-> binarize(false_(eve::as<float>()), xf) = 0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

@@ -12,7 +12,7 @@ using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  float ep = eve::Eps<float>();
+  float ep = eve::eps(eve::as<float>());
   wide_ft pf = {1.0f+ep, 0.5f*(1.0f+ep*4), -1.3f,   1.0f+4*ep};
   wide_ft qf = {1.0f-ep, 0.5f,             -1.3f,   1.0f-ep/2};
 

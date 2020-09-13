@@ -8,12 +8,12 @@
 -> saturated_(convert)(pf, int_16())  = (-1, 2, 32767, -32768)
 -> convert(pf, int_16()) =            = (-1, 2, -20536, 768)
 <- pi                                 = (-1, 2, -3, 9223372036854775807)
--> convert(pi, as<double>())          = (-1, 2, -3, 9.22337e+18)
+-> convert(pi, as(eve::as<double>()))          = (-1, 2, -3, 9.22337e+18)
 ---- scalar
 <- xf                               = -64768.4
 -> convert(xf, int_64())            = -64768
 <- xi                               = -64768
--> convert(xi, as<double>())        = -64768
+-> convert(xi, as(eve::as<double>()))        = -64768
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

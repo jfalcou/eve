@@ -13,7 +13,7 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 int main()
 {
   wide_it pi = {14, 1, 3, 0, 16, 23000, 0, 27};
-  wide_ft pf = {14.0, 1.0, -0.0, 0.0, 16.0, 23000.0, eve::Inf<float>(), 27.0};
+  wide_ft pf = {14.0, 1.0, -0.0, 0.0, 16.0, 23000.0, eve::inf(eve::as<float>()), 27.0};
 
   std::cout << "---- simd" << '\n'
             << "<- pi           = " << pi << '\n'
