@@ -27,11 +27,11 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return radinpi(decorator(asec)(a));
+      return radinpi(decorator(eve::asec)(a));
     }
     else
     {
-      return apply_over(decorator(asecpi), a);
+      return apply_over(decorator(eve::asecpi), a);
     }
   }
 

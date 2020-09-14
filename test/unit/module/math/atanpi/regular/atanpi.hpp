@@ -31,13 +31,13 @@ TTS_CASE_TPL("Check eve::eve::atanpi behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atanpi(eve::Nan<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::atanpi(eve::nan(eve::as<T>())), (eve::nan(eve::as<T>())) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::atanpi(eve::Inf<T>()) , T( 0.5) );
-    TTS_IEEE_EQUAL(eve::atanpi(eve::Minf<T>()), T(-0.5) );
+    TTS_IEEE_EQUAL(eve::atanpi(eve::inf(eve::as<T>())) , T( 0.5) );
+    TTS_IEEE_EQUAL(eve::atanpi(eve::minf(eve::as<T>())), T(-0.5) );
   }
 
   TTS_ULP_EQUAL(eve::atanpi(T(0.5))  , (eve::radinpi(T(4.636476090008061e-01))) , 0.5);

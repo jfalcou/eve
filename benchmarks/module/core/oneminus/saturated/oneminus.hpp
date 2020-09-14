@@ -15,10 +15,10 @@
 
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto std__oneminus = [](EVE_VALUE e) { return e <= eve::Valmin<EVE_VALUE>()+1 ? eve::Valmax<EVE_VALUE>() : EVE_VALUE(1-e); };
+  auto std__oneminus = [](EVE_VALUE e) { return e <= eve::valmin(eve::as<EVE_VALUE>())+1 ? eve::valmax(eve::as<EVE_VALUE>()) : EVE_VALUE(1-e); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

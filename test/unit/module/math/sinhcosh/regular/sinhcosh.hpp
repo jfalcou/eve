@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check eve::sinhcosh behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_infinites)
   {
-    std::array<v_t, 3> a = {eve::Nan<v_t>(), eve::Inf<v_t>(), eve::Minf<v_t>()};
+    std::array<v_t, 3> a = {eve::nan(eve::as<v_t>()), eve::inf(eve::as<v_t>()), eve::minf(eve::as<v_t>())};
 
     for(int i=0; i < 3 ; ++i)
     {
@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check eve::sinhcosh behavior", EVE_TYPE)
   }
   v_t ovflimit =  eve::Ieee_constant<v_t,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
   std::array<v_t, 10> a = {v_t(1), v_t(-1), v_t(0), v_t(-0.0), v_t(10), v_t(-10)
-                             , eve::Maxlog<v_t>(), ovflimit/2, ovflimit, 2*ovflimit};
+                             , eve::maxlog(eve::as<v_t>()), ovflimit/2, ovflimit, 2*ovflimit};
 
   for(size_t i=0; i < a.size(); ++i)
   {
@@ -71,6 +71,3 @@ TTS_CASE_TPL("Check eve::sinhcosh behavior", EVE_TYPE)
     TTS_EXPECT(eve::all(eve::is_positive(sh)));
   }
 }
-
-
-

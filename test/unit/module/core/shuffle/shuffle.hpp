@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check shuffle behavior",
   using eve::wide;
   using i_t = eve::detail::as_integer_t<EVE_TYPE>;
 
-  wide<EVE_TYPE, T> arg([](auto i, auto c) { return Valmax<EVE_VALUE>(); });
-  wide<double, T> ref([&](auto i, auto c) { return eve::Valmax<EVE_VALUE>(); });
+  wide<EVE_TYPE, T> arg([](auto i, auto c) { return valmax(eve::as<EVE_VALUE>()); });
+  wide<double, T> ref([&](auto i, auto c) { return eve::valmax(eve::as<EVE_VALUE>()); });
   TTS_EQUAL(ref, eve::convert(arg, as<double>()));
   TTS_EQUAL(ref1 eve::convert(arg1, as<double>()));
 }

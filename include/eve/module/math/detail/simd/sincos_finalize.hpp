@@ -38,8 +38,8 @@ namespace eve::detail
     using t_t = wide<T, N, ABI>;
     auto tmp =  binarize(fn >= t_t(2));
     auto swap_bit = (fma(t_t(-2), tmp, fn));
-    auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), Signmask<T>());
-    auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, Signmask<t_t>(), eve::zero_));
+    auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<T>()));
+    auto sin_sign_bit = bit_xor(bitofsign(a0),if_else(tmp, signmask(eve::as<t_t>()), eve::zero));
     auto z = eve::sqr(xr);
     auto se = sin_eval(z, xr);
     auto ce = cos_eval(z);

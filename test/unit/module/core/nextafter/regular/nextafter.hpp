@@ -52,14 +52,15 @@ TTS_CASE_TPL("Check eve::nextafter one parameter behavior", EVE_TYPE)
   }
   else
   {
-    TTS_EQUAL(eve::nextafter(  T(-1),   T( 2)), T(-1)+eve::Eps<T>()/2 );
-    TTS_EQUAL(eve::nextafter(  T( 1),   T(-1)), T( 1)-eve::Eps<T>()/2 );
+    using eve::as;
+    TTS_EQUAL(eve::nextafter(  T(-1),   T( 2)), T(-1)+eve::eps(as<T>())/2 );
+    TTS_EQUAL(eve::nextafter(  T( 1),   T(-1)), T( 1)-eve::eps(as<T>())/2 );
     TTS_EQUAL(eve::nextafter(  T( 1),   T( 1)), T( 1)                 );
-    TTS_EQUAL(eve::nextafter(v_t(-1),   T( 2)), T(-1)+eve::Eps<T>()/2 );
-    TTS_EQUAL(eve::nextafter(v_t( 1),   T(-1)), T( 1)-eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(v_t(-1),   T( 2)), T(-1)+eve::eps(as<T>())/2 );
+    TTS_EQUAL(eve::nextafter(v_t( 1),   T(-1)), T( 1)-eve::eps(as<T>())/2 );
     TTS_EQUAL(eve::nextafter(v_t( 1),   T( 1)), T( 1)                 );
-    TTS_EQUAL(eve::nextafter(  T(-1), v_t( 2)), T(-1)+eve::Eps<T>()/2 );
-    TTS_EQUAL(eve::nextafter(  T( 1), v_t(-1)), T( 1)-eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::nextafter(  T(-1), v_t( 2)), T(-1)+eve::eps(as<T>())/2 );
+    TTS_EQUAL(eve::nextafter(  T( 1), v_t(-1)), T( 1)-eve::eps(as<T>())/2 );
     TTS_EQUAL(eve::nextafter(v_t( 1),   T( 1)), T( 1)                 );
   }
 }

@@ -36,12 +36,12 @@ TTS_CASE_TPL("Check eve::rshr behavior", EVE_TYPE)
 
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::rshr(eve::Allbits<T>(), -1), T(-2)             );
-    TTS_EQUAL(eve::rshr(eve::Allbits<T>(),  1), eve::Allbits<T>() );
+    TTS_EQUAL(eve::rshr(eve::allbits(eve::as<T>()), -1), T(-2)             );
+    TTS_EQUAL(eve::rshr(eve::allbits(eve::as<T>()),  1), eve::allbits(eve::as<T>()) );
   }
   else
   {
-    TTS_EQUAL(eve::rshr(eve::Allbits<T>(), -1), eve::Allbits<T>() - 1 );
-    TTS_EQUAL(eve::rshr(eve::Allbits<T>(),  1), eve::Allbits<T>()/2   );
+    TTS_EQUAL(eve::rshr(eve::allbits(eve::as<T>()), -1), eve::allbits(eve::as<T>()) - 1 );
+    TTS_EQUAL(eve::rshr(eve::allbits(eve::as<T>()),  1), eve::allbits(eve::as<T>())/2   );
   }
 }

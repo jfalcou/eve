@@ -27,8 +27,8 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-     TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int32_t>()), T(eve::Valmin<std::int32_t>()) );
-     TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int32_t>()), T(eve::Valmax<std::int32_t>()) );
+     TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int32_t>()), T(eve::valmin(eve::as<std::int32_t>())) );
+     TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int32_t>()), T(eve::valmax(eve::as<std::int32_t>())) );
   }
   else
   {
@@ -37,26 +37,26 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
       using v_t = eve::element_type_t<T>;
       if constexpr(sizeof(v_t) <= sizeof(std::int32_t))
       {
-        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int32_t>()), eve::Valmin<T>() );
+        TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int32_t>()), eve::valmin(eve::as<T>()) );
       }
       else
       {
-        TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int32_t>()), T(eve::Valmin<std::int32_t>()) );
+        TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int32_t>()), T(eve::valmin(eve::as<std::int32_t>())) );
       }
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int32_t>()), T(0) );
+      TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int32_t>()), T(0) );
     }
 
     using v_t = eve::element_type_t<T>;
     if constexpr(sizeof(v_t) < sizeof(std::int32_t))
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int32_t>()), eve::Valmax<T>() );
+      TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int32_t>()), eve::valmax(eve::as<T>()) );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int32_t>()), T(eve::Valmax<std::int32_t>()) );
+      TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int32_t>()), T(eve::valmax(eve::as<std::int32_t>())) );
     }
   }
 }

@@ -24,9 +24,9 @@ TTS_CASE_TPL("Check eve::mantissa  behavior", EVE_TYPE)
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::mantissa(eve::Inf<T>())      , eve::Inf<T>() );
-    TTS_EQUAL(eve::mantissa(eve::Minf<T>())     , eve::Minf<T>());
-    TTS_IEEE_EQUAL(eve::mantissa(eve::Nan<T>()) , eve::Nan<T>() );
+    TTS_EQUAL(eve::mantissa(eve::inf(eve::as<T>()))      , eve::inf(eve::as<T>()) );
+    TTS_EQUAL(eve::mantissa(eve::minf(eve::as<T>()))     , eve::minf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::mantissa(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
   TTS_EQUAL(eve::mantissa(T(-1  )), T(-1    ));
   TTS_EQUAL(eve::mantissa(T( 1  )), T( 1    ));

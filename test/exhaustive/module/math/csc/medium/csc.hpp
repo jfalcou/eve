@@ -31,7 +31,7 @@ TTS_CASE_TPL("wide exhaustive check on csc", EVE_TYPE)
   }
   else
   {
-    eve::exhaustive_producer<T>  p(eve::Smallestposval<v_t>(), l);
+    eve::exhaustive_producer<T>  p(eve::smallestposval(eve::as<v_t>()), l);
     TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
   }
 }

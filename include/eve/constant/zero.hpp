@@ -15,14 +15,14 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(zero_, zero_);
+  EVE_MAKE_CALLABLE(zero_, zero);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Zero(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    return T(0);
+    template<typename T>
+    EVE_FORCEINLINE auto zero_(EVE_SUPPORTS(cpu_), eve::as_<T> const &) noexcept
+    {
+      return T(0);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(zero_, Zero);
 }
-

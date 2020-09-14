@@ -15,9 +15,10 @@
 
 int main(int argc, char** argv)
 {
-  auto const std_is_flint = [](auto x) { return (x < eve::Maxflint<EVE_TYPE>()) && !(x-trunc(x)); };
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto const std_is_flint = [](auto x)
+    { return (x < eve::maxflint(eve::as<EVE_TYPE>())) && !(x-trunc(x)); };
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_is_flint, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));
 

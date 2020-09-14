@@ -28,13 +28,13 @@ TTS_CASE_TPL("Check eve::medium_(eve::cscd) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(T( 0 )) , eve::Inf<T>() );
-  TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(T(-0.)) , eve::Minf<T>());
+  TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(T( 0 )) , eve::inf(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::medium_(eve::cscd)(T(-0.)) , eve::minf(eve::as<T>()));
 
   TTS_ULP_EQUAL(eve::medium_(eve::cscd)( T(1)  ) , T(57.298688498550183476612683735173779889969877177276)   , 5);
   TTS_ULP_EQUAL(eve::medium_(eve::cscd)(-T(1)  ) , T(-57.298688498550183476612683735173779889969877177276)  , 5);

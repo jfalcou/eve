@@ -10,16 +10,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/as.hpp>
 
-namespace eve
+namespace eve::detail
 {
-  EVE_MAKE_CALLABLE(iota_, iota_);
-
   template<typename T>
-  EVE_FORCEINLINE auto Iota(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE constexpr auto linear_ramp(as_<T> const &) noexcept
   {
     if constexpr( scalar_value<T> )
     {
@@ -30,6 +28,5 @@ namespace eve
       return T([](auto i, auto ) { return i; } );
     }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(iota_, Iota);
 }
+

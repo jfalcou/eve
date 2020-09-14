@@ -16,17 +16,17 @@ int main()
                 1.0f,
                 -1.0f,
                 -2.0f,
-                eve::Mindenormal<float>(),
-                eve::Inf<float>(),
-                eve::Minf<float>(),
-                eve::Nan<float>()};
+                eve::mindenormal(eve::as<float>()),
+                eve::inf(eve::as<float>()),
+                eve::minf(eve::as<float>()),
+                eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
             << "<- pf =                      " << pf << '\n'
             << "-> eve::exponentbits(pf) =   " << std::hex << eve::exponentbits(pf) << '\n'; 
 
   float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  float yf = eve::nan(eve::as<float>());
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                      " << std::dec << xf << '\n'

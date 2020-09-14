@@ -51,25 +51,25 @@ namespace eve::detail
       auto sgn = eve::bitofsign(a0);
       if constexpr(std::is_same_v<elt_t, float>)
       {
-        const auto x_larger_05 = x > Half<T>();
-        T z = if_else(x_larger_05, Half<T>()*oneminus(x), eve::sqr(x));
+        const auto x_larger_05 = x > half(eve::as<T>());
+        T z = if_else(x_larger_05, half(eve::as<T>())*oneminus(x), eve::sqr(x));
         x = if_else(x_larger_05, sqrt(z), x);
         T z1 = horn<T, 0x3e2aaae4, 0x3d9980f6, 0x3d3a3ec7, 0x3cc617e3, 0x3d2cb352>(z);
         z1 = fma(z1, z*x, x);
-        z = if_else(x_larger_05, Pio_2<T>()-(z1+z1), z1);
+        z = if_else(x_larger_05, pio_2(eve::as<T>())-(z1+z1), z1);
         return eve::bit_xor(z, sgn);
       }
       else if constexpr(std::is_same_v<elt_t, double>)
       {
-        auto small = x < Sqrteps<T>();
+        auto small = x < sqrteps(eve::as<T>());
         if constexpr(scalar_value<T>) //early scalar return
         {
           if (small) return a0;
-          if ((x >  One<T>())) return Nan<T>();
+          if ((x >  one(eve::as<T>()))) return nan(eve::as<T>());
         }
         else if constexpr(simd_value<T>) //simd preparation
         {
-          x = if_else(x > One<T>(), eve::allbits_, x);
+          x = if_else(x > one(eve::as<T>()), eve::allbits, x);
         }
         auto case_1 = [](const T & x){ // x < 0.625
           auto zz1 = eve::oneminus(x);
@@ -78,10 +78,10 @@ namespace eve::detail
           auto den = horn1<T, 0x40756709b0b644bell, 0xc077fe08959063eell, 0x40626219af6a7f42ll, 0xc035f2a2b6bf5d8cll>(zz1);
           auto vp =  num/den;
           zz1 =  sqrt(zz1+zz1);
-          auto z = Pio_4<T>()-zz1;
+          auto z = pio_4(eve::as<T>())-zz1;
           zz1 = fms(zz1, vp,  Constant<T, 0X3C91A62633145C07ULL>());//pio_2lo
           z =  z-zz1;
-          zz1 = z+Pio_4<T>();
+          zz1 = z+pio_4(eve::as<T>());
           return zz1;
         };
         auto case_2 =  [](const T & x){ // x >=  0.625
@@ -104,7 +104,7 @@ namespace eve::detail
         return  bit_xor(res, sgn);
       }
     }
-    else return apply_over(asin, a0);
+    else return apply_over(eve::asin, a0);
   }
 }
 

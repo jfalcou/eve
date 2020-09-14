@@ -27,7 +27,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(integral_value<T>) return True(as(a));
+      if constexpr(integral_value<T>) return true_(eve::as(a));
       else                            return (a == a) && (b == b);
     }
     else                              return apply_over(is_ordered, a, b);

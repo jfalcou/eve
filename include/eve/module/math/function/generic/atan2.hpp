@@ -59,7 +59,7 @@ namespace eve::detail
     {
       auto q = eve::abs(a0/a1);
       auto z = detail::atan_kernel(q, eve::rec(q));
-      return if_else(is_positive(a1), z, (Pi(as(a0))-z))*signnz(a0);
+      return if_else(is_positive(a1), z, (pi(eve::as(a0))-z))*signnz(a0);
     }
     else return  apply_over(atan2, a0, a1);
   }
@@ -87,14 +87,14 @@ namespace eve::detail
     {
       if constexpr(scalar_value<T> && platform::supports_nans)
       {
-        if (is_unordered(a0, a1)) return Nan(as(a0));
+        if (is_unordered(a0, a1)) return nan(eve::as(a0));
       }
       T a00 = a0, a10 = a1;
       auto test1 =  eve::is_infinite(a0)&& eve::is_infinite(a1);
       if constexpr(platform::supports_infinites)
       {
-        a00 =  eve::if_else(test1, eve::copysign(One(as(a0)), a00), a00);
-        a10 =  eve::if_else(test1, eve::copysign(One(as(a0)), a10), a10);
+        a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a00), a00);
+        a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a10), a10);
       }
 
       T q = eve::abs(a00/a10);
@@ -102,16 +102,16 @@ namespace eve::detail
       T sgn = signnz(a0);
       if constexpr(scalar_value<T>)
       {
-        z = (is_positive(a10)? z: Pi<T>()-z)*sgn;
-        return is_eqz(a00) ? if_else(is_negative(a10), Pi(as(a00))*sgn, eve::zero_) : z;
+        z = (is_positive(a10)? z: pi(eve::as<T>())-z)*sgn;
+        return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
       }
       else
       {
-        z = eve::if_else(eve::is_positive(a10), z, eve::Pi(as(a0))-z)*sgn;
+        z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
         z = eve::if_else( eve::is_eqz(a00),
-                          eve::if_else( eve::is_negative(a10),  eve::Pi(as(a0))*sgn, eve::zero_),
+                          eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a0))*sgn, eve::zero),
                           z);
-        if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits_, z);
+        if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
         else                                  return z;
       }
     }

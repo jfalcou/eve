@@ -20,7 +20,7 @@
 namespace eve
 {
   template<floating_value T, auto BitsPatternfloat, auto BitsPatterndouble>
-  EVE_FORCEINLINE auto Ieee_constant(as_<T> const & = {}) noexcept
+  EVE_FORCEINLINE auto Ieee_constant(eve::as_<T> const & = {}) noexcept
   {
     using t_t = detail::value_type_t<T>;
 

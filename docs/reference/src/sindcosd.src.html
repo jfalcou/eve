@@ -11,7 +11,7 @@ using wide_ft = eve::wide<double, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), 180.0f};
+  wide_ft pf = {1.0f, 0.0f, eve::inf(eve::as<float>()), 180.0f};
 
   auto [s, c]    = eve::sindcosd(pf);
   std::cout << "---- simd" << '\n'

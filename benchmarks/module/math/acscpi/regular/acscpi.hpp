@@ -17,7 +17,7 @@
 int main()
 {
   auto lmin = EVE_VALUE(1);
-  auto lmax = EVE_VALUE(eve::Oneotwoeps<EVE_VALUE>()); //eve::Valmax<EVE_VALUE>());
+  auto lmax = EVE_VALUE(eve::oneotwoeps(eve::as<EVE_VALUE>())); //eve::valmax(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__acscpi = [](auto x){return eve::radinpi(std::asin(1/x));};

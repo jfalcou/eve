@@ -31,7 +31,7 @@ namespace eve::detail
            if constexpr(integral_value<T>) return a0;
       else if constexpr(floating_value<T>)
       {
-        auto already_integral = is_not_less_equal(eve::abs(a0), Maxflint<T>());
+        auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
              if constexpr(scalar_value<T>) return already_integral ? a0 :raw_(trunc)(a0);
         else if constexpr(simd_value<T>)   return if_else(already_integral, a0, eve::raw_(trunc)(a0));
       }

@@ -29,9 +29,9 @@ TTS_CASE_TPL("Check eve::big_(eve::tan) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::tan)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL( eve::big_(eve::tan)(T( 0 )) , T(0) );
@@ -41,10 +41,10 @@ TTS_CASE_TPL("Check eve::big_(eve::tan) behavior", EVE_TYPE)
   TTS_EXPECT( eve::all(eve::is_positive(eve::medium_(eve::tan)(T( 0 )))) );
 
   using v_t = eve::element_type_t<T>;
-  auto vpi_4    = eve::Pio_4<T>();
-  auto spi_4    = eve::Pio_4<v_t>();
-  auto vvalmax  = eve::Valmax<T>();
-  auto svalmax  = eve::Valmax<v_t>();
+  auto vpi_4    = eve::pio_4(eve::as<T>());
+  auto spi_4    = eve::pio_4(eve::as<v_t>());
+  auto vvalmax  = eve::valmax(eve::as<T>());
+  auto svalmax  = eve::valmax(eve::as<v_t>());
 
   TTS_ULP_EQUAL(eve::big_(eve::tan)(T(1)), T(std::tan(1.0)), 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::tan)(T(-1)),T(std::tan(-1.0)), 0.5);

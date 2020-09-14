@@ -16,8 +16,8 @@
 int main(int argc, char** argv)
 {
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
  auto const std_minus = [](auto x) { return -x; };
   EVE_REGISTER_BENCHMARK(std_minus, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax));

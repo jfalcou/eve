@@ -66,7 +66,7 @@ namespace eve::detail
         logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
-          test = is_less(a0, Smallestposval<T>()) && isnez;
+          test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
           if( any(test) )
           {
             k = sub[test](k, iT(25));
@@ -86,10 +86,10 @@ namespace eve::detail
         T t1   = w * horn<T, 0x3eccce13u, 0x3e789e26u>(w);
         T t2   = z * horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
 
         T dk = single_(k);
-        T r  = fma(fms(s, hfsq + R, hfsq) + f, Invlog_2<T>(), dk);
+        T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(eve::as<T>()), dk);
         // The original algorithm does some extra calculation in place of the return line
         // to get extra precision but this is uneeded for float as the exhaustive test shows
         // a 0.5 ulp maximal error on the full range.
@@ -103,13 +103,13 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
@@ -130,7 +130,7 @@ namespace eve::detail
         logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
-          test = is_less(a0, Smallestposval<T>()) && isnez;
+          test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
           if( any(test) )
           {
             k = sub[test](k, iT(54));
@@ -156,7 +156,7 @@ namespace eve::detail
                       0x3fc7466496cb03deull,
                       0x3fc2f112df3e5244ull>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         //        return -(hfsq-(s*(hfsq+R))-f)*Invlog_2<T>()+dk;  // fast ?
 
         /*
@@ -195,7 +195,7 @@ namespace eve::detail
         T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
         T Invlog_2hi = Ieee_constant<T, 0x3fb8b000U, 0x3ff7154765200000ULL>();
         T hi         = f - hfsq;
-        hi           = bit_and(hi, (Allbits<uiT>() << 32));
+        hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo         = fma(s, hfsq + R, f - hi - hfsq);
 
         T val_hi = hi * Invlog_2hi;
@@ -209,13 +209,13 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
     }
     else
@@ -245,9 +245,9 @@ namespace eve::detail
       if( ix < 0x00800000 || ix >> 31 ) /* x < 2**-126  */
       {
         if( ix << 1 == 0 )
-          return Minf<T>(); /* log(+-0)=-inf */
+          return minf(eve::as<T>()); /* log(+-0)=-inf */
         if( ix >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         if constexpr( eve::platform::supports_denormals )
         { /* subnormal number, scale up x */
           k -= 25;
@@ -260,7 +260,7 @@ namespace eve::detail
         return x;
       }
       else if( ix == 0x3f800000 )
-        return Zero(as(x));
+        return zero(eve::as(x));
 
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       ix += 0x3f800000 - 0x3f3504f3;
@@ -275,7 +275,7 @@ namespace eve::detail
       T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
-      return -(hfsq - (s * (hfsq + R)) - f) * Invlog_2<T>() + k;
+      return -(hfsq - (s * (hfsq + R)) - f) * invlog_2(eve::as<T>()) + k;
       // The original algorithm does some extra calculation in place of the return line
       // to get extra precision but this is uneeded for float as the exhaustive test shows
       // a 0.5 ulp maximal error on the full range.
@@ -304,9 +304,9 @@ namespace eve::detail
       if( hx < 0x00100000 || hx >> 31 )
       {
         if( is_eqz(x) )
-          return Minf<T>(); /* log(+-0)=-inf */
+          return minf(eve::as<T>()); /* log(+-0)=-inf */
         if( hx >> 31 )
-          return Nan<T>(); /* log(-#) = NaN */
+          return nan(eve::as<T>()); /* log(-#) = NaN */
         /* subnormal number, scale x up */
         if constexpr( eve::platform::supports_denormals )
         {
@@ -319,8 +319,8 @@ namespace eve::detail
       {
         return x;
       }
-      else if( x == One<T>() )
-        return Zero<T>();
+      else if( x == one(eve::as<T>()) )
+        return zero(eve::as<T>());
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       hx += 0x3ff00000 - 0x3fe6a09e;
       k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
@@ -377,7 +377,7 @@ namespace eve::detail
       T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
       T Invlog_2hi = Ieee_constant<T, 0x3fb8b000UL, 0x3ff7154765200000ULL>();
       T hi         = f - hfsq;
-      hi           = bit_and(hi, (Allbits<uiT>() << 32));
+      hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
       T lo         = f - hi - hfsq + s * (hfsq + R);
 
       T val_hi = hi * Invlog_2hi;

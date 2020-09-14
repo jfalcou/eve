@@ -23,13 +23,13 @@ TTS_CASE_TPL("wide random check on bit_ceil", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_bit_ceil = tts::vectorize<T>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::rng_producer<T> p(v_t(0), eve::Valmax<v_t>()/4);
+    eve::rng_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>())/4);
     TTS_RANGE_CHECK(p, std_bit_ceil, eve::bit_ceil);
   }
   else
   {
     auto std_bit_ceil = tts::vectorize<T>( [](auto e) { return ((e <= 1) ? 1 : std::exp2l(std::ceil(std::log2l(double(e))))); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), (1ul << (sizeof(v_t)*8-2)));
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), (1ul << (sizeof(v_t)*8-2)));
     TTS_RANGE_CHECK(p, std_bit_ceil, eve::bit_ceil);
   }
 }

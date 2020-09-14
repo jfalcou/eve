@@ -17,19 +17,26 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(sqrteps_, sqrteps_);
+  EVE_MAKE_CALLABLE(sqrteps_, sqrteps);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Sqrteps(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t =  detail::value_type_t<T>;
-    if constexpr(std::is_same_v<t_t, float>)  {
-      return Constant<T, 0x39B504F3U >(); }
-    else if constexpr(std::is_same_v<t_t, double>)  {
-      return Constant<T, 0x3E50000000000000ULL>(); }
-    else if constexpr(std::is_integral_v<t_t>) {
-     return T(1); }
+    template<typename T>
+    EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as_<T> const & ) noexcept
+    {
+      using t_t =  detail::value_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        return Constant<T, 0x39B504F3U >();
+      }
+      else if constexpr(std::is_same_v<t_t, double>)
+      {
+        return Constant<T, 0x3E50000000000000ULL>();
+      }
+      else if constexpr(std::is_integral_v<t_t>)
+      {
+        return T(1);
+      }
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(sqrteps_, Sqrteps);
 }

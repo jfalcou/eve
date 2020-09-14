@@ -17,8 +17,8 @@ int main(int argc, char** argv)
 {
   using I_TYPE =  eve::detail::as_integer_t<EVE_TYPE>;
   auto const std_inearest = [](auto x) { return static_cast<I_TYPE>(std::nearbyint(x)); };
-  auto lmax = eve::Valmax<EVE_TYPE>();
-  auto lmin = eve::Valmin<EVE_TYPE>();
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_inearest, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin, lmax));
 

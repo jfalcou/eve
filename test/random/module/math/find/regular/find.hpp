@@ -23,19 +23,19 @@ TTS_CASE_TPL("wide random check on find", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_find = tts::vectorize<T>( [](auto e) { return std::find(e); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_find, eve::find);
   }
   else if constexpr(eve::signed_value<T>)
   {
     auto std_find = tts::vectorize<T>( [](auto e) { return  std::find(e); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_find, eve::find);
   }
   else
   {
     auto std_find = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_find, eve::find);
   }
 }

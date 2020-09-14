@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/function/if_else.hpp>
-#include <eve/constant/iota.hpp>
 
 namespace eve::detail
 {
@@ -26,7 +25,7 @@ namespace eve::detail
                               )
   {
     using r_t             = decltype(f(a0,as...));
-    auto const condition  = c.mask(as_<r_t>());
+    auto const condition  = c.mask(eve::as<r_t>());
 
     // If the ignore/keep is complete we can jump over if_else
     if constexpr( C::is_complete )

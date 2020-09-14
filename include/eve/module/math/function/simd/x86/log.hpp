@@ -12,9 +12,9 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/constant/half.hpp>
+#include <eve/constant/invsqrt_2.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/constant/inf.hpp>
-#include <eve/constant/invsqrt_2.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/smallestposval.hpp>
@@ -53,12 +53,12 @@ namespace eve::detail
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T          xx    = a0;
-        T          dk    = Zero<T>();
+        T          dk    = zero(eve::as<T>());
         auto       isnez = is_nez(a0);
 //        logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
-          auto test = is_less(a0, Smallestposval<T>()) && isnez;
+          auto test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
           if( any(test) )
           {
             dk = sub[test](dk, T(23));
@@ -68,27 +68,27 @@ namespace eve::detail
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
 
         auto [x, kk]     = eve::frexp(xx);
-        auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+        auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
-        T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+        T f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
         T s    = f / (T(2) + f);
         T z    = sqr(s);
         T w    = sqr(z);
         T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
         T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
@@ -105,10 +105,10 @@ namespace eve::detail
          */
         //        using uiT = as_integer_t<T, unsigned>;
         T    xx    = a0;
-        T    dk    = Zero<T>();
+        T    dk    = zero(eve::as<T>());
         auto isnez = is_nez(a0);
 
-        logical<T> test = is_less(a0, Smallestposval<T>()) && isnez;
+        logical<T> test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
         if constexpr( eve::platform::supports_denormals )
         {
           if( any(test) )
@@ -119,9 +119,9 @@ namespace eve::detail
         }
         /* reduce x into [sqrt(2)/2, sqrt(2)] */
         auto [x, kk]     = eve::frexp(xx);
-        auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+        auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
         dk += dec[x_lt_sqrthf](kk);
-        T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+        T f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
         T s  = f / (T(2) + f);
         T z  = sqr(s);
         T w  = sqr(z);
@@ -133,18 +133,18 @@ namespace eve::detail
                       0x3fc7466496cb03dell,
                       0x3fc2f112df3e5244ll>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(a0), eve::allbits_, zz);
+        return if_else(is_ngez(a0), eve::allbits, zz);
       }
     }
     else

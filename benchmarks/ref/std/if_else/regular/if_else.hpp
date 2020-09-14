@@ -15,8 +15,8 @@
 int main(int argc, char** argv)
 {
   using L_TYPE = eve::logical<EVE_TYPE>;
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
   auto std_if_else = [](auto c,  auto x,  auto y){return c ? x : y};
   EVE_REGISTER_BENCHMARK(std_if_else, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(lmin,lmax)

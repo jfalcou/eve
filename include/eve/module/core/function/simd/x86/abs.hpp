@@ -25,7 +25,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
           if constexpr( cat && category::unsigned_) return v;
-    else  if constexpr( cat && category::float_   ) return bit_notand(Mzero(as(v)), v);
+    else  if constexpr( cat && category::float_   ) return bit_notand(mzero(eve::as(v)), v);
     else  if constexpr( cat && category::size64_  ) return map(eve::abs, v);
     else  if constexpr( cat == category::int32x4  ) return _mm_abs_epi32(v);
     else  if constexpr( cat == category::int16x8  ) return _mm_abs_epi16(v);

@@ -24,9 +24,9 @@ TTS_CASE_TPL("wide random check on acscd", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_acscd = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::asin(eve::rec(e))); } );
 
-  eve::exhaustive_producer<T> p1(eve::Valmin<v_t>(), v_t(-1));
+  eve::exhaustive_producer<T> p1(eve::valmin(eve::as<v_t>()), v_t(-1));
   TTS_RANGE_CHECK(p1, std_acscd, eve::acscd);
 
-  eve::exhaustive_producer<T> p2(v_t(1), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p2(v_t(1), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p2, std_acscd, eve::acscd);
 }

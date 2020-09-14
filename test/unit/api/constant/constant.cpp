@@ -22,10 +22,10 @@ TTS_CASE("Constant generation for scalar")
   using namespace eve::literal;
 
   TTS_ULP_EQUAL((eve::Constant<float, 0x3F8E38E3>()), 1.111111f, 0.5);
-  TTS_IEEE_EQUAL((eve::Constant<float, 0xFFFFFFFF>()), eve::Nan<float>());
+  TTS_IEEE_EQUAL((eve::Constant<float, 0xFFFFFFFF>()), eve::nan(eve::as<float>()));
 
   TTS_ULP_EQUAL((eve::Constant<double, 0x3FF1C71C71C71C72ULL>()), 1.111111111111111111, 0.5);
-  TTS_IEEE_EQUAL((eve::Constant<double, 0xFFFFFFFFFFFFFFFFULL>()), eve::Nan<double>());
+  TTS_IEEE_EQUAL((eve::Constant<double, 0xFFFFFFFFFFFFFFFFULL>()), eve::nan(eve::as<double>()));
 
   TTS_EQUAL((eve::Constant<std::uint8_t, 0xE5>()), 0xE5);
   TTS_EQUAL((eve::Constant<std::int8_t, 0x55>()), 0x55);
@@ -51,13 +51,13 @@ TTS_CASE_TPL("Constant generation for wide",
   TTS_ULP_EQUAL(
       (eve::Constant<eve::wide<float, T>, 0x3F8E38E3>()), (eve::wide<float, T>(1.111111f)), 0.5);
   TTS_IEEE_EQUAL((eve::Constant<eve::wide<float, T>, 0xFFFFFFFF>()),
-                 (eve::Nan<eve::wide<float, T>>()));
+                 (eve::nan(eve::as<eve::wide<float, T>>())));
 
   TTS_ULP_EQUAL((eve::Constant<eve::wide<double, T>, 0x3FF1C71C71C71C72ULL>()),
                 (eve::wide<double, T>(1.111111111111111111)),
                 0.5);
   TTS_IEEE_EQUAL((eve::Constant<eve::wide<double, T>, 0xFFFFFFFFFFFFFFFFULL>()),
-                 (eve::Nan<eve::wide<double, T>>()));
+                 (eve::nan(eve::as<eve::wide<double, T>>())));
 
   TTS_EQUAL((eve::Constant<eve::wide<std::uint8_t, T>, 0xE5>()),
             (eve::wide<std::uint8_t, T>(0xE5)));

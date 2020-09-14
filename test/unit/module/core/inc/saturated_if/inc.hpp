@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check conditional saturated_(eve::inc) behavior", EVE_TYPE)
   using eve::saturated_;
 
   T tv(2);
-  auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto t = eve::true_(eve::as<T>());
+  auto f = eve::false_(eve::as<T>());
 
   // All basic TRUE
-  TTS_EQUAL(saturated_(eve::inc[ 1 ])(eve::Valmax<T>())     , eve::Valmax<T>());
-  TTS_EQUAL(saturated_(eve::inc[ 1.0 ])(eve::Valmax<T>())   , eve::Valmax<T>());
-  TTS_EQUAL(saturated_(eve::inc[ true ])(eve::Valmax<T>())  , eve::Valmax<T>());
-  TTS_EQUAL(saturated_(eve::inc[ t ])(eve::Valmax<T>())     , eve::Valmax<T>());
+  TTS_EQUAL(saturated_(eve::inc[ 1 ])(eve::valmax(eve::as<T>()))     , eve::valmax(eve::as<T>()));
+  TTS_EQUAL(saturated_(eve::inc[ 1.0 ])(eve::valmax(eve::as<T>()))   , eve::valmax(eve::as<T>()));
+  TTS_EQUAL(saturated_(eve::inc[ true ])(eve::valmax(eve::as<T>()))  , eve::valmax(eve::as<T>()));
+  TTS_EQUAL(saturated_(eve::inc[ t ])(eve::valmax(eve::as<T>()))     , eve::valmax(eve::as<T>()));
 
   // All basic FALSE
   TTS_EQUAL(saturated_(eve::inc[ 0 ])(tv)     , tv);

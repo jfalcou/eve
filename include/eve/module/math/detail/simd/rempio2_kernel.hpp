@@ -50,8 +50,8 @@ namespace eve::detail
     if constexpr(std::is_same_v<elt_t,  float>)
     {
       auto x =  double_(xx);
-      auto n =  nearest(x*Twoopi<double>());
-      auto dxr = fma(n, -Pio_2<double>(), x);
+      auto n =  nearest(x*twoopi(eve::as<double>()));
+      auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return std::make_tuple(quadrant(single_(n)), single_(dxr), T(0.0f));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
@@ -60,7 +60,7 @@ namespace eve::detail
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
       static const double mp2 = 0x1.DDE973C000000p-27;  /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto                xn  = nearest(xx * Twoopi<double>());
+      auto                xn  = nearest(xx * twoopi(eve::as<double>()));
       auto                y   = fma(xn, mp2, fma(xn, mp1, xx));
       auto                n   = quadrant(xn);
       auto                da  = xn * mp3;
@@ -82,7 +82,7 @@ namespace eve::detail
     static const double pp4 = 0x1.d747f23e32ed7p-83;  /*  1.9034889620193266e-25  */
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      auto xn  = nearest(xx * Twoopi<double>());
+      auto xn  = nearest(xx * twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
@@ -99,7 +99,7 @@ namespace eve::detail
     else if constexpr( std::is_same_v<elt_t, float> )
     {
       auto x   = double_(xx);
-      auto xn  = nearest(x * Twoopi<double>());
+      auto xn  = nearest(x * twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
@@ -112,7 +112,7 @@ namespace eve::detail
       da       = (t - a) + da;
       auto fa  = single_(a);
       auto dfa = single_((a - double_(fa)) + da);
-      if( any(fa >= Pio_4<float>() || fa < -Pio_4<float>()) )
+      if( any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);
@@ -211,7 +211,7 @@ namespace eve::detail
       T    b    = b1 + b2;
       T    bb   = if_else(eve::abs(b1) > eve::abs(b2), (b1 - b) + b2, (b2 - b) + b1);
       auto test = eve::abs(b) > 0.5;
-      auto z    = copysign(One<T>(), b);
+      auto z    = copysign(one(eve::as<T>()), b);
       b         = sub[test](b, z);
       sum       = add[test](sum, z);
       T s       = b + (bb + bb1 + bb2);
@@ -224,7 +224,7 @@ namespace eve::detail
       // fma ? TODO
       s = b + bb;
       t = (b - s) + bb;
-      s = if_else(is_not_finite(x), eve::allbits_, s);
+      s = if_else(is_not_finite(x), eve::allbits, s);
 
       return std::make_tuple(quadrant(sum), s, t);
     }
@@ -278,7 +278,7 @@ namespace eve::detail
         auto dsr1 = single_(z - double_(sr1));
         auto br   = if_else(xlerfl, sr, sr1);
         auto dbr  = if_else(xlerfl, dsr, dsr1);
-        br        = if_else(is_not_finite(xx), eve::allbits_, br);
+        br        = if_else(is_not_finite(xx), eve::allbits, br);
         return std::make_tuple(bn, br, dbr);
       }
     }

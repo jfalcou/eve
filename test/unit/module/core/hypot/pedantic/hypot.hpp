@@ -42,18 +42,18 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::hypot) behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<T>()  , eve::Inf<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::Nan<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<v_t>(), eve::Inf<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<v_t>(), eve::Nan<T>())  , eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Nan<T>()  , eve::Inf<v_t>()), eve::Inf<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>()  , eve::Nan<v_t>()), eve::Inf<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<T>())  , eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>())  , eve::nan(eve::as<T>()))  , eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<v_t>()), eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<v_t>()), eve::nan(eve::as<T>()))  , eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::nan(eve::as<T>())  , eve::inf(eve::as<v_t>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>())  , eve::nan(eve::as<v_t>())), eve::inf(eve::as<T>()));
   }
 
-  auto tmax   = eve::Valmax<T>();
-  auto vmax   = eve::Valmax<v_t>();
-  auto sqrt2  = eve::Sqrt_2<T>();
-  auto vsqrt2 = eve::Sqrt_2<v_t>();
+  auto tmax   = eve::valmax(eve::as<T>());
+  auto vmax   = eve::valmax(eve::as<v_t>());
+  auto sqrt2  = eve::sqrt_2(eve::as<T>());
+  auto vsqrt2 = eve::sqrt_2(eve::as<v_t>());
 
   TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(tmax  , T(0)  ) , tmax);
   TTS_IEEE_EQUAL(eve::pedantic_(eve::hypot)(T(0)  , tmax  ) , tmax);
@@ -89,22 +89,22 @@ TTS_CASE_TPL("Check pedantic_ 3 params eve::hypot behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<T>(), eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
 
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<v_t>(), eve::Inf<T>(), eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<v_t>(), eve::Inf<T>(), eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
 
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<v_t>(), eve::Inf<T>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<v_t>(), eve::Inf<T>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
 
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<v_t>(), eve::Inf<v_t>()), eve::Inf<T>(), 0);
-    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::Inf<T>(), eve::Inf<v_t>(), eve::Inf<v_t>()), eve::Inf<T>(), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<v_t>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<v_t>())), eve::inf(eve::as<T>()), 0);
 
   }
 
-  auto tmax   = eve::Valmax<T>();
-  auto sqrt2  = eve::Sqrt_2<T>();
+  auto tmax   = eve::valmax(eve::as<T>());
+  auto sqrt2  = eve::sqrt_2(eve::as<T>());
 
   TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(tmax , T(0)  , T(0)  ) , tmax, 0.5 );
   TTS_ULP_EQUAL(eve::pedantic_(eve::hypot)(T(0) , tmax  , T(0)  ) , tmax, 0.5 );

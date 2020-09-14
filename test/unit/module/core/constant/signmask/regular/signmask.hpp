@@ -16,7 +16,7 @@
 
 TTS_CASE_TPL("Check signmask return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::Signmask<T>(), T);
+  TTS_EXPR_IS(eve::signmask(eve::as<T>()), T);
 }
 
 TTS_CASE_TPL("Check signmask behavior", EVE_TYPE)
@@ -25,10 +25,10 @@ TTS_CASE_TPL("Check signmask behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::Signmask<T>(), eve::Mzero<T>());
+    TTS_EQUAL(eve::signmask(eve::as<T>()), eve::mzero(eve::as<T>()));
   }
   else if constexpr(eve::integral_value<T>)
   {
-    TTS_EQUAL(eve::Signmask<T>(), T(v_t(1) << (sizeof(v_t)*CHAR_BIT-1)));
+    TTS_EQUAL(eve::signmask(eve::as<T>()), T(v_t(1) << (sizeof(v_t)*CHAR_BIT-1)));
   }
 }

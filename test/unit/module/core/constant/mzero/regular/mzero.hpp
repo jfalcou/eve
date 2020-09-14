@@ -21,13 +21,13 @@
 
 TTS_CASE_TPL("Check mzero return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::Mzero<T>(), T);
+  TTS_EXPR_IS(eve::mzero(eve::as<T>()), T);
 }
 
 TTS_CASE_TPL("Check mzero behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(T(1) / eve::Mzero<T>(), T(-std::numeric_limits<v_t>::infinity()) );
+  TTS_EQUAL(T(1) / eve::mzero(eve::as<T>()), T(-std::numeric_limits<v_t>::infinity()) );
 }
 
 #if defined(EVE_COMP_IS_MSVC)

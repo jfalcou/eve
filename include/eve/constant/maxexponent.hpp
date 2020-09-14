@@ -18,18 +18,18 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(maxexponent_, maxexponent_);
+  EVE_MAKE_CALLABLE(maxexponent_, maxexponent);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Maxexponent(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<t_t>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto maxexponent_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<t_t>;
 
-    if constexpr(std::is_same_v<t_t, float>) return i_t(127);
-    else if constexpr(std::is_same_v<t_t, double >) return i_t(1023);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(127);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(1023);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(maxexponent_, Maxexponent);
 }
-

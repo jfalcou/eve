@@ -14,8 +14,8 @@
 
 int main(int argc, char** argv)
 {
-  auto lmin = eve::Valmin<EVE_TYPE>();
-  auto lmax = eve::Valmax<EVE_TYPE>();
+  auto lmin = eve::valmin(eve::as<EVE_TYPE>());
+  auto lmax = eve::valmax(eve::as<EVE_TYPE>());
    auto const std_is_nan = [](auto x) { return std::isnan(x); };
   EVE_REGISTER_BENCHMARK(std_is_nan, EVE_TYPE, eve::bench::random<EVE_TYPE>(lmin,lmax));
 

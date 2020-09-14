@@ -29,13 +29,13 @@ TTS_CASE_TPL("Check eve::acotd behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acotd(eve::Inf<T>())  , T(0), 0);
-    TTS_ULP_EQUAL(eve::acotd(eve::Minf<T>()) , T(0), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::inf(eve::as<T>()))  , T(0), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::minf(eve::as<T>())) , T(0), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acotd(eve::Nan<T>()), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acotd(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::acotd(T( 0.5)), T( 63.4349488229220) , 1   );
@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check eve::acotd behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::acotd(T( 1. )), T( 45)               , 0.5 );
   TTS_ULP_EQUAL(eve::acotd(T( 0. )), T( 90)               , 0.5 );
 
-  auto inv_smallest = eve::rec(eve::Smallestposval<T>());
+  auto inv_smallest = eve::rec(eve::smallestposval(eve::as<T>()));
   TTS_ULP_EQUAL(eve::acotd(T(-0.))      ,  T(-90)                             , 0.5);
-  TTS_ULP_EQUAL(eve::acotd(inv_smallest), eve::radindeg(eve::Smallestposval<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::acotd(inv_smallest), eve::radindeg(eve::smallestposval(eve::as<T>())), 0.5);
 }

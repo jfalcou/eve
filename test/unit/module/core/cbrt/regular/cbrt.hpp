@@ -33,9 +33,9 @@ TTS_CASE_TPL("Check eve::eve::cbrt behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::cbrt(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::cbrt(eve::Inf<T>()) , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::cbrt(eve::Minf<T>()), eve::Minf<T>());
+    TTS_IEEE_EQUAL(eve::cbrt(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cbrt(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cbrt(eve::minf(eve::as<T>())), eve::minf(eve::as<T>()));
   }
 
   TTS_ULP_EQUAL(eve::cbrt(T(1))   , T( 1), 0.5);

@@ -22,6 +22,6 @@ TTS_CASE_TPL("wide exhaustive check on rsqrt", EVE_TYPE)
 
   auto std_rsqrt = tts::vectorize<T>( [](auto e) { return v_t(1.0l/std::sqrt((long double)e)); } );
 
-  eve::exhaustive_producer<T> p(v_t(0), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt));
 }

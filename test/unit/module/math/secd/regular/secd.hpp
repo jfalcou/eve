@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check eve::secd behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::secd(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::secd(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::secd(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::secd(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::secd(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::secd(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::secd(T( 0  )) , T(1));

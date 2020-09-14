@@ -20,6 +20,6 @@ TTS_CASE_TPL("wide random check on cot", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_cot = tts::vectorize<T>( [](auto e) { return eve::rec(std::tan(double(e))); } );
 
-  eve::rng_producer<T> p(-eve::Pio_2<v_t>(), eve::Pio_2<v_t>());
+  eve::rng_producer<T> p(-eve::pio_2(eve::as<v_t>()), eve::pio_2(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_cot, eve::small_(eve::cot));
 }

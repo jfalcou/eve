@@ -28,7 +28,7 @@ namespace eve::detail
     {
       if constexpr(std::is_same_v<D, restricted_type>)
       {
-        return Pio_4<T>();
+        return pio_4(eve::as<T>());
       }
       if constexpr(std::is_same_v<D, small_type>)
       {
@@ -40,12 +40,12 @@ namespace eve::detail
       }
       else
       {
-        return Valmax<T>();
+        return valmax(eve::as<T>());
       }
     }
     else
     {
-      return Valmax<T>();
+      return valmax(eve::as<T>());
     }
   }
 }

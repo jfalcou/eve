@@ -20,6 +20,6 @@ TTS_CASE_TPL("wide random check on log10", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_log10 = tts::vectorize<T>( [](auto e) { return std::log10(e); } );
 
-  eve::exhaustive_producer<T> p(v_t(0), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_log10, eve::log10);
 }

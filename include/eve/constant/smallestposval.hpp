@@ -18,27 +18,27 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(smallestposval_, smallestposval_);
+  EVE_MAKE_CALLABLE(smallestposval_, smallestposval);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Smallestposval(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<typename T>
+    EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as_<T> const & = {}) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>)
+      if constexpr(std::is_same_v<t_t, float>)
       {
         return Constant<T, 0X00800000U>();
       }
-    else if constexpr(std::is_same_v<t_t, double>)
+      else if constexpr(std::is_same_v<t_t, double>)
       {
         return Constant<T, 0X0010000000000000ULL>();
       }
-    else if constexpr(std::is_integral_v<t_t>)
+      else if constexpr(std::is_integral_v<t_t>)
       {
         return T(1);
       }
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(smallestposval_, Smallestposval);
 }
-

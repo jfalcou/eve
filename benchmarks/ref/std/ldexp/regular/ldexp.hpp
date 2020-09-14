@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_ldexp = [](auto x, int y) { return std::ldexp(x, y); };
-  auto l = eve::Valmax<EVE_TYPE>();
+  auto l = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_ldexp, EVE_TYPE
                         , eve::bench::random< EVE_TYPE>(-l, l)
                         , eve::bench::random< int>(-100, 100));

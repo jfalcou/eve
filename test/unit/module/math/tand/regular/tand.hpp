@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check eve::tand behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::tand(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::tand(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::tand(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::tand(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::tand(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::tand(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::tand(T( 0 )) , T(0) );

@@ -46,9 +46,9 @@ namespace eve::detail
       auto x2          = sqr(a0);
       auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
       if constexpr( scalar_value<T> )
-        return (x2nlepi2_16) ? Nan<T>() : cos_eval(x2);
+        return (x2nlepi2_16) ? nan(eve::as<T>()) : cos_eval(x2);
       else
-        return if_else(x2nlepi2_16, eve::allbits_, cos_eval(x2));
+        return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
     }
     else
       return apply_over(restricted_(cos), a0);
@@ -60,10 +60,10 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       T    x        = eve::abs(a0);
-      auto xnlepio2 = is_not_less_equal(x, Pio_2<T>());
+      auto xnlepio2 = is_not_less_equal(x, pio_2(eve::as<T>()));
       if constexpr( scalar_value<T> )
         if( xnlepio2 )
-          return Nan<T>();
+          return nan(eve::as<T>());
       auto reduce = [](auto x) {
         auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
         auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
@@ -76,7 +76,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         using i_t = as_integer_t<T, signed>;
-        i_t n     = x > Pio_4<T>();
+        i_t n     = x > pio_4(eve::as<T>());
         if( n )
         {
           auto xr = reduce(x);
@@ -88,8 +88,8 @@ namespace eve::detail
       else
       {
         using elt_t   = element_type_t<T>;
-        auto n        = binarize(is_not_less_equal(x, Pio_4(as(x))));
-        auto sign_bit = binarize(is_nez(n), Signmask<elt_t>());
+        auto n        = binarize(is_not_less_equal(x, pio_4(eve::as(x))));
+        auto sign_bit = binarize(is_nez(n), signmask(eve::as<elt_t>()));
         auto xr       = reduce(x);
         xr            = if_else(n, xr, x);
         auto z        = sqr(xr);
@@ -97,7 +97,7 @@ namespace eve::detail
         auto ce       = cos_eval(z);
         auto z1       = if_else(n, se, ce);
 //        return z1;
-        return if_else(xnlepio2, eve::allbits_, z1);
+        return if_else(xnlepio2, eve::allbits, z1);
       }
     }
     else
@@ -113,7 +113,7 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
       auto x             = abs(a0);
       auto [fn, xr, dxr] = D()(rempio2)(x);
       return cos_finalize(fn, xr, dxr);
@@ -128,9 +128,9 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( all(x <= Pio_4(as(x))) )
+      if( all(x <= pio_4(eve::as(x))) )
         return restricted_(cos)(a0);
-      else if( all(x <= Pio_2(as(x))) )
+      else if( all(x <= pio_2(eve::as(x))) )
         return small_(cos)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
         return medium_(cos)(a0);

@@ -54,8 +54,8 @@ namespace eve::detail
     {
       auto ltza   = is_ltz(a);
       auto isinfb = is_infinite(b);
-      if( a == Mone<T>() && isinfb )                return One<T>();
-      if( ltza && !is_flint(b) && !is_infinite(b) ) return Nan<T>();
+      if( a == mone(eve::as<T>()) && isinfb )                return one(eve::as<T>());
+      if( ltza && !is_flint(b) && !is_infinite(b) ) return nan(eve::as<T>());
       auto z = pow_abs(a, b);
       if( isinfb )                                  return z;
       return (is_negative(a) && is_odd(b)) ? -z : z;
@@ -66,7 +66,7 @@ namespace eve::detail
       T    z       = pow_abs(a, b);
       z            = minus[logical_and(is_odd(b), nega)](z);
       auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
-      return if_else(invalid, eve::allbits_, z);
+      return if_else(invalid, eve::allbits, z);
     }
     else return apply_over(pow, a, b);
   }

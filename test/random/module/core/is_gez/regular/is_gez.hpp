@@ -22,6 +22,6 @@ TTS_CASE_TPL("wide random check on is_gez", EVE_TYPE)
   using l_t = eve::as_logical_t<T>;
   auto std_is_gez = tts::vectorize<l_t>( [](auto e) { return (e >= v_t(0)); } );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_is_gez, eve::is_gez);
 }

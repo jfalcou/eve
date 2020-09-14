@@ -38,10 +38,10 @@ TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
   {
     if constexpr( eve::platform::supports_infinites )
     {
-      TTS_EQUAL( bitofsign(eve::Inf<T>() ), T(0)           );
-      TTS_EQUAL( bitofsign(eve::Minf<T>()), T(-0.));
-      TTS_EXPECT( all(is_positive(bitofsign( eve::Inf<T>()))) );
-      TTS_EXPECT( all(is_negative(bitofsign(eve::Minf<T>()))) );
+      TTS_EQUAL( bitofsign(eve::inf(eve::as<T>()) ), T(0)           );
+      TTS_EQUAL( bitofsign(eve::minf(eve::as<T>())), T(-0.));
+      TTS_EXPECT( all(is_positive(bitofsign( eve::inf(eve::as<T>())))) );
+      TTS_EXPECT( all(is_negative(bitofsign(eve::minf(eve::as<T>())))) );
     }
 
     TTS_EQUAL (bitofsign(T(0))  , T(0));
@@ -60,7 +60,7 @@ TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
 
     TTS_EQUAL(bitofsign(T(1)), T(0));
-    TTS_EQUAL(bitofsign(eve::Valmax<T>()), T(1ull << (sizeof(v_t)*8-1)));
+    TTS_EQUAL(bitofsign(eve::valmax(eve::as<T>())), T(1ull << (sizeof(v_t)*8-1)));
   }
   else
   {

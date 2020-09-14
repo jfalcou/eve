@@ -34,7 +34,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return eve::restricted_(sin)(x * Pi<T>());
+      return eve::restricted_(sin)(x * pi(eve::as<T>()));
     }
     else
       return apply_over(restricted_(sinpi), x);
@@ -49,17 +49,17 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
         if( is_not_finite(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
       auto x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
-        if( x > Maxflint<T>() )
+        if( x > maxflint(eve::as<T>()) )
           return T(0);
       }
       else
       {
-        x = if_else(is_not_finite(x), eve::allbits_, x); // Nan or Inf input
-        x = if_else(is_greater(x, Maxflint(as(x))), eve::zero_, x);
+        x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+        x = if_else(is_greater(x, maxflint(eve::as(x))), eve::zero, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return sin_finalize(bitofsign(a0), fn, xr, dxr);

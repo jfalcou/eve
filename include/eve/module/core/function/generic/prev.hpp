@@ -77,7 +77,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(a), Mzero(as(a)), bitfloating(nz)), z);
+          return if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z);
         }
       }
       else if constexpr(integral_value<T>)
@@ -100,7 +100,7 @@ namespace eve::detail
       if constexpr(floating_value<T>)
       {
         auto z =  prev(a);
-        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits_, z);
+        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
         else                                       return z;
       }
       else if constexpr(integral_value<T>)
@@ -158,7 +158,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(test, if_else(is_eqz(nz), Mzero<T>(), bitfloating(nz)), z);
+          return if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z);
         }
       }
       else if constexpr(integral_value<T>)
@@ -182,7 +182,7 @@ namespace eve::detail
       if constexpr(floating_value<T>)
       {
         auto z =  prev(a, n);
-        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits_, z);
+        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
         else                                       return z;
       }
       else if constexpr(integral_value<T>)

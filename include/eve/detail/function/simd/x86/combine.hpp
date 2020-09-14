@@ -75,11 +75,11 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( std::is_integral_v<T> && ((sizeof(T) != 8) && (N::value == 2)) )
     {
-      return make(as_<T> {}, eve::sse_ {}, l[0], l[1], h[0], h[1]);
+      return make(eve::as_<T> {}, eve::sse_ {}, l[0], l[1], h[0], h[1]);
     }
     else if constexpr( std::is_integral_v<T> && (sizeof(T) != 8) && (N::value == 1) )
     {
-      return make(as_<T> {}, eve::sse_ {}, l[0], h[0]);
+      return make(eve::as_<T> {}, eve::sse_ {}, l[0], h[0]);
     }
   }
 

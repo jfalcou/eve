@@ -18,7 +18,7 @@ int main(int argc, char** argv)
   constexpr EVE_TYPE inrad = std::numbers::pi_v<EVE_TYPE>/180;
   auto const std_cscd = [](auto x) { return inrad*1/std::sin(x); };
 
-  EVE_REGISTER_BENCHMARK(std_cscd, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::Valmin<EVE_TYPE>(), eve::Valmax<EVE_TYPE>()));
+  EVE_REGISTER_BENCHMARK(std_cscd, EVE_TYPE, eve::bench::random<EVE_TYPE>(eve::valmin(eve::as<EVE_TYPE>()), eve::valmax(eve::as<EVE_TYPE>())));
 
   eve::bench::start_benchmarks(argc, argv);
 }

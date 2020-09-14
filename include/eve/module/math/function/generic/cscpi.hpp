@@ -36,7 +36,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return restricted_(csc)(a0 * Pi<T>());
+      return restricted_(csc)(a0 * pi(eve::as<T>()));
     }
     else
       return apply_over(restricted_(cscpi), a0);
@@ -54,12 +54,12 @@ namespace eve::detail
         if( is_eqz(a0) )
           return rec(a0);
         if( is_flint(a0) || is_not_finite(a0) )
-          return Nan<T>(); // Nan or Inf input
+          return nan(eve::as<T>()); // nan or Inf input
       }
       T x = abs(a0);
       if constexpr( simd_value<T> )
       {
-        x = if_else(is_nez(a0) && (is_not_finite(x) || is_flint(x)), eve::allbits_, x);
+        x = if_else(is_nez(a0) && (is_not_finite(x) || is_flint(x)), eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return rec(sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));

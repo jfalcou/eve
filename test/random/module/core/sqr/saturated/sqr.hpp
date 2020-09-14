@@ -23,19 +23,19 @@ TTS_CASE_TPL("wide random check on sqr", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_sqr = tts::vectorize<T>( [](auto e) { return e*e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_sqr = tts::vectorize<T>( [](auto e) { return (eve::abs(e) > eve::Sqrtvalmax<v_t>() || e == eve::Valmin<v_t>()) ? eve::Valmax<v_t>() : e*e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    auto std_sqr = tts::vectorize<T>( [](auto e) { return (eve::abs(e) > eve::sqrtvalmax(eve::as<v_t>()) || e == eve::valmin(eve::as<v_t>())) ? eve::valmax(eve::as<v_t>()) : e*e; } );
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
   else
   {
-    auto std_sqr = tts::vectorize<T>( [](auto e) { return e > eve::Sqrtvalmax<v_t>() ? eve::Valmax<v_t>() : e*e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    auto std_sqr = tts::vectorize<T>( [](auto e) { return e > eve::sqrtvalmax(eve::as<v_t>()) ? eve::valmax(eve::as<v_t>()) : e*e; } );
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_sqr, eve::saturated_(eve::sqr));
   }
 }

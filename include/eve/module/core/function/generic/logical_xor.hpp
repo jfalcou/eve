@@ -48,7 +48,7 @@ namespace eve::detail
       using i_t = as_integer_t<T>;
       return as_logical_t<T>(bit_xor(bit_mask(i_t(a)), bit_mask(i_t(b))));
     }
-    //return as_logical_t<T>(as_logical_t<T>(a).value() ^ as_logical_t<T>( b).value());
+    //return as_logical_t<T>(eve::as_logical_t<T>(a).value() ^ as_logical_t<T>( b).value());
   }
 
   template<simd_value T, simd_value U>

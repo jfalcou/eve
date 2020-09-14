@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::medium_(eve::csc) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::csc)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::medium_(eve::csc)(T( 0 )), T(ref_csc(v_t(0.0))));
@@ -42,8 +42,8 @@ TTS_CASE_TPL("Check eve::medium_(eve::csc) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::medium_(eve::csc)( T(1)            ) , T(ref_csc(1.0))               , 1.0 );
   TTS_ULP_EQUAL(eve::medium_(eve::csc)(-T(1)            ) , T(ref_csc(-1.0))              , 1.0 );
-  TTS_ULP_EQUAL(eve::medium_(eve::csc)(-eve::Pio_4<T>() ) , T(ref_csc(-eve::Pio_4<v_t>())), 0.75);
-  TTS_ULP_EQUAL(eve::medium_(eve::csc)( eve::Pio_4<T>() ) , T(ref_csc(eve::Pio_4<v_t>())) , 0.75);
+  TTS_ULP_EQUAL(eve::medium_(eve::csc)(-eve::pio_4(eve::as<T>()) ) , T(ref_csc(-eve::pio_4(eve::as<v_t>()))), 0.75);
+  TTS_ULP_EQUAL(eve::medium_(eve::csc)( eve::pio_4(eve::as<T>()) ) , T(ref_csc(eve::pio_4(eve::as<v_t>()))) , 0.75);
   TTS_ULP_EQUAL(eve::medium_(eve::csc)( T(100.0)        ) , T(ref_csc(v_t(100.0)))        , 1.5 );
   TTS_ULP_EQUAL(eve::medium_(eve::csc)(-T(100.0)        ) , T(ref_csc(v_t(-100.0)))       , 1.5 );
   TTS_ULP_EQUAL(eve::medium_(eve::csc)( T(100000.0)     ) , T(ref_csc(v_t(100000.0)))     , 0.5 );

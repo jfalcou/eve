@@ -32,13 +32,13 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto vle1 = v <= One(as(v));
-      if constexpr(scalar_value<T>) if (vle1) return One(as(v));
+      auto vle1 = v <= one(eve::as(v));
+      if constexpr(scalar_value<T>) if (vle1) return one(eve::as(v));
       if constexpr(floating_real_value<T>)
       {
         auto [m, e] = ifrexp(v);
         e = dec(e);
-        auto tmp = ldexp(One(as(v)), e);
+        auto tmp = ldexp(one(eve::as(v)), e);
         auto tmpltv = tmp < v;
         if constexpr(scalar_value<T>)
         {
@@ -46,7 +46,7 @@ namespace eve::detail
         }
         else
         {
-          return if_else(vle1, One(as(v)), if_else(tmpltv,  tmp*2, tmp));
+          return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp*2, tmp));
         }
       }
       else
@@ -54,7 +54,7 @@ namespace eve::detail
         auto tmp =  bit_floor(v);
         auto tmpltv = tmp < v;
         if constexpr(scalar_value<T>)  return T(tmpltv ? tmp*2 :  tmp);
-        else return if_else(vle1, One(as(v)) //TODO Optimize with one_ ?
+        else return if_else(vle1, one(eve::as(v)) //TODO Optimize with one_ ?
                            , if_else(tmpltv, tmp*2,  tmp));
       }
     }

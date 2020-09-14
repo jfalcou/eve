@@ -24,14 +24,14 @@ TTS_CASE_TPL("Check eve::is_ngez behavior", EVE_TYPE)
 {
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::is_ngez(T(-1)), eve::True<T>());
+    TTS_EQUAL(eve::is_ngez(T(-1)), eve::true_(eve::as<T>()));
   }
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_ngez(eve::Nan<T>()), eve::True<T>());
+    TTS_EQUAL(eve::is_ngez(eve::nan(eve::as<T>())), eve::true_(eve::as<T>()));
   }
 
-  TTS_EQUAL(eve::is_ngez(T(0)), eve::False<T>());
-  TTS_EQUAL(eve::is_ngez(T(3)), eve::False<T>());
+  TTS_EQUAL(eve::is_ngez(T(0)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_ngez(T(3)), eve::false_(eve::as<T>()));
 }

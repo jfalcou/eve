@@ -25,9 +25,9 @@ TTS_CASE_TPL("Check eve::deginrad behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve::deginrad(eve::Inf<T>())  , eve::Inf<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::deginrad(eve::Minf<T>()) , eve::Minf<T>(), 0.5);
-    TTS_ULP_EQUAL(eve::deginrad(eve::Nan<T>())  , eve::Nan<T>() , 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::minf(eve::as<T>())) , eve::minf(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) , 0.5);
   }
 
   TTS_ULP_EQUAL(eve::deginrad(T( 0)), T( 0 )                                , 0.5);

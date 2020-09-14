@@ -64,20 +64,20 @@ namespace eve::detail
         T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
         T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
         T R    = t2 + t1;
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T dk   = single_(k);
         T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
         T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(uf), eve::allbits_, zz);
+        return if_else(is_ngez(uf), eve::allbits, zz);
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
@@ -104,7 +104,7 @@ namespace eve::detail
                        as<T>());
         f   = dec(f);
 
-        T hfsq = Half<T>() * sqr(f);
+        T hfsq = half(eve::as<T>()) * sqr(f);
         T s    = f / (2.0 + f);
         T z    = sqr(s);
         T w    = sqr(z);
@@ -121,13 +121,13 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
-          zz = if_else(isnez, r, Minf<T>());
+          zz = if_else(isnez, r, minf(eve::as<T>()));
         }
-        return if_else(is_ngez(uf), eve::allbits_, zz);
+        return if_else(is_ngez(uf), eve::allbits, zz);
       }
     }
     else
@@ -156,14 +156,14 @@ namespace eve::detail
        */
       uiT ix = bit_cast(x, as<uiT>());
       iT  k  = 1;
-      T   c = Zero<T>(), f = x;
+      T   c = zero(eve::as<T>()), f = x;
       if( ix < 0x3ed413d0 || ix >> 31 ) /* 1+x < sqrt(2)+  */
       {
         if( ix >= 0xbf800000 ) /* x <= -1.0 */
         {
-          if( x == Mone<T>() )
-            return Minf<T>(); /* log1p(-1)=-inf */
-          return Nan<T>();    /* log1p(x<-1)=NaN */
+          if( x == mone(eve::as<T>()) )
+            return minf(eve::as<T>()); /* log1p(-1)=-inf */
+          return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( ix << 1 < 0x33800000 << 1 ) /* |x| < 2**-24 */
         {
@@ -221,15 +221,15 @@ namespace eve::detail
       uiT hx = bit_cast(x, as<uiT>()) >> 32;
       iT  k  = 1;
 
-      T c = Zero<T>();
+      T c = zero(eve::as<T>());
       T f = x;
       if( hx < 0x3fda827a || hx >> 31 ) /* 1+x < sqrt(2)+ */
       {
         if( hx >= 0xbff00000 ) /* x <= -1.0 */
         {
-          if( x == Mone<T>() )
-            return Minf<T>(); /* log1p(-1)=-inf */
-          return Nan<T>();    /* log1p(x<-1)=NaN */
+          if( x == mone(eve::as<T>()) )
+            return minf(eve::as<T>()); /* log1p(-1)=-inf */
+          return nan(eve::as<T>());    /* log1p(x<-1)=NaN */
         }
         if( hx << 1 < 0x3ca00000 << 1 ) /* |x| < 2**-53 */
         {

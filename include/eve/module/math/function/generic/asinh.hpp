@@ -42,28 +42,28 @@ namespace eve::detail
     {
       using vt_t = value_type_t<T>;
       T x =  eve::abs(a0);
-      if constexpr(scalar_value<T>) if (x < Sqrteps<T>()) return a0; // scalar early return
-      auto x_gt_oneosqrteps = x > Oneosqrteps<T>();
+      if constexpr(scalar_value<T>) if (x < sqrteps(eve::as<T>())) return a0; // scalar early return
+      auto x_gt_oneosqrteps = x > oneosqrteps(eve::as<T>());
       auto  bts =  bitofsign(a0);
       if constexpr(std::is_same_v<vt_t, double>)
       {
         if constexpr(scalar_value<T>) // faster for great or small values
         {
-          if (x_gt_oneosqrteps)         return bit_xor(log(x)+Log_2<T>(), bts);
-          else if (x >= eve::Half<T>()) return bit_xor(log(x+hypot(One<T>(), x)), bts);
+          if (x_gt_oneosqrteps)         return bit_xor(log(x)+log_2(eve::as<T>()), bts);
+          else if (x >= eve::half(eve::as<T>())) return bit_xor(log(x+hypot(one(eve::as<T>()), x)), bts);
         }
         // remaining scalar case and all simd cases to avoid multiple computations as
         // this one is always ok
-        T z = if_else(x_gt_oneosqrteps,dec(x), x+sqr(x)/eve::inc(hypot(One<T>(), x)));
-        if constexpr(eve::platform::supports_infinites) z = if_else(is_equal(x, Inf<T>()), x, z);
-        z =  add[x_gt_oneosqrteps](eve::log1p(z), Log_2<T>());
+        T z = if_else(x_gt_oneosqrteps,dec(x), x+sqr(x)/eve::inc(hypot(one(eve::as<T>()), x)));
+        if constexpr(eve::platform::supports_infinites) z = if_else(is_equal(x, inf(eve::as<T>())), x, z);
+        z =  add[x_gt_oneosqrteps](eve::log1p(z), log_2(eve::as<T>()));
         return bit_xor(z, bts);
       }
       else if constexpr(std::is_same_v<vt_t, float>)
       {
-        auto x_lt_half = x < Half<T>();
+        auto x_lt_half = x < half(eve::as<T>());
         T x2 = sqr(x);
-        T z = Zero<T>();
+        T z = zero(eve::as<T>());
         std::size_t nb = nbtrue(x_lt_half);
         if(nb > 0)
         {
@@ -71,17 +71,16 @@ namespace eve::detail
           if(nb >= cardinal_v<T>) return  bit_xor(z, bts);
         }
         auto case_1 = [](T const & x){return x; };                              // great x
-        auto case_2 = [](T const & x){return average(x, hypot(One<T>(), x)); }; // lesser x
+        auto case_2 = [](T const & x){return average(x, hypot(one(eve::as<T>()), x)); }; // lesser x
         auto tmp =  branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x);
-        auto z1 = bit_xor(if_else(x_lt_half, z, log(tmp)+Log_2<T>()), bts);
-        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits_, z1);
+        auto z1 = bit_xor(if_else(x_lt_half, z, log(tmp)+log_2(eve::as<T>())), bts);
+        if constexpr(eve::platform::supports_invalids) return if_else(is_nan(a0), eve::allbits, z1);
         else                                           return z1;
       }
     }
     else
     {
-      return apply_over(asinh, a0);
+      return apply_over(eve::asinh, a0);
     }
   }
 }
-

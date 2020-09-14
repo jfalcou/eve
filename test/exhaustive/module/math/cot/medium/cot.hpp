@@ -31,7 +31,7 @@ TTS_CASE_TPL("wide random check on cot", EVE_TYPE)
   }
   else
   {
-    eve::exhaustive_producer<T>  p(eve::Smallestposval<v_t>(), l);
+    eve::exhaustive_producer<T>  p(eve::smallestposval(eve::as<v_t>()), l);
     TTS_RANGE_CHECK(p, std_cot, eve::medium_(eve::cot));
   }
 }

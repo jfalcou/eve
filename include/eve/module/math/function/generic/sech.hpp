@@ -35,13 +35,13 @@ namespace eve::detail
     // respectively computed
     // *  in the first case sech (e+rec(e))/2
     // *  in the second     sech is (e/2)*e (avoiding undue overflow)
-    // Threshold is Maxlog - Log_2
+    // Threshold is maxlog - Log_2
     //////////////////////////////////////////////////////////////////////////////
     if constexpr(has_native_abi_v<T>)
     {
       T x = eve::abs(a0);
-      auto test1 = (x > Maxlog<T>()-Log_2<T>());
-      auto fac = if_else(test1, Half<T>(),eve::one_);
+      auto test1 = (x > maxlog(eve::as<T>())-log_2(eve::as<T>()));
+      auto fac = if_else(test1, half(eve::as<T>()),eve::one);
       T tmp1 = exp(-x*fac);
       T tmp = T(2)*tmp1;
       if constexpr(scalar_value<T>)

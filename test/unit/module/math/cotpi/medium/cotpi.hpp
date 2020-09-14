@@ -28,20 +28,20 @@ TTS_CASE_TPL("Check eve::medium_(eve::cotpi) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(T(0)), (eve::Inf<T>()));
-  TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(T(-0.)), (eve::Minf<T>()));
+  TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(T(0)), (eve::inf(eve::as<T>())));
+  TTS_IEEE_EQUAL(eve::medium_(eve::cotpi)(T(-0.)), (eve::minf(eve::as<T>())));
 
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T( 1)       )   , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T( 1)       )   , eve::Nan<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T( 1)       )   , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T( 1)       )   , eve::nan(eve::as<T>()) , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T(22.5)     )   , T(0)          , 0.5);
   TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T(22.5)     )   , T(0)          , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T(100000.0) )   , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T(100000.0) )   , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T(100000000.0)) , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T(100000000.0)) , eve::Nan<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T(100000.0) )   , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T(100000.0) )   , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)( T(100000000.0)) , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::medium_(eve::cotpi)(-T(100000000.0)) , eve::nan(eve::as<T>()) , 0.5);
 }

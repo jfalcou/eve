@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check eve::big_(eve::secpi) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big_(eve::secpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::big_(eve::secpi)(T( 0 )), T(1));
@@ -38,11 +38,11 @@ TTS_CASE_TPL("Check eve::big_(eve::secpi) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::big_(eve::secpi)( T( 1))       ,-T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T( 1))       ,-T(1)          , 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(22.5))     , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(22.5))     , eve::Nan<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(22.5))     , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(22.5))     , eve::nan(eve::as<T>()) , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(100000.0)) , T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100000.0)) , T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)( T(1000001.0)),-T(1)          , 0.5);
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(-T(100001.0)) ,-T(1)          , 0.5);
-  auto z = eve::Maxflint<T>()*10;
+  auto z = eve::maxflint(eve::as<T>())*10;
   TTS_ULP_EQUAL(eve::big_(eve::secpi)(z) , T(1) , 0.5);}

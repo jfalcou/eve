@@ -38,9 +38,8 @@ TTS_CASE_TPL("Check eve::bit_cast behavior", EVE_TYPE)
     TTS_EQUAL(eve::bit_cast((T(0)), eve::as<ut_t>()), ut_t(0));
     TTS_EQUAL(eve::bit_cast((T(0)), eve::as<T>()), (T(0)));
 
-    TTS_EQUAL(eve::bit_cast(eve::Allbits<T>(), eve::as<it_t>()), eve::Allbits<it_t>());
-    TTS_EQUAL(eve::bit_cast(eve::Allbits<T>(), eve::as<ut_t>()), eve::Allbits<ut_t>());
-    TTS_IEEE_EQUAL(eve::bit_cast(eve::Allbits<T>(),eve::as_<T>()), (eve::Nan<T>()));
+    TTS_EQUAL(eve::bit_cast(eve::allbits(eve::as<T>()), eve::as<it_t>()), eve::allbits(eve::as<it_t>()));
+    TTS_EQUAL(eve::bit_cast(eve::allbits(eve::as<T>()), eve::as<ut_t>()), eve::allbits(eve::as<ut_t>()));
 
     if constexpr(sizeof(v_t)==4)
     {
@@ -58,8 +57,7 @@ TTS_CASE_TPL("Check eve::bit_cast behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::bit_cast((T(0)), eve::as<it_t>()), it_t(0));
     TTS_EQUAL(eve::bit_cast((T(0)), eve::as<ut_t>()), ut_t(0));
-    TTS_EQUAL(eve::bit_cast(eve::Allbits<T>(), eve::as<it_t>()), eve::Allbits<it_t>());
-    TTS_EQUAL(eve::bit_cast(eve::Allbits<T>(), eve::as<ut_t>()), eve::Allbits<ut_t>());
+    TTS_EQUAL(eve::bit_cast(eve::allbits(eve::as<T>()), eve::as<it_t>()), eve::allbits(eve::as<it_t>()));
+    TTS_EQUAL(eve::bit_cast(eve::allbits(eve::as<T>()), eve::as<ut_t>()), eve::allbits(eve::as<ut_t>()));
   }
 }
-

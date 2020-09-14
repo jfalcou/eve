@@ -18,8 +18,8 @@ int main()
   using I_TYPE    = eve::detail::as_integer_t<EVE_TYPE, signed>;
   using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
   using I_VALUE   = eve::detail::as_integer_t<EVE_VALUE, signed>;
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
   auto smax = I_VALUE(sizeof(EVE_VALUE)-1);
   auto smin = I_VALUE(-smax);
 

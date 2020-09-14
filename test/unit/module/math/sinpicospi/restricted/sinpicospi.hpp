@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
   for(int i=4; i < 6 ; ++i)
   {
     auto [p0, p1] = eve::restricted_(eve::sinpicospi)(T(x[i]));
-    TTS_ULP_EQUAL(p0, eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(p1, eve::Nan<T>(), 0.5);
+    TTS_ULP_EQUAL(p0, eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(p1, eve::nan(eve::as<T>()), 0.5);
   }
 }

@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check pedantic_(eve::atan2d)  behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    auto inf  = eve::Inf<T>();
-    auto minf = eve::Minf<T>();
+    auto inf  = eve::inf(eve::as<T>());
+    auto minf = eve::minf(eve::as<T>());
 
     TTS_ULP_EQUAL(pedantic_(eve::atan2d)(inf         , (T(1.))  ), (T(90))  , 0.5);
     TTS_ULP_EQUAL(pedantic_(eve::atan2d)(inf         , (T(-1.)) ), (T(90))  , 0.5);
@@ -63,9 +63,9 @@ TTS_CASE_TPL("Check pedantic_(eve::atan2d)  behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(pedantic_(eve::atan2d)(eve::Nan<T>(), eve::Nan<T>()) , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2d)(eve::Nan<T>(), (T(0.)))       , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(pedantic_(eve::atan2d)((T(0.))      , eve::Nan<T>()) , eve::Nan<T>(), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2d)(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2d)(eve::nan(eve::as<T>()), (T(0.)))       , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(pedantic_(eve::atan2d)((T(0.))      , eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
   }
 
   TTS_ULP_EQUAL(pedantic_(eve::atan2d)((T(0.5)) , (T(0.5)) ) ,  (T(45))  , 0.5);

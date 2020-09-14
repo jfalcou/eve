@@ -45,7 +45,7 @@ namespace eve
 
     void deallocate(value_type *p, std::size_t) noexcept
     {
-      aligned_dealloc(as_aligned<Alignment>(p));
+      aligned_dealloc(eve::as_aligned<Alignment>(p));
     }
   };
 

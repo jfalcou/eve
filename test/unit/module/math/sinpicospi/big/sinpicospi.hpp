@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check  eve::big_(eve::sinpicospi) behavior", EVE_TYPE)
                         , v_t(10)           , v_t(-10)
                         , v_t(1000000)      , v_t(-1000000)
                         , v_t(1000000000)   , v_t(-1000000000)
-                        , eve::Valmax<v_t>(), eve::Valmin<v_t>()
-                        , eve::Valmax<v_t>()/100000, eve::Valmin<v_t>()/10000
+                        , eve::valmax(eve::as<v_t>()), eve::valmin(eve::as<v_t>())
+                        , eve::valmax(eve::as<v_t>())/100000, eve::valmin(eve::as<v_t>())/10000
                         };
 
   for(auto v : values)

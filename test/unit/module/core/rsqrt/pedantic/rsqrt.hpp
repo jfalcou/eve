@@ -31,13 +31,13 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::rsqrt) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::Nan<T>())) , (eve::Nan<T>()));
-    TTS_EQUAL(eve::pedantic_(eve::rsqrt)((T(0)))               , eve::Inf<T>());
+    TTS_IEEE_EQUAL((eve::pedantic_(eve::rsqrt)(eve::nan(eve::as<T>()))) , (eve::nan(eve::as<T>())));
+    TTS_EQUAL(eve::pedantic_(eve::rsqrt)((T(0)))               , eve::inf(eve::as<T>()));
   }
 
   using v_t = eve::element_type_t<T>;
-  auto z = eve::Mindenormal<v_t>();
+  auto z = eve::mindenormal(eve::as<v_t>());
 
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(eve::Mindenormal<T>())   , T(eve::rec(std::sqrt(z)))   , 2.0);
-  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(2*eve::Mindenormal<T>()) , T(eve::rec(std::sqrt(2*z))) , 2.0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(eve::mindenormal(eve::as<T>()))   , T(eve::rec(std::sqrt(z)))   , 2.0);
+  TTS_ULP_EQUAL(eve::pedantic_(eve::rsqrt)(2*eve::mindenormal(eve::as<T>())) , T(eve::rec(std::sqrt(2*z))) , 2.0);
 }

@@ -25,13 +25,13 @@ TTS_CASE_TPL("wide random check on is_flint", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_is_flint = tts::vectorize<l_t>( [](auto e) { return (std::remainder(e, v_t(1)) == v_t(0)); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_flint, eve::is_flint);
   }
   else
   {
     auto std_is_flint = tts::vectorize<l_t>( [](auto ) { return true; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_flint, eve::is_flint);
   }
 }

@@ -15,8 +15,8 @@
 
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
   auto const std__modf = [](EVE_VALUE x) { EVE_VALUE i; auto f = std::modf(x, &i); return std::make_tuple(f, i); };
 

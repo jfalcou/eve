@@ -27,7 +27,7 @@ namespace eve::detail
                                            , wide<T, N, ppc_> const &v1) noexcept
   {
     if constexpr(integral_value<T> && sizeof(T) < 8) return vec_avg(v0.storage(), v1.storage());
-    else if constexpr(floating_value<T>)             return fma(v0,  Half(as(v0)), v1 *  Half(as(v0)));
+    else if constexpr(floating_value<T>)             return fma(v0,  half(eve::as(v0)), v1 *  half(eve::as(v0)));
     else                                             return map(average, v0, v1);
   }
 }

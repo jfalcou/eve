@@ -26,7 +26,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       if constexpr(scalar_value<T> && integral_value<T>) return T(~v);
-      else                                               return eve::bit_xor(v, Allbits(as(v)));
+      else                                               return eve::bit_xor(v, allbits(eve::as(v)));
     }
     else return apply_over(bit_not, v);
   }

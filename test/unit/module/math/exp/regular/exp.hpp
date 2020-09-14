@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::exp(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::exp(eve::Inf<T>()) , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::exp(eve::Minf<T>()), T( 0 ) );
+    TTS_IEEE_EQUAL(eve::exp(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::exp(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::exp(eve::minf(eve::as<T>())), T( 0 ) );
   }
 
   TTS_ULP_EQUAL(eve::exp(T(1)), T(std::exp(v_t(1))), 0.5);
@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check eve::exp behavior", EVE_TYPE)
 
   TTS_IEEE_EQUAL( eve::exp(T( 0.)), T(1));
   TTS_IEEE_EQUAL( eve::exp(T(-0.)), T(1));
-  v_t z = eve::Minlog<v_t>()+1;
+  v_t z = eve::minlog(eve::as<v_t>())+1;
 
   TTS_ULP_EQUAL( eve::exp(T(z)), T(std::exp((z))), 0.5);
 

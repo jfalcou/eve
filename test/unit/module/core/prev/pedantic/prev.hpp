@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::prev) one parameter behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(2)), T(1));
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(3)), T(2));
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>()), eve::Valmin<T>());
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<T>())), eve::valmin(eve::as<T>()));
 
     if constexpr(eve::signed_value<T>)
     {
@@ -53,14 +53,14 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::prev) one parameter behavior", EVE_TYPE)
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Minf<T>()), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
 
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>()), eve::Minf<T>()          );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Inf<T>())   , eve::Valmax<T>()        );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1 ))          , T(-1) - eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1 ))          , T( 1) - eve::Eps<T>()/2 );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<T>())), eve::minf(eve::as<T>())          );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::inf(eve::as<T>()))   , eve::valmax(eve::as<T>())        );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1 ))          , T(-1) - eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1 ))          , T( 1) - eve::eps(eve::as<T>())/2 );
     TTS_EQUAL(eve::pedantic_(eve::prev)(T( 0 ))          , T(-0.)                  );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-0.))          , -eve::Mindenormal<T>()  );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-0.))          , -eve::mindenormal(eve::as<T>())  );
   }
 }
 
@@ -76,11 +76,11 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::prev) two parameters behavior", EVE_TYPE
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(5), i_t(2)), T(3));
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(4), si_t(2)),T(2));
     TTS_EQUAL(eve::pedantic_(eve::prev)(T(5), si_t(2)),T(3));
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>(), i_t(2)), eve::Valmin<T>());
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<T>()), i_t(2)), eve::valmin(eve::as<T>()));
 
     TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(4), i_t(2)), T(2));
     TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(5), i_t(2)), T(3));
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<v_t>(), i_t(2)), eve::Valmin<T>());
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<v_t>()), i_t(2)), eve::valmin(eve::as<T>()));
 
     if constexpr(eve::signed_value<T>)
     {
@@ -95,30 +95,29 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::prev) two parameters behavior", EVE_TYPE
   }
   else
   {
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Minf<T>()    , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>()  , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Minf<T>()    , si_t(2) ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<T>()  , si_t(2) ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Minf<v_t>()  , i_t(2)  ), eve::Nan<T>());
-    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::Valmin<v_t>(), i_t(2)  ), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::minf(eve::as<T>())    , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<T>())  , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::minf(eve::as<T>())    , si_t(2) ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<T>())  , si_t(2) ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::minf(eve::as<v_t>())  , i_t(2)  ), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic_(eve::prev)(eve::valmin(eve::as<v_t>()), i_t(2)  ), eve::nan(eve::as<T>()));
 
     TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::prev)(T( 0 )               , 1) )));
-    TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::prev)(eve::Mindenormal<T>(), 2) )));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::prev)(eve::Mindenormal<T>(), 1) )));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic_(eve::prev)(eve::mindenormal(eve::as<T>()), 2) )));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic_(eve::prev)(eve::mindenormal(eve::as<T>()), 1) )));
 
-    TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(-1), i_t(2))         , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1), si_t(2))          , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1), i_t(2))           , T(-1)-eve::Eps<T>()*2 );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1), i_t(2))           , T( 1)-eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1), si_t(2))          , T( 1)-eve::Eps<T>()   );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(1), i_t(2))          , T( 1)-eve::Eps<T>()   );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(-1), i_t(2))         , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1), si_t(2))          , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-1), i_t(2))           , T(-1)-eve::eps(eve::as<T>())*2 );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1), i_t(2))           , T( 1)-eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 1), si_t(2))          , T( 1)-eve::eps(eve::as<T>())   );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(v_t(1), i_t(2))          , T( 1)-eve::eps(eve::as<T>())   );
 
     TTS_EQUAL(eve::pedantic_(eve::prev)(T( 0 ), 1)                , T(-0.)                );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 0 ), 2)                , -eve::Mindenormal<T>());
-    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-0.), 1)                , -eve::Mindenormal<T>());
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Mindenormal<T>(), 1) , T(-0.)                );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Mindenormal<T>(), 2) , T( 0 )                );
-    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::Mindenormal<T>(), 3) , -eve::Mindenormal<T>());
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T( 0 ), 2)                , -eve::mindenormal(eve::as<T>()));
+    TTS_EQUAL(eve::pedantic_(eve::prev)(T(-0.), 1)                , -eve::mindenormal(eve::as<T>()));
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::mindenormal(eve::as<T>()), 1) , T(-0.)                );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::mindenormal(eve::as<T>()), 2) , T( 0 )                );
+    TTS_EQUAL(eve::pedantic_(eve::prev)(eve::mindenormal(eve::as<T>()), 3) , -eve::mindenormal(eve::as<T>()));
   }
 }
-

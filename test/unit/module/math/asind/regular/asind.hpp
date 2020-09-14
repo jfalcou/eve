@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check eve::eve::asind behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asind(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::asind(T(2))          , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::asind(T(-2))         , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::asind(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asind(T(2))          , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asind(T(-2))         , eve::nan(eve::as<T>()) );
   }
 
   TTS_ULP_EQUAL(eve::asind(T( 0.5)) , T(30) , 0.5);

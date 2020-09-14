@@ -21,6 +21,6 @@ TTS_CASE_TPL("Check eve::is_not_imag return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_not_imag behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_not_imag(T(0)), eve::False<T>() );
-  TTS_EQUAL(eve::is_not_imag(T(2)), eve::True<T>()  );
+  TTS_EQUAL(eve::is_not_imag(T(0)), eve::false_(eve::as<T>()) );
+  TTS_EQUAL(eve::is_not_imag(T(2)), eve::true_(eve::as<T>())  );
 }

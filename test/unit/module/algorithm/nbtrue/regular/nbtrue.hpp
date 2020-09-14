@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EQUAL(eve::nbtrue(eve::Nan<T>()), cardinal);
+      TTS_EQUAL(eve::nbtrue(eve::nan(eve::as<T>())), cardinal);
     }
 
     TTS_EQUAL(eve::nbtrue(T(-0.)), 0u);
@@ -66,6 +66,6 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on logical", EVE_TYPE)
 {
   auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
 
-  TTS_EQUAL(eve::nbtrue(eve::True<T>()) , cardinal);
-  TTS_EQUAL(eve::nbtrue(eve::False<T>()), 0u      );
+  TTS_EQUAL(eve::nbtrue(eve::true_(eve::as<T>())) , cardinal);
+  TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<T>())), 0u      );
 }

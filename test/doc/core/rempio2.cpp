@@ -6,8 +6,8 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, 0.0f, 367.0f, -1005600.0f, eve::Pi<float>()/8,
-               eve::Pi<float>()/3, -eve::Pi<float>()/3, 2*eve::Pi<float>()/3};
+  wide_ft pf = {-1.0f, 0.0f, 367.0f, -1005600.0f, eve::pi(eve::as<float>())/8,
+               eve::pi(eve::as<float>())/3, -eve::pi(eve::as<float>())/3, 2*eve::pi(eve::as<float>())/3};
 
   auto [n, x, dx]    = eve::rempio2(pf);
   std::cout << "---- simd" << '\n'

@@ -28,7 +28,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(asech, x);
+      return apply_over(eve::asech, x);
     }
   }
 }

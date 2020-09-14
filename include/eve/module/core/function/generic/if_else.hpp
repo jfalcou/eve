@@ -93,7 +93,7 @@ namespace eve::detail
     }
     else
     {
-      auto const condition  = cond.mask(as_<r_t>());
+      auto const condition  = cond.mask(eve::as_<r_t>());
 
       if constexpr( C::is_inverted )  { return if_else(condition, f, t ); }
       else                            { return if_else(condition, t, f ); }
@@ -131,20 +131,20 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
                                           U const &t,
-                                          eve::callable_allbits_ const
+                                          callable_allbits_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : Allbits(as(t));
+    if constexpr(scalar_value<T>) return  static_cast<bool>(cond) ? t : allbits(eve::as(t));
     else                          return bit_ornot(t, bit_mask(cond));
   }
 
   template<typename T, typename U>
   EVE_FORCEINLINE constexpr auto if_else_(EVE_SUPPORTS(cpu_),
                                           T const &cond,
-                                          eve::callable_allbits_ const &,
+                                          callable_allbits_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? Allbits(as(t)) : t;
+    if constexpr(scalar_value<T>) return static_cast<bool>(cond) ? allbits(eve::as(t)) : t;
     else                          return bit_or(t, bit_mask(cond));
   }
 
@@ -157,9 +157,9 @@ namespace eve::detail
                                           eve::callable_mone_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? t : Mone(as(t));
+    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? t : mone(eve::as(t));
     else if constexpr(integral_value<U>) return bit_ornot(t, bit_mask(cond));
-    else                                 return if_else(cond, t, eve::Mone<U>());
+    else                                 return if_else(cond, t, eve::mone(eve::as<U>()));
   }
 
   template<typename T, typename U>
@@ -168,9 +168,9 @@ namespace eve::detail
                                           eve::callable_mone_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? Mone(as(t)) : t;
+    if constexpr(scalar_value<T>)        return  static_cast<bool>(cond) ? mone(eve::as(t)) : t;
     else if constexpr(integral_value<U>) return bit_or(t, bit_mask(cond));
-    else                                 return if_else(cond, Mone(as(t)), t);
+    else                                 return if_else(cond, mone(eve::as(t)), t);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -182,9 +182,9 @@ namespace eve::detail
                                           eve::callable_one_ const
                                           &) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : One(as(t));
+    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? t : one(eve::as(t));
     else if constexpr(std::is_integral_v<U>) return minus(bit_ornot(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, t, One(as(t)));
+    else                                return if_else(cond, t, one(eve::as(t)));
   }
 
   template<typename T, typename U>
@@ -193,8 +193,8 @@ namespace eve::detail
                                           eve::callable_one_ const &,
                                           U const &t) noexcept
   {
-    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? One(as(t)) : t;
+    if constexpr(scalar_value<T>)       return  static_cast<bool>(cond) ? one(eve::as(t)) : t;
     else if constexpr(std::is_integral_v<U>) return minus(bit_or(minus(t), bit_mask(cond)));
-    else                                return if_else(cond, One(as(t)), t);
+    else                                return if_else(cond, one(eve::as(t)), t);
   }
 }

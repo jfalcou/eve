@@ -12,8 +12,8 @@
 
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/function/iota.hpp>
 #include <eve/traits.hpp>
-#include <eve/concept/value.hpp>
 #include <iosfwd>
 
 namespace eve
@@ -26,7 +26,7 @@ namespace eve
     { T::has_alternative  };
     { T::is_inverted      };
     { T::is_complete      };
-    { a.mask(as_<int>())  };
+    { a.mask(eve::as_<int>())  };
   };
 
   //================================================================================================
@@ -40,7 +40,7 @@ namespace eve
 
     if_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&)  const { return condition_; }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
 
     friend std::ostream& operator<<(std::ostream& os, if_or_ const& c)
     {
@@ -62,7 +62,7 @@ namespace eve
 
     if_not_or_(C const& c, V const& v) : condition_(c), alternative(v) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const { return condition_;  }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const { return condition_;  }
 
     friend std::ostream& operator<<(std::ostream& os, if_not_or_ const& c)
     {
@@ -85,7 +85,7 @@ namespace eve
     if_(C const& c) : condition_(c) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const { return if_or_(condition_,v); }
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&)  const { return condition_; }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_; }
 
     friend std::ostream& operator<<(std::ostream& os, if_ const& c)
     {
@@ -107,7 +107,7 @@ namespace eve
     if_not_(C const& c) : condition_(c) {}
 
     template<typename V> EVE_FORCEINLINE auto else_(V v) const { return if_not_or_(condition_,v); }
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&)  const { return condition_;  }
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&)  const { return condition_;  }
 
     friend std::ostream& operator<<(std::ostream& os, if_not_ const& c)
     {
@@ -126,7 +126,7 @@ namespace eve
     static constexpr bool is_inverted     = false;
     static constexpr bool is_complete     = true;
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       return eve::as_logical_t<T>(false);
     }
@@ -145,7 +145,7 @@ namespace eve
     static constexpr bool is_inverted     = true;
     static constexpr bool is_complete     = true;
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       return eve::as_logical_t<T>(true);
     }
@@ -169,10 +169,10 @@ namespace eve
 
     constexpr ignore_last_(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return Iota(eve::as_<T>()) < (card-count_);
+      return detail::linear_ramp(eve::as_<T>()) < (card-count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_last_ const& c)
@@ -199,10 +199,10 @@ namespace eve
 
     constexpr EVE_FORCEINLINE keep_last_(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> auto mask(as_<T> const&) const
+    template<typename T> auto mask(eve::as_<T> const&) const
     {
       constexpr std::ptrdiff_t card = cardinal_v<T>;
-      return Iota(eve::as_<T>()) >= (card-count_);
+      return detail::linear_ramp(eve::as_<T>()) >= (card-count_);
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_last_ const& c)
@@ -229,9 +229,9 @@ namespace eve
 
     constexpr ignore_first_(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      return Iota(eve::as_<T>()) >= count_;
+      return detail::linear_ramp(eve::as_<T>()) >= count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, ignore_first_ const& c)
@@ -258,9 +258,9 @@ namespace eve
 
     constexpr keep_first_(std::ptrdiff_t n) noexcept : count_(n) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      return Iota(eve::as_<T>()) < count_;
+      return detail::linear_ramp(eve::as_<T>()) < count_;
     }
 
     friend std::ostream& operator<<(std::ostream& os, keep_first_ const& c)
@@ -287,9 +287,9 @@ namespace eve
 
     constexpr ignore_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = Iota(eve::as_<T>());
+      auto const i = detail::linear_ramp(eve::as_<T>());
       return (i < begin_) || (i > end_);
     }
 
@@ -317,9 +317,9 @@ namespace eve
 
     constexpr keep_between_(std::ptrdiff_t b, std::ptrdiff_t e) noexcept : begin_(b), end_(e) {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = Iota(eve::as_<T>());
+      auto const i = detail::linear_ramp(eve::as_<T>());
       return (i >= begin_) && (i <= end_);
     }
 
@@ -349,9 +349,9 @@ namespace eve
             : first_count_(b), last_count_(e)
     {}
 
-    template<typename T> EVE_FORCEINLINE auto mask(as_<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as_<T> const&) const
     {
-      auto const i = Iota(eve::as_<T>());
+      auto const i = detail::linear_ramp(eve::as_<T>());
       constexpr std::ptrdiff_t card = cardinal_v<T>;
       return (i >= first_count_) && (i < (card-last_count_));
     }

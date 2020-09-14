@@ -37,7 +37,7 @@ namespace eve::detail
       T r0 = a*b;
       T r1 = a2*b2 -(((r0-a1*b1)-a2*b1)-a1*b2);
       if constexpr(eve::platform::supports_invalids)
-        r1 = if_else(is_not_finite(r0), eve::zero_, r1);
+        r1 = if_else(is_not_finite(r0), eve::zero, r1);
       return std::make_tuple(r0, r1);
     }
     else return apply_over2(two_prod, a, b);

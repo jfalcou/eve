@@ -19,7 +19,7 @@
 namespace eve::detail
 {
   template<typename Generator, typename ABI, typename Pack>
-  EVE_FORCEINLINE auto fill(as_<Pack> const &, ABI const &, Generator g) noexcept
+  EVE_FORCEINLINE auto fill(eve::as_<Pack> const &, ABI const &, Generator g) noexcept
   {
     if constexpr( is_aggregated_v<ABI> )
     {

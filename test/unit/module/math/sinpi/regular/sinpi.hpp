@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check eve::eve::sinpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL((eve::sinpi)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL((eve::sinpi)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL((eve::sinpi)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL((eve::sinpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL((eve::sinpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL((eve::sinpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_EXPECT(eve::all(eve::is_positive(eve::sinpi(T( 0 )))));
@@ -51,6 +51,6 @@ TTS_CASE_TPL("Check eve::eve::sinpi behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::sinpi(T( 100000000.0)), T(0), 0.5);
   TTS_ULP_EQUAL(eve::sinpi(T(-100000000.0)), T(0), 0.5);
 
-  TTS_ULP_EQUAL(eve::sinpi(eve::Valmax<T>())    , T(0), 0.5);
-  TTS_ULP_EQUAL(eve::sinpi(eve::Valmax<T>()/10) , T(0), 0.5);
+  TTS_ULP_EQUAL(eve::sinpi(eve::valmax(eve::as<T>()))    , T(0), 0.5);
+  TTS_ULP_EQUAL(eve::sinpi(eve::valmax(eve::as<T>())/10) , T(0), 0.5);
 }

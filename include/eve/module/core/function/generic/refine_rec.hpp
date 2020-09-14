@@ -25,7 +25,7 @@ namespace eve::detail
                                , T const &x) noexcept
   {
     // Newton-Raphson: 1/X ~= (1-a0*x)*x + x
-    return fma(fnma(x, a0, One(as(a0))), x, x);
+    return fma(fnma(x, a0, one(eve::as(a0))), x, x);
   }
 }
 

@@ -17,14 +17,14 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(mone_, mone_);
+  EVE_MAKE_CALLABLE(mone_, mone);
 
-  template<typename T>
-  EVE_FORCEINLINE auto Mone(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    return T(-1);
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      return T(-1);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(mone_, Mone);
 }
-

@@ -17,9 +17,9 @@ int main()
             << " <- si =                              " << si << '\n'
             << " <- lsi =                             " << lsi << '\n'
             << " <- pi =                              " << pi << '\n'
-            << " -> eve::if_zero_else(si, eve::zero_, pi) =        "
-            << eve::if_else(si, eve::zero_, pi) << '\n'
-            << " -> eve::if_else(lsi, eve::zero, pi_) =       " << eve::if_else(lsi, eve::zero_, pi)
+            << " -> eve::if_zero_else(si, eve::zero, pi) =         "
+            << eve::if_else(si, eve::zero, pi) << '\n'
+            << " -> eve::if_else(lsi, eve::zero, pi) =        " << eve::if_else(lsi, eve::zero, pi)
             << '\n';
 
   iT               ssi = 3, xi = 3;
@@ -29,9 +29,9 @@ int main()
             << " ssi =                                " << ssi << '\n'
             << " lssi =                               " << lssi << '\n'
             << " xi =                                 " << xi << '\n'
-            << " -> eve::if_else(ssi, eve::zero_, xi) =       " << eve::if_else(ssi, eve::zero_, xi)
+            << " -> eve::if_else(ssi, eve::zero, xi) =        " << eve::if_else(ssi, eve::zero, xi)
             << '\n'
-            << " -> eve::if_else(lssi, xi, eve::zero_, xi) =      "
-            << eve::if_else(lssi, eve::zero_, xi) << '\n';
+            << " -> eve::if_else(lssi, xi, eve::zero, xi) =       "
+            << eve::if_else(lssi, eve::zero, xi) << '\n';
   return 0;
 }

@@ -42,14 +42,14 @@ namespace eve::detail
     {
       if constexpr( scalar_value<T> )
       {
-        if( is_not_less_equal(eve::abs(a0), Pio_4<T>()) )
-          return Nan<T>();
+        if( is_not_less_equal(eve::abs(a0), pio_4(eve::as<T>())) )
+          return nan(eve::as<T>());
       }
       else
       {
         auto pi2_16 = Ieee_constant<T, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>(); // 0.61685027506808491367715568749226
                                                                               // but rounded upward
-        a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits_, a0);
+        a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits, a0);
       }
       return tancot_eval(a0);
     }
@@ -74,11 +74,11 @@ namespace eve::detail
       T x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
-        if( x < Eps<T>() )
+        if( x < eps(as<T>()) )
           return a0;
-        if( is_not_less_equal(x, Pio_2<T>()) )
-          return Nan<T>();
-        int n = x > Pio_4<T>();
+        if( is_not_less_equal(x, pio_2(eve::as<T>())) )
+          return nan(eve::as<T>());
+        int n = x > pio_4(eve::as<T>());
         if( n )
         {
           T xr = reduce(x);
@@ -92,11 +92,11 @@ namespace eve::detail
       }
       else if constexpr( simd_value<T> )
       {
-        auto test = is_not_less_equal(x, Pio_4(as(a0)));
+        auto test = is_not_less_equal(x, pio_4(eve::as(a0)));
         T    xr   = if_else(test, reduce(x), x);
         auto y    = tancot_eval(xr);
-        y         = if_else(is_not_finite(a0), eve::allbits_, if_else(test, -rec(y), y));
-        return if_else(x <= Eps<T>(), a0, bit_xor(bitofsign(a0), y));
+        y         = if_else(is_not_finite(a0), eve::allbits, if_else(test, -rec(y), y));
+        return if_else(x <= eps(as<T>()), a0, bit_xor(bitofsign(a0), y));
       }
     }
     else
@@ -113,7 +113,7 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
         if( is_eqz(a0) )
           return a0;
       }
@@ -131,9 +131,9 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto x = abs(a0);
-      if( all(x <= Pio_4(as(x))) )
+      if( all(x <= pio_4(eve::as(x))) )
         return restricted_(tan)(a0);
-      else if( all(x <= Pio_2(as(x))) )
+      else if( all(x <= pio_2(eve::as(x))) )
         return small_(tan)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
         return medium_(tan)(a0);

@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check eve::medium_(eve::cosd) behavior",EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Inf<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::Minf<T>()) , eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium_(eve::cosd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::big_(eve::cosd)(T(0   )), T(1));

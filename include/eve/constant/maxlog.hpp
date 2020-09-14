@@ -19,17 +19,17 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(maxlog_, maxlog_);
+  EVE_MAKE_CALLABLE(maxlog_, maxlog);
 
-  template<floating_value T>
-  constexpr EVE_FORCEINLINE auto Maxlog(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto maxlog_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42b0c0a5U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x40862e42fefa39efULL>();
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42b0c0a5U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x40862e42fefa39efULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(maxlog_, Maxlog);
 }
-

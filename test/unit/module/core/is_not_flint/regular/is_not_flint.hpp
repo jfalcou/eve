@@ -23,13 +23,13 @@ TTS_CASE_TPL("Check eve::is_not_flint return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_not_flint behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_not_flint(T(1)), eve::False<T>() );
-  TTS_EQUAL(eve::is_not_flint(T(2)), eve::False<T>() );
+  TTS_EQUAL(eve::is_not_flint(T(1)), eve::false_(eve::as<T>()) );
+  TTS_EQUAL(eve::is_not_flint(T(2)), eve::false_(eve::as<T>()) );
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_not_flint(eve::Inf<T>()), eve::True<T>() );
-    TTS_EQUAL(eve::is_not_flint(eve::Nan<T>()), eve::True<T>() );
-    TTS_EQUAL(eve::is_not_flint(T(1) / T(2)), eve::True<T>());
+    TTS_EQUAL(eve::is_not_flint(eve::inf(eve::as<T>())), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::is_not_flint(eve::nan(eve::as<T>())), eve::true_(eve::as<T>()) );
+    TTS_EQUAL(eve::is_not_flint(T(1) / T(2)), eve::true_(eve::as<T>()));
   }
 }

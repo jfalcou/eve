@@ -16,19 +16,19 @@
 #include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
-
 namespace eve
 {
-  EVE_MAKE_CALLABLE(mhalf_, mhalf_);
+  EVE_MAKE_CALLABLE(mhalf_, mhalf);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Mhalf(as_<T> const & = {})
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto mhalf_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>)  return Constant<T, 0xBF000000U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xBFE0000000000000ULL>();
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0xBF000000U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xBFE0000000000000ULL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(mhalf_, Mhalf);
 }

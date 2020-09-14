@@ -22,12 +22,12 @@ TTS_CASE_TPL("Check eve::is_even return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_even behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_even(T(1)), eve::False<T>() );
-  TTS_EQUAL(eve::is_even(T(2)), eve::True<T>()  );
+  TTS_EQUAL(eve::is_even(T(1)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_even(T(2)), eve::true_(eve::as<T>())  );
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_even(T(0.5)), eve::False<T>());
-    TTS_EQUAL(eve::is_even(T(-0.)), eve::True<T>() );
+    TTS_EQUAL(eve::is_even(T(0.5)), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_even(T(-0.)), eve::true_(eve::as<T>()) );
   }
 }

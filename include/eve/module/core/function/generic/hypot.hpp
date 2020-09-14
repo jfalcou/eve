@@ -100,23 +100,23 @@ namespace eve::detail
   {
     using elt_t =  element_type_t<T>;
     if constexpr(eve::platform::supports_invalids && scalar_value<T>)
-      if (is_infinite(a) || is_infinite(b)) return Inf(as(a));
+      if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
     if constexpr(std::is_same_v<elt_t, float>)
     {
       auto res = single_(hypot(double_(a), double_(b)));
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
-        return if_else(is_infinite(a) || is_infinite(b), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
     }
     else
     {
-      if constexpr(eve::platform::supports_invalids && scalar_value<T>) if (is_infinite(a) || is_infinite(b)) return Inf(as(a));
+      if constexpr(eve::platform::supports_invalids && scalar_value<T>) if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
       auto e =  exponent(eve::maxmag(a, b));
-      e = eve::min(eve::max(e,Minexponent<T>()),Maxexponentm1<T>());
+      e = eve::min(eve::max(e,minexponent(eve::as<T>())),maxexponentm1(eve::as<T>()));
       auto tmp = pedantic_(ldexp)(a, -e);
       auto res =  pedantic_(ldexp)(sqrt(fma(tmp, tmp, sqr(pedantic_(ldexp)(b, -e)))), e);
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
-        return if_else(is_infinite(a) || is_infinite(b), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
     }
   }
@@ -142,7 +142,7 @@ namespace eve::detail
   requires has_native_abi_v<T>
   {
     if constexpr(scalar_value<T>)
-      if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return Inf(as(a));
+      if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return inf(eve::as(a));
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
       return single_(hypot(double_(a), double_(b), double_(c)));
@@ -150,13 +150,13 @@ namespace eve::detail
     else
     {
       auto e =  exponent(eve::maxmag(eve::maxmag(a, b), c));
-      e = eve::min(eve::max(e,Minexponent<T>()),Maxexponentm1<T>());
+      e = eve::min(eve::max(e,minexponent(eve::as<T>())),maxexponentm1(eve::as<T>()));
       auto tmpr = pedantic_(ldexp)(a, -e);
       auto tmpi = pedantic_(ldexp)(b, -e);
       auto tmpj = pedantic_(ldexp)(c, -e);
       T res =  pedantic_(ldexp)(eve::sqrt(fma(tmpr, tmpr, fma(tmpi, tmpi, sqr(tmpj)))), e);
       if constexpr(eve::platform::supports_invalids)
-        return if_else(is_infinite(a) || is_infinite(b) || is_infinite(c), Inf<T>(), res);
+        return if_else(is_infinite(a) || is_infinite(b) || is_infinite(c), inf(eve::as<T>()), res);
       else  return res;
     }
   }

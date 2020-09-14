@@ -9,10 +9,10 @@ using wide_t = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  float es  = eve::Eps<float>();
+  float es  = eve::eps(eve::as<float>());
   float esm1 = es-1.0f;
   float esp1 = es+1.0f;
-  float vm  = eve::Valmax<float>();
+  float vm  = eve::valmax(eve::as<float>());
   wide_t oi = {2, -3, esp1,  vm};
   wide_t pi = {3, -2, esm1,  2 };
   wide_t qi = {4, -1, -1.0f, vm};

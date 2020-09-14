@@ -12,7 +12,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_equal.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/constant/true.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -25,10 +25,9 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(integral_value<T>) return True(as(a));
+      if constexpr(integral_value<T>) return true_(eve::as(a));
       else                            return a == a;
     }
     else                              return apply_over(is_not_nan, a);
   }
 }
-

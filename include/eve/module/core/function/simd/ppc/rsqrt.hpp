@@ -25,18 +25,18 @@ namespace eve::detail
   {
     if constexpr(std::is_same_v<T, float>)
     {
-      auto ct = One(as(v0));
+      auto ct = one(eve::as(v0));
       auto es = raw_(rsqrt)(v0);
       auto xn = sqr(es);
-      auto he = es * Half(as(v0));
+      auto he = es * half(eve::as(v0));
 
       xn = vec_nmsub(v0.storage(), xn.storage(), ct.storage());
       xn = fma(xn, he, es);
 
       if(platform::supports_infinites)
       {
-        auto inf = Inf(as(v0));
-        xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero_, xn));
+        auto inf = inf(eve::as(v0));
+        xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero, xn));
       }
 
       return xn;
@@ -44,8 +44,8 @@ namespace eve::detail
     else if constexpr(std::is_same_v<T, double>)
     {
       auto refine = [](auto sw0, auto w0) {
-        auto hest = sw0 * Half(as(w0));
-        auto tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), One(as(w0)).storage());
+        auto hest = sw0 * half(eve::as(w0));
+        auto tmp  = vec_nmsub(w0.storage(), sqr(sw0).storage(), one(eve::as(w0)).storage());
         return fma(tmp, hest, sw0);
       };
 
@@ -55,8 +55,8 @@ namespace eve::detail
 
       if(platform::supports_infinites)
       {
-        auto inf = Inf(as(v0));
-        xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero_, xn));
+        auto inf = inf(eve::as(v0));
+        xn       = if_else(is_eqz(v0), inf, if_else(v0 == inf, eve::zero, xn));
       }
 
       return xn;

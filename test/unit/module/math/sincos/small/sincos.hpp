@@ -30,10 +30,10 @@ TTS_CASE_TPL("Check eve::small_(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
-  auto pi_v = eve::Pi<v_t>();
+  auto pi_v = eve::pi(eve::as<v_t>());
 
   v_t x[] = {  pi_v/8, -pi_v/8, pi_v/4, -pi_v/4, 3*pi_v/8, -3*pi_v/8
-            , eve::Pio_2<v_t>(), -pi_v/2, v_t(1.57079632679489655800e+00)
+            , eve::pio_2(eve::as<v_t>()), -pi_v/2, v_t(1.57079632679489655800e+00)
             };
 
   for(auto v :x)

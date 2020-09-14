@@ -17,6 +17,7 @@
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/logeps.hpp>
 #include <eve/constant/maxlog.hpp>
+#include <eve/constant/nbmantissabits.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -48,29 +49,29 @@ namespace eve::detail
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
       T       k         = nearest(Invlog_2 * xx);
-      auto    xlelogeps = xx <= Logeps(as(xx));
-      auto    xgemaxlog = xx >= Maxlog(as(xx));
+      auto    xlelogeps = xx <= logeps(eve::as(xx));
+      auto    xgemaxlog = xx >= maxlog(eve::as(xx));
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(xx) )
           return xx;
         if( xgemaxlog )
-          return Inf<T>();
+          return inf(eve::as<T>());
         if( xlelogeps )
-          return Mone<T>();
+          return mone(eve::as<T>());
       }
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T x        = fnma(k, Log_2hi, xx);
         x          = fnma(k, Log_2lo, x);
-        T hx       = x * Half<T>();
+        T hx       = x * half(eve::as<T>());
         T hxs      = x * hx;
         T r1       = horn<T, 0X3F800000U, 0XBD08887FU, 0X3ACF6DB4U>(hxs);
         T t        = fnma(r1, hx, T(3));
         T e        = hxs * ((r1 - t) / (T(6) - x * t));
         e          = fms(x, e, hxs);
         i_t ik     = int_(k);
-        T   two2mk = bit_cast(shl(Maxexponent<T>() - ik, Nbmantissabits<elt_t>()), as<T>());
+        T   two2mk = bit_cast(shl(maxexponent(eve::as<T>()) - ik, nbmantissabits(eve::as<elt_t>())), as<T>());
         k          = oneminus(two2mk) - (e - x);
         k          = D()(ldexp)(k, ik);
       }
@@ -79,7 +80,7 @@ namespace eve::detail
         T hi       = fnma(k, Log_2hi, xx);
         T lo       = k * Log_2lo;
         T x        = hi - lo;
-        T hxs      = sqr(x) * Half<T>();
+        T hxs      = sqr(x) * half(eve::as<T>());
         T r1       = horn<T,
                     0X3FF0000000000000ULL,
                     0XBFA11111111110F4ULL,
@@ -87,12 +88,12 @@ namespace eve::detail
                     0XBF14CE199EAADBB7ULL,
                     0X3ED0CFCA86E65239ULL,
                     0XBE8AFDB76E09C32DULL>(hxs);
-        T t        = T(3) - r1 * Half<T>() * x;
+        T t        = T(3) - r1 * half(eve::as<T>()) * x;
         T e        = hxs * ((r1 - t) / (T(6) - x * t));
         T c        = (hi - x) - lo;
         e          = (x * (e - c) - c) - hxs;
         i_t ik     = int_(k);
-        T   two2mk = bit_cast(shl(Maxexponent<T>() - ik, Nbmantissabits<T>()), as<T>());
+        T   two2mk = bit_cast(shl(maxexponent(eve::as<T>()) - ik, nbmantissabits(eve::as<T>())), as<T>());
         T   ct1    = oneminus(two2mk) - (e - x);
         T   ct2    = inc((x - (e + two2mk)));
         k          = if_else((k < T(20)), ct1, ct2);
@@ -100,9 +101,9 @@ namespace eve::detail
       }
       if constexpr( simd_value<T> )
       {
-        k = if_else(xgemaxlog, Inf<T>(), k);
+        k = if_else(xgemaxlog, inf(eve::as<T>()), k);
         k = if_else(is_eqz(xx), xx, k);
-        k = if_else(xlelogeps, eve::mone_, k);
+        k = if_else(xlelogeps, eve::mone, k);
       }
       return k;
     }

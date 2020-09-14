@@ -53,7 +53,7 @@ namespace eve::detail
       static constexpr double pi_inv = 0x1.45F306DC9C883p+23;
       double r = xx * pi_inv;
       int32_t  n = ((int32_t)r + 0x800000) >> 24;
-      double xr = xx - n * Pio_2<double>();
+      double xr = xx - n * pio_2(eve::as<double>());
       float dxr = xr-float(xr);
       float fn =  n&3;
       return std::make_tuple(fn, float(xr), dxr);
@@ -64,7 +64,7 @@ namespace eve::detail
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto xn =  nearest(xx*Twoopi<double>());
+      auto xn =  nearest(xx*twoopi(eve::as<double>()));
       auto y  =  fma(xn, mp2, fma(xn, mp1, xx));
       auto n = quadrant(xn);
       auto da = xn * mp3;
@@ -86,7 +86,7 @@ namespace eve::detail
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
 
-      auto xn =  nearest(xx*Twoopi<double>());
+      auto xn =  nearest(xx*twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
@@ -106,7 +106,7 @@ namespace eve::detail
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
       auto x  = double_(xx);
-      auto xn =  nearest(x*Twoopi<double>());
+      auto xn =  nearest(x*twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
@@ -119,7 +119,7 @@ namespace eve::detail
       da = (t - a) + da;
       auto fa = single_(a);
       auto dfa = single_((a- double_(fa))+da);
-      if (fa >= Pio_4<float>() || fa < - Pio_4<float>())
+      if (fa >= pio_4(eve::as<float>()) || fa < - pio_4(eve::as<float>()))
       {
         T n1;
         std::tie(n1, fa, dfa) = rempio2_small(fa);
@@ -201,7 +201,7 @@ namespace eve::detail
   template<floating_real_scalar_value T>
   EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
-    if (is_not_finite(xx)) return std::make_tuple(T(0), Nan<T>(),T(0));
+    if (is_not_finite(xx)) return std::make_tuple(T(0), nan(eve::as<T>()),T(0));
     else if (xx < Rempio2_limit(restricted_type(), as(xx))) return std::make_tuple(T(0), xx, T(0));
     if constexpr(std::is_same_v<T, float>)
     {

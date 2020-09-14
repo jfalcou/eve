@@ -39,9 +39,9 @@ TTS_CASE_TPL("Check eve::numeric_(eve::fma) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    T e = eve::Eps<T>();
+    T e = eve::eps(eve::as<T>());
     TTS_EQUAL(eve::numeric_(eve::fma)(eve::inc(e), eve::oneminus(e), T(-1)), -eve::sqr(e));
-    TTS_EQUAL(eve::numeric_(eve::fma)(eve::Valmax<T>(), T(2), eve::Valmin<T>()), eve::Valmax<T>());
+    TTS_EQUAL(eve::numeric_(eve::fma)(eve::valmax(eve::as<T>()), T(2), eve::valmin(eve::as<T>())), eve::valmax(eve::as<T>()));
   }
 
 }

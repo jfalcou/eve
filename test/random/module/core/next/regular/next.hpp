@@ -26,19 +26,19 @@ TTS_CASE_TPL("wide rng check on next", EVE_TYPE)
   {
     auto std_next = tts::vectorize<T> ( [](auto e)
                                         {
-                                          return    (e ==  eve::Inf<v_t>())
-                                                  ? eve::Nan<v_t>()
-                                                  : std::nextafter(e, eve::Inf<v_t>());
+                                          return    (e ==  eve::inf(eve::as<v_t>()))
+                                                  ? eve::nan<v_t>()
+                                                  : std::nextafter(e, eve::inf(eve::as<v_t>()));
                                         }
                                       );
 
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_ULP_RANGE_CHECK(p, std_next, eve::next, 0);
   }
   else
   {
-    auto std_next = tts::vectorize<T>( [](auto e) { return e == eve::Valmax<v_t>() ? eve::Valmin<v_t>(): e+1; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    auto std_next = tts::vectorize<T>( [](auto e) { return e == eve::valmax(eve::as<v_t>()) ? eve::valmin(eve::as<v_t>()): e+1; } );
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_ULP_RANGE_CHECK(p, std_next, eve::next, 0);
   }
 }

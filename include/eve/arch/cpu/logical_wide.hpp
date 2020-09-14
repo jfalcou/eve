@@ -83,7 +83,7 @@ namespace eve
     //==============================================================================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit logical(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(as_<logical>{}, abi_type{}, b, e))
+                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, b, e))
     {
     }
 
@@ -98,26 +98,26 @@ namespace eve
     // Constructs a wide from a pointer
     //==============================================================================================
     EVE_FORCEINLINE explicit logical(logical<Type> const* ptr) noexcept
-        : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+        : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     EVE_FORCEINLINE explicit logical(logical<Type>* ptr) noexcept
-        : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+        : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type>, Alignment> ptr) noexcept
                     requires(Alignment >= static_alignment)
-                  : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit logical(aligned_ptr<logical<Type> const, Alignment> ptr) noexcept
                     requires(Alignment >= static_alignment)
-                  : data_(detail::load(as_<logical>{}, abi_type{}, ptr))
+                  : data_(detail::load(eve::as_<logical>{}, abi_type{}, ptr))
     {
     }
 
@@ -127,7 +127,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE explicit logical(T const &v) noexcept
                     requires( std::convertible_to<T, logical<Type>> )
-                  : data_(detail::make(as_<target_type>{}, abi_type{}, v))
+                  : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v))
     {
     }
 
@@ -140,7 +140,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
-        : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
+        : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {
     }
 
@@ -162,11 +162,11 @@ namespace eve
     //==============================================================================================
     // Constructs a wide from a pair of sub-wide
     //==============================================================================================
-    template<typename HalfSize, typename Other>
-    EVE_FORCEINLINE logical ( logical<wide<Type, HalfSize, Other>> const &l
-                            , logical<wide<Type, HalfSize, Other>> const &h
+    template<typename halfSize, typename Other>
+    EVE_FORCEINLINE logical ( logical<wide<Type, halfSize, Other>> const &l
+                            , logical<wide<Type, halfSize, Other>> const &h
                             ) noexcept
-                    requires( static_size == 2 * HalfSize::value )
+                    requires( static_size == 2 * halfSize::value )
                   : logical(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
@@ -178,7 +178,7 @@ namespace eve
 
     EVE_FORCEINLINE logical &operator=(logical<Type> const &v) noexcept
     {
-      data_ = detail::make(as_<target_type>{}, abi_type{}, v);
+      data_ = detail::make(eve::as_<target_type>{}, abi_type{}, v);
       return *this;
     }
 

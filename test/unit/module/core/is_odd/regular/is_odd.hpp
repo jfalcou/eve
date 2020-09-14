@@ -21,13 +21,13 @@ TTS_CASE_TPL("Check is_odd return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::is_odd behavior", EVE_TYPE)
 {
-  TTS_EQUAL(eve::is_odd(T(1)), eve::True<T>() );
-  TTS_EQUAL(eve::is_odd(T(2)), eve::False<T>());
-  TTS_EQUAL(eve::is_odd(T(3)), eve::True<T>() );
+  TTS_EQUAL(eve::is_odd(T(1)), eve::true_(eve::as<T>()) );
+  TTS_EQUAL(eve::is_odd(T(2)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_odd(T(3)), eve::true_(eve::as<T>()) );
 
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::is_odd(T( 0.5) ), eve::False<T>());
-    TTS_EQUAL(eve::is_odd(T(-0.)  ), eve::False<T>());
+    TTS_EQUAL(eve::is_odd(T( 0.5) ), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_odd(T(-0.)  ), eve::false_(eve::as<T>()));
   }
 }

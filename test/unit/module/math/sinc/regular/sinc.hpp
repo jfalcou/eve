@@ -25,10 +25,10 @@ TTS_CASE_TPL("Check eve::sinc return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::sinc behavior", EVE_TYPE)
 {
   TTS_ULP_EQUAL(eve::sinc(T(0)), T(1), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(-eve::Pio_2<T>()), T(2)/(eve::Pi<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(-eve::Pio_4<T>()), eve::sin(eve::Pio_4<T>())/(eve::Pio_4<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(eve::Pio_2<T>()),  T(2)/(eve::Pi<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(eve::Pio_4<T>()), eve::sin(eve::Pio_4<T>())/(eve::Pio_4<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(eve::Eps<T>()), eve::One<T>(), 0.5);
-  TTS_ULP_EQUAL(eve::sinc(eve::Zero<T>()), eve::One<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(-eve::pio_2(eve::as<T>())), T(2)/(eve::pi(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(-eve::pio_4(eve::as<T>())), eve::sin(eve::pio_4(eve::as<T>()))/(eve::pio_4(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(eve::pio_2(eve::as<T>())),  T(2)/(eve::pi(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(eve::pio_4(eve::as<T>())), eve::sin(eve::pio_4(eve::as<T>()))/(eve::pio_4(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(eve::eps(eve::as<T>())), eve::one(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinc(eve::zero(eve::as<T>())), eve::one(eve::as<T>()), 0.5);
 }

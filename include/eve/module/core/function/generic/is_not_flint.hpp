@@ -25,7 +25,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto is_not_flint_(EVE_SUPPORTS(cpu_)
                                           , T const &a) noexcept
   {
-    if constexpr(integral_value<T>)        return False<T>();
+    if constexpr(integral_value<T>)        return false_(eve::as<T>());
     else if constexpr(has_native_abi_v<T>) return is_nez(frac(a));
     else                                   return apply_over(is_not_flint, a);
   }
@@ -37,8 +37,8 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(integral_value<T>) return True<T>();
-      if constexpr(floating_value<T>) return is_nez(frac(a)) || (a > eve::Maxflint<T>());
+      if constexpr(integral_value<T>) return true_(eve::as<T>());
+      if constexpr(floating_value<T>) return is_nez(frac(a)) || (a > eve::maxflint(eve::as<T>()));
     }
     else                              return apply_over(pedantic_(is_not_flint), a);
   }

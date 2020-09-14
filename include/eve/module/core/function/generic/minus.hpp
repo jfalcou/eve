@@ -35,11 +35,11 @@ namespace eve::detail
       {
         if (std::is_floating_point_v<value_type_t<T>>)
         {
-          return  bit_xor(a, Signmask(as(a)));
+          return  bit_xor(a, signmask(eve::as(a)));
         }
         else
         {
-          return Zero(as(a)) - a;
+          return zero(eve::as(a)) - a;
         }
       }
     }

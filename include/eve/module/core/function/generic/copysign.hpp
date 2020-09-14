@@ -40,6 +40,6 @@ namespace eve::detail
                               , T b) noexcept
   requires has_native_abi_v<T>
   {
-    return bit_or(bitofsign(b), bit_notand(Signmask(as(a)), a));
+    return bit_or(bitofsign(b), bit_notand(signmask(eve::as(a)), a));
   }
 }

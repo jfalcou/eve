@@ -20,6 +20,6 @@ TTS_CASE_TPL("wide random check on cosh", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_cosh = tts::vectorize<T>( [](auto e) { return std::cosh(e); } );
 
-  eve::exhaustive_producer<T> p(-eve::Maxlog<v_t>(), eve::Maxlog<v_t>());
+  eve::exhaustive_producer<T> p(-eve::maxlog(eve::as<v_t>()), eve::maxlog(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_cosh, eve::cosh);
 }

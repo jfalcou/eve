@@ -46,11 +46,11 @@ namespace eve::detail
     {
       if constexpr( eve::platform::supports_nans )
       {
-        return if_else(is_not_less_equal(a, b), a - b, eve::zero_);
+        return if_else(is_not_less_equal(a, b), a - b, eve::zero);
       }
       else
       {
-        return max(b - a, Zero(as(a)));
+        return max(b - a, zero(eve::as(a)));
       }
     }
   }

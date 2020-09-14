@@ -20,7 +20,7 @@
 namespace eve
 {
   template<typename T, auto BitsPattern>
-  EVE_FORCEINLINE auto Constant(as_<T> const & = {})
+  EVE_FORCEINLINE auto Constant(eve::as_<T> const & = {})
   {
     using t_t = detail::value_type_t<T>;
 

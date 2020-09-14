@@ -21,6 +21,6 @@ TTS_CASE_TPL("wide random check on frexp", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_frexp = tts::vectorize<T>( [](auto e) { return std::frexp(e); } );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_frexp, eve::eve::pedantic_(eve::frexp));
 }

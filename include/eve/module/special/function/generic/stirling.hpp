@@ -59,41 +59,41 @@ namespace eve::detail
       const T Sqrt_2pi = Ieee_constant<T, 0X40206C99U, 0X40040D931FF62704ULL>(); // 2.50662827463100
       if constexpr( simd_value<T> )
       {
-        a0        = if_else(is_gez(a0), a0, eve::allbits_);
+        a0        = if_else(is_gez(a0), a0, eve::allbits);
         T w       = rec(a0);
-        w         = fma(w, stirling1(w), One<T>());
+        w         = fma(w, stirling1(w), one(eve::as<T>()));
         T    y    = exp(-a0);
         auto test = is_less(a0, Stirlingsplitlim);
-        T    z    = a0 - Half<T>();
-        z         = if_else(test, z, Half<T>() * z);
+        T    z    = a0 - half(eve::as<T>());
+        z         = if_else(test, z, half(eve::as<T>()) * z);
         T v       = pow_abs(a0, z);
         y *= v;
         y = if_else(test, y, y * v); /* Avoid overflow in pow() */
         y *= Sqrt_2pi * w;
 #ifndef BOOST_SIMD_NO_INFINITIES
-        y = if_else(is_equal(a0, Inf<T>()), a0, y);
+        y = if_else(is_equal(a0, inf(eve::as<T>())), a0, y);
 #endif
-        return if_else(a0 > Stirlinglargelim, Inf<T>(), y);
+        return if_else(a0 > Stirlinglargelim, inf(eve::as<T>()), y);
       }
       else if constexpr( scalar_value<T> )
       {
         if( is_ltz(a0) )
-          return Nan<T>();
+          return nan(eve::as<T>());
 #ifndef BOOST_SIMD_NO_INVALIDS
         if( is_nan(a0) )
           return a0;
 #endif
         if( a0 > Stirlinglargelim )
-          return Inf<T>();
+          return inf(eve::as<T>());
         T w = rec(a0);
-        w   = fma(w, stirling1(w), One<T>());
+        w   = fma(w, stirling1(w), one(eve::as<T>()));
         T y = exp(-a0);
         if( is_eqz(y) )
-          return Inf<T>();
-        T z = a0 - Half<T>();
+          return inf(eve::as<T>());
+        T z = a0 - half(eve::as<T>());
         if( a0 >= Stirlingsplitlim )
         { /* Avoid overflow in pow() */
-          const T v = pow_abs(a0, z * Half<T>());
+          const T v = pow_abs(a0, z * half(eve::as<T>()));
           y *= v;
           y *= v;
         }

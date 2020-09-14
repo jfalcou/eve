@@ -16,8 +16,8 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, eve::Valmax<float>(),
-                eve::Inf<float>(), eve::Maxflint<float>()*2, eve::Nan<float>()};
+  wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, eve::valmax(eve::as<float>()),
+                eve::inf(eve::as<float>()), eve::maxflint(eve::as<float>())*2, eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
             << "<- pf                          = " << pf << '\n'

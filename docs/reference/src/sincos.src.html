@@ -12,7 +12,7 @@ using wide_ft = eve::wide<double, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), eve::Pi<float>()};
+  wide_ft pf = {1.0f, 0.0f, eve::inf(eve::as<float>()), eve::pi(eve::as<float>())};
 
   auto [s, c]    = eve::sincos(pf);
   std::cout << "---- simd" << '\n'

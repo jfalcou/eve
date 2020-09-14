@@ -14,7 +14,7 @@ int main()
     << "-> eve::acos(pf) = " << eve::acos(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Nan<float>();
+  float yf = eve::nan(eve::as<float>());
 
   std::cout
     << "---- scalar"  << '\n'

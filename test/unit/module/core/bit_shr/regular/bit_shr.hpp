@@ -40,7 +40,7 @@ TTS_CASE_TPL( "Check eve::bit_shr behavior", EVE_TYPE)
   }
   else
   {
-    TTS_EQUAL(eve::bit_shr(eve::Valmax<T>(),(sizeof(v_t)*8-1)), T(1) );
-    TTS_EQUAL(eve::bit_shr(eve::Valmax<T>(),(sizeof(v_t)*8-2)), T(3) );
+    TTS_EQUAL(eve::bit_shr(eve::valmax(eve::as<T>()),(sizeof(v_t)*8-1)), T(1) );
+    TTS_EQUAL(eve::bit_shr(eve::valmax(eve::as<T>()),(sizeof(v_t)*8-2)), T(3) );
   }
 }

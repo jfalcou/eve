@@ -21,7 +21,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, arm_abi ABI, typename Arch>
-  EVE_FORCEINLINE auto load(as_<wide<T, N, ABI>> const &, Arch const &, T const* ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N, ABI>> const &, Arch const &, T const* ptr) noexcept
   {
     if constexpr( N::value * sizeof(T) >= neon64_::bytes )
     {
@@ -154,7 +154,7 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, typename Arch, arm_abi ABI, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(as_<wide<T, N, ABI>> const &tgt,Arch const &, aligned_ptr<T, Align> p) noexcept
+  load(eve::as_<wide<T, N, ABI>> const &tgt,Arch const &, aligned_ptr<T, Align> p) noexcept
   {
     return load(tgt, mode, aligned_ptr<T const, A>(p));
   }
@@ -163,14 +163,14 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, typename Arch, arm_abi ABI, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(as_<wide<T, N, ABI>> const &tgt, Arch const &  mode,aligned_ptr<T const, Align>  ptr)
+  load(eve::as_<wide<T, N, ABI>> const &tgt, Arch const &  mode,aligned_ptr<T const, Align>  ptr)
   {
     return load(tgt, mode, ptr.get());
   }
 
   template<real_scalar_value T, typename N, typename Arch, arm_abi ABI, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(as_<wide<T, N, ABI>> const &tgt, Arch const &mode, aligned_ptr<T, Align> ptr) noexcept
+  load(eve::as_<wide<T, N, ABI>> const &tgt, Arch const &mode, aligned_ptr<T, Align> ptr) noexcept
   {
     return load(tgt, mode, ptr.get());
   }

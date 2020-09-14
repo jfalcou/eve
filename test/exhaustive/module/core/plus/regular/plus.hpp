@@ -20,6 +20,6 @@ TTS_CASE_TPL("wide random check on plus", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_plus = tts::vectorize<T>( [](auto e) { return e; } );
 
-  eve::exhaustive_producer<T> p(eve::Valmin<v_t>()+1, eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_plus, eve::plus);
 }

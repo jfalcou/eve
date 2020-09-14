@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
   if constexpr(eve::integral_value<T>)
   {
     // with floating value this test produces undefined behaviour
-    TTS_EQUAL(eve::convert(eve::Valmax<T>(), eve::as<std::int8_t>()), static_cast<target_t>(eve::Valmax<v_t>()) );
-    TTS_EQUAL(eve::convert(eve::Valmin<T>(), eve::as<std::int8_t>()), static_cast<target_t>(eve::Valmin<v_t>()) );
+    TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), eve::as<std::int8_t>()), static_cast<target_t>(eve::valmax(eve::as<v_t>())) );
+    TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), eve::as<std::int8_t>()), static_cast<target_t>(eve::valmin(eve::as<v_t>())) );
   }
 }

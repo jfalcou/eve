@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T inc_(EVE_SUPPORTS(cpu_)
                                   , T const &v) noexcept
   {
-    if constexpr(has_native_abi_v<T>)  return v + One(as(v));
+    if constexpr(has_native_abi_v<T>)  return v + one(eve::as(v));
     else                     return apply_over(inc, v);
   }
 
@@ -45,7 +45,7 @@ namespace eve::detail
     {
       if constexpr(integral_value<T>)
       {
-        return inc[ a != Valmax(as(a)) ](a);
+        return inc[ a != valmax(eve::as(a)) ](a);
       }
       else if constexpr(floating_value<T>)
       {

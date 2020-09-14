@@ -33,8 +33,8 @@ TTS_CASE_TPL("Check eve::acospi behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acospi(T(2)) , eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::acospi(T(-2)), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acospi(T(2)) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::acospi(T(-2)), eve::nan(eve::as<T>()), 0);
   }
 
   TTS_ULP_EQUAL(eve::acospi(T( 0.5)), T(1/3.) , 0.5);

@@ -36,11 +36,11 @@ namespace eve::detail
     // respectively computed
     // *  in the first case cosh (e+rec(e))/2
     // *  in the second     cosh is (e/2)*e (avoiding undue overflow)
-    // Threshold is Maxlog - Log_2
+    // Threshold is maxlog - Log_2
     //////////////////////////////////////////////////////////////////////////////
     if constexpr(scalar_value<T>)
     {
-      if (is_eqz(a0)) return One(as(a0));
+      if (is_eqz(a0)) return one(eve::as(a0));
     }
     if constexpr(has_native_abi_v<T>)
     {
@@ -50,23 +50,23 @@ namespace eve::detail
       {
         if (x >= ovflimitmln2)
         {
-          auto w = exp(x*Half<T>());
-          auto t = Half<T>()*w;
+          auto w = exp(x*half(eve::as<T>()));
+          auto t = half(eve::as<T>())*w;
           t *= w;
           return t;
         }
         auto t = exp(x);
-        return (x > T(22.0f)) ? t*Half<T>() : average(t, rec(t));
+        return (x > T(22.0f)) ? t*half(eve::as<T>()) : average(t, rec(t));
       }
       else
       {
         auto t = exp(x);
-        auto invt = if_else(x > T(22.0f), eve::zero_, rec(t));
+        auto invt = if_else(x > T(22.0f), eve::zero, rec(t));
         auto c = average(t, invt);
         auto test = x <  ovflimitmln2;
         if (eve::all(test)) return c;
-        auto w = exp(x*Half<T>());
-        t = Half<T>()*w;
+        auto w = exp(x*half(eve::as<T>()));
+        t = half(eve::as<T>())*w;
         t *= w;
 
         c = if_else(test, c, t);

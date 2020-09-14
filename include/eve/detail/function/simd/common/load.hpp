@@ -22,7 +22,7 @@ namespace eve::detail
   // Emulation
   //================================================================================================
   template<typename Pack, typename Iterator>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::emulated_ const &, Iterator ptr) noexcept
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &, eve::emulated_ const &, Iterator ptr) noexcept
   {
     auto impl = [&](auto... I) {
       auto deref = [&](auto p, auto const &i) {
@@ -36,7 +36,7 @@ namespace eve::detail
   }
 
   template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &     tgt,
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
                             eve::emulated_ const &mode,
                             aligned_ptr<T, N>     ptr) noexcept
   {
@@ -44,7 +44,7 @@ namespace eve::detail
   }
 
   template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &     tgt,
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
                             eve::emulated_ const &mode,
                             aligned_ptr<T const, N>     ptr) noexcept
   {
@@ -52,7 +52,7 @@ namespace eve::detail
   }
 
   template<typename Iterator, typename ABI, typename Pack>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &tgt, ABI const &, Iterator b, Iterator) noexcept
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &tgt, ABI const &, Iterator b, Iterator) noexcept
   {
     return load(tgt, eve::emulated_ {}, b);
   }
@@ -61,7 +61,7 @@ namespace eve::detail
   // Aggregation
   //==================================================================================================
   template<typename Pack, typename Pointer>
-  EVE_FORCEINLINE Pack load(as_<Pack> const &, eve::aggregated_ const &, Pointer ptr) noexcept
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &, eve::aggregated_ const &, Pointer ptr) noexcept
   {
     Pack that;
 

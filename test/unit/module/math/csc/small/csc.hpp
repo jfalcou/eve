@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check eve::small_(eve::csc) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::Nan<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::Inf<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::Minf<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small_(eve::csc)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   TTS_IEEE_EQUAL(eve::small_(eve::csc)(T( 0 )), T(ref_csc(v_t(0.0))));
@@ -44,14 +44,14 @@ TTS_CASE_TPL("Check eve::small_(eve::csc) behavior", EVE_TYPE)
 
   TTS_ULP_EQUAL(eve::small_(eve::csc)( T(1)              ), T(ref_csc(1.0))                   , 1.0 );
   TTS_ULP_EQUAL(eve::small_(eve::csc)(-T(1)              ), T(ref_csc(-1.0))                  , 1.0 );
-  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::Pio_2<T>()   ), T(ref_csc(-eve::Pio_2<v_t>()))    , 1.0 );
-  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::Pio_4<T>()   ), T(ref_csc(-eve::Pio_4<v_t>()))    , 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::Pio_4<T>()/ 2), T(ref_csc(-eve::Pio_4<v_t>()/2))  , 0.5 );
-  TTS_ULP_EQUAL(eve::small_(eve::csc)( eve::Pio_4<T>()   ), T(ref_csc(eve::Pio_4<v_t>()))     , 0.5 );
-  TTS_ULP_EQUAL(eve::small_(eve::csc)( eve::Pio_4<T>()/ 2), T(ref_csc(eve::Pio_4<v_t>()/2))   , 0.75);
-  TTS_ULP_EQUAL(eve::small_(eve::csc)(eve::Pio_2<T>()    ), T(ref_csc(eve::Pio_2<v_t>()))     , 1.0 );
+  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::pio_2(eve::as<T>())   ), T(ref_csc(-eve::pio_2(eve::as<v_t>())))    , 1.0 );
+  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::pio_4(eve::as<T>())   ), T(ref_csc(-eve::pio_4(eve::as<v_t>())))    , 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::csc)(-eve::pio_4(eve::as<T>())/ 2), T(ref_csc(-eve::pio_4(eve::as<v_t>())/2))  , 0.5 );
+  TTS_ULP_EQUAL(eve::small_(eve::csc)( eve::pio_4(eve::as<T>())   ), T(ref_csc(eve::pio_4(eve::as<v_t>())))     , 0.5 );
+  TTS_ULP_EQUAL(eve::small_(eve::csc)( eve::pio_4(eve::as<T>())/ 2), T(ref_csc(eve::pio_4(eve::as<v_t>())/2))   , 0.75);
+  TTS_ULP_EQUAL(eve::small_(eve::csc)(eve::pio_2(eve::as<T>())    ), T(ref_csc(eve::pio_2(eve::as<v_t>())))     , 1.0 );
 
-  auto z = eve::Pio_2<v_t>();
+  auto z = eve::pio_2(eve::as<v_t>());
   TTS_ULP_EQUAL(eve::small_(eve::csc)(T(z)), T(ref_csc(z)), 1);
   z = eve::prev(z);
   TTS_ULP_EQUAL(eve::small_(eve::csc)(T(z)), T(ref_csc(z)), 1);

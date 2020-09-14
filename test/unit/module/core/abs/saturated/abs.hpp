@@ -30,6 +30,6 @@ TTS_CASE_TPL("Check eve::saturated_(eve::abs) behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<T>(-1)), T(1));
     TTS_EQUAL(eve::saturated_(eve::abs)(static_cast<T>(-2)), T(2));
-    TTS_EQUAL(eve::saturated_(eve::abs)(eve::Valmin<T>()), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::abs)(eve::valmin(eve::as<T>())), eve::valmax(eve::as<T>()));
   }
 }

@@ -23,13 +23,13 @@ TTS_CASE_TPL("Check eve::radinpi return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::radinpi behavior", EVE_TYPE)
 {
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<T>())     , -T(1)     , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pi<T>()/3)   , -T(1./3.) , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_2<T>())  , -T(0.5)   , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(-eve::Pio_4<T>())  , -T(0.25)  , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::pi(eve::as<T>()))     , -T(1)     , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::pi(eve::as<T>())/3)   , -T(1./3.) , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::pio_2(eve::as<T>()))  , -T(0.5)   , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(-eve::pio_4(eve::as<T>()))  , -T(0.25)  , 0.5 );
   TTS_ULP_EQUAL(eve::radinpi(T(0))              ,  T(0)     , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_4<T>())   ,  T(0.25)  , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pio_2<T>())   ,  T(0.5)   , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<T>() / 3)  ,  T(1./3.) , 0.5 );
-  TTS_ULP_EQUAL(eve::radinpi(eve::Pi<T>())      ,  T(1)     , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::pio_4(eve::as<T>()))   ,  T(0.25)  , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::pio_2(eve::as<T>()))   ,  T(0.5)   , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::pi(eve::as<T>()) / 3)  ,  T(1./3.) , 0.5 );
+  TTS_ULP_EQUAL(eve::radinpi(eve::pi(eve::as<T>()))      ,  T(1)     , 0.5 );
 }

@@ -9,7 +9,7 @@ using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 2.0f, eve::Eps<float>(), eve::Bitincrement<float>()};
+  wide_ft pf = {0.0f, 2.0f, eve::eps(eve::as<float>()), eve::Bitincrement(eve::as<float>())};
   wide_it pi = {-1, 2, -3, -32};
 
   std::cout << "---- simd" << '\n'

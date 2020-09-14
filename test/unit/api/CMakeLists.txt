@@ -40,6 +40,7 @@ make_units("function/simd/store/logical"      "unit.api" ${all_types})
 
 ##==================================================================================================
 ## Constant tests
+make_unit( "unit.api" constant/allbits.cpp      )
 make_unit( "unit.api" constant/constant.cpp     )
 make_unit( "unit.api" constant/conditional.cpp  )
 

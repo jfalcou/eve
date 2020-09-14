@@ -33,7 +33,7 @@ namespace eve::detail
   {
     if constexpr( scalar_value<T> )
     {
-      return a0 ? rec(eve::sqrt(a0)) : Inf(as(a0));
+      return a0 ? rec(eve::sqrt(a0)) : inf(eve::as(a0));
     }
     else if constexpr( has_aggregated_abi_v<T> )
     {
@@ -50,7 +50,7 @@ namespace eve::detail
   {
     if constexpr( scalar_value<T> )
     {
-      return a0 ? rec(eve::sqrt(a0)) : Inf(as(a0));
+      return a0 ? rec(eve::sqrt(a0)) : inf(eve::as(a0));
     }
     else if constexpr( has_aggregated_abi_v<T> )
     {

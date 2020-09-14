@@ -27,7 +27,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T dec_(EVE_SUPPORTS(cpu_)
                                   , T const &v) noexcept
   {
-    if constexpr(has_native_abi_v<T>)  return v - One(as(v));
+    if constexpr(has_native_abi_v<T>)  return v - one(eve::as(v));
     else                     return apply_over(dec, v);
   }
 
@@ -40,7 +40,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-           if constexpr(integral_value<T>) return dec[ a != Valmin(as(a)) ](a);
+           if constexpr(integral_value<T>) return dec[ a != valmin(eve::as(a)) ](a);
       else if constexpr(floating_value<T>) return dec(a);
     }
     else return apply_over(saturated_(dec), a);

@@ -24,8 +24,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr as_logical_t<T> is_infinite_(EVE_SUPPORTS(cpu_)
                                                         , T const &a) noexcept
   {
-    if constexpr(integral_value<T>) return False(as(a));
-    else if constexpr(has_native_abi_v<T>)    return is_equal(eve::abs(a), Inf(as(a)));
+    if constexpr(integral_value<T>) return false_(eve::as(a));
+    else if constexpr(has_native_abi_v<T>)    return is_equal(eve::abs(a), inf(eve::as(a)));
     else                            return apply_over(is_infinite, a);
   }
 }

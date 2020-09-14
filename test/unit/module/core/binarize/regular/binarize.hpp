@@ -40,14 +40,13 @@ TTS_CASE_TPL("Check eve::binarize on logicals behavior", EVE_TYPE)
     TTS_EQUAL(binarize(is_equal(T(1), T(1)), v_t(-2))   , T(-2));
     TTS_EQUAL(binarize(is_equal(T(0), T(1)), v_t(-2))   , T( 0));
 
-    TTS_EQUAL(binarize(is_equal(T(2), T(2)), eve::mone_), T(-1));
-    TTS_EQUAL(binarize(is_equal(T(1), T(2)), eve::mone_), T( 0));
+    TTS_EQUAL(binarize(is_equal(T(2), T(2)), eve::mone), T(-1));
+    TTS_EQUAL(binarize(is_equal(T(1), T(2)), eve::mone), T( 0));
   }
 
   TTS_EQUAL(binarize(is_equal(T(1), T(1)), v_t(2))        , T(2));
   TTS_EQUAL(binarize(is_equal(T(0), T(1)), v_t(2))        , T(0));
 
-  TTS_EQUAL(binarize(is_equal(T(0), T(1)), eve::allbits_)     , T(0)              );
-  TTS_IEEE_EQUAL(binarize(is_equal(T(2), T(2)), eve::allbits_), eve::Allbits<T>() );
+  TTS_EQUAL(binarize(is_equal(T(0), T(1)), eve::allbits)     , T(0)              );
+  TTS_IEEE_EQUAL(binarize(is_equal(T(2), T(2)), eve::allbits), eve::allbits(eve::as<T>()) );
 }
-

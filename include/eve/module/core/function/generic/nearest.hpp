@@ -35,7 +35,7 @@ namespace eve::detail
       {
         auto s   = bitofsign(a0);
         auto v   = bit_xor(a0, s);
-        auto t2n = Twotonmb(as(a0));
+        auto t2n = twotonmb(eve::as(a0));
         auto d0  = v + t2n;
         auto d   = d0 - t2n;
         if constexpr(scalar_value<T>)

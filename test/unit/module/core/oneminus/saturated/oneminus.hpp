@@ -21,9 +21,9 @@ TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
   {
     TTS_EQUAL(eve::saturated_(eve::oneminus)(T(2)               ) , T(-1)           );
     TTS_EQUAL(eve::saturated_(eve::oneminus)(static_cast<T>(-2) ) , T(3)            );
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::Valmin<T>()   ) , eve::Valmax<T>());
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::Valmin<T>()))          , eve::Valmax<T>());
-    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::inc(eve::Valmin<T>()))), eve::Valmax<T>());
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::valmin(eve::as<T>())   ) , eve::valmax(eve::as<T>()));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::valmin(eve::as<T>())))          , eve::valmax(eve::as<T>()));
+    TTS_EQUAL(eve::saturated_(eve::oneminus)(eve::inc(eve::inc(eve::valmin(eve::as<T>())))), eve::valmax(eve::as<T>()));
   }
 
   if constexpr(eve::unsigned_value<T>)

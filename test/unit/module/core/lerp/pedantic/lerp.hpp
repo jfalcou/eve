@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::lerp) behavior", EVE_TYPE)
                 );
 
   // test monotonicity
-  auto e0 = eve::pedantic_(eve::lerp)(v_t(1), v_t(2), eve::prev(1 - 10 * eve::Eps<v_t>()));
+  auto e0 = eve::pedantic_(eve::lerp)(v_t(1), v_t(2), eve::prev(1 - 10 * eve::eps(eve::as<v_t>())));
 
-  for ( v_t i = 1 - 10 * eve::Eps<v_t>(); i <= 1 + 10 * eve::Eps<v_t>();
+  for ( v_t i = 1 - 10 * eve::eps(eve::as<v_t>()); i <= 1 + 10 * eve::eps(eve::as<v_t>());
         i     = eve::next(i)
       )
   {

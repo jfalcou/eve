@@ -17,10 +17,11 @@
 
 int main()
 {
-  auto lmin = eve::Valmin<EVE_VALUE>();
-  auto lmax = eve::Valmax<EVE_VALUE>();
+  auto lmin = eve::valmin(eve::as<EVE_VALUE>());
+  auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto const std__is_flint = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>  { return (eve::abs(x) < eve::Maxflint<EVE_VALUE>()) && !(x-std::trunc(x)); };
+  auto const std__is_flint = [](EVE_VALUE x) -> eve::logical<EVE_VALUE>
+    { return (eve::abs(x) < eve::maxflint(eve::as<EVE_VALUE>())) && !(x-std::trunc(x)); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

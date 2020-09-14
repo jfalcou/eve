@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_hypot2 = [](auto x, auto y) { return std::hypot(x, y); };
-  auto l = eve::Valmax<EVE_TYPE>();
+  auto l = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_hypot2, EVE_TYPE
                         , eve::bench::random<EVE_TYPE>(-l, l)
                         , eve::bench::random<EVE_TYPE>(-l, l));

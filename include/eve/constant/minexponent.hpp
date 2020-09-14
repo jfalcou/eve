@@ -18,18 +18,18 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(minexponent_, minexponent_);
+  EVE_MAKE_CALLABLE(minexponent_, minexponent);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Minexponent(as_<T> const & = {})
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<t_t>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto minexponent_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<t_t>;
 
-    if constexpr(std::is_same_v<t_t, float>) return i_t(-126);
-    else if constexpr(std::is_same_v<t_t, double >) return i_t(-1022);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(-126);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(-1022);
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(minexponent_, Minexponent);
 }
-

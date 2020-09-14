@@ -38,28 +38,28 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::frexp) behavior", EVE_TYPE)
   }
   if constexpr(eve::platform::supports_nans)
   {
-    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::Nan<T>());
+    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::nan(eve::as<T>()));
 
-    TTS_IEEE_EQUAL(r0 , (eve::Nan<T>()));
+    TTS_IEEE_EQUAL(r0 , (eve::nan(eve::as<T>())));
     TTS_EQUAL     (r1, (T(0)));
   }
   if constexpr(eve::platform::supports_infinites)
   {
-    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::Inf<T>());
-    auto [q0, q1] = eve::pedantic_(eve::frexp)(eve::Minf<T>());
+    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::inf(eve::as<T>()));
+    auto [q0, q1] = eve::pedantic_(eve::frexp)(eve::minf(eve::as<T>()));
 
-    TTS_IEEE_EQUAL(r0, (eve::Inf<T>()));
+    TTS_IEEE_EQUAL(r0, (eve::inf(eve::as<T>())));
     TTS_EQUAL     (r1, T(0));
 
-    TTS_IEEE_EQUAL(q0, (eve::Minf<T>()));
+    TTS_IEEE_EQUAL(q0, (eve::minf(eve::as<T>())));
     TTS_EQUAL     (q1, T(0));
   }
   if constexpr(eve::platform::supports_denormals)
   {
     using v_t = eve::element_type_t<T>;
-    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::Mindenormal<T>());
+    auto [r0, r1] = eve::pedantic_(eve::frexp)(eve::mindenormal(eve::as<T>()));
 
     TTS_ULP_EQUAL (r0, T(0.5), 1);
-    TTS_EQUAL     (r1, T(eve::Minexponent<v_t>()-eve::Nbmantissabits<v_t>()+1));
+    TTS_EQUAL     (r1, T(eve::minexponent(eve::as<v_t>())-eve::nbmantissabits(eve::as<v_t>())+1));
   }
 }

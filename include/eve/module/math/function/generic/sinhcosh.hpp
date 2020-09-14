@@ -40,37 +40,37 @@ namespace eve::detail
         auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {
-        if (x < T(0x1.0p-28)) return std::make_tuple(a0, One<T>());
+        if (x < T(0x1.0p-28)) return std::make_tuple(a0, one(eve::as<T>()));
         auto h = (a0 > T(0)) ? T(1) : T(-1);
         if (x >= ovflimit)
         {
-          auto w = exp(x*Half<T>());
-          auto t = Half<T>()*w;
+          auto w = exp(x*half(eve::as<T>()));
+          auto t = half(eve::as<T>())*w;
           t *= w;
           return std::make_tuple(t*h, t);
         }
-        h*= Half<T>();
+        h*= half(eve::as<T>());
         auto t = expm1(x);
         auto inct = inc(t);
         auto u = t/inct;
         auto s = h*(fnma(t, u, t)+t);
-        auto c = (x > T(22.0f)) ? inct*Half<T>() : average(inct, rec(inct));
+        auto c = (x > T(22.0f)) ? inct*half(eve::as<T>()) : average(inct, rec(inct));
         return std::make_tuple(s, c);       }
       else
       {
-        auto h = if_else( is_positive(a0), One<T>(), Mone<T>());
+        auto h = if_else( is_positive(a0), one(eve::as<T>()), mone(eve::as<T>()));
         auto t = expm1(x);
         auto inct = inc(t);
         auto u = t/inct;
         auto z =  fnma(t, u, t);
-        auto s = Half<T>()*h*(z+t);
-        auto invt = if_else(x > T(22.0f), eve::zero_, rec(inct));
+        auto s = half(eve::as<T>())*h*(z+t);
+        auto invt = if_else(x > T(22.0f), eve::zero, rec(inct));
         auto c = average(inct, invt);
         auto test = x <  ovflimit;
         if (eve::all(test)) return std::make_tuple(s, c);
 
-        auto w = exp(x*Half<T>());
-        t = Half<T>()*w;
+        auto w = exp(x*half(eve::as<T>()));
+        t = half(eve::as<T>())*w;
         t *= w;
 
         s = if_else(test, s, t*h);

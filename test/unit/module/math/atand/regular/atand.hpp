@@ -34,13 +34,13 @@ TTS_CASE_TPL("Check eve::eve::atand behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atand(eve::Nan<T>()), (eve::Nan<T>()) );
+    TTS_IEEE_EQUAL(eve::atand(eve::nan(eve::as<T>())), (eve::nan(eve::as<T>())) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::atand(eve::Inf<T>()) , (T( 90.)), 0.5);
-    TTS_ULP_EQUAL(eve::atand(eve::Minf<T>()), (T(-90.)), 0.5);
+    TTS_ULP_EQUAL(eve::atand(eve::inf(eve::as<T>())) , (T( 90.)), 0.5);
+    TTS_ULP_EQUAL(eve::atand(eve::minf(eve::as<T>())), (T(-90.)), 0.5);
   }
 
   TTS_ULP_EQUAL(eve::atand(T(0.5))  , (eve::radindeg(T(4.636476090008061e-01)))  , 0.5);

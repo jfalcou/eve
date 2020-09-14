@@ -38,14 +38,14 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( test )
-          return Nan<T>();
+          return nan(eve::as<T>());
       }
       else
       {
-        a0 = if_else(test, eve::allbits_, a0);
+        a0 = if_else(test, eve::allbits, a0);
       }
 
-      a0 *= Pi<T>();
+      a0 *= pi(eve::as<T>());
       auto x2 = sqr(a0);
       return rec(detail::cos_eval(x2));
     }
@@ -64,8 +64,8 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(x) )
-          return Nan<T>();
-        if( x > Maxflint<T>() )
+          return nan(eve::as<T>());
+        if( x > maxflint(eve::as<T>()) )
           return T(1);
       }
 
@@ -73,11 +73,11 @@ namespace eve::detail
       T z                = cos_finalize(quadrant(fn), xr, dxr);
       if constexpr( scalar_value<T> )
       {
-        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : Nan<T>();
+        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : nan(eve::as<T>());
       }
       else
       {
-        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits_);
+        return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits);
       }
     }
     else

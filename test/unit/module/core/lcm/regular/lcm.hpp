@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check eve::lcm behavior", EVE_TYPE)
 
   TTS_EQUAL(eve::lcm(T(22), T( 10)) , T(std::lcm(v_t(22), v_t( 10))));
   TTS_EQUAL(eve::lcm(T(22), T(-10)) , T(std::lcm(v_t(22), v_t(-10))));
-  v_t z = eve::Valmin<v_t>()/2;
+  v_t z = eve::valmin(eve::as<v_t>())/2;
 
   TTS_EQUAL(eve::lcm(T(z), T(2)), T(std::lcm(z, v_t(2))) );
   TTS_EQUAL(eve::lcm(T(z), T(1)), T(std::lcm(z, v_t(1))) );

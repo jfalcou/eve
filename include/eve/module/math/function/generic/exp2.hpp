@@ -53,25 +53,25 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t     = element_type_t<T>;
-      auto xltminlog2 = x < Minlog2(as(x));
-      auto xgemaxlog2 = x >= Maxlog2(as(x));
+      auto xltminlog2 = x < minlog2(eve::as(x));
+      auto xgemaxlog2 = x >= maxlog2(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog2 )
-          return Inf(as(x));
+          return inf(eve::as(x));
         if( xltminlog2 )
-          return Zero(as(x));
+          return zero(eve::as(x));
       }
       auto k = nearest(x);
       x      = x - k;
       if constexpr( std::is_same_v<elt_t, float> )
       {
         T y = horn<T, 0x3e75fdf1, 0x3d6356eb, 0x3c1d9422, 0x3ab01218, 0x3922c8c4>(x);
-        x   = inc(fma(y, sqr(x), x * Log_2<T>()));
+        x   = inc(fma(y, sqr(x), x * log_2(eve::as<T>())));
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        x *= Log_2<T>();
+        x *= log_2(eve::as<T>());
         T    t = sqr(x);
         auto h = horn<T,
                       0x3fc555555555553eull,
@@ -85,8 +85,8 @@ namespace eve::detail
       auto z = D()(ldexp)(x, k);
       if constexpr( simd_value<T> )
       {
-        z = if_else(xltminlog2, eve::zero_, z);
-        z = if_else(xgemaxlog2, Inf(as(x)), z);
+        z = if_else(xltminlog2, eve::zero, z);
+        z = if_else(xgemaxlog2, inf(eve::as(x)), z);
       }
       return z;
     }
@@ -119,18 +119,18 @@ namespace eve::detail
         using i_t  = as_integer_t<vd_t>;
         auto x = to_<i_t>(xx);
         auto z = is_nez(x);
-        auto zz =  eve::min(x+Maxexponent<vd_t>(), 2*Maxexponent<vd_t>()+1) & z.mask();
-        zz = zz << Nbmantissabits<vd_t>();
+        auto zz =  eve::min(x+maxexponent(eve::as<vd_t>()), 2*maxexponent(eve::as<vd_t>())+1) & z.mask();
+        zz = zz << nbmantissabits(eve::as<vd_t>());
         using r_t   = std::conditional_t<scalar_value<T>, vd_t, wide<vd_t, cardinal_t<T>>>;
         return bit_cast(zz, as<r_t>());
       }
       else
       {
-        auto tmp =  if_else(is_ltz(xx), eve::zero_, shl(One(as(xx)), xx));
+        auto tmp =  if_else(is_ltz(xx), eve::zero, shl(one(eve::as(xx)), xx));
         if constexpr(std::is_same_v<D, saturated_type>)
         {
           using elt_t =  element_type_t<T>;
-          return if_else(is_gez(xx, T(sizeof(elt_t))), Valmax<T>(), tmp);
+          return if_else(is_gez(xx, T(sizeof(elt_t))), valmax(eve::as<T>()), tmp);
         }
         else
           return tmp;

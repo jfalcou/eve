@@ -57,7 +57,7 @@ namespace eve::detail
           T r = if_else(is_eqz(a), a, binarize(is_gtz(a))-binarize(is_ltz(a)));
           if constexpr(eve::platform::supports_nans && floating_value<T>)
           {
-            return if_else(is_nan(a), eve::allbits_, r);
+            return if_else(is_nan(a), eve::allbits, r);
           }
           else
           {

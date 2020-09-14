@@ -28,10 +28,10 @@ TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
                                           {
                                             return    (x == 0 || !eve::is_flint(x))
                                                     ? eve::rec(boost::math::sin_pi(x))
-                                                    : eve::Nan<v_t>();
+                                                    : eve::nan<v_t>();
                                           }
                                         );
 
-  eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, my_stdcscpi, eve::big_(eve::cscpi));
 }

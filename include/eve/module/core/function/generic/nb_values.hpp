@@ -48,7 +48,7 @@ namespace eve::detail
       auto aa = eve::detail::bitinteger(a);
       auto bb = eve::detail::bitinteger(b);
       auto z = if_else (is_unordered(a, b)
-                       , eve::Valmax<ui_t>()
+                       , eve::valmax(eve::as<ui_t>())
                        , bit_cast(dist(bb, aa), as<ui_t>())
                        );
       return inc[is_ltz(signnz(a)*signnz(b))](z);

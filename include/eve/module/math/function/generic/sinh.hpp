@@ -47,12 +47,12 @@ namespace eve::detail
         T h = (a0 > T(0)) ? T(1) : T(-1);
         if (x >= ovflimit)
         {
-          T w = exp(x*Half<T>());
-          T t = Half<T>()*w;
+          T w = exp(x*half(eve::as<T>()));
+          T t = half(eve::as<T>())*w;
           t *= w;
           return t*h;
         }
-        h*= Half<T>();
+        h*= half(eve::as<T>());
         T t = expm1(x);
         T inct = inc(t);
         T u = t/inct;
@@ -61,19 +61,19 @@ namespace eve::detail
       }
       else
       {
-        auto h = if_else( is_gtz(a0), One<T>(), eve::mone_);
+        auto h = if_else( is_gtz(a0), one(eve::as<T>()), eve::mone);
         auto t = expm1(x);
         auto inct = inc(t);
         auto u = t/inct;
         auto z =  fnma(t, u, t);
-        auto s = Half<T>()*h*(z+t);
+        auto s = half(eve::as<T>())*h*(z+t);
 
         s = if_else (is_eqz(a0), a0,  s);
         auto test = x <  ovflimit;
         if (eve::all(test)) return s;
 
-        auto w = exp(x*Half<T>());
-        t = Half<T>()*w;
+        auto w = exp(x*half(eve::as<T>()));
+        t = half(eve::as<T>())*w;
         t *= w;
 
         return if_else(test, s, t*h);

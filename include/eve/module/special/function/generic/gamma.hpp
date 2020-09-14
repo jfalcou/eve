@@ -94,17 +94,17 @@ namespace eve::detail
           };
         };
         if( is_eqz(a0) )
-          return copysign(Inf(as(a0)), a0);
+          return copysign(inf(eve::as(a0)), a0);
         if constexpr( eve::platform::supports_nans )
         {
-          if( is_nan(a0) || (a0 == Minf(as(a0))) )
-            return Nan(as(a0));
-          if( a0 == Inf(as(a0)) )
+          if( is_nan(a0) || (a0 == minf(eve::as(a0))) )
+            return nan(eve::as(a0));
+          if( a0 == inf(eve::as(a0)) )
             return a0;
         }
         auto x = a0;
         if( inftest(a0) )
-          return Inf(as(a0));
+          return inf(eve::as(a0));
         auto q = abs(x);
         if( x < T(-33) )
         {
@@ -112,36 +112,36 @@ namespace eve::detail
           T    p      = floor(q);
           auto iseven = is_even((int32_t)p);
           if( p == q )
-            return Nan(as(a0));
+            return nan(eve::as(a0));
           T z = q - p;
-          if( z > Half(as(a0)) )
+          if( z > half(eve::as(a0)) )
           {
-            p += One(as(a0));
+            p += one(eve::as(a0));
             z = q - p;
           }
           z = q * sinpi(z);
           if( is_eqz(z) )
-            return Nan(as(a0));
-          st = Pi(as(a0)) / (abs(z) * st);
+            return nan(eve::as(a0));
+          st = pi(eve::as(a0)) / (abs(z) * st);
           return iseven ? -st : st;
         }
-        T z = One(as(a0));
+        T z = one(eve::as(a0));
         while( x >= T(3) )
         {
-          x -= One(as(a0));
+          x -= one(eve::as(a0));
           z *= x;
         }
         while( is_ltz(x) )
         {
           z /= x;
-          x += One(as(a0));
+          x += one(eve::as(a0));
         }
         while( x < T(2) )
         {
           if( is_eqz(x) )
-            return Nan(as(a0));
+            return nan(eve::as(a0));
           z /= x;
-          x += One(as(a0));
+          x += one(eve::as(a0));
         }
         if( x == T(2) )
           return (z);
@@ -153,22 +153,22 @@ namespace eve::detail
         auto large_negative = [](T q) {
           auto st     = stirling(q);
           auto p      = floor(q);
-          auto sgngam = if_else(is_even(p), One(as(q)), eve::mone_);
+          auto sgngam = if_else(is_even(p), one(eve::as(q)), eve::mone);
           auto z      = q - p;
-          auto test2  = is_less(z, Half(as(q)));
+          auto test2  = is_less(z, half(eve::as(q)));
           z           = dec[test2](z);
           z           = q * sinpi(z);
           z           = abs(z);
-          return sgngam * Pi(as(q)) / (z * st);
+          return sgngam * pi(eve::as(q)) / (z * st);
         };
         auto other = [gamma1](T q, const auto &test) {
           auto x = if_else(test, T(2), q);
           if constexpr( eve::platform::supports_nans )
           {
-            auto inf_result = is_equal(q, Inf<T>());
+            auto inf_result = is_equal(q, inf(eve::as<T>()));
             x               = if_else(inf_result, T(2), x);
           }
-          auto z     = One<T>();
+          auto z     = one(eve::as<T>());
           auto test1 = is_greater_equal(x, T(3));
           while( any(test1) )
           {
@@ -196,7 +196,7 @@ namespace eve::detail
           x = z * gamma1(x - T(2));
           if constexpr( eve::platform::supports_infinites )
           {
-            auto inf_result = is_equal(q, Inf<T>());
+            auto inf_result = is_equal(q, inf(eve::as<T>()));
             return if_else(inf_result, q, x);
           }
           else
@@ -208,18 +208,18 @@ namespace eve::detail
         auto        q    = abs(a0);
         auto        test = is_less(a0, T(-33.0));
         std::size_t nb   = nbtrue(test);
-        auto        r    = Nan(as(a0));
+        auto        r    = nan(eve::as(a0));
         if( nb > 0 )
         {
           // treat negative large with reflection
           r = large_negative(q);
           if( nb >= cardinal_v<T> )
-            return if_else(nan_result, eve::allbits_, r);
+            return if_else(nan_result, eve::allbits, r);
         }
         auto r1 = other(a0, test);
         auto r2 = if_else(test, r, r1);
         return if_else(
-            is_eqz(a0), copysign(Inf(as(a0)), a0), if_else(nan_result, eve::allbits_, r2));
+            is_eqz(a0), copysign(inf(eve::as(a0)), a0), if_else(nan_result, eve::allbits, r2));
       }
     }
     else

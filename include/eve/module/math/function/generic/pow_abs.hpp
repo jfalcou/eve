@@ -59,7 +59,7 @@ namespace eve::detail
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
-    w                = fma(Mhalf<T>(), z, w);
+    w                = fma(mhalf(eve::as<T>()), z, w);
     const T Log2_em1 = T(0.44269504088896340735992468100189);
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
@@ -98,19 +98,19 @@ namespace eve::detail
     z                   = pedantic_(ldexp)(z, i);
     if constexpr( eve::platform::supports_infinites )
     {
-      auto gtax1 = is_greater(ax, One<T>());
-      z          = if_else(is_equal(b, Inf<T>()), if_else(gtax1, Inf<T>(), eve::zero_), z);
-      z          = if_else(is_equal(b, Minf<T>()), if_else(gtax1, eve::zero_, Inf<T>()), z);
-      z = if_else(is_equal(ax, Inf<T>()), if_else(is_gtz(b), Inf<T>(), binarize(is_gez(b))), z);
+      auto gtax1 = is_greater(ax, one(eve::as<T>()));
+      z          = if_else(is_equal(b, inf(eve::as<T>())), if_else(gtax1, inf(eve::as<T>()), eve::zero), z);
+      z          = if_else(is_equal(b, minf(eve::as<T>())), if_else(gtax1, eve::zero, inf(eve::as<T>())), z);
+      z = if_else(is_equal(ax, inf(eve::as<T>())), if_else(is_gtz(b), inf(eve::as<T>()), binarize(is_gez(b))), z);
     }
-    z = if_else(zer_ret, eve::zero_, z);
-    z = if_else(inf_ret, Inf<T>(), z);
-    z = if_else(is_equal(ax, One<T>()), ax, z);
+    z = if_else(zer_ret, eve::zero, z);
+    z = if_else(inf_ret, inf(eve::as<T>()), z);
+    z = if_else(is_equal(ax, one(eve::as<T>())), ax, z);
 
-    z = if_else(is_eqz(a), if_else(is_ltz(b), eve::Inf<T>(), binarize(is_eqz(b))), z);
+    z = if_else(is_eqz(a), if_else(is_ltz(b), eve::inf(eve::as<T>()), binarize(is_eqz(b))), z);
     if constexpr( eve::platform::supports_invalids )
     {
-      z = if_else(is_nan(a), if_else(is_eqz(b), One<T>(), eve::allbits_), z);
+      z = if_else(is_nan(a), if_else(is_eqz(b), one(eve::as<T>()), eve::allbits), z);
     }
     return z;
   }
@@ -121,35 +121,35 @@ namespace eve::detail
     const T Oneo_16 = T(0.0625);
     using i_t       = as_integer_t<T>;
     T xx            = eve::abs(a0);
-    if( xx == One<T>() )
+    if( xx == one(eve::as<T>()) )
       return xx;
     if( is_eqz(xx) )
-      return is_eqz(a1) ? One<T>() : is_ltz(a1) ? Inf<T>() : Zero<T>();
+      return is_eqz(a1) ? one(eve::as<T>()) : is_ltz(a1) ? inf(eve::as<T>()) : zero(eve::as<T>());
     if constexpr( eve::platform::supports_infinites )
     {
-      if( xx == a1 && a1 == Inf<T>() )
-        return Inf<T>();
-      if( xx == Inf<T>() && a1 == Minf<T>() )
-        return Zero<T>();
-      if( a1 == Inf<T>() )
-        return (xx < One<T>()) ? Zero<T>() : Inf<T>();
-      if( a1 == Minf<T>() )
-        return (xx > One<T>()) ? Zero<T>() : Inf<T>();
-      if( xx == Inf<T>() )
-        return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : Inf<T>());
+      if( xx == a1 && a1 == inf(eve::as<T>()) )
+        return inf(eve::as<T>());
+      if( xx == inf(eve::as<T>()) && a1 == minf(eve::as<T>()) )
+        return zero(eve::as<T>());
+      if( a1 == inf(eve::as<T>()) )
+        return (xx < one(eve::as<T>())) ? zero(eve::as<T>()) : inf(eve::as<T>());
+      if( a1 == minf(eve::as<T>()) )
+        return (xx > one(eve::as<T>())) ? zero(eve::as<T>()) : inf(eve::as<T>());
+      if( xx == inf(eve::as<T>()) )
+        return (a1 < zero(eve::as<T>())) ? zero(eve::as<T>()) : ((a1 == zero(eve::as<T>())) ? one(eve::as<T>()) : inf(eve::as<T>()));
     }
     if constexpr( eve::platform::supports_invalids )
     {
       if( is_nan(a0) )
-        return is_eqz(a1) ? One<T>() : a0;
+        return is_eqz(a1) ? one(eve::as<T>()) : a0;
       if( is_nan(a1) )
-        return Nan<T>();
+        return nan(eve::as<T>());
     }
     auto [xm, e]     = pedantic_(eve::ifrexp)(xx);
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
-    w                = fma(Mhalf<T>(), z, w);
+    w                = fma(mhalf(eve::as<T>()), z, w);
     const T Log2_em1 = T(0.44269504088896340735992468100189);
     w                = fma(Log2_em1, w, w);
     z                = fma(Log2_em1, x, w);
@@ -175,9 +175,9 @@ namespace eve::detail
     const T Powlargelim = Ieee_constant<T, 0x44ffe000U, 0x40cfff8000000000ULL>();
     const T Powlowlim   = Ieee_constant<T, 0xc5160000U, 0xc0d0c7c000000000ULL>();
     if( w > Powlargelim )
-      return Inf<T>();
+      return inf(eve::as<T>());
     if( w < Powlowlim )
-      return Zero<T>();
+      return zero(eve::as<T>());
     e  = w;
     Wb = W - Wb;    //
     if( Wb > 0.0f ) //

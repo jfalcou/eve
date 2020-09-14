@@ -22,7 +22,7 @@ namespace eve::detail
   template < typename T>
   EVE_FORCEINLINE constexpr T horn1(T) noexcept
   {
-    return eve::One<T>();
+    return eve::one(eve::as<T>());
   }
   
   template < typename T,  auto Coef>

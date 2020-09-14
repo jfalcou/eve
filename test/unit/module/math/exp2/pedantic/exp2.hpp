@@ -32,9 +32,9 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::exp2) behavior", EVE_TYPE)
   {
     if constexpr( eve::platform::supports_invalids )
     {
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Nan<T>()) , eve::Nan<T>() );
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Inf<T>()) , eve::Inf<T>() );
-      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::Minf<T>()), T( 0 ) );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
+      TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(eve::minf(eve::as<T>())), T( 0 ) );
     }
 
     TTS_IEEE_EQUAL(eve::pedantic_(eve::exp2)(T(-0.)), T(1));

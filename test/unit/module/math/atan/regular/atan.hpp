@@ -32,19 +32,19 @@ TTS_CASE_TPL("Check eve::eve::atan behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::Nan<T>()), eve::Nan<T>() );
+    TTS_IEEE_EQUAL(eve::atan(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::Inf<T>()) , eve::Pio_2<T>() );
-    TTS_IEEE_EQUAL(eve::atan(eve::Minf<T>()), -eve::Pio_2<T>());
+    TTS_IEEE_EQUAL(eve::atan(eve::inf(eve::as<T>())) , eve::pio_2(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::atan(eve::minf(eve::as<T>())), -eve::pio_2(eve::as<T>()));
   }
 
   TTS_ULP_EQUAL(eve::atan(T(0.5))  , T(4.636476090008061e-01) , 0.5);
   TTS_ULP_EQUAL(eve::atan(T(-0.5)) , T(-4.636476090008061e-01), 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(-1.))  , -eve::Pio_4<T>()         , 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(1.))   ,  eve::Pio_4<T>()         , 0.5);
+  TTS_ULP_EQUAL(eve::atan(T(-1.))  , -eve::pio_4(eve::as<T>())         , 0.5);
+  TTS_ULP_EQUAL(eve::atan(T(1.))   ,  eve::pio_4(eve::as<T>())         , 0.5);
   TTS_ULP_EQUAL(eve::atan(T(0.))   , T(0)                     , 0.5);
 
   TTS_EXPECT(all(eve::is_positive(eve::atan((T(0))))) );

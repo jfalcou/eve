@@ -34,10 +34,10 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> rec_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0) noexcept
   {
-    if constexpr(std::is_same_v<T, double>) { return _mm_div_pd(One(as(a0)), a0); }
+    if constexpr(std::is_same_v<T, double>) { return _mm_div_pd(one(eve::as(a0)), a0); }
     else if constexpr(std::is_same_v<T, float>)
     {
-      return _mm_div_ps(One(as(a0)), a0);
+      return _mm_div_ps(one(eve::as(a0)), a0);
     }
   }
 
@@ -65,10 +65,10 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> rec_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0) noexcept
   {
-    if constexpr(std::is_same_v<T, double>) { return _mm256_div_pd(One(as(a0)), a0); }
+    if constexpr(std::is_same_v<T, double>) { return _mm256_div_pd(one(eve::as(a0)), a0); }
     else if constexpr(std::is_same_v<T, float>)
     {
-      return _mm256_div_ps(One(as(a0)), a0);
+      return _mm256_div_ps(one(eve::as(a0)), a0);
     }
   }
 

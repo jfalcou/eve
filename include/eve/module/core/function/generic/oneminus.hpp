@@ -37,7 +37,7 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<D, regular_type> || std::is_floating_point_v<elt_t> )
       {
-        return One<T>() - v;
+        return one(eve::as<T>()) - v;
       }
       else if constexpr( std::is_same_v<D, saturated_type> )
       {
@@ -47,11 +47,11 @@ namespace eve::detail
         }
         if constexpr( scalar_value<T> )
         {
-          return (v <= Valmin(as(v)) + 2) ? Valmax(as(v)) : oneminus(v);
+          return (v <= valmin(eve::as(v)) + 2) ? valmax(eve::as(v)) : oneminus(v);
         }
         else if constexpr( simd_value<T> )
         {
-          return if_else(v < Valmin(as(v)) + 2, Valmax(as(v)), oneminus(v));
+          return if_else(v < valmin(eve::as(v)) + 2, valmax(eve::as(v)), oneminus(v));
         }
       }
     }

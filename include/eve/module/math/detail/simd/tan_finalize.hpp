@@ -43,7 +43,7 @@ namespace eve::detail
     auto test = is_eqz(swap_bit);
     t_t y = tancot_eval(xr);
     y = if_else(test,y,-rec(y));
-    y = fma(dxr, fma(y, y, One<T>()), y);
+    y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
     return if_else(abs(a0) < Eps<t_t>(), a0, bit_xor(y, bitofsign(a0)));
   }
 }

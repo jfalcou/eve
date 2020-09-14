@@ -64,13 +64,13 @@ namespace eve::detail
       T    uf          = inc(a0);
       auto isnez       = is_nez(uf);
       auto [x, k]      = frexp(uf);
-      auto x_lt_sqrthf = (Invsqrt_2<T>() > x);
+      auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       k   = dec[x_lt_sqrthf](k);
-      T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero_));
+      T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
-      T hfsq = Half<T>() * sqr(f);
+      T hfsq = half(eve::as<T>()) * sqr(f);
       T s    = f / (2.0f + f);
       T z    = sqr(s);
       T w    = sqr(z);
@@ -95,13 +95,13 @@ namespace eve::detail
       T zz;
       if constexpr( eve::platform::supports_infinites )
       {
-        zz = if_else(isnez, if_else(a0 == Inf<T>(), Inf<T>(), r), Minf<T>());
+        zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
       }
       else
       {
-        zz = if_else(isnez, r, Minf<T>());
+        zz = if_else(isnez, r, minf(eve::as<T>()));
       }
-      return if_else(is_ngez(uf), eve::allbits_, zz);
+      return if_else(is_ngez(uf), eve::allbits, zz);
     }
     else
       return apply_over(plain_(log1p), a0);

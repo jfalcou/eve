@@ -25,8 +25,8 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                           = " << xf << '\n'
-    << "-> binarize(True<float>(), xf)  = " << eve::binarize(eve::True<float>(), xf) << '\n'
-    << "-> binarize(False<float>(), xf) = " << eve::binarize(eve::False<float>(), xf) << '\n'        ;
+    << "-> binarize(true_(eve::as<float>()), xf)  = " << eve::binarize(eve::true_(eve::as<float>()), xf) << '\n'
+    << "-> binarize(false_(eve::as<float>()), xf) = " << eve::binarize(eve::false_(eve::as<float>()), xf) << '\n'        ;
   return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

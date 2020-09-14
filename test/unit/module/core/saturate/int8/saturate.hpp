@@ -24,14 +24,14 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
 {
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int8_t>()), T(eve::Valmin<std::int8_t>()) );
+    TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int8_t>()), T(eve::valmin(eve::as<std::int8_t>())) );
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::Valmin<T>(), eve::as<std::int8_t>()), T(0) );
+    TTS_EQUAL(eve::saturate(eve::valmin(eve::as<T>()), eve::as<std::int8_t>()), T(0) );
   }
 
   TTS_EQUAL(eve::saturate(T(0)    , eve::as<std::int8_t>()), T(0)     );
   TTS_EQUAL(eve::saturate(T(42.69), eve::as<std::int8_t>()), T(42.69) );
-  TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::int8_t>()), T(eve::Valmax<std::int8_t>()) );
+  TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::int8_t>()), T(eve::valmax(eve::as<std::int8_t>())) );
 }

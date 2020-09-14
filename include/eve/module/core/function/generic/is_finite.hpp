@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(is_logical_v<T>)       return True(as(a));
+      if constexpr(is_logical_v<T>)       return true_(eve::as(a));
       else if constexpr(scalar_value<T>)  return is_eqz(T(a-a));
       else                                return is_eqz(a-a);
     }

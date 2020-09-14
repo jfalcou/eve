@@ -27,10 +27,10 @@ TTS_CASE_TPL("Check add return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check saturated conditional add behavior", EVE_TYPE)
 {
-  T tv{eve::Valmax<T>()};
+  T tv{eve::valmax(eve::as<T>())};
   T fv{3};
-  auto t = eve::True<T>();
-  auto f = eve::False<T>();
+  auto t = eve::true_(eve::as<T>());
+  auto f = eve::false_(eve::as<T>());
 
   TTS_EQUAL(eve::saturated_(eve::add[ 1 ])(tv, fv)    , eve::saturated_(eve::add)(tv,fv));
   TTS_EQUAL(eve::saturated_(eve::add[ 1.0 ])(tv, fv)  , eve::saturated_(eve::add)(tv,fv));

@@ -46,14 +46,14 @@ namespace eve::detail
       const T Log_2hi   = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
-      auto    xltminlog = x < Minlog(as(x));
-      auto    xgemaxlog = x >= Maxlog(as(x));
+      auto    xltminlog = x < minlog(eve::as(x));
+      auto    xgemaxlog = x >= maxlog(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog )
-          return Inf(as(x));
+          return inf(eve::as(x));
         if( xltminlog )
-          return Zero(as(x));
+          return zero(eve::as(x));
       }
       auto c = nearest(Invlog_2 * x);
       auto k = c;
@@ -83,8 +83,8 @@ namespace eve::detail
       auto z = D()(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
-        z = if_else(xltminlog, eve::zero_, z);
-        z = if_else(xgemaxlog, Inf(as(x)), z);
+        z = if_else(xltminlog, eve::zero, z);
+        z = if_else(xgemaxlog, inf(eve::as(x)), z);
       }
       return z;
     }

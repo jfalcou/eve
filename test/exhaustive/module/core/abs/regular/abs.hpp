@@ -30,13 +30,13 @@ TTS_CASE_TPL("wide random check on abs", EVE_TYPE)
   else if constexpr(eve::signed_value<T>)
   {
     auto std_abs = tts::vectorize<T>( [](auto e) { return (e < 0) ? -e : e; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else
   {
     auto std_abs = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
 }

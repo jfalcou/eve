@@ -15,7 +15,7 @@
 int main(int argc, char** argv)
 {
   auto const std_sinh = [](auto x) { return std::sinh(x); };
-  auto l = eve::Valmax<EVE_TYPE>();
+  auto l = eve::valmax(eve::as<EVE_TYPE>());
   EVE_REGISTER_BENCHMARK(std_sinh, EVE_TYPE
                         , eve::bench::random< EVE_TYPE>(-l, l));
 

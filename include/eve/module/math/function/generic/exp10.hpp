@@ -47,16 +47,16 @@ namespace eve::detail
       using elt_t         = element_type_t<T>;
       const T Log10_2hi   = Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
       const T Log10_2lo   = Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
-      auto    xltminlog10 = x < Minlog10(as(x));
-      auto    xgemaxlog10 = x >= Maxlog10(as(x));
+      auto    xltminlog10 = x < minlog10(eve::as(x));
+      auto    xgemaxlog10 = x >= maxlog10(eve::as(x));
       if constexpr( scalar_value<T> )
       {
         if( xgemaxlog10 )
-          return Inf(as(x));
+          return inf(eve::as(x));
         if( xltminlog10 )
-          return Zero(as(x));
+          return zero(eve::as(x));
       }
-      auto c = nearest(Invlog10_2<T>() * x);
+      auto c = nearest(invlog10_2(eve::as<T>()) * x);
       auto k = c;
       x      = fnma(c, Log10_2hi, x); // x-c*L
       x      = fnma(c, Log10_2lo, x);
@@ -82,8 +82,8 @@ namespace eve::detail
       auto z = D()(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
-        z = if_else(xltminlog10, eve::zero_, z);
-        z = if_else(xgemaxlog10, Inf(as(x)), z);
+        z = if_else(xltminlog10, eve::zero, z);
+        z = if_else(xgemaxlog10, inf(eve::as(x)), z);
       }
       return z;
     }

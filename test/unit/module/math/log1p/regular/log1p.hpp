@@ -35,22 +35,22 @@ TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::log1p(eve::Inf<T>())  , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::log1p(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::log1p(eve::Mone<T>()) , eve::Minf<T>());
+    TTS_IEEE_EQUAL(eve::log1p(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log1p(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log1p(eve::mone(eve::as<T>())) , eve::minf(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::log1p(T( 0 ))         , T( 0 )        );
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log1p(eve::Mindenormal<T>()), T(std::log1p(eve::Mindenormal<v_t>())));
+    TTS_IEEE_EQUAL(eve::log1p(eve::mindenormal(eve::as<T>())), T(std::log1p(eve::mindenormal(eve::as<v_t>()))));
   }
 
-  auto epsi = eve::Eps<T>();
+  auto epsi = eve::eps(eve::as<T>());
 
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(T(1))                    , eve::Log_2<T>()         , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(T(1))                    , eve::log_2(eve::as<T>())         , 0.5 );
   TTS_ULP_EQUAL(eve::log1p(T(0))                    , T(0)                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(eve::Smallestposval<T>()), eve::Smallestposval<T>(), 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(eve::smallestposval(eve::as<T>())), eve::smallestposval(eve::as<T>()), 0.5 );
   TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
 }

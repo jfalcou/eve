@@ -26,9 +26,9 @@ TTS_CASE_TPL("Check eve::exponent  behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::exponent(eve::Inf<T>()) , r_t(0));
-    TTS_EQUAL(eve::exponent(eve::Minf<T>()), r_t(0));
-    TTS_EQUAL(eve::exponent(eve::Nan<T>()) , r_t(0));
+    TTS_EQUAL(eve::exponent(eve::inf(eve::as<T>())) , r_t(0));
+    TTS_EQUAL(eve::exponent(eve::minf(eve::as<T>())), r_t(0));
+    TTS_EQUAL(eve::exponent(eve::nan(eve::as<T>())) , r_t(0));
   }
 
   TTS_EQUAL(eve::exponent(T(0   )), r_t(0));

@@ -35,8 +35,8 @@ TTS_CASE_TPL("Check eve::atan2d behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_infinites )
   {
-    auto inf  = eve::Inf<T>();
-    auto minf = eve::Minf<T>();
+    auto inf  = eve::inf(eve::as<T>());
+    auto minf = eve::minf(eve::as<T>());
 
     TTS_ULP_EQUAL(eve::atan2d(inf         , (T(1.))  ), (T(90))  , 0.5);
     TTS_ULP_EQUAL(eve::atan2d(inf         , (T(-1.)) ), (T(90))  , 0.5);
@@ -50,19 +50,19 @@ TTS_CASE_TPL("Check eve::atan2d behavior", EVE_TYPE)
     TTS_EXPECT( all(is_negative(eve::atan2d((T(-1.)), inf))) );
     TTS_EXPECT( all(is_positive(eve::atan2d((T(1.)) , inf))) );
 
-    TTS_ULP_EQUAL(eve::atan2d(minf, minf      ), eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2d(inf , minf      ), eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2d(minf, inf       ), eve::Nan<T>() , 0.5);
-    TTS_ULP_EQUAL(eve::atan2d(inf , inf       ), eve::Nan<T>() , 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(minf, minf      ), eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(inf , minf      ), eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(minf, inf       ), eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(inf , inf       ), eve::nan(eve::as<T>()) , 0.5);
     TTS_ULP_EQUAL(eve::atan2d(inf , (T(1.))),  (T(90))  , 0.5);
     TTS_ULP_EQUAL(eve::atan2d(minf, (T(1.))), -(T(90))  , 0.5);
   }
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::atan2d(eve::Nan<T>(), eve::Nan<T>()) , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2d(eve::Nan<T>(), (T(0.)))       , eve::Nan<T>(), 0.5);
-    TTS_ULP_EQUAL(eve::atan2d((T(0.))      , eve::Nan<T>()) , eve::Nan<T>(), 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::atan2d(eve::nan(eve::as<T>()), (T(0.)))       , eve::nan(eve::as<T>()), 0.5);
+    TTS_ULP_EQUAL(eve::atan2d((T(0.))      , eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0.5);
   }
 
   TTS_ULP_EQUAL(eve::atan2d((T(0.5)) , (T(0.5)) ) ,  (T(45))  , 0.5);
@@ -76,8 +76,8 @@ TTS_CASE_TPL("Check eve::atan2d behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::atan2d((T(1.))  , mzero       ) ,  (T(90))  , 0.5);
   TTS_ULP_EQUAL(eve::atan2d((T(1.))  , (T(0.))  ) ,  (T(90))  , 0.5);
 
-  TTS_ULP_EQUAL(eve::atan2d((T(0.))  , (T(0.))  ) , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::atan2d(mzero       , (T(0.))  ) , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::atan2d(mzero       , mzero       ) , eve::Nan<T>() , 0.5);
-  TTS_ULP_EQUAL(eve::atan2d((T(0.))  , mzero       ) , eve::Nan<T>() , 0.5);
+  TTS_ULP_EQUAL(eve::atan2d((T(0.))  , (T(0.))  ) , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::atan2d(mzero       , (T(0.))  ) , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::atan2d(mzero       , mzero       ) , eve::nan(eve::as<T>()) , 0.5);
+  TTS_ULP_EQUAL(eve::atan2d((T(0.))  , mzero       ) , eve::nan(eve::as<T>()) , 0.5);
 }

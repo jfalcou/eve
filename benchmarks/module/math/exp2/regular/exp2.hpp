@@ -15,8 +15,8 @@
 
 int main()
 {
-  auto lmin = EVE_VALUE(eve::Minlog2<EVE_VALUE>());
-  auto lmax = EVE_VALUE(eve::Maxlog2<EVE_VALUE>());
+  auto lmin = EVE_VALUE(eve::minlog2(eve::as<EVE_VALUE>()));
+  auto lmax = EVE_VALUE(eve::maxlog2(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto std__exp2 = [](auto x){return std::exp2(x);};

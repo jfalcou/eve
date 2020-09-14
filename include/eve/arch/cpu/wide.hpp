@@ -85,7 +85,7 @@ namespace eve
     //==============================================================================================
     template<std::input_iterator Iterator>
     EVE_FORCEINLINE explicit wide(Iterator b, Iterator e) noexcept
-                  : data_(detail::load(as_<wide>{}, abi_type{}, b, e))
+                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, b, e))
     {
     }
 
@@ -100,26 +100,26 @@ namespace eve
     // Constructs a wide from a pointer
     //==============================================================================================
     EVE_FORCEINLINE explicit wide(Type const *ptr) noexcept
-        : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+        : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
     EVE_FORCEINLINE explicit wide(Type *ptr) noexcept
-        : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+        : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type const, Alignment> ptr) noexcept
                     requires(Alignment >= static_alignment)
-                  : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
     template<std::size_t Alignment>
     EVE_FORCEINLINE explicit wide(aligned_ptr<Type, Alignment> ptr) noexcept
                     requires(Alignment >= static_alignment)
-                  : data_(detail::load(as_<wide>{}, abi_type{}, ptr))
+                  : data_(detail::load(eve::as_<wide>{}, abi_type{}, ptr))
     {
     }
 
@@ -128,7 +128,7 @@ namespace eve
     //==============================================================================================
     template<typename T>
     EVE_FORCEINLINE explicit  wide(T const &v)  noexcept requires( std::convertible_to<T, Type> )
-                            : data_(detail::make(as_<target_type>{}, abi_type{}, v))
+                            : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v))
     {
     }
 
@@ -141,7 +141,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,Type>)
                     &&  (static_size == 2 + sizeof...(Ts))
                   )
-        : data_(detail::make(as_<target_type>{}, abi_type{}, v0, v1, vs...))
+        : data_(detail::make(eve::as_<target_type>{}, abi_type{}, v0, v1, vs...))
     {
     }
 
@@ -151,17 +151,17 @@ namespace eve
     template<typename Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
                     requires( std::invocable<Generator,size_type,size_type>)
-                  : data_( detail::fill(as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
+                  : data_( detail::fill(eve::as_<wide>{}, abi_type{}, std::forward<Generator>(g)) )
     {}
 
     //==============================================================================================
     // Constructs a wide from a pair of sub-wide
     //==============================================================================================
-    template<typename HalfSize>
-    EVE_FORCEINLINE wide( wide<Type, HalfSize> const &l
-                        , wide<Type, HalfSize> const &h
+    template<typename halfSize>
+    EVE_FORCEINLINE wide( wide<Type, halfSize> const &l
+                        , wide<Type, halfSize> const &h
                         ) noexcept
-                    requires( static_size == 2 * HalfSize::value )
+                    requires( static_size == 2 * halfSize::value )
                   : data_(detail::combine(EVE_CURRENT_API{}, l, h))
     {
     }
@@ -171,7 +171,7 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE wide &operator=(Type v) noexcept
     {
-      data_ = detail::make(as_<target_type>{}, abi_type{}, v);
+      data_ = detail::make(eve::as_<target_type>{}, abi_type{}, v);
       return *this;
     }
 

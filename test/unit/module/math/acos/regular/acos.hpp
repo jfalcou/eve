@@ -32,15 +32,15 @@ TTS_CASE_TPL("Check eve::acos behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acos(T(2)) , eve::Nan<T>(), 0);
-    TTS_ULP_EQUAL(eve::acos(T(-2)), eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acos(T(2)) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::acos(T(-2)), eve::nan(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acos(T( 0.5)) , eve::Pi<T>()/3   , 0.5 );
-  TTS_ULP_EQUAL(eve::acos(T(-0.5)) , 2*eve::Pi<T>()/3 , 0.5 );
-  TTS_ULP_EQUAL(eve::acos(T(-1. )) , eve::Pi<T>()     , 0   );
+  TTS_ULP_EQUAL(eve::acos(T( 0.5)) , eve::pi(eve::as<T>())/3   , 0.5 );
+  TTS_ULP_EQUAL(eve::acos(T(-0.5)) , 2*eve::pi(eve::as<T>())/3 , 0.5 );
+  TTS_ULP_EQUAL(eve::acos(T(-1. )) , eve::pi(eve::as<T>())     , 0   );
   TTS_ULP_EQUAL(eve::acos(T( 1. )) , T(0)             , 0   );
-  TTS_ULP_EQUAL(eve::acos(T( 0. )) , eve::Pio_2<T>()  , 0   );
+  TTS_ULP_EQUAL(eve::acos(T( 0. )) , eve::pio_2(eve::as<T>())  , 0   );
 
   TTS_EXPECT( all(eve::is_positive(eve::acos(T(1)))) );
 

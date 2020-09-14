@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check eve::log10 behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::log10(eve::Inf<T>())  , eve::Inf<T>() );
-    TTS_IEEE_EQUAL(eve::log10(eve::Nan<T>())  , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::log10(eve::Mone<T>()) , eve::Nan<T>() );
-    TTS_IEEE_EQUAL(eve::log10(T( 0 ))         , eve::Minf<T>());
+    TTS_IEEE_EQUAL(eve::log10(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log10(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log10(eve::mone(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log10(T( 0 ))         , eve::minf(eve::as<T>()));
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log10(eve::Mindenormal<T>()), T(std::log10(eve::Mindenormal<v_t>())));
+    TTS_IEEE_EQUAL(eve::log10(eve::mindenormal(eve::as<T>())), T(std::log10(eve::mindenormal(eve::as<v_t>()))));
   }
 
   TTS_IEEE_EQUAL(eve::log10(T(1)      ), T(0) );

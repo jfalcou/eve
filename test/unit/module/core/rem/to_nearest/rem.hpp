@@ -53,7 +53,7 @@ TTS_CASE_TPL("Check eve::to_nearest_(eve::rem) behavior", EVE_TYPE)
 
    if constexpr(eve::floating_value<T>)
   {
-    TTS_IEEE_EQUAL(eve::to_nearest_(eve::rem)(  T(1),   T(0)), eve::Nan<T>());
+    TTS_IEEE_EQUAL(eve::to_nearest_(eve::rem)(  T(1),   T(0)), eve::nan(eve::as<T>()));
     TTS_EXPECT(eve::all(eve::is_negative(eve::to_nearest_(eve::rem)(  -T(1), T(1)))));
     TTS_EXPECT(eve::all(eve::is_positive(eve::to_nearest_(eve::rem)(  T(1) , T(1)))));
   }

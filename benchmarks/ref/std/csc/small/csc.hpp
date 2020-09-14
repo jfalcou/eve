@@ -13,7 +13,7 @@
 
 int main(int argc, char** argv)
 {
-  auto lmax = eve::Pio_2<EVE_TYPE>();
+  auto lmax = eve::pio_2(eve::as<EVE_TYPE>());
   auto lmin = -lmax;
   auto const std_csc = [](auto x) { return 1/std::sin(x); };
   EVE_REGISTER_BENCHMARK(std_csc, EVE_TYPE

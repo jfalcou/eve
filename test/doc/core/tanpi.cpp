@@ -8,7 +8,7 @@ using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {1.0f, 0.0f, eve::Inf<float>(), 0.5f};
+  wide_ft pf = {1.0f, 0.0f, eve::inf(eve::as<float>()), 0.5f};
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'

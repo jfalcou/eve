@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on sinpicospi", EVE_TYPE)
   auto sinpicospi_s =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return s; };
   auto sinpicospi_c =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return c; };
 
-  eve::exhaustive_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+  eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sinpi, sinpicospi_s);
   TTS_RANGE_CHECK(p, std_cospi, sinpicospi_c);
 }

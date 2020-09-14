@@ -22,6 +22,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__asind) , xp, std__asind , arg0);
-  run<EVE_VALUE>(EVE_NAME(asind) , xp, eve::asind , arg0);
-  run<EVE_TYPE> (EVE_NAME(asind) , xp, eve::asind , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::asind) , xp, eve::asind , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::asind) , xp, eve::asind , arg0);
 }

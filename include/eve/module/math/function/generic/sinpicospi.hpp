@@ -36,7 +36,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return restricted_(sincos)(a0 * Pi<T>());
+      return restricted_(sincos)(a0 * pi(eve::as<T>()));
     }
     else
       return apply_over2(restricted_(sinpicospi), a0);
@@ -52,19 +52,19 @@ namespace eve::detail
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(a0) )
-          return std::make_tuple(Nan<T>(), Nan<T>());
+          return std::make_tuple(nan(eve::as<T>()), nan(eve::as<T>()));
       }
       T x = abs(a0);
       if constexpr( scalar_value<T> )
       {
-        if( x > Maxflint<T>() )
+        if( x > maxflint(eve::as<T>()) )
           return std::make_tuple(T {0}, T(1));
       }
       else
       {
         auto invalid = is_not_finite(x);
-        x = if_else(x > Maxflint(as(x)), eve::zero_, x);
-        x = if_else(invalid, eve::allbits_, x);
+        x = if_else(x > maxflint(eve::as(x)), eve::zero, x);
+        x = if_else(invalid, eve::allbits, x);
       }
       auto [fn, xr, dxr] = rem2(x);
       return sincos_finalize(bitofsign(a0), fn, xr, dxr);

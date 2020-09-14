@@ -8,8 +8,8 @@
 -> binarize_not(pf > 0.0f, 3)       = (3, 0, 3, 3)
 ---- scalar
 <- xf                               = 1
--> binarize_not(True<float>(), xf)  = 0
--> binarize_not(False<float>(), xf) = 1
+-> binarize_not(true_(eve::as<float>()), xf)  = 0
+-> binarize_not(false_(eve::as<float>()), xf) = 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

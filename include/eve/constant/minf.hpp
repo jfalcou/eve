@@ -19,15 +19,15 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(minf_, minf_);
+  EVE_MAKE_CALLABLE(minf_, minf);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Minf(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    return T(-std::numeric_limits<t_t>::infinity());
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto minf_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
+      return T(-std::numeric_limits<t_t>::infinity());
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(minf_, Minf);
 }
-

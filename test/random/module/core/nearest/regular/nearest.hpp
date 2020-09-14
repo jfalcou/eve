@@ -23,13 +23,13 @@ TTS_CASE_TPL("wide random check on nearest", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_nearest = tts::vectorize<T>( [](auto e) { return std::nearbyint(e); } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
   else
   {
     auto std_nearest = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::Valmin<v_t>(), eve::Valmax<v_t>());
+    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
 }

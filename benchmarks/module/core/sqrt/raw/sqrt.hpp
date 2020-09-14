@@ -18,8 +18,8 @@
 int main()
 {
   auto lmax = [](){
-    if constexpr(eve::floating_value<EVE_VALUE>) return eve::Oneotwoeps<EVE_VALUE>();
-    else return eve::Valmax<EVE_VALUE>();
+    if constexpr(eve::floating_value<EVE_VALUE>) return eve::oneotwoeps(eve::as<EVE_VALUE>());
+    else return eve::valmax(eve::as<EVE_VALUE>());
   }();
   auto lmin = EVE_VALUE(0);
 

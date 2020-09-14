@@ -39,13 +39,13 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sindcosd) behavior", EVE_TYPE)
   }
   {
     auto [sin_, cos_] = eve::restricted_(eve::sindcosd)(T(base));
-    TTS_IEEE_EQUAL(sin_, eve::Nan<T>());
-    TTS_IEEE_EQUAL(cos_, eve::Nan<T>());
+    TTS_IEEE_EQUAL(sin_, eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(cos_, eve::nan(eve::as<T>()));
   }
 
   {
     auto [sin_, cos_] = eve::restricted_(eve::sindcosd)(T(-base));
-    TTS_IEEE_EQUAL(sin_, eve::Nan<T>());
-    TTS_IEEE_EQUAL(cos_, eve::Nan<T>());
+    TTS_IEEE_EQUAL(sin_, eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(cos_, eve::nan(eve::as<T>()));
   }
 }

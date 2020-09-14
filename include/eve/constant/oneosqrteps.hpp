@@ -19,17 +19,17 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(oneosqrteps_, oneosqrteps_);
+  EVE_MAKE_CALLABLE(oneosqrteps_, oneosqrteps);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Oneosqrteps(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto oneosqrteps_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t           = detail::value_type_t<T>;
 
-    if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X453504F3U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4190000000000000UL>();
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X453504F3U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4190000000000000UL>();
+    }
   }
-
-  EVE_MAKE_NAMED_CONSTANT(oneosqrteps_, Oneosqrteps);
 }
-

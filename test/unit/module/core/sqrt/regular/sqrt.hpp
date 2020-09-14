@@ -28,10 +28,10 @@ TTS_CASE_TPL("Check eve::sqrt behavior", EVE_TYPE)
   TTS_EQUAL(eve::sqrt(T( 1))    , (T(1)));
   TTS_EQUAL(eve::sqrt(T( 4))    , (T(2)));
 
-  TTS_ULP_EQUAL(eve::sqrt(T(2)) , eve::Sqrt_2<T>(), 0.5);
+  TTS_ULP_EQUAL(eve::sqrt(T(2)) , eve::sqrt_2(eve::as<T>()), 0.5);
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::sqrt(eve::Nan<T>()), (eve::Nan<T>()));
+    TTS_IEEE_EQUAL(eve::sqrt(eve::nan(eve::as<T>())), (eve::nan(eve::as<T>())));
   }
 }

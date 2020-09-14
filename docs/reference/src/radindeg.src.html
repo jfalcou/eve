@@ -16,8 +16,8 @@ using wide_ft = eve::wide <float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = { 0.0f, 1.0f, -1.0f, eve::Pio_2<float>()
-                 ,eve::Pi<float>(), eve::Inf<float>(), eve::Minf<float>(), eve::Nan<float>() };
+  wide_ft pf = { 0.0f, 1.0f, -1.0f, eve::pio_2(eve::as<float>())
+                 ,eve::pi(eve::as<float>()), eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>()) };
 
   std::cout
     << "---- simd" << '\n'
@@ -25,7 +25,7 @@ int main()
     << "-> eve::radindeg(pf) =      " << eve::radindeg(pf) << '\n';
 
   float xf = 1.0f;
-  float yf = eve::Pi<float>();
+  float yf = eve::pi(eve::as<float>());
 
   std::cout
     << "---- scalar"  << '\n'

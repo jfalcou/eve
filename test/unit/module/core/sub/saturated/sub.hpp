@@ -38,19 +38,19 @@ TTS_CASE_TPL("Check eve::saturated_(eve::sub) behavior", EVE_TYPE)
 
   if constexpr(eve::integral_value<T>)
   {
-    auto vmin = eve::Valmin<T>();
+    auto vmin = eve::valmin(eve::as<T>());
 
-    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::Valmin<T>()  ,T(1)))   , vmin );
-    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::Valmin<v_t>(),T(1)))   , vmin );
-    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::Valmin<T>()  ,v_t(1))) , vmin );
+    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::valmin(eve::as<T>())  ,T(1)))   , vmin );
+    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::valmin(eve::as<v_t>()),T(1)))   , vmin );
+    TTS_EQUAL( (eve::saturated_(eve::sub)(eve::valmin(eve::as<T>())  ,v_t(1))) , vmin );
 
     if constexpr(std::is_signed_v<v_t>)
     {
-      auto vmax = eve::Valmax<T>();
+      auto vmax = eve::valmax(eve::as<T>());
 
-      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::Valmax<T>()   , T(-1))) ,vmax );
-      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::Valmax<v_t>() , T(-1))) ,vmax );
-      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::Valmax<T>()   , v_t(-1))),vmax );
+      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::valmax(eve::as<T>())   , T(-1))) ,vmax );
+      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::valmax(eve::as<v_t>()) , T(-1))) ,vmax );
+      TTS_EQUAL ( (eve::saturated_(eve::sub)(eve::valmax(eve::as<T>())   , v_t(-1))),vmax );
 
       TTS_EQUAL(eve::saturated_(eve::sub)(  T(-1) ,   T( 1)), T(-2));
       TTS_EQUAL(eve::saturated_(eve::sub)(  T(-2) ,   T(-6)), T( 4));

@@ -29,15 +29,15 @@ TTS_CASE_TPL("Check eve::saturate behavior", EVE_TYPE)
     using v_t = eve::element_type_t<T>;
     if constexpr(sizeof(v_t) <= sizeof(std::int16_t))
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::uint16_t>()), eve::Valmax<T>() );
+      TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::uint16_t>()), eve::valmax(eve::as<T>()) );
     }
     else
     {
-      TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::uint16_t>()), T(eve::Valmax<std::uint16_t>()) );
+      TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::uint16_t>()), T(eve::valmax(eve::as<std::uint16_t>())) );
     }
   }
   else
   {
-    TTS_EQUAL(eve::saturate(eve::Valmax<T>(), eve::as<std::uint16_t>()), T(eve::Valmax<std::uint16_t>()) );
+    TTS_EQUAL(eve::saturate(eve::valmax(eve::as<T>()), eve::as<std::uint16_t>()), T(eve::valmax(eve::as<std::uint16_t>())) );
   }
 }

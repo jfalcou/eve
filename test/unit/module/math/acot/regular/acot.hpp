@@ -31,22 +31,22 @@ TTS_CASE_TPL("Check eve::acot behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acot(eve::Nan<T>()) , eve::Nan<T>(), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acot(eve::Inf<T>()) , T(0), 0);
-    TTS_ULP_EQUAL(eve::acot(eve::Minf<T>()), T(0), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::inf(eve::as<T>())) , T(0), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::minf(eve::as<T>())), T(0), 0);
   }
 
   TTS_ULP_EQUAL(eve::acot(T( 0.5))         ,  T(1.107148717794090e+00)  , 1   );
   TTS_ULP_EQUAL(eve::acot(T(-0.5))         ,  T(-1.107148717794090e+00) , 1   );
-  TTS_ULP_EQUAL(eve::acot(T(-1. ))         , -eve::Pio_4<T>()           , 0.5 );
-  TTS_ULP_EQUAL(eve::acot(T( 1. ))         ,  eve::Pio_4<T>()           , 0.5 );
-  TTS_ULP_EQUAL(eve::acot(T( 0. ))         ,  eve::Pio_2<T>()           , 1   );
+  TTS_ULP_EQUAL(eve::acot(T(-1. ))         , -eve::pio_4(eve::as<T>())           , 0.5 );
+  TTS_ULP_EQUAL(eve::acot(T( 1. ))         ,  eve::pio_4(eve::as<T>())           , 0.5 );
+  TTS_ULP_EQUAL(eve::acot(T( 0. ))         ,  eve::pio_2(eve::as<T>())           , 1   );
 
-  auto inv_smallest = eve::rec(eve::Smallestposval<T>());
-  TTS_ULP_EQUAL(eve::acot(T(-0.)) , -eve::Pio_2<T>()           , 1   );
-  TTS_ULP_EQUAL(eve::acot(inv_smallest)       ,  eve::Smallestposval<T>()  , 0.5 );
+  auto inv_smallest = eve::rec(eve::smallestposval(eve::as<T>()));
+  TTS_ULP_EQUAL(eve::acot(T(-0.)) , -eve::pio_2(eve::as<T>())           , 1   );
+  TTS_ULP_EQUAL(eve::acot(inv_smallest)       ,  eve::smallestposval(eve::as<T>())  , 0.5 );
 }

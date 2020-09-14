@@ -20,14 +20,16 @@ namespace eve
   //TODO: RENOMMAGE EN  Mantissanentmask
   EVE_MAKE_CALLABLE(mantissabits_mask_, mantissabits_mask_);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto Mantissabits_mask(as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<T, signed>;
-    if constexpr(std::is_same_v<t_t, float>) return i_t(0x007FFFFFU);
-    else if constexpr(std::is_same_v<t_t, double >) return i_t(0x000FFFFFFFFFFFFFULL);
-  }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto mantissabits_mask_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<t_t>;
 
-  EVE_MAKE_NAMED_CONSTANT(mantissabits_mask_, Mantissabits_mask);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(0x007FFFFFU);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(0x000FFFFFFFFFFFFFULL);
+    }
+  }
 }

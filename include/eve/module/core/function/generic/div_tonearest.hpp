@@ -54,7 +54,7 @@ namespace eve::detail
           {
             using ui_t = as_integer_t<T, unsigned>;
             if( !a )
-              return Zero<T>();
+              return zero(eve::as<T>());
             if( b )
             {
               ui_t aa = saturated_(eve::abs)(a);
@@ -63,7 +63,7 @@ namespace eve::detail
               return if_else(is_gez(a ^ b), q, -q);
             }
             else
-              return ((a > 0) ? Valmax<T>() : Valmin<T>());
+              return ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>()));
           }
           else
           {
@@ -72,7 +72,7 @@ namespace eve::detail
               return saturated_(convert)(nearest(static_cast<f_t>(a) / static_cast<f_t>(b)),
                                          as<T>());
             else
-              return (a) ? ((a > 0) ? Valmax<T>() : Valmin<T>()) : Zero<T>();
+              return (a) ? ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>())) : zero(eve::as<T>());
           }
         }
         else if constexpr( unsigned_value<T> )
@@ -101,26 +101,26 @@ namespace eve::detail
           {
             auto aa  = saturated_(eve::abs)(a);
             auto bb  = saturated_(eve::abs)(b);
-            bb       = if_else(is_eqz(bb), eve::allbits_, bb);
+            bb       = if_else(is_eqz(bb), eve::allbits, bb);
             auto q   = eve::saturated_(eve::div)(aa, bb);
             auto rx2 = 2 * (aa - q * bb);
             q = if_else(is_greater_equal(rx2, bb), inc[logical_ornot(rx2 != bb, is_even(q))](q), q);
             return if_else(
                 is_nez(b),
                 if_else(is_gez(a ^ b), q, -q),
-                if_else(is_eqz(a), eve::zero_, if_else(is_gtz(a), Valmax<T>(), Valmin<T>())));
+                if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
           else
           {
             return if_else(
                 is_nez(b),
                 saturated_(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
-                if_else(is_eqz(a), eve::zero_, if_else(is_gtz(a), Valmax<T>(), Valmin<T>())));
+                if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
         }
         else if constexpr( unsigned_value<T> )
         {
-          auto bb  = if_else(is_eqz(b), eve::allbits_, b);
+          auto bb  = if_else(is_eqz(b), eve::allbits, b);
           T    q   = div(a, bb);
           T    rx2 = 2 * (a - q * bb);
           q = if_else(is_greater_equal(rx2, bb), inc[logical_ornot(rx2 != bb, is_even(q))](q), q);

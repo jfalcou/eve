@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::fnms) behavior", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    T e = eve::Eps<T>();
+    T e = eve::eps(eve::as<T>());
     TTS_EQUAL(eve::pedantic_(eve::fnms)(eve::inc(e), eve::dec(e),T(1)), -eve::sqr(e));
   }
 }
