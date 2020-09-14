@@ -1,4 +1,4 @@
-<img src="https://github.com/jfalcou/eve/raw/develop/doc/_static/logo.png" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/develop/doc/_static/logo.png" align="left"  width="15%" height="15%" />
+<img src="https://github.com/jfalcou/eve/raw/develop/docs/logo.png" alt="" data-canonical-src="https://github.com/jfalcou/eve/raw/develop/docs/logo.png" align="left"  width="15%" height="15%" />
 
 # EVE - the Expressive Vector Engine
 
@@ -19,15 +19,16 @@ needs to change.
 ## What's left to do?
 
 EVE is roughly usable at the moment but we need to:
- [ ]  Complete and host the documentations on the web
- [ ]  Implement algorithms à la std over SIMD-izable ranges
- [ ]  Complete implementations of some functions like multi-register shuffles and some math functions
- [ ] Fix potential performance or codegen issues
+
+- [ ] Complete and host the documentations on the web
+- [ ]  Implement algorithms à la std over SIMD-izable ranges
+- [ ]  Complete implementations of some functions like multi-register shuffles and some math functions
+- [ ] Fix potential performance or codegen issues
 
 ## FAQ
 
  - **Why C++20 ?** Becasue we want to be able to use modern design components like Concepts, and later on, Modules.
- - 
+ 
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
  design and implementation decision for such libraries. Vc and its standard version are fine pieces
  of work but we aim at pushing the envelop in term of API and implementation without any standard
