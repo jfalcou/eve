@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/exp10.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -39,5 +40,9 @@ TTS_CASE_TPL("Check eve::exp10 behavior", EVE_TYPE)
 
     TTS_ULP_EQUAL ( eve::exp10(T(-1)) , T(0.1), 0.5);
     TTS_IEEE_EQUAL( eve::exp10(T(-0.)), T(1));
+    TTS_ULP_EQUAL (eve::exp10(eve::minlog10(eve::as<T>())), T(0), 0);
+    TTS_ULP_EQUAL (eve::exp10(eve::prev(eve::minlog10(eve::as<T>()))), T(0), 0);
+
+    TTS_ULP_EQUAL (eve::exp10(eve::minlog10denormal(eve::as<T>())), T(0), 0);
   }
 }

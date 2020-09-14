@@ -15,6 +15,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
+#include <eve/constant/minlogdenormal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -33,6 +34,7 @@
 #include <eve/function/regular.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -43,17 +45,25 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t       = element_type_t<T>;
+      auto minlogval = [](){
+        if constexpr((!eve::platform::supports_denormals) || std::is_same_v<D,regular_type> )
+        {
+          return  minlog(eve::as<T>());
+        }
+        else
+        {
+          return minlogdenormal(eve::as<T>());
+        }
+      };
       const T Log_2hi   = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
       const T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
       const T Invlog_2  = Ieee_constant<T, 0x3fb8aa3bU, 0x3ff71547652b82feULL>();
-      auto    xltminlog = x < minlog(eve::as(x));
+      auto    xltminlog = x <= minlogval();
       auto    xgemaxlog = x >= maxlog(eve::as(x));
       if constexpr( scalar_value<T> )
       {
-        if( xgemaxlog )
-          return inf(eve::as(x));
-        if( xltminlog )
-          return zero(eve::as(x));
+        if( xgemaxlog ) return inf(eve::as(x));
+        if( xltminlog ) return zero(eve::as(x));
       }
       auto c = nearest(Invlog_2 * x);
       auto k = c;
@@ -89,7 +99,7 @@ namespace eve::detail
       return z;
     }
     else
-      return apply_over(exp, x);
+      return apply_over(D()(exp), x);
   }
 
   template<floating_real_value T>
