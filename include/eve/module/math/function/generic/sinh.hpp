@@ -10,13 +10,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/constant/maxlog.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expm1.hpp>
 #include <eve/function/inc.hpp>
-#include <eve/function/div.hpp>    // -> put in wide
 #include <eve/function/fnma.hpp>
 #include <eve/constant/half.hpp>
 #include <eve/constant/one.hpp>
@@ -39,13 +39,12 @@ namespace eve::detail
 
     if constexpr(has_native_abi_v<T>)
     {
-      T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
       T x = eve::abs(a0);
 
       if constexpr(scalar_value<T>)
       {
         T h = (a0 > T(0)) ? T(1) : T(-1);
-        if (x >= ovflimit)
+        if (x >= maxlog(as<T>()))
         {
           T w = exp(x*half(eve::as<T>()));
           T t = half(eve::as<T>())*w;
@@ -69,9 +68,8 @@ namespace eve::detail
         auto s = half(eve::as<T>())*h*(z+t);
 
         s = if_else (is_eqz(a0), a0,  s);
-        auto test = x <  ovflimit;
+        auto test = x < maxlog(as < T > ());
         if (eve::all(test)) return s;
-
         auto w = exp(x*half(eve::as<T>()));
         t = half(eve::as<T>())*w;
         t *= w;
@@ -85,4 +83,3 @@ namespace eve::detail
     }
   }
 }
-

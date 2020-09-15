@@ -95,7 +95,10 @@ namespace eve::detail
       return z;
     }
     else
+    {
       return apply_over(D()(exp2), x);
+    }
+
   }
 
   template<floating_real_value T>
