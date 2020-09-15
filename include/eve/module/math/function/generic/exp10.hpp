@@ -15,6 +15,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/invlog10_2.hpp>
 #include <eve/constant/maxlog10.hpp>
+#include <eve/constant/minlog10.hpp>
 #include <eve/constant/minlog10denormal.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/detail/abi.hpp>
