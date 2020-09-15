@@ -18,16 +18,11 @@
 #define EVE_BASE eve::wide<${target}>
 
 #if !defined(EVE_CUSTOM_CARDINAL)
-inline constexpr auto base_cardinal   = EVE_BASE::static_size;
-inline constexpr auto large_cardinal  = 2*base_cardinal;
-inline constexpr auto small_cardinal  = (base_cardinal>1) ? base_cardinal/2 : 1;
 
 #define EVE_CARDINAL ::eve::cardinal_v<T>
 
 // Native size test
-#define EVE_TYPE  eve::wide<${target},eve::fixed<1>>, eve::wide<${target},eve::fixed<small_cardinal>> \
-                , eve::wide<${target}>              , eve::wide<${target},eve::fixed<large_cardinal>> \
-/**/
+#define EVE_TYPE  eve::wide<${target}>
 #include "${header}.hpp"
 
 #else
