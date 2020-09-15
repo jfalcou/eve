@@ -95,7 +95,6 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-         std::cout << "latte1" << std::endl;
        return pedantic_(ldexp)(a, convert(trunc(b), as<eli_t>()));
       }
     }
