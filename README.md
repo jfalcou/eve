@@ -57,7 +57,7 @@ EVE is considered in **advanced beta**: it's usable, has an almost complete feat
 ### Current roaster of suypported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
- - Concepts
+ - Concepts and requires
  - Template lambdas
  - Inline variables
  - Non-Type Template Parameters
@@ -69,10 +69,10 @@ Here is the current minimal compiler version supported:
 | Compiler       | Version       |
 | -------------- | ------------- |
 | g++            | 10.2 or above |
-| clang++        | 11   or above |
+| clang++        | 10   or above |
 | Visual Studio  | *TBD*         |
 
-Visual Studio support is currently being added.
+Visual Studio support is currently being added. Help on the front of setting up appveyor properly is also welcome.
 
 ## FAQ
 
@@ -120,6 +120,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-
-This won't change. Not anymore. 
-We learnt our lessons.
