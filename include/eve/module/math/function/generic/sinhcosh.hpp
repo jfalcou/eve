@@ -36,7 +36,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      T ovflimit =  Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
+      T ovflimit =   maxlog(as<T>()); //Ieee_constant<T,0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f, 709.782712893384
         auto x = eve::abs(a0);
       if constexpr(scalar_value<T>)
       {
@@ -84,4 +84,3 @@ namespace eve::detail
     }
   }
 }
-

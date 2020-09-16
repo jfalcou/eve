@@ -48,6 +48,7 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   {
     auto sh  = eve::sinh(T(a[i]));
     v_t sh1 = std::sinh(double(a[i]));
+    std::cout << "i " << i << std::endl;
     TTS_ULP_EQUAL(sh, (T(sh1)), 0.5);
   }
 }

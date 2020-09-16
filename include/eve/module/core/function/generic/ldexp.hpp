@@ -71,6 +71,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T> && has_native_abi_v<U>)
     {
       using elt_t = element_type_t<T>;
+      using eli_t =  as_integer_t<elt_t>;
       if constexpr(integral_value<U>)
       {
         using i_t =  as_integer_t<T>;
@@ -94,10 +95,10 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-        return ldexp(a, saturated_(convert)(trunc(b), as<elt_t>()));
+       return pedantic_(ldexp)(a, convert(trunc(b), as<eli_t>()));
       }
     }
-    else  return apply_over(ldexp, a, b);
+    else  return apply_over(pedantic_(ldexp), a, b);
   }
 
 

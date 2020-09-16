@@ -9,10 +9,12 @@
 **/
 //==================================================================================================
 #include <eve/function/exp.hpp>
+#include <eve/function/prev.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/minlog.hpp>
+#include <eve/constant/minlogdenormal.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -40,6 +42,11 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::exp) behavior", EVE_TYPE)
 
   TTS_IEEE_EQUAL( eve::pedantic_(eve::exp)(T( 0.)), T(1));
   TTS_IEEE_EQUAL( eve::pedantic_(eve::exp)(T(-0.)), T(1));
-  v_t z = eve::minlog(eve::as<v_t>())+1;
-  TTS_ULP_EQUAL( eve::pedantic_(eve::exp)(T(z)), T(std::exp((z))), 0.5);
+  if constexpr( eve::platform::supports_denormals )
+  {
+    TTS_ULP_EQUAL (eve::pedantic_(eve::exp)(eve::minlog(eve::as<T>())), T(std::exp(eve::minlog(eve::as<v_t>()))), 0.5);
+    TTS_ULP_EQUAL (eve::pedantic_(eve::exp)(eve::prev(eve::minlog(eve::as<T>()))), T(std::exp(eve::prev(eve::minlog(eve::as<v_t>())))), 0.5);
+  }
+  TTS_ULP_EQUAL (eve::pedantic_(eve::exp)(eve::minlogdenormal(eve::as<T>())), T(std::exp(eve::minlogdenormal(eve::as<v_t>()))), 0);
+  TTS_ULP_EQUAL (eve::pedantic_(eve::exp)(eve::prev(eve::minlogdenormal(eve::as<T>()))), T(std::exp(eve::prev(eve::minlogdenormal(eve::as<v_t>())))), 0);
 }
