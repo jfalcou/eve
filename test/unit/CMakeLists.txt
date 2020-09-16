@@ -9,3 +9,4 @@
 add_subdirectory(arch)
 add_subdirectory(api)
 add_subdirectory(module)
+add_subdirectory(meta)

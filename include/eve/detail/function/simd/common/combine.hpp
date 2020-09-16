@@ -1,54 +1,68 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_COMMON_COMBINE_HPP_INCLUDED
+#pragma once
 
 #include <eve/detail/abi.hpp>
+#include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/function/bit_cast.hpp>
 #include <eve/forward.hpp>
 
-#if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#pragma GCC diagnostic ignored "-Wuninitialized"
-#endif
-
-namespace eve { namespace detail
+namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( cpu_ const&
-                              , pack<T,N,emulated_> const& l
-                              , pack<T,N,emulated_> const& h
-                              ) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  combine(cpu_ const &, wide<T, N, ABI> const &l, wide<T, N, ABI> const &h) noexcept
   {
-    auto impl = [&](auto... I) { return pack<T,typename N::combined_type>{l[I]...,h[I]...}; };
-    return apply<N::value>(impl);
+    using that_t = wide<T, typename N::combined_type>;
+
+    if constexpr( is_emulated_v<ABI> )
+    {
+      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+    }
+    else if constexpr( is_aggregated_v<ABI> )
+    {
+      that_t that;
+
+      that.storage().segments[0] = l;
+      that.storage().segments[1] = h;
+
+      return that;
+    }
   }
 
-  //------------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto combine( cpu_ const&
-                              , pack<T,N,aggregated_> const& l
-                              , pack<T,N,aggregated_> const& h
-                              ) noexcept
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto
+  combine(cpu_ const &, logical<wide<T, N, ABI>> const &l, logical<wide<T, N, ABI>> const &h) noexcept
   {
-    using that_t = pack<T,typename N::combined_type>;
-    return that_t( typename that_t::storage_type{l,h} );
+    using that_t = logical<wide<T, typename N::combined_type>>;
+
+    if constexpr( is_emulated_v<ABI> )
+    {
+      return apply<N::value>([&](auto... I) { return that_t {l[I]..., h[I]...}; });
+    }
+    else if constexpr( is_aggregated_v<ABI> )
+    {
+      that_t that;
+
+      that.storage().segments[0] = l;
+      that.storage().segments[1] = h;
+
+      return that;
+    }
+    else
+    {
+      wide<T, typename N::combined_type> cb(l.mask(),h.mask());
+      return bit_cast(cb, as_<that_t>());
+    }
   }
-} }
+}
 
-#if defined(EVE_COMP_IS_GNUC)
-#pragma GCC diagnostic pop
-#endif
-
-#endif

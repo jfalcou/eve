@@ -1,16 +1,20 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CSCD_HPP_INCLUDED
-#define EVE_FUNCTION_CSCD_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/cscd.hpp>
-//#include <eve/function/simd/cscd.hpp>
+#include <eve/detail/overload.hpp>
 
-#endif
+namespace eve
+{
+  EVE_MAKE_CALLABLE(cscd_, cscd);
+}
+
+#include <eve/module/math/function/generic/cscd.hpp>

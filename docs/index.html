@@ -1,0 +1,96 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+<br>
+**EVE** is a C++20 and forward implementation of a type based wrapper around for SIMD computations. It wraps SIMD instruction sets for most current architectures. It aims at showing how C++20 can be used to design and implement efficient, low level, high abstraction library suited for high performances.
+
+It's a research project first and an open source library second as we want to explore new programming styles and techniques as the language evolves. Semantic versions will ensure API retro-compatibility if anything huge needs to change by keeping branches for old major versions.
+
+  (insert crumbs.html here)
+
+Build and setup
+====================================================================================================
+
+Retrieving the source
+----------------------------------------------------------------------------------------------------
+
+**EVE** is available on GitHub and can be retrieved via the following command:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+ $ git clone -b master https://github.com/jfalcou/eve.git
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once retrieved, you should have a ``eve`` folder which contains the whole source code.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+ $ cd eve
+ $ ls
+   appveyor.yml  build  cmake  CMakeLists.txt  CTestConfig.cmake  doc
+   docs  format.sh  include  LICENSE.md  README.md  src  test
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installing
+----------------------------------------------------------------------------------------------------
+
+Create a ``build`` directory here and enter it. Once in the ``build`` directory,
+you can use  **CMake** to generate the build system for **EVE**. We recommend using
+Ninja but any build system is fine.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+ $ mkdir build
+ $ cd build
+ $ cmake .. -G Ninja
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once **CMake** completes, you can use the ``install`` target to build and install **EVE**.
+By default, the library will be installed in the ``/usr/local`` directory, thus requiring
+root privileges.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+ $ sudo ninja install
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can select an alternative installation path by specifying the ``CMAKE_INSTALL_PREFIX``
+option at configuration time.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
+ $ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install
+ $ ninja install
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once completed, the following files and folders are installed:
+
+- `$CMAKE_INSTALL_PREFIX/include/eve`
+- `$CMAKE_INSTALL_PREFIX/lib/cmake/eve`
+
+CMake integration
+====================================================================================================
+
+Classic usage
+----------------------------------------------------------------------------------------------------
+
+ExternalProject
+----------------------------------------------------------------------------------------------------
+
+Quick Start
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<link rel="stylesheet" href="eve.css">
+<!-- Markdeep: -->
+<script src="markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>

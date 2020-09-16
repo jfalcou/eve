@@ -1,16 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
-#define EVE_FUNCTION_LOGICAL_NOTOR_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/logical_notor.hpp>
-//#include <eve/function/simd/logical_notor.hpp>
+#include <eve/detail/overload.hpp>
 
-#endif
+namespace eve
+{
+  EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
+}
+
+#include <eve/module/core/function/generic/logical_notor.hpp>
+

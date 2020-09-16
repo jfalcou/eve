@@ -1,82 +1,159 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_CPUID_HPP_INCLUDED
-#define EVE_DETAIL_CPUID_HPP_INCLUDED
+#pragma once
 
-#include <eve/detail/architecture.hpp>
-#include <eve/detail/compiler.hpp>
-#include <eve/detail/os.hpp>
-#include <cstdio>
+#include <eve/detail/spy.hpp>
 
-#if defined(EVE_ARCH_IS_X86)
 
-#if defined(EVE_COMP_IS_GNUC) || defined(EVE_COMP_IS_CLANG)
-  #define EVE_CPUID_HEADER
-#else
-  #if defined(EVE__OS_IS_LINUX)
-    #if defined(EVE_COMP_IS_INTEL) || defined(EVE_COMP_IS_INTEL_EMULATED)
-      #define EVE_CPUID_HEADER
-    #endif
-  #endif
-#endif
+#if defined(SPY_ARCH_IS_AMD64)
+#  if __has_include(<cpuid.h>)
+#    include <cpuid.h>
+#    define EVE_HAS_CPUID
+#  endif
 
-#if defined(EVE_CPUID_HEADER)
-#include <cpuid.h>
-#else
-#include <intrin.h>
-#endif
+#  if __has_include(<intrin.h>) && !defined(EVE_HAS_CPUID)
+#    include <intrin.h>
+#  endif
 
-namespace eve { namespace detail
+#include <bitset>
+#include <vector>
+#include <array>
+
+namespace
 {
-#if defined(EVE_CPUID_HEADER)
+#  if defined(EVE_HAS_CPUID)
   using register_t = unsigned int;
-#else
+#  else
   using register_t = int;
-#endif
+#  endif
 
-  enum registerID { eax=0, ebx=1, ecx=2, edx=3 };
+  enum registerID { eax = 0, ebx = 1, ecx = 2, edx = 3 };
 
-  inline void cpuid(register_t registers[4], int function) noexcept
+  inline void cpuid(register_t registers[ 4 ], int function) noexcept
   {
-#if defined(EVE_CPUID_HEADER)
-    __cpuid (function, registers[eax], registers[ebx], registers[ecx], registers[edx]);
-#else
+#  if defined(EVE_HAS_CPUID)
+    __cpuid(function, registers[ eax ], registers[ ebx ], registers[ ecx ], registers[ edx ]);
+#  else
     __cpuid(registers, function);
-#endif
+#  endif
   }
 
-  inline void cpuidex(register_t registers[4], int function, int subfunction) noexcept
+  inline void cpuidex(register_t registers[ 4 ], int function, int subfunction) noexcept
   {
-#if defined(EVE_CPUID_HEADER)
-    __cpuid_count ( function, subfunction
-                  , registers[eax], registers[ebx], registers[ecx], registers[edx]
-                  );
-#else
+#  if defined(EVE_HAS_CPUID)
+    __cpuid_count(function,
+                  subfunction,
+                  registers[ eax ],
+                  registers[ ebx ],
+                  registers[ ecx ],
+                  registers[ edx ]);
+#  else
     __cpuidex(registers, function, subfunction);
-#endif
+#  endif
   }
 
-  inline bool detect_feature(int bit, int function, int register_id) noexcept
+  /*
+    This code is an slight adaptation of:
+    https://docs.microsoft.com/en-us/cpp/intrinsics/cpuid-cpuidex?view=vs-2019
+  */
+  struct runtime_flags
   {
-    register_t regs_x86[4] = {0x00000000, 0x00000000, 0x00000000, 0x00000000};
-    cpuidex(regs_x86, function, 0);
-    return (regs_x86[register_id] & (1 << bit)) != 0;
-  }
+    runtime_flags() : isIntel_{ false }, isAMD_{ false }
+                    , f1_ECX_{ 0 }, f1_EDX_{ 0 }, f7_EBX_{ 0 },f7_ECX_{ 0 }, f81_ECX_{ 0 }
+    {
+      std::array<register_t, 4> cpui, cpui0, cpui1, cpui7;
 
-  inline bool detect_features(int bits, int function, int register_id) noexcept
+      // Calling cpuid with function 0 gets the number of the highest valid extended ID.
+      cpuid(cpui.data(), 0);
+      cpuidex(cpui0.data(), 0, 0);
+      cpuidex(cpui1.data(), 1, 0);
+      cpuidex(cpui7.data(), 7, 0);
+
+      // Compare minimal amount of vendor string
+      isIntel_ = (cpui0[1] == 0x756e6547); // data == 'Genu'
+      isAMD_   = (cpui0[1] == 0x68747541); // data == 'Auth'
+
+      // load bitset with flags for function 0x00000001
+      if (cpui[0] >= 1)
+      {
+        f1_ECX_ = cpui1[2];
+        f1_EDX_ = cpui1[3];
+      }
+
+      // load bitset with flags for function 0x00000007
+      if (cpui[0] >= 7)
+      {
+        f7_EBX_ = cpui7[1];
+        f7_ECX_ = cpui7[2];
+      }
+
+      // Calling cpuid with function 0x80000000 gets the number of the highest valid extended ID.
+      cpuid(cpui.data(), 0x80000000);
+      if( cpui[0]>= 0x80000001)
+      {
+        cpuidex(cpui.data(), 0x80000001, 0);
+      // load bitset with flags for function 0x80000001
+      f81_ECX_ = cpui[2];
+      }
+    }
+
+    bool supports_sse2()     const noexcept { return f1_EDX_[26];                 }
+    bool supports_sse3()     const noexcept { return f1_ECX_[0];                  }
+    bool supports_ssse3()    const noexcept { return f1_ECX_[9];                  }
+    bool supports_sse4_1()   const noexcept { return f1_ECX_[19];                 }
+    bool supports_sse4_2()   const noexcept { return f1_ECX_[20];                 }
+    bool supports_fma3()     const noexcept { return f1_ECX_[12] && f1_ECX_[27];  }
+    bool supports_avx()      const noexcept { return f1_ECX_[28] && f1_ECX_[27];  }
+    bool supports_avx2()     const noexcept { return f7_EBX_[5]  && f1_ECX_[27];  }
+
+    bool supports_avx512F()  const noexcept { return f7_EBX_[16]; }
+    bool supports_avx512PF() const noexcept { return f7_EBX_[26]; }
+    bool supports_avx512ER() const noexcept { return f7_EBX_[27]; }
+    bool supports_avx512CD() const noexcept { return f7_EBX_[28]; }
+
+    bool supports_sse4_a()   const noexcept { return isAMD_ && f81_ECX_[6];                  }
+    bool supports_xop()      const noexcept { return isAMD_ && f1_ECX_[27] && f81_ECX_[11];  }
+    bool supports_fma4()     const noexcept { return isAMD_ && f1_ECX_[27] && f81_ECX_[16];  }
+
+    bool isIntel_, isAMD_;
+    std::bitset<32> f1_ECX_, f1_EDX_, f7_EBX_, f7_ECX_, f81_ECX_;
+  };
+}
+#else
+namespace
+{
+  struct runtime_flags
   {
-    register_t regs_x86[4] = {0x00000000, 0x00000000, 0x00000000, 0x00000000};
-    cpuidex(regs_x86, function, 0);
-    return (regs_x86[register_id] & bits) != 0;
-  }
-} }
+    bool supports_sse2()     const noexcept { return false; }
+    bool supports_sse3()     const noexcept { return false; }
+    bool supports_ssse3()    const noexcept { return false; }
+    bool supports_sse4_1()   const noexcept { return false; }
+    bool supports_sse4_2()   const noexcept { return false; }
+    bool supports_fma3()     const noexcept { return false; }
+    bool supports_avx()      const noexcept { return false; }
+    bool supports_avx2()     const noexcept { return false; }
+
+    bool supports_avx512F()  const noexcept { return false; }
+    bool supports_avx512PF() const noexcept { return false; }
+    bool supports_avx512ER() const noexcept { return false; }
+    bool supports_avx512CD() const noexcept { return false; }
+
+    bool supports_sse4_a()   const noexcept { return false;  }
+    bool supports_xop()      const noexcept { return false;  }
+    bool supports_fma4()     const noexcept { return false;  }
+  };
+}
 #endif
 
-#endif
+namespace eve::detail
+{
+  inline const runtime_flags cpuid_states = {};
+}

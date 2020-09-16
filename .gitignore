@@ -32,6 +32,11 @@
 *_
 *#
 
-# Potential local build repository
-build/
+# Setup
+.idea/
+*.sublime-*
 
+# Potential local build repository
+*build*/
+Testing/*
+*.vscode/*

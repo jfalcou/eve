@@ -1,0 +1,47 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <tts/tests/types.hpp>
+#include <eve/function/musl.hpp>
+#include <eve/function/plain.hpp>
+#include <eve/function/numeric.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
+#include <eve/function/roundings.hpp>
+#include <eve/function/saturated.hpp>
+
+TTS_CASE("Checck that non-decorator types don't satisfy decorator" )
+{
+  TTS_EXPECT_NOT( eve::decorator<int>   );
+  TTS_EXPECT_NOT( eve::decorator<char>  );
+  TTS_EXPECT_NOT( eve::decorator<float> );
+  TTS_EXPECT_NOT( eve::decorator<double>);
+
+  TTS_EXPECT_NOT( eve::decorator<eve::logical<short>>);
+  TTS_EXPECT_NOT( eve::decorator<eve::logical<float>>);
+}
+
+TTS_CASE("Checck that decorators satisfies decorator" )
+{
+  TTS_EXPECT( eve::decorator<eve::downward_type>    );
+  TTS_EXPECT( eve::decorator<eve::musl_type>        );
+  TTS_EXPECT( eve::decorator<eve::numeric_type>     );
+  TTS_EXPECT( eve::decorator<eve::pedantic_type>    );
+  TTS_EXPECT( eve::decorator<eve::plain_type>       );
+  TTS_EXPECT( eve::decorator<eve::raw_type>         );
+  TTS_EXPECT( eve::decorator<eve::regular_type>     );
+  TTS_EXPECT( eve::decorator<eve::saturated_type>   );
+  TTS_EXPECT( eve::decorator<eve::to_nearest_type>  );
+  TTS_EXPECT( eve::decorator<eve::toward_zero_type> );
+  TTS_EXPECT( eve::decorator<eve::upward_type>      );
+}
+

@@ -1,31 +1,28 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef TEST_TEST_HPP
-#define TEST_TEST_HPP
+#pragma once
 
+#define TTS_USE_CUSTOM_DRIVER
 #include <tts/tts.hpp>
-#include <tts/tests/relation.hpp>
-#include <eve/forward.hpp>
-#include <algorithm>
+#include "measures.hpp"
 
-namespace tts { namespace ext
+int main(int argc, char **argv)
 {
-  template<typename T, typename N, typename ABI, typename EnableIf>
-  struct equal<eve::pack<T,N,ABI>,eve::pack<T,N,ABI>,EnableIf>
-  {
-    using arg_t = eve::pack<T,N,ABI>;
-    inline bool operator()(arg_t const& l, arg_t const& r) const
-    {
-      return std::equal(l.begin(),l.end(),r.begin());
-    }
-  };
-} }
-
+  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Assertions: ";
+#ifdef NDEBUG
+  std::cout << "Disabled\n";
+#else
+  std::cout << "Enabled\n";
 #endif
+
+  ::tts::env runtime(argc, argv, std::cout);
+  return ::tts::run(runtime, ::tts::detail::suite, 0, 0);
+}

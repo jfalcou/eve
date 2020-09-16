@@ -1,16 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_ATANH_HPP_INCLUDED
-#define EVE_FUNCTION_ATANH_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/atanh.hpp>
-//#include <eve/function/simd/atanh.hpp>
+#include <eve/detail/overload.hpp>
 
-#endif
+namespace eve
+{
+  EVE_MAKE_CALLABLE(atanh_, atanh);
+}
+
+#include <eve/module/math/function/generic/atanh.hpp>
+

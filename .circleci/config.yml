@@ -1,0 +1,203 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright 2019 Joel FALCOU
+##  Copyright 2019 Jean-Thierry LAPRESTE
+##
+##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+version: 2.1
+
+##==================================================================================================
+## Docker images
+##==================================================================================================
+docker_gcc: &docker_gcc
+  docker:
+    - image: compilaction/gcc-dev:latest
+      environment:
+        COMPILER: g++
+docker_clang: &docker_clang
+  docker:
+    - image: compilaction/clang-dev:latest
+      environment:
+        COMPILER: clang++
+docker_aarch64: &docker_aarch64
+  docker:
+    - image: compilaction/gcc-dev:latest
+      environment:
+        RUN_COMMAND: qemu-aarch64
+        COMPILER: aarch64-linux-gnu-g++
+
+##==================================================================================================
+## Build configurations
+##==================================================================================================
+config_gcc_x86: &config_gcc_x86
+  <<: *docker_gcc
+config_clang_x86: &config_clang_x86
+  <<: *docker_clang
+config_aarch64: &config_aarch64
+ <<: *docker_aarch64
+
+##==================================================================================================
+## Jobs list
+##==================================================================================================
+jobs:
+  ##================================================================================================
+  ## Non-SIMD tests
+  ##================================================================================================
+  gcc_x86:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running Basic Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX
+          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - FMA3
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
+
+  clang_x86:
+    <<: *config_clang_x86
+    steps:
+      - checkout
+      - run:
+          name: Running Basic Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX
+          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - FMA3
+          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
+
+  arm_aarch64:
+    <<: *config_aarch64
+    steps:
+      - checkout
+      - run:
+          name: Running Basic Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - AARCH64 NEON
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
+      - run:
+          name: Running Basic Tests - Scalar
+          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
+
+  ##================================================================================================
+  ## SIMD tests
+  ##================================================================================================
+  x86_emulation:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - Emulation
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
+
+  x86_sse2:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - SSE2
+          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
+
+  x86_sse4:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - SSE4
+          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
+
+  x86_avx:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - AVX
+          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
+
+  x86_fma:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - FMA
+          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
+
+  x86_avx2:
+    <<: *config_gcc_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - AVX2
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
+
+  arm_aarch64_neon:
+    <<: *config_aarch64
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - AARCH64 NEON
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    ##==============================================================================================
+    ## All tests
+    ##==============================================================================================
+      - gcc_x86
+      - clang_x86
+      - arm_aarch64
+      - arm_aarch64_neon:
+          requires:
+            - arm_aarch64
+      - x86_sse2:
+          requires:
+            - gcc_x86
+      - x86_sse4:
+          requires:
+            - gcc_x86
+      - x86_avx:
+          requires:
+            - gcc_x86
+      - x86_avx2:
+          requires:
+            - gcc_x86
+      - x86_fma:
+          requires:
+            - gcc_x86
+      - x86_emulation:
+          requires:
+            - gcc_x86

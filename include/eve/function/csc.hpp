@@ -1,16 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_CSC_HPP_INCLUDED
-#define EVE_FUNCTION_CSC_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/csc.hpp>
-//#include <eve/function/simd/csc.hpp>
+#include <eve/detail/overload.hpp>
 
-#endif
+namespace eve
+{
+  EVE_MAKE_CALLABLE(csc_, csc);
+}
+
+#include <eve/module/core/function/generic/csc.hpp>
+

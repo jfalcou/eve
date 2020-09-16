@@ -1,16 +1,26 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
-#define EVE_FUNCTION_IS_NOT_GREATER_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/is_not_greater.hpp>
-//#include <eve/function/simd/is_not_greater.hpp>
+#include <eve/detail/overload.hpp>
 
+namespace eve
+{
+  EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
+}
+
+#include <eve/arch.hpp>
+#include <eve/module/core/function/generic/is_not_greater.hpp>
+
+#if defined(EVE_HW_X86)
+#  include <eve/module/core/function/simd/x86/add.hpp>
 #endif
+

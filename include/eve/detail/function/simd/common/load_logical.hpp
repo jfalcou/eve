@@ -1,48 +1,55 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_LOGICAL_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_COMMON_LOAD_LOGICAL_HPP_INCLUDED
+#pragma once
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/as.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/as.hpp>
 
-namespace eve { namespace detail
+namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
+  //================================================================================================
   // Common logical case
-  template<typename T, typename N, typename ABI>
-  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
-                            , logical<T>* ptr
-                            ) noexcept
-                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
+  //================================================================================================
+  template<real_scalar_value T, typename N, native ABI>
+  EVE_FORCEINLINE auto load(eve::as_<logical<wide<T, N, ABI>>> const &,
+                            ABI const & mode,
+                            logical<T> const* ptr) noexcept
   {
-    using type    = typename pack<logical<T>,N>::storage_type;
-    return type( load(as_<pack<T,N>>{}, mode, (T*)ptr) );
+    using type = typename logical<wide<T, N, ABI>>::storage_type;
+    auto raw_data = load(eve::as_<wide<T, N, ABI>> {}, mode, (T *)ptr);
+    return type(raw_data);
   }
 
-  template<typename T, typename N, std::size_t Align, typename ABI>
-  EVE_FORCEINLINE auto  load( as_<pack<logical<T>,N>> const& tgt, ABI const& mode
-                            , aligned_ptr<logical<T>,Align> ptr
-                            ) noexcept
-                        requires( typename pack<logical<T>,N>::storage_type, Native<ABI>)
+  template<typename T, typename N, std::size_t Align, native ABI>
+  EVE_FORCEINLINE auto
+  load(eve::as_<logical<wide<T, N, ABI>>> const &,
+       ABI const &                          mode,
+       aligned_ptr<logical<T> const, Align> ptr) noexcept
   {
-    using type    = typename pack<logical<T>,N>::storage_type;
-    return type ( load( as_<pack<T,N>>{},mode
-                      , aligned_ptr<T,Align>((T*)ptr.get())
-                      )
-                );
+    using type = typename logical<wide<T, N, ABI>>::storage_type;
+    auto raw_data = load(eve::as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T const, Align>((T const*)ptr.get()));
+    return type(raw_data);
   }
-} }
 
-#endif
+  template<typename T, typename N, std::size_t Align, native ABI>
+  EVE_FORCEINLINE auto
+  load(eve::as_<logical<wide<T, N, ABI>>> const &,
+       ABI const &                          mode,
+       aligned_ptr<logical<T>, Align>       ptr) noexcept
+  {
+    using type = typename logical<wide<T, N, ABI>>::storage_type;
+    auto raw_data = load(eve::as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get()));
+    return type(raw_data);
+  }
+}
 

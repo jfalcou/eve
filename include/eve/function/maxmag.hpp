@@ -1,16 +1,21 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_FUNCTION_MAXMAG_HPP_INCLUDED
-#define EVE_FUNCTION_MAXMAG_HPP_INCLUDED
+#pragma once
 
-#include <eve/function/scalar/maxmag.hpp>
-//#include <eve/function/simd/maxmag.hpp>
+#include <eve/detail/overload.hpp>
 
-#endif
+namespace eve
+{
+  EVE_MAKE_CALLABLE(maxmag_, maxmag);
+}
+
+#include <eve/module/core/function/generic/maxmag.hpp>
+

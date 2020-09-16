@@ -1,91 +1,141 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#ifndef EVE_DETAIL_FUNCTION_SIMD_COMMON_SLICE_HPP_INCLUDED
-#define EVE_DETAIL_FUNCTION_SIMD_COMMON_SLICE_HPP_INCLUDED
+#pragma once
 
-#include <eve/detail/abi.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/is_native.hpp>
+#include <eve/detail/function/bit_cast.hpp>
+#include <eve/platform.hpp>
+#include <eve/traits/as_wide.hpp>
+
 #include <cstddef>
+#include <type_traits>
 
 namespace eve
 {
-  struct upper_slice : std::integral_constant<std::size_t,1> {};
-  struct lower_slice : std::integral_constant<std::size_t,0> {};
+  struct upper_slice : std::integral_constant<std::size_t, 1>
+  {
+  };
+  struct lower_slice : std::integral_constant<std::size_t, 0>
+  {
+  };
 
-  inline constexpr upper_slice upper_ = {};
-  inline constexpr lower_slice lower_ = {};
+  inline constexpr upper_slice const upper_ = {};
+  inline constexpr lower_slice const lower_ = {};
 }
 
-namespace eve { namespace detail
+namespace eve::detail
 {
-  //------------------------------------------------------------------------------------------------
-  // Emulation
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto slice( pack<T,N,emulated_> const& a ) noexcept
+  //================================================================================================
+  // Full slice
+  //================================================================================================
+  template<typename P> EVE_FORCEINLINE auto slice_impl(P const &a) noexcept
   {
-    auto eval = [&](auto... I)
+    using abi_t   = typename P::abi_type;
+    using card_t  = typename P::cardinal_type;
+    using value_t = typename P::value_type;
+
+    using sub_t = as_wide_t<value_t, typename card_t::split_type>;
+
+    if constexpr( is_emulated_v<abi_t> )
     {
-      using pack_t = pack<T,typename N::split_type>;
-      using that_t = std::array<pack_t,2>;
-      return that_t{pack_t{a[I]...},pack_t{a[I+N::value/2]...}};
-    };
-
-    return apply<N::value/2>(eval);
-  }
-
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<T,N,emulated_> const& a, Slice const& ) noexcept
-  {
-    auto eval = [&](auto... I)
-    {
-      using pack_t = pack<T,typename N::split_type>;
-      return pack_t{a[I+(Slice::value*N::value/2)]...};
-    };
-
-    return apply<N::value/2>(eval);
-  }
-
-  //------------------------------------------------------------------------------------------------
-  // Aggregation
-  template<typename T, typename N>
-  EVE_FORCEINLINE decltype(auto) slice( pack<T,N,aggregated_> const& a ) noexcept
-  {
-    #if defined(EVE_COMP_IS_GNUC)
-    constexpr bool is_gnuc = true;
-    #else
-    constexpr bool is_gnuc = false;
-    #endif
-
-    // g++ has trouble returning the storage properly for large aggregate - we then copy it
-    if constexpr(is_gnuc && sizeof(a) > 256)
-    {
-      auto eval = [&](auto... I)
-      {
-        using pack_t = pack<T,typename N::split_type>;
-        using that_t = std::array<pack_t,2>;
-        return that_t{pack_t{a[I]...},pack_t{a[I+N::value/2]...}};
+      auto eval = [&](auto... I) {
+        using that_t = std::array<sub_t, 2>;
+        return that_t {sub_t {a[I]...}, sub_t {a[I + card_t::value / 2]...}};
       };
 
-      return apply<N::value/2>(eval);
+      return apply<card_t::value / 2>(eval);
+    }
+    else if constexpr( is_aggregated_v<abi_t> )
+    {
+      return a.storage().segments;
+    }
+  }
+
+  //================================================================================================
+  // Partial slice
+  //================================================================================================
+  template<typename P, typename Slice>
+  EVE_FORCEINLINE auto slice_impl(P const &a, Slice const &) noexcept
+  {
+    using abi_t   = typename P::abi_type;
+    using card_t  = typename P::cardinal_type;
+    using value_t = typename P::value_type;
+
+    using sub_t = as_wide_t<value_t, typename card_t::split_type>;
+
+    if constexpr( is_emulated_v<abi_t> )
+    {
+      auto eval = [&](auto... I) { return sub_t {a[I + (Slice::value * sub_t::static_size)]...}; };
+
+      return apply<card_t::value / 2>(eval);
+    }
+    else if constexpr( is_aggregated_v<abi_t> )
+    {
+      return a.storage().segments[Slice::value];
+    }
+  }
+
+  //================================================================================================
+  // Logical slices
+  //================================================================================================
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a) noexcept requires(N::value > 1)
+  {
+    if constexpr( is_native_v<ABI> )
+    {
+      using l_t   = logical<wide<T, typename N::split_type>>;
+      using s_t   = typename l_t::storage_type;
+      using t_t   = std::array<l_t, 2>;
+      auto [l, h] = a.mask().slice();
+      return t_t{ l_t( bit_cast(l.storage(), as_<s_t>()) )
+                , l_t( bit_cast(h.storage(), as_<s_t>()) )
+                };
     }
     else
-      return a.storage();
+    {
+      return slice_impl(a);
+    }
   }
 
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice( pack<T,N,aggregated_> const& a, Slice const& ) noexcept
+  template<typename T, typename N, typename ABI, typename Slice>
+  EVE_FORCEINLINE auto slice(logical<wide<T, N, ABI>> const &a, Slice const &s) noexcept
+      requires(N::value > 1)
   {
-    return a.storage()[Slice::value];
+    if constexpr( is_native_v<ABI> )
+    {
+      using l_t = logical<wide<T, typename N::split_type>>;
+      using s_t   = typename l_t::storage_type;
+      return l_t( bit_cast(a.mask().slice(s).storage(), as_<s_t>()) );
+    }
+    else
+    {
+      return slice_impl(a, s);
+    }
   }
-} }
 
-#endif
+  //================================================================================================
+  // Arithmetic slices
+  //================================================================================================
+  template<typename T, typename N, typename ABI>
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a) noexcept requires(N::value > 1)
+  {
+    return slice_impl(a);
+  }
+
+  template<typename T, typename N, typename ABI, typename Slice>
+  EVE_FORCEINLINE auto slice(wide<T, N, ABI> const &a, Slice const &s) noexcept
+      requires(N::value > 1)
+  {
+    return slice_impl(a, s);
+  }
+}
+
