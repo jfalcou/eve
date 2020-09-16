@@ -37,6 +37,24 @@ EVE is considered in **advanced beta**: it's usable, has an almost complete feat
 - [ ] Implement algorithms à la std over SIMD-izable ranges
 - [ ] Complete the documentations with bite-size tutorials
 
+### Current roaster of suypported Instructions Sets
+
+ - **Intel**
+   - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
+   - AVX, AVX2, FMA4
+ - **AMD**
+   - SSE4a
+   - XOP, FMA3
+ - **PowerPC**
+   - VMX
+   - VSX
+ - **ARM**
+   - NEON (64 & 128 bits)
+   - AARCH64 
+   
+ - We **do not support** ARM SVE as the execution model makes no sense and the current compielr support is not adequate for us.
+ - We **do not support** GPGPU, this is the job for another tool. 
+ 
 ### Current roaster of suypported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we requries are:
