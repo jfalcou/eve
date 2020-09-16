@@ -27,23 +27,22 @@ A new, more up-to-date EVE specific journal paper is in the work atm.
 
 ## Current status - Advanced BETA
 
-EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimisations so we can deliver the best performance around.
+EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
 ### Main remaining works:
 
 - [ ] Complete optimized implementations of multi-register shuffles
-- [ ] Reduction (sum, etc) operations
+- [ ] Reduction (sum, prod, etc) operations
 - [ ] Fix potential performance or codegen issues
 - [ ] Implement algorithms à la std over SIMD-izable ranges
 - [ ] Complete the documentations with bite-size tutorials
 
-### Current roaster of suypported Instructions Sets
+### Current roaster of supported Instructions Sets
 
  - **Intel**
    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
    - AVX, AVX2, FMA4
  - **AMD**
-   - SSE4a
    - XOP, FMA3
  - **PowerPC**
    - VMX
@@ -52,12 +51,12 @@ EVE is considered in **advanced beta**: it's usable, has an almost complete feat
    - NEON (64 & 128 bits)
    - AARCH64 
    
- - We **do not support** ARM SVE as the execution model makes no sense and the current compielr support is not adequate for us.
+ - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
  - We **do not support** GPGPU, this is the job for another tool. 
  
 ### Current roaster of suypported compiler
 
-EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we requries are:
+EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts
  - Template lambdas
  - Inline variables
@@ -77,22 +76,22 @@ Visual Studio support is currently being added.
 
 ## FAQ
 
- - **Why C++20 ?** Because we want to be able to use modern design components like Concepts, and later on, Modules. C++14 is ofr 2014.
+ - **Why C++20 ?** Because we want to be able to use modern design components like Concepts, and later on, Modules. C++14 is for 2014.
    We fully know it may hinders adoption in some situation, but we're not running a race. We value proper design and API choice over
    complex retro-compatibility.
  
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
-   design and implementation decision for such libraries. Vc and its standard version are fine pieces
+   design and implementation decisions for such libraries. Vc and its standard version are fine pieces
    of work but we aim at pushing the envelop in term of API and implementation without any standard
    restriction. We will try, however, to keep up with standard naming as much as possible.
 
  - **Is this Boost.SIMD v42.69?** Yes and no. This reimplementation is based on slightly different
    premises and some radical new ideas. All results exhibited by all our previous Boost.SIMD papers
-   still holds and we'll try to improve upon.
+   still hold and we'll try to improve upon.
 
- - **I want to help!** Good, we need tests on exotic configuration, maybe a stable PPC test machines.
+ - **I want to help!** Good, we need tests on exotic configuration, maybe a stable PPC test machine.
    Write code, make it fail so we can improve for use cases we may have missed. Fork and hack away.
-   We would also value input (even harsh ones) on how we ue our CI infrastructure or how our CMake looks.
+   We would also value input (even harsh ones) on how we use our CI infrastructure or how our CMake looks.
    We tried our best but those elements are complex all by themselves.
 
  ## License
@@ -123,4 +122,4 @@ SOFTWARE.
 ```
 
 This won't change. Not anymore. 
-I learnt my lessons.
+We learnt our lessons.
