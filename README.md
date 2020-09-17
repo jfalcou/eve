@@ -29,6 +29,8 @@ A new, more up-to-date EVE specific journal paper is in the work atm.
 
 EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
+[The still-in-progress documentation is here.](https://jfalcou.github.io/eve/index.html)
+
 ### Main remaining works:
 
 - [ ] Complete optimized implementations of multi-register shuffles
