@@ -147,7 +147,6 @@ private:
       else return  eve::smallestposval(eve::as<T>());
     };
     if (!a) a = minval();
-    if (!b) b = -minval();
     auto [ma, ea] = eve::pedantic_(eve::frexp)(a);
     if (ea < minexp()) ea = minexp();
     auto [mb, eb] = eve::pedantic_(eve::frexp)(b);
@@ -214,11 +213,11 @@ TTS_CASE("wide random check on abs")
 {
   std::random_device rd;  //Will be used to obtain a seed for the random number engine
   std::mt19937 g(rd()); //Standard mersenne_twister_engine seeded with rd()
-  auto min = 0.0f; //eve::mindenormal(eve::as(1.0f));
-  auto max = eve::smallestposval(eve::as(1.0f));
+  auto min = -1.0f; //eve::mindenormal(eve::as(1.0f));
+  auto max = 1.0f; //eve::valmax(eve::as(1.0f));//eve::smallestposval(eve::as(1.0f));
   std::cout << min <<  " ---- " << max << std::endl;
   tester_real_distribution d(min, max);
-  for(int i=0; i <1000 ; ++i)
+  for(int i=0; i <100 ; ++i)
   {
     auto r = d(g);
     std::cout << std::showpos << r << std::endl;
