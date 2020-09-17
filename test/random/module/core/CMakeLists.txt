@@ -21,6 +21,7 @@ add_dependencies(random.tst random.core.tst)
 ##==================================================================================================
 ## Elementwise function unit tests
 ##==================================================================================================
+make_all_units(ROOT random.core NAME essai_gen             ARCH scalar  TYPES ${real_types})
 make_all_units(ROOT random.core NAME abs                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.core NAME arg                   ARCH scalar simd TYPES ${real_types}    )
 ##make_all_units(ROOT random.core NAME average               ARCH scalar simd TYPES ${all_types}     )
