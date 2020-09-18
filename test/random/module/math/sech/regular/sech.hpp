@@ -21,7 +21,7 @@ TTS_CASE_TPL("wide random check on sech", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
   auto std_sech = tts::vectorize<T>( [](auto e) { return v_t(1)/eve::cosh(double(e)); } );
-
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::maxlog(eve::as<v_t>()));
+  auto max = eve::maxlog(eve::as<v_t>())-v_t(1);
+  eve::rng_producer<T> p(-max, max);
   TTS_RANGE_CHECK(p, std_sech, eve::sech);
 }
