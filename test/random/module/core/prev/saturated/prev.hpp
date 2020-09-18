@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide rng check on prev", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_prev = tts::vectorize<T>( [](auto e) { return (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan<v_t>() : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
+    auto std_prev = tts::vectorize<T>( [](auto e) { return (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan(eve::as<v_t>()) : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
     eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_prev, eve::saturated_(eve::prev));
   }

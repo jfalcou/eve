@@ -9,8 +9,10 @@
 **/
 //==================================================================================================
 #include <eve/function/rsqrt.hpp>
+#include <eve/function/rec.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
@@ -26,6 +28,7 @@ TTS_CASE_TPL("Check eve::rsqrt behavior", EVE_TYPE)
 {
   TTS_ULP_EQUAL(eve::rsqrt(T(1)), T(1  ), 0.5);
   TTS_ULP_EQUAL(eve::rsqrt(T(4)), T(0.5), 0.5);
+  TTS_ULP_EQUAL(eve::rsqrt(eve::smallestposval(eve::as<T>())), eve::rec(eve::sqrt(eve::smallestposval(eve::as<T>()))), 0.5);
 
   if constexpr(eve::floating_value<T> && eve::platform::supports_invalids)
   {

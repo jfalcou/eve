@@ -16,6 +16,7 @@
 #include <eve/constant/smallestposval.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
+#include <eve/function/frexp.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_denormal.hpp>
 #include <eve/function/is_equal.hpp>
@@ -87,7 +88,8 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &a0) noexcept
   {
-    return rsqrt_x86(a0);
+    if constexpr(std::is_same_v<T, double>) return rsqrt_x86_pedantic(a0);
+    else return rsqrt_x86(a0);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -105,7 +107,8 @@ namespace eve::detail
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0) noexcept
   {
-    return rsqrt_x86(a0);
+    if constexpr(std::is_same_v<T, double>) return rsqrt_x86_pedantic(a0);
+    else return rsqrt_x86(a0);
   }
 
   //------------------------------------------------------------------------------------------------
@@ -152,4 +155,3 @@ namespace eve::detail
     }
   }
 }
-

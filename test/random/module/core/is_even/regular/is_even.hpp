@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on is_even", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == trunc(e/2)*2; } );
+    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return bool(e == trunc(e/2)*2); } );
     eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_is_even, eve::is_even);
   }

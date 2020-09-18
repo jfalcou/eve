@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
   auto my_stdsecpi =  tts::vectorize<T> ( [](auto x)
                                           {
                                             return  ((x < eve::maxflint(eve::as<v_t>())) && eve::is_odd(x*2))
-                                                  ? eve::nan<v_t>()
+                                                  ? eve::nan(eve::as<v_t>())
                                                   : eve::rec(boost::math::cos_pi(x));
                                           }
                                         );
