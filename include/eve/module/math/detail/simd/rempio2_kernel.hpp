@@ -129,6 +129,11 @@ namespace eve::detail
     using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
     {
+      auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
+      if( all(xlerfl) )
+      {
+        return rempio2_small(xx);
+      }
       using ui64_t                             = as_wide_t<uint64_t, cardinal_t<T>>;
       using i32_t                              = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
       constexpr auto                alg        = T::static_alignment;
