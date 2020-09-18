@@ -9,8 +9,9 @@
 **/
 //==================================================================================================
 #include <eve/function/sech.hpp>
+#include <eve/function/cosh.hpp>
 #include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
@@ -19,8 +20,8 @@
 TTS_CASE_TPL("wide random check on sech", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_sech = tts::vectorize<T>( [](auto e) { return v_t(1)/std::cosh(e); } );
-
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  auto std_sech = tts::vectorize<T>( [](auto e) { return v_t(1)/eve::cosh(double(e)); } );
+  auto max = eve::maxlog(eve::as<v_t>())-v_t(1);
+  eve::rng_producer<T> p(-max, max);
   TTS_RANGE_CHECK(p, std_sech, eve::sech);
 }

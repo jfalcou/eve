@@ -129,6 +129,11 @@ namespace eve::detail
     using elt_t             = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
     {
+      auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
+      if( all(xlerfl) )
+      {
+        return rempio2_small(xx);
+      }
       using ui64_t                             = as_wide_t<uint64_t, cardinal_t<T>>;
       using i32_t                              = as_wide_t<int32_t, fixed<2 * cardinal_v<T>>>;
       constexpr auto                alg        = T::static_alignment;
@@ -225,6 +230,14 @@ namespace eve::detail
       s = b + bb;
       t = (b - s) + bb;
       s = if_else(is_not_finite(x), eve::allbits, s);
+      s = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), xx, s);
+      t = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
+      auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)),T(0), quadrant(sum));
+      return  std::make_tuple(q, s, t);
+ //      return if_else(xx < Rempio2_limit(restricted_type(), as(xx)),
+//                      std::make_tuple(T(0), xx, T(0)),
+//                      std::make_tuple(quadrant(sum), s, t)
+//                     );
 
       return std::make_tuple(quadrant(sum), s, t);
     }

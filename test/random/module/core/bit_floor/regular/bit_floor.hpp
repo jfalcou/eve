@@ -22,7 +22,7 @@ TTS_CASE_TPL("wide random check on bit_floor", EVE_TYPE)
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_bit_floor = tts::vectorize<T>( [](auto e) { return (e == 0)? 0 : ((e <= 1) ? 1 : std::exp2l(std::floor(std::log2l(e)))); } );
+    auto std_bit_floor = tts::vectorize<T>( [](auto e) { return (e <= 1)? 0 : std::exp2l(std::floor(std::log2l(e))); } );
     eve::rng_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_bit_floor, eve::bit_floor);
   }

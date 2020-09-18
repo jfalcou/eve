@@ -15,6 +15,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/cospi.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_finite.hpp>
 #include <eve/function/is_not_finite.hpp>
@@ -60,7 +61,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      const T x = abs(a0);
+      const T x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(x) )
@@ -69,11 +70,10 @@ namespace eve::detail
           return T(1);
       }
 
-      auto [fn, xr, dxr] = rem2(x);
-      T z                = cos_finalize(quadrant(fn), xr, dxr);
+      T z = D()(cospi)(x);
       if constexpr( scalar_value<T> )
       {
-        return (z) ? rec(cos_finalize(quadrant(fn), xr, dxr)) : nan(eve::as<T>());
+        return (z) ? rec(z) : nan(eve::as<T>());
       }
       else
       {
@@ -100,4 +100,3 @@ namespace eve::detail
   }
 
 }
-

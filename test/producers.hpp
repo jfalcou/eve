@@ -14,7 +14,7 @@
 #include <eve/function/nb_values.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
-
+#include "test_distribution.hpp"
 #include <algorithm>
 #include <random>
 #include <tts/tests/range.hpp>
@@ -39,7 +39,8 @@ namespace eve
     using value_type = T;
 
     using distribution_type = std::conditional_t<std::is_floating_point_v<base_type>,
-                                                 std::uniform_real_distribution<base_type>,
+                                                 eve::tests_real_distribution<base_type>,
+//                                                 std::uniform_real_distribution<base_type>,
                                                  std::uniform_int_distribution<base_type>>;
 
     base_type first() const noexcept { return first_; }
@@ -47,12 +48,21 @@ namespace eve
 
     T next() noexcept
     {
-      T that{};
-      std::generate ( tts::detail::begin(that),
-                      tts::detail::end(that),
-                      [&](){ return distribution_(generator_); }
-                    );
-      return that;
+      if constexpr( eve::scalar_value<T> )
+      {
+        return distribution_(generator_);
+      }
+      else
+      {
+        typename T::value_type out[T::static_size];
+
+        std::generate ( &out[0],
+                        &out[0] + T::static_size,
+                        [&](){ return distribution_(generator_); }
+                      );
+
+        return T(&out[0]);
+      }
     }
 
     std::size_t size() const noexcept { return size_; }
