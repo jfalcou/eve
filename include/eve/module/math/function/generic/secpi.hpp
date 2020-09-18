@@ -71,8 +71,6 @@ namespace eve::detail
       }
 
       T z = D()(cospi)(x);
- //      auto [fn, xr, dxr] = rem2(x);
-//       T z                = cos_finalize(quadrant(fn), xr, dxr);
       if constexpr( scalar_value<T> )
       {
         return (z) ? rec(z) : nan(eve::as<T>());
