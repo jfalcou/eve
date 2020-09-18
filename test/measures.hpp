@@ -13,20 +13,34 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>
 #include <eve/wide.hpp>
+#include <eve/function/store.hpp>
+#include <eve/function/all.hpp>
+
 #include <algorithm>
 
 namespace tts
 {
-  template<typename EVE_TYPE,typename Func> auto vectorize(Func&& f)
+  template<typename T,typename Func> auto vectorize(Func f)
   {
-    return  [func = std::forward<Func>(f)](auto const& x)
+    return  [=]<typename X>(X const& x)
             {
-              EVE_TYPE that;
-              std::transform( tts::detail::begin(x),tts::detail::end(x),
-                              tts::detail::begin(that),
-                              func
-                            );
-              return that;
+              if constexpr( eve::scalar_value<T> )
+              {
+                T that = f(x);
+                return that;
+              }
+              else
+              {
+                typename X::value_type in[X::static_size];
+                eve::store(x, &in[0]);
+
+                typename T::value_type out[T::static_size];
+
+                for(std::size_t i=0;i<T::static_size;++i)
+                  out[i] = f(in[i]);
+
+                return T(&out[0]);
+              }
             };
   }
 }
@@ -94,7 +108,7 @@ namespace tts::ext
   {
     inline double operator()(eve::logical<T> const &l, eve::logical<T> const &r) const
     {
-      return tts::ulpdist(-l.bits(), -r.bits());
+      return eve::all(l==r) ? 0. : std::numeric_limits<double>::infinity();
     }
   };
 
