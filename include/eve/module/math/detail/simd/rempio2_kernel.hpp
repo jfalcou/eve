@@ -230,6 +230,14 @@ namespace eve::detail
       s = b + bb;
       t = (b - s) + bb;
       s = if_else(is_not_finite(x), eve::allbits, s);
+      s = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), xx, s);
+      t = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
+      auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)),T(0), quadrant(sum));
+      return  std::make_tuple(q, s, t);
+ //      return if_else(xx < Rempio2_limit(restricted_type(), as(xx)),
+//                      std::make_tuple(T(0), xx, T(0)),
+//                      std::make_tuple(quadrant(sum), s, t)
+//                     );
 
       return std::make_tuple(quadrant(sum), s, t);
     }
