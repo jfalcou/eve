@@ -39,7 +39,7 @@ namespace eve::detail
     {
       return add(v0, v1);
     }
-    else if constexpr( current_api >= avx2 )
+    else
     {
       if constexpr( std::signed_integral<T> )
       {
@@ -71,10 +71,6 @@ namespace eve::detail
           return add_(EVE_RETARGET(cpu_), st, v0, v1);
         }
       }
-    }
-    else
-    {
-      return add_(EVE_RETARGET(cpu_), st, v0, v1);
     }
   }
 

@@ -46,7 +46,7 @@ namespace eve::detail
   {
     if constexpr( std::is_floating_point_v<T> )
       return sub(v0, v1);
-    else if constexpr( current_api >= avx2 )
+    else
     {
       if constexpr( std::is_signed_v<T> )
       {
@@ -67,8 +67,6 @@ namespace eve::detail
           return sub_(EVE_RETARGET(cpu_), st, v0, v1);
       }
     }
-    else
-      return sub_(EVE_RETARGET(cpu_), st, v0, v1);
   }
 
   // -----------------------------------------------------------------------------------------------
