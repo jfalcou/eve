@@ -41,7 +41,15 @@ namespace eve::detail
     }
     else if constexpr(simd_value<T>)
     {
-      if constexpr(has_aggregated_abi_v<V>||has_aggregated_abi_v<U>) return map(if_else, cond, t, f);//aggregate(if_else, cond, t, f);
+      // Don't be pessimist on common aggregate cases
+      if constexpr(has_aggregated_abi_v<V> && has_aggregated_abi_v<U> && has_aggregated_abi_v<T> )
+      {
+        return aggregate(if_else, cond, t, f);
+      }
+      if constexpr(has_aggregated_abi_v<V>||has_aggregated_abi_v<U>)
+      {
+        return map(if_else, cond, t, f);
+      }
       else if constexpr(has_emulated_abi_v<V>||has_emulated_abi_v<U>)   return map(if_else, cond, t, f);
       else if constexpr(scalar_value<U> && scalar_value<V>)
       {
