@@ -171,7 +171,8 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE wide &operator=(Type v) noexcept
     {
-      data_ = detail::make(eve::as_<target_type>{}, abi_type{}, v);
+      wide that(v);
+      swap(that);
       return *this;
     }
 
