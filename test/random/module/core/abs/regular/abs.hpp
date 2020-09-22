@@ -9,6 +9,7 @@
 **/
 //==================================================================================================
 #include <eve/function/abs.hpp>
+#include <eve/function/inc.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -29,8 +30,8 @@ TTS_CASE_TPL("wide random check on abs", EVE_TYPE)
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_abs = tts::vectorize<T>( [](auto e) { return (e < 0) ? -e : e; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_abs = tts::vectorize<T>( [](auto e) { v_t z = (e < 0) ? -e : e; return z < 0 ? eve::valmax(eve::as(e)) : z; } );
+    eve::rng_producer<T> p(eve::inc(eve::valmin(eve::as<v_t>())), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_abs, eve::abs);
   }
   else
