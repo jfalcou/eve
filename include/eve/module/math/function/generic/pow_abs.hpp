@@ -39,6 +39,8 @@
 #include <eve/function/sqr.hpp>
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
 #include <eve/platform.hpp>
+#include <eve/function/modf.hpp>
+#include <eve/function/convert.hpp>
 
 namespace eve::detail
 {
@@ -199,26 +201,63 @@ namespace eve::detail
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    std::cout << "icitte" << std::endl;
     return arithmetic_call(raw_(pow_abs), a, b);
   }
 
   template<floating_real_value T>
-  /*EVE_FORCEINLINE*/ auto
+  EVE_FORCEINLINE auto
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
-//     auto tmp = eve::log(abs(a));
-//     auto tmp1= exp(b);
-//     return tmp1+tmp;
-//    return exp(tmp);
-//     if (has_native_abi_v<T>)
-//     {
-//     std::cout << tts::type_id<T>()<< std::endl;
-//     std::cout << "latte" << std::endl;
-    return eve::exp(b * eve::log(eve::abs(a)));
-//     }
-//     else
-//       apply_over(raw_(pow_abs), a, b);
+     if (has_native_abi_v<T>)
+     {
+       return eve::exp(b * eve::log(eve::abs(a)));
+     }
+     else return apply_over(raw_(pow_abs), a, b);
   }
 
+//   template<floating_real_value T>
+//   EVE_FORCEINLINE auto
+//   pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a, T b) noexcept
+//   {
+//      if (has_native_abi_v<T>)
+//      {
+//        auto [yi,  yf] = eve::modf(eve::abs(a));
+//        auto  a1 = one(as(a));
+//        auto  ae =  zero(as(a));
+//        // ans *= x**yf
+//        auto test =  yf > 0.5;
+//        yf = dec[test](yf);
+//        yi = inc[test](yi);
+//        a1 = eve::exp(yf * eve::log(a));
+//        // ans *= x**yi
+//        // by multiplying in successive squarings
+//        // of x according to bits of yi.
+//        // accumulate powers of two into exp.
+//        using vi_t = as_integer_t<element_type_t<T>>();
+//        auto [x1, xe] = eve::frexp(a);
+//        auto i = eve::convert(yi, as_<vi_t>());
+//        while (true)
+//        {
+//          auto test1 = abs(xe) >  (1 << 12);
+
+//          ae = add[test1](ae, xe);
+//          if (eve::all(test1)) break;
+//          auto odd = logical_andnot(is_odd(i), test1);
+//          a1 = mul[odd](a1, x1);
+//          ae = add[odd](ae, xe);
+//          x1 = sqr[test1](x1);
+//          xe = add[test1](xe, xe);
+//          auto test3 = x1 < .5;
+//          x1 = add[test3](x1, x1);
+//          xe = dec[test3](xe);
+//          i >>= 1; 
+//        }
+//        auto ylt0 =  b < 0;
+//        a1 = rec[ylt0](a1);
+//        ae = minus[ylt0](ae);
+//        return ldexp(a1, ae);
+//      }
+//      else return apply_over(pedantic_(pow_abs), a, b);
+
+//   }
 }
