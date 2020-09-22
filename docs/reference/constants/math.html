@@ -10,10 +10,31 @@
                       **Expressive Vector Engine**
                           Mathematical Constants
 
-  (insert ../../crumbs.html here)
+$$\newcommand{\choose}[4]{\left\{
+  \begin{array}{@{}ll@{}}
+    #1 & \texttt{if E is } \texttt{#2}\ \\
+    #3 & \texttt{if E is } \texttt{#4}
+  \end{array}\right.}$$
 
+$$\newcommand{\choosefd}[2]{\left\{
+  \begin{array}{@{}ll@{}}
+     #1 & \texttt{if E is float }  \\
+     #2 & \texttt{if E is double}
+  \end{array}\right.}$$
+
+$$\newcommand{\tchoosefd}[2]{\choosefd{\texttt{#1}}{\texttt{#2}}}$$
+
+$$\newcommand{\choosefdi}[3]{\left\{
+  \begin{array}{@{}ll@{}}
+     #1 & \texttt{if E is float }  \\
+     #2 & \texttt{if E is double}  \\
+     #3 & \texttt{if E is integral}
+  \end{array}\right.}$$
 
 Those constants provides generator function for some useful mathematical constants.
+
+  (insert ../../crumbs.html here)
+
 
 Synopsis
 ====================================================================================================
@@ -56,29 +77,6 @@ simd   : {3.141593e+00f, 3.141593e+00f, 3.141593e+00f, 3.141593e+00f}
 
 List of constants
 ====================================================================================================
-
-$$\newcommand{\choose}[4]{\left\{
-  \begin{array}{@{}ll@{}}
-    #1 & \texttt{if E is } \texttt{#2}\ \\
-    #3 & \texttt{if E is } \texttt{#4}
-  \end{array}\right.}$$
-
-$$\newcommand{\choosefd}[2]{\left\{
-  \begin{array}{@{}ll@{}}
-     #1 & \texttt{if E is float }  \\
-     #2 & \texttt{if E is double}
-  \end{array}\right.}$$
-
-$$\newcommand{\tchoosefd}[2]{
-  \choosefd{\texttt{#1}}{\texttt{#2}}}$$
-
-
-$$\newcommand{\choosefdi}[3]{\left\{
-  \begin{array}{@{}ll@{}}
-     #1 & \texttt{if E is float }  \\
-     #2 & \texttt{if E is double}  \\
-     #3 & \texttt{if E is integral}
-  \end{array}\right.}$$
 
 In the following table:
   * `T` represents the requested type for the generated constant.
