@@ -40,7 +40,7 @@
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/modf.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/function/converter.hpp>
 
 namespace eve::detail
 {
@@ -208,56 +208,55 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
   {
-     if (has_native_abi_v<T>)
-     {
-       return eve::exp(b * eve::log(eve::abs(a)));
-     }
-     else return apply_over(raw_(pow_abs), a, b);
+    return eve::exp(b * eve::log(eve::abs(a)));
   }
 
-//   template<floating_real_value T>
-//   EVE_FORCEINLINE auto
-//   pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T a, T b) noexcept
-//   {
-//      if (has_native_abi_v<T>)
-//      {
-//        auto [yi,  yf] = eve::modf(eve::abs(a));
-//        auto  a1 = one(as(a));
-//        auto  ae =  zero(as(a));
-//        // ans *= x**yf
-//        auto test =  yf > 0.5;
-//        yf = dec[test](yf);
-//        yi = inc[test](yi);
-//        a1 = eve::exp(yf * eve::log(a));
-//        // ans *= x**yi
-//        // by multiplying in successive squarings
-//        // of x according to bits of yi.
-//        // accumulate powers of two into exp.
-//        using vi_t = as_integer_t<element_type_t<T>>();
-//        auto [x1, xe] = eve::frexp(a);
-//        auto i = eve::convert(yi, as_<vi_t>());
-//        while (true)
-//        {
-//          auto test1 = abs(xe) >  (1 << 12);
+  template<floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto
+  pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
+      requires compatible_values<T, U>
+  {
+    return arithmetic_call(pedantic_(pow_abs), a, b);
+  }
 
-//          ae = add[test1](ae, xe);
-//          if (eve::all(test1)) break;
-//          auto odd = logical_andnot(is_odd(i), test1);
-//          a1 = mul[odd](a1, x1);
-//          ae = add[odd](ae, xe);
-//          x1 = sqr[test1](x1);
-//          xe = add[test1](xe, xe);
-//          auto test3 = x1 < .5;
-//          x1 = add[test3](x1, x1);
-//          xe = dec[test3](xe);
-//          i >>= 1; 
-//        }
-//        auto ylt0 =  b < 0;
-//        a1 = rec[ylt0](a1);
-//        ae = minus[ylt0](ae);
-//        return ldexp(a1, ae);
-//      }
-//      else return apply_over(pedantic_(pow_abs), a, b);
-
-//   }
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto
+  pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T x, T y) noexcept
+  {
+    using i_t = as_integer_t<T, unsigned>;
+    using eli_t = element_type_t<i_t>;
+    eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
+    auto ylt0 = y < zero(as(y));
+    auto ax = eve::abs(x);
+    auto [yf,  yi] = eve::modf(eve::abs(y));
+//      std::cout <<" yf "<< yf << std::endl;
+//      std::cout <<" yi "<< yi << std::endl;
+    auto test =  yf > 0.5;
+    yf = dec[test](yf);
+    auto z = eve::exp(yf * eve::log(ax));
+    yi = inc[test](yi);
+    auto ax_is1 = ax == eve::one(as(x));
+    yi = if_else(ax_is1, eve::one, yi);
+    auto large = (yi > largelimit);
+    yi =  if_else(large, eve::one, yi);
+    auto zen = [](T base, i_t expo){
+      T result(1);
+      while( any(expo) )
+      {
+        result *= if_else(is_odd(expo), base, T(1));
+        expo = shr(expo, 1);
+        base = sqr(base);
+      }
+      return result;
+    };
+    auto iseqzx = is_eqz(x);
+    z *= zen(ax, uint_(yi));
+    z =  if_else(large, if_else(is_less(ax, one(as(x))), zero, inf(as(x))), z);
+    z =  if_else(iseqzx && ylt0, zero, z);
+    z =  if_else(is_infinite(ax), inf(as(x)), z);
+    z =  if_else(ylt0, rec(z), z);
+    z =  if_else(ax_is1 || is_eqz(y), one, z);
+    z =  if_else(iseqzx && is_gtz(y), zero, z);
+    return z;
+  }
 }
