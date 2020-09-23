@@ -46,16 +46,16 @@ namespace eve::detail
     float32x16  = float_ | size32_ | 16 ,
 
     // All known native ?int8
-     int8_    =  int_   | size8_,
-    uint8_    = uint_   | size8_,
-     int8x8   =  int8_  | 8     ,
-     int8x16  =  int8_  | 16    ,
-     int8x32  =  int8_  | 32    ,
-     int8x64  =  int8_  | 64    ,
-    uint8x8   = uint8_  | 8     ,
-    uint8x16  = uint8_  | 16    ,
-    uint8x32  = uint8_  | 32    ,
-    uint8x64  = uint8_  | 64    ,
+     int8    =  int_   | size8_,
+    uint8    = uint_   | size8_,
+     int8x8   =  int8  | 8     ,
+     int8x16  =  int8  | 16    ,
+     int8x32  =  int8  | 32    ,
+     int8x64  =  int8  | 64    ,
+    uint8x8   = uint8  | 8     ,
+    uint8x16  = uint8  | 16    ,
+    uint8x32  = uint8  | 32    ,
+    uint8x64  = uint8  | 64    ,
 
     // All known native ?int16
      int16_   =  int_   | size16_ ,

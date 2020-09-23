@@ -18,8 +18,8 @@ eve::wide<int,eve::fixed<8>> vb;
 //==================================================================================================
 // None of those should compiles
 //==================================================================================================
-auto r1  = eve::bit_cast(a , eve::int8_ );
+auto r1  = eve::bit_cast(a , eve::int8 );
 auto r2  = eve::bit_cast(a , as(vb)     );
-auto r3  = eve::bit_cast(va, eve::int8_ );
+auto r3  = eve::bit_cast(va, eve::int8 );
 auto r4  = eve::bit_cast(va, as(vb)     );
 
