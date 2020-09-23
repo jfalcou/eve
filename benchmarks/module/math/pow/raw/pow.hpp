@@ -27,5 +27,4 @@ int main()
   run<EVE_VALUE>(EVE_NAME(raw_(eve::pow)) , xp, eve::raw_(eve::pow) , arg0, arg1);
   run<EVE_TYPE> (EVE_NAME(raw_(eve::pow)) , xp, eve::raw_(eve::pow) , arg0, arg1);
 
->>>>>>> pow and pow_abs
 }

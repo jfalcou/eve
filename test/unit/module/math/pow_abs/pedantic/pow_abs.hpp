@@ -63,7 +63,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::pow_abs) behavior", EVE_TYPE)
    TTS_ULP_EQUAL(eve::pedantic_(eve::pow_abs)(T(0.5) , T(1.0e19)), T(0), 2);
    TTS_ULP_EQUAL(eve::pedantic_(eve::pow_abs)(T(10.0), T(10.0)), T(10000000000.0), 2);
 
-  if constexpr(!std::is_fundamental<T>)
+   if constexpr(!eve::real_scalar_value<T>)
   {
     using w8_t =  eve::wide<v_t, eve::fixed<8>>;
     {
