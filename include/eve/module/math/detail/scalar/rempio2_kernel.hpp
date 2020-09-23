@@ -110,15 +110,15 @@ namespace eve::detail
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-      auto n = single_(quadrant(xn));
+      auto n = float32(quadrant(xn));
       auto da = xn1 * pp3;
       auto t = y - da;
       da = (y - t) - da;
       da = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a = t + da;
       da = (t - a) + da;
-      auto fa = single_(a);
-      auto dfa = single_((a- float64(fa))+da);
+      auto fa = float32(a);
+      auto dfa = float32((a- float64(fa))+da);
       if (fa >= pio_4(eve::as<float>()) || fa < - pio_4(eve::as<float>()))
       {
         T n1;

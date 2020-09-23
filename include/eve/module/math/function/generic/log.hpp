@@ -87,7 +87,7 @@ namespace eve::detail
         T R    = t2 + t1;
         T hfsq = half(eve::as<T>()) * sqr(f);
 
-        T dk = single_(k);
+        T dk = float32(k);
         T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )
@@ -221,7 +221,7 @@ namespace eve::detail
       T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
-      T dk   = single_(k);
+      T dk   = float32(k);
       return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
     }
     else if constexpr( std::is_same_v<T, double> )

@@ -88,7 +88,7 @@ namespace eve::detail
         T R    = t2 + t1;
         T hfsq = half(eve::as<T>()) * sqr(f);
 
-        T dk = single_(k);
+        T dk = float32(k);
         T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(eve::as<T>()), dk);
         // The original algorithm does some extra calculation in place of the return line
         // to get extra precision but this is uneeded for float as the exhaustive test shows

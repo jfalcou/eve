@@ -89,7 +89,7 @@ namespace eve::detail
         T t2     = z * horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
         T R      = t2 + t1;
         T hfsq   = half(eve::as<T>()) * sqr(f);
-        T dk     = single_(k);
+        T dk     = float32(k);
         T hibits = f - hfsq;
         hibits   = bit_and(hibits, uiT(0xfffff000ul));
         T lobits = fma(s, hfsq + R, f - hibits - hfsq);

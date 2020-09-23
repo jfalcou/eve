@@ -103,7 +103,7 @@ namespace eve::detail
       if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
     if constexpr(std::is_same_v<elt_t, float>)
     {
-      auto res = single_(hypot(float64(a), float64(b)));
+      auto res = float32(hypot(float64(a), float64(b)));
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
         return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
@@ -145,7 +145,7 @@ namespace eve::detail
       if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return inf(eve::as(a));
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
-      return single_(hypot(float64(a), float64(b), float64(c)));
+      return float32(hypot(float64(a), float64(b), float64(c)));
     }
     else
     {

@@ -40,7 +40,7 @@ namespace eve::detail
       }
       else
       {
-        return single_(div_180(float64(a)));
+        return float32(div_180(float64(a)));
       }
     }
     else return apply_over(div_180, a);
