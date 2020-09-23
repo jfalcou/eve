@@ -29,24 +29,24 @@ TTS_CASE_TPL("Check eve::eve::tanpi behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::tanpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::tanpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::tanpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::medium_(eve::tanpi)(T(0)))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::medium_(eve::tanpi)(T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::medium(eve::tanpi)(T(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::medium(eve::tanpi)(T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(T(0))   , T(0) );
-  TTS_IEEE_EQUAL(eve::medium_(eve::tanpi)(T(-0.)) , T(0) );
+  TTS_IEEE_EQUAL(eve::medium(eve::tanpi)(T(0))   , T(0) );
+  TTS_IEEE_EQUAL(eve::medium(eve::tanpi)(T(-0.)) , T(0) );
 
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T( 1)           ), T(0)          , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(-1)           ), T(0)          , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(22.5)         ), eve::nan(eve::as<T>()) , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)(-T(22.5)         ), eve::nan(eve::as<T>()) , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(100000.0)     ), T(0)          , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(-100000.0)    ), T(0)          , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(100000000.0)  ), T(0)          , 0.5 );
-  TTS_ULP_EQUAL( eve::medium_(eve::tanpi)( T(-100000000.0) ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T( 1)           ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(-1)           ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(22.5)         ), eve::nan(eve::as<T>()) , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)(-T(22.5)         ), eve::nan(eve::as<T>()) , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(100000.0)     ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(-100000.0)    ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(100000000.0)  ), T(0)          , 0.5 );
+  TTS_ULP_EQUAL( eve::medium(eve::tanpi)( T(-100000000.0) ), T(0)          , 0.5 );
 }
 

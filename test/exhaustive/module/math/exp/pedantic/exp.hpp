@@ -22,5 +22,5 @@ TTS_CASE_TPL("wide random check on exp", EVE_TYPE)
   auto std_exp = tts::vectorize<T>( [](auto e) { return std::exp(e); } );
 
   eve::exhaustive_producer<T> p(eve::minlog(eve::as<v_t>()), eve::maxlog(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_exp, eve::pedantic_(eve::exp));
+  TTS_RANGE_CHECK(p, std_exp, eve::pedantic(eve::exp));
 }

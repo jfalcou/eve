@@ -22,5 +22,5 @@ TTS_CASE_TPL("wide random check on sec", EVE_TYPE)
   auto l = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<v_t>());
 
   eve::rng_producer<T>  p(-l, l);
-  TTS_RANGE_CHECK(p, std_sec, eve::medium_(eve::sec));
+  TTS_RANGE_CHECK(p, std_sec, eve::medium(eve::sec));
 }

@@ -183,7 +183,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(plain_(log10), a0);
+      return apply_over(plain(log10), a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
   {
     if constexpr( current_api < avx2 )
-      return plain_(log10)(v);
+      return plain(log10)(v);
     else
       return musl_(log10)(v);
   }

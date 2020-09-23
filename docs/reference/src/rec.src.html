@@ -18,7 +18,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
             << "-> rec(pf)       = " << eve::rec(pf) << '\n'
-            << "-> raw_(rec)(pf) = " << eve::raw_(eve::rec)(pf) << '\n'
+            << "-> raw(rec)(pf) = " << eve::raw(eve::rec)(pf) << '\n'
             << "<- pi            = " << pi << '\n'
             << "-> rec(pi)       = " << eve::rec(pi) << '\n';
 

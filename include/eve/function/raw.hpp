@@ -31,6 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - raw mode
-  inline constexpr raw_type const raw_ = {};
+  inline constexpr raw_type const raw = {};
 }
 

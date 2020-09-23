@@ -179,7 +179,7 @@ namespace eve::detail
         return -1;
       }
     }
-    if(ix<=0x413921fb) { /* |x| ~<= 2^19*(pi/2), medium_ size */
+    if(ix<=0x413921fb) { /* |x| ~<= 2^19*(pi/2), medium size */
       t  = fabs(x);
       n  = (std::int32_t) (t*invpio2+half);
       fn = (double)n;

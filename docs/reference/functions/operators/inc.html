@@ -51,13 +51,13 @@ The result is `x+1`.
 
 Supported Incorators
 ====================================================================================================
-[`saturated_`](../incorators.html#saturated_)
-:   The call `saturated_(inc)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-    for integral type T  `saturated_(inc)(Valmax< T >())` returns `Valmax< T >()`.
+[`saturated`](../incorators.html#saturated)
+:   The call `saturated(inc)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
+    for integral type T  `saturated(inc)(Valmax< T >())` returns `Valmax< T >()`.
 
 Masked calls
 ====================================================================================================
- The [masked](../../../tutorial/masking.html) calls `inc[cond](x)` and `saturated_(inc[cond])(x)` where `cond` satisfies the
+ The [masked](../../../tutorial/masking.html) calls `inc[cond](x)` and `saturated(inc[cond])(x)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
  More precisely, if `cond` is
@@ -65,7 +65,7 @@ Masked calls
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, inc(x), x)`,
- *  `if_else(cond, saturated_(inc)(x), x)`;
+ *  `if_else(cond, saturated(inc)(x), x)`;
 
   (insert ../../src/inc.src.html here)
 

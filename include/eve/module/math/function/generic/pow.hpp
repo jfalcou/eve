@@ -100,7 +100,7 @@ namespace eve::detail
         return pow(a, b);
       }
     }
-    else return apply_over(raw_(pow), a, b);
+    else return apply_over(raw(pow), a, b);
 
   }
 

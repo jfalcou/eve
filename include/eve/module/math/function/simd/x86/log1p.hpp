@@ -104,7 +104,7 @@ namespace eve::detail
       return if_else(is_ngez(uf), eve::allbits, zz);
     }
     else
-      return apply_over(plain_(log1p), a0);
+      return apply_over(plain(log1p), a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto log1p_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &v) noexcept
   {
     if constexpr( current_api < avx2 )
-      return plain_(log1p)(v);
+      return plain(log1p)(v);
     else
       return musl_(log1p)(v);
   }

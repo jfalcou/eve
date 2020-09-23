@@ -23,12 +23,12 @@ TTS_CASE_TPL("wide random check on oneminus", EVE_TYPE)
   {
     auto std_oneminus = tts::vectorize<T>( [](auto e) { return e <= eve::valmin(eve::as<v_t>())+1 ? eve::valmax(eve::as<v_t>()) : v_t(1)-e; } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated_(eve::oneminus));
+    TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated(eve::oneminus));
  }
   else
   {
     auto std_oneminus = tts::vectorize<T>( [](auto e) { return (e <= 1) ? v_t(1)-e : v_t(0); } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_oneminus, eve::saturated_(eve::oneminus));
+    TTS_RANGE_CHECK(p, std_oneminus, eve::saturated(eve::oneminus));
   }
 }

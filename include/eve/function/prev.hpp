@@ -33,7 +33,7 @@ namespace eve
     template<typename T, typename U>
     EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_), T const&,[[ maybe_unused ]]  U const & n)
     {
-      EVE_ASSERT(all(is_gez(n)), "[[eve::saturated_([eve::prev)] : second parameter must be positive");
+      EVE_ASSERT(all(is_gez(n)), "[[eve::saturated([eve::prev)] : second parameter must be positive");
     }
   }
 

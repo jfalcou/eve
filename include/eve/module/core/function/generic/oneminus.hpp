@@ -81,6 +81,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto oneminus_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::oneminus), t);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated(eve::oneminus), t);
   }
 }

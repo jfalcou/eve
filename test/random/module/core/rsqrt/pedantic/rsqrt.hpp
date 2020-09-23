@@ -23,5 +23,5 @@ TTS_CASE_TPL("wide rng check on rsqrt", EVE_TYPE)
   auto std_rsqrt = tts::vectorize<T>( [](auto e) { return v_t(1.0l/std::sqrt((long double)e)); } );
 
   eve::rng_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic_(eve::rsqrt));
+  TTS_RANGE_CHECK(p, std_rsqrt, eve::pedantic(eve::rsqrt));
 }

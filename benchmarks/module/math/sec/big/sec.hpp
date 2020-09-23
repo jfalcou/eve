@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sec) , xp, std__sec , arg0);
-  run<EVE_VALUE>(EVE_NAME(big_(eve::sec)) , xp, eve::big_(eve::sec) , arg0);
-  run<EVE_TYPE> (EVE_NAME(big_(eve::sec)) , xp, eve::big_(eve::sec) , arg0);
+  run<EVE_VALUE>(EVE_NAME(big(eve::sec)) , xp, eve::big(eve::sec) , arg0);
+  run<EVE_TYPE> (EVE_NAME(big(eve::sec)) , xp, eve::big(eve::sec) , arg0);
 
 }

@@ -43,7 +43,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(raw_(acos), a0);
+      return apply_over(raw(acos), a0);
     }
   }
 

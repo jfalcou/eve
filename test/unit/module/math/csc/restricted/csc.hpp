@@ -19,12 +19,12 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::restricted_(eve::csc) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::restricted(eve::csc) return type", EVE_TYPE)
 {
   TTS_EXPR_IS(eve::csc(T()), T);
 }
 
-TTS_CASE_TPL("Check eve::restricted_(eve::csc) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::restricted(eve::csc) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -32,16 +32,16 @@ TTS_CASE_TPL("Check eve::restricted_(eve::csc) behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::csc)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::csc)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::csc)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(T( 0 )) , T(ref_csc(v_t(0.0)))  );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(T(-0.)) , T(ref_csc(v_t(-0.0))) );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::csc)( T(1) ) , eve::nan(eve::as<T>())         );
-  TTS_IEEE_EQUAL(eve::restricted_(eve::csc)(-T(1) ) , eve::nan(eve::as<T>())         );
+  TTS_IEEE_EQUAL(eve::restricted(eve::csc)(T( 0 )) , T(ref_csc(v_t(0.0)))  );
+  TTS_IEEE_EQUAL(eve::restricted(eve::csc)(T(-0.)) , T(ref_csc(v_t(-0.0))) );
+  TTS_IEEE_EQUAL(eve::restricted(eve::csc)( T(1) ) , eve::nan(eve::as<T>())         );
+  TTS_IEEE_EQUAL(eve::restricted(eve::csc)(-T(1) ) , eve::nan(eve::as<T>())         );
 
-  TTS_ULP_EQUAL(eve::restricted_(eve::csc)(-eve::pio_4(eve::as<T>()) ) , T(ref_csc(-eve::pio_4(eve::as<v_t>()))), 0.75);
-  TTS_ULP_EQUAL(eve::restricted_(eve::csc)( eve::pio_4(eve::as<T>()) ) , T(ref_csc(eve::pio_4(eve::as<v_t>()))) , 0.75);
+  TTS_ULP_EQUAL(eve::restricted(eve::csc)(-eve::pio_4(eve::as<T>()) ) , T(ref_csc(-eve::pio_4(eve::as<v_t>()))), 0.75);
+  TTS_ULP_EQUAL(eve::restricted(eve::csc)( eve::pio_4(eve::as<T>()) ) , T(ref_csc(eve::pio_4(eve::as<v_t>()))) , 0.75);
 }

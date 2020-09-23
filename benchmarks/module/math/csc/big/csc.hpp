@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__csc) , xp, std__csc , arg0);
-  run<EVE_VALUE>(EVE_NAME(big_(eve::csc)) , xp, eve::big_(eve::csc) , arg0);
-  run<EVE_TYPE> (EVE_NAME(big_(eve::csc)) , xp, eve::big_(eve::csc) , arg0);
+  run<EVE_VALUE>(EVE_NAME(big(eve::csc)) , xp, eve::big(eve::csc) , arg0);
+  run<EVE_TYPE> (EVE_NAME(big(eve::csc)) , xp, eve::big(eve::csc) , arg0);
 
 }

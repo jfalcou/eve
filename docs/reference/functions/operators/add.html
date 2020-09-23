@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic sum of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic sum of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -56,13 +56,13 @@ Return the sum of `x` and `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorator/saturated.html)
-:   The call `saturated_(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
+[`saturated`](../decorator/saturated.html)
+:   The call `saturated(add)(x,y)` computes the saturated  sum of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 Masked calls
 ====================================================================================================
- The [masked](../../../tutorial/masking.html) calls `add[cond](x,y)` and `saturated_(add[cond])(x,y)` where `cond` satisfies the
+ The [masked](../../../tutorial/masking.html) calls `add[cond](x,y)` and `saturated(add[cond])(x,y)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
  More precisely, if `cond` is
@@ -70,7 +70,7 @@ Masked calls
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, add(x,y),x)`,
- *  `if_else(cond, saturated_(add)(x,y),x)`;
+ *  `if_else(cond, saturated(add)(x,y),x)`;
 
   (insert ../../src/add.src.html here)
 

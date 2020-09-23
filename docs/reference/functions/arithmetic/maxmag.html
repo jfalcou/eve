@@ -35,7 +35,7 @@ template< value T, value U > auto operator()( T x, U y ) const noexcept requires
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the [element-wise](../../../glossary.html#regular_) maxmag operation on its parameters.
+Performs the [element-wise](../../../glossary.html#regular) maxmag operation on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -55,21 +55,21 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(maxmag)(x,y)` is  semantically equivalent to:
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(maxmag)(x,y)` is  semantically equivalent to:
 
   * If `|x| >  |y|`,  `x` is returned.
   * If `|x| <  |y|`,  `y` is returned.
-  * Otherwise `pedantic_(max)(x, y)` is returned.
+  * Otherwise `pedantic(max)(x, y)` is returned.
 
 
-[`numeric_`](../decorators.html#numeric_)
-:   The call `numeric_(maxmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
+[`numeric`](../decorators.html#numeric)
+:   The call `numeric(maxmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins):
 
   * If `|x| >  |y|`,  `x` is returned.
   * If `|x| <  |y|`,  `y` is returned.
-  * Otherwise `numeric_(max)(x, y)` is returned.
+  * Otherwise `numeric(max)(x, y)` is returned.
 
 </script>
 

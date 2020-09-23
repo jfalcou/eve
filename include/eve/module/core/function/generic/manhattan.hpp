@@ -70,7 +70,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic_(manhattan), a, b);
+    return arithmetic_call(pedantic(manhattan), a, b);
   }
   template<floating_value T>
   EVE_FORCEINLINE auto manhattan_( EVE_SUPPORTS(cpu_)
@@ -100,7 +100,7 @@ namespace eve::detail
                               , V const &c) noexcept
   requires compatible_values<T, U> &&  compatible_values<T, V>
   {
-    return arithmetic_call(pedantic_(manhattan), a, b, c);
+    return arithmetic_call(pedantic(manhattan), a, b, c);
   }
 
   template<floating_value T>

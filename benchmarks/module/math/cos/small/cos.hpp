@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cos) , xp, std__cos , arg0);
-  run<EVE_VALUE>(EVE_NAME(small_(eve::cos)) , xp, eve::small_(eve::cos) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small_(eve::cos)) , xp, eve::small_(eve::cos) , arg0);
+  run<EVE_VALUE>(EVE_NAME(small(eve::cos)) , xp, eve::small(eve::cos) , arg0);
+  run<EVE_TYPE> (EVE_NAME(small(eve::cos)) , xp, eve::small(eve::cos) , arg0);
 
 }

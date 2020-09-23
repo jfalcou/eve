@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Tests the  [element-wise](../../../glossary.html#regular_) equality the two [values](../../concepts.html#value).
+Tests the  [element-wise](../../../glossary.html#regular) equality the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 Supported Decorators
 ====================================================================================================
-[`numerics_`](../decorators.html#saturated_)
+[`numerics_`](../decorators.html#saturated)
 :   The expression `numerics_(is_not_equal)(x,y)` considers that Nan values are equal.
 
   (insert ../../src/is_not_equal.src.html here)

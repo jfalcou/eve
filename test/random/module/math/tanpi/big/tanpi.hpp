@@ -33,5 +33,5 @@ TTS_CASE_TPL("wide random check on tanpi", EVE_TYPE)
                                           }
                                         );
   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, my_stdtanpi, eve::big_(eve::tanpi));
+  TTS_RANGE_CHECK(p, my_stdtanpi, eve::big(eve::tanpi));
 }

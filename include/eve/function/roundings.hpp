@@ -66,9 +66,9 @@ namespace eve
 
   //================================================================================================
   // Rounding decorator objects
-  inline constexpr upward_type      const upward_       = {};
-  inline constexpr downward_type    const downward_     = {};
-  inline constexpr to_nearest_type  const to_nearest_   = {};
-  inline constexpr toward_zero_type const toward_zero_  = {};
+  inline constexpr upward_type      const upward       = {};
+  inline constexpr downward_type    const downward     = {};
+  inline constexpr to_nearest_type  const to_nearest   = {};
+  inline constexpr toward_zero_type const toward_zero  = {};
 }
 

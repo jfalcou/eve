@@ -23,8 +23,8 @@ TTS_CASE_TPL("wide random check on sinpicospi", EVE_TYPE)
 
   auto std_sinpi = tts::vectorize<T>( [](auto e) { return eve::sinpi(double(e)); } );
   auto std_cospi = tts::vectorize<T>( [](auto e) { return eve::cospi(double(e)); } );
-  auto sinpicospi_s =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return s; };
-  auto sinpicospi_c =  [](auto e) { auto [s, c] = eve::medium_(eve::sinpicospi)(e); return c; };
+  auto sinpicospi_s =  [](auto e) { auto [s, c] = eve::medium(eve::sinpicospi)(e); return s; };
+  auto sinpicospi_c =  [](auto e) { auto [s, c] = eve::medium(eve::sinpicospi)(e); return c; };
 
   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
   TTS_RANGE_CHECK(p, std_sinpi, sinpicospi_s);

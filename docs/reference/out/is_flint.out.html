@@ -5,7 +5,7 @@
 ---- simd
 <- pf                      = (0, 1, -1.5, -2, 3.40282e+38, inf, 3.35544e+07, -nan)
 -> is_flint(pf)            = (true, true, false, true, true, false, true, false)
--> pedantic_(is_flint)(pf) = (true, true, false, true, false, false, false, false)
+-> pedantic(is_flint)(pf) = (true, true, false, true, false, false, false, false)
 ---- scalar
 <- xf                      = 1
 -> is_flint(xf)            = true

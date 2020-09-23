@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires compatible_values<T, U>
   {
-    return fnma(b, toward_zero_(div)(a,b), a);
+    return fnma(b, toward_zero(div)(a,b), a);
   }
 
   template<real_value T, real_value U>

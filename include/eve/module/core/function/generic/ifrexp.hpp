@@ -46,7 +46,7 @@ namespace eve::detail
       auto x    = bit_notand(Expobits_mask<T>(), a0);
       return  std::make_tuple( bit_or(half(eve::as<T>()), x), bit_shr(r1,nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>()));
     }
-    else  return apply_over2(raw_(ifrexp), a0);
+    else  return apply_over2(raw(ifrexp), a0);
   }
 
   template<floating_real_value T>
@@ -56,7 +56,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto [m, e] =  raw_(ifrexp)(a0);
+      auto [m, e] =  raw(ifrexp)(a0);
       auto a0eqz = is_eqz(a0);
       if constexpr(scalar_value<T>)
       {
@@ -136,7 +136,7 @@ namespace eve::detail
         }
       }
     }
-    else  return apply_over2(pedantic_(ifrexp), a0);
+    else  return apply_over2(pedantic(ifrexp), a0);
   }
 
 

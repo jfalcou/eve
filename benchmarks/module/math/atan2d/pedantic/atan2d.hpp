@@ -25,7 +25,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__atan2d) , xp, std__atan2d , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::atan2d)) , xp, eve::pedantic_(eve::atan2d) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::atan2d)) , xp, eve::pedantic(eve::atan2d) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::atan2d)) , xp, eve::pedantic(eve::atan2d) , arg0, arg1);
 
 }

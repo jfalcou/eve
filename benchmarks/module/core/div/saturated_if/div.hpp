@@ -24,7 +24,7 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  auto eve__div =  [](auto x,  auto y,  auto z){ return eve::saturated_(eve::div[x])(y, z); };
+  auto eve__div =  [](auto x,  auto y,  auto z){ return eve::saturated(eve::div[x])(y, z); };
 
   eve::bench::experiment xp;
   run<eve::bench::types<L_VALUE, EVE_VALUE, EVE_VALUE>>(EVE_NAME( eve_div) , xp, eve__div, arg0, arg1, arg2);

@@ -48,23 +48,23 @@ Return value
 Computes  [element-wise](../../../glossary.html#elment-wise) the square of `x`.
 
 !!! WARNING
-   For  [real integral signed values](../../concepts.html#value)   if `saturated_(abs)(x)`
+   For  [real integral signed values](../../concepts.html#value)   if `saturated(abs)(x)`
    is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html) the corresponding element result is undefined .
 
 
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#saturated_)
-:   The expression `saturated_(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
+[`saturated`](../decorators.html#saturated)
+:   The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the [regular case](../decorator/regular.html), this guarantees
     that the result is [`element-wise`](../../../glossary.html#element-wise) greater or equal than 0. More specifically, for any signed integer value
     `x`, the expression:
 
-    `saturated_(sqr)(x)`
+    `saturated(sqr)(x)`
 
     evaluates to:
 
-    [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) as soon as `saturated_(abs)(x)`
+    [`eve::Valmax(as(x))`](../../constants/limits/valmax.html) as soon as `saturated(abs)(x)`
     is greater than [`eve::Sqrtvalmax(as(x))`](../../constants/limits/sqrtvalmax.html).
 
   (insert ../../src/sqr.src.html here)

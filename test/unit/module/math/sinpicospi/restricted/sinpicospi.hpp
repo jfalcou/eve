@@ -18,7 +18,7 @@
 
 TTS_CASE_TPL("Check sinpicospi  return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::sinpicospi)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::restricted(eve::sinpicospi)(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
 
   for(int i=0; i < 4 ; ++i)
   {
-    auto [p0, p1] = eve::restricted_(eve::sinpicospi)(T(x[i]));
-    TTS_ULP_EQUAL(p0, T(eve::restricted_(eve::sinpi)(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, T(eve::restricted_(eve::cospi)(x[i])), 0.5);
+    auto [p0, p1] = eve::restricted(eve::sinpicospi)(T(x[i]));
+    TTS_ULP_EQUAL(p0, T(eve::restricted(eve::sinpi)(x[i])), 0.5);
+    TTS_ULP_EQUAL(p1, T(eve::restricted(eve::cospi)(x[i])), 0.5);
   }
 
   for(int i=4; i < 6 ; ++i)
   {
-    auto [p0, p1] = eve::restricted_(eve::sinpicospi)(T(x[i]));
+    auto [p0, p1] = eve::restricted(eve::sinpicospi)(T(x[i]));
     TTS_ULP_EQUAL(p0, eve::nan(eve::as<T>()), 0.5);
     TTS_ULP_EQUAL(p1, eve::nan(eve::as<T>()), 0.5);
   }

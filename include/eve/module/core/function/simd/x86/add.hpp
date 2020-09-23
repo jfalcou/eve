@@ -27,7 +27,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // 128 bits saturated_ implementation
+  // 128 bits saturated implementation
   //================================================================================================
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> add_(EVE_SUPPORTS(sse2_),
@@ -75,7 +75,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // 256 bits saturated_ implementation
+  // 256 bits saturated implementation
   //================================================================================================
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, avx_> add_(EVE_SUPPORTS(avx2_),

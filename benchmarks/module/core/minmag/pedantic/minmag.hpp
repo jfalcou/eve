@@ -22,6 +22,6 @@ int main()
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::minmag)) , xp, eve::pedantic_(eve::minmag), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::minmag)) , xp, eve::pedantic_(eve::minmag), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::minmag)) , xp, eve::pedantic(eve::minmag), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::minmag)) , xp, eve::pedantic(eve::minmag), arg0, arg1);
 }

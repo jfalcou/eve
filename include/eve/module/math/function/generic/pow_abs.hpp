@@ -59,7 +59,7 @@ namespace eve::detail
     const T Oneo_16 = T(0.0625);
     //        using i_t = as_integer_t<T>;
     T ax             = eve::abs(a);
-    auto [xm, ee]    = pedantic_(frexp)(ax);
+    auto [xm, ee]    = pedantic(frexp)(ax);
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
@@ -99,7 +99,7 @@ namespace eve::detail
     e                   = fms(i, 16, e);
     w                   = detail::twomio16(e);
     z                   = fma(w, z, w);
-    z                   = pedantic_(ldexp)(z, i);
+    z                   = pedantic(ldexp)(z, i);
     if constexpr( eve::platform::supports_infinites )
     {
       auto gtax1 = is_greater(ax, one(eve::as<T>()));
@@ -150,7 +150,7 @@ namespace eve::detail
       if( is_nan(a1) )
         return nan(eve::as<T>());
     }
-    auto [xm, e]     = pedantic_(eve::ifrexp)(xx);
+    auto [xm, e]     = pedantic(eve::ifrexp)(xx);
     auto [x, i]      = detail::kernel_select(xm);
     T z              = sqr(x);
     T w              = detail::kernel_pow1(x, z);
@@ -195,7 +195,7 @@ namespace eve::detail
     e = fms(i, i_t(16), e);
     w = detail::twomio16(e);
     z = fma(w, z, w);
-    z = pedantic_(ldexp)(z, i);
+    z = pedantic(ldexp)(z, i);
     return z;
   }
 

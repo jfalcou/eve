@@ -5,17 +5,17 @@
 ---- simd
 <- pf                       = (-1, -1.3, -1.5, -1.7, 2, 2.3, 2.5, 2.7)
 -> iround(pf)               = (-1, -1, -2, -2, 2, 2, 2, 3)
--> upward_(iround)(pf)      = (-1, -1, -1, -1, 2, 3, 3, 3)
--> downward_(iround)(pf)    = (-1, -2, -2, -2, 2, 2, 2, 2)
--> to_nearest_(iround)(pf)  = (-1, -1, -2, -2, 2, 2, 2, 3)
--> toward_zero_(iround)(pf) = (-1, -1, -1, -1, 2, 2, 2, 2)
+-> upward(iround)(pf)      = (-1, -1, -1, -1, 2, 3, 3, 3)
+-> downward(iround)(pf)    = (-1, -2, -2, -2, 2, 2, 2, 2)
+-> to_nearest(iround)(pf)  = (-1, -1, -2, -2, 2, 2, 2, 3)
+-> toward_zero(iround)(pf) = (-1, -1, -1, -1, 2, 2, 2, 2)
 ---- scalar
 <- xf                       = -32.768
 -> iround(xf)               = -33
--> upward_(iround)(xf)      = -32
--> downward_(iround)(xf)    = -33
--> to_nearest_(iround)(xf)  = -33
--> toward_zero_(iround)(xf) = -32
+-> upward(iround)(xf)      = -32
+-> downward(iround)(xf)    = -33
+-> to_nearest(iround)(xf)  = -33
+-> toward_zero(iround)(xf) = -32
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

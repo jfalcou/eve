@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic multiplication  of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic multiplication  of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -57,13 +57,13 @@ Return the multiplication of `x` by `y`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorator/saturated.html)
-:   The call `saturated_(mul)(x,y)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
+[`saturated`](../decorator/saturated.html)
+:   The call `saturated(mul)(x,y)` computes the saturated  multiplication of `x` and `y`. The saturation is obtained in the
      [compatibility result](../../concept.html#compatibility) of the two parameters. No overflow occurs.
 
 Masked calls
 ====================================================================================================
- The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated_(mul[cond])(x,y)` where `cond` satisfies the
+ The [masked](../../../tutorial/masking.html) calls `mul[cond](x,y)` and `saturated(mul[cond])(x,y)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
  More precisely, if `cond` is
@@ -72,7 +72,7 @@ Masked calls
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, mul(x,y),x)`,
- *  `if_else(cond, saturated_(mul)(x,y),x)`;
+ *  `if_else(cond, saturated(mul)(x,y),x)`;
 
   (insert ../../src/mul.src.html here)
 

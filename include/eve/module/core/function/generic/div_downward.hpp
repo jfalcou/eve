@@ -50,10 +50,10 @@ namespace eve::detail
               return zero(eve::as<T>());
             if( b )
             {
-              auto q = saturated_(div)(a, b);
+              auto q = saturated(div)(a, b);
               auto r = a - q * b;
               if( is_nez(r) && ((a ^ b) <= 0) )
-                return saturated_(dec)(q);
+                return saturated(dec)(q);
               else
                 return q;
             }
@@ -63,7 +63,7 @@ namespace eve::detail
           else
           {
             if( b )
-              return saturated_(convert)(floor(static_cast<double>(a) / static_cast<double>(b)),
+              return saturated(convert)(floor(static_cast<double>(a) / static_cast<double>(b)),
                                          as<T>());
             else
               return (a) ? ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>())) : zero(eve::as<T>());
@@ -72,7 +72,7 @@ namespace eve::detail
         else if constexpr( unsigned_value<T> )
         {
           if( b )
-            return saturated_(div)(a, b);
+            return saturated(div)(a, b);
           else
             return bit_mask(a);
         }
@@ -84,9 +84,9 @@ namespace eve::detail
           if constexpr( std::is_same_v<elt_t, std::int64_t> )
           {
             auto bb = if_else(is_eqz(b), eve::one, b);
-            auto q  = saturated_(eve::div)(a, bb);
+            auto q  = saturated(eve::div)(a, bb);
             auto r  = a - q * b;
-            q       = saturated_(dec[is_nez(r) && is_lez(bit_xor(a, b))])(q);
+            q       = saturated(dec[is_nez(r) && is_lez(bit_xor(a, b))])(q);
             auto z  = if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()));
             z       = if_else(is_eqz(a), eve::zero, z);
             return if_else(is_nez(b), q, z);
@@ -96,14 +96,14 @@ namespace eve::detail
             auto z = if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()));
             z      = if_else(is_eqz(a), eve::zero, z);
             auto q =
-              saturated_(convert)(floor(double_(a) / double_(b)), as<elt_t>());
+              saturated(convert)(floor(double_(a) / double_(b)), as<elt_t>());
             return if_else(is_nez(b), q, z);
           }
         }
         else if constexpr( unsigned_value<T> )
         {
           auto bb = if_else(is_eqz(b), eve::allbits, b);
-          T    q  = saturated_(div)(a, bb);
+          T    q  = saturated(div)(a, bb);
           return if_else(is_nez(b), q, bit_mask(a));
         }
       }

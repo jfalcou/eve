@@ -10,7 +10,7 @@ using wide_ft = eve::wide<double, eve::fixed<8>>;
 
 int main()
 {
-  using eve::pedantic_;
+  using eve::pedantic;
 
   wide_ft pf = {0.0f,
                 1.0f,

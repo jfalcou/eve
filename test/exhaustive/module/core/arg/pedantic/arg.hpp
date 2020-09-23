@@ -24,5 +24,5 @@ TTS_CASE_TPL("wide random check on arg", EVE_TYPE)
   auto std_arg = tts::vectorize<T>( [](auto e) { return eve::is_negative(e) ? eve::pi(eve::as<v_t>()) : v_t(0); } );
 
   eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_arg, eve::pedantic_(eve::arg));
+  TTS_RANGE_CHECK(p, std_arg, eve::pedantic(eve::arg));
 }

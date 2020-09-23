@@ -23,6 +23,6 @@ int main()
 
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(numeric_(eve::maxmag)) , xp, eve::numeric_(eve::maxmag), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(numeric_(eve::maxmag)) , xp, eve::numeric_(eve::maxmag), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(numeric(eve::maxmag)) , xp, eve::numeric(eve::maxmag), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(numeric(eve::maxmag)) , xp, eve::numeric(eve::maxmag), arg0, arg1);
 }

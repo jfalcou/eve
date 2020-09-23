@@ -23,5 +23,5 @@ TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
   auto my_stdcospi =  tts::vectorize<T>([](auto x){return boost::math::cos_pi(x); });
 
   eve::exhaustive_producer<T> p(v_t(-100000.0), v_t(100000.0));
-  TTS_RANGE_CHECK(p, my_stdcospi, eve::medium_(eve::cospi));
+  TTS_RANGE_CHECK(p, my_stdcospi, eve::medium(eve::cospi));
 }

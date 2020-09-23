@@ -17,7 +17,7 @@
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::medium_(eve::sinpicospi)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS( eve::medium(eve::sinpicospi)(T()), (std::tuple<T,T>));
 }
 
 TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
@@ -31,7 +31,7 @@ TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
 
   for(int i=0; i < N ; ++i)
   {
-    auto [p0, p1] = eve::medium_(eve::sinpicospi)(T(x[i]));
+    auto [p0, p1] = eve::medium(eve::sinpicospi)(T(x[i]));
     TTS_ULP_EQUAL(p0, eve::sinpi(T(x[i])), 0.5);
     TTS_ULP_EQUAL(p1, eve::cospi(T(x[i])), 0.5);
   }

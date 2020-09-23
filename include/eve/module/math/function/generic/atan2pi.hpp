@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   atan2pi_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
   {
-    return arithmetic_call(pedantic_(atan2pi), a, b);
+    return arithmetic_call(pedantic(atan2pi), a, b);
   }
 
   template<floating_real_value T>
@@ -47,9 +47,9 @@ namespace eve::detail
   atan2pi_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return radinpi(pedantic_(atan2)(a, b));
+      return radinpi(pedantic(atan2)(a, b));
     else
-      return apply_over(pedantic_(atan2pi), a, b);
+      return apply_over(pedantic(atan2pi), a, b);
   }
 }
 

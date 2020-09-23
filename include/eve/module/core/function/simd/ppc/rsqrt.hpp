@@ -26,7 +26,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>)
     {
       auto ct = one(eve::as(v0));
-      auto es = raw_(rsqrt)(v0);
+      auto es = raw(rsqrt)(v0);
       auto xn = sqr(es);
       auto he = es * half(eve::as(v0));
 
@@ -49,7 +49,7 @@ namespace eve::detail
         return fma(tmp, hest, sw0);
       };
 
-      auto est = raw_(rsqrt)(v0);
+      auto est = raw(rsqrt)(v0);
       auto xn  = refine(est, v0);
       xn       = refine(xn, v0);
 
@@ -63,7 +63,7 @@ namespace eve::detail
     }
     else
     {
-      return map(raw_(rsqrt), v0);
+      return map(raw(rsqrt), v0);
     }
   }
 
@@ -74,7 +74,7 @@ namespace eve::detail
     if constexpr(std::is_floating_point_v<T>) { return vec_rsqrte(v0.storage()); }
     else
     {
-      return map(raw_(rsqrt), v0);
+      return map(raw(rsqrt), v0);
     }
   }
 }

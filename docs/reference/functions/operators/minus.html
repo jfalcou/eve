@@ -56,13 +56,13 @@ is not representable and the result is undefined behaviour.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorator/saturated.html)
-:   The call `saturated_(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-    for integral signed type T  `saturated_(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
+[`saturated`](../decorator/saturated.html)
+:   The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
+    for integral signed type T  `saturated(minus)(Valmin< T >())` returns `Valmax< T >()` and is not u.b.
 
 Masked calls
 ====================================================================================================
- The [masked](../../../tutorial/masking.html) calls `minus[cond](x)` and `saturated_(minus[cond])(x)` where `cond` satisfies the
+ The [masked](../../../tutorial/masking.html) calls `minus[cond](x)` and `saturated(minus[cond])(x)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
  More precisely, if `cond` is
@@ -70,7 +70,7 @@ Masked calls
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 .
  *  `if_else(cond, minus(x), x)`,
- *  `if_else(cond, saturated_(minus)(x), x)`;
+ *  `if_else(cond, saturated(minus)(x), x)`;
 
   (insert ../../src/minus.src.html here)
 

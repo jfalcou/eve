@@ -24,11 +24,11 @@ TTS_CASE_TPL("wide random check on cot", EVE_TYPE)
   if constexpr(eve::platform::supports_denormals)
   {
     eve::exhaustive_producer<T> p(-eve::pio_4(eve::as<v_t>()), eve::pio_4(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot));
+    TTS_RANGE_CHECK(p, std_cot, eve::restricted(eve::cot));
   }
   else
   {
     eve::exhaustive_producer<T> p(eve::smallestposval(eve::as<v_t>()), eve::pio_4(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_cot, eve::restricted_(eve::cot));
+    TTS_RANGE_CHECK(p, std_cot, eve::restricted(eve::cot));
   }
 }

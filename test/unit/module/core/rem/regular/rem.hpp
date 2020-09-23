@@ -59,5 +59,5 @@ TTS_CASE_TPL("Check eve::rem behavior", EVE_TYPE)
 
   TTS_EQUAL(eve::rem(T(12), v_t(4)), T(0));
   TTS_EQUAL(eve::rem(T( 1), v_t(2)), T(1));
-  TTS_EQUAL(eve::toward_zero_(eve::rem)(T( 4), v_t(3)), T(1));
+  TTS_EQUAL(eve::toward_zero(eve::rem)(T( 4), v_t(3)), T(1));
 }

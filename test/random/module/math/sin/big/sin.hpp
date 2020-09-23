@@ -22,5 +22,5 @@ TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
   auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(e); } );
 
   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, std_sin, eve::big_(eve::sin));
+  TTS_RANGE_CHECK(p, std_sin, eve::big(eve::sin));
 }

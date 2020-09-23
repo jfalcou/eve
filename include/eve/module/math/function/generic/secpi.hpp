@@ -52,7 +52,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(restricted_(secpi), a0);
+      return apply_over(restricted(secpi), a0);
     }
   }
 
@@ -91,7 +91,7 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return big_(secpi)(a0);
+      return big(secpi)(a0);
     }
     else
     {

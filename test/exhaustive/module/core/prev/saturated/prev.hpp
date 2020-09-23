@@ -28,12 +28,12 @@ TTS_CASE_TPL("wide exhaustive check on prev", EVE_TYPE)
   {
     auto std_prev = tts::vectorize<T>( [](auto e) { return (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan<v_t>() : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_prev, eve::saturated_(eve::prev));
+    TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
   }
   else
   {
     auto std_prev = tts::vectorize<T>( [](auto e) { return e == eve::valmin(eve::as<v_t>()) ? e : e-1; } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_prev, eve::saturated_(eve::prev));
+    TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
   }
 }

@@ -16,12 +16,12 @@
 #include <tuple>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::restricted_(eve::sincos) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::restricted(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::restricted_(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::restricted(eve::sincos)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE_TPL("Check eve::restricted_(eve::sincos) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::restricted(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,14 +30,14 @@ TTS_CASE_TPL("Check eve::restricted_(eve::sincos) behavior", EVE_TYPE)
 
   for(int i=0; i < 4 ; ++i)
   {
-    auto [p0, p1] = eve::restricted_(eve::sincos)(T(x[i]));
+    auto [p0, p1] = eve::restricted(eve::sincos)(T(x[i]));
     TTS_ULP_EQUAL(p0, T(std::sin(x[i])), 0.5);
     TTS_ULP_EQUAL(p1, T(std::cos(x[i])), 0.5);
   }
 
   for(int i=4; i < 6 ; ++i)
   {
-    auto [p0, p1] = eve::restricted_(eve::sincos)(T(x[i]));
+    auto [p0, p1] = eve::restricted(eve::sincos)(T(x[i]));
     TTS_ULP_EQUAL(p0, eve::nan(eve::as<T>()), 0.5);
     TTS_ULP_EQUAL(p1, eve::nan(eve::as<T>()), 0.5);
   }

@@ -51,7 +51,7 @@ namespace eve::detail
         return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
     }
     else
-      return apply_over(restricted_(cos), a0);
+      return apply_over(restricted(cos), a0);
   }
 
   template<floating_real_value T>
@@ -101,7 +101,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small_(cos), a0);
+      return apply_over(small(cos), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,13 +129,13 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(x <= pio_4(eve::as(x))) )
-        return restricted_(cos)(a0);
+        return restricted(cos)(a0);
       else if( all(x <= pio_2(eve::as(x))) )
-        return small_(cos)(a0);
+        return small(cos)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
-        return medium_(cos)(a0);
+        return medium(cos)(a0);
       else
-        return big_(cos)(a0);
+        return big(cos)(a0);
     }
     else
       return apply_over(cos, a0);

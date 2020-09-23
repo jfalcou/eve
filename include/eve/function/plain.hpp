@@ -28,7 +28,7 @@ namespace eve
 
   //================================================================================================
   // Function decorator - plain mode
-  template<typename Function> constexpr EVE_FORCEINLINE auto plain_(Function f) noexcept
+  template<typename Function> constexpr EVE_FORCEINLINE auto plain(Function f) noexcept
   {
     return plain_type {}(f);
   }

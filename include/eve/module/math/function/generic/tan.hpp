@@ -54,7 +54,7 @@ namespace eve::detail
       return tancot_eval(a0);
     }
     else
-      return apply_over(restricted_(tan), a0);
+      return apply_over(restricted(tan), a0);
   }
 
   template<floating_real_value T>
@@ -100,7 +100,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small_(tan), a0);
+      return apply_over(small(tan), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,13 +132,13 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(x <= pio_4(eve::as(x))) )
-        return restricted_(tan)(a0);
+        return restricted(tan)(a0);
       else if( all(x <= pio_2(eve::as(x))) )
-        return small_(tan)(a0);
+        return small(tan)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
-        return medium_(tan)(a0);
+        return medium(tan)(a0);
       else
-        return big_(tan)(a0);
+        return big(tan)(a0);
     }
     else
       return apply_over(tan, a0);

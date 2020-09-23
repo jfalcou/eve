@@ -34,10 +34,10 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return eve::restricted_(cos)(x * pi(eve::as<T>()));
+      return eve::restricted(cos)(x * pi(eve::as<T>()));
     }
     else
-      return apply_over(restricted_(cospi), x);
+      return apply_over(restricted(cospi), x);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,9 +84,9 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(eve::abs(x) <= T(0.25)) )
-        return restricted_(cospi)(x);
+        return restricted(cospi)(x);
       else
-        return big_(cospi)(x);
+        return big(cospi)(x);
     }
     else
       return apply_over(cospi, a0);

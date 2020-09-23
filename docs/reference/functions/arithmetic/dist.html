@@ -65,8 +65,8 @@ auto r = abs(x-y);
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorators.html#saturated_)
-:   The call `saturated_(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
+[`saturated`](../decorators.html#saturated)
+:   The call `saturated(dist)(x, y)` computes a saturated distance. Contrary to the [regular case](../decorator/regular.html), it guarantees
     that the result is always defined. If $|x-y|$ is not representable
     [the greatest representable positive value](../../constants.html#valmax) is returned
 

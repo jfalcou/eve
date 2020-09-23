@@ -31,5 +31,5 @@ TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
                                         );
 
   eve::exhaustive_producer<T> p(v_t(-100000.0), v_t(100000.0));
-  TTS_RANGE_CHECK(p, my_stdcscpi, eve::medium_(eve::cscpi));
+  TTS_RANGE_CHECK(p, my_stdcscpi, eve::medium(eve::cscpi));
 }

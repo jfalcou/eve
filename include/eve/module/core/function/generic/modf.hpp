@@ -71,7 +71,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over2(pedantic_(modf), a);
+      return apply_over2(pedantic(modf), a);
     }
   }
 

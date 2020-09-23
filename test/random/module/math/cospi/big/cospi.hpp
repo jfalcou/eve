@@ -24,7 +24,7 @@ TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
   auto my_stdcospi =  tts::vectorize<T>([](auto x){return boost::math::cos_pi(x); });
 
   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi));
+  TTS_RANGE_CHECK(p, my_stdcospi, eve::big(eve::cospi));
 }
 
 
@@ -34,5 +34,5 @@ TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
 //   ::crlibm_init();
 //   auto my_stdcospi =  tts::vectorize<T>([](v_t x){return v_t(::cospi_rn(x)); });
 //   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-//   TTS_RANGE_CHECK(p, my_stdcospi, eve::big_(eve::cospi));
+//   TTS_RANGE_CHECK(p, my_stdcospi, eve::big(eve::cospi));
 // }

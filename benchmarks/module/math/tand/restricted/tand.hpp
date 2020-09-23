@@ -20,6 +20,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::tand)) , xp, eve::restricted_(eve::tand) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::tand)) , xp, eve::restricted_(eve::tand) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::tand)) , xp, eve::restricted(eve::tand) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::tand)) , xp, eve::restricted(eve::tand) , arg0);
 }

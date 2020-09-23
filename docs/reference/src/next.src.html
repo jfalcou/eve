@@ -20,7 +20,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << std::setprecision(12) << pf << '\n'
             << "-> next(pf)            = " << eve::next(pf) << '\n'
-            << "-> pedantic_(next)(pf) = " << eve::pedantic_(eve::next)(pf) << '\n'
+            << "-> pedantic(next)(pf) = " << eve::pedantic(eve::next)(pf) << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> next(pi)            = " << eve::next(pi) << '\n';
 

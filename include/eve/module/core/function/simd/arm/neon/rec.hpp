@@ -51,7 +51,7 @@ namespace eve::detail
     if constexpr(std::is_same_v<T, float>)
     {
       // estimate 1/x with an extra NR step for full precision
-      auto a = refine_rec(v0, raw_(rec)(v0));
+      auto a = refine_rec(v0, raw(rec)(v0));
       return refine_rec(v0, a);
     }
   }
@@ -61,7 +61,7 @@ namespace eve::detail
                                             wide<T, N, neon128_> const &v0) noexcept
   {
       // estimate 1/x with an extra NR step for full precision
-      auto a = refine_rec(v0, raw_(rec)(v0));
+      auto a = refine_rec(v0, raw(rec)(v0));
       return refine_rec(v0, a);
   }
 

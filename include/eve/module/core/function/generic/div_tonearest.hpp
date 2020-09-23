@@ -57,9 +57,9 @@ namespace eve::detail
               return zero(eve::as<T>());
             if( b )
             {
-              ui_t aa = saturated_(eve::abs)(a);
-              ui_t ab = saturated_(eve::abs)(b);
-              T    q  = to_nearest_(div)(aa, ab);
+              ui_t aa = saturated(eve::abs)(a);
+              ui_t ab = saturated(eve::abs)(b);
+              T    q  = to_nearest(div)(aa, ab);
               return if_else(is_gez(a ^ b), q, -q);
             }
             else
@@ -69,7 +69,7 @@ namespace eve::detail
           {
             using f_t = as_floating_point_t<elt_t>;
             if( b )
-              return saturated_(convert)(nearest(static_cast<f_t>(a) / static_cast<f_t>(b)),
+              return saturated(convert)(nearest(static_cast<f_t>(a) / static_cast<f_t>(b)),
                                          as<T>());
             else
               return (a) ? ((a > 0) ? valmax(eve::as<T>()) : valmin(eve::as<T>())) : zero(eve::as<T>());
@@ -99,10 +99,10 @@ namespace eve::detail
         {
           if constexpr( std::is_same_v<elt_t, std::int64_t> )
           {
-            auto aa  = saturated_(eve::abs)(a);
-            auto bb  = saturated_(eve::abs)(b);
+            auto aa  = saturated(eve::abs)(a);
+            auto bb  = saturated(eve::abs)(b);
             bb       = if_else(is_eqz(bb), eve::allbits, bb);
-            auto q   = eve::saturated_(eve::div)(aa, bb);
+            auto q   = eve::saturated(eve::div)(aa, bb);
             auto rx2 = 2 * (aa - q * bb);
             q = if_else(is_greater_equal(rx2, bb), inc[logical_ornot(rx2 != bb, is_even(q))](q), q);
             return if_else(
@@ -114,7 +114,7 @@ namespace eve::detail
           {
             return if_else(
                 is_nez(b),
-                saturated_(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
+                saturated(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
                 if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
         }

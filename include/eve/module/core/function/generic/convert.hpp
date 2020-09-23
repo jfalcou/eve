@@ -85,7 +85,7 @@ namespace eve::detail
     using elt_tin = element_type_t<IN>;
     if constexpr( has_aggregated_abi_v<IN> )
     {
-      return aggregate(eve::pedantic_(eve::convert), v00, tgt);
+      return aggregate(eve::pedantic(eve::convert), v00, tgt);
     }
     else if constexpr( std::is_same_v<elt_tin, double> && std::is_same_v<OUT, int64_t> )
     {

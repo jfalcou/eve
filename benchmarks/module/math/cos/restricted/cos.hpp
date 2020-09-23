@@ -21,6 +21,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(scalar std::cos)  , xp, std__cos                  , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted_(cos)) , xp, eve::restricted_(eve::cos), arg0);
-  run<EVE_TYPE >(EVE_NAME(restricted_(cos)) , xp, eve::restricted_(eve::cos), arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(cos)) , xp, eve::restricted(eve::cos), arg0);
+  run<EVE_TYPE >(EVE_NAME(restricted(cos)) , xp, eve::restricted(eve::cos), arg0);
 }

@@ -92,7 +92,7 @@ namespace eve::detail
   }
 
   /////////////////////////////////////////////////////////////////////////////////
-  /// pedantic_ numeric_
+  /// pedantic numeric
   template<decorator D, real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, sse_> fms_(EVE_SUPPORTS(avx2_),
                                         D const &,

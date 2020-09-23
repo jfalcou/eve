@@ -29,6 +29,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__rec) , xp, std__rec, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec) , xp, eve::raw_(eve::rec), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec) , xp, eve::raw_(eve::rec), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve:rec) , xp, eve::raw(eve::rec), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve:rec) , xp, eve::raw(eve::rec), arg0);
 }

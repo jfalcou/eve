@@ -16,9 +16,9 @@
 
 TTS_CASE_TPL("Check conditional saturated(eve::div) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( (eve::downward_(eve::div[ T()              ])(T(), T())), T);
-  TTS_EXPR_IS( (eve::downward_(eve::div[ eve::logical<T>()])(T(), T())), T);
-  TTS_EXPR_IS( (eve::downward_(eve::div[ true             ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::downward(eve::div[ T()              ])(T(), T())), T);
+  TTS_EXPR_IS( (eve::downward(eve::div[ eve::logical<T>()])(T(), T())), T);
+  TTS_EXPR_IS( (eve::downward(eve::div[ true             ])(T(), T())), T);
 }
 
 TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
@@ -28,15 +28,15 @@ TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
   auto t = eve::true_(eve::as<T>());
   auto f = eve::false_(eve::as<T>());
 
-  TTS_EQUAL(eve::downward_(eve::div[ 1 ])(tv, fv)    , eve::downward_(eve::div)(tv,fv));
-  TTS_EQUAL(eve::downward_(eve::div[ 1.0 ])(tv, fv)  , eve::downward_(eve::div)(tv,fv));
-  TTS_EQUAL(eve::downward_(eve::div[ true ])(tv, fv) , eve::downward_(eve::div)(tv,fv));
-  TTS_EQUAL(eve::downward_(eve::div[ t ])(tv, fv)    , eve::downward_(eve::div)(tv,fv));
+  TTS_EQUAL(eve::downward(eve::div[ 1 ])(tv, fv)    , eve::downward(eve::div)(tv,fv));
+  TTS_EQUAL(eve::downward(eve::div[ 1.0 ])(tv, fv)  , eve::downward(eve::div)(tv,fv));
+  TTS_EQUAL(eve::downward(eve::div[ true ])(tv, fv) , eve::downward(eve::div)(tv,fv));
+  TTS_EQUAL(eve::downward(eve::div[ t ])(tv, fv)    , eve::downward(eve::div)(tv,fv));
 
-  TTS_EQUAL(eve::downward_(eve::div[ 0 ])(tv, fv)    , tv);
-  TTS_EQUAL(eve::downward_(eve::div[ 0.0 ])(tv, fv)  , tv);
-  TTS_EQUAL(eve::downward_(eve::div[ false ])(tv, fv), tv);
-  TTS_EQUAL(eve::downward_(eve::div[ f ])(tv, fv)    , tv);
+  TTS_EQUAL(eve::downward(eve::div[ 0 ])(tv, fv)    , tv);
+  TTS_EQUAL(eve::downward(eve::div[ 0.0 ])(tv, fv)  , tv);
+  TTS_EQUAL(eve::downward(eve::div[ false ])(tv, fv), tv);
+  TTS_EQUAL(eve::downward(eve::div[ f ])(tv, fv)    , tv);
 
   // Mixed case
   eve::as_logical_t<T> m;
@@ -44,8 +44,8 @@ TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL ( eve::downward_(eve::div[ m ])(tv, fv),
-                  eve::if_else(m, eve::downward_(eve::div)(tv,fv), tv)
+  TTS_EQUAL ( eve::downward(eve::div[ m ])(tv, fv),
+                  eve::if_else(m, eve::downward(eve::div)(tv,fv), tv)
                 );
 
 }
