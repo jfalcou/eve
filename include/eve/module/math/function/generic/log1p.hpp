@@ -116,7 +116,7 @@ namespace eve::detail
                       0x3fc7466496cb03dell,
                       0x3fc2f112df3e5244ll>(w);
         T R  = t2 + t1;
-        T dk = double_(k);
+        T dk = float64(k);
         T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
         T zz;
         if constexpr( eve::platform::supports_infinites )

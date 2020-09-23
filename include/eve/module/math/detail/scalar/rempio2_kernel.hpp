@@ -105,7 +105,7 @@ namespace eve::detail
       static const double mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       static const double pp3 = -0x1.CB3B398000000p-55; /* -4.9789962314799099e-17  */
       static const double pp4 =  0x1.d747f23e32ed7p-83; /*  1.9034889620193266e-25  */
-      auto x  = double_(xx);
+      auto x  = float64(xx);
       auto xn =  nearest(x*twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
@@ -118,7 +118,7 @@ namespace eve::detail
       auto a = t + da;
       da = (t - a) + da;
       auto fa = single_(a);
-      auto dfa = single_((a- double_(fa))+da);
+      auto dfa = single_((a- float64(fa))+da);
       if (fa >= pio_4(eve::as<float>()) || fa < - pio_4(eve::as<float>()))
       {
         T n1;

@@ -70,7 +70,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      return single_(double_(a)*double_(b)+double_(c));
+      return single_(float64(a)*float64(b)+float64(c));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {

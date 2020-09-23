@@ -201,7 +201,7 @@ namespace eve::detail
         T val_hi = hi * Invlog_2hi;
         T val_lo = fma(lo + hi, Invlog_2lo, lo * Invlog_2hi);
 
-        T dk = double_(k);
+        T dk = float64(k);
         T w1 = dk + val_hi;
         val_lo += (dk - w1) + val_hi;
         val_hi = w1;

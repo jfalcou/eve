@@ -114,7 +114,7 @@ namespace eve::detail
           {
             return if_else(
                 is_nez(b),
-                saturated(convert)(nearest(double_(a) / double_(b)), as<elt_t>()),
+                saturated(convert)(nearest(float64(a) / float64(b)), as<elt_t>()),
                 if_else(is_eqz(a), eve::zero, if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()))));
           }
         }

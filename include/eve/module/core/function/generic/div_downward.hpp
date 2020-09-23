@@ -96,7 +96,7 @@ namespace eve::detail
             auto z = if_else(is_gtz(a), valmax(eve::as<T>()), valmin(eve::as<T>()));
             z      = if_else(is_eqz(a), eve::zero, z);
             auto q =
-              saturated(convert)(floor(double_(a) / double_(b)), as<elt_t>());
+              saturated(convert)(floor(float64(a) / float64(b)), as<elt_t>());
             return if_else(is_nez(b), q, z);
           }
         }

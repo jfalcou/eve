@@ -49,7 +49,7 @@ namespace eve::detail
     using elt_t             = element_type_t<T>;
     if constexpr(std::is_same_v<elt_t,  float>)
     {
-      auto x =  double_(xx);
+      auto x =  float64(xx);
       auto n =  nearest(x*twoopi(eve::as<double>()));
       auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return std::make_tuple(quadrant(single_(n)), single_(dxr), T(0.0f));
@@ -98,7 +98,7 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = double_(xx);
+      auto x   = float64(xx);
       auto xn  = nearest(x * twoopi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
@@ -111,7 +111,7 @@ namespace eve::detail
       auto a   = t + da;
       da       = (t - a) + da;
       auto fa  = single_(a);
-      auto dfa = single_((a - double_(fa)) + da);
+      auto dfa = single_((a - float64(fa)) + da);
       if( any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
         T n1;
@@ -284,11 +284,11 @@ namespace eve::detail
         auto n = shr((res0 + (1ULL << 61)), 62);
         res0   = res0 - (n << 62); // -= n << 62;
         auto tmp =  bit_cast(res0, as<i_t>());
-        auto xx1  = double_(tmp);
+        auto xx1  = float64(tmp);
         auto bn   = if_else(xlerfl, sn, single_(n));
         auto z    = xx1 * pi63;
         auto sr1  = single_(z);
-        auto dsr1 = single_(z - double_(sr1));
+        auto dsr1 = single_(z - float64(sr1));
         auto br   = if_else(xlerfl, sr, sr1);
         auto dbr  = if_else(xlerfl, dsr, dsr1);
         br        = if_else(is_not_finite(xx), eve::allbits, br);

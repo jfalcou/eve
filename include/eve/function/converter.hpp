@@ -49,7 +49,7 @@ namespace eve
   //================================================================================================
   // Function decorators for all basic type
   inline constexpr converter_type<float>          const single_   = {};
-  inline constexpr converter_type<double>         const double_   = {};
+  inline constexpr converter_type<double>         const float64   = {};
   inline constexpr converter_type<std::uint8_t >  const uint8_    = {};
   inline constexpr converter_type<std::uint16_t>  const uint16_   = {};
   inline constexpr converter_type<std::uint32_t>  const uint32_   = {};
