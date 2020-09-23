@@ -7,7 +7,7 @@ Example
 #include <eve/wide.hpp>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::int16t, eve::fixed<4>>;
 
 int main()
 {
@@ -22,7 +22,7 @@ int main()
             << "-> sign(pi) = " << eve::sign(pi) << '\n';
 
   float        xf = -327.68f;
-  std::int16_t xi = -328;
+  std::int16t xi = -328;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf       = " << xf << '\n'

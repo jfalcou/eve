@@ -51,13 +51,13 @@ namespace eve
   inline constexpr converter_type<float>          const float32   = {};
   inline constexpr converter_type<double>         const float64   = {};
   inline constexpr converter_type<std::uint8_t >  const uint8    = {};
-  inline constexpr converter_type<std::uint16_t>  const uint16_   = {};
-  inline constexpr converter_type<std::uint32_t>  const uint32_   = {};
-  inline constexpr converter_type<std::uint64_t>  const uint64_   = {};
+  inline constexpr converter_type<std::uint16_t>  const uint16   = {};
+  inline constexpr converter_type<std::uint32_t>  const uint32   = {};
+  inline constexpr converter_type<std::uint64_t>  const uint64   = {};
   inline constexpr converter_type<std::int8_t >   const int8     = {};
-  inline constexpr converter_type<std::int16_t>   const int16_    = {};
-  inline constexpr converter_type<std::int32_t>   const int32_    = {};
-  inline constexpr converter_type<std::int64_t>   const int64_    = {};
+  inline constexpr converter_type<std::int16_t>   const int16    = {};
+  inline constexpr converter_type<std::int32_t>   const int32    = {};
+  inline constexpr converter_type<std::int64_t>   const int64    = {};
 
   //================================================================================================
   // Function decorator for template conversion

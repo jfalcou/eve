@@ -265,15 +265,15 @@ namespace eve::detail
         auto xi                     = bit_cast(xx, as_<ui_t>());
         auto index                  = bit_and(shr(xi, 26), 15);
         auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-        auto arr4 =      uint64_(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
-        auto arr8 =      uint64_(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
+        auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
+        auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
 
         auto shift  = bit_and(shr(xi, 23), 7);
         auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
               xi    = shl(xii, shift);
 
-        auto xi64   = uint64_(xi);
-        auto res0   = uint64_(xi * arr0);
+        auto xi64   = uint64(xi);
+        auto res0   = uint64(xi * arr0);
 
         using wui_t = as_wide_t<uint64_t, cardinal_t<T>>;
         wui_t res1  = mul(xi64, arr4);

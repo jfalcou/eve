@@ -9,14 +9,14 @@ Example
 #include <eve/wide.hpp>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int64_t, eve::fixed<4>>;
-using int_16 = eve::as_<std::int16_t>;
-using int_64 = eve::as_<std::int64_t>;
+using wide_it = eve::wide<std::int64t, eve::fixed<4>>;
+using int_16 = eve::as_<std::int16t>;
+using int_64 = eve::as_<std::int64t>;
 
 int main()
 {
   wide_ft pf = {-1.0f, 2.3f, 45000.7f, -64768.6f};
-  wide_it pi = {-1, 2, -3, eve::valmax(eve::as<std::int64_t>())};
+  wide_it pi = {-1, 2, -3, eve::valmax(eve::as<std::int64t>())};
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                 = " << pf << '\n'
@@ -27,7 +27,7 @@ int main()
             << "-> convert(pi, as(eve::as<double>()))          = " << eve::convert(pi, eve::as<double>()) << '\n';
 
   double        xf = -64768.4f;
-  std::int64_t xi = -64768;
+  std::int64t xi = -64768;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                               = " << xf << '\n'

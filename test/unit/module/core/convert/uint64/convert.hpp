@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<std::uint64_t>()), target_t);
-  TTS_EXPR_IS(eve::uint64_(T())     , target_t);
+  TTS_EXPR_IS(eve::uint64(T())     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
