@@ -50,23 +50,23 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
-    if constexpr(scalar_value<T>)
-    {
-      auto ltza   = is_ltz(a);
-      auto isinfb = is_infinite(b);
-      if( a == mone(eve::as<T>()) && isinfb )                return one(eve::as<T>());
-      if( ltza && !is_flint(b) && !is_infinite(b) ) return nan(eve::as<T>());
-      auto z = pow_abs(a, b);
-      if( isinfb )                                  return z;
-      return (is_negative(a) && is_odd(b)) ? -z : z;
-    }
-    else  if constexpr(has_native_abi_v<T> )
+//     if constexpr(scalar_value<T>)
+//     {
+//       auto ltza   = is_ltz(a);
+//       auto isinfb = is_infinite(b);
+//       if( a == mone(eve::as<T>()) && isinfb )                return one(eve::as<T>());
+//       if( ltza && !is_flint(b) && !is_infinite(b) ) return nan(eve::as<T>());
+//       auto z = pow_abs(a, b);
+//       if( isinfb )                                  return z;
+//       return (is_negative(a) && is_odd(b)) ? -z : z;
+//     }
+//     else
+    if constexpr(has_native_abi_v<T> )
     {
       auto nega    = is_negative(a);
       T    z       = pow_abs(a, b);
-      z            = minus[logical_and(is_odd(b), nega)](z);
-      auto invalid = logical_andnot(nega, logical_or(is_flint(b), is_infinite(b)));
-      return if_else(invalid, eve::allbits, z);
+      z            = minus[is_odd(b) && nega](z);
+      return z;
     }
     else return apply_over(pow, a, b);
   }
@@ -80,8 +80,11 @@ namespace eve::detail
     {
       if constexpr( floating_value<U> )
       {
-        if constexpr( scalar_value<U> )  return pow(a, T {b});
-        else if constexpr(  scalar_value<T> ) return pow(U {a}, b);
+        if constexpr( simd_value<T> ^ simd_value<U>)
+        {
+          if constexpr( scalar_value<U> )  return raw_(pow)(a, T {b});
+          else if constexpr(  scalar_value<T> ) return raw_(pow)(U {a}, b);
+        }
         else
         {
           if constexpr( std::is_same_v<T, U> )
@@ -170,29 +173,35 @@ namespace eve::detail
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 5:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 4:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 3:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 2:
       if( a1 & 1 )
         result *= a0;
       a1 >>= 1;
       a0 *= a0;
+      [[fallthrough]];
     case 1:
       if( a1 & 1 )
         result *= a0;
+      [[fallthrough]];
     default: return result;
     }
   }
@@ -274,4 +283,3 @@ namespace eve::detail
     }
   }
 }
-

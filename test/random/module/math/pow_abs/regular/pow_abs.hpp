@@ -8,8 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/average.hpp>
+#include <eve/function/pow_abs.hpp>
 #include <eve/constant/one.hpp>
+#include <eve/detail/function/iota.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <tts/tests/range.hpp>
@@ -20,10 +21,15 @@
 TTS_CASE_TPL("wide random check on pow_abs", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_pow_abs = tts::vectorize<T>( [](auto e) { return std::pow(std::abs(e),  100*iota(eve::as(e))); } );
-  auto  my_pow_abs =  [](auto e) {  return eve::pow_abs(e,  iota(eve::as(e))); };
+  auto std_pow_abs = tts::vectorize<T>( [](auto e) { return eve::pow_abs(e, v_t(10.51)); } );
+  auto  my_pow_abs =  [](auto e) {  return (eve::pow_abs)(e,  v_t(10.51)); };
+  eve::rng_producer<T> p(v_t(0.05), v_t(100.0));
+  TTS_ULP_RANGE_CHECK(p, std_pow_abs, my_pow_abs, 8);
 
- eve::rng_producer<T> p(eve::zero(eve::as<v_t>()), v_t(100)));
-  TTS_RANGE_CHECK(p, std_powabs, my_pow_abs);
+  auto std_pow_abs1 = tts::vectorize<T>( [](auto e) { return eve::pow_abs(v_t(0.51), e); } );
+  auto  my_pow_abs1 =  [](auto e) {  return (eve::pow_abs)(v_t(0.51), e); };
+
+  eve::rng_producer<T> p1(v_t(0.05), v_t(10.5));
+  TTS_ULP_RANGE_CHECK(p1, std_pow_abs1, my_pow_abs1, 8);
 
 }
