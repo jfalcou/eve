@@ -23,6 +23,7 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_less.hpp>
 #include <eve/function/logical_and.hpp>
+#include <eve/as.hpp>
 #include <concepts>
 
 namespace eve::detail
@@ -45,8 +46,8 @@ namespace eve::detail
         }
         else
         {
-          auto mn = static_cast<double>(valmin(eve::as<float>()));
-          auto mx = static_cast<double>(valmax(eve::as<float>()));
+          auto mn = static_cast<double>(valmin(eve::as_<float>()));
+          auto mx = static_cast<double>(valmax(eve::as_<float>()));
           return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
         }
       }
@@ -132,8 +133,8 @@ namespace eve::detail
             return v;
           else
           {
-            auto mn = U(valmin(eve::as<float>()));
-            auto mx = U(valmax(eve::as<float>()));
+            auto mn = U(valmin(eve::as_<float>()));
+            auto mx = U(valmax(eve::as_<float>()));
             return if_else(is_infinite(v), v, clamp(v, mn, mx));
           }
         }

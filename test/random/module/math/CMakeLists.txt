@@ -72,7 +72,7 @@ make_all_units(ROOT random.math NAME log1p                 ARCH scalar simd TYPE
 make_all_units(ROOT random.math NAME log2                  ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE
 ### make_all_units(ROOT random.math NAME pow                   ARCH scalar simd TYPES ${all_types}    )
-### make_all_units(ROOT random.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT random.math NAME pow_abs               ARCH scalar simd TYPES ${real_types}    )
 ### TEMPORARY MEASURE
 make_all_units(ROOT random.math NAME radindeg              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME radinpi               ARCH scalar simd TYPES ${real_types}    )

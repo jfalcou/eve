@@ -23,7 +23,7 @@ namespace eve
   };
 
   template<typename T>
-  EVE_FORCEINLINE constexpr as_<std::decay_t<T>> as(T && = {}) noexcept
+  EVE_FORCEINLINE constexpr as_<std::decay_t<T>> as(T &&= {}) noexcept
   {
     return {};
   }

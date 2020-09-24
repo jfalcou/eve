@@ -8,23 +8,23 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/pow.hpp>
+#include <eve/function/pow_abs.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <cmath>
 
 int main()
 {
-  auto lmin = EVE_VALUE(-1.0);
-  auto lmax = EVE_VALUE(100.0);
+  auto lmin = EVE_VALUE(-10000.0);
+  auto lmax = EVE_VALUE(10000.0);
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__pow = [](auto x, auto y){return std::pow(x, y);};
+  auto std__pow_abs = [](auto x, auto y){return std::pow(std::abs(x), y);};
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(std__pow) , xp, std__pow , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(raw_(eve::pow)) , xp, eve::raw_(eve::pow) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(raw_(eve::pow)) , xp, eve::raw_(eve::pow) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(std__pow_abs) , xp, std__pow_abs , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::pow_abs)) , xp, eve::pedantic_(eve::pow_abs) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::pow_abs)) , xp, eve::pedantic_(eve::pow_abs) , arg0, arg1);
 
 }

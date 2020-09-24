@@ -115,7 +115,7 @@ jobs:
   ## SIMD tests
   ##================================================================================================
   x86_emulation:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -123,7 +123,7 @@ jobs:
           command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
 
   x86_sse2:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -131,7 +131,7 @@ jobs:
           command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
 
   x86_sse4:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -139,7 +139,7 @@ jobs:
           command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
 
   x86_avx:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -147,7 +147,7 @@ jobs:
           command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
 
   x86_fma:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
@@ -155,7 +155,7 @@ jobs:
           command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
 
   x86_avx2:
-    <<: *config_gcc_x86
+    <<: *config_clang_x86
     steps:
       - checkout
       - run:
