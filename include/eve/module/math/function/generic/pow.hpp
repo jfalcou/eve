@@ -63,9 +63,11 @@ namespace eve::detail
 //     else
     if constexpr(has_native_abi_v<T> )
     {
+      if constexpr(scalar_value<T>)
+        if (a == mone(as(a)) && is_infinite(b)) return one(as(a));
       auto nega    = is_negative(a);
       T    z       = pow_abs(a, b);
-      z            = minus[is_odd(b) && nega](z);
+     z            = minus[is_odd(b) && nega](z);
       return z;
     }
     else return apply_over(pow, a, b);
