@@ -8,11 +8,32 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Basic Constants
+                            Constants
 
-  (insert ../../crumbs.html here)
+$$\newcommand{\choose}[4]{\left\{
+  \begin{array}{@{}ll@{}}
+    #1 & \texttt{if E is } \texttt{#2}\ \\
+    #3 & \texttt{if E is } \texttt{#4}
+  \end{array}\right.}$$
+
+$$\newcommand{\choosefd}[2]{\left\{
+  \begin{array}{@{}ll@{}}
+     #1 & \texttt{if E is float }  \\
+     #2 & \texttt{if E is double}
+  \end{array}\right.}$$
+
+$$\newcommand{\tchoosefd}[2]{\choosefd{\texttt{#1}}{\texttt{#2}}}$$
+
+$$\newcommand{\choosefdi}[3]{\left\{
+  \begin{array}{@{}ll@{}}
+     #1 & \texttt{if E is float }  \\
+     #2 & \texttt{if E is double}  \\
+     #3 & \texttt{if E is integral}
+  \end{array}\right.}$$
 
 Those constants provides generator function for basic values used in various settings.
+
+  (insert ../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
@@ -52,7 +73,7 @@ simd   : {1, 1, 1, 1}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-List of constants
+Basic constants
 ====================================================================================================
 
 In the following table:
@@ -70,6 +91,49 @@ One           | `eve::one`      | `T(1)`                    | `arithmetic_value`
 Minus one     | `eve::mone`     | `T(-1)`                   | `arithmetic_value`   |
 Zero          | `eve::zero`     | `T(0)`                    | `arithmetic_value`   |
 Minus Zero    | `eve::mzero`    | `T(-0.0)`                 | `arithmetic_value`   |
+
+IEEE constants
+====================================================================================================
+In the following table:
+  * `T` represents the requested type for the generated constant.
+  * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`
+  * `I` represents the integral type associated  to `T`
+
+Description                                     | Callable object        | Value                                              | Constraints on `T` |
+:-----------------------------------------------|:-----------------------|:---------------------------------------------------|:-------------------|
+Smallest value increment                        | `eve::bitincrement`    | `bit_cast(1,as<`T`>())`                            | `value`            |
+Machine $\epsilon$                              | `eve::eps`             | $$\choosefdi{2^{-23}}{2^{-52}}{1}$$                | `value`            |
+Mask for the exponent bits                      | `eve::expobits_mask`   | $$\tchoosefd{0x7f800000U}{0x7ff0000000000000ULL}$$ | `floating_value`   |
+Largest possible exponent plus one              | `eve::limitexponent`   | $$\tchoosefd{128}{1024}$$                          | `floating_value`   |
+ $\log\epsilon$                                 | `eve::logeps`          | $$\tchoosefd{-15.9424f}{-36.0436533891172}$$       | `floating_value`   |
+Bit mask for mantissa extraction                | `eve::mantissamask`    | $$\tchoosefd{0x807FFFFFU}{0x800FFFFFFFFFFFFFULL}$$ | `floating_value`   |
+Inverse of the square root of the machine $\epsilon$           | `eve::oneosqrteps`     | $$\tchoosefd{2896.31f}{67108864.0}$$            | `floating_value`   |
+Largest possible exponent                       | `eve::maxexponent`     | $$\choosefd{127}{1023}$$                           | `floating_value`   |
+Largest possible exponent minus one             | `eve::maxexponentm1`   | $$\choosefd{126}{1022}$$                           | `floating_value`   |
+Smallest positive denormal value                | `eve::mindenormal`     | `bit_cast(1,as<`T`>())`                            | `floating_value`   |
+Smallest possible exponent                      | `eve::minexponent`     | $$\choosefd{-126}{-1022}$$                         | `floating_value`   |
+Not a Number                                    | `eve::nan`             |                                                    | `floating_value`   |
+Number of mantissa bits                         | `eve::nbmantissabits`  | $$\choosefd{23}{52}$$                              | `floating_value`   |
+Bit mask for sign bit extraction                | `eve::signmask`        | `bit_cast(I(1) << (sizeof(E)*8-1),as<`T`>())`      | `floating_value`   |
+Square root of the machine $\epsilon$           | `eve::sqrteps`         | $$\sqrt{\epsilon}$$                                | `value`            |
+Two at the power of the number of mantissa bits | `eve::twotonmb`        | $$\choosefdi{2^{23}}{2^{52}}{1}$$                  | `floating_value`   |
+
+Fundamental Limits Constants
+====================================================================================================
+
+In the following table:
+  * `T` represents the requested type for the generated constant.
+  * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`
+
+Description                                     | Callable object        | Value            | Constraints on `T` |
+:-----------------------------------------------|:-----------------------|:-----------------|:-------------------|
+Infinity                                        | `eve::inf`             |   $$\infty$$     | `floating_value`   |
+Minus infinity                                  | `eve::minf`            |   $$-\infty$$    | `floating_value`   |
+Greatest value                                  | `eve::valmax`          | $$\tchoosefd{3.40282e+38f}{1.79769313486232e+308}$$   | `value`            |
+Least    value                                  | `eve::valmin`          | $$\tchoosefd{-3.40282e+38f}{-1.79769313486232e+308}$$ | `value`            |
+Greatest contiguous integral floating value     | `eve::maxflint`        | $$\tchoosefd{16777216.0f}{9007199254740992.0}$$       | `floating_value`   |
+Smallest strictly positive normal value         | `eve::smallestposval`  | $$\tchoosefd{1.17549e-38f}{2.2250738585072e-308}$$    | `floating_value`   |
+Square root of greatest value                   | `eve::sqrtvalmax`      | $$\tchoosefd{1.844674e+19f}{1.340780792994260e+154}$$ | `floating_value`   |
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
