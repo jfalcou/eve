@@ -18,7 +18,7 @@ needs to change.
 
 ## Bibliographic References
 
-If you want to refers to EVE, you can currently use those papers (by order of preference in citation). 
+If you want to refer to EVE, you can currently use those papers (by order of preference in citation). 
 A new, more up-to-date EVE specific journal paper is in the work atm.
 
  - **Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication**, Jules Penuchot, Joel Falcou, Amal Khabou in *HPCS 2018*
@@ -27,7 +27,7 @@ A new, more up-to-date EVE specific journal paper is in the work atm.
 
 ## Current status - Advanced BETA
 
-EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may be possible. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
 [The still-in-progress documentation is here.](https://jfalcou.github.io/eve/index.html)
 
@@ -56,7 +56,7 @@ EVE is considered in **advanced beta**: it's usable, has an almost complete feat
  - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
  - We **do not support** GPGPU, this is the job for another tool. 
  
-### Current roaster of suypported compiler
+### Current roaster of supported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts and requires
