@@ -24,7 +24,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__pow_abs) , xp, std__pow_abs , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::pow_abs)) , xp, eve::pedantic_(eve::pow_abs) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::pow_abs)) , xp, eve::pedantic_(eve::pow_abs) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::pow_abs)) , xp, eve::pedantic(eve::pow_abs) , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::pow_abs)) , xp, eve::pedantic(eve::pow_abs) , arg0, arg1);
 
 }

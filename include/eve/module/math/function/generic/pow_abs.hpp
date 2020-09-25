@@ -204,7 +204,7 @@ namespace eve::detail
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(raw_(pow_abs), a, b);
+    return arithmetic_call(raw(pow_abs), a, b);
   }
 
   template<floating_real_value T>
@@ -219,7 +219,7 @@ namespace eve::detail
   pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic_(pow_abs), a, b);
+    return arithmetic_call(pedantic(pow_abs), a, b);
   }
 
   template<floating_real_value T>
