@@ -12,8 +12,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/logical.hpp>
 

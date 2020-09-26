@@ -10,8 +10,6 @@
 //==================================================================================================
 #pragma once
 
-#include <tts/tests/precision.hpp>
-#include <tts/tests/basic.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/logical.hpp>
 

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rem.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>

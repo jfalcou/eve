@@ -14,9 +14,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <cmath>
 #include <type_traits>
 

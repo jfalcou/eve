@@ -10,8 +10,6 @@
 
 #include "test.hpp"
 #include <eve/wide.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("wide supports std::tuple_size",
              eve::fixed<1>,

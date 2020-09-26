@@ -8,12 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
-#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check splatting constructor for arithmetic wide", EVE_TYPE)
+TTS_CASE("Check splatting constructor for arithmetic wide")
 {
   EVE_VALUE base = 42;
   T  simd(base);

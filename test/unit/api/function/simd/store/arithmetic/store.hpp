@@ -11,8 +11,6 @@
 #pragma once
 
 #include "test.hpp"
-#include <tts/tests/basic.hpp>
-#include <tts/tests/sequence.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/function/store.hpp>
 #include <eve/wide.hpp>

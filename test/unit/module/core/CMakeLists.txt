@@ -10,22 +10,22 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.core.tst                )
-add_custom_target(unit.core.constant.tst       )
-add_custom_target(unit.core.constant.scalar.tst)
-add_custom_target(unit.core.constant.simd.tst  )
-add_custom_target(unit.core.scalar.tst         )
-add_custom_target(unit.core.simd.tst           )
+add_custom_target(unit.core.exe                )
+add_custom_target(unit.core.constant.exe       )
+add_custom_target(unit.core.constant.scalar.exe)
+add_custom_target(unit.core.constant.simd.exe  )
+add_custom_target(unit.core.scalar.exe         )
+add_custom_target(unit.core.simd.exe           )
 
-add_dependencies(unit.scalar.tst        unit.core.scalar.tst          )
-add_dependencies(unit.simd.tst          unit.core.simd.tst            )
-add_dependencies(unit.core.constant.tst unit.core.constant.scalar.tst )
-add_dependencies(unit.core.constant.tst unit.core.constant.simd.tst   )
-add_dependencies(unit.core.scalar.tst   unit.core.constant.scalar.tst )
-add_dependencies(unit.core.simd.tst     unit.core.constant.simd.tst   )
-add_dependencies(unit.core.tst          unit.core.constant.tst        )
-add_dependencies(unit.core.tst          unit.core.scalar.tst          )
-add_dependencies(unit.core.tst          unit.core.simd.tst            )
+add_dependencies(unit.scalar.exe        unit.core.scalar.exe          )
+add_dependencies(unit.simd.exe          unit.core.simd.exe            )
+add_dependencies(unit.core.constant.exe unit.core.constant.scalar.exe )
+add_dependencies(unit.core.constant.exe unit.core.constant.simd.exe   )
+add_dependencies(unit.core.scalar.exe   unit.core.constant.scalar.exe )
+add_dependencies(unit.core.simd.exe     unit.core.constant.simd.exe   )
+add_dependencies(unit.core.exe          unit.core.constant.exe        )
+add_dependencies(unit.core.exe          unit.core.scalar.exe          )
+add_dependencies(unit.core.exe          unit.core.simd.exe            )
 
 ##==================================================================================================
 ## Other tests

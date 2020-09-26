@@ -14,8 +14,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/function/all.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check  eve::big(eve::sincos) return type", EVE_TYPE)

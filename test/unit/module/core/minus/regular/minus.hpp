@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/minus.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>

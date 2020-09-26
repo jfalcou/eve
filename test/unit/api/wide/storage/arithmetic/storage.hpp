@@ -8,12 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
-#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check storage access for wide", EVE_TYPE)
+TTS_CASE("Check storage access for wide")
 {
   T  simd([](auto i, auto) { return 1+i; });
   T  ref;
@@ -27,7 +24,7 @@ TTS_CASE_TPL("Check storage access for wide", EVE_TYPE)
   TTS_EQUAL(simd, ref);
 }
 
-TTS_CASE_TPL("Check begin/end access for wide", EVE_TYPE)
+TTS_CASE("Check begin/end access for wide")
 {
   T  simd([](auto i, auto) { return 1+i; });
   T  ref;

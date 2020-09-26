@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/floor.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check ifloor return type", EVE_TYPE)
 {

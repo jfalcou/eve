@@ -8,13 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
-#include <tts/tests/relation.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check enumerating constructor for wide of logical", EVE_TYPE)
+TTS_CASE("Check enumerating constructor for wide of logical")
 {
   auto filler = [](auto i, auto) { return i % 3 ? true : false; };
 

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/bit_ceil.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/valmax.hpp>
 
 TTS_CASE_TPL("Check bit_ceil return type", EVE_TYPE)

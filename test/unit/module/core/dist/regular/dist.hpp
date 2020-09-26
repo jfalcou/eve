@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/dist.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::dist return type", EVE_TYPE)
 {

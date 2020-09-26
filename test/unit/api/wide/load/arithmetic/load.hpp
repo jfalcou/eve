@@ -8,150 +8,107 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
 #include "test.hpp"
 
-#include <tts/tests/relation.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <list>
 
-template<typename T, typename N>
-auto data_block()
+template<typename W> auto data_block()
 {
-  using alloc_t = eve::aligned_allocator<T, eve::wide<T, N>::static_alignment>;
+  using alloc_t = eve::aligned_allocator<EVE_VALUE, W::static_alignment>;
 
-  auto nb_elem  = 4096/sizeof(T);
-  auto start    = nb_elem - N::value;
-  std::vector<T, alloc_t> ref(nb_elem);
+  auto nb_elem  = 4096/sizeof(EVE_VALUE);
+  auto start    = nb_elem - EVE_CARDINAL;
+  std::vector<EVE_VALUE, alloc_t> ref(nb_elem);
 
-  T k = {};
+  EVE_VALUE k = {};
   for(std::size_t i=start;i<nb_elem;++i) ref[i] = k++;
 
   return std::pair{ref,start};
 }
 
-TTS_CASE_TPL("Check ctor from unaligned pointer for wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE("Check ctor from unaligned pointer for wide")
 {
-  auto [data,idx] = data_block<EVE_TYPE, T>();
+  auto [data,idx] = data_block<T>();
   auto* ref_ptr   = &data[idx];
 
-  eve::wide<EVE_TYPE, T> simd(ref_ptr);
-  eve::wide<EVE_TYPE, T> ref;
+  T simd(ref_ptr);
+  T ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL(simd, ref);
 }
 
-TTS_CASE_TPL("Check ctor from const unaligned pointer for wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE("Check ctor from const unaligned pointer for wide")
 {
-  auto [data,idx]     = data_block<EVE_TYPE, T>();
+  auto [data,idx]     = data_block<T>();
   auto const* ref_ptr = &data[idx];
 
-  eve::wide<EVE_TYPE, T> simd(ref_ptr);
-  eve::wide<EVE_TYPE, T> ref;
+  T simd(ref_ptr);
+  T ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL(simd, ref);
 }
 
-TTS_CASE_TPL("Check ctor from aligned pointer for wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE("Check ctor from aligned pointer for wide")
 {
-  auto constexpr algt = eve::wide<EVE_TYPE, T>::static_alignment;
-  auto [data,idx]     = data_block<EVE_TYPE, T>();
+  auto constexpr algt = T::static_alignment;
+  auto [data,idx]     = data_block<T>();
   auto* ref_ptr       = &data[idx];
 
-  eve::wide<EVE_TYPE, T> simd(eve::as_aligned<algt>(ref_ptr));
-  eve::wide<EVE_TYPE, T> ref;
+  T simd(eve::as_aligned<algt>(ref_ptr));
+  T ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL(simd, ref);
 }
 
-TTS_CASE_TPL("Check ctor from const aligned pointer for wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE("Check ctor from const aligned pointer for wide")
 {
-  auto constexpr algt = eve::wide<EVE_TYPE, T>::static_alignment;
-  auto [data,idx]     = data_block<EVE_TYPE, T>();
+  auto constexpr algt = T::static_alignment;
+  auto [data,idx]     = data_block<T>();
   auto const* ref_ptr = &data[idx];
 
-  eve::wide<EVE_TYPE, T> simd(eve::as_aligned<algt>(ref_ptr));
-  eve::wide<EVE_TYPE, T> ref;
+  T simd(eve::as_aligned<algt>(ref_ptr));
+  T ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL(simd, ref);
 }
 
-TTS_CASE_TPL("Check ctor from range for wide"
-            , eve::fixed<1>
-            , eve::fixed<2>
-            , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
-            , eve::fixed<32>
-            , eve::fixed<64>
-            )
+TTS_CASE("Check ctor from range for wide")
 {
-  std::list<EVE_TYPE> ref_ptr(T::value);
+  std::list<EVE_VALUE> ref_ptr(EVE_CARDINAL);
 
-  EVE_TYPE k = {};
+  EVE_VALUE k = {};
   for(auto &e : ref_ptr) e = k++;
 
-  eve::wide<EVE_TYPE, T> ref;
+  T ref;
 
   k = {};
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, k++);
 
   {
-    eve::wide<EVE_TYPE, T> simd(ref_ptr);
+    T simd(ref_ptr);
     TTS_EQUAL(simd, ref);
   }
 
   {
-    eve::wide<EVE_TYPE, T> simd(ref_ptr.begin(), ref_ptr.end());
+    T simd(ref_ptr.begin(), ref_ptr.end());
     TTS_EQUAL(simd, ref);
   }
 }

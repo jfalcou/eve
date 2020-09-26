@@ -12,8 +12,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/function/mul.hpp>
 
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::mul return type", EVE_TYPE)

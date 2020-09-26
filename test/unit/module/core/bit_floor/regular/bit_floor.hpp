@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/bit_floor.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/valmax.hpp>
 
 TTS_CASE_TPL("Check bit_floor return type", EVE_TYPE)

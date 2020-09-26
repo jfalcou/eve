@@ -11,8 +11,6 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/traits.hpp>
 #include <eve/arch/abi_of.hpp>
 

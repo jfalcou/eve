@@ -13,8 +13,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/logical.hpp>
 #include <eve/function/if_else.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 #include <algorithm>
 

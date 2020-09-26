@@ -13,8 +13,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::has_single_bit return type", EVE_TYPE)
 {

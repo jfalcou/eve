@@ -11,9 +11,6 @@
 #include <eve/function/nextafter.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check nextafter return type", EVE_TYPE)
 {

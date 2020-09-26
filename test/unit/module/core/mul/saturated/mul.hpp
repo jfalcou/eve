@@ -12,8 +12,6 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/function/mul.hpp>
 
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check saturated(eve::mul) return type", EVE_TYPE)

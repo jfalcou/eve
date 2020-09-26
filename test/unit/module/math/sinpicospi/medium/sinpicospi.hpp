@@ -11,8 +11,6 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/cospi.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)

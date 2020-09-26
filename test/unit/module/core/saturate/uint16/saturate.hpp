@@ -11,8 +11,6 @@
 #include <eve/function/saturate.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::saturate return type", EVE_TYPE)
 {

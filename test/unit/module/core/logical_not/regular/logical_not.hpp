@@ -12,8 +12,6 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check logical_not return type", EVE_TYPE)
 {

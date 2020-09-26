@@ -13,8 +13,6 @@
 #include <eve/function/next.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/constant/eps.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::lerp return type", EVE_TYPE)
 {

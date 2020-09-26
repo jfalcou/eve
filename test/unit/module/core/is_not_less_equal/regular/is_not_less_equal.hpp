@@ -14,8 +14,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check is_not_less_equal return type", EVE_TYPE)
 {

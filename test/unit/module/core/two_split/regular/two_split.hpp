@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/two_split.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check two_split return type", EVE_TYPE)

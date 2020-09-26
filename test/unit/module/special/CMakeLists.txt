@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.special.tst       )
-add_custom_target(unit.special.scalar.tst)
-add_custom_target(unit.special.simd.tst  )
+add_custom_target(unit.special.exe       )
+add_custom_target(unit.special.scalar.exe)
+add_custom_target(unit.special.simd.exe  )
 
-add_dependencies(unit.scalar.tst    unit.special.scalar.tst )
-add_dependencies(unit.simd.tst      unit.special.simd.tst   )
-add_dependencies(unit.special.tst unit.special.scalar.tst   )
-add_dependencies(unit.special.tst unit.special.simd.tst     )
+add_dependencies(unit.scalar.exe    unit.special.scalar.exe )
+add_dependencies(unit.simd.exe      unit.special.simd.exe   )
+add_dependencies(unit.special.exe unit.special.scalar.exe   )
+add_dependencies(unit.special.exe unit.special.simd.exe     )
 
 ##==================================================================================================
 ## Elementwise function unit tests

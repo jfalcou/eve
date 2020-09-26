@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/nearest.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check nearest return type", EVE_TYPE)
 {

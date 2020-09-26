@@ -8,13 +8,10 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
-#include <tts/tests/relation.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check splatting constructor for logical wide", EVE_TYPE )
+TTS_CASE("Check splatting constructor for logical wide")
 {
   eve::logical<T> from_bool_t{true};
   eve::logical<T> from_logical_t{eve::logical<T>(true)};

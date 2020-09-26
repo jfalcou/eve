@@ -12,9 +12,6 @@
 #include <eve/function/raw.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/sqrt_2.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::raw(eve::sqrt) return type", EVE_TYPE)
 {

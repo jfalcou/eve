@@ -11,7 +11,6 @@
 #pragma once
 
 #include "test.hpp"
-#include <tts/tests/relation.hpp>
 #include <eve/function/combine.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
@@ -23,27 +22,21 @@ TTS_CASE("Check combining for logical values")
   using eve::logical;
   using eve::wide;
 
-  logical<wide<EVE_TYPE, fixed<2>>> ref(true, false);
+  logical<wide<EVE_VALUE, fixed<2>>> ref(true, false);
 
-  TTS_EQUAL((eve::combine(logical<EVE_TYPE>(true), logical<EVE_TYPE>(false))), ref);
+  TTS_EQUAL((eve::combine(logical<EVE_VALUE>(true), logical<EVE_VALUE>(false))), ref);
 }
 
-TTS_CASE_TPL("Check combining for logical wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE("Check combining for logical wide")
 {
   using eve::logical;
   using eve::wide;
+  using combined_cardinal = typename T::cardinal_type::combined_type;
 
-  logical<wide<EVE_TYPE, T>>                         low([](auto i, auto) { return i % 2 < 2; });
-  logical<wide<EVE_TYPE, T>>                         high([](auto i, auto) { return i % 2 > 3; });
-  logical<wide<EVE_TYPE, typename T::combined_type>> ref([](auto i, auto c) { return i < int(c) / 2; });
+  logical<T>                         low([](auto i, auto) { return i % 2 < 2; });
+  logical<T>                         high([](auto i, auto) { return i % 2 > 3; });
+  logical<wide<EVE_VALUE, combined_cardinal>> ref([](auto i, auto c) { return i < int(c) / 2; });
 
-  TTS_EQUAL((logical<wide<EVE_TYPE, typename T::combined_type>>(low, high)), ref);
+  TTS_EQUAL((logical<wide<EVE_VALUE, combined_cardinal>>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);
 }

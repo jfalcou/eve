@@ -14,9 +14,6 @@
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/mone.hpp>
 #include <eve/logical.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check binarize return type", EVE_TYPE)

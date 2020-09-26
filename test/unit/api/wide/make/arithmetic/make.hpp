@@ -8,12 +8,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
-#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL( "Check enumerating constructor for arithmetic wide", EVE_TYPE )
+TTS_CASE( "Check enumerating constructor for arithmetic wide")
 {
   auto filler = [](auto i, auto) { return EVE_VALUE(i + 1); };
 

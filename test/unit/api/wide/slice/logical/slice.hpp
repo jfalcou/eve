@@ -8,10 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#pragma once
-
 #include "test.hpp"
-#include <tts/tests/relation.hpp>
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 

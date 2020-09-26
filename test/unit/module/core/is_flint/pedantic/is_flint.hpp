@@ -13,8 +13,6 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::is_flint return type", EVE_TYPE)
 {
