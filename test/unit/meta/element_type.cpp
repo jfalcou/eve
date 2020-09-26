@@ -12,7 +12,6 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE( "Check for element_type")
 {

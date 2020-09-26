@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <tts/tests/types.hpp>
 #include <eve/concept/rebindable.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
