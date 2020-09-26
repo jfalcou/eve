@@ -8,12 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-
 #include "test.hpp"
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 
-using EVE_TYPE  = ${target};
+using T  = ${target};
 inline constexpr auto EVE_CARDINAL = 1;
 
 #include "${header}.hpp"

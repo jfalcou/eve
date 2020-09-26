@@ -5,7 +5,6 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(download)
 include(generate_test)
 include(add_parent_target)
 
@@ -52,11 +51,6 @@ macro(to_std type output)
 endmacro()
 
 ##==================================================================================================
-## Some test *may* require OpenMP
-##==================================================================================================
-find_package(OpenMP)
-
-##==================================================================================================
 ## Setup a basic test
 ##==================================================================================================
 function(make_unit root)
@@ -96,7 +90,7 @@ function(make_all_units)
             set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp")
 
             configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
-            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.tst"
+            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
                             "${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp"
                           )
           endforeach()
@@ -111,12 +105,12 @@ function(make_all_units)
             configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
 
             if(GEN_TEST_CARDINAL)
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.tst"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
                               "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                               "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
                             )
             else()
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.tst"
+              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
                               "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
                             )
             endif()
@@ -133,7 +127,7 @@ endfunction()
 ##==================================================================================================
 function(check_failure root)
   foreach(file ${ARGN})
-    string(REPLACE ".cpp" ".tst" base ${file})
+    string(REPLACE ".cpp" ".exe" base ${file})
     string(REPLACE "/"    "." base ${base})
     string(REPLACE "\\"   "." base ${base})
     set(test "${root}.${base}")
@@ -200,17 +194,15 @@ endfunction()
 ## Setup TTS
 ##==================================================================================================
 set(TTS_BUILD_TEST    OFF CACHE INTERNAL "OFF")
-set(TTS_BUILD_DOC     OFF CACHE INTERNAL "OFF")
 set(TTS_IS_DEPENDENT  ON  CACHE INTERNAL "ON")
 
-download_project( PROJ                tts
-                  GIT_REPOSITORY      https://github.com/jfalcou/tts.git
-                  GIT_TAG             master
-                  "UPDATE_DISCONNECTED 1"
-                  QUIET
-                )
+include(FetchContent)
+FetchContent_Declare( tts
+                      GIT_REPOSITORY https://github.com/jfalcou/tts.git
+                      GIT_TAG main
+                    )
 
-add_subdirectory(${tts_SOURCE_DIR} ${tts_BINARY_DIR})
+FetchContent_MakeAvailable(tts)
 
 ##==================================================================================================
 ## Setup our tests
@@ -222,27 +214,27 @@ add_dependencies(tests unit)
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.tst              )
-add_custom_target(unit.scalar.tst       )
-add_custom_target(unit.basic.tst        )
-add_custom_target(unit.simd.tst         )
-add_custom_target(random.tst            )
-add_custom_target(random.scalar.tst     )
-add_custom_target(random.simd.tst       )
-add_custom_target(exhaustive.tst        )
-add_custom_target(exhaustive.scalar.tst )
-add_custom_target(exhaustive.simd.tst   )
+add_custom_target(unit.exe              )
+add_custom_target(unit.scalar.exe       )
+add_custom_target(unit.basic.exe        )
+add_custom_target(unit.simd.exe         )
+add_custom_target(random.exe            )
+add_custom_target(random.scalar.exe     )
+add_custom_target(random.simd.exe       )
+add_custom_target(exhaustive.exe        )
+add_custom_target(exhaustive.scalar.exe )
+add_custom_target(exhaustive.simd.exe   )
 
-add_dependencies(unit.tst       unit.scalar.tst       )
-add_dependencies(unit.tst       unit.simd.tst         )
-add_dependencies(random.tst     random.scalar.tst     )
-add_dependencies(random.tst     random.simd.tst       )
-add_dependencies(exhaustive.tst exhaustive.scalar.tst )
-add_dependencies(exhaustive.tst exhaustive.simd.tst   )
+add_dependencies(unit.exe       unit.scalar.exe       )
+add_dependencies(unit.exe       unit.simd.exe         )
+add_dependencies(random.exe     random.scalar.exe     )
+add_dependencies(random.exe     random.simd.exe       )
+add_dependencies(exhaustive.exe exhaustive.scalar.exe )
+add_dependencies(exhaustive.exe exhaustive.simd.exe   )
 
-add_dependencies(unit.basic.tst unit.arch.tst   )
-add_dependencies(unit.basic.tst unit.api.tst    )
-add_dependencies(unit.basic.tst unit.meta.tst   )
+add_dependencies(unit.basic.exe unit.arch.exe   )
+add_dependencies(unit.basic.exe unit.api.exe    )
+add_dependencies(unit.basic.exe unit.meta.exe   )
 
 ##==================================================================================================
 ## Incldue tests themselves

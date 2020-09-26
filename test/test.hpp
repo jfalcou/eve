@@ -10,19 +10,19 @@
 //==================================================================================================
 #pragma once
 
-#define TTS_USE_CUSTOM_DRIVER
+#define TTS_CUSTOM_DRIVER_FUNCTION eve_entry_point
 #include <tts/tts.hpp>
 #include "measures.hpp"
 
-int main(int argc, char **argv)
+int main(int argc, char const **argv)
 {
-  std::cout << "[EVE] - Target: " << ::tts::type_id<EVE_CURRENT_API>() << " - Assertions: ";
+  std::cout << "[EVE] - Target: " << ::tts::typename_<EVE_CURRENT_API> << " - Assertions: ";
 #ifdef NDEBUG
   std::cout << "Disabled\n";
 #else
   std::cout << "Enabled\n";
 #endif
 
-  ::tts::env runtime(argc, argv, std::cout);
-  return ::tts::run(runtime, ::tts::detail::suite, 0, 0);
+  eve_entry_point(argc, argv);
+  return tts::report(0,0);
 }
