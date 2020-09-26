@@ -97,7 +97,6 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       if constexpr(std::is_same_v<elt_t, double>)
       {
-//        a0 = if_else(a0 > T(26.543), inf(as(a0)), a0);
         T y =  eve::abs(a0);
         y =  if_else(y > T(26.543), T(26.543), y);
         T sqry =  eve::sqr(y);
