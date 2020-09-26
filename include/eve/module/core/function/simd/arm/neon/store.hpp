@@ -209,7 +209,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(neon128_), wide<T, S, neon128_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
-    if constexpr( N >= arm_128_::bytes )
+    if constexpr( N >= neon128_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -271,14 +271,14 @@ namespace eve::detail
 #else
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, S, neon64_> const &value, aligned_ptr<T, N> ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, S, arm_64_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
     store(value, ptr.get());
   }
 
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, S, neon128_> const &value, aligned_ptr<T, N> ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, S, arm_128_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
     store(value, ptr.get());
   }
