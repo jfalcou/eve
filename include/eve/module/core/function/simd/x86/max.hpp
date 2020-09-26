@@ -21,9 +21,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> max_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, sse_> const &v0
-                                       , wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_> max_(EVE_SUPPORTS(sse2_)
+                                       , wide<T, N, x86_128_> const &v0
+                                       , wide<T, N, x86_128_> const &v1) noexcept
   {
          if constexpr(std::is_same_v<T, double>)     return _mm_max_pd(v0, v1);
     else if constexpr(std::is_same_v<T, float>)      return _mm_max_ps(v0, v1);
@@ -52,9 +52,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> max_(EVE_SUPPORTS(avx_)
-                                       , wide<T, N, avx_> const &v0
-                                       , wide<T, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_> max_(EVE_SUPPORTS(avx_)
+                                       , wide<T, N, x86_256_> const &v0
+                                       , wide<T, N, x86_256_> const &v1) noexcept
   {
          if constexpr(std::is_same_v<T, float>)        return _mm256_max_ps(v0, v1);
     else if constexpr(std::is_same_v<T, double>)       return _mm256_max_pd(v0, v1);

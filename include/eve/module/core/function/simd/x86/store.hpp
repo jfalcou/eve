@@ -21,9 +21,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &value, T *ptr) noexcept
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &value, T *ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == sse_::bytes)
+    if constexpr(N::value * sizeof(T) == x86_128_::bytes)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm_storeu_pd(ptr, value);
@@ -40,11 +40,11 @@ namespace eve::detail
 
   template<typename T, typename N, std::size_t A>
   EVE_FORCEINLINE auto
-  store_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> const &value, aligned_ptr<T, A> ptr) noexcept
+  store_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> const &value, aligned_ptr<T, A> ptr) noexcept
   {
-    static constexpr auto alg = wide<T, N, sse_>::static_alignment;
+    static constexpr auto alg = wide<T, N, x86_128_>::static_alignment;
 
-    if constexpr(N::value * sizeof(T) == sse_::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= alg)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm_store_pd(ptr.get(), value);
@@ -62,9 +62,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<typename T, typename N>
-  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &value, T *ptr) noexcept
+  EVE_FORCEINLINE auto store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, T *ptr) noexcept
   {
-    if constexpr(N::value * sizeof(T) == avx_::bytes)
+    if constexpr(N::value * sizeof(T) == x86_128_::bytes)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_storeu_pd(ptr, value);
@@ -81,11 +81,11 @@ namespace eve::detail
 
   template<typename T, typename N, std::size_t A>
   EVE_FORCEINLINE auto
-  store_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &value, aligned_ptr<T, A> ptr) noexcept
+  store_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &value, aligned_ptr<T, A> ptr) noexcept
   {
-    static constexpr auto alg = wide<T, N, avx_>::static_alignment;
+    static constexpr auto alg = wide<T, N, x86_256_>::static_alignment;
 
-    if constexpr(N::value * sizeof(T) == avx_::bytes && A >= alg)
+    if constexpr(N::value * sizeof(T) == x86_128_::bytes && A >= alg)
     {
       if constexpr(std::is_same_v<T, double>)
         _mm256_store_pd(ptr.get(), value);

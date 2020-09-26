@@ -21,9 +21,9 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> min_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, sse_> const &v0
-                                       , wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_> min_(EVE_SUPPORTS(sse2_)
+                                       , wide<T, N, x86_128_> const &v0
+                                       , wide<T, N, x86_128_> const &v1) noexcept
   {
          if constexpr(std::is_same_v<T, double>)   return _mm_min_pd(v0, v1);
     else if constexpr(std::is_same_v<T, float>)    return _mm_min_ps(v0, v1);
@@ -45,16 +45,16 @@ namespace eve::detail
           else if constexpr(sizeof(T) == 4)  return _mm_min_epu32(v0, v1);
         }
       }
-      else return map(min, v0, v1); 
+      else return map(min, v0, v1);
     }
   }
 
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> min_(EVE_SUPPORTS(avx_)
-                                       , wide<T, N, avx_> const &v0
-                                       , wide<T, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_> min_(EVE_SUPPORTS(avx_)
+                                       , wide<T, N, x86_256_> const &v0
+                                       , wide<T, N, x86_256_> const &v1) noexcept
   {
          if constexpr(std::is_same_v<T, float>)  return _mm256_min_ps(v0, v1);
     else if constexpr(std::is_same_v<T, double>) return _mm256_min_pd(v0, v1);
@@ -75,7 +75,7 @@ namespace eve::detail
           else if constexpr(sizeof(T) == 4)  return _mm256_min_epu32(v0, v1);
         }
       }
-      else return aggregate(min, v0, v1); 
+      else return aggregate(min, v0, v1);
     }
   }
 }

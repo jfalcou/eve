@@ -19,17 +19,20 @@ namespace eve
 {
   // clang-format off
   //================================================================================================
-  // ABI tag for all X86 128 bits SIMD registers
+  // ABI tags for all X86 bits SIMD registers
   //================================================================================================
-  struct sse_
+  template<std::size_t Size, bool Logical> struct x86_abi_
   {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t bits           = Size;
+    static constexpr std::size_t bytes          = Size/8;
+    static constexpr bool        is_bit_logical = Logical;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
+
+  struct x86_128_ : x86_abi_<128, true> {};
+  struct x86_256_ : x86_abi_<256, true> {};
 
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
@@ -39,18 +42,8 @@ namespace eve
   struct ssse3_   : sse3_   {};
   struct sse4_1_  : ssse3_  {};
   struct sse4_2_  : sse4_1_ {};
-
-  struct avx_     : sse4_2_
-  {
-    static constexpr std::size_t bits           = 256;
-    static constexpr std::size_t bytes          = 32;
-    static constexpr bool        is_bit_logical = true;
-
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
-
-  struct avx2_    : avx_ {};
+  struct avx_     : sse4_2_ {};
+  struct avx2_    : avx_    {};
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
@@ -97,6 +90,6 @@ namespace eve
   // x86 ABI concept
   //================================================================================================
   template<typename T>
-  concept x86_abi = detail::is_one_of<T>(detail::types<sse_, avx_> {});
+  concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_> {});
 }
 

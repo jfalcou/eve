@@ -25,7 +25,7 @@ namespace eve::detail
   // 128 bits implementation for xop
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(avx_),
-                             wide<T, N, sse_> const &a0) noexcept
+                             wide<T, N, x86_128_> const &a0) noexcept
   {
     if constexpr(supports_xop)
     {
@@ -39,7 +39,7 @@ namespace eve::detail
   // 256 bits implementation for xop
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(avx_),
-                             wide<T, N, avx_> const &a0) noexcept
+                             wide<T, N, x86_256_> const &a0) noexcept
   {
     if constexpr(supports_xop)
     {

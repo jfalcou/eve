@@ -25,27 +25,26 @@ namespace eve
 {
   // clang-format off
   //================================================================================================
-  // Dispatching tag for VMX SIMD implementation
+  // ABI tags for all ARM bits SIMD registers
   //================================================================================================
-  struct neon64_  : simd_
+  template<std::size_t Size, bool Logical> struct arm_abi_
   {
-    static constexpr std::size_t bits           = 64;
-    static constexpr std::size_t bytes          = 8;
-    static constexpr bool        is_bit_logical = true;
+    static constexpr std::size_t bits           = Size;
+    static constexpr std::size_t bytes          = Size/8;
+    static constexpr bool        is_bit_logical = Logical;
 
     template<typename Type>
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
-  struct neon128_ : simd_
-  {
-    static constexpr std::size_t bits           = 128;
-    static constexpr std::size_t bytes          = 16;
-    static constexpr bool        is_bit_logical = true;
+  struct arm_64_  : arm_abi_<64,true> {};
+  struct arm_128_ : arm_abi_<128,true> {};
 
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
+  //================================================================================================
+  // Dispatching tag for ARM SIMD implementation
+  //================================================================================================
+  struct neon64_  : simd_ {};
+  struct neon128_ : simd_ {};
 
   //================================================================================================
   // NEON extension tag objects
@@ -81,6 +80,5 @@ namespace eve
   //================================================================================================
   // ARM ABI concept
   //================================================================================================
-  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<neon128_, neon64_> {});
+  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<arm_64_,arm_128_> {});
 }
-

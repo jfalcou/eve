@@ -22,14 +22,14 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> shr_(EVE_SUPPORTS(sse2_)
-                                       , wide<T, N, sse_> const &a0, I const & a1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_> shr_(EVE_SUPPORTS(sse2_)
+                                       , wide<T, N, x86_128_> const &a0, I const & a1) noexcept
   {
     if constexpr(std::is_unsigned_v<T>)
     {
       if constexpr(sizeof(T) == 1)
       {
-        using t_t = wide<T, N, sse_>;
+        using t_t = wide<T, N, x86_128_>;
         using int_t     = std::uint16_t;
         using gen_t     = wide<int_t, fixed<N::value / 2>>;
         t_t const Mask1 = bit_cast(gen_t(0x00ff),as(a0));
@@ -58,13 +58,13 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T,  integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>  shr_(EVE_SUPPORTS(avx_),
-                                         wide<T, N, sse_> const &a0,
-                                         wide<I, N, sse_> const &a1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_>  shr_(EVE_SUPPORTS(avx_),
+                                         wide<T, N, x86_128_> const &a0,
+                                         wide<I, N, x86_128_> const &a1) noexcept
   {
     if constexpr(supports_xop)
     {
-      using si_t = wide<as_integer_t<I, signed>, N, sse_>;
+      using si_t = wide<as_integer_t<I, signed>, N, x86_128_>;
       auto sa1   = -bit_cast(a1, as_<si_t>{});
       if constexpr(std::is_unsigned_v<T>)
       {
@@ -103,7 +103,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> shr_(EVE_SUPPORTS(avx_), wide<T, N, avx_> const &a0,I const & a1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_> shr_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> const &a0,I const & a1) noexcept
   {
     if constexpr(current_api >= avx2)
     {
@@ -133,9 +133,9 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> shr_(EVE_SUPPORTS(avx_),
-       wide<T, N, avx_> const &a0,
-       wide<I, N, avx_> const &a1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_> shr_(EVE_SUPPORTS(avx_),
+       wide<T, N, x86_256_> const &a0,
+       wide<I, N, x86_256_> const &a1) noexcept
   {
     [[ maybe_unused ]] auto ifxop_choice = [](const auto &a0, const auto &a1) {
       if constexpr(supports_xop)

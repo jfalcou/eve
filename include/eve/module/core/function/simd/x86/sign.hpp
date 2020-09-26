@@ -18,12 +18,12 @@
 namespace eve::detail
 {
   template<integral_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> sign_(EVE_SUPPORTS(ssse3_)
-                                        , wide<T, N, sse_> const &a) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_> sign_(EVE_SUPPORTS(ssse3_)
+                                        , wide<T, N, x86_128_> const &a) noexcept
   {
     if constexpr(std::is_signed_v<T>)
     {
-      using t_t = wide<T, N, sse_>;
+      using t_t = wide<T, N, x86_128_>;
       if constexpr(sizeof(T) == 1)
         return t_t(_mm_sign_epi8(one(eve::as(a)), a));
       else if constexpr(sizeof(T) == 2)

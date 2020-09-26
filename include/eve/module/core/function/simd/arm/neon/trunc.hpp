@@ -19,8 +19,8 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> trunc_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> trunc_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N, arm_64_> const &v0) noexcept
   {
     if constexpr(integral_value<T>) return v0;
 #if __ARM_ARCH >= 8
@@ -37,16 +37,16 @@ namespace eve::detail
 }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> trunc_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_64_> trunc_(EVE_SUPPORTS(neon128_),
                                              raw_type const &,
-                                             wide<T, N, neon64_> const &v0) noexcept
+                                             wide<T, N, arm_64_> const &v0) noexcept
   {
     return trunc(v0);
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> trunc_(EVE_SUPPORTS(neon128_),
-                                              wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> trunc_(EVE_SUPPORTS(neon128_),
+                                              wide<T, N, arm_128_> const &v0) noexcept
   {
     if constexpr(integral_value<T>) return v0;
 #if __ARM_ARCH >= 8
@@ -63,9 +63,9 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> trunc_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_128_> trunc_(EVE_SUPPORTS(neon128_),
                                              raw_type const &,
-                                             wide<T, N, neon128_> const &v0) noexcept
+                                             wide<T, N, arm_128_> const &v0) noexcept
   {
     return trunc(v0);
   }

@@ -22,8 +22,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> rotl_(EVE_SUPPORTS(avx_),
-                                        wide<T, N, sse_> const &a0,
+  EVE_FORCEINLINE wide<T, N, x86_128_> rotl_(EVE_SUPPORTS(avx_),
+                                        wide<T, N, x86_128_> const &a0,
                                         I const &               a1) noexcept
   {
     if constexpr(supports_xop)

@@ -33,31 +33,31 @@ namespace eve
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_X86)
 #  include <immintrin.h>
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX2)
-#    define EVE_CURRENT_ABI ::eve::avx_
+#    define EVE_CURRENT_ABI ::eve::x86_256_
 #    define EVE_CURRENT_API ::eve::avx2_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX)
-#    define EVE_CURRENT_ABI ::eve::avx_
+#    define EVE_CURRENT_ABI ::eve::x86_256_
 #    define EVE_CURRENT_API ::eve::avx_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_2)
-#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_ABI ::eve::x86_128_
 #    define EVE_CURRENT_API ::eve::sse4_2_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_1)
-#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_ABI ::eve::x86_128_
 #    define EVE_CURRENT_API ::eve::sse4_1_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSSE3)
-#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_ABI ::eve::x86_128_
 #    define EVE_CURRENT_API ::eve::ssse3_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE3)
-#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_ABI ::eve::x86_128_
 #    define EVE_CURRENT_API ::eve::sse3_
 #  endif
 #  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE2)
-#    define EVE_CURRENT_ABI ::eve::sse_
+#    define EVE_CURRENT_ABI ::eve::x86_128_
 #    define EVE_CURRENT_API ::eve::sse2_
 #  endif
 # endif

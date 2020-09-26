@@ -20,9 +20,9 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N>
-                  convert_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> const &v0, as_<U> const &tgt) noexcept
+                  convert_(EVE_SUPPORTS(neon128_), wide<T, N, arm_64_> const &v0, as_<U> const &tgt) noexcept
   {
-    using in_t  = typename wide<T, N, neon64_>::storage_type;
+    using in_t  = typename wide<T, N, arm_64_>::storage_type;
     using tgt_t = typename wide<U, N>::storage_type;
 
     // Idempotent call
@@ -179,9 +179,9 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N>
-                  convert_(EVE_SUPPORTS(neon128_), wide<T, N, neon128_> const &v0, as_<U> const &tgt) noexcept
+                  convert_(EVE_SUPPORTS(neon128_), wide<T, N, arm_128_> const &v0, as_<U> const &tgt) noexcept
   {
-    using in_t  = typename wide<T, N, neon128_>::storage_type;
+    using in_t  = typename wide<T, N, arm_128_>::storage_type;
     using tgt_t = typename wide<U, N>::storage_type;
 
     // Idempotent call

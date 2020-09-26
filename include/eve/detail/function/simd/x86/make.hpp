@@ -21,9 +21,9 @@ namespace eve::detail
   // 128 bits make
   //================================================================================================
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::sse_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::x86_128_ const &, Vs... vs) noexcept
   {
-    static_assert(sizeof...(Vs) <= sse_::bytes / sizeof(T),
+    static_assert(sizeof...(Vs) <= x86_128_::bytes / sizeof(T),
                   "[eve::make sse] - Invalid number of arguments");
 
     if constexpr( std::is_same_v<T, double> )
@@ -95,7 +95,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::sse_ const &, V v) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::x86_128_ const &, V v) noexcept
   {
     if constexpr( std::is_same_v<T, double> )
     {
@@ -135,9 +135,9 @@ namespace eve::detail
   // 256 bits make
   //================================================================================================
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::avx_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::x86_256_ const &, Vs... vs) noexcept
   {
-    static_assert(sizeof...(Vs) <= avx_::bytes / sizeof(T),
+    static_assert(sizeof...(Vs) <= x86_256_::bytes / sizeof(T),
                   "[eve::make avx] - Invalid number of arguments");
 
     if constexpr( std::is_same_v<T, double> )
@@ -170,7 +170,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename V>
-  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::avx_ const &, V v) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<T> const &, eve::x86_256_ const &, V v) noexcept
   {
     if constexpr( std::is_same_v<T, double> )
     {
@@ -205,15 +205,15 @@ namespace eve::detail
   // logical cases
   //================================================================================================
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::sse_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::x86_128_ const &, Vs... vs) noexcept
   {
-    return make(eve::as_<T> {}, eve::sse_ {}, logical<T>(vs).mask()...);
+    return make(eve::as_<T> {}, eve::x86_128_ {}, logical<T>(vs).mask()...);
   }
 
   template<real_scalar_value T, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::avx_ const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as_<logical<T>> const &, eve::x86_256_ const &, Vs... vs) noexcept
   {
-    return make(eve::as_<T> {}, eve::avx_ {}, logical<T>(vs).mask()...);
+    return make(eve::as_<T> {}, eve::x86_256_ {}, logical<T>(vs).mask()...);
   }
 }
 

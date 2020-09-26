@@ -19,7 +19,7 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon128_> const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, arm_128_> const &a, Slice const &) noexcept
       requires(N::value > 1)
   {
     using type = wide<T, typename N::split_type>;
@@ -129,7 +129,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, arm_64_> const &a, Slice const &) noexcept
       requires(N::value > 1)
   {
     using type = wide<T, typename N::split_type>;
@@ -154,14 +154,14 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon128_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, arm_128_> const &a) noexcept requires(N::value > 1)
   {
     std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, neon64_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, arm_64_> const &a) noexcept requires(N::value > 1)
   {
     std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;

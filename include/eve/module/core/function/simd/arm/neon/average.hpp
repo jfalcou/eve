@@ -22,13 +22,13 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> average_(EVE_SUPPORTS(neon128_),
-                                               wide<T, N, neon64_> const &v0,
-                                               wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> average_(EVE_SUPPORTS(neon128_),
+                                               wide<T, N, arm_64_> const &v0,
+                                               wide<T, N, arm_64_> const &v1) noexcept
   {
-    using in_t = typename wide<T, N, neon64_>::storage_type;
+    using in_t = typename wide<T, N, arm_64_>::storage_type;
 
-    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1))); 
+    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1)));
     else
     {
            if constexpr(sizeof(T) == 8)                   return map(average, v0, v1);
@@ -40,15 +40,15 @@ namespace eve::detail
       else if constexpr(std::is_same_v<in_t, uint8x8_t>)  return vhadd_u8(v0, v1);
     }
   }
-  
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> average_(EVE_SUPPORTS(neon128_),
-                                                wide<T, N, neon128_> const &v0,
-                                                wide<T, N, neon128_> const &v1) noexcept
-  {
-    using in_t = typename wide<T, N, neon128_>::storage_type;
 
-    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1))); 
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N, arm_128_> average_(EVE_SUPPORTS(neon128_),
+                                                wide<T, N, arm_128_> const &v0,
+                                                wide<T, N, arm_128_> const &v1) noexcept
+  {
+    using in_t = typename wide<T, N, arm_128_>::storage_type;
+
+    if constexpr(std::is_floating_point_v<T>) return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1)));
     else
     {
            if constexpr(sizeof(T) == 8)                   return map(average, v0, v1);

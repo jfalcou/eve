@@ -19,8 +19,8 @@
 namespace eve::detail
 {
   template<typename floating_scalar_value, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> floor_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> floor_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N, arm_64_> const &v0) noexcept
   {
 #if __ARM_ARCH >= 8
     if constexpr(std::is_same_v<T, double>)
@@ -36,8 +36,8 @@ namespace eve::detail
   }
 
   template<typename floating_scalar_value, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> floor_(EVE_SUPPORTS(neon128_),
-                                              wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> floor_(EVE_SUPPORTS(neon128_),
+                                              wide<T, N, arm_128_> const &v0) noexcept
   {
 #if __ARM_ARCH >= 8
     if constexpr(std::is_same_v<T, double>)

@@ -25,10 +25,10 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Raw version
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_>
-                  rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_>
+                  rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_64_> const &v0) noexcept
   {
-    using that_t = wide<T, N, neon64_>;
+    using that_t = wide<T, N, arm_64_>;
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return that_t(vrsqrte_f64(v0)); }
     else if constexpr(std::is_same_v<T, float>)
@@ -42,10 +42,10 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_>
-                  rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_>
+                  rsqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_128_> const &v0) noexcept
   {
-    using that_t = wide<T, N, neon128_>;
+    using that_t = wide<T, N, arm_128_>;
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return that_t(vrsqrteq_f64(v0)); }
     else if constexpr(std::is_same_v<T, float>)
@@ -61,10 +61,10 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Basic version
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> rsqrt_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N, arm_64_> const &v0) noexcept
   {
-    using that_t = wide<T, N, neon64_>;
+    using that_t = wide<T, N, arm_64_>;
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64)
     {
@@ -86,10 +86,10 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> rsqrt_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N, arm_128_> const &v0) noexcept
   {
-    using that_t = wide<T, N, neon128_>;
+    using that_t = wide<T, N, arm_128_>;
 
     if constexpr(std::is_same_v<T, double> && supports_aarch64)
     {
@@ -114,13 +114,13 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Pedantic version
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> rsqrt_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_64_> rsqrt_(EVE_SUPPORTS(neon128_),
                                              pedantic_type const &,
-                                             wide<T, N, neon64_> const &v00) noexcept
+                                             wide<T, N, arm_64_> const &v00) noexcept
   {
     if (any(is_denormal(v00)))
     {
-      using that_t = wide<T, N, neon64_>;
+      using that_t = wide<T, N, arm_64_>;
       auto[v0, nn] =  pedantic(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
       nn  = dec[tst](nn);
@@ -133,13 +133,13 @@ namespace eve::detail
 
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> rsqrt_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_128_> rsqrt_(EVE_SUPPORTS(neon128_),
                                              pedantic_type const &,
-                                             wide<T, N, neon128_> const &v00) noexcept
+                                             wide<T, N, arm_128_> const &v00) noexcept
   {
     if (any(is_denormal(v00)))
     {
-      using that_t = wide<T, N, neon128_>;
+      using that_t = wide<T, N, arm_128_>;
       auto[v0, nn] =  pedantic(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
       nn  = dec[tst](nn);

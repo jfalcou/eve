@@ -19,11 +19,11 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> bit_ornot_(EVE_SUPPORTS(neon128_),
-                                                     wide<T, N, neon64_> const &v0,
-                                                     wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> bit_ornot_(EVE_SUPPORTS(neon128_),
+                                                     wide<T, N, arm_64_> const &v0,
+                                                     wide<T, N, arm_64_> const &v1) noexcept
   {
-    using in_t = typename wide<T, N, neon64_>::storage_type;
+    using in_t = typename wide<T, N, arm_64_>::storage_type;
 
 // Dispatch to sub-functions
 
@@ -45,11 +45,11 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> bit_ornot_(EVE_SUPPORTS(neon128_),
-                                                      wide<T, N, neon128_> const &v0,
-                                                      wide<T, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> bit_ornot_(EVE_SUPPORTS(neon128_),
+                                                      wide<T, N, arm_128_> const &v0,
+                                                      wide<T, N, arm_128_> const &v1) noexcept
   {
-    using in_t = typename wide<T, N, neon128_>::storage_type;
+    using in_t = typename wide<T, N, arm_128_>::storage_type;
 
 // Dispatch to sub-functions
          if constexpr(std::is_same_v<in_t, float32x4_t>)

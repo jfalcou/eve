@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(neon128_),
-                                      logical<wide<T, N, neon64_>> const &v0,
+                                      logical<wide<T, N, arm_64_>> const &v0,
                                       std::integral_constant<I, V> const &u) noexcept
   {
     return logical<T>(extract(v0.bits(), u));
@@ -27,7 +27,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(neon128_),
-                             wide<T, N, neon64_> const &v0,
+                             wide<T, N, arm_64_> const &v0,
                              std::integral_constant<I, V> const &) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
@@ -47,7 +47,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(neon128_),
-                                      logical<wide<T, N, neon128_>> const &v0,
+                                      logical<wide<T, N, arm_128_>> const &v0,
                                       std::integral_constant<I, V> const & u) noexcept
   {
     return logical<T>(extract(v0.bits(), u));
@@ -55,7 +55,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(neon128_),
-                             wide<T, N, neon128_> const &v0,
+                             wide<T, N, arm_128_> const &v0,
                              std::integral_constant<I, V> const &) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;

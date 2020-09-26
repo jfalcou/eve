@@ -18,12 +18,12 @@ namespace eve::detail
 {
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
   EVE_FORCEINLINE auto rshr_(EVE_SUPPORTS(avx_),
-                             wide<T, N, sse_> const &a0,
-                             wide<I, N, sse_> const &a1) noexcept
+                             wide<T, N, x86_128_> const &a0,
+                             wide<I, N, x86_128_> const &a1) noexcept
   {
     if constexpr(supports_xop)
     {
-      using si_t = wide<as_integer_t<I, signed>, N, sse_>;
+      using si_t = wide<as_integer_t<I, signed>, N, x86_128_>;
       auto sa1   = -bit_cast(a1, as_<si_t>{});
       if(std::is_signed_v<I>)
       {

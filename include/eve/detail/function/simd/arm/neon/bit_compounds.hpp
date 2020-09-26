@@ -22,10 +22,10 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -92,10 +92,10 @@ namespace eve::detail
   }
 
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -165,10 +165,10 @@ namespace eve::detail
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -235,10 +235,10 @@ namespace eve::detail
   }
 
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -308,10 +308,10 @@ namespace eve::detail
   // ^=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_64_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {
@@ -378,10 +378,10 @@ namespace eve::detail
   }
 
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N, neon128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
+  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires((sizeof(wide<T, N, arm_128_>) == sizeof(U)) || (sizeof(T) == sizeof(U)))
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( element_bit_compatible_to<U, type> )
     {

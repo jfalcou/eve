@@ -18,8 +18,8 @@ namespace eve::detail
 {
   template<integral_real_scalar_value T, integral_real_scalar_value I, typename N>
   EVE_FORCEINLINE auto  rshl_(EVE_SUPPORTS(avx_),
-                              wide<T, N, sse_> const &a0,
-                              wide<I, N, sse_> const &a1)
+                              wide<T, N, x86_128_> const &a0,
+                              wide<I, N, x86_128_> const &a1)
   {
     if constexpr(supports_xop)
     {

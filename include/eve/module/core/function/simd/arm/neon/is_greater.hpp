@@ -20,8 +20,8 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_greater_(EVE_SUPPORTS(neon128_),
-                                                       wide<T, N, neon64_> const &v0,
-                                                       wide<T, N, neon64_> const &v1) noexcept
+                                                       wide<T, N, arm_64_> const &v0,
+                                                       wide<T, N, arm_64_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -46,8 +46,8 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE as_logical_t<wide<T, N>> is_greater_(EVE_SUPPORTS(neon128_),
-                                                       wide<T, N, neon128_> const &v0,
-                                                       wide<T, N, neon128_> const &v1) noexcept
+                                                       wide<T, N, arm_128_> const &v0,
+                                                       wide<T, N, arm_128_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;

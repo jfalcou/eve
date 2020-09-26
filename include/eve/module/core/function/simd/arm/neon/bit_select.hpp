@@ -18,12 +18,12 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> bit_select_(EVE_SUPPORTS(neon128_),
-                                                      wide<T, N, neon64_> const &m,
-                                                      wide<T, N, neon64_> const &v0,
-                                                      wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> bit_select_(EVE_SUPPORTS(neon128_),
+                                                      wide<T, N, arm_64_> const &m,
+                                                      wide<T, N, arm_64_> const &v0,
+                                                      wide<T, N, arm_64_> const &v1) noexcept
   {
-    using in_t = typename wide<T, N, neon64_>::storage_type;
+    using in_t = typename wide<T, N, arm_64_>::storage_type;
 
 // Dispatch to sub-functions
 #if defined(__aarch64__)
@@ -49,12 +49,12 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> bit_select_(EVE_SUPPORTS(neon128_),
-                                                       wide<T, N, neon128_> const &m,
-                                                       wide<T, N, neon128_> const &v0,
-                                                       wide<T, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> bit_select_(EVE_SUPPORTS(neon128_),
+                                                       wide<T, N, arm_128_> const &m,
+                                                       wide<T, N, arm_128_> const &v0,
+                                                       wide<T, N, arm_128_> const &v1) noexcept
   {
-    using in_t = typename wide<T, N, neon128_>::storage_type;
+    using in_t = typename wide<T, N, arm_128_>::storage_type;
 
 // Dispatch to sub-functions
 #if defined(__aarch64__)

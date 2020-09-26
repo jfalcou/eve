@@ -23,10 +23,10 @@ namespace eve::detail
   // 128 bits implementation
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(sse2_)
-                                  , wide<T, N, sse_> const &v0
-                                  , wide<T, N, sse_> const &v1) noexcept
+                                  , wide<T, N, x86_128_> const &v0
+                                  , wide<T, N, x86_128_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, x86_128_>;
     using l_t = as_logical_t<t_t>;
 
          if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpgt_ps(v0, v1));
@@ -46,7 +46,7 @@ namespace eve::detail
       }
       else if constexpr(std::is_unsigned_v<T>)
       {
-        using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, sse_>;
+        using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, x86_128_>;
         s_t const sm = signmask(eve::as<s_t>());
 
         return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
@@ -60,10 +60,10 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx_),
-                                   wide<T, N, sse_> const &v0,
-                                   wide<T, N, sse_> const &v1) noexcept
+                                   wide<T, N, x86_128_> const &v0,
+                                   wide<T, N, x86_128_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, x86_128_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(supports_xop)
@@ -115,10 +115,10 @@ namespace eve::detail
   // 256 bits implementation
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx_)
-                                  , wide<T, N, avx_> const &v0
-                                  , wide<T, N, avx_> const &v1) noexcept
+                                  , wide<T, N, x86_256_> const &v0
+                                  , wide<T, N, x86_256_> const &v1) noexcept
   {
-    using t_t = wide<T, N, avx_>;
+    using t_t = wide<T, N, x86_256_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)       return as_logical_t<t_t>(_mm256_cmp_ps(v0, v1, _CMP_GT_OQ));
@@ -136,7 +136,7 @@ namespace eve::detail
         }
         else
         {
-          using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, avx_>;
+          using s_t    = eve::wide<eve::detail::as_integer_t<T, signed>, N, x86_256_>;
           s_t const sm = signmask(eve::as<s_t>());
 
           return eve::bit_cast( eve::is_greater ( eve::bit_cast(v0,as(sm)) - sm,
