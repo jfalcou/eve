@@ -50,15 +50,7 @@ namespace eve
     static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
   };
 
-  struct avx2_    : avx_
-  {
-    static constexpr std::size_t bits           = 512;
-    static constexpr std::size_t bytes          = 64;
-    static constexpr bool        is_bit_logical = true;
-
-    template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
-  };
+  struct avx2_    : avx_ {};
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
