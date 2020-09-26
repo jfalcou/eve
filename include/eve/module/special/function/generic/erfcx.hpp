@@ -65,7 +65,7 @@ namespace eve::detail
 
     T a = eve::abs(x); // NaN-preserving absolute value computation
     using elt_t = element_type_t<T>;
-    if constexpr(scalar_value<T>) if (is_infinite(a)) return Zero<T>();
+    if constexpr(scalar_value<T>) if (is_infinite(a)) return zero(as<T>());
     constexpr auto isfloat = std::same_as<elt_t, float>;
     const T shift = if_else(isfloat, T(2), T(4));
     /* Compute q = (a-shift)/(a+shift) accurately. [0,INF) -> [-1,1] */
@@ -121,15 +121,16 @@ namespace eve::detail
     }
 
     /* Divide (1+p) by (1+2*a) ==> exp(a*a)*erfc(a) */
-    T d = a + Half<T>();
+    T d = a + half(as<T>());
     r = rec(d);
-    r *= Half<T>();
+    r *= half(as<T>());
     q = fma (p, r, r); // q = (p+1)/(1+2*a)
     t = q + q;
     e = (p - q) + fma (t, -a, T(1)); // residual: (p+1)-q*(1+2*a)
     r = fma (e, r, q);
-    if constexpr(std::same_as<D, pedantic_type> && eve::platform::supports_infinites)
-      r = if_else (a >= eve::prev(eve::Valmax<T>()), eve::zero_, r);
+//   if constexpr(std::same_as<D, pedantic_type> && eve::platform::supports_infinites)
+//      r = if_else (a >= eve::prev(eve::valmax(as<T>())), eve::zero, r);
+    r = if_else (a >= eve::valmax(as<T>())/2, rec(sqrt(pi(as(a))))/a, r);
     auto xpos = (x >= 0);
     if (all(xpos)) return r;
     /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */
@@ -146,9 +147,10 @@ namespace eve::detail
 
 
     auto r1 = fms(T(2), expx2(x), r);
-    r1 =  if_else(is_nan(r1), Inf<T>(), r1);
+//    auto r1 = fms(T(2), exp(sqr(x)), r);
+    r1 =  if_else(is_nan(r1), inf(as<T>()), r1);
     r = if_else(xpos, r, r1);
-    return if_else (is_nan(x),  eve::allbits_, r);
+    return if_else (is_nan(x),  eve::allbits, r);
   }
 
   template<floating_real_value T>
