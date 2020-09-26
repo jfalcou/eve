@@ -53,7 +53,7 @@ namespace eve::detail
       }
     }
     else      {
-        return apply_over(saturated_(inc), a);
+        return apply_over(saturated(inc), a);
     }
   }
 
@@ -68,6 +68,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::inc), t);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated(eve::inc), t);
   }
 }

@@ -31,6 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - regular mode
-  inline constexpr regular_type const regular_ = {};
+  inline constexpr regular_type const regular = {};
 }
 

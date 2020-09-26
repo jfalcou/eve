@@ -31,6 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - saturated mode
-  inline constexpr saturated_type const saturated_ = {};
+  inline constexpr saturated_type const saturated = {};
 }
 

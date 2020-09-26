@@ -21,6 +21,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::tan)) , xp, eve::restricted_(eve::tan) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::tan)) , xp, eve::restricted_(eve::tan) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::tan)) , xp, eve::restricted(eve::tan) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::tan)) , xp, eve::restricted(eve::tan) , arg0);
 }

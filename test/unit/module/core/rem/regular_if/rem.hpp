@@ -29,10 +29,10 @@ TTS_CASE_TPL("Check eve::rem[condition] behavior", EVE_TYPE)
   auto f = eve::false_(eve::as<T>());
 
   // All basic TRUE
-  TTS_EQUAL(eve::rem[ 1 ](tv, fv)     , eve::toward_zero_(eve::rem)(tv, fv));
-  TTS_EQUAL(eve::rem[ 1.0 ](tv, fv)   , eve::toward_zero_(eve::rem)(tv, fv));
-  TTS_EQUAL(eve::rem[ true ](tv, fv)  , eve::toward_zero_(eve::rem)(tv, fv));
-  TTS_EQUAL(eve::rem[ t ](tv, fv)     , eve::toward_zero_(eve::rem)(tv, fv));
+  TTS_EQUAL(eve::rem[ 1 ](tv, fv)     , eve::toward_zero(eve::rem)(tv, fv));
+  TTS_EQUAL(eve::rem[ 1.0 ](tv, fv)   , eve::toward_zero(eve::rem)(tv, fv));
+  TTS_EQUAL(eve::rem[ true ](tv, fv)  , eve::toward_zero(eve::rem)(tv, fv));
+  TTS_EQUAL(eve::rem[ t ](tv, fv)     , eve::toward_zero(eve::rem)(tv, fv));
 
   // All basic FALSE
   TTS_EQUAL(eve::rem[ 0 ](tv, fv)     , tv);
@@ -46,5 +46,5 @@ TTS_CASE_TPL("Check eve::rem[condition] behavior", EVE_TYPE)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::rem[ m ](tv, fv) , eve::if_else(m,eve::toward_zero_(eve::rem)(tv, fv), tv) );
+  TTS_EQUAL(eve::rem[ m ](tv, fv) , eve::if_else(m,eve::toward_zero(eve::rem)(tv, fv), tv) );
 }

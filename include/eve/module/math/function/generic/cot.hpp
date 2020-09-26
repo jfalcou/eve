@@ -56,7 +56,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(restricted_(cot), a0);
+      return apply_over(restricted(cot), a0);
   }
 
   template<floating_real_value T>
@@ -103,7 +103,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small_(cot), a0);
+      return apply_over(small(cot), a0);
   }
 
   //////////////////////////////////////////////////////////////////
@@ -135,13 +135,13 @@ namespace eve::detail
     {
       auto x = eve::abs(a0);
       if( all(x <= pio_4(eve::as(x))) )
-        return restricted_(cot)(a0);
+        return restricted(cot)(a0);
       else if( all(x <= pio_2(eve::as(x))) )
-        return small_(cot)(a0);
+        return small(cot)(a0);
       else if( all(x <= Rempio2_limit(eve::medium_type(), as(a0))) )
-        return medium_(cot)(a0);
+        return medium(cot)(a0);
       else
-        return big_(cot)(a0);
+        return big(cot)(a0);
     }
     else
       return apply_over(cot, a0);

@@ -45,7 +45,7 @@ namespace eve::detail
   div_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_(div), a, b);
+    return arithmetic_call(saturated(div), a, b);
   }
 
   //////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ namespace eve::detail
         return div(a, b);
     }
     else
-      return apply_over(toward_zero_(div), a, b);
+      return apply_over(toward_zero(div), a, b);
   }
 
   // -----------------------------------------------------------------------------------------------

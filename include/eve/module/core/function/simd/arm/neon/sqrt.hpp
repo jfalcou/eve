@@ -30,7 +30,7 @@ namespace eve::detail
       if constexpr(supports_aarch64) { return vsqrt_f32(v0); }
       else
       {
-        return if_else(v0, v0 * raw_(rsqrt)(v0), v0);
+        return if_else(v0, v0 * raw(rsqrt)(v0), v0);
       }
     }
   }
@@ -45,7 +45,7 @@ namespace eve::detail
       if constexpr(supports_aarch64) { return vsqrtq_f32(v0); }
       else
       {
-        return if_else(v0, v0 * raw_(rsqrt)(v0), v0);
+        return if_else(v0, v0 * raw(rsqrt)(v0), v0);
       }
     }
   }

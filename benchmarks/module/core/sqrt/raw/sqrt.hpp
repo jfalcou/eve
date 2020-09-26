@@ -29,6 +29,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__sqrt) , xp, std__sqrt, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve::raw_(eve::sqrt)) , xp, eve::raw_(eve::sqrt), arg0);
+  run<EVE_VALUE> (EVE_NAME(eve::raw(eve::sqrt)) , xp, eve::raw(eve::sqrt), arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve::raw(eve::sqrt)) , xp, eve::raw(eve::sqrt), arg0);
 }

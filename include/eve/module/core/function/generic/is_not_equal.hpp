@@ -79,7 +79,7 @@ namespace eve::detail
   }
 
   ///////////////////////////////////////////////////////////////////////////
-  // numeric_ decoarator -> nans are considered equal
+  // numeric decoarator -> nans are considered equal
   template<real_value T, real_value U>
   EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_)
                                 , numeric_type const &
@@ -87,7 +87,7 @@ namespace eve::detail
                                 , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(numeric_(is_not_equal), a, b);
+    return arithmetic_call(numeric(is_not_equal), a, b);
   }
 
   template<real_value T, real_value U>

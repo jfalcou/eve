@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acospi) , xp, std__acospi , arg0);
-  run<EVE_VALUE>(EVE_NAME(raw_(eve::acospi)) , xp, eve::raw_(eve::acospi) , arg0);
-  run<EVE_TYPE> (EVE_NAME(raw_(eve::acospi)) , xp, eve::raw_(eve::acospi) , arg0);
+  run<EVE_VALUE>(EVE_NAME(raw(eve::acospi)) , xp, eve::raw(eve::acospi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(raw(eve::acospi)) , xp, eve::raw(eve::acospi) , arg0);
 
 }

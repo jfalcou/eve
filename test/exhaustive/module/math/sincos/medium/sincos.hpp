@@ -21,8 +21,8 @@ TTS_CASE_TPL("wide random check on sincos", EVE_TYPE)
   using v_t = eve::element_type_t<T>;
   auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(double(e)); } );
   auto std_cos = tts::vectorize<T>( [](auto e) { return std::cos(double(e)); } );
-  auto sincos_s =  [](auto e) { auto [s, c] = eve::medium_(eve::sincos)(e); return s; };
-  auto sincos_c =  [](auto e) { auto [s, c] = eve::medium_(eve::sincos)(e); return c; };
+  auto sincos_s =  [](auto e) { auto [s, c] = eve::medium(eve::sincos)(e); return s; };
+  auto sincos_c =  [](auto e) { auto [s, c] = eve::medium(eve::sincos)(e); return c; };
 
   auto l = eve::detail::Rempio2_limit(eve::small_type(), eve::as<v_t>());
   eve::exhaustive_producer<T> p(-l, l);

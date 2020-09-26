@@ -20,6 +20,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::sindcosd)) , xp, eve::restricted_(eve::sindcosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::sindcosd)) , xp, eve::restricted_(eve::sindcosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::sindcosd)) , xp, eve::restricted(eve::sindcosd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::sindcosd)) , xp, eve::restricted(eve::sindcosd) , arg0);
 }

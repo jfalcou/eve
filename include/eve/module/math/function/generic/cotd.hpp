@@ -31,7 +31,7 @@ namespace eve::detail
       T a0_180;
       if constexpr(std::is_same_v<elt_t, float>)
       {
-        a0_180 =  single_(div_180(double_(a0))); // better precision in float
+        a0_180 =  float32(div_180(float64(a0))); // better precision in float
       }
       else
       {

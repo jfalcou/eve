@@ -30,5 +30,5 @@ TTS_CASE_TPL("wide random check on cotpi", EVE_TYPE)
                                         );
 
   eve::exhaustive_producer<T> p(v_t(-100000.0), v_t(100000.0));
-  TTS_RANGE_CHECK(p, my_stdcotpi, eve::medium_(eve::cotpi));
+  TTS_RANGE_CHECK(p, my_stdcotpi, eve::medium(eve::cotpi));
 }

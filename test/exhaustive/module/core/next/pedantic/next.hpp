@@ -35,12 +35,12 @@ TTS_CASE_TPL("wide exhaustive check on next", EVE_TYPE)
                                       );
 
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic_(eve::next), 0);
+    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic(eve::next), 0);
   }
   else
   {
     auto std_next = tts::vectorize<T>( [](auto e) { return e == eve::valmax(eve::as<v_t>()) ? e : e+1; } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic_(eve::next), 0);
+    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic(eve::next), 0);
   }
 }

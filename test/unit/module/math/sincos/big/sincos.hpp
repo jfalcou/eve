@@ -18,12 +18,12 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check  eve::big_(eve::sincos) return type", EVE_TYPE)
+TTS_CASE_TPL("Check  eve::big(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::big_(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::big(eve::sincos)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE_TPL("Check  eve::big_(eve::sincos) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check  eve::big(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check  eve::big_(eve::sincos) behavior", EVE_TYPE)
 
  for(int i=0; i < 8; ++i)
   {
-    auto [p0, p1] = eve::big_(eve::sincos)(T(x[i]));
+    auto [p0, p1] = eve::big(eve::sincos)(T(x[i]));
     v_t pp0 = std::sin(x[i]);
     v_t pp1 = std::cos(x[i]);
     TTS_ULP_EQUAL(p0, T(pp0), 0.5);

@@ -26,6 +26,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__fma) , xp, std__fma, arg0, arg1, arg2);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::fma)) , xp, eve::pedantic_(eve::fma), arg0, arg1, arg2);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::fma)) , xp, eve::pedantic_(eve::fma), arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::fma)) , xp, eve::pedantic(eve::fma), arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::fma)) , xp, eve::pedantic(eve::fma), arg0, arg1, arg2);
 }

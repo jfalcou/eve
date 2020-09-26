@@ -59,7 +59,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over2(restricted_(sincos), a0);
+      return apply_over2(restricted(sincos), a0);
   }
 
   template<floating_real_value T>
@@ -113,7 +113,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over2(small_(sincos), a0);
+      return apply_over2(small(sincos), a0);
     }
   }
 
@@ -144,13 +144,13 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(x <= pio_4(eve::as(x))) )
-        return restricted_(sincos)(a0);
+        return restricted(sincos)(a0);
       else if( all(x <= pio_2(eve::as(x))) )
-        return small_(sincos)(a0);
+        return small(sincos)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
-        return medium_(sincos)(a0);
+        return medium(sincos)(a0);
       else
-        return big_(sincos)(a0);
+        return big(sincos)(a0);
     }
     else
     {

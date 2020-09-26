@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
-  run<EVE_VALUE>(EVE_NAME(medium_(eve::cot)) , xp, eve::medium_(eve::cot) , arg0);
-  run<EVE_TYPE> (EVE_NAME(medium_(eve::cot)) , xp, eve::medium_(eve::cot) , arg0);
+  run<EVE_VALUE>(EVE_NAME(medium(eve::cot)) , xp, eve::medium(eve::cot) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium(eve::cot)) , xp, eve::medium(eve::cot) , arg0);
 
 }

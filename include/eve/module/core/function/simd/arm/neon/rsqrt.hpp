@@ -121,12 +121,12 @@ namespace eve::detail
     if (any(is_denormal(v00)))
     {
       using that_t = wide<T, N, neon64_>;
-      auto[v0, nn] =  pedantic_(eve::ifrexp)(v00);
+      auto[v0, nn] =  pedantic(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
       nn  = dec[tst](nn);
       v0 = mul[tst](v0,2);
       auto inv = rsqrt(v0);
-      return that_t(pedantic_(eve::ldexp)(inv, -nn/2));
+      return that_t(pedantic(eve::ldexp)(inv, -nn/2));
     }
     else return rsqrt(v00);
   }
@@ -140,12 +140,12 @@ namespace eve::detail
     if (any(is_denormal(v00)))
     {
       using that_t = wide<T, N, neon128_>;
-      auto[v0, nn] =  pedantic_(eve::ifrexp)(v00);
+      auto[v0, nn] =  pedantic(eve::ifrexp)(v00);
       auto tst = is_odd(nn);
       nn  = dec[tst](nn);
       v0 = mul[tst](v0,2);
       auto inv = rsqrt(v0);
-      return that_t(pedantic_(eve::ldexp)(inv, -nn/2));
+      return that_t(pedantic(eve::ldexp)(inv, -nn/2));
     }
     else return rsqrt(v00);
   }

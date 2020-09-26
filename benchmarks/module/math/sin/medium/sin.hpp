@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
-  run<EVE_VALUE>(EVE_NAME(medium_(eve::sin)) , xp, eve::medium_(eve::sin) , arg0);
-  run<EVE_TYPE> (EVE_NAME(medium_(eve::sin)) , xp, eve::medium_(eve::sin) , arg0);
+  run<EVE_VALUE>(EVE_NAME(medium(eve::sin)) , xp, eve::medium(eve::sin) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium(eve::sin)) , xp, eve::medium(eve::sin) , arg0);
 
 }

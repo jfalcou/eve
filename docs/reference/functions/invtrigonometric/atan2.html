@@ -35,7 +35,7 @@ template< value T, value U > auto operator()( T x, U y ) const noexcept
 requires compatible< T,U>;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the [element-wise](../../../glossary.html#regular_) atan2 operation on its parameters.
+Performs the [element-wise](../../../glossary.html#regular) atan2 operation on its parameters.
 
 Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
 
@@ -71,8 +71,8 @@ The result type is the [compatibility result](../../concept.html#compatibilit`y`
 
 supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(atan2)(`x`,`y`)` returns the same results as the regular call, but all
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(atan2)(`x`,`y`)` returns the same results as the regular call, but all
     **IEEE** limiting values are satisfied :
 
      -  If `y` is $\pm\infty$ and `x` is $-\infty$, $\frac{\pm3\pi}4$ is returned

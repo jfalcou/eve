@@ -31,6 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - pedantic mode
-  inline constexpr pedantic_type const pedantic_ = {};
+  inline constexpr pedantic_type const pedantic = {};
 }
 

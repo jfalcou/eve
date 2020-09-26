@@ -18,14 +18,14 @@
 TTS_CASE_TPL("Check oneminus return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ v_t(0)               ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ T(0)                 ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ eve::logical<T>(0)   ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ eve::logical<v_t>(0) ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated_(eve::oneminus[ true                 ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ v_t(0)               ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ T(0)                 ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<T>(0)   ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<v_t>(0) ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ true                 ])(T(0)), T);
 }
 
-TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::saturated(eve::oneminus) behavior", EVE_TYPE)
 {
   T tv, res;
   auto t = eve::true_(eve::as<T>());
@@ -42,15 +42,15 @@ TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
     res = T{0};
   }
 
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ 1    ])(tv), res);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ 1.0  ])(tv), res);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ true ])(tv), res);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ t    ])(tv), res);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ 1    ])(tv), res);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ 1.0  ])(tv), res);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ true ])(tv), res);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ t    ])(tv), res);
 
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ 0 ])(tv)     , tv);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ 0.0 ])(tv)   , tv);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ false ])(tv) , tv);
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ f ])(tv)     , tv);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ 0 ])(tv)     , tv);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ 0.0 ])(tv)   , tv);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ false ])(tv) , tv);
+  TTS_EQUAL(eve::saturated(eve::oneminus[ f ])(tv)     , tv);
 
     // Mixed case
   eve::as_logical_t<T> m;
@@ -58,5 +58,5 @@ TTS_CASE_TPL("Check eve::saturated_(eve::oneminus) behavior", EVE_TYPE)
                 , [k = true](auto& e) mutable { e = k; k = !k; }
                 );
 
-  TTS_EQUAL(eve::saturated_(eve::oneminus[ m ])(tv), eve::if_else(m, res, tv) );
+  TTS_EQUAL(eve::saturated(eve::oneminus[ m ])(tv), eve::if_else(m, res, tv) );
 }

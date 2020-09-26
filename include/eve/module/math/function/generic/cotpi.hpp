@@ -56,7 +56,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(restricted_(cotpi), a0);
+      return apply_over(restricted(cotpi), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,9 +92,9 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(eve::abs(x) <= T(0.25)) )
-        return restricted_(cotpi)(a0);
+        return restricted(cotpi)(a0);
       else
-        return big_(cotpi)(a0);
+        return big(cotpi)(a0);
     }
     else
       return apply_over(cotpi, a0);

@@ -36,7 +36,7 @@ requires compatible< T, U > && compatible< T, V >;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the [element-wise](../../../glossary.html#regular_) fused negate-multiply-substract operator on its parameters.
+Performs the [element-wise](../../../glossary.html#regular) fused negate-multiply-substract operator on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -58,11 +58,11 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 Supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(fnms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(fnms)(x,y,z)` ensures the one rounding property. This can be very expensive if the
     system has no hardware capability.
-[`numeric_`](../decorators.html#numeric_)
-:   The call `numeric_(fnms)(x,y,z)` ensures the full compliance to fnms properties. This can be very expensive if the
+[`numeric`](../decorators.html#numeric)
+:   The call `numeric(fnms)(x,y,z)` ensures the full compliance to fnms properties. This can be very expensive if the
     system has no hardware capability.
 
    (insert ../../src/fnms.src.html here)

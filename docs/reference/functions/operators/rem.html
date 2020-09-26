@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) arithmetic rem of the two [values](../../concepts.html#value).
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic rem of the two [values](../../concepts.html#value).
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -58,8 +58,8 @@ Return the remainderafter division division of `x` by `y`.
 
 Supported Decorators
 ====================================================================================================
-[`toward_zero_`](../decorators.html#toward_zero_)
-:   The call `toward_zero_(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
+[`toward_zero`](../decorators.html#toward_zero)
+:   The call `toward_zero(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
     For floating point entries this call is similar to std::fmod. In particular:
 
     * If `x` is  $\pm0$ and y is not zero,  $\pm0$ is returned.
@@ -69,16 +69,16 @@ Supported Decorators
     * If either argument is a Nan, NaN is returned.
 
 
-[`downward_`](../decorators.html#downward_)
-:   The call `downward_(rem)(x, y)`  computes  `x-downward_(div)(x, y)*y`.
+[`downward`](../decorators.html#downward)
+:   The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
 
-[`upward_`](../decorators.html#upward_)
-:   The call `upward_(rem)(x, y)`  computes  `x-upward_(div)(x, y)*y`.
+[`upward`](../decorators.html#upward)
+:   The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
     It is not defined for unsigned values as the result can be negative.
 
 
-[`to_nearest_`](../decorators.html#to_nearest_)
-:   The call `to_nearest_(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
+[`to_nearest`](../decorators.html#to_nearest)
+:   The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
     It is not defined for unsigned values as the result can be negative.
     For floating point entries this call is similar to std::remainder.
     In particular:

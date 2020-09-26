@@ -34,7 +34,7 @@ Member functions
 template< value T, integral_value U > auto operator()( T x, U n = 1 ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_) next `n`th representable greater than `x` .
+Performs  the  [element-wise](../../../glossary.html#regular) next `n`th representable greater than `x` .
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -50,9 +50,9 @@ If `n` is zero returns `x`.
 
 Supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
-    So `pedantic_(next)(-0.0)` is `+0.0`.
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
+    So `pedantic(next)(-0.0)` is `+0.0`.
 
   (insert ../../src/next.src.html here)
 

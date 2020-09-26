@@ -17,25 +17,25 @@
 #include <tts/tests/types.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::saturated_(eve::dec) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::saturated(eve::dec) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::saturated_(eve::dec)(T()), T);
+  TTS_EXPR_IS(eve::saturated(eve::dec)(T()), T);
 }
 
-TTS_CASE_TPL("Check eve::saturated_(eve::dec) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::saturated(eve::dec) behavior", EVE_TYPE)
 {
-  using eve::saturated_;
+  using eve::saturated;
 
-  TTS_EQUAL(saturated_(eve::dec)(eve::valmin(eve::as<T>())), eve::valmin(eve::as<T>()));
-  TTS_EQUAL(saturated_(eve::dec)(T(1))            , (T( 0)) );
-  TTS_EQUAL(saturated_(eve::dec)(T(2))            , (T( 1)) );
+  TTS_EQUAL(saturated(eve::dec)(eve::valmin(eve::as<T>())), eve::valmin(eve::as<T>()));
+  TTS_EQUAL(saturated(eve::dec)(T(1))            , (T( 0)) );
+  TTS_EQUAL(saturated(eve::dec)(T(2))            , (T( 1)) );
 
   if constexpr(eve::signed_value<T>)
   {
-    TTS_EQUAL(saturated_(eve::dec)(T(0)), T(-1) );
+    TTS_EQUAL(saturated(eve::dec)(T(0)), T(-1) );
   }
   else
   {
-    TTS_EQUAL(saturated_(eve::dec)(T(0)), T(0) );
+    TTS_EQUAL(saturated(eve::dec)(T(0)), T(0) );
   }
 }

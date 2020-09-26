@@ -18,35 +18,35 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE_TPL("Check eve::medium_(eve::cscpi) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium(eve::cscpi) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::medium_(eve::cscpi)(T()), T);
+  TTS_EXPR_IS(eve::medium(eve::cscpi)(T()), T);
 }
 
-TTS_CASE_TPL("Check eve::medium_(eve::cscpi) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium(eve::cscpi) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::cscpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::cscpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::cscpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(T(0))  , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::medium_(eve::cscpi)(T(-0.)), eve::minf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::medium(eve::cscpi)(T(0))  , eve::inf(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::medium(eve::cscpi)(T(-0.)), eve::minf(eve::as<T>()));
 
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(100000000.0) ) , eve::nan(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(100000.0)    ) , eve::nan(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(100000.5)    ) , T(-1)           , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(1)           ) , eve::nan(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(1)           ) , eve::nan(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(T(0.125)        ) , T(2.6131259297527530557132863468543743071675223766986)  , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(0.125)       ) , T(-2.6131259297527530557132863468543743071675223766986) , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(22.5)        ) , T(-1)           , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)(-T(22.25)       ) ,-eve::sqrt_2(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(22.25)       ) , eve::sqrt_2(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(22.5)        ) , T(1)            , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(100000.0)    ) , eve::nan(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(100000.5)    ) , T(1)            , 0.5);
-  TTS_ULP_EQUAL(eve::medium_(eve::cscpi)( T(100000000.0) ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(100000000.0) ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(100000.0)    ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(100000.5)    ) , T(-1)           , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(1)           ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(1)           ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(T(0.125)        ) , T(2.6131259297527530557132863468543743071675223766986)  , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(0.125)       ) , T(-2.6131259297527530557132863468543743071675223766986) , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(22.5)        ) , T(-1)           , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)(-T(22.25)       ) ,-eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(22.25)       ) , eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(22.5)        ) , T(1)            , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(100000.0)    ) , eve::nan(eve::as<T>())   , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(100000.5)    ) , T(1)            , 0.5);
+  TTS_ULP_EQUAL(eve::medium(eve::cscpi)( T(100000000.0) ) , eve::nan(eve::as<T>())   , 0.5);
 }

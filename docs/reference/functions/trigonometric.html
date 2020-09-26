@@ -19,10 +19,10 @@ but in different ranges and this is peculiarly important for radian and degree i
 
    The possible decorators are:
 
-    - restricted_ is the fastest but gives the correct result in $[-\pi/4, +\pi/4]$ only and Nan outside.
-    - small_                        gives the correct result for $[-\pi/2, +\pi/2]$ only and Nan outside.
-    - medium_                       gives the correct result for $|x| < 536870912.0f$ (float) or  $ |x| < 2.0e14 $ (double)
-    - big_                          gives the correct result in the whole range.
+    - restricted is the fastest but gives the correct result in $[-\pi/4, +\pi/4]$ only and Nan outside.
+    - small                        gives the correct result for $[-\pi/2, +\pi/2]$ only and Nan outside.
+    - medium                       gives the correct result for $|x| < 536870912.0f$ (float) or  $ |x| < 2.0e14 $ (double)
+    - big                          gives the correct result in the whole range.
 
       Without any decorator the call tests the input value to choose among the decorated ones the best fit.
       Of course, with SIMD parameter the fit is the interval containing all the vector elements.

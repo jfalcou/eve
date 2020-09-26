@@ -95,10 +95,10 @@ namespace eve::detail
       }
       else if constexpr(floating_value<U>)
       {
-       return pedantic_(ldexp)(a, convert(trunc(b), as<eli_t>()));
+       return pedantic(ldexp)(a, convert(trunc(b), as<eli_t>()));
       }
     }
-    else  return apply_over(pedantic_(ldexp), a, b);
+    else  return apply_over(pedantic(ldexp), a, b);
   }
 
 

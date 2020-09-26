@@ -44,7 +44,7 @@ namespace eve::detail
   sub_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_(sub), a, b);
+    return arithmetic_call(saturated(sub), a, b);
   }
 
   template<real_scalar_value T>
@@ -119,7 +119,7 @@ namespace eve::detail
         }
         else
         {
-          return map(saturated_(sub), a, b);
+          return map(saturated(sub), a, b);
         }
       }
       else if constexpr( unsigned_value<T> )
@@ -145,7 +145,7 @@ namespace eve::detail
   sub_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated_(sub), t, f);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated(sub), t, f);
   }
 }
 

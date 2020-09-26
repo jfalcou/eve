@@ -18,8 +18,8 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> minmag(pf, qf)            = " << eve::minmag(pf, qf) << '\n'
-            << "-> pedantic_(minmag)(pf, qf) = " << eve::pedantic_(eve::minmag)(pf, qf) << '\n'
-            << "-> numeric_(minmag)(pf, qf)  = " << eve::numeric_(eve::minmag)(pf, qf) << '\n';
+            << "-> pedantic(minmag)(pf, qf) = " << eve::pedantic(eve::minmag)(pf, qf) << '\n'
+            << "-> numeric(minmag)(pf, qf)  = " << eve::numeric(eve::minmag)(pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -28,7 +28,7 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> minmag(xf, yf)            = " << eve::minmag(xf, yf) << '\n'
-            << "-> pedantic_(minmag)(xf, yf) = " << eve::pedantic_(eve::minmag)(xf, yf) << '\n'
-            << "-> numeric_(minmag)(xf, yf)  = " << eve::numeric_(eve::minmag)(xf, yf) << '\n';
+            << "-> pedantic(minmag)(xf, yf) = " << eve::pedantic(eve::minmag)(xf, yf) << '\n'
+            << "-> numeric(minmag)(xf, yf)  = " << eve::numeric(eve::minmag)(xf, yf) << '\n';
    return 0;
 }

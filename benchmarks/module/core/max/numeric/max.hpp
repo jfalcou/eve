@@ -25,6 +25,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__max) , xp, std__max, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(numeric_(eve::max)) , xp, eve::numeric_(eve::max), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(numeric_(eve::max)) , xp, eve::numeric_(eve::max), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(numeric(eve::max)) , xp, eve::numeric(eve::max), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(numeric(eve::max)) , xp, eve::numeric(eve::max), arg0, arg1);
 }

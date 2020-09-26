@@ -27,11 +27,11 @@ TTS_CASE_TPL("wide rng check on csc", EVE_TYPE)
   if constexpr(eve::platform::supports_denormals)
   {
     eve::rng_producer<T>  p(-l, l);
-    TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
+    TTS_RANGE_CHECK(p, std_csc, eve::medium(eve::csc));
   }
   else
   {
     eve::rng_producer<T>  p(eve::smallestposval(eve::as<v_t>()), l);
-    TTS_RANGE_CHECK(p, std_csc, eve::medium_(eve::csc));
+    TTS_RANGE_CHECK(p, std_csc, eve::medium(eve::csc));
   }
 }

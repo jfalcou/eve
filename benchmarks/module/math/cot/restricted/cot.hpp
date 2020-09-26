@@ -21,6 +21,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cot) , xp, std__cot , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::cot)) , xp, eve::restricted_(eve::cot) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::cot)) , xp, eve::restricted_(eve::cot) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::cot)) , xp, eve::restricted(eve::cot) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::cot)) , xp, eve::restricted(eve::cot) , arg0);
 }

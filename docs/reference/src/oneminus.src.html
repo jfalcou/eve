@@ -11,7 +11,7 @@ Example
 #include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
-using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
+using wide_it = eve::wide <std::int16t, eve::fixed<8>>;
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pi                       = " << pi << '\n'
     << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
-    << "-> saturated_(oneminus(pi)) = " << eve::saturated_(eve::oneminus)(pi) << '\n';
+    << "-> saturated(oneminus(pi)) = " << eve::saturated(eve::oneminus)(pi) << '\n';
 
 
   float xf = 2.0f;

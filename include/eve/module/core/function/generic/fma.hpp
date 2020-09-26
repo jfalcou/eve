@@ -70,7 +70,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      return single_(double_(a)*double_(b)+double_(c));
+      return float32(float64(a)*float64(b)+float64(c));
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {
@@ -79,11 +79,11 @@ namespace eve::detail
         auto amax    = maxmag(a, b);
         auto amin    = minmag(a, b);
         auto e0      = -shr(exponent(amax), 1);
-        amax         = pedantic_(ldexp)(amax, e0);
-        auto c0      = pedantic_(ldexp)(c, e0);
+        amax         = pedantic(ldexp)(amax, e0);
+        auto c0      = pedantic(ldexp)(c, e0);
         auto [p, rp] = two_prod(amax, amin);
         auto [s, rs] = two_add(p, c0);
-        return pedantic_(ldexp)(s + (rp + rs), -e0);
+        return pedantic(ldexp)(s + (rp + rs), -e0);
       }
       else if constexpr( std::is_same_v<D, pedantic_type> )
       {

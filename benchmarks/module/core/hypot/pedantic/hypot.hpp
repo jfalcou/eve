@@ -25,6 +25,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__hypot) , xp, std__hypot, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic_(eve::hypot)) , xp, eve::pedantic_(eve::hypot), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic_(eve::hypot)) , xp, eve::pedantic_(eve::hypot), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(pedantic(eve::hypot)) , xp, eve::pedantic(eve::hypot), arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(pedantic(eve::hypot)) , xp, eve::pedantic(eve::hypot), arg0, arg1);
 }

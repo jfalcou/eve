@@ -35,7 +35,7 @@ namespace eve::detail
   mul_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, U const &b) noexcept
       requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_(mul), a, b);
+    return arithmetic_call(saturated(mul), a, b);
   }
 
   template<real_scalar_value T>
@@ -130,12 +130,12 @@ namespace eve::detail
       {
         using sup_t = upgrade_t<elt_t>;
         auto z      = mul(to_<sup_t>(a), to_<sup_t>(b));
-        auto s      = saturate(z, as<elt_t>()); // TODO saturated_(convert) ?
+        auto s      = saturate(z, as<elt_t>()); // TODO saturated(convert) ?
         return to_<elt_t>(s);
       }
       else
       {
-        auto that = map(saturated_(eve::mul), a, b);
+        auto that = map(saturated(eve::mul), a, b);
         return that;
       }
     }
@@ -157,6 +157,6 @@ namespace eve::detail
   mul_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated_(mul), t, f);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated(mul), t, f);
   }
 }

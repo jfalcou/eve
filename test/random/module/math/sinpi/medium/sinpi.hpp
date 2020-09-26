@@ -20,5 +20,5 @@ TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
   auto my_stdsinpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x); });
 
   eve::rng_producer<T> p(v_t(-100000.0), v_t(100000.0));
-  TTS_RANGE_CHECK(p, my_stdsinpi, eve::medium_(eve::sinpi));
+  TTS_RANGE_CHECK(p, my_stdsinpi, eve::medium(eve::sinpi));
 }

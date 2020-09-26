@@ -43,7 +43,7 @@ namespace eve::detail
            if constexpr(integral_value<T>) return dec[ a != valmin(eve::as(a)) ](a);
       else if constexpr(floating_value<T>) return dec(a);
     }
-    else return apply_over(saturated_(dec), a);
+    else return apply_over(saturated(dec), a);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -57,6 +57,6 @@ namespace eve::detail
   template<conditional_expr C, real_value U>
   EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(cpu_), C const &cond, saturated_type const &, U const &t) noexcept
   {
-    return mask_op( EVE_CURRENT_API{}, cond, saturated_(eve::dec), t);
+    return mask_op( EVE_CURRENT_API{}, cond, saturated(eve::dec), t);
   }
 }

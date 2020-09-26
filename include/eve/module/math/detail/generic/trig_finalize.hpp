@@ -232,7 +232,7 @@ namespace eve::detail
       auto test = is_eqz(swap_bit);
       y = if_else(test,rec(y),-y);
       y = fma(dxr, fma(y, y, one(eve::as<T>())), y);
-      return if_else(aa0lteps, pedantic_(rec)(a0), bit_xor(y, bitofsign(a0)));
+      return if_else(aa0lteps, pedantic(rec)(a0), bit_xor(y, bitofsign(a0)));
     }
   }
 }

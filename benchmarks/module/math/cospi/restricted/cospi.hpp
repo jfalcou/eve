@@ -19,6 +19,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::cospi)) , xp, eve::restricted_(eve::cospi) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::cospi)) , xp, eve::restricted_(eve::cospi) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::cospi)) , xp, eve::restricted(eve::cospi) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::cospi)) , xp, eve::restricted(eve::cospi) , arg0);
 }

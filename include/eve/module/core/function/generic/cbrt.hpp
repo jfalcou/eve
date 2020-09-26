@@ -49,7 +49,7 @@ namespace eve::detail
       auto test = is_less(eve::abs(x), T(100)*smallestposval(eve::as<T>()));
       ax = if_else(test, ldexp(ax, 54), ax);
       /* Reduce x.  xm now is an range  [0.5, 1.0].  */
-      auto [xm, xe] = raw_(ifrexp)(ax);
+      auto [xm, xe] = raw(ifrexp)(ax);
       T u;
       if constexpr(std::is_same_v<vt_t, double>)
       {

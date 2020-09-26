@@ -21,8 +21,8 @@ int main()
             << " <- oi                                 = " << oi << '\n'
             << " <- pi                                 = " << pi << '\n'
             << " <- qi                                 = " << qi << '\n'
-            << " -> pedantic_(fnma)(oi, pi, qi)        = " << eve::pedantic_(eve::fnma)(oi, pi, qi) << '\n'
-            << " -> numeric_(fnma)(oi, pi, qi)         = " << eve::numeric_(eve::fnma)(oi, pi, qi) << '\n'
+            << " -> pedantic(fnma)(oi, pi, qi)        = " << eve::pedantic(eve::fnma)(oi, pi, qi) << '\n'
+            << " -> numeric(fnma)(oi, pi, qi)         = " << eve::numeric(eve::fnma)(oi, pi, qi) << '\n'
             << " -> fnma(oi, pi, qi)                   = " << eve::fnma(oi, pi, qi) << '\n'
             << "\n if the last fnma result ends by '0, -inf}', it means that\n"
             << " the system has no simd fnma family intrinsics\n"
@@ -30,13 +30,13 @@ int main()
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm =                                " << vm << '\n'
-            << " -> pedantic_(fnma)(vm, 2.0f, -vm)     = " << eve::pedantic_(eve::fnma)(vm, 2.0f, -vm) << '\n'
-            << " -> numeric_(fnma)(vm, 2.0f, -vm)      = " << eve::numeric_(eve::fnma)(vm, 2.0f, -vm) << '\n'
+            << " -> pedantic(fnma)(vm, 2.0f, -vm)     = " << eve::pedantic(eve::fnma)(vm, 2.0f, -vm) << '\n'
+            << " -> numeric(fnma)(vm, 2.0f, -vm)      = " << eve::numeric(eve::fnma)(vm, 2.0f, -vm) << '\n'
             << " -> fnma(vm, 2.0f, -vm)                = " << eve::fnma(vm, 2.0f, -vm) << '\n'
             << " <- esm1                               = " << esm1 << '\n'
             << " <- esp1                               = " << esp1 << '\n'
-            << " -> pedantic_(fnma)(esp1, esm1, -1.0f) = " << eve::pedantic_(eve::fnma)(esp1, esm1,-1.0f) << '\n'
-            << " -> numeric_(fnma)(esp1, esm1, -1.0f)  = " << eve::numeric_(eve::fnma)(esp1, esm1, -1.0f) << '\n'
+            << " -> pedantic(fnma)(esp1, esm1, -1.0f) = " << eve::pedantic(eve::fnma)(esp1, esm1,-1.0f) << '\n'
+            << " -> numeric(fnma)(esp1, esm1, -1.0f)  = " << eve::numeric(eve::fnma)(esp1, esm1, -1.0f) << '\n'
             << " -> fnma(esp1, esm1, -1.0f)            = " << eve::fnma(esp1, esm1, -1.0f) << '\n';
   return 0;
 }

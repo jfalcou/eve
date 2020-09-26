@@ -73,7 +73,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic_(atan2), a, b);
+    return arithmetic_call(pedantic(atan2), a, b);
   }
 
   template<floating_value T>
@@ -115,7 +115,7 @@ namespace eve::detail
         else                                  return z;
       }
     }
-    else return apply_over(pedantic_(atan2), a0, a1);
+    else return apply_over(pedantic(atan2), a0, a1);
   }
 }
 

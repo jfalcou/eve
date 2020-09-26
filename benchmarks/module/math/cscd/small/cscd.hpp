@@ -21,7 +21,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(small_(eve::cscd)) , xp, eve::small_(eve::cscd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(small_(eve::cscd)) , xp, eve::small_(eve::cscd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(small(eve::cscd)) , xp, eve::small(eve::cscd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(small(eve::cscd)) , xp, eve::small(eve::cscd) , arg0);
 
 }

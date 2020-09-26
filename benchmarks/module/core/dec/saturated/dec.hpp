@@ -21,6 +21,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE> (EVE_NAME(saturated_(eve::dec)) , xp, eve::saturated_(eve::dec), arg0);
-  run<EVE_TYPE>  (EVE_NAME(saturated_(eve::dec)) , xp, eve::saturated_(eve::dec), arg0);
+  run<EVE_VALUE> (EVE_NAME(saturated(eve::dec)) , xp, eve::saturated(eve::dec), arg0);
+  run<EVE_TYPE>  (EVE_NAME(saturated(eve::dec)) , xp, eve::saturated(eve::dec), arg0);
 }

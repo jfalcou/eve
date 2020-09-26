@@ -13,7 +13,7 @@ int main()
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
             << "-> hypot(pf, qf)            = " << eve::hypot(pf, qf) << '\n'
-            << "-> pedantic_(hypot)(pf, qf) = " << eve::pedantic_(eve::hypot)(pf, qf) << '\n';
+            << "-> pedantic(hypot)(pf, qf) = " << eve::pedantic(eve::hypot)(pf, qf) << '\n';
 
   double        xf = -32768.0;
   double        yf = 12.0;
@@ -22,6 +22,6 @@ int main()
             << "<- xf                       = " << xf << '\n'
             << "<- yf                       = " << yf << '\n'
             << "-> hypot(xf, yf)            = " << eve::hypot(xf, yf) << '\n'
-            << "-> pedantic_(hypot)(xf, yf) = " << eve::pedantic_(eve::hypot)(xf, yf) << '\n';
+            << "-> pedantic(hypot)(xf, yf) = " << eve::pedantic(eve::hypot)(xf, yf) << '\n';
   return 0;
 }

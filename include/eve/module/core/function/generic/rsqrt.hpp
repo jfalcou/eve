@@ -37,11 +37,11 @@ namespace eve::detail
     }
     else if constexpr( has_aggregated_abi_v<T> )
     {
-      return aggregate(pedantic_(eve::rsqrt), a0);
+      return aggregate(pedantic(eve::rsqrt), a0);
     }
     else
     {
-      return map(pedantic_(rsqrt), a0);
+      return map(pedantic(rsqrt), a0);
     }
   }
 

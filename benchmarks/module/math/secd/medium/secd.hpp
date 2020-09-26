@@ -22,7 +22,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(medium_(eve::secd)) , xp, eve::medium_(eve::secd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(medium_(eve::secd)) , xp, eve::medium_(eve::secd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(medium(eve::secd)) , xp, eve::medium(eve::secd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium(eve::secd)) , xp, eve::medium(eve::secd) , arg0);
 
 }

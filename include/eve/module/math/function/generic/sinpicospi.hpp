@@ -36,10 +36,10 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      return restricted_(sincos)(a0 * pi(eve::as<T>()));
+      return restricted(sincos)(a0 * pi(eve::as<T>()));
     }
     else
-      return apply_over2(restricted_(sinpicospi), a0);
+      return apply_over2(restricted(sinpicospi), a0);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -80,9 +80,9 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(x <= T(0.25)) )
-        return restricted_(sinpicospi)(a0);
+        return restricted(sinpicospi)(a0);
       else
-        return big_(sinpicospi)(a0);
+        return big(sinpicospi)(a0);
     }
     else
       return apply_over2(sinpicospi, a0);

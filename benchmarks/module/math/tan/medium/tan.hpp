@@ -23,7 +23,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(medium_(eve::tan)) , xp, eve::medium_(eve::tan) , arg0);
-  run<EVE_TYPE> (EVE_NAME(medium_(eve::tan)) , xp, eve::medium_(eve::tan) , arg0);
+  run<EVE_VALUE>(EVE_NAME(medium(eve::tan)) , xp, eve::medium(eve::tan) , arg0);
+  run<EVE_TYPE> (EVE_NAME(medium(eve::tan)) , xp, eve::medium(eve::tan) , arg0);
 
 }

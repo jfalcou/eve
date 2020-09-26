@@ -50,8 +50,8 @@ namespace eve
 
   //================================================================================================
   // Trigonometric decorator objects
-  inline constexpr restricted_type  const restricted_ = {};
-  inline constexpr small_type       const small_      = {};
-  inline constexpr medium_type      const medium_     = {};
-  inline constexpr big_type         const big_        = {};
+  inline constexpr restricted_type  const restricted = {};
+  inline constexpr small_type       const small      = {};
+  inline constexpr medium_type      const medium     = {};
+  inline constexpr big_type         const big        = {};
 }

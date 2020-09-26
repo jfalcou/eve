@@ -63,7 +63,7 @@ namespace eve::detail
                             U const &v1) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic_(max), v0, v1);
+    return arithmetic_call(pedantic(max), v0, v1);
   }
 
   template<real_value T>
@@ -111,7 +111,7 @@ namespace eve::detail
                             U const &v1) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(numeric_(max), v0, v1);
+    return arithmetic_call(numeric(max), v0, v1);
   }
 
   template<real_value T>

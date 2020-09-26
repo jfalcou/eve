@@ -35,7 +35,7 @@ template< value T, value U > auto operator()( T x, U y ) const noexcept requires
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the [element-wise](../../../glossary.html#regular_) min operationr on its parameters.
+Performs the [element-wise](../../../glossary.html#regular) min operationr on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -53,13 +53,13 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(min)(x,y)`  ensures the conformity to the standard behaviour, that is
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(min)(x,y)`  ensures the conformity to the standard behaviour, that is
     (on an  [element-wise](../../../glossary.html#value) basis) semanticaly equivalent to:
     `(x < y) ? x : y`.
 
-[`numeric_`](../decorators.html#numeric_)
-:   The call `numeric_(min)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
+[`numeric`](../decorators.html#numeric)
+:   The call `numeric(min)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins).
 
 </script>

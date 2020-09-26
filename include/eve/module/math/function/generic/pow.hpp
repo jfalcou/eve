@@ -84,8 +84,8 @@ namespace eve::detail
       {
         if constexpr( simd_value<T> ^ simd_value<U>)
         {
-          if constexpr( scalar_value<U> )  return raw_(pow)(a, T {b});
-          else if constexpr(  scalar_value<T> ) return raw_(pow)(U {a}, b);
+          if constexpr( scalar_value<U> )  return raw(pow)(a, T {b});
+          else if constexpr(  scalar_value<T> ) return raw(pow)(U {a}, b);
         }
         else
         {
@@ -100,7 +100,7 @@ namespace eve::detail
         return pow(a, b);
       }
     }
-    else return apply_over(raw_(pow), a, b);
+    else return apply_over(raw(pow), a, b);
 
   }
 

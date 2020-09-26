@@ -35,7 +35,7 @@ template< value T, value U > auto operator()( T x, U y ) const noexcept requires
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs the minmag [element-wise](../../../glossary.html#regular_) operator on its parameters.
+Performs the minmag [element-wise](../../../glossary.html#regular) operator on its parameters.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -55,21 +55,21 @@ The result type is the [compatibility result](../../concept.html#compatibility) 
 
 supported Decorators
 ====================================================================================================
-[`pedantic_`](../decorators.html#pedantic_)
-:   The call `pedantic_(minmag)(x,y)` is  semantically equivalent to:
+[`pedantic`](../decorators.html#pedantic)
+:   The call `pedantic(minmag)(x,y)` is  semantically equivalent to:
 
   * If `|x| >  |y|`,  `y` is returned.
   * If `|x| <  |y|`,  `x` is returned.
-  * Otherwise `pedantic_(min)(x, y)` is returned.
+  * Otherwise `pedantic(min)(x, y)` is returned.
 
 
-[`numeric_`](../decorators.html#numeric_)
-:   The call `numeric_(minmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
+[`numeric`](../decorators.html#numeric)
+:   The call `numeric(minmag)(x,y)`  ensures that  if any element of the inputs is a `Nan`, the corresponding
     output element is the corresponding element of the other parameter (i.e. the not invalid parameter wins):
 
   * If `|x| >  |y|`,  `y` is returned.
   * If `|x| <  |y|`,  `x` is returned.
-  * Otherwise `numeric_(min)(x, y)` is returned.
+  * Otherwise `numeric(min)(x, y)` is returned.
 
 </script>
 

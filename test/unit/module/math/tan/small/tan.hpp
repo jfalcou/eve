@@ -21,45 +21,45 @@
 #include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
-TTS_CASE_TPL("Check eve::small_(eve::tan) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::small(eve::tan) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::small_(eve::tan)(T(0)), (T));
+  TTS_EXPR_IS(eve::small(eve::tan)(T(0)), (T));
 }
 
-TTS_CASE_TPL("Check eve::small_(eve::tan) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::small(eve::tan) behavior", EVE_TYPE)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::small_(eve::tan)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::small_(eve::tan)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::small_(eve::tan)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small(eve::tan)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small(eve::tan)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::small(eve::tan)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
   }
 
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::small_(eve::tan)(T( 1)), T(std::tan( 1.0)), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::tan)(T(-1)), T(std::tan(-1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)(T( 1)), T(std::tan( 1.0)), 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)(T(-1)), T(std::tan(-1.0)), 0.5);
 
-  TTS_IEEE_EQUAL( eve::small_(eve::tan)(T(0))   , T(0));
-  TTS_IEEE_EQUAL( eve::small_(eve::tan)(T(-0.)) , T(0));
+  TTS_IEEE_EQUAL( eve::small(eve::tan)(T(0))   , T(0));
+  TTS_IEEE_EQUAL( eve::small(eve::tan)(T(-0.)) , T(0));
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::small_(eve::tan)(T(-0.)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::small_(eve::tan)(T( 0 )))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::small(eve::tan)(T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::small(eve::tan)(T( 0 )))));
 
-  TTS_ULP_EQUAL(eve::small_(eve::tan)( eve::pio_4(eve::as<T>()))  , T(std::tan( eve::pio_4(eve::as<v_t>())))  , 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::tan)(-eve::pio_4(eve::as<T>()))  , T(std::tan(-eve::pio_4(eve::as<v_t>())))  , 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::tan)( eve::pio_4(eve::as<T>())/2), T(std::tan( eve::pio_4(eve::as<v_t>())/2)), 0.5);
-  TTS_ULP_EQUAL(eve::small_(eve::tan)(-eve::pio_4(eve::as<T>())/2), T(std::tan(-eve::pio_4(eve::as<v_t>())/2)), 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)( eve::pio_4(eve::as<T>()))  , T(std::tan( eve::pio_4(eve::as<v_t>())))  , 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)(-eve::pio_4(eve::as<T>()))  , T(std::tan(-eve::pio_4(eve::as<v_t>())))  , 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)( eve::pio_4(eve::as<T>())/2), T(std::tan( eve::pio_4(eve::as<v_t>())/2)), 0.5);
+  TTS_ULP_EQUAL(eve::small(eve::tan)(-eve::pio_4(eve::as<T>())/2), T(std::tan(-eve::pio_4(eve::as<v_t>())/2)), 0.5);
 
   auto z = eve::pio_2(eve::as<v_t>());
-  TTS_ULP_EQUAL( eve::small_(eve::tan)(T(z)), T(std::tan(eve::pio_2(eve::as<v_t>()))), 5.5);
+  TTS_ULP_EQUAL( eve::small(eve::tan)(T(z)), T(std::tan(eve::pio_2(eve::as<v_t>()))), 5.5);
 
   z = eve::prev(z);
-  TTS_ULP_EQUAL( eve::small_(eve::tan)(T(z)), T(std::tan(z)), 1);
+  TTS_ULP_EQUAL( eve::small(eve::tan)(T(z)), T(std::tan(z)), 1);
 
   z = eve::prev(z);
-  TTS_ULP_EQUAL( eve::small_(eve::tan)(T(z)), T(std::tan(z)), 1);
+  TTS_ULP_EQUAL( eve::small(eve::tan)(T(z)), T(std::tan(z)), 1);
 
   z = eve::prev(z);
-  TTS_ULP_EQUAL( eve::small_(eve::tan)(T(z)), T(std::tan(z)), 0.5);
+  TTS_ULP_EQUAL( eve::small(eve::tan)(T(z)), T(std::tan(z)), 0.5);
 }

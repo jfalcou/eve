@@ -9,9 +9,9 @@ Example
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::uint32t, eve::fixed<4>>;
   w_t pi = {3, 602, 3, 4001}, qi = {4, 1, 2, 0};
-  std::uint32_t z = 5;
+  std::uint32t z = 5;
   std::cout << "---- simd" << '\n'
             << " <- pi              = " << pi << '\n'
             << " <- qi              = " << qi << '\n'
@@ -20,8 +20,8 @@ int main()
             << " -> bit_shr(z,  qi) = " << eve::bit_shr(z,  qi) << '\n'
             << " -> bit_shr(pi, z ) = " << eve::bit_shr(pi, z) << '\n';
 
-  std::uint32_t a = 1;
-  std::uint32_t n = 4;
+  std::uint32t a = 1;
+  std::uint32t n = 4;
 
   std::cout << "---- scalar" << '\n'
             << " <- a             = " << a << '\n'

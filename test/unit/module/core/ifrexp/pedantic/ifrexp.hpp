@@ -21,33 +21,33 @@
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::pedantic_(eve::ifrexp)(T()), (std::tuple<T,eve::detail::as_integer_t<T,signed>>));
+  TTS_EXPR_IS(eve::pedantic(eve::ifrexp)(T()), (std::tuple<T,eve::detail::as_integer_t<T,signed>>));
 }
 
-TTS_CASE_TPL("Check eve::pedantic_(eve::ifrexp) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::pedantic(eve::ifrexp) behavior", EVE_TYPE)
 {
   using i_t = eve::detail::as_integer_t<T,signed>;
   {
-    auto [p0, p1] = eve::pedantic_(eve::ifrexp)(T(1));
+    auto [p0, p1] = eve::pedantic(eve::ifrexp)(T(1));
     TTS_EQUAL(p0, T(0.5));
     TTS_EQUAL(p1, i_t(1));
   }
   {
-    auto [p0, p1] = eve::pedantic_(eve::ifrexp)(T(0));
+    auto [p0, p1] = eve::pedantic(eve::ifrexp)(T(0));
     TTS_EQUAL (p0 , T(0));
     TTS_EQUAL (p1, i_t(0));
   }
   if constexpr(eve::platform::supports_nans)
   {
-    auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::nan(eve::as<T>()));
+    auto [r0, r1] = eve::pedantic(eve::ifrexp)(eve::nan(eve::as<T>()));
 
     TTS_IEEE_EQUAL(r0 , (eve::nan(eve::as<T>())));
     TTS_EQUAL     (r1, (i_t(0)));
   }
   if constexpr(eve::platform::supports_infinites)
   {
-    auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::inf(eve::as<T>()));
-    auto [q0, q1] = eve::pedantic_(eve::ifrexp)(eve::minf(eve::as<T>()));
+    auto [r0, r1] = eve::pedantic(eve::ifrexp)(eve::inf(eve::as<T>()));
+    auto [q0, q1] = eve::pedantic(eve::ifrexp)(eve::minf(eve::as<T>()));
 
     TTS_IEEE_EQUAL(r0, (eve::inf(eve::as<T>())));
     TTS_EQUAL     (r1, i_t(0));
@@ -57,7 +57,7 @@ TTS_CASE_TPL("Check eve::pedantic_(eve::ifrexp) behavior", EVE_TYPE)
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    auto [r0, r1] = eve::pedantic_(eve::ifrexp)(eve::mindenormal(eve::as<T>()));
+    auto [r0, r1] = eve::pedantic(eve::ifrexp)(eve::mindenormal(eve::as<T>()));
 
     TTS_ULP_EQUAL (r0, T(0.5), 1);
     TTS_EQUAL     (r1, i_t(eve::minexponent(eve::as<T>())-eve::nbmantissabits(eve::as<T>())+1));

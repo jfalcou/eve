@@ -21,6 +21,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sec) , xp, std__sec , arg0);
-  run<EVE_VALUE>(EVE_NAME(restricted_(eve::sec)) , xp, eve::restricted_(eve::sec) , arg0);
-  run<EVE_TYPE> (EVE_NAME(restricted_(eve::sec)) , xp, eve::restricted_(eve::sec) , arg0);
+  run<EVE_VALUE>(EVE_NAME(restricted(eve::sec)) , xp, eve::restricted(eve::sec) , arg0);
+  run<EVE_TYPE> (EVE_NAME(restricted(eve::sec)) , xp, eve::restricted(eve::sec) , arg0);
 }

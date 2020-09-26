@@ -15,7 +15,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  =" << std::setprecision(12) << pf << '\n'
             << "-> prev(pf)            =" << eve::prev(pf) << '\n'
-            << "-> pedantic_(prev)(pf) =" << eve::pedantic_(eve::prev)(pf) << '\n'
+            << "-> pedantic(prev)(pf) =" << eve::pedantic(eve::prev)(pf) << '\n'
             << "<- pi                  =" << pi << '\n'
             << "-> prev(pi)            =" << eve::prev(pi) << '\n';
 

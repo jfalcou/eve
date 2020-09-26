@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<float>()), target_t);
-  TTS_EXPR_IS(eve::single_(T())     , target_t);
+  TTS_EXPR_IS(eve::float32(T())     , target_t);
 }
 
 TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
@@ -50,9 +50,9 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
   }
 }
 
-TTS_CASE_TPL("single_", EVE_TYPE)
+TTS_CASE_TPL("float32", EVE_TYPE)
 {
-  TTS_EQUAL(eve::convert((T(0))        , eve::as<float>()), eve::single_(T(0)) );
-  TTS_EQUAL(eve::convert((T(42.69))    , eve::as<float>()), eve::single_(T(42.69)));
-  TTS_EQUAL(eve::convert(eve::sqr(T(2)), eve::as<float>()), eve::single_(eve::sqr)(T(2)));
+  TTS_EQUAL(eve::convert((T(0))        , eve::as<float>()), eve::float32(T(0)) );
+  TTS_EQUAL(eve::convert((T(42.69))    , eve::as<float>()), eve::float32(T(42.69)));
+  TTS_EQUAL(eve::convert(eve::sqr(T(2)), eve::as<float>()), eve::float32(eve::sqr)(T(2)));
 }

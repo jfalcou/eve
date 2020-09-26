@@ -31,6 +31,6 @@ namespace eve
 
   //================================================================================================
   // Function decorator - numeric mode
-  inline constexpr numeric_type const numeric_ = {};
+  inline constexpr numeric_type const numeric = {};
 }
 

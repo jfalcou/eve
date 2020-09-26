@@ -109,7 +109,7 @@ namespace eve
           }
         }
 
-        res = eve::pedantic_(eve::ldexp)(mant, expo);
+        res = eve::pedantic(eve::ldexp)(mant, expo);
       } while (res < a || res >=  b);
       return res;
     }
@@ -147,9 +147,9 @@ namespace eve
         else return  eve::smallestposval(eve::as<T>());
       };
       if (!a) a = minval();
-      auto [ma, ea] = eve::pedantic_(eve::frexp)(a);
+      auto [ma, ea] = eve::pedantic(eve::frexp)(a);
       if (ea < minexp()) ea = minexp();
-      auto [mb, eb] = eve::pedantic_(eve::frexp)(b);
+      auto [mb, eb] = eve::pedantic(eve::frexp)(b);
       if (eb < minexp()) eb = minexp();
       internal dists(ea, eb);
       return dists;

@@ -51,13 +51,13 @@ The result is `x-1`.
 
 Supported Decorators
 ====================================================================================================
-[`saturated_`](../decorator/saturated.html)
-:   The call `saturated_(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-    for integral type T  `saturated_(dec)(Valmin< T >())` returns `Valmin< T >()`.
+[`saturated`](../decorator/saturated.html)
+:   The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
+    for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
 
 Masked calls
 ====================================================================================================
- The [masked](../../../tutorial/masking.html) calls `dec[cond](x)` and `saturated_(dec[cond])(x)` where `cond` satisfies the
+ The [masked](../../../tutorial/masking.html) calls `dec[cond](x)` and `saturated(dec[cond])(x)` where `cond` satisfies the
  [conditionnal-expression](../../concepts.html#conditionnal) requirements are supported.
 
  More precisely, if `cond` is
@@ -65,7 +65,7 @@ Masked calls
  if the condition `cond` is satisfied else returns  `x`. The calls are respectively equivalent to :
 
  *  `if_else(cond, dec(x), x)`,
- *  `if_else(cond, saturated_(dec)(x), x)`;
+ *  `if_else(cond, saturated(dec)(x), x)`;
 
   (insert ../../src/dec.src.html here)
 

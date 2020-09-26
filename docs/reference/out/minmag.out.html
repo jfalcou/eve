@@ -6,14 +6,14 @@
 <- pf                        = (0, 1, 1, -2, 2, inf, -inf, -nan)
 <- qf                        = (4, 1, -1, 0, -3, -nan, nan, -2)
 -> minmag(pf, qf)            = (0, 1, -1, 0, 2, inf, -inf, -nan)
--> pedantic_(minmag)(pf, qf) = (0, 1, -1, 0, 2, inf, -inf, -nan)
--> numeric_(minmag)(pf, qf)  = (0, 1, -1, 0, 2, inf, -inf, -2)
+-> pedantic(minmag)(pf, qf) = (0, 1, -1, 0, 2, inf, -inf, -nan)
+-> numeric(minmag)(pf, qf)  = (0, 1, -1, 0, 2, inf, -inf, -2)
 ---- scalar
 <- xf                        = -4
 <- yf                        = 1
 -> minmag(xf, yf)            = 1
--> pedantic_(minmag)(xf, yf) = 1
--> numeric_(minmag)(xf, yf)  = 1
+-> pedantic(minmag)(xf, yf) = 1
+-> numeric(minmag)(xf, yf)  = 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
 <!-- Markdeep: -->

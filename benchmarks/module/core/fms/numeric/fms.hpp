@@ -26,6 +26,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__fms) , xp, std__fms, arg0, arg1, arg2);
-  run<EVE_VALUE>(EVE_NAME(numeric_(eve::fms)) , xp, eve::numeric_(eve::fms), arg0, arg1, arg2);
-  run<EVE_TYPE> (EVE_NAME(numeric_(eve::fms)) , xp, eve::numeric_(eve::fms), arg0, arg1, arg2);
+  run<EVE_VALUE>(EVE_NAME(numeric(eve::fms)) , xp, eve::numeric(eve::fms), arg0, arg1, arg2);
+  run<EVE_TYPE> (EVE_NAME(numeric(eve::fms)) , xp, eve::numeric(eve::fms), arg0, arg1, arg2);
 }

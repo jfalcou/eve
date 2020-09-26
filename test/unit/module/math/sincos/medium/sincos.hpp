@@ -17,12 +17,12 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::medium_(eve::sincos) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS( eve::medium_(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS( eve::medium(eve::sincos)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE_TPL("Check eve::medium_(eve::sincos) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::medium(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check eve::medium_(eve::sincos) behavior", EVE_TYPE)
 
   for(auto v : x)
   {
-    auto [p0, p1] = eve::medium_(eve::sincos)(T(v));
+    auto [p0, p1] = eve::medium(eve::sincos)(T(v));
     TTS_ULP_EQUAL(p0, T(std::sin(v)), 0.5);
     TTS_ULP_EQUAL(p1, T(std::cos(v)), 0.5);
   }

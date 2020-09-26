@@ -22,5 +22,5 @@ TTS_CASE_TPL("wide random check on cos", EVE_TYPE)
 
   auto l = eve::detail::Rempio2_limit(eve::medium_type(), eve::as<v_t>());
   eve::rng_producer<T> p(-l, l);
-  TTS_ULP_RANGE_CHECK(p, std_cos, eve::medium_(eve::cos), 0.5);
+  TTS_ULP_RANGE_CHECK(p, std_cos, eve::medium(eve::cos), 0.5);
 }

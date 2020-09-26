@@ -7,7 +7,7 @@ Example
 #include <eve/function/lookup.hpp>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int32_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::int32t, eve::fixed<4>>;
 
 int main()
 {
@@ -19,7 +19,7 @@ int main()
             << "-> eve::lookup(pf, pi) =           " << eve::lookup(pf, pi) << '\n';
 
   float        xf = -327.0f;
-  std::int32_t xi = 0;
+  std::int32t xi = 0;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf =                            " << xf << '\n'

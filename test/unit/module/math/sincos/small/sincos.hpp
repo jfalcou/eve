@@ -21,12 +21,12 @@
 #include <tuple>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::small_(eve::sincos) return type", EVE_TYPE)
+TTS_CASE_TPL("Check eve::small(eve::sincos) return type", EVE_TYPE)
 {
-  TTS_EXPR_IS(eve::small_(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::small(eve::sincos)(T()), (std::tuple<T,T>));
 }
 
-TTS_CASE_TPL("Check eve::small_(eve::sincos) behavior", EVE_TYPE)
+TTS_CASE_TPL("Check eve::small(eve::sincos) behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check eve::small_(eve::sincos) behavior", EVE_TYPE)
 
   for(auto v :x)
   {
-    auto [p0, p1] = eve::small_(eve::sincos)(T(v));
+    auto [p0, p1] = eve::small(eve::sincos)(T(v));
     TTS_ULP_EQUAL(p0, T(std::sin(v)), 3.5);
     TTS_ULP_EQUAL(p1, T(std::cos(v)), 3.5);
   }

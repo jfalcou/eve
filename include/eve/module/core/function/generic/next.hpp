@@ -82,17 +82,17 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(inc)(a);
+        return saturated(inc)(a);
       }
     }
     else
     {
-      return apply_over(pedantic_(next), a);
+      return apply_over(pedantic(next), a);
     }
   }
 
   ////////////////////////////////////////////////
-  // saturated_ call
+  // saturated call
   template< real_value T>
   EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
                                       , saturated_type const &
@@ -108,12 +108,12 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(inc)(a);
+        return saturated(inc)(a);
       }
     }
     else
     {
-      return apply_over(saturated_(next), a);
+      return apply_over(saturated(next), a);
     }
   }
 
@@ -144,7 +144,7 @@ namespace eve::detail
     }
   }
   //////////////////////////////////////////////////////////////
-  // pedantic_ call
+  // pedantic call
   template<real_value T, integral_real_value U>
   EVE_FORCEINLINE constexpr auto next_(EVE_SUPPORTS(cpu_)
                                      ,  pedantic_type const &
@@ -170,12 +170,12 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(add)(a, to_<T>(n));
+        return saturated(add)(a, to_<T>(n));
       }
    }
     else
     {
-      return apply_over(pedantic_(next), a, n);
+      return apply_over(pedantic(next), a, n);
     }
   }
 
@@ -196,12 +196,12 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(add)(a, to_<T>(n));
+        return saturated(add)(a, to_<T>(n));
       }
     }
     else
     {
-      return apply_over(pedantic_(next), a, n);
+      return apply_over(pedantic(next), a, n);
     }
   }
 }

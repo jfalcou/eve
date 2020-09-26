@@ -87,7 +87,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(pedantic_(hypot), a, b);
+    return arithmetic_call(pedantic(hypot), a, b);
   }
 
   template<floating_value T>
@@ -103,7 +103,7 @@ namespace eve::detail
       if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
     if constexpr(std::is_same_v<elt_t, float>)
     {
-      auto res = single_(hypot(double_(a), double_(b)));
+      auto res = float32(hypot(float64(a), float64(b)));
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
         return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
@@ -113,8 +113,8 @@ namespace eve::detail
       if constexpr(eve::platform::supports_invalids && scalar_value<T>) if (is_infinite(a) || is_infinite(b)) return inf(eve::as(a));
       auto e =  exponent(eve::maxmag(a, b));
       e = eve::min(eve::max(e,minexponent(eve::as<T>())),maxexponentm1(eve::as<T>()));
-      auto tmp = pedantic_(ldexp)(a, -e);
-      auto res =  pedantic_(ldexp)(sqrt(fma(tmp, tmp, sqr(pedantic_(ldexp)(b, -e)))), e);
+      auto tmp = pedantic(ldexp)(a, -e);
+      auto res =  pedantic(ldexp)(sqrt(fma(tmp, tmp, sqr(pedantic(ldexp)(b, -e)))), e);
       if constexpr(eve::platform::supports_invalids && simd_value<T>)
         return if_else(is_infinite(a) || is_infinite(b), inf(eve::as<T>()), res);
       else return res;
@@ -129,7 +129,7 @@ namespace eve::detail
                               , V const &c) noexcept
   requires compatible_values<T, U> &&  compatible_values<T, V>
   {
-    return arithmetic_call(pedantic_(hypot), a, b, c);
+    return arithmetic_call(pedantic(hypot), a, b, c);
   }
 
   template<floating_value T>
@@ -145,16 +145,16 @@ namespace eve::detail
       if (is_infinite(a)|| is_infinite(b)|| is_infinite(c))  return inf(eve::as(a));
     if constexpr(std::is_same_v<value_type_t<T>, float>)
     {
-      return single_(hypot(double_(a), double_(b), double_(c)));
+      return float32(hypot(float64(a), float64(b), float64(c)));
     }
     else
     {
       auto e =  exponent(eve::maxmag(eve::maxmag(a, b), c));
       e = eve::min(eve::max(e,minexponent(eve::as<T>())),maxexponentm1(eve::as<T>()));
-      auto tmpr = pedantic_(ldexp)(a, -e);
-      auto tmpi = pedantic_(ldexp)(b, -e);
-      auto tmpj = pedantic_(ldexp)(c, -e);
-      T res =  pedantic_(ldexp)(eve::sqrt(fma(tmpr, tmpr, fma(tmpi, tmpi, sqr(tmpj)))), e);
+      auto tmpr = pedantic(ldexp)(a, -e);
+      auto tmpi = pedantic(ldexp)(b, -e);
+      auto tmpj = pedantic(ldexp)(c, -e);
+      T res =  pedantic(ldexp)(eve::sqrt(fma(tmpr, tmpr, fma(tmpi, tmpi, sqr(tmpj)))), e);
       if constexpr(eve::platform::supports_invalids)
         return if_else(is_infinite(a) || is_infinite(b) || is_infinite(c), inf(eve::as<T>()), res);
       else  return res;

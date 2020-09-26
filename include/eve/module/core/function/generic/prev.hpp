@@ -82,14 +82,14 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(dec)(a);
+        return saturated(dec)(a);
       }
     }
-    else  { return apply_over(pedantic_(prev), a);    }
+    else  { return apply_over(pedantic(prev), a);    }
   }
 
   ////////////////////////////////////////////////
-  // saturated_
+  // saturated
   template<real_value T>
   EVE_FORCEINLINE constexpr auto prev_(EVE_SUPPORTS(cpu_)
                                       , saturated_type const &
@@ -105,10 +105,10 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(dec)(a);
+        return saturated(dec)(a);
       }
     }
-    else  { return apply_over(saturated_(prev), a);    }
+    else  { return apply_over(saturated(prev), a);    }
   }
 
   //////////////////////////////////////////////////////////////
@@ -163,10 +163,10 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(sub)(a, to_<T>(n));
+        return saturated(sub)(a, to_<T>(n));
       }
     }
-    else  { return apply_over(pedantic_(prev), a, n);    }
+    else  { return apply_over(pedantic(prev), a, n);    }
   }
 
 
@@ -187,9 +187,9 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return saturated_(sub)(a, to_<T>(n));
+        return saturated(sub)(a, to_<T>(n));
       }
     }
-    else  { return apply_over(saturated_(prev), a, n);    }
+    else  { return apply_over(saturated(prev), a, n);    }
   }
 }

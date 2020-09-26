@@ -22,7 +22,7 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(big_(eve::sindcosd)) , xp, eve::big_(eve::sindcosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(big_(eve::sindcosd)) , xp, eve::big_(eve::sindcosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(big(eve::sindcosd)) , xp, eve::big(eve::sindcosd) , arg0);
+  run<EVE_TYPE> (EVE_NAME(big(eve::sindcosd)) , xp, eve::big(eve::sindcosd) , arg0);
 
 }

@@ -34,7 +34,7 @@ Member functions
 template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the  [element-wise](../../../glossary.html#regular_)  the absolute value of `x` raised to the power `y`.
+Performs  the  [element-wise](../../../glossary.html#regular)  the absolute value of `x` raised to the power `y`.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -68,8 +68,8 @@ Returns [element-wise](../../../glossary.html#value) $|x|^y$.
 
 Supported Decorators
 ====================================================================================================
-[`raw_`](../decorators.html#raw_)
-:   The expression `raw_(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
+[`raw`](../decorators.html#raw)
+:   The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
     than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
 
   (insert ../../src/pow_abs.src.html here)

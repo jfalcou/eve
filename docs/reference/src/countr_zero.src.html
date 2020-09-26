@@ -7,7 +7,7 @@ Example
 #include <eve/constant/inf.hpp>
 #include <eve/wide.hpp>
 
-using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
+using wide_it = eve::wide<std::uint32t, eve::fixed<4>>;
 
 int main()
 {
@@ -17,7 +17,7 @@ int main()
             << "<- pi              = " << pi << '\n'
             << "-> countr_zero(pi) = " << eve::countr_zero(pi) << '\n';
 
-  std::uint32_t xf = 48;
+  std::uint32t xf = 48;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf              = " << xf << '\n'

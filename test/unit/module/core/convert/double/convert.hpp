@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
 #endif
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<double>()), target_t);
-  TTS_EXPR_IS(eve::double_(T()), target_t);
+  TTS_EXPR_IS(eve::float64(T()), target_t);
 }
 
 TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)

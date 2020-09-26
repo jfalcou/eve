@@ -55,7 +55,7 @@ namespace eve::detail
         return if_else(is_not_less_equal(x2, pi2_16), eve::allbits, r);
     }
     else
-      return apply_over(restricted_(sin), a0);
+      return apply_over(restricted(sin), a0);
   }
 
   template<floating_real_value T>
@@ -102,7 +102,7 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(small_(sin), a0);
+      return apply_over(small(sin), a0);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,13 +130,13 @@ namespace eve::detail
     {
       auto x = abs(a0);
       if( all(x <= pio_4(eve::as(x))) )
-        return restricted_(sin)(a0);
+        return restricted(sin)(a0);
       else if( all(x <= pio_2(eve::as(x))) )
-        return small_(sin)(a0);
+        return small(sin)(a0);
       else if( all(x <= Rempio2_limit(medium_type(), as(a0))) )
-        return medium_(sin)(a0);
+        return medium(sin)(a0);
       else
-        return big_(sin)(a0);
+        return big(sin)(a0);
     }
     else
       return apply_over(sin, a0);

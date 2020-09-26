@@ -48,7 +48,7 @@ namespace eve::detail
     auto c3  = Pack(v_t{3});
     auto c10 = Pack(v_t{10});
     auto c15 = Pack(v_t{15});
-    auto a0 = raw_(rsqrt)(x);
+    auto a0 = raw(rsqrt)(x);
     auto y  = sqr(a0) * x;
 
     // Perform one Halley cubically convergent iteration
@@ -73,12 +73,12 @@ namespace eve::detail
     if(any(is_denormal(x)) || (std::is_same_v<v_t, double> && any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))))
       // this is necessary because of the poor initialisation by float intrinsic
     {
-      auto [a00, nn] =  pedantic_(ifrexp)(x);
+      auto [a00, nn] =  pedantic(ifrexp)(x);
       auto tst = is_odd(nn);
       nn  = dec[tst](nn);
       a00 = mul[tst](a00,2);
       auto a0 = rsqrt_x86(a00);
-      return if_else(is_eqz(x), inf(eve::as(x)), pedantic_(ldexp)(a0, -nn/2));
+      return if_else(is_eqz(x), inf(eve::as(x)), pedantic(ldexp)(a0, -nn/2));
     }
     else return rsqrt_x86(x);
   }

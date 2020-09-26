@@ -34,12 +34,12 @@ namespace eve::detail
   {
     if constexpr(std::is_same_v<double, T>)
     {
-      auto estimate = refine_rec(v0, raw_(rec)(v0));
+      auto estimate = refine_rec(v0, raw(rec)(v0));
       return refine_rec(v0, estimate);
     }
     else if constexpr(std::is_same_v<float, T>)
     {
-      return refine_rec(v0, raw_(rec)(v0));
+      return refine_rec(v0, raw(rec)(v0));
     }
   }
 

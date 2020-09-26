@@ -50,7 +50,7 @@ namespace eve::detail
                             , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(saturated_(dist), a, b);
+    return arithmetic_call(saturated(dist), a, b);
   }
 
   template<real_value T>
