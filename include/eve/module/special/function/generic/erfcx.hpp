@@ -18,6 +18,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
+#include <eve/function/any.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/expx2.hpp>
 #include <eve/function/fma.hpp>
@@ -125,8 +126,7 @@ namespace eve::detail
     t = q + q;
     e = (p - q) + fma (t, -a, T(1)); // residual: (p+1)-q*(1+2*a)
     r = fma (e, r, q);
-    if constexpr(std::same_as<D, pedantic_type>)
-      if (any(a) > ll) r =  if_else(a > ll, invsqrtpi*rec(a), r);
+    if (eve::any(a > ll)) r =  if_else(a > ll, invsqrtpi*rec(a), r);
     auto xpos = (x >= 0);
     if (all(xpos)) return r;
     /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */

@@ -25,10 +25,10 @@
 #include <tts/tests/types.hpp>
 #include <cmath>
 
-// TTS_CASE_TPL("Check eve::erf return type", EVE_TYPE)
-// {
-//   TTS_EXPR_IS(eve::erf(T(0)), T);
-// }
+TTS_CASE_TPL("Check eve::erf return type", EVE_TYPE)
+{
+  TTS_EXPR_IS(eve::erf(T(0)), T);
+}
 
 TTS_CASE_TPL("Check eve::erf behavior", EVE_TYPE)
 {
