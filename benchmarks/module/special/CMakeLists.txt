@@ -19,6 +19,7 @@ add_custom_target(special.bench)
 ### TEMPORARY MEASURE
 make_all_benchs(ROOT special NAME erf      TYPES ${real_types}    )
 make_all_benchs(ROOT special NAME erfc     TYPES ${real_types}    )
+make_all_benchs(ROOT special NAME erfcx    TYPES ${real_types}    )
 ### make_all_benchs(ROOT special NAME gamma    TYPES ${real_types}    )
 ### make_all_benchs(ROOT special NAME stirling TYPES ${real_types}    )
 ### TEMPORARY MEASURE

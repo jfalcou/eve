@@ -15,7 +15,7 @@
 
 int main()
 {
-  auto lmin = EVE_VALUE((-27);
+  auto lmin = EVE_VALUE(-27);
   auto lmax = -lmin;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

@@ -11,6 +11,8 @@
 #include <eve/function/erfcx.hpp>
 #include <eve/constant/halfeps.hpp>
 #include <eve/function/prev.hpp>
+#include <eve/function/nb_values.hpp>
+#include <eve/function/average.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
@@ -33,7 +35,6 @@ TTS_CASE_TPL("Check eve::erfcx return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::erfcx behavior", EVE_TYPE)
 {
-//  using v_t = eve::element_type_t<T>;
   using eve::as;
   TTS_ULP_EQUAL(eve::erfcx(T(-0.0)), T(1), 0);
   TTS_ULP_EQUAL(eve::erfcx(T(0)), T(1), 0);
@@ -48,12 +49,12 @@ TTS_CASE_TPL("Check eve::erfcx behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::erfcx(T(5)), T(0.110704637733068626370212086492), 0.5);      //    1.5);
   TTS_ULP_EQUAL(eve::erfcx(T(27)), T(0.0208816079904209406740944901929), 0.5);    //     4);
   TTS_ULP_EQUAL(eve::erfcx(T(100)), T(0.00564161378298943290355645700695), 0.5);  //   36.5);
-  TTS_ULP_EQUAL(eve::erfcx(eve::valmax(as<T>()))     ,eve::rsqrt(eve::pi(as<T>()))/eve::valmax(as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 3))     ,T(1.65800436828243910794622504034625935640270296756e-39), 0.5);
-  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,T(1.65800436828243910794622504034625935640270296756e-39), 0.5);
-  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 1))     ,T(1.65800436828243910794622504034625935640270296756e-39), 0.5);
-  TTS_ULP_EQUAL(eve::erfcx(          eve::valmax(as<T>())  )        ,T(1.65800436828243910794622504034625935640270296756e-39), 0.5);
-//   TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,T(3.1384087339854435612285044169667449893901754731606e-309), 0.5);
+  auto big = [](auto x){ return eve::rsqrt(eve::pi(as<T>()))/x;};
+
+  TTS_ULP_EQUAL(eve::erfcx(eve::valmax(as<T>()))                   ,big(eve::valmax(as<T>())), 0.5);
+  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 3))     ,big(eve::prev(eve::valmax(as<T>()), 3)), 0.5);
+  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,big(eve::prev(eve::valmax(as<T>()), 2)), 0.5);
+  TTS_ULP_EQUAL(eve::erfcx(eve::prev(eve::valmax(as<T>()), 1))     ,big(eve::prev(eve::valmax(as<T>()), 1)), 0.5);
   TTS_ULP_EQUAL(eve::erfcx(T(1.0E30)), eve::rsqrt(eve::pi(as<T>()))/T(1.0E30), 0.5);
   TTS_ULP_EQUAL(eve::erfcx(-eve::halfeps(as<T>())), T(1.00000000000000012527525318168), 0.5);
   TTS_ULP_EQUAL(eve::erfcx(-T(0.25))          , T(1.3586423701047221152100420169489882200138085022721), 0.5);
@@ -65,12 +66,12 @@ TTS_CASE_TPL("Check eve::erfcx behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::erfcx(-T(27))            , eve::inf(as<T>()), 0);
   TTS_ULP_EQUAL(eve::erfcx(-T(100))           , eve::inf(as<T>()), 0);
   TTS_ULP_EQUAL(eve::erfcx(-eve::valmax(as<T>())) , eve::inf(as<T>()), 0);
-  TTS_ULP_EQUAL(eve::erfcx(eve::valmax(as<T>())/2     ,T(1.65800436828243910794622504034625935640270296756e-39), 0.5);
+  TTS_ULP_EQUAL(eve::erfcx(eve::valmax(as<T>())/2)     ,big(eve::valmax(as<T>())/2), 0.5);
 
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve::erfcx(eve::inf(as<T>())), T(0), 0);
+    TTS_ULP_EQUAL(eve::erfcx(eve::minf(as<T>())), eve::inf(as<T>()), 0);
     TTS_ULP_EQUAL(eve::erfcx(eve::nan(as<T>())), eve::nan(as<T>()), 0);
   }
-//  std::cout << std::setprecision(20) << eve::prev(eve::Valmax<T> ()) << std::endl;
 }

@@ -44,7 +44,7 @@
 #include <eve/module/math/detail/generic/erf_kernel.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
-
+#include <eve/module/core/detail/generic/horn.hpp>
 namespace eve::detail
 {
 
@@ -62,10 +62,31 @@ namespace eve::detail
     {
       if (is_nan(x)) return x;
     }
+    using elt_t =  element_type_t<T>;
+    auto largelimit = [](){
+      // for x greater than the value 1/(sqrt(pi)*x) ==  erfcx(x) at working precision
+      if constexpr(std::is_same_v<elt_t, float>)
+        return 0x1.a919d2p+37; // 2.282242867200000e+11
+      else
+        return 0x1.fffffffffffffp+510;  // 6.703903964971298e+153
+    };
+    auto ll = largelimit();
+    const T invsqrtpi = T(0.564189583547756286948079451560772585844050629329);
+    T a = eve::abs(x);
+    if constexpr(scalar_value<T>)
+    {
+      if (x == inf(as(x))) return zero(as(a));
+      if (x > ll) return invsqrtpi*rec(a);
+      auto largeneglimit = [](){
+        // for x less than the value erfcx(x) is inf at working precision
+        if constexpr(std::is_same_v<elt_t, float>)
+          return -0x1.fffffcp+63;  // -1.844674187468630e+19
+        else
+          return -0x1.ffffffffffffep+511;  // -1.340780792994259e+154
+      };
+      if (x < largeneglimit()) return inf(as(a));
 
-    T a = eve::abs(x); // NaN-preserving absolute value computation
-    using elt_t = element_type_t<T>;
-    if constexpr(scalar_value<T>) if (is_infinite(a)) return zero(as<T>());
+    }
     constexpr auto isfloat = std::same_as<elt_t, float>;
     const T shift = if_else(isfloat, T(2), T(4));
     /* Compute q = (a-shift)/(a+shift) accurately. [0,INF) -> [-1,1] */
@@ -79,45 +100,21 @@ namespace eve::detail
     /* Approximate (1+2*a)*exp(a*a)*erfc(a) as p(q)+1 for q in [-1,1] */
     if constexpr(isfloat)
     {
-      p =             0x1.f10000p-15f;  //  5.92470169e-5
-      p = fma (p, q,  0x1.521cc6p-13f); //  1.61224554e-4
-      p = fma (p, q, -0x1.6b4ffep-12f); // -3.46481771e-4
-      p = fma (p, q, -0x1.6e2a7cp-10f); // -1.39681227e-3
-      p = fma (p, q,  0x1.3c1d7ep-10f); //  1.20588380e-3
-      p = fma (p, q,  0x1.1cc236p-07f); //  8.69014394e-3
-      p = fma (p, q, -0x1.069940p-07f); // -8.01387429e-3
-      p = fma (p, q, -0x1.bc1b6cp-05f); // -5.42122945e-2
-      p = fma (p, q,  0x1.4ff8acp-03f); //  1.64048523e-1
-      p = fma (p, q, -0x1.54081ap-03f); // -1.66031078e-1
-      p = fma (p, q, -0x1.7bf5cep-04f); // -9.27637145e-2
-      p = fma (p, q,  0x1.1ba03ap-02f); //  2.76978403e-1
+      p =  horn<T,
+        0x3e8dd01d, 0xbdbdfae7, 0xbe2a040d, 0x3e27fc56, 0xbd5e0db6, 0xbc034ca0,
+        0x3c0e611b, 0x3a9e0ebf, 0xbab7153e, 0xb9b5a7ff, 0x39290e63, 0x38788000
+        >(q);
     }
     else // isdouble
     {
-      p =             0x1.edcad78fc8044p-31;  //  8.9820305531190140e-10
-      p = fma (p, q,  0x1.b1548f14735d1p-30); //  1.5764464777959401e-09
-      p = fma (p, q, -0x1.a1ad2e6c4a7a8p-27); // -1.2155985739342269e-08
-      p = fma (p, q, -0x1.1985b48f08574p-26); // -1.6386753783877791e-08
-      p = fma (p, q,  0x1.c6a8093ac4f83p-24); //  1.0585794011876720e-07
-      p = fma (p, q,  0x1.31c2b2b44b731p-24); //  7.1190423171700940e-08
-      p = fma (p, q, -0x1.b87373facb29fp-21); // -8.2040389712752056e-07
-      p = fma (p, q,  0x1.3fef1358803b7p-22); //  2.9796165315625938e-07
-      p = fma (p, q,  0x1.7eec072bb0be3p-18); //  5.7059822144459833e-06
-      p = fma (p, q, -0x1.78a680a741c4ap-17); // -1.1225056665965572e-05
-      p = fma (p, q, -0x1.9951f39295cf4p-16); // -2.4397380523258482e-05
-      p = fma (p, q,  0x1.3be1255ce180bp-13); //  1.5062307184282616e-04
-      p = fma (p, q, -0x1.a1df71176b791p-13); // -1.9925728768782324e-04
-      p = fma (p, q, -0x1.8d4aaa0099bc8p-11); // -7.5777369791018515e-04
-      p = fma (p, q,  0x1.49c673066c831p-8);  //  5.0319701025945277e-03
-      p = fma (p, q, -0x1.0962386ea02b7p-6);  // -1.6197733983519948e-02
-      p = fma (p, q,  0x1.3079edf465cc3p-5);  //  3.7167515521269866e-02
-      p = fma (p, q, -0x1.0fb06dfedc4ccp-4);  // -6.6330365820039094e-02
-      p = fma (p, q,  0x1.7fee004e266dfp-4);  //  9.3732834999538536e-02
-      p = fma (p, q, -0x1.9ddb23c3e14d2p-4);  // -1.0103906603588378e-01
-      p = fma (p, q,  0x1.16ecefcfa4865p-4);  //  6.8097054254651804e-02
-      p = fma (p, q,  0x1.f7f5df66fc349p-7);  //  1.5379652102610957e-02
-      p = fma (p, q, -0x1.1df1ad154a27fp-3);  // -1.3962111684056208e-01
-      p = fma (p, q,  0x1.dd2c8b74febf6p-3);  //  2.3299511862555250e-01
+      p =  horn<T,
+        0x3fcdd2c8b74febf6ll,0xbfc1df1ad154a27fll, 0x3f8f7f5df66fc349ll, 0x3fb16ecefcfa4865ll,
+        0xbfb9ddb23c3e14d2ll, 0x3fb7fee004e266dfll, 0xbfb0fb06dfedc4ccll, 0x3fa3079edf465cc3ll,
+        0xbf90962386ea02b7ll, 0x3f749c673066c831ll, 0xbf48d4aaa0099bc8ll, 0xbf2a1df71176b791ll,
+        0x3f23be1255ce180bll, 0xbef9951f39295cf4ll, 0xbee78a680a741c4all, 0x3ed7eec072bb0be3ll,
+        0x3e93fef1358803b7ll, 0xbeab87373facb29fll, 0x3e731c2b2b44b731ll, 0x3e7c6a8093ac4f83ll,
+        0xbe51985b48f08574ll, 0xbe4a1ad2e6c4a7a8ll, 0x3e1b1548f14735d1ll, 0x3e0edcad78fc8044ll
+        >(q);
     }
 
     /* Divide (1+p) by (1+2*a) ==> exp(a*a)*erfc(a) */
@@ -128,26 +125,12 @@ namespace eve::detail
     t = q + q;
     e = (p - q) + fma (t, -a, T(1)); // residual: (p+1)-q*(1+2*a)
     r = fma (e, r, q);
-//   if constexpr(std::same_as<D, pedantic_type> && eve::platform::supports_infinites)
-//      r = if_else (a >= eve::prev(eve::valmax(as<T>())), eve::zero, r);
-    r = if_else (a >= eve::valmax(as<T>())/2, rec(sqrt(pi(as(a))))/a, r);
+    if constexpr(std::same_as<D, pedantic_type>)
+      if (any(a) > ll) r =  if_else(a > ll, invsqrtpi*rec(a), r);
     auto xpos = (x >= 0);
     if (all(xpos)) return r;
     /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */
-
-//     auto s = x * x;
-//     d = fma (x, x, -s);
-//     e = exp (s);
-//     auto   r1 = e - r;
-//     r1 = fma (e, d + d, r);
-//     r1 = r + e;
-//     r1 = if_else (e > Valmax<T>(), e,  r1); // 3.40282347e+38 // avoid creating NaN
-//     r = if_else(xpos,  r,  r1);
-
-
-
     auto r1 = fms(T(2), expx2(x), r);
-//    auto r1 = fms(T(2), exp(sqr(x)), r);
     r1 =  if_else(is_nan(r1), inf(as<T>()), r1);
     r = if_else(xpos, r, r1);
     return if_else (is_nan(x),  eve::allbits, r);
