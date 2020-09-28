@@ -32,32 +32,33 @@ TTS_CASE_TPL("Check eve::erf return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::erf behavior", EVE_TYPE)
 {
+  auto eve__erf =  [](auto x) { return eve::erf(x); };
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve::erf(eve::minf(eve::as<T>())), T(-1), 0);
-    TTS_ULP_EQUAL(eve::erf(eve::inf(eve::as<T>())), T(1), 0);
-    TTS_ULP_EQUAL(eve::erf(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve__erf(eve::minf(eve::as<T>())), T(-1), 0);
+    TTS_ULP_EQUAL(eve__erf(eve::inf(eve::as<T>())), T(1), 0);
+    TTS_ULP_EQUAL(eve__erf(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
 
-  TTS_ULP_EQUAL(eve::erf(T(-0.0)), T(0), 0);
-  TTS_ULP_EQUAL(eve::erf(T(1)), T(0.842700792949714869341220635083), 0.5);
-  TTS_ULP_EQUAL(eve::erf(T(2)), T(0.995322265018952734162069256367), 0);
-  TTS_ULP_EQUAL(eve::erf(T(0)), T(0), 0);
-  TTS_ULP_EQUAL(eve::erf(T(5)), T(0.99999999999846254020557196515), 0);
-  TTS_ULP_EQUAL(eve::erf(T(27)), T(1), 0);
+  TTS_ULP_EQUAL(eve__erf(T(-0.0)), T(0), 0);
+  TTS_ULP_EQUAL(eve__erf(T(1)), T(0.842700792949714869341220635083), 0.5);
+  TTS_ULP_EQUAL(eve__erf(T(2)), T(0.995322265018952734162069256367), 0);
+  TTS_ULP_EQUAL(eve__erf(T(0)), T(0), 0);
+  TTS_ULP_EQUAL(eve__erf(T(5)), T(0.99999999999846254020557196515), 0);
+  TTS_ULP_EQUAL(eve__erf(T(27)), T(1), 0);
 
-  TTS_ULP_EQUAL(eve::erf(-T(1)), -T(0.842700792949714869341220635083), 0.5);
-  TTS_ULP_EQUAL(eve::erf(-T(2)), -T(0.995322265018952734162069256367), 0);
-  TTS_ULP_EQUAL(eve::erf(-T(5)), -T(0.99999999999846254020557196515), 0);
-  TTS_ULP_EQUAL(eve::erf(T(-27)), -T(1), 0);
+  TTS_ULP_EQUAL(eve__erf(-T(1)), -T(0.842700792949714869341220635083), 0.5);
+  TTS_ULP_EQUAL(eve__erf(-T(2)), -T(0.995322265018952734162069256367), 0);
+  TTS_ULP_EQUAL(eve__erf(-T(5)), -T(0.99999999999846254020557196515), 0);
+  TTS_ULP_EQUAL(eve__erf(T(-27)), -T(1), 0);
 
-  TTS_ULP_EQUAL(eve::erf(T(0.5)), T(0.520499877813046537682746653892), 0.5);
-  TTS_ULP_EQUAL(eve::erf(T(0.1)), T(0.112462916018284892203275071744), 0);
-  TTS_ULP_EQUAL(eve::erf(T(0.5)), T(0.520499877813046537682746653892), 0.5);
-  TTS_ULP_EQUAL(eve::erf(-T(0.5)), -T(0.520499877813046537682746653892), 0.5);
-  TTS_ULP_EQUAL(eve::erf(T(-0.1)), -T(0.112462916018284892203275071744), 0);
-  TTS_ULP_EQUAL(eve::erf(eve::halfeps(eve::as<T>())), eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>())), 0);
-  TTS_ULP_EQUAL(eve::erf(-eve::halfeps(eve::as<T>())), -eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>() )), 0);
-  TTS_ULP_EQUAL(eve::erf(T(20)), T(1), 0);
+  TTS_ULP_EQUAL(eve__erf(T(0.5)), T(0.520499877813046537682746653892), 0.5);
+  TTS_ULP_EQUAL(eve__erf(T(0.1)), T(0.112462916018284892203275071744), 0);
+  TTS_ULP_EQUAL(eve__erf(T(0.5)), T(0.520499877813046537682746653892), 0.5);
+  TTS_ULP_EQUAL(eve__erf(-T(0.5)), -T(0.520499877813046537682746653892), 0.5);
+  TTS_ULP_EQUAL(eve__erf(T(-0.1)), -T(0.112462916018284892203275071744), 0);
+  TTS_ULP_EQUAL(eve__erf(eve::halfeps(eve::as<T>())), eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>())), 0);
+  TTS_ULP_EQUAL(eve__erf(-eve::halfeps(eve::as<T>())), -eve::eps(eve::as<T>())*eve::rsqrt(eve::pi(eve::as<T>() )), 0);
+  TTS_ULP_EQUAL(eve__erf(T(20)), T(1), 0);
 }

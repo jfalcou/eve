@@ -27,25 +27,26 @@ TTS_CASE_TPL("Check eve::signgam return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::signgam behavior", EVE_TYPE)
 {
+  auto eve__signgam =  [](auto x) { return eve::signgam(x); };
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::signgam(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::signgam(eve::inf(eve::as<T>()))  , eve::one(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::signgam(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::inf(eve::as<T>()))  , eve::one(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
   }
 
-  TTS_EQUAL(eve::signgam(T(0.5)), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T(-35)), eve::nan(eve::as<T>()));
+  TTS_EQUAL(eve__signgam(T(0.5)), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T(-35)), eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::signgam(T( 0 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T(-0.)), T(-1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( 1 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( 2 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( 3 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( 5 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( -1.1 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( -2.1 )), T(-1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( -3.1 )), T(1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( -4.1 )), T(-1) );
-  TTS_IEEE_EQUAL(eve::signgam(T( -5.1 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( 0 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T(-0.)), T(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( 1 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( 2 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( 3 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( 5 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( -1.1 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( -2.1 )), T(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( -3.1 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( -4.1 )), T(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(T( -5.1 )), T(1) );
 }
