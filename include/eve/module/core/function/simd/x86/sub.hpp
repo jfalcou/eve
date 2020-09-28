@@ -21,8 +21,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  sub_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> v0, wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_>
+                  sub_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
   {
     return v0 -= v1;
   }
@@ -30,8 +30,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_>
-                  sub_(EVE_SUPPORTS(avx_), wide<T, N, avx_> v0, wide<T, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_>
+                  sub_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> v0, wide<T, N, x86_256_> const &v1) noexcept
   {
     return v0 -= v1;
   }
@@ -39,10 +39,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits saturated implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> sub_(EVE_SUPPORTS(sse2_),
+  EVE_FORCEINLINE wide<T, N, x86_128_> sub_(EVE_SUPPORTS(sse2_),
                                         saturated_type const &  st,
-                                        wide<T, N, sse_> const &v0,
-                                        wide<T, N, sse_> const &v1) noexcept
+                                        wide<T, N, x86_128_> const &v0,
+                                        wide<T, N, x86_128_> const &v1) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
       return sub(v0, v1);
@@ -72,10 +72,10 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits saturated implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> sub_(EVE_SUPPORTS(avx2_),
+  EVE_FORCEINLINE wide<T, N, x86_256_> sub_(EVE_SUPPORTS(avx2_),
                                         saturated_type const &  st,
-                                        wide<T, N, avx_> const &v0,
-                                        wide<T, N, avx_> const &v1) noexcept
+                                        wide<T, N, x86_256_> const &v0,
+                                        wide<T, N, x86_256_> const &v1) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
       return sub(v0, v1);

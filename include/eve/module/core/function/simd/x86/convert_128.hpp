@@ -35,7 +35,7 @@ namespace eve::detail
   //================================================================================================
   template<real_scalar_value In, typename N, real_scalar_value Out>
   EVE_FORCEINLINE wide<Out, N>
-  convert_(EVE_SUPPORTS(sse2_), wide<In, N, sse_> const &v0, as_<Out> const &tgt) noexcept
+  convert_(EVE_SUPPORTS(sse2_), wide<In, N, x86_128_> const &v0, as_<Out> const &tgt) noexcept
   {
     //==============================================================================================
     // Idempotent call

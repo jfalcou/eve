@@ -22,10 +22,10 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> fnms_(EVE_SUPPORTS(avx2_),
-                                         wide<T, N, sse_> const &a,
-                                         wide<T, N, sse_> const &b,
-                                         wide<T, N, sse_> const &c) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_> fnms_(EVE_SUPPORTS(avx2_),
+                                         wide<T, N, x86_128_> const &a,
+                                         wide<T, N, x86_128_> const &b,
+                                         wide<T, N, x86_128_> const &c) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -56,10 +56,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> fnms_(EVE_SUPPORTS(avx2_),
-                                         wide<T, N, avx_> const &a,
-                                         wide<T, N, avx_> const &b,
-                                         wide<T, N, avx_> const &c) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_> fnms_(EVE_SUPPORTS(avx2_),
+                                         wide<T, N, x86_256_> const &a,
+                                         wide<T, N, x86_256_> const &b,
+                                         wide<T, N, x86_256_> const &c) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -80,11 +80,11 @@ namespace eve::detail
   /////////////////////////////////////////////////////////////////////////////////
   /// pedantic numeric
   template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> fnms_(EVE_SUPPORTS(avx2_),
+  EVE_FORCEINLINE wide<T, N, x86_128_> fnms_(EVE_SUPPORTS(avx2_),
                                          D const &,
-                                         wide<T, N, sse_> const &a,
-                                         wide<T, N, sse_> const &b,
-                                         wide<T, N, sse_> const &c) noexcept
+                                         wide<T, N, x86_128_> const &a,
+                                         wide<T, N, x86_128_> const &b,
+                                         wide<T, N, x86_128_> const &c) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
     {
@@ -115,11 +115,11 @@ namespace eve::detail
   }
 
   template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> fnms_(EVE_SUPPORTS(avx2_),
+  EVE_FORCEINLINE wide<T, N, x86_256_> fnms_(EVE_SUPPORTS(avx2_),
                                          D const &,
-                                         wide<T, N, avx_> const &a,
-                                         wide<T, N, avx_> const &b,
-                                         wide<T, N, avx_> const &c) noexcept
+                                         wide<T, N, x86_256_> const &a,
+                                         wide<T, N, x86_256_> const &b,
+                                         wide<T, N, x86_256_> const &c) noexcept
   {
     if constexpr( std::is_floating_point_v<T> )
     {

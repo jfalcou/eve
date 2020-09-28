@@ -27,10 +27,10 @@ namespace eve::detail
   // 128 bits implementation
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(sse2_),
-                                      wide<T, N, sse_> const &v0,
-                                      wide<T, N, sse_> const &v1) noexcept
+                                      wide<T, N, x86_128_> const &v0,
+                                      wide<T, N, x86_128_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, x86_128_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)       return l_t(_mm_cmple_ps(v0, v1));
@@ -40,10 +40,10 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(avx_),
-                                      wide<T, N, sse_> const &v0,
-                                      wide<T, N, sse_> const &v1) noexcept
+                                      wide<T, N, x86_128_> const &v0,
+                                      wide<T, N, x86_128_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, x86_128_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)       return l_t(_mm_cmp_ps(v0, v1, _CMP_LE_OQ));
@@ -100,10 +100,10 @@ namespace eve::detail
   // 256 bits implementation
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_less_equal_(EVE_SUPPORTS(avx_),
-                                      wide<T, N, avx_> const &v0,
-                                      wide<T, N, avx_> const &v1) noexcept
+                                      wide<T, N, x86_256_> const &v0,
+                                      wide<T, N, x86_256_> const &v1) noexcept
   {
-    using t_t = wide<T, N, avx_>;
+    using t_t = wide<T, N, x86_256_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)       return l_t(_mm256_cmp_ps(v0, v1, _CMP_LE_OQ));

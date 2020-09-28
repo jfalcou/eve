@@ -21,10 +21,10 @@ namespace eve::detail
   // 256 bits implementation
   template<typename T, typename N>
   EVE_FORCEINLINE auto is_lessgreater_(EVE_SUPPORTS(avx_),
-                                       wide<T, N, avx_> const &v0,
-                                       wide<T, N, avx_> const &v1) noexcept
+                                       wide<T, N, x86_256_> const &v0,
+                                       wide<T, N, x86_256_> const &v1) noexcept
   {
-    using t_t = wide<T, N, avx_>;
+    using t_t = wide<T, N, x86_256_>;
     using l_t = as_logical_t<t_t>;
 
     if constexpr(std::is_same_v<T, float>)

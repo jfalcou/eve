@@ -23,9 +23,9 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> min_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, neon64_> const &v0,
-                                           wide<T, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> min_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, arm_64_> const &v0,
+                                           wide<T, N, arm_64_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -45,9 +45,9 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> min_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon128_> const &v0,
-                                            wide<T, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> min_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_128_> const &v0,
+                                            wide<T, N, arm_128_> const &v1) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -67,10 +67,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> max_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_64_> max_(EVE_SUPPORTS(neon128_),
                                            pedantic_type const &,
-                                           wide<T, N, neon64_> const &a0,
-                                           wide<T, N, neon64_> const &a1) noexcept
+                                           wide<T, N, arm_64_> const &a0,
+                                           wide<T, N, arm_64_> const &a1) noexcept
   {
     auto tmp = eve::min(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
@@ -78,10 +78,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> max_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_128_> max_(EVE_SUPPORTS(neon128_),
                                             pedantic_type const &,
-                                            wide<T, N, neon128_> const &a0,
-                                            wide<T, N, neon128_> const &a1) noexcept
+                                            wide<T, N, arm_128_> const &a0,
+                                            wide<T, N, arm_128_> const &a1) noexcept
   {
     auto tmp = eve::min(a0, a1);
     if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);

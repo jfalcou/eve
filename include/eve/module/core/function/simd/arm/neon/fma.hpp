@@ -18,10 +18,10 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> fma_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, neon64_> const &v0,
-                                           wide<T, N, neon64_> const &v1,
-                                           wide<T, N, neon64_> const &v2) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> fma_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, arm_64_> const &v0,
+                                           wide<T, N, arm_64_> const &v1,
+                                           wide<T, N, arm_64_> const &v2) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -52,20 +52,20 @@ namespace eve::detail
   }
 
   template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> fma_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_64_> fma_(EVE_SUPPORTS(neon128_),
                                            D const &,
-                                           wide<T, N, neon64_> const &v0,
-                                           wide<T, N, neon64_> const &v1,
-                                           wide<T, N, neon64_> const &v2) noexcept
+                                           wide<T, N, arm_64_> const &v0,
+                                           wide<T, N, arm_64_> const &v1,
+                                           wide<T, N, arm_64_> const &v2) noexcept
   {
     return fma(v0, v1, v2);
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon128_> const &v0,
-                                            wide<T, N, neon128_> const &v1,
-                                            wide<T, N, neon128_> const &v2) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> fma_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_128_> const &v0,
+                                            wide<T, N, arm_128_> const &v1,
+                                            wide<T, N, arm_128_> const &v2) noexcept
   {
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
@@ -95,11 +95,11 @@ namespace eve::detail
   }
 
   template<decorator D, real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> fma_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N, arm_128_> fma_(EVE_SUPPORTS(neon128_),
                                             D const &,
-                                            wide<T, N, neon128_> const &v0,
-                                            wide<T, N, neon128_> const &v1,
-                                            wide<T, N, neon128_> const &v2) noexcept
+                                            wide<T, N, arm_128_> const &v0,
+                                            wide<T, N, arm_128_> const &v1,
+                                            wide<T, N, arm_128_> const &v2) noexcept
   {
     return fma(v0, v1, v2);
   }

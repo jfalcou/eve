@@ -19,10 +19,10 @@
 namespace eve::detail
 {
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE auto neon_shifter(wide<T, N, neon64_> const &v0,
-                                    wide<I, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE auto neon_shifter(wide<T, N, arm_64_> const &v0,
+                                    wide<I, N, arm_64_> const &v1) noexcept
   {
-    using t_t                      = wide<T, N, neon64_>;
+    using t_t                      = wide<T, N, arm_64_>;
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 
@@ -40,10 +40,10 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename I>
-  EVE_FORCEINLINE auto neon_shifter(wide<T, N, neon128_> const &v0,
-                                    wide<I, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE auto neon_shifter(wide<T, N, arm_128_> const &v0,
+                                    wide<I, N, arm_128_> const &v1) noexcept
   {
-    using t_t                      = wide<T, N, neon128_>;
+    using t_t                      = wide<T, N, arm_128_>;
     constexpr bool is_signed_int   = std::is_integral_v<T> && std::is_signed_v<T>;
     constexpr bool is_unsigned_int = std::is_integral_v<T> && std::is_unsigned_v<T>;
 

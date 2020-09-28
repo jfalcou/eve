@@ -30,8 +30,8 @@ namespace eve
 
         if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
         {
-               if constexpr( width <= 16) return sse_{};
-          else if constexpr( width == 32) return avx_{};
+               if constexpr( width <= 16) return x86_128_{};
+          else if constexpr( width == 32) return x86_256_{};
           else                            return aggregated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::vmx_ )
@@ -48,14 +48,14 @@ namespace eve
         {
           if constexpr( spy::supports::aarch64_ )
           {
-            if constexpr(width <= 8)       return neon64_{};
-            else if constexpr(width == 16) return neon128_{};
+            if constexpr(width <= 8)       return arm_64_{};
+            else if constexpr(width == 16) return arm_128_{};
             else                           return emulated_{};
           }
           else
           {
-            if constexpr(!f64 && width <= 8)       return neon64_{};
-            else if constexpr(!f64 && width == 16) return neon128_{};
+            if constexpr(!f64 && width <= 8)       return arm_64_{};
+            else if constexpr(!f64 && width == 16) return arm_128_{};
             else                                   return emulated_{};
           }
         }

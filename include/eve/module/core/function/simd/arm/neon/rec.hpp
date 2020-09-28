@@ -19,8 +19,8 @@
 namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_>
-                  rec_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_>
+                  rec_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_64_> const &v0) noexcept
   {
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) { return vrecpe_f64(v0); }
@@ -30,8 +30,8 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_>
-                  rec_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_>
+                  rec_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_128_> const &v0) noexcept
   {
 #if defined(__aarch64__)
     if constexpr(std::is_same_v<T, double>) { return vrecpeq_f64(v0); }
@@ -41,11 +41,11 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> rec_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> rec_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, arm_64_> const &v0) noexcept
   {
 #if defined(__aarch64__)
-    if constexpr(std::is_same_v<T, double>) { return wide<T, N, neon64_>{T{1} / v0[ 0 ]}; }
+    if constexpr(std::is_same_v<T, double>) { return wide<T, N, arm_64_>{T{1} / v0[ 0 ]}; }
 #endif
 
     if constexpr(std::is_same_v<T, float>)
@@ -57,8 +57,8 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> rec_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> rec_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_128_> const &v0) noexcept
   {
       // estimate 1/x with an extra NR step for full precision
       auto a = refine_rec(v0, raw(rec)(v0));
@@ -66,15 +66,15 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_>
-                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_>
+                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, arm_64_> const &v0) noexcept
   {
     return rec(v0);
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_>
-                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_>
+                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, arm_128_> const &v0) noexcept
   {
     return rec(v0);
   }

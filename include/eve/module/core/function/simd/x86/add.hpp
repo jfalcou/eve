@@ -30,10 +30,10 @@ namespace eve::detail
   // 128 bits saturated implementation
   //================================================================================================
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_> add_(EVE_SUPPORTS(sse2_),
+  EVE_FORCEINLINE wide<T, N, x86_128_> add_(EVE_SUPPORTS(sse2_),
                                         saturated_type const &  st,
-                                        wide<T, N, sse_> const &v0,
-                                        wide<T, N, sse_> const &v1) noexcept
+                                        wide<T, N, x86_128_> const &v0,
+                                        wide<T, N, x86_128_> const &v1) noexcept
   {
     if constexpr( std::floating_point<T> )
     {
@@ -78,10 +78,10 @@ namespace eve::detail
   // 256 bits saturated implementation
   //================================================================================================
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_> add_(EVE_SUPPORTS(avx2_),
+  EVE_FORCEINLINE wide<T, N, x86_256_> add_(EVE_SUPPORTS(avx2_),
                                         saturated_type const &  st,
-                                        wide<T, N, avx_> const &v0,
-                                        wide<T, N, avx_> const &v1) noexcept
+                                        wide<T, N, x86_256_> const &v0,
+                                        wide<T, N, x86_256_> const &v1) noexcept
   {
     if constexpr( std::floating_point<T> )
     {

@@ -19,11 +19,11 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> bit_not_(EVE_SUPPORTS(neon128_),
-                                                   wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> bit_not_(EVE_SUPPORTS(neon128_),
+                                                   wide<T, N, arm_64_> const &v0) noexcept
   {
     using i_t  = wide<as_integer_t<T, unsigned>, N>;
-    using in_t = typename wide<T, N, neon64_>::storage_type;
+    using in_t = typename wide<T, N, arm_64_>::storage_type;
 
          if constexpr(std::is_floating_point_v<T>)
             return bit_cast(bit_not(bit_cast(v0,as_<i_t>{})), as(v0));
@@ -40,11 +40,11 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> bit_not_(EVE_SUPPORTS(neon128_),
-                                                    wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> bit_not_(EVE_SUPPORTS(neon128_),
+                                                    wide<T, N, arm_128_> const &v0) noexcept
   {
     using i_t  = wide<as_integer_t<T, unsigned>, N>;
-    using in_t = typename wide<T, N, neon128_>::storage_type;
+    using in_t = typename wide<T, N, arm_128_>::storage_type;
 
          if constexpr(std::is_floating_point_v<T>)
             return bit_cast(bit_not(bit_cast(v0,as_<i_t>{})),as(v0));

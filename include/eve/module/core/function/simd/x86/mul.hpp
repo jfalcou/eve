@@ -19,15 +19,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  mul_(EVE_SUPPORTS(sse2_), wide<T, N, sse_> v0, wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_>
+                  mul_(EVE_SUPPORTS(sse2_), wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
   {
     return v0 *= v1;
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, sse_>
-                  mul_(EVE_SUPPORTS(avx_), saturated_type const &, wide<T, N, sse_> v0, wide<T, N, sse_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_128_>
+                  mul_(EVE_SUPPORTS(avx_), saturated_type const &, wide<T, N, x86_128_> v0, wide<T, N, x86_128_> const &v1) noexcept
   {
     if constexpr(supports_xop)
     {
@@ -41,8 +41,8 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, avx_>
-                  mul_(EVE_SUPPORTS(avx_), wide<T, N, avx_> v0, wide<T, N, avx_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, x86_256_>
+                  mul_(EVE_SUPPORTS(avx_), wide<T, N, x86_256_> v0, wide<T, N, x86_256_> const &v1) noexcept
   {
     return v0 *= v1;
   }

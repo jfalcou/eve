@@ -23,10 +23,10 @@ namespace eve::detail
   // +=
   //================================================================================================
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon64_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_64_>, U>)
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -88,10 +88,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon128_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_128_>, U>)
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -156,10 +156,10 @@ namespace eve::detail
   // -=
   //================================================================================================
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon64_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_64_>, U>)
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -221,10 +221,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon128_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_128_>, U>)
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -289,10 +289,10 @@ namespace eve::detail
   // *=
   //================================================================================================
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_mul(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon64_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_mul(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_64_>, U>)
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -405,10 +405,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_mul(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon128_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_mul(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_128_>, U>)
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -520,10 +520,10 @@ namespace eve::detail
   // /=
   //================================================================================================
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_div(wide<T, N, neon64_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon64_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_div(wide<T, N, arm_64_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_64_>, U>)
   {
-    using type = wide<T, N, neon64_>;
+    using type = wide<T, N, arm_64_>;
 
     if constexpr( scalar_value<U> )
     {
@@ -558,10 +558,10 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_div(wide<T, N, neon128_> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N, neon128_>, U>)
+  EVE_FORCEINLINE decltype(auto) self_div(wide<T, N, arm_128_> &self, U const &other) noexcept
+      requires(scalar_value<U> || std::same_as<wide<T, N, arm_128_>, U>)
   {
-    using type = wide<T, N, neon128_>;
+    using type = wide<T, N, arm_128_>;
 
     if constexpr( scalar_value<U> )
     {

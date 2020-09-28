@@ -21,8 +21,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Raw version
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_>
-                  sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_>
+                  sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_64_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return vsqrt_f64(v0); }
     else if constexpr(std::is_same_v<T, float>)
@@ -36,8 +36,8 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_>
-                  sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_>
+                  sqrt_(EVE_SUPPORTS(neon128_), raw_type const &, wide<T, N, arm_128_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return vsqrtq_f64(v0); }
     else if constexpr(std::is_same_v<T, float>)
@@ -53,8 +53,8 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   // Basic version
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon64_> sqrt_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon64_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> sqrt_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_64_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return vsqrt_f64(v0); }
     else if constexpr(std::is_same_v<T, float>)
@@ -73,8 +73,8 @@ namespace eve::detail
   }
 
   template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, neon128_> sqrt_(EVE_SUPPORTS(neon128_),
-                                             wide<T, N, neon128_> const &v0) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> sqrt_(EVE_SUPPORTS(neon128_),
+                                             wide<T, N, arm_128_> const &v0) noexcept
   {
     if constexpr(std::is_same_v<T, double> && supports_aarch64) { return vsqrtq_f64(v0); }
     else if constexpr(std::is_same_v<T, float>)

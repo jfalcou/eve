@@ -20,10 +20,10 @@ namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_not_less_equal_(EVE_SUPPORTS(sse2_),
-                                          wide<T, N, sse_> const &v0,
-                                          wide<T, N, sse_> const &v1) noexcept
+                                          wide<T, N, x86_128_> const &v0,
+                                          wide<T, N, x86_128_> const &v1) noexcept
   {
-    using t_t = wide<T, N, sse_>;
+    using t_t = wide<T, N, x86_128_>;
     using l_t = as_logical_t<t_t>;
          if constexpr(std::is_same_v<T, float>)  return l_t(_mm_cmpnle_ps(v0, v1));
     else if constexpr(std::is_same_v<T, double>) return l_t(_mm_cmpnle_pd(v0, v1));
@@ -31,10 +31,10 @@ namespace eve::detail
 
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE auto is_not_less_equal_(EVE_SUPPORTS(avx_),
-                                          wide<T, N, avx_> const &v0,
-                                          wide<T, N, avx_> const &v1) noexcept
+                                          wide<T, N, x86_256_> const &v0,
+                                          wide<T, N, x86_256_> const &v1) noexcept
   {
-    using l_t = as_logical_t<wide<T, N, avx_>>;
+    using l_t = as_logical_t<wide<T, N, x86_256_>>;
          if constexpr(std::is_same_v<T, float>)  return l_t(_mm256_cmp_ps(v0, v1, _CMP_NLE_UQ));
     else if constexpr(std::is_same_v<T, double>) return l_t(_mm256_cmp_pd(v0, v1, _CMP_NLE_UQ));
   }

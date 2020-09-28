@@ -25,7 +25,7 @@ namespace eve::detail
   {
     using type = std::bitset<N::value>;
 
-    if constexpr( std::is_same_v<ABI, sse_>)
+    if constexpr( std::is_same_v<ABI, x86_128_>)
     {
             if constexpr( std::is_same_v<T, float > ) return type(_mm_movemask_ps(p.mask()));
       else  if constexpr( std::is_same_v<T, double> ) return type(_mm_movemask_pd(p.mask()));
@@ -55,7 +55,7 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr( std::is_same_v<ABI, avx_>)
+    else if constexpr( std::is_same_v<ABI, x86_256_>)
     {
             if constexpr( std::is_same_v<T, float > ) return type(_mm256_movemask_ps(p.mask()));
       else  if constexpr( std::is_same_v<T, double> ) return type(_mm256_movemask_pd(p.mask()));

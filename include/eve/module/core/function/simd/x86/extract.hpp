@@ -23,7 +23,7 @@ namespace eve::detail
   // 128 bits implementation
   template<typename T, typename I, typename N, auto V>
   EVE_FORCEINLINE T extract_(EVE_SUPPORTS(sse2_),
-                             wide<T, N, sse_> const &v0,
+                             wide<T, N, x86_128_> const &v0,
                              std::integral_constant<I, V> const &) noexcept
   {
     if constexpr(std::is_floating_point_v<T>)
@@ -85,7 +85,7 @@ namespace eve::detail
 
   template<typename T, typename N, typename I, auto V>
   EVE_FORCEINLINE logical<T> extract_(EVE_SUPPORTS(sse2_),
-                                      logical<wide<T, N, sse_>> const &   v0,
+                                      logical<wide<T, N, x86_128_>> const &   v0,
                                       std::integral_constant<I, V> const &u) noexcept
   {
     return logical<T>(extract(v0.bits(), u));

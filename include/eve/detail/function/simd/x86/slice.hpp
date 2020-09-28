@@ -23,7 +23,7 @@ namespace eve::detail
   // Single slice
   //================================================================================================
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, sse_> const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, x86_128_> const &a, Slice const &) noexcept
       requires(N::value > 1)
   {
     using that_t = wide<T, typename N::split_type>;
@@ -53,11 +53,11 @@ namespace eve::detail
         {
           return that_t(a[1]);
         }
-        if constexpr( bytes_size == eve::sse_::bytes )
+        if constexpr( bytes_size == eve::x86_128_::bytes )
         {
           return that_t(_mm_shuffle_epi32(a, 0xEE));
         }
-        if constexpr( 2 * bytes_size == eve::sse_::bytes )
+        if constexpr( 2 * bytes_size == eve::x86_128_::bytes )
         {
           return that_t(_mm_shuffle_epi32(a, 0x01));
         }
@@ -70,7 +70,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N, avx_> const &a, Slice const &) noexcept
+  EVE_FORCEINLINE auto slice(wide<T, N, x86_256_> const &a, Slice const &) noexcept
       requires(N::value > 1)
   {
     using that_t = wide<T, typename N::split_type>;
@@ -93,14 +93,14 @@ namespace eve::detail
   // Both slice
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, sse_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, x86_128_> const &a) noexcept requires(N::value > 1)
   {
     std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N, avx_> const &a) noexcept requires(N::value > 1)
+  EVE_FORCEINLINE auto slice(wide<T, N, x86_256_> const &a) noexcept requires(N::value > 1)
   {
     std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
     return that;

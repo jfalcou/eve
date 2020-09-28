@@ -17,8 +17,8 @@ namespace eve
 {
   template<typename T>
   struct logical;
-  struct sse_;
-  struct avx_;
+  struct x86_128_;
+  struct x86_256_;
 }
 
 #if defined(EVE_HW_X86)
@@ -26,7 +26,7 @@ namespace eve
 namespace eve
 {
   template<typename Type, typename Size>
-  struct as_register<Type, Size, eve::sse_>
+  struct as_register<Type, Size, eve::x86_128_>
   {
     static constexpr auto find()
     {
@@ -44,7 +44,7 @@ namespace eve
   };
 
   template<typename Type, typename Size>
-  struct as_register<Type, Size, eve::avx_>
+  struct as_register<Type, Size, eve::x86_256_>
   {
     static constexpr auto find()
     {
@@ -63,12 +63,12 @@ namespace eve
 
   // logical uses same registers
   template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::sse_> : as_register<T, Size, eve::sse_>
+  struct as_register<logical<T>, Size, eve::x86_128_> : as_register<T, Size, eve::x86_128_>
   {
   };
 
   template<typename T, typename Size>
-  struct as_register<logical<T>, Size, eve::avx_> : as_register<T, Size, eve::avx_>
+  struct as_register<logical<T>, Size, eve::x86_256_> : as_register<T, Size, eve::x86_256_>
   {
   };
 }

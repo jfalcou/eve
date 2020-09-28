@@ -21,9 +21,9 @@ namespace eve::detail
 {
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, N, neon64_> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, N, arm_64_> const &value, T *ptr) noexcept
   {
-    if constexpr( N::value * sizeof(T) == neon64_::bytes )
+    if constexpr( N::value * sizeof(T) == arm_64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -85,7 +85,7 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, N, neon128_> const &value, T *ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, N, arm_128_> const &value, T *ptr) noexcept
   {
     if constexpr( std::is_same_v<T, float> )
     {
@@ -145,7 +145,7 @@ namespace eve::detail
   EVE_FORCEINLINE void
   store_(EVE_SUPPORTS(neon128_), wide<T, S, neon64_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
-    if constexpr( N >= neon64_::bytes )
+    if constexpr( N >= arm_64_::bytes )
     {
       if constexpr( std::is_same_v<T, float> )
       {
@@ -271,14 +271,14 @@ namespace eve::detail
 #else
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, S, neon64_> const &value, aligned_ptr<T, N> ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, S, arm_64_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
     store(value, ptr.get());
   }
 
   template<real_scalar_value T, typename S, std::size_t N>
   EVE_FORCEINLINE void
-  store_(EVE_SUPPORTS(neon128_), wide<T, S, neon128_> const &value, aligned_ptr<T, N> ptr) noexcept
+  store_(EVE_SUPPORTS(neon128_), wide<T, S, arm_128_> const &value, aligned_ptr<T, N> ptr) noexcept
   {
     store(value, ptr.get());
   }

@@ -19,16 +19,16 @@
 namespace eve::detail
 {
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
-  EVE_FORCEINLINE wide<T, N, neon64_> shr_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, neon64_> const &v0,
-                                           wide<I, N, neon64_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_64_> shr_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, arm_64_> const &v0,
+                                           wide<I, N, arm_64_> const &v1) noexcept
   {
     return neon_shifter(v0, -v1);
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
-  EVE_FORCEINLINE wide<T, N, neon64_> shr_(EVE_SUPPORTS(neon128_),
-                                           wide<T, N, neon64_> const &v0,
+  EVE_FORCEINLINE wide<T, N, arm_64_> shr_(EVE_SUPPORTS(neon128_),
+                                           wide<T, N, arm_64_> const &v0,
                                            I v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
@@ -36,16 +36,16 @@ namespace eve::detail
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
-  EVE_FORCEINLINE wide<T, N, neon128_> shr_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon128_> const &v0,
-                                            wide<I, N, neon128_> const &v1) noexcept
+  EVE_FORCEINLINE wide<T, N, arm_128_> shr_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_128_> const &v0,
+                                            wide<I, N, arm_128_> const &v1) noexcept
   {
     return neon_shifter(v0, -v1);
   }
 
   template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
-  EVE_FORCEINLINE wide<T, N, neon128_> shr_(EVE_SUPPORTS(neon128_),
-                                            wide<T, N, neon128_> const &v0,
+  EVE_FORCEINLINE wide<T, N, arm_128_> shr_(EVE_SUPPORTS(neon128_),
+                                            wide<T, N, arm_128_> const &v0,
                                             I v1) noexcept
   {
     using i_t = wide<as_integer_t<T, signed>, N>;
