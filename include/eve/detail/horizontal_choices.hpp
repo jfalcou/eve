@@ -98,6 +98,13 @@ namespace eve::detail
     }
 
     template <typename F, typename U>
+    bool intermediate(F const & f) noexcept
+    {
+      f();
+      return notdone_;
+    }
+
+    template <typename F, typename U>
     bool next_interval(F const & f, U const & val) noexcept
     {
       test0_ = x_ <= val;
