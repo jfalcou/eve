@@ -8,20 +8,21 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Memory Management
-<br>
-These functions provides support for memory related operations: load, store, allocation ...
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of memory related functions:**
+# Memory Management
+These functions handles the explicit transfer of data between memory and SIMD registers.
 
-  [`eve::load`](memory/load.html)
-<span class="mediumskip"></span>
-  [`eve::store`](memory/store.html)
-<span class="mediumskip"></span>
-  [`eve::gather`](memory/gather.html)
+**Convenience header:** <script type="preformatted">`#include <eve/function/memory.hpp>`</script>
+
+**Functions:**
+[`eve::load`](memory/load.html)
+:    Load contiguous data into a SIMD register
+[`eve::gather`](memory/gather.html)
+:   Load sparse data into a SIMD register
+[`eve::store`](memory/store.html)
+:   Store a SIMD register to memory
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
@@ -29,7 +30,7 @@ These functions provides support for memory related operations: load, store, all
 <!-- Footnotes -->
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
