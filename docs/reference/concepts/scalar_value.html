@@ -11,9 +11,13 @@
 
   (insert ../../crumbs.html here)
 
-# eve::value
+# eve::scalar_value
 
-**Required header:** <script type="preformatted">`#include <eve/concepts/vectorized.hpp>`</script>
+**Required header:**
+
+<script type="preformatted">
+`#include <eve/concepts/vectorizable.hpp>`
+</script>
 
 ## Synopsis:
 <script type="preformatted">
@@ -21,21 +25,23 @@
 namespace eve
 {
   template<typename T>
-  concept value = simd_value<T> || scalar_value<T>;
+  concept scalar_value = / * see below */;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
-The concept `value<T>` is satisfied if and only if T satisfies
-either [`eve::scalar_value`](./scalar_value.html) or [`eve::simd_value`](./simd_value.html).
+The concept `scalar_value<T>` is satisfied if and only if T is an
+[arithmetic type](https://en.cppreference.com/w/cpp/types/is_arithmetic) or satisfies
+[`eve::rebindable`](./rebindable.html) while all its subobjetcts satisfy <script type="preformatted">`scalar_value<T>`</script>
+themselves.
 
 ## Examples
 
-  - <script type="preformatted">`eve::logical<eve::wide<char>>`</script>
   - <script type="preformatted">`float`</script>
-  - <script type="preformatted">`eve::wide<int, eve::fixed<1>>`</script>
-  - <script type="preformatted">`std::array<eve::wide<float>,4>`</script>
-  - <script type="preformatted">`std::tuple<loat, int>`</script>
+  - <script type="preformatted">`int`</script>
+  - <script type="preformatted">`std::array<int,4>`</script>
+  - <script type="preformatted">`std::pair<int,float>`</script>
+  - <script type="preformatted">`std::tuple<char,long,double>`</script>
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
