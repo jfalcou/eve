@@ -45,7 +45,7 @@ namespace eve::detail
           }
           else
           {
-            return to_bitmap( cpu_{}, p );
+            return type(_mm_movemask_epi8(_mm_packs_epi16(p.storage(), _mm_setzero_si128())));
           }
         }
         else  if constexpr( sizeof(T) >= 4 )
@@ -64,19 +64,22 @@ namespace eve::detail
         using type = logical<wide<as_floating_point_t<T>, N>>;
         return bit_cast(p,as_<type>()).bitmap();
       }
-      else  if constexpr( current_api >= avx2 )
+      else if constexpr( sizeof(T) == 2 )
       {
-        if constexpr( sizeof(T) == 1 ) return type(_mm256_movemask_epi8(p.mask()));
+        auto [l, h] = p.slice();
+        return type( _mm_movemask_epi8(_mm_packs_epi16(l, h)) );
+      }
+      else if constexpr( sizeof(T) == 1 )
+      {
+        if constexpr( current_api >= avx2 )
+        {
+          return type(_mm256_movemask_epi8(p.mask()));
+        }
         else
         {
           auto [l, h] = p.slice();
           return type( (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong() );
         }
-      }
-      else
-      {
-        auto [l, h] = p.slice();
-        return type( (h.bitmap().to_ullong() << h.size()) | l.bitmap().to_ullong() );
       }
     }
   }
