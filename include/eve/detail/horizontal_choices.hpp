@@ -20,11 +20,13 @@
 // This is a help for programming efiicient horizontal branching
 // supose we have a function special(x) that has a scalar implementation
 // using 4 branches as:
-// if (x <=  lim1) return f1(x);
-// else if (x <=  lim2) return f2(x);
-// else if (x <=  lim3) return f3(x);
-// else if (x <=  lim4) return f4(x);
-// else return f5(x);
+// if (x <=  lim1) return f1();
+// else if (x <=  lim2) return f2();
+// else if (x <=  lim3) return f3();
+// else if (x <=  lim4) return f4();
+...
+// else if (x <=  lim4) return fn();
+// else return flast();
 // with lim1 <= lim2 <= lim3 <=  lim4
 // The simd function can be written as such:
 
@@ -32,11 +34,29 @@
 //  hz.first_interval(f1, lim1, x) &&
 //  hz.next_interval(f2, lim2) &&
 //  hz.next_interval(f3, lim3) &&
-//  hz.last_interval(f4, f5, lim4);
+//  ...
+//  hz.last_interval(fn, flst, lim4);
 //  return hz.result();
 
-// if last_interval is not called the results for x > limn (greater limit used are 0
+// if last_interval is not called the results for x > limn (greatest limit used) are 0
 // by default,  but can be set with the class construtor hz(init)
+// fi are supposed to be lambdas with no parameters but taking outside the state they need
+// if between two call stats need to evolve hz.intermediate(interf) can be used
+// dawson implementation is an example.
+//  hz_device hz;
+//  hz.first_interval(f1, lim1, x) &&
+//  hz.intermediate(inter1) &&
+//  hz.next_interval(f2, lim2) &&
+//  hz.intermediate(inter2) &&
+//  hz.next_interval(f3, lim3) &&
+//  hz.intermediate(inter3) &&
+//  ...
+//  hz.last_interval(fn, flst, lim4);
+//  return hz.result();
+
+// && being taken on bool is shortcut as soon as the total number of elements
+// falling in the range is equal to the static size of the vector.
+// if an interval does not contain any element the corresponding lambda is not evaluated.
 
 namespace eve::detail
 {
