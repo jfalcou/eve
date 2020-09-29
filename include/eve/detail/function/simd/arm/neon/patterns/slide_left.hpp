@@ -17,36 +17,37 @@
 namespace eve::detail
 {
   template<typename Wide, typename Target, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(neon128_), slide_left const&
-                                  , as_<Target>, [[maybe_unused]] Pattern const& p, Wide const& v
-                                  )
+  EVE_FORCEINLINE Target do_swizzle ( EVE_SUPPORTS(neon128_), slide_left const&
+                                    , as_<Target>, [[maybe_unused]] Pattern const& p, Wide const& v
+                                    )
   {
-    using in_t = typename Wide::storage_type;
     constexpr auto c  = cardinal_v<Wide>;
     constexpr auto sz = Pattern::size(c);
-    constexpr auto s  = sz-1-slide_left::find_slide(Pattern());
+    using in_t  = typename Wide::storage_type;
 
-    [[maybe_unused]] Wide z(0);
+    constexpr auto slider = []<typename N>(auto w, N const&)
+    {
+           if constexpr(std::is_same_v<in_t, int64x1_t>) return Target{vext_s64 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int64x2_t>) return Target{vextq_s64(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint64x1_t>) return Target{vext_u64 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint64x2_t>) return Target{vextq_u64(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int32x2_t>) return Target{vext_s32 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int32x4_t>) return Target{vextq_s32(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint32x2_t>) return Target{vext_u32 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint32x4_t>) return Target{vextq_u32(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int16x4_t>) return Target{vext_s16 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int16x8_t>) return Target{vextq_s16(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint16x4_t>) return Target{vext_u16 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint16x8_t>) return Target{vextq_u16(w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int8x8_t >) return Target{vext_s8  (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t, int8x16_t>) return Target{vextq_s8 (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint8x8_t >) return Target{vext_u8  (w,Wide{0},N::value)};
+      else if constexpr(std::is_same_v<in_t,uint8x16_t>) return Target{vextq_u8 (w,Wide{0},N::value)};
+    };
 
     if constexpr( c == sz ) // same cardinal in and out
     {
-           if constexpr(std::is_same_v<in_t,  int64x1_t>) return Target{vext_s64 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int64x2_t>) return Target{vextq_s64(v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint64x1_t>) return Target{vext_u64 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint64x2_t>) return Target{vextq_u64(v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int32x2_t>) return Target{vext_s32 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int32x4_t>) return Target{vextq_s32(v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint32x2_t>) return Target{vext_u32 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint32x4_t>) return Target{vextq_u32(v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int16x4_t>) return Target{vext_s16 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int16x8_t>) return Target{vextq_s16(v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint16x4_t>) return Target{vext_u16 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint16x8_t>) return Target{vextq_u16(v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int8x8_t >) return Target{vext_s8  (v,z,s)};
-      else if constexpr(std::is_same_v<in_t,  int8x16_t>) return Target{vextq_s8 (v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint8x8_t >) return Target{vext_u8  (v,z,s)};
-      else if constexpr(std::is_same_v<in_t, uint8x16_t>) return Target{vextq_u8 (v,z,s)};
-      else
+      if constexpr(std::is_floating_point_v<typename Wide::value_type>)
       {
         return bit_cast ( do_swizzle( EVE_RETARGET(neon128_), slide_left{}
                                     , as<as_integer_t<Target>>(), p
@@ -55,15 +56,37 @@ namespace eve::detail
                         , as<Target>()
                         );
       }
+      else
+      {
+        constexpr auto s  = sz -1 - slide_left::find_slide(Pattern());
+        return slider(v,std::integral_constant<std::size_t,s>{});
+      }
     }
-    else if constexpr( c > sz ) // 128 -> 64
+    else if constexpr( c > sz )
     {
-      auto r = v.slice(lower_);
-      return r[ p ];
+      if constexpr(std::is_floating_point_v<typename Wide::value_type>)
+      {
+        return bit_cast ( do_swizzle( EVE_RETARGET(neon128_), slide_left{}
+                                    , as<as_integer_t<Target>>(), p
+                                    , bit_cast( v, as<as_integer_t<Wide>>())
+                                    )
+                        , as<Target>()
+                        );
+      }
+      else if constexpr( std::is_same_v<typename Wide::abit_, arm_128_>)
+      {
+        auto r = v.slice(lower_);
+        return r[ p ];
+      }
+      else
+      {
+        constexpr auto s  = sz - 1 - slide_left::find_slide(Pattern());
+        return slider(v,std::integral_constant<std::size_t,s>{});
+      }
     }
-    else // 64->128
+    else
     {
-      return Target( v[ pattern_view<0,sz/2>(p) ], v[ pattern_view<sz/2,sz/2>(p) ] );
+      return do_swizzle(EVE_RETARGET(neon128_), any_match{}, as_<Target>(),p,v );
     }
   }
 }

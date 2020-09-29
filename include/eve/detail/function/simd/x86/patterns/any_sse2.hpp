@@ -37,13 +37,13 @@ namespace eve::detail
 
     if constexpr( sizeof(element_type_t<Wide>) == 8 )
     {
-      auto perm = [&]<typename W64>(W64 r)
+      auto perm = [&]<typename W>(W r)
       {
-        if constexpr( current_api >= avx) return process_zeros(W64(_mm_permute_pd(r  ,m),p));
-        else                              return process_zeros(W64(_mm_shuffle_pd(r,r,m),p));
+        if constexpr( current_api >= avx) return process_zeros(W(_mm_permute_pd(r  ,m)),p);
+        else                              return process_zeros(W(_mm_shuffle_pd(r,r,m)),p);
       };
 
-      return bit_cast( perm( bit_cast(v, as_<wide<double,cardinal_t<Wide>>>() )), as_<Target>() );
+      return bit_cast( perm( bit_cast(v, as_<wide<double,cardinal_t<Target>>>() )), as_<Target>() );
     }
     else if constexpr( std::same_as<float, element_type_t<Wide>> )
     {

@@ -122,7 +122,7 @@ namespace eve::detail
                           ||  p.is_similar(pattern<-1,15>)
                           );
 
-      return u32 || u16 || u8;
+      return (p.size(Wide::static_size) > 1) && (u32 || u16 || u8);
     }
   };
 

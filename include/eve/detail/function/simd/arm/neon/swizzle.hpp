@@ -22,7 +22,7 @@ namespace eve::detail
   template<typename T, typename N, arm_abi ABI, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto swizzle( neon128_ const&, wide<T,N,ABI> const& v, Pattern p ) noexcept
   {
-    swizzle_matcher < zero_match, identity_match
+    swizzle_matcher < zero_match, identity_match, broadcast_match
                     , slide_left, slide_right
                     , reverse_match
                     , any_match

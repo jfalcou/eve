@@ -56,6 +56,12 @@ namespace eve::detail
       {
         return r.slice(upper_)[ slide_pattern<cd/2,sz>(p) ];
       }
+      // We're swizzling the a full aggregate
+      else if constexpr( has_aggregated_abi_v<Wide> )
+      {
+        puts("FUCKED UP");
+        return that_t{};
+      }
       else
       {
         // We select the proper shuffler/swizzler
@@ -63,7 +69,7 @@ namespace eve::detail
                                       , types<Matcher...>
                                       >::type;
 
-        //std::cout << typeid(found).name() << "\n";
+        std::cout << typeid(found).name() << "\n";
 
         // We call the associated processing function
         return do_swizzle ( delay_t{}, EVE_CURRENT_API{}

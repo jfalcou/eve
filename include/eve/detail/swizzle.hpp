@@ -25,7 +25,7 @@ namespace eve::detail
   template<typename Pack, typename Pattern>
   EVE_FORCEINLINE auto process_zeros( Pack const& v, Pattern p ) noexcept
   {
-    constexpr auto sz = Pattern::size(cardinal_v<Pack>);
+    constexpr auto sz = cardinal_v<Pack>;
     using type = typename Pack::value_type;
 
     if constexpr( p.has_zeros(sz) )

@@ -200,7 +200,13 @@ namespace eve
   template<int O, int N, shuffle_pattern Pattern>
   constexpr auto slide_pattern(Pattern) noexcept
   {
-    constexpr auto that = swizzler<N>([](int i, int c) { Pattern q; return q(i,c)-O; });
+    constexpr auto that = swizzler<N> ( [](int i, int c)
+                                        {
+                                          Pattern q;
+                                          auto v = q(i,c)-O;
+                                          return v < -1 ? -1 : v;
+                                        }
+                                      );
     return that;
   }
 }

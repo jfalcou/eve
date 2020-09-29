@@ -69,24 +69,22 @@ template<typename Env, typename Wide> void test_N_2(Env& runtime, Wide base)
 
   permute_2nd(std::make_integer_sequence<int,1+eve::cardinal_v<Wide>>{});
 
-
   TTS_EQUAL( (base[ eve::pattern<Wide::static_size-1,Wide::static_size-2> ]), (ref(Wide::static_size-1,Wide::static_size-2)) );
 
   if constexpr( Wide::static_size > 2 )
     TTS_EQUAL( (base[ eve::pattern<Wide::static_size/2-1,Wide::static_size/2-2> ]), (ref(Wide::static_size/2-1,Wide::static_size/2-2)) );
 }
 
-/*
 TTS_CASE_TPL("Check swizzle for arithmetic wide with 2-lanes patterns over k-lanes register"
-            , eve::fixed<2>
+            //, eve::fixed<2>
             , eve::fixed<4>
-            , eve::fixed<8>
-            , eve::fixed<16>
+            // , eve::fixed<8>
+            // , eve::fixed<16>
             )
 {
   eve::wide<EVE_TYPE, T>  simd([](int i,int) { return 1+i; });
   test_N_2(runtime, simd);
-}*/
+}
 
 // TTS_CASE_TPL("Check swizzle for logical wide with 2-lanes patterns over k-lanes register"
 //             , eve::fixed<2>

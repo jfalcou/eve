@@ -34,6 +34,7 @@ namespace eve::detail
     static constexpr auto check(pattern_<I...> const& p, as_<Wide> const&)  noexcept
     {
       constexpr auto c = cardinal_v<Wide>;
+      if(c==1) return false;
 
       // Find where the -1 streak ends
       int i = find_slide(p), res = i;
