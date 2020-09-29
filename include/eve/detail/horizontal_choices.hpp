@@ -97,7 +97,7 @@ namespace eve::detail
       return notdone_;
     }
 
-    template <typename F, typename U>
+    template <typename F>
     bool intermediate(F const & f) noexcept
     {
       f();
