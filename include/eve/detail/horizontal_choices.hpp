@@ -73,11 +73,12 @@ namespace eve::detail
     template <typename F, typename U>
     bool first_interval(F const & f, U const & val, T x) noexcept
     {
+      std::cout << "debut r_ " << r_ << std::endl;
       x_ = x;
       test0_ = x_ <= val;
       if constexpr(eve::scalar_value<T>)
       {
-        r_ = test0_ ? f(x_) : r_;
+        r_ = test0_ ? f() : r_;
         notdone_ = !test0_;
       }
       else
@@ -88,12 +89,13 @@ namespace eve::detail
           std::size_t nbc = nbtrue(test_);
           if (nbc > 0)
           {
-            r_ = if_else(test_, f(x_), r_);
+            r_ = if_else(test_, f(), r_);
             nb_+= nbc;
             notdone_ = (nbc <  T::static_size);
           }
         }
       }
+      std::cout << "f r_ " << r_ << std::endl;
       return notdone_;
     }
 
@@ -101,6 +103,7 @@ namespace eve::detail
     bool intermediate(F const & f) noexcept
     {
       f();
+      std::cout << "r_ " << r_ << std::endl;
       return notdone_;
     }
 
@@ -110,7 +113,7 @@ namespace eve::detail
       test0_ = x_ <= val;
       if constexpr(eve::scalar_value<T>)
       {
-        r_ = test0_ ? f(x_) : r_;
+        r_ = test0_ ? f() : r_;
         notdone_ = !test0_;
       }
       else
@@ -121,23 +124,25 @@ namespace eve::detail
           std::size_t nbc = nbtrue(test_);
           if (nbc > 0)
           {
-            r_ = if_else(test_, f(x_), r_);
+            r_ = if_else(test_, f(), r_);
             nb_+= nbc;
             notdone_ = (nbc <  T::static_size);
           }
           test_ = test0_;
         }
       }
+      std::cout << "r_ " << r_ << std::endl;
       return notdone_;
     }
 
     template <typename F, typename G, typename U>
     bool last_interval(F const & f, G const & g, U const & val) noexcept
     {
-      test0_ = x_ <= val;
+      std::cout << "notdone_ " << notdone_ << std::endl;
+       test0_ = x_ <= val;
       if constexpr(eve::scalar_value<T>)
       {
-        r_ = test0_ ? f(x_) : g(x_);
+        r_ = test0_ ? f() : g();
         notdone_ = false;
       }
       else
@@ -148,42 +153,20 @@ namespace eve::detail
           std::size_t nbc = nbtrue(test_);
           if (nbc > 0)
           {
-            r_ = if_else(test_, f(x_), r_);
+            r_ = if_else(test_, f(), r_);
             nb_+= nbc;
-            if (nb_ <  T::static_size)
-            {
-              r_ = if_else(test0_, r_, g(x_));
-            }
             notdone_ = false;
+            if (nb_ ==  T::static_size) return notdone_;
           }
+          if (nb_ <  T::static_size)
+          {
+            r_ = if_else(test0_, r_, g());
+          }
+          notdone_ = false;
         }
       }
       return notdone_;
     }
-
-//     template <typename F, typename U>
-//     bool last_interval(F const & f, U const & val) noexcept
-//     {
-//       test0_ = x_ > val;
-//       if constexpr(eve::scalar_value<T>)
-//       {
-//         r_ = test0_ ? f(x_) : r_;
-//         notdone_ = false;
-//       }
-//       else
-//       {
-//         if (notdone_)
-//         {
-//           std::size_t nbc = nbtrue(test0_);
-//           if (nbc > 0)
-//           {
-//             r_ = if_else(test0_, f(x_), r_);
-//             notdone_ = false;
-//           }
-//         }
-//       }
-//       return notdone_;
-//     }
 
   private:
     std::size_t nb_;
