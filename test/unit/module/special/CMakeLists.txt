@@ -24,6 +24,7 @@ add_dependencies(unit.special.tst unit.special.simd.tst     )
 ##==================================================================================================
 
 make_all_units(ROOT unit.special NAME beta                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME dawson               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME erf                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME erfc                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME erfcx                ARCH scalar simd TYPES ${real_types}    )
