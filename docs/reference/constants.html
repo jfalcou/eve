@@ -8,11 +8,10 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                            Constants
 
   (insert ../crumbs.html here)
 
-# Synopsis
+# Constants
 
 **EVE** provides callable objects able to generate the value of various constants used in various settings
 from a [type specifier](../types/helpers.html#eve::as_) passed as argument. Each constant is available
@@ -54,7 +53,7 @@ In the following tables:
   * `E` represents the [element type](../../glossary.html#elementtype#elementtype) associated to `T`
   * `I` represents the integral type associated  to `T`
 
-# Basic Constants
+## Basic Constants
 $$\newcommand{\choosefd}[2]{\left\{
   \begin{array}{@{}ll@{}}
      #1 & \texttt{if E is float }  \\
@@ -75,7 +74,7 @@ Zero          | `eve::zero`     | `T(0)`                    | `arithmetic_value`
 Minus Zero    | `eve::mzero`    | `T(-0.0)`                 | `arithmetic_value`   |
 </center>
 
-# IEEE Constants
+## IEEE Constants
 $$\newcommand{\tchoosefd}[2]{\choosefd{\texttt{#1}}{\texttt{#2}}}$$
 
 $$\newcommand{\choosefdi}[3]{\left\{
@@ -106,19 +105,7 @@ Square root of the machine $\epsilon$           | `eve::sqrteps`         | $$\sq
 Two at the power of the number of mantissa bits | `eve::twotonmb`        | $$\choosefdi{2^{23}}{2^{52}}{1}$$                  | `floating_value`   |
 </center>
 
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
-# Fundamental Limits
+## Fundamental Limits
 <center>
 Constant                                    | Callable object       | Value                                                 | Constraints on `T` |
 :-------------------------------------------|:--------------------- |:------------------------------------------------------|:-------------------|
@@ -131,7 +118,7 @@ Smallest strictly positive normal value     | `eve::smallestposval` | $$\tchoose
 Square root of greatest value               | `eve::sqrtvalmax`     | $$\tchoosefd{1.844674e+19f}{1.340780792994260e+154}$$ | `floating_value`   |
 </center>
 
-# Mathematical Constants
+## Mathematical Constants
 <center>
 Constant                | Callable object        | Value                                          | Constraints on `T` |
 :-----------------------|:-----------------------|:-----------------------------------------------|:-------------------|
