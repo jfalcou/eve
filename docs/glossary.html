@@ -25,8 +25,8 @@ will be reputed to respond to the **arithmetic operations semantic**
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-   using TU=std::conditional< scalar_value< T >, U, T>;
-   return anyobj(TU(x), TU(y));
+using TU=std::conditional< scalar_value< T >, U, T>;
+return anyobj(TU(x), TU(y));
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
@@ -36,9 +36,9 @@ if `T`, `U` and `V` are mutually [compatible](../../concepts.html#compatible)
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-   using TU  = std::conditional< scalar_value< T >, U, T >;
-   using TUV = std::conditional< scalar_value< TU >, V, TU >
-   return anyobj(TUV(x), TUV(y),TUV(z));
+using TU  = std::conditional< scalar_value< T >, U, T >;
+using TUV = std::conditional< scalar_value< TU >, V, TU >
+return anyobj(TUV(x), TUV(y),TUV(z));
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
@@ -54,23 +54,23 @@ if the two types are bit_compatible and the call is semantically equivalent to:
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-   if constexpr(scalar_value<T> && simd_value<U>)
-   {
-      using r_t = wide<element_type<T>>,cardinal_t<U>)
-      r_t xx(bit_cast(x, as<element_type<T>()>);
-      r_t yy(bit_cast(y, as<r_t>()));
-      return anyobj(xx, yy);
-   }
-   else if  constexpr(simd_value<T> && scalar_value<U>)
-   {
-     auto yy = bit_cast(y, as<element_type<T>()>);
-     return anyobj(x, yy);
-   }
-   else
-   {
-     auto yy = bit_cast(y, as<T>()>);
-     return anyobj(x, yy);
-   }
+if constexpr(scalar_value<T> && simd_value<U>)
+{
+  using r_t = wide<element_type<T>>,cardinal_t<U>)
+  r_t xx(bit_cast(x, as<element_type<T>()>);
+  r_t yy(bit_cast(y, as<r_t>()));
+  return anyobj(xx, yy);
+}
+else if  constexpr(simd_value<T> && scalar_value<U>)
+{
+  auto yy = bit_cast(y, as<element_type<T>()>);
+  return anyobj(x, yy);
+}
+else
+{
+  auto yy = bit_cast(y, as<T>()>);
+  return anyobj(x, yy);
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
 
@@ -149,11 +149,9 @@ as the type of scalar value stored in the SIMD register.
 **EVE** provides the [value_type](reference/types/traits.html#value_type) traits to access the
 value type of any type.
 
-
 ----------------------------------------------------------------------------------------------------
-
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="eve.css">
 <!-- Markdeep: -->
 <script src="markdeep.min.js"></script>

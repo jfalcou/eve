@@ -15,8 +15,13 @@ body
   font-size: 18px;
   font-weight: 400;
   line-height: 170%;
-  max-width: 960px;
+  max-width: 60em;
   text-align: justify;
+}
+
+.md .overview
+{
+  margin: 40px 0px 0px 0px;
 }
 
 .md h2, .md .nonumberh2
@@ -47,7 +52,7 @@ body
 .md div.subtitle
 {
   color: #000;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 700;
   padding-bottom: 20px;
   padding-left: 10px;
