@@ -23,7 +23,11 @@ add_dependencies(unit.special.tst unit.special.simd.tst     )
 ## Elementwise function unit tests
 ##==================================================================================================
 
-### TEMPORARY MEASURE
-### make_all_units(ROOT special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
-### make_all_units(ROOT special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
-### TEMPORARY MEASURE
+make_all_units(ROOT unit.special NAME beta                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME erf                  ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME erfc                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME erfcx                ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME gammaln              ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME signgam              ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME stirling             ARCH scalar simd TYPES ${real_types}    )

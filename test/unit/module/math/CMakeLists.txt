@@ -66,6 +66,7 @@ make_all_units(ROOT unit.math NAME exp                   ARCH scalar simd TYPES 
 make_all_units(ROOT unit.math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.math NAME exp2                  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.math NAME expx2                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.math NAME log10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.math NAME log1p                 ARCH scalar simd TYPES ${real_types}    )
