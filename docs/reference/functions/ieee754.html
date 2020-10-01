@@ -8,39 +8,45 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           IEE754 Functions
-<br>
-These functions provide scalar and SIMD version of functions related to the manipulation of IEEE754
- representation of floating numbers.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of IEEE754 related functions:**
+# IEE754 Functions
 
-  [`eve::bitofsign`](ieee754/bitofsign.html)
-<span class="mediumskip"></span>
-  [`eve::exponent`](ieee754/exponent.html)
-<span class="mediumskip"></span>
-  [`eve::frexp`](ieee754/frexp.html)
-<span class="mediumskip"></span>
-  [`eve::ifrexp`](ieee754/ifrexp.html)
-<span class="mediumskip"></span>
-  [`eve::ldexp`](ieee754/ldexp.html)
-<span class="mediumskip"></span>
-  [`eve::mantissa`](ieee754/mantissa.html)
-<span class="mediumskip"></span>
-  [`eve::nb_values`](ieee754/nb_values.html)
-<span class="mediumskip"></span>
-  [`eve::nextafter`](ieee754/nextafter.html)
-<span class="mediumskip"></span>
-  [`eve::two_add`](ieee754/two_add.html)
-<span class="mediumskip"></span>
-  [`eve::two_prod`](ieee754/two_prod.html)
-<span class="mediumskip"></span>
-  [`eve::ulpdist`](ieee754/ulpdist.html)
+These functions provide scalar and SIMD version of functions related to the manipulation of IEEE754
+ representation of floating numbers.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/ieee.hpp>`</script>
+
+[`eve::bitofsign`](ieee754/bitofsign.html)
+:   extracts the bit of sign of its parameter
+[`eve::exponent`](ieee754/exponent.html)
+:   extracts the exponent of its parameter
+[`eve::frexp`](ieee754/frexp.html)
+:   breaks a number into significand and a power of 2
+[`eve::ifrexp`](ieee754/ifrexp.html)
+:   breaks a number into significand and an integral power of 2
+[`eve::ldexp`](ieee754/ldexp.html)
+:   multiplies a number by 2 raised to a power
+[`eve::mantissa`](ieee754/mantissa.html)
+:   extracts the mantissa of its parameter
+[`eve::nb_values`](ieee754/nb_values.html)
+:   computes the number of IEEE754 values between its parameters
+[`eve::nextafter`](ieee754/nextafter.html)
+:   determines next representable floating-point value towards the given value
+<!--
+[`eve::two_add`](ieee754/two_add.html)
+:   computes the of its parameter
+[`eve::two_prod`](ieee754/two_prod.html)
+:   computes the of its parameter
+-->
+[`eve::ulpdist`](ieee754/ulpdist.html)
+:   computes the distance in ULP between its parameters
 
 ----------------------------------------------------------------------------------------------------
+
 <!-- Shortcuts -->
 
 <!-- Footnotes -->

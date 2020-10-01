@@ -8,31 +8,34 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Exponential Functions
-<br>
-These functions provide scalar and SIMD version of exponential and logarithmic standard functions of floating
-parameters.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of exponential functions:**
+# Exponential functions
 
-  [`eve::exp`](exponential/exp.html)
-<span class="mediumskip"></span>
-  [`eve::exp10`](exponential/exp10.html)
-<span class="mediumskip"></span>
-  [`eve::exp2`](exponential/exp2.html)
-<span class="mediumskip"></span>
-  [`eve::expm1`](exponential/expm1.html)
-<span class="mediumskip"></span>
-  [`eve::log`](exponential/log.html)
-<span class="mediumskip"></span>
-  [`eve::log10`](exponential/log10.html)
-<span class="mediumskip"></span>
-  [`eve::log1p`](exponential/log1p.html)
-<span class="mediumskip"></span>
-  [`eve::log2`](exponential/log2.html)
+These functions provide scalar and SIMD version of exponential and logarithmic standard
+functions for floating point values.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/exponential.hpp>`</script>
+
+[`eve::exp`](exponential/exp.html)
+:   computes the exponential of its parameter ($e^x$)
+[`eve::exp10`](exponential/exp10.html)
+:   computes the base 10 exponential of its parameter ($10^x$)
+[`eve::exp2`](exponential/exp2.html)
+:   computes the base 2 exponential of its parameter ($2^x$)
+[`eve::expm1`](exponential/expm1.html)
+:   computes the exponential of its parameters minus one  with good accuracy ($e^x - 1$)
+[`eve::log`](exponential/log.html)
+:   computes the natural logarithm of its parameter ($log(x)$)
+[`eve::log10`](exponential/log10.html)
+:   computes the base 10 logarithm of its parameter ($log_{10}(x)$)
+[`eve::log2`](exponential/log2.html)
+:   computes the base 2 logarithm of its parameter ($log_{2}(x)$)
+[`eve::log1p`](exponential/log1p.html)
+:   computes the logarithm of its parameters plus one with good accuracy ($log(1+x)$)
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

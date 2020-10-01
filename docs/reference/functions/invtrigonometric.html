@@ -8,57 +8,68 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Inverse Trigonometric Functions
-<br>
-These functions provide scalar and SIMD version of  the inverse trigonometric
-operations in radians, degrees and $\pi$ multiples.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of Inverse trigonometric related functions:**
+# Inverse Trigonometric Functions
 
-  [`eve::acos`](invtrigonometric/acos.html)
-<span class="mediumskip"></span>
-  [`eve::acosd`](invtrigonometric/acosd.html)
-<span class="mediumskip"></span>
-  [`eve::acospi`](invtrigonometric/acospi.html)
-<span class="mediumskip"></span>
-  [`eve::acot`](invtrigonometric/acot.html)
-<span class="mediumskip"></span>
-  [`eve::acotd`](invtrigonometric/acotd.html)
-<span class="mediumskip"></span>
-  [`eve::acotpi`](invtrigonometric/acotpi.html)
-<span class="mediumskip"></span>
-  [`eve::acsc`](invtrigonometric/acsc.html)
-<span class="mediumskip"></span>
-  [`eve::acscd`](invtrigonometric/acscd.html)
-<span class="mediumskip"></span>
-  [`eve::acscpi`](invtrigonometric/acscpi.html)
-<span class="mediumskip"></span>
-  [`eve::asec`](invtrigonometric/asec.html)
-<span class="mediumskip"></span>
-  [`eve::asecd`](invtrigonometric/asecd.html)
-<span class="mediumskip"></span>
-  [`eve::asecpi`](invtrigonometric/asecpi.html)
-<span class="mediumskip"></span>
-  [`eve::asin`](invtrigonometric/asin.html)
-<span class="mediumskip"></span>
-  [`eve::asind`](invtrigonometric/asind.html)
-<span class="mediumskip"></span>
-  [`eve::asinpi`](invtrigonometric/asinpi.html)
-<span class="mediumskip"></span>
-  [`eve::atan2`](invtrigonometric/atan2.html)
-<span class="mediumskip"></span>
-  [`eve::atan2d`](invtrigonometric/atan2d.html)
-<span class="mediumskip"></span>
-  [`eve::atan2pi`](invtrigonometric/atan2pi.html)
-<span class="mediumskip"></span>
-  [`eve::atan`](invtrigonometric/atan.html)
-<span class="mediumskip"></span>
-  [`eve::atand`](invtrigonometric/atand.html)
-<span class="mediumskip"></span>
-  [`eve::atanpi`](invtrigonometric/atanpi.html)
+These functions provide scalar and SIMD version of the inverse trigonometric functions in radians,
+degrees and $\pi$ multiples.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/trigonometric.hpp>`</script>
+
+### Radians
+
+[`eve::acos`](invtrigonometric/acos.html)
+:   computes the arccosine of its parameter
+[`eve::acot`](invtrigonometric/acot.html)
+:   computes the arccotangentof of its parameter
+[`eve::acsc`](invtrigonometric/acsc.html)
+:   computes the arccosecant of its parameter
+[`eve::asec`](invtrigonometric/asec.html)
+:   computes the arcsecant of its parameter
+[`eve::asin`](invtrigonometric/asin.html)
+:   computes the arcsine of its parameter
+[`eve::atan2`](invtrigonometric/atan2.html)
+:   computes the arctangent, using signs to determine quadrants, of its parameter
+[`eve::atan`](invtrigonometric/atan.html)
+:   computes the arctangent of its parameter
+
+### Degrees
+
+[`eve::acosd`](invtrigonometric/acosd.html)
+:   computes the arccosine of its parameter
+[`eve::acotd`](invtrigonometric/acotd.html)
+:   computes the arccotangent of its parameter
+[`eve::acscd`](invtrigonometric/acscd.html)
+:   computes the arccosecant of its parameter
+[`eve::asecd`](invtrigonometric/asecd.html)
+:   computes the arcsecant of its parameter
+[`eve::asind`](invtrigonometric/asind.html)
+:   computes the arcsine of its parameter
+[`eve::atan2d`](invtrigonometric/atan2d.html)
+:   computes the arctangent, using signs to determine quadrants, of its parameter
+[`eve::atand`](invtrigonometric/atand.html)
+:   computes the arctangent of its parameter
+
+### Multiple of $\pi$
+
+[`eve::acospi`](invtrigonometric/acospi.html)
+:   computes the arccosine of its parameter
+[`eve::acotpi`](invtrigonometric/acotpi.html)
+:   computes the arccotangent of its parameter
+[`eve::acscpi`](invtrigonometric/acscpi.html)
+:   computes the arccosecant of its parameter
+[`eve::asecpi`](invtrigonometric/asecpi.html)
+:   computes the arcsecant of its parameter
+[`eve::asinpi`](invtrigonometric/asinpi.html)
+:   computes the arcsine of its parameter
+[`eve::atan2pi`](invtrigonometric/atan2pi.html)
+:   computes the arctangent, using signs to determine quadrants, of its parameter
+[`eve::atanpi`](invtrigonometric/atanpi.html)
+:   computes the arctangent of its parameter
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->

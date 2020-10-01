@@ -8,58 +8,61 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Comparisons
-<br>
-These functions provide scalar and SIMD version of ...
-
-The header `eve/function/logical.hpp` allows the inclusion of all logicals related functions.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of comparisons functions:**
+# Comparisons
+These functions provide scalar and SIMD version of various comparisons operators.
 
-  [`eve::is_equal`](comparisons/is_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_less`](comparisons/is_less.html)
-<span class="mediumskip"></span>
-  [`eve::is_greater`](comparisons/is_greater.html)
-<span class="mediumskip"></span>
-  [`eve::is_greater_equal`](comparisons/is_greater_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_less_equal`](comparisons/is_less_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_lessgreater`](comparisons/is_lessgreater.html)
-<span class="mediumskip"></span>
-  [`eve::is_not_equal`](comparisons/is_not_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_not_greater_equal`](comparisons/is_not_greater_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_not_greater`](comparisons/is_not_greater.html)
-<span class="mediumskip"></span>
-  [`eve::is_not_less_equal`](comparisons/is_not_less_equal.html)
-<span class="mediumskip"></span>
-  [`eve::is_not_less`](comparisons/is_not_less.html)
-<span class="mediumskip"></span>
-  [`eve::is_eqz`](comparisons/is_eqz.html)
-<span class="mediumskip"></span>
-  [`eve::is_nez`](comparisons/is_nez.html)
-<span class="mediumskip"></span>
-  [`eve::is_ltz`](comparisons/is_ltz.html)
-<span class="mediumskip"></span>
-  [`eve::is_gtz`](comparisons/is_gtz.html)
-<span class="mediumskip"></span>
-  [`eve::is_gez`](comparisons/is_gez.html)
-<span class="mediumskip"></span>
-  [`eve::is_lez`](comparisons/is_lez.html)
-<span class="mediumskip"></span>
-  [`eve::is_nlez`](comparisons/is_nlez.html)
-<span class="mediumskip"></span>
-  [`eve::is_ngez`](comparisons/is_ngez.html)
-<span class="mediumskip"></span>
-  [`eve::is_nltz`](comparisons/is_nltz.html)
-<span class="mediumskip"></span>
-  [`eve::is_ngtz`](comparisons/is_ngtz.html)
+!!! WARNING
+    Note that, when used on SIMD values, those operations returns a SIMD value and not a `bool`.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/comparison.hpp>`</script>
+
+[`eve::is_equal`](comparisons/is_equal.html)
+:   checks if its parameters are equal
+[`eve::is_less`](comparisons/is_less.html)
+:   checks if its first parameter is less than the other
+[`eve::is_greater`](comparisons/is_greater.html)
+:   checks if its first parameter is greater than the other
+[`eve::is_greater_equal`](comparisons/is_greater_equal.html)
+:   checks if its first parameter is greater or equal than the other
+[`eve::is_less_equal`](comparisons/is_less_equal.html)
+:   checks if its first parameter is less or equal than the other
+[`eve::is_lessgreater`](comparisons/is_lessgreater.html)
+:   checks if its parameters are either less or greater then each other
+[`eve::is_not_equal`](comparisons/is_not_equal.html)
+:   checks if its parameters are not equal
+[`eve::is_not_greater_equal`](comparisons/is_not_greater_equal.html)
+:   checks if its first parameter is less or equal than the other
+[`eve::is_not_greater`](comparisons/is_not_greater.html)
+:   checks if its first parameter is less or equal than the other
+[`eve::is_not_less_equal`](comparisons/is_not_less_equal.html)
+:   checks if its first parameter is less or equal than the other
+[`eve::is_not_less`](comparisons/is_not_less.html)
+:   checks if its first parameter is less or equal than the other
+[`eve::is_eqz`](comparisons/is_eqz.html)
+:   checks if its parameter is equal to zero
+[`eve::is_nez`](comparisons/is_nez.html)
+:   checks if its parameter is not equal to zero
+[`eve::is_ltz`](comparisons/is_ltz.html)
+:   checks if its parameter is less than zero
+[`eve::is_gtz`](comparisons/is_gtz.html)
+:   checks if its parameter is greater than zero
+[`eve::is_gez`](comparisons/is_gez.html)
+:   checks if its parameter is greater or equal to zero
+[`eve::is_lez`](comparisons/is_lez.html)
+:   checks if its parameter is less or equal to zero
+[`eve::is_nlez`](comparisons/is_nlez.html)
+:   checks if its parameter is not less or equal to zero
+[`eve::is_ngez`](comparisons/is_ngez.html)
+:   checks if its parameter is not greater or equal to zero
+[`eve::is_nltz`](comparisons/is_nltz.html)
+:   checks if its parameter is not less than zero
+[`eve::is_ngtz`](comparisons/is_ngtz.html)
+:   checks if its parameter is not greater than zero
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
