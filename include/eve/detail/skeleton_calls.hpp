@@ -40,9 +40,9 @@ namespace eve::detail
     else
     if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
     {
-           if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);    // no one is_native aggregate to avoid an early splat
-           else if constexpr(scalar_value<T>)       return /*apply_over(*/op(U(a), b);
-      else if constexpr(scalar_value<U>)           return  /*apply_over(*/op( a, T(b));
+      if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);    // no one is_native aggregate to avoid an early splat
+      else if constexpr(scalar_value<T>)      return apply_over(op, U(a), b);
+      else if constexpr(scalar_value<U>)      return apply_over(op, a, T(b));
     }
     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same type
     {

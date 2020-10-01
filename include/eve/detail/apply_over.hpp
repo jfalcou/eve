@@ -87,7 +87,6 @@ namespace eve::detail
                             , eve::combine( xlo, xhi)
                             , eve::combine( dxlo, dxhi));
     }
-        else return f(v);
-//    else return std::make_tuple(T(), T(), T());
+    else return f(v);
   }
 }
