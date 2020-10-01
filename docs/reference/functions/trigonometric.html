@@ -8,15 +8,74 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Trigonometric Functions
-<br>
-These functions provide scalar and SIMD version of the direct trigonometric operations in radians, degrees and $\pi$ multiples.
 
-Each one is supported with four decorators aside the regular call, which all provides the same accuracy,
-but in different ranges and this is peculiarly important for radian and degree inputs:
+  (insert ../../crumbs.html here)
 
- * Radians
+# Trigonometric Functions
 
+These functions provide scalar and SIMD version of the trigonometric functions in radians,
+degrees and $\pi$ multiples.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/trigonometric.hpp>`</script>
+
+### Radians
+
+[`eve::cos`](trigonometric/cos.html)
+:   computes the cosine of its parameter
+[`eve::cot`](trigonometric/cot.html)
+:   computes the cotangent of its parameter
+[`eve::csc`](trigonometric/csc.html)
+:   computes the cosecant of its parameter
+[`eve::sec`](trigonometric/sec.html)
+:   computes the secant of its parameter
+[`eve::sin`](trigonometric/sin.html)
+:   computes the sine of its parameter
+[`eve::sinc`](trigonometric/sinc.html)
+:   computes the cardinal sine of its parameter
+[`eve::sincos`](trigonometric/sincos.html)
+:   computes the sine and cosine of its parameter
+[`eve::tan`](trigonometric/tan.html)
+:   computes the tangent of its parameter
+
+### Degrees
+
+[`eve::cosd`](trigonometric/cosd.html)
+:   computes the cosine of its parameter
+[`eve::cotd`](trigonometric/cotd.html)
+:   computes the cotangent of its parameter
+[`eve::cscd`](trigonometric/cscd.html)
+:   computes the cosecant of its parameter
+[`eve::secd`](trigonometric/secd.html)
+:   computes the secant of its parameter
+[`eve::sind`](trigonometric/sind.html)
+:   computes the sine of its parameter
+[`eve::sindcosd`](trigonometric/sindcosd.html)
+:   computes the sine and cosine of its parameter
+[`eve::tand`](trigonometric/tand.html)
+:   computes the tangent of its parameter
+
+### Multiple of $\pi$
+
+[`eve::cospi`](trigonometric/cospi.html)
+:   computes the cosine of its parameter
+[`eve::cotpi`](trigonometric/cotpi.html)
+:   computes the cotangent of its parameter
+[`eve::cscpi`](trigonometric/cscpi.html)
+:   computes the cosecant of its parameter
+[`eve::secpi`](trigonometric/secpi.html)
+:   computes the secant of its parameter
+[`eve::sinpi`](trigonometric/sinpi.html)
+:   computes the sine of its parameter
+[`eve::sinpic`](trigonometric/sincpi.html)
+:   computes the cardinal sine of its parameter
+[`eve::sinpicospi`](trigonometric/sincospi.html)
+:   computes the sine and cosine of its parameter
+[`eve::tanpi`](trigonometric/tanpi.html)
+:   computes the tangent of its parameter
+
+<!--
    The possible decorators are:
 
     - restricted is the fastest but gives the correct result in $[-\pi/4, +\pi/4]$ only and Nan outside.
@@ -36,64 +95,7 @@ but in different ranges and this is peculiarly important for radian and degree i
     - if $x \in [-\pi, +\pi]$ the work is not a lot heavier.
     - if $x \in  $             a simplified scheme can be used.
     - for the whole range a quite heavy algorithm is to be used.
-
-      The time ratio between the fastest and the slowest can be of 20.
-
-      If you are not sure of your interval the regular call works and the penalty is the
-      range test that is not much in the medium and big cases, but not neglectable in the restricted and small ones.
-
- * Degrees
-
-   For degree the functions are computed by multiplying the entry by $\pi/180$ and so the same
-   comments are valid on the same intervals expressed in degrees.
-   Also the multiplication causes a little loss in accuracy as $\pi$ is not represented exactly.
-
- * $\pi$ multiples
-
-   In this case the reduction is a lot less expansive, because it's quite just a truncation to perform,
-   and the the various flavour (except restricted)  are just provided  for orthogonality.
-
-
-  (insert ../../crumbs.html here)
-
-----------------------------------------------------------------------------------------------------
-**List of trigonometric functions:**
-
-  [`eve::cos`](trigonometric/cos.html)
-<span class="mediumskip"></span>
-  [`eve::cosd`](trigonometric/cosd.html)
-<span class="mediumskip"></span>
-  [`eve::cospi`](trigonometric/cospi.html)
-<span class="mediumskip"></span>
-  [`eve::cot`](trigonometric/cot.html)
-<span class="mediumskip"></span>
-  [`eve::cotpi`](trigonometric/cotpi.html)
-<span class="mediumskip"></span>
-  [`eve::csc`](trigonometric/csc.html)
-<span class="mediumskip"></span>
-  [`eve::cscpi`](trigonometric/cscpi.html)
-<span class="mediumskip"></span>
-  [`eve::sec`](trigonometric/sec.html)
-<span class="mediumskip"></span>
-  [`eve::secpi`](trigonometric/secpi.html)
-<span class="mediumskip"></span>
-  [`eve::sin`](trigonometric/sin.html)
-<span class="mediumskip"></span>
-  [`eve::sinpi`](trigonometric/sinpi.html)
-<span class="mediumskip"></span>
-  [`eve::sinc`](trigonometric/sinc.html)
-<span class="mediumskip"></span>
-  [`eve::sincpi`](trigonometric/sinpic.html)
-<span class="mediumskip"></span>
-  [`eve::sincos`](trigonometric/sincos.html)
-<span class="mediumskip"></span>
-  [`eve::sindcosd`](trigonometric/sindcosd.html)
-<span class="mediumskip"></span>
-  [`eve::sinpicospi`](trigonometric/sinpicospi.html)
-<span class="mediumskip"></span>
-  [`eve::tan`](trigonometric/tan.html)
-<span class="mediumskip"></span>
-  [`eve::tanpi`](trigonometric/tanpi.html)
+-->
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
@@ -101,7 +103,7 @@ but in different ranges and this is peculiarly important for radian and degree i
 <!-- Footnotes -->
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

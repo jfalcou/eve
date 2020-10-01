@@ -8,12 +8,10 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::store`
-<br>
 
   (insert ../../../crumbs.html here)
 
-Synopsis
+`eve::store`
 ====================================================================================================
 **Required header:** <script type="preformatted">`#include <eve/function/store.hpp>`</script>
 
@@ -25,53 +23,27 @@ namespace eve
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing **TODO: FILL THIS BLANK**.
+Function object performing the storage of a register back to memory.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template<**TODO: FILL THIS BLANK**>
-auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
+template<value T, typename Dest>
+void operator()(T const& value, Dest* ptr) const noexcept
+                                           requires( std::is_same_v<Dest, element_type_t<T>);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-**TODO: FILL THIS BLANK**
+
+Store a [value](../../concepts.html#value). back in memory using a type-dependent operations.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`
-:   **TODO: FILL THIS BLANK**
+`value`
+:  Value to store back to memory
 
-OTHER PARAMETERS
-:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
-
-Return value
-----------------------------------------------------------------------------------------------------
-<span class="smallskip"></span>
-For **TODO: FILL THIS BLANK**:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-auto r = store(**TODO: FILL THIS BLANK**);
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
-
-is semantically equivalent to:
-
-<script type="preformatted">
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-Target r;
-
-if constexpr( scalar_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-else if constexpr( simd_value<T> )
-{
-  **TODO: FILL THIS BLANK**
-}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-</script>
+`ptr`
+:  Memory location to store `value` in.
 
   <!--(insert ../../src/store.src.html here)-->
 
@@ -79,12 +51,11 @@ else if constexpr( simd_value<T> )
 
 See Also
 ====================================================================================================
-
-**TODO: FILL THIS BLANK OR REMOVE THE SECTION ALTOGETHER**
+[eve::laod](./load.html)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
-<script>markdeepOptions={tocStyle:'medium'};</script>
+<script>markdeepOptions={tocStyle:'none'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

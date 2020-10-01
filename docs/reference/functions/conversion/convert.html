@@ -13,8 +13,8 @@
 
   (insert ../../../crumbs.html here)
 
-Synopsis
-====================================================================================================
+## Synopsis
+
 **Required header:** <script type="preformatted">`#include <eve/function/convert.hpp>`</script>
 
 <script type="preformatted">
@@ -27,8 +27,8 @@ namespace eve
 </script>
 Function object converting a value to another type.
 
-Member functions
-====================================================================================================
+## Member functions
+
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 template<value T, scalar_value Target>
@@ -77,9 +77,7 @@ else if constexpr( simd_value<T> )
 !!! WARNING Note
    Conversion operated by [eve::convert](#eve::convert) follows the regular rules of C++ type conversion, including the cases leading to Undefined Behaviors.
 
-Supported Decorators
-====================================================================================================
-
+## Supported Decorators
 ### [`saturated`](../../decorators.html#saturated)
 The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
 
@@ -87,14 +85,12 @@ The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` 
 
   (insert ../../out/convert.out.html here)
 
-See Also
-====================================================================================================
-
+## See Also
 [eve::tofloat](#eve::tofloat), [eve::toint](#eve::toint), [eve::touint](#eve::touint)
 
 <!-- End of Document -->
 <link rel="stylesheet" href="../../../eve.css">
 <!-- Markdeep: -->
-<script>markdeepOptions={tocStyle:'medium'};</script>
+<script>markdeepOptions={tocStyle:'none'};</script>
 <script src="../../../markdeep.min.js"></script>
 <script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

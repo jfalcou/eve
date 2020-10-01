@@ -15,11 +15,11 @@
 Generalities
 ====================================================================================================
 
-Nowadays, directly off the shelf, all computers avalaible on the market propose set of SIMD
+Nowadays, directly off the shelf, all computers available on the market propose set of SIMD
 instructions at the processor level.
 
 These instruction are reputed to act on N (architecture dependent integer greater than 1) scalar values
-in the same way and time are their pure scalar equivalent (conceptualy N=1).
+in the same way and time are their pure scalar equivalent (conceptually N=1).
 
 Some programming languages (as *C++*) provide access to so-called `compiler intrinsics` that are mere
 functions that allow using the SIMD instructions without writing any assembly code.
@@ -33,7 +33,7 @@ Ideally if the `SIMD vectors` have N scalar elements, one could hope a transform
 Alas this ratio can not be exactly reached mainly because programs can have:
 
   * branches
-  * order dependancies on data processing
+  * order dependencies on data processing
 
 Now if you are used to write SISD (Single Instruction Single Data!) programs, there are some fundamental
 principles and tricks to convert these to a vectorized version.
@@ -663,7 +663,7 @@ converted to the value type of the simd one.
 ----------------------------------------------------------------------------------------------------
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="eve.css">
 <!-- Markdeep: -->
 <script src="markdeep.min.js"></script>

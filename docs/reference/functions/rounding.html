@@ -8,28 +8,28 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           Rounding Functions
-
-
-<br>
-The following functions provide scalar and SIMD version of rounding to integer functions. For integral inputs they all act as identity, otherwise provide access to the common rounding rules.
-
-Namely: rounding to nearest, toward plus or minus infinity or truncation towards zero.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of rounding functions:**
+# Rounding Functions
 
-  [`eve::ceil`](rounding/ceil.html)
-<span class="mediumskip"></span>
-  [`eve::floor`](rounding/floor.html)
-<span class="mediumskip"></span>
-  [`eve::nearest`](rounding/nearest.html)
-<span class="mediumskip"></span>
-  [`eve::round`](rounding/round.html)
-<span class="mediumskip"></span>
-  [`eve::trunc`](rounding/trunc.html)
+The following functions provide scalar and SIMD version of rounding to integer functions.
+For integral inputs they all act as identity, otherwise provide access to the common rounding rules.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/rounding.hpp>`</script>
+
+[`eve::ceil`](rounding/ceil.html)
+:   computes the smallest integer not less than its parameter
+[`eve::floor`](rounding/floor.html)
+:   computes the largest integer not greater than its parameter
+[`eve::nearest`](rounding/nearest.html)
+:   computes the closest integer to its parameter, rounding downward
+[`eve::round`](rounding/round.html)
+:   rounds to an integer using a given rounding mode
+[`eve::trunc`](rounding/trunc.html)
+:   rounds to nearest integer not greater in magnitude than its parameter
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
@@ -37,7 +37,7 @@ Namely: rounding to nearest, toward plus or minus infinity or truncation towards
 <!-- Footnotes -->
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

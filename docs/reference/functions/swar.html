@@ -8,28 +8,27 @@
  -->
 <meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
                        **Expressive Vector Engine**
-                           SIMD Operations
-<br>
-These functions performs intra-register operations on SIMD types.
-
-The header `eve/function/swar.hpp` allows the inclusion of all logicals related functions.
 
   (insert ../../crumbs.html here)
 
-----------------------------------------------------------------------------------------------------
-**List of intra-SIMD functions:**
+# SIMD Specific Functions
 
-  [`eve::broadcast`](swar/broadcast.html)
-<span class="mediumskip"></span>
-  [`eve::combine`](swar/combine.html)
-<span class="mediumskip"></span>
-  [`eve::extract`](swar/extract.html)
-<span class="mediumskip"></span>
-  [`eve::lookup`](swar/lookup.html)
-<span class="mediumskip"></span>
-  [`eve::shuffle`](swar/shuffle.html)
-<span class="mediumskip"></span>
-  [`eve::slice`](swar/slice.html)
+These functions performs intra-register operations on SIMD types.
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/swar.hpp>`</script>
+
+[`eve::combine`](swar/combine.html)
+:   combine its parameters in a value with a larger cardinal
+[`eve::extract`](swar/extract.html)
+:   extract a value from a SIMD register
+[`eve::lookup`](swar/lookup.html)
+:   apply a lookup table on a SIMD register
+[`eve::shuffle`](swar/shuffle.html)
+:   shuffle values of a SIMD register using a constexpr pattern
+[`eve::slice`](swar/slice.html)
+:   slice a SIMD register in two halves
 
 ----------------------------------------------------------------------------------------------------
 <!-- Shortcuts -->
@@ -37,7 +36,7 @@ The header `eve/function/swar.hpp` allows the inclusion of all logicals related 
 <!-- Footnotes -->
 
 <!-- End of Document -->
-<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'medium'};</script>
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
 <link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>

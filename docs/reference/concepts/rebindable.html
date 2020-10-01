@@ -6,11 +6,12 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
  -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
 
-<meta charset="utf-8">
+  (insert ../../crumbs.html here)
 
-eve::rebindable
-====================================================================================================
+# eve::rebindable
 
 **Required header:**
 
@@ -18,7 +19,7 @@ eve::rebindable
 `#include <eve/concepts/rebindable.hpp>`
 </script>
 
-**Synopsis:**
+## Synopsis:
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
@@ -32,7 +33,22 @@ namespace eve
 The concept `rebindable<T>` is satisfied if and only if T can be used in a
 [structured binding declaration](https://en.cppreference.com/w/cpp/language/structured_binding).
 
+## Examples
+
+  - `eve::logical<eve::wide<char>>`
+  - `eve::wide<float>`
+  - `std::array<int,4>`
+  - `std::pair<float,double>`
+  - `std::tuple<char,short,int>`
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
 <!-- End of Document -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<link rel="stylesheet" href="../../eve.css">
 <!-- Markdeep: -->
 <script src="../../markdeep.min.js"></script>
-<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
