@@ -15,8 +15,8 @@
 
 The following concepts provide definitions of fundamental library concepts used throughout **EVE**
 to perform compile-time validation of template arguments and perform function dispatch based on
-properties of those types. Based on the general properties and reasoning style from the C++ Standard l
-ibrary, **EVE** concepts caters to the specific needs of SIMD computations.
+properties of those types. Based on the general properties and reasoning style from the C++ Standard
+library, **EVE** concepts caters to the specific needs of SIMD computations.
 
 **Convenience header:** <script type="preformatted">`#include <eve/concepts.hpp>`</script>
 
@@ -29,6 +29,10 @@ ibrary, **EVE** concepts caters to the specific needs of SIMD computations.
 :   Type supporting vectorized operations
 [`eve::value`](concepts/value.html)
 :   Type usable as **EVE** callable objects' parameters
+[`eve::element_compatible_to`<br>`eve::compatible_values`](concepts/compatible.html)
+:   Verify the constraints between scalar and SIMD types for arithmetic-like operations.
+[`eve::element_bit_compatible_to`<br>`eve::bit_compatible_values`](concepts/bit_compatible.html)
+:   Verify the constraints between scalar and SIMD types for bitwise-like operations.
 
 ## Convenience Concepts
 

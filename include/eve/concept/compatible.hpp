@@ -35,7 +35,4 @@ namespace eve
   concept bit_compatible_values = (sizeof(T) == sizeof(U))
                                || element_bit_compatible_to<T, U>
                                || element_bit_compatible_to<U, T>;
-
-
 }
-
