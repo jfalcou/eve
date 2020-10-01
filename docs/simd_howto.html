@@ -15,7 +15,7 @@
 Generalities
 ====================================================================================================
 
-Nowadays, of the shelf, all computers avalaible on the market propose set of SIMD
+Nowadays, directly off the shelf, all computers avalaible on the market propose set of SIMD
 instructions at the processor level.
 
 These instruction are reputed to act on N (architecture dependent integer greater than 1) scalar values
@@ -296,6 +296,368 @@ can often be writen
 
 If not always optimized this is always not worse and is peculiarly related to
 masked intrinsics available with some processors architectures.
+
+
+
+Writing generic functions
+====================================================================================================
+
+In our context a generic function will denote a function that can be used as well for scalar or for
+simd vector parameters. It is a bit different to write
+
+  * a function at the user level
+  * a function to be integrated in **EVE**
+
+We will  stick to a function to be integrated in **EVE**
+
+Unary functions
+====================================================================================================
+
+an unary **EVE** generic function always is an object function whose operators ()
+parameters satisfy the concept `value`.
+
+
+As a working example we will implement a simple formula  $e^{-1/x}$ if $x>0$ else $\sin(3*x)$.
+
+We will consider that its will belong to an existing eve-module called
+math (see xxx to learn create nex modules).
+
+The name of the function will be `foo` (to maintain traditions) and we will restrict its use
+ to floating point inputs.
+
+The standard way to implement such a function is first to create
+a definition file in the `eve/include/function` directory named `foo.hpp`.
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#pragma once
+
+#include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  EVE_MAKE_CALLABLE(foo_, foo);
+}
+
+#include <eve/module/math/function/generic/foo.hpp>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+
+and as the last line shows, we are to create at least another file where the implementation will take place.
+
+For our exammple as the function will not present any architecture dependent low-level characteristic
+not already present in **EVE**, there we will be no need for more.
+
+So in `eve/module/math/function/generic/foo.hpp` we will write the implementation as some foo_
+(don't miss the undescore) template functions with one more parameter than the intended function.
+
+The first `foo_`parameter will always be a macro call indicating which is the
+architectures that will support this part of the implementation.
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+There can be several differnt foo_ functions as we may need to split between scalar/simd implementation
+or parameter types, in shake of readability and maintening functions small enough.
+We can also add decorated versions or masked versions,
+
+For example, If for some reasons the scalar and simd implementation (greatly) differs and/or are quite large this
+could have been split between:
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     template<floating_scalar_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept;
+     template<floating_simd_value   T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+See concepts in order to view the granularity that can been choosed. Here we will stick to one implementation/
+
+Here is the straightforward version to be written.
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include. <eve/detail/implementation.hpp>
+     #include<eve/concept/value.hpp>
+     #include<eve/function/exp.hpp>
+     #include<eve/function/if_else.hpp>
+     #include<eve/function/rec.hpp>
+     #include<eve/function/sin.hpp>
+
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept
+     {
+       return if_else(x>0,eve::exp(-eve::rec(x), eve::sin(3*x));
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+This function is fine and you can write some lines to obtain a working program:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include<eve/wide.hpp>
+     #include<eve/function/foo.hpp>
+     #include<iostream>
+
+     int main()
+     {
+       wide<float, eve::fixed<8>> v{1,2,3,4,5,6,7,8};
+       double z = 1.0;
+       std::cout << "v = "<< v <<std::endl;
+       std::cout << "z = "<< f <<std::endl;
+       std::cout << "foo(v) " << eve::foo(v) << std::endl;
+       std::cout << "foo(f) " << eve::foo(f) << std::endl;
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+Now there subsist some small flaws as EVE is supposed to be fast:
+
+ * we have better to do simd calls on native vectors:
+
+     - What if 8 is not the native size of simd float vectors ?
+
+       we have to treat some way the fact that depending of the native size the wide will be aggregation
+       or emulation of native on the future current user  architecture
+
+ * we do not have to evaluate both branches if all the elements belong to only one of them and
+   surely if the call is scalar.
+
+     - how to avoid that
+
+**EVE** provides a tool named `apply_over` to fix the first issue, and the second
+one can also be easily handled.
+
+First issue
+================
+
+we can test if `T` has a native ABI
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include<eve/value.hpp>
+     #include<eve/function/exp.hpp>
+     #include<eve/function/if_else.hpp>
+     #include<eve/function/rec.hpp>
+     #include<eve/function/sin.hpp>
+     #include <eve/detail/has_abi.hpp>
+     #include <eve/detail/implementation.hpp>
+     #include <eve/detail/apply_over.hpp>
+
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept
+     {
+       if constexpr(has_native_abi_v<`T`>)
+         return if_else(x>0, eve::exp(-eve::rec(x), eve::sin(3*x));
+       else
+         return apply_over(foo,x);
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+
+`apply_over` do all the job necessary to split, combine or map in order that
+the call will be done in the best way.
+
+Second issue
+================
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include<eve/concept.hpp>
+     #include<eve/function/exp.hpp>
+     #include<eve/function/if_else.hpp>
+     #include<eve/function/rec.hpp>
+     #include<eve/function/sin.hpp>
+     #include <eve/detail/has_abi.hpp>
+     #include <eve/detail/implementation.hpp>
+     #include <eve/detail/apply_over.hpp>
+
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept
+     {
+       if constexpr(has_native_abi_v<T>)
+       {
+         if constexpr(scalar_value<T>)
+         {
+           return x>0 ? eve::exp(-eve::rec(x) : eve::sin(3*x);
+         }
+         else
+         {
+           return if_else(x>0, eve::exp(-eve::rec(x), eve::sin(3*x));
+         }
+       }
+       else
+         return apply_over(foo,x);
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+The gain is that the ternary operator does not evaluate both branches.
+In the simd part we can do another trick more expansive but that  is to be used
+only if the two branches are huge compared to a test. Here is a solution where
+ `all` and `none` are self-explanatory:
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include<eve/concept.hpp>
+     #include<eve/function/all.hpp>
+     #include<eve/function/exp.hpp>
+     #include<eve/function/if_else.hpp>
+     #include<eve/function/none.hpp>
+     #include<eve/function/rec.hpp>
+     #include<eve/function/sin.hpp>
+     #include <eve/detail/has_abi.hpp>
+     #include <eve/detail/implementation.hpp>
+     #include <eve/detail/apply_over.hpp>
+
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept
+     {
+       if constexpr(has_native_abi_v<T>)
+       {
+         if constexpr(scalar_value<T>)
+         {
+           return x>0 ? eve::exp(-eve::rec(x)) : eve::sin(3*x);
+         }
+         else
+         {
+           auto test = x>0;
+           if (eve::all(test)) return eve::exp(-eve::rec(x);
+           else if (eve::none(test)) return eve::sin(3*x);
+           else return if_else(x>0, eve::exp(-eve::rec(x)), eve::sin(3*x));
+         }
+       }
+       else
+         return apply_over(foo,x);
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+Here we have repeated three times the code of each branch. Of course this is not necessary.
+It suffices to write two lamdas branch1 and branch2 to obtain:
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+     #include<eve/concept.hpp>
+     #include<eve/function/all.hpp>
+     #include<eve/function/exp.hpp>
+     #include<eve/function/if_else.hpp>
+     #include<eve/function/none.hpp>
+     #include<eve/function/rec.hpp>
+     #include<eve/function/sin.hpp>
+     #include <eve/detail/has_abi.hpp>
+     #include <eve/detail/implementation.hpp>
+     #include <eve/detail/apply_over.hpp>
+
+     template<floating_value T> auto foo_(EVE_SUPPORTS(cpu_), T x) noexcept
+     {
+       if constexpr(has_native_abi_v<T>)
+       {
+         auto branch1 = [](auto x){return eve::exp(-eve::rec(x)); };
+         auto branch2 = [](auto x){return eve::sin(3*x); };
+         if constexpr(scalar_value<T>)
+         {
+           return x>0 ? branch1(x) : branch2(x);
+         }
+         else
+         {
+           auto test = x>0;
+           if (eve::all(test)) return branch1(x);
+           else if (eve::none(test)) return branch2(x);
+           else return if_else(x>0, branch1(x), branch2(x));
+         }
+       }
+       else
+         return apply_over(foo,x);
+     }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+Binary (or ternary) functions
+=================================================================================================
+
+The scheme is almost the same, the definition file is quite identical: replace `foo` by `bar`.
+
+Now for the implementation we must deal with the fact we have two parameters and they are not
+necessarily of the same type. We have chosen to demonstrate here the case of the vectorization
+of a function for which the scalar base have two parameters of the same type or which can be promotted
+to a common type.
+
+Most existing n-ary function of **EVE** share a common policy (except in case it makes no sense) which
+is to always acts in favour of the simd parameters if there is at least one. We call these calls `arithmetic calls`
+and the details are described in the glossary (see arithmetic calls).
+
+So let us write the famous `bar` function which is defined by the formula: $\sin(x+\tan(y))*x+y$.
+
+We have to write two implementations, the first is very simple, it merely takes care of the possible
+difference of parameter types:
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  template<real_value T, real_value U>
+  auto bar_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(bar, x, y);
+  }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+
+the function `arithmetic_call` is in charge to convert the parameters to the common type and
+perform a new call to a version with two parameters of identical types. This new function will
+contain the 'true' implementation  and  must be written to avoid infinite recursion.
+
+Of course in 'small' cases a `if constexpr(std::is_same_v<T,U>)` can be used to avoid writing two functions.
+
+The clause `requires compatible_values<`T`, `U`>` enforces the fact that U and T are either the same
+scalar type or a scalar value and an simd value for which the scalar can be implicitely
+converted to the value type of the simd one.
+
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+  #include <eve/detail/apply_over.hpp>
+  #include <eve/detail/skeleton_calls.hpp>
+  #include <eve/detail/implementation.hpp>
+  #include <eve/concept/value.hpp>
+  #include <eve/function/sin.hpp>
+  #include <eve/function/tan.hpp>
+
+  template<real_value T, real_value U>
+  auto bar_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(average, x, y);
+  }
+
+  template<real_value T>
+  T bar_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
+  {
+    if constexpr(has_native_abi_v<T>)
+    {
+      return sin(x+tan(y))*x+y;
+    }
+    else return apply_over(bar, x, y);
+  }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
 
 
 ----------------------------------------------------------------------------------------------------
