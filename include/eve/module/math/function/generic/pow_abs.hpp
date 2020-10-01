@@ -55,9 +55,10 @@ namespace eve::detail
   template<floating_real_simd_value T>
   EVE_FORCEINLINE auto pow_abs_(EVE_SUPPORTS(cpu_), pedantic_type const &,
                                T const &a, T const &b) noexcept
+  requires(has_native_abi_v<T>)
   {
     const T Oneo_16 = T(0.0625);
-    //        using i_t = as_integer_t<T>;
+    using i_t = as_integer_t<T>;
     T ax             = eve::abs(a);
     auto [xm, ee]    = pedantic(frexp)(ax);
     auto [x, i]      = detail::kernel_select(xm);
@@ -96,7 +97,7 @@ namespace eve::detail
     Wb                  = sub[test](Wb, Oneo_16);
     z                   = detail::kernel_pow2(Wb) * Wb;
     i                   = inc[is_gtz(e)](e / 16);
-    e                   = fms(i, 16, e);
+    e                   = fms(i, i_t(16), e);
     w                   = detail::twomio16(e);
     z                   = fma(w, z, w);
     z                   = pedantic(ldexp)(z, i);
@@ -210,6 +211,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto
   pow_abs_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
+  requires(has_native_abi_v<T>)
   {
     return eve::exp(b * eve::log(eve::abs(a)));
   }
@@ -225,6 +227,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE auto
   pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
+  requires has_native_abi_v<T>
   {
     using i_t = as_integer_t<T, unsigned>;
     using eli_t = element_type_t<i_t>;
@@ -243,12 +246,12 @@ namespace eve::detail
 
     eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
     auto [yf,  yi] = eve::modf(eve::abs(y));
-    auto test =  yf > 0.5;
+    auto test =  yf > T(0.5);
     yf = dec[test](yf);
     auto z = eve::exp(yf * eve::log(ax));
     yi = inc[test](yi);
     yi = if_else(ax_is1, eve::one, yi);
-    auto large = (yi > largelimit);
+    auto large = (yi > T(largelimit));
     if constexpr(real_scalar_value<T> )
     {
       if(large) return is_less(ax, one(as(x))) ? T(0) : inf(as(x));

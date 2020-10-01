@@ -24,6 +24,7 @@ namespace eve::detail
   {
          if constexpr(has_aggregated_abi_v<T>) return aggregate(f, v);
     else if constexpr(has_emulated_abi_v<T>)   return map(f, v);
+    else                                       return f(v);
   }
 
   template<typename Obj, value T, value U>
@@ -31,7 +32,8 @@ namespace eve::detail
   requires simd_value<T> || simd_value<U>
   {
          if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>) return aggregate(f, v, w);
-    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)   return map(f, v, w);
+    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>)     return map(f, v, w);
+    else                                                                return f(v, w);
   }
 
   template<typename Obj, value T, value U, value V>
@@ -39,7 +41,8 @@ namespace eve::detail
     requires (simd_value<T> || simd_value<U> || simd_value<V>)
   {
          if constexpr(has_aggregated_abi_v<T>||has_aggregated_abi_v<U>||has_aggregated_abi_v<V>) return aggregate(f, v, w, x);
-    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>||has_emulated_abi_v<V>)   return map(f, v, w, x);
+    else if constexpr(has_emulated_abi_v<T>||has_emulated_abi_v<U>||has_emulated_abi_v<V>)       return map(f, v, w, x);
+    else                                                                                         return f(v, w, x);
   }
 
   template<typename Obj, simd_value T>
@@ -53,6 +56,7 @@ namespace eve::detail
       auto  [xlo, elo] = f(lov);
       return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
+    else return f(v);
   }
 
   template<typename Obj, simd_value T>
@@ -67,6 +71,7 @@ namespace eve::detail
       auto  [xlo, elo] = f(lov, low);
       return std::make_tuple(eve::combine(xlo, xhi), eve::combine(elo, ehi));
     }
+    else return f(v, w);
   }
 
   template<typename Obj, simd_value T>
@@ -82,7 +87,7 @@ namespace eve::detail
                             , eve::combine( xlo, xhi)
                             , eve::combine( dxlo, dxhi));
     }
-    else return std::make_tuple(T(), T(), T());
+        else return f(v);
+//    else return std::make_tuple(T(), T(), T());
   }
 }
-

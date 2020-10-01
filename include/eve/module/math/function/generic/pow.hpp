@@ -49,28 +49,14 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE auto pow_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  requires has_native_abi_v<T>
   {
-//     if constexpr(scalar_value<T>)
-//     {
-//       auto ltza   = is_ltz(a);
-//       auto isinfb = is_infinite(b);
-//       if( a == mone(eve::as<T>()) && isinfb )                return one(eve::as<T>());
-//       if( ltza && !is_flint(b) && !is_infinite(b) ) return nan(eve::as<T>());
-//       auto z = pow_abs(a, b);
-//       if( isinfb )                                  return z;
-//       return (is_negative(a) && is_odd(b)) ? -z : z;
-//     }
-//     else
-    if constexpr(has_native_abi_v<T> )
-    {
-      if constexpr(scalar_value<T>)
-        if (a == mone(as(a)) && is_infinite(b)) return one(as(a));
-      auto nega    = is_negative(a);
-      T    z       = pow_abs(a, b);
-     z            = minus[is_odd(b) && nega](z);
-      return z;
-    }
-    else return apply_over(pow, a, b);
+    if constexpr(scalar_value<T>)
+      if (a == mone(as(a)) && is_infinite(b)) return one(as(a));
+    auto nega    = is_negative(a);
+    T    z       = pow_abs(a, b);
+    z            = minus[is_odd(b) && nega](z);
+    return z;
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////
