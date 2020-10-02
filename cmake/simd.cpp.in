@@ -20,16 +20,16 @@ using EVE_VALUE = ${target};
 
 
 // Native size test
-using T = eve::wide<${target}>;
-inline constexpr auto EVE_CARDINAL = ::eve::cardinal_v<T>;
+using EVE_TYPE = eve::wide<${target}>;
+inline constexpr auto EVE_CARDINAL = ::eve::cardinal_v<EVE_TYPE>;
 #include "${header}.hpp"
 
 #else
 
 #if EVE_CUSTOM_CARDINAL > 0
-using T = eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
+using EVE_TYPE = eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
 #else
-using T = eve::wide<EVE_VALUE>
+using EVE_TYPE = eve::wide<EVE_VALUE>
 #endif
 
 // Specific  EVE_CARDINAL test
