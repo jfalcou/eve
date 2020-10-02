@@ -16,33 +16,33 @@
 #include <eve/platform.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE_TPL("Check eve::nbtrue return type", EVE_TYPE)
+TTS_CASE("Check eve::nbtrue return type")
 {
-  TTS_EXPR_IS( (eve::nbtrue(eve::logical<T>())) , std::size_t);
-  TTS_EXPR_IS( (eve::nbtrue(T()))               , std::size_t);
+  TTS_EXPR_IS( (eve::nbtrue(eve::logical<EVE_TYPE>())) , std::size_t);
+  TTS_EXPR_IS( (eve::nbtrue(EVE_TYPE()))               , std::size_t);
 }
 
-TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
+TTS_CASE("Check eve::nbtrue behavior on arithmetic")
 {
   auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
 
-  TTS_EQUAL(eve::nbtrue(T(1)), cardinal);
-  TTS_EQUAL(eve::nbtrue(T(0)), 0u);
+  TTS_EQUAL(eve::nbtrue(EVE_TYPE(1)), cardinal);
+  TTS_EQUAL(eve::nbtrue(EVE_TYPE(0)), 0u);
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
     if constexpr( eve::platform::supports_nans )
     {
-      TTS_EQUAL(eve::nbtrue(eve::nan(eve::as<T>())), cardinal);
+      TTS_EQUAL(eve::nbtrue(eve::nan(eve::as<EVE_TYPE>())), cardinal);
     }
 
-    TTS_EQUAL(eve::nbtrue(T(-0.)), 0u);
+    TTS_EQUAL(eve::nbtrue(EVE_TYPE(-0.)), 0u);
   }
 
 #if defined(EVE_SIMD_TESTS)
   for(std::size_t j=0; j<cardinal; ++j)
   {
-    T rhs1,rhs2, rhs3, rhs4;
+    EVE_TYPE rhs1,rhs2, rhs3, rhs4;
 
     for(std::size_t i=0; i<cardinal; ++i)
     {
@@ -60,10 +60,10 @@ TTS_CASE_TPL("Check eve::nbtrue behavior on arithmetic", EVE_TYPE)
 #endif
 }
 
-TTS_CASE_TPL("Check eve::nbtrue behavior on logical", EVE_TYPE)
+TTS_CASE("Check eve::nbtrue behavior on logical")
 {
   auto cardinal = static_cast<std::size_t>(EVE_CARDINAL);
 
-  TTS_EQUAL(eve::nbtrue(eve::true_(eve::as<T>())) , cardinal);
-  TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<T>())), 0u      );
+  TTS_EQUAL(eve::nbtrue(eve::true_ (eve::as<EVE_TYPE>())), cardinal);
+  TTS_EQUAL(eve::nbtrue(eve::false_(eve::as<EVE_TYPE>())), 0u      );
 }
