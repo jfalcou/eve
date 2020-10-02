@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #pragma once
-
-
 #include <eve/wide.hpp>
 
 TTS_CASE_TPL("Check splatting constructor for arithmetic wide", EVE_TYPE)

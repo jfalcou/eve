@@ -10,30 +10,28 @@
 //==================================================================================================
 #pragma once
 
-#include "test.hpp"
-
 #include <eve/wide.hpp>
 
-using eve::fixed;
-
-TTS_CASE_TPL("Check slicing for arithmetic wide",
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check slicing for arithmetic wide", EVE_TYPE)
 {
-  using eve::wide;
+  if constexpr( EVE_CARDINAL > 1 )
+  {
+    using eve::wide;
 
-  wide<EVE_TYPE, T>                      simd([](auto i, auto) { return 1 + i; });
-  wide<EVE_TYPE, typename T::split_type> ref_low([](auto i, auto) { return 1 + i; });
-  wide<EVE_TYPE, typename T::split_type> ref_high([](auto i, auto) { return T::value / 2 + 1 + i; });
+    using split_t = eve::cardinal_t<T>::split_type;
+    T                         simd    ([](auto i, auto) { return 1 + i; });
+    wide<EVE_VALUE, split_t>  ref_low ([](auto i, auto) { return 1 + i; });
+    wide<EVE_VALUE, split_t>  ref_high([](auto i, auto) { return EVE_CARDINAL / 2 + 1 + i; });
 
-  auto [ low, high ] = simd.slice();
+    auto [ low, high ] = simd.slice();
 
-  TTS_EQUAL(low, ref_low);
-  TTS_EQUAL(simd.slice(eve::lower_), ref_low);
-  TTS_EQUAL(high, ref_high);
-  TTS_EQUAL(simd.slice(eve::upper_), ref_high);
+    TTS_EQUAL(low, ref_low);
+    TTS_EQUAL(simd.slice(eve::lower_), ref_low);
+    TTS_EQUAL(high, ref_high);
+    TTS_EQUAL(simd.slice(eve::upper_), ref_high);
+  }
+  else
+  {
+    TTS_PASS("Small type don't need to be sliced");
+  }
 }
