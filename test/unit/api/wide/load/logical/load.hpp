@@ -12,8 +12,8 @@
 
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/logical.hpp>
 #include <eve/wide.hpp>
+#include <eve/logical.hpp>
 #include <vector>
 #include <list>
 
@@ -36,27 +36,27 @@ template<typename W> auto data_block()
 
 TTS_CASE( "Check ctor from unaligned pointer for wide")
 {
-  auto  [data,idx]  = data_block<logical<T>>();
-  auto* ref_ptr     = &data[idx];
+  auto [data,idx] = data_block<EVE_TYPE>();
+  auto* ref_ptr   = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
-  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+  logical<EVE_TYPE> simd(ref_ptr);
+  logical<EVE_TYPE> ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  TTS_EQUAL( simd, ref );
+  TTS_EQUAL(simd, ref);
 }
 
 TTS_CASE( "Check ctor from const unaligned pointer for wide")
 {
-  auto        [data,idx]  = data_block<logical<T>>();
+  auto        [data,idx]  = data_block<EVE_TYPE>();
   auto const* ref_ptr     = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
-  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+  eve::logical<EVE_TYPE> simd(ref_ptr);
+  eve::logical<EVE_TYPE> ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL( simd, ref );
@@ -64,14 +64,14 @@ TTS_CASE( "Check ctor from const unaligned pointer for wide")
 
 TTS_CASE( "Check ctor from aligned pointer for wide")
 {
-  auto constexpr  algt        = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
-  auto            [data,idx]  = data_block<logical<T>>();
+  auto constexpr  algt        = logical<EVE_TYPE>::static_alignment;
+  auto            [data,idx]  = data_block<EVE_TYPE>();
   auto*           ref_ptr     = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(eve::as_aligned<algt>(ref_ptr));
-  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+  eve::logical<EVE_TYPE> simd(eve::as_aligned<algt>(ref_ptr));
+  eve::logical<EVE_TYPE> ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL( simd, ref );
@@ -79,14 +79,14 @@ TTS_CASE( "Check ctor from aligned pointer for wide")
 
 TTS_CASE("Check ctor from const aligned pointer for wide")
 {
-  auto constexpr  algt        = logical<eve::wide<EVE_TYPE, T>>::static_alignment;
-  auto            [data,idx]  = data_block<logical<T>>();
+  auto constexpr  algt        = logical<EVE_TYPE>::static_alignment;
+  auto            [data,idx]  = data_block<EVE_TYPE>();
   auto const*     ref_ptr     = &data[idx];
 
-  eve::logical<eve::wide<EVE_TYPE, T>> simd(eve::as_aligned<algt>(ref_ptr));
-  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+  eve::logical<EVE_TYPE> simd(eve::as_aligned<algt>(ref_ptr));
+  eve::logical<EVE_TYPE> ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
   TTS_EQUAL( simd, ref );
@@ -94,24 +94,24 @@ TTS_CASE("Check ctor from const aligned pointer for wide")
 
 TTS_CASE( "Check ctor from range for wide")
 {
-  std::list<eve::logical<EVE_TYPE>> ref_ptr(T::value);
+  std::list<eve::logical<EVE_VALUE>> ref_ptr(EVE_CARDINAL);
 
-  eve::logical<EVE_TYPE> k = true;
+  eve::logical<EVE_VALUE> k(true);
   for(auto &e : ref_ptr) e = (k = !k);
 
   k = true;
-  eve::logical<eve::wide<EVE_TYPE, T>> ref;
+  eve::logical<EVE_TYPE> ref;
 
-  for(std::size_t i=0;i<T::value;++i)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, (k = !k));
 
   {
-    eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr);
+    eve::logical<EVE_TYPE> simd(ref_ptr);
     TTS_EQUAL( simd, ref );
   }
 
   {
-    eve::logical<eve::wide<EVE_TYPE, T>> simd(ref_ptr.begin(), ref_ptr.end());
+    eve::logical<EVE_TYPE> simd(ref_ptr.begin(), ref_ptr.end());
     TTS_EQUAL( simd, ref );
   }
 }

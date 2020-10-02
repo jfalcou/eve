@@ -14,8 +14,8 @@ TTS_CASE( "Check enumerating constructor for arithmetic wide")
 {
   auto filler = [](auto i, auto) { return EVE_VALUE(i + 1); };
 
-  T simd(filler);
-  T ref;
+  EVE_TYPE simd(filler);
+  EVE_TYPE ref;
 
   for(std::ptrdiff_t i = 0; i < simd.size(); ++i)
     ref.set(i, filler(i, simd.size()));

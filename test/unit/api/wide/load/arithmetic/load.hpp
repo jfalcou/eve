@@ -4,7 +4,7 @@
   Copyright 2020 Joel FALCOU
   Copyright 2020 Jean-Thierry LAPRESTE
 
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Licensed under the MIEVE_TYPE License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
@@ -32,11 +32,11 @@ template<typename W> auto data_block()
 
 TTS_CASE("Check ctor from unaligned pointer for wide")
 {
-  auto [data,idx] = data_block<T>();
+  auto [data,idx] = data_block<EVE_TYPE>();
   auto* ref_ptr   = &data[idx];
 
-  T simd(ref_ptr);
-  T ref;
+  EVE_TYPE simd(ref_ptr);
+  EVE_TYPE ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
@@ -46,11 +46,11 @@ TTS_CASE("Check ctor from unaligned pointer for wide")
 
 TTS_CASE("Check ctor from const unaligned pointer for wide")
 {
-  auto [data,idx]     = data_block<T>();
+  auto [data,idx]     = data_block<EVE_TYPE>();
   auto const* ref_ptr = &data[idx];
 
-  T simd(ref_ptr);
-  T ref;
+  EVE_TYPE simd(ref_ptr);
+  EVE_TYPE ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
@@ -60,12 +60,12 @@ TTS_CASE("Check ctor from const unaligned pointer for wide")
 
 TTS_CASE("Check ctor from aligned pointer for wide")
 {
-  auto constexpr algt = T::static_alignment;
-  auto [data,idx]     = data_block<T>();
+  auto constexpr algt = EVE_TYPE::static_alignment;
+  auto [data,idx]     = data_block<EVE_TYPE>();
   auto* ref_ptr       = &data[idx];
 
-  T simd(eve::as_aligned<algt>(ref_ptr));
-  T ref;
+  EVE_TYPE simd(eve::as_aligned<algt>(ref_ptr));
+  EVE_TYPE ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
@@ -75,12 +75,12 @@ TTS_CASE("Check ctor from aligned pointer for wide")
 
 TTS_CASE("Check ctor from const aligned pointer for wide")
 {
-  auto constexpr algt = T::static_alignment;
-  auto [data,idx]     = data_block<T>();
+  auto constexpr algt = EVE_TYPE::static_alignment;
+  auto [data,idx]     = data_block<EVE_TYPE>();
   auto const* ref_ptr = &data[idx];
 
-  T simd(eve::as_aligned<algt>(ref_ptr));
-  T ref;
+  EVE_TYPE simd(eve::as_aligned<algt>(ref_ptr));
+  EVE_TYPE ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
@@ -95,7 +95,7 @@ TTS_CASE("Check ctor from range for wide")
   EVE_VALUE k = {};
   for(auto &e : ref_ptr) e = k++;
 
-  T ref;
+  EVE_TYPE ref;
 
   k = {};
 
@@ -103,12 +103,12 @@ TTS_CASE("Check ctor from range for wide")
     ref.set(i, k++);
 
   {
-    T simd(ref_ptr);
+    EVE_TYPE simd(ref_ptr);
     TTS_EQUAL(simd, ref);
   }
 
   {
-    T simd(ref_ptr.begin(), ref_ptr.end());
+    EVE_TYPE simd(ref_ptr.begin(), ref_ptr.end());
     TTS_EQUAL(simd, ref);
   }
 }

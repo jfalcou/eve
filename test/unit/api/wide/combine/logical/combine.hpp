@@ -31,10 +31,10 @@ TTS_CASE("Check combining for logical wide")
 {
   using eve::logical;
   using eve::wide;
-  using combined_cardinal = typename T::cardinal_type::combined_type;
+  using combined_cardinal = typename EVE_TYPE::cardinal_type::combined_type;
 
-  logical<T>                         low([](auto i, auto) { return i % 2 < 2; });
-  logical<T>                         high([](auto i, auto) { return i % 2 > 3; });
+  logical<EVE_TYPE>                           low([](auto i, auto) { return i % 2 < 2; });
+  logical<EVE_TYPE>                           high([](auto i, auto) { return i % 2 > 3; });
   logical<wide<EVE_VALUE, combined_cardinal>> ref([](auto i, auto c) { return i < int(c) / 2; });
 
   TTS_EQUAL((logical<wide<EVE_VALUE, combined_cardinal>>(low, high)), ref);

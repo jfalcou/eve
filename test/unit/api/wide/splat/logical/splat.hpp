@@ -13,16 +13,16 @@
 
 TTS_CASE("Check splatting constructor for logical wide")
 {
-  eve::logical<T> from_bool_t{true};
-  eve::logical<T> from_logical_t{eve::logical<T>(true)};
-  eve::logical<T> from_value_t{EVE_VALUE{123}};
+  eve::logical<EVE_TYPE> from_bool_t{true};
+  eve::logical<EVE_TYPE> from_logical_t{eve::logical<EVE_TYPE>(true)};
+  eve::logical<EVE_TYPE> from_value_t{EVE_VALUE{123}};
 
-  eve::logical<T> from_bool_f{false};
-  eve::logical<T> from_logical_f{eve::logical<T>(false)};
-  eve::logical<T> from_value_f{EVE_VALUE{0}};
+  eve::logical<EVE_TYPE> from_bool_f{false};
+  eve::logical<EVE_TYPE> from_logical_f{eve::logical<EVE_TYPE>(false)};
+  eve::logical<EVE_TYPE> from_value_f{EVE_VALUE{0}};
 
-  eve::logical<T> all_t;
-  eve::logical<T> all_f;
+  eve::logical<EVE_TYPE> all_t;
+  eve::logical<EVE_TYPE> all_f;
 
   for(std::size_t i = 0; i < EVE_CARDINAL; ++i)
   {

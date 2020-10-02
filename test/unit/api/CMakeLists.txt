@@ -39,10 +39,5 @@ make_units("function/simd/store/arithmetic"   "unit.api" ${all_types})
 make_units("function/simd/store/logical"      "unit.api" ${all_types})
 
 ##==================================================================================================
-## wide API tests
-make_units("wide/slice/arithmetic"      "unit.api" ${all_types})
-make_units("wide/slice/logical"         "unit.api" ${all_types})
-
-##==================================================================================================
 ## logical API tests
 make_all_units(ROOT unit.api      NAME logical  ARCH scalar simd  TYPES ${all_types} )

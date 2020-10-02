@@ -13,8 +13,8 @@
 TTS_CASE("Check splatting constructor for arithmetic wide")
 {
   EVE_VALUE base = 42;
-  T  simd(base);
-  T  ref;
+  EVE_TYPE  simd(base);
+  EVE_TYPE  ref;
 
   for(std::ptrdiff_t i = 0; i < simd.size(); ++i)
     ref.set(i, base);

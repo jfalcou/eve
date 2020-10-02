@@ -19,8 +19,8 @@ TTS_CASE("Check self-decrement on wide")
 {
   TTS_WHEN("A value is initialized")
   {
-    T simd(baseg), next(nextg);
-    T prev(simd), res;
+    EVE_TYPE simd(baseg), next(nextg);
+    EVE_TYPE prev(simd), res;
 
     TTS_AND_THEN("We call post-decrement operator on the value")
     {

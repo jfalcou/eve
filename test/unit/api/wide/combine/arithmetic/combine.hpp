@@ -26,11 +26,11 @@ TTS_CASE("Check combining for arithmetic values")
 TTS_CASE("Check combining for arithmetic wide")
 {
   using eve::wide;
-  using combined_cardinal = typename T::cardinal_type::combined_type;
+  using combined_cardinal = typename EVE_TYPE::cardinal_type::combined_type;
 
-  T                         low([](auto i, auto) { return 1 + i; });
-  T                         high([](auto i, auto) { return EVE_CARDINAL + 1 + i; });
-  wide<EVE_VALUE, combined_cardinal> ref([](auto i, auto) { return 1 + i; });
+  EVE_TYPE                            low([](auto i, auto) { return 1 + i; });
+  EVE_TYPE                            high([](auto i, auto) { return EVE_CARDINAL + 1 + i; });
+  wide<EVE_VALUE, combined_cardinal>  ref([](auto i, auto) { return 1 + i; });
 
   TTS_EQUAL((wide<EVE_VALUE, combined_cardinal>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);

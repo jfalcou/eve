@@ -12,8 +12,8 @@
 
 TTS_CASE("Check storage access for wide")
 {
-  T  simd([](auto i, auto) { return 1+i; });
-  T  ref;
+  eve::logical<EVE_TYPE>  simd([](auto i, auto) { return 1+i; });
+  eve::logical<EVE_TYPE>  ref;
 
   // Access via const storage
   auto const& st  = simd.storage();

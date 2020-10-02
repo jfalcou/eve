@@ -15,8 +15,8 @@ TTS_CASE("Check enumerating constructor for wide of logical")
 {
   auto filler = [](auto i, auto) { return i % 3 ? true : false; };
 
-  eve::logical<T> simd(filler);
-  eve::logical<T> ref;
+  eve::logical<EVE_TYPE> simd(filler);
+  eve::logical<EVE_TYPE> ref;
 
   for(std::ptrdiff_t i = 0; i < simd.size(); ++i)
     ref.set(i, filler(i, simd.size()));
