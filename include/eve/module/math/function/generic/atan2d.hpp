@@ -35,22 +35,17 @@ namespace eve::detail
 
   template<floating_real_value T>
   EVE_FORCEINLINE auto atan2d_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
+  requires  has_native_abi_v<T>
   {
-    if constexpr( has_native_abi_v<T> )
-      return radindeg(atan2(a, b));
-    else
-      return apply_over(atan2d, a, b);
+    return radindeg(atan2(a, b));
   }
 
   template<floating_real_value T>
   EVE_FORCEINLINE auto
   atan2d_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const &a, T const &b) noexcept
+  requires  has_native_abi_v<T>
   {
-    if constexpr( has_native_abi_v<T> )
-      return radindeg(pedantic(atan2)(a, b));
-    else
-      return apply_over(pedantic(atan2d), a, b);
+    return radindeg(pedantic(atan2)(a, b));
   }
 
 }
-

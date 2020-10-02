@@ -42,12 +42,8 @@ namespace eve::detail
                             , T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
-      else                            return fma(a, half(eve::as(a)), mul(b, half(eve::as(a))));
-   }
-    else return  apply_over(average, a, b);
+    if constexpr(integral_value<T>) return (a & b) + ((a ^ b) >> 1);
+    else                            return fma(a, half(eve::as(a)), mul(b, half(eve::as(a))));
   }
 
   //================================================================================================

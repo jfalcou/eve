@@ -40,14 +40,14 @@ namespace eve::detail
     else
     if constexpr(scalar_value<T> != scalar_value<U>) //  one is scalar and one simd
     {
-           if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);   // no one is_native aggregate to avoid an early splat
-      else if constexpr(scalar_value<T>)           return op(U(a), b);
-      else if constexpr(scalar_value<U>)           return op(a, T(b));
+      if constexpr(!(native<T> && native<U>)) return apply_over(op, a, b);    // no one is_native aggregate to avoid an early splat
+      else if constexpr(scalar_value<T>)      return apply_over(op, U(a), b);
+      else if constexpr(scalar_value<U>)      return apply_over(op, a, T(b));
     }
     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same type
     {
       if constexpr(has_native_abi_v<T>) return op(a, b); // generally already taken by arch specific intrisicss
-      else                            return apply_over(op, a, b);
+      else                              return apply_over(op, a, b);
     }
   }
 
@@ -68,17 +68,19 @@ namespace eve::detail
     if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same type
     {
       if constexpr(has_native_abi_v<T>) return op(a, b, c); // generally already taken by arch specific intrisicss
-      else                            return apply_over(op, a, b, c);
+      else                              return apply_over(op, a, b, c);
     }
     else if constexpr(scalar_value<T>) //  T is scalar and one simd
     {
       using c_t = std::conditional_t<simd_value<U>, cardinal_t<U>, cardinal_t<V>>;
       using r_t = as_wide_t<T, c_t>;
-      return op(r_t(a), r_t(b), r_t(c));
+      return apply_over(op, r_t(a), r_t(b), r_t(c));
     }
-    else
+    else // T is simd
     {
-      return op(a, T(b), T(c));
+      if constexpr(scalar_value<U> &&  scalar_value<V>) return apply_over(op, a, T(b), T(c));
+      else if constexpr(scalar_value<U>)                return apply_over(op, a, V(b), c);
+      else if constexpr(scalar_value<V>)                return apply_over(op, a, b, U(c));
     }
   }
 
@@ -114,15 +116,14 @@ namespace eve::detail
     else if constexpr(simd_value<T> && simd_value<U>) // both are simd so of the same bit size
     {
       if constexpr(has_native_abi_v<T> && has_native_abi_v<U>) return op(a, bit_cast(b, as<T>())); // generally already taken by arch specific intrisicss
-      else                                 return apply_over(op, a, b);
+      else                                                     return apply_over(op, a, b);
     }
   }
 
 
   template<typename Obj, value T, value U, value V>
   EVE_FORCEINLINE auto bit_call(Obj op
-                               , T const &a
-                               , U const &b
+                               , T const &a                               , U const &b
                                , V const &c) noexcept
   requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>  && (!(std::same_as<U,T> && std::same_as<T,V>))
   {
@@ -195,4 +196,3 @@ namespace eve::detail
   }
 
 }
-

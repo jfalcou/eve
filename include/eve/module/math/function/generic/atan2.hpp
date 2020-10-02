@@ -54,14 +54,11 @@ namespace eve::detail
                              , T const &a1
                              ) noexcept
 
+  requires  has_native_abi_v<T>
   {
-    if constexpr(has_native_abi_v<T>)
-    {
-      auto q = eve::abs(a0/a1);
-      auto z = detail::atan_kernel(q, eve::rec(q));
-      return if_else(is_positive(a1), z, (pi(eve::as(a0))-z))*signnz(a0);
-    }
-    else return  apply_over(atan2, a0, a1);
+    auto q = eve::abs(a0/a1);
+    auto z = detail::atan_kernel(q, eve::rec(q));
+    return if_else(is_positive(a1), z, (pi(eve::as(a0))-z))*signnz(a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -82,40 +79,36 @@ namespace eve::detail
                              , T const &a0
                              , T const &a1
                              ) noexcept
+  requires  has_native_abi_v<T>
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr(scalar_value<T> && platform::supports_nans)
     {
-      if constexpr(scalar_value<T> && platform::supports_nans)
-      {
-        if (is_unordered(a0, a1)) return nan(eve::as(a0));
-      }
-      T a00 = a0, a10 = a1;
-      auto test1 =  eve::is_infinite(a0)&& eve::is_infinite(a1);
-      if constexpr(platform::supports_infinites)
-      {
-        a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a00), a00);
-        a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a10), a10);
-      }
-
-      T q = eve::abs(a00/a10);
-      T z = atan_kernel(q, rec(q));
-      T sgn = signnz(a0);
-      if constexpr(scalar_value<T>)
-      {
-        z = (is_positive(a10)? z: pi(eve::as<T>())-z)*sgn;
-        return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
-      }
-      else
-      {
-        z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
-        z = eve::if_else( eve::is_eqz(a00),
-                          eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a0))*sgn, eve::zero),
-                          z);
-        if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
-        else                                  return z;
-      }
+      if (is_unordered(a0, a1)) return nan(eve::as(a0));
     }
-    else return apply_over(pedantic(atan2), a0, a1);
+    T a00 = a0, a10 = a1;
+    auto test1 =  eve::is_infinite(a0)&& eve::is_infinite(a1);
+    if constexpr(platform::supports_infinites)
+    {
+      a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a00), a00);
+      a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a0)), a10), a10);
+    }
+
+    T q = eve::abs(a00/a10);
+    T z = atan_kernel(q, rec(q));
+    T sgn = signnz(a0);
+    if constexpr(scalar_value<T>)
+    {
+      z = (is_positive(a10)? z: pi(eve::as<T>())-z)*sgn;
+      return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
+    }
+    else
+    {
+      z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
+      z = eve::if_else( eve::is_eqz(a00),
+                        eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a0))*sgn, eve::zero),
+                        z);
+      if constexpr(platform::supports_nans) return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
+      else                                  return z;
+    }
   }
 }
-
