@@ -239,7 +239,7 @@ namespace eve::detail
     {
       if(iseqzx && ylt0) return inf(as(x));
       if(is_infinite(ax)) return y == 0 ? T(1) : (ylt0 ? T(0) : inf(as(x)));
-      if(y == minf(as(y)))  return (ax > T(1)) ? T(0) : inf(as(y));
+      if(y == minf(as(y)))  return (ax == T(1)) ? T(1) : (ax > T(1)) ? T(0) : inf(as(y));
       if(ax_is1 || is_eqz(y)) return T(1);
       if(iseqzx && is_gtz(y)) return T(0);
     }
