@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/fms.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/bit_xor.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/sincos.hpp>
@@ -22,30 +23,15 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
 #include <eve/constant/inf.hpp>
+#include <eve/constant/invsqrt_2.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <type_traits>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/poleval.hpp>
+#include <tuple>
 
 namespace eve::detail
 {
-//   template<floating_real_scalar_value T>
-//   EVE_FORCEINLINE T j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
-//   {
-//     if constexpr(eve::platform::supports_invalids)
-//       if(is_nan(a0)) return a0;
-//     if constexpr(eve::platform::supports_infinites)
-//       if (eve::is_infinite(a0)) return signnz(a0);
-//     if constexpr(std::is_same_v<T, double>)
-//     {
-
-//     }
-//     else  if constexpr(std::is_same_v<T, float>)
-//     {
-
-//     }
-//   }
-
   template<floating_real_value T>
   EVE_FORCEINLINE T j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
