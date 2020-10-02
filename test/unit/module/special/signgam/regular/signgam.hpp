@@ -9,44 +9,39 @@
 **/
 //==================================================================================================
 #include <eve/function/signgam.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::signgam return type", EVE_TYPE)
+TTS_CASE("Check eve::signgam return type")
 {
-  TTS_EXPR_IS(eve::signgam(T(0)), T);
+  TTS_EXPR_IS(eve::signgam(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::signgam behavior", EVE_TYPE)
+TTS_CASE("Check eve::signgam behavior")
 {
   auto eve__signgam =  [](auto x) { return eve::signgam(x); };
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve__signgam(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve__signgam(eve::inf(eve::as<T>()))  , eve::one(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve__signgam(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::inf(eve::as<EVE_TYPE>()))  , eve::one(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve__signgam(eve::minf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_EQUAL(eve__signgam(T(0.5)), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T(-35)), eve::nan(eve::as<T>()));
+  TTS_EQUAL(eve__signgam(EVE_TYPE(0.5)), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE(-35)), eve::nan(eve::as<EVE_TYPE>()));
 
-  TTS_IEEE_EQUAL(eve__signgam(T( 0 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T(-0.)), T(-1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( 1 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( 2 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( 3 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( 5 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( -1.1 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( -2.1 )), T(-1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( -3.1 )), T(1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( -4.1 )), T(-1) );
-  TTS_IEEE_EQUAL(eve__signgam(T( -5.1 )), T(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( 0 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE(-0.)), EVE_TYPE(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( 1 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( 2 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( 3 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( 5 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( -1.1 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( -2.1 )), EVE_TYPE(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( -3.1 )), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( -4.1 )), EVE_TYPE(-1) );
+  TTS_IEEE_EQUAL(eve__signgam(EVE_TYPE( -5.1 )), EVE_TYPE(1) );
 }
