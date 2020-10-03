@@ -22,11 +22,10 @@
 #include <eve/concept/value.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::exp2 return type", EVE_TYPE)
+TTS_CASE("Check eve::exp2 return type")
 {
-  TTS_EXPR_IS(eve::exp2(T(0)), T);
+  TTS_EXPR_IS(eve::exp2(EVE_TYPE(0)), EVE_TYPE);
 }
-
 
 TTS_CASE_TPL("Check eve::exp2 behavior", EVE_TYPE)
 {
@@ -62,14 +61,13 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", EVE_TYPE)
 {
   if constexpr(eve::integral_value<T>)
   {
-    using v_t = eve::element_type_t<T>;
-    if constexpr(eve::scalar_value<T> )
+      if constexpr(eve::scalar_value<T> )
     {
       TTS_EXPR_IS(eve::float64(eve::exp2)(T(0)), double);
       TTS_EXPR_IS(eve::float32(eve::exp2)(T(0)), float);
       TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(37)), exp2(float(37)));
       TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(126)), exp2(float(126)));
-      if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
+      if constexpr(sizeof(EVE_VALUE) > 1 || std::is_unsigned_v<EVE_VALUE>)
       {
         TTS_IEEE_EQUAL(eve::float32(eve::exp2)(eve::next(T(127))), eve::inf(eve::as<float>()));
         TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(129)), eve::inf(eve::as<float>()));
@@ -78,7 +76,7 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", EVE_TYPE)
 
       TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(37)), exp2(double(37)));
       TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(127)), exp2(double(127)));
-      if constexpr(sizeof(v_t) > 1)
+      if constexpr(sizeof(EVE_VALUE) > 1)
       {
         TTS_IEEE_EQUAL(eve::float64(eve::exp2)(eve::next(T(1023))), eve::inf(eve::as<double>()));
         TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(1025)), eve::inf(eve::as<double>()));
@@ -92,7 +90,7 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", EVE_TYPE)
       TTS_EXPR_IS(eve::float32(eve::exp2)(T(0)), f_t);
       TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(37)), eve::exp2(f_t(37)));
       TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(126)), eve::exp2(f_t(126)));
-      if constexpr(sizeof(v_t) > 1 || std::is_unsigned_v<v_t>)
+      if constexpr(sizeof(EVE_VALUE) > 1 || std::is_unsigned_v<EVE_VALUE>)
       {
         TTS_IEEE_EQUAL(eve::float32(eve::exp2)(eve::next(T(127))), eve::inf(eve::as<f_t>()));
         TTS_IEEE_EQUAL(eve::float32(eve::exp2)(T(129)), eve::inf(eve::as<f_t>()));
@@ -101,7 +99,7 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", EVE_TYPE)
 
       TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(37)), eve::exp2(d_t(37)));
       TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(127)),eve::exp2(d_t(127)));
-      if constexpr(sizeof(v_t) > 1)
+      if constexpr(sizeof(EVE_VALUE) > 1)
       {
         TTS_IEEE_EQUAL(eve::float64(eve::exp2)(eve::next(T(1023))), eve::inf(eve::as<d_t>()));
         TTS_IEEE_EQUAL(eve::float64(eve::exp2)(T(1025)), eve::inf(eve::as<d_t>()));
@@ -112,5 +110,4 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", EVE_TYPE)
   }
   else
     TTS_EQUAL(0, 0);
-
 }

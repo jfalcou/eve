@@ -16,23 +16,23 @@
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::restricted(eve::cscpi) return type", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::cscpi) return type")
 {
-  TTS_EXPR_IS(eve::restricted(eve::cscpi)(T()), T);
+  TTS_EXPR_IS(eve::restricted(eve::cscpi)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::restricted(eve::cscpi) behavior", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::cscpi) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::inf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(eve::minf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(T(0))     , eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(T(-0.))   , eve::minf(eve::as<T>()));
-  TTS_ULP_EQUAL(eve::restricted(eve::cscpi)(T(0.125))  , T(2.6131259297527530557132863468543743071675223766986)  , 0.5);
-  TTS_ULP_EQUAL(eve::restricted(eve::cscpi)(-T(0.125)) , T(-2.6131259297527530557132863468543743071675223766986) , 0.5);
+  TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(EVE_TYPE(0))     , eve::inf(eve::as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::restricted(eve::cscpi)(EVE_TYPE(-0.))   , eve::minf(eve::as<EVE_TYPE>()));
+  TTS_ULP_EQUAL(eve::restricted(eve::cscpi)(EVE_TYPE(0.125))  , EVE_TYPE(2.6131259297527530557132863468543743071675223766986)  , 0.5);
+  TTS_ULP_EQUAL(eve::restricted(eve::cscpi)(-EVE_TYPE(0.125)) , EVE_TYPE(-2.6131259297527530557132863468543743071675223766986) , 0.5);
 }
 

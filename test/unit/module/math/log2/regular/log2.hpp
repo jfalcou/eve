@@ -16,29 +16,27 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::log2 return type", EVE_TYPE)
+TTS_CASE("Check eve::log2 return type")
 {
-  TTS_EXPR_IS(eve::log2(T(0)), T);
+  TTS_EXPR_IS(eve::log2(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::log2 behavior", EVE_TYPE)
+TTS_CASE("Check eve::log2 behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::log2(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>())  );
-    TTS_IEEE_EQUAL(eve::log2(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>())  );
-    TTS_IEEE_EQUAL(eve::log2(eve::mone(eve::as<T>())) , eve::nan(eve::as<T>())  );
-    TTS_IEEE_EQUAL(eve::log2(T( 0 ))         , eve::minf(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::log2(eve::inf(eve::as<EVE_TYPE>()))  , eve::inf(eve::as<EVE_TYPE>())  );
+    TTS_IEEE_EQUAL(eve::log2(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>())  );
+    TTS_IEEE_EQUAL(eve::log2(eve::mone(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>())  );
+    TTS_IEEE_EQUAL(eve::log2(EVE_TYPE( 0 ))         , eve::minf(eve::as<EVE_TYPE>()) );
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log2(eve::mindenormal(eve::as<T>())), T(std::log2(eve::mindenormal(eve::as<v_t>()))));
+    TTS_IEEE_EQUAL(eve::log2(eve::mindenormal(eve::as<EVE_TYPE>())), EVE_TYPE(std::log2(eve::mindenormal(eve::as<EVE_VALUE>()))));
   }
 
-  TTS_IEEE_EQUAL(eve::log2(T( 1)), T(0) );
-  TTS_IEEE_EQUAL(eve::log2(T( 2)), T(1) );
-  TTS_IEEE_EQUAL(eve::log2(T( 8)), T(3) );
-  TTS_IEEE_EQUAL(eve::log2(T(64)), T(6) );
+  TTS_IEEE_EQUAL(eve::log2(EVE_TYPE( 1)), EVE_TYPE(0) );
+  TTS_IEEE_EQUAL(eve::log2(EVE_TYPE( 2)), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve::log2(EVE_TYPE( 8)), EVE_TYPE(3) );
+  TTS_IEEE_EQUAL(eve::log2(EVE_TYPE(64)), EVE_TYPE(6) );
 }

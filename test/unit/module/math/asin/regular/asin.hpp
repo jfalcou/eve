@@ -16,12 +16,12 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::asin return type", EVE_TYPE)
+TTS_CASE("Check eve::asin return type")
 {
-  TTS_EXPR_IS(eve::asin(T(0)), T);
+  TTS_EXPR_IS(eve::asin(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::asin behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::asin behavior")
 {
   using eve::all;
   using eve::is_negative;
@@ -29,19 +29,19 @@ TTS_CASE_TPL("Check eve::eve::asin behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asin(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::asin(T(2))          , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::asin(T(-2))         , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asin(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asin(EVE_TYPE(2))          , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asin(EVE_TYPE(-2))         , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_ULP_EQUAL(eve::asin(T( 0.5)) ,  eve::pio_2(eve::as<T>())/3 , 0.5);
-  TTS_ULP_EQUAL(eve::asin(T(-0.5)) , -eve::pio_2(eve::as<T>())/3 , 0.5);
-  TTS_ULP_EQUAL(eve::asin(T(-1. )) , -eve::pio_2(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::asin(T( 1. )) ,  eve::pio_2(eve::as<T>())   , 0.5);
-  TTS_ULP_EQUAL(eve::asin(T( 0. )) ,  T(0)              , 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 0.5)) ,  eve::pio_2(eve::as<EVE_TYPE>())/3 , 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE(-0.5)) , -eve::pio_2(eve::as<EVE_TYPE>())/3 , 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE(-1. )) , -eve::pio_2(eve::as<EVE_TYPE>())   , 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 1. )) ,  eve::pio_2(eve::as<EVE_TYPE>())   , 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE( 0. )) ,  EVE_TYPE(0)              , 0.5);
 
-  TTS_ULP_EQUAL(eve::asin(T(-0.)), T(0), 0.5);
+  TTS_ULP_EQUAL(eve::asin(EVE_TYPE(-0.)), EVE_TYPE(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asin(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::asin(T(0))))   );
+  TTS_EXPECT( all(is_negative(eve::asin(EVE_TYPE(-0.)))) );
+  TTS_EXPECT( all(is_positive(eve::asin(EVE_TYPE(0))))   );
 }

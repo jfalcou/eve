@@ -14,21 +14,21 @@
 #include <eve/constant/minf.hpp>
 #include <tts/tts.hpp>
 
-TTS_CASE_TPL("Check deginrad return type", EVE_TYPE)
+TTS_CASE("Check deginrad return type")
 {
-  TTS_EXPR_IS(eve::deginrad(T()),  T);
+  TTS_EXPR_IS(eve::deginrad(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::deginrad behavior", EVE_TYPE)
+TTS_CASE("Check eve::deginrad behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve::deginrad(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) , 0.5);
-    TTS_ULP_EQUAL(eve::deginrad(eve::minf(eve::as<T>())) , eve::minf(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::deginrad(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) , 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::inf(eve::as<EVE_TYPE>()))  , eve::inf(eve::as<EVE_TYPE>()) , 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::minf(eve::as<EVE_TYPE>())) , eve::minf(eve::as<EVE_TYPE>()), 0.5);
+    TTS_ULP_EQUAL(eve::deginrad(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) , 0.5);
   }
 
-  TTS_ULP_EQUAL(eve::deginrad(T( 0)), T( 0 )                                , 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(T( 1)), T(0.017453292519943295769236907684886), 0.5);
-  TTS_ULP_EQUAL(eve::deginrad(T(10)), T(0.17453292519943295769236907684886) , 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(EVE_TYPE( 0)), EVE_TYPE( 0 )                                , 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(EVE_TYPE( 1)), EVE_TYPE(0.017453292519943295769236907684886), 0.5);
+  TTS_ULP_EQUAL(eve::deginrad(EVE_TYPE(10)), EVE_TYPE(0.17453292519943295769236907684886) , 0.5);
 }

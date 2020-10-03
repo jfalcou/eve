@@ -16,29 +16,30 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::log10 return type", EVE_TYPE)
+TTS_CASE("Check eve::log10 return type")
 {
-  TTS_EXPR_IS(eve::log10(T()), T);
+  TTS_EXPR_IS(eve::log10(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::log10 behavior", EVE_TYPE)
+TTS_CASE("Check eve::log10 behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::log10(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log10(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log10(eve::mone(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log10(T( 0 ))         , eve::minf(eve::as<T>()));
-  }
-  if constexpr(eve::platform::supports_denormals)
-  {
-    TTS_IEEE_EQUAL(eve::log10(eve::mindenormal(eve::as<T>())), T(std::log10(eve::mindenormal(eve::as<v_t>()))));
+    TTS_IEEE_EQUAL(eve::log10(eve::inf(eve::as<EVE_TYPE>()))  , eve::inf(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::log10(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::log10(eve::mone(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::log10(EVE_TYPE( 0 ))                  , eve::minf(eve::as<EVE_TYPE>()));
   }
 
-  TTS_IEEE_EQUAL(eve::log10(T(1)      ), T(0) );
-  TTS_IEEE_EQUAL(eve::log10(T(10)     ), T(1) );
-  TTS_IEEE_EQUAL(eve::log10(T(1000)   ), T(3) );
-  TTS_IEEE_EQUAL(eve::log10(T(1000000)), T(6) );
+  if constexpr(eve::platform::supports_denormals)
+  {
+    TTS_IEEE_EQUAL( eve::log10(eve::mindenormal(eve::as<EVE_TYPE>()))
+                  , EVE_TYPE(std::log10(eve::mindenormal(eve::as<EVE_VALUE>())))
+                  );
+  }
+
+  TTS_IEEE_EQUAL(eve::log10(EVE_TYPE(1)      ), EVE_TYPE(0) );
+  TTS_IEEE_EQUAL(eve::log10(EVE_TYPE(10)     ), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL(eve::log10(EVE_TYPE(1000)   ), EVE_TYPE(3) );
+  TTS_IEEE_EQUAL(eve::log10(EVE_TYPE(1000000)), EVE_TYPE(6) );
 }

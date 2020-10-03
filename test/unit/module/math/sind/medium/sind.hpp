@@ -16,27 +16,27 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::medium(eve::sind) return type", EVE_TYPE)
+TTS_CASE("Check eve::medium(eve::sind) return type")
 {
-  TTS_EXPR_IS(eve::medium(eve::sind)(T()), T);
+  TTS_EXPR_IS(eve::medium(eve::sind)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::medium(eve::sind) behavior", EVE_TYPE)
+TTS_CASE("Check eve::medium(eve::sind) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::nan(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::inf(eve::as<T>()) ) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::nan(eve::as<EVE_TYPE>()) ) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::inf(eve::as<EVE_TYPE>()) ) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::medium(eve::sind)(eve::minf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::medium(eve::sind)(T( 0 )), T(0) );
-  TTS_IEEE_EQUAL(eve::medium(eve::sind)(T(-0.)), T(0) );
+  TTS_IEEE_EQUAL(eve::medium(eve::sind)(EVE_TYPE( 0 )), EVE_TYPE(0) );
+  TTS_IEEE_EQUAL(eve::medium(eve::sind)(EVE_TYPE(-0.)), EVE_TYPE(0) );
 
-  TTS_ULP_EQUAL(eve::medium(eve::sind)( T(1)    ) , T(1.745240643728351281941897851631619247225272030714e-2)  , 4.0);
-  TTS_ULP_EQUAL(eve::medium(eve::sind)(-T(1)    ) , T(-1.745240643728351281941897851631619247225272030714e-2) , 4.0);
-  TTS_ULP_EQUAL(eve::medium(eve::sind)( T(45.0) ) , T(0.70710678118654752440084436210484903928483593768847)   , 4.0);
-  TTS_ULP_EQUAL(eve::medium(eve::sind)(-T(45.0) ) , T(-0.70710678118654752440084436210484903928483593768847)  , 4.0);
-  TTS_ULP_EQUAL(eve::medium(eve::sind)( T(500.0)) , T(0.64278760968653932632264340990726343290755988420567)   , 4.0);
-  TTS_ULP_EQUAL(eve::medium(eve::sind)(-T(500.0)) , T(-0.64278760968653932632264340990726343290755988420567)  , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)( EVE_TYPE(1)    ) , EVE_TYPE(1.745240643728351281941897851631619247225272030714e-2)  , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)(-EVE_TYPE(1)    ) , EVE_TYPE(-1.745240643728351281941897851631619247225272030714e-2) , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)( EVE_TYPE(45.0) ) , EVE_TYPE(0.70710678118654752440084436210484903928483593768847)   , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)(-EVE_TYPE(45.0) ) , EVE_TYPE(-0.70710678118654752440084436210484903928483593768847)  , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)( EVE_TYPE(500.0)) , EVE_TYPE(0.64278760968653932632264340990726343290755988420567)   , 4.0);
+  TTS_ULP_EQUAL(eve::medium(eve::sind)(-EVE_TYPE(500.0)) , EVE_TYPE(-0.64278760968653932632264340990726343290755988420567)  , 4.0);
 }

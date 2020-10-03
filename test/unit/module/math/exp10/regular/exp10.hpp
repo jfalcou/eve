@@ -16,9 +16,9 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::exp10 return type", EVE_TYPE)
+TTS_CASE("Check eve::exp10 return type")
 {
-  TTS_EXPR_IS(eve::exp10(T(0)), T);
+  TTS_EXPR_IS(eve::exp10(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::exp10 behavior", EVE_TYPE)

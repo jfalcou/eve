@@ -14,28 +14,28 @@
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::asecpi return type", EVE_TYPE)
+TTS_CASE("Check eve::asecpi return type")
 {
-  TTS_EXPR_IS(eve::asecpi(T(0)), T);
+  TTS_EXPR_IS(eve::asecpi(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::asecpi behavior", EVE_TYPE)
+TTS_CASE("Check eve::asecpi behavior")
 {
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::asecpi(eve::inf(eve::as<T>()))  , T(0.5) );
-    TTS_IEEE_EQUAL(eve::asecpi(eve::minf(eve::as<T>())) , T(0.5) );
+    TTS_IEEE_EQUAL(eve::asecpi(eve::inf(eve::as<EVE_TYPE>()))  , EVE_TYPE(0.5) );
+    TTS_IEEE_EQUAL(eve::asecpi(eve::minf(eve::as<EVE_TYPE>())) , EVE_TYPE(0.5) );
   }
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asecpi(eve::nan(eve::as<T>()))  , (eve::nan(eve::as<T>())) );
-    TTS_ULP_EQUAL(eve::asecpi(T(-0.)) , eve::nan(eve::as<T>()), 1);
-    TTS_ULP_EQUAL(eve::asecpi(T(0))   , eve::nan(eve::as<T>()), 1);
+    TTS_IEEE_EQUAL(eve::asecpi(eve::nan(eve::as<EVE_TYPE>()))  , (eve::nan(eve::as<EVE_TYPE>())) );
+    TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE(-0.)) , eve::nan(eve::as<EVE_TYPE>()), 1);
+    TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE(0))   , eve::nan(eve::as<EVE_TYPE>()), 1);
   }
 
-  TTS_ULP_EQUAL(eve::asecpi(T(-2.)), T(2)/3 , 1   );
-  TTS_ULP_EQUAL(eve::asecpi(T( 2.)), T(1)/3 , 1   );
-  TTS_ULP_EQUAL(eve::asecpi(T(-1.)), T(1)   , 0.5 );
-  TTS_ULP_EQUAL(eve::asecpi(T( 1.)), T(0)   , 0.5 );
+  TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE(-2.)), EVE_TYPE(2)/3 , 1   );
+  TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE( 2.)), EVE_TYPE(1)/3 , 1   );
+  TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE(-1.)), EVE_TYPE(1)   , 0.5 );
+  TTS_ULP_EQUAL(eve::asecpi(EVE_TYPE( 1.)), EVE_TYPE(0)   , 0.5 );
 }

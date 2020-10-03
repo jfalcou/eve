@@ -19,32 +19,32 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::atan return type", EVE_TYPE)
+TTS_CASE("Check eve::atan return type")
 {
-  TTS_EXPR_IS(eve::atan(T(0)), T);
+  TTS_EXPR_IS(eve::atan(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::atan behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::atan behavior")
 {
   using eve::all;
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::atan(eve::nan(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()) );
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_IEEE_EQUAL(eve::atan(eve::inf(eve::as<T>())) , eve::pio_2(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::atan(eve::minf(eve::as<T>())), -eve::pio_2(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::atan(eve::inf(eve::as<EVE_TYPE>())) , eve::pio_2(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::atan(eve::minf(eve::as<EVE_TYPE>())), -eve::pio_2(eve::as<EVE_TYPE>()));
   }
 
-  TTS_ULP_EQUAL(eve::atan(T(0.5))  , T(4.636476090008061e-01) , 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(-0.5)) , T(-4.636476090008061e-01), 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(-1.))  , -eve::pio_4(eve::as<T>())         , 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(1.))   ,  eve::pio_4(eve::as<T>())         , 0.5);
-  TTS_ULP_EQUAL(eve::atan(T(0.))   , T(0)                     , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(0.5))  , EVE_TYPE(4.636476090008061e-01) , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(-0.5)) , EVE_TYPE(-4.636476090008061e-01), 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(-1.))  , -eve::pio_4(eve::as<EVE_TYPE>())         , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(1.))   ,  eve::pio_4(eve::as<EVE_TYPE>())         , 0.5);
+  TTS_ULP_EQUAL(eve::atan(EVE_TYPE(0.))   , EVE_TYPE(0)                     , 0.5);
 
-  TTS_EXPECT(all(eve::is_positive(eve::atan((T(0))))) );
-  TTS_EXPECT(all(eve::is_negative(eve::atan(T(-0.)))) );
+  TTS_EXPECT(all(eve::is_positive(eve::atan((EVE_TYPE(0))))) );
+  TTS_EXPECT(all(eve::is_negative(eve::atan(EVE_TYPE(-0.)))) );
 }

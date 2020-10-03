@@ -17,28 +17,26 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::tanh return type", EVE_TYPE)
+TTS_CASE("Check eve::tanh return type")
 {
-  TTS_EXPR_IS(eve::tanh(T(0)), T);
+  TTS_EXPR_IS(eve::tanh(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::tanh behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::tanh behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::tanh(eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::tanh(eve::inf(eve::as<T>()) ), T(1)          );
-    TTS_IEEE_EQUAL(eve::tanh(eve::minf(eve::as<T>())), T(-1)         );
+    TTS_IEEE_EQUAL(eve::tanh(eve::nan(eve::as<EVE_TYPE>()) ), eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::tanh(eve::inf(eve::as<EVE_TYPE>()) ), EVE_TYPE(1)          );
+    TTS_IEEE_EQUAL(eve::tanh(eve::minf(eve::as<EVE_TYPE>())), EVE_TYPE(-1)         );
   }
 
-  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(eve::tanh(EVE_TYPE( 1)), EVE_TYPE(std::tanh(EVE_VALUE(1))) , 0.5);
+  TTS_ULP_EQUAL(eve::tanh(EVE_TYPE(-1)), EVE_TYPE(std::tanh(EVE_VALUE(-1))), 0.5);
 
-  TTS_ULP_EQUAL(eve::tanh(T( 1)), T(std::tanh(v_t(1))) , 0.5);
-  TTS_ULP_EQUAL(eve::tanh(T(-1)), T(std::tanh(v_t(-1))), 0.5);
+  TTS_IEEE_EQUAL( eve::tanh(EVE_TYPE( 0 )), EVE_TYPE(0) );
+  TTS_IEEE_EQUAL( eve::tanh(EVE_TYPE(-0.)), EVE_TYPE(0) );
 
-  TTS_IEEE_EQUAL( eve::tanh(T( 0 )), T(0) );
-  TTS_IEEE_EQUAL( eve::tanh(T(-0.)), T(0) );
-
-  TTS_EXPECT( eve::all(eve::is_negative(eve::tanh(T(-0.)))) );
-  TTS_EXPECT( eve::all(eve::is_positive(eve::tanh(T( 0 )))) );
+  TTS_EXPECT( eve::all(eve::is_negative(eve::tanh(EVE_TYPE(-0.)))) );
+  TTS_EXPECT( eve::all(eve::is_positive(eve::tanh(EVE_TYPE( 0 )))) );
 }

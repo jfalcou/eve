@@ -21,33 +21,31 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::log1p return type", EVE_TYPE)
+TTS_CASE("Check eve::log1p return type")
 {
-  TTS_EXPR_IS(eve::log1p(T(0)), T);
+  TTS_EXPR_IS(eve::log1p(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::log1p behavior", EVE_TYPE)
+TTS_CASE("Check eve::log1p behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::log1p(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log1p(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::log1p(eve::mone(eve::as<T>())) , eve::minf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::log1p(T( 0 ))         , T( 0 )        );
+    TTS_IEEE_EQUAL(eve::log1p(eve::inf(eve::as<EVE_TYPE>()))  , eve::inf(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::log1p(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::log1p(eve::mone(eve::as<EVE_TYPE>())) , eve::minf(eve::as<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::log1p(EVE_TYPE( 0 ))         , EVE_TYPE( 0 )        );
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_IEEE_EQUAL(eve::log1p(eve::mindenormal(eve::as<T>())), T(std::log1p(eve::mindenormal(eve::as<v_t>()))));
+    TTS_IEEE_EQUAL(eve::log1p(eve::mindenormal(eve::as<EVE_TYPE>())), EVE_TYPE(std::log1p(eve::mindenormal(eve::as<EVE_VALUE>()))));
   }
 
-  auto epsi = eve::eps(eve::as<T>());
+  auto epsi = eve::eps(eve::as<EVE_TYPE>());
 
-  TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(T(1))                    , eve::log_2(eve::as<T>())         , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(T(0))                    , T(0)                    , 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(eve::smallestposval(eve::as<T>())), eve::smallestposval(eve::as<T>()), 0.5 );
-  TTS_ULP_EQUAL(eve::log1p(epsi)                    , epsi                    , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(epsi)        , epsi                            , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(epsi)        , epsi                            , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(EVE_TYPE(1)) , eve::log_2(eve::as<EVE_TYPE>()) , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(EVE_TYPE(0)) , EVE_TYPE(0)                     , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(epsi)        , epsi                            , 0.5 );
+  TTS_ULP_EQUAL(eve::log1p(eve::smallestposval(eve::as<EVE_TYPE>())), eve::smallestposval(eve::as<EVE_TYPE>()), 0.5 );
 }

@@ -19,31 +19,31 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::acot return type", EVE_TYPE)
+TTS_CASE("Check eve::acot return type")
 {
-  TTS_EXPR_IS(eve::acot(T(0)), T);
+  TTS_EXPR_IS(eve::acot(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::acot behavior", EVE_TYPE)
+TTS_CASE("Check eve::acot behavior")
 {
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acot(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acot(eve::inf(eve::as<T>())) , T(0), 0);
-    TTS_ULP_EQUAL(eve::acot(eve::minf(eve::as<T>())), T(0), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::inf(eve::as<EVE_TYPE>())) , EVE_TYPE(0), 0);
+    TTS_ULP_EQUAL(eve::acot(eve::minf(eve::as<EVE_TYPE>())), EVE_TYPE(0), 0);
   }
 
-  TTS_ULP_EQUAL(eve::acot(T( 0.5))         ,  T(1.107148717794090e+00)  , 1   );
-  TTS_ULP_EQUAL(eve::acot(T(-0.5))         ,  T(-1.107148717794090e+00) , 1   );
-  TTS_ULP_EQUAL(eve::acot(T(-1. ))         , -eve::pio_4(eve::as<T>())           , 0.5 );
-  TTS_ULP_EQUAL(eve::acot(T( 1. ))         ,  eve::pio_4(eve::as<T>())           , 0.5 );
-  TTS_ULP_EQUAL(eve::acot(T( 0. ))         ,  eve::pio_2(eve::as<T>())           , 1   );
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE( 0.5))         ,  EVE_TYPE(1.107148717794090e+00)  , 1   );
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE(-0.5))         ,  EVE_TYPE(-1.107148717794090e+00) , 1   );
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE(-1. ))         , -eve::pio_4(eve::as<EVE_TYPE>())           , 0.5 );
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE( 1. ))         ,  eve::pio_4(eve::as<EVE_TYPE>())           , 0.5 );
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE( 0. ))         ,  eve::pio_2(eve::as<EVE_TYPE>())           , 1   );
 
-  auto inv_smallest = eve::rec(eve::smallestposval(eve::as<T>()));
-  TTS_ULP_EQUAL(eve::acot(T(-0.)) , -eve::pio_2(eve::as<T>())           , 1   );
-  TTS_ULP_EQUAL(eve::acot(inv_smallest)       ,  eve::smallestposval(eve::as<T>())  , 0.5 );
+  auto inv_smallest = eve::rec(eve::smallestposval(eve::as<EVE_TYPE>()));
+  TTS_ULP_EQUAL(eve::acot(EVE_TYPE(-0.)) , -eve::pio_2(eve::as<EVE_TYPE>())           , 1   );
+  TTS_ULP_EQUAL(eve::acot(inv_smallest)       ,  eve::smallestposval(eve::as<EVE_TYPE>())  , 0.5 );
 }

@@ -14,29 +14,27 @@
 #include <tuple>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::restricted(eve::sincos) return type", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::sincos) return type")
 {
-  TTS_EXPR_IS(eve::restricted(eve::sincos)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::restricted(eve::sincos)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::restricted(eve::sincos) behavior", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::sincos) behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   static const int N = 6;
-  v_t x[N]  = { v_t(1)/8, -v_t(1)/8, v_t(1)/4, -v_t(1)/4, v_t(1), v_t(-1) };
+  EVE_VALUE x[N]  = { EVE_VALUE(1)/8, -EVE_VALUE(1)/8, EVE_VALUE(1)/4, -EVE_VALUE(1)/4, EVE_VALUE(1), EVE_VALUE(-1) };
 
   for(int i=0; i < 4 ; ++i)
   {
-    auto [p0, p1] = eve::restricted(eve::sincos)(T(x[i]));
-    TTS_ULP_EQUAL(p0, T(std::sin(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, T(std::cos(x[i])), 0.5);
+    auto [p0, p1] = eve::restricted(eve::sincos)(EVE_TYPE(x[i]));
+    TTS_ULP_EQUAL(p0, EVE_TYPE(std::sin(x[i])), 0.5);
+    TTS_ULP_EQUAL(p1, EVE_TYPE(std::cos(x[i])), 0.5);
   }
 
   for(int i=4; i < 6 ; ++i)
   {
-    auto [p0, p1] = eve::restricted(eve::sincos)(T(x[i]));
-    TTS_ULP_EQUAL(p0, eve::nan(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(p1, eve::nan(eve::as<T>()), 0.5);
+    auto [p0, p1] = eve::restricted(eve::sincos)(EVE_TYPE(x[i]));
+    TTS_ULP_EQUAL(p0, eve::nan(eve::as<EVE_TYPE>()), 0.5);
+    TTS_ULP_EQUAL(p1, eve::nan(eve::as<EVE_TYPE>()), 0.5);
   }
 }

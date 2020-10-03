@@ -15,52 +15,48 @@
 #include <eve/constant/minf.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/concept/value.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::expx2 return type", EVE_TYPE)
+TTS_CASE("Check eve::expx2 return type")
 {
-  TTS_EXPR_IS(eve::expx2(T()), T);
+  TTS_EXPR_IS(eve::expx2(EVE_TYPE()), EVE_TYPE);
 }
 
-
-TTS_CASE_TPL("Check eve::expx2 behavior", EVE_TYPE)
+TTS_CASE("Check eve::expx2 behavior")
 {
   using eve::as;
-  TTS_ULP_EQUAL (eve::expx2(T(1)), eve::exp(T(1)), 0.5);
-  TTS_IEEE_EQUAL(eve::expx2(T(0)), T(1));
-  TTS_IEEE_EQUAL(eve::expx2(T(4)), eve::exp(T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(T(-4)),eve::exp(T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<T>())) , eve::nan(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<T>())) , eve::inf(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<T>())), eve::inf(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(T(-0.)), T(1));
-  TTS_ULP_EQUAL (eve::expx2(T(-1)) , eve::exp(T(1)), 0.5);
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(1)), eve::exp(EVE_TYPE(1)), 0.5);
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(0)), EVE_TYPE(1));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(4)), eve::exp(EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-4)),eve::exp(EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<EVE_TYPE>())) , eve::nan(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<EVE_TYPE>())) , eve::inf(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<EVE_TYPE>())), eve::inf(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-0.)), EVE_TYPE(1));
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(-1)) , eve::exp(EVE_TYPE(1)), 0.5);
 }
 
-TTS_CASE_TPL("Check eve::expx2 behavior", EVE_TYPE)
+TTS_CASE("Check eve::expx2 behavior")
 {
   using eve::as;
-   TTS_ULP_EQUAL (eve::expx2(T(1), T(1)), eve::exp(T(1)), 0.5);
-  TTS_IEEE_EQUAL(eve::expx2(T(0), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::expx2(T(4), T(1)), eve::exp(T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(T(-4), T(1)),eve::exp(T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<T>()), T(1)) , eve::nan(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<T>()), T(1)) , eve::inf(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<T>()), T(1)), eve::inf(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(T(-0.), T(1)), T(1));
-  TTS_ULP_EQUAL (eve::expx2(T(-1), T(1)) , eve::exp(T(1)), 0.5);
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(1), EVE_TYPE(1)), eve::exp(EVE_TYPE(1)), 0.5);
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(0), EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(4), EVE_TYPE(1)), eve::exp(EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-4), EVE_TYPE(1)),eve::exp(EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<EVE_TYPE>()), EVE_TYPE(1)) , eve::nan(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<EVE_TYPE>()), EVE_TYPE(1)) , eve::inf(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<EVE_TYPE>()), EVE_TYPE(1)), eve::inf(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-0.), EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(-1), EVE_TYPE(1)) , eve::exp(EVE_TYPE(1)), 0.5);
 
-  TTS_ULP_EQUAL (eve::expx2(T(1), T(-1)), eve::exp(-T(1)), 0.5);
-  TTS_IEEE_EQUAL(eve::expx2(T(0), T(-1)), T(1));
-  TTS_IEEE_EQUAL(eve::expx2(T(4), T(-1)), eve::exp(-T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(T(-4), T(-1)),eve::exp(-T(16)));
-  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<T>()), T(-1)) , eve::nan(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<T>()), T(-1)) , eve::zero(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<T>()), T(-1)), eve::zero(as<T>()) );
-  TTS_IEEE_EQUAL(eve::expx2(T(-0.), T(-1)), T(1));
-  TTS_ULP_EQUAL (eve::expx2(T(-1), T(-1)) , eve::exp(-T(1)), 0.5);
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(1), EVE_TYPE(-1)), eve::exp(-EVE_TYPE(1)), 0.5);
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(0), EVE_TYPE(-1)), EVE_TYPE(1));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(4), EVE_TYPE(-1)), eve::exp(-EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-4), EVE_TYPE(-1)),eve::exp(-EVE_TYPE(16)));
+  TTS_IEEE_EQUAL(eve::expx2(eve::nan(as<EVE_TYPE>()), EVE_TYPE(-1)) , eve::nan(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::inf(as<EVE_TYPE>()), EVE_TYPE(-1)) , eve::zero(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(eve::minf(as<EVE_TYPE>()), EVE_TYPE(-1)), eve::zero(as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::expx2(EVE_TYPE(-0.), EVE_TYPE(-1)), EVE_TYPE(1));
+  TTS_ULP_EQUAL (eve::expx2(EVE_TYPE(-1), EVE_TYPE(-1)) , eve::exp(-EVE_TYPE(1)), 0.5);
 }

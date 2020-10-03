@@ -17,33 +17,31 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::cot return type", EVE_TYPE)
+TTS_CASE("Check eve::cot return type")
 {
-  TTS_EXPR_IS(eve::cot(T()), T);
+  TTS_EXPR_IS(eve::cot(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::cot behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::cot behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   auto ref_cot =  [](auto x) { return eve::rec(std::tan(double(x))); };
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::cot(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cot(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cot(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::cot(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cot(eve::inf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cot(eve::minf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::cot(T( 0 )), eve::inf(eve::as<T>())  );
-  TTS_IEEE_EQUAL(eve::cot(T(-0.)), eve::minf(eve::as<T>()) );
+  TTS_IEEE_EQUAL(eve::cot(EVE_TYPE( 0 )), eve::inf(eve::as<EVE_TYPE>())  );
+  TTS_IEEE_EQUAL(eve::cot(EVE_TYPE(-0.)), eve::minf(eve::as<EVE_TYPE>()) );
 
-  TTS_ULP_EQUAL(eve::cot( T(1))               , T(ref_cot(v_t(1.0)))          , 1  );
-  TTS_ULP_EQUAL(eve::cot(-T(1))               , T(ref_cot(v_t(-1.0)))         , 1  );
-  TTS_ULP_EQUAL(eve::cot( eve::pio_4(eve::as<T>()))    , T(ref_cot(eve::pio_4(eve::as<v_t>()))) , 1  );
-  TTS_ULP_EQUAL(eve::cot(-eve::pio_4(eve::as<T>()))    , T(ref_cot(-eve::pio_4(eve::as<v_t>()))), 1  );
-  TTS_ULP_EQUAL(eve::cot( T(100000.0))        , T(ref_cot(100000.0))          , 0.5);
-  TTS_ULP_EQUAL(eve::cot(-T(100000.0))        , T(ref_cot(-100000.0))         , 0.5);
-  TTS_ULP_EQUAL(eve::cot(-T(100000000.0))     , T(ref_cot(-100000000.0))      , 0.5);
-  TTS_ULP_EQUAL(eve::cot( T(eve::valmax(eve::as<T>()))), T(ref_cot(eve::valmax(eve::as<v_t>()))), 1.5);
+  TTS_ULP_EQUAL(eve::cot( EVE_TYPE(1))               , EVE_TYPE(ref_cot(EVE_VALUE(1.0)))          , 1  );
+  TTS_ULP_EQUAL(eve::cot(-EVE_TYPE(1))               , EVE_TYPE(ref_cot(EVE_VALUE(-1.0)))         , 1  );
+  TTS_ULP_EQUAL(eve::cot( eve::pio_4(eve::as<EVE_TYPE>()))    , EVE_TYPE(ref_cot(eve::pio_4(eve::as<EVE_VALUE>()))) , 1  );
+  TTS_ULP_EQUAL(eve::cot(-eve::pio_4(eve::as<EVE_TYPE>()))    , EVE_TYPE(ref_cot(-eve::pio_4(eve::as<EVE_VALUE>()))), 1  );
+  TTS_ULP_EQUAL(eve::cot( EVE_TYPE(100000.0))        , EVE_TYPE(ref_cot(100000.0))          , 0.5);
+  TTS_ULP_EQUAL(eve::cot(-EVE_TYPE(100000.0))        , EVE_TYPE(ref_cot(-100000.0))         , 0.5);
+  TTS_ULP_EQUAL(eve::cot(-EVE_TYPE(100000000.0))     , EVE_TYPE(ref_cot(-100000000.0))      , 0.5);
+  TTS_ULP_EQUAL(eve::cot( EVE_TYPE(eve::valmax(eve::as<EVE_TYPE>()))), EVE_TYPE(ref_cot(eve::valmax(eve::as<EVE_VALUE>()))), 1.5);
 }

@@ -19,30 +19,29 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::acsch return type", EVE_TYPE)
+TTS_CASE("Check eve::acsch return type")
 {
-  TTS_EXPR_IS(eve::acsch(T(0)), T);
+  TTS_EXPR_IS(eve::acsch(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::acsch behavior", EVE_TYPE)
+TTS_CASE("Check eve::acsch behavior")
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()), 0);
   }
 
   if constexpr( eve::platform::supports_infinites )
   {
-    TTS_ULP_EQUAL(eve::acsch(eve::inf(eve::as<T>())) , T(0), 0);
-    TTS_ULP_EQUAL(eve::acsch(eve::minf(eve::as<T>())) , T(-0.0), 0);
-    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::minf(eve::as<T>())))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::inf(eve::as<T>())))));
+    TTS_ULP_EQUAL(eve::acsch(eve::inf(eve::as<EVE_TYPE>())) , EVE_TYPE(0), 0);
+    TTS_ULP_EQUAL(eve::acsch(eve::minf(eve::as<EVE_TYPE>())) , EVE_TYPE(-0.0), 0);
+    TTS_EXPECT(eve::all(eve::is_negative(eve::acsch(eve::minf(eve::as<EVE_TYPE>())))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::acsch(eve::inf(eve::as<EVE_TYPE>())))));
   }
 
-  TTS_ULP_EQUAL(eve::acsch(T( 0.5)) , T(std::asinh(v_t(2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(T(-0.5)) , T(std::asinh(v_t(-2.)))  , 0   );
-  TTS_ULP_EQUAL(eve::acsch(T( 1. )) , T(std::asinh(v_t(1.0)))  , 0.5   );
-  TTS_ULP_EQUAL(eve::acsch(T( 2. )) , T(std::asinh(v_t(0.5))), 0.5  );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE(-0.5)) , EVE_TYPE(std::asinh(EVE_VALUE(-2.)))  , 0   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 1. )) , EVE_TYPE(std::asinh(EVE_VALUE(1.0)))  , 0.5   );
+  TTS_ULP_EQUAL(eve::acsch(EVE_TYPE( 2. )) , EVE_TYPE(std::asinh(EVE_VALUE(0.5))), 0.5  );
 }

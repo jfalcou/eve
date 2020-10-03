@@ -16,29 +16,27 @@
 #include <eve/constant/pi.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check eve::medium(eve::sindcosd) return type", EVE_TYPE)
+TTS_CASE("Check eve::medium(eve::sindcosd) return type")
 {
-  TTS_EXPR_IS(eve::medium(eve::sindcosd)(T()), (std::tuple<T, T>));
+  TTS_EXPR_IS(eve::medium(eve::sindcosd)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::medium(eve::sindcosd) behavior", EVE_TYPE)
+TTS_CASE("Check eve::medium(eve::sindcosd) behavior")
 {
-  using v_t = eve::element_type_t<T>;
+  auto base = EVE_VALUE(180);
+  auto vmax = eve::valmax(eve::as<EVE_VALUE>());
+  auto vmin = eve::valmin(eve::as<EVE_VALUE>());
 
-  auto base = v_t(180);
-  auto vmax = eve::valmax(eve::as<v_t>());
-  auto vmin = eve::valmin(eve::as<v_t>());
-
-  v_t x[] = { base/8, -base/8, base/4, -base/4
+  EVE_VALUE x[] = { base/8, -base/8, base/4, -base/4
             , base, -base, 10*base, -10*base
-            , v_t(1000000), v_t(-1000000), v_t(1000000000), v_t(-1000000000)
+            , EVE_VALUE(1000000), EVE_VALUE(-1000000), EVE_VALUE(1000000000), EVE_VALUE(-1000000000)
             , vmax, vmin, vmax/10000, vmin/10000
             };
 
   for(auto v : x)
   {
-    auto [sin_, cos_] = eve::medium(eve::sindcosd)(T(v));
-    TTS_ULP_EQUAL(sin_, eve::sind(T(v)), 0.5);
-    TTS_ULP_EQUAL(cos_, eve::cosd(T(v)), 0.5);
+    auto [sin_, cos_] = eve::medium(eve::sindcosd)(EVE_TYPE(v));
+    TTS_ULP_EQUAL(sin_, eve::sind(EVE_TYPE(v)), 0.5);
+    TTS_ULP_EQUAL(cos_, eve::cosd(EVE_TYPE(v)), 0.5);
   }
 }

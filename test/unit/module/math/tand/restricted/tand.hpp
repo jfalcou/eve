@@ -15,26 +15,26 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::restricted(eve::tand) return type", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::tand) return type")
 {
-  TTS_EXPR_IS(eve::restricted(eve::tand)(T()), (T));
+  TTS_EXPR_IS(eve::restricted(eve::tand)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::restricted(eve::tand) behavior", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::tand) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::inf(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::tand)(eve::minf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::restricted(eve::tand)(T( 0 )) , T(0) );
-  TTS_IEEE_EQUAL(eve::restricted(eve::tand)(T(-0.)) , T(0) );
+  TTS_IEEE_EQUAL(eve::restricted(eve::tand)(EVE_TYPE( 0 )) , EVE_TYPE(0) );
+  TTS_IEEE_EQUAL(eve::restricted(eve::tand)(EVE_TYPE(-0.)) , EVE_TYPE(0) );
 
 
-  TTS_ULP_EQUAL(eve::restricted(eve::tand)( T(  1)) , T(1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::restricted(eve::tand)(-T(  1)) , T(-1.74550649282175857651288952197278243141015888398755e-2) , 3 );
-  TTS_ULP_EQUAL(eve::restricted(eve::tand)( T( 45)) , T(1)  , 3 );
-  TTS_ULP_EQUAL(eve::restricted(eve::tand)(-T( 45)) , T(-1) , 3 );
+  TTS_ULP_EQUAL(eve::restricted(eve::tand)( EVE_TYPE(  1)) , EVE_TYPE(1.74550649282175857651288952197278243141015888398755e-2) , 3 );
+  TTS_ULP_EQUAL(eve::restricted(eve::tand)(-EVE_TYPE(  1)) , EVE_TYPE(-1.74550649282175857651288952197278243141015888398755e-2) , 3 );
+  TTS_ULP_EQUAL(eve::restricted(eve::tand)( EVE_TYPE( 45)) , EVE_TYPE(1)  , 3 );
+  TTS_ULP_EQUAL(eve::restricted(eve::tand)(-EVE_TYPE( 45)) , EVE_TYPE(-1) , 3 );
 }

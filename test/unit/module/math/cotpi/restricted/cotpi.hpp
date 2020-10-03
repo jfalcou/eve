@@ -16,23 +16,23 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::restricted(eve::cotpi) return type", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::cotpi) return type")
 {
-  TTS_EXPR_IS(eve::restricted(eve::cotpi)(T()), T);
+  TTS_EXPR_IS(eve::restricted(eve::cotpi)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::restricted(eve::cotpi) behavior", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::cotpi) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::inf(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::inf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(eve::minf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(T( 0      )), eve::inf(eve::as<T>()) );
-  TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(T(-0.     )), eve::minf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(EVE_TYPE( 0      )), eve::inf(eve::as<EVE_TYPE>()) );
+  TTS_IEEE_EQUAL(eve::restricted(eve::cotpi)(EVE_TYPE(-0.     )), eve::minf(eve::as<EVE_TYPE>()));
 
-  TTS_ULP_EQUAL(eve::restricted(eve::cotpi)(T( 0.125) ), T(2.414213562373095048801688724209698078569671875377  ), 0.5);
-  TTS_ULP_EQUAL(eve::restricted(eve::cotpi)(T(-0.125) ), T(-2.414213562373095048801688724209698078569671875377 ), 0.5);
+  TTS_ULP_EQUAL(eve::restricted(eve::cotpi)(EVE_TYPE( 0.125) ), EVE_TYPE(2.414213562373095048801688724209698078569671875377  ), 0.5);
+  TTS_ULP_EQUAL(eve::restricted(eve::cotpi)(EVE_TYPE(-0.125) ), EVE_TYPE(-2.414213562373095048801688724209698078569671875377 ), 0.5);
 }

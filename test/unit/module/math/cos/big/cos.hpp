@@ -17,35 +17,34 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::big(eve::cos) return type", EVE_TYPE)
+TTS_CASE("Check eve::big(eve::cos) return type")
 {
-  TTS_EXPR_IS(eve::big(eve::cos)(T(0)), T);
+  TTS_EXPR_IS(eve::big(eve::cos)(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::big(eve::cos) behavior", EVE_TYPE)
+TTS_CASE("Check eve::big(eve::cos) behavior")
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::nan(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::inf(eve::as<T>())) , (eve::nan(eve::as<T>())) );
-    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::minf(eve::as<T>())), (eve::nan(eve::as<T>())) );
+    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::nan(eve::as<EVE_TYPE>())) , (eve::nan(eve::as<EVE_TYPE>())) );
+    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::inf(eve::as<EVE_TYPE>())) , (eve::nan(eve::as<EVE_TYPE>())) );
+    TTS_IEEE_EQUAL(eve::big(eve::cos)(eve::minf(eve::as<EVE_TYPE>())), (eve::nan(eve::as<EVE_TYPE>())) );
   }
 
   auto std_cos = [](auto e) { return std::cos(double(e)); };
 
-  TTS_IEEE_EQUAL( eve::big(eve::cos)(T(-0.)), T(1) );
-  TTS_IEEE_EQUAL( eve::big(eve::cos)(T( 0.)), T(1) );
+  TTS_IEEE_EQUAL( eve::big(eve::cos)(EVE_TYPE(-0.)), EVE_TYPE(1) );
+  TTS_IEEE_EQUAL( eve::big(eve::cos)(EVE_TYPE( 0.)), EVE_TYPE(1) );
 
-  TTS_ULP_EQUAL(eve::big(eve::cos)( T(1)           )         , T(std_cos(1.0))                   , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)(-T(1)           )         , T(std_cos(-1.0))                  , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)( eve::pio_4(eve::as<T>()))         , T(std_cos( eve::pio_4(eve::as<v_t>())))    , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)(-eve::pio_4(eve::as<T>()))         , T(std_cos(-eve::pio_4(eve::as<v_t>())))    , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)( T(100000.0)    )         , T(std_cos(100000.0))              , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)(-T(100000.0)    )         , T(std_cos(-100000.0))             , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)( T(100000000.0) )         , T(std_cos(100000000.0))           , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)(-T(100000000.0) )         , T(std_cos(-100000000.0))          , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)( T(eve::valmax(eve::as<T>()))    ) , T(std_cos(eve::valmax(eve::as<v_t>()))   ) , 0.5);
-  TTS_ULP_EQUAL(eve::big(eve::cos)( T(eve::valmax(eve::as<T>())/10) ) , T(std_cos(eve::valmax(eve::as<v_t>())/10 )), 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(1)           )         , EVE_TYPE(std_cos(1.0))                   , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)(-EVE_TYPE(1)           )         , EVE_TYPE(std_cos(-1.0))                  , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( eve::pio_4(eve::as<EVE_TYPE>()))         , EVE_TYPE(std_cos( eve::pio_4(eve::as<EVE_VALUE>())))    , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)(-eve::pio_4(eve::as<EVE_TYPE>()))         , EVE_TYPE(std_cos(-eve::pio_4(eve::as<EVE_VALUE>())))    , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(100000.0)    )         , EVE_TYPE(std_cos(100000.0))              , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)(-EVE_TYPE(100000.0)    )         , EVE_TYPE(std_cos(-100000.0))             , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(100000000.0) )         , EVE_TYPE(std_cos(100000000.0))           , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)(-EVE_TYPE(100000000.0) )         , EVE_TYPE(std_cos(-100000000.0))          , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(eve::valmax(eve::as<EVE_TYPE>()))    ) , EVE_TYPE(std_cos(eve::valmax(eve::as<EVE_VALUE>()))   ) , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(eve::valmax(eve::as<EVE_TYPE>())/10) ) , EVE_TYPE(std_cos(eve::valmax(eve::as<EVE_VALUE>())/10 )), 0.5);
 }

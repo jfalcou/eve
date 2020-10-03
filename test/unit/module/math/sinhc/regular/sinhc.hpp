@@ -12,15 +12,15 @@
 #include <eve/constant/half.hpp>
 
 
-TTS_CASE_TPL("Check eve::sinhc return type", EVE_TYPE)
+TTS_CASE("Check eve::sinhc return type")
 {
-  TTS_EXPR_IS(eve::sinhc(T(0)), T);
+  TTS_EXPR_IS(eve::sinhc(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sinhc behavior", EVE_TYPE)
+TTS_CASE("Check eve::sinhc behavior")
 {
-  TTS_ULP_EQUAL(eve::sinhc(T(0)), T(1), 0.5);
-  TTS_ULP_EQUAL(eve::sinhc(T(1)), eve::sinh(T(1)), 0.5);
-  TTS_ULP_EQUAL(eve::sinhc(T(2)), eve::sinh(T(2))*eve::half(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinhc(T(-1)), eve::sinh(T(1)), 0.5);
+  TTS_ULP_EQUAL(eve::sinhc(EVE_TYPE(0)), EVE_TYPE(1), 0.5);
+  TTS_ULP_EQUAL(eve::sinhc(EVE_TYPE(1)), eve::sinh(EVE_TYPE(1)), 0.5);
+  TTS_ULP_EQUAL(eve::sinhc(EVE_TYPE(2)), eve::sinh(EVE_TYPE(2))*eve::half(eve::as<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinhc(EVE_TYPE(-1)), eve::sinh(EVE_TYPE(1)), 0.5);
 }

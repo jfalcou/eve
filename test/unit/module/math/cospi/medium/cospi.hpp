@@ -14,9 +14,9 @@
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::medium(eve::cospi) return type", EVE_TYPE)
+TTS_CASE("Check eve::medium(eve::cospi) return type")
 {
-  TTS_EXPR_IS(eve::medium(eve::cospi)(T(0)), T);
+  TTS_EXPR_IS(eve::medium(eve::cospi)(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::medium(eve::cospi) behavior", EVE_TYPE)

@@ -15,12 +15,12 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::asind return type", EVE_TYPE)
+TTS_CASE("Check eve::asind return type")
 {
-  TTS_EXPR_IS(eve::asind(T(0)), T);
+  TTS_EXPR_IS(eve::asind(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::asind behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::asind behavior")
 {
   using eve::all;
   using eve::is_negative;
@@ -28,19 +28,19 @@ TTS_CASE_TPL("Check eve::eve::asind behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_nans )
   {
-    TTS_IEEE_EQUAL(eve::asind(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::asind(T(2))          , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::asind(T(-2))         , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::asind(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asind(EVE_TYPE(2))          , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::asind(EVE_TYPE(-2))         , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_ULP_EQUAL(eve::asind(T( 0.5)) , T(30) , 0.5);
-  TTS_ULP_EQUAL(eve::asind(T(-0.5)) , T(-30), 0.5);
-  TTS_ULP_EQUAL(eve::asind(T(-1. )) , T(-90), 0.5);
-  TTS_ULP_EQUAL(eve::asind(T( 1. )) , T(90) , 0.5);
-  TTS_ULP_EQUAL(eve::asind(T( 0. )) , T(0)  , 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 0.5)) , EVE_TYPE(30) , 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE(-0.5)) , EVE_TYPE(-30), 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE(-1. )) , EVE_TYPE(-90), 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 1. )) , EVE_TYPE(90) , 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE( 0. )) , EVE_TYPE(0)  , 0.5);
 
-  TTS_ULP_EQUAL(eve::asind(T(-0.)), T(0), 0.5);
+  TTS_ULP_EQUAL(eve::asind(EVE_TYPE(-0.)), EVE_TYPE(0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::asind(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::asind(T(0))))   );
+  TTS_EXPECT( all(is_negative(eve::asind(EVE_TYPE(-0.)))) );
+  TTS_EXPECT( all(is_positive(eve::asind(EVE_TYPE(0))))   );
 }

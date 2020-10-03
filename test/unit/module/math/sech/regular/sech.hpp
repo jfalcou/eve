@@ -19,28 +19,26 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::sech return type", EVE_TYPE)
+TTS_CASE("Check eve::sech return type")
 {
-  TTS_EXPR_IS(eve::sech(T()), T);
+  TTS_EXPR_IS(eve::sech(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sech behavior", EVE_TYPE)
+TTS_CASE("Check eve::sech behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::sech(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::sech(eve::inf(eve::as<T>())) , T(0)          );
-    TTS_IEEE_EQUAL(eve::sech(eve::minf(eve::as<T>())), T(0)          );
+    TTS_IEEE_EQUAL(eve::sech(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::sech(eve::inf(eve::as<EVE_TYPE>())) , EVE_TYPE(0)          );
+    TTS_IEEE_EQUAL(eve::sech(eve::minf(eve::as<EVE_TYPE>())), EVE_TYPE(0)          );
 
-    TTS_EXPECT(eve::all(eve::is_positive(eve::sech(eve::inf(eve::as<T>())))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::sech(eve::minf(eve::as<T>())))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::sech(eve::inf(eve::as<EVE_TYPE>())))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::sech(eve::minf(eve::as<EVE_TYPE>())))));
   }
 
-  TTS_ULP_EQUAL(eve::sech( T(1)), T(eve::rec(std::cosh(v_t(1))))  , 0.5);
-  TTS_ULP_EQUAL(eve::sech(-T(1)), T(eve::rec(std::cosh(v_t(-1)))) , 0.5);
+  TTS_ULP_EQUAL(eve::sech( EVE_TYPE(1)), EVE_TYPE(eve::rec(std::cosh(EVE_VALUE(1))))  , 0.5);
+  TTS_ULP_EQUAL(eve::sech(-EVE_TYPE(1)), EVE_TYPE(eve::rec(std::cosh(EVE_VALUE(-1)))) , 0.5);
 
-  TTS_IEEE_EQUAL(eve::sech(T( 0 )), T(1));
-  TTS_IEEE_EQUAL(eve::sech(T(-0.)), T(1));
+  TTS_IEEE_EQUAL(eve::sech(EVE_TYPE( 0 )), EVE_TYPE(1));
+  TTS_IEEE_EQUAL(eve::sech(EVE_TYPE(-0.)), EVE_TYPE(1));
 }

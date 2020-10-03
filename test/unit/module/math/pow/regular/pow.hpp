@@ -18,14 +18,10 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check pow_abs return type", EVE_TYPE)
+TTS_CASE("Check pow_abs return type")
 {
-  if (eve::floating_value<T>)
-  {
-    TTS_EXPR_IS(eve::pow(T(0), T(0)), T);
-  }
-
-  TTS_EXPR_IS(eve::pow(T(0), int(0)), T);
+  TTS_EXPR_IS(eve::pow(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::pow(EVE_TYPE(0), int(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("pow conformity", EVE_TYPE)
@@ -67,6 +63,7 @@ TTS_CASE_TPL("pow conformity", EVE_TYPE)
   if constexpr(!eve::real_scalar_value<T>)
   {
     using v_t = eve::element_type_t<T>;
+
     if constexpr(std::is_floating_point_v < v_t > )
     {
       using w8_t =  eve::wide<v_t, eve::fixed<8>>;

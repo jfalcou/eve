@@ -15,9 +15,9 @@
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::raw(eve::pow) return type", EVE_TYPE)
+TTS_CASE("Check eve::raw(eve::pow) return type")
 {
-  TTS_EXPR_IS(eve::raw(eve::pow)(T(0), T(0)), T);
+  TTS_EXPR_IS(eve::raw(eve::pow)(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::raw(eve::pow) behavior", EVE_TYPE)

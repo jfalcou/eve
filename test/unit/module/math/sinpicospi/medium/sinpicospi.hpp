@@ -13,24 +13,22 @@
 #include <eve/function/cospi.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check sinpicospi return type", EVE_TYPE)
+TTS_CASE("Check sinpicospi return type")
 {
-  TTS_EXPR_IS( eve::medium(eve::sinpicospi)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS( eve::medium(eve::sinpicospi)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check (eve::sinpicospi behavior", EVE_TYPE)
+TTS_CASE("Check (eve::sinpicospi behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   static const int N = 10;
-  v_t x[N]  = {  v_t(1)/8, -v_t(1)/8, v_t(1)/4, -v_t(1)/4, v_t(1)
-              , v_t(-1), v_t(10), v_t(-10), v_t(1000000), v_t(-1000000)
-              };
+  EVE_VALUE x[N]  = { EVE_VALUE(1)/8, -EVE_VALUE(1)/8, EVE_VALUE(1)/4, -EVE_VALUE(1)/4, EVE_VALUE(1)
+                    , EVE_VALUE(-1), EVE_VALUE(10), EVE_VALUE(-10), EVE_VALUE(1000000), EVE_VALUE(-1000000)
+                    };
 
   for(int i=0; i < N ; ++i)
   {
-    auto [p0, p1] = eve::medium(eve::sinpicospi)(T(x[i]));
-    TTS_ULP_EQUAL(p0, eve::sinpi(T(x[i])), 0.5);
-    TTS_ULP_EQUAL(p1, eve::cospi(T(x[i])), 0.5);
+    auto [p0, p1] = eve::medium(eve::sinpicospi)(EVE_TYPE(x[i]));
+    TTS_ULP_EQUAL(p0, eve::sinpi(EVE_TYPE(x[i])), 0.5);
+    TTS_ULP_EQUAL(p1, eve::cospi(EVE_TYPE(x[i])), 0.5);
   }
 }

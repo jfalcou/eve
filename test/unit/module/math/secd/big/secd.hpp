@@ -17,29 +17,29 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::big(eve::secd) return type", EVE_TYPE)
+TTS_CASE("Check eve::big(eve::secd) return type")
 {
-  TTS_EXPR_IS(eve::big(eve::secd)(T()), T);
+  TTS_EXPR_IS(eve::big(eve::secd)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::big(eve::secd) behavior", EVE_TYPE)
+TTS_CASE("Check eve::big(eve::secd) behavior")
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::inf(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::nan(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::inf(eve::as<EVE_TYPE>()))  , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::big(eve::secd)(eve::minf(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
   }
 
-  TTS_IEEE_EQUAL(eve::big(eve::secd)(T( 0  )), T(1));
-  TTS_IEEE_EQUAL(eve::big(eve::secd)(T(-0. )), T(1));
+  TTS_IEEE_EQUAL(eve::big(eve::secd)(EVE_TYPE( 0  )), EVE_TYPE(1));
+  TTS_IEEE_EQUAL(eve::big(eve::secd)(EVE_TYPE(-0. )), EVE_TYPE(1));
 
-  TTS_ULP_EQUAL(eve::big(eve::secd)( T(  1)  ) , T(1.00015232804390766542842643421257380147891180422143)  , 3);
-  TTS_ULP_EQUAL(eve::big(eve::secd)(-T(  1)  ) , T(1.00015232804390766542842643421257380147891180422143)  , 3);
-  TTS_ULP_EQUAL(eve::big(eve::secd)( T( 45.0)) , T(1.41421356237309504880168872420969807856967187537694)  , 5);
-  TTS_ULP_EQUAL(eve::big(eve::secd)(-T( 45.0)) , T(1.41421356237309504880168872420969807856967187537694)  , 5);
-  TTS_ULP_EQUAL(eve::big(eve::secd)( T(500.0)) , T(-1.30540728933227860459313349292274081599849729126374) , 3);
-  TTS_ULP_EQUAL(eve::big(eve::secd)(-T(500.0)) , T(-1.30540728933227860459313349292274081599849729126374) , 3);
-  auto z = eve::maxflint(eve::as<T>())*180;
-  TTS_ULP_EQUAL(eve::big(eve::secd)(z) , T(1) , 0.5);
+  TTS_ULP_EQUAL(eve::big(eve::secd)( EVE_TYPE(  1)  ) , EVE_TYPE(1.00015232804390766542842643421257380147891180422143)  , 3);
+  TTS_ULP_EQUAL(eve::big(eve::secd)(-EVE_TYPE(  1)  ) , EVE_TYPE(1.00015232804390766542842643421257380147891180422143)  , 3);
+  TTS_ULP_EQUAL(eve::big(eve::secd)( EVE_TYPE( 45.0)) , EVE_TYPE(1.41421356237309504880168872420969807856967187537694)  , 5);
+  TTS_ULP_EQUAL(eve::big(eve::secd)(-EVE_TYPE( 45.0)) , EVE_TYPE(1.41421356237309504880168872420969807856967187537694)  , 5);
+  TTS_ULP_EQUAL(eve::big(eve::secd)( EVE_TYPE(500.0)) , EVE_TYPE(-1.30540728933227860459313349292274081599849729126374) , 3);
+  TTS_ULP_EQUAL(eve::big(eve::secd)(-EVE_TYPE(500.0)) , EVE_TYPE(-1.30540728933227860459313349292274081599849729126374) , 3);
+  auto z = eve::maxflint(eve::as<EVE_TYPE>())*180;
+  TTS_ULP_EQUAL(eve::big(eve::secd)(z) , EVE_TYPE(1) , 0.5);
 }

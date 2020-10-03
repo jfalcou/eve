@@ -15,27 +15,26 @@
 #include <eve/constant/valmax.hpp>
 #include <utility>
 
-TTS_CASE_TPL("Check  eve::big(eve::sinpicospi) return type", EVE_TYPE)
+TTS_CASE("Check  eve::big(eve::sinpicospi) return type")
 {
-  TTS_EXPR_IS(eve::big(eve::sinpicospi)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::big(eve::sinpicospi)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check  eve::big(eve::sinpicospi) behavior", EVE_TYPE)
+TTS_CASE("Check  eve::big(eve::sinpicospi) behavior")
 {
-  using v_t = eve::element_type_t<T>;
-  v_t values[] =  { v_t(1)/8          , -v_t(1)/8
-                        , v_t(1)/4          , -v_t(1)/4
-                        , v_t(1)            , v_t(-1)
-                        , v_t(10)           , v_t(-10)
-                        , v_t(1000000)      , v_t(-1000000)
-                        , v_t(1000000000)   , v_t(-1000000000)
-                        , eve::valmax(eve::as<v_t>()), eve::valmin(eve::as<v_t>())
-                        , eve::valmax(eve::as<v_t>())/100000, eve::valmin(eve::as<v_t>())/10000
+  EVE_VALUE values[] =  { EVE_VALUE(1)/8          , -EVE_VALUE(1)/8
+                        , EVE_VALUE(1)/4          , -EVE_VALUE(1)/4
+                        , EVE_VALUE(1)            , EVE_VALUE(-1)
+                        , EVE_VALUE(10)           , EVE_VALUE(-10)
+                        , EVE_VALUE(1000000)      , EVE_VALUE(-1000000)
+                        , EVE_VALUE(1000000000)   , EVE_VALUE(-1000000000)
+                        , eve::valmax(eve::as<EVE_VALUE>()), eve::valmin(eve::as<EVE_VALUE>())
+                        , eve::valmax(eve::as<EVE_VALUE>())/100000, eve::valmin(eve::as<EVE_VALUE>())/10000
                         };
 
   for(auto v : values)
   {
-    T e(v);
+    EVE_TYPE e(v);
     auto [p0, p1] = eve::big(eve::sinpicospi)(e);
     TTS_ULP_EQUAL(p0, eve::sinpi(e), 0.5);
     TTS_ULP_EQUAL(p1, eve::cospi(e), 0.5);

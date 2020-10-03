@@ -14,22 +14,21 @@
 
 #define EVE_SIMD_TESTS
 
-using EVE_VALUE = ${target};
+#define EVE_VALUE ${target}
 
 #if !defined(EVE_CUSTOM_CARDINAL)
 
-
 // Native size test
-using EVE_TYPE = eve::wide<${target}>;
-inline constexpr auto EVE_CARDINAL = ::eve::cardinal_v<EVE_TYPE>;
+#define EVE_TYPE      ::eve::wide<${target}>
+#define EVE_CARDINAL  ::eve::cardinal_v<::eve::wide<${target}>>
 #include "${header}.hpp"
 
 #else
 
 #if EVE_CUSTOM_CARDINAL > 0
-using EVE_TYPE = eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
+#define EVE_TYPE eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
 #else
-using EVE_TYPE = eve::wide<EVE_VALUE>
+#define EVE_TYPE eve::wide<EVE_VALUE>
 #endif
 
 // Specific  EVE_CARDINAL test

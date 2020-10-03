@@ -14,9 +14,9 @@
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::restricted(eve::cospi) return type", EVE_TYPE)
+TTS_CASE("Check eve::restricted(eve::cospi) return type")
 {
-  TTS_EXPR_IS(eve::restricted(eve::cospi)(T(0)), T);
+  TTS_EXPR_IS(eve::restricted(eve::cospi)(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::restricted(eve::cospi) behavior", EVE_TYPE)

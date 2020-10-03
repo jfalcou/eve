@@ -15,19 +15,19 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/zero.hpp>
 
-TTS_CASE_TPL("Check eve::sinpic return type", EVE_TYPE)
+TTS_CASE("Check eve::sinpic return type")
 {
-  TTS_EXPR_IS(eve::sinpic(T(0)), T);
+  TTS_EXPR_IS(eve::sinpic(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sinpic behavior", EVE_TYPE)
+TTS_CASE("Check eve::sinpic behavior")
 {
-  TTS_ULP_EQUAL(eve::sinpic(T(0)), T(1), 0.5);
-  TTS_ULP_EQUAL(eve::sinpic(-T(1)/T(2)), T(2)/(eve::pi(eve::as<T>())), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(-T(1)/T(4)), eve::sinpi(T(1)/T(4))*T(4)/(eve::pi(eve::as<T>())), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(T(1)/T(2)),  T(2)/(eve::pi(eve::as<T>())), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(T(1)/T(4)), eve::sinpi(T(1)/T(4))*T(4)/(eve::pi(eve::as<T>())), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(eve::eps(eve::as<T>())), eve::one(eve::as<T>()), 1.0);
-  TTS_ULP_EQUAL(eve::sinpic(eve::zero(eve::as<T>())), eve::one(eve::as<T>()), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(EVE_TYPE(0)), EVE_TYPE(1), 0.5);
+  TTS_ULP_EQUAL(eve::sinpic(-EVE_TYPE(1)/EVE_TYPE(2)), EVE_TYPE(2)/(eve::pi(eve::as<EVE_TYPE>())), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(-EVE_TYPE(1)/EVE_TYPE(4)), eve::sinpi(EVE_TYPE(1)/EVE_TYPE(4))*EVE_TYPE(4)/(eve::pi(eve::as<EVE_TYPE>())), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(EVE_TYPE(1)/EVE_TYPE(2)),  EVE_TYPE(2)/(eve::pi(eve::as<EVE_TYPE>())), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(EVE_TYPE(1)/EVE_TYPE(4)), eve::sinpi(EVE_TYPE(1)/EVE_TYPE(4))*EVE_TYPE(4)/(eve::pi(eve::as<EVE_TYPE>())), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(eve::eps(eve::as<EVE_TYPE>())), eve::one(eve::as<EVE_TYPE>()), 1.0);
+  TTS_ULP_EQUAL(eve::sinpic(eve::zero(eve::as<EVE_TYPE>())), eve::one(eve::as<EVE_TYPE>()), 1.0);
 
 }

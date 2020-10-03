@@ -16,24 +16,21 @@
 #include <eve/constant/pi.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check eve::small(eve::sindcosd) return type", EVE_TYPE)
+TTS_CASE("Check eve::small(eve::sindcosd) return type")
 {
-  TTS_EXPR_IS(eve::small(eve::sindcosd)(T()), (std::tuple<T, T>));
+  TTS_EXPR_IS(eve::small(eve::sindcosd)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::small(eve::sindcosd) behavior", EVE_TYPE)
+TTS_CASE("Check eve::small(eve::sindcosd) behavior")
 {
-  using v_t = eve::element_type_t<T>;
+  auto base = EVE_VALUE(180);
 
-  auto base = v_t(180);
-
-  v_t x[] = { base/8, -base/8, base/4, -base/4, base/2, -base/2};
+  EVE_VALUE x[] = { base/8, -base/8, base/4, -base/4, base/2, -base/2};
 
   for(auto v : x)
   {
-    auto [sin_, cos_] = eve::small(eve::sindcosd)(T(v));
-    TTS_ULP_EQUAL(sin_, eve::sind(T(v)), 0.5);
-    TTS_ULP_EQUAL(cos_, eve::cosd(T(v)), 0.5);
+    auto [sin_, cos_] = eve::small(eve::sindcosd)(EVE_TYPE(v));
+    TTS_ULP_EQUAL(sin_, eve::sind(EVE_TYPE(v)), 0.5);
+    TTS_ULP_EQUAL(cos_, eve::cosd(EVE_TYPE(v)), 0.5);
   }
-
 }
