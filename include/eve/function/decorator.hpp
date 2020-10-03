@@ -8,10 +8,13 @@
 **/
 //==================================================================================================
 #pragma once
-// **=======================================================
-// helper file to include all arithmetic functions
-#include <eve/function/combine.hpp>
-#include <eve/function/extract.hpp>
-#include <eve/function/lookup.hpp>
-//#include <eve/function/shuffle.hpp> TO DO
-//#include <eve/function/slice.hpp>   TO DO   ??
+
+// helper file to include all predicates functions and operators
+#include <eve/function/numeric.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
+#include <eve/function/saturated.hpp>
+#include <eve/function/trigo_tags.hpp>
+#include <eve/function/converter.hpp>
+#include <eve/function/roundings.hpp>

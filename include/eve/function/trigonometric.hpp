@@ -12,7 +12,7 @@
 // helper file to include all inverse trigonometric functions
 #include <eve/function/cos.hpp>
 #include <eve/function/cosd.hpp>
-#include <eve/function/cospi.hpp
+#include <eve/function/cospi.hpp>
 #include <eve/function/cot.hpp>
 #include <eve/function/cotd.hpp>
 #include <eve/function/cotpi.hpp>
@@ -23,7 +23,7 @@
 #include <eve/function/secd.hpp>
 #include <eve/function/secpi.hpp>
 #include <eve/function/sin.hpp>
-#include <eve/function/sinc.hpp
+#include <eve/function/sinc.hpp>
 #include <eve/function/sind.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/function/sinpic.hpp>

@@ -11,6 +11,4 @@
 
 // helper file to include all predicates functions and operators
 #include <eve/function/convert.hpp>
-#include <eve/function/tofloat.hpp>
-#include <eve/function/toint.hpp>
-#include <eve/function/touint.hpp>
+#include <eve/function/converter.hpp>
