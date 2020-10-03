@@ -19,7 +19,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(invlog10_, invlog10);
+  EVE_MAKE_CALLABLE(invlog_10_, invlog_10);
 
   namespace detail
   {
