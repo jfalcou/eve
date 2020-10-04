@@ -17,8 +17,11 @@
 #include <eve/function/rec.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/copysign.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/nan.hpp>
+#include <eve/function/is_not_nan.hpp>
 #include <type_traits>
-#include <eve/detail/horizontal_choices.hpp>
+#include <eve/detail/hz_device.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +34,7 @@ namespace eve::detail
       auto x  = eve::abs(a0);
       auto rx = x;
       auto xx = sqr(x);
-      auto dawson1 = [&xx, &x](){
+      auto dawson1 = [](auto xx, auto x){
         if constexpr(std::is_same_v<elt_t, float>)
         {
           return x*horn<T,
@@ -91,10 +94,7 @@ namespace eve::detail
           >(xx);
         }
       };
-      auto recxx = [&xx, &rx, &x](){ rx = rec(x); xx = sqr(rx); };
-
-
-      auto dawson2 = [&xx, &rx, &x](){
+      auto dawson2 = [](auto xx, auto rx, auto x){
         if constexpr(std::is_same_v<elt_t, float>)
         {
           auto num = horn<T,
@@ -156,7 +156,7 @@ namespace eve::detail
           return average(rx, xx*num/(denom*x));
         }
       };
-      auto dawson3 = [&xx, &rx, &x](){
+      auto dawson3 = [](auto xx, auto rx, auto x){
         if constexpr(std::is_same_v<elt_t, float>)
         {
           auto num = horn<T,
@@ -197,21 +197,27 @@ namespace eve::detail
         }
 
       };
-      auto dawson4 = [&rx](){
-        std::cout << "d4 rx " << rx << std::endl;
+      auto dawson4 = [](auto rx){
         return rx*T(0.5);
       };
 
-
-      hz_device<T> hz;
-      hz.first_interval(dawson1, elt_t(3.25), x) &&
-        hz.intermediate(recxx) &&
-        hz.next_interval(dawson2, elt_t(6.25)) &&
-        hz.last_interval(dawson3, dawson4, 1.0e9);
-      auto r = eve::copysign(hz.result(), a0);
-      if constexpr(eve::platform::supports_nans)
-        r = if_else(is_nan(a0), allbits, r);
-      return r;
+      auto r = nan(as<T>());
+      auto notdone =  is_not_nan(x);
+      notdone = first_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
+      rx = rec(x); xx = sqr(rx);
+      if(any(notdone))
+      {
+        notdone = next_interval(dawson2,  notdone, x < elt_t(6.25), r, xx, rx, x);
+        if(any(notdone))
+        {
+          notdone = next_interval(dawson3,  notdone, x < elt_t(1.0e9), r, xx, rx, x);
+          if(any(notdone))
+          {
+            last_interval(dawson4, x >= elt_t(1.0e9), r, rx);
+          }
+        }
+      }
+      return eve::copysign(r, a0);
     }
     else
       return apply_over(dawson, a0);
