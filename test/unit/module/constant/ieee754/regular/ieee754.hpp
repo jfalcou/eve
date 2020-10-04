@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check ieee754 constants behavior", EVE_TYPE)
   if constexpr(std::is_same_v<elt_t, float>)
   {
     TTS_EQUAL(eve::eps(as<T>()), eve::exp2(T(-23.0f)));
-    TTS_EQUAL(eve::expobits_mask(as<T>()), i_t(0x7f800000U));
+    TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7f800000U));
     TTS_EQUAL(eve::limitexponent(as<T>()), i_t(128));
     TTS_EQUAL(eve::logeps(as<T>()), T(-15.942384719848632812f));
     TTS_EQUAL(eve::mantissamask(as<T>()), i_t(0x807FFFFFU));
@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check ieee754 constants behavior", EVE_TYPE)
   else if constexpr(std::is_same_v<elt_t, double>)
   {
     TTS_EQUAL(eve::eps(as<T>()), eve::exp2(T(-52.0)));
-    TTS_EQUAL(eve::expobits_mask(as<T>()), i_t(0x7ff0000000000000ULL));
+    TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7ff0000000000000ULL));
     TTS_EQUAL(eve::limitexponent(as<T>()), i_t(1024));
     TTS_EQUAL(eve::logeps(as<T>()), T(-36.043653389117153552));
     TTS_EQUAL(eve::mantissamask(as<T>()), i_t(0x800FFFFFFFFFFFFFULL));

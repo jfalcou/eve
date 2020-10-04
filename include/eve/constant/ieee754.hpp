@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/constant/eps.hpp>
-#include <eve/constant/expobits_mask.hpp>
+#include <eve/constant/exponentmask.hpp>
 #include <eve/constant/limitexponent.hpp>
 #include <eve/constant/logeps.hpp>
 #include <eve/constant/mantissamask.hpp>

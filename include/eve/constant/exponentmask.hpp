@@ -17,17 +17,18 @@
 
 namespace eve
 {
-  //TODO: RENOMMAGE EN  Exponentmask
-  EVE_MAKE_CALLABLE(expobits_mask_, expobits_mask_);
+  EVE_MAKE_CALLABLE(exponentmask_, exponentmask);
 
-  template<floating_value T>
-  EVE_FORCEINLINE auto expobits_mask(eve::as_<T> const & = {}) noexcept
+  namespace detail
   {
-    using t_t = detail::value_type_t<T>;
-    using i_t = detail::as_integer_t<T, signed>;
-    if constexpr(std::is_same_v<t_t, float>) return i_t(0x7f800000);
-    else if constexpr(std::is_same_v<t_t, double >) return i_t(0x7ff0000000000000LL);
-  }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto exponentmask_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
+    {
+      using t_t = detail::value_type_t<T>;
+      using i_t = detail::as_integer_t<T>;
 
-  EVE_MAKE_NAMED_CONSTANT(expobits_mask_, Expobits_mask);
+      if constexpr(std::is_same_v<t_t, float>) return i_t(0x7f800000);
+      else if constexpr(std::is_same_v<t_t, double >) return i_t(0x7ff0000000000000LL);
+    }
+  }
 }

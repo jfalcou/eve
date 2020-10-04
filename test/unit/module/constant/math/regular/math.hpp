@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check basic constants behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve::pio_4(as<T>()),   eve::atan(T(1)),0.5);
   TTS_ULP_EQUAL(eve::sqrt_2(as<T>()), eve::sqrt(T(2)),0.5);
   TTS_ULP_EQUAL(eve::invsqrt_2(as<T>()), eve::sqrt(T(2))/2,0.5);
-  TTS_ULP_EQUAL(eve::invlog10(as<T>()), eve::rec(eve::log(T(10))),0.5);
+  TTS_ULP_EQUAL(eve::invlog_10(as<T>()), eve::rec(eve::log(T(10))),0.5);
   TTS_ULP_EQUAL(eve::invlog10_2(as<T>()), eve::rec(eve::log10(T(2))),0.5);
   TTS_ULP_EQUAL(eve::twopi(as<T>()), 8*eve::atan(T(1)),0.5);
   TTS_ULP_EQUAL(eve::twoopi(as<T>()), eve::rec(eve::pio_2(as<T>())),0.5);
