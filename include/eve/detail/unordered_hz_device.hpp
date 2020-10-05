@@ -22,11 +22,23 @@
 
 // This is a help for programming efiicient horizontal branching
 // see dawson .hpp for an example
-// the tests can be incompatible or in increasing order when
-// using next interval
 
 namespace eve
 {
+  template <typename F, typename L, typename L1, typename R, typename ...Ts>
+  auto first_interval(F const & f, L  notdone, L1 test, R & r, Ts ... ts) noexcept
+  {
+    auto todo = notdone && test;
+    if constexpr(eve::scalar_value<R>)
+    {
+      if(todo) { r =  f(ts...);  return false_(as(r)); }
+    }
+    else
+    {
+      if(any(todo)) {r = if_else(todo, f(ts...), r); return !todo &&  notdone; };
+    }
+    return notdone;
+  }
 
   template <typename F, typename L, typename L1, typename R, typename ...Ts>
   auto next_interval(F const & f, L notdone, L1 test, R& r, Ts ... ts) noexcept
