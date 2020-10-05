@@ -201,9 +201,9 @@ namespace eve::detail
         return rx*T(0.5);
       };
 
-      auto r = nan(as<T>());
+      auto r = nan(as<T>()); //nan case treated here
       auto notdone =  is_not_nan(x);
-      notdone = first_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
+      notdone = next_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
       rx = rec(x); xx = sqr(rx);
       if(any(notdone))
       {
