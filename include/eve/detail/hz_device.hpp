@@ -32,13 +32,12 @@ namespace eve
     if constexpr(eve::scalar_value<R>)
     {
       if(todo) { r =  f(ts...);  return false_(as(r)); }
-      return notdone;
     }
     else
     {
-      r = if_else(todo, f(ts...), r);
-      return !todo && notdone;
+      if(any(todo)) {r = if_else(todo, f(ts...), r); return !todo &&  notdone; };
     }
+    return notdone;
   }
 
   template <typename F, typename L, typename L1, typename R, typename ...Ts>
@@ -48,13 +47,12 @@ namespace eve
     if constexpr(eve::scalar_value<R>)
     {
       if(todo) { r =  f(ts...); return false_(as(r)); }
-      return notdone;
     }
     else
     {
-      r = if_else(todo, f(ts...), r);
-      return !todo && notdone;
+      if(any(todo)){  r = if_else(todo, f(ts...), r); return !todo && notdone; };
     }
+    return notdone;
   }
 
   template <typename F, typename L, typename R, typename ...Ts>
@@ -67,7 +65,7 @@ namespace eve
     }
     else
     {
-      r = if_else(todo, f(ts...), r);
+      if(any(todo))  r = if_else(todo, f(ts...), r);
       return eve::false_(as(r));
     }
   }
