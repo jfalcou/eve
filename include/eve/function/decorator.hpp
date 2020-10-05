@@ -1,7 +1,6 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
   Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -10,13 +9,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(reldist_, reldist);
-}
-
-#include <eve/module/core/function/scalar/reldist.hpp>
-//#include <eve/module/core/function/simd/reldist.hpp>
-
+// helper file to include all predicates functions and operators
+#include <eve/function/numeric.hpp>
+#include <eve/function/pedantic.hpp>
+#include <eve/function/raw.hpp>
+#include <eve/function/regular.hpp>
+#include <eve/function/saturated.hpp>
+#include <eve/function/trigo_tags.hpp>
+#include <eve/function/converter.hpp>
+#include <eve/function/roundings.hpp>
