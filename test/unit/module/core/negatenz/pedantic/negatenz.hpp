@@ -13,9 +13,9 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::pedantic(eve::negatenz) return type", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::negatenz) return type")
 {
-  TTS_EXPR_IS(eve::pedantic(eve::negatenz)(T(), T()), T);
+  TTS_EXPR_IS(eve::pedantic(eve::negatenz)(EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
 TTS_CASE_TPL(" negatenz behaviour", EVE_TYPE)

@@ -15,10 +15,9 @@
 
 TTS_CASE_TPL("Check eve::is_less return type", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::is_less(  T(),   T() ), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_less(  T(), v_t() ), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_less(v_t(),   T() ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_less( EVE_TYPE()  , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_less( EVE_TYPE()  , EVE_VALUE() ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_less( EVE_VALUE() , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
 }
 
 #if defined(EVE_SIMD_TESTS)

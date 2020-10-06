@@ -13,30 +13,30 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 
-TTS_CASE_TPL("Check eve::fdim return type", EVE_TYPE)
+TTS_CASE("Check eve::fdim return type")
 {
-  TTS_EXPR_IS(eve::fdim(T(), T()), T);
+  TTS_EXPR_IS(eve::fdim(EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL(" fdim behaviour", EVE_TYPE)
+TTS_CASE(" fdim behaviour")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::fdim(eve::inf(eve::as<T>()) , eve::inf(eve::as<T>()))  , T(0));
-    TTS_EQUAL(eve::fdim(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())) , T(0));
+    TTS_EQUAL(eve::fdim(eve::inf(eve::as<EVE_TYPE>()) , eve::inf(eve::as<EVE_TYPE>()))  , EVE_TYPE(0));
+    TTS_EQUAL(eve::fdim(eve::minf(eve::as<EVE_TYPE>()), eve::minf(eve::as<EVE_TYPE>())) , EVE_TYPE(0));
 
-    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<T>()) , T(0)          ), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::fdim(T(0)          , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<T>()) , T(0)          ), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::fdim(T(1)          , eve::nan(eve::as<T>()) ), eve::nan(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<T>()) , T(1)          ), eve::nan(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<EVE_TYPE>()) , eve::nan(eve::as<EVE_TYPE>()) ), eve::nan(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<EVE_TYPE>()) , EVE_TYPE(0)          ), eve::nan(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(EVE_TYPE(0)          , eve::nan(eve::as<EVE_TYPE>()) ), eve::nan(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<EVE_TYPE>()) , EVE_TYPE(0)          ), eve::nan(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(EVE_TYPE(1)          , eve::nan(eve::as<EVE_TYPE>()) ), eve::nan(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::fdim(eve::nan(eve::as<EVE_TYPE>()) , EVE_TYPE(1)          ), eve::nan(eve::as<EVE_TYPE>()), 0);
   }
 
-  TTS_EQUAL(eve::fdim(T(-1), T(-1)) , T(0));
-  TTS_EQUAL(eve::fdim(T( 1), T( 1)) , T(0));
-  TTS_EQUAL(eve::fdim(T( 0), T( 0)) , T(0));
-  TTS_EQUAL(eve::fdim(T( 1), T( 0)) , T(1));
-  TTS_EQUAL(eve::fdim(T( 2), T(-3)) , T(5));
-  TTS_EQUAL(eve::fdim(T( 2), T( 3)) , T(0));
+  TTS_EQUAL(eve::fdim(EVE_TYPE(-1), EVE_TYPE(-1)) , EVE_TYPE(0));
+  TTS_EQUAL(eve::fdim(EVE_TYPE( 1), EVE_TYPE( 1)) , EVE_TYPE(0));
+  TTS_EQUAL(eve::fdim(EVE_TYPE( 0), EVE_TYPE( 0)) , EVE_TYPE(0));
+  TTS_EQUAL(eve::fdim(EVE_TYPE( 1), EVE_TYPE( 0)) , EVE_TYPE(1));
+  TTS_EQUAL(eve::fdim(EVE_TYPE( 2), EVE_TYPE(-3)) , EVE_TYPE(5));
+  TTS_EQUAL(eve::fdim(EVE_TYPE( 2), EVE_TYPE( 3)) , EVE_TYPE(0));
 }

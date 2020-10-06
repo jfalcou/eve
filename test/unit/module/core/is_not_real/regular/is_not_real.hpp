@@ -13,13 +13,13 @@
 #include <eve/function/is_not_real.hpp>
 #include <eve/traits/as_logical.hpp>
 
-TTS_CASE_TPL("Check is_not_real return type", EVE_TYPE)
+TTS_CASE("Check is_not_real return type")
 {
-  TTS_EXPR_IS(eve::is_not_real(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_not_real(EVE_TYPE(0)), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_not_real behavior", EVE_TYPE)
+TTS_CASE("Check eve::is_not_real behavior")
 {
-  TTS_EQUAL(eve::is_not_real(T{0}), eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_not_real(T{2}), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_not_real(EVE_TYPE(0)), eve::false_(eve::as<EVE_TYPE>()));
+  TTS_EQUAL(eve::is_not_real(EVE_TYPE(2)), eve::false_(eve::as<EVE_TYPE>()));
 }

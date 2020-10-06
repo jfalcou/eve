@@ -128,7 +128,7 @@ make_all_units(ROOT unit.core NAME is_not_flint          ARCH scalar simd TYPES 
 make_all_units(ROOT unit.core NAME is_not_greater        ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME is_not_greater_equal  ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME is_not_imag           ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.core NAME is_not_inf            ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.core NAME is_not_infinite       ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME is_not_less           ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME is_not_less_equal     ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME is_not_nan            ARCH scalar simd TYPES ${all_types}     )

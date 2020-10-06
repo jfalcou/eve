@@ -11,14 +11,14 @@
 #include <eve/function/frexp.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check frexp return type", EVE_TYPE)
+TTS_CASE("Check frexp return type")
 {
-  TTS_EXPR_IS(eve::raw(eve::frexp)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::raw(eve::frexp)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::raw(eve::frexp) behavior", EVE_TYPE)
+TTS_CASE("Check eve::raw(eve::frexp) behavior")
 {
-  auto [p0, p1] = eve::raw(eve::frexp)(T(1));
-  TTS_EQUAL(p0, T(0.5));
-  TTS_EQUAL(p1, T(1));
+  auto [p0, p1] = eve::raw(eve::frexp)(EVE_TYPE(1));
+  TTS_EQUAL(p0, EVE_TYPE(0.5));
+  TTS_EQUAL(p1, EVE_TYPE(1));
 }

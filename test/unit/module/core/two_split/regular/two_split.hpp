@@ -11,30 +11,29 @@
 #include <eve/function/two_split.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check two_split return type", EVE_TYPE)
+TTS_CASE("Check two_split return type")
 {
-  TTS_EXPR_IS(eve::two_split(T()), (std::tuple<T,T>) );
+  TTS_EXPR_IS(eve::two_split(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>) );
 }
 
-TTS_CASE_TPL("Check (eve::two_split behavior", EVE_TYPE)
+TTS_CASE("Check (eve::two_split behavior")
 {
   {
-    auto [p0, p1] = eve::two_split(T(1));
-    TTS_EQUAL(p0, T(1));
-    TTS_EQUAL(p1, T(0));
+    auto [p0, p1] = eve::two_split(EVE_TYPE(1));
+    TTS_EQUAL(p0, EVE_TYPE(1));
+    TTS_EQUAL(p1, EVE_TYPE(0));
   }
 
-  if (std::is_same_v<eve::element_type_t<T>, double>)
+  if (std::is_same_v<EVE_VALUE, double>)
   {
-    auto [p0, p1] = eve::two_split(T(1.0e-30));
-    TTS_EQUAL (p0, T(0x1.4484cp-100));
-    TTS_EQUAL (p1, T(-0x1.143d6p-128));
+    auto [p0, p1] = eve::two_split(EVE_TYPE(1.0e-30));
+    TTS_EQUAL (p0, EVE_TYPE( 0x1.4484cp-100));
+    TTS_EQUAL (p1, EVE_TYPE(-0x1.143d6p-128));
   }
   else
   {
-    auto [p0, p1] = eve::two_split(T(1.0e-30));
-    TTS_EQUAL (p0, T(0x1.448p-100f));
-    TTS_EQUAL (p1, T(0x1.3p-114f));
+    auto [p0, p1] = eve::two_split(EVE_TYPE(1.0e-30));
+    TTS_EQUAL (p0, EVE_TYPE(0x1.448p-100f));
+    TTS_EQUAL (p1, EVE_TYPE(0x1.3p-114f));
   }
-
 }

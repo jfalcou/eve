@@ -17,12 +17,10 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/platform.hpp>
-#include <type_traits>
 
-TTS_CASE_TPL("Check bitofsign return type", EVE_TYPE)
+TTS_CASE("Check bitofsign return type")
 {
-  using eve::bitofsign;
-  TTS_EXPR_IS(bitofsign(T()), T);
+  TTS_EXPR_IS(eve::bitofsign(EVE_TYPE()), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
@@ -56,14 +54,12 @@ TTS_CASE_TPL("Check eve::bitofsign behavior", EVE_TYPE)
   else if constexpr( eve::unsigned_value<T> )
   {
     using v_t = eve::element_type_t<T>;
-
     TTS_EQUAL(bitofsign(T(1)), T(0));
     TTS_EQUAL(bitofsign(eve::valmax(eve::as<T>())), T(1ull << (sizeof(v_t)*8-1)));
   }
   else
   {
     using v_t = eve::element_type_t<T>;
-
     TTS_EQUAL(bitofsign(T(-1)), T(1ull << (sizeof(v_t)*8-1)));
     TTS_EQUAL(bitofsign(T( 1)), T(0));
     TTS_EQUAL(bitofsign(T( 0)), T(0));

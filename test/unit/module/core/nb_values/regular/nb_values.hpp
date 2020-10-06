@@ -21,10 +21,10 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::nb_values return type", EVE_TYPE)
+TTS_CASE("Check eve::nb_values return type")
 {
-  using r_t = eve::detail::as_integer_t<T, unsigned>;
-  TTS_EXPR_IS((eve::nb_values(T(0), T(0))), (r_t));
+  using r_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  TTS_EXPR_IS((eve::nb_values(EVE_TYPE(0), EVE_TYPE(0))), (r_t));
 }
 
 TTS_CASE_TPL("Check eve::nb_values  behavior", EVE_TYPE)

@@ -15,22 +15,22 @@
 #include <eve/function/ceil.hpp>
 #include <eve/function/roundings.hpp>
 
-TTS_CASE_TPL("Check eve::round return type", EVE_TYPE)
+TTS_CASE("Check eve::round return type")
 {
-  TTS_EXPR_IS(eve::round(T(0)), T);
+  TTS_EXPR_IS(eve::round(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::upward(eve::round) behavior", EVE_TYPE)
+TTS_CASE("Check eve::upward(eve::round) behavior")
 {
-  TTS_EQUAL(eve::upward      (eve::round)(T(1.7)), eve::ceil   (T(1.7)) );
-  TTS_EQUAL(eve::downward    (eve::round)(T(1.7)), eve::floor  (T(1.7)) );
-  TTS_EQUAL(eve::toward_zero (eve::round)(T(1.7)), eve::trunc  (T(1.7)) );
-  TTS_EQUAL(eve::to_nearest  (eve::round)(T(1.7)), eve::nearest(T(1.7)) );
-  TTS_EQUAL(eve::round(T(1.7))                    , eve::nearest(T(1.7)) );
+  TTS_EQUAL(eve::upward      (eve::round)(EVE_TYPE(1.7)), eve::ceil   (EVE_TYPE(1.7)) );
+  TTS_EQUAL(eve::downward    (eve::round)(EVE_TYPE(1.7)), eve::floor  (EVE_TYPE(1.7)) );
+  TTS_EQUAL(eve::toward_zero (eve::round)(EVE_TYPE(1.7)), eve::trunc  (EVE_TYPE(1.7)) );
+  TTS_EQUAL(eve::to_nearest  (eve::round)(EVE_TYPE(1.7)), eve::nearest(EVE_TYPE(1.7)) );
+  TTS_EQUAL(eve::round(EVE_TYPE(1.7))                    , eve::nearest(EVE_TYPE(1.7)) );
 
-  TTS_EQUAL(eve::upward      (eve::round)(T(1.3)), eve::ceil   (T(1.3)) );
-  TTS_EQUAL(eve::downward    (eve::round)(T(1.3)), eve::floor  (T(1.3)) );
-  TTS_EQUAL(eve::toward_zero (eve::round)(T(1.3)), eve::trunc  (T(1.3)) );
-  TTS_EQUAL(eve::to_nearest  (eve::round)(T(1.3)), eve::nearest(T(1.3)) );
-  TTS_EQUAL(eve::round(T(1.3))                    , eve::nearest(T(1.3)) );
+  TTS_EQUAL(eve::upward      (eve::round)(EVE_TYPE(1.3)), eve::ceil   (EVE_TYPE(1.3)) );
+  TTS_EQUAL(eve::downward    (eve::round)(EVE_TYPE(1.3)), eve::floor  (EVE_TYPE(1.3)) );
+  TTS_EQUAL(eve::toward_zero (eve::round)(EVE_TYPE(1.3)), eve::trunc  (EVE_TYPE(1.3)) );
+  TTS_EQUAL(eve::to_nearest  (eve::round)(EVE_TYPE(1.3)), eve::nearest(EVE_TYPE(1.3)) );
+  TTS_EQUAL(eve::round(EVE_TYPE(1.3))                    , eve::nearest(EVE_TYPE(1.3)) );
 }

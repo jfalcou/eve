@@ -12,12 +12,11 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check nextafter return type", EVE_TYPE)
+TTS_CASE("Check nextafter return type")
 {
-  using v_t   = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(  T(),  T()), T);
-  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(  T(),v_t()), T);
-  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(v_t(),  T()), T);
+  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(EVE_TYPE()  , EVE_TYPE()  ), EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(EVE_TYPE()  , EVE_VALUE() ), EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::nextafter)(EVE_VALUE() , EVE_TYPE()  ), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::pedantic(eve::nextafter) one parameter behavior", EVE_TYPE)

@@ -16,34 +16,33 @@
 #include <eve/logical.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check binarize return type", EVE_TYPE)
+TTS_CASE("Check binarize return type")
 {
   using eve::binarize;
-  TTS_EXPR_IS(binarize(eve::logical<T>()), T);
-  TTS_EXPR_IS(binarize(eve::logical<T>(), int()), T);
+  TTS_EXPR_IS(binarize(eve::logical<EVE_TYPE>()), EVE_TYPE);
+  TTS_EXPR_IS(binarize(eve::logical<EVE_TYPE>(), int()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::binarize on logicals behavior", EVE_TYPE)
+TTS_CASE("Check eve::binarize on logicals behavior")
 {
   using eve::binarize;
   using eve::is_equal;
-  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(binarize(is_equal(T(1) , T(2))), T(0));
-  TTS_EQUAL(binarize(is_equal(T(2) , T(2))), T(1));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE(1) , EVE_TYPE(2))), EVE_TYPE(0));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE(2) , EVE_TYPE(2))), EVE_TYPE(1));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(binarize(is_equal(T(1), T(1)), v_t(-2))   , T(-2));
-    TTS_EQUAL(binarize(is_equal(T(0), T(1)), v_t(-2))   , T( 0));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE(1), EVE_TYPE(1)), EVE_VALUE(-2))   , EVE_TYPE(-2));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE(0), EVE_TYPE(1)), EVE_VALUE(-2))   , EVE_TYPE( 0));
 
-    TTS_EQUAL(binarize(is_equal(T(2), T(2)), eve::mone), T(-1));
-    TTS_EQUAL(binarize(is_equal(T(1), T(2)), eve::mone), T( 0));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE(2), EVE_TYPE(2)), eve::mone), EVE_TYPE(-1));
+    TTS_EQUAL(binarize(is_equal(EVE_TYPE(1), EVE_TYPE(2)), eve::mone), EVE_TYPE( 0));
   }
 
-  TTS_EQUAL(binarize(is_equal(T(1), T(1)), v_t(2))        , T(2));
-  TTS_EQUAL(binarize(is_equal(T(0), T(1)), v_t(2))        , T(0));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE(1), EVE_TYPE(1)), EVE_VALUE(2))        , EVE_TYPE(2));
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE(0), EVE_TYPE(1)), EVE_VALUE(2))        , EVE_TYPE(0));
 
-  TTS_EQUAL(binarize(is_equal(T(0), T(1)), eve::allbits)     , T(0)              );
-  TTS_IEEE_EQUAL(binarize(is_equal(T(2), T(2)), eve::allbits), eve::allbits(eve::as<T>()) );
+  TTS_EQUAL(binarize(is_equal(EVE_TYPE(0), EVE_TYPE(1)), eve::allbits)     , EVE_TYPE(0)              );
+  TTS_IEEE_EQUAL(binarize(is_equal(EVE_TYPE(2), EVE_TYPE(2)), eve::allbits), eve::allbits(eve::as<EVE_TYPE>()) );
 }

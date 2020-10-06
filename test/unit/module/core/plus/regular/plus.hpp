@@ -10,23 +10,23 @@
 //==================================================================================================
 #include <eve/function/plus.hpp>
 
-TTS_CASE_TPL("Check eve::plus return type", EVE_TYPE)
+TTS_CASE("Check eve::plus return type")
 {
-  TTS_EXPR_IS(eve::plus(T()), T);
+  TTS_EXPR_IS(eve::plus(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::plus behavior", EVE_TYPE)
+TTS_CASE("Check eve::plus behavior")
 {
-  TTS_EQUAL(eve::plus(T(1)), T(1));
+  TTS_EQUAL(eve::plus(EVE_TYPE(1)), EVE_TYPE(1));
 }
 
-TTS_CASE_TPL("Check eve::plus with 2 parameters behavior", EVE_TYPE)
+TTS_CASE("Check eve::plus with 2 parameters behavior")
 {
-  TTS_EQUAL(eve::plus(T(1), T(1)), T(2));
+  TTS_EQUAL(eve::plus(EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(2));
 }
 
-TTS_CASE_TPL("Check eve::plus with 3 parameters behavior", EVE_TYPE)
+TTS_CASE("Check eve::plus with 3 parameters behavior")
 {
-  TTS_EQUAL(eve::plus[T(1) > T(2)](T(1), T(1)), T(1));
-  TTS_EQUAL(eve::plus[T(1) < T(2)](T(1), T(1)), T(2));
+  TTS_EQUAL(eve::plus[EVE_TYPE(1) > EVE_TYPE(2)](EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::plus[EVE_TYPE(1) < EVE_TYPE(2)](EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(2));
 }

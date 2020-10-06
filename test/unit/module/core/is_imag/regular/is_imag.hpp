@@ -12,13 +12,13 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 
-TTS_CASE_TPL("Check eve::is_imag return type", EVE_TYPE)
+TTS_CASE("Check eve::is_imag return type")
 {
-  TTS_EXPR_IS(eve::is_imag(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_imag(EVE_TYPE(0)), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_imag behavior", EVE_TYPE)
+TTS_CASE("Check eve::is_imag behavior")
 {
-  TTS_EQUAL(eve::is_imag(T(0)), eve::true_(eve::as<T>())  );
-  TTS_EQUAL(eve::is_imag(T(2)), eve::false_(eve::as<T>()) );
+  TTS_EQUAL(eve::is_imag(EVE_TYPE(0)), eve::true_(eve::as<EVE_TYPE>())  );
+  TTS_EQUAL(eve::is_imag(EVE_TYPE(2)), eve::false_(eve::as<EVE_TYPE>()) );
 }

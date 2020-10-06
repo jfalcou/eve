@@ -11,9 +11,9 @@
 #include <eve/function/modf.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check modf return type", EVE_TYPE)
+TTS_CASE("Check modf return type")
 {
-  TTS_EXPR_IS(eve::pedantic(eve::modf)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::pedantic(eve::modf)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
 TTS_CASE_TPL("Check (eve::pedantic(eve::modf) behavior", EVE_TYPE)

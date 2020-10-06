@@ -11,9 +11,9 @@
 #include <eve/function/trunc.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::trunc return type", EVE_TYPE)
+TTS_CASE("Check eve::trunc return type")
 {
-  TTS_EXPR_IS(eve::trunc(T()), T);
+  TTS_EXPR_IS(eve::trunc(EVE_TYPE()), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::trunc behavior", EVE_TYPE)

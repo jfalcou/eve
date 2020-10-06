@@ -16,9 +16,9 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::pedantic(eve::rsqrt) return type", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::rsqrt) return type")
 {
-  TTS_EXPR_IS(eve::pedantic(eve::rsqrt)(T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::rsqrt)(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::pedantic(eve::rsqrt) behavior", EVE_TYPE)
@@ -32,8 +32,7 @@ TTS_CASE_TPL("Check eve::pedantic(eve::rsqrt) behavior", EVE_TYPE)
     TTS_EQUAL(eve::pedantic(eve::rsqrt)((T(0)))               , eve::inf(eve::as<T>()));
   }
 
-  using v_t = eve::element_type_t<T>;
-  auto z = eve::mindenormal(eve::as<v_t>());
+  auto z = eve::mindenormal(eve::as<EVE_VALUE>());
 
   TTS_ULP_EQUAL(eve::pedantic(eve::rsqrt)(eve::mindenormal(eve::as<T>()))   , T(eve::rec(std::sqrt(z)))   , 2.0);
   TTS_ULP_EQUAL(eve::pedantic(eve::rsqrt)(2*eve::mindenormal(eve::as<T>())) , T(eve::rec(std::sqrt(2*z))) , 2.0);

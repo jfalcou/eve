@@ -10,15 +10,15 @@
 //==================================================================================================
 #include <eve/function/sqr_abs.hpp>
 
-TTS_CASE_TPL("Check eve::sqr_abs return type", EVE_TYPE)
+TTS_CASE("Check eve::sqr_abs return type")
 {
-  TTS_EXPR_IS(eve::sqr_abs(T(0)), T);
+  TTS_EXPR_IS(eve::sqr_abs(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sqr_abs behavior", EVE_TYPE)
+TTS_CASE("Check eve::sqr_abs behavior")
 {
-  TTS_EQUAL(eve::sqr_abs(T(1))              , T(1) );
-  TTS_EQUAL(eve::sqr_abs(T(2))              , T(4) );
-  TTS_EQUAL(eve::sqr_abs(T(-0.))            , T(0) );
-  TTS_EQUAL(eve::sqr_abs(static_cast<T>(-2)), T(4) );
+  TTS_EQUAL(eve::sqr_abs(EVE_TYPE(1))              , EVE_TYPE(1) );
+  TTS_EQUAL(eve::sqr_abs(EVE_TYPE(2))              , EVE_TYPE(4) );
+  TTS_EQUAL(eve::sqr_abs(EVE_TYPE(-0.))            , EVE_TYPE(0) );
+  TTS_EQUAL(eve::sqr_abs(static_cast<EVE_TYPE>(-2)), EVE_TYPE(4) );
 }

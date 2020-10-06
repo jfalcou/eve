@@ -10,24 +10,22 @@
 //==================================================================================================
 #include <eve/function/fnms.hpp>
 
-TTS_CASE_TPL("Check eve::fnms return type", EVE_TYPE)
+TTS_CASE("Check eve::fnms return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::fnms(T()   , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::fnms(T()   , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::fnms(T()   , v_t() , T()   ) , T);
-  TTS_EXPR_IS(eve::fnms(T()   , v_t() , v_t() ) , T);
-  TTS_EXPR_IS(eve::fnms(v_t() , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::fnms(v_t() , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::fnms(v_t() , v_t() , T()   ) , T);
+  TTS_EXPR_IS(eve::fnms(EVE_TYPE()   , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_TYPE()   , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_TYPE()   , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_TYPE()   , EVE_VALUE() , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_VALUE() , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_VALUE() , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fnms(EVE_VALUE() , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::fnms behavior", EVE_TYPE)
+TTS_CASE("Check eve::fnms behavior")
 {
-  TTS_EQUAL(eve::fnms(T(0), T(0), T(0)), T(0) );
-  TTS_EQUAL(eve::fnms(T(0), T(0), T(7)), static_cast<T>(-7));
-  TTS_EQUAL(eve::fnms(T(2), T(0), T(7)), static_cast<T>(-7));
-  TTS_EQUAL(eve::fnms(T(0), T(5), T(7)), static_cast<T>(-7));
-  TTS_EQUAL(eve::fnms(T(2), T(5), T(7)), static_cast<T>(-17));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE(0) );
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), static_cast<EVE_TYPE>(-7));
+  TTS_EQUAL(eve::fnms(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), static_cast<EVE_TYPE>(-17));
 }

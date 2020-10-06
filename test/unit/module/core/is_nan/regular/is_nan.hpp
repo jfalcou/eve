@@ -13,9 +13,9 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_nan return type", EVE_TYPE)
+TTS_CASE("Check eve::is_nan return type")
 {
-  TTS_EXPR_IS(eve::is_nan(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_nan(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_nan behavior", EVE_TYPE)

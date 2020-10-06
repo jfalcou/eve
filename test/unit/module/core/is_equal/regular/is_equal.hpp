@@ -15,17 +15,15 @@
 #include <eve/concept/value.hpp>
 #include <eve/logical.hpp>
 
-TTS_CASE_TPL("Check eve::is_equal return type", EVE_TYPE)
+TTS_CASE("Check eve::is_equal return type")
 {
-  using v_t = eve::element_type_t<T>;
   using eve::logical;
-
-  TTS_EXPR_IS( eve::is_equal(  T()         ,   T()         ) , logical<T>);
-  TTS_EXPR_IS( eve::is_equal(  T()         , v_t()         ) , logical<T>);
-  TTS_EXPR_IS( eve::is_equal(v_t()         ,   T()         ) , logical<T>);
-  TTS_EXPR_IS( eve::is_equal(logical<T>()  , logical<T>()  ) , logical<T>);
-  TTS_EXPR_IS( eve::is_equal(logical<T>()  , logical<v_t>()) , logical<T>);
-  TTS_EXPR_IS( eve::is_equal(logical<v_t>(), logical<T>()  ) , logical<T>);
+  TTS_EXPR_IS( eve::is_equal(EVE_TYPE()           , EVE_TYPE()          ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::is_equal(EVE_TYPE()           , EVE_VALUE()         ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::is_equal(EVE_VALUE()          , EVE_TYPE()          ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::is_equal(logical<EVE_TYPE>()  , logical<EVE_TYPE>() ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::is_equal(logical<EVE_TYPE>()  , logical<EVE_VALUE>()) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::is_equal(logical<EVE_VALUE>() , logical<EVE_TYPE>() ) , logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::operator== return type", EVE_TYPE)
@@ -74,14 +72,14 @@ TTS_CASE_TPL("Check eve::operator== behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL(eve::nan(eve::as<T>()) == eve::nan(eve::as<T>()), eve::false_(eve::as<T>()));
-    TTS_EQUAL(eve::nan(eve::as<T>()) == T(4)         , eve::false_(eve::as<T>()));
+    TTS_EQUAL( (eve::nan(eve::as<T>()) == eve::nan(eve::as<T>())) , eve::false_(eve::as<T>()));
+    TTS_EQUAL( (eve::nan(eve::as<T>()) == T(4)                  ) , eve::false_(eve::as<T>()));
   }
 
-  TTS_EQUAL( T(1)           == T(1)           , eve::true_(eve::as<T>()) );
-  TTS_EQUAL( T(1)           == v_t(1)         , eve::true_(eve::as<T>()) );
-  TTS_EQUAL( T(3)           == T(1)           , eve::false_(eve::as<T>()));
-  TTS_EQUAL( T(3)           == v_t(1)         , eve::false_(eve::as<T>()));
-  TTS_EQUAL( eve::true_(eve::as<T>()) == eve::true_(eve::as<T>()) , eve::true_(eve::as<T>()) );
-  TTS_EQUAL( eve::true_(eve::as<T>()) == eve::false_(eve::as<T>()), eve::false_(eve::as<T>()));
+  TTS_EQUAL( (T(1)           == T(1)           )                    , eve::true_(eve::as<T>()) );
+  TTS_EQUAL( (T(1)           == v_t(1)         )                    , eve::true_(eve::as<T>()) );
+  TTS_EQUAL( (T(3)           == T(1)           )                    , eve::false_(eve::as<T>()));
+  TTS_EQUAL( (T(3)           == v_t(1)         )                    , eve::false_(eve::as<T>()));
+  TTS_EQUAL( (eve::true_(eve::as<T>()) == eve::true_(eve::as<T>()) ), eve::true_(eve::as<T>()) );
+  TTS_EQUAL( (eve::true_(eve::as<T>()) == eve::false_(eve::as<T>())), eve::false_(eve::as<T>()));
 }

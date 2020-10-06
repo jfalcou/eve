@@ -15,9 +15,9 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check is_not_less_equal return type", EVE_TYPE)
+TTS_CASE("Check is_not_less_equal return type")
 {
-  TTS_EXPR_IS(eve::is_not_less_equal(T(), T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_not_less_equal(EVE_TYPE(), EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_not_less_equal behavior", EVE_TYPE)

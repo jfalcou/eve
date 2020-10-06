@@ -10,18 +10,18 @@
 //==================================================================================================
 #include <eve/function/sign.hpp>
 
-TTS_CASE_TPL("Check eve::sign return type", EVE_TYPE)
+TTS_CASE("Check eve::sign return type")
 {
-  TTS_EXPR_IS(eve::sign(T()), T);
+  TTS_EXPR_IS(eve::sign(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sign behavior", EVE_TYPE)
+TTS_CASE("Check eve::sign behavior")
 {
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::sign(static_cast<T>(-2)), (T(-1)));
+    TTS_EQUAL(eve::sign(static_cast<EVE_TYPE>(-2)), (EVE_TYPE(-1)));
   }
 
-  TTS_EQUAL(eve::sign(T(0)), T(0));
-  TTS_EQUAL(eve::sign(T(2)), T(1));
+  TTS_EQUAL(eve::sign(EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::sign(EVE_TYPE(2)), EVE_TYPE(1));
 }

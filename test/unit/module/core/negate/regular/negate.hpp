@@ -13,9 +13,9 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 
-TTS_CASE_TPL("Check eve::negate return type", EVE_TYPE)
+TTS_CASE("Check eve::negate return type")
 {
-  TTS_EXPR_IS(eve::negate(T(), T()), T);
+  TTS_EXPR_IS(eve::negate(EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
 TTS_CASE_TPL(" negate behaviour", EVE_TYPE)

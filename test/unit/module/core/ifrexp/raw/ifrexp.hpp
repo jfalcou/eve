@@ -11,15 +11,16 @@
 #include <eve/function/ifrexp.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)
+using i_t = eve::detail::as_integer_t<EVE_TYPE,signed>;
+
+TTS_CASE("Check ifrexp return type")
 {
-  TTS_EXPR_IS(eve::raw(eve::ifrexp)(T()), (std::tuple<T,eve::detail::as_integer_t<T,signed>>));
+  TTS_EXPR_IS(eve::raw(eve::ifrexp)(EVE_TYPE()), (std::tuple<EVE_TYPE,i_t>));
 }
 
-TTS_CASE_TPL("Check eve::raw(eve::ifrexp) behavior", EVE_TYPE)
+TTS_CASE("Check eve::raw(eve::ifrexp) behavior")
 {
-  using i_t = eve::detail::as_integer_t<T,signed>;
-  auto [p0, p1] = eve::raw(eve::ifrexp)(T(1));
-  TTS_EQUAL(p0, T(0.5));
+  auto [p0, p1] = eve::raw(eve::ifrexp)(EVE_TYPE(1));
+  TTS_EQUAL(p0, EVE_TYPE(0.5));
   TTS_EQUAL(p1, i_t(1));
 }

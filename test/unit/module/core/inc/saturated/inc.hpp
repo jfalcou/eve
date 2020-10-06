@@ -11,25 +11,25 @@
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmax.hpp>
 
-TTS_CASE_TPL("Check inc return type", EVE_TYPE)
+TTS_CASE("Check inc return type")
 {
-  TTS_EXPR_IS(eve::saturated(eve::inc)(T()), T);
+  TTS_EXPR_IS(eve::saturated(eve::inc)(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check saturated(inc) behavior", EVE_TYPE)
+TTS_CASE("Check saturated(inc) behavior")
 {
-  TTS_EQUAL(eve::saturated(eve::inc)(eve::valmax(eve::as<T>())), eve::valmax(eve::as<T>()) );
-  TTS_EQUAL(eve::saturated(eve::inc)(T(1)            ), T(2)             );
-  TTS_EQUAL(eve::saturated(eve::inc)(T(2)            ), T(3)             );
+  TTS_EQUAL(eve::saturated(eve::inc)(eve::valmax(eve::as<EVE_TYPE>())), eve::valmax(eve::as<EVE_TYPE>()) );
+  TTS_EQUAL(eve::saturated(eve::inc)(EVE_TYPE(1)            ), EVE_TYPE(2)             );
+  TTS_EQUAL(eve::saturated(eve::inc)(EVE_TYPE(2)            ), EVE_TYPE(3)             );
 
-if constexpr(eve::signed_value<T>)
+if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::saturated(eve::inc)(T(-2)), T(-1));
+    TTS_EQUAL(eve::saturated(eve::inc)(EVE_TYPE(-2)), EVE_TYPE(-1));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::saturated(eve::inc)( T(-0.)), T(1));
-    TTS_EQUAL(eve::saturated(eve::inc)( T( 0 )), T(1));
+    TTS_EQUAL(eve::saturated(eve::inc)( EVE_TYPE(-0.)), EVE_TYPE(1));
+    TTS_EQUAL(eve::saturated(eve::inc)( EVE_TYPE( 0 )), EVE_TYPE(1));
   }
 }

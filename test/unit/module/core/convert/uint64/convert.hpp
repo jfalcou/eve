@@ -11,9 +11,8 @@
 #include <eve/function/convert.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <type_traits>
 
-TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
+TTS_CASE("Check eve::convert return type")
 {
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<std::uint64_t, eve::fixed<EVE_CARDINAL>>;
@@ -21,11 +20,11 @@ TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)
   using target_t = std::uint64_t;
 #endif
 
-  TTS_EXPR_IS(eve::convert(T(), eve::as<std::uint64_t>()), target_t);
-  TTS_EXPR_IS(eve::uint64(T())     , target_t);
+  TTS_EXPR_IS(eve::convert(EVE_TYPE(), eve::as<std::uint64_t>()), target_t);
+  TTS_EXPR_IS(eve::uint64(EVE_TYPE())     , target_t);
 }
 
-TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
+TTS_CASE("Check eve::convert behavior")
 {
 #if defined(EVE_SIMD_TESTS)
   using target_t = eve::wide<std::uint64_t, eve::fixed<EVE_CARDINAL>>;
@@ -33,14 +32,13 @@ TTS_CASE_TPL("Check eve::convert behavior", EVE_TYPE)
   using target_t = std::uint64_t;
 #endif
 
-  using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::convert((T(0))          , eve::as<std::uint64_t>()), static_cast<target_t>(0) );
-  TTS_EQUAL(eve::convert((T(42.69))      , eve::as<std::uint64_t>()), static_cast<target_t>(v_t(42.69)) );
-  if constexpr(eve::integral_value<T>)
+  TTS_EQUAL(eve::convert((EVE_TYPE(0))          , eve::as<std::uint64_t>()), static_cast<target_t>(0) );
+  TTS_EQUAL(eve::convert((EVE_TYPE(42.69))      , eve::as<std::uint64_t>()), static_cast<target_t>(EVE_VALUE(42.69)) );
+  if constexpr(eve::integral_value<EVE_TYPE>)
   {
     // with floating value this test produces undefined behaviour
-    TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), eve::as<std::uint64_t>()), static_cast<target_t>(eve::valmin(eve::as<v_t>())) );
-    TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), eve::as<std::uint64_t>()), static_cast<target_t>(eve::valmax(eve::as<v_t>())) );
+    TTS_EQUAL(eve::convert(eve::valmin(eve::as<EVE_TYPE>()), eve::as<std::uint64_t>()), static_cast<target_t>(eve::valmin(eve::as<EVE_VALUE>())) );
+    TTS_EQUAL(eve::convert(eve::valmax(eve::as<EVE_TYPE>()), eve::as<std::uint64_t>()), static_cast<target_t>(eve::valmax(eve::as<EVE_VALUE>())) );
   }
 }

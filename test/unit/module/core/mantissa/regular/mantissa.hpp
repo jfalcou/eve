@@ -13,24 +13,25 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::mantissa return type", EVE_TYPE)
+TTS_CASE("Check eve::mantissa return type")
 {
-  TTS_EXPR_IS(eve::mantissa(T(0)), T);
+  TTS_EXPR_IS(eve::mantissa(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::mantissa  behavior", EVE_TYPE)
+TTS_CASE("Check eve::mantissa behavior")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::mantissa(eve::inf(eve::as<T>()))      , eve::inf(eve::as<T>()) );
-    TTS_EQUAL(eve::mantissa(eve::minf(eve::as<T>()))     , eve::minf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::mantissa(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_EQUAL(eve::mantissa(eve::inf(eve::as<EVE_TYPE>()))      , eve::inf(eve::as<EVE_TYPE>()) );
+    TTS_EQUAL(eve::mantissa(eve::minf(eve::as<EVE_TYPE>()))     , eve::minf(eve::as<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::mantissa(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
   }
-  TTS_EQUAL(eve::mantissa(T(-1  )), T(-1    ));
-  TTS_EQUAL(eve::mantissa(T( 1  )), T( 1    ));
-  TTS_EQUAL(eve::mantissa(T( 0  )), T( 0    ));
-  TTS_EQUAL(eve::mantissa(T( 2  )), T( 1    ));
-  TTS_EQUAL(eve::mantissa(T( 1.5)), T( 1.5  ));
-  TTS_EQUAL(eve::mantissa(T( 2.5)), T( 1.25 ));
+
+  TTS_EQUAL(eve::mantissa(EVE_TYPE(-1  )), EVE_TYPE(-1    ));
+  TTS_EQUAL(eve::mantissa(EVE_TYPE( 1  )), EVE_TYPE( 1    ));
+  TTS_EQUAL(eve::mantissa(EVE_TYPE( 0  )), EVE_TYPE( 0    ));
+  TTS_EQUAL(eve::mantissa(EVE_TYPE( 2  )), EVE_TYPE( 1    ));
+  TTS_EQUAL(eve::mantissa(EVE_TYPE( 1.5)), EVE_TYPE( 1.5  ));
+  TTS_EQUAL(eve::mantissa(EVE_TYPE( 2.5)), EVE_TYPE( 1.25 ));
 }
 

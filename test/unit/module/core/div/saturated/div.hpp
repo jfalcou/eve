@@ -12,89 +12,87 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 
-TTS_CASE_TPL("Check saturated(eve::div) return type", EVE_TYPE)
+TTS_CASE("Check saturated(eve::div) return type")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::saturated(eve::div)(  T() ,   T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::div)(v_t() ,   T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::div)(  T() , v_t()), T);
+  TTS_EXPR_IS(eve::saturated(eve::div)(  EVE_TYPE() ,   EVE_TYPE()), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::div)(EVE_VALUE() ,   EVE_TYPE()), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::div)(  EVE_TYPE() , EVE_VALUE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check saturated(eve::div) behavior", EVE_TYPE)
+TTS_CASE("Check saturated(eve::div) behavior")
 {
   using eve::saturated;
-  using v_t = eve::element_type_t<T>;
 
-  if constexpr(eve::integral_value<T>)
+  if constexpr(eve::integral_value<EVE_TYPE>)
   {
-    auto tvmax  = eve::valmax(eve::as<T>());
-    auto vmax   = eve::valmax(eve::as<v_t>());
+    auto tvmax  = eve::valmax(eve::as<EVE_TYPE>());
+    auto vmax   = eve::valmax(eve::as<EVE_VALUE>());
 
-    if constexpr(eve::signed_value<T>)
+    if constexpr(eve::signed_value<EVE_TYPE>)
     {
-      auto vmin   = eve::valmin(eve::as<v_t>());
-      auto tvmin  = eve::valmin(eve::as<T>());
+      auto vmin   = eve::valmin(eve::as<EVE_VALUE>());
+      auto tvmin  = eve::valmin(eve::as<EVE_TYPE>());
 
-      TTS_EQUAL(saturated(eve::div)(tvmax  , T(-1) ), tvmin+(T(1)) );
-      TTS_EQUAL(saturated(eve::div)(tvmin  , T(-1) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(T(-1)  , T( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(T(-2)  , T( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(tvmin  , T( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(T(1)   , T( 0) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(T(2)   , T( 0) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(tvmax  , T( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(tvmax  , EVE_TYPE(-1) ), tvmin+(EVE_TYPE(1)) );
+      TTS_EQUAL(saturated(eve::div)(tvmin  , EVE_TYPE(-1) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(-1)  , EVE_TYPE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(-2)  , EVE_TYPE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(tvmin  , EVE_TYPE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(1)   , EVE_TYPE( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(2)   , EVE_TYPE( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(tvmax  , EVE_TYPE( 0) ), tvmax        );
 
-      TTS_EQUAL(saturated(eve::div)(tvmax  , v_t(-1) ), tvmin+(T(1)) );
-      TTS_EQUAL(saturated(eve::div)(tvmin  , v_t(-1) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(T(-1)  , v_t( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(T(-2)  , v_t( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(tvmin  , v_t( 0) ), tvmin        );
-      TTS_EQUAL(saturated(eve::div)(T(1)   , v_t( 0) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(T(2)   , v_t( 0) ), tvmax        );
-      TTS_EQUAL(saturated(eve::div)(tvmax  , v_t( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(tvmax  , EVE_VALUE(-1) ), tvmin+(EVE_TYPE(1)) );
+      TTS_EQUAL(saturated(eve::div)(tvmin  , EVE_VALUE(-1) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(-1)  , EVE_VALUE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(-2)  , EVE_VALUE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(tvmin  , EVE_VALUE( 0) ), tvmin        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(1)   , EVE_VALUE( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(2)   , EVE_VALUE( 0) ), tvmax        );
+      TTS_EQUAL(saturated(eve::div)(tvmax  , EVE_VALUE( 0) ), tvmax        );
 
-      TTS_EQUAL(saturated(eve::div)(vmax   , T(-1)), tvmin+(T(1)));
-      TTS_EQUAL(saturated(eve::div)(vmin   , T(-1)), tvmax       );
-      TTS_EQUAL(saturated(eve::div)(v_t(-1), T( 0)), tvmin       );
-      TTS_EQUAL(saturated(eve::div)(v_t(-2), T( 0)), tvmin       );
-      TTS_EQUAL(saturated(eve::div)(vmin   , T( 0)), tvmin       );
-      TTS_EQUAL(saturated(eve::div)(v_t(1) , T( 0)), tvmax       );
-      TTS_EQUAL(saturated(eve::div)(v_t(2) , T( 0)), tvmax       );
-      TTS_EQUAL(saturated(eve::div)(vmax   , T( 0)), tvmax       );
+      TTS_EQUAL(saturated(eve::div)(vmax   , EVE_TYPE(-1)), tvmin+(EVE_TYPE(1)));
+      TTS_EQUAL(saturated(eve::div)(vmin   , EVE_TYPE(-1)), tvmax       );
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(-1), EVE_TYPE( 0)), tvmin       );
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(-2), EVE_TYPE( 0)), tvmin       );
+      TTS_EQUAL(saturated(eve::div)(vmin   , EVE_TYPE( 0)), tvmin       );
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(1) , EVE_TYPE( 0)), tvmax       );
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(2) , EVE_TYPE( 0)), tvmax       );
+      TTS_EQUAL(saturated(eve::div)(vmax   , EVE_TYPE( 0)), tvmax       );
      }
     else
     {
-      TTS_EQUAL(saturated(eve::div)(tvmax, T(1)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(T(1) , T(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(T(2) , T(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(tvmax, T(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(tvmax, EVE_TYPE(1)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(1) , EVE_TYPE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(2) , EVE_TYPE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(tvmax, EVE_TYPE(0)), tvmax);
 
-      TTS_EQUAL(saturated(eve::div)(vmax   , T(1)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(v_t(1) , T(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(v_t(2) , T(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(vmax   , T(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(vmax   , EVE_TYPE(1)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(1) , EVE_TYPE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_VALUE(2) , EVE_TYPE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(vmax   , EVE_TYPE(0)), tvmax);
 
-      TTS_EQUAL(saturated(eve::div)(tvmax, v_t(1)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(T(1) , v_t(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(T(2) , v_t(0)), tvmax);
-      TTS_EQUAL(saturated(eve::div)(tvmax, v_t(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(tvmax, EVE_VALUE(1)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(1) , EVE_VALUE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(EVE_TYPE(2) , EVE_VALUE(0)), tvmax);
+      TTS_EQUAL(saturated(eve::div)(tvmax, EVE_VALUE(0)), tvmax);
     }
   }
   else
   {
-    TTS_EQUAL(saturated(eve::div)(T( 0) , T(1)), T(0  ) );
-    TTS_EQUAL(saturated(eve::div)(T( 1) , T(1)), T(1  ) );
-    TTS_EQUAL(saturated(eve::div)(T(12) , T(4)), T(3  ) );
-    TTS_EQUAL(saturated(eve::div)(T( 1) , T(2)), T(0.5) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 0) , EVE_TYPE(1)), EVE_TYPE(0  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 1) , EVE_TYPE(1)), EVE_TYPE(1  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE(12) , EVE_TYPE(4)), EVE_TYPE(3  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 1) , EVE_TYPE(2)), EVE_TYPE(0.5) );
 
-    TTS_EQUAL(saturated(eve::div)(v_t( 0) , T(1)), T(0  ) );
-    TTS_EQUAL(saturated(eve::div)(v_t( 1) , T(1)), T(1  ) );
-    TTS_EQUAL(saturated(eve::div)(v_t(12) , T(4)), T(3  ) );
-    TTS_EQUAL(saturated(eve::div)(v_t( 1) , T(2)), T(0.5) );
+    TTS_EQUAL(saturated(eve::div)(EVE_VALUE( 0) , EVE_TYPE(1)), EVE_TYPE(0  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_VALUE( 1) , EVE_TYPE(1)), EVE_TYPE(1  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_VALUE(12) , EVE_TYPE(4)), EVE_TYPE(3  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_VALUE( 1) , EVE_TYPE(2)), EVE_TYPE(0.5) );
 
-    TTS_EQUAL(saturated(eve::div)(T( 0) , v_t(1)), T(0  ) );
-    TTS_EQUAL(saturated(eve::div)(T( 1) , v_t(1)), T(1  ) );
-    TTS_EQUAL(saturated(eve::div)(T(12) , v_t(4)), T(3  ) );
-    TTS_EQUAL(saturated(eve::div)(T( 1) , v_t(2)), T(0.5) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 0) , EVE_VALUE(1)), EVE_TYPE(0  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 1) , EVE_VALUE(1)), EVE_TYPE(1  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE(12) , EVE_VALUE(4)), EVE_TYPE(3  ) );
+    TTS_EQUAL(saturated(eve::div)(EVE_TYPE( 1) , EVE_VALUE(2)), EVE_TYPE(0.5) );
   }
 }

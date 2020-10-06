@@ -9,31 +9,30 @@
 **/
 //==================================================================================================
 #include <eve/function/ceil.hpp>
-#include <type_traits>
 
-TTS_CASE_TPL("Check ceil return type", EVE_TYPE)
+TTS_CASE("Check ceil return type")
 {
-  TTS_EXPR_IS(eve::ceil(T()), T);
+  TTS_EXPR_IS(eve::ceil(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::ceil behavior", EVE_TYPE)
+TTS_CASE("Check eve::ceil behavior")
 {
-  TTS_EQUAL(eve::ceil(T(0)), T(0));
-  TTS_EQUAL(eve::ceil(T(1)), T(1));
-  TTS_EQUAL(eve::ceil(T(2)), T(2));
+  TTS_EQUAL(eve::ceil(EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::ceil(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::ceil(EVE_TYPE(2)), EVE_TYPE(2));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::ceil(T(-1)), T(-1));
-    TTS_EQUAL(eve::ceil(T(-2)), T(-2));
+    TTS_EQUAL(eve::ceil(EVE_TYPE(-1)), EVE_TYPE(-1));
+    TTS_EQUAL(eve::ceil(EVE_TYPE(-2)), EVE_TYPE(-2));
   }
-  else if constexpr(eve::floating_value<T>)
+  else if constexpr(eve::floating_value<EVE_TYPE>)
   {
-   TTS_EQUAL(eve::ceil(T(-1.3)), T(-1));
-   TTS_EQUAL(eve::ceil(T(-1.5)), T(-1));
-   TTS_EQUAL(eve::ceil(T(-1.6)), T(-1));
-   TTS_EQUAL(eve::ceil(T(1.3)) , T(2));
-   TTS_EQUAL(eve::ceil(T(1.5)) , T(2));
-   TTS_EQUAL(eve::ceil(T(1.6)) , T(2));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(-1.3)), EVE_TYPE(-1));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(-1.5)), EVE_TYPE(-1));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(-1.6)), EVE_TYPE(-1));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(1.3)) , EVE_TYPE(2));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(1.5)) , EVE_TYPE(2));
+   TTS_EQUAL(eve::ceil(EVE_TYPE(1.6)) , EVE_TYPE(2));
   }
 }

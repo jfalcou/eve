@@ -19,19 +19,18 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check saturated prev return type", EVE_TYPE)
+TTS_CASE("Check saturated prev return type")
 {
-  using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<T, signed>;
-  using u_t = eve::detail::as_integer_t<T, unsigned>;
-  using si_t = eve::detail::as_integer_t<v_t, signed>;
-  using su_t = eve::detail::as_integer_t<v_t, unsigned>;
+  using i_t   = eve::detail::as_integer_t<EVE_TYPE, signed>;
+  using u_t   = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using si_t  = eve::detail::as_integer_t<EVE_VALUE, signed>;
+  using su_t  = eve::detail::as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::saturated(eve::prev)(T())        , T);
-  TTS_EXPR_IS(eve::saturated(eve::prev)(T(),  i_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::prev)(T(),  u_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::prev)(T(), si_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::prev)(T(), su_t()), T);
+  TTS_EXPR_IS(eve::saturated(eve::prev)(EVE_TYPE())        , EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::prev)(EVE_TYPE(),  i_t()), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::prev)(EVE_TYPE(),  u_t()), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::prev)(EVE_TYPE(), si_t()), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::prev)(EVE_TYPE(), su_t()), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::saturated(eve::prev) one parameter behavior", EVE_TYPE)

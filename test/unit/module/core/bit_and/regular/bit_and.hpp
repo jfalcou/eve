@@ -11,47 +11,45 @@
 #include <eve/function/bit_and.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::bit_and return type", EVE_TYPE)
+TTS_CASE("Check eve::bit_and return type")
 {
   using eve::detail::as_integer_t;
-  using v_t = eve::element_type_t<T>;
-  using ui_t = as_integer_t<T, unsigned>;
-  using vi_t = as_integer_t<v_t, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE, unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
-  TTS_EXPR_IS(eve::bit_and(T()  , T()) , T);
-  TTS_EXPR_IS(eve::bit_and(T()  , v_t()), T);
-  TTS_EXPR_IS(eve::bit_and(v_t() , T()) , T);
-  TTS_EXPR_IS(eve::bit_and(T()  , ui_t())     , T);
-  TTS_EXPR_IS(eve::bit_and(T()  , vi_t())     , T);
-  TTS_EXPR_IS(eve::bit_and(ui_t()      , T()) , ui_t      );
-  TTS_EXPR_IS(eve::bit_and(vi_t()      , T()) , ui_t      );
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE()  , EVE_TYPE()) , EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE()  , EVE_VALUE()), EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_and(EVE_VALUE() , EVE_TYPE()) , EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE()  , ui_t())     , EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_and(EVE_TYPE()  , vi_t())     , EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_and(ui_t()      , EVE_TYPE()) , ui_t      );
+  TTS_EXPR_IS(eve::bit_and(vi_t()      , EVE_TYPE()) , ui_t      );
 }
 
-TTS_CASE_TPL( "Check eve::bit_and behavior", EVE_TYPE)
+TTS_CASE( "Check eve::bit_and behavior")
 {
   using eve::detail::as_integer_t;
   using eve::bit_cast;
   using eve::as;
 
-  using v_t = eve::element_type_t<T>;
-  using ui_t = as_integer_t<T , unsigned>;
-  using vi_t = as_integer_t<v_t, unsigned>;
+  using ui_t = as_integer_t<EVE_TYPE , unsigned>;
+  using vi_t = as_integer_t<EVE_VALUE, unsigned>;
 
   constexpr auto u  = 0x5555555555555555ULL;
   constexpr auto d  = 0xAAAAAAAAAAAAAAAAULL;
 
-  auto tz = T(0);
+  auto tz = EVE_TYPE(0);
 
   ui_t uu( static_cast<vi_t>(u) );
   ui_t uz( static_cast<vi_t>(0) );
   ui_t ud( static_cast<vi_t>(d) );
-  auto td = bit_cast(ud, as<T>());
-  auto tu = bit_cast(uu, as<T>());
+  auto td = bit_cast(ud, as<EVE_TYPE>());
+  auto tu = bit_cast(uu, as<EVE_TYPE>());
 
   vi_t su( static_cast<vi_t>(u) );
   vi_t sd( static_cast<vi_t>(d) );
-  auto vu = bit_cast(su, as<v_t>());
-  auto vd = bit_cast(sd, as<v_t>());
+  auto vu = bit_cast(su, as<EVE_VALUE>());
+  auto vd = bit_cast(sd, as<EVE_VALUE>());
 
   // wT | wT -> wT
   TTS_EQUAL(eve::bit_and(tu,tu),tu);

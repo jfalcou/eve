@@ -13,13 +13,11 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_lessgreater return type", EVE_TYPE)
+TTS_CASE("Check eve::is_lessgreater return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::is_lessgreater(  T() ,   T()), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_lessgreater(  T() , v_t()), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_lessgreater(v_t() ,   T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_lessgreater(EVE_TYPE()  , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_lessgreater(EVE_TYPE()  , EVE_VALUE() ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_lessgreater(EVE_VALUE() , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_lessgreater behavior", EVE_TYPE)

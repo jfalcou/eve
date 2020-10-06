@@ -14,28 +14,30 @@
 #include <eve/constant/sqrtvalmax.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::saturated(eve::sqr) return type", EVE_TYPE)
+TTS_CASE("Check eve::saturated(eve::sqr) return type")
 {
-  TTS_EXPR_IS(eve::saturated(eve::sqr)(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::sqr)(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sqr behavior", EVE_TYPE)
+TTS_CASE("Check eve::sqr behavior")
 {
-  TTS_EQUAL(eve::saturated(eve::sqr)(T(1)), T(1));
-  TTS_EQUAL(eve::saturated(eve::sqr)(T(2)), T(4));
+  TTS_EQUAL(eve::saturated(eve::sqr)(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::saturated(eve::sqr)(EVE_TYPE(2)), EVE_TYPE(4));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated(eve::sqr)(static_cast<T>(-2)), T(4));
+    TTS_EQUAL(eve::saturated(eve::sqr)(static_cast<EVE_TYPE>(-2)), EVE_TYPE(4));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated(eve::sqr)(T(-0.)), T(0));
+    TTS_EQUAL(eve::saturated(eve::sqr)(EVE_TYPE(-0.)), EVE_TYPE(0));
   }
 
-  if constexpr(eve::integral_value<T>)
+  if constexpr(eve::integral_value<EVE_VALUE>)
   {
-    TTS_EQUAL(eve::saturated(eve::sqr)(eve::inc(eve::sqrtvalmax(eve::as<T>()))), eve::valmax(eve::as<T>()));
+    TTS_EQUAL ( eve::saturated(eve::sqr)(eve::inc(eve::sqrtvalmax(eve::as<EVE_TYPE>())))
+              , eve::valmax(eve::as<EVE_TYPE>())
+              );
   }
 }

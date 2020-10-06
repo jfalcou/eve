@@ -12,12 +12,11 @@
 #include <eve/function/numeric.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::numeric(eve::maxmag) return type", EVE_TYPE)
+TTS_CASE("Check eve::numeric(eve::maxmag) return type")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::numeric(eve::maxmag)(T(0)  , T(0) ) , T);
-  TTS_EXPR_IS(eve::numeric(eve::maxmag)(v_t(0), T(0) ) , T);
-  TTS_EXPR_IS(eve::numeric(eve::maxmag)(T(0)  , v_t(0)) , T);
+  TTS_EXPR_IS(eve::numeric(eve::maxmag)(EVE_TYPE(0) , EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::numeric(eve::maxmag)(EVE_VALUE(0), EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::numeric(eve::maxmag)(EVE_TYPE(0) , EVE_VALUE(0)) , EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::numeric(eve::maxmag) behavior", EVE_TYPE)

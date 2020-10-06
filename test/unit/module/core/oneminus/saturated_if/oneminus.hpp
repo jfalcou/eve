@@ -13,31 +13,30 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check oneminus return type", EVE_TYPE)
+TTS_CASE("Check oneminus return type")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[ v_t(0)               ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[ T(0)                 ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<T>(0)   ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<v_t>(0) ])(T(0)), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[ true                 ])(T(0)), T);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ EVE_VALUE(0)              ])(EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ EVE_TYPE(0)               ])(EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<EVE_TYPE>(0) ])(EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ eve::logical<EVE_VALUE>(0)])(EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::saturated(eve::oneminus[ true                      ])(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::saturated(eve::oneminus) behavior", EVE_TYPE)
+TTS_CASE("Check eve::saturated(eve::oneminus) behavior")
 {
-  T tv, res;
-  auto t = eve::true_(eve::as<T>());
-  auto f = eve::false_(eve::as<T>());
+  EVE_TYPE tv, res;
+  auto t = eve::true_(eve::as<EVE_TYPE>());
+  auto f = eve::false_(eve::as<EVE_TYPE>());
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    tv  = eve::valmin(eve::as<T>());
-    res = eve::valmax(eve::as<T>());
+    tv  = eve::valmin(eve::as<EVE_TYPE>());
+    res = eve::valmax(eve::as<EVE_TYPE>());
   }
   else
   {
-    tv  = T{2};
-    res = T{0};
+    tv  = EVE_TYPE{2};
+    res = EVE_TYPE{0};
   }
 
   TTS_EQUAL(eve::saturated(eve::oneminus[ 1    ])(tv), res);
@@ -51,10 +50,17 @@ TTS_CASE_TPL("Check eve::saturated(eve::oneminus) behavior", EVE_TYPE)
   TTS_EQUAL(eve::saturated(eve::oneminus[ f ])(tv)     , tv);
 
     // Mixed case
-  eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  eve::as_logical_t<EVE_TYPE> m;
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL(eve::saturated(eve::oneminus[ m ])(tv), eve::if_else(m, res, tv) );
 }

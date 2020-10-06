@@ -10,29 +10,27 @@
 //==================================================================================================
 #include <eve/function/min.hpp>
 
-TTS_CASE_TPL("Check eve::min return type", EVE_TYPE)
+TTS_CASE("Check eve::min return type")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::min(T(0)  , T(0) ) , T);
-  TTS_EXPR_IS(eve::min(v_t(0), T(0) ) , T);
-  TTS_EXPR_IS(eve::min(T(0)  , v_t(0)) , T);
+  TTS_EXPR_IS(eve::min(EVE_TYPE(0)  , EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::min(EVE_VALUE(0) , EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::min(EVE_TYPE(0)  , EVE_VALUE(0)) , EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::min behavior", EVE_TYPE)
+TTS_CASE("Check eve::min behavior")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::min(T(0), T(0)), T(0));
-  TTS_EQUAL(eve::min(T(0), T(1)), T(0));
-  TTS_EQUAL(eve::min(T(1), T(0)), T(0));
-  TTS_EQUAL(eve::min(T(1), T(1)), T(1));
+  TTS_EQUAL(eve::min(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(0), EVE_TYPE(1)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(1), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::min(v_t(0), T(0)), T(0));
-  TTS_EQUAL(eve::min(v_t(0), T(1)), T(0));
-  TTS_EQUAL(eve::min(v_t(1), T(0)), T(0));
-  TTS_EQUAL(eve::min(v_t(1), T(1)), T(1));
+  TTS_EQUAL(eve::min(EVE_VALUE(0), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_VALUE(0), EVE_TYPE(1)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_VALUE(1), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_VALUE(1), EVE_TYPE(1)), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::min(T(0), v_t(0)), T(0));
-  TTS_EQUAL(eve::min(T(0), v_t(1)), T(0));
-  TTS_EQUAL(eve::min(T(1), v_t(0)), T(0));
-  TTS_EQUAL(eve::min(T(1), v_t(1)), T(1));
+  TTS_EQUAL(eve::min(EVE_TYPE(0), EVE_VALUE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(0), EVE_VALUE(1)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(1), EVE_VALUE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::min(EVE_TYPE(1), EVE_VALUE(1)), EVE_TYPE(1));
 }

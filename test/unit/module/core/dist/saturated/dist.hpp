@@ -12,28 +12,28 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 
-TTS_CASE_TPL("Check saturated(eve::dist) return type", EVE_TYPE)
+TTS_CASE("Check saturated(eve::dist) return type")
 {
-  TTS_EXPR_IS(eve::saturated(eve::dist)(T(), T()), T);
+  TTS_EXPR_IS(eve::saturated(eve::dist)(EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check saturated(eve::dist) behavior", EVE_TYPE)
+TTS_CASE("Check saturated(eve::dist) behavior")
 {
-  TTS_EQUAL(eve::saturated(eve::dist)(T(0), T(0)), T(0));
-  TTS_EQUAL(eve::saturated(eve::dist)(T(1), T(5)), T(4));
+  TTS_EQUAL(eve::saturated(eve::dist)(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::saturated(eve::dist)(EVE_TYPE(1), EVE_TYPE(5)), EVE_TYPE(4));
 
-  if constexpr(eve::integral_value<T>)
+  if constexpr(eve::integral_value<EVE_TYPE>)
   {
-    TTS_EQUAL ( eve::saturated(eve::dist)(eve::valmax(eve::as<T>()),eve::valmin(eve::as<T>()))
-              , eve::valmax(eve::as<T>())
+    TTS_EQUAL ( eve::saturated(eve::dist)(eve::valmax(eve::as<EVE_TYPE>()),eve::valmin(eve::as<EVE_TYPE>()))
+              , eve::valmax(eve::as<EVE_TYPE>())
               );
 
-    if constexpr(eve::signed_value<T>)
+    if constexpr(eve::signed_value<EVE_TYPE>)
     {
-      TTS_EQUAL(eve::saturated(eve::dist)(eve::valmin(eve::as<T>()) , T(-1)), eve::valmax(eve::as<T>()));
-      TTS_EQUAL(eve::saturated(eve::dist)(eve::valmin(eve::as<T>()) , T( 0)), eve::valmax(eve::as<T>()));
-      TTS_EQUAL(eve::saturated(eve::dist)(T(-1)            , T( 1)), T(2)            );
-      TTS_EQUAL(eve::saturated(eve::dist)(T(-2)            , T(-6)), T(4)            );
+      TTS_EQUAL(eve::saturated(eve::dist)(eve::valmin(eve::as<EVE_TYPE>()) , EVE_TYPE(-1)), eve::valmax(eve::as<EVE_TYPE>()));
+      TTS_EQUAL(eve::saturated(eve::dist)(eve::valmin(eve::as<EVE_TYPE>()) , EVE_TYPE( 0)), eve::valmax(eve::as<EVE_TYPE>()));
+      TTS_EQUAL(eve::saturated(eve::dist)(EVE_TYPE(-1) , EVE_TYPE( 1)), EVE_TYPE(2) );
+      TTS_EQUAL(eve::saturated(eve::dist)(EVE_TYPE(-2) , EVE_TYPE(-6)), EVE_TYPE(4) );
     }
   }
 }

@@ -13,13 +13,11 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_not_greater_equal return type", EVE_TYPE)
+TTS_CASE("Check eve::is_not_greater_equal return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::is_not_greater_equal(T()   , T()   ), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_not_greater_equal(T()   , v_t() ), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_not_greater_equal(v_t() , T()   ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_not_greater_equal(EVE_TYPE()  , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_not_greater_equal(EVE_TYPE()  , EVE_VALUE() ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_not_greater_equal(EVE_VALUE() , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_not_greater_equal behavior", EVE_TYPE)

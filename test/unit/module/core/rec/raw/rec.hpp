@@ -14,29 +14,29 @@
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Checkeve::raw(eve::rec) return type", EVE_TYPE)
+TTS_CASE("Checkeve::raw(eve::rec) return type")
 {
-  TTS_EXPR_IS(eve::raw(eve::rec)(T(0)), T);
+  TTS_EXPR_IS(eve::raw(eve::rec)(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::raw(eve::rec) behavior", EVE_TYPE)
+TTS_CASE("Check eve::raw(eve::rec) behavior")
 {
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_RELATIVE_EQUAL(eve::raw(eve::rec)(T(1)) , T(1)     , 0.2);
-    TTS_RELATIVE_EQUAL(eve::raw(eve::rec)(T(47)), T(1./47.), 0.2);
+    TTS_RELATIVE_EQUAL(eve::raw(eve::rec)(EVE_TYPE(1)) , EVE_TYPE(1)     , 0.2);
+    TTS_RELATIVE_EQUAL(eve::raw(eve::rec)(EVE_TYPE(47)), EVE_TYPE(1./47.), 0.2);
   }
   else
   {
-    if constexpr(eve::signed_value<T>)
+    if constexpr(eve::signed_value<EVE_TYPE>)
     {
-      TTS_EQUAL(eve::raw(eve::rec)(T(- 1)), T(-1));
-      TTS_EQUAL(eve::raw(eve::rec)(T(-47)), T( 0));
+      TTS_EQUAL(eve::raw(eve::rec)(EVE_TYPE(- 1)), EVE_TYPE(-1));
+      TTS_EQUAL(eve::raw(eve::rec)(EVE_TYPE(-47)), EVE_TYPE( 0));
     }
     else
     {
-      TTS_EQUAL(eve::raw(eve::rec)(T(1)) , T(1));
-      TTS_EQUAL(eve::raw(eve::rec)(T(47)), T(0));
+      TTS_EQUAL(eve::raw(eve::rec)(EVE_TYPE(1)) , EVE_TYPE(1));
+      TTS_EQUAL(eve::raw(eve::rec)(EVE_TYPE(47)), EVE_TYPE(0));
     }
   }
 }

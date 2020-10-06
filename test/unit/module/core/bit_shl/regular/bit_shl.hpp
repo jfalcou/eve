@@ -10,20 +10,20 @@
 //==================================================================================================
 #include <eve/function/bit_shl.hpp>
 
-TTS_CASE_TPL("Check eve::bit_shl return type", EVE_TYPE)
+TTS_CASE("Check eve::bit_shl return type")
 {
-  using ui_t = eve::detail::as_integer_t<T, unsigned>;
-  using si_t = eve::detail::as_integer_t<T, signed>;
+  using ui_t = eve::detail::as_integer_t<EVE_TYPE, unsigned>;
+  using si_t = eve::detail::as_integer_t<EVE_TYPE, signed>;
 
-  TTS_EXPR_IS(eve::bit_shl(T(), int()) , T);
-  TTS_EXPR_IS(eve::bit_shl(T(), ui_t()), T);
-  TTS_EXPR_IS(eve::bit_shl(T(), si_t()), T);
+  TTS_EXPR_IS(eve::bit_shl(EVE_TYPE(), int()) , EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_shl(EVE_TYPE(), ui_t()), EVE_TYPE);
+  TTS_EXPR_IS(eve::bit_shl(EVE_TYPE(), si_t()), EVE_TYPE);
 }
 
-TTS_CASE_TPL( "Check eve::bit_shl behavior", EVE_TYPE)
+TTS_CASE( "Check eve::bit_shl behavior")
 {
-  TTS_EQUAL(eve::bit_shl(T(7), T(4)), T(112) );
-  TTS_EQUAL(eve::bit_shl(T(1), T(1)), T(  2) );
-  TTS_EQUAL(eve::bit_shl(T(1), T(0)), T(  1) );
-  TTS_EQUAL(eve::bit_shl(T(0), T(1)), T(  0) );
+  TTS_EQUAL(eve::bit_shl(EVE_TYPE(7), EVE_TYPE(4)), EVE_TYPE(112) );
+  TTS_EQUAL(eve::bit_shl(EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(  2) );
+  TTS_EQUAL(eve::bit_shl(EVE_TYPE(1), EVE_TYPE(0)), EVE_TYPE(  1) );
+  TTS_EQUAL(eve::bit_shl(EVE_TYPE(0), EVE_TYPE(1)), EVE_TYPE(  0) );
 }

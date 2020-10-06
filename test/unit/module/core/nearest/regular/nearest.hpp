@@ -10,37 +10,37 @@
 //==================================================================================================
 #include <eve/function/nearest.hpp>
 
-TTS_CASE_TPL("Check nearest return type", EVE_TYPE)
+TTS_CASE("Check nearest return type")
 {
-  TTS_EXPR_IS(eve::nearest(T()), T);
+  TTS_EXPR_IS(eve::nearest(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::nearest behavior", EVE_TYPE)
+TTS_CASE("Check eve::nearest behavior")
 {
-  TTS_EQUAL(eve::nearest(T(0)), T(0));
-  TTS_EQUAL(eve::nearest(T(1)), T(1));
-  TTS_EQUAL(eve::nearest(T(2)), T(2));
+  TTS_EQUAL(eve::nearest(EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::nearest(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::nearest(EVE_TYPE(2)), EVE_TYPE(2));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::nearest(static_cast<T>(-1)), T(-1));
-    TTS_EQUAL(eve::nearest(static_cast<T>(-2)), T(-2));
+    TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-1)), EVE_TYPE(-1));
+    TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-2)), EVE_TYPE(-2));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-   TTS_EQUAL(eve::nearest(static_cast<T>(-1.3)), T(-1));
-   TTS_EQUAL(eve::nearest(static_cast<T>(-1.5)), T(-2));
-   TTS_EQUAL(eve::nearest(static_cast<T>(-1.6)), T(-2));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 1.3)), T( 1));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 1.5)), T( 2));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 1.6)), T( 2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-1.3)), EVE_TYPE(-1));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-1.5)), EVE_TYPE(-2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-1.6)), EVE_TYPE(-2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 1.3)), EVE_TYPE( 1));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 1.5)), EVE_TYPE( 2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 1.6)), EVE_TYPE( 2));
 
-   TTS_EQUAL(eve::nearest(static_cast<T>(-2.3)), T(-2));
-   TTS_EQUAL(eve::nearest(static_cast<T>(-2.5)), T(-2));
-   TTS_EQUAL(eve::nearest(static_cast<T>(-2.6)), T(-3));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 2.3)), T( 2));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 2.5)), T( 2));
-   TTS_EQUAL(eve::nearest(static_cast<T>( 2.6)), T( 3));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-2.3)), EVE_TYPE(-2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-2.5)), EVE_TYPE(-2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>(-2.6)), EVE_TYPE(-3));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 2.3)), EVE_TYPE( 2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 2.5)), EVE_TYPE( 2));
+   TTS_EQUAL(eve::nearest(static_cast<EVE_TYPE>( 2.6)), EVE_TYPE( 3));
   }
 }

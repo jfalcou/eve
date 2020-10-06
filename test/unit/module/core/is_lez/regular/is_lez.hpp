@@ -13,9 +13,9 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_lez return type", EVE_TYPE)
+TTS_CASE("Check eve::is_lez return type")
 {
-  TTS_EXPR_IS(eve::is_lez(T() ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_lez(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_lez behavior", EVE_TYPE)

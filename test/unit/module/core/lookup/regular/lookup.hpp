@@ -10,31 +10,30 @@
 //==================================================================================================
 #include <eve/function/lookup.hpp>
 
-TTS_CASE_TPL("Check eve::lookup return type", EVE_TYPE)
+TTS_CASE("Check eve::lookup return type")
 {
-  using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS((eve::lookup(T() , eve::detail::as_integer_t<T >())), T );
-  TTS_EXPR_IS((eve::lookup(v_t(), eve::detail::as_integer_t<v_t>())), (v_t));
+  TTS_EXPR_IS((eve::lookup(EVE_TYPE() , eve::detail::as_integer_t<EVE_TYPE>())) , EVE_TYPE );
+  TTS_EXPR_IS((eve::lookup(EVE_VALUE(), eve::detail::as_integer_t<EVE_VALUE>())), EVE_VALUE);
 }
 
-TTS_CASE_TPL("Check eve::lookup behavior", EVE_TYPE)
+TTS_CASE("Check eve::lookup behavior")
 {
-  using index_t = eve::detail::as_integer_t<T>;
+  using index_t = eve::detail::as_integer_t<EVE_TYPE>;
 
   #if defined(EVE_SIMD_TESTS)
-  using v_t = eve::element_type_t<T>;
 
-  T    value{[](auto i, auto)       { return static_cast<v_t>(1+i); } };
-  T    reference{[](auto i, auto c) { return static_cast<v_t>(c-i); } };
-  index_t indexes{[](auto i, auto c) { return c-i-1; } };
+  EVE_TYPE  value{[](auto i, auto)       { return static_cast<EVE_VALUE>(1+i); } };
+  EVE_TYPE  reference{[](auto i, auto c) { return static_cast<EVE_VALUE>(c-i); } };
+  index_t   indexes{[](auto i, auto c) { return c-i-1; } };
 
   TTS_EQUAL(eve::lookup(value, indexes) , reference );
   TTS_EQUAL(value[indexes]              , reference );
+
   #else
 
-  TTS_EQUAL(eve::lookup((T(42)), index_t( 0) ), (T(42)) );
-  TTS_EQUAL(eve::lookup((T(42)), index_t(-1) ), (T(0))  );
+  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t( 0) ), (EVE_TYPE(42)) );
+  TTS_EQUAL(eve::lookup((EVE_TYPE(42)), index_t(-1) ), (EVE_TYPE(0))  );
 
   #endif
 }

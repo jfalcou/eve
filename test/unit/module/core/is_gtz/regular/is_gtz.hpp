@@ -13,9 +13,9 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_gtz return type", EVE_TYPE)
+TTS_CASE("Check eve::is_gtz return type")
 {
-  TTS_EXPR_IS(eve::is_gtz(T() ), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_gtz(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_gtz behavior", EVE_TYPE)

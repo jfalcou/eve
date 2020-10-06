@@ -10,18 +10,16 @@
 //==================================================================================================
 #include <eve/function/countr_zero.hpp>
 
-TTS_CASE_TPL("Check countr_zero return type", EVE_TYPE)
+TTS_CASE("Check countr_zero return type")
 {
-  TTS_EXPR_IS(eve::countr_zero(T()), T);
+  TTS_EXPR_IS(eve::countr_zero(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::countr_zero behavior", EVE_TYPE)
+TTS_CASE("Check eve::countr_zero behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EQUAL(eve::countr_zero(T(0)), T(sizeof(v_t) * 8));
-  TTS_EQUAL(eve::countr_zero(T(3)), T(0));
-  TTS_EQUAL(eve::countr_zero(T(8)), T(3));
-  TTS_EQUAL(eve::countr_zero(T(6)), T(1));
-  TTS_EQUAL(eve::countr_zero(T(9)), T(0));
+  TTS_EQUAL(eve::countr_zero(EVE_TYPE(0)), EVE_TYPE(sizeof(EVE_VALUE) * 8));
+  TTS_EQUAL(eve::countr_zero(EVE_TYPE(3)), EVE_TYPE(0));
+  TTS_EQUAL(eve::countr_zero(EVE_TYPE(8)), EVE_TYPE(3));
+  TTS_EQUAL(eve::countr_zero(EVE_TYPE(6)), EVE_TYPE(1));
+  TTS_EQUAL(eve::countr_zero(EVE_TYPE(9)), EVE_TYPE(0));
 }

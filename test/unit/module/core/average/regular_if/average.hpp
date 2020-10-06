@@ -13,23 +13,21 @@
 #include <eve/constant/false.hpp>
 #include <eve/logical.hpp>
 #include <eve/function/if_else.hpp>
-#include <type_traits>
-#include <algorithm>
 
-TTS_CASE_TPL("Check eve::average[condition] return type", EVE_TYPE)
+TTS_CASE("Check eve::average[condition] return type")
 {
-  TTS_EXPR_IS( (eve::average[ T() ](T(), T())), T);
-  TTS_EXPR_IS( (eve::average[ eve::logical<T>() ](T(), T())), T);
-  TTS_EXPR_IS( (eve::average[ true ](T(), T())), T);
-  TTS_EXPR_IS( (eve::average[ eve::if_(true)](T(), T())), T);
+  TTS_EXPR_IS( (eve::average[ EVE_TYPE() ](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
+  TTS_EXPR_IS( (eve::average[ eve::logical<EVE_TYPE>() ](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
+  TTS_EXPR_IS( (eve::average[ true ](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
+  TTS_EXPR_IS( (eve::average[ eve::if_(true)](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::average[condition] behavior", EVE_TYPE)
+TTS_CASE("Check eve::average[condition] behavior")
 {
-  T tv{2};
-  T fv{3};
-  auto t = eve::true_(eve::as<T>());
-  auto f = eve::false_(eve::as<T>());
+  EVE_TYPE tv{2};
+  EVE_TYPE fv{3};
+  auto t = eve::true_(eve::as<EVE_TYPE>());
+  auto f = eve::false_(eve::as<EVE_TYPE>());
 
   // All basic TRUE
   TTS_EQUAL(eve::average[ 1 ](tv, fv)     , eve::average(fv,tv));
@@ -44,10 +42,17 @@ TTS_CASE_TPL("Check eve::average[condition] behavior", EVE_TYPE)
   TTS_EQUAL(eve::average[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  eve::as_logical_t<EVE_TYPE> m;
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL(eve::average[ m ](tv, fv) , eve::if_else(m, eve::average(tv, fv), tv) );
 }

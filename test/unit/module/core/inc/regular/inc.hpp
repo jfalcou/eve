@@ -10,24 +10,24 @@
 //==================================================================================================
 #include <eve/function/inc.hpp>
 
-TTS_CASE_TPL("Check eve::inc return type", EVE_TYPE)
+TTS_CASE("Check eve::inc return type")
 {
-  TTS_EXPR_IS(eve::inc(T()), T);
+  TTS_EXPR_IS(eve::inc(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::inc behavior", EVE_TYPE)
+TTS_CASE("Check eve::inc behavior")
 {
-  TTS_EQUAL(eve::inc(T(1)), T(2));
-  TTS_EQUAL(eve::inc(T(2)), T(3));
+  TTS_EQUAL(eve::inc(EVE_TYPE(1)), EVE_TYPE(2));
+  TTS_EQUAL(eve::inc(EVE_TYPE(2)), EVE_TYPE(3));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::inc(T(-2)), T(-1));
+    TTS_EQUAL(eve::inc(EVE_TYPE(-2)), EVE_TYPE(-1));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::inc(T(-0.)), T(1));
-    TTS_EQUAL(eve::inc(T( 0 )), T(1));
+    TTS_EQUAL(eve::inc(EVE_TYPE(-0.)), EVE_TYPE(1));
+    TTS_EQUAL(eve::inc(EVE_TYPE( 0 )), EVE_TYPE(1));
   }
 }

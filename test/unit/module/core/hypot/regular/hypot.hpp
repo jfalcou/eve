@@ -17,57 +17,53 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check hypot return type", EVE_TYPE)
+TTS_CASE("Check hypot return type")
 {
-  using v_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_TYPE(0))  , EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_VALUE(0), EVE_TYPE(0))  , EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_VALUE(0)) , EVE_TYPE);
 
-  TTS_EXPR_IS(eve::hypot(   T(0),   T(0)), T);
-  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0)), T);
-  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0)), T);
-
-  TTS_EXPR_IS(eve::hypot(   T(0),   T(0),   T(0)), T);
-  TTS_EXPR_IS(eve::hypot(   T(0),   T(0), v_t(0)), T);
-  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0),   T(0)), T);
-  TTS_EXPR_IS(eve::hypot(   T(0), v_t(0), v_t(0)), T);
-  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0),   T(0)), T);
-  TTS_EXPR_IS(eve::hypot( v_t(0),   T(0), v_t(0)), T);
-  TTS_EXPR_IS(eve::hypot( v_t(0), v_t(0),   T(0)), T);
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_TYPE(0) , EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_TYPE(0) , EVE_VALUE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_VALUE(0), EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_TYPE(0) , EVE_VALUE(0), EVE_VALUE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_VALUE(0), EVE_TYPE(0) , EVE_TYPE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_VALUE(0), EVE_TYPE(0) , EVE_VALUE(0)), EVE_TYPE);
+  TTS_EXPR_IS(eve::hypot( EVE_VALUE(0), EVE_VALUE(0), EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::hypot behavior", EVE_TYPE)
+TTS_CASE("Check eve::hypot behavior")
 {
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<T>()), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<EVE_TYPE>()), eve::nan(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()));
   }
 
-  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<T>()) , T(0)            ) , eve::inf(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::valmax(eve::as<T>())) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<EVE_TYPE>()) , EVE_TYPE(0)            ) , eve::inf(eve::as<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::hypot(EVE_TYPE(0)             , eve::valmax(eve::as<EVE_TYPE>())) , eve::inf(eve::as<EVE_TYPE>()));
 
-  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1))                      , eve::sqrt_2(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1))                      , eve::sqrt_2(eve::as<T>()), 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0))                      , T(0)            , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(eve::sqrt_2(eve::as<T>()), eve::sqrt_2(eve::as<T>())), T(2)            , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE(-1), EVE_TYPE(-1))                      , eve::sqrt_2(eve::as<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE( 1), EVE_TYPE( 1))                      , eve::sqrt_2(eve::as<EVE_TYPE>()), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE( 0), EVE_TYPE( 0))                      , EVE_TYPE(0)            , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(eve::sqrt_2(eve::as<EVE_TYPE>()), eve::sqrt_2(eve::as<EVE_TYPE>())), EVE_TYPE(2)            , 0.5);
 }
 
-TTS_CASE_TPL("Check 3 params eve::hypot behavior", EVE_TYPE)
+TTS_CASE("Check 3 params eve::hypot behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
   // non conforming to standard
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<T>()), eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::hypot(eve::inf(eve::as<EVE_TYPE>()), eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::nan(eve::as<EVE_TYPE>()));
   }
 
-  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<T>()) , T(0)            , T(0)) , eve::inf(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::hypot(T(0)             , eve::valmax(eve::as<T>()), T(0)) , eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::hypot(eve::valmax(eve::as<EVE_TYPE>()) , EVE_TYPE(0)            , EVE_TYPE(0)) , eve::inf(eve::as<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::hypot(EVE_TYPE(0)             , eve::valmax(eve::as<EVE_TYPE>()), EVE_TYPE(0)) , eve::inf(eve::as<EVE_TYPE>()));
 
-  TTS_ULP_EQUAL(eve::hypot(T(-1), T(-1), eve::sqrt_2(eve::as<T>()) ) , T(2)                , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), eve::sqrt_2(eve::as<T>()) ) , T(2)                , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 0), T( 0), T( 0)            ) , T(0)                , 0.5);
-  TTS_ULP_EQUAL(eve::hypot(T( 1), T( 1), T( 1)            ) , T(std::sqrt(v_t(3))), 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE(-1), EVE_TYPE(-1), eve::sqrt_2(eve::as<EVE_TYPE>()) ) , EVE_TYPE(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE( 1), EVE_TYPE( 1), eve::sqrt_2(eve::as<EVE_TYPE>()) ) , EVE_TYPE(2)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE( 0), EVE_TYPE( 0), EVE_TYPE( 0)            ) , EVE_TYPE(0)                , 0.5);
+  TTS_ULP_EQUAL(eve::hypot(EVE_TYPE( 1), EVE_TYPE( 1), EVE_TYPE( 1)            ) , EVE_TYPE(std::sqrt(EVE_VALUE(3))), 0.5);
 }

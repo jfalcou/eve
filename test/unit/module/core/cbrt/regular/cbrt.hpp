@@ -17,12 +17,12 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::cbrt return type", EVE_TYPE)
+TTS_CASE("Check eve::cbrt return type")
 {
-  TTS_EXPR_IS(eve::cbrt(T(0)), T);
+  TTS_EXPR_IS(eve::cbrt(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::eve::cbrt behavior", EVE_TYPE)
+TTS_CASE("Check eve::eve::cbrt behavior")
 {
   using eve::all;
   using eve::is_negative;
@@ -30,18 +30,18 @@ TTS_CASE_TPL("Check eve::eve::cbrt behavior", EVE_TYPE)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::cbrt(eve::nan(eve::as<T>())) , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cbrt(eve::inf(eve::as<T>())) , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(eve::cbrt(eve::minf(eve::as<T>())), eve::minf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::cbrt(eve::nan(eve::as<EVE_TYPE>())) , eve::nan(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cbrt(eve::inf(eve::as<EVE_TYPE>())) , eve::inf(eve::as<EVE_TYPE>()) );
+    TTS_IEEE_EQUAL(eve::cbrt(eve::minf(eve::as<EVE_TYPE>())), eve::minf(eve::as<EVE_TYPE>()));
   }
 
-  TTS_ULP_EQUAL(eve::cbrt(T(1))   , T( 1), 0.5);
-  TTS_ULP_EQUAL(eve::cbrt(T(-1))  , T(-1), 0.5);
-  TTS_ULP_EQUAL(eve::cbrt(T(8))   , T( 2), 0.5);
-  TTS_ULP_EQUAL(eve::cbrt(T(-8))  , T(-2), 0.5);
-  TTS_ULP_EQUAL(eve::cbrt(T(0))   , T( 0), 0  );
-  TTS_ULP_EQUAL(eve::cbrt(T(-0.)) , T( 0), 0.5);
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(1))   , EVE_TYPE( 1), 0.5);
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(-1))  , EVE_TYPE(-1), 0.5);
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(8))   , EVE_TYPE( 2), 0.5);
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(-8))  , EVE_TYPE(-2), 0.5);
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(0))   , EVE_TYPE( 0), 0  );
+  TTS_ULP_EQUAL(eve::cbrt(EVE_TYPE(-0.)) , EVE_TYPE( 0), 0.5);
 
-  TTS_EXPECT( all(is_negative(eve::cbrt(T(-0.)))) );
-  TTS_EXPECT( all(is_positive(eve::cbrt(T(0)))  ) );
+  TTS_EXPECT( all(is_negative(eve::cbrt(EVE_TYPE(-0.)))) );
+  TTS_EXPECT( all(is_positive(eve::cbrt(EVE_TYPE(0)))  ) );
 }

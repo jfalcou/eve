@@ -10,32 +10,32 @@
 //==================================================================================================
 #include <eve/function/floor.hpp>
 
-TTS_CASE_TPL("Check ifloor return type", EVE_TYPE)
+TTS_CASE("Check ifloor return type")
 {
-  TTS_EXPR_IS((eve::int_(eve::floor)(T())), (eve::detail::as_integer_t<T>));
+  TTS_EXPR_IS((eve::int_(eve::floor)(EVE_TYPE())), (eve::detail::as_integer_t<EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::int_(eve::floor) behavior", EVE_TYPE)
+TTS_CASE("Check eve::int_(eve::floor) behavior")
 {
-  using i_t = eve::detail::as_integer_t<T>;
+  using i_t = eve::detail::as_integer_t<EVE_TYPE>;
 
-  TTS_EQUAL(eve::int_(eve::floor)(T(0)), i_t(0));
-  TTS_EQUAL(eve::int_(eve::floor)(T(1)), i_t(1));
-  TTS_EQUAL(eve::int_(eve::floor)(T(2)), i_t(2));
+  TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(0)), i_t(0));
+  TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(1)), i_t(1));
+  TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(2)), i_t(2));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::int_(eve::floor)(T(-1)), i_t(-1));
-    TTS_EQUAL(eve::int_(eve::floor)(T(-2)), i_t(-2));
+    TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(-1)), i_t(-1));
+    TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(-2)), i_t(-2));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-   TTS_EQUAL(eve::int_(eve::floor)(T(-1.3)), i_t(-2));
-   TTS_EQUAL(eve::int_(eve::floor)(T(-1.5)), i_t(-2));
-   TTS_EQUAL(eve::int_(eve::floor)(T(-1.6)), i_t(-2));
-   TTS_EQUAL(eve::int_(eve::floor)(T( 1.3)), i_t( 1));
-   TTS_EQUAL(eve::int_(eve::floor)(T( 1.5)), i_t( 1));
-   TTS_EQUAL(eve::int_(eve::floor)(T( 1.6)), i_t( 1));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(-1.3)), i_t(-2));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(-1.5)), i_t(-2));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE(-1.6)), i_t(-2));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE( 1.3)), i_t( 1));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE( 1.5)), i_t( 1));
+   TTS_EQUAL(eve::int_(eve::floor)(EVE_TYPE( 1.6)), i_t( 1));
   }
 }

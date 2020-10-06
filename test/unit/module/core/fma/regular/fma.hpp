@@ -10,24 +10,22 @@
 //==================================================================================================
 #include <eve/function/fma.hpp>
 
-TTS_CASE_TPL("Check eve::fma return type", EVE_TYPE)
+TTS_CASE("Check eve::fma return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::fma(T()   , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::fma(T()   , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::fma(T()   , v_t() , T()   ) , T);
-  TTS_EXPR_IS(eve::fma(T()   , v_t() , v_t() ) , T);
-  TTS_EXPR_IS(eve::fma(v_t() , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::fma(v_t() , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::fma(v_t() , v_t() , T()   ) , T);
+  TTS_EXPR_IS(eve::fma(EVE_TYPE()   , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_TYPE()   , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_TYPE()   , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_TYPE()   , EVE_VALUE() , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_VALUE() , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_VALUE() , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::fma(EVE_VALUE() , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::fma behavior", EVE_TYPE)
+TTS_CASE("Check eve::fma behavior")
 {
-  TTS_EQUAL(eve::fma(T(0), T(0), T(0)), T(0)  );
-  TTS_EQUAL(eve::fma(T(0), T(0), T(7)), T(7)  );
-  TTS_EQUAL(eve::fma(T(2), T(0), T(7)), T(7)  );
-  TTS_EQUAL(eve::fma(T(0), T(5), T(7)), T(7)  );
-  TTS_EQUAL(eve::fma(T(2), T(5), T(7)), T(17) );
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE(0)  );
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(0), EVE_TYPE(7)), EVE_TYPE(7)  );
+  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(0), EVE_TYPE(7)), EVE_TYPE(7)  );
+  TTS_EQUAL(eve::fma(EVE_TYPE(0), EVE_TYPE(5), EVE_TYPE(7)), EVE_TYPE(7)  );
+  TTS_EQUAL(eve::fma(EVE_TYPE(2), EVE_TYPE(5), EVE_TYPE(7)), EVE_TYPE(17) );
 }

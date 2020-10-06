@@ -12,10 +12,11 @@
 #include <eve/constant/mzero.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
+#include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_nez return type", EVE_TYPE)
+TTS_CASE("Check eve::is_nez return type")
 {
-  TTS_EXPR_IS(eve::is_nez(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_nez(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_nez behavior", EVE_TYPE)
@@ -26,5 +27,10 @@ TTS_CASE_TPL("Check eve::is_nez behavior", EVE_TYPE)
   if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::is_nez(T(-0.)), eve::false_(eve::as<T>()) );
+
+    if constexpr(eve::platform::supports_nans)
+    {
+      TTS_EQUAL(eve::is_nez(eve::nan(eve::as<T>())), eve::true_(eve::as<T>()));
+    }
   }
 }

@@ -14,17 +14,15 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::numeric(eve::is_equal) return type", EVE_TYPE)
+TTS_CASE("Check eve::numeric(eve::is_equal) return type")
 {
-  using v_t = eve::element_type_t<T>;
   using eve::logical;
-
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(  T()         ,   T()         ) , logical<T>);
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(  T()         , v_t()         ) , logical<T>);
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(v_t()         ,   T()         ) , logical<T>);
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<T>()  , logical<T>()  ) , logical<T>);
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<T>()  , logical<v_t>()) , logical<T>);
-  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<v_t>(), logical<T>()  ) , logical<T>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(EVE_TYPE()           , EVE_TYPE()          ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(EVE_TYPE()           , EVE_VALUE()         ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(EVE_VALUE()          , EVE_TYPE()          ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<EVE_TYPE>()  , logical<EVE_TYPE>() ) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<EVE_TYPE>()  , logical<EVE_VALUE>()) , logical<EVE_TYPE>);
+  TTS_EXPR_IS( eve::numeric(eve::is_equal)(logical<EVE_VALUE>() , logical<EVE_TYPE>() ) , logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::numeric(eve::is_equal) behavior", EVE_TYPE)

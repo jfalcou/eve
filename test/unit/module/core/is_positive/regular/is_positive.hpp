@@ -14,27 +14,27 @@
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check is_positive return type", EVE_TYPE)
+TTS_CASE("Check is_positive return type")
 {
-  TTS_EXPR_IS(eve::is_positive(T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_positive(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_positive behavior", EVE_TYPE)
+TTS_CASE("Check eve::is_positive behavior")
 {
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::is_positive(T(-1)), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_positive(EVE_TYPE(-1)), eve::false_(eve::as<EVE_TYPE>()));
   }
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::is_positive(T( 0 )), eve::true_(eve::as<T>()));
-    TTS_EQUAL(eve::is_positive(T(-0.)), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_positive(EVE_TYPE( 0 )), eve::true_(eve::as<EVE_TYPE>()));
+    TTS_EQUAL(eve::is_positive(EVE_TYPE(-0.)), eve::false_(eve::as<EVE_TYPE>()));
   }
-  if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
+  if constexpr(eve::platform::supports_nans && eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::is_positive( eve::nan(eve::as<T>())), eve::false_(eve::as<T>()) );
-    TTS_EQUAL(eve::is_positive(-eve::nan(eve::as<T>())), eve::true_(eve::as<T>())  );
+    TTS_EQUAL(eve::is_positive( eve::nan(eve::as<EVE_TYPE>())), eve::false_(eve::as<EVE_TYPE>()) );
+    TTS_EQUAL(eve::is_positive(-eve::nan(eve::as<EVE_TYPE>())), eve::true_(eve::as<EVE_TYPE>())  );
   }
-  TTS_EQUAL(eve::is_positive(T(0)), eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_positive(T(3)), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_positive(EVE_TYPE(0)), eve::true_(eve::as<EVE_TYPE>()));
+  TTS_EQUAL(eve::is_positive(EVE_TYPE(3)), eve::true_(eve::as<EVE_TYPE>()));
 }

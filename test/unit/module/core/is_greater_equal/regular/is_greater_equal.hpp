@@ -13,13 +13,11 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::is_greater_equal return type", EVE_TYPE)
+TTS_CASE("Check eve::is_greater_equal return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::is_greater_equal(  T() ,   T()), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_greater_equal(  T() , v_t()), eve::logical<T>);
-  TTS_EXPR_IS(eve::is_greater_equal(v_t() ,   T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_greater_equal(EVE_TYPE()  , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_greater_equal(EVE_TYPE()  , EVE_VALUE() ), eve::logical<EVE_TYPE>);
+  TTS_EXPR_IS(eve::is_greater_equal(EVE_VALUE() , EVE_TYPE()  ), eve::logical<EVE_TYPE>);
 }
 
 #if defined(EVE_SIMD_TESTS)
@@ -43,15 +41,15 @@ TTS_CASE_TPL("Check eve::operator> behavior", EVE_TYPE)
     TTS_EQUAL((eve::nan(eve::as<T>()) > T(4))          , eve::false_(eve::as<T>()));
   }
 
-  TTS_EQUAL( T(1)   >= T(1)   , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( v_t(1) >= T(1)   , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( T(1)   >= v_t(1) , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( T(3)   >= T(1)   , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( v_t(3) >= T(1)   , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( T(3)   >= v_t(1) , eve::true_(eve::as<T>())  );
-  TTS_EQUAL( T(1)   >= T(3)   , eve::false_(eve::as<T>()) );
-  TTS_EQUAL( v_t(1) >= T(3)   , eve::false_(eve::as<T>()) );
-  TTS_EQUAL( T(1)   >= v_t(3) , eve::false_(eve::as<T>()) );
+  TTS_EQUAL( (T(1)   >= T(1)  ) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (v_t(1) >= T(1)  ) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (T(1)   >= v_t(1)) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (T(3)   >= T(1)  ) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (v_t(3) >= T(1)  ) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (T(3)   >= v_t(1)) , eve::true_(eve::as<T>())  );
+  TTS_EQUAL( (T(1)   >= T(3)  ) , eve::false_(eve::as<T>()) );
+  TTS_EQUAL( (v_t(1) >= T(3)  ) , eve::false_(eve::as<T>()) );
+  TTS_EQUAL( (T(1)   >= v_t(3)) , eve::false_(eve::as<T>()) );
 }
 
 TTS_CASE_TPL("Check eve::is_greater_equal behavior", EVE_TYPE)

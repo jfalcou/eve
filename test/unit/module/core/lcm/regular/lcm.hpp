@@ -12,21 +12,19 @@
 #include <eve/constant/valmin.hpp>
 #include <numeric>
 
-TTS_CASE_TPL("Check eve::lcm return type", EVE_TYPE)
+TTS_CASE("Check eve::lcm return type")
 {
-  TTS_EXPR_IS(eve::lcm(T(), T()), T);
+  TTS_EXPR_IS(eve::lcm(EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::lcm behavior", EVE_TYPE)
+TTS_CASE("Check eve::lcm behavior")
 {
-  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL(eve::lcm(EVE_TYPE(22), EVE_TYPE( 10)) , EVE_TYPE(std::lcm(EVE_VALUE(22), EVE_VALUE( 10))));
+  TTS_EQUAL(eve::lcm(EVE_TYPE(22), EVE_TYPE(-10)) , EVE_TYPE(std::lcm(EVE_VALUE(22), EVE_VALUE(-10))));
+  EVE_VALUE z = eve::valmin(eve::as<EVE_VALUE>())/2;
 
-  TTS_EQUAL(eve::lcm(T(22), T( 10)) , T(std::lcm(v_t(22), v_t( 10))));
-  TTS_EQUAL(eve::lcm(T(22), T(-10)) , T(std::lcm(v_t(22), v_t(-10))));
-  v_t z = eve::valmin(eve::as<v_t>())/2;
-
-  TTS_EQUAL(eve::lcm(T(z), T(2)), T(std::lcm(z, v_t(2))) );
-  TTS_EQUAL(eve::lcm(T(z), T(1)), T(std::lcm(z, v_t(1))) );
-  TTS_EQUAL(eve::lcm(T(0), T(1)), T(std::lcm(v_t(0), v_t(1))) );
-  TTS_EQUAL(eve::lcm(T(1), T(0)), T(std::lcm(v_t(1), v_t(0))) );
+  TTS_EQUAL(eve::lcm(EVE_TYPE(z), EVE_TYPE(2)), EVE_TYPE(std::lcm(z, EVE_VALUE(2))) );
+  TTS_EQUAL(eve::lcm(EVE_TYPE(z), EVE_TYPE(1)), EVE_TYPE(std::lcm(z, EVE_VALUE(1))) );
+  TTS_EQUAL(eve::lcm(EVE_TYPE(0), EVE_TYPE(1)), EVE_TYPE(std::lcm(EVE_VALUE(0), EVE_VALUE(1))) );
+  TTS_EQUAL(eve::lcm(EVE_TYPE(1), EVE_TYPE(0)), EVE_TYPE(std::lcm(EVE_VALUE(1), EVE_VALUE(0))) );
 }

@@ -21,5 +21,5 @@ endif()
 
 add_subdirectory(doc)
 #add_subdirectory(exhaustive)
-add_subdirectory(random)
+#add_subdirectory(random)
 add_subdirectory(unit)

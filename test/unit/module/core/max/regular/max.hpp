@@ -10,31 +10,27 @@
 //==================================================================================================
 #include <eve/function/max.hpp>
 
-TTS_CASE_TPL("Check eve::max return type", EVE_TYPE)
+TTS_CASE("Check eve::max return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::max(T(0)   , T(0) ) , T);
-  TTS_EXPR_IS(eve::max(v_t(0) , T(0) ) , T);
-  TTS_EXPR_IS(eve::max(T(0)   , v_t(0)) , T);
+  TTS_EXPR_IS(eve::max( EVE_TYPE(0)  , EVE_TYPE(0)  ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::max( EVE_VALUE(0) , EVE_TYPE(0)  ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::max( EVE_TYPE(0)  , EVE_VALUE(0) ) , EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
+TTS_CASE("Check eve::max behavior")
 {
-  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL(eve::max(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::max(EVE_TYPE(0), EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_TYPE(1), EVE_TYPE(0)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_TYPE(1), EVE_TYPE(1)), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::max(T(0), T(0)), T(0));
-  TTS_EQUAL(eve::max(T(0), T(1)), T(1));
-  TTS_EQUAL(eve::max(T(1), T(0)), T(1));
-  TTS_EQUAL(eve::max(T(1), T(1)), T(1));
+  TTS_EQUAL(eve::max(EVE_VALUE(0), EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::max(EVE_VALUE(0), EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_VALUE(1), EVE_TYPE(0)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_VALUE(1), EVE_TYPE(1)), EVE_TYPE(1));
 
-  TTS_EQUAL(eve::max(v_t(0), T(0)), T(0));
-  TTS_EQUAL(eve::max(v_t(0), T(1)), T(1));
-  TTS_EQUAL(eve::max(v_t(1), T(0)), T(1));
-  TTS_EQUAL(eve::max(v_t(1), T(1)), T(1));
-
-  TTS_EQUAL(eve::max(T(0), v_t(0)), T(0));
-  TTS_EQUAL(eve::max(T(0), v_t(1)), T(1));
-  TTS_EQUAL(eve::max(T(1), v_t(0)), T(1));
-  TTS_EQUAL(eve::max(T(1), v_t(1)), T(1));
+  TTS_EQUAL(eve::max(EVE_TYPE(0), EVE_VALUE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::max(EVE_TYPE(0), EVE_VALUE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_TYPE(1), EVE_VALUE(0)), EVE_TYPE(1));
+  TTS_EQUAL(eve::max(EVE_TYPE(1), EVE_VALUE(1)), EVE_TYPE(1));
 }

@@ -16,9 +16,9 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::rsqrt return type", EVE_TYPE)
+TTS_CASE("Check eve::rsqrt return type")
 {
-  TTS_EXPR_IS(eve::rsqrt(T(0)), T);
+  TTS_EXPR_IS(eve::rsqrt(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::rsqrt behavior", EVE_TYPE)

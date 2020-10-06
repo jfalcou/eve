@@ -9,25 +9,22 @@
 **/
 //==================================================================================================
 #include <eve/function/minus.hpp>
-#include <eve/function/all.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/function/all.hpp>
 
-TTS_CASE_TPL("Check eve::minus return type", EVE_TYPE)
+TTS_CASE("Check eve::minus return type")
 {
-  TTS_EXPR_IS(eve::minus(T(0)), T);
+  TTS_EXPR_IS(eve::minus(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::minus behavior", EVE_TYPE)
+TTS_CASE("Check eve::minus behavior")
 {
-  TTS_EQUAL(eve::minus(T( 1)) , static_cast<T>(-1));
-  TTS_EQUAL(eve::minus(T(-1)) , static_cast<T>( 1));
-  if (eve::floating_value<T>)
+  TTS_EQUAL(eve::minus(EVE_TYPE( 1)) , static_cast<EVE_TYPE>(-1));
+  TTS_EQUAL(eve::minus(EVE_TYPE(-1)) , static_cast<EVE_TYPE>( 1));
+  if (eve::floating_value<EVE_TYPE>)
   {
-    TTS_EXPECT(eve::all(eve::is_negative(eve::minus(T( 0 )))));
-    TTS_EXPECT(eve::all(eve::is_positive(eve::minus(T(-0.)))));
+    TTS_EXPECT(eve::all(eve::is_negative(eve::minus(EVE_TYPE( 0 )))));
+    TTS_EXPECT(eve::all(eve::is_positive(eve::minus(EVE_TYPE(-0.)))));
   }
-
 }

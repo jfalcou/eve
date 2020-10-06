@@ -17,47 +17,46 @@
 #include <eve/constant/nbmantissabits.hpp>
 #include <tuple>
 
-TTS_CASE_TPL("Check frexp return type", EVE_TYPE)
+TTS_CASE("Check frexp return type")
 {
-  TTS_EXPR_IS(eve::pedantic(eve::frexp)(T()), (std::tuple<T,T>));
+  TTS_EXPR_IS(eve::pedantic(eve::frexp)(EVE_TYPE()), (std::tuple<EVE_TYPE,EVE_TYPE>));
 }
 
-TTS_CASE_TPL("Check eve::pedantic(eve::frexp) behavior", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::frexp) behavior")
 {
   {
-    auto [p0, p1] = eve::pedantic(eve::frexp)(T(1));
-    TTS_EQUAL(p0, T(0.5));
-    TTS_EQUAL(p1, T(1));
+    auto [p0, p1] = eve::pedantic(eve::frexp)(EVE_TYPE(1));
+    TTS_EQUAL(p0, EVE_TYPE(0.5));
+    TTS_EQUAL(p1, EVE_TYPE(1));
   }
   {
-    auto [p0, p1] = eve::pedantic(eve::frexp)(T(0));
-    TTS_EQUAL (p0 , T(0));
-    TTS_EQUAL (p1, T(0));
+    auto [p0, p1] = eve::pedantic(eve::frexp)(EVE_TYPE(0));
+    TTS_EQUAL (p0 , EVE_TYPE(0));
+    TTS_EQUAL (p1, EVE_TYPE(0));
   }
   if constexpr(eve::platform::supports_nans)
   {
-    auto [r0, r1] = eve::pedantic(eve::frexp)(eve::nan(eve::as<T>()));
+    auto [r0, r1] = eve::pedantic(eve::frexp)(eve::nan(eve::as<EVE_TYPE>()));
 
-    TTS_IEEE_EQUAL(r0 , (eve::nan(eve::as<T>())));
-    TTS_EQUAL     (r1, (T(0)));
+    TTS_IEEE_EQUAL(r0 , (eve::nan(eve::as<EVE_TYPE>())));
+    TTS_EQUAL     (r1, (EVE_TYPE(0)));
   }
   if constexpr(eve::platform::supports_infinites)
   {
-    auto [r0, r1] = eve::pedantic(eve::frexp)(eve::inf(eve::as<T>()));
-    auto [q0, q1] = eve::pedantic(eve::frexp)(eve::minf(eve::as<T>()));
+    auto [r0, r1] = eve::pedantic(eve::frexp)(eve::inf(eve::as<EVE_TYPE>()));
+    auto [q0, q1] = eve::pedantic(eve::frexp)(eve::minf(eve::as<EVE_TYPE>()));
 
-    TTS_IEEE_EQUAL(r0, (eve::inf(eve::as<T>())));
-    TTS_EQUAL     (r1, T(0));
+    TTS_IEEE_EQUAL(r0, (eve::inf(eve::as<EVE_TYPE>())));
+    TTS_EQUAL     (r1, EVE_TYPE(0));
 
-    TTS_IEEE_EQUAL(q0, (eve::minf(eve::as<T>())));
-    TTS_EQUAL     (q1, T(0));
+    TTS_IEEE_EQUAL(q0, (eve::minf(eve::as<EVE_TYPE>())));
+    TTS_EQUAL     (q1, EVE_TYPE(0));
   }
   if constexpr(eve::platform::supports_denormals)
   {
-    using v_t = eve::element_type_t<T>;
-    auto [r0, r1] = eve::pedantic(eve::frexp)(eve::mindenormal(eve::as<T>()));
+      auto [r0, r1] = eve::pedantic(eve::frexp)(eve::mindenormal(eve::as<EVE_TYPE>()));
 
-    TTS_ULP_EQUAL (r0, T(0.5), 1);
-    TTS_EQUAL     (r1, T(eve::minexponent(eve::as<v_t>())-eve::nbmantissabits(eve::as<v_t>())+1));
+    TTS_ULP_EQUAL (r0, EVE_TYPE(0.5), 1);
+    TTS_EQUAL     (r1, EVE_TYPE(eve::minexponent(eve::as<EVE_VALUE>())-eve::nbmantissabits(eve::as<EVE_VALUE>())+1));
   }
 }

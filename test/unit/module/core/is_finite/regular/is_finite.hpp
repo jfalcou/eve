@@ -14,11 +14,10 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
-#include <type_traits>
 
-TTS_CASE_TPL("Check eve::is_finite return type", EVE_TYPE)
+TTS_CASE("Check eve::is_finite return type")
 {
-  TTS_EXPR_IS(eve::is_finite(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_finite(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_finite behavior", EVE_TYPE)

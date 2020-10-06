@@ -12,12 +12,11 @@
 #include <eve/function/pedantic.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::pedantic(eve::maxmag) return type", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::maxmag) return type")
 {
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(T(0)  , T(0) ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(v_t(0), T(0) ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(T(0)  , v_t(0)) , T);
+  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(EVE_TYPE(0) , EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(EVE_VALUE(0), EVE_TYPE(0) ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::maxmag)(EVE_TYPE(0) , EVE_VALUE(0)) , EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::pedantic(eve::maxmag) behavior", EVE_TYPE)

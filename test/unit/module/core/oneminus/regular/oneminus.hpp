@@ -11,24 +11,24 @@
 #include <eve/function/oneminus.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::oneminus return type", EVE_TYPE)
+TTS_CASE("Check eve::oneminus return type")
 {
-  TTS_EXPR_IS(eve::oneminus(T(0)), T);
+  TTS_EXPR_IS(eve::oneminus(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::oneminus behavior", EVE_TYPE)
+TTS_CASE("Check eve::oneminus behavior")
 {
-  TTS_EQUAL(eve::oneminus(T(1)), T(0));
+  TTS_EQUAL(eve::oneminus(EVE_TYPE(1)), EVE_TYPE(0));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::oneminus(T(2))              , T(-1));
-    TTS_EQUAL(eve::oneminus(static_cast<T>(-2)), T( 3));
+    TTS_EQUAL(eve::oneminus(EVE_TYPE(2))              , EVE_TYPE(-1));
+    TTS_EQUAL(eve::oneminus(static_cast<EVE_TYPE>(-2)), EVE_TYPE( 3));
   }
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::oneminus(T(-0.)) , T(1));
-    TTS_EQUAL(eve::oneminus((T(0))) , T(1));
+    TTS_EQUAL(eve::oneminus(EVE_TYPE(-0.)) , EVE_TYPE(1));
+    TTS_EQUAL(eve::oneminus((EVE_TYPE(0))) , EVE_TYPE(1));
   }
 }

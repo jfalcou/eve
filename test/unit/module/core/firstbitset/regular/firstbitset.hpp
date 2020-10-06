@@ -10,20 +10,20 @@
 //==================================================================================================
 #include <eve/function/firstbitset.hpp>
 
-TTS_CASE_TPL("Check firstbitset return type", EVE_TYPE)
+TTS_CASE("Check firstbitset return type")
 {
-  TTS_EXPR_IS(eve::firstbitset(T()), T);
+  TTS_EXPR_IS(eve::firstbitset(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::firstbitset behavior", EVE_TYPE)
+TTS_CASE("Check eve::firstbitset behavior")
 {
-  TTS_EQUAL(eve::firstbitset(T(0)), T(0));
-  TTS_EQUAL(eve::firstbitset(T(1)), T(1));
-  TTS_EQUAL(eve::firstbitset(T(2)), T(2));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(0)), EVE_TYPE(0));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(1)), EVE_TYPE(1));
+  TTS_EQUAL(eve::firstbitset(EVE_TYPE(2)), EVE_TYPE(2));
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::firstbitset(T(-1)), T(1));
-    TTS_EQUAL(eve::firstbitset(T(-2)), T(2));
+    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-1)), EVE_TYPE(1));
+    TTS_EQUAL(eve::firstbitset(EVE_TYPE(-2)), EVE_TYPE(2));
   }
 }

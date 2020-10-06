@@ -17,41 +17,41 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check manhattan return type", EVE_TYPE)
+TTS_CASE("Check manhattan return type")
 {
-  TTS_EXPR_IS(eve::pedantic(eve::manhattan)(T(0), T(0)), T);
+  TTS_EXPR_IS(eve::pedantic(eve::manhattan)(EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::pedantic(eve::manhattan) behavior", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::manhattan) behavior")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::inf(eve::as<EVE_TYPE>()));
+    TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::inf(eve::as<EVE_TYPE>()), eve::nan(eve::as<EVE_TYPE>())), eve::inf(eve::as<EVE_TYPE>()));
   }
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::valmax(eve::as<T>()), T(0))             , eve::valmax(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(T(0)            , eve::valmax(eve::as<T>())) , eve::valmax(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(eve::valmax(eve::as<EVE_TYPE>()), EVE_TYPE(0))             , eve::valmax(eve::as<EVE_TYPE>()));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE(0)            , eve::valmax(eve::as<EVE_TYPE>())) , eve::valmax(eve::as<EVE_TYPE>()));
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(T(-1), T(-1)), T(2));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(T( 1), T( 1)), T(2));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(T( 0), T( 0)), T(0));
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::sqrt_2(eve::as<T>()) , eve::sqrt_2(eve::as<T>())) , T(2)* eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE(-1), EVE_TYPE(-1)), EVE_TYPE(2));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE( 1), EVE_TYPE( 1)), EVE_TYPE(2));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE( 0), EVE_TYPE( 0)), EVE_TYPE(0));
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::sqrt_2(eve::as<EVE_TYPE>()) , eve::sqrt_2(eve::as<EVE_TYPE>())) , EVE_TYPE(2)* eve::sqrt_2(eve::as<EVE_TYPE>()), 0.5);
 }
 
-TTS_CASE_TPL("Check 3 params eve::pedantic(eve::manhattan) behavior", EVE_TYPE)
+TTS_CASE("Check 3 params eve::pedantic(eve::manhattan) behavior")
 {
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::nan(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
-    TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::inf(eve::as<T>()), eve::nan(eve::as<T>()), eve::inf(eve::as<T>())), eve::inf(eve::as<T>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::inf(eve::as<EVE_TYPE>()), 0);
+    TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::inf(eve::as<EVE_TYPE>()), eve::nan(eve::as<EVE_TYPE>()), eve::inf(eve::as<EVE_TYPE>())), eve::inf(eve::as<EVE_TYPE>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::valmax(eve::as<T>()), T(0),              T(0)), eve::valmax(eve::as<T>()), 0);
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(T(0)          , (eve::valmax(eve::as<T>())),  T(0)), eve::valmax(eve::as<T>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(eve::valmax(eve::as<EVE_TYPE>()), EVE_TYPE(0),              EVE_TYPE(0)), eve::valmax(eve::as<EVE_TYPE>()), 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE(0)          , (eve::valmax(eve::as<EVE_TYPE>())),  EVE_TYPE(0)), eve::valmax(eve::as<EVE_TYPE>()), 0);
 
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(T(-1), T(-1), T(-1)), T(3) , 0);
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(T( 1), T( 1), T(-1)), T(3) , 0);
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(T( 0), T( 0), T( 0)), T(0) , 0);
-  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(T( 1), T( 1), T( 1)), T(3) , 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE(-1), EVE_TYPE(-1), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE( 1), EVE_TYPE( 1), EVE_TYPE(-1)), EVE_TYPE(3) , 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE( 0), EVE_TYPE( 0), EVE_TYPE( 0)), EVE_TYPE(0) , 0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::manhattan)(EVE_TYPE( 1), EVE_TYPE( 1), EVE_TYPE( 1)), EVE_TYPE(3) , 0);
 }

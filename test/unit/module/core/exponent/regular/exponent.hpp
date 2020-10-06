@@ -13,27 +13,27 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 
-TTS_CASE_TPL("Check eve::exponent return type", EVE_TYPE)
+TTS_CASE("Check eve::exponent return type")
 {
-  TTS_EXPR_IS(eve::exponent(T(0)), eve::detail::as_integer_t<T>);
+  TTS_EXPR_IS(eve::exponent(EVE_TYPE(0)), eve::detail::as_integer_t<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::exponent  behavior", EVE_TYPE)
+TTS_CASE("Check eve::exponent  behavior")
 {
-  using r_t = eve::detail::as_integer_t<T>;
+  using r_t = eve::detail::as_integer_t<EVE_TYPE>;
 
   if constexpr(eve::platform::supports_invalids)
   {
-    TTS_EQUAL(eve::exponent(eve::inf(eve::as<T>())) , r_t(0));
-    TTS_EQUAL(eve::exponent(eve::minf(eve::as<T>())), r_t(0));
-    TTS_EQUAL(eve::exponent(eve::nan(eve::as<T>())) , r_t(0));
+    TTS_EQUAL(eve::exponent(eve::inf(eve::as<EVE_TYPE>())) , r_t(0));
+    TTS_EQUAL(eve::exponent(eve::minf(eve::as<EVE_TYPE>())), r_t(0));
+    TTS_EQUAL(eve::exponent(eve::nan(eve::as<EVE_TYPE>())) , r_t(0));
   }
 
-  TTS_EQUAL(eve::exponent(T(0   )), r_t(0));
-  TTS_EQUAL(eve::exponent(T(1   )), r_t(0));
-  TTS_EQUAL(eve::exponent(T(1.5 )), r_t(0));
-  TTS_EQUAL(eve::exponent(T(2   )), r_t(1));
-  TTS_EQUAL(eve::exponent(T(2.5 )), r_t(1));
-  TTS_EQUAL(eve::exponent(T(4.5 )), r_t(2));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(0   )), r_t(0));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(1   )), r_t(0));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(1.5 )), r_t(0));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(2   )), r_t(1));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(2.5 )), r_t(1));
+  TTS_EQUAL(eve::exponent(EVE_TYPE(4.5 )), r_t(2));
 }
 

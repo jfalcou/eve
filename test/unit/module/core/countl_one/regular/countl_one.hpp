@@ -10,18 +10,16 @@
 //==================================================================================================
 #include <eve/function/countl_one.hpp>
 
-TTS_CASE_TPL("Check countl_one return type", EVE_TYPE)
+TTS_CASE("Check countl_one return type")
 {
-  TTS_EXPR_IS(eve::countl_one(T()), T);
+  TTS_EXPR_IS(eve::countl_one(EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::countl_one behavior", EVE_TYPE)
+TTS_CASE("Check eve::countl_one behavior")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EQUAL(eve::countl_one(T(~0)), T(sizeof(v_t) * 8     ));
-  TTS_EQUAL(eve::countl_one(T(~2)), T(sizeof(v_t) * 8 - 2 ));
-  TTS_EQUAL(eve::countl_one(T(~5)), T(sizeof(v_t) * 8 - 3 ));
-  TTS_EQUAL(eve::countl_one(T(~6)), T(sizeof(v_t) * 8 - 3 ));
-  TTS_EQUAL(eve::countl_one(T(~9)), T(sizeof(v_t) * 8 - 4 ));
+  TTS_EQUAL(eve::countl_one(EVE_TYPE(~0)), EVE_TYPE(sizeof(EVE_VALUE) * 8     ));
+  TTS_EQUAL(eve::countl_one(EVE_TYPE(~2)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 2 ));
+  TTS_EQUAL(eve::countl_one(EVE_TYPE(~5)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 3 ));
+  TTS_EQUAL(eve::countl_one(EVE_TYPE(~6)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 3 ));
+  TTS_EQUAL(eve::countl_one(EVE_TYPE(~9)), EVE_TYPE(sizeof(EVE_VALUE) * 8 - 4 ));
 }

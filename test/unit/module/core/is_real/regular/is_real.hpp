@@ -12,13 +12,13 @@
 #include <eve/constant/true.hpp>
 #include <eve/function/is_real.hpp>
 
-TTS_CASE_TPL("Check is_real return type", EVE_TYPE)
+TTS_CASE("Check is_real return type")
 {
-  TTS_EXPR_IS(eve::is_real(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_real(EVE_TYPE(0)), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_real behavior", EVE_TYPE)
+TTS_CASE("Check eve::is_real behavior")
 {
-  TTS_EQUAL(eve::is_real(T{0}), eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_real(T{2}), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_real(EVE_TYPE(0)), eve::true_(eve::as<EVE_TYPE>()));
+  TTS_EQUAL(eve::is_real(EVE_TYPE(2)), eve::true_(eve::as<EVE_TYPE>()));
 }

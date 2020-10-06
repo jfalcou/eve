@@ -13,21 +13,21 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check is_unordered return type", EVE_TYPE)
+TTS_CASE("Check is_unordered return type")
 {
-  TTS_EXPR_IS(eve::is_unordered(T(), T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_unordered(EVE_TYPE(), EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_unordered behavior on arithmetic", EVE_TYPE)
+TTS_CASE("Check eve::is_unordered behavior on arithmetic")
 {
-  TTS_EQUAL(eve::is_unordered(T(1), T(1)), eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_unordered(T(3), T(1)), eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_unordered(T(1), T(3)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(1)), eve::false_(eve::as<EVE_TYPE>()));
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(3), EVE_TYPE(1)), eve::false_(eve::as<EVE_TYPE>()));
+  TTS_EQUAL(eve::is_unordered(EVE_TYPE(1), EVE_TYPE(3)), eve::false_(eve::as<EVE_TYPE>()));
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<T>()) , T(3)          ), eve::true_(eve::as<T>()));
-    TTS_EQUAL(eve::is_unordered(T(3)          , eve::nan(eve::as<T>()) ), eve::true_(eve::as<T>()));
-    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<T>()) , eve::nan(eve::as<T>()) ), eve::true_(eve::as<T>()));
+    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<EVE_TYPE>()) , EVE_TYPE(3)          ), eve::true_(eve::as<EVE_TYPE>()));
+    TTS_EQUAL(eve::is_unordered(EVE_TYPE(3)          , eve::nan(eve::as<EVE_TYPE>()) ), eve::true_(eve::as<EVE_TYPE>()));
+    TTS_EQUAL(eve::is_unordered(eve::nan(eve::as<EVE_TYPE>()) , eve::nan(eve::as<EVE_TYPE>()) ), eve::true_(eve::as<EVE_TYPE>()));
   }
 }

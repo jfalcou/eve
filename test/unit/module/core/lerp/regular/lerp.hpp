@@ -15,25 +15,25 @@
 #include <eve/constant/eps.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::lerp return type", EVE_TYPE)
+TTS_CASE("Check eve::lerp return type")
 {
-  TTS_EXPR_IS(eve::lerp(T(), T(), T()), T);
+  TTS_EXPR_IS(eve::lerp(EVE_TYPE(), EVE_TYPE(), EVE_TYPE()), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::(eve::lerp) behavior", EVE_TYPE)
+TTS_CASE("Check eve::(eve::lerp) behavior")
 {
-  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(eve::lerp(EVE_TYPE(12.73), EVE_TYPE(27.6666), EVE_TYPE(1)), EVE_TYPE(27.6666)                           , 0 );
+  TTS_ULP_EQUAL(eve::lerp(EVE_TYPE(12.73), EVE_TYPE(27.6666), EVE_TYPE(0)), EVE_TYPE(12.73)                             , 0 );
+  TTS_ULP_EQUAL(eve::lerp(EVE_TYPE(12.73), EVE_TYPE(27.6666), EVE_TYPE(0.5)), eve::average(EVE_TYPE(12.73), EVE_TYPE(27.6666)) , 0 );
 
-  TTS_ULP_EQUAL(eve::lerp(T(12.73), T(27.6666), T(1)), T(27.6666)                           , 0 );
-  TTS_ULP_EQUAL(eve::lerp(T(12.73), T(27.6666), T(0)), T(12.73)                             , 0 );
-  TTS_ULP_EQUAL(eve::lerp(T(12.73), T(27.6666), T(0.5)), eve::average(T(12.73), T(27.6666)) , 0 );
+  auto e0 = eve::lerp(EVE_VALUE(1), EVE_VALUE(2), eve::prev(1 - 10 * eve::eps(eve::as<EVE_VALUE>())));
 
-  auto e0 = eve::lerp(v_t(1), v_t(2), eve::prev(1 - 10 * eve::eps(eve::as<v_t>())));
-
-  for( v_t  i = 1 - 10 * eve::eps(eve::as<v_t>()); i <= 1 + 10 * eve::eps(eve::as<v_t>());
-            i = eve::next(i) )
+  for ( EVE_VALUE  i = 1 - 10 * eve::eps(eve::as<EVE_VALUE>())
+      ; i <= 1 + 10 * eve::eps(eve::as<EVE_VALUE>())
+      ; i = eve::next(i)
+      )
   {
-    auto e1 = eve::lerp(v_t(1), v_t(2), i);
+    auto e1 = eve::lerp(EVE_VALUE(1), EVE_VALUE(2), i);
     TTS_LESS_EQUAL(e0, e1);
     e0 = e1;
   }

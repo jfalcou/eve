@@ -13,17 +13,17 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/sqrt_2.hpp>
 
-TTS_CASE_TPL("Check eve::raw(eve::sqrt) return type", EVE_TYPE)
+TTS_CASE("Check eve::raw(eve::sqrt) return type")
 {
-  TTS_EXPR_IS( eve::raw(eve::sqrt)(T(0)), T);
+  TTS_EXPR_IS( eve::raw(eve::sqrt)(EVE_TYPE(0)), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::sqrt behavior", EVE_TYPE)
+TTS_CASE("Check eve::sqrt behavior")
 {
-  TTS_EQUAL(eve::raw(eve::sqrt)(T(-0.)), T(0));
-  TTS_EQUAL(eve::raw(eve::sqrt)(T( 0 )), T(0));
-  TTS_EQUAL(eve::raw(eve::sqrt)(T( 1 )), T(1));
-  TTS_EQUAL(eve::raw(eve::sqrt)(T( 4 )), T(2));
+  TTS_EQUAL(eve::raw(eve::sqrt)(EVE_TYPE(-0.)), EVE_TYPE(0));
+  TTS_EQUAL(eve::raw(eve::sqrt)(EVE_TYPE( 0 )), EVE_TYPE(0));
+  TTS_EQUAL(eve::raw(eve::sqrt)(EVE_TYPE( 1 )), EVE_TYPE(1));
+  TTS_EQUAL(eve::raw(eve::sqrt)(EVE_TYPE( 4 )), EVE_TYPE(2));
 
-  TTS_ULP_EQUAL(eve::raw(eve::sqrt)(T(2)), eve::sqrt_2(eve::as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::raw(eve::sqrt)(EVE_TYPE(2)), eve::sqrt_2(eve::as<EVE_TYPE>()), 0.5);
 }

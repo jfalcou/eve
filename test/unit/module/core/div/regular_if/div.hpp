@@ -12,19 +12,19 @@
 #include <eve/constant/true.hpp>
 #include <eve/constant/false.hpp>
 
-TTS_CASE_TPL("Check eve::div[condition] return type", EVE_TYPE)
+TTS_CASE("Check eve::div[condition] return type")
 {
-  TTS_EXPR_IS( (eve::div[ T() ](T(), T()))              , T);
-  TTS_EXPR_IS( (eve::div[ eve::logical<T>() ](T(), T())), T);
-  TTS_EXPR_IS( (eve::div[ true ](T(), T()))             , T);
+  TTS_EXPR_IS( (eve::div[ EVE_TYPE()              ](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
+  TTS_EXPR_IS( (eve::div[ eve::logical<EVE_TYPE>()](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
+  TTS_EXPR_IS( (eve::div[ true                    ](EVE_TYPE(), EVE_TYPE())), EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::div[condition] behavior", EVE_TYPE)
+TTS_CASE("Check eve::div[condition] behavior")
 {
-  T tv(2);
-  T fv(3);
-  auto t = eve::true_(eve::as<T>());
-  auto f = eve::false_(eve::as<T>());
+  EVE_TYPE tv(2);
+  EVE_TYPE fv(3);
+  auto t = eve::true_(eve::as<EVE_TYPE>());
+  auto f = eve::false_(eve::as<EVE_TYPE>());
 
   // All basic TRUE
   TTS_EQUAL(eve::div[ 1 ](tv, fv)     , tv / fv);
@@ -39,10 +39,17 @@ TTS_CASE_TPL("Check eve::div[condition] behavior", EVE_TYPE)
   TTS_EQUAL(eve::div[ f ](tv, fv)     , tv);
 
   // Mixed case
-  eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  eve::as_logical_t<EVE_TYPE> m;
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<EVE_CARDINAL;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL(eve::div[ m ](tv, fv) , eve::if_else(m,eve::div(tv, fv), tv) );
 }

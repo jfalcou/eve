@@ -13,13 +13,11 @@
 #include <eve/function/all.hpp>
 #include <eve/constant/nan.hpp>
 
-TTS_CASE_TPL("Check eve::numeric(eve::max) return type", EVE_TYPE)
+TTS_CASE("Check eve::numeric(eve::max) return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::numeric(eve::max)( T(0)  , T(0)   ) , T);
-  TTS_EXPR_IS(eve::numeric(eve::max)(v_t(0) , T(0)   ) , T);
-  TTS_EXPR_IS(eve::numeric(eve::max)( T(0)  , v_t(0) ) , T);
+  TTS_EXPR_IS(eve::numeric(eve::max)( EVE_TYPE(0)  , EVE_TYPE(0)  ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::numeric(eve::max)( EVE_VALUE(0) , EVE_TYPE(0)  ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::numeric(eve::max)( EVE_TYPE(0)  , EVE_VALUE(0) ) , EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::numeric(eve::max) behavior", EVE_TYPE)

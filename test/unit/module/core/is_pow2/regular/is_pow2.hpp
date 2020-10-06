@@ -14,21 +14,21 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/valmax.hpp>
 
-TTS_CASE_TPL("Check eve::is_pow2 return type", EVE_TYPE)
+TTS_CASE("Check eve::is_pow2 return type")
 {
-  TTS_EXPR_IS(eve::is_pow2(T()), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_pow2(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
-TTS_CASE_TPL("Check eve::is_pow2 behavior", EVE_TYPE)
+TTS_CASE("Check eve::is_pow2 behavior")
 {
-  if constexpr(std::is_signed_v<T>)
+  if constexpr(std::is_signed_v<EVE_TYPE>)
   {
-    TTS_EQUAL(eve::is_pow2(T(-1)), eve::false_(eve::as<T>()));
+    TTS_EQUAL(eve::is_pow2(EVE_TYPE(-1)), eve::false_(eve::as<EVE_TYPE>()));
   }
 
-  TTS_EQUAL(eve::is_pow2(T(0))                , eve::false_(eve::as<T>()) );
-  TTS_EQUAL(eve::is_pow2(T(1))                , eve::true_(eve::as<T>())  );
-  TTS_EQUAL(eve::is_pow2(T(3))                , eve::false_(eve::as<T>()) );
-  TTS_EQUAL(eve::is_pow2(T(4))                , eve::true_(eve::as<T>())  );
-  TTS_EQUAL(eve::is_pow2(eve::valmax(eve::as<T>())/2+1), eve::true_(eve::as<T>())  );
+  TTS_EQUAL(eve::is_pow2(EVE_TYPE(0)), eve::false_(eve::as<EVE_TYPE>()) );
+  TTS_EQUAL(eve::is_pow2(EVE_TYPE(1)), eve::true_(eve::as<EVE_TYPE>())  );
+  TTS_EQUAL(eve::is_pow2(EVE_TYPE(3)), eve::false_(eve::as<EVE_TYPE>()) );
+  TTS_EQUAL(eve::is_pow2(EVE_TYPE(4)), eve::true_(eve::as<EVE_TYPE>())  );
+  TTS_EQUAL(eve::is_pow2(eve::valmax(eve::as<EVE_TYPE>())/2+1), eve::true_(eve::as<EVE_TYPE>())  );
 }

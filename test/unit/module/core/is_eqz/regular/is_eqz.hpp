@@ -12,9 +12,9 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 
-TTS_CASE_TPL("Check eve::is_eqz return type", EVE_TYPE)
+TTS_CASE("Check eve::is_eqz return type")
 {
-  TTS_EXPR_IS(eve::is_eqz(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_eqz(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_eqz behavior", EVE_TYPE)

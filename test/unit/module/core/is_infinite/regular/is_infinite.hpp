@@ -16,9 +16,9 @@
 #include <eve/constant/nan.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL("Check eve::is_infinite return type", EVE_TYPE)
+TTS_CASE("Check eve::is_infinite return type")
 {
-  TTS_EXPR_IS(eve::is_infinite(T(0)), eve::logical<T>);
+  TTS_EXPR_IS(eve::is_infinite(EVE_TYPE()), eve::logical<EVE_TYPE>);
 }
 
 TTS_CASE_TPL("Check eve::is_infinite behavior", EVE_TYPE)

@@ -13,9 +13,9 @@
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
 
-TTS_CASE_TPL("Check eve::rec return type", EVE_TYPE)
+TTS_CASE("Check eve::rec return type")
 {
-  TTS_EXPR_IS(eve::rec(T(0)), T);
+  TTS_EXPR_IS(eve::rec(EVE_TYPE(0)), EVE_TYPE);
 }
 
 TTS_CASE_TPL("Check eve::rec behavior", EVE_TYPE)

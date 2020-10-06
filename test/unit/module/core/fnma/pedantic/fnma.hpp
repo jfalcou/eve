@@ -14,30 +14,28 @@
 #include <eve/function/sqr.hpp>
 #include <eve/constant/eps.hpp>
 
-TTS_CASE_TPL("Check eve::pedantic(eve::fnma) return type", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::fnma) return type")
 {
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(T()   , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(T()   , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(T()   , v_t() , T()   ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(T()   , v_t() , v_t() ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(v_t() , T()   , T()   ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(v_t() , T()   , v_t() ) , T);
-  TTS_EXPR_IS(eve::pedantic(eve::fnma)(v_t() , v_t() , T()   ) , T);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_TYPE()   , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_TYPE()   , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_TYPE()   , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_TYPE()   , EVE_VALUE() , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_VALUE() , EVE_TYPE()   , EVE_TYPE()   ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_VALUE() , EVE_TYPE()   , EVE_VALUE() ) , EVE_TYPE);
+  TTS_EXPR_IS(eve::pedantic(eve::fnma)(EVE_VALUE() , EVE_VALUE() , EVE_TYPE()   ) , EVE_TYPE);
 }
 
-TTS_CASE_TPL("Check eve::pedantic(eve::fnma) behavior", EVE_TYPE)
+TTS_CASE("Check eve::pedantic(eve::fnma) behavior")
 {
-  TTS_EQUAL(eve::pedantic(eve::fnma)(T( 0), T(0), T(0)), T( 0));
-  TTS_EQUAL(eve::pedantic(eve::fnma)(T( 0), T(0), T(7)), T( 7));
-  TTS_EQUAL(eve::pedantic(eve::fnma)(T( 2), T(0), T(7)), T( 7));
-  TTS_EQUAL(eve::pedantic(eve::fnma)(T( 0), T(5), T(7)), T( 7));
-  TTS_EQUAL(eve::pedantic(eve::fnma)(T(-2), T(5), T(7)), T(17));
+  TTS_EQUAL(eve::pedantic(eve::fnma)(EVE_TYPE( 0), EVE_TYPE(0), EVE_TYPE(0)), EVE_TYPE( 0));
+  TTS_EQUAL(eve::pedantic(eve::fnma)(EVE_TYPE( 0), EVE_TYPE(0), EVE_TYPE(7)), EVE_TYPE( 7));
+  TTS_EQUAL(eve::pedantic(eve::fnma)(EVE_TYPE( 2), EVE_TYPE(0), EVE_TYPE(7)), EVE_TYPE( 7));
+  TTS_EQUAL(eve::pedantic(eve::fnma)(EVE_TYPE( 0), EVE_TYPE(5), EVE_TYPE(7)), EVE_TYPE( 7));
+  TTS_EQUAL(eve::pedantic(eve::fnma)(EVE_TYPE(-2), EVE_TYPE(5), EVE_TYPE(7)), EVE_TYPE(17));
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    T e = eve::eps(eve::as<T>());
-    TTS_EQUAL(eve::pedantic(eve::fnma)(eve::inc(e), eve::dec(e), T(-1)), -eve::sqr(e));
+    EVE_TYPE e = eve::eps(eve::as<EVE_TYPE>());
+    TTS_EQUAL(eve::pedantic(eve::fnma)(eve::inc(e), eve::dec(e), EVE_TYPE(-1)), -eve::sqr(e));
   }
 }
