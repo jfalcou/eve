@@ -31,7 +31,6 @@ add_dependencies(unit.core.tst          unit.core.simd.tst            )
 ## Other tests
 ##==================================================================================================
 add_subdirectory(failure)
-add_subdirectory(constant)
 
 ##==================================================================================================
 ## Elementwise function unit tests

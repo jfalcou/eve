@@ -20,10 +20,15 @@ add_dependencies(unit.constant.tst unit.constant.scalar.tst   )
 add_dependencies(unit.constant.tst unit.constant.simd.tst     )
 
 ##==================================================================================================
-## Elementwise function unit tests
+## Regular constant function unit tests
 ##==================================================================================================
 
 make_all_units(ROOT unit.constant NAME basic                ARCH scalar simd TYPES ${all_types}    )
 make_all_units(ROOT unit.constant NAME ieee754              ARCH scalar simd TYPES ${real_types}   )
 make_all_units(ROOT unit.constant NAME limit                ARCH scalar simd TYPES ${all_types}    )
 make_all_units(ROOT unit.constant NAME math                 ARCH scalar simd TYPES ${real_types}   )
+
+##==================================================================================================
+## Other Constant tests
+make_unit( "unit.constant" constant.cpp     )
+make_unit( "unit.constant" conditional.cpp  )

@@ -39,12 +39,6 @@ make_units("function/simd/store/arithmetic"   "unit.api" ${all_types})
 make_units("function/simd/store/logical"      "unit.api" ${all_types})
 
 ##==================================================================================================
-## Constant tests
-make_unit( "unit.api" constant/allbits.cpp      )
-make_unit( "unit.api" constant/constant.cpp     )
-make_unit( "unit.api" constant/conditional.cpp  )
-
-##==================================================================================================
 ## wide API tests
 make_units("wide/combine/arithmetic"    "unit.api" ${all_types})
 make_units("wide/combine/logical"       "unit.api" ${all_types})
