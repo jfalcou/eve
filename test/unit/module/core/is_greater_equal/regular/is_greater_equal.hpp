@@ -39,8 +39,8 @@ TTS_CASE_TPL("Check eve::operator> behavior", EVE_TYPE)
 
   if constexpr(eve::platform::supports_nans && eve::floating_value<T>)
   {
-    TTS_EQUAL((eve::nan(eve::as<T>()) > eve::nan(eve::as<T>())) , eve::false_(eve::as<T>()));
-    TTS_EQUAL((eve::nan(eve::as<T>()) > T(4))          , eve::false_(eve::as<T>()));
+    TTS_EQUAL((eve::nan(eve::as<T>()) >= eve::nan(eve::as<T>())), eve::false_(eve::as<T>()));
+    TTS_EQUAL((eve::nan(eve::as<T>()) >= T(4))                  , eve::false_(eve::as<T>()));
   }
 
   TTS_EQUAL((T(1)   >= T(1)  ), eve::true_(eve::as<T>())  );
