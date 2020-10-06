@@ -56,7 +56,6 @@ namespace eve::detail
   EVE_FORCEINLINE T gammainc_(EVE_SUPPORTS(cpu_), T x, T a) noexcept
   requires has_native_abi_v<T>
   {
-//    using elt_t =  element_type_t<T>;
     auto const third = T(1/3.0);
     auto res = nan(as<T>()); //nan case treated here
     auto notdone =  is_not_nan(x);
@@ -70,7 +69,7 @@ namespace eve::detail
     }
     auto lginc = [](auto a0,  auto a1,  auto test){
       // insure convergence in each case for all members of simd vector
-      // making x =  a <  a+1 when the test do not succeed
+      // making x = a+1 when the test do not succeed
       auto x = if_else(test, a0, a1);
 
       //Series expansion for x < a+1
@@ -88,9 +87,10 @@ namespace eve::detail
       //  For very small a, the series may overshoot very slightly.
       b = eve::min(b, one(as(b)));
       //  if lower, b(k) = bk; else b(k) = 1-bk; end
-      return b;
+      return if_else(is_eqz(a0) && is_eqz(a1), one, b);
     };
     auto uginc = [](auto x,  auto a, auto test){
+      std::cout << "uginc" << std::endl;
       // insure convergence in each case for all members of simd vector
       // making x =  a <  a+1 when the test do not succeed
       x = if_else(test, x, inc(a));
@@ -106,7 +106,7 @@ namespace eve::detail
       auto g = b1*fac;
       auto gold = b0;
 
-      while (   any(abs(g-gold))  >=  100*eve::epsilon(maximum(eve::abs(g))))
+      while (   maximum(abs(g-gold))  >=  100*eve::epsilon(maximum(eve::abs(g))))
       {
         gold = g;
         auto ana = n - a;
@@ -120,12 +120,12 @@ namespace eve::detail
         n = inc(n);
       }
       return if_else( eve::is_infinite(x)
-                    , one, oneminus(exp(fms(a, log(x), x+ gammaln(a))*g)));
+                    , one, oneminus(exp(fms(a, log(x), x+ gammaln(a)))*g));
     };
 
     test = x < inc(a);
     notdone = next_interval(lginc, notdone, test, res, x, a, test);
-    if (any(notdone)) last_interval(uginc, notdone, res, x, a, test);
+    if (any(notdone)) last_interval(uginc, notdone, res, x, a, !test);
     return res;
   }
 }
