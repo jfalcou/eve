@@ -29,11 +29,11 @@ fi
 ## Compile every test for SIMD
 ## We keep compiling even with errors as we want the most test being run
 ##==================================================================================================
-ninja doc.tst        -k 0 -j 8
-ninja unit.basic.tst -k 0 -j 8
+ninja doc.exe        -k 0 -j 8
+ninja unit.basic.exe -k 0 -j 8
 
 ##==================================================================================================
 ## Run every tests for SIMD
 ##==================================================================================================
-ctest -R ^unit.arch.*.tst -j 8 && ctest -R ^unit.meta.*.tst -j 8 && \
-ctest -R ^doc.*.tst  -j 8 && ctest -R ^unit.api.*.tst  -j 8
+ctest -R ^unit.arch.*.exe -j 8 && ctest -R ^unit.meta.*.exe -j 8 && \
+ctest -R ^doc.*.exe  -j 8 && ctest -R ^unit.api.*.exe  -j 8
