@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.constant.tst       )
-add_custom_target(unit.constant.scalar.tst)
-add_custom_target(unit.constant.simd.tst  )
+add_custom_target(unit.constant.exe       )
+add_custom_target(unit.constant.scalar.exe)
+add_custom_target(unit.constant.simd.exe  )
 
-add_dependencies(unit.scalar.tst    unit.constant.scalar.tst )
-add_dependencies(unit.simd.tst      unit.constant.simd.tst   )
-add_dependencies(unit.constant.tst unit.constant.scalar.tst   )
-add_dependencies(unit.constant.tst unit.constant.simd.tst     )
+add_dependencies(unit.scalar.exe    unit.constant.scalar.exe )
+add_dependencies(unit.simd.exe      unit.constant.simd.exe   )
+add_dependencies(unit.constant.exe unit.constant.scalar.exe   )
+add_dependencies(unit.constant.exe unit.constant.simd.exe     )
 
 ##==================================================================================================
 ## Regular constant function unit tests
