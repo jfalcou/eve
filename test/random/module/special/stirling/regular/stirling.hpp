@@ -8,19 +8,20 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <eve/function/stirling.hpp>
 #include <eve/constant/maxlog.hpp>
 #include <eve/constant/minlog.hpp>
-#include <eve/function/stirling.hpp>
-
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
-#include <tts/tests/range.hpp>
 
 TTS_CASE("wide random check on stirling")
 {
-  auto std_stirling = tts::vectorize<EVE_TYPE>([](auto e) { return std::stirling(e); });
+  auto std_stirling = [](auto e) { return std::stirling(e); };
+  auto eve_stirling = [](auto e) { return eve::stirling(e); };
 
-  eve::rng_producer<EVE_TYPE> p(eve::minlog(eve::as<EVE_VALUE>()), eve::maxlog(eve::as<EVE_VALUE>()) - 1);
-  TTS_RANGE_CHECK(p, std_stirling, eve::stirling);
+  eve::uniform_prng<EVE_TYPE> p ( eve::minlog(eve::as<EVE_VALUE>())
+                                , eve::maxlog(eve::as<EVE_VALUE>()) - 1
+                                );
+
+  TTS_RANGE_CHECK(p, std_stirling, eve_stirling);
 }
