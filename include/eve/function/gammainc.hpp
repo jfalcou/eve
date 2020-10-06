@@ -14,9 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(maximum_, maximum);
+  EVE_MAKE_CALLABLE(gammainc_, gammainc);
 }
 
-#include <eve/arch.hpp>
-#include <eve/module/algorithm/function/generic/maximum.hpp>
-
+#include <eve/module/special/function/generic/gammainc.hpp>

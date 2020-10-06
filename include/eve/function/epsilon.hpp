@@ -14,9 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(maximum_, maximum);
+  EVE_MAKE_CALLABLE(epsilon_, epsilon);
 }
 
-#include <eve/arch.hpp>
-#include <eve/module/algorithm/function/generic/maximum.hpp>
-
+#include <eve/module/core/function/generic/epsilon.hpp>

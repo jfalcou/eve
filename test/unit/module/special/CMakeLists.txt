@@ -31,6 +31,7 @@ make_all_units(ROOT unit.special NAME erfcx                ARCH scalar simd TYPE
 make_all_units(ROOT unit.special NAME j0                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME j1                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME gamma                ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME gammainc             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME gammaln              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME signgam              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME stirling             ARCH scalar simd TYPES ${real_types}    )
