@@ -8,19 +8,14 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/minf.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <cstddef>
-#include <limits>
+#pragma once
 
-TTS_CASE_TPL("Check minf return type", EVE_TYPE)
-{
-  TTS_EXPR_IS(eve::minf(eve::as<T>()), T);
-}
-
-TTS_CASE_TPL("Check minf behavior", EVE_TYPE)
-{
-  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::minf(eve::as<T>()), T(-std::numeric_limits<v_t>::infinity()) );
-}
+#include <eve/constant/allbits.hpp>
+#include <eve/constant/true.hpp>
+#include <eve/constant/false.hpp>
+#include <eve/constant/half.hpp>
+#include <eve/constant/mhalf.hpp>
+#include <eve/constant/one.hpp>
+#include <eve/constant/mone.hpp>
+#include <eve/constant/zero.hpp>
+#include <eve/constant/mzero.hpp>

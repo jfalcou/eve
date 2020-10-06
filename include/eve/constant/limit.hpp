@@ -8,17 +8,12 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/nan.hpp>
+#pragma once
+
 #include <eve/constant/inf.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
-
-TTS_CASE_TPL("Check nan return type", EVE_TYPE)
-{
-  TTS_EXPR_IS(eve::nan(eve::as<T>()), T);
-}
-
-TTS_CASE_TPL("Check nan behavior", EVE_TYPE)
-{
-  TTS_IEEE_EQUAL(eve::nan(eve::as<T>()), eve::inf(eve::as<T>()) - eve::inf(eve::as<T>()));
-}
+#include <eve/constant/minf.hpp>
+#include <eve/constant/valmax.hpp>
+#include <eve/constant/valmin.hpp>
+#include <eve/constant/maxflint.hpp>
+#include <eve/constant/smallestposval.hpp>
+#include <eve/constant/sqrtvalmax.hpp>

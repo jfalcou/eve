@@ -26,7 +26,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto maxexponentm1_(EVE_SUPPORTS(cpu_), as_<T> const &) noexcept
     {
       using t_t           = detail::value_type_t<T>;
-      using i_t = detail::as_integer_t<t_t>;
+      using i_t = detail::as_integer_t<T>;
 
       if constexpr(std::is_same_v<t_t, float>) return i_t(126);
       else if constexpr(std::is_same_v<t_t, double >) return i_t(1022);

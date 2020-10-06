@@ -16,7 +16,7 @@
 #include <eve/function/is_nez.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/constant/expobits_mask.hpp>
+#include <eve/constant/exponentmask.hpp>
 #include <eve/constant/maxexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
 #include <eve/concept/value.hpp>
@@ -31,7 +31,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      auto z =  bit_and(Expobits_mask<T>(), a);
+      auto z =  bit_and(exponentmask(as<T>()), a);
       if constexpr(scalar_value<T>)
       {
         if (is_not_finite(a)) return as_integer_t<T>(0);
@@ -48,4 +48,3 @@ namespace eve::detail
   }
 
 }
-

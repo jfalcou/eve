@@ -8,19 +8,15 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/inf.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
-#include <cstddef>
-#include <limits>
+#pragma once
 
-TTS_CASE_TPL("Check inf return type", EVE_TYPE)
-{
-  TTS_EXPR_IS(eve::inf(eve::as<T>()), T);
-}
-
-TTS_CASE_TPL("Check inf behavior", EVE_TYPE)
-{
-  using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::inf(eve::as<T>()), T(std::numeric_limits<v_t>::infinity()) );
-}
+#include <eve/constant/pi.hpp>
+#include <eve/constant/pio_2.hpp>
+#include <eve/constant/pio_4.hpp>
+#include <eve/constant/sqrt_2.hpp>
+#include <eve/constant/invsqrt_2.hpp>
+#include <eve/constant/invlog_10.hpp>
+#include <eve/constant/invlog10_2.hpp>
+#include <eve/constant/log_2.hpp>
+#include <eve/constant/twopi.hpp>
+#include <eve/constant/twoopi.hpp>

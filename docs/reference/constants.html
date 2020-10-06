@@ -64,8 +64,8 @@ $$\newcommand{\choosefd}[2]{\left\{
 Constant      | Callable object | Value                     | Constraints on `T`   |
 :-------------|:----------------|:--------------------------|:---------------------|
 All bits set  | `eve::allbits`  |  see below                | `arithmetic_value`   |
-True          | `eve::true`     | `as_logical_t<T>(true)`   | `value`              |
-False         | `eve::false`    | `as_logical_t<T>(false)`  | `value`              |
+True          | `eve::true_`    | `as_logical_t<T>(true)`    | `value`              |
+False         | `eve::false_`   | `as_logical_t<T>(false)`   | `value`              |
 Half          | `eve::half`     | `T(0.5)`                  | `floating_value`     |
 Minus half    | `eve::mhalf`    | `T(-0.5)`                 | `floating_value`     |
 One           | `eve::one`      | `T(1)`                    | `arithmetic_value`   |
@@ -129,7 +129,7 @@ Constant                | Callable object        | Value                        
  $\pi/4$                | `eve::pio_4`           | `T(0.78539816339)`                             | `floating_value`   |
  $\sqrt2$               | `eve::sqrt_2`          | `T(1.414213562373095e)`                        | `floating_value`   |
  $1/{\sqrt2}$           | `eve::invsqrt_2`       | `T(0.7071067811865476)`                        | `floating_value`   |
- $1/{\log10}$           | `eve::invlog10`        | `T(0.434294481903252)`                         | `floating_value`   |
+ $1/{\log10}$           | `eve::invlog_10`       | `T(0.434294481903252)`                         | `floating_value`   |
  $1/{\log_{10}(2)}$     | `eve::invlog10_2`      | `T(3.32192809488736 )`                         | `floating_value`   |
  $\log2$                | `eve::log_2`           | `T(0.693147180559945)`                         | `floating_value`   |
  $2\pi$                 | `eve::twopi`           | `T(6.283185307179586)`                         | `floating_value`   |
