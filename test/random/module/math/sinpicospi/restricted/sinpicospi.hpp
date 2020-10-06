@@ -12,20 +12,16 @@
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpicospi", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-
-  auto std_sinpi = tts::vectorize<T>( [](auto e) { return eve::sinpi(double(e)); } );
-  auto std_cospi = tts::vectorize<T>( [](auto e) { return eve::cospi(double(e)); } );
+  auto std_sinpi     = [](auto e) -> EVE_VALUE { return eve::sinpi(double(e)); };
+  auto std_cospi     = [](auto e) -> EVE_VALUE { return eve::cospi(double(e)); };
   auto sinpicospi_s =  [](auto e) { auto [s, c] = eve::small(eve::sinpicospi)(e); return s; };
   auto sinpicospi_c =  [](auto e) { auto [s, c] = eve::small(eve::sinpicospi)(e); return c; };
 
-  eve::rng_producer<T> p(-v_t(0.25), v_t(0.25));
+  eve::uniform_prng<EVE_VALUE> p(-EVE_VALUE(0.25), EVE_VALUE(0.25));
   TTS_RANGE_CHECK(p, std_sinpi, sinpicospi_s);
   TTS_RANGE_CHECK(p, std_cospi, sinpicospi_c);
 }

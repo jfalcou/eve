@@ -15,25 +15,18 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/pi.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
-#include <cmath>
 
 TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto rid =  [](auto e)
+  auto std_indeg =  [](auto e)
     {
       if (eve::abs(e) < eve::eps(eve::as(e)))
-        return (eve::sqr((eve::sqrt(e)/eve::sqrt(eve::pi(eve::as<v_t>())))*eve::sqrt(v_t(180))));
+        return (eve::sqr((eve::sqrt(e)/eve::sqrt(eve::pi(eve::as<EVE_VALUE>())))*eve::sqrt(EVE_VALUE(180))));
       else
-        return (e/eve::pi(eve::as<v_t>()))*v_t(180);
+        return (e/eve::pi(eve::as<EVE_VALUE>()))*EVE_VALUE(180);
     };
 
-
-  auto std_indeg = tts::vectorize<T>( rid );
-
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_ULP_RANGE_CHECK(p, std_indeg, eve::radindeg, 4);
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
+  TTS_RANGE_CHECK_WITH(p, std_indeg, eve::radindeg, 4);
 }

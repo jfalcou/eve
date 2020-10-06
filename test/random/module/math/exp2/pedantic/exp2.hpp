@@ -11,24 +11,21 @@
 #include <eve/function/exp2.hpp>
 #include <eve/constant/minlog2.hpp>
 #include <eve/constant/maxlog2.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on exp2", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
   if constexpr(eve::integral_value<T>)
   {
-    auto std_exp2 = tts::vectorize<T>( [](auto e) { return v_t(std::exp2(e)); } );
-    eve::rng_producer<T> p(v_t(-63), v_t(63));
+    auto std_exp2 = [](auto e) { return EVE_VALUE(std::exp2(e)); };
+    eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(-63), EVE_VALUE(63));
     TTS_RANGE_CHECK(p, std_exp2, eve::exp2);
   }
   else
   {
-  auto std_exp2 = tts::vectorize<T>( [](auto e) { return std::exp2(e); } );
-    eve::rng_producer<T> p(eve::minlog2(eve::as<v_t>())+1, eve::maxlog2(eve::as<v_t>()));
+    auto std_exp2 = [](auto e) { return std::exp2(e); };
+    eve::uniform_prng<EVE_VALUE> p(eve::minlog2(eve::as<EVE_VALUE>())+1, eve::maxlog2(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_exp2, eve::exp2);
   }
 }

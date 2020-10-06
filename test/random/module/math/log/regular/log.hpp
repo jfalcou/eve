@@ -10,16 +10,13 @@
 //==================================================================================================
 #include <eve/function/log.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on log", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_log = tts::vectorize<T>( [](auto e) { return std::log(e); } );
+  auto std_log = [](auto e) { return std::log(e); };
 
-  eve::rng_producer<T> p(v_t(0), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(0), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_log, eve::log);
 }

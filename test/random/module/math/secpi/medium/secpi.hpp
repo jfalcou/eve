@@ -11,27 +11,24 @@
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
 #include <eve/function/secpi.hpp>
 #include <eve/function/abs.hpp>
-#include <tts/tests/range.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/maxflint.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/function/rec.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on secpi", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto my_stdsecpi =  tts::vectorize<T> ( [](auto x)
-    {
-      auto z = eve::abs(x);
-      if (eve::is_even(z)) return   v_t(1);
-      if (z-v_t(0.5) == eve::trunc(z)) return eve::nan(eve::as<v_t>());
-      return  v_t(eve::rec(boost::math::cos_pi(double(x))));
-    });
+  auto my_stdsecpi =  [](auto x)
+                      {
+                        auto z = eve::abs(x);
+                        if (eve::is_even(z)) return   EVE_VALUE(1);
+                        if (z-EVE_VALUE(0.5) == eve::trunc(z)) return eve::nan(eve::as<EVE_VALUE>());
+                        return  EVE_VALUE(eve::rec(boost::math::cos_pi(double(x))));
+                      };
 
-  eve::rng_producer<T> p(v_t(-100000.0), v_t(100000.0));
+  eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(-100000.0), EVE_VALUE(100000.0));
   TTS_RANGE_CHECK(p, my_stdsecpi, eve::medium(eve::secpi));
 }

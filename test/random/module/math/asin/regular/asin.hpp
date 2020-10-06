@@ -9,15 +9,13 @@
 **/
 //==================================================================================================
 #include <eve/function/asin.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on asin", EVE_TYPE)
 {
-  auto std_asin = tts::vectorize<T>( [](auto e) { return std::asin(e); } );
+  auto std_asin = [](auto e) { return std::asin(e); };
 
-  eve::rng_producer<T> p(-1, 1);
+  eve::uniform_prng<EVE_VALUE> p(-1, 1);
   TTS_RANGE_CHECK(p, std_asin, eve::asin);
 }

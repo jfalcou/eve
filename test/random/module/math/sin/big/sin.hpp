@@ -11,16 +11,13 @@
 #include <eve/function/sin.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on sin", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_sin = tts::vectorize<T>( [](auto e) { return std::sin(e); } );
+  auto std_sin = [](auto e) { return std::sin(e); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_sin, eve::big(eve::sin));
 }

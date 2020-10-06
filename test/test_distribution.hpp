@@ -21,10 +21,8 @@
 #include <type_traits>
 #include <random>
 
-
 namespace eve
 {
-
   template< eve::real_scalar_value T = double > struct tests_real_distribution
   {
     using result_type = T;
@@ -33,6 +31,7 @@ namespace eve
       T a;
       T b;
     };
+
     struct internal
     {
       std::uniform_int_distribution<int>  uird;
@@ -203,7 +202,5 @@ namespace eve
     internal posd;
     internal negd;
     std::uniform_real_distribution<T> sd;
-
   };
-
 }
