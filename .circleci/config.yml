@@ -185,19 +185,19 @@ workflows:
             - arm_aarch64
       - x86_sse2:
           requires:
-            - gcc_x86
+            - clang_x86
       - x86_sse4:
           requires:
-            - gcc_x86
+            - clang_x86
       - x86_avx:
           requires:
-            - gcc_x86
+            - clang_x86
       - x86_avx2:
           requires:
-            - gcc_x86
+            - clang_x86
       - x86_fma:
           requires:
-            - gcc_x86
+            - clang_x86
       - x86_emulation:
           requires:
-            - gcc_x86
+            - clang_x86
