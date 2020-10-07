@@ -17,13 +17,13 @@
 namespace eve
 {
   template<typename T, typename N, typename ABI>
-  inline bool compare_equal(wide<T, N, ABI> const &l, wide<T, N, ABI> const &r)
+  inline bool compare_equal(wide<T, N, ABI> l, wide<T, N, ABI> r)
   {
     return eve::all(l == r);
   }
 
   template<typename T>
-  inline bool compare_equal(logical<T> const &l, logical<T> const &r)
+  inline bool compare_equal(logical<T> l, logical<T> r)
   {
     if constexpr(eve::simd_value<T>)  return eve::all(l == r);
     else                              return l == r;
