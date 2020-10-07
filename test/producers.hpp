@@ -25,14 +25,8 @@
   } while(::tts::detail::done())                                                                    \
 /**/
 
-#define TTS_RANGE_CHECK_WITH(Producer, Type, Ref, New)                                              \
-  do                                                                                                \
-  {                                                                                                 \
-    if constexpr(eve::floating_value<eve::element_type_t<Type>>)                                    \
-      TTS_ULP_RANGE_CHECK(Producer, (eve::element_type_t<Type>), (Type), Ref, New, 2.0);            \
-    else                                                                                            \
-      TTS_ULP_RANGE_CHECK(Producer, (eve::element_type_t<Type>), (Type), Ref, New, 0.0);            \
-  } while(::tts::detail::done())                                                                    \
+#define TTS_RANGE_CHECK_WITH(Producer, Ref, New, Ulps)                                              \
+TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (EVE_TYPE), Ref, New, Ulps);                             \
 /**/
 
 namespace eve

@@ -13,23 +13,20 @@
 #include <eve/detail/function/iota.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on pow_abs", EVE_TYPE)
+TTS_CASE("wide random check on pow_abs")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_pow_abs = tts::vectorize<T>( [](auto e) { return eve::pow_abs(e, v_t(10.51)); } );
-  auto  my_pow_abs =  [](auto e) {  return (eve::pow_abs)(e,  v_t(10.51)); };
-  eve::rng_producer<T> p(v_t(0.05), v_t(100.0));
-  TTS_ULP_RANGE_CHECK(p, std_pow_abs, my_pow_abs, 8);
+  auto std_pow_abs = [](auto e) { return eve::pow_abs(e, EVE_VALUE(10.51)); };
+  auto  my_pow_abs = [](auto e) { return (eve::pow_abs)(e,  EVE_VALUE(10.51)); };
 
-  auto std_pow_abs1 = tts::vectorize<T>( [](auto e) { return eve::pow_abs(v_t(0.51), e); } );
-  auto  my_pow_abs1 =  [](auto e) {  return (eve::pow_abs)(v_t(0.51), e); };
+  eve::uniform_prng<EVE_VALUE> p(EVE_VALUE(0.05), EVE_VALUE(100.0));
+  TTS_RANGE_CHECK_WITH(p, std_pow_abs, my_pow_abs, 8);
 
-  eve::rng_producer<T> p1(v_t(0.05), v_t(10.5));
-  TTS_ULP_RANGE_CHECK(p1, std_pow_abs1, my_pow_abs1, 8);
+  auto std_pow_abs1 = [](auto e) { return eve::pow_abs(EVE_VALUE(0.51), e); };
+  auto  my_pow_abs1 = [](auto e) {  return (eve::pow_abs)(EVE_VALUE(0.51), e); };
 
+  eve::uniform_prng<EVE_VALUE> p1(EVE_VALUE(0.05), EVE_VALUE(10.5));
+  TTS_RANGE_CHECK_WITH(p1, std_pow_abs1, my_pow_abs1, 8);
 }

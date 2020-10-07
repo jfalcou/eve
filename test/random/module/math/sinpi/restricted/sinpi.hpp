@@ -10,15 +10,13 @@
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
+TTS_CASE("wide random check on sinpi")
 {
-  auto my_stdsinpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x); });
+  auto my_stdsinpi = [](auto x){return boost::math::sin_pi(x); };
 
-  eve::rng_producer<T> p(-0.25, 0.25);
+  eve::uniform_prng<EVE_VALUE> p(-0.25, 0.25);
   TTS_RANGE_CHECK(p, my_stdsinpi, eve::restricted(eve::sinpi));
 }

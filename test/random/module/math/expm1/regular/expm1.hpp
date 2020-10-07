@@ -11,16 +11,13 @@
 #include <eve/function/expm1.hpp>
 #include <eve/constant/minlog.hpp>
 #include <eve/constant/maxlog.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on expm1", EVE_TYPE)
+TTS_CASE("wide random check on expm1")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_expm1 = tts::vectorize<T>( [](auto e) { return std::expm1(e); } );
+  auto std_expm1 = [](auto e) { return std::expm1(e); };
 
-  eve::rng_producer<T> p(eve::minlog(eve::as<v_t>()), eve::maxlog(eve::as<v_t>())-1);
+  eve::uniform_prng<EVE_VALUE> p(eve::minlog(eve::as<EVE_VALUE>()), eve::maxlog(eve::as<EVE_VALUE>())-1);
   TTS_RANGE_CHECK(p, std_expm1, eve::expm1);
 }

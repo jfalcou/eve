@@ -12,24 +12,21 @@
 #include <eve/function/sinpi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
-TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
+TTS_CASE("wide random check on sinpi")
 {
-  using v_t = eve::element_type_t<T>;
-  auto my_stdsinpi =  tts::vectorize<T>([](auto x){return boost::math::sin_pi(x); });
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  auto my_stdsinpi = [](auto x){return boost::math::sin_pi(x); };
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big(eve::sinpi));
 }
 
 // #include <crlibm.h>
 
-// TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)
+// TTS_CASE("wide random check on sinpi")
 // {
 //   ::crlibm_init();
-//   auto my_stdsinpi =  tts::vectorize<T>([](v_t x){return v_t(::sinpi_rn(x)); });
-//   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+//   auto my_stdsinpi =  tts::vectorize<T>([](EVE_VALUE x){return EVE_VALUE(::sinpi_rn(x)); });
+//   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
 //   TTS_RANGE_CHECK(p, my_stdsinpi, eve::big(eve::sinpi));
 // }

@@ -15,22 +15,18 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
+TTS_CASE("wide random check on cscpi")
 {
-  using v_t = eve::element_type_t<T>;
-  auto my_stdcscpi =  tts::vectorize<T> ( [](auto x)
-                                          {
-                                            return    (x == 0 || !eve::is_flint(x))
-                                              ? v_t(eve::rec(boost::math::sin_pi(double(x))))
-                                                    : eve::nan(eve::as<v_t>());
-                                          }
-                                        );
+  auto my_stdcscpi  = [](auto x)
+                      {
+                        return    (x == 0 || !eve::is_flint(x))
+                                ? EVE_VALUE(eve::rec(boost::math::sin_pi(double(x))))
+                                : eve::nan(eve::as<EVE_VALUE>());
+                      };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-  TTS_ULP_RANGE_CHECK(p, my_stdcscpi, eve::cscpi, 4);
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
+  TTS_RANGE_CHECK_WITH(p, my_stdcscpi, eve::cscpi, 4);
 }

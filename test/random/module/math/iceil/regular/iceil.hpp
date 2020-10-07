@@ -11,28 +11,25 @@
 #include <eve/function/ceil.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on iceil", EVE_TYPE)
+TTS_CASE("wide random check on iceil")
 {
-  using v_t = eve::element_type_t<T>;
-
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    using vi_t =  eve::detail::as_integer_t<T>;
-    using i_t = eve::detail::value_type_t<vi_t>;
-    auto std_iceil = tts::vectorize<vi_t>( [](auto e) { return i_t(std::ceil(e)); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));
+    using i_t   = eve::detail::as_integer_t<EVE_VALUE>;
+    auto std_iceil = [](auto e) { return i_t(std::ceil(e)); };
+
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));
     TTS_RANGE_CHECK(p, std_iceil, eve::int_(eve::ceil));
   }
   else
   {
-    auto std_iceil = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_iceil, eve::int(eve::ceil));
+    auto std_iceil = [](auto e) { return e; };
+
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
+    TTS_RANGE_CHECK(p, std_iceil, eve::int_(eve::ceil));
   }
 }

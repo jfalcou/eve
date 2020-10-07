@@ -12,17 +12,12 @@
 #include <eve/constant/invpi.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
-
-#include "measures.hpp"
 #include "producers.hpp"
-#include <cmath>
-#include <tts/tests/range.hpp>
 
-TTS_CASE_TPL("wide random check on inpi", EVE_TYPE)
+TTS_CASE("wide random check on inpi")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_inpi = tts::vectorize<T>( [](auto e) { return eve::invpi(eve::as<v_t>())*e; } );
+  auto std_inpi = [](auto e) { return eve::invpi(eve::as<EVE_VALUE>())*e; };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_inpi, eve::radinpi);
 }
