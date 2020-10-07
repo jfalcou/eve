@@ -8,6 +8,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+#include <boost/math/special_functions/gamma.hpp>
 #include <eve/function/gammainc.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/function/oneminus.hpp>
@@ -43,9 +44,13 @@ TTS_CASE_TPL("Check eve::gammainc behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve__gammainc(T(1.0), T(0.25)), T(9.320788679898916e-01), 5.5 );
   TTS_ULP_EQUAL(eve__gammainc(T(0.25), T(2.0)), T(2.649902116074387e-02), 5.5 );
   TTS_ULP_EQUAL(eve__gammainc(T(0.25), T(2.25)), T( 1.460405690340118e-02), 0.5 );
-  TTS_ULP_EQUAL(eve__gammainc(T(1.0), T(2.25)), T(2.015171022500710e-01), 5.5 );
-  TTS_ULP_EQUAL(eve__gammainc(T(10.25), T(2.0)), T(9.993562658346851e-01), 2 );
-  TTS_ULP_EQUAL(eve__gammainc(T(10.25), T(2.25)), T(9.991962820874968e-01), 0.5 );
-  TTS_ULP_EQUAL(eve__gammainc(T(11.0), T(2.25)), T(9.996704204992496e-01), 5.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(1.0), T(2.25)), T(2.015171022500710e-01), 3.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(10.25), T(2.0)), T(9.996022281154329e-01), 2 );
+  TTS_ULP_EQUAL(eve__gammainc(T(10.0), T(2.25)), T(9.991962820874968e-01), 0.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(10.25), T(2.25)), T(9.993562658346851e-01), 0.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(11.0), T(2.25)), T(9.996704204992496e-01), 0.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(50.0), T(2.25)), T(1), 5.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(10.0), T(4)), T(9.896639493240743e-01), 0.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(10.1), T(4)), T(9.903947030847022e-01), 0.5 );
 
 }

@@ -82,7 +82,7 @@ namespace eve::detail
         ap  += one(as(ap));
         del  = x*del/ap;
         sum += del;
-      }
+     }
       auto b = sum*eve::exp(fms(a1, eve::log(x), eve::gammaln(inc(a1))+x));
       //  For very small a, the series may overshoot very slightly.
       b = eve::min(b, one(as(b)));
@@ -90,11 +90,9 @@ namespace eve::detail
       return if_else(is_eqz(a0) && is_eqz(a1), one, b);
     };
     auto uginc = [](auto x,  auto a, auto test){
-      std::cout << "uginc" << std::endl;
       // insure convergence in each case for all members of simd vector
       // making x =  a <  a+1 when the test do not succeed
       x = if_else(test, x, inc(a));
-
       // Continued fraction for x >= a+1
       //k = find(a ~= 0 & x >= a+1); % & x ~= 0
       auto x0 = one(as(x));
@@ -120,7 +118,7 @@ namespace eve::detail
         n = inc(n);
       }
       return if_else( eve::is_infinite(x)
-                    , one, oneminus(exp(fms(a, log(x), x+ gammaln(a)))*g));
+                    , one, oneminus(exp(-x+a*log(x)- gammaln(a))*g));
     };
 
     test = x < inc(a);
