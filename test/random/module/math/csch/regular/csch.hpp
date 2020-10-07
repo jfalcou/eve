@@ -12,16 +12,13 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/minlog.hpp>
 #include <eve/constant/maxlog.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on csch", EVE_TYPE)
+TTS_CASE("wide random check on csch")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_csch = tts::vectorize<T>( [](auto e) { return eve::rec(std::sinh(e)); } );
+  auto std_csch = [](auto e) { return eve::rec(std::sinh(e)); };
 
-  eve::rng_producer<T> p(-eve::maxlog(eve::as<v_t>())+1, eve::maxlog(eve::as<v_t>())-1);
+  eve::uniform_prng<EVE_VALUE> p(-eve::maxlog(eve::as<EVE_VALUE>())+1, eve::maxlog(eve::as<EVE_VALUE>())-1);
   TTS_RANGE_CHECK(p, std_csch, eve::csch);
 }

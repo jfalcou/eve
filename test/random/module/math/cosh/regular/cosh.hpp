@@ -10,16 +10,13 @@
 //==================================================================================================
 #include <eve/function/cosh.hpp>
 #include <eve/constant/maxlog.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on cosh", EVE_TYPE)
+TTS_CASE("wide random check on cosh")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_cosh = tts::vectorize<T>( [](auto e) { return std::cosh(e); } );
+  auto std_cosh = [](auto e) { return std::cosh(e); };
 
-  eve::rng_producer<T> p(-eve::maxlog(eve::as<v_t>()), eve::maxlog(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(-eve::maxlog(eve::as<EVE_VALUE>()), eve::maxlog(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_cosh, eve::cosh);
 }

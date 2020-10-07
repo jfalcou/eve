@@ -12,25 +12,21 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/smallestposval.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
+TTS_CASE("wide random check on csc")
 {
-  using v_t = eve::element_type_t<T>;
-
-  auto std_csc = tts::vectorize<T>( [](auto e) { return 1/std::sin(double(e)); } );
+  auto std_csc = [](auto e) -> EVE_VALUE { return 1/std::sin(double(e)); };
 
   if constexpr(eve::platform::supports_denormals)
   {
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_csc, eve::big(eve::csc));
   }
   else
   {
-    eve::rng_producer<T>  p(eve::smallestposval(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    eve::uniform_prng<EVE_VALUE>  p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_csc, eve::big(eve::csc));
   }
 }

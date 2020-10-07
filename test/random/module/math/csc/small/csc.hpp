@@ -10,16 +10,13 @@
 //==================================================================================================
 #include <eve/function/csc.hpp>
 #include <eve/constant/pio_2.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on csc", EVE_TYPE)
+TTS_CASE("wide random check on csc")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_csc = tts::vectorize<T>( [](auto e) { return eve::rec(std::sin(double(e))); } );
+  auto std_csc = [](auto e) -> EVE_VALUE { return eve::rec(std::sin(double(e))); };
 
-  eve::rng_producer<T> p(-eve::pio_2(eve::as<v_t>()), eve::pio_2(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(-eve::pio_2(eve::as<EVE_VALUE>()), eve::pio_2(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_csc, eve::small(eve::csc));
 }

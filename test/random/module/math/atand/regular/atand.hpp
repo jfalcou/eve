@@ -13,16 +13,13 @@
 #include <eve/function/atand.hpp>
 #include <eve/function/radindeg.hpp>
 
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
-#include <tts/tests/range.hpp>
 
-TTS_CASE_TPL("wide random check on atand", EVE_TYPE)
+TTS_CASE("wide random check on atand")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_atand = tts::vectorize<T>( [](auto e) { return eve::radindeg(std::atan(e)); } );
+  auto std_atand = [](auto e) { return eve::radindeg(std::atan(e)); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_atand, eve::atand);
 }

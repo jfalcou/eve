@@ -13,19 +13,16 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/function/rec.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on coth", EVE_TYPE)
+TTS_CASE("wide random check on coth")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_coth = tts::vectorize<T>( [](auto e) { return eve::rec(std::tanh(e)); } );
+  auto std_coth = [](auto e) { return eve::rec(std::tanh(e)); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), v_t(-1));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
   TTS_RANGE_CHECK(p, std_coth, eve::coth);
 
-  eve::rng_producer<T> p1(v_t(1), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p1(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p1, std_coth, eve::coth);
 }
