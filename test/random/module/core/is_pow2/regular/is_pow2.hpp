@@ -17,7 +17,7 @@
 
 TTS_CASE("wide random check on is_pow2")
 {
-  auto std_is_pow2 = [](auto e) ->eve::logical<EVE_VALUE>{
+  auto std_is_pow2 = [](auto e) ->eve::logical<EVE_VALUE> {
     return ((e > 0) && (eve::popcount(e) == 1u));
   };
 

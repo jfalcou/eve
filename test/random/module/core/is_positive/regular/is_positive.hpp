@@ -17,8 +17,6 @@
 
 TTS_CASE("wide random check on is_positive")
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>;
-
   if constexpr(eve::floating_value<EVE_TYPE>)
   {
     auto std_is_positive = [](auto e)  ->eve::logical<EVE_VALUE> { return std::signbit(e) == 0; };

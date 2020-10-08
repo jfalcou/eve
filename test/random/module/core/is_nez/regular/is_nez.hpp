@@ -16,7 +16,7 @@
 TTS_CASE("wide random check on is_nez")
 {
   using l_t = eve::as_logical_t<T>;
-  auto std_is_nez = tts::vectorize<l_t>( [](auto e) { return e!= EVE_VALUE(0); };
+  auto std_is_nez =  [](auto e) { return e!= EVE_VALUE(0); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_nez, eve::is_nez);

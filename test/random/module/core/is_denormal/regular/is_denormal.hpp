@@ -17,17 +17,15 @@
 
 TTS_CASE("wide random check on is_denormal")
 {
-  using l_t = eve::as_logical_t<T>;
-
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_is_denormal = tts::vectorize<l_t>( [](auto e) { return std::fpclassify(e) == FP_SUBNORMAL; };
+    auto std_is_denormal =  [](auto e)   ->eve::logical<EVE_VALUE> { return std::fpclassify(e) == FP_SUBNORMAL; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }
   else
   {
-    auto std_is_denormal = tts::vectorize<l_t>( [](auto ) { return  false; };
+    auto std_is_denormal =  [](auto )  ->eve::logical<EVE_VALUE> { return  false; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }

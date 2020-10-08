@@ -17,8 +17,6 @@
 
 TTS_CASE("wide random check on is_eqz")
 {
-  using l_t = eve::as_logical_t<EVE_TYPE>;
-
   auto std_is_eqz = [](auto e) ->eve::logical<EVE_VALUE> { return e == EVE_VALUE(0); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));

@@ -15,8 +15,8 @@
 
 TTS_CASE("wide random check on is_not_real")
 {
-  using l_t =  eve::as_logical_t<T>;
-  auto std_is_not_real = tts::vectorize<l_t>( [](auto ) { return false; };
+
+  auto std_is_not_real =  [](auto ) ->eve::logical<EVE_VALUE> { return false; };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_not_real, eve::is_not_real);

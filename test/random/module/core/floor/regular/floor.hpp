@@ -18,15 +18,15 @@
 TTS_CASE("wide random check on floor")
 {
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_floor = [](auto e) { return std::floor(e); };
+    auto std_floor = [](auto e) ->EVE_VALUE { return std::floor(e); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_floor, eve::floor);
   }
   else
   {
-    auto std_floor = [](auto e) { return e; };
+    auto std_floor = [](auto e) ->EVE_VALUE { return e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_floor, eve::floor);
   }
