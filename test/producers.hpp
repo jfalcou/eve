@@ -149,4 +149,34 @@ namespace eve
     base_type   pmi_, pmx_;
     std::size_t size_;
   };
+
+  template<typename T,typename N,typename ABI> struct adapter<eve::logical<eve::wide<T,N,ABI>>>
+  {
+    using type = eve::logical<eve::wide<T,N,ABI>>;
+
+    template<typename U, typename Func>
+    static void run(eve::logical<T> const*& src, U*& dst, Func f) noexcept
+    {
+      // Load and compute
+      type that(src);
+      auto res = f(that);
+      eve::store(res,dst);
+
+      // Advance pointers to next one
+      dst += that.size();
+      src += that.size();
+    }
+
+    static auto retrieve(eve::logical<T> const* src) noexcept
+    {
+      // realign on SIMD boundaries
+      auto p = eve::align(src, eve::under{type::static_alignment});
+      return type(p);
+    }
+
+    static void display(type const& v, std::ostream& os) noexcept
+    {
+      os << v;
+    }
+  };
 }
