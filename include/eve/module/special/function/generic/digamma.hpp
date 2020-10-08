@@ -109,11 +109,10 @@ namespace eve::detail
               result = add[cond](result,rec(x));
               cond = x > 2;
             }
-            // If x < 1 use shift to > 1:
             cond = x < 1;
-            if(any(cond))
+            if(any(cond)) // back one step
             {
-              result = if_else(cond,  -nt2::rec(x), result);
+              result = seladd[cond] -rec(x), result);
               x =  inc[cond](x);
             }
             notdone = last_interval(digamma_1_2,  notdone, r, x);
