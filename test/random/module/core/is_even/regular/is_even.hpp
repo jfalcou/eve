@@ -23,13 +23,13 @@ TTS_CASE("wide random check on is_even")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return bool(e == trunc(e/2)*2); } );
+    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return bool(e == trunc(e/2)*2); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_even, eve::is_even);
   }
   else
   {
-    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == (e/2)*2; } );
+    auto std_is_even = tts::vectorize<l_t>( [](auto e) { return e == (e/2)*2; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_even, eve::is_even);
   }

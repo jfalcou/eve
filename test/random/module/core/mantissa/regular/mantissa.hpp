@@ -17,7 +17,7 @@
 TTS_CASE("wide random check on mantissa")
 {
   auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp);  };
-  auto std_mantissa = [ internal_f ](auto e) { return internal_f(e)*2; } );
+  auto std_mantissa = [ internal_f ](auto e) { return internal_f(e)*2; };
 
   eve::uniform_prng<EVE_VALUE> p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa);

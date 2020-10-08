@@ -16,7 +16,7 @@
 
 TTS_CASE("wide random check on conj")
 {
-  auto std_conj = [](auto e) { return e; } );
+  auto std_conj = [](auto e) { return e; };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_conj, eve::conj);

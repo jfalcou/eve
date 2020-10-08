@@ -20,13 +20,13 @@ TTS_CASE("wide random check on is_nan")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_nan = tts::vectorize<l_t>( [](auto e) { return e!=e; } );
+    auto std_is_nan = tts::vectorize<l_t>( [](auto e) { return e!=e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_nan, eve::is_nan);
   }
   else
   {
-    auto std_is_nan = tts::vectorize<l_t>( [](auto ) { return false; } );
+    auto std_is_nan = tts::vectorize<l_t>( [](auto ) { return false; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_nan, eve::is_nan);
   }

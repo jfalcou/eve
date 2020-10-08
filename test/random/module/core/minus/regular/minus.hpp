@@ -16,7 +16,7 @@
 
 TTS_CASE("wide random check on minus")
 {
-  auto std_minus = [](auto e) { return -e; } );
+  auto std_minus = [](auto e) { return -e; };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_minus, eve::minus);

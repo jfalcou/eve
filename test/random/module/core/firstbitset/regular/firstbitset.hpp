@@ -17,7 +17,7 @@
 
 TTS_CASE("wide random check on firstbitset")
 {
-  auto std_firstbitset = [](auto e) { return e & (~e+1); } );
+  auto std_firstbitset = [](auto e) { return e & (~e+1); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_firstbitset, eve::firstbitset);

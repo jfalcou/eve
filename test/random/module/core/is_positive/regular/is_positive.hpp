@@ -21,13 +21,13 @@ TTS_CASE("wide random check on is_positive")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 0; } );
+    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 0; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_positive, eve::is_positive);
   }
   else
   {
-    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return e >= 0; } );
+    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return e >= 0; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_positive, eve::is_positive);
   }

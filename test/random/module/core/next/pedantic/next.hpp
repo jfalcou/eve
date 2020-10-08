@@ -17,27 +17,25 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE("wide rng check on next")
+TTS_CASE_TPL("wide rng check on next", EVE_TYPE)
 {
-
+  using v_t = eve::element_type_t<T>;
   if constexpr(eve::floating_value<T>)
   {
-    auto std_next = tts::vectorize<T> ( [](auto e)
-                                        { return    (e == 0) && eve::is_negative(e) ? EVE_VALUE(0)
-                                                  : ( ( e ==  eve::inf(eve::as<EVE_VALUE>())) ? eve::nan(eve::as<EVE_VALUE>())
-                                                          : std::nextafter(e, eve::inf(eve::as<EVE_VALUE>())
-                                                      )
-                                                    );
-                                        }
-                                      );
+    auto std_next = [](auto e) { return    (e == 0) && eve::is_negative(e) ?
+                                           v_t(0)
+                                         : ( e ==  eve::inf(eve::as<v_t>())) ?
+                                             eve::nan(eve::as<v_t>())
+                                           : std::nextafter(e, eve::inf(eve::as<v_t>()));
+                               };
 
-    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
-    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic(eve::next), 0);
+    eve::uniform_prng<v_t> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    TTS_RANGE_CHECK(p, std_next, eve::pedantic(eve::next));
   }
   else
   {
-    auto std_next = [](auto e) { return e == eve::valmax(eve::as<EVE_VALUE>()) ? e : e+1; } );
-    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
-    TTS_ULP_RANGE_CHECK(p, std_next, eve::pedantic(eve::next), 0);
+    auto std_next = [](auto e) -> v_t  { return e == eve::valmax(eve::as<v_t>()) ? e : e+1; };
+    eve::uniform_prng<v_t> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    TTS_RANGE_CHECK(p, std_next, eve::pedantic(eve::next));
   }
 }

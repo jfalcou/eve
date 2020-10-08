@@ -21,13 +21,13 @@ TTS_CASE("wide random check on is_not_infinite")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto e) { return !std::isinf(e); } );
+    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto e) { return !std::isinf(e); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_not_infiniteinite, eve::is_not_infinite);
   }
   else
   {
-    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto ) { return true; } );
+    auto std_is_not_infiniteinite = tts::vectorize<l_t>( [](auto ) { return true; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_not_infiniteinite, eve::is_not_infinite);
   }

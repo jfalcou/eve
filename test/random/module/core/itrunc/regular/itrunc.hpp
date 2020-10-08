@@ -21,13 +21,13 @@ TTS_CASE("wide random check on itrunc")
   if constexpr(eve::floating_value<T>)
   {
     using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
-    auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return i_t(std::trunc(e)); } );
+    auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return i_t(std::trunc(e)); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));
     TTS_RANGE_CHECK(p, std_itrunc,  eve::int_(eve::trunc));
   }
   else
   {
-    auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return e; } );
+    auto std_itrunc = tts::vectorize<vi_t>( [](auto e) { return e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_itrunc,  eve::int_(eve::trunc));
   }

@@ -63,8 +63,8 @@ namespace tts
     static auto retrieve(T const* src) noexcept
     {
       // realign on SIMD boundaries
-      auto p = eve::align(src, eve::under{type::static_alignment});
-      return type(p);
+//      auto p = eve::align(src, eve::under{type::static_alignment});
+      return type(src);
     }
 
     static void display(type const& v, std::ostream& os) noexcept
@@ -93,8 +93,8 @@ namespace tts
     static auto retrieve(eve::logical<T> const* src) noexcept
     {
       // realign on SIMD boundaries
-      auto p = eve::align(src, eve::under{type::static_alignment});
-      return type(p);
+//      auto p = eve::align(src, eve::under{type::static_alignment});
+      return type(src);
     }
 
     static void display(type const& v, std::ostream& os) noexcept

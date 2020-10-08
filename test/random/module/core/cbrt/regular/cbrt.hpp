@@ -16,7 +16,7 @@
 
 TTS_CASE("wide random check on cbrt")
 {
-  auto std_cbrt = [](auto e) { return std::cbrt(e); } );
+  auto std_cbrt = [](auto e) { return std::cbrt(e); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_cbrt, eve::cbrt);

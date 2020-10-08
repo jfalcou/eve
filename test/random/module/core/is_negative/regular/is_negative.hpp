@@ -21,13 +21,13 @@ TTS_CASE("wide random check on is_negative")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 1; } );
+    auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 1; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_negative, eve::is_negative);
   }
   else
   {
-    auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return e < 0; } );
+    auto std_is_negative = tts::vectorize<l_t>( [](auto e) { return e < 0; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_negative, eve::is_negative);
   }

@@ -16,7 +16,7 @@
 
 TTS_CASE("wide random check on frexp")
 {
-  auto std_frexp = [](auto e) { return std::frexp(e); } );
+  auto std_frexp = [](auto e) { return std::frexp(e); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_frexp, eve::frexp);

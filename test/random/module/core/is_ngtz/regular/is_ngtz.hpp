@@ -17,7 +17,7 @@
 TTS_CASE("wide random check on is_ngtz")
 {
   using l_t = eve::as_logical_t<T>;
-  auto std_is_ngtz = tts::vectorize<l_t>( [](auto e) { return !(e > 0); } );
+  auto std_is_ngtz = tts::vectorize<l_t>( [](auto e) { return !(e > 0); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_ngtz, eve::is_ngtz);

@@ -34,7 +34,7 @@ TTS_CASE("wide random check on is_odd")
   else
   {
     using l_t = eve::as_logical_t<T>;
-    auto std_is_odd = tts::vectorize<l_t>( [](auto e) { return  (e/2)*2!= e; } );
+    auto std_is_odd = tts::vectorize<l_t>( [](auto e) { return  (e/2)*2!= e; };
 
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_odd, eve::is_odd);

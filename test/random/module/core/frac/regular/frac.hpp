@@ -20,13 +20,13 @@ TTS_CASE("wide random check on frac")
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_frac = [](auto e) { return e-std::trunc(e); } );
+    auto std_frac = [](auto e) { return e-std::trunc(e); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_frac, eve::frac);
   }
   else
   {
-    auto std_frac = [](auto ) { return EVE_VALUE(0); } );
+    auto std_frac = [](auto ) { return EVE_VALUE(0); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_frac, eve::frac);
   }

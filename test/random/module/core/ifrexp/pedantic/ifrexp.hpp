@@ -17,7 +17,7 @@
 TTS_CASE("wide random check on ifrexp")
 {
   using i_t = eve::detail::as_integer_t<EVE_VALUE>;
-  auto std_ifrexp = [](auto e) { int y; auto x = std::frexp(e, &y); return std::make_tuple(x, i_t(y)); } );
+  auto std_ifrexp = [](auto e) { int y; auto x = std::frexp(e, &y); return std::make_tuple(x, i_t(y)); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_ifrexp, eve::pedantic(eve::ifrexp));

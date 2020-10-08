@@ -18,14 +18,14 @@ TTS_CASE("wide random check on oneminus")
 
   if constexpr(std::is_unsigned_v<EVE_VALUE>)
   {
-    auto std_oneminus = [](auto e) { return EVE_VALUE(1)-e; } );
+    auto std_oneminus = [](auto e) { return EVE_VALUE(1)-e; };
 
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
   }
   else
   {
-    auto std_oneminus = [](auto e) { return EVE_VALUE(1)-e; } );
+    auto std_oneminus = [](auto e) { return EVE_VALUE(1)-e; };
 
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus, eve::oneminus);
