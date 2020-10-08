@@ -13,28 +13,25 @@
 #include <eve/function/shl.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on bitofsign", EVE_TYPE)
+TTS_CASE("wide random check on bitofsign")
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_bitofsign = tts::vectorize<T>( [](auto e) { return std::copysign(v_t(1), e); } );
-    auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), v_t(1)); };
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_bitofsign = [](auto e) { return std::copysign(EVE_VALUE(1), e); } );
+    auto eve_bitofsign = [](auto e) { return eve::bit_xor(eve::bitofsign(e), EVE_VALUE(1)); };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_bitofsign, eve_bitofsign);
   }
   else
   {
-    auto std_bitofsign = tts::vectorize<T>( [](auto e) {
-                                                 using i_t = eve::detail::as_integer_t<v_t>;
-                                                 return  v_t(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_bitofsign = [](auto e) {
+                                                 using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+                                                 return  EVE_VALUE(i_t(std::signbit(e)) << (sizeof(e)*8-1)); } );
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_bitofsign, eve::bitofsign);
   }
 }

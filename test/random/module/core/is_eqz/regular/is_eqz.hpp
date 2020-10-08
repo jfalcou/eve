@@ -12,18 +12,15 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on is_eqz", EVE_TYPE)
+TTS_CASE("wide random check on is_eqz")
 {
-  using v_t = eve::element_type_t<T>;
   using l_t = eve::as_logical_t<T>;
 
-  auto std_is_eqz = tts::vectorize<l_t>( [](auto e) { return e == v_t(0); } );
+  auto std_is_eqz = tts::vectorize<l_t>( [](auto e) { return e == EVE_VALUE(0); } );
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_eqz, eve::is_eqz);
 }

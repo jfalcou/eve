@@ -13,25 +13,22 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/function/bit_shr.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
-TTS_CASE_TPL("wide rng check on popcount", EVE_TYPE)
+TTS_CASE("wide rng check on popcount")
 {
-  using v_t = eve::element_type_t<T>;
   using u_t =  eve::detail::as_integer_t<T, unsigned>;
 
   auto std_popcount = tts::vectorize<u_t>(
     [](auto e) { unsigned int j = 0;
-      for(unsigned int i = 0; i < sizeof(v_t)*8; ++i)
+      for(unsigned int i = 0; i < sizeof(EVE_VALUE)*8; ++i)
       {
-        if (e&v_t(1)) ++j;
+        if (e&EVE_VALUE(1)) ++j;
         e = eve::bit_shr(e, 1);
       }
       return j; }
   );
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_popcount, eve::popcount);
 }

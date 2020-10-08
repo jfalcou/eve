@@ -11,26 +11,23 @@
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on inc", EVE_TYPE)
+TTS_CASE("wide random check on inc")
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_inc = tts::vectorize<T>( [](auto e) { return e+1; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_inc = [](auto e) { return e+1; } );
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_inc, eve::saturated(eve::inc));
   }
   else
   {
-    auto std_inc = tts::vectorize<T>( [](auto e) { return  e == eve::valmax(eve::as<v_t>()) ? e : e+1; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
+    auto std_inc = [](auto e) { return  e == eve::valmax(eve::as<EVE_VALUE>()) ? e : e+1; } );
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_inc, eve::saturated(eve::inc));
   }
 }

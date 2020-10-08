@@ -11,16 +11,13 @@
 #include <eve/function/bit_not.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on bit_not", EVE_TYPE)
+TTS_CASE("wide random check on bit_not")
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_bit_not = tts::vectorize<T>( [](auto e) { return  ~v_t(e); } );
+  auto std_bit_not = [](auto e) { return  ~EVE_VALUE(e); } );
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_bit_not, eve::bit_not);
 }

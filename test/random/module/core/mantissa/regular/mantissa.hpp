@@ -11,17 +11,14 @@
 #include <eve/function/mantissa.hpp>
 #include <eve/constant/smallestposval.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on mantissa", EVE_TYPE)
+TTS_CASE("wide random check on mantissa")
 {
-  using v_t = eve::element_type_t<T>;
   auto internal_f = [](auto e){  int exp; return std::frexp(e, &exp);  };
-  auto std_mantissa = tts::vectorize<T>( [ internal_f ](auto e) { return internal_f(e)*2; } );
+  auto std_mantissa = [ internal_f ](auto e) { return internal_f(e)*2; } );
 
-  eve::rng_producer<T> p(eve::smallestposval(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_mantissa, eve::mantissa);
 }

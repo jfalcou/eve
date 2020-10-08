@@ -12,16 +12,13 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
-TTS_CASE_TPL("wide random check on is_ltz", EVE_TYPE)
+TTS_CASE("wide random check on is_ltz")
 {
-  using v_t = eve::element_type_t<T>;
   using l_t = eve::as_logical_t<T>;
-  auto std_is_ltz = tts::vectorize<l_t>( [](auto e) { return e < v_t(0); } );
+  auto std_is_ltz = tts::vectorize<l_t>( [](auto e) { return e < EVE_VALUE(0); } );
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_ltz, eve::is_ltz);
 }
