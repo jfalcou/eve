@@ -13,25 +13,26 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE_TPL("wide rng check on prev", EVE_TYPE)
+TTS_CASE("wide rng check on prev")
 {
-  using v_t = eve::element_type_t<T>;
-
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_prev = tts::vectorize<T>( [](auto e) { return (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan(eve::as<v_t>()) : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_prev = [](auto e)
+                    {
+                      return  (e ==  eve::minf(eve::as<EVE_VALUE>()))  ?
+                              eve::nan(eve::as<EVE_VALUE>())
+                            : std::nextafter(e, eve::minf(eve::as<EVE_VALUE>()));
+                    };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
   }
   else
   {
-    auto std_prev = tts::vectorize<T>( [](auto e) { return e == eve::valmin(eve::as<v_t>()) ? e : e-1; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_prev = [](auto e) { return e == eve::valmin(eve::as<EVE_VALUE>()) ? e : e-1; };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_prev, eve::saturated(eve::prev));
   }
 }

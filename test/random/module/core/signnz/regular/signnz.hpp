@@ -11,24 +11,20 @@
 #include <eve/function/signnz.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
-TTS_CASE_TPL("wide random check on signnz", EVE_TYPE)
+TTS_CASE("wide random check on signnz")
 {
-  using v_t = eve::element_type_t<T>;
-
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    auto std_signnz = tts::vectorize<T>( [](auto e) {  return e >= 0 ? v_t(1) : v_t(-1); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>())+1, eve::valmax(eve::as<v_t>()));
+    auto std_signnz = [](auto e) {  return e >= 0 ? EVE_VALUE(1) : EVE_VALUE(-1); };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
   else
   {
-    auto std_signnz = tts::vectorize<T>( [](auto ) { return v_t(1); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_signnz = [](auto ) { return EVE_VALUE(1); };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_signnz, eve::signnz);
   }
 }
