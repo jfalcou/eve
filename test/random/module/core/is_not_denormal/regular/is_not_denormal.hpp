@@ -16,9 +16,7 @@
 
 TTS_CASE("wide random check on is_not_denormal")
 {
-  using l_t = eve::as_logical_t<T>;
-
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
     auto std_is_not_denormal =  [](auto e)  ->eve::logical<EVE_VALUE> { return std::fpclassify(e) != FP_SUBNORMAL; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));

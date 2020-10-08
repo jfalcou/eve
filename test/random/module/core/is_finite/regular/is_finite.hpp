@@ -17,17 +17,16 @@
 
 TTS_CASE("wide random check on is_finite")
 {
-  using l_t = eve::as_logical_t<T>;
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_is_finite =  [](auto e) { return std::isfinite(e); };
+    auto std_is_finite =  [](auto e)  ->eve::logical<EVE_VALUE> { return std::isfinite(e); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
   }
   else
   {
-    auto std_is_finite =  [](auto ) { return  true; };
+    auto std_is_finite =  [](auto ) ->eve::logical<EVE_VALUE> { return  true; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_finite, eve::is_finite);
   }

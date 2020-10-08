@@ -20,9 +20,8 @@ TTS_CASE("wide random check on exponent")
   using i_t = eve::detail::as_integer_t<EVE_VALUE>;
 
   auto internal_f = [](auto e){  int exp; std::frexp(e, &exp); return i_t(exp); };
-  using vi_t = eve::detail::as_integer_t<T>;
 
-  auto std_exponent = tts::vectorize<vi_t>( [ internal_f ](auto e) { return eve::dec(internal_f(e)); };
+  auto std_exponent = [ internal_f ](auto e) { return eve::dec(internal_f(e)); };
 
   eve::uniform_prng<EVE_VALUE> p(eve::smallestposval(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_exponent, eve::exponent);
