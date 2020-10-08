@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check eve::gammainc behavior", EVE_TYPE)
   TTS_ULP_EQUAL(eve__gammainc(T(10.0), T(2.25)), T(9.991962820874968e-01), 0.5 );
   TTS_ULP_EQUAL(eve__gammainc(T(10.25), T(2.25)), T(9.993562658346851e-01), 0.5 );
   TTS_ULP_EQUAL(eve__gammainc(T(11.0), T(2.25)), T(9.996704204992496e-01), 0.5 );
-  TTS_ULP_EQUAL(eve__gammainc(T(50.0), T(2.25)), T(1), 5.5 );
+  TTS_ULP_EQUAL(eve__gammainc(T(50.0), T(2.25)), T(1), 0 );
   TTS_ULP_EQUAL(eve__gammainc(T(10.0), T(4)), T(9.896639493240743e-01), 0.5 );
   TTS_ULP_EQUAL(eve__gammainc(T(10.1), T(4)), T(9.903947030847022e-01), 0.5 );
 
