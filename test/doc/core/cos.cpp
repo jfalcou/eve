@@ -19,13 +19,5 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf      = " << xf << '\n'
             << "-> cos(xf) = " << eve::cos(xf) << '\n';
-
-  using wide_dt = eve::wide<double, eve::fixed<4>>;
-
-  wide_dt e{+0x1.42ae8e38e5eb9p+954, +0x1.ee7ed0206072ap+559, +0x1.d71af50a57018p-128, +0x1.154e112f8b03cp-826};
-  std::cout << "---- simd" << std::hexfloat << '\n'
-            << "<- e      = " << e << '\n'
-             << "-> cos(e) = " << eve::big(eve::cos)(e) << '\n';
-
   return 0;
 }
