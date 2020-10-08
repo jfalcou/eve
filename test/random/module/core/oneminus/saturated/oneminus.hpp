@@ -16,15 +16,15 @@
 TTS_CASE("wide random check on oneminus")
 {
 
-  if constexpr(eve::signed_value<T>)
+  if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    auto std_oneminus = [](auto e) { return e <= eve::valmin(eve::as<EVE_VALUE>())+1 ? eve::valmax(eve::as<EVE_VALUE>()) : EVE_VALUE(1)-e; };
+    auto std_oneminus = [](auto e) -> EVE_VALUE { return e <= eve::valmin(eve::as<EVE_VALUE>())+1 ? eve::valmax(eve::as<EVE_VALUE>()) : EVE_VALUE(1)-e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated(eve::oneminus));
  }
   else
   {
-    auto std_oneminus = [](auto e) { return (e <= 1) ? EVE_VALUE(1)-e : EVE_VALUE(0); };
+    auto std_oneminus = [](auto e) -> EVE_VALUE { return (e <= 1) ? EVE_VALUE(1)-e : EVE_VALUE(0); };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus, eve::saturated(eve::oneminus));
   }

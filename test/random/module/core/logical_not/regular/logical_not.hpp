@@ -16,22 +16,21 @@
 
 TTS_CASE("wide random check on logical_not")
 {
-  using l_t = eve::logical<T>;
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return !e; };
+    auto std_logical_not = [](auto e) -> eve::logical<EVE_VALUE> { return !e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }
-  else if constexpr(eve::signed_value<T>)
+  else if constexpr(eve::signed_value<EVE_TYPE>)
   {
-    auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return  !e; };
+    auto std_logical_not = [](auto e) -> eve::logical<EVE_VALUE> { return  !e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }
   else
   {
-    auto std_logical_not = tts::vectorize<l_t>( [](auto e) { return !e; };
+    auto std_logical_not = [](auto e)  -> eve::logical<EVE_VALUE> { return !e; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_logical_not, eve::logical_not);
   }

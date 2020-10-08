@@ -17,17 +17,17 @@
 
 TTS_CASE("wide random check on is_positive")
 {
-  using l_t = eve::as_logical_t<T>;
+  using l_t = eve::as_logical_t<EVE_TYPE>;
 
-  if constexpr(eve::floating_value<T>)
+  if constexpr(eve::floating_value<EVE_TYPE>)
   {
-    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return std::signbit(e) == 0; };
+    auto std_is_positive = [](auto e)  ->eve::logical<EVE_VALUE> { return std::signbit(e) == 0; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>())+1, eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_positive, eve::is_positive);
   }
   else
   {
-    auto std_is_positive = tts::vectorize<l_t>( [](auto e) { return e >= 0; };
+    auto std_is_positive = [](auto e) ->eve::logical<EVE_VALUE> { return e >= 0; };
     eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_positive, eve::is_positive);
   }
