@@ -15,14 +15,14 @@
 #include "producers.hpp"
 #include <cmath>
 
-TTS_CASE( "wide random check on abs")
+TTS_CASE_TPL( "wide random check on abs", EVE_TYPE)
 {
-  if constexpr(eve::floating_value<EVE_TYPE>)
+  if constexpr(eve::floating_value<T>)
   {
     auto std_abs = [](auto e) { return (e < 0) ? -e : e; };
     TTS_RANGE_CHECK( eve::uniform_prng<EVE_VALUE>(-1,1),  std_abs, eve::abs );
   }
-  else if constexpr(eve::signed_value<EVE_TYPE>)
+  else if constexpr(eve::signed_value<T>)
   {
     auto vmin = eve::valmin(eve::as<EVE_VALUE>());
     auto vmax = eve::valmax(eve::as<EVE_VALUE>());

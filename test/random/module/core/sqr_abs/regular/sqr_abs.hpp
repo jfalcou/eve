@@ -11,15 +11,12 @@
 #include <eve/function/sqr_abs.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sqr_abs", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_sqr_abs = tts::vectorize<T>( [](auto e) { return e*e; } );
+  auto std_sqr_abs = [](auto e) { return e*e; };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_sqr_abs, eve::sqr_abs);
 }

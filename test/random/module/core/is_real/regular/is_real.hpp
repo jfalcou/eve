@@ -11,8 +11,6 @@
 #include <eve/function/is_real.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on is_real", EVE_TYPE)
@@ -20,6 +18,6 @@ TTS_CASE_TPL("wide random check on is_real", EVE_TYPE)
   using l_t = eve::as_logical_t<EVE_VALUE>;
   auto std_is_real = [](auto) { return l_t(true); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_is_real, eve::is_real);
 }

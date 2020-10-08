@@ -12,26 +12,25 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/concept/value.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on rec", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
   if constexpr(eve::integral_value<T>)
   {
-    auto std_rec = tts::vectorize<T>( [](auto e) { return e ? v_t(1)/e : eve::valmax(eve::as<v_t>()); } );
+    auto std_rec  = [](auto e)  -> EVE_VALUE
+                    {
+                      return e ? EVE_VALUE(1)/e : eve::valmax(eve::as<EVE_VALUE>());
+                    };
 
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_rec, eve::rec);
   }
   else
   {
-    auto std_rec = tts::vectorize<T>( [](auto e) { return v_t(1)/e; } );
+    auto std_rec = [](auto e) { return EVE_VALUE(1)/e; };
 
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_rec, eve::rec);
   }
-
 }

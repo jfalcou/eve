@@ -11,24 +11,21 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on oneminus", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::signed_value<T>)
   {
-    auto std_oneminus = tts::vectorize<T>( [](auto e) { return e <= eve::valmin(eve::as<v_t>())+1 ? eve::valmax(eve::as<v_t>()) : v_t(1)-e; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_oneminus = [](auto e) -> EVE_VALUE { return e <= eve::valmin(eve::as<EVE_VALUE>())+1 ? eve::valmax(eve::as<EVE_VALUE>()) : EVE_VALUE(1)-e; };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus,  eve::saturated(eve::oneminus));
  }
   else
   {
-    auto std_oneminus = tts::vectorize<T>( [](auto e) { return (e <= 1) ? v_t(1)-e : v_t(0); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_oneminus = [](auto e) -> EVE_VALUE { return (e <= 1) ? EVE_VALUE(1)-e : EVE_VALUE(0); };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_oneminus, eve::saturated(eve::oneminus));
   }
 }

@@ -11,25 +11,22 @@
 #include <eve/function/nearest.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on nearest", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
 
   if constexpr(eve::floating_value<T>)
   {
-    auto std_nearest = tts::vectorize<T>( [](auto e) { return std::nearbyint(e); } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_nearest = [](auto e) -> EVE_VALUE { return std::nearbyint(e); };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
   else
   {
-    auto std_nearest = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_nearest = [](auto e) -> EVE_VALUE { return e; };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_nearest, eve::nearest);
   }
 }
