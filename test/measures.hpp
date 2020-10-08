@@ -33,7 +33,7 @@ namespace eve
 namespace tts
 {
   template<typename T, typename N, typename ABI>
-  inline double ulp_distance(eve::wide<T, N, ABI> const &l, eve::wide<T, N, ABI> const &r)
+  inline double ulp_distance(eve::wide<T, N, ABI> l, eve::wide<T, N, ABI> r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)

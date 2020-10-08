@@ -22,7 +22,13 @@
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/scalar/rempio2_kernel.hpp>
 #include <eve/module/math/detail/simd/rempio2_kernel.hpp>
-
+////////////////////////////////////
+// this is a temporary measure TTS has to be corrected TODO
+#ifndef TTS_CORRECTED
+#include <eve/function/rem_pio2.hpp>
+#include <eve/detail/spy.hpp>
+#endif
+////////////////////////////////////
 #include <tuple>
 #include <type_traits>
 
@@ -43,7 +49,17 @@ namespace eve::detail
       }
       else if constexpr( std::is_same_v<D, eve::big_type> )
       {
-        return rempio2_big(xx);
+#ifdef TTS_CORRECTED
+         return rempio2_big(xx);
+#else
+         if constexpr( spy::compiler == spy::gcc_ ){
+           return rem_pio2(xx);
+         }
+         else
+         {
+           return rempio2_big(xx);
+         }
+#endif
       }
       else if constexpr( std::is_same_v<D, eve::regular_type> )
       {
@@ -71,4 +87,3 @@ namespace eve::detail
       return apply_over3(rempio2, x);
   }
 }
-

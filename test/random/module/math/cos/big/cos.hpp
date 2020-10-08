@@ -8,6 +8,11 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
+//// if TTS_CORRECTED is defined and tts is still not corrected
+////  the test -s123456 fails with g++10.2
+//// else the old reduction routine is taken and all is good...
+//// see rempio2.hpp
+//// #define TTS_CORRECTED
 #include <eve/function/cos.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>

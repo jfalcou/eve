@@ -47,4 +47,14 @@ TTS_CASE("Check eve::big(eve::cos) behavior")
   TTS_ULP_EQUAL(eve::big(eve::cos)(-EVE_TYPE(100000000.0) )         , EVE_TYPE(std_cos(-100000000.0))          , 0.5);
   TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(eve::valmax(eve::as<EVE_TYPE>()))    ) , EVE_TYPE(std_cos(eve::valmax(eve::as<EVE_VALUE>()))   ) , 0.5);
   TTS_ULP_EQUAL(eve::big(eve::cos)( EVE_TYPE(eve::valmax(eve::as<EVE_TYPE>())/10) ) , EVE_TYPE(std_cos(eve::valmax(eve::as<EVE_VALUE>())/10 )), 0.5);
+
+  using wide_dt = eve::wide<double, eve::fixed<4>>;
+
+  wide_dt e{+0x1.42ae8e38e5eb9p+954, +0x1.ee7ed0206072ap+559, +0x1.d71af50a57018p-128, +0x1.154e112f8b03cp-826};
+  wide_dt f{+0x1.f231a6797dd59p-2, +0x1.f3a517713f05fp-1, +0x1p+0, +0x1p+0};
+  std::cout << "---- simd" << std::hexfloat << '\n'
+            << "<- e      = " << e << '\n'
+             << "-> cos(e) = " << eve::big(eve::cos)(e) << '\n';
+
+  TTS_ULP_EQUAL(eve::big(eve::cos)(e), f, 0.5);
 }
