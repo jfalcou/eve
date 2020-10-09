@@ -10,8 +10,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
+#include <eve/detail/implementation.hpp>
+
 #include <cstring>
 
 namespace eve
@@ -23,16 +24,16 @@ namespace eve::detail
 {
   template<typename T, typename Target>
   EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_), T const &a, as_<Target> const &) noexcept
-  requires (sizeof(T) == sizeof(Target))
+      requires(sizeof(T) == sizeof(Target))
   {
-    if constexpr(std::is_same_v<T, Target>)
+    if constexpr( std::is_same_v<T, Target> )
     {
       return a;
     }
     else
     {
       [[maybe_unused]] Target that;
-      std::memcpy((char*)&that, (char*)&a, sizeof(a));
+      std::memcpy((char *)&that, (char *)&a, sizeof(a));
       return that;
     }
   }

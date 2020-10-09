@@ -36,7 +36,7 @@ namespace eve::detail
   }
 
   template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &tgt,
                             eve::emulated_ const &mode,
                             aligned_ptr<T, N>     ptr) noexcept
   {
@@ -44,9 +44,9 @@ namespace eve::detail
   }
 
   template<typename T, typename Pack, std::size_t N>
-  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &     tgt,
-                            eve::emulated_ const &mode,
-                            aligned_ptr<T const, N>     ptr) noexcept
+  EVE_FORCEINLINE Pack load(eve::as_<Pack> const &  tgt,
+                            eve::emulated_ const &  mode,
+                            aligned_ptr<T const, N> ptr) noexcept
   {
     return load(tgt, mode, ptr.get());
   }
@@ -65,16 +65,11 @@ namespace eve::detail
   {
     Pack that;
 
-    that.storage().apply
-    (
-      [&]<typename... Sub>(Sub&... v)
-      {
-        int offset = 0;
-        (((v = Sub(ptr + offset), offset += Sub::static_size), ...));
-      }
-    );
+    that.storage().apply([&]<typename... Sub>(Sub & ...v) {
+      int offset = 0;
+      (((v = Sub(ptr + offset), offset += Sub::static_size), ...));
+    });
 
     return that.storage();
   }
 }
-

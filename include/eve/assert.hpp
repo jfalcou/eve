@@ -23,15 +23,14 @@
 #  include <iostream>
 
 #  define EVE_ASSERT(cond, ...)                                                                    \
-    do                                                                                             \
-    {                                                                                              \
-      if(!(cond))                                                                                  \
+    do {                                                                                           \
+      if( !(cond) )                                                                                \
       {                                                                                            \
         std::cerr << "Assertion '" << #cond << "' failed in " << __FILE__ << ":" << __LINE__       \
                   << " - " << __VA_ARGS__ << std::endl;                                            \
         std::abort();                                                                              \
       }                                                                                            \
-    } while(0) /**/
+    } while( 0 ) /**/
 
 #  define EVE_VERIFY(cond, ...) EVE_ASSERT(cond, __VA_ARGS__)
 

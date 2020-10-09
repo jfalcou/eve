@@ -31,4 +31,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/module/core/function/simd/arm/neon/add.hpp>
 #endif
-

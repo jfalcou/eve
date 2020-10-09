@@ -11,9 +11,9 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/function/is_nez.hpp>
 
 namespace eve::detail
@@ -30,7 +30,7 @@ namespace eve::detail
       {
         if constexpr( has_aggregated_abi_v<T> )
         {
-          return v.storage().apply( [](auto const &... e) { return eve::any((e || ...)); } );
+          return v.storage().apply([](auto const &...e) { return eve::any((e || ...)); });
         }
         else
         {
@@ -49,4 +49,3 @@ namespace eve::detail
     }
   }
 }
-

@@ -29,7 +29,7 @@ namespace eve::detail
       {
         if constexpr( has_aggregated_abi_v<T> )
         {
-          return v.storage().apply( [](auto const &... e) { return eve::all((e && ...)); } );
+          return v.storage().apply([](auto const &...e) { return eve::all((e && ...)); });
         }
         else
         {
@@ -48,4 +48,3 @@ namespace eve::detail
     }
   }
 }
-

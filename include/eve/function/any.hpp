@@ -31,4 +31,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/module/algorithm/function/simd/arm/neon/any.hpp>
 #endif
-

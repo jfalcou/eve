@@ -18,57 +18,47 @@ namespace eve
   // Rounding decorator types
   struct upward_type : decorator_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(upward_type{}, std::forward<decltype(args)>(args)...);
-              };
+      return
+          [f](auto &&...args) { return f(upward_type {}, std::forward<decltype(args)>(args)...); };
     }
   };
 
   struct downward_type : decorator_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(downward_type{}, std::forward<decltype(args)>(args)...);
-              };
+      return [f](auto &&...args) {
+        return f(downward_type {}, std::forward<decltype(args)>(args)...);
+      };
     }
   };
 
   struct to_nearest_type : decorator_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(to_nearest_type{}, std::forward<decltype(args)>(args)...);
-              };
+      return [f](auto &&...args) {
+        return f(to_nearest_type {}, std::forward<decltype(args)>(args)...);
+      };
     }
   };
 
   struct toward_zero_type : decorator_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(toward_zero_type{}, std::forward<decltype(args)>(args)...);
-              };
+      return [f](auto &&...args) {
+        return f(toward_zero_type {}, std::forward<decltype(args)>(args)...);
+      };
     }
   };
 
   //================================================================================================
   // Rounding decorator objects
-  inline constexpr upward_type      const upward       = {};
-  inline constexpr downward_type    const downward     = {};
-  inline constexpr to_nearest_type  const to_nearest   = {};
-  inline constexpr toward_zero_type const toward_zero  = {};
+  inline constexpr upward_type const      upward      = {};
+  inline constexpr downward_type const    downward    = {};
+  inline constexpr to_nearest_type const  to_nearest  = {};
+  inline constexpr toward_zero_type const toward_zero = {};
 }
-

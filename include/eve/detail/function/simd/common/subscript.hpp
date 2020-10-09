@@ -21,7 +21,7 @@ namespace eve::detail
   // Extract value
   //================================================================================================
   template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage const& p ) noexcept
+  EVE_FORCEINLINE auto at_begin(cpu_ const &, as_<Wide> const &, Storage const &p) noexcept
   {
     using type = element_type_t<Wide>;
 
@@ -40,7 +40,7 @@ namespace eve::detail
   }
 
   template<typename Storage, typename Wide>
-  EVE_FORCEINLINE auto at_begin ( cpu_ const&, as_<Wide> const&, Storage & p ) noexcept
+  EVE_FORCEINLINE auto at_begin(cpu_ const &, as_<Wide> const &, Storage &p) noexcept
   {
     using type = element_type_t<Wide>;
 
@@ -62,27 +62,25 @@ namespace eve::detail
   // Extract value
   //================================================================================================
   template<typename Storage, typename Wide>
-  EVE_FORCEINLINE element_type_t<Wide> extract( cpu_ const& arch, as_<Wide> const& tgt
-                                              , Storage const& p, std::size_t i
-                                              ) noexcept
+  EVE_FORCEINLINE element_type_t<Wide>
+  extract(cpu_ const &arch, as_<Wide> const &tgt, Storage const &p, std::size_t i) noexcept
   {
-    return at_begin(arch,tgt,p)[i];
+    return at_begin(arch, tgt, p)[i];
   }
 
   //================================================================================================
   // Insert value
   //================================================================================================
   template<typename Storage, typename Wide, typename Value>
-  EVE_FORCEINLINE void insert ( cpu_ const&, as_<Wide> const&
-                              , Storage& p, std::size_t i, Value v
-                              ) noexcept
+  EVE_FORCEINLINE void
+  insert(cpu_ const &, as_<Wide> const &, Storage &p, std::size_t i, Value v) noexcept
   {
     using type = element_type_t<Wide>;
 
     if constexpr( has_aggregated_abi_v<Wide> )
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.segments[0]);
-      ptr[i] = v;
+      auto ptr = reinterpret_cast<detail::alias_t<type> *>(&p.segments[0]);
+      ptr[i]   = v;
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
@@ -90,8 +88,8 @@ namespace eve::detail
     }
     else
     {
-      auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p);
-      ptr[i] = v;
+      auto ptr = reinterpret_cast<detail::alias_t<type> *>(&p);
+      ptr[i]   = v;
     }
   }
 }

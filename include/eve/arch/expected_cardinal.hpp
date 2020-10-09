@@ -11,17 +11,17 @@
 #pragma once
 
 #include <eve/arch/spec.hpp>
-#include <eve/detail/meta.hpp>
 #include <eve/concept/rebindable.hpp>
-#include <type_traits>
-#include <cstddef>
-#include <utility>
+#include <eve/detail/meta.hpp>
+
 #include <array>
+#include <cstddef>
+#include <type_traits>
+#include <utility>
 
 namespace eve
 {
-  template<std::ptrdiff_t Cardinal>
-  struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
+  template<std::ptrdiff_t Cardinal> struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
   {
     static_assert(Cardinal % 2 == 0, "Cardinal must be a power of 2");
     static constexpr bool is_default = false;
@@ -29,8 +29,7 @@ namespace eve
     using combined_type              = fixed<Cardinal * 2>;
   };
 
-  template<>
-  struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
+  template<> struct fixed<1ULL> : std::integral_constant<std::ptrdiff_t, 1ULL>
   {
     static constexpr bool is_default = false;
     using combined_type              = fixed<2>;
@@ -43,42 +42,36 @@ namespace eve
   };
 
   template<typename Type, typename ABI = EVE_CURRENT_ABI>
-  struct expected_cardinal
-      : fixed<ABI::template expected_cardinal<Type>>
+  struct expected_cardinal : fixed<ABI::template expected_cardinal<Type>>
   {
     using type = fixed<ABI::template expected_cardinal<Type>>;
   };
 
   namespace detail
   {
-    template<typename ABI, typename T>
-    constexpr std::ptrdiff_t scard(always<T>) noexcept
+    template<typename ABI, typename T> constexpr std::ptrdiff_t scard(always<T>) noexcept
     {
-      auto cardinals = []<std::size_t... X>(std::index_sequence<X...> const&)
+      auto cardinals = []<std::size_t... X>(std::index_sequence<X...> const &)
       {
-        return  std::array<std::ptrdiff_t,sizeof...(X)>
-                {
-                  expected_cardinal< std::tuple_element_t<X,T>,ABI>::value...
-                };
-      }( std::make_index_sequence<std::tuple_size<T>::value>{} );
+        return std::array<std::ptrdiff_t, sizeof...(X)> {
+            expected_cardinal<std::tuple_element_t<X, T>, ABI>::value...};
+      }
+      (std::make_index_sequence<std::tuple_size<T>::value> {});
 
       std::ptrdiff_t r = cardinals[0];
 
-      for(auto c : cardinals)
-        r = std::min(r,c);
+      for( auto c : cardinals ) r = std::min(r, c);
 
       return r;
     }
 
-    template<typename ABI, typename T>
-    using scard_t = fixed<scard<ABI>(always<T>{})>;
+    template<typename ABI, typename T> using scard_t = fixed<scard<ABI>(always<T> {})>;
   }
 
   template<typename Type, typename ABI>
-  requires( rebindable<Type> )
-  struct expected_cardinal<Type,ABI> : detail::scard_t<ABI,Type>
+  requires(rebindable<Type>) struct expected_cardinal<Type, ABI> : detail::scard_t<ABI, Type>
   {
-    using type = detail::scard_t<ABI,Type>;
+    using type = detail::scard_t<ABI, Type>;
   };
 
   template<typename Type, typename ABI = EVE_CURRENT_ABI>
@@ -87,4 +80,3 @@ namespace eve
   template<typename Type, typename ABI = EVE_CURRENT_ABI>
   constexpr inline auto expected_cardinal_v = expected_cardinal<Type, ABI>::value;
 }
-

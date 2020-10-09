@@ -106,4 +106,3 @@ namespace eve::detail
     return that;
   }
 }
-

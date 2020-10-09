@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/arch/arm/predef.hpp>
+
 #include <cstddef>
 
 //==================================================================================================
@@ -28,19 +29,18 @@ namespace eve
 
 //==================================================================================================
 // NEON SIMD ABI
-# if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
-#  include <arm_neon.h>
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
-#   define EVE_CURRENT_ABI ::eve::arm_128_
-#   define EVE_CURRENT_API ::eve::neon128_
+#  if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
+#    include <arm_neon.h>
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_ARM_NEON)
+#      define EVE_CURRENT_ABI ::eve::arm_128_
+#      define EVE_CURRENT_API ::eve::neon128_
+#    endif
 #  endif
-# endif
 
-# if !defined(__aarch64__)
-#  ifndef EVE_NO_DENORMALS
-#   define EVE_NO_DENORMALS
+#  if !defined(__aarch64__)
+#    ifndef EVE_NO_DENORMALS
+#      define EVE_NO_DENORMALS
+#    endif
 #  endif
-# endif
 
 #endif
-

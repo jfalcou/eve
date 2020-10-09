@@ -31,4 +31,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/detail/function/simd/arm/neon/lookup.hpp>
 #endif
-

@@ -216,4 +216,3 @@ namespace eve::detail
     return make(eve::as_<T> {}, eve::x86_256_ {}, logical<T>(vs).mask()...);
   }
 }
-

@@ -42,7 +42,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s += o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s += o; }, other);
         return self;
       }
     }
@@ -69,7 +69,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s -= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s -= o; }, other);
         return self;
       }
     }
@@ -96,7 +96,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s *= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s *= o; }, other);
         return self;
       }
     }
@@ -123,7 +123,7 @@ namespace eve::detail
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s /= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s /= o; }, other);
         return self;
       }
     }
@@ -135,7 +135,7 @@ namespace eve::detail
   template<integral_scalar_value T, value U, typename N, typename ABI>
   EVE_FORCEINLINE decltype(auto)
   self_rem(wide<T, N, ABI> &self,
-           U const &        other) requires(integral_scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
+           U const &other) requires(integral_scalar_value<U> || std::same_as<wide<T, N, ABI>, U>)
   {
     using type = wide<T, N, ABI>;
 
@@ -147,7 +147,7 @@ namespace eve::detail
     {
       if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s %= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s %= o; }, other);
         return self;
       }
       else

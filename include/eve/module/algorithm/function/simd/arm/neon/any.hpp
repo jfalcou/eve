@@ -16,7 +16,7 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T,N,arm_64_>> const &v0) noexcept
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T, N, arm_64_>> const &v0) noexcept
   {
     auto m = v0.bits();
 
@@ -31,24 +31,33 @@ namespace eve::detail
     }
     else if constexpr( sizeof(T) == 2 )
     {
-      if constexpr( N::value == 4) { m = vorr_u16(m, vrev64_u16(m)); }
+      if constexpr( N::value == 4 )
+      {
+        m = vorr_u16(m, vrev64_u16(m));
+      }
       m = vorr_u16(m, vrev32_u16(m));
       return static_cast<bool>(m[0]);
     }
-    else //if constexpr( sizeof(T) == 1 )
+    else // if constexpr( sizeof(T) == 1 )
     {
-      if constexpr( N::value == 8)  { m = vorr_u8(m, vrev64_u8(m)); }
-      if constexpr( N::value >= 4)  { m = vorr_u8(m, vrev32_u8(m)); }
+      if constexpr( N::value == 8 )
+      {
+        m = vorr_u8(m, vrev64_u8(m));
+      }
+      if constexpr( N::value >= 4 )
+      {
+        m = vorr_u8(m, vrev32_u8(m));
+      }
       m = vorr_u8(m, vrev16_u8(m));
       return static_cast<bool>(m[0]);
     }
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_), logical<wide<T,N,arm_128_>> const &v0) noexcept
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(neon128_),
+                            logical<wide<T, N, arm_128_>> const &v0) noexcept
   {
-    auto[l,h] = v0.mask().slice();
+    auto [l, h] = v0.mask().slice();
     return any(l) || any(h);
   }
 }
-

@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/simd/lookup_helpers.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/function/simd/lookup_helpers.hpp>
 #include <eve/detail/implementation.hpp>
 
 // TODO: fix operator<< in operators.hpp
@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T, typename I, typename N>
   EVE_FORCEINLINE wide<T, N, x86_128_>
-                  lookup_(EVE_SUPPORTS(ssse3_), wide<T, N, x86_128_> a, wide<I, N, x86_128_> idx) noexcept
+  lookup_(EVE_SUPPORTS(ssse3_), wide<T, N, x86_128_> a, wide<I, N, x86_128_> idx) noexcept
   {
     // TODO: We use sizeof as a discriminant but we could actually use shuffle
     // to extract the one byte for the lookup form bigger integer and put them inside
@@ -43,4 +43,3 @@ namespace eve::detail
     }
   }
 }
-

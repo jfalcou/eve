@@ -94,4 +94,3 @@ namespace eve::detail
     return neon_maker<logical<T>, eve::arm_128_> {}(vs...);
   }
 }
-

@@ -11,13 +11,12 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto linear_ramp(as_<T> const &) noexcept
+  template<typename T> EVE_FORCEINLINE constexpr auto linear_ramp(as_<T> const &) noexcept
   {
     if constexpr( scalar_value<T> )
     {
@@ -25,8 +24,7 @@ namespace eve::detail
     }
     else
     {
-      return T([](auto i, auto ) { return i; } );
+      return T([](auto i, auto) { return i; });
     }
   }
 }
-

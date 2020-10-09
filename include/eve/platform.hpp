@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/spy.hpp>
 
 namespace eve
 {
@@ -40,8 +40,7 @@ namespace eve
 #if defined(EVE_NO_DENORMALS)
     static constexpr bool supports_denormals = false;
 #else
-    static constexpr bool supports_denormals  = true;
+    static constexpr bool supports_denormals = true;
 #endif
   };
 }
-

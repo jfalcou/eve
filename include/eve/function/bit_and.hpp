@@ -18,4 +18,3 @@ namespace eve
 }
 
 #include <eve/module/core/function/generic/bit_and.hpp>
-

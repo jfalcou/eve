@@ -10,10 +10,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <eve/traits/cardinal.hpp>
 
 namespace eve
 {
@@ -22,9 +22,9 @@ namespace eve
 
 namespace eve::detail
 {
-  template<value T> EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_),T const &a,T const &b) noexcept
+  template<value T>
+  EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   {
     return as_wide_t<T, typename cardinal_t<T>::combined_type>(a, b);
   }
 }
-

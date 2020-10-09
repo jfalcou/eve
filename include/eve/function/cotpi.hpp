@@ -18,5 +18,3 @@ namespace eve
 }
 
 #include <eve/module/math/function/generic/cotpi.hpp>
-
-

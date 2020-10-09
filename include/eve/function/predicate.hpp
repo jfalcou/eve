@@ -24,8 +24,8 @@
 #include <eve/function/is_not_flint.hpp>
 #include <eve/function/is_not_imag.hpp>
 #include <eve/function/is_not_infinite.hpp>
-#include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_less.hpp>
+#include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/is_not_nan.hpp>
 #include <eve/function/is_not_real.hpp>
 #include <eve/function/is_odd.hpp>

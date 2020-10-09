@@ -115,4 +115,3 @@ namespace eve::detail
     return stirling(regular_type(), x);
   }
 }
-

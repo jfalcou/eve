@@ -23,7 +23,6 @@
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/converter.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>
@@ -43,14 +42,14 @@
 
 namespace eve::detail
 {
- // up to 255*pi/4 ~200
+  // up to 255*pi/4 ~200
   template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_small(T const &xx) noexcept
   {
-    using elt_t             = element_type_t<T>;
-    if constexpr(std::is_same_v<elt_t,  float>)
+    using elt_t = element_type_t<T>;
+    if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x =  float64(xx);
-      auto n =  nearest(x*twoopi(eve::as<double>()));
+      auto x   = float64(xx);
+      auto n   = nearest(x * twoopi(eve::as<double>()));
       auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return std::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
     }
@@ -126,7 +125,7 @@ namespace eve::detail
 
   template<floating_real_simd_value T> EVE_FORCEINLINE auto rempio2_big(T const &xx) noexcept
   {
-    using elt_t             = element_type_t<T>;
+    using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, double> )
     {
       auto xlerfl = (xx <= Rempio2_limit(small_type(), as<elt_t>()));
@@ -179,7 +178,7 @@ namespace eve::detail
         T    r[6];
         auto inds =
             shr(bit_cast(k, as<ui64_t>()),
-                32); // TODO un shuffle à la place du shr sur les 32bits pour inverser low et hi
+                32); // TODO un shuffle ï¿½ la place du shr sur les 32bits pour inverser low et hi
         for( int i = 0; i < 6; ++i )
         {
           auto values = gather(eve::as_aligned<alg>(&toverp[0]), inds);
@@ -227,17 +226,17 @@ namespace eve::detail
       b         = s * hp0;
       bb        = (((t1 * mp1 - b) + t1 * mp2) + t2 * mp1) + (t2 * mp2 + s * hp1 + t * hp0);
       // fma ? TODO
-      s = b + bb;
-      t = (b - s) + bb;
-      s = if_else(is_not_finite(x), eve::allbits, s);
-      s = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), xx, s);
-      t = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
-      auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)),T(0), quadrant(sum));
-      return  std::make_tuple(q, s, t);
- //      return if_else(xx < Rempio2_limit(restricted_type(), as(xx)),
-//                      std::make_tuple(T(0), xx, T(0)),
-//                      std::make_tuple(quadrant(sum), s, t)
-//                     );
+      s      = b + bb;
+      t      = (b - s) + bb;
+      s      = if_else(is_not_finite(x), eve::allbits, s);
+      s      = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), xx, s);
+      t      = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), t);
+      auto q = if_else(xx < Rempio2_limit(restricted_type(), as(xx)), T(0), quadrant(sum));
+      return std::make_tuple(q, s, t);
+      //      return if_else(xx < Rempio2_limit(restricted_type(), as(xx)),
+      //                      std::make_tuple(T(0), xx, T(0)),
+      //                      std::make_tuple(quadrant(sum), s, t)
+      //                     );
 
       return std::make_tuple(quadrant(sum), s, t);
     }
@@ -251,7 +250,7 @@ namespace eve::detail
       else
       {
         using ui_t         = as_wide_t<uint32_t, cardinal_t<T>>;
-        using  i_t         = as_wide_t< int64_t, cardinal_t<T>>;
+        using i_t          = as_wide_t<int64_t, cardinal_t<T>>;
         constexpr auto alg = ui_t::static_alignment;
         // Table with 4/PI to 192 bit precision.  To avoid unaligned accesses
         //   only 8 new bits are added per entry, making the table 4 times larger.
@@ -265,15 +264,15 @@ namespace eve::detail
         auto xi                     = bit_cast(xx, as_<ui_t>());
         auto index                  = bit_and(shr(xi, 26), 15);
         auto arr0                   = gather(eve::as_aligned<alg>(&__inv_pio4[0]), index);
-        auto arr4 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
-        auto arr8 =      uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
+        auto arr4 = uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 4));
+        auto arr8 = uint64(gather(eve::as_aligned<alg>(&__inv_pio4[0]), index + 8));
 
-        auto shift  = bit_and(shr(xi, 23), 7);
-        auto xii    = bit_or(bit_and(xi, 0xffffff), 0x800000);
-              xi    = shl(xii, shift);
+        auto shift = bit_and(shr(xi, 23), 7);
+        auto xii   = bit_or(bit_and(xi, 0xffffff), 0x800000);
+        xi         = shl(xii, shift);
 
-        auto xi64   = uint64(xi);
-        auto res0   = uint64(xi * arr0);
+        auto xi64 = uint64(xi);
+        auto res0 = uint64(xi * arr0);
 
         using wui_t = as_wide_t<uint64_t, cardinal_t<T>>;
         wui_t res1  = mul(xi64, arr4);
@@ -281,9 +280,9 @@ namespace eve::detail
         res0        = bit_or(shr(res2, 32), shl(res0, 32));
         res0 += res1;
 
-        auto n = shr((res0 + (1ULL << 61)), 62);
-        res0   = res0 - (n << 62); // -= n << 62;
-        auto tmp =  bit_cast(res0, as<i_t>());
+        auto n    = shr((res0 + (1ULL << 61)), 62);
+        res0      = res0 - (n << 62); // -= n << 62;
+        auto tmp  = bit_cast(res0, as<i_t>());
         auto xx1  = float64(tmp);
         auto bn   = if_else(xlerfl, sn, float32(n));
         auto z    = xx1 * pi63;

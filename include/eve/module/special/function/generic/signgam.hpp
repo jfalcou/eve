@@ -15,8 +15,8 @@
 #include <eve/constant/minf.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>
+#include <eve/function/bitofsign.hpp>
 #include <eve/function/floor.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_flint.hpp>
@@ -37,7 +37,7 @@ namespace eve::detail
       auto a       = if_else(is_flint(a0) || is_infinite(a0),
                        eve::allbits,
                        oneminus(binarize(is_odd(floor(a0))) * T(2)));
-      a = if_else(is_eqz(a0), bit_or(one(as(a0)), bitofsign(a0)), a);
+      a            = if_else(is_eqz(a0), bit_or(one(as(a0)), bitofsign(a0)), a);
       return if_else(is_nan(a0), a0, if_else(isleza0, a, eve::one));
     }
     else

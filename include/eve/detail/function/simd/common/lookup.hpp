@@ -10,10 +10,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/concepts.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/detail/concepts.hpp>
 #include <eve/detail/function/slice.hpp>
+#include <eve/detail/implementation.hpp>
 
 namespace eve::detail
 {
@@ -21,20 +21,21 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, Y> const &ind) noexcept
   {
-    auto const cond = [&]()
-    {
-      if constexpr( std::is_signed_v<I> ) return ind >= 0;
-      else                                return ind < N::value;
+    auto const cond = [&]() {
+      if constexpr( std::is_signed_v<I> )
+        return ind >= 0;
+      else
+        return ind < N::value;
     }();
 
     // Compute mask as SIMD
-    auto  idx  = cond.bits();
-          idx &= ind;
-    auto  msk  = cond.mask();
+    auto idx = cond.bits();
+    idx &= ind;
+    auto msk = cond.mask();
 
     // Rebuild as scalar
     wide<T, N, X> data;
-    apply<N::value>([&](auto... v) { (data.set(v,a[idx[v]]),...); });
+    apply<N::value>([&](auto... v) { (data.set(v, a[idx[v]]), ...); });
 
     // Apply mask as SIMD
     data &= msk;
@@ -45,27 +46,27 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   lookup_(EVE_SUPPORTS(cpu_), wide<T, N, X> const &a, wide<I, N, aggregated_> const &ind) noexcept
   {
-    auto const cond = [&]()
-    {
-      if constexpr( std::is_signed_v<I> ) return ind >= 0;
-      else                                return ind < N::value;
+    auto const cond = [&]() {
+      if constexpr( std::is_signed_v<I> )
+        return ind >= 0;
+      else
+        return ind < N::value;
     }();
 
     // Compute mask as SIMD
-    auto  idx  = cond.bits();
-          idx &= ind;
-    auto  msk  = cond.mask();
+    auto idx = cond.bits();
+    idx &= ind;
+    auto msk = cond.mask();
 
     // Rebuild as scalar
     wide<T, N, X> data;
 
     constexpr auto const half = N::value / 2;
-    apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v     , a[lx[v]]),...); } );
-    apply<half>([&, hx = idx.slice(upper_)](auto... v) { (data.set(v+half, a[hx[v]]),...); } );
+    apply<half>([&, lx = idx.slice(lower_)](auto... v) { (data.set(v, a[lx[v]]), ...); });
+    apply<half>([&, hx = idx.slice(upper_)](auto... v) { (data.set(v + half, a[hx[v]]), ...); });
 
     // Apply mask as SIMD
     data &= msk;
     return data;
   }
 }
-

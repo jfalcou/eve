@@ -64,9 +64,9 @@ namespace eve::detail
          * is preserved.
          * ====================================================
          */
-        T          xx    = a0;
-        T          dk    = zero(eve::as<T>());
-        auto       isnez = is_nez(a0);
+        T    xx    = a0;
+        T    dk    = zero(eve::as<T>());
+        auto isnez = is_nez(a0);
         //       logical<T> test;
         if constexpr( eve::platform::supports_denormals )
         {
@@ -100,7 +100,8 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+          zz = if_else(
+              isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
         else
         {
@@ -172,7 +173,8 @@ namespace eve::detail
         T zz;
         if constexpr( eve::platform::supports_infinites )
         {
-          zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+          zz = if_else(
+              isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
         }
 
         else

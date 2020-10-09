@@ -126,7 +126,8 @@ namespace eve::detail
       {
         if constexpr( scalar_value<T> ) // float scalar
         {
-          if( (is_infinite(a0)) ) return inf(as<T>());
+          if( (is_infinite(a0)) )
+            return inf(as<T>());
           const T Maxgammaln =
               Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
           auto gammaln_pos = [Logsqrt2pi](T x) {
@@ -194,7 +195,7 @@ namespace eve::detail
             if( p == q )
               return inf(as<T>());
             T z = q - p;
-            if( z > half(as<T>()))
+            if( z > half(as<T>()) )
             {
               p += one(as<T>());
               z = p - q;
@@ -381,7 +382,7 @@ namespace eve::detail
             if( p == q )
               return inf(as<T>());
             T z = q - p;
-            if( z > half(as<T>()))
+            if( z > half(as<T>()) )
             {
               p += one(as<T>());
               z = p - q;
@@ -448,10 +449,12 @@ namespace eve::detail
             return Logpi - log(z) - w;
           };
 
-          auto inf_result = logical_and(is_lez(a0), is_flint(a0)) || is_infinite(a0);;
-          T    x          = if_else(inf_result, eve::allbits, a0);
-          T    q          = abs(x);
-          if (eve::platform::supports_infinites) inf_result = inf_result || is_equal(q, inf(as<T>()));
+          auto inf_result = logical_and(is_lez(a0), is_flint(a0)) || is_infinite(a0);
+          ;
+          T x = if_else(inf_result, eve::allbits, a0);
+          T q = abs(x);
+          if( eve::platform::supports_infinites )
+            inf_result = inf_result || is_equal(q, inf(as<T>()));
           auto   test = is_less(a0, T(-34.0));
           size_t nb   = nbtrue(test);
           T      r    = nan(as<T>());

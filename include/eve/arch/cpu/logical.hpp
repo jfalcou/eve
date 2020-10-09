@@ -19,22 +19,18 @@
 
 namespace eve
 {
-  template<typename T>
-  struct logical
+  template<typename T> struct logical
   {
     using value_type                      = T;
     using bits_type                       = detail::as_integer_t<T, unsigned>;
-    static constexpr bits_type true_mask  = ~bits_type{0};
-    static constexpr bits_type false_mask = bits_type{0};
+    static constexpr bits_type true_mask  = ~bits_type {0};
+    static constexpr bits_type false_mask = bits_type {0};
 
     /// Default constructor
     EVE_FORCEINLINE constexpr logical() noexcept {}
 
     /// Constructor from boolean value
-    EVE_FORCEINLINE constexpr logical(bool v) noexcept
-        : value_(v ? true_mask : false_mask)
-    {
-    }
+    EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
     /// Constructor from non-boolean value
     template<typename U>
@@ -50,7 +46,7 @@ namespace eve
       return *this;
     }
 
-    void swap( logical& other ) { std::swap(value_,other.value_); }
+    void swap(logical &other) { std::swap(value_, other.value_); }
 
     /// Convert a logical value to bool
     EVE_FORCEINLINE constexpr operator bool() const noexcept { return !!value_; }
@@ -73,10 +69,7 @@ namespace eve
     }
 
     // Convert a logical to a bitmap of its truth values
-    EVE_FORCEINLINE constexpr auto bitmap() const noexcept
-    {
-      return std::bitset<1>(value_ & 1);
-    }
+    EVE_FORCEINLINE constexpr auto bitmap() const noexcept { return std::bitset<1>(value_ & 1); }
 
     /// Stream insertion operator
     friend EVE_FORCEINLINE std::ostream &operator<<(std::ostream &os, logical const &v)
@@ -88,9 +81,7 @@ namespace eve
     bits_type value_;
   };
 
-
-  template<typename T>
-  EVE_FORCEINLINE void swap(logical<T> &lhs, logical<T> &rhs) noexcept
+  template<typename T> EVE_FORCEINLINE void swap(logical<T> &lhs, logical<T> &rhs) noexcept
   {
     lhs.swap(rhs);
   }

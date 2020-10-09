@@ -11,12 +11,13 @@
 #pragma once
 
 #include <eve/arch/x86/predef.hpp>
-#include <cstdint>
+
 #include <cstddef>
+#include <cstdint>
 
 //==================================================================================================
 // X86 hardware info
-# if defined(SPY_SIMD_IS_X86)
+#if defined(SPY_SIMD_IS_X86)
 namespace eve
 {
   struct register_count
@@ -30,40 +31,40 @@ namespace eve
 
 //==================================================================================================
 // X86 SIMD API/ABI
-# if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_X86)
-#  include <immintrin.h>
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX2)
-#    define EVE_CURRENT_ABI ::eve::x86_256_
-#    define EVE_CURRENT_API ::eve::avx2_
+#  if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_X86)
+#    include <immintrin.h>
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX2)
+#      define EVE_CURRENT_ABI ::eve::x86_256_
+#      define EVE_CURRENT_API ::eve::avx2_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX)
+#      define EVE_CURRENT_ABI ::eve::x86_256_
+#      define EVE_CURRENT_API ::eve::avx_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_2)
+#      define EVE_CURRENT_ABI ::eve::x86_128_
+#      define EVE_CURRENT_API ::eve::sse4_2_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_1)
+#      define EVE_CURRENT_ABI ::eve::x86_128_
+#      define EVE_CURRENT_API ::eve::sse4_1_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSSE3)
+#      define EVE_CURRENT_ABI ::eve::x86_128_
+#      define EVE_CURRENT_API ::eve::ssse3_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE3)
+#      define EVE_CURRENT_ABI ::eve::x86_128_
+#      define EVE_CURRENT_API ::eve::sse3_
+#    endif
+#    if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE2)
+#      define EVE_CURRENT_ABI ::eve::x86_128_
+#      define EVE_CURRENT_API ::eve::sse2_
+#    endif
 #  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_AVX)
-#    define EVE_CURRENT_ABI ::eve::x86_256_
-#    define EVE_CURRENT_API ::eve::avx_
-#  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_2)
-#    define EVE_CURRENT_ABI ::eve::x86_128_
-#    define EVE_CURRENT_API ::eve::sse4_2_
-#  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE4_1)
-#    define EVE_CURRENT_ABI ::eve::x86_128_
-#    define EVE_CURRENT_API ::eve::sse4_1_
-#  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSSE3)
-#    define EVE_CURRENT_ABI ::eve::x86_128_
-#    define EVE_CURRENT_API ::eve::ssse3_
-#  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE3)
-#    define EVE_CURRENT_ABI ::eve::x86_128_
-#    define EVE_CURRENT_API ::eve::sse3_
-#  endif
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_X86_SSE2)
-#    define EVE_CURRENT_ABI ::eve::x86_128_
-#    define EVE_CURRENT_API ::eve::sse2_
-#  endif
-# endif
 
 // TODO: AVX512 API
-# endif
+#endif
 
 //==================================================================================================
 // Additionnal ISA support
@@ -75,8 +76,8 @@ namespace eve
 #  if defined(SPY_COMPILER_IS_MSVC)
 #    include <intrin.h>
 #  else
-#    include <x86intrin.h>
 #    include <fma4intrin.h>
+#    include <x86intrin.h>
 #  endif
 #endif
 
@@ -88,4 +89,3 @@ namespace eve
 #    include <xopintrin.h>
 #  endif
 #endif
-

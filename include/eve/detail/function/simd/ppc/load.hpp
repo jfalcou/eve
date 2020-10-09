@@ -19,7 +19,8 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const* ptr) noexcept
+  EVE_FORCEINLINE auto
+  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &, T const *ptr) noexcept
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -56,8 +57,9 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N, std::size_t Align>
-  EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T const, Align> ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<wide<T, N>> const &tgt,
+                            eve::ppc_ const &           mode,
+                            aligned_ptr<T const, Align> ptr) noexcept
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
@@ -98,9 +100,8 @@ namespace eve::detail
 
   template<real_scalar_value T, typename N, std::size_t Align>
   EVE_FORCEINLINE auto
-  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const & mode, aligned_ptr<T, Align>  ptr) noexcept
+  load(eve::as_<wide<T, N>> const &tgt, eve::ppc_ const &mode, aligned_ptr<T, Align> ptr) noexcept
   {
     return load(tgt, mode, aligned_ptr<T const, Align>(ptr));
   }
 }
-

@@ -24,4 +24,3 @@
 #if defined(EVE_HW_ARM)
 #  include <eve/detail/function/simd/arm/neon/make.hpp>
 #endif
-

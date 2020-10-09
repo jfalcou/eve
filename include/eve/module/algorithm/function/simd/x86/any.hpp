@@ -25,12 +25,12 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N, ABI>>();
 
-    if constexpr(cat == category::int16x8 || cat == category::uint16x8)
+    if constexpr( cat == category::int16x8 || cat == category::uint16x8 )
     {
       // Using bitmap directly on short is pessimistic, we do a custom check here
-      using type  = logical<wide<T, N, ABI>>;
-      using tgt   = typename type::template rebind<std::uint8_t,typename N::combined_type>;
-      return bit_cast(v,as_<tgt>()).bitmap().any();
+      using type = logical<wide<T, N, ABI>>;
+      using tgt  = typename type::template rebind<std::uint8_t, typename N::combined_type>;
+      return bit_cast(v, as_<tgt>()).bitmap().any();
     }
     else
     {

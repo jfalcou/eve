@@ -92,4 +92,3 @@ namespace eve
   template<typename T>
   concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_> {});
 }
-

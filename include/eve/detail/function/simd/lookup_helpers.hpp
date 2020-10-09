@@ -71,4 +71,3 @@ namespace eve::detail
     }
   }();
 }
-

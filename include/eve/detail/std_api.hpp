@@ -31,8 +31,7 @@ namespace std
     using type = T;
   };
 
-  template<typename T, typename N, typename ABI>
-  struct tuple_size<eve::wide<T, N, ABI>> : N
+  template<typename T, typename N, typename ABI> struct tuple_size<eve::wide<T, N, ABI>> : N
   {
   };
 
@@ -47,16 +46,14 @@ namespace std
 
 namespace eve
 {
-  template<std::size_t I, typename T, typename N, typename ABI>
-  auto get(wide<T, N, ABI> const &w)
+  template<std::size_t I, typename T, typename N, typename ABI> auto get(wide<T, N, ABI> const &w)
   {
-    return w[ I ];
+    return w[I];
   }
 
   template<std::size_t I, typename T, typename N, typename ABI>
   auto get(logical<wide<T, N, ABI>> const &w)
   {
-    return w[ I ];
+    return w[I];
   }
 }
-

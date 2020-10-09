@@ -10,29 +10,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/function/convert.hpp>
+#include <eve/function/saturated.hpp>
 
 namespace eve
 {
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  template <typename T>
-  struct converter_type : decorator_
+  template<typename T> struct converter_type : decorator_
   {
     using value_type = element_type_t<T>;
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const &val) const noexcept
     {
       return convert(val, as<T>());
     }
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    EVE_FORCEINLINE constexpr auto operator()(Function const &f) const noexcept
     {
-      return  [f]<typename... Ts>(Ts&&... args)
+      return [f]<typename... Ts>(Ts && ...args)
       {
         if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
@@ -48,35 +46,33 @@ namespace eve
 
   //================================================================================================
   // Function decorators for all basic type
-  inline constexpr converter_type<float>          const float32   = {};
-  inline constexpr converter_type<double>         const float64   = {};
-  inline constexpr converter_type<std::uint8_t >  const uint8    = {};
-  inline constexpr converter_type<std::uint16_t>  const uint16   = {};
-  inline constexpr converter_type<std::uint32_t>  const uint32   = {};
-  inline constexpr converter_type<std::uint64_t>  const uint64   = {};
-  inline constexpr converter_type<std::int8_t >   const int8     = {};
-  inline constexpr converter_type<std::int16_t>   const int16    = {};
-  inline constexpr converter_type<std::int32_t>   const int32    = {};
-  inline constexpr converter_type<std::int64_t>   const int64    = {};
+  inline constexpr converter_type<float> const         float32 = {};
+  inline constexpr converter_type<double> const        float64 = {};
+  inline constexpr converter_type<std::uint8_t> const  uint8   = {};
+  inline constexpr converter_type<std::uint16_t> const uint16  = {};
+  inline constexpr converter_type<std::uint32_t> const uint32  = {};
+  inline constexpr converter_type<std::uint64_t> const uint64  = {};
+  inline constexpr converter_type<std::int8_t> const   int8    = {};
+  inline constexpr converter_type<std::int16_t> const  int16   = {};
+  inline constexpr converter_type<std::int32_t> const  int32   = {};
+  inline constexpr converter_type<std::int64_t> const  int64   = {};
 
   //================================================================================================
   // Function decorator for template conversion
-  template<typename T>
-  inline constexpr converter_type<element_type_t<T>> const to_ = {};
+  template<typename T> inline constexpr converter_type<element_type_t<T>> const to_ = {};
 
   struct int_converter
   {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const &val) const noexcept
     {
       using value_type = detail::as_integer_t<element_type_t<Val>>;
       return convert(val, as<value_type>());
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    EVE_FORCEINLINE constexpr auto operator()(Function const &f) const noexcept
     {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      return [f]<typename T, typename... Ts>(T && arg0, Ts && ...args)
       {
         using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>>;
 
@@ -96,17 +92,16 @@ namespace eve
 
   struct uint_converter
   {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const &val) const noexcept
     {
       using value_type = detail::as_integer_t<element_type_t<Val>, unsigned>;
       return convert(val, as<value_type>());
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    EVE_FORCEINLINE constexpr auto operator()(Function const &f) const noexcept
     {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      return [f]<typename T, typename... Ts>(T && arg0, Ts && ...args)
       {
         using value_type = detail::as_integer_t<element_type_t<std::remove_cvref_t<T>>, unsigned>;
 
@@ -126,17 +121,16 @@ namespace eve
 
   struct floating_converter
   {
-    template<value Val>
-    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const &val) const noexcept
     {
       using value_type = detail::as_floating_point_t<element_type_t<Val>>;
       return convert(val, as<value_type>());
     }
 
     template<typename Function>
-    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    EVE_FORCEINLINE constexpr auto operator()(Function const &f) const noexcept
     {
-      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      return [f]<typename T, typename... Ts>(T && arg0, Ts && ...args)
       {
         using value_type = detail::as_floating_point_t<element_type_t<std::remove_cvref_t<T>>>;
 

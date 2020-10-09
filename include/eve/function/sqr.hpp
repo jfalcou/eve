@@ -18,4 +18,3 @@ namespace eve
 }
 
 #include <eve/module/core/function/generic/sqr.hpp>
-

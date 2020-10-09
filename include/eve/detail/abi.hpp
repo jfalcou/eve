@@ -59,4 +59,3 @@
 #  define EVE_NO_NANS
 #  define EVE_NO_INFINITIES
 #endif
-

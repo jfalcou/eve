@@ -11,26 +11,33 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
 #include <eve/function/all.hpp>
+#include <eve/function/is_flint.hpp>
 
 namespace eve
 {
-  namespace tag { struct ldexp_; }
+  namespace tag
+  {
+    struct ldexp_;
+  }
 
   namespace detail
   {
     template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]]  U const& b)
+    EVE_FORCEINLINE void
+    check(EVE_SUPPORTS(eve::tag::ldexp_), T const &, [[maybe_unused]] U const &b)
     {
-      if constexpr(std::is_floating_point_v<value_type_t<U>>)
+      if constexpr( std::is_floating_point_v<value_type_t<U>> )
         EVE_ASSERT(all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
     }
 
     template<typename T, typename U>
-    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), pedantic_type const&, T const&,  [[maybe_unused]] U const& b)
+    EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_),
+                               pedantic_type const &,
+                               T const &,
+                               [[maybe_unused]] U const &b)
     {
-      if constexpr(std::is_floating_point_v<value_type_t<U>>)
+      if constexpr( std::is_floating_point_v<value_type_t<U>> )
         EVE_ASSERT(all(is_flint(b)), "ldexp argument 2 is floating but not a flint");
     }
   }

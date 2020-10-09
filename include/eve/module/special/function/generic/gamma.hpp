@@ -232,4 +232,3 @@ namespace eve::detail
     return gamma(regular_type(), x);
   }
 }
-

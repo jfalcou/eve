@@ -16,4 +16,3 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
-

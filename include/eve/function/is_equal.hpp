@@ -30,4 +30,3 @@ namespace eve
 #if defined(EVE_HW_ARM)
 #  include <eve/module/core/function/simd/arm/neon/is_equal.hpp>
 #endif
-

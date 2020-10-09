@@ -22,7 +22,7 @@ namespace eve
     template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
       return
-          [f](auto &&... args) { return f(plain_type {}, std::forward<decltype(args)>(args)...); };
+          [f](auto &&...args) { return f(plain_type {}, std::forward<decltype(args)>(args)...); };
     }
   };
 
@@ -33,4 +33,3 @@ namespace eve
     return plain_type {}(f);
   }
 }
-

@@ -21,35 +21,32 @@ namespace eve::detail
   // Common logical case
   //================================================================================================
   template<real_scalar_value T, typename N, native ABI>
-  EVE_FORCEINLINE auto load(eve::as_<logical<wide<T, N, ABI>>> const &,
-                            ABI const & mode,
-                            logical<T> const* ptr) noexcept
+  EVE_FORCEINLINE auto
+  load(eve::as_<logical<wide<T, N, ABI>>> const &, ABI const &mode, logical<T> const *ptr) noexcept
   {
-    using type = typename logical<wide<T, N, ABI>>::storage_type;
+    using type   = typename logical<wide<T, N, ABI>>::storage_type;
     auto rawdata = load(eve::as_<wide<T, N, ABI>> {}, mode, (T *)ptr);
     return type(rawdata);
   }
 
   template<typename T, typename N, std::size_t Align, native ABI>
-  EVE_FORCEINLINE auto
-  load(eve::as_<logical<wide<T, N, ABI>>> const &,
-       ABI const &                          mode,
-       aligned_ptr<logical<T> const, Align> ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<logical<wide<T, N, ABI>>> const &,
+                            ABI const &                          mode,
+                            aligned_ptr<logical<T> const, Align> ptr) noexcept
   {
     using type = typename logical<wide<T, N, ABI>>::storage_type;
-    auto rawdata = load(eve::as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T const, Align>((T const*)ptr.get()));
+    auto rawdata =
+        load(eve::as_<wide<T, N, ABI>> {}, mode, aligned_ptr<T const, Align>((T const *)ptr.get()));
     return type(rawdata);
   }
 
   template<typename T, typename N, std::size_t Align, native ABI>
-  EVE_FORCEINLINE auto
-  load(eve::as_<logical<wide<T, N, ABI>>> const &,
-       ABI const &                          mode,
-       aligned_ptr<logical<T>, Align>       ptr) noexcept
+  EVE_FORCEINLINE auto load(eve::as_<logical<wide<T, N, ABI>>> const &,
+                            ABI const &                    mode,
+                            aligned_ptr<logical<T>, Align> ptr) noexcept
   {
-    using type = typename logical<wide<T, N, ABI>>::storage_type;
-    auto rawdata = load(eve::as_<wide<T, N, ABI>>{}, mode, aligned_ptr<T, Align>((T *)ptr.get()));
+    using type   = typename logical<wide<T, N, ABI>>::storage_type;
+    auto rawdata = load(eve::as_<wide<T, N, ABI>> {}, mode, aligned_ptr<T, Align>((T *)ptr.get()));
     return type(rawdata);
   }
 }
-

@@ -595,4 +595,3 @@ namespace eve::detail
     return self;
   }
 }
-

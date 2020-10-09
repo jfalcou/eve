@@ -11,6 +11,7 @@
 #pragma once
 
 #include <eve/detail/spy.hpp>
+
 #include <type_traits>
 
 #ifndef EVE_NO_STRICT_ALIASING
@@ -33,13 +34,10 @@ namespace eve::detail
     typedef T EVE_MAY_ALIAS type;
   };
 
-  template<typename T> requires( std::is_class_v<T> )
-  struct alias<T>
+  template<typename T> requires(std::is_class_v<T>) struct alias<T>
   {
     using type = T;
   };
 
-  template<typename T>
-  using alias_t = typename alias<T>::type;
+  template<typename T> using alias_t = typename alias<T>::type;
 }
-

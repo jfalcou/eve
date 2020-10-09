@@ -10,8 +10,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
@@ -19,13 +19,9 @@ namespace eve
   // Function decorators mark-up used in function overloads
   struct regular_type : decorator_
   {
-    template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
-              {
-                return f(std::forward<decltype(args)>(args)...);
-              };
+      return [f](auto &&...args) { return f(std::forward<decltype(args)>(args)...); };
     }
   };
 
@@ -33,4 +29,3 @@ namespace eve
   // Function decorator - regular mode
   inline constexpr regular_type const regular = {};
 }
-

@@ -11,10 +11,10 @@
 #pragma once
 
 #include <eve/concept/compatible.hpp>
-#include <eve/detail/concepts.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/concepts.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
 
 namespace eve::detail
@@ -38,17 +38,16 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
+        auto &data = self.storage();
 
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_and_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
-        });
+        apply<N::value>(
+            [&](auto... I) { ((data[I] = bit_and_(EVE_RETARGET(cpu_), self[I], other[I])), ...); });
 
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s &= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s &= o; }, other);
         return self;
       }
     }
@@ -73,17 +72,16 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
+        auto &data = self.storage();
 
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_or_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
-        });
+        apply<N::value>(
+            [&](auto... I) { ((data[I] = bit_or_(EVE_RETARGET(cpu_), self[I], other[I])), ...); });
 
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s |= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s |= o; }, other);
         return self;
       }
     }
@@ -108,17 +106,16 @@ namespace eve::detail
     {
       if constexpr( is_emulated_v<ABI> )
       {
-        auto& data = self.storage();
+        auto &data = self.storage();
 
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self[I], other[I])), ...);
-        });
+        apply<N::value>(
+            [&](auto... I) { ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self[I], other[I])), ...); });
 
         return self;
       }
       else if constexpr( is_aggregated_v<ABI> )
       {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s ^= o; }, other );
+        self.storage().for_each([&](auto &s, auto const &o) { s ^= o; }, other);
         return self;
       }
     }

@@ -18,4 +18,3 @@ namespace eve
 }
 
 #include <eve/module/math/function/generic/acosh.hpp>
-

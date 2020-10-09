@@ -40,7 +40,7 @@ namespace eve::detail
       }
       else
       {
-        t8_t i1 = lookup(bit_cast( eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
+        t8_t i1 = lookup(bit_cast(eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
         i1      = bit_cast(bit_cast(i1, as<wide<I, N, arm_64_>>()) + offset<I>, as<t8_t>());
         return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
@@ -72,11 +72,10 @@ namespace eve::detail
       }
       else
       {
-        t8_t i1 = lookup(bit_cast( eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
+        t8_t i1 = lookup(bit_cast(eve::shl(idx, shift<I>), as(i1)), t8_t {repeater<I>});
         i1      = bit_cast(bit_cast(i1, as<wide<I, N, arm_128_>>()) + offset<I>, as<t8_t>());
         return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
       }
     }
   }
 }
-

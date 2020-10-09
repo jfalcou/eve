@@ -11,4 +11,3 @@
 #pragma once
 
 #include <eve/arch/cpu/logical.hpp>
-

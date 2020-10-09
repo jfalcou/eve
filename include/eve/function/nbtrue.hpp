@@ -23,4 +23,3 @@ namespace eve
 #if defined(EVE_HW_X86)
 #  include <eve/module/algorithm/function/simd/x86/nbtrue.hpp>
 #endif
-

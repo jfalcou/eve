@@ -10,24 +10,21 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/any.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-  template<value T>
-  EVE_FORCEINLINE bool none_(EVE_SUPPORTS(cpu_)
-                           , T const &v) noexcept
+  template<value T> EVE_FORCEINLINE bool none_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
-    if constexpr(scalar_value<T>)
+    if constexpr( scalar_value<T> )
     {
       return !v;
     }
-    else if constexpr(simd_value<T>)
+    else if constexpr( simd_value<T> )
     {
       return !any(v);
     }
   }
 }
-

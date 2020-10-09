@@ -22,9 +22,8 @@
 // Additionnal ISA support
 namespace eve
 {
-  inline constexpr bool supports_fma3     = spy::supports::fma_;
-  inline constexpr bool supports_fma4     = spy::supports::fma4_;
-  inline constexpr bool supports_xop      = spy::supports::xop_;
-  inline constexpr bool supports_aarch64  = spy::supports::aarch64_;
+  inline constexpr bool supports_fma3    = spy::supports::fma_;
+  inline constexpr bool supports_fma4    = spy::supports::fma4_;
+  inline constexpr bool supports_xop     = spy::supports::xop_;
+  inline constexpr bool supports_aarch64 = spy::supports::aarch64_;
 }
-

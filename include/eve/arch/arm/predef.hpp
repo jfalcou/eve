@@ -17,4 +17,3 @@
 #  define EVE_SUPPORTS_NATIVE_SIMD
 #  define EVE_HW_ARM
 #endif
-

@@ -80,7 +80,7 @@ namespace eve::detail
         t1 = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
         t2 = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
       }
-      else if constexpr(std::is_same_v<element_type_t<T>, double>)
+      else if constexpr( std::is_same_v<element_type_t<T>, double> )
       {
         t1 = w * horn<T, 0x3fd999999997fa04ll, 0x3fcc71c51d8e78afll, 0x3fc39a09d078c69fll>(w);
         t2 = z
@@ -95,7 +95,8 @@ namespace eve::detail
       T zz;
       if constexpr( eve::platform::supports_infinites )
       {
-        zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+        zz = if_else(
+            isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
       }
       else
       {
@@ -118,4 +119,3 @@ namespace eve::detail
       return musl_(log1p)(v);
   }
 }
-

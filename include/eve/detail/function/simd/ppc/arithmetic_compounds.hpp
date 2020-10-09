@@ -22,16 +22,17 @@ namespace eve::detail
   // +=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto)
+  self_add(wide<T, N, ppc_> &self,
+           U const &         other) requires(scalar_value<U> || std::same_as<wide<T, N, ppc_>, U>)
   {
     using type = wide<T, N, ppc_>;
 
     if constexpr( scalar_value<U> )
     {
-      self = vec_add(self.storage(), type{other}.storage());
+      self = vec_add(self.storage(), type {other}.storage());
     }
-    else if constexpr( std::same_as<type,U> )
+    else if constexpr( std::same_as<type, U> )
     {
       self = vec_add(self.storage(), other.storage());
     }
@@ -43,16 +44,17 @@ namespace eve::detail
   // -=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto)
+  self_sub(wide<T, N, ppc_> &self,
+           U const &         other) requires(scalar_value<U> || std::same_as<wide<T, N, ppc_>, U>)
   {
     using type = wide<T, N, ppc_>;
 
     if constexpr( scalar_value<U> )
     {
-      self = vec_sub(self.storage(), type{other}.storage());
+      self = vec_sub(self.storage(), type {other}.storage());
     }
-    else if constexpr( std::same_as<type,U> )
+    else if constexpr( std::same_as<type, U> )
     {
       self = vec_sub(self.storage(), other.storage());
     }
@@ -64,16 +66,17 @@ namespace eve::detail
   // *=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_mul( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto)
+  self_mul(wide<T, N, ppc_> &self,
+           U const &         other) requires(scalar_value<U> || std::same_as<wide<T, N, ppc_>, U>)
   {
     using type = wide<T, N, ppc_>;
 
     if constexpr( scalar_value<U> )
     {
-      self = self.storage() *  type{other}.storage();
+      self = self.storage() * type {other}.storage();
     }
-    else if constexpr( std::same_as<type,U> )
+    else if constexpr( std::same_as<type, U> )
     {
       self = self.storage() * other.storage();
     }
@@ -85,16 +88,17 @@ namespace eve::detail
   // /=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_div( wide<T,N,ppc_>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T,N,ppc_>,U> )
+  EVE_FORCEINLINE decltype(auto)
+  self_div(wide<T, N, ppc_> &self,
+           U const &         other) requires(scalar_value<U> || std::same_as<wide<T, N, ppc_>, U>)
   {
     using type = wide<T, N, ppc_>;
 
     if constexpr( scalar_value<U> )
     {
-      self = self.storage() / type{other}.storage();
+      self = self.storage() / type {other}.storage();
     }
-    else if constexpr( std::same_as<type,U> )
+    else if constexpr( std::same_as<type, U> )
     {
       self = self.storage() / other.storage();
     }
@@ -102,4 +106,3 @@ namespace eve::detail
     return self;
   }
 }
-

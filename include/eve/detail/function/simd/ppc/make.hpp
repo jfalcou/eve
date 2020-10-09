@@ -70,4 +70,3 @@ namespace eve::detail
     return apply<expected_cardinal_v<T>>(impl);
   }
 }
-
