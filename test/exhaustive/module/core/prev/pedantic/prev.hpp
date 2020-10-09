@@ -25,7 +25,7 @@ TTS_CASE_TPL("wide exhaustive check on prev", EVE_TYPE)
   if constexpr(eve::floating_value<T>)
   {
     auto std_prev = tts::vectorize<T>( [](auto e) { return (e == 0) && eve::is_positive(e) ? v_t(-0.)
-                                                  : (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan<v_t>() : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
+                                                  : (e ==  eve::minf(eve::as<v_t>())) ?  eve::nan(eve::as_<v_t>{}) : std::nextafter(e, eve::minf(eve::as<v_t>())); } );
     eve::exhaustive_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
     TTS_RANGE_CHECK(p, std_prev, eve::pedantic(eve::prev));
   }

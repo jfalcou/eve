@@ -27,7 +27,7 @@ TTS_CASE_TPL("wide exhaustive check on next", EVE_TYPE)
     auto std_next = tts::vectorize<T> ( [](auto e)
                                         {
                                           return    (e ==  eve::inf(eve::as<v_t>()))
-                                                  ? eve::nan<v_t>()
+                                                  ? eve::nan(eve::as_<v_t>{})
                                                   : std::nextafter(e, eve::inf(eve::as<v_t>()));
                                         }
                                       );

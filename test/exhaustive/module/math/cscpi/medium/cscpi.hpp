@@ -26,7 +26,7 @@ TTS_CASE_TPL("wide random check on cscpi", EVE_TYPE)
                                           {
                                             return    (x == 0 || !eve::is_flint(x))
                                                     ? eve::rec(boost::math::sin_pi(x))
-                                                    : eve::nan<v_t>();
+                                                    : eve::nan(eve::as_<v_t>{});
                                           }
                                         );
 
