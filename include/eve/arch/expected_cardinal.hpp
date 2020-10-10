@@ -23,7 +23,9 @@ namespace eve
   template<std::ptrdiff_t Cardinal>
   struct fixed : std::integral_constant<std::ptrdiff_t, Cardinal>
   {
-    static_assert(Cardinal % 2 == 0, "Cardinal must be a power of 2");
+    static constexpr bool is_pow2(std::ptrdiff_t v) { return (!(v & (v - 1)) && v); }
+    static_assert(is_pow2(Cardinal), "Cardinal must be a power of 2");
+
     static constexpr bool is_default = false;
     using split_type                 = fixed<Cardinal / 2>;
     using combined_type              = fixed<Cardinal * 2>;
