@@ -8,8 +8,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <tts/tests/basic.hpp>
-#include <tts/tests/relation.hpp>
+
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/function/if_else.hpp>

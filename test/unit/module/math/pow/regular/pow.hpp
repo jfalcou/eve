@@ -16,7 +16,6 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/basic.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check pow_abs return type", EVE_TYPE)

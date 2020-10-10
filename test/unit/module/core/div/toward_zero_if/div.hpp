@@ -38,9 +38,16 @@ TTS_CASE_TPL("Check conditional saturated(eve::div) behavior", EVE_TYPE)
 
   // Mixed case
   eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL ( eve::toward_zero(eve::div[ m ])(tv, fv),
                   eve::if_else(m, eve::toward_zero(eve::div)(tv,fv), tv)

@@ -17,8 +17,7 @@
 #include <eve/function/prev.hpp>
 #include <eve/function/ulpdist.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+
 
 TTS_CASE_TPL("Check eve::small(eve::tan) return type", EVE_TYPE)
 {

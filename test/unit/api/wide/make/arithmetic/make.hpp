@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <tts/tests/relation.hpp>
+
 #include <eve/wide.hpp>
 
 TTS_CASE_TPL( "Check enumerating constructor for arithmetic wide", EVE_TYPE )

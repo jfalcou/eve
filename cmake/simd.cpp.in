@@ -13,26 +13,8 @@
 #include <eve/traits/element_type.hpp>
 
 #define EVE_SIMD_TESTS
+#define EVE_TYPE      ${target}
+#define EVE_CARDINAL  ::eve::cardinal_v<T>
+#define EVE_VALUE     ::eve::element_type_t<T>
 
-using EVE_VALUE = ${target};
-
-#if !defined(EVE_CUSTOM_CARDINAL)
-
-
-// Native size test
-using T = eve::wide<${target}>;
-inline constexpr auto EVE_CARDINAL = ::eve::cardinal_v<T>;
 #include "${header}.hpp"
-
-#else
-
-#if EVE_CUSTOM_CARDINAL > 0
-using T = eve::wide<EVE_VALUE,eve::fixed<EVE_CUSTOM_CARDINAL>>
-#else
-using T = eve::wide<EVE_VALUE>
-#endif
-
-// Specific  EVE_CARDINAL test
-#include "${header}.hpp"
-
-#endif

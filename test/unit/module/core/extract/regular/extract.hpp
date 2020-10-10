@@ -51,6 +51,6 @@ TTS_CASE_TPL("Check eve::extract behavior on logical types", EVE_TYPE)
     arg.set(i, ((1+i) % 2) == 0);
 
   for(int i=0; i< EVE_CARDINAL; ++i)
-    TTS_EQUAL(eve::extract(arg, i), ((1+i) % 2) == 0);
+    TTS_EQUAL(eve::extract(arg, i), (((1+i) % 2) == 0) );
 #endif
 }

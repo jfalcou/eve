@@ -19,8 +19,7 @@
 #include <eve/constant/minlog2denormal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+
 #include <eve/concept/value.hpp>
 #include <cmath>
 

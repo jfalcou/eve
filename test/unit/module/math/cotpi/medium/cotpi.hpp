@@ -16,7 +16,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::medium(eve::cotpi) return type", EVE_TYPE)
 {

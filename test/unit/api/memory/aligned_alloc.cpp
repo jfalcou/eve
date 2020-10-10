@@ -12,7 +12,6 @@
 #include <eve/memory/is_aligned.hpp>
 #include <eve/memory/aligned_alloc.hpp>
 #include <eve/memory/aligned_dealloc.hpp>
-#include <tts/tests/basic.hpp>
 
 TTS_CASE_TPL( "aligned_alloc behavior"
             , std::integral_constant<int,    8>

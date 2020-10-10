@@ -12,7 +12,8 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 
-using T  = ${target};
+#define EVE_TYPE ${target}
+#define EVE_VALUE ${target}
 inline constexpr auto EVE_CARDINAL = 1;
 
 #include "${header}.hpp"

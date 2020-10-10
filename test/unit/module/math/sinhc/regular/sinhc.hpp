@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/sinhc.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/half.hpp>
 
 

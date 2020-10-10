@@ -15,8 +15,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/zero.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::acosh return type", EVE_TYPE)

@@ -11,9 +11,7 @@
 #include "test.hpp"
 #include <eve/memory/is_aligned.hpp>
 #include <eve/memory/aligned_allocator.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/basic.hpp>
-#include <tts/tests/types.hpp>
+
 #include <vector>
 
 TTS_CASE_TPL("aligned_allocator behavior"

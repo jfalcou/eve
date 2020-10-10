@@ -12,7 +12,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <tts/tests/types.hpp>
 #include <tts/tts.hpp>
 
 TTS_CASE_TPL("Check deginrad return type", EVE_TYPE)

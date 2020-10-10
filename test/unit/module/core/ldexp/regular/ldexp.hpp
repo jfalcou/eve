@@ -12,8 +12,7 @@
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>
 #include <eve/function/all.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+
 
 TTS_CASE_TPL("Check ldexp return type", EVE_TYPE)
 {

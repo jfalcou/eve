@@ -65,7 +65,7 @@ endfunction()
 function(make_all_units)
   # Parse our options to find name, arch and types to generate
   set(multiValueArgs TYPES ARCH)
-  set(oneValueArgs ROOT NAME CARDINAL)
+  set(oneValueArgs ROOT NAME)
   cmake_parse_arguments(GEN_TEST "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
   # Locate all subdirectory for current test
@@ -83,38 +83,42 @@ function(make_all_units)
 
       # Generate test for each arch
       foreach( arch ${GEN_TEST_ARCH})
-        # Scalar case just uses the types as setup
-        if( arch STREQUAL scalar)
-          foreach(type ${GEN_TEST_TYPES})
-            to_std("${type}" target)
-            set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp")
+        list(SUBLIST GEN_TEST_TYPES 0  1 head)
+        list(SUBLIST GEN_TEST_TYPES 1 -1 tail)
 
-            configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
-            generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
-                            "${GEN_TEST_ROOT}.${base_file}.scalar.${type}.cpp"
-                          )
+        # Scalar case just uses t1he types as setup
+        if( arch STREQUAL scalar)
+
+          to_std("${head}" target)
+          foreach(type ${tail})
+            to_std("${type}" name)
+            string(JOIN "," target "${target}" "${name}")
           endforeach()
+
+          set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.cpp")
+
+          configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
+          generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
+                          "${GEN_TEST_ROOT}.${base_file}.scalar.cpp"
+                        )
         endif()
 
         # SIMD case uses the types x cardinals as setup
         if( arch STREQUAL simd)
-          foreach(type ${GEN_TEST_TYPES})
-            to_std("${type}" target)
-            set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp")
 
-            configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
-
-            if(GEN_TEST_CARDINAL)
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
-                              "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
-                              "EVE_CUSTOM_CARDINAL=${GEN_TEST_CARDINAL}"
-                            )
-            else()
-              generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
-                              "${GEN_TEST_ROOT}.${base_file}.simd.${type}.cpp"
-                            )
-            endif()
+          to_std("${head}" target)
+          set(target "eve::wide<${target}>")
+          foreach(type ${tail})
+            to_std("${type}" name)
+            string(JOIN "," target "${target}" "eve::wide<${name}>")
           endforeach()
+
+          set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.cpp")
+
+          configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
+          generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
+                          "${GEN_TEST_ROOT}.${base_file}.simd.cpp"
+                        )
         endif()
       endforeach()
     endif()

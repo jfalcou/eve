@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/conj.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::conj return type", EVE_TYPE)
 {

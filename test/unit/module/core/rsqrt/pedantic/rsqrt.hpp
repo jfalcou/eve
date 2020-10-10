@@ -14,8 +14,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
+
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::pedantic(eve::rsqrt) return type", EVE_TYPE)

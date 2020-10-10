@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/module/core/detail/generic/horn1.hpp>
-#include <tts/tests/relation.hpp>
 #include <type_traits>
 
 template<typename T> constexpr auto coeff0()

@@ -12,7 +12,6 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/function/all.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/basic.hpp>
 
 TTS_CASE_TPL("Check eve::numeric(eve::max) return type", EVE_TYPE)
 {

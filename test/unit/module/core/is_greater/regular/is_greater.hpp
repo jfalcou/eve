@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check eve::operator> return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(  T() >   T(), eve::logical<T>);
-  TTS_EXPR_IS(  T() > v_t(), eve::logical<T>);
-  TTS_EXPR_IS(v_t() >   T(), eve::logical<T>);
+  TTS_EXPR_IS((  T() >   T()), eve::logical<T>);
+  TTS_EXPR_IS((  T() > v_t()), eve::logical<T>);
+  TTS_EXPR_IS((v_t() >   T()), eve::logical<T>);
 }
 #endif
 
