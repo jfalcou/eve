@@ -14,8 +14,6 @@
 #include <eve/constant/valmax.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/pi.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check eve::big(eve::sindcosd) return type", EVE_TYPE)

@@ -11,8 +11,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/function/is_real.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check is_real return type", EVE_TYPE)
 {

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/bit_and.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::bit_and return type", EVE_TYPE)

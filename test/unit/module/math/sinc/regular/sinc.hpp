@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/sinc.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <eve/constant/eps.hpp>
 #include <eve/constant/pi.hpp>

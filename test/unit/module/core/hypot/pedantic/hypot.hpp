@@ -16,7 +16,6 @@
 #include <eve/constant/sqrt_2.hpp>
 #include <eve/platform.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check hypot return type", EVE_TYPE)

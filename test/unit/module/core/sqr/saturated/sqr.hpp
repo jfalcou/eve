@@ -12,8 +12,6 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/constant/sqrtvalmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::saturated(eve::sqr) return type", EVE_TYPE)

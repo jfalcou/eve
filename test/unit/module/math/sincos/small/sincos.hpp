@@ -16,8 +16,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 #include <cmath>
 

@@ -10,8 +10,6 @@
 //==================================================================================================
 #include <eve/function/rotl.hpp>
 #include <eve/constant/allbits.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <bit>
 
 TTS_CASE_TPL("Check eve::rotl return type", EVE_TYPE)

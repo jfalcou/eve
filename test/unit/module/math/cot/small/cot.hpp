@@ -16,7 +16,6 @@
 #include <eve/constant/pio_4.hpp>
 #include <eve/constant/pio_2.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 #include <cmath>
 

@@ -10,8 +10,6 @@
 //==================================================================================================
 #include <eve/function/oneminus.hpp>
 #include <eve/function/inc.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::saturated(eve::oneminus) behavior", EVE_TYPE)
 {

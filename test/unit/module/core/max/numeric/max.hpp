@@ -13,8 +13,6 @@
 #include <eve/function/all.hpp>
 #include <eve/constant/nan.hpp>
 #include <tts/tests/basic.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::numeric(eve::max) return type", EVE_TYPE)
 {

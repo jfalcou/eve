@@ -17,7 +17,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/nan.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check pedantic next return type", EVE_TYPE)

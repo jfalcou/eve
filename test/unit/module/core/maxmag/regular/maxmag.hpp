@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/maxmag.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::maxmag return type", EVE_TYPE)
 {

@@ -8,8 +8,6 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>

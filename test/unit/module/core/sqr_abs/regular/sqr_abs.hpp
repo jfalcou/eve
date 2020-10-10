@@ -10,7 +10,6 @@
 //==================================================================================================
 #include <eve/function/sqr_abs.hpp>
 #include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::sqr_abs return type", EVE_TYPE)

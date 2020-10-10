@@ -11,8 +11,6 @@
 #include <eve/function/maxmag.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/constant/nan.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::pedantic(eve::maxmag) return type", EVE_TYPE)
 {

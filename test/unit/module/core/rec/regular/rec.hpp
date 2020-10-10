@@ -12,7 +12,6 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
 #include <tts/tests/sequence.hpp>
 #include <tts/tests/types.hpp>
 

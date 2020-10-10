@@ -9,14 +9,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.api.tst       )
-add_custom_target(unit.api.scalar.tst)
-add_custom_target(unit.api.simd.tst  )
+add_custom_target(unit.api.exe       )
+add_custom_target(unit.api.scalar.exe)
+add_custom_target(unit.api.simd.exe  )
 
-add_dependencies(unit.scalar.tst    unit.api.scalar.tst )
-add_dependencies(unit.simd.tst      unit.api.simd.tst   )
-add_dependencies(unit.api.tst       unit.api.scalar.tst )
-add_dependencies(unit.api.tst       unit.api.simd.tst   )
+add_dependencies(unit.scalar.exe    unit.api.scalar.exe )
+add_dependencies(unit.simd.exe      unit.api.simd.exe   )
+add_dependencies(unit.api.exe       unit.api.scalar.exe )
+add_dependencies(unit.api.exe       unit.api.simd.exe   )
 
 ##==================================================================================================
 ## wide API tests
