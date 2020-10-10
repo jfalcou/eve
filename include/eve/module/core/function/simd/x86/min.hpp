@@ -10,14 +10,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/forward.hpp>
+#include <eve/function/if_else.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
+  template <eve::simd_value Wide>
+  EVE_FORCEINLINE Wide if_else_min(Wide x, Wide y)
+  {
+    return eve::if_else(x > y, y, x);
+  }
+
   // -----------------------------------------------------------------------------------------------
   // 128 bits implementation
   template<real_scalar_value T, typename N>
@@ -25,27 +32,30 @@ namespace eve::detail
                                        , wide<T, N, x86_128_> const &v0
                                        , wide<T, N, x86_128_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, double>)   return _mm_min_pd(v0, v1);
-    else if constexpr(std::is_same_v<T, float>)    return _mm_min_ps(v0, v1);
-    else if constexpr( std::is_integral_v<T>)
+         if constexpr(std::is_same_v<T, double>) return _mm_min_pd(v0, v1);
+    else if constexpr(std::is_same_v<T, float>)  return _mm_min_ps(v0, v1);
+    else if constexpr(sizeof(T) == 1)
     {
-      constexpr bool issigned = std::is_signed_v<T>;
-           if constexpr(issigned && sizeof(T) == 2) return _mm_min_epi16(v0, v1);
-      else if constexpr(!issigned && sizeof(T) == 1) return _mm_min_epu8(v0, v1);
-      else if constexpr((current_api >= sse4_1) && (sizeof(T) != 8))
-      {
-        if constexpr(issigned)
-        {
-               if constexpr(sizeof(T) == 1) return _mm_min_epi8(v0, v1);
-          else if constexpr(sizeof(T) == 4) return _mm_min_epi32(v0, v1);
-        }
-        else
-        {
-               if constexpr(sizeof(T) == 2)  return _mm_min_epu16(v0, v1);
-          else if constexpr(sizeof(T) == 4)  return _mm_min_epu32(v0, v1);
-        }
-      }
-      else return map(min, v0, v1);
+           if constexpr(!std::is_signed_v<T>)    return _mm_min_epu8(v0, v1);
+      else if constexpr(current_api >= sse4_1)   return _mm_min_epi8(v0, v1);
+      else                                       return detail::if_else_min(v0, v1);
+    }
+    else if constexpr(sizeof(T) == 2)
+    {
+           if constexpr(std::is_signed_v<T>)    return _mm_min_epi16(v0, v1);
+      else if constexpr(current_api >= sse4_1)  return _mm_min_epu16(v0, v1);
+      else                                      return detail::if_else_min(v0, v1);
+    }
+    else if constexpr(sizeof(T) == 4)
+    {
+           if constexpr(current_api < sse4_1)   return detail::if_else_min(v0, v1);
+      else if constexpr(std::is_signed_v<T>)    return _mm_min_epi32(v0, v1);
+      else                                      return _mm_min_epu32(v0, v1);
+    }
+    else
+    {
+           if constexpr(current_api >= sse4_2)  return detail::if_else_min(v0, v1);
+      else                                      return map(min, v0, v1);
     }
   }
 
@@ -56,27 +66,21 @@ namespace eve::detail
                                        , wide<T, N, x86_256_> const &v0
                                        , wide<T, N, x86_256_> const &v1) noexcept
   {
-         if constexpr(std::is_same_v<T, float>)  return _mm256_min_ps(v0, v1);
-    else if constexpr(std::is_same_v<T, double>) return _mm256_min_pd(v0, v1);
-    else if constexpr(std::is_integral_v<T>)
-    {
-      if constexpr(current_api >= avx2 && sizeof(T) != 8)
+         if constexpr(std::is_same_v<T, float>)            return _mm256_min_ps(v0, v1);
+    else if constexpr(std::is_same_v<T, double>)           return _mm256_min_pd(v0, v1);
+    else if constexpr(current_api == avx && sizeof(T) < 8) return aggregate(min, v0, v1);
+    else if constexpr(sizeof(T) == 8)                      return detail::if_else_min(v0, v1);
+    else if constexpr(std::is_signed_v<T>)
       {
-        if constexpr(std::is_signed_v<T>)
-        {
-               if constexpr(sizeof(T) == 1) return _mm256_min_epi8(v0, v1);
-          else if constexpr(sizeof(T) == 2) return _mm256_min_epi16(v0, v1);
-          else if constexpr(sizeof(T) == 4) return _mm256_min_epi32(v0, v1);
-        }
-        else
-        {
-               if constexpr(sizeof(T) == 1)  return _mm256_min_epu8(v0, v1);
-          else if constexpr(sizeof(T) == 2)  return _mm256_min_epu16(v0, v1);
-          else if constexpr(sizeof(T) == 4)  return _mm256_min_epu32(v0, v1);
-        }
+             if constexpr(sizeof(T) == 1)                  return _mm256_min_epi8(v0, v1);
+        else if constexpr(sizeof(T) == 2)                  return _mm256_min_epi16(v0, v1);
+        else if constexpr(sizeof(T) == 4)                  return _mm256_min_epi32(v0, v1);
       }
-      else return aggregate(min, v0, v1);
-    }
+    else
+      {
+             if constexpr(sizeof(T) == 1)                  return _mm256_min_epu8(v0, v1);
+        else if constexpr(sizeof(T) == 2)                  return _mm256_min_epu16(v0, v1);
+        else if constexpr(sizeof(T) == 4)                  return _mm256_min_epu32(v0, v1);
+      }
   }
 }
-
