@@ -12,6 +12,7 @@
 #include <tts/tests/relation.hpp>
 #include <tts/tests/types.hpp>
 
+
 TTS_CASE_TPL("Check eve::min return type", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
@@ -37,4 +38,13 @@ TTS_CASE_TPL("Check eve::min behavior", EVE_TYPE)
   TTS_EQUAL(eve::min(T(0), v_t(1)), T(0));
   TTS_EQUAL(eve::min(T(1), v_t(0)), T(0));
   TTS_EQUAL(eve::min(T(1), v_t(1)), T(1));
+
+  if constexpr (std::is_unsigned_v<v_t>)
+  {
+    TTS_EQUAL(eve::min(T(-1), v_t(1)), T(1));
+  }
+  else
+  {
+    TTS_EQUAL(eve::min(T(-1), v_t(1)), T(-1));
+  }
 }

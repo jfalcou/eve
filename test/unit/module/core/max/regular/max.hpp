@@ -39,4 +39,13 @@ TTS_CASE_TPL("Check eve::max behavior", EVE_TYPE)
   TTS_EQUAL(eve::max(T(0), v_t(1)), T(1));
   TTS_EQUAL(eve::max(T(1), v_t(0)), T(1));
   TTS_EQUAL(eve::max(T(1), v_t(1)), T(1));
+
+  if constexpr (std::is_unsigned_v<v_t>)
+  {
+    TTS_EQUAL(eve::max(T(-1), v_t(1)), T(-1));
+  }
+  else
+  {
+    TTS_EQUAL(eve::max(T(-1), v_t(1)), T(1));
+  }
 }
