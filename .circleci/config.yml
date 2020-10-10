@@ -43,84 +43,23 @@ config_aarch64: &config_aarch64
 ##==================================================================================================
 jobs:
   ##================================================================================================
-  ## Non-SIMD tests
+  ## SIMD tests
   ##================================================================================================
-  gcc_x86:
-    <<: *config_gcc_x86
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX
-          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
-
-  clang_x86:
+  x86_scalar:
     <<: *config_clang_x86
     steps:
       - checkout
       - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-O3 -msse2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-O3 -msse4" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX
-          command: VARIANT="avx" OPTIONS="-O3 -mavx" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - FMA3
-          command: VARIANT="fma" OPTIONS="-O3 -mavx2 -mfma" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-O3 -mavx2" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
+          name: Running Scalar Tests
           command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
 
-  arm_aarch64:
-    <<: *config_aarch64
-    steps:
-      - checkout
-      - run:
-          name: Running Basic Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3 -Wno-psabi" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_basic.sh
-      - run:
-          name: Running Basic Tests - Scalar
-          command: VARIANT="scalar" OPTIONS="-O3" . ./.circleci/perform_scalar.sh
-
-  ##================================================================================================
-  ## SIMD tests
-  ##================================================================================================
   x86_emulation:
     <<: *config_clang_x86
     steps:
       - checkout
       - run:
           name: Running SIMD Tests - Emulation
-          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="emulation" OPTIONS="-DEVE_NO_SIMD -O3" . ./.circleci/perform.sh
 
   x86_sse2:
     <<: *config_clang_x86
@@ -128,7 +67,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - SSE2
-          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="sse2" OPTIONS="-msse2 -O3" . ./.circleci/perform.sh
 
   x86_sse4:
     <<: *config_clang_x86
@@ -136,7 +75,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - SSE4
-          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="sse4" OPTIONS="-msse4 -O3" . ./.circleci/perform.sh
 
   x86_avx:
     <<: *config_clang_x86
@@ -144,7 +83,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AVX
-          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="avx" OPTIONS="-mavx -O3" . ./.circleci/perform.sh
 
   x86_fma:
     <<: *config_clang_x86
@@ -152,7 +91,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - FMA
-          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="fma" OPTIONS="-mavx2 -mfma -O3" . ./.circleci/perform.sh
 
   x86_avx2:
     <<: *config_clang_x86
@@ -160,7 +99,7 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AVX2
-          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform_simd.sh
+          command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform.sh
 
   arm_aarch64_neon:
     <<: *config_aarch64
@@ -168,36 +107,17 @@ jobs:
       - checkout
       - run:
           name: Running SIMD Tests - AARCH64 NEON
-          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform_simd.sh
+          command: VARIANT="aarch64" OPTIONS="-O3 -Wno-psabi" . .circleci/perform.sh
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-    ##==============================================================================================
-    ## All tests
-    ##==============================================================================================
-      - gcc_x86
-      - clang_x86
-      - arm_aarch64
-      - arm_aarch64_neon:
-          requires:
-            - arm_aarch64
-      - x86_sse2:
-          requires:
-            - clang_x86
-      - x86_sse4:
-          requires:
-            - clang_x86
-      - x86_avx:
-          requires:
-            - clang_x86
-      - x86_avx2:
-          requires:
-            - clang_x86
-      - x86_fma:
-          requires:
-            - clang_x86
-      - x86_emulation:
-          requires:
-            - clang_x86
+      - x86_scalar
+      - x86_sse2
+      - x86_sse4
+      - x86_avx
+      - x86_avx2
+      - x86_fma
+      - x86_emulation
+      - arm_aarch64_neon
