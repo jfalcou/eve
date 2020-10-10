@@ -101,8 +101,8 @@ namespace eve::detail
       T result(1);
       while( expo )
       {
-        if( is_odd(expo) )
-          result *= base;
+        std::cout << expo << " -> " << base << " -> " <<  is_odd(expo) << std::endl;
+        if( is_odd(expo) )result *= base;
         expo >>= 1;
         base = sqr(base);
       }
@@ -137,7 +137,7 @@ namespace eve::detail
     {
       using u_t = as_integer_t<U, unsigned>;
       T tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-      return minus[a0 < 0 && is_odd(a1)](tmp);
+      return  if_else(is_ltz(a1), rec(tmp), tmp);
     }
   }
 
