@@ -31,7 +31,6 @@ TTS_CASE_TPL("Check eve::beta return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::beta behavior", EVE_TYPE)
 {
   using eve::as;
-  using elt_t = eve::element_type_t<T>;
   auto eve__beta =  [](auto x, auto y) { return eve::beta(x, y); };
   if constexpr( eve::platform::supports_invalids )
   {
@@ -48,6 +47,8 @@ TTS_CASE_TPL("Check eve::beta behavior", EVE_TYPE)
   }
 
 #if __cpp_lib_math_special_functions
+  using elt_t = eve::element_type_t<T>;
+
   TTS_ULP_EQUAL(eve__beta(T(-0.0), T(-0.0)), T(std::beta(elt_t(-0.0), elt_t(-0.0))), 0);
   TTS_ULP_EQUAL(eve__beta(T( 0.0), T( 0.0)), T(std::beta(elt_t(0.0), elt_t(0.0))), 0);
   TTS_ULP_EQUAL(eve__beta(T( 1.0), T( 1.0)), T(std::beta(elt_t(1.0), elt_t(1.0))), 0);
