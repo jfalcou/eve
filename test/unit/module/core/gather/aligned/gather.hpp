@@ -10,7 +10,7 @@
 //==================================================================================================
 #include <eve/function/gather.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <tts/tests/relation.hpp>
+
 
 TTS_CASE_TPL("Check eve::gather behavior with 32 bits indexes", EVE_TYPE)
 {

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/mul.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check conditional saturated(eve::mul) return type", EVE_TYPE)
 {
@@ -38,9 +36,16 @@ TTS_CASE_TPL("Check conditional saturated(eve::mul) behavior", EVE_TYPE)
 
   // Mixed case
   eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL ( eve::saturated(eve::mul[ m ])(tv, fv),
                   eve::if_else(m, eve::saturated(eve::mul)(tv,fv), tv)

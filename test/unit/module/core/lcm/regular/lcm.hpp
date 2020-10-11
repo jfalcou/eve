@@ -10,8 +10,6 @@
 //==================================================================================================
 #include <eve/function/lcm.hpp>
 #include <eve/constant/valmin.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <numeric>
 
 TTS_CASE_TPL("Check eve::lcm return type", EVE_TYPE)

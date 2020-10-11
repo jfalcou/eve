@@ -12,26 +12,21 @@
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on is_denormal", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  using l_t = eve::as_logical_t<T>;
-
   if constexpr(eve::floating_value<T>)
   {
-    auto std_is_denormal = tts::vectorize<l_t>( [](auto e) { return std::fpclassify(e) == FP_SUBNORMAL; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_is_denormal =  [](auto e)   ->eve::logical<EVE_VALUE> { return std::fpclassify(e) == FP_SUBNORMAL; };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }
   else
   {
-    auto std_is_denormal = tts::vectorize<l_t>( [](auto ) { return  false; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    auto std_is_denormal =  [](auto )  ->eve::logical<EVE_VALUE> { return  false; };
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_is_denormal, eve::is_denormal);
   }
 }

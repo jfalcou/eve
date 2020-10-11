@@ -10,9 +10,6 @@
 //==================================================================================================
 #include <eve/constant/math.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/log10.hpp>
 #include <eve/function/rec.hpp>

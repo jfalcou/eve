@@ -26,7 +26,7 @@ else
 fi
 
 ##==================================================================================================
-## Run Scalar tests
+## Run every test up to SIMD
 ##==================================================================================================
-ninja unit.scalar.tst -k 0 -j 8
-ctest -R "^unit\..*\..*\..*\.scalar\..*\.tst" -j 8
+ninja unit.meta.exe   -k 0 -j 8 && ctest -R "^unit.meta\..*\.exe"           -j 8  && \
+ninja unit.scalar.exe -k 0 -j 8 && ctest -R "^unit\..*\..*\..*\.scalar.exe" -j 8

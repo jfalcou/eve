@@ -11,17 +11,14 @@
 #include <eve/function/ifrexp.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on ifrexp", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  using i_t = eve::detail::as_integer_t<v_t>;
-  auto std_ifrexp = tts::vectorize<T>( [](auto e) { int y; auto x = std::frexp(e, &y); return std::make_tuple(x, i_t(y)); } );
+  using i_t = eve::detail::as_integer_t<EVE_VALUE>;
+  auto std_ifrexp = [](auto e) { int y; auto x = std::frexp(e, &y); return std::make_tuple(x, i_t(y)); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, std_ifrexp, eve::pedantic(eve::ifrexp));
 }

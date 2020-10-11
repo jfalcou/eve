@@ -11,8 +11,6 @@
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::small(eve::rempio2) behavior", EVE_TYPE)
 {

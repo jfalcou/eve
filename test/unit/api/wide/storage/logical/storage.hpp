@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <tts/tests/relation.hpp>
+
 #include <eve/wide.hpp>
 
 TTS_CASE_TPL("Check storage access for wide", EVE_TYPE)

@@ -15,8 +15,6 @@
 #include <eve/constant/eps.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::numeric(eve::fnms) return type", EVE_TYPE)
 {

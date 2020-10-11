@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.math.tst)
-add_custom_target(random.math.scalar.tst)
-add_custom_target(random.math.simd.tst)
-add_dependencies(random.math.tst random.math.scalar.tst)
-add_dependencies(random.math.tst random.math.simd.tst)
-add_dependencies(random.scalar.tst random.math.scalar.tst)
-add_dependencies(random.simd.tst random.math.simd.tst)
-add_dependencies(random.tst random.math.tst)
+add_custom_target(random.math.exe)
+add_custom_target(random.math.scalar.exe)
+add_custom_target(random.math.simd.exe)
+add_dependencies(random.math.exe random.math.scalar.exe)
+add_dependencies(random.math.exe random.math.simd.exe)
+add_dependencies(random.scalar.exe random.math.scalar.exe)
+add_dependencies(random.simd.exe random.math.simd.exe)
+add_dependencies(random.exe random.math.exe)
 
 ##==================================================================================================
 ## Elementwise function unit tests
@@ -64,8 +64,9 @@ make_all_units(ROOT random.math NAME cscpi                 ARCH scalar simd TYPE
 make_all_units(ROOT random.math NAME deginrad              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME exp                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME exp10                 ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT random.math NAME exp2                  ARCH scalar simd TYPES ${real_types}     )
+make_all_units(ROOT random.math NAME exp2                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME expm1                 ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT random.math NAME iceil                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT random.math NAME log                   ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME log10                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT random.math NAME log1p                 ARCH scalar simd TYPES ${real_types}    )

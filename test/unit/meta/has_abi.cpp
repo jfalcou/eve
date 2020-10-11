@@ -12,7 +12,6 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/basic.hpp>
 
 TTS_CASE( "Check for detection of native ABI")
 {

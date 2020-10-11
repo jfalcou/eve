@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/gcd.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <numeric>
 
 TTS_CASE_TPL("Check eve::gcd return type", EVE_TYPE)

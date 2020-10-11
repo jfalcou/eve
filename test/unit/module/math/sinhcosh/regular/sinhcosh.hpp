@@ -23,9 +23,6 @@
 #include <eve/constant/log_2.hpp>
 #include <eve/constant/ieee_constant.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/sequence.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 #include <array>
 #include <cmath>

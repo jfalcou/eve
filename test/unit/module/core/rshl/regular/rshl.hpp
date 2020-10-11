@@ -10,8 +10,6 @@
 //==================================================================================================
 #include <eve/function/rshl.hpp>
 #include <eve/constant/allbits.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::rshl return type", EVE_TYPE)
 {

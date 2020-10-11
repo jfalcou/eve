@@ -15,8 +15,6 @@
 #include <eve/constant/minf.hpp>
 #include <eve/constant/pio_4.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("Check eve::big(eve::cot) return type", EVE_TYPE)

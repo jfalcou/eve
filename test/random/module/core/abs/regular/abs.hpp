@@ -12,32 +12,35 @@
 #include <eve/function/inc.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
-#include <type_traits>
 #include <cmath>
 
-TTS_CASE_TPL("wide random check on abs", EVE_TYPE)
+TTS_CASE_TPL( "wide random check on abs", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr(eve::floating_value<T>)
   {
-    auto std_abs = tts::vectorize<T>( [](auto e) { return (e < 0) ? -e : e; } );
-    eve::rng_producer<T> p(-1,1);
-    TTS_RANGE_CHECK(p, std_abs, eve::abs);
+    auto std_abs = [](auto e) { return (e < 0) ? -e : e; };
+    TTS_RANGE_CHECK( eve::uniform_prng<EVE_VALUE>(-1,1),  std_abs, eve::abs );
   }
   else if constexpr(eve::signed_value<T>)
   {
-    auto std_abs = tts::vectorize<T>( [](auto e) { v_t z = (e < 0) ? -e : e; return z < 0 ? eve::valmax(eve::as(e)) : z; } );
-    eve::rng_producer<T> p(eve::inc(eve::valmin(eve::as<v_t>())), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_abs, eve::abs);
+    auto vmin = eve::valmin(eve::as<EVE_VALUE>());
+    auto vmax = eve::valmax(eve::as<EVE_VALUE>());
+
+    auto std_abs = [](auto e)
+    {
+      EVE_VALUE z = (e < 0) ? -e : e;
+      return z < 0 ? eve::valmax(eve::as(e)) : z;
+    };
+
+    TTS_RANGE_CHECK( eve::uniform_prng<EVE_VALUE>( eve::inc(vmin), vmax ), std_abs, eve::abs );
   }
   else
   {
-    auto std_abs = tts::vectorize<T>( [](auto e) { return e; } );
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
-    TTS_RANGE_CHECK(p, std_abs, eve::abs);
+    auto vmin = eve::valmin(eve::as<EVE_VALUE>());
+    auto vmax = eve::valmax(eve::as<EVE_VALUE>());
+
+    auto std_abs = [](auto e) { return e; };
+    TTS_RANGE_CHECK( eve::uniform_prng<EVE_VALUE>(vmin,vmax), std_abs, eve::abs );
   }
 }

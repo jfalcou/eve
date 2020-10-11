@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/countl_one.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check countl_one return type", EVE_TYPE)
 {

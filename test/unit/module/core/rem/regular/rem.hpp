@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rem.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::rem return type", EVE_TYPE)
 {
@@ -41,12 +39,12 @@ TTS_CASE_TPL("Check eve::rem behavior", EVE_TYPE)
     TTS_EQUAL(eve::rem(v_t(-4),   T(3)), T(-1));
     TTS_EQUAL(eve::rem(  T(-4), v_t(3)), T(-1));
 
-    TTS_EQUAL(  T(-1) %   T(2), T(-1));
-    TTS_EQUAL(v_t(-1) %   T(2), T(-1));
-    TTS_EQUAL(  T(-1) % v_t(2), T(-1));
-    TTS_EQUAL(  T(-4) %   T(3), T(-1));
-    TTS_EQUAL(v_t(-4) %   T(3), T(-1));
-    TTS_EQUAL(  T(-4) % v_t(3), T(-1));
+    TTS_EQUAL((  T(-1) %   T(2)), T(-1));
+    TTS_EQUAL((v_t(-1) %   T(2)), T(-1));
+    TTS_EQUAL((  T(-1) % v_t(2)), T(-1));
+    TTS_EQUAL((  T(-4) %   T(3)), T(-1));
+    TTS_EQUAL((v_t(-4) %   T(3)), T(-1));
+    TTS_EQUAL((  T(-4) % v_t(3)), T(-1));
   }
 
   TTS_EQUAL(eve::rem(T(12), T(4)), T(0));

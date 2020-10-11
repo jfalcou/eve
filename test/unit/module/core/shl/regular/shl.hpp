@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/shl.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/allbits.hpp>
 #include <type_traits>
 

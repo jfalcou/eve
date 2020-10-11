@@ -11,8 +11,6 @@
 #include <eve/function/is_imag.hpp>
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::is_imag return type", EVE_TYPE)
 {

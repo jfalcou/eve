@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/bit_notor.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::bit_notor return type", EVE_TYPE)

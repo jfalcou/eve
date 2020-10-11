@@ -14,8 +14,6 @@
 #include <eve/function/plus.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/sqr.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::convert return type", EVE_TYPE)

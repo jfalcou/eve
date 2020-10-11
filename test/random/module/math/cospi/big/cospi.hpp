@@ -12,27 +12,23 @@
 #include <eve/function/cospi.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto my_stdcospi =  tts::vectorize<T>([](auto x){return boost::math::cos_pi(x); });
+  auto my_stdcospi = [](auto x) -> EVE_VALUE {return boost::math::cos_pi(x); };
 
-  eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p, my_stdcospi, eve::big(eve::cospi));
 }
-
 
 // #include <crlibm.h>
 // TTS_CASE_TPL("wide random check on cospi", EVE_TYPE)
 // {
 //   ::crlibm_init();
-//   auto my_stdcospi =  tts::vectorize<T>([](v_t x){return v_t(::cospi_rn(x)); });
-//   eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+//   auto my_stdcospi =  tts::vectorize<T>([](EVE_VALUE x){return EVE_VALUE(::cospi_rn(x)); });
+//   eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
 //   TTS_RANGE_CHECK(p, my_stdcospi, eve::big(eve::cospi));
 // }

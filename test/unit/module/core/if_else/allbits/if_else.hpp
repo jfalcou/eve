@@ -12,8 +12,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/constant/true.hpp>
 #include <eve/constant/allbits.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::if_else return type", EVE_TYPE)
 {

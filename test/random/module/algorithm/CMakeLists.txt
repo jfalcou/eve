@@ -10,14 +10,14 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(random.algorithm.tst)
-add_custom_target(random.algorithm.scalar.tst)
-add_custom_target(random.algorithm.simd.tst)
-add_dependencies(random.algorithm.tst random.algorithm.scalar.tst)
-add_dependencies(random.algorithm.tst random.algorithm.simd.tst)
-add_dependencies(random.scalar.tst random.algorithm.scalar.tst)
-add_dependencies(random.simd.tst random.algorithm.simd.tst)
-add_dependencies(random.tst random.algorithm.tst)
+add_custom_target(random.algorithm.exe)
+add_custom_target(random.algorithm.scalar.exe)
+add_custom_target(random.algorithm.simd.exe)
+add_dependencies(random.algorithm.exe random.algorithm.scalar.exe)
+add_dependencies(random.algorithm.exe random.algorithm.simd.exe)
+add_dependencies(random.scalar.exe random.algorithm.scalar.exe)
+add_dependencies(random.simd.exe random.algorithm.simd.exe)
+add_dependencies(random.exe random.algorithm.exe)
 
 ##==================================================================================================
 ## Algoritms function unit tests

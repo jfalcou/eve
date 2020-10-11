@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/modf.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check modf return type", EVE_TYPE)

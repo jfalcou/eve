@@ -14,9 +14,7 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
+
 
 TTS_CASE_TPL("Check eve::restricted(eve::secpi) return type", EVE_TYPE)
 {

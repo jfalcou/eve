@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/rem.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::upward(eve::rem) return type", EVE_TYPE)
 {

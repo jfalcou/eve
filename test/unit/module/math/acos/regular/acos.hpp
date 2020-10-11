@@ -15,9 +15,7 @@
 #include <eve/constant/pio_2.hpp>
 #include <eve/constant/pi.hpp>
 #include <eve/platform.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/types.hpp>
+
 #include <cmath>
 
 TTS_CASE_TPL("Check acos return type", EVE_TYPE)

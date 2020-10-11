@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/div.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/constant/mone.hpp>
 #include <type_traits>
 

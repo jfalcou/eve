@@ -28,5 +28,7 @@ fi
 ##==================================================================================================
 ## Run every test up to SIMD
 ##==================================================================================================
-ninja unit.simd.tst -k 0 -j 2
-ctest -R "^unit\..*\..*\..*\.simd\..*\.tst" -j 8
+ninja unit.arch.exe -k 0      && ctest -R "^unit.arch\..*\.exe"               && \
+ninja unit.api.exe  -k 0 -j 8 && ctest -R "^unit.api\..*\.exe"          -j 8  && \
+ninja doc.exe       -k 0 -j 8 && ctest -R "^doc\..*\.exe"               -j 8  && \
+ninja unit.simd.exe -k 0 -j 2 && ctest -R "^unit\..*\..*\..*\.simd.exe" -j 8

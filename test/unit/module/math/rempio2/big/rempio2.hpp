@@ -11,8 +11,6 @@
 #include <eve/function/rempio2.hpp>
 #include <eve/function/rem_pio2.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 
 TTS_CASE_TPL("Check eve::big(eve::rempio2) behavior", EVE_TYPE)
 {
@@ -25,7 +23,6 @@ TTS_CASE_TPL("Check eve::big(eve::rempio2) behavior", EVE_TYPE)
   }
 
   {
-    std::cout << tts::type_id<T>() << std::endl;
     auto z = eve::detail::Rempio2_limit(eve::big_type(), eve::as<T>())/2;
     auto [rn, rx, rdx]  = eve::rem_pio2(z);
     auto [ n,  x,  dx]  = eve::big(eve::rempio2)(z);

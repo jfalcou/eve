@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include <eve/function/ifrexp.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)

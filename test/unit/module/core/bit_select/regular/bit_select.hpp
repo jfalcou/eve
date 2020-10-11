@@ -12,8 +12,6 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/constant/allbits.hpp>
 #include <eve/constant/zero.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
 

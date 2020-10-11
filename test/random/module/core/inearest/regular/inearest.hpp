@@ -11,30 +11,28 @@
 #include <eve/function/nearest.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <type_traits>
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on inearest", EVE_TYPE)
 {
-  using v_t   = eve::element_type_t<T>;
-  using vi_t  = eve::detail::as_integer_t<T>;
+
+  using i_t  = eve::detail::as_integer_t<EVE_VALUE>;
 
   if constexpr(eve::floating_value<T>)
   {
-    using i_t =  eve::detail::as_integer_t<v_t>;
-    auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return i_t(std::nearbyint(e)); } );
+    using i_t =  eve::detail::as_integer_t<EVE_VALUE>;
+    auto std_inearest =  [](auto e)  ->i_t { return i_t(std::nearbyint(e)); };
 
-    eve::rng_producer<T> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<i_t>()), eve::valmax(eve::as<i_t>()));
     TTS_RANGE_CHECK(p, std_inearest, eve::int_(eve::nearest));
   }
   else
   {
-    auto std_inearest = tts::vectorize<vi_t>( [](auto e) { return e; } );
+    auto std_inearest = [](auto e) -> i_t { return e; };
 
-    eve::rng_producer<T> p(eve::valmin(eve::as<v_t>()), eve::valmax(eve::as<v_t>()));
+    eve::uniform_prng<EVE_VALUE> p(eve::valmin(eve::as<EVE_VALUE>()), eve::valmax(eve::as<EVE_VALUE>()));
     TTS_RANGE_CHECK(p, std_inearest, eve::int_(eve::nearest));
   }
 }

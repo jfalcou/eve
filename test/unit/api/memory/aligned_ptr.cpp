@@ -10,8 +10,7 @@
 
 #include "test.hpp"
 #include <eve/memory/aligned_ptr.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/basic.hpp>
+
 #include <array>
 
 TTS_CASE("aligned_ptr constructor from nullptr")

@@ -11,7 +11,6 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 
 TTS_CASE("Check as_floating_point on scalar")

@@ -9,8 +9,6 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>

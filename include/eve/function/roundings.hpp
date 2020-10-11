@@ -21,9 +21,9 @@ namespace eve
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
+      return  [f](auto const&... args)
               {
-                return f(upward_type{}, std::forward<decltype(args)>(args)...);
+                return f(upward_type{}, args...);
               };
     }
   };
@@ -33,9 +33,9 @@ namespace eve
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
+      return  [f](auto const&... args)
               {
-                return f(downward_type{}, std::forward<decltype(args)>(args)...);
+                return f(downward_type{}, args...);
               };
     }
   };
@@ -45,9 +45,9 @@ namespace eve
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
+      return  [f](auto const&... args)
               {
-                return f(to_nearest_type{}, std::forward<decltype(args)>(args)...);
+                return f(to_nearest_type{}, args...);
               };
     }
   };
@@ -57,9 +57,9 @@ namespace eve
     template<typename Function>
     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
     {
-      return  [f](auto&&... args)
+      return  [f](auto const&... args)
               {
-                return f(toward_zero_type{}, std::forward<decltype(args)>(args)...);
+                return f(toward_zero_type{}, args...);
               };
     }
   };

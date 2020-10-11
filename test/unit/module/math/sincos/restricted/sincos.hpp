@@ -11,8 +11,6 @@
 #include <eve/function/sincos.hpp>
 #include <eve/constant/nan.hpp>
 #include <type_traits>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <tuple>
 #include <cmath>
 

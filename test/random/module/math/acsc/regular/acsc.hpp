@@ -12,19 +12,16 @@
 #include <eve/function/rec.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/range.hpp>
-#include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on acsc", EVE_TYPE)
 {
-  using v_t = eve::element_type_t<T>;
-  auto std_acsc = tts::vectorize<T>( [](auto e) { return std::asin(eve::rec(e)); } );
+  auto std_acsc = [](auto e) { return std::asin(eve::rec(e)); };
 
-  eve::rng_producer<T> p1(eve::valmin(eve::as<v_t>()), v_t(-1));
+  eve::uniform_prng<EVE_VALUE> p1(eve::valmin(eve::as<EVE_VALUE>()), EVE_VALUE(-1));
   TTS_RANGE_CHECK(p1, std_acsc, eve::acsc);
 
-  eve::rng_producer<T> p2(v_t(1), eve::valmax(eve::as<v_t>()));
+  eve::uniform_prng<EVE_VALUE> p2(EVE_VALUE(1), eve::valmax(eve::as<EVE_VALUE>()));
   TTS_RANGE_CHECK(p2, std_acsc, eve::acsc);
 }

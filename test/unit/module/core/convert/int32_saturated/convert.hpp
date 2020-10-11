@@ -11,8 +11,6 @@
 #include <eve/function/convert.hpp>
 #include <eve/constant/valmin.hpp>
 #include <eve/constant/valmax.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/sub.hpp>
 #include <type_traits>

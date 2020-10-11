@@ -13,8 +13,6 @@
 #include <eve/constant/false.hpp>
 #include <eve/logical.hpp>
 #include <eve/function/if_else.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <type_traits>
 #include <algorithm>
 
@@ -47,9 +45,17 @@ TTS_CASE_TPL("Check eve::average[condition] behavior", EVE_TYPE)
 
   // Mixed case
   eve::as_logical_t<T> m;
-  std::for_each ( tts::detail::begin(m), tts::detail::end(m)
-                , [k = true](auto& e) mutable { e = k; k = !k; }
-                );
+  bool k = true;
+  #if defined(EVE_SIMD_TESTS)
+  for(std::size_t i=0;i<eve::cardinal_v<T>;++i)
+  {
+    m.set(i, k);
+    k = !k;
+  }
+  #else
+  m = k;
+  #endif
 
   TTS_EQUAL(eve::average[ m ](tv, fv) , eve::if_else(m, eve::average(tv, fv), tv) );
 }
+

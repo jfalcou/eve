@@ -5,7 +5,6 @@
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(download)
 include(generate_benchmark)
 include(add_parent_target)
 
