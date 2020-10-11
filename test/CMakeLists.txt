@@ -21,5 +21,9 @@ endif()
 
 add_subdirectory(doc)
 #add_subdirectory(exhaustive)
-add_subdirectory(random)
+
+if( EVE_BUILD_RANDOM )
+  add_subdirectory(random)
+endif()
+
 add_subdirectory(unit)
