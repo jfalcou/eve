@@ -1,0 +1,69 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+  (insert ../../crumbs.html here)
+
+# Special functions
+
+These functions provide scalar and SIMD version of some special functions in namespace `eve`.
+The naming of these functions tries to follow the standard.
+
+  - if the standard library implements the function, its name will be identical to the standard name
+  - else if the boost math libary implements the function, its name will be identical to the library name
+  - else if Octave implements the function, its name will be identical to the octave name
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/special.hpp>`</script>
+
+[`eve::acosh`](special/beta.html)
+:   computes $\displaystyle B(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$
+[`eve::cyl_besselj0`](special/cylbesselj0.html)
+:   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t)\mbox{d}t$
+[`eve::cyl_besselj1`](special/cylbesselj1.html)
+:   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t - t)\mbox{d}t$
+[`eve::cyl_besselj`](special/cylbesselj.html)
+:   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t - n t)\mbox{d}t$
+[`eve::dawson`](special/dawson.html)
+:   computes $\displaystyle D(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t$
+[`eve::digamma`](special/digamma.html)
+:   computes the logarithmic derivative of the $\Gamma$ function : $\displaystyle \frac{\Gamma^\prime(x)}{\Gamma(x)}$
+[`eve::erf`](special/erf.html)
+:   computes $\displaystyle \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t$
+[`eve::erfc`](special/erfc.html)
+:   computes the complementary error function $1-\mbox{erf}(x)$
+[`eve::erfcx`](special/erfcx.html)
+:   computes the normalized complementary error function $\mbox{erfcx}(x) = \exp(x^2) \mbox{erfc(x)}$
+[`eve::erf_inv`](special/erf_inv.html)
+:   computes the inverse of the $\mbox{erf}$ function
+[`eve::csch`](special/exp_int.html)
+:   computes the exponential integral $\displaystyle E_{n}(x)=\int_0^\infty \frac{e^{-xt}}{t^{n}} \mbox{d}t$
+[`eve::tgamma`](special/tgamma.html)
+:   computes the $\Gamma$ function : $\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t$
+[`eve::tgamma_p`](special/tgamma_p.html)
+:   computes the lower incomplete $\Gamma$ function : $\displaystyle \mbox{P}(x,y) = \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t$
+[`eve::signgam`](special/signgam.html)
+:   computes the sign of $\Gamma(x)$
+[`eve::stirling`](special/stirling.html)
+:   computes an approximation of the $\Gamma$ function by $\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))$,
+    where $P$ is a polynomial.
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
