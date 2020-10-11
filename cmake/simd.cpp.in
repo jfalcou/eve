@@ -12,6 +12,12 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/element_type.hpp>
 
+template<typename T>
+using extra_wide = eve::wide<T,eve::fixed<2*eve::expected_cardinal_v<T>>>;
+
+template<typename T>
+using tiny_wide = eve::wide<T,eve::fixed<1>>;
+
 #define EVE_SIMD_TESTS
 #define EVE_TYPE      ${target}
 #define EVE_CARDINAL  ::eve::cardinal_v<T>

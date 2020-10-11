@@ -101,6 +101,22 @@ jobs:
           name: Running SIMD Tests - AVX2
           command: VARIANT="avx2" OPTIONS="-mavx2 -O3" . ./.circleci/perform.sh
 
+  x86_tiny:
+    <<: *config_clang_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - Tiny Wide
+          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=tiny_wide" VARIANT="tiny" OPTIONS="-O3" . ./.circleci/perform.sh
+
+  x86_extra:
+    <<: *config_clang_x86
+    steps:
+      - checkout
+      - run:
+          name: Running SIMD Tests - Extra-large Wide
+          command: CMAKE_OPTIONS="-DEVE_TEST_TYPE=extra_wide" VARIANT="extra" OPTIONS="-O3" . ./.circleci/perform.sh
+
   arm_aarch64_neon:
     <<: *config_aarch64
     steps:
@@ -119,5 +135,7 @@ workflows:
       - x86_avx
       - x86_avx2
       - x86_fma
+      - x86_tiny
+      - x86_extra
       - x86_emulation
       - arm_aarch64_neon

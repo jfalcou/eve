@@ -106,11 +106,17 @@ function(make_all_units)
         # SIMD case uses the types x cardinals as setup
         if( arch STREQUAL simd)
 
+          if( EVE_TEST_TYPE )
+          set( base "${EVE_TEST_TYPE}")
+          else()
+          set( base "eve::wide")
+          endif()
+
           to_std("${head}" target)
-          set(target "eve::wide<${target}>")
+          set(target "${base}<${target}>")
           foreach(type ${tail})
             to_std("${type}" name)
-            string(JOIN "," target "${target}" "eve::wide<${name}>")
+            string(JOIN "," target "${target}" "${base}<${name}>")
           endforeach()
 
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.cpp")
