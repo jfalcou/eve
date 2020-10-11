@@ -33,7 +33,7 @@ namespace eve::detail
 {
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T j1_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  EVE_FORCEINLINE T cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
     using elt_t =  element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -176,6 +176,6 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(j1, a0);
+      return apply_over(cyl_bessel_j1, a0);
   }
 }
