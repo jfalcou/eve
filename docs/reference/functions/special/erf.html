@@ -1,0 +1,64 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::erf`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/erf.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ erf = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the erf operation.
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< value T > auto operator()( T x) const noexcept;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs  the computation of the logarithmic derivative of the
+ $\Gamma$ function : $\displaystyle \frac{\Gamma^\prime(x)}{\Gamma(x)}$
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`
+:   [value](../../concepts.html#value).
+
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+Returns [element-wise](../../../glossary.html#value) the value  the logarithmic derivative
+of the $\Gamma$ function.
+
+ The result type is of the same type as the  parameter.
+
+  (insert ../../src/erf.src.html here)
+
+  (insert ../../out/erf.out.html here)
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>
