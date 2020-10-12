@@ -1,6 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
+##  Copyright 2020 Joel FALCOU
+##  Copyright 2020 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -18,3 +19,4 @@ make_all_units(ROOT unit.api  NAME make       ARCH simd TYPES ${all_types} )
 make_all_units(ROOT unit.api  NAME slice      ARCH simd TYPES ${all_types} )
 make_all_units(ROOT unit.api  NAME splat      ARCH simd TYPES ${all_types} )
 make_all_units(ROOT unit.api  NAME storage    ARCH simd TYPES ${all_types} )
+make_all_units(ROOT unit.api  NAME store      ARCH simd TYPES ${all_types} )

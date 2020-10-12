@@ -9,7 +9,6 @@
 **/
 //==================================================================================================
 #pragma once
-
 #include <eve/function/combine.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>

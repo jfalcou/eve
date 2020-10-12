@@ -11,6 +11,7 @@
 #pragma once
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/function/load.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <list>
@@ -35,13 +36,16 @@ TTS_CASE_TPL("Check ctor from unaligned pointer for wide", EVE_TYPE)
   auto [data,idx] = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr   = &data[idx];
 
-  T simd(ref_ptr);
   T ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  TTS_EQUAL(simd, ref);
+  T constructed(ref_ptr);
+  TTS_EQUAL(constructed, ref);
+
+  T loaded = eve::load(ref_ptr, eve::as_<T>());
+  TTS_EQUAL(loaded, ref);
 }
 
 TTS_CASE_TPL("Check ctor from const unaligned pointer for wide", EVE_TYPE )
@@ -49,13 +53,16 @@ TTS_CASE_TPL("Check ctor from const unaligned pointer for wide", EVE_TYPE )
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto const* ref_ptr = &data[idx];
 
-  T simd(ref_ptr);
   T ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  TTS_EQUAL(simd, ref);
+  T constructed(ref_ptr);
+  TTS_EQUAL(constructed, ref);
+
+  T loaded = eve::load(ref_ptr, eve::as_<T>());
+  TTS_EQUAL(loaded, ref);
 }
 
 TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
@@ -64,13 +71,16 @@ TTS_CASE_TPL("Check ctor from aligned pointer for wide", EVE_TYPE )
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto* ref_ptr       = &data[idx];
 
-  T simd(eve::as_aligned<algt>(ref_ptr));
   T ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  TTS_EQUAL(simd, ref);
+  T constructed(eve::as_aligned<algt>(ref_ptr));
+  TTS_EQUAL(constructed, ref);
+
+  T loaded = eve::load(eve::as_aligned<algt>(ref_ptr), eve::as_<T>());
+  TTS_EQUAL(loaded, ref);
 }
 
 TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE )
@@ -79,13 +89,16 @@ TTS_CASE_TPL("Check ctor from const aligned pointer for wide", EVE_TYPE )
   auto [data,idx]     = data_block<EVE_VALUE, eve::fixed<EVE_CARDINAL>>();
   auto const* ref_ptr = &data[idx];
 
-  T simd(eve::as_aligned<algt>(ref_ptr));
   T ref;
 
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, data[idx+i]);
 
-  TTS_EQUAL(simd, ref);
+  T constructed(eve::as_aligned<algt>(ref_ptr));
+  TTS_EQUAL(constructed, ref);
+
+  T loaded = eve::load(eve::as_aligned<algt>(ref_ptr), eve::as_<T>());
+  TTS_EQUAL(loaded, ref);
 }
 
 TTS_CASE_TPL("Check ctor from range for wide", EVE_TYPE )
@@ -102,13 +115,9 @@ TTS_CASE_TPL("Check ctor from range for wide", EVE_TYPE )
   for(std::size_t i=0;i<EVE_CARDINAL;++i)
     ref.set(i, k++);
 
-  {
-    T simd(ref_ptr);
-    TTS_EQUAL(simd, ref);
-  }
+  T from_range(ref_ptr);
+  TTS_EQUAL(from_range, ref);
 
-  {
-    T simd(ref_ptr.begin(), ref_ptr.end());
-    TTS_EQUAL(simd, ref);
-  }
+  T from_begin_end(ref_ptr.begin(), ref_ptr.end());
+  TTS_EQUAL(from_begin_end, ref);
 }
