@@ -29,7 +29,7 @@ make_all_units(ROOT unit.special NAME digamma              ARCH scalar simd TYPE
 make_all_units(ROOT unit.special NAME erf                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME erfc                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME erfcx                ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.special NAME erfinv               ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME erf_inv              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME exp_int              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_j0        ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_j1        ARCH scalar simd TYPES ${real_types}    )
