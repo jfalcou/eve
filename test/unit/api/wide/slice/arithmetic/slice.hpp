@@ -18,7 +18,7 @@ TTS_CASE_TPL("Check slicing for arithmetic wide", EVE_TYPE)
   {
     using eve::wide;
 
-    using split_t = eve::cardinal_t<T>::split_type;
+    using split_t = typename eve::cardinal_t<T>::split_type;
     T                         simd    ([](auto i, auto) { return 1 + i; });
     wide<EVE_VALUE, split_t>  ref_low ([](auto i, auto) { return 1 + i; });
     wide<EVE_VALUE, split_t>  ref_high([](auto i, auto) { return EVE_CARDINAL / 2 + 1 + i; });

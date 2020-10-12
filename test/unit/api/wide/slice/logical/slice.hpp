@@ -19,7 +19,7 @@ TTS_CASE_TPL("Check slicing for arithmetic wide", EVE_TYPE)
     using eve::logical;
     using eve::wide;
 
-    using split_t = eve::cardinal_t<T>::split_type;
+    using split_t = typename eve::cardinal_t<T>::split_type;
     logical<T>                        simd    ([](auto i, auto c) { return i < int(c) / 2; });
     logical<wide<EVE_VALUE, split_t>> ref_low ([](auto i, auto  ) { return i % 2 < 2; });
     logical<wide<EVE_VALUE, split_t>> ref_high([](auto i, auto  ) { return i % 2 > 3; });
