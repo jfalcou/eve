@@ -9,14 +9,12 @@
 **/
 //==================================================================================================
 #pragma once
-
-
 #include <eve/wide.hpp>
 
 TTS_CASE_TPL("Check storage access for wide", EVE_TYPE)
 {
-  T  simd([](auto i, auto) { return 1+i; });
-  T  ref;
+  eve::logical<T>  simd([](auto i, auto) { return 1+i; });
+  eve::logical<T>  ref;
 
   // Access via const storage
   auto const& st  = simd.storage();

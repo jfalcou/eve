@@ -1,6 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright 2018 Joel FALCOU
+##  Copyright 2020 Joel FALCOU
+##  Copyright 2020 Jean-Thierry LAPRESTE
 ##
 ##  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 ##  SPDX-License-Identifier: MIT
@@ -31,23 +32,10 @@ make_unit( "unit.api" memory/is_aligned.cpp )
 
 ##==================================================================================================
 ## Function tests
-make_units("function/scalar/load/arithmetic"  "unit.api" ${all_types})
-make_units("function/scalar/load/logical"     "unit.api" ${all_types})
-make_units("function/simd/load/arithmetic"    "unit.api" ${all_types})
-make_units("function/simd/load/logical"       "unit.api" ${all_types})
-make_units("function/simd/store/arithmetic"   "unit.api" ${all_types})
-make_units("function/simd/store/logical"      "unit.api" ${all_types})
+make_all_units(ROOT unit.api  NAME function/load  ARCH scalar simd TYPES ${all_types} )
 
-##==================================================================================================
-## wide API tests
-make_units("wide/combine/arithmetic"    "unit.api" ${all_types})
-make_units("wide/combine/logical"       "unit.api" ${all_types})
-make_units("wide/decrement/arithmetic"  "unit.api" ${all_types})
-make_units("wide/increment/arithmetic"  "unit.api" ${all_types})
-make_units("wide/load/arithmetic"       "unit.api" ${all_types})
-make_units("wide/load/logical"          "unit.api" ${all_types})
-make_units("wide/slice/arithmetic"      "unit.api" ${all_types})
-make_units("wide/slice/logical"         "unit.api" ${all_types})
+# make_units("function/simd/load/arithmetic"    "unit.api" ${all_types})
+# make_units("function/simd/load/logical"       "unit.api" ${all_types})
 
 ##==================================================================================================
 ## logical API tests

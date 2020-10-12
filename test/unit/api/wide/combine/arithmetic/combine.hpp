@@ -9,38 +9,26 @@
 **/
 //==================================================================================================
 #pragma once
-
-#include "test.hpp"
-
 #include <eve/function/combine.hpp>
 #include <eve/wide.hpp>
 
 using eve::fixed;
 
-TTS_CASE("Check combining for arithmetic values")
+TTS_CASE_TPL("Check combining for arithmetic values", EVE_TYPE)
 {
-  using eve::wide;
-
-  wide<EVE_TYPE, fixed<2>> ref(13, 37);
-
-  TTS_EQUAL((eve::combine(EVE_TYPE(13), EVE_TYPE(37))), ref);
+  eve::wide<EVE_VALUE, fixed<2>> ref(13, 37);
+  TTS_EQUAL((eve::combine(EVE_VALUE(13), EVE_VALUE(37))), ref);
 }
 
-TTS_CASE_TPL("Check combining for arithmetic wide",
-             fixed<1>,
-             fixed<2>,
-             fixed<4>,
-             fixed<8>,
-             fixed<16>,
-             fixed<32>,
-             fixed<64>)
+TTS_CASE_TPL("Check combining for arithmetic wide", EVE_TYPE)
 {
   using eve::wide;
+  using combined_cardinal = typename T::cardinal_type::combined_type;
 
-  wide<EVE_TYPE, T>                         low([](auto i, auto) { return 1 + i; });
-  wide<EVE_TYPE, T>                         high([](auto i, auto) { return T::value + 1 + i; });
-  wide<EVE_TYPE, typename T::combined_type> ref([](auto i, auto) { return 1 + i; });
+  T                                   low ([](auto i, auto) { return 1 + i; });
+  T                                   high([](auto i, auto) { return EVE_CARDINAL + 1 + i; });
+  wide<EVE_VALUE, combined_cardinal>  ref ([](auto i, auto) { return 1 + i; });
 
-  TTS_EQUAL((wide<EVE_TYPE, typename T::combined_type>(low, high)), ref);
+  TTS_EQUAL((wide<EVE_VALUE, combined_cardinal>(low, high)), ref);
   TTS_EQUAL((eve::combine(low, high)), ref);
 }
