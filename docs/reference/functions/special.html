@@ -30,8 +30,10 @@ The naming of these functions tries to follow the standard.
 :   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t)\mbox{d}t$
 [`eve::cyl_bessel_j1`](special/cyl_bessel_j1.html)
 :   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t - t)\mbox{d}t$
-[`eve::cyl_besselj`](special/cylbesselj.html)
-:   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t - n t)\mbox{d}t$
+[`eve::cyl_bessel_y0`](special/cyl_bessel_y0.html)
+:   computes  $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t)\mbox{d}t - \frac1{\pi} \int_0^\infty 2 e^{-x  \sinh t} \mbox{d}t$
+[`eve::cyl_bessel_y1`](special/cyl_bessel_y1.html)
+:   computes $\displaystyle \frac1{\pi} \int_0^\pi \cos(x \sin t - t)\mbox{d}t - \frac1{\pi} \int_0^\infty 2 \sinh(nt) e^{-x  \sinh(t)} \mbox{d}t$
 [`eve::dawson`](special/dawson.html)
 :   computes $\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t$
 [`eve::digamma`](special/digamma.html)
@@ -41,7 +43,7 @@ The naming of these functions tries to follow the standard.
 [`eve::erfc`](special/erfc.html)
 :   computes the complementary error function $1-\mbox{erf}(x)$
 [`eve::erfcx`](special/erfcx.html)
-:   computes the normalized complementary error function $\mbox{erfcx}(x) = e^{x^2} \mbox{erfc(x)}$
+:   computes the normalized complementary error function $\mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)$
 [`eve::erf_inv`](special/erf_inv.html)
 :   computes the inverse of the $\mbox{erf}$ function
 [`eve::lgamma`](special/lgamma.html)

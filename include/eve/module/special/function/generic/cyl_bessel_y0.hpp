@@ -38,15 +38,15 @@
 
 namespace eve::detail
 {
-//  *             y0()
+//  *             cyl_bessel_y0()
 //  * Bessel function of second kind, order zero  */
 //  * Rational approximation coefficients YP[] are used for x < 6.5.
-//  * The function computed is  y0(x)  -  2 ln(x) j0(x) / pi,
+//  * The function computed is  cyl_bessel_y0(x)  -  2 ln(x) j0(x) / pi,
 //  * whose value at x = 0 is  2 * ( log(0.5) + EUL ) / pi
 //  * = 0.073804295108687225 , EUL is Euler's constant.
 
   template<floating_real_value T>
-  EVE_FORCEINLINE T y0_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  EVE_FORCEINLINE T cyl_bessel_y0_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
     using elt_t =  element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -199,6 +199,6 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(y0, a0);
+      return apply_over(cyl_bessel_y0, a0);
   }
 }

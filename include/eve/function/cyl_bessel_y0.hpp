@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(y1_, y1);
+  EVE_MAKE_CALLABLE(cyl_bessel_y0_, cyl_bessel_y0);
 }
 
-#include <eve/module/special/function/generic/y1.hpp>
+#include <eve/module/special/function/generic/cyl_bessel_y0.hpp>
