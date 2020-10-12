@@ -69,7 +69,7 @@ namespace eve::detail
                                       , types<Matcher...>
                                       >::type;
 
-        std::cout << typeid(found).name() << "\n";
+//        std::cout << typeid(found).name() << "\n";
 
         // We call the associated processing function
         return do_swizzle ( delay_t{}, EVE_CURRENT_API{}
