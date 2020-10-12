@@ -24,7 +24,7 @@
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
-#include <eve/function/gammaln.hpp>
+#include <eve/function/lgamma.hpp>
 #include <eve/function/log.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/maximum.hpp>

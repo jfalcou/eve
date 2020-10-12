@@ -10,19 +10,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/lgamma.hpp>
-#include <eve/function/signgam.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/detail/overload.hpp>
 
-namespace eve::detail
+namespace eve
 {
-  template<floating_real_value T>
-  EVE_FORCEINLINE T beta_(EVE_SUPPORTS(cpu_), T a0,  T a1) noexcept
-  {
-    auto y = a0+a1;
-    auto sign = signgam(a0)*signgam(a1)*signgam(y);
-    return sign*exp(lgamma(a0)+lgamma(a1)-lgamma(y));
-  }
+  EVE_MAKE_CALLABLE(tgamma_, tgamma);
 }
+
+#include <eve/module/special/function/generic/tgamma.hpp>

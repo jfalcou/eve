@@ -18,7 +18,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
-#include <eve/function/j0.hpp>
+#include <eve/function/cyl_bessel_j0.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sin.hpp>
@@ -64,7 +64,7 @@ namespace eve::detail
           constexpr elt_t YZ1 =  0.43221455686510834878f;
           const T z = sqr(x);
           auto w = (z-YZ1) * poleval( z, YP);
-          return w + twoopi(as(x)) * log(x) *j0(x);
+          return w + twoopi(as(x)) * log(x) *cyl_bessel_j0(x);
         };
 
         auto branch2 =  [](auto x){
@@ -133,7 +133,7 @@ namespace eve::detail
           };
           const T z = sqr(x);
           auto w = poleval( z, YP)/ poleval( z, YQ);
-          return w + twoopi(as(x)) * log(x) *j0(x);
+          return w + twoopi(as(x)) * log(x) *cyl_bessel_j0(x);
         };
 
         auto branch2 =  [](auto x){

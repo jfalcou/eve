@@ -8,51 +8,50 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::beta`
+                           `eve::lgamma`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/beta.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/lgamma.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ beta = /*unspecified*/;
+  inline constexpr /*unspecified*/ lgamma = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the beta operation.
+Function object representing the lgamma operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
+template< value T > auto operator()( T x) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of $\displaystyle B(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t$, or equivalently
-$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$
+Plgammaorms  the computation of the natural logarithm of the absolute value of the $\Gamma$ function.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`
-:   [values](../../concepts.html#value).
+`x`
+:   [value](../../concepts.html#value).
 
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns [element-wise](../../../glossary.html#value) $\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
+Returns [element-wise](../../../glossary.html#value) $\displaystyle \log(|\Gamma(x)|)$
 
- The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+ The result type is of the same type as the  parameter.
 
-  (insert ../../src/beta.src.html here)
+  (insert ../../src/lgamma.src.html here)
 
-  (insert ../../out/beta.out.html here)
+  (insert ../../out/lgamma.out.html here)
 
 
 <!-- End of Document -->

@@ -19,7 +19,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fms.hpp>
-#include <eve/function/j1.hpp>
+#include <eve/function/cyl_bessel_j1.hpp>
 #include <eve/function/none.hpp>
 #include <eve/function/sincos.hpp>
 #include <eve/function/sin.hpp>
@@ -59,7 +59,7 @@ namespace eve::detail
           constexpr elt_t Y01 = 4.66539330185668857532f;
           const T z = sqr(x);
           auto w = (z-Y01)*x*poleval( z, YP);
-          w = fma(twoopi(as(x)), fms(log(x), j1(x), rec(x)), w);
+          w = fma(twoopi(as(x)), fms(log(x), cyl_bessel_j1(x), rec(x)), w);
           return if_else(is_eqz(x), minf(as(x)), w);
         };
 
@@ -129,7 +129,7 @@ namespace eve::detail
           const T z = sqr(x);
           auto w = x*poleval( z, YP)/poleval1( z, YQ);
           return if_else(is_eqz(x), minf(as(x))
-                        , w + twoopi(as(x)) * fms(log(x), j1(x), rec(x)));
+                        , w + twoopi(as(x)) * fms(log(x), cyl_bessel_j1(x), rec(x)));
         };
 
         auto branch2 =  [](auto x){
