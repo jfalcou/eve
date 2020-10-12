@@ -12,9 +12,6 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-// zeroing swizzle with N values
-template<std::size_t N> auto zeroing = eve::swizzler<N>( [](int, int ) { return -1; } );
-
 TTS_CASE_TPL("Check zeroing swizzle for arithmetic type", EVE_TYPE )
 {
   T simd([](int i, int) { return 1+i; });
@@ -26,10 +23,10 @@ TTS_CASE_TPL("Check zeroing swizzle for arithmetic type", EVE_TYPE )
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= EVE_CARDINAL)
                 {
-                  std::cout << "using pattern " << zeroing<sz> << "\n";
+                  std::cout << "using pattern " << eve::zeroing_n<sz> << "\n";
 
                   typename T::template reshape<eve::fixed<sz>> ref(0);
-                  TTS_EQUAL(simd[zeroing<sz>], ref);
+                  TTS_EQUAL(simd[eve::zeroing_n<sz>], ref);
                 }
               };
 
@@ -48,10 +45,10 @@ TTS_CASE_TPL("Check zeroing swizzle for logical type", EVE_TYPE )
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= EVE_CARDINAL)
                 {
-                  std::cout << "using pattern " << zeroing<sz> << "\n";
+                  std::cout << "using pattern " << eve::zeroing_n<sz> << "\n";
 
                   typename eve::logical<T>::template reshape<eve::fixed<sz>> ref(false);
-                  TTS_EQUAL(simd[zeroing<sz>], ref);
+                  TTS_EQUAL(simd[eve::zeroing_n<sz>], ref);
                 }
               };
 

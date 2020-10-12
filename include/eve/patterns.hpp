@@ -151,17 +151,24 @@ namespace eve
   //================================================================================================
   // Zero swizzle : [-1 -1 ... -1]
   //================================================================================================
-  inline constexpr auto zeroing = swizzler ( [](int, int){ return na_; } );
+  template<int N>
+  inline constexpr auto zeroing_n = swizzler<N>( [](int, int){ return na_; } );
+  inline constexpr auto zeroing   = zeroing_n<-1>;
 
   //================================================================================================
   // Identity swizzle : [0 1 ... N-1]
   //================================================================================================
-  inline constexpr auto identity = swizzler ( [](int i, int){ return i; } );
+  template<int N>
+  inline constexpr auto identity_n  = swizzler<N>( [](int i, int){ return i; } );
+  inline constexpr auto identity    = identity_n<-1>;
 
   //-----------------------------------------------------------------------------------------------
   // Broadcast swizzle : [N N ... N]
-  template<int N>
-  inline constexpr auto broadcast  = swizzler([](int, int) { return N; });
+  template<int V, int N>
+  inline constexpr auto broadcast_n = swizzler<N>([](int, int) { return V; });
+
+  template<int V>
+  inline constexpr auto broadcast   = broadcast_n<V,-1>;
 
   //-----------------------------------------------------------------------------------------------
   // Reverse swizzle : [ N-1 ... 2 1 0]

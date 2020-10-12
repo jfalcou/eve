@@ -12,9 +12,6 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-// identity swizzle with N values
-template<std::size_t N> auto identity = eve::swizzler<N>( [](int i, int ) { return i; } );
-
 TTS_CASE_TPL("Check identity swizzle for arithmetic type", EVE_TYPE )
 {
   auto const filler = [](int i, int) { return 1+i; };
@@ -27,10 +24,10 @@ TTS_CASE_TPL("Check identity swizzle for arithmetic type", EVE_TYPE )
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= EVE_CARDINAL)
                 {
-                  std::cout << "using pattern " << identity<sz> << "\n";
+                  std::cout << "using pattern " << eve::identity_n<sz> << "\n";
 
                   typename T::template reshape<eve::fixed<sz>> ref(filler);
-                  TTS_EQUAL(simd[identity<sz>], ref);
+                  TTS_EQUAL(simd[eve::identity_n<sz>], ref);
                 }
               };
 
@@ -50,10 +47,10 @@ TTS_CASE_TPL("Check identity swizzle for logical type", EVE_TYPE )
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= EVE_CARDINAL)
                 {
-                  std::cout << "using pattern " << identity<sz> << "\n";
+                  std::cout << "using pattern " << eve::identity_n<sz> << "\n";
 
                   typename eve::logical<T>::template reshape<eve::fixed<sz>> ref(filler);
-                  TTS_EQUAL(simd[identity<sz>], ref);
+                  TTS_EQUAL(simd[eve::identity_n<sz>], ref);
                 }
               };
 

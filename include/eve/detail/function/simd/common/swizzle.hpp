@@ -32,6 +32,20 @@ namespace eve::detail
   }
 
   //================================================================================================
+  // Binary swizzle - logical
+  //================================================================================================
+  template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto shuffle_( cpu_ const&
+                              , logical<wide<T,N,ABI>> const& v
+                              , logical<wide<T,N,ABI>> const& w
+                              , Pattern p
+                              ) noexcept
+  {
+    constexpr auto sz = Pattern::size(N::value);
+    return bit_cast( shuffle(v.mask(),w.mask(),p), as<logical<wide<T,fixed<sz>>>>() );
+  }
+
+  //================================================================================================
   // Unary swizzle - arithmetic
   //================================================================================================
   template<typename T, typename N, typename ABI, shuffle_pattern Pattern>
