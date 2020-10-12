@@ -11,10 +11,11 @@
 ##==================================================================================================
 ## Setup a test with many option
 ##==================================================================================================
-function(generate_test root rootpath dep file)
+function(generate_test root rootpath dep file precompiled_target)
   string(REPLACE ".cpp" ".exe" base ${file})
   string(REPLACE "/"    "." base ${base})
   string(REPLACE "\\"   "." base ${base})
+
 
   if( NOT root STREQUAL "")
     set(test "${root}.${base}")
@@ -23,6 +24,15 @@ function(generate_test root rootpath dep file)
   endif()
 
   add_executable( ${test}  "${rootpath}${file}")
+
+  if (NOT ${precompiled_target} STREQUAL "")
+    if(${precompiled_target} STREQUAL "GENERATE")
+        target_precompile_headers(${test} PRIVATE "/home/dyarosh/space/eve/test/test.hpp")
+        set(precompiled_target ${test} PARENT_SCOPE)
+    else()
+        target_precompile_headers(${test} REUSE_FROM ${precompiled_target})
+    endif()
+  endif()
 
   if( ${ARGC} EQUAL 5)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})

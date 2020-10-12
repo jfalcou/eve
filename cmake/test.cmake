@@ -55,7 +55,7 @@ endmacro()
 ##==================================================================================================
 function(make_unit root)
   foreach(file ${ARGN})
-    generate_test(${root} "" "" ${file})
+    generate_test(${root} "" "" ${file} "")
   endforeach()
 endfunction()
 
@@ -98,9 +98,20 @@ function(make_all_units)
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.scalar.cpp")
 
           configure_file( "${_TestCurrentDir}/scalar.cpp.in" "${file_to_compile}" )
+
+          get_property(precompiled_target GLOBAL PROPERTY precompiled_test)
+
+          if ("${precompiled_target}" STREQUAL "")
+            set(precompiled_target "GENERATE")
+          endif()
+
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.scalar.exe"
                           "${GEN_TEST_ROOT}.${base_file}.scalar.cpp"
+                          "${precompiled_target}"
                         )
+          if (NOT ${precompiled_target} STREQUAL "GENERATE")
+            set_property(GLOBAL PROPERTY precompiled_test ${precompiled_target})
+          endif()
         endif()
 
         # SIMD case uses the types x cardinals as setup
@@ -122,9 +133,20 @@ function(make_all_units)
           set(file_to_compile "${_TestSrcDir}/${GEN_TEST_ROOT}.${base_file}.simd.cpp")
 
           configure_file( "${_TestCurrentDir}/simd.cpp.in" "${file_to_compile}" )
+
+          if ("${precompiled_target}" STREQUAL "")
+            set(precompiled_target "GENERATE")
+          endif()
+
           generate_test ( "" "${_TestSrcDir}/" "${GEN_TEST_ROOT}.simd.exe"
                           "${GEN_TEST_ROOT}.${base_file}.simd.cpp"
+                           "${precompiled_target}"
                         )
+
+          if (NOT ${precompiled_target} STREQUAL "GENERATE")
+            set_property(GLOBAL PROPERTY precompiled_test ${precompiled_target})
+          endif()
+
         endif()
       endforeach()
     endif()
