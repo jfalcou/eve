@@ -196,7 +196,7 @@ make_all_units(ROOT unit.core NAME sqr                   ARCH scalar simd TYPES 
 make_all_units(ROOT unit.core NAME sqr_abs               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME sqrt                  ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME sub                   ARCH scalar simd TYPES ${all_types}     )
-make_all_units(ROOT unit.core NAME tcheb                 ARCH scalar simd TYPES ${real_types}    )
+##make_all_units(ROOT unit.core NAME tcheb                 ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME trunc                 ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.core NAME two_split             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.core NAME ulpdist               ARCH scalar simd TYPES ${all_types}     )
