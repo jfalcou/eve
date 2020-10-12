@@ -48,7 +48,10 @@ namespace eve
     using storage_type  = typename storage_base::storage_type;
     using size_type     = typename card_base::size_type;
 
-    template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T,N>;
+    template<typename T, typename N = expected_cardinal_t<T>>
+    using rebind = wide<T,N>;
+    template<typename N> using reshape = wide<value_type, N>;
+    template<typename T> using retype  = wide<T         , cardinal_type>;
 
     static constexpr auto  static_alignment  = std::min ( sizeof(Type)*Size::value
                                                         , alignof(storage_type)

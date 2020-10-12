@@ -55,6 +55,8 @@ namespace eve
 
     template<typename T, typename N = expected_cardinal_t<T>>
     using rebind = logical<wide<T,N>>;
+    template<typename N> using reshape = logical<wide<value_type, N>>;
+    template<typename T> using retype  = logical<wide<T         , cardinal_type>>;
 
     static constexpr size_type  static_alignment  = std::min( sizeof(Type)*Size::value
                                                             , alignof(storage_type)
