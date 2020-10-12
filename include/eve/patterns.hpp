@@ -38,6 +38,13 @@ namespace eve
       return i<sz ? data[i] : -1;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, pattern_ const&)
+    {
+      os << "< ";
+      ((os << I<< " "),...);
+      return os << ">";
+    }
+
     template<std::ptrdiff_t... O>
     constexpr auto is_similar(pattern_<I..., O...>) const noexcept { return true; }
 
@@ -105,6 +112,11 @@ namespace eve
         if( (Generator{}(i,sz) >= N) || (Generator{}(i,sz) < -1) )
           return false;
       return true;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, swizzler_ const& s)
+    {
+      return os << as_pattern<Size>(s);
     }
   };
 
