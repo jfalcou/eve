@@ -24,9 +24,9 @@ TTS_CASE_TPL("Check eve::bit_floor behavior", EVE_TYPE)
   {
     for(v_t z = 2; z < eve::valmax(eve::as<v_t>())/2; z*=2)
     {
-      TTS_EQUAL(eve::bit_floor(EVE_TYPE(z)), EVE_TYPE(z));
-      TTS_EQUAL(eve::bit_floor(EVE_TYPE(z+1)), EVE_TYPE(z));
-      TTS_EQUAL(eve::bit_floor(EVE_TYPE(3*(z/2))), EVE_TYPE(z));
+      TTS_EQUAL(eve::bit_floor(T(z)), T(z));
+      TTS_EQUAL(eve::bit_floor(T(z+1)), T(z));
+      TTS_EQUAL(eve::bit_floor(T(3*(z/2))), T(z));
     }
   }
   else
