@@ -45,18 +45,22 @@ function(generate_test root rootpath dep file)
       string(REPLACE ".cpp" ".out.html" doc_output ${file})
       string(REPLACE ".cpp" ".src.html" doc_source ${file})
 
-      add_test( NAME ${test}
-                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
-              )
-
-
       if( EVE_BUILD_SRC_HTML )
+        add_test( NAME ${test}
+                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
+                )
+
         set(src_test "src.${test}")
 
         add_test( NAME ${src_test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                   COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/txt2html.sh $<TARGET_FILE:${test}> ${PROJECT_SOURCE_DIR}/test/${doc_path}/${file} > ${PROJECT_SOURCE_DIR}/docs/reference/src/${doc_source}"
+                )
+      else()
+        add_test( NAME ${test}
+                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                  COMMAND "$<TARGET_FILE:${test}>"
                 )
       endif()
 
