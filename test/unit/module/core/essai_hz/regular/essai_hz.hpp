@@ -12,9 +12,6 @@
 #include <eve/constant/nan.hpp>
 #include <eve/constant/inf.hpp>
 #include <eve/constant/true.hpp>
-#include <tts/tests/precision.hpp>
-#include <tts/tests/relation.hpp>
-#include <tts/tests/types.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/if_else.hpp>
@@ -41,7 +38,7 @@ TTS_CASE_TPL("Check eve::arg return type", EVE_TYPE)
   if(any(notdone)) notdone = next_interval(f2,  notdone, x < lim2, r, x);
   if(any(notdone)) notdone = next_interval(f3,  notdone, x < lim3, r, x);
   if(any(notdone)) last_interval(f4, notdone, r, x) ;
-  w_t r2{400000, 100, 100, 2000, 30000, 400000, 0, 2000};
+git  w_t r2{400000, 100, 100, 2000, 30000, 400000, 0, 2000};
   TTS_IEEE_EQUAL(r2,r);
 
   w_t r1(36);
