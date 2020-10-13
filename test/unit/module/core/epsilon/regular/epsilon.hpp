@@ -17,6 +17,7 @@
 #include <eve/constant/eps.hpp>
 #include <eve/platform.hpp>
 #include <cmath>
+#include <type_traits>
 
 TTS_CASE_TPL("Check eve::epsilon return type", EVE_TYPE)
 {
@@ -44,6 +45,6 @@ TTS_CASE_TPL("Check eve::epsilon behavior", EVE_TYPE)
   else
   {
     TTS_ULP_EQUAL(eve::epsilon(T(1)), T(1), 0.5);
-    TTS_ULP_EQUAL(eve::epsilon(T(10)), T(10), 0.5);
+    TTS_ULP_EQUAL(eve::epsilon(T(10)), T(1), 0.5);
   }
 }
