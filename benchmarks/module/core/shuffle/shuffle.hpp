@@ -12,7 +12,6 @@
 #define SHUFFLE_HPP
 
 #include "test.hpp"
-#include <tts/tests/relation.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/constant/valmax.hpp>
 #include <eve/wide.hpp>
