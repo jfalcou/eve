@@ -16,6 +16,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/dist.hpp>
+#include <eve/function/if_else.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/if_else.hpp>
 
@@ -26,7 +27,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto aa = abs(a);
-      return dist(aa, next(aa));
+      return if_else(is_nan(a), allbits, dist(aa, next(aa)));
     }
     else
     {
