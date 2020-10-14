@@ -33,6 +33,7 @@ make_all_units(ROOT unit.special NAME erf_inv              ARCH scalar simd TYPE
 make_all_units(ROOT unit.special NAME exp_int              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_j0        ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_j1        ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME cyl_bessel_j        ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME gamma_p              ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME lgamma               ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME signgam              ARCH scalar simd TYPES ${real_types}    )
