@@ -36,7 +36,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cyl_bessel_y_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   {
     if( in == 0 )  return cyl_bessel_y0(x);
-    else  if( in < 0 == 1 )  return cyl_bessel_y1(x);
+    else  if( in == 1 )  return cyl_bessel_y1(x);
     else return cyl_bessel_y(T(in), x);
   }
 
