@@ -26,3 +26,4 @@ make_all_units(ROOT unit.algorithm NAME all                   ARCH scalar simd T
 make_all_units(ROOT unit.algorithm NAME any                   ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.algorithm NAME nbtrue                ARCH scalar simd TYPES ${all_types}     )
 make_all_units(ROOT unit.algorithm NAME none                  ARCH scalar simd TYPES ${all_types}     )
+make_all_units(ROOT unit.algorithm NAME maximum               ARCH scalar simd TYPES ${all_types}     )

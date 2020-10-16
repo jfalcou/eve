@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/function/gammaln.hpp>
+#include <eve/function/lgamma.hpp>
 #include <eve/function/signgam.hpp>
 #include <eve/function/exp.hpp>
 #include <eve/concept/value.hpp>
@@ -23,6 +23,6 @@ namespace eve::detail
   {
     auto y = a0+a1;
     auto sign = signgam(a0)*signgam(a1)*signgam(y);
-    return sign*exp(gammaln(a0)+gammaln(a1)-gammaln(y));
+    return sign*exp(lgamma(a0)+lgamma(a1)-lgamma(y));
   }
 }

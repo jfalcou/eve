@@ -17,6 +17,6 @@ namespace eve
   EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
-#include <eve/module/core/function/scalar/maximum.hpp>
-//#include <eve/module/core/function/simd/maximum.hpp>
+#include <eve/arch.hpp>
+#include <eve/module/algorithm/function/generic/maximum.hpp>
 

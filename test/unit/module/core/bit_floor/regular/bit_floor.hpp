@@ -38,4 +38,3 @@ TTS_CASE_TPL("Check eve::bit_floor behavior", EVE_TYPE)
     TTS_EQUAL(eve::bit_floor(T(2.9)) , T(2));
   }
 }
-

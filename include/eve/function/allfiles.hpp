@@ -109,7 +109,6 @@
 #include <eve/function/fnms.hpp>
 #include <eve/function/frac.hpp>
 #include <eve/function/frexp.hpp>
-#include <eve/function/gamma.hpp>
 #include <eve/function/gather.hpp>
 #include <eve/function/gcd.hpp>
 #include <eve/function/has_single_bit.hpp>
@@ -269,6 +268,7 @@
 #include <eve/function/tanh.hpp>
 #include <eve/function/tan.hpp>
 #include <eve/function/tanpi.hpp>
+#include <eve/function/tgamma.hpp>
 #include <eve/function/trigonometric.hpp>
 #include <eve/function/trigo_tags.hpp>
 #include <eve/function/trunc.hpp>

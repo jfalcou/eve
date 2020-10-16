@@ -19,7 +19,6 @@ TTS_CASE_TPL("Check bit_ceil return type", EVE_TYPE)
 TTS_CASE_TPL("Check eve::bit_ceil behavior", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-
   if constexpr(!eve::floating_value<T>)
   {
     for(v_t z = 4; z < eve::valmax(eve::as<v_t>())/4; z*=2)

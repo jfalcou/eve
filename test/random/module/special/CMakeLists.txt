@@ -23,5 +23,5 @@ add_dependencies(random.exe random.special.exe)
 ## Elementwise function unit tests
 ##==================================================================================================
 
-## make_all_units(ROOT random.special NAME gamma ARCH scalar simd TYPES ${real_types}    )
+## make_all_units(ROOT random.special NAME tgamma ARCH scalar simd TYPES ${real_types}    )
 ## make_all_units(ROOT random.special NAME stirling  ARCH scalar simd TYPES ${real_types}    )

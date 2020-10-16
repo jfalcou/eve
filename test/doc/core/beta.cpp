@@ -21,6 +21,7 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf            = " << xf << '\n'
+    << "<- yf            = " << yf << '\n'
     << "-> beta(xf, yf)  = " << eve::beta(xf, yf) << '\n';
   return 0;
 }
