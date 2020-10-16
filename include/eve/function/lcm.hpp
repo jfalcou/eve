@@ -17,5 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lcm_, lcm);
 }
 
-#include <eve/module/core/function/generic/lcm.hpp>
-
+#include <eve/module/combinatorial/function/generic/lcm.hpp>

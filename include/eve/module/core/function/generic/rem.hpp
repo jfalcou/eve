@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/function/binarize_not.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/div.hpp>
 #include <eve/function/fnma.hpp>
@@ -22,6 +23,14 @@
 
 namespace eve::detail
 {
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto
+  rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires compatible_values<T, U>
+  {
+    return arithmetic_call(
+  }
+
+
   template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto
   rem_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires compatible_values<T, U>
@@ -29,12 +38,22 @@ namespace eve::detail
     return fnma(b, toward_zero(div)(a,b), a);
   }
 
-  template<real_value T, real_value U>
+  template<floating_real_value T, floating_real_value U>
   EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
                             , pedantic_type const&,T const &a, U const &b
                             ) noexcept requires compatible_values<T, U>
   {
-    return if_else(is_nez(b), rem(a,b), a);
+    auto isnezb = is_nez(b);
+      return if_else(isnezb, rem(a,b), a);
+  }
+
+  template<integral_real_value T, integral_real_value U>
+  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
+                            , pedantic_type const&,T const &a, U const &b
+                            ) noexcept requires compatible_values<T, U>
+  {
+    auto isnezb = is_nez(b);
+    return if_else(isnezb, rem(a,b+binarize_not(isnezb)), a);
   }
 
   template<real_value T, real_value U, decorator D>

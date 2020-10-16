@@ -8,16 +8,13 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/gcd.hpp>
-#include <numeric>
+#pragma once
 
-TTS_CASE_TPL("Check eve::gcd return type", EVE_TYPE)
+#include <eve/detail/overload.hpp>
+
+namespace eve
 {
-  TTS_EXPR_IS(eve::gcd(T(0), T(0)), T);
+  EVE_MAKE_CALLABLE(anp_, anp);
 }
 
-TTS_CASE_TPL("Check eve::gcd behavior", EVE_TYPE)
-{
-  TTS_EQUAL(eve::gcd(T(22), T( 10)) , T(eve::gcd(T(22), T(10))) );
-  TTS_EQUAL(eve::gcd(T(22), T(-10)) , T(eve::gcd(T(22), T(10))) );
-}
+#include <eve/module/combinatorial/function/generic/anp.hpp>
