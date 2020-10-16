@@ -13,9 +13,9 @@ version: 2.1
 ##==================================================================================================
 docker_gcc: &docker_gcc
   docker:
-    - image: compilaction/gcc-dev:latest
+    - image: compilaction/cpp-20:latest
       environment:
-        COMPILER: g++
+        COMPILER: g++-10
 docker_clang: &docker_clang
   docker:
     - image: compilaction/clang-dev:latest
@@ -23,10 +23,10 @@ docker_clang: &docker_clang
         COMPILER: clang++
 docker_aarch64: &docker_aarch64
   docker:
-    - image: compilaction/gcc-dev:latest
+    - image: compilaction/cpp-20:latest
       environment:
         RUN_COMMAND: qemu-aarch64
-        COMPILER: aarch64-linux-gnu-g++
+        COMPILER: aarch64-linux-gnu-g++-10
 
 ##==================================================================================================
 ## Build configurations
