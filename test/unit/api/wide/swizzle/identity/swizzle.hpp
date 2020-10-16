@@ -12,9 +12,9 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check identity swizzle for arithmetic type", EVE_TYPE )
+template<typename T, typename Env, typename Filler>
+void test_identity(Env& runtime, bool verbose, Filler filler)
 {
-  auto const filler = [](int i, int) { return 1+i; };
   T simd(filler);
 
   [&]<std::size_t... I>( std::index_sequence<I...>)
@@ -35,25 +35,12 @@ TTS_CASE_TPL("Check identity swizzle for arithmetic type", EVE_TYPE )
   }( std::make_index_sequence<7>{} );
 }
 
+TTS_CASE_TPL("Check identity swizzle for arithmetic type", EVE_TYPE )
+{
+  test_identity<T>(runtime, verbose, [](int i, int) { return 1+i; } );
+}
+
 TTS_CASE_TPL("Check identity swizzle for logical type", EVE_TYPE )
 {
-  auto const filler = [](int i, int) { return i%3==0; };
-  eve::logical<T> simd(filler);
-
-  [&]<std::size_t... I>( std::index_sequence<I...>)
-  {
-    auto f  = [&]<std::size_t N>(std::integral_constant<std::size_t,N>)
-              {
-                constexpr std::size_t sz = 1ULL << N;
-                if constexpr(sz <= EVE_CARDINAL)
-                {
-                  std::cout << "using pattern " << eve::identity_n<sz> << "\n";
-
-                  typename eve::logical<T>::template reshape<eve::fixed<sz>> ref(filler);
-                  TTS_EQUAL(simd[eve::identity_n<sz>], ref);
-                }
-              };
-
-    ( f(std::integral_constant<std::size_t,I>{}), ... );
-  }( std::make_index_sequence<7>{} );
+  test_identity<eve::logical<T>>(runtime, verbose, [](int i, int) { return i%3==0; } );
 }

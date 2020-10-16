@@ -9,8 +9,9 @@
 **/
 //==================================================================================================
 #pragma once
-#include <eve/logical.hpp>
 #include <eve/wide.hpp>
+#include <eve/logical.hpp>
+
 
 template<typename T, typename Env, typename Filler>
 void test_slide(Env& runtime, bool verbose, Filler filler)
@@ -30,7 +31,7 @@ void test_slide(Env& runtime, bool verbose, Filler filler)
                   {
                     ([&]()
                     {
-                      constexpr auto pt = eve::slide_left_n<V+1,sz,EVE_CARDINAL>;
+                      constexpr auto pt = eve::slide_right_n<V+1,sz,EVE_CARDINAL>;
                       std::cout << "using pattern " << pt << "\n";
 
                       using type = typename T::template reshape<eve::fixed<sz>>;
@@ -43,11 +44,10 @@ void test_slide(Env& runtime, bool verbose, Filler filler)
                                 return check ? simd[check ? idx : 0] : typename type::value_type(0);
                               }
                               );
-
                       TTS_EQUAL((simd[pt]), ref);
                     }(), ...);
 
-                  }( std::make_index_sequence<EVE_CARDINAL-1>{} );
+                  }( std::make_index_sequence<sz-1>{} );
                 }
               };
 
@@ -55,13 +55,13 @@ void test_slide(Env& runtime, bool verbose, Filler filler)
   }( std::make_index_sequence<6>{} );
 }
 
-
-TTS_CASE_TPL( "Check slide_left swizzle for arithmetic type", EVE_TYPE )
+TTS_CASE_TPL( "Check slide_right swizzle for arithmetic type", EVE_TYPE )
 {
   test_slide<T>(runtime, verbose, [](int i, int) { return 1+i; });
 }
 
-TTS_CASE_TPL("Check slide_left swizzle for logical type", EVE_TYPE )
+TTS_CASE_TPL("Check slide_right swizzle for logical type", EVE_TYPE )
 {
+
   test_slide<eve::logical<T>>(runtime, verbose, [](int i, int) { return i%3==0; });
 }

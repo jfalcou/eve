@@ -37,24 +37,23 @@ namespace eve::detail
       // Valid pattern
       // [ k (k+1<N ? k+1 : -1) .. (k+sz-1<N ? k+sz-1 : -1) ]  1 <= k <= N-1
       auto p0 = p(0,c);
-      int i = 0;
 
+      // We must starts with at least 1
+      if(p0 < 1) return false;
+
+      int  i  = 1;
       while(i<sz)
       {
         auto q = p(i,c);
-        if(q!=-1 && q != p0+i)
-          return false;
+        if(q!=-1 && q != p0+i)  return false;
         i++;
       }
 
-      if(i<sz)
+      while( i<sz )
       {
-        while( i<sz )
-        {
-          auto q = p(i,c);
-          if(q!=-1) return false;
-          i++;
-        }
+        auto q = p(i,c);
+        if(q!=-1) return false;
+        i++;
       }
 
       return true;

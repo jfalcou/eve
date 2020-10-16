@@ -25,7 +25,6 @@ namespace eve::detail
     static constexpr auto check(Pattern const&, as_<Wide> const&)  noexcept
     {
       constexpr Pattern p{};
-
       return      p.size(Wide::static_size) > 1
               &&
               (   p.is_similar( pattern<1,0> )
@@ -37,66 +36,78 @@ namespace eve::detail
   };
 
   template<typename Wide, typename Target, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto do_swizzle ( EVE_SUPPORTS(neon128_), reverse_match const&
-                                  , as_<Target> , Pattern const&, Wide const& v
-                                  )
+  EVE_FORCEINLINE Target do_swizzle ( EVE_SUPPORTS(neon128_), reverse_match const&
+                                    , as_<Target> , Pattern const&, Wide const& v
+                                    )
   {
-    using in_t        = typename Wide::storage_type;
+    using           in_t    = typename Wide::value_type;
+    constexpr auto  rebuild = [](auto s) { return Target{s.slice(upper_),s.slice(lower_)}; };
+    constexpr auto  tsz     = Target::static_size;
+    constexpr auto  wsz     = Wide::static_size;
 
-    if constexpr( Wide::static_size == Target::static_size)
+          if constexpr( sizeof(in_t) == 8 )       return {v[1],v[0]};
+    else  if constexpr( std::is_same_v<in_t, float> )
     {
-      [[maybe_unused]] Target s;
-
-           if constexpr(std::is_same_v<in_t,  int32x2_t >) s = Target(vrev64_s32 (v));
-      else if constexpr(std::is_same_v<in_t,  uint32x2_t>) s = Target(vrev64_u32 (v));
-      else if constexpr(std::is_same_v<in_t,  int16x4_t >) s = Target(vrev32_s16 (v));
-      else if constexpr(std::is_same_v<in_t,  uint16x4_t>) s = Target(vrev32_u16 (v));
-      else if constexpr(std::is_same_v<in_t,  int8x8_t  >) s = Target(vrev64_s8  (v));
-      else if constexpr(std::is_same_v<in_t,  uint8x8_t >) s = Target(vrev64_u8  (v));
-      else if constexpr(std::is_same_v<in_t, float32x2_t>) s = Target(vrev64_f32 (v));
-      else if constexpr(std::is_same_v<in_t,  int32x4_t >) s = Target(vrev64q_s32(v));
-      else if constexpr(std::is_same_v<in_t,  uint32x4_t>) s = Target(vrev64q_u32(v));
-      else if constexpr(std::is_same_v<in_t,  int16x8_t >) s = Target(vrev64q_s16(v));
-      else if constexpr(std::is_same_v<in_t,  uint16x8_t>) s = Target(vrev64q_u16(v));
-      else if constexpr(std::is_same_v<in_t,  int8x16_t >) s = Target(vrev64q_s8 (v));
-      else if constexpr(std::is_same_v<in_t,  uint8x16_t>) s = Target(vrev64q_u8 (v));
-      else if constexpr(std::is_same_v<in_t, float32x4_t>) s = Target(vrev64q_f32(v));
+            if constexpr(tsz == 2 && wsz == 2)    return vrev64_f32(v);
+      else  if constexpr(tsz == 2 && wsz == 4)    return vrev64_f32(v.slice(upper_));
+      else                                        return rebuild(Target{vrev64q_f32(v)});
+    }
+    else  if constexpr( std::is_integral_v<in_t> && sizeof(in_t) == 4 )
+    {
+      if constexpr( std::is_signed_v<in_t> )
+      {
+              if constexpr(tsz == 2 && wsz == 2)  return vrev64_s32(v);
+        else  if constexpr(tsz == 2 && wsz == 4)  return vrev64_s32(v.slice(upper_));
+        else                                      return rebuild(Target{vrev64q_s32(v)});
+      }
       else
       {
-        return Target{v[1],v[0]};
+              if constexpr(tsz == 2 && wsz == 2)  return vrev64_u32(v);
+        else  if constexpr(tsz == 2 && wsz == 4)  return vrev64_u32(v.slice(upper_));
+        else                                      return rebuild(Target{vrev64q_u32(v)});
       }
-
-      auto[l,h] = s.slice();
-      return Target(h,l);
     }
-    else if constexpr( Wide::static_size > Target::static_size)
+    else if constexpr( std::is_integral_v<in_t> && sizeof(in_t) == 2 )
     {
-      constexpr auto slicer = [](auto i)
+      if constexpr( std::is_signed_v<in_t> )
       {
-        constexpr Pattern p{};
-        constexpr auto first = p(0,Wide::static_size);
-        if(first == Wide::static_size-1)  return i.slice(upper_);
-        else                              return i.slice(lower_);
-      };
-
-      auto s = slicer(v);
-
-            if constexpr(std::is_same_v<in_t,  int32x4_t >) return Target(vrev64_s32(s));
-      else  if constexpr(std::is_same_v<in_t,  uint32x4_t>) return Target(vrev64_u32(s));
-      else  if constexpr(std::is_same_v<in_t,  int16x8_t >) return Target(vrev64_s16(s));
-      else  if constexpr(std::is_same_v<in_t,  uint16x8_t>) return Target(vrev64_u16(s));
-      else  if constexpr(std::is_same_v<in_t,  int8x16_t >) return Target(vrev64_s8 (s));
-      else  if constexpr(std::is_same_v<in_t,  uint8x16_t>) return Target(vrev64_u8 (s));
-      else  if constexpr(std::is_same_v<in_t, float32x4_t>) return Target(vrev64_f32(s));
+              if constexpr(wsz == 2)              return vrev32_s16(v);
+        else  if constexpr(wsz == 4 && tsz == 2)  return vrev32_s16(v.slice(upper_));
+        else  if constexpr(wsz == 4 && tsz != 2)  return rebuild(Target{vrev32_s16(v)});
+        else  if constexpr(tsz == 8)              return rebuild(Target{vrev64q_s16(v)});
+        else                                      return vrev64_s16(v.slice(upper_));
+      }
       else
       {
-        return Target{v[1]};
+              if constexpr(wsz == 2)              return vrev32_u16(v);
+        else  if constexpr(wsz == 4 && tsz == 2)  return vrev32_u16(v.slice(upper_));
+        else  if constexpr(wsz == 4 && tsz != 2)  return rebuild(Target{vrev32_u16(v)});
+        else  if constexpr(tsz == 8)              return rebuild(Target{vrev64q_u16(v)});
+        else                                      return vrev64_u16(v.slice(upper_));
       }
     }
-    else
+    else if constexpr( std::is_integral_v<in_t> && sizeof(in_t) == 1 )
     {
-      puts("TODO: reverse");
-      return Target{};
+      if constexpr( std::is_signed_v<in_t> )
+      {
+              if constexpr(wsz == 2)              return vrev16_s8(v);
+        else  if constexpr(tsz == 2)              return vrev64_s8(v.slice(upper_));
+        else  if constexpr(wsz == 4)              return rebuild(Target{vrev16_s8(v)});
+        else  if constexpr(tsz == 4)              return vrev64_s8(v.slice(upper_));
+        else  if constexpr(tsz == 8 && wsz == 8)  return rebuild(Target{vrev32_s8(v)});
+        else  if constexpr(tsz == 8 && wsz != 8)  return vrev64_s8(v.slice(upper_));
+        else                                      return rebuild(Target{vrev64q_s8(v)});
+      }
+      else
+      {
+              if constexpr(wsz == 2)              return vrev16_u8(v);
+        else  if constexpr(tsz == 2)              return vrev64_u8(v.slice(upper_));
+        else  if constexpr(wsz == 4)              return rebuild(Target{vrev16_u8(v)});
+        else  if constexpr(tsz == 4)              return vrev64_u8(v.slice(upper_));
+        else  if constexpr(tsz == 8 && wsz == 8)  return rebuild(Target{vrev32_u8(v)});
+        else  if constexpr(tsz == 8 && wsz != 8)  return vrev64_u8(v.slice(upper_));
+        else                                      return rebuild(Target{vrev64q_u8(v)});
+      }
     }
   }
 }

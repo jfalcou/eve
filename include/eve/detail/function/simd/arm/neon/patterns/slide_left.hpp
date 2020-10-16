@@ -56,7 +56,8 @@ namespace eve::detail
     }
     else if constexpr( c == sz ) // same cardinal in and out
     {
-      return slider(v,std::integral_constant<std::size_t,Pattern()(0,c)>{});
+      constexpr auto s  = Pattern()(0,c);
+      return slider(v,std::integral_constant<std::ptrdiff_t,s>{});
     }
     else if constexpr( c > sz )
     {

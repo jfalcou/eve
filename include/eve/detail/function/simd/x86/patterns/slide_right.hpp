@@ -21,7 +21,10 @@ namespace eve::detail
                                   , as_<Target> , Pattern const&, Wide const& v
                                   )
   {
-    constexpr auto s  = sizeof(element_type_t<Wide>) * slide_right::find_slide(Pattern());
+    constexpr auto c   = Pattern::size(cardinal_v<Wide>);
+    constexpr auto sft = c - Pattern{}(c-1,c) - 1;
+    constexpr auto s   = sizeof(element_type_t<Wide>) * sft;
+
     return Target( (typename Wide::storage_type)_mm_slli_si128((__m128i)(v.storage()),s) );
   }
 }

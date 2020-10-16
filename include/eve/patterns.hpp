@@ -175,16 +175,23 @@ namespace eve
   inline constexpr auto reverse    = swizzler([](int i, int c ) { return c-i-1; });
 
   //------------------------------------------------------------------------------------------------
-  // Slides swizzle: left, right and relative
+  // Slides data left
   template<int O, int S, int N>
   inline constexpr auto slide_left_n  = swizzler<S>( [](int i, int) { return i+O<N ? i+O : na_; } );
 
   template<int O>
   inline constexpr auto slide_left    = swizzler( [](int i, int c) { return i+O<c ? i+O : na_; } );
 
+  //------------------------------------------------------------------------------------------------
+  // Slides data right
+  template<int O, int S, int N>
+  inline constexpr auto slide_right_n  = swizzler<S>( [](int i, int) { return i<O ? na_ : i-O; } );
+
   template<int O>
   inline constexpr auto slide_right = swizzler( [](int i, int ) { return i<O ? na_ : i-O; } );
 
+  //------------------------------------------------------------------------------------------------
+  // Slides data relative
   template<int O>
   inline constexpr auto slide = swizzler( [](int i, int c)
                                           {

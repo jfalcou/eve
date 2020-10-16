@@ -12,46 +12,37 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check zeroing swizzle for arithmetic type", EVE_TYPE )
+template<typename T, typename Env, typename Filler>
+void test_zero(Env& runtime, bool verbose, Filler filler)
 {
-  T simd([](int i, int) { return 1+i; });
+  T simd(filler);
 
   [&]<std::size_t... I>( std::index_sequence<I...>)
   {
     auto f  = [&]<std::size_t N>(std::integral_constant<std::size_t,N>)
+            {
+              constexpr std::size_t sz = 1ULL << N;
+              if constexpr(sz <= EVE_CARDINAL)
               {
-                constexpr std::size_t sz = 1ULL << N;
-                if constexpr(sz <= EVE_CARDINAL)
-                {
-                  std::cout << "using pattern " << eve::zeroing_n<sz> << "\n";
+                std::cout << "using pattern " << eve::zeroing_n<sz> << "\n";
 
-                  typename T::template reshape<eve::fixed<sz>> ref(0);
-                  TTS_EQUAL(simd[eve::zeroing_n<sz>], ref);
-                }
-              };
+                using type = typename T::template reshape<eve::fixed<sz>>;
+
+                type ref(typename type::value_type(0));
+                TTS_EQUAL(simd[eve::zeroing_n<sz>], ref);
+              }
+            };
 
     ( f(std::integral_constant<std::size_t,I>{}), ... );
   }( std::make_index_sequence<7>{} );
 }
 
+TTS_CASE_TPL("Check zeroing swizzle for arithmetic type", EVE_TYPE )
+{
+  test_zero<T>(runtime, verbose, [](int i, int) { return 1+i; } );
+}
+
 TTS_CASE_TPL("Check zeroing swizzle for logical type", EVE_TYPE )
 {
-  eve::logical<T> simd([](int i, int) { return i%3==0; });
-
-  [&]<std::size_t... I>( std::index_sequence<I...>)
-  {
-    auto f  = [&]<std::size_t N>(std::integral_constant<std::size_t,N>)
-              {
-                constexpr std::size_t sz = 1ULL << N;
-                if constexpr(sz <= EVE_CARDINAL)
-                {
-                  std::cout << "using pattern " << eve::zeroing_n<sz> << "\n";
-
-                  typename eve::logical<T>::template reshape<eve::fixed<sz>> ref(false);
-                  TTS_EQUAL(simd[eve::zeroing_n<sz>], ref);
-                }
-              };
-
-    ( f(std::integral_constant<std::size_t,I>{}), ... );
-  }( std::make_index_sequence<7>{} );
+  test_zero<eve::logical<T>>(runtime, verbose, [](int i, int) { return i%3 == 0; } );
 }

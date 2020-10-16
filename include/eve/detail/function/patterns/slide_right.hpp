@@ -19,33 +19,33 @@ namespace eve::detail
   //================================================================================================
   struct slide_right
   {
-    template<std::ptrdiff_t... I>
-    static constexpr auto find_slide(pattern_<I...> const& p)  noexcept
+    template<typename Wide, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<Wide> const&)  noexcept
     {
-      std::ptrdiff_t c = sizeof...(I);
-      std::ptrdiff_t i = 0;
+      constexpr std::ptrdiff_t c  = cardinal_v<Wide>;
+      constexpr std::ptrdiff_t sz = pattern_<I...>::size(c);
+      constexpr pattern_<I...> p;
 
-      while(p(i,c)==-1 && i<c) i++;
-
-      return i;
-    }
-
-    template<std::ptrdiff_t... I, typename Wide>
-    static constexpr auto check(pattern_<I...> const& p, as_<Wide> const&)  noexcept
-    {
-      constexpr auto c = cardinal_v<Wide>;
       if(c==1) return false;
 
-      // Find where the -1 streak ends
-      int i = find_slide(p), res = i;
+      // Consume consecutive -1
+      int i = 0;
+      while(i<sz && p(i,c)==-1)
+      {
+        i++;
+      }
 
-      // Check we have partial identity afterward
-      for(;i<c;++i)
-        if( p(i,c) != i-res)
-          return false;
+      // Check for partial identity
+      int j = 0;
+      while( i<sz )
+      {
+        auto q = p(i,c);
+        if(q!=j) return false;
+        i++;
+        j++;
+      }
 
-      return c <= expected_cardinal_t<element_type_t<Wide>>::value;
+      return true;
     }
   };
-
 }
