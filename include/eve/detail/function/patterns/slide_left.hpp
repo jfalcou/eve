@@ -17,36 +17,47 @@ namespace eve::detail
 {
   //================================================================================================
   // Slide data left
+  //
+  //  [ a b c d ] : sz elements taken from wide of N cardinal
+  //
+  //  [ k (k+1<N ? k+1 : -1) .. (k+sz-1<N ? k+sz-1 : -1) ]  1 <= k <= N-1
+  //
   //================================================================================================
   struct slide_left
   {
-    template<std::ptrdiff_t... I>
-    static constexpr auto find_slide(pattern_<I...> const& p)  noexcept
-    {
-      std::ptrdiff_t c = sizeof...(I);
-      std::ptrdiff_t i = c-1;
-
-      while(p(i,c)==-1 && i>0) i--;
-
-      return i;
-    }
-
     template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const& p, as_<Wide> const&)  noexcept
+    static constexpr auto check(pattern_<I...>, as_<Wide> const&)  noexcept
     {
-      constexpr std::ptrdiff_t c = cardinal_v<Wide>;
+      constexpr std::ptrdiff_t c  = cardinal_v<Wide>;
+      constexpr std::ptrdiff_t sz = pattern_<I...>::size(c);
+      constexpr pattern_<I...> p;
+
       if(c==1) return false;
 
-      // Find where the -1 streak ends
-      std::ptrdiff_t i = find_slide(p), res = i;
-      std::ptrdiff_t d = c-1;
+      // Valid pattern
+      // [ k (k+1<N ? k+1 : -1) .. (k+sz-1<N ? k+sz-1 : -1) ]  1 <= k <= N-1
+      auto p0 = p(0,c);
+      int i = 0;
 
-      // Check we have partial identity afterward
-      for(;i>=0;--i)
-        if( p(i,c) != d+(i-res))
+      while(i<sz)
+      {
+        auto q = p(i,c);
+        if(q!=-1 && q != p0+i)
           return false;
+        i++;
+      }
 
-      return c <= expected_cardinal_t<element_type_t<Wide>>::value;
+      if(i<sz)
+      {
+        while( i<sz )
+        {
+          auto q = p(i,c);
+          if(q!=-1) return false;
+          i++;
+        }
+      }
+
+      return true;
     }
   };
 }

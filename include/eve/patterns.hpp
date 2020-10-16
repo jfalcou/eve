@@ -132,10 +132,10 @@ namespace eve
   template<int N, typename G, int S>
   constexpr auto as_pattern( swizzler_<G,S> const& ) noexcept
   {
-    return []<std::size_t... I>( std::index_sequence<I...> const&)
+    return []<int... I>( std::integer_sequence<int,I...> const&)
     {
-      return pattern_< swizzler_<G,S>{}(I,sizeof...(I))... >{};
-    }( std::make_index_sequence<swizzler_<G,S>::size(N)>{});
+      return pattern_< swizzler_<G,S>{}(I,static_cast<int>(sizeof...(I)))... >{};
+    }( std::make_integer_sequence<int, swizzler_<G,S>::size(N)>{});
   }
 
   template<int N, typename T> constexpr auto as_pattern( T const& p ) noexcept
@@ -176,8 +176,11 @@ namespace eve
 
   //------------------------------------------------------------------------------------------------
   // Slides swizzle: left, right and relative
+  template<int O, int S, int N>
+  inline constexpr auto slide_left_n  = swizzler<S>( [](int i, int) { return i+O<N ? i+O : na_; } );
+
   template<int O>
-  inline constexpr auto slide_left  = swizzler( [](int i, int c) { return i<(c-O) ? i+O : na_; } );
+  inline constexpr auto slide_left    = swizzler( [](int i, int c) { return i+O<c ? i+O : na_; } );
 
   template<int O>
   inline constexpr auto slide_right = swizzler( [](int i, int ) { return i<O ? na_ : i-O; } );
@@ -189,6 +192,14 @@ namespace eve
                                                           : slide_right<O>(i,c);
                                           }
                                         );
+
+  //----------------------------------------------------------------------------------------------
+  // Fix a patternto a given size
+  template<int N, shuffle_pattern Pattern >
+  constexpr auto fix_pattern(Pattern const& p) noexcept
+  {
+    return swizzler<N>( p );
+  }
 
   //----------------------------------------------------------------------------------------------
   // Extract a sub-pattern of an existing pattern

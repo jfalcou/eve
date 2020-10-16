@@ -45,48 +45,23 @@ namespace eve::detail
       else if constexpr(std::is_same_v<in_t,uint8x16_t>) return Target{vextq_u8 (w,Wide{0},N::value)};
     };
 
-    if constexpr( c == sz ) // same cardinal in and out
+    if constexpr(std::is_floating_point_v<typename Wide::value_type>)
     {
-      if constexpr(std::is_floating_point_v<typename Wide::value_type>)
-      {
-        return bit_cast ( do_swizzle( EVE_RETARGET(neon128_), slide_left{}
-                                    , as<as_integer_t<Target>>(), p
-                                    , bit_cast( v, as<as_integer_t<Wide>>())
-                                    )
-                        , as<Target>()
-                        );
-      }
-      else
-      {
-        constexpr auto s  = sz -1 - slide_left::find_slide(Pattern());
-        return slider(v,std::integral_constant<std::size_t,s>{});
-      }
+      return bit_cast ( do_swizzle( EVE_RETARGET(neon128_), slide_left{}
+                                  , as<as_integer_t<Target>>(), p
+                                  , bit_cast( v, as<as_integer_t<Wide>>())
+                                  )
+                      , as<Target>()
+                      );
+    }
+    else if constexpr( c == sz ) // same cardinal in and out
+    {
+      return slider(v,std::integral_constant<std::size_t,Pattern()(0,c)>{});
     }
     else if constexpr( c > sz )
     {
-      if constexpr(std::is_floating_point_v<typename Wide::value_type>)
-      {
-        return bit_cast ( do_swizzle( EVE_RETARGET(neon128_), slide_left{}
-                                    , as<as_integer_t<Target>>(), p
-                                    , bit_cast( v, as<as_integer_t<Wide>>())
-                                    )
-                        , as<Target>()
-                        );
-      }
-      else if constexpr( std::is_same_v<typename Wide::abit_, arm_128_>)
-      {
-        auto r = v.slice(lower_);
-        return r[ p ];
-      }
-      else
-      {
-        constexpr auto s  = sz - 1 - slide_left::find_slide(Pattern());
-        return slider(v,std::integral_constant<std::size_t,s>{});
-      }
-    }
-    else
-    {
-      return do_swizzle(EVE_RETARGET(neon128_), any_match{}, as_<Target>(),p,v );
+      auto r = v[ fix_pattern<c>(p) ];
+      return bit_cast(r.slice(lower_), as_<Target>());
     }
   }
 }
