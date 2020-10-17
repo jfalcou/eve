@@ -45,9 +45,8 @@ TTS_CASE_TPL("Check eve::rem behavior", EVE_TYPE)
     TTS_EQUAL((  T(-4) %   T(3)), T(-1));
     TTS_EQUAL((v_t(-4) %   T(3)), T(-1));
     TTS_EQUAL((  T(-4) % v_t(3)), T(-1));
-    TTS_EQUAL((  T(-4) %   T(0)), T(0));
   }
-  else if constexpr(eve::integral_value<T>)
+  if constexpr(eve::integral_value<T>)
   {
     TTS_EQUAL((  T(1) %   T(2)), T(1));
     TTS_EQUAL((v_t(1) %   T(2)), T(1));
@@ -55,7 +54,6 @@ TTS_CASE_TPL("Check eve::rem behavior", EVE_TYPE)
     TTS_EQUAL((  T(4) %   T(3)), T(1));
     TTS_EQUAL((v_t(4) %   T(3)), T(1));
     TTS_EQUAL((  T(4) % v_t(3)), T(1));
-    TTS_EQUAL((  T(4) %   T(0)), T(0));
   }
 
   TTS_EQUAL(eve::rem(T(12), T(4)), T(0));

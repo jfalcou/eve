@@ -15,13 +15,17 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
+#include <eve/function/converter.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/rem.hpp>
+#include <eve/function/round.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/allbits.hpp>
+#include <eve/constant/nan.hpp>
+
 
 #include <type_traits>
 #include <eve/detail/apply_over.hpp>
@@ -35,38 +39,129 @@ namespace eve::detail
     return arithmetic_call(gcd, a, b);
   }
 
-  template<value T> EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
-  requires(has_native_abi_v<T>)
+  template<integral_scalar_value T>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
+  {
+    while( b )
+    {
+      auto r = a % b;
+      a   = b;
+      b   = r;
+    }
+    return a;
+  }
+
+  template<integral_simd_value T>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      std::cout << "native" << std::endl;
-      auto valid = true_(as(a));
-      if constexpr( signed_value<T> )
+      using elt_t = element_type_t<T>;
+      if constexpr(sizeof(elt_t) == 8)
       {
-        a = abs(a);
-        b = abs(b);
+        auto test = is_nez(b);
+        T r(0);
+        while (any(test))
+        {
+          b = if_else(test, b, allbits);
+          r = a % b;
+          a = if_else(test, b, a);
+          test = test && is_nez(r);
+          b = r;
+        }
+        return a;
       }
-      if constexpr( floating_value<T> )
+      else if  constexpr(sizeof(elt_t) == 4)
       {
-        valid = is_flint(a) && is_flint(b);
+        auto r = raw(gcd)(float64(a), float64(b));
+        if constexpr(std::is_signed_v < elt_t>)
+          return int32(r);
+        else
+          return uint32(r);
+      }
+      else if constexpr(sizeof(elt_t) <= 2)
+      {
+        auto r = raw(gcd)(float32(a), float32(b));
+        if constexpr(sizeof(elt_t) == 2)
+        {
+          if constexpr(std::is_signed_v < elt_t>)
+            return int16(r);
+          else
+            return uint16(r);
+        }
+        else
+        {
+          if constexpr(std::is_signed_v < elt_t>)
+            return int8(r);
+          else
+            return uint8(r);
+        }
+      }
+
+    }
+    else
+    {
+      return apply_over(gcd, a, b);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto valid = is_flint(a) && is_flint(b);
+      if constexpr( scalar_value<T> )
+      {
+        if (valid)
+        {
+          while( b )
+          {
+            auto r = rem(a, b);
+            a   = b;
+            b   = r;
+          }
+          return a;
+        }
+        else return nan(as(a));
+      }
+      else
+      {
         a = if_else(valid, a, zero);
         b = if_else(valid, b, zero);
+        auto test = is_nez(b);
+        T r(0);
+        while (any(test))
+        {
+          r = rem(a, b);
+          a = if_else(test, b, a);
+          test = is_nez(r)&&test;
+          b = r;
+        }
+        return if_else(valid, a, allbits);
       }
-      a = if_else(is_eqz(a), b, a);
-      b = if_else(is_eqz(b), a, b);
-      T r;
+    }
+    else
+    {
+      return apply_over(gcd, a, b);
+    }
+
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
       if constexpr( scalar_value<T> )
       {
         while( b )
         {
-          if constexpr(integral_value<T>) r = a % b;
-          else r = rem(a, b);
+          auto r = rem(a, b);
           a   = b;
           b   = r;
         }
-        if constexpr(integral_value<T>) return a;
-        else return  valid ? a: eve::allbits(as(a));
+        return a;
       }
       else
       {
@@ -74,39 +169,35 @@ namespace eve::detail
         T r(0);
         while (any(test))
         {
-          if constexpr(integral_value<T>)
-          {
-            std::cout << "avant a " << a << std::endl;
-            std::cout << "avant b " << b << std::endl;
-            std::cout << "avant r " << r << std::endl;
-              r = a % b;
-            std::cout << "apres a " << a << std::endl;
-            std::cout << "apres b " << b << std::endl;
-            std::cout << "apres r " << r << std::endl;
-          }
-
-          else r = rem(a, b);
+          r = rem(a, b);
           a = if_else(test, b, a);
+          test = is_nez(r)&&test;
           b = r;
-          test = is_nez(b);
         }
-        if constexpr( floating_value<T> )
-        {
-          return if_else(valid, a, allbits);
-        }
-        else
-        {
-          return a;
-        }
-
+        return a;
       }
     }
     else
     {
-      std::cout << "not native" << std::endl;
       return apply_over(gcd, a, b);
     }
+  }
 
+
+  template<value T, value U, decorator D>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, U b) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(D(gcd), a, b);
+  }
+
+  template<value T, decorator D>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, T b) noexcept
+  {
+    if constexpr(floating_value<T>)
+      return raw(gcd)(D()(round)(a), D()(round)(b));
+    else
+      return raw(gcd)(a, b);
   }
 
 }
