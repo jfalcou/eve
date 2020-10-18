@@ -23,6 +23,5 @@ add_dependencies(unit.combinatorial.exe unit.combinatorial.simd.exe     )
 ## Elementwise function unit tests
 ##==================================================================================================
 
-make_all_units(ROOT unit.combinatorial NAME anp                 ARCH scalar simd TYPES ${real_types}   )
 make_all_units(ROOT unit.combinatorial NAME gcd                 ARCH scalar simd TYPES ${all_types}    )
 make_all_units(ROOT unit.combinatorial NAME lcm                 ARCH scalar simd TYPES ${all_types}    )
