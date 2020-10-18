@@ -14,6 +14,11 @@
 
 namespace eve
 {
+  namespace tag { struct lcm_; }
+
+  template<>
+  struct supports_optimized_conversion<tag::lcm_> : std::true_type {};
+
   EVE_MAKE_CALLABLE(lcm_, lcm);
 }
 

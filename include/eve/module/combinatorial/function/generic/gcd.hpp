@@ -183,6 +183,11 @@ namespace eve::detail
     }
   }
 
+  template<integral_value T>
+  EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), raw_type const &, T a, T b) noexcept
+  {
+    return gcd(a, b);
+  }
 
   template<value T, value U, decorator D>
   EVE_FORCEINLINE auto gcd_(EVE_SUPPORTS(cpu_), D const &, T a, U b) noexcept
