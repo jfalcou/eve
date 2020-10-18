@@ -1,0 +1,79 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en">
+                       **Expressive Vector Engine**
+                           `eve::falling_factorial`
+<br>
+
+  (insert ../../../crumbs.html here)
+
+Synopsis
+====================================================================================================
+**Required header:** <script type="preformatted">`#include <eve/function/falling_factorial.hpp>`</script>
+
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+namespace eve
+{
+  inline constexpr /*unspecified*/ falling_factorial = /*unspecified*/;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Function object representing the mid-point operation.
+
+Member functions
+====================================================================================================
+<script type="preformatted">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
+template< value T, value U > auto operator()( T x, U n ) const noexcept requires compatible< T, U >;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</script>
+Performs  the  [element-wise](../../../glossary.html#regular) arithmetic falling_factorial of the two [values](../../concepts.html#value).
+
+Parameters
+----------------------------------------------------------------------------------------------------
+`x`, `n`
+:   [values](../../concepts.html#value).
+
+
+Return value
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+The falling factorial (or Pochhammer symbol)  $(x)_n$ is defined for positive integral `n` by $\prod_{i=1}^n (x-i)$.
+
+ The result type is the [compatibility result](../../concept.html#compatibility) of the two parameters.
+
+!!! WARNING
+    If `x` and `n` can be of any [real values](../../concepts.html#value) type, but `n` element must be positive flint. If it is not the
+    case the corresponding result will be Nan.
+
+    Take also care that with integral types overflow is at hand (see below) and that the computation are done internally in floating points
+    so that rouding errors can occur.
+
+Type conversion
+----------------------------------------------------------------------------------------------------
+<span class="smallskip"></span>
+
+Trying to avoid the overflow problem, one can convert the parameters to a larger type before calling the function, but this can
+be done in an optimized way applying converter on the function object rather than the parameters.
+
+For instance the call `float64(falling_factorial)(34,10)` will computes the double result of the computation and `uint64(falling_factorial)(34,10)`
+the std::uint64_t result.
+
+  (insert ../../src/falling_factorial.src.html here)
+
+  (insert ../../out/falling_factorial.out.html here)
+
+
+<!-- End of Document -->
+<link rel="stylesheet" href="../../../eve.css">
+<!-- Markdeep: -->
+<script>markdeepOptions={tocStyle:'none'};</script>
+<script src="../../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script>

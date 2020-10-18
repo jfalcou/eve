@@ -14,7 +14,12 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(anp_, anp);
+  namespace tag { struct falling_factorial_; }
+
+  template<>
+  struct supports_optimized_conversion<tag::falling_factorial_> : std::true_type {};
+
+  EVE_MAKE_CALLABLE(falling_factorial_, falling_factorial);
 }
 
-#include <eve/module/combinatorial/function/generic/anp.hpp>
+#include <eve/module/combinatorial/function/generic/falling_factorial.hpp>
