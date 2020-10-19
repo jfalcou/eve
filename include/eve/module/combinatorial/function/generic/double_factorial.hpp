@@ -63,7 +63,7 @@ namespace eve::detail
       };
       auto i = uint64(i0);
       auto r = inf(as<decltype(factorial(i))>()); //perhaps 0 should be fine
-      auto notdone =  true_(as(i));
+      auto notdone =  i <= 300;
       notdone = next_interval(odd, notdone, is_odd(i), r, i);
       if(any(notdone))
       {
