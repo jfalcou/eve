@@ -59,6 +59,7 @@ namespace eve
   inline constexpr converter_type<std::int32_t>   const int32    = {};
   inline constexpr converter_type<std::int64_t>   const int64    = {};
 
+
   //================================================================================================
   // Function decorator for template conversion
   template<typename T>
@@ -154,4 +155,38 @@ namespace eve
 
   inline constexpr floating_converter const floating_ = {};
 
+
+//   template<typename T>
+//   inline constexpr converter_type<element_type_t<T>> const  upgrade = to_<detail::upgrade_t<element_type_t>> {};
+
+
+  struct upgrade_converter
+  {
+    template<value Val>
+    constexpr EVE_FORCEINLINE auto operator()(Val const & val) const noexcept
+    {
+      using value_type = detail::upgrade_t<element_type_t<Val>>;
+      return convert(val, as<value_type>());
+    }
+
+    template<typename Function>
+    EVE_FORCEINLINE constexpr  auto operator()(Function const & f) const noexcept
+    {
+      return  [f]<typename T, typename... Ts>(T&& arg0, Ts&&... args)
+      {
+        using value_type = detail::upgrade_t<element_type_t<std::remove_cvref_t<T>>>;
+
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+        {
+          return f(upgrade_converter(), std::forward<T>(arg0), std::forward<Ts>(args)...);
+        }
+        else
+        {
+          return convert(f(std::forward<T>(arg0), std::forward<Ts>(args)...), as_<value_type>());
+        }
+      };
+    }
+  };
+
+  inline constexpr upgrade_converter const upgrade_ = {};
 }
