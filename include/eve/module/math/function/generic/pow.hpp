@@ -101,7 +101,6 @@ namespace eve::detail
       T result(1);
       while( expo )
       {
-        std::cout << expo << " -> " << base << " -> " <<  is_odd(expo) << std::endl;
         if( is_odd(expo) )result *= base;
         expo >>= 1;
         base = sqr(base);
@@ -139,6 +138,13 @@ namespace eve::detail
       T tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
       return  if_else(is_ltz(a1), rec(tmp), tmp);
     }
+  }
+
+  template<floating_real_scalar_value T, integral_real_simd_value U>
+  EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
+  {
+    using r_t = wide<T, cardinal_t<U>>;
+    return pow(r_t(a0), a1);
   }
 
   template<integral_real_value T, integral_real_scalar_value U>
