@@ -16,6 +16,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/forward.hpp>
+#include <eve/platform.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/concept/value.hpp>
@@ -24,7 +25,7 @@ namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-                  rec_(EVE_SUPPORTS(vmx_), raw_type const &mode, wide<T, N, ppc_> const &v0) noexcept
+                  rec_(EVE_SUPPORTS(vmx_), raw_type const&, wide<T, N, ppc_> const &v0) noexcept
   {
     return vec_re(v0.storage());
   }
@@ -34,26 +35,29 @@ namespace eve::detail
   {
     if constexpr(std::is_same_v<double, T>)
     {
-      auto estimate = refine_rec(v0, raw(rec)(v0));
-      return refine_rec(v0, estimate);
+      auto    estimate  = refine_rec(v0, raw(rec)(v0));
+              estimate  = refine_rec(v0, estimate);
+              estimate  = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
+      return  estimate;
     }
     else if constexpr(std::is_same_v<float, T>)
     {
-      return refine_rec(v0, raw(rec)(v0));
+      auto    estimate  = refine_rec(v0, raw(rec)(v0));
+              estimate  = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
+      return  estimate;
     }
   }
 
   template<floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N, ppc_>
-                  rec_(EVE_SUPPORTS(vmx_), pedantic_type const &mode, wide<T, N, ppc_> const &v0) noexcept
+                  rec_(EVE_SUPPORTS(vmx_), pedantic_type const&, wide<T, N, ppc_> const &v0) noexcept
   {
     auto estimate = rec(v0);
 
-    estimate = if_else(is_eqz(v0), bit_or(v0, inf(eve::as(v0))), estimate);
-
-#pragma once
-    estimate = if_else(is_infinite(v0), bit_and(v0, mzero(eve::as(v0))), estimate);
-#endif
+    if constexpr(platform::supports_infinites)
+    {
+      estimate = if_else(is_infinite(v0), bit_and(v0, mzero(eve::as(v0))), estimate);
+    }
 
     return estimate;
   }

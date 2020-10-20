@@ -30,9 +30,9 @@ namespace eve
 // PPC SIMD ABI
 # if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_PPC)
 
-#  ifndef EVE_NO_DENORMALS
-#    define EVE_NO_DENORMALS
-#  endif
+// #  ifndef EVE_NO_DENORMALS
+// #    define EVE_NO_DENORMALS
+// #  endif
 
 #  if !defined(__APPLE_CC__) || __APPLE_CC__ <= 1 || __GNUC__ >= 4
 #    include <altivec.h>

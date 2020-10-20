@@ -36,7 +36,7 @@ namespace eve::detail
                                , I v1) noexcept
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
-    return shr(v0, i_t(v1));
+    return bit_shr(v0, i_t(v1));
   }
 }
 
