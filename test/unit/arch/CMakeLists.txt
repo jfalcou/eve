@@ -8,6 +8,7 @@
 
 set(  SOURCES
       is_supported.cpp
+      expected_cardinal.cpp
    )
 
 make_unit( "unit.arch" ${SOURCES} )

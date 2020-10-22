@@ -11,6 +11,7 @@
 #pragma once
 
 #include <cstddef>
+#include <eve/detail/concepts.hpp>
 
 namespace eve
 {
@@ -33,6 +34,10 @@ namespace eve
   {
     using parent = cpu_;
   };
+
+  //================================================================================================
+  // Concept for discriminatig aggregated from non-agrgegated ABI
+  template<typename T> concept regular_abi = !std::same_as<T,aggregated_>;
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation
