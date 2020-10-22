@@ -1,0 +1,55 @@
+<!--
+  EVE -  Expressive Vector Engine
+  Copyright 2020 Joel FALCOU
+  Copyright 2020 Jean-Thierry LAPRESTE
+
+  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  SPDX-License-Identifier: MIT
+ -->
+<meta charset="utf-8" lang="en"><style class="fallback">body{visibility:hidden;}</style>
+                       **Expressive Vector Engine**
+
+  (insert ../../crumbs.html here)
+
+# Special functions
+
+These functions provide scalar and SIMD version of some special functions in namespace `eve`.
+The naming of these functions tries to follow the standard.
+
+  - if the standard library implements the function, its name will be identical to the standard name
+  - else if the boost math libary implements the function, its name will be identical to the library name
+  - else if Octave implements the function, its name will be identical to the octave name
+
+## Functions
+
+**Convenience header:** <script type="preformatted">`#include <eve/function/elliptic.hpp>`</script>
+
+[`eve::am`](special/am.html)
+:   computes  the Jacobi's elliptic function
+[`eve::ellie`](special/ellie.html)
+:   computes the incomplete elliptic integral of the first kind : $\displaystyle E(a_0, a_1) = \int_0^{a0} \sqrt{1-a_1\sin^2 t} \mbox{d}t$
+[`eve::ellik`](special/ellik.html)
+:   computes the incomplete elliptic integral of the second kind: $\displaystyle F(a_0, a_1) = \int_0^{a0} \frac1{\sqrt{1-a_1\sin^2 t}}  \mbox{d}t$
+[`eve::ellint_1`](special/ellint_2.html)
+:   computes the complete elliptic integral of the first kind : $\displaystyle K(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
+[`eve::ellint_2`](special/ellint_2.html)
+:   computes the complete elliptic integral of the second kind : $\displaystyle E(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
+[`eve::ellpj`](special/ellipj.html)
+:   computes simultaneously the values of the jacobi elliptic functions sn, cn and dn
+[`eve::ellpk`](special/ellipk.html)
+:   computes simultaneously the values of the jacobi elliptic functions sn, cn and dn
+[`eve::ellpke`](special/ellipke.html)
+:   computes simultaneously the values of the complete elliptic integral of the first and second kind
+
+
+----------------------------------------------------------------------------------------------------
+<!-- Shortcuts -->
+
+<!-- Footnotes -->
+
+<!-- End of Document -->
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'none'};</script>
+<link rel="stylesheet" href="../../eve.css">
+<!-- Markdeep: -->
+<script src="../../markdeep.min.js"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
