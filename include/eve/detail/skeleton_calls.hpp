@@ -195,4 +195,49 @@ namespace eve::detail
     }
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // ternary indexed operators scheme
+  template<typename Obj, integral_value V, value T, value U>
+  EVE_FORCEINLINE  auto indexed_call(Obj op
+                                       , V const &c
+                                       , T const &a
+                                       , U const &b) noexcept
+  requires compatible_values<T, U> && size_compatible_values<T, V> && size_compatible_values<U, V>
+  {
+
+    if constexpr(scalar_value<T> && simd_value<U>)
+    {
+      return indexed_call(op, c, U(a), b);
+    }
+    else if constexpr(simd_value<T> && scalar_value<U>)
+    {
+      return indexed_call(op, c, a, T(b));
+    }
+    else if constexpr(scalar_value<T> && scalar_value<U>) // so U and T of the same type
+    {
+      if constexpr(scalar_value<V>)
+      {
+        return op(c, a, b);
+      }
+      else
+      {
+        using r_t = as_wide<T, cardinal_t<V>>;
+        return op(c, r_t(a), r_t(b));
+      }
+    }
+    else if constexpr(simd_value<T> && simd_value<U>)   //all two are simd so of U and V the same type and V correctly sized index
+    {
+      if constexpr(scalar_value<V>)
+      {
+        using i_t = as_wide<V, cardinal_t<T>>;
+        return op(i_t(c), a, b);
+      }
+      else
+      {
+        return op(c, a, b);
+      }
+    }
+  }
+
+
 }
