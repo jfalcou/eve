@@ -8,6 +8,7 @@
 
 set(  SOURCES
       is_supported.cpp
+      current_api.cpp
       expected_cardinal.cpp
    )
 
