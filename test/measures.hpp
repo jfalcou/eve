@@ -27,6 +27,14 @@ namespace eve
     if constexpr(eve::simd_value<T>)  return eve::all(l == r);
     else                              return l == r;
   }
+
+  template<typename T>
+  inline std::string to_string(logical<T> const &l)
+  {
+    std::ostringstream str;
+    str << l;
+    return str.str();
+  }
 }
 
 namespace tts
