@@ -24,11 +24,11 @@ namespace eve
 {
   //================================================================================================
   // Local renaming for spy SIMD detector
-  inline constexpr auto current_api = spy::simd_instruction_set;
-
 # if defined(EVE_NO_SIMD)
-  inline constexpr bool supports_simd = false;
+  inline constexpr auto current_api     = spy::undefined_simd_;
+  inline constexpr bool supports_simd   = false;
 # else
+  inline constexpr auto current_api   = spy::simd_instruction_set;
   inline constexpr bool supports_simd = true;
 # endif
 }
