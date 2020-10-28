@@ -11,20 +11,21 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/as.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/traits/element_type.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/as.hpp>
-#include <optional>
+#include <eve/traits/element_type.hpp>
+
 #include <array>
 #include <bit>
+#include <optional>
 
 namespace eve::detail
 {
   //================================================================================================
-  // Store the top bots of a logical Pack to optimize some boolean processing
+  // Store the top bits of a logical Pack to optimize some boolean processing
   //================================================================================================
   template<typename Pack>
   struct top_bits
@@ -39,17 +40,35 @@ namespace eve::detail
     using replications_t = std::make_index_sequence<replications()>;
 
     // Compute proper storage
-    using wide_t        = as_wide_t<element_type_t<Pack>>;
-    using raw_t = std::conditional_t< has_aggregated_abi_v<Pack>
-                                    , std::array< top_bits<wide_t> , replications()>
-                                    , std::uint32_t
-                                    >;
+    using wide_t  = as_wide_t<element_type_t<Pack>>;
+    using raw_t   = std::conditional_t< has_aggregated_abi_v<Pack>
+                                      , std::array< top_bits<wide_t> , replications()>
+                                      , std::uint32_t
+                                      >;
 
     raw_t raw;
 
     //----------------------------------------------------------------------------------------------
+    // This helper simplify all aggregate implementation
+    template<typename Operation>
+    static constexpr void iterate( top_bits& dst, top_bits const& src, Operation op )
+    {
+      if constexpr( has_aggregated_abi_v<Pack> )
+      {
+        [&]<std::size_t... I>(std::index_sequence<I...> const&)
+        {
+          (op(dst.raw[I], src.raw[I]),...);
+        }(std::make_index_sequence<replications()>{});
+      }
+      else
+      {
+        op(dst.raw, src.raw);
+      }
+    }
 
-    top_bits() {}
+    //----------------------------------------------------------------------------------------------
+    // Constructors
+    constexpr top_bits() {}
 
     explicit top_bits(const Pack& x)
     {
@@ -72,21 +91,27 @@ namespace eve::detail
         {
           raw = _mm256_movemask_epi8((__m256i)(x.storage()));
         }
+
+        // Smaller cardinal need one more mask to remove unrequired bits
+        constexpr auto ec = expected_cardinal_v<element_type_t<Pack>,typename Pack::abi_type>;
+        if constexpr( cardinal_v<Pack> < ec )
+        {
+          constexpr std::uint32_t mask = (1ULL << cardinal_v<Pack>) - 1;
+          raw &= mask;
+        }
       }
     }
 
-    // top_bits(const Pack& x, top_bits<Pack> ignore) : top_bits(x)
-    // {
-    //   *this &= ignore;
-    // }
-
-    explicit operator bool() const
+    //----------------------------------------------------------------------------------------------
+    // Non-0 top_bits is convertible to true
+    explicit constexpr operator bool() const noexcept
     {
       if constexpr( has_aggregated_abi_v<Pack> )
       {
-        bool r = true;
-        for(auto const& b : raw) r = r && static_cast<bool>(b);
-        return r;
+        for(auto const& b : raw)
+          if(!static_cast<bool>(b)) return false;
+
+        return true;
       }
       else
       {
@@ -95,115 +120,47 @@ namespace eve::detail
     }
 
     //----------------------------------------------------------------------------------------------
-    friend bool operator==(top_bits const& lhs, top_bits const& rhs) { return lhs.raw == rhs.raw; }
-    friend bool operator!=(top_bits const& lhs, top_bits const& rhs) { return lhs.raw != rhs.raw; }
-    friend bool operator< (top_bits const& lhs, top_bits const& rhs) { return lhs.raw  < rhs.raw; }
-    friend bool operator> (top_bits const& lhs, top_bits const& rhs) { return lhs.raw  > rhs.raw; }
-    friend bool operator<=(top_bits const& lhs, top_bits const& rhs) { return lhs.raw <= rhs.raw; }
-    friend bool operator>=(top_bits const& lhs, top_bits const& rhs) { return lhs.raw >= rhs.raw; }
+    // Comparison operators
+    constexpr auto operator<=>(top_bits const&)const  noexcept = default;
 
-    // top_bits operator|(top_bits const& other) const { return {raw  | other.raw};  }
-    // top_bits operator&(top_bits const& other) const { return {raw  & other.raw};  }
-    // top_bits operator~()                      const { return {~raw};              }
-
-    // top_bits& operator&=(top_bits const& other)
-    // {
-    //   raw &= other.raw;
-    //   return *this;
-    // }
-
-    // top_bits& operator|=(top_bits const& other)
-    // {
-    //   raw |= other.raw;
-    //   return *this;
-    // }
-  };
-
-/*
-  //================================================================================================
-  // Aggregate case - stores an array of top_bits<smallest_pack>
-  //================================================================================================
-  template<typename Pack> requires(has_aggregated_abi_v<Pack>)
-  struct top_bits<Pack>
-  {
-    using value_type                  = element_type_t<Pack>;
-    static constexpr auto replication = replications();
-
-    using wide_t = as_wide_t<value_type>;
-    using raw_t  = std::array<top_bits<wide_t>,replication>;
-    raw_t raw;
-
-    top_bits() {}
-
-    explicit top_bits(const Pack& x)
+    //----------------------------------------------------------------------------------------------
+    // Bits manipulations
+    friend constexpr top_bits operator|(top_bits const& l, top_bits const& r) noexcept
     {
-      [&]<std::size_t... I>(auto const& s, std::index_sequence<I...> const&)
-      {
-        ((raw[replication - 1 - I] = top_bits<wide_t>(s.template get<I>()) ),...);
-      }(x.storage(), std::make_index_sequence<replication>{});
+      top_bits that(l);
+      that |= r;
+      return that;
     }
 
-    top_bits(const Pack& x, top_bits<Pack> ignore) : top_bits(x)
+    friend constexpr top_bits operator&(top_bits const& l, top_bits const& r) noexcept
     {
-      *this &= ignore;
+      top_bits that(l);
+      that &= r;
+      return that;
     }
 
-    explicit operator bool() const
-    {
-      bool r = true;
-      for(auto const& b : raw) r = r && static_cast<bool>(b);
-      return r;
-    }
-
-    top_bits operator|(top_bits const& other) const
-    {
-      top_bits r(*this);
-      r |= other;
-      return r;
-    }
-
-    top_bits operator&(top_bits const& other) const
-    {
-      top_bits r(*this);
-      r &= other;
-      return r;
-    }
-
-    top_bits operator~() const
+    constexpr top_bits operator~() const noexcept
     {
       top_bits r;
-      [&]<std::size_t... I>(std::index_sequence<I...> const&)
-      {
-        ((r.raw[I] = ~raw[I]),...);
-      }(std::make_index_sequence<replication>{});
-
+      iterate( r, *this, [](auto& dst, auto const& src) { dst = ~src; } );
       return r;
     }
 
-    top_bits& operator&=(top_bits const& other)
+    constexpr top_bits& operator&=(top_bits const& other) noexcept
     {
-      [&]<std::size_t... I>(std::index_sequence<I...> const&)
-      {
-        ((raw[I] &= other.raw[I] ),...);
-      }(std::make_index_sequence<replication>{});
-
+      iterate( *this, other, [](auto& dst, auto const& src) { dst &= src; } );
       return *this;
     }
 
-    top_bits& operator|=(top_bits const& other)
+    constexpr top_bits& operator|=(top_bits const& other) noexcept
     {
-      [&]<std::size_t... I>(std::index_sequence<I...> const&)
-      {
-        ((raw[I] |= other.raw[I] ),...);
-      }(std::make_index_sequence<replication>{});
-
+      iterate( *this, other, [](auto& dst, auto const& src) { dst |= src; } );
       return *this;
     }
   };
-*/
-
 
 /*
+  // TODO : functions ? constructors ?
   template <typename Pack>
   top_bits<Pack> ignore_first_n_mask() {
     return top_bits<Pack>{set_lower_n_bits(sizeof(Pack))};
@@ -256,23 +213,24 @@ namespace eve::detail
   }
 */
 
+  //------------------------------------------------------------------------------------------------
+  // Find the index of the first true bit if any
   template <typename Pack>
-  std::optional<std::size_t> first_true(const top_bits<Pack>& x)
+  std::optional<std::size_t> first_true(const top_bits<Pack>& x) noexcept
   {
     if constexpr( has_aggregated_abi_v<Pack> )
     {
       std::uint32_t offset = x.raw.size();
       std::uint32_t mask;
 
-      constexpr auto rep = top_bits<Pack>::replications() - 1;
       [&]<std::size_t... I>(auto r, std::index_sequence<I...> const&)
       {
         bool status;
 
         ((
-            status = !r[rep-I]
-          , offset = status ? offset  : rep-I
-          , mask   = status ? mask    : r[rep-I].raw
+            status = !r[I]
+          , offset = status ? offset  : I
+          , mask   = status ? mask    : r[I].raw
         ),...);
 
       }(x.raw, typename top_bits<Pack>::replications_t{});
@@ -295,11 +253,21 @@ namespace eve::detail
     }
   }
 
+  //------------------------------------------------------------------------------------------------
+  // Checks everything is set in a given top_bits
+  template <typename Pack> bool all_true(const top_bits<Pack>& x) noexcept
+  {
+    if constexpr( has_aggregated_abi_v<Pack> )
+    {
+      for(auto const& b : x.raw)
+        if(!all_true(b)) return false;
 
-/*
-  template <typename Pack>
-  bool all_true(const top_bits<Pack>& x) {
-    return x.raw == set_lower_n_bits(sizeof(Pack));
+      return true;
+    }
+    else
+    {
+      constexpr std::uint32_t mask = (1ULL << cardinal_v<Pack>) - 1ULL;
+      return x.raw == mask;
+    }
   }
-*/
 }
