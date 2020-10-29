@@ -17,4 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(am_, am);
 }
 
-#include <eve/module/special/function/generic/am.hpp>
+#include <eve/module/elliptic/function/generic/am.hpp>
