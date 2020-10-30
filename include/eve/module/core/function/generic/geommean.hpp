@@ -15,6 +15,8 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_nltz.hpp>
+#include <eve/function/max.hpp>
+#include <eve/function/min.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/rec.hpp>
 #include <eve/function/sqrt.hpp>
