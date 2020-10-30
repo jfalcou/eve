@@ -24,21 +24,24 @@ The naming of these functions tries to follow the standard.
 
 **Convenience header:** <script type="preformatted">`#include <eve/function/elliptic.hpp>`</script>
 
-[`eve::am`](special/am.html)
-:   computes  the Jacobi's elliptic function
-[`eve::ellie`](special/ellie.html)
+[`eve::am`](elliptic/am.html)
+:   computes  the Jacobi's elliptic amplitude function
+[`eve::ellint_rf`](elliptic/ellint_rf.html)
+:   computes the Carlson's elliptic integral of the first kind
+  $\displaystyle R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t$
+[`eve::ellie`](elliptic/ellie.html)
 :   computes the incomplete elliptic integral of the first kind : $\displaystyle E(a_0, a_1) = \int_0^{a0} \sqrt{1-a_1\sin^2 t} \mbox{d}t$
-[`eve::ellik`](special/ellik.html)
+[`eve::ellik`](elliptic/ellik.html)
 :   computes the incomplete elliptic integral of the second kind: $\displaystyle F(a_0, a_1) = \int_0^{a0} \frac1{\sqrt{1-a_1\sin^2 t}}  \mbox{d}t$
-[`eve::ellint_1`](special/ellint_2.html)
+[`eve::ellint_1`](elliptic/ellint_1.html)
 :   computes the complete elliptic integral of the first kind : $\displaystyle K(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
-[`eve::ellint_2`](special/ellint_2.html)
+[`eve::ellint_2`](elliptic/ellint_2.html)
 :   computes the complete elliptic integral of the second kind : $\displaystyle E(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
-[`eve::ellpj`](special/ellipj.html)
+[`eve::ellpj`](elliptic/ellipj.html)
 :   computes simultaneously the values of the jacobi elliptic functions sn, cn and dn
-[`eve::ellpk`](special/ellipk.html)
+[`eve::ellpk`](elliptic/ellipk.html)
 :   computes simultaneously the values of the jacobi elliptic functions sn, cn and dn
-[`eve::ellpke`](special/ellipke.html)
+[`eve::ellpke`](elliptic/ellipke.html)
 :   computes simultaneously the values of the complete elliptic integral of the first and second kind
 
 
