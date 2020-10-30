@@ -44,11 +44,21 @@ namespace eve::detail
     return if_else(is_nltz(a) || is_nltz(b), sqrt(a)*sqrt(b), allbits);
   }
 
+  template<floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE  auto geommean_(EVE_SUPPORTS(cpu_)
+                                 ,  pedantic_type const&
+                                 , T a
+                                 , U b) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(pedantic(geommean), a, b);
+  }
+
   template<floating_real_value T>
   EVE_FORCEINLINE  T geommean_(EVE_SUPPORTS(cpu_)
-                           ,  pedantic_type const&
-                            , T a
-                            , T b) noexcept
+                              ,  pedantic_type const&
+                              , T a
+                              , T b) noexcept
   requires has_native_abi_v<T>
   {
     auto m = max(a, b);
