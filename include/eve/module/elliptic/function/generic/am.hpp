@@ -32,31 +32,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 
-// namespace eve
-// {
-//   //================================================================================================
-//   // Function decorators mark-up used in function overloads
-//   template < typename T >
-//   struct ell_type : decorator_
-//   {
-//     template<typename Function>
-//     constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-//     {
-//       return  [f](auto&&... args)
-//       {
-//         return f(ell_type<T>{}, std::forward<decltype(args)>(args)...);
-//       };
-//     }
-//   };
-
-//   //================================================================================================
-//   // Function decorator - regular mode
-//   template <typename T> inline constexpr ell_type<T> const ell = {};
-//   struct modulus  {};
-//   struct angle    {};
-
-// }
-
 namespace eve
 {
   //================================================================================================

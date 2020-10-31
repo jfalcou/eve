@@ -74,6 +74,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
+      x = eve::abs(x); 
       auto phi =  abs(phi0);
       // Carlson's algorithm works only for |phi| <= pi/2,
       // use the integrand's periodicity to normalize phi
