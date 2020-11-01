@@ -49,7 +49,7 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( std::is_same_v<Out, double> )
     {
-      if constexpr( std::is_same_v<In, float> && (N::value <= 2))
+           if constexpr( std::is_same_v<In, float> && (N::value <= 2))
       {
         return _mm_cvtps_pd(v0);
       }
@@ -85,13 +85,41 @@ namespace eve::detail
     //==============================================================================================
     else if constexpr( std::is_integral_v<Out> && (sizeof(Out) == 4) )
     {
-      if constexpr( std::is_same_v<In, float> )
+           if constexpr( std::is_same_v<In, float> )                     return _mm_cvttps_epi32(v0);
+      else if constexpr( std::is_same_v<In, double> && (N::value <= 2) ) return _mm_cvttpd_epi32(v0);
+      else if constexpr (sizeof(In) == 1 && N() <= 4)
       {
-        return _mm_cvttps_epi32(v0);
+             if constexpr( eve::current_api < eve::sse4_1 )
+        {
+          using type16 = std::conditional_t<std::is_signed_v<In>, std::int16_t, std::uint16_t>;
+          auto wide16 = eve::convert(v0, eve::as_<type16>{});
+          return eve::convert(wide16, tgt);
+        }
+        else if constexpr ( std::is_signed_v<In> )                       return _mm_cvtepi8_epi32(v0);
+        else                                                             return _mm_cvtepu8_epi32(v0);
       }
-      else if constexpr( std::is_same_v<In, double> && (N::value <= 2) )
+      else if constexpr (sizeof(In) == 2 && N() <= 4)
       {
-        return _mm_cvttpd_epi32(v0);
+             if constexpr( eve::current_api < eve::sse4_1 )
+        {
+          auto const mask = [&]() { if constexpr(std::is_signed_v<In>)  return (v0<0).bits();
+                                    else                                return _mm_setzero_si128();
+                                  }();
+
+          if constexpr(N::value <= 8)
+          {
+            return _mm_unpacklo_epi16( v0, mask );
+          }
+          else
+          {
+            // clang can generate this from aggregate+above, but not gcc nor msvc
+            wide<Out, fixed<4>> l = _mm_unpacklo_epi16( v0, mask );
+            wide<Out, fixed<4>> h = _mm_unpackhi_epi16( v0, mask );
+            return eve::combine(l,h);
+          }
+        }
+        else if constexpr ( std::is_signed_v<In> )                      return _mm_cvtepi16_epi32(v0);
+        else                                                            return _mm_cvtepu16_epi32(v0);
       }
       else
       {
@@ -106,7 +134,7 @@ namespace eve::detail
       //============================================================================================
       // 8 -> 16 bits
       //============================================================================================
-      if constexpr( std::is_integral_v<In> && (sizeof(In) == 1))
+      if constexpr( std::is_integral_v<In> && (sizeof(In) == 1) )
       {
         if constexpr( current_api >= sse4_1 )
         {
@@ -252,4 +280,3 @@ namespace eve::detail
     }
   }
 }
-
