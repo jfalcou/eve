@@ -8,61 +8,65 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::ellint_rf`
+                           `eve::ellint_2`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/ellint_rf.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/ellint_2.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ ellint_rf = /*unspecified*/;
+  inline constexpr /*unspecified*/ ellint_2 = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the ellint_rf operation.
+Function object representing the ellint_2 operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< floating_value T, floating_value U, floating_scalar_value V> auto operator()(T x, U y, V z) const noexcept;
+template< floating_value T>                   auto operator()(T k) const noexcept;
+template< floating_value T, floating_value U> auto operator()(T phi, U k) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of the `ellint_rf` function.
+Performs  the computation of the `ellint_2` function.
 
 
 Parameters
 ----------------------------------------------------------------------------------------------------
-`x`, `y`, `z`
+`phi, `k`
 :   [floating values](../../concepts.html#value).
 
 
+ computes the complete and incomplete elliptic integrals of the second kind :
 
-  This computes the Carlson's elliptic integral
+$$\displaystyle F(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t\mbox{d}t}$$
 
-  $$\displaystyle R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t$$
+The complete case corresponds to $\phi = \pi/2$.
 
-  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
+  - `k` must verify $k^2\sin^2\phi \le 1$ or the result is nan.
 
-  parameters must be non-negative and at most one zero or the result is nan.
+  - In the complete case this means $|k| \le 1$.
+
+  In any other case the result is nan.
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns [element-wise](../../../glossary.html#value) the Carlson's integral.
+Returns  [element-wise](../../../glossary.html#value) the elliptic integral of the first kind.
 
  The result type is of the compatibility type of the three parameters.
 
 
-  (insert ../../src/ellint_rf.src.html here)
+  (insert ../../src/ellint_2.src.html here)
 
-  (insert ../../out/ellint_rf.out.html here)
+  (insert ../../out/ellint_2.out.html here)
 
 
 <!-- End of Document -->

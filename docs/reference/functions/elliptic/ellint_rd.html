@@ -44,17 +44,19 @@ Parameters
 
 
 
-  This computes the Carlson's elliptic integral of the second kind
-  $\displaystyle R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t$
+  This computes the Carlson's elliptic integral
+
+  $$\displaystyle R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t$$
+
   as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
 
-  Parameters `x` and `y`must be non-negative and at most one ot them  zero. Parameter `z` must be greter of equal to 0.
+  Parameters `x` and `y`must be non-negative and at most one ot them  zero. Parameter `z` must be greater than 0.
   In any other case the result is nan.
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns the [element-wise](../../../glossary.html#value) Jacobi amplitude.
+Returns [element-wise](../../../glossary.html#value) the Carlson's integral.
 
  The result type is of the compatibility type of the three parameters.
 

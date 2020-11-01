@@ -27,19 +27,20 @@ The naming of these functions tries to follow the standard.
 [`eve::am`](elliptic/am.html)
 :   computes  the Jacobi's elliptic amplitude function
 [`eve::ellint_rf`](elliptic/ellint_rf.html)
-:   computes the Carlson's elliptic integral of the first kind
+:   computes the Carlson's elliptic integral
   $\displaystyle R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t$
 [`eve::ellint_rd`](elliptic/ellint_rd.html)
-:   computes the Carlson's elliptic integral of the second kind
+:   computes the Carlson's elliptic integral
   $\displaystyle R_D(x, y, z) = \frac32 \int_{0}^{\infty} [(t+x)(t+y)]^{-1/2} (t+z)^{-3/2} \mbox{d}t$
-[`eve::ellie`](elliptic/ellie.html)
-:   computes the incomplete elliptic integral of the first kind : $\displaystyle E(a_0, a_1) = \int_0^{a_0} \sqrt{1-a_1\sin^2 t} \mbox{d}t$
-[`eve::ellik`](elliptic/ellik.html)
-:   computes the incomplete elliptic integral of the second kind: $\displaystyle F(a_0, a_1) = \int_0^{a_0} \frac1{\sqrt{1-a_1\sin^2 t}}  \mbox{d}t$
+[`eve::ellint_rg`](elliptic/ellint_rg.html)
+:   computes the Carlson's elliptic integral
+  $\displaystyle R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
+                                                                                +y\sin^2\theta\sin^2\phi
+                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi$
 [`eve::ellint_1`](elliptic/ellint_1.html)
-:   computes the complete elliptic integral of the first kind : $\displaystyle K(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
+:   computes the complete and incomplete elliptic integrals of the first kind : $\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{\sqrt{1-k^2\sin^2 t}}$
 [`eve::ellint_2`](elliptic/ellint_2.html)
-:   computes the complete elliptic integral of the second kind : $\displaystyle E(a_0) = \int_0^{\pi/2} \sqrt{1-a_0^2\sin^2 t} \mbox{d}t$
+:   computes the complete and incomplete elliptic integrals of the second kind : $\displaystyle E(\phi,k) = \int_0^{\phi} \sqrt{1-k^2\sin^2 t} \mbox{d}t$
 [`eve::ellpj`](elliptic/ellipj.html)
 :   computes simultaneously the values of the jacobi elliptic functions sn, cn and dn
 [`eve::ellpk`](elliptic/ellipk.html)

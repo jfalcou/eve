@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::ellint_rf`
+                           `eve::ellint_rg`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/ellint_rf.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/ellint_rg.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ ellint_rf = /*unspecified*/;
+  inline constexpr /*unspecified*/ ellint_rg = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the ellint_rf operation.
+Function object representing the ellint_rg operation.
 
 Member functions
 ====================================================================================================
@@ -34,7 +34,7 @@ Member functions
 template< floating_value T, floating_value U, floating_scalar_value V> auto operator()(T x, U y, V z) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of the `ellint_rf` function.
+Performs  the computation of the `ellint_rg` function.
 
 
 Parameters
@@ -45,24 +45,25 @@ Parameters
 
 
   This computes the Carlson's elliptic integral
-
-  $$\displaystyle R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t$$
-
+  $\displaystyle R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
+                                                                                +y\sin^2\theta\sin^2\phi
+                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi$
   as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
 
-  parameters must be non-negative and at most one zero or the result is nan.
+  Parameters `x` and `y` and `z`must be non-negative.
+  In any other case the result is nan.
 
 Return value
 ----------------------------------------------------------------------------------------------------
 <span class="smallskip"></span>
-Returns [element-wise](../../../glossary.html#value) the Carlson's integral.
+Returns the [element-wise](../../../glossary.html#value) Jacobi amplitude.
 
  The result type is of the compatibility type of the three parameters.
 
 
-  (insert ../../src/ellint_rf.src.html here)
+  (insert ../../src/ellint_rg.src.html here)
 
-  (insert ../../out/ellint_rf.out.html here)
+  (insert ../../out/ellint_rg.out.html here)
 
 
 <!-- End of Document -->
