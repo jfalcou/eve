@@ -128,7 +128,7 @@ namespace eve::detail
       return r;
     }
      else
-      return apply_over(raw(ellint_rf), x, y, z);
+      return apply_over(ellint_rf, x, y, z);
    }
 
 
