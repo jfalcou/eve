@@ -23,6 +23,7 @@
 #include <eve/function/ellint_rd.hpp>
 #include <eve/function/ellint_rf.hpp>
 #include <eve/function/fma.hpp>
+#include <eve/function/fms.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/is_nez.hpp>
@@ -90,7 +91,7 @@ namespace eve::detail
             v -= 3 * ellint_rf(x, y, z);
             auto pq =  p*q;
             auto tmp = fma(x, y, pq);
-            v += 3 * sqrt((x * y * z) /tmp) * ellint_rc(tmp, pq);
+            v += 3 * sqrt((x*y*z) /tmp) * ellint_rc(tmp, pq);
             v /= (z + q);
             return v;
           };
@@ -220,36 +221,37 @@ namespace eve::detail
         {
           rc_sum += fmn/dn*rc1p(en);
         }
-        auto lambda = rx * ry + rx * rz + ry * rz;
+        auto lambda = fma(rx, ry, fma(rx, rz, ry * rz));
 
         // from here on we move to n+1:
-        an = (an + lambda) / 4;
+        an = (an + lambda)*T(0.25); // / 4;
         fmn /= 4;
 
         if(all(fmn * q < an)) break;
 
-        xn = (xn + lambda) / 4;
-        yn = (yn + lambda) / 4;
-        zn = (zn + lambda) / 4;
-        pn = (pn + lambda) / 4;
-        delta /= 64;
+        xn = (xn + lambda)*T(0.25); // / 4;
+        yn = (yn + lambda)*T(0.25); // / 4;
+        zn = (zn + lambda)*T(0.25); // / 4;
+        pn = (pn + lambda)*T(0.25); // / 4;
+        delta *= T(0.015625); // /= 64;
       }
-      auto invan = rec(an);
-      auto xx = fmn * (a0 - x)*invan;
-      auto yy = fmn * (a0 - y)*invan;
-      auto zz = fmn * (a0 - z)*invan;
+      auto fmninvan = fmn*rec(an);
+      auto xx = (a0 - x)*fmninvan;
+      auto yy = (a0 - y)*fmninvan;
+      auto zz = (a0 - z)*fmninvan;
       auto p = -(xx + yy + zz) / 2;
       auto p2 = sqr(p);
       auto xxyy = xx*yy;
-      auto e2 = xxyy + xx * zz + yy * zz - 3 * p2;
+      auto e2 = xxyy + fma(xx, zz, fms(yy, zz, 3*p2));
       auto p3 = p*p2;
       auto xxyyzz = xxyy*zz;
       auto e3 = xxyyzz+2*e2*p+4*p3;
       auto e4 = (2*xxyyzz+e2*p+3*p3)*p;
       auto e5 = xxyyzz*p2;
-      auto result = fmn * invan *rsqrt(an)*
-        (1 - 3 * e2 / 14 + e3 / 6 + 9 * e2 * e2 / 88 - 3 * e4 / 22 - 9 * e2 * e3 / 52 + 3 * e5 / 26 - e2 * e2 * e2 / 16
-         + 3 * e3 * e3 / 40 + 3 * e2 * e4 / 20 + 45 * e2 * e2 * e3 / 272 - 9 * (e3 * e4 + e2 * e5) / 68);
+      auto e22= sqr(e2);
+      auto result = fmninvan*rsqrt(an)*
+        (1 - 3 * e2 / 14 + e3 / 6 + 9 * e22 / 88 - 3 * e4 / 22 - 9 * e2 * e3 / 52 + 3 * e5 / 26 - e2 * e22 / 16
+         + 3 * e3 * e3 / 40 + 3 * e2 * e4 / 20 + 45 * e22 * e3 / 272 - 9 * (e3 * e4 + e2 * e5) / 68);
 
       result += 6 * rc_sum;
       return result;

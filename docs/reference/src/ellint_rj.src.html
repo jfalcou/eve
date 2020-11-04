@@ -4,6 +4,7 @@ Example
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 #include <eve/function/ellint_rj.hpp>
+#include <boost/math/special_functions/ellint_rj.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -26,15 +27,18 @@ int main()
   float xf = 3.0f;
   float yf = 0.5f;
   float zf = 1.0f;
-  float uf = 3.4f;
+  float uf = -3.4f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "<- zf                        = " << zf << '\n'
+            << "<- uf                        = " << uf << '\n'
             << "-> ellint_rj(xf, yf, zf, uf) = " << eve::ellint_rj(xf, yf, zf, uf) << '\n';
 
   return 0;
+
+
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  </script>
