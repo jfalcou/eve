@@ -18,6 +18,7 @@
 #include <eve/constant/inf.hpp>
 #include <eve/constant/one.hpp>
 #include <eve/constant/pio_2.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/average.hpp>
@@ -28,6 +29,9 @@
 #include <eve/function/is_not_less.hpp>
 #include <eve/function/oneminus.hpp>
 #include <eve/function/sincos.hpp>
+#include <eve/function/asinh.hpp>
+#include <eve/function/tan.hpp>
+
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
 
@@ -74,7 +78,7 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      x = eve::abs(x); 
+      x = eve::abs(x);
       auto phi =  abs(phi0);
       // Carlson's algorithm works only for |phi| <= pi/2,
       // use the integrand's periodicity to normalize phi
@@ -89,16 +93,21 @@ namespace eve::detail
       sinp *= sinp;
       cosp *= cosp;
       auto notdone = sinp*sqr(x) < one(as(phi));
+
       auto c = if_else(notdone, rec(sinp), allbits);
       auto r = s*ellint_rf(cosp*c, c-sqr(x), c);
-      r = if_else(x == one(as(x)), inf(as(x)), r);
-      r = if_else(rphi < eps(as(x)), s*rphi, r);
+      auto xis1 = x == one(as(x));
+      if (any(xis1))
+      {
+        r = if_else(xis1, if_else(phi == pio_2(as(x)), inf(as(x)), asinh(tan(phi0))), r);
+      }
+      r = if_else(rphi < smallestposval(as(x)), s*rphi, r);
       auto mgt0 =  is_nez(m) && notdone;
       auto greatphi = eps(as(phi))*phi > one(as(phi))&&notdone;
       if (any(mgt0||greatphi&&notdone))
       {
         auto z = ellint_1(x);
-        r += m*ellint_1(x);
+        r += m*z;
         r = if_else(greatphi, phi*z/pio_2(as(x)), r);
       }
       return copysign(r, phi);

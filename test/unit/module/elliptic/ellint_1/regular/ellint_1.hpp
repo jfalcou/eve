@@ -66,5 +66,5 @@ TTS_CASE_TPL("Check eve::ellint_1 behavior two parameter", EVE_TYPE)
   TTS_ULP_EQUAL( eve::ellint_1(T(100), T( 0.)),  T(boost::math::ellint_1(v_t(0)  , v_t(100))), 0.5);
   TTS_ULP_EQUAL( eve::ellint_1(T(100), T( 0.5)), T(boost::math::ellint_1(v_t(0.5), v_t(100))), 0.5);
   TTS_ULP_EQUAL( eve::ellint_1(T(100), T( 0.9)), T(boost::math::ellint_1(v_t(0.9), v_t(100))), 0.5);
-
+  TTS_ULP_EQUAL( eve::ellint_1(T(1.5), T(1)),    T(boost::math::ellint_1(v_t(1)  , v_t(1.5))), 1.0);
 }
