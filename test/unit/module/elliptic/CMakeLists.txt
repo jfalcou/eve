@@ -32,4 +32,4 @@ make_all_units(ROOT unit.elliptic NAME ellint_rg            ARCH scalar simd TYP
 make_all_units(ROOT unit.elliptic NAME ellint_1             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.elliptic NAME ellint_2             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.elliptic NAME ellint_3             ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.elliptic NAME jacobi_elliptic      ARCH scalar simd TYPES ${real_types}    )
+#make_all_units(ROOT unit.elliptic NAME jacobi_elliptic      ARCH scalar simd TYPES ${real_types}    )
