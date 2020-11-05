@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check eve::jacobi_elliptic behavior", EVE_TYPE)
   using elt_t = eve::element_type_t<T>;
   using eve::as;
 
-  auto inf   =  eve::inf(as<elt_t>());
+//  auto inf   =  eve::inf(as<elt_t>());
 //   auto minf  =  eve::minf(as<elt_t>());
   auto nan   =  eve::nan(as<elt_t>());
   auto pio_2 =  eve::pio_2(as<elt_t>());

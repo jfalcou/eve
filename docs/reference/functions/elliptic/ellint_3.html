@@ -8,34 +8,34 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::ellint_1`
+                           `eve::ellint_3`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/ellint_1.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/ellint_3.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ ellint_1 = /*unspecified*/;
+  inline constexpr /*unspecified*/ ellint_3 = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the ellint_1 operation.
+Function object representing the ellint_3 operation.
 
 Member functions
 ====================================================================================================
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-template< floating_value T>                   auto operator()(T k) const noexcept;
-template< floating_value T, floating_value U> auto operator()(T phi, U k) const noexcept;
+template< floating_value T, floating_value V>                   auto operator()(T n, V k) const noexcept;
+template< floating_value T, floating_value U, floating_value V> auto operator()(T n, U phi, V k) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of the `ellint_1` function.
+Performs  the computation of the `ellint_3` function.
 
 
 Parameters
@@ -44,17 +44,18 @@ Parameters
 :   [floating values](../../concepts.html#value).
 
 
- computes the complete and incomplete elliptic integrals of the first kind :
+ computes the complete and incomplete elliptic integrals of the third kind :
 
-$$\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{\sqrt{1-k^2\sin^2 t}}$$
+$$\displaystyle E(n,\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{(1-n\sin^2 t)\sqrt{1-k^2\sin^2 t}} \mbox{d}t$$
 
 The complete case corresponds to $\phi = \pi/2$.
 
-  - `k` must verify $k^2\sin^2\phi \le 1$ or the result is nan.
+  - `k` must verify $k^2\sin^2\phi \le 1$ and   $n\sin^2\phi < 1$ or the result is nan.
 
-  - In the complete case this means $|k| \le 1$.
+  - In the complete case this means $|k| \le 1$ and $n \le 1$.
 
   In any other case the result is nan.
+
 
 !!! WARNING
   Be aware that as $\pi/2$ is not exactly represented by floating point values the result of the incomplete
@@ -68,9 +69,9 @@ Returns  [element-wise](../../../glossary.html#value) the elliptic integral of t
  The result type is of the compatibility type of the three parameters.
 
 
-  (insert ../../src/ellint_1.src.html here)
+  (insert ../../src/ellint_3.src.html here)
 
-  (insert ../../out/ellint_1.out.html here)
+  (insert ../../out/ellint_3.out.html here)
 
 
 <!-- End of Document -->

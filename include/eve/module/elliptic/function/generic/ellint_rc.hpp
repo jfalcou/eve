@@ -21,7 +21,7 @@
 #include <eve/function/abs.hpp>
 #include <eve/function/atan.hpp>
 #include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
+#include <eve/function/atanh.hpp>
 #include <eve/function/mul.hpp>
 #include <eve/function/is_nltz.hpp>
 #include <eve/function/is_nez.hpp>
@@ -85,7 +85,7 @@ namespace eve::detail
           {
             auto br_2 =  [tmp1, tmp3]() // y > 0.5*x
               {
-                return (log1p(tmp3) - log1p(-tmp3))/(2*tmp1);
+                return atanh(tmp3)/tmp1;
               };
             notdone = next_interval(br_2, notdone, y > T(0.5)*x , r);
             if(any(notdone))
