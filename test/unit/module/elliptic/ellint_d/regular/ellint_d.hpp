@@ -54,7 +54,7 @@ TTS_CASE_TPL("Check eve::ellint_d behavior two parameter", EVE_TYPE)
 
   TTS_ULP_EQUAL( eve::ellint_d(eve::pio_2(as<T>()), T( 0.)),  T(boost::math::ellint_d(v_t(0)  , eve::pio_2(as<v_t>()))), 0.5);
   TTS_ULP_EQUAL( eve::ellint_d(eve::pio_2(as<T>()), T( 0.5)), T(boost::math::ellint_d(v_t(0.5), eve::pio_2(as<v_t>()))), 1.5);
-  TTS_ULP_EQUAL( eve::ellint_d(eve::pio_2(as<T>()), T( 0.9)), T(boost::math::ellint_d(v_t(0.9), eve::pio_2(as<v_t>()))), 1.5);
+  TTS_ULP_EQUAL( eve::ellint_d(eve::pio_2(as<T>()), T( 0.9)), T(boost::math::ellint_d(v_t(0.9), eve::pio_2(as<v_t>()))), 2.5);
   TTS_ULP_EQUAL( eve::ellint_d(eve::pio_4(as<T>()), T( 0.)),  T(boost::math::ellint_d(v_t(0)  , eve::pio_4(as<v_t>()))), 1.5);
   TTS_ULP_EQUAL( eve::ellint_d(eve::pio_4(as<T>()), T( 0.5)), T(boost::math::ellint_d(v_t(0.5), eve::pio_4(as<v_t>()))), 1.5);
   TTS_ULP_EQUAL( eve::ellint_d(eve::pio_4(as<T>()), T( 0.9)), T(boost::math::ellint_d(v_t(0.9), eve::pio_4(as<v_t>()))), 4.0);
