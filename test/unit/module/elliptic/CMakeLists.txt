@@ -24,7 +24,7 @@ add_dependencies(unit.elliptic.exe unit.elliptic.simd.exe     )
 ##==================================================================================================
 
 make_all_units(ROOT unit.elliptic NAME am                   ARCH scalar simd TYPES ${real_types}    )
-make_all_units(ROOT unit.elliptic NAME ellint_d             ARCH scalar simd TYPES ${real_types}    )
+#make_all_units(ROOT unit.elliptic NAME ellint_d             ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.elliptic NAME ellint_rc            ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.elliptic NAME ellint_rd            ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.elliptic NAME ellint_rf            ARCH scalar simd TYPES ${real_types}    )
