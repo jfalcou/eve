@@ -102,6 +102,6 @@ namespace eve::detail
       return if_else(x == inf(as(x)), zero, r*prefix);
     }
     else
-      return apply_over(raw(ellint_rc), x, y);
+      return apply_over(ellint_rc, x, y);
   }
 }
