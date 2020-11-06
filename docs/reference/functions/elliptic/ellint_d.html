@@ -8,24 +8,24 @@
  -->
 <meta charset="utf-8" lang="en">
                        **Expressive Vector Engine**
-                           `eve::ellint_1`
+                           `eve::ellint_d`
 <br>
 
   (insert ../../../crumbs.html here)
 
 Synopsis
 ====================================================================================================
-**Required header:** <script type="preformatted">`#include <eve/function/ellint_1.hpp>`</script>
+**Required header:** <script type="preformatted">`#include <eve/function/ellint_d.hpp>`</script>
 
 <script type="preformatted">
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
 namespace eve
 {
-  inline constexpr /*unspecified*/ ellint_1 = /*unspecified*/;
+  inline constexpr /*unspecified*/ ellint_d = /*unspecified*/;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Function object representing the ellint_1 operation.
+Function object representing the ellint_d operation.
 
 Member functions
 ====================================================================================================
@@ -35,7 +35,7 @@ template< floating_value T>                   auto operator()(T k) const noexcep
 template< floating_value T, floating_value U> auto operator()(T phi, U k) const noexcept;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 </script>
-Performs  the computation of the `ellint_1` function.
+Performs  the computation of the `ellint_d` function.
 
 
 Parameters
@@ -44,9 +44,9 @@ Parameters
 :   [floating values](../../concepts.html#value).
 
 
- computes the complete and incomplete elliptic integrals of the first kind :
+ computes the complete and incomplete D elliptic integrals  :
 
-$$\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\mbox{d}t}{\sqrt{1-k^2\sin^2 t}}$$
+$$\displaystyle F(\phi,k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}\mbox{d}t$$
 
 The complete case corresponds to $\phi = \pi/2$.
 
@@ -68,9 +68,9 @@ Returns  [element-wise](../../../glossary.html#value) the elliptic integral of t
  The result type is of the compatibility type of the three parameters.
 
 
-  (insert ../../src/ellint_1.src.html here)
+  (insert ../../src/ellint_d.src.html here)
 
-  (insert ../../out/ellint_1.out.html here)
+  (insert ../../out/ellint_d.out.html here)
 
 
 <!-- End of Document -->

@@ -96,11 +96,18 @@ namespace eve::detail
           T c = rec(sqr(sinp));
           T cm1 = sqr(cosp)*c;  // c - 1
           T k2 = sqr(k);
-          auto br_reg =  [c, cm1, k2, s]()
+          auto br_reg =  [c, cm1, k2, s, m](auto k)
             {
-              return  if_else(is_finite(c), s * ellint_rd(cm1, c - k2, c) / 3, zero);
+              auto z = if_else(is_finite(c), s * ellint_rd(cm1, c - k2, c) / 3, zero);
+              auto test =  is_nez(m);
+              if(any(test)){
+                return z+m*ellint_d(k);
+              }
+              else return z;
+
             };
-          notdone = last_interval(br_reg, notdone, r);
+          notdone = last_interval(br_reg, notdone, r, k);
+
           r = if_else(k2*sinp*sinp > one(as(phi0)), allbits, r);
           r = if_else(is_eqz(phi0), zero, r);
         }
