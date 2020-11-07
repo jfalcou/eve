@@ -70,7 +70,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       auto r =  nan(as(x));
-      auto notdone = is_nltz(x) &&  is_nltz(y) && is_nltz(z) && is_nez(p);
+      auto notdone = is_nltz(x) &&  is_nltz(y) && is_nltz(z) && is_nez(p) && is_nez(x+y) && is_nez(z+y) && is_nez(x+z);
       if (any(notdone))
       {
         auto br_pneg =  [](auto x,  auto y, auto z, auto p) //p < 0
@@ -111,20 +111,24 @@ namespace eve::detail
                 return ellint_rd(x, y, z);
               };
             notdone = next_interval(br_eqzp, notdone, (z == p), r, x, y, z);
-            if  (any(notdone))
+           if  (any(notdone))
             {
+              x = if_else(notdone, x, one);
+              y = if_else(notdone, y, one);
+              z = if_else(notdone, z, one);
+              p = if_else(notdone, p, one);
               auto br_last = [](auto x, auto y, auto z, auto p){
                 return  raw(ellint_rj)(x, y, z, p);
               };
               last_interval(br_last, notdone, r, x, y, z, p);
-            }
+             }
           }
         }
       }
       return r;
     }
     else
-      return apply_over(ellint_rj, x, y, z);
+      return apply_over(ellint_rj, x, y, z, p);
   }
 
   template<floating_real_value T>
@@ -160,11 +164,10 @@ namespace eve::detail
         auto en = delta / dn;
         en /= dn;
         auto test = (en < -0.5) && (en > -1.5);
-
         auto rc1p = [](auto y)
           {
-            auto r =  nan(as(y));
-            auto notdone = y != mone(as(y));
+            auto r =  zero(as(y));
+            auto notdone = true_(as(y)); //!= mone(as(y));
             if(any(notdone))
             {
               auto br_yltm1 =  [](auto my){ return rsqrt(my)*ellint_rc(my, dec(my)); };
@@ -179,14 +182,14 @@ namespace eve::detail
                   auto log1parg = log1p(arg);
                   auto br_ygtmhf =  [arg, log1parg]()
                     {
-                      return  (log1parg-log1p(-arg))/(2*arg);
+                      return  if_else(is_eqz(arg), T(1), (log1parg-log1p(-arg))/(2*arg));
                     };
                   notdone = next_interval(br_ygtmhf, notdone, y > T(-0.5), r);
                   if(any(notdone))
                   {
-                    auto br_last =  [arg, log1parg](auto y)
+                   auto br_last =  [arg, log1parg](auto y)
                       {
-                        return  log1parg*rsqrt(inc(y))/arg;
+                         return  log1parg*rsqrt(inc(y))/arg;
                       };
                     last_interval(br_last, notdone, r, y);
                   }
@@ -219,7 +222,8 @@ namespace eve::detail
         }
         else
         {
-          rc_sum += fmn/dn*rc1p(en);
+          auto r =  rc1p(en);
+          rc_sum += fmn/dn*r;
         }
         auto lambda = fma(rx, ry, fma(rx, rz, ry * rz));
 
@@ -263,7 +267,7 @@ namespace eve::detail
 //       return r;
     }
      else
-       return apply_over(raw(ellint_rj), x, y, z);
+       return apply_over(raw(ellint_rj), x, y, z, p);
    }
 
 }
