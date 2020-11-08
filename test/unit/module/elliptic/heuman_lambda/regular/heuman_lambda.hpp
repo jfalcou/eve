@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check eve::heuman_lambda behavior two parameter", EVE_TYPE)
   TTS_ULP_EQUAL( eve::heuman_lambda(eve::pio_2(as<T>()), T( 0.9)), eve::one(eve::as<T>()), 4.55);
 
   TTS_ULP_EQUAL( eve::heuman_lambda(eve::pio_4(as<T>()), T( 0.)),  T(boost::math::heuman_lambda(v_t(0)  , eve::pio_4(as<v_t>()))), 1.0);
-  TTS_ULP_EQUAL( eve::heuman_lambda(eve::pio_4(as<T>()), T( 0.5)), T(boost::math::heuman_lambda(v_t(0.5), eve::pio_4(as<v_t>()))), 1.0);
+  TTS_ULP_EQUAL( eve::heuman_lambda(eve::pio_4(as<T>()), T( 0.5)), T(boost::math::heuman_lambda(v_t(0.5), eve::pio_4(as<v_t>()))), 2.0);
   TTS_ULP_EQUAL( eve::heuman_lambda(eve::pio_4(as<T>()), T( 0.9)), T(boost::math::heuman_lambda(v_t(0.9), eve::pio_4(as<v_t>()))), 1.5);
 
 }
