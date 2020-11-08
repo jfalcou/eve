@@ -55,24 +55,6 @@ TTS_CASE_TPL("Check eve::jacobi_zeta behavior two parameter", EVE_TYPE)
     std::cout <<  z1 << std::endl;
     std::cout <<  z2 << std::endl;
   }
-//   {
-//     auto z1 = eve::jacobi_zeta(3*eve::pio_4(as<T>()), T( 0.9));
-//     auto z2 = boost::math::jacobi_zeta(v_t(0.0), 3*eve::pio_4(as<v_t>()));
-//     std::cout <<  z1 << std::endl;
-//     std::cout <<  z2 << std::endl;
-//   }
-//   {
-//     auto z1 = eve::jacobi_zeta(3*eve::pio_4(as<T>()), T( 0.9));
-//     auto z2 = boost::math::jacobi_zeta(v_t(0.9), 3*eve::pio_4(as<v_t>()));
-//     std::cout <<  z1 << std::endl;
-//     std::cout <<  z2 << std::endl;
-//   }
-//   {
-//     auto z1 = eve::jacobi_zeta(eve::pio_2(as<T>()), T( 0.9));
-//     auto z2 = boost::math::jacobi_zeta(v_t(0.9), eve::pio_2(as<v_t>()));
-//     std::cout << "eve " << z1 << std::endl;
-//     std::cout << "bm  " << z2 << std::endl;
-//   }
 
   TTS_ULP_EQUAL( eve::jacobi_zeta(3*eve::pio_4(as<T>()), T( 0.5)), T(boost::math::jacobi_zeta(v_t(0.5), 3*eve::pio_4(as<v_t>()))), 0.5);
   TTS_ULP_EQUAL( eve::jacobi_zeta(3*eve::pio_4(as<T>()), T( 0.9)), T(boost::math::jacobi_zeta(v_t(0.9), 3*eve::pio_4(as<v_t>()))), 0.5);

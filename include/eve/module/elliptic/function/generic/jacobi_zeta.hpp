@@ -52,7 +52,7 @@ namespace eve::detail
       auto e_1 = ellint_1(k);
       auto r = if_else(k2 == one(as(k)),  eve::signnz(cosp)*sinp
                       , k2*sinp*cosp*sqrt(k2s2c)*e_rj/(3*e_1));
-      r =  if_else(aphi == pio_2(as(phi)), zero, r); //this is a guess of what the user wants
+      r =  if_else(aphi == pio_2(as(phi)), zero, r); //this is a guess of what the user wants pio_2 being not exact
       return negate(r, phi); ;
     }
     else

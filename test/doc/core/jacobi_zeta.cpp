@@ -23,11 +23,5 @@ int main()
             << "<- phif                  = " << phif<< '\n'
             << "-> jacobi_zeta(phif, kf) = " << eve::jacobi_zeta(phif, kf) << '\n';
 
-  std::cout<< std::endl;
- for(int i=0; i < 4 ; ++i)
- {
-   std::cout << boost::math::jacobi_zeta(k[i], phi[i]) << std::endl;
- }
-
   return 0;
 }

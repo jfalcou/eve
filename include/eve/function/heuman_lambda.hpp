@@ -14,7 +14,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(jacobi_zeta_, jacobi_zeta);
+  EVE_MAKE_CALLABLE(heuman_lambda_, heuman_lambda);
 }
 
-#include <eve/module/elliptic/function/generic/jacobi_zeta.hpp>
+#include <eve/module/elliptic/function/generic/heuman_lambda.hpp>
