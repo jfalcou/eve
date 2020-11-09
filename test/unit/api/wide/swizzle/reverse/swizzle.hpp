@@ -40,12 +40,12 @@ void test_reverse(Env& runtime, bool verbose, Filler filler)
   }( std::make_index_sequence<7>{} );
 }
 
-TTS_CASE_TPL( "Check identity swizzle for arithmetic type", EVE_TYPE )
+TTS_CASE_TPL( "Check reverse swizzle for arithmetic type", EVE_TYPE )
 {
   test_reverse<T>(runtime, verbose, [](int i, int) { return 1+i; } );
 }
 
-TTS_CASE_TPL("Check identity swizzle for logical type", EVE_TYPE )
+TTS_CASE_TPL("Check reverse swizzle for logical type", EVE_TYPE )
 {
   test_reverse<eve::logical<T>>(runtime, verbose, [](int i, int) { return i%3==0; } );
 }
