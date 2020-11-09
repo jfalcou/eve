@@ -37,7 +37,6 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   TTS_EXPECT(eve::all(eve::is_negative(eve::sinh(T(-0.)))) );
   TTS_EXPECT(eve::all(eve::is_positive(eve::sinh(T(0))))            );
 
-  // 88.376251220703125f, 709.782712893384
   v_t ovflimit =  eve::Ieee_constant<v_t,0x42B0C0A4U, 0x40862E42FEFA39EFULL>();
   std::array<v_t, 10> a = {v_t(1), v_t(-1), v_t(0), v_t(-0.0), v_t(10), v_t(-10)
                              , eve::maxlog(eve::as<v_t>()), ovflimit/2, ovflimit, 2*ovflimit};
@@ -46,7 +45,6 @@ TTS_CASE_TPL("Check eve::eve::sinh behavior", EVE_TYPE)
   {
     auto sh  = eve::sinh(T(a[i]));
     v_t sh1 = std::sinh(double(a[i]));
-    std::cout << "i " << i << std::endl;
     TTS_ULP_EQUAL(sh, (T(sh1)), 0.5);
   }
 }

@@ -39,11 +39,11 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       auto phi = am(u, x, tol);
-      std::cout << "phi " << phi << std::endl;
+//      std::cout << "phi " << phi << std::endl;
       auto [sn, cn] = sincos(phi);
-      std::cout << "sn " << sn << std::endl;
-      std::cout << "cn " << cn << std::endl;
-      std::cout << "dn " << sqrt(oneminus(sqr(x*sn)))<< std::endl;
+//       std::cout << "sn " << sn << std::endl;
+//       std::cout << "cn " << cn << std::endl;
+//       std::cout << "dn " << sqrt(oneminus(sqr(x*sn)))<< std::endl;
       return std::make_tuple(sn, cn, sqrt(oneminus(sqr(x*sn))));
     }
     else
