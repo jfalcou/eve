@@ -43,3 +43,4 @@ make_all_units(ROOT unit.special NAME tgamma               ARCH scalar simd TYPE
 make_all_units(ROOT unit.special NAME cyl_bessel_y         ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_y0        ARCH scalar simd TYPES ${real_types}    )
 make_all_units(ROOT unit.special NAME cyl_bessel_y1        ARCH scalar simd TYPES ${real_types}    )
+make_all_units(ROOT unit.special NAME zeta                 ARCH scalar simd TYPES ${real_types}    )
