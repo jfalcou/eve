@@ -64,9 +64,47 @@ namespace eve::detail
                                       >::type;
 
         // We call the associated processing function
-        return do_swizzle ( delay_t{}, EVE_CURRENT_API{}
-                          , found{}
+        return do_swizzle ( EVE_RETARGET(EVE_CURRENT_API), found{}
                           , as_<that_t>(), as_pattern<sz>(p), r
+                          );
+      }
+    }
+
+    // Perform a shuffle with the best strategy for current pattern
+    template<typename Pattern, typename Wide>
+    EVE_FORCEINLINE auto operator()(Pattern const& p, Wide const& a, Wide const& b) const
+    {
+      constexpr auto  cd  = cardinal_v<Wide>;
+      constexpr auto  sz  = Pattern::size(cd);
+      using that_t        = as_wide_t<Wide,fixed<sz>>;
+
+      // We're shuffling (a,b) but only a is selected
+      if constexpr( as_pattern<sz>(Pattern{}) < cd )
+      {
+        return a[p];
+      }
+      // We're shuffling (a,b) but only b is selected
+      else if constexpr( as_pattern<sz>(Pattern{}) >= cd )
+      {
+        return b[slide_pattern<cd,sz>(p)];
+      }
+      // We're shuffling toward aggregate - can we optimize it ?
+      if constexpr( has_aggregated_abi_v<that_t> )
+      {
+        return that_t ( shuffle_(EVE_RETARGET(EVE_CURRENT_API), a, b, pattern_view<0    , sz/2>(p))
+                      , shuffle_(EVE_RETARGET(EVE_CURRENT_API), a, b, pattern_view<sz/2 , sz/2>(p))
+                      );
+      }
+      else
+      {
+        // We select the proper shuffler
+        using found = typename type_at< find( as_pattern<sz>(Pattern{}), as_<Wide>(), as_<that_t>())
+                                      , types<Matcher...>
+                                      >::type;
+
+        // We call the associated processing function
+        return do_shuffle ( EVE_RETARGET(EVE_CURRENT_API), found{}
+                          , as_<that_t>(), as_pattern<sz>(p), a, b
                           );
       }
     }

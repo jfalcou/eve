@@ -17,6 +17,4 @@ namespace eve
   EVE_MAKE_CALLABLE(shuffle_, shuffle);
 }
 
-#include <eve/module/real/core/function/scalar/shuffle.hpp>
-//#include <eve/module/real/core/function/regular/simd/shuffle.hpp>
-
+#include <eve/detail/function/swizzle.hpp>

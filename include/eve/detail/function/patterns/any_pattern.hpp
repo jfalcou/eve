@@ -37,4 +37,16 @@ namespace eve::detail
     using type  = element_type_t<Wide>;
     return Target( (I == -1 ? type{0} : v[I])...);
   }
+
+  template<typename Target, typename Wide, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto do_shuffle ( EVE_SUPPORTS(cpu_), any_match const&
+                                  , as_<Target> , pattern_<I...> const&
+                                  , Wide const& a, Wide const& b
+                                  )
+  {
+    constexpr auto c  = cardinal_v<Wide>;
+    using type        = element_type_t<Wide>;
+
+    return Target( (I == -1 ? type{0} : ( I < c ? a[I] : b[I-c]) )...);
+  }
 }
