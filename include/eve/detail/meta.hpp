@@ -82,11 +82,11 @@ namespace eve::detail
   };
 
   // Return the Nth type from a list of types
-  template<std::size_t> struct any { any(...) {} };
+  template<std::size_t> struct anything { anything(...) {} };
 
   template<std::size_t... Is> struct nth
   {
-    template<typename T> static auto fit(any<Is>..., T, ...) -> T;
+    template<typename T> static auto fit(anything<Is>..., T, ...) -> T;
   };
 
   template<std::size_t... Is, typename... Ts>
@@ -300,7 +300,7 @@ namespace eve::detail
   template<typename... T>
   inline constexpr bool wrong = false;
 
-  // How many items in tuple-like things ? 0 means non-tuple
+  // How manything items in tuple-like things ? 0 means non-tuple
   template<typename T>
   struct count : std::integral_constant<std::size_t,0>
   {};
