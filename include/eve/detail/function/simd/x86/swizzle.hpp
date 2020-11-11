@@ -22,23 +22,11 @@ namespace eve::detail
   template<typename T, typename N, shuffle_pattern Pattern>
   EVE_FORCEINLINE auto swizzle( sse2_ const&, wide<T,N,x86_128_> const& v, Pattern p ) noexcept
   {
-    swizzle_matcher < zero_match    , broadcast_match
-                    , unpack_match  , identity_match
-                    , slide_right   , slide_left   , mov_match
-                    , ssse3_match   , shuffle_16   , sse2_match
-                    , any_match
-                    > match_with;
-
-    return match_with(p, v);
-  }
-
-  template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto swizzle( avx_ const&, wide<T,N,x86_128_> const& v, Pattern p ) noexcept
-  {
-    swizzle_matcher < zero_match    , broadcast_match
-                    , unpack_match  , identity_match
-                    , slide_right   , slide_left   , mov_match
-                    , ssse3_match   , shuffle_16   , sse2_match
+    swizzle_matcher < zero_match  , broadcast_match
+                    , slide_left  , unpack_match
+                    , identity_match
+                    , slide_right , mov_match
+                    , ssse3_match , shuffle_16, sse2_match
                     , any_match
                     > match_with;
 
