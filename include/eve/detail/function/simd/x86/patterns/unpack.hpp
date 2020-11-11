@@ -157,11 +157,8 @@ namespace eve::detail
     {
       if constexpr( sizeof(e_t) == 4 )
       {
-        return bit_cast ( _mm_unpacklo_ps ( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )
-                                          , bit_cast(w, as_<wide<float,cardinal_t<Wide>>>() )
-                                          )
-                        , as_<Target>()
-                        );
+        if constexpr( std::is_floating_point_v<e_t> ) return _mm_unpacklo_ps (v,w);
+        else                                          return _mm_unpacklo_epi32 (v,w);
       }
       else if constexpr( sizeof(e_t) == 2 ) return _mm_unpacklo_epi16(v,w);
       else if constexpr( sizeof(e_t) == 1 ) return _mm_unpacklo_epi8(v,w);
@@ -172,11 +169,8 @@ namespace eve::detail
     {
       if constexpr( sizeof(e_t) == 4 )
       {
-        return bit_cast ( _mm_unpackhi_ps ( bit_cast(v, as_<wide<float,cardinal_t<Wide>>>() )
-                                          , bit_cast(w, as_<wide<float,cardinal_t<Wide>>>() )
-                                          )
-                        , as_<Target>()
-                        );
+        if constexpr( std::is_floating_point_v<e_t> ) return _mm_unpackhi_ps (v,w);
+        else                                          return _mm_unpackhi_epi32 (v,w);
       }
       else if constexpr( sizeof(e_t) == 2 ) return _mm_unpackhi_epi16(v,w);
       else if constexpr( sizeof(e_t) == 1 ) return _mm_unpackhi_epi8(v,w);
