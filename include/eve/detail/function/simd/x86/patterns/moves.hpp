@@ -19,12 +19,12 @@ namespace eve::detail
   //================================================================================================
   struct mov_match
   {
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
       constexpr pattern_<I...> p{};
 
-      return      sizeof(element_type_t<Wide>) == 4
+      return      sizeof(element_type_t<In>) == 4
             &&  (     p == pattern< 0, 1, 0, 1> // movlh
                   ||  p == pattern< 0, 1,-1,-1>
                   ||  p == pattern< 2, 3, 2, 3> // movhl

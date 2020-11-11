@@ -22,10 +22,10 @@ namespace eve::detail
   struct swizzle_matcher
   {
     // For a given list of pattern matcher and a pattern, find the first matcher matching it.
-    template<typename Wide, typename Pattern>
-    static constexpr auto find(Pattern p, as_<Wide> t ) noexcept
+    template<typename Pattern,typename In,typename Out>
+    static constexpr auto find(Pattern p, as_<In> in, as_<Out> out) noexcept
     {
-      bool found[] = { Matcher::check(p, t)... };
+      bool found[] = { Matcher::check(p, in, out)... };
 
       std::size_t i = 0;
       for(;i<sizeof...(Matcher);++i) { if( found[i] ) return i; }
@@ -65,11 +65,11 @@ namespace eve::detail
       else
       {
         // We select the proper shuffler/swizzler
-        using found = typename type_at< find( as_pattern<sz>(Pattern{}), as_<that_t>())
+        using found = typename type_at< find( as_pattern<sz>(Pattern{}), as_<Wide>(), as_<that_t>())
                                       , types<Matcher...>
                                       >::type;
 
-//        std::cout << typeid(found).name() << "\n";
+        std::cout << typeid(found).name() << "\n";
 
         // We call the associated processing function
         return do_swizzle ( delay_t{}, EVE_CURRENT_API{}

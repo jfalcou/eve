@@ -22,8 +22,8 @@ namespace eve::detail
   //==================================================================================================
   struct zero_match
   {
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
       return ((I == -1) && ...);
     }

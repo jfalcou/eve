@@ -19,11 +19,11 @@ namespace eve::detail
   //================================================================================================
   struct slide_right
   {
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...>, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
-      constexpr std::ptrdiff_t c  = cardinal_v<Wide>;
-      constexpr std::ptrdiff_t sz = pattern_<I...>::size(c);
+      constexpr std::ptrdiff_t c  = cardinal_v<In>;
+      constexpr std::ptrdiff_t sz = cardinal_v<Out>;
       constexpr pattern_<I...> p;
 
       if(c==1) return false;

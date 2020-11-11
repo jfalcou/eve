@@ -51,10 +51,10 @@ namespace eve::detail
       else                                                          return none;
     }
 
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const& p, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...> p, as_<In>, as_<Out>)  noexcept
     {
-      return  (sizeof(element_type_t<Wide>) == 2) &&  categorize(p) != none;
+      return  (sizeof(element_type_t<In>) == 2) &&  categorize(p) != none;
     }
   };
 

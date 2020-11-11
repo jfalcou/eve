@@ -20,8 +20,8 @@ namespace eve::detail
   // Match any pattern of the form [k k ... k k]
   struct broadcast_match
   {
-    template<typename Wide, std::ptrdiff_t I0, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I0,I...> const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t I0, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I0,I...>, as_<In> const&, as_<Out>)  noexcept
     {
       return ((I==I0) && ...);
     }

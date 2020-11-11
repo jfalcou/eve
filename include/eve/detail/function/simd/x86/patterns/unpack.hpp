@@ -31,8 +31,8 @@ namespace eve::detail
       return p0 == -1 ? (p1<s) : (p0<s);
     }
 
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
       constexpr pattern_<I...> p{};
 
@@ -42,7 +42,7 @@ namespace eve::detail
         8  bits case requires the most variants
       */
       // check for 32 bits unpacks
-      constexpr bool  u32 =   sizeof(element_type_t<Wide>) == 4
+      constexpr bool  u32 =   sizeof(element_type_t<Out>) == 4
                       &&  (   p.is_similar(pattern< 2, 2, 3, 3>)
                           ||  p.is_similar(pattern< 2,-1, 3,-1>)
                           ||  p.is_similar(pattern<-1, 2,-1, 3>)
@@ -55,7 +55,7 @@ namespace eve::detail
                           );
 
       // check for 16 bits unpacks
-      constexpr bool  u16 =   sizeof(element_type_t<Wide>) == 2
+      constexpr bool  u16 =   sizeof(element_type_t<Out>) == 2
                       &&  (   p.is_similar(pattern< 4, 4, 5, 5, 6, 6, 7, 7>)
                           ||  p.is_similar(pattern< 4,-1, 5,-1, 6,-1, 7,-1>)
                           ||  p.is_similar(pattern<-1, 4,-1, 5,-1, 6,-1, 7>)
@@ -74,7 +74,7 @@ namespace eve::detail
                           );
 
       // check for 8 bits unpacks
-      constexpr bool  u8  =   sizeof(element_type_t<Wide>) == 1
+      constexpr bool  u8  =   sizeof(element_type_t<Out>) == 1
                       &&  (   p.is_similar(pattern< 8, 8, 9, 9,10,10,11,11,12,12,13,13,14,14,15,15>)
                           ||  p.is_similar(pattern< 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14,-1,15,-1>)
                           ||  p.is_similar(pattern<-1, 8,-1, 9,-1,10,-1,11,-1,12,-1,13,-1,14,-1,15>)
@@ -125,7 +125,7 @@ namespace eve::detail
                           ||  p.is_similar(pattern<-1,15>)
                           );
 
-      return (p.size(Wide::static_size) > 1) && (u32 || u16 || u8);
+      return (cardinal_v<Out> > 1) && (u32 || u16 || u8);
     }
   };
 

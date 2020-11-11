@@ -20,11 +20,11 @@ namespace eve::detail
   //================================================================================================
   struct sse2_match
   {
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...> const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
-      using t_t = element_type_t<Wide>;
-      return (cardinal_v<Wide> <= expected_cardinal_t<t_t>::value) && (sizeof(t_t) >= 4 );
+      using t_t = element_type_t<Out>;
+      return (cardinal_v<Out> <= expected_cardinal_t<t_t>::value) && (sizeof(t_t) >= 4 );
     }
   };
 

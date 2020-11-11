@@ -25,11 +25,11 @@ namespace eve::detail
   //================================================================================================
   struct slide_left
   {
-    template<typename Wide, std::ptrdiff_t... I>
-    static constexpr auto check(pattern_<I...>, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, std::ptrdiff_t... I>
+    static constexpr auto check(pattern_<I...>, as_<In>, as_<Out>)  noexcept
     {
-      constexpr std::ptrdiff_t c  = cardinal_v<Wide>;
-      constexpr std::ptrdiff_t sz = pattern_<I...>::size(c);
+      constexpr std::ptrdiff_t c  = cardinal_v<In>;
+      constexpr std::ptrdiff_t sz = cardinal_v<Out>;
       constexpr pattern_<I...> p;
 
       if(c==1) return false;
@@ -42,18 +42,27 @@ namespace eve::detail
       if(p0 < 1) return false;
 
       int  i  = 1;
-      while(i<sz)
+      while(i<sz && p(i,c) != -1)
       {
         auto q = p(i,c);
-        if(q!=-1 && q != p0+i)  return false;
+        if(q != p0+i)  return false;
         i++;
       }
-
-      while( i<sz )
+      if(i != sz)
       {
-        auto q = p(i,c);
-        if(q!=-1) return false;
-        i++;
+        if(c ==sz)
+        {
+          while( i<sz )
+          {
+            auto q = p(i,c);
+            if(q!=-1) return false;
+            i++;
+          }
+        }
+        else
+        {
+          return false;
+        }
       }
 
       return true;

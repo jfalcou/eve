@@ -21,11 +21,11 @@ namespace eve::detail
   //================================================================================================
   struct reverse_match
   {
-    template<typename Wide, shuffle_pattern Pattern>
-    static constexpr auto check(Pattern const&, as_<Wide> const&)  noexcept
+    template<typename In, typename Out, shuffle_pattern Pattern>
+    static constexpr auto check(Pattern, as_<In>, as_<Out>)  noexcept
     {
       constexpr Pattern p{};
-      return      p.size(Wide::static_size) > 1
+      return      cardinal_v<Out> > 1
               &&
               (   p.is_similar( pattern<1,0> )
               ||  p.is_similar( pattern<3,2,1,0> )
