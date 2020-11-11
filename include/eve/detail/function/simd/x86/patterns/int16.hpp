@@ -67,13 +67,13 @@ namespace eve::detail
 
     auto perm = [&](auto r)
     {
-      if constexpr(cc & shuffle_16::low)
+      if constexpr((cc & shuffle_16::low) != 0)
       {
         constexpr auto m = swizzle_mask<Pattern,4>();
         r = _mm_shufflelo_epi16(r, m);
       }
 
-      if constexpr(cc & shuffle_16::high)
+      if constexpr((cc & shuffle_16::high) != 0)
       {
         if constexpr (cardinal_v<Target> <= 4)
         {
