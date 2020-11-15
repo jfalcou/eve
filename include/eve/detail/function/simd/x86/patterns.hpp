@@ -17,11 +17,10 @@ namespace eve::detail
   //------------------------------------------------------------------------------------------------
   template<int S,typename P> constexpr auto swizzle_mask(P p) noexcept
   {
-    auto p0 = (p(0,16/S) == -1 ? 0 : p(0,16/S)) & 3;
-    auto p1 = (p(1,16/S) == -1 ? 1 : p(1,16/S)) & 3;
-
     if constexpr(S == 4)
     {
+      auto p0 = (p(0,4) == -1 ? 0 : p(0,4)) & 3;
+      auto p1 = (p(1,4) == -1 ? 1 : p(1,4)) & 3;
       auto p2 = (p(2,4) == -1 ? 2 : p(2,4)) & 3;
       auto p3 = (p(3,4) == -1 ? 3 : p(3,4)) & 3;
 
@@ -29,6 +28,8 @@ namespace eve::detail
     }
     else if constexpr(S == 8)
     {
+      auto p0 = (p(0,2) == -1 ? 0 : p(0,2)) & 1;
+      auto p1 = (p(1,2) == -1 ? 1 : p(1,2)) & 1;
       return _MM_SHUFFLE2( p1, p0 );
     }
   }

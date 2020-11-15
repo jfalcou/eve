@@ -33,35 +33,37 @@ namespace eve::detail
     return match_with(p, v);
   }
 
+  //================================================================================================
+  // Binary shuffle
+  //================================================================================================
+  template<typename T, typename N, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto shuffle_ (  EVE_SUPPORTS(sse2_)
+                                , wide<T,N,x86_128_> const& a, wide<T,N,x86_128_> const& b
+                                , Pattern p
+                                ) noexcept
+  {
+    swizzle_matcher < mov_binary_match, sse2_binary_match
+                    , any_match
+                    > match_with;
+
+    return match_with(p, a, b);
+  }
+
 //   template<typename T, typename N, typename P, int Size>
 //   EVE_FORCEINLINE auto swizzle( avx_ const&
-//                               , wide<T,N,x86_128_> const& v, swizzler_t<P,Size> p
+//                               , wide<T,N,x86_256_> const& v, swizzler_t<P,Size> p
 //                               ) noexcept
 //   {
-//     constexpr auto sz = swizzler_t<P,Size>::size(N::value);
-//     using that_t      = wide<T,fixed<sz>>;
+/*
+    swizzle_matcher < zero_match  , broadcast_match
+                    , slide_left  , unpack_match
+                    , identity_match
+                    , slide_right , mov_match
+                    , ssse3_match , shuffle_16, sse2_match
+                    , any_match
+                    > match_with;
 
-//     static_assert ( is_valid_pattern<N::value>(p)
-//                   , "[eve::swizzle x86::avx] - Out of range pattern index"
-//                   );
-
-//     //----------------------------------------------------------------------------------------------
-//     // Handle 64 bits AVX style
-//     else if constexpr(sizeof(T) == 8)
-//     {
-//       return swizzle_f64(v,p);
-//     }
-//     //----------------------------------------------------------------------------------------------
-//     // Handle 32 bits AVX style
-//     else if constexpr(sizeof(T) == 4)
-//     {
-//       return swizzle_f32(v, p, []{});
-//     }
-//     //----------------------------------------------------------------------------------------------
-//     // Go back to SSSE3
-//     else
-//     {
-//       return swizzle(x86_128_{},v,p);
-//     }
+    return match_with(p, v);
+*/
 //  }
 }
