@@ -25,14 +25,14 @@ namespace eve::detail
 {
 
   template<unsigned_value T>
-  EVE_FORCEINLINE auto primes_(EVE_SUPPORTS(cpu_), T n) noexcept
+  EVE_FORCEINLINE auto nth_prime_(EVE_SUPPORTS(cpu_), T n) noexcept
   {
     //
     // This is basically three big tables which together
     // occupy 19946 bytes, we use the smallest type which
     // will handle each value, and store the final set of
     // values in a uint16_t with the values offset by 0xffff.
-    // That gives us the first 10000 primes with the largest
+    // That gives us the first 10000 nth_prime with the largest
     // being 104729:
     //
 //     constexpr unsigned b1 = 53;
@@ -1238,11 +1238,11 @@ namespace eve::detail
       }
     }
     else
-      return apply_over(primes, n);
+      return apply_over(nth_prime, n);
   }
 
   template<unsigned_value T, typename D>
-  EVE_FORCEINLINE constexpr auto primes_(EVE_SUPPORTS(cpu_), D const &, T n) noexcept
+  EVE_FORCEINLINE constexpr auto nth_prime_(EVE_SUPPORTS(cpu_), D const &, T n) noexcept
   requires(is_one_of<D>(types<
                         converter_type<std::uint8_t>
                        , converter_type<std::uint16_t>
@@ -1253,12 +1253,12 @@ namespace eve::detail
   {
     if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
     {
-      auto r =  D()(primes(uint32(n)));
+      auto r =  D()(nth_prime(uint32(n)));
       return if_else(is_eqz(r), allbits, r);
     }
     else
     {
-      return primes(D()(n));
+      return nth_prime(D()(n));
     }
   }
 

@@ -17,7 +17,7 @@
 #include <eve/function/average.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/primes.hpp>
+#include <eve/function/nth_prime.hpp>
 #include <eve/function/if_else.hpp>
 #include <type_traits>
 #include <typeinfo>
@@ -37,13 +37,13 @@ namespace eve::detail
       while (any(inc(first) < last))
       {
          auto mid = average(first, last);
-         auto pmid = convert(primes(mid), as<elt_t>());
+         auto pmid = convert(nth_prime(mid), as<elt_t>());
          auto test = pmid <= n;
          first = if_else (test, mid, first);
          last =  if_else (test, last, mid);
 
       }
-      return primes(first);
+      return nth_prime(first);
     }
     else
       return apply_over(prime_floor, n);

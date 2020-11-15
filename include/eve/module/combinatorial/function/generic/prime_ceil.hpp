@@ -17,7 +17,7 @@
 #include <eve/function/average.hpp>
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
-#include <eve/function/primes.hpp>
+#include <eve/function/nth_prime.hpp>
 #include <eve/function/if_else.hpp>
 #include <type_traits>
 #include <eve/detail/apply_over.hpp>
@@ -39,12 +39,12 @@ namespace eve::detail
       while (any(inc(first) < last))
       {
         auto mid = average(first, last);
-        auto pmid = primes(mid);
+        auto pmid = nth_prime(mid);
         auto test = pmid >= n;
         last = if_else (test, mid, last);
         first =  if_else (test, first, mid);
       }
-      return primes(last);
+      return nth_prime(last);
     }
     else
       return apply_over(prime_ceil, n);
