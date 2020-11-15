@@ -38,7 +38,7 @@ namespace eve::detail
 //     constexpr unsigned b1 = 53;
 //     constexpr unsigned b2 = 6541;
 //     constexpr unsigned b3 = 10000;
-    constexpr std::array<std::uint32_t, 10001> a1 = {
+    constexpr std::array<std::uint16_t, 10001> a1 = {
       0u, //this is the overflow value
       2u, 3u, 5u, 7u, 11u, 13u, 17u, 19u, 23u, 29u, 31u,
       37u, 41u, 43u, 47u, 53u, 59u, 61u, 67u, 71u, 73u,
@@ -1204,7 +1204,6 @@ namespace eve::detail
     };
     if constexpr(has_native_abi_v<T>)
     {
-      n =  if_else(n > 10000, T(0), n);
       if constexpr(scalar_value<T>)
       {
         if constexpr(sizeof(T) == 1)
@@ -1213,6 +1212,7 @@ namespace eve::detail
         }
         else
         {
+          n =  if_else(n > 10000, T(0), n);
           return a1[n]+(n> 6542)*0xffffu;
         }
 
@@ -1233,7 +1233,7 @@ namespace eve::detail
         else
         {
           auto nn = convert(n, as<elt_t>());
-          return gather(&a1[0], nn) + if_else(nn > 6542, T(0xffffu), zero) ;
+          return convert(gather(&a1[0], nn), as<elt_t>()) + if_else(nn > 6542, T(0xffffu), zero) ;
         }
       }
     }
@@ -1253,7 +1253,8 @@ namespace eve::detail
   {
     if constexpr(is_one_of<D>(types<converter_type<float>, converter_type<double>>{}))
     {
-      return D()(primes(uint32(n)));
+      auto r =  D()(primes(uint32(n)));
+      return if_else(is_eqz(r), allbits, r);
     }
     else
     {
