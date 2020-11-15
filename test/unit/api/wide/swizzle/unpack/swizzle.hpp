@@ -26,7 +26,7 @@ inline constexpr auto unpack_with_zero  =  eve::swizzler<N>([](int i, int)
 template<typename T, typename Env, typename Filler, typename Pattern>
 void test_unpack(Env& runtime, bool verbose, Filler filler, Pattern pt)
 {
-  if constexpr(eve::cardinal_v<T> < 1) TTS_PASS("Type is too small to swizzle.");
+  if constexpr(eve::cardinal_v<T> == 1) TTS_PASS("Type is too small to swizzle.");
 
   T simd(filler);
   [&]<std::size_t... I>( std::index_sequence<I...>)

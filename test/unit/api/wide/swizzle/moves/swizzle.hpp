@@ -21,7 +21,11 @@ void test_unpack(Env& runtime, bool verbose, Filler filler)
 
   T simd(filler);
 
-  if constexpr(eve::cardinal_v<T> > 1)
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    TTS_PASS("Type is too small to swizzle.");
+  }
+  else if constexpr(eve::cardinal_v<T> > 1)
   {
     std::cout << "using pattern " << eve::pattern< 0, 1, 0, 1> << "\n";
     TTS_EQUAL((simd[eve::pattern< 0, 1, 0, 1>]), type4(simd[0],simd[1],simd[0],simd[1]));
@@ -29,8 +33,7 @@ void test_unpack(Env& runtime, bool verbose, Filler filler)
     std::cout << "using pattern " << eve::pattern< 0, 1,-1,-1> << "\n";
     TTS_EQUAL((simd[eve::pattern< 0, 1,-1,-1>]), type4(simd[0],simd[1],v_t(0),v_t(0)));
   }
-
-  if constexpr(eve::cardinal_v<T> > 2)
+  else if constexpr(eve::cardinal_v<T> > 2)
   {
     std::cout << "using pattern " << eve::pattern< 2, 3, 2, 3> << "\n";
     TTS_EQUAL((simd[eve::pattern< 2, 3, 2, 3>]), type4(simd[2],simd[3],simd[2],simd[3]));
