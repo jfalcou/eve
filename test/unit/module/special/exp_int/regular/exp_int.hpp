@@ -18,10 +18,10 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-TTS_CASE_TPL("Check eve::exp_int return type", EVE_TYPE)
-{
-  TTS_EXPR_IS(eve::exp_int(T(0), T(0)), T);
-}
+// TTS_CASE_TPL("Check eve::exp_int return type", EVE_TYPE)
+// {
+//   TTS_EXPR_IS(eve::exp_int(T(0), T(0)), T);
+// }
 
 TTS_CASE_TPL("Check eve::exp_int behavior", EVE_TYPE)
 {
@@ -35,15 +35,16 @@ TTS_CASE_TPL("Check eve::exp_int behavior", EVE_TYPE)
 //   }
 
 
-  for(int i=2; i < 3 ; ++i)
+  for(int i=1; i < 4 ; ++i)
   {
     std::cout << i << std::endl;
-//    TTS_ULP_EQUAL(eve__exp_int(T(i), T(0))  , T(boost__exp_int(i, 0.0)), 0.5);
+    TTS_ULP_EQUAL(eve__exp_int(T(i), T(0))  , eve::rec(T(i-1)), 0.5);
     TTS_ULP_EQUAL(eve__exp_int(T(i), T(0.5)), T(boost__exp_int(i, 0.5)), 2.0);
-//      TTS_ULP_EQUAL(eve__exp_int(T(i), T(1))  , T(boost__exp_int(i, 1.0)), 4.0);
-//      TTS_ULP_EQUAL(eve__exp_int(T(i), T(10)) , T(boost__exp_int(i, 10.0)), 0.5);
+    TTS_ULP_EQUAL(eve__exp_int(T(i), T(1))  , T(boost__exp_int(i, 1.0)), 4.0);
+    TTS_ULP_EQUAL(eve__exp_int(T(i), T(10)) , T(boost__exp_int(i, 10.0)), 0.5);
   }
   using elt_t =  eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve__exp_int(elt_t(2.0), elt_t(0.5)), (boost__exp_int(elt_t(2), elt_t(0.5))), 2.0);
+  TTS_ULP_EQUAL(eve__exp_int(elt_t(6000), elt_t(0.5)), (boost__exp_int(elt_t(6000), elt_t(0.5))), 3.0);
 }

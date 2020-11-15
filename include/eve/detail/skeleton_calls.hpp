@@ -85,6 +85,46 @@ namespace eve::detail
   }
 
   // -----------------------------------------------------------------------------------------------
+  // four parameters arithmetic operators scheme
+  template<typename Obj, value T, value U, value V, value W>
+  EVE_FORCEINLINE  auto arithmetic_call(Obj op
+                                       , T const &a
+                                       , U const &b
+                                       , V const &c
+                                       , W const &d) noexcept
+  requires compatible_values<T, U> && compatible_values<T, V>&& compatible_values<W, V>
+  {
+    if constexpr(scalar_value<T> && scalar_value<U> &&  scalar_value<V> &&  scalar_value<W>)    //all are scalar so of the same type
+    {
+      return op(a, b, c, d);
+    }
+    else
+    if constexpr(simd_value<T> && simd_value<U> && simd_value<V> && simd_value<W>)    //all are simd so of the same type
+    {
+      if constexpr(has_native_abi_v<T>) return op(a, b, c, d); // generally already taken by arch specific intrisicss
+      else                              return apply_over(op, a, b, c, d);
+    }
+    else if constexpr(scalar_value<T>) //  T is scalar and one simd
+    {
+      using c_t = std::conditional_t<simd_value<U>
+                                     , cardinal_t<U>
+                                     , std::conditional_t<simd_value<V>
+                                                          , cardinal_t<V>
+                                                          , cardinal_t<W>>>;
+      using r_t = as_wide_t<T, c_t>;
+      return apply_over(op, r_t(a), r_t(b), r_t(c), r_t(d));
+    }
+    else // T is simd
+    {
+      return apply_over(op, T(a), T(b), T(c));
+//       if constexpr(scalar_value<U> &&  scalar_value<V> &&  scalar_value<W>) return apply_over(op, T(a), T(b), T(c));
+//       else if constexpr(scalar_value<U>)                return apply_over(op, a, V(b), c);
+//       else if constexpr(scalar_value<V>)                return apply_over(op, a, b, U(c));
+//       else if constexpr(scalar_value<W>)                return apply_over(op, a, b, U(c));
+    }
+  }
+
+   // -----------------------------------------------------------------------------------------------
   // binary bit operators scheme
   template<typename Obj, real_value T, real_value U>
   EVE_FORCEINLINE auto bit_call(Obj op

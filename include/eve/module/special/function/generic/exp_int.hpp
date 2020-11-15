@@ -83,20 +83,19 @@ namespace eve::detail
      auto br_zeron = []  (auto x){ //n == 0
        return exp(-x)/x;
      };
-     notdone = next_interval(br_zeron, notdone, is_eqz(n), r, x);
+     notdone = next_interval(br_zeron, notdone, is_eqz(n), r, x); // n == 0
      if (any(notdone))
      {
        auto br_largen = [](auto n,  auto x){ //n >  5000
-         T xk = x + n;
-         T yk = rec(sqr(xk));
-         T t = n;
-         T ans = fma(T(-8), x, t);
-         ans = t*fma(yk, 6*sqr(x), ans);
-         ans = yk*fma(t, fma(T(-2), x, t), ans);
-         ans = fma(yk, (ans+t), T(1));
-         return ans*exp(-x)/xk;
+         auto xk = x + n;
+         auto yk = rec(sqr(xk));
+         auto t = n;
+         auto ans = yk*t*(6*sqr(x)-8*t*x+sqr(t));
+         ans = yk*(ans+t*(t-2*x));
+         ans = yk*(ans+t);
+         return inc(ans)*exp(-x)/xk;
        };
-       notdone = next_interval(br_largen, notdone, n > 5000, r, n, x);
+       notdone = next_interval(br_largen, notdone, n > 5000, r, n, x); // n >  5000
        if (any(notdone))
        {
          auto br_xlt1 = [](auto n,  auto x){ // here x is always le 1
@@ -104,7 +103,7 @@ namespace eve::detail
            x = inc[eqzx](x); //loop is infinite for x == 0
            auto psi1 = zero(as(x));
            int32_t maxn = maximum(n);
-           for( int32_t i=maxn-1; i; --i )  psi1 = add[T(i) < n](psi1, T(rec(i)));
+           for( int32_t i=dec(maxn); i; --i )  psi1 = add[T(i) < n](psi1, rec(T(i)));
            auto euler = Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>();
            auto psi = -euler-log(x)+psi1;
            T t; ;
@@ -127,7 +126,7 @@ namespace eve::detail
          };
          auto xlt1 = x < 1;
          T xx = if_else(xlt1, x, one);
-         notdone = next_interval(br_xlt1, notdone, xlt1, r, n, xx);
+         notdone = next_interval(br_xlt1, notdone, xlt1, r, n, xx); // x <  1
          if(any(notdone))
          {
            auto br_xge1 = [](auto n,  auto x){ // here x is always gt 1
@@ -172,7 +171,7 @@ namespace eve::detail
          }
        }
      }
-     return r;
+     return if_else(is_eqz(x), rec(dec(n)), r);
    }
    else
      return apply_over(exp_int, n, x);

@@ -68,10 +68,6 @@ TTS_CASE_TPL("Check eve::pedantic(eve::pow_abs) behavior", EVE_TYPE)
       w8_t a(0.25, 0.5, 1, 2.5, 100.0, 12.7, 4.0, 0.5);
       w8_t b(1.1, 2.2, 3.3, 4.4, 43.2, -0.7, 0.4, 0.0);
       TTS_ULP_EQUAL(eve::pedantic(eve::pow_abs)(a, b) ,eve::pow_abs(a, b),2);
-      std::cout << std::scientific << std::setprecision(15) << "a " << a << std::endl;
-      std::cout << std::scientific << std::setprecision(15) << "b " << b << std::endl;
-      std::cout << std::scientific << std::setprecision(15) << eve::pedantic(eve::pow_abs)(a, b)<< std::endl;
-      std::cout << std::scientific << std::setprecision(15) <<                eve::pow_abs(a, b)<< std::endl;
     }
     auto Nan =  eve::nan(eve::as<v_t>());
     auto Inf =  eve::inf(eve::as<v_t>());
