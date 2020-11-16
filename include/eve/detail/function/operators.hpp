@@ -18,6 +18,9 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/traits/as_wide.hpp>
 
+// In this file deleted versions are present to prevent clang using an internally defined
+// operator over simd vector types with different value types, but same storage.
+
 namespace eve
 {
   //================================================================================================
@@ -30,6 +33,11 @@ namespace eve
     else                            return a += b;
   }
 
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator + (T const &a
+                                  , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
+
   //================================================================================================
   // operator-
   //================================================================================================
@@ -39,6 +47,12 @@ namespace eve
     if constexpr( scalar_value<T> ) return U{a} -= b;
     else                            return a    -= b;
   }
+
+
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator - (T const &a
+                                  , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
 
   //================================================================================================
   // operator*
@@ -50,6 +64,11 @@ namespace eve
     else                            return a *= b;
   }
 
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator * (T const &a
+                                  , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
+
   //================================================================================================
   // operator/
   //================================================================================================
@@ -60,6 +79,11 @@ namespace eve
     else                            return a    /= b;
   }
 
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator / (T const &a
+                                  , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
+
   //================================================================================================
   // operator%
   //================================================================================================
@@ -69,6 +93,12 @@ namespace eve
     if constexpr( scalar_value<T> ) return U{a} %= b;
     else                            return a    %= b;
   }
+
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator % (T const &a
+                                  , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
+
 
   //================================================================================================
   // operator&
