@@ -12,7 +12,6 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/raw.hpp>
-#include <eve/function/pedantic.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
@@ -41,13 +40,6 @@ namespace eve::detail
     }
   }
 
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_128_>
-                  rec_(EVE_SUPPORTS(sse2_), pedantic_type const &, wide<T, N, x86_128_> const &a0) noexcept
-  {
-    return  rec(a0);
-  }
-
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<floating_real_scalar_value T, typename N>
@@ -70,13 +62,6 @@ namespace eve::detail
     {
       return _mm256_div_ps(one(eve::as(a0)), a0);
     }
-  }
-
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, x86_256_>
-                  rec_(EVE_SUPPORTS(avx_), pedantic_type const &, wide<T, N, x86_256_> const &a0) noexcept
-  {
-    return rec(a0);
   }
 }
 

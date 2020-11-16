@@ -20,10 +20,13 @@ TTS_CASE_TPL("Check eve::rec return type", EVE_TYPE)
 
 TTS_CASE_TPL("Check eve::rec behavior", EVE_TYPE)
 {
-  if constexpr(eve::floating_value<T> && eve::platform::supports_infinites)
+  if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL(eve::rec( T(-0.)), eve::minf(eve::as<T>()) , 0.5);
-    TTS_ULP_EQUAL(eve::rec( T( 0 )), eve::inf(eve::as<T>())  , 0.5);
+    if constexpr(eve::platform::supports_infinites)
+    {
+      TTS_ULP_EQUAL(eve::rec( T(-0.)), eve::minf(eve::as<T>()) , 0.5);
+      TTS_ULP_EQUAL(eve::rec( T( 0 )), eve::inf(eve::as<T>())  , 0.5);
+    }
     TTS_ULP_EQUAL(eve::rec( T( 1 )), T(1)           , 0.5);
     TTS_ULP_EQUAL(eve::rec( T( 2 )), T(1./2.)       , 0.5);
   }
