@@ -41,4 +41,14 @@ namespace eve::detail
                                           )
                   );
   }
+
+  template<typename Wide, typename Target, shuffle_pattern Pattern>
+  EVE_FORCEINLINE auto do_shuffle ( EVE_SUPPORTS(sse2_), ssse3_match const&
+                                  , as_<Target> , Pattern const& p
+                                  , Wide const& v0, Wide const& v1
+                                  )
+  {
+    Target first  = v0[mask_pattern<true>(p) ];
+    return first |= v1[mask_pattern<false>(p)];
+  }
 }

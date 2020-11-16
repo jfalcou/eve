@@ -246,4 +246,20 @@ namespace eve
                                       );
     return that;
   }
+
+  //----------------------------------------------------------------------------------------------
+  // Modify a patternt to only let 1st or 2nd part fo the shuffle left
+  template<bool First, shuffle_pattern Pattern>
+  constexpr auto mask_pattern(Pattern) noexcept
+  {
+    constexpr auto that = swizzler( [](int i, int c)
+                                    {
+                                      Pattern q;
+                                      auto v = q(i,c);
+                                      if constexpr(First) return v < c ? v  : -1;
+                                      else                return v < c ? -1 :  v - c;
+                                    }
+                                  );
+    return that;
+  }
 }

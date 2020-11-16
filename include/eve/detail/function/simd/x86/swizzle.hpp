@@ -42,7 +42,8 @@ namespace eve::detail
                                 , Pattern p
                                 ) noexcept
   {
-    swizzle_matcher < mov_binary_match, sse2_binary_match
+    swizzle_matcher < mov_binary_match
+                    , ssse3_match, sse2_binary_match
                     , any_match
                     > match_with;
 
