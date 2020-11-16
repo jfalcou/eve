@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/refine_rec.hpp>
 #include <eve/function/raw.hpp>
-#include <eve/function/pedantic.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
@@ -63,20 +62,6 @@ namespace eve::detail
       // estimate 1/x with an extra NR step for full precision
       auto a = refine_rec(v0, raw(rec)(v0));
       return refine_rec(v0, a);
-  }
-
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_64_>
-                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, arm_64_> const &v0) noexcept
-  {
-    return rec(v0);
-  }
-
-  template<floating_real_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N, arm_128_>
-                  rec_(EVE_SUPPORTS(neon128_), pedantic_type const &, wide<T, N, arm_128_> const &v0) noexcept
-  {
-    return rec(v0);
   }
 }
 
