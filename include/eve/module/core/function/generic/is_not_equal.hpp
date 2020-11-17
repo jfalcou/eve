@@ -130,6 +130,14 @@ namespace eve
   {
     return eve::is_not_equal(v0, v1);
   }
+
+  // This is needed to prevent clang using an internal operator of comparison over simd vector
+  // types with different value types, as some architectures are not
+  // aware of the accurate element type in the storage
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator != (T const &a
+                                    , U const &b) noexcept
+  requires different_value_type<T, U> = delete;
 }
 
 

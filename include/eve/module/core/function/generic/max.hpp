@@ -18,6 +18,7 @@
 #include <eve/function/is_less.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_unordered.hpp>
+#include <eve/function/logical_and.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/numeric.hpp>
 #include <eve/platform.hpp>
@@ -133,7 +134,7 @@ namespace eve::detail
         else
         {
           auto tmp = if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, max(v0, v1)));
-          return if_else(is_eqz(v0) && is_eqz(v1), bit_and(v0, v1), tmp);                                         ;
+          return if_else(is_eqz(v0) && is_eqz(v1), bit_and(v0, v1), tmp);
         }
       }
       else
@@ -150,4 +151,3 @@ namespace eve::detail
     }
   }
 }
-

@@ -16,6 +16,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
+#include <eve/function/convert.hpp>
 
 namespace eve::detail
 {
@@ -52,10 +53,16 @@ namespace eve
   template<value T, value U>
   EVE_FORCEINLINE auto operator <(T const &v0, U const &v1) noexcept
   -> decltype( eve::is_less(v0,v1) )
-  requires compatible_values<T, U>
+    requires (compatible_values<T, U>)
   {
     return eve::is_less(v0, v1);
   }
+
+  // This is needed to prevent clang using an internal operator of comparison over simd vector
+  // types with different value types, as some architectures are not
+  // aware of the accurate element type in the storage
+  template<real_simd_value T, real_simd_value U>
+  EVE_FORCEINLINE  auto operator <(T const &a
+                                  , U const &b) noexcept
+                                  requires different_value_type<T, U> = delete;
 }
-
-

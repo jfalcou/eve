@@ -44,4 +44,11 @@ namespace eve
   template<typename T, typename U>
   concept size_compatible_values = size_compatible_to<T, U>
                                 || size_compatible_to<U, T>;
+
+
+  template<typename T, typename U>
+  concept same_value_type = std::same_as<element_type_t<U>, element_type_t<T>>;
+
+  template<typename T, typename U>
+  concept different_value_type = !std::same_as<element_type_t<U>, element_type_t<T>>;
 }

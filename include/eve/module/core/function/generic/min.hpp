@@ -136,7 +136,7 @@ namespace eve::detail
         else
         {
           auto tmp = if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, min(v0, v1)));
-          return if_else(is_eqz(v0) && is_eqz(v1), bit_or(v0, v1), tmp);                                         ;
+          return if_else(is_eqz(v0) && is_eqz(v1), bit_or(v0, v1), tmp);
         }
       }
       else
@@ -153,4 +153,3 @@ namespace eve::detail
     }
   }
 }
-
